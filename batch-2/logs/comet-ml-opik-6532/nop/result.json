@@ -1,0 +1,29 @@
+{
+    "id": "ff36b48c-9513-4852-adc5-1666d89e9694",
+    "started_at": "2026-07-06T12:17:22.675841",
+    "finished_at": "2026-07-06T12:17:55.466046",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__comet-ml-opik-6532": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "comet-ml-opik-6532__a8XZp8J"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

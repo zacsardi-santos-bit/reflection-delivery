@@ -1,8 +1,0 @@
-patching file core/tauri-macros/src/command/wrapper.rs
-patching file core/tauri-utils/src/acl/resolved.rs
-patching file core/tauri-utils/src/acl/value.rs
-patching file core/tauri/src/command/authority.rs
-patching file core/tauri/src/command/mod.rs
-patching file core/tauri/src/plugin.rs
-patching file examples/api/src-tauri/capabilities/run-app.json
-patching file examples/api/src-tauri/tauri-plugin-sample/src/lib.rs

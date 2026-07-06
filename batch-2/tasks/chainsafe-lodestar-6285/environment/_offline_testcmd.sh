@@ -1,0 +1,1 @@
+cd /workspace/repo && yarn install --frozen-lockfile >/dev/null 2>&1 && yarn build >/dev/null 2>&1 && cd /workspace/repo/packages/cli && bash -c "npx vitest run --reporter=verbose test/unit/cmds/beacon.test.ts"

@@ -1,5 +1,0 @@
-I'd like to add a Zulip alerting provider to Gatus. Our team uses Zulip for communication, and we want Gatus to send us notifications when monitored endpoints fail or recover. Right now there's no built-in Zulip support, so we have to rely on workarounds.
-
-The new provider should be configurable with a bot email, bot API key, organization domain, and channel ID. All four fields should be required — the provider should be considered invalid if any of them is missing. It should also support per-group overrides so we can route alerts for different endpoint groups to different Zulip channels; each override must specify a group name and a complete set of credentials.
-
-When sending an alert, the provider should post a message to the Zulip API using the bot credentials for authentication. The message content should clearly indicate whether the alert was triggered (due to repeated failures) or resolved (after repeated successes), include the alert description if one is set, and list each condition result with a visual indicator of whether it passed or failed. The provider should return an error if the API call fails or returns a non-success response.

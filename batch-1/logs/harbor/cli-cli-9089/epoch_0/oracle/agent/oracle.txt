@@ -1,0 +1,6 @@
+patching file pkg/cmd/auth/refresh/refresh.go
+patching file pkg/cmd/auth/setupgit/setupgit.go
+patching file pkg/cmd/auth/shared/git_credential.go
+patching file pkg/cmd/auth/shared/gitcredentials/helper_config.go
+patching file pkg/cmd/auth/shared/gitcredentials/updater.go
+patching file pkg/cmd/auth/shared/login_flow.go

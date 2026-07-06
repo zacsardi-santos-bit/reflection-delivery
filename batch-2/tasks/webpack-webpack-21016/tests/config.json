@@ -1,0 +1,38 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && node --experimental-vm-modules node_modules/.bin/jest test/buildHtmlAst.unittest.js --coverage=false --verbose --watchAll=false",
+  "test_files": [
+    "test/buildHtmlAst.unittest.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse an empty document",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse a simple element",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse nested elements",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse void elements",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse attributes",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse comments",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse doctype",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle self-closing tags",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should auto-close <p> when block element opens",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should auto-close same-name elements like <li>",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should merge adjacent text nodes",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should detect SVG namespace",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should detect MathML namespace",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse a full HTML document",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle multiple attributes on void elements",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle deeply nested structures",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should export namespace constants",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle mixed content",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle valueless attributes",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle table row auto-closing",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle SVG foreignObject HTML integration",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle SVG desc HTML integration",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle bogus comments",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should handle unquoted attributes",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should parse raw-text elements correctly",
+    "/workspace/repo/test/buildHtmlAst.unittest.js::buildHtmlAst should track end offsets correctly"
+  ],
+  "PASS_TO_PASS": []
+}

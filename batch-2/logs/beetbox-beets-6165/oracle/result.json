@@ -1,0 +1,29 @@
+{
+    "id": "727c60f0-f51f-4861-a873-ea2b186942f5",
+    "started_at": "2026-07-06T12:18:24.257467",
+    "finished_at": "2026-07-06T12:19:02.412929",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__beetbox-beets-6165": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "beetbox-beets-6165__hSwsyAa"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

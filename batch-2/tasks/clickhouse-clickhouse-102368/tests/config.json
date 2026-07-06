@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/my_test.py -v",
+  "test_files": [
+    "tests/integration/test_storage_s3/s3_mocks/gcs_transcode_mock.py",
+    "tests/integration/test_storage_s3/test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "my_test::test_gcs_decompressive_transcoding"
+  ],
+  "PASS_TO_PASS": []
+}

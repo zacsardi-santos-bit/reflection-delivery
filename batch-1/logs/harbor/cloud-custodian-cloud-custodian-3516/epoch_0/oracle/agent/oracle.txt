@@ -1,0 +1,3 @@
+patching file c7n/query.py
+patching file c7n/resources/dynamodb.py
+patching file tox.ini

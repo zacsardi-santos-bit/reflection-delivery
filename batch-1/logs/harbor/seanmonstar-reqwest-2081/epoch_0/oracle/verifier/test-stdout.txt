@@ -1,0 +1,150 @@
+patching file tests/client.rs
+patching file tests/support/delay_server.rs
+patching file tests/support/mod.rs
+patching file tests/support/server.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling libc v0.2.186
+   Compiling stable_deref_trait v1.2.1
+   Compiling shlex v2.0.1
+   Compiling find-msvc-tools v0.1.9
+   Compiling vcpkg v0.2.15
+   Compiling pkg-config v0.3.33
+   Compiling pin-project-lite v0.2.17
+   Compiling bytes v1.12.0
+   Compiling litemap v0.8.2
+   Compiling cfg-if v1.0.4
+   Compiling writeable v0.6.3
+   Compiling futures-core v0.3.32
+   Compiling icu_normalizer_data v2.2.0
+   Compiling icu_properties_data v2.2.0
+   Compiling utf8_iter v1.0.4
+   Compiling itoa v1.0.18
+   Compiling foreign-types-shared v0.1.1
+   Compiling cc v1.2.65
+   Compiling fnv v1.0.7
+   Compiling once_cell v1.21.4
+   Compiling openssl v0.10.81
+   Compiling foreign-types v0.3.2
+   Compiling hashbrown v0.17.1
+   Compiling log v0.4.33
+   Compiling equivalent v1.0.2
+   Compiling slab v0.4.12
+   Compiling native-tls v0.2.18
+   Compiling httparse v1.10.1
+   Compiling smallvec v1.15.2
+   Compiling tracing-core v0.1.36
+   Compiling futures-sink v0.3.32
+   Compiling futures-task v0.3.32
+   Compiling http v0.2.12
+   Compiling serde_core v1.0.228
+   Compiling bitflags v2.13.0
+   Compiling serde v1.0.228
+   Compiling memchr v2.8.2
+   Compiling futures-util v0.3.32
+   Compiling try-lock v0.2.5
+   Compiling tracing v0.1.44
+   Compiling indexmap v2.14.0
+   Compiling openssl-probe v0.2.1
+   Compiling percent-encoding v2.3.2
+   Compiling want v0.3.1
+   Compiling futures-channel v0.3.32
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling aho-corasick v1.1.4
+   Compiling form_urlencoded v1.2.2
+   Compiling http-body v0.4.6
+   Compiling httpdate v1.0.3
+   Compiling regex-syntax v0.8.11
+   Compiling tower-service v0.3.3
+   Compiling openssl-sys v0.9.117
+   Compiling crc32fast v1.5.0
+   Compiling alloc-stdlib v0.2.4
+   Compiling rle-decode-fast v1.0.3
+   Compiling ryu v1.0.23
+   Compiling doc-comment v0.3.4
+   Compiling libflate_lz77 v1.2.0
+   Compiling brotli-decompressor v2.5.1
+   Compiling encoding_rs v0.8.35
+   Compiling humantime v2.3.0
+   Compiling base64 v0.21.7
+   Compiling adler32 v1.2.0
+   Compiling termcolor v1.4.1
+   Compiling mime v0.3.17
+   Compiling ipnet v2.12.0
+   Compiling syn v2.0.118
+   Compiling sync_wrapper v0.1.2
+   Compiling socket2 v0.6.4
+   Compiling mio v1.2.1
+   Compiling socket2 v0.5.10
+   Compiling regex-automata v0.4.14
+   Compiling atty v0.2.14
+   Compiling brotli v3.5.0
+   Compiling libflate v1.4.0
+   Compiling regex v1.12.4
+   Compiling env_logger v0.8.4
+   Compiling synstructure v0.13.2
+   Compiling zerovec-derive v0.11.3
+   Compiling displaydoc v0.2.6
+   Compiling tokio-macros v2.7.0
+   Compiling openssl-macros v0.1.1
+   Compiling serde_derive v1.0.228
+   Compiling zerofrom-derive v0.1.7
+   Compiling yoke-derive v0.8.2
+   Compiling tokio v1.52.3
+   Compiling zerofrom v0.1.8
+   Compiling yoke v0.8.3
+   Compiling zerovec v0.11.6
+   Compiling zerotrie v0.2.4
+   Compiling tinystr v0.8.3
+   Compiling potential_utf v0.1.5
+   Compiling icu_collections v2.2.0
+   Compiling icu_locale_core v2.2.0
+   Compiling serde_urlencoded v0.7.1
+   Compiling icu_provider v2.2.0
+   Compiling icu_properties v2.2.0
+   Compiling icu_normalizer v2.2.0
+   Compiling tokio-util v0.7.18
+   Compiling tokio-native-tls v0.3.1
+   Compiling h2 v0.3.27
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling hyper v0.14.32
+   Compiling hyper-tls v0.5.0
+   Compiling reqwest v0.11.23 (/workspace/repo)
+warning: struct `Server` is never constructed
+  --> tests/support/delay_server.rs:26:12
+   |
+26 | pub struct Server {
+   |            ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: associated items `new`, `shutdown`, and `addr` are never used
+   --> tests/support/delay_server.rs:33:18
+    |
+32  | impl Server {
+    | ----------- associated items in this implementation
+33  |     pub async fn new<F1, Fut, F2>(func: F1, apply_config: F2, delay: Duration) -> Self
+    |                  ^^^
+...
+108 |     pub async fn shutdown(mut self) {
+    |                  ^^^^^^^^
+...
+116 |     pub fn addr(&self) -> net::SocketAddr {
+    |            ^^^^
+
+warning: `reqwest` (test "upgrade") generated 2 warnings
+warning: `reqwest` (test "proxy") generated 2 warnings (2 duplicates)
+warning: `reqwest` (test "timeouts") generated 2 warnings (2 duplicates)
+warning: `reqwest` (test "redirect") generated 2 warnings (2 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 37.57s
+------------
+ Nextest run ID ff7f5153-ae20-4f18-8803-d54ca33feaea with nextest profile: default
+    Starting 2 tests across 8 binaries (120 tests skipped)
+        PASS [   0.264s] reqwest::client highly_concurrent_requests_to_http2_server_with_low_max_concurrent_streams
+        PASS [   2.281s] reqwest::client highly_concurrent_requests_to_slow_http2_server_with_low_max_concurrent_streams
+------------
+     Summary [   2.283s] 2 tests run: 2 passed, 120 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

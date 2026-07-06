@@ -1,0 +1,231 @@
+diff --git a/docs/tools/todos.md b/docs/tools/todos.md
+index abb44c092..d198b872e 100644
+--- a/docs/tools/todos.md
++++ b/docs/tools/todos.md
+@@ -13,7 +13,8 @@ updates to the CLI interface.
+ - `todos` (array of objects, required): The complete list of tasks. Each object
+   includes:
+   - `description` (string): Technical description of the task.
+-  - `status` (enum): `pending`, `in_progress`, `completed`, or `cancelled`.
++  - `status` (enum): `pending`, `in_progress`, `completed`, `cancelled`, or
++    `blocked`.
+ 
+ ## Technical behavior
+ 
+diff --git a/packages/cli/src/ui/components/ChecklistItem.tsx b/packages/cli/src/ui/components/ChecklistItem.tsx
+index 6e08e0af6..065c79d51 100644
+--- a/packages/cli/src/ui/components/ChecklistItem.tsx
++++ b/packages/cli/src/ui/components/ChecklistItem.tsx
+@@ -13,7 +13,8 @@ export type ChecklistStatus =
+   | 'pending'
+   | 'in_progress'
+   | 'completed'
+-  | 'cancelled';
++  | 'cancelled'
++  | 'blocked';
+ 
+ export interface ChecklistItemData {
+   status: ChecklistStatus;
+@@ -48,6 +49,12 @@ const ChecklistStatusDisplay: React.FC<{ status: ChecklistStatus }> = ({
+           ✗
+         </Text>
+       );
++    case 'blocked':
++      return (
++        <Text color={theme.status.warning} aria-label="Blocked">
++          ⛔
++        </Text>
++      );
+     default:
+       checkExhaustive(status);
+   }
+@@ -70,6 +77,7 @@ export const ChecklistItem: React.FC<ChecklistItemProps> = ({
+         return theme.text.accent;
+       case 'completed':
+       case 'cancelled':
++      case 'blocked':
+         return theme.text.secondary;
+       case 'pending':
+         return theme.text.primary;
+diff --git a/packages/cli/src/ui/components/__snapshots__/ChecklistItem.test.tsx.snap b/packages/cli/src/ui/components/__snapshots__/ChecklistItem.test.tsx.snap
+index 9cd5fbb64..80599ae87 100644
+--- a/packages/cli/src/ui/components/__snapshots__/ChecklistItem.test.tsx.snap
++++ b/packages/cli/src/ui/components/__snapshots__/ChecklistItem.test.tsx.snap
+@@ -1,5 +1,10 @@
+ // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+ 
++exports[`<ChecklistItem /> > renders { status: 'blocked', label: 'Blocked this' } item correctly 1`] = `
++"⛔ Blocked this
++"
++`;
++
+ exports[`<ChecklistItem /> > renders { status: 'cancelled', label: 'Skipped this' } item correctly 1`] = `
+ "✗ Skipped this
+ "
+diff --git a/packages/core/src/services/trackerTypes.ts b/packages/core/src/services/trackerTypes.ts
+index d0e94bb98..6c21456fe 100644
+--- a/packages/core/src/services/trackerTypes.ts
++++ b/packages/core/src/services/trackerTypes.ts
+@@ -22,6 +22,7 @@ export const TASK_TYPE_LABELS: Record<TaskType, string> = {
+ export enum TaskStatus {
+   OPEN = 'open',
+   IN_PROGRESS = 'in_progress',
++  BLOCKED = 'blocked',
+   CLOSED = 'closed',
+ }
+ export const TaskStatusSchema = z.nativeEnum(TaskStatus);
+diff --git a/packages/core/src/tools/definitions/__snapshots__/coreToolsModelSnapshots.test.ts.snap b/packages/core/src/tools/definitions/__snapshots__/coreToolsModelSnapshots.test.ts.snap
+index e3a80eddd..e2bab4d05 100644
+--- a/packages/core/src/tools/definitions/__snapshots__/coreToolsModelSnapshots.test.ts.snap
++++ b/packages/core/src/tools/definitions/__snapshots__/coreToolsModelSnapshots.test.ts.snap
+@@ -697,6 +697,7 @@ DO NOT use this tool for simple tasks that can be completed in less than 2 steps
+ - in_progress: Marked just prior to beginning work on a given subtask. You should only have one subtask as in_progress at a time.
+ - completed: Subtask was successfully completed with no errors or issues. If the subtask required more steps to complete, update the todo list with the subtasks. All steps should be identified as completed only when they are completed.
+ - cancelled: As you update the todo list, some tasks are not required anymore due to the dynamic nature of the task. In this case, mark the subtasks as cancelled.
++- blocked: Subtask is blocked and cannot be completed at this time.
+ 
+ 
+ ## Methodology for using this tool
+@@ -766,6 +767,7 @@ The agent did not use the todo list because this task could be completed by a ti
+                 "in_progress",
+                 "completed",
+                 "cancelled",
++                "blocked",
+               ],
+               "type": "string",
+             },
+@@ -1451,6 +1453,7 @@ DO NOT use this tool for simple tasks that can be completed in less than 2 steps
+ - in_progress: Marked just prior to beginning work on a given subtask. You should only have one subtask as in_progress at a time.
+ - completed: Subtask was successfully completed with no errors or issues. If the subtask required more steps to complete, update the todo list with the subtasks. All steps should be identified as completed only when they are completed.
+ - cancelled: As you update the todo list, some tasks are not required anymore due to the dynamic nature of the task. In this case, mark the subtasks as cancelled.
++- blocked: Subtask is blocked and cannot be completed at this time.
+ 
+ 
+ ## Methodology for using this tool
+@@ -1520,6 +1523,7 @@ The agent did not use the todo list because this task could be completed by a ti
+                 "in_progress",
+                 "completed",
+                 "cancelled",
++                "blocked",
+               ],
+               "type": "string",
+             },
+diff --git a/packages/core/src/tools/definitions/model-family-sets/default-legacy.ts b/packages/core/src/tools/definitions/model-family-sets/default-legacy.ts
+index 3309fcc5b..5c219f468 100644
+--- a/packages/core/src/tools/definitions/model-family-sets/default-legacy.ts
++++ b/packages/core/src/tools/definitions/model-family-sets/default-legacy.ts
+@@ -543,6 +543,7 @@ DO NOT use this tool for simple tasks that can be completed in less than 2 steps
+ - in_progress: Marked just prior to beginning work on a given subtask. You should only have one subtask as in_progress at a time.
+ - completed: Subtask was successfully completed with no errors or issues. If the subtask required more steps to complete, update the todo list with the subtasks. All steps should be identified as completed only when they are completed.
+ - cancelled: As you update the todo list, some tasks are not required anymore due to the dynamic nature of the task. In this case, mark the subtasks as cancelled.
++- blocked: Subtask is blocked and cannot be completed at this time.
+ 
+ 
+ ## Methodology for using this tool
+@@ -609,7 +610,13 @@ The agent did not use the todo list because this task could be completed by a ti
+               [TODOS_ITEM_PARAM_STATUS]: {
+                 type: 'string',
+                 description: 'The current status of the task.',
+-                enum: ['pending', 'in_progress', 'completed', 'cancelled'],
++                enum: [
++                  'pending',
++                  'in_progress',
++                  'completed',
++                  'cancelled',
++                  'blocked',
++                ],
+               },
+             },
+             required: [TODOS_ITEM_PARAM_DESCRIPTION, TODOS_ITEM_PARAM_STATUS],
+diff --git a/packages/core/src/tools/definitions/model-family-sets/gemini-3.ts b/packages/core/src/tools/definitions/model-family-sets/gemini-3.ts
+index 2c0375baa..cac98a90b 100644
+--- a/packages/core/src/tools/definitions/model-family-sets/gemini-3.ts
++++ b/packages/core/src/tools/definitions/model-family-sets/gemini-3.ts
+@@ -518,6 +518,7 @@ DO NOT use this tool for simple tasks that can be completed in less than 2 steps
+ - in_progress: Marked just prior to beginning work on a given subtask. You should only have one subtask as in_progress at a time.
+ - completed: Subtask was successfully completed with no errors or issues. If the subtask required more steps to complete, update the todo list with the subtasks. All steps should be identified as completed only when they are completed.
+ - cancelled: As you update the todo list, some tasks are not required anymore due to the dynamic nature of the task. In this case, mark the subtasks as cancelled.
++- blocked: Subtask is blocked and cannot be completed at this time.
+ 
+ 
+ ## Methodology for using this tool
+@@ -584,7 +585,13 @@ The agent did not use the todo list because this task could be completed by a ti
+               [TODOS_ITEM_PARAM_STATUS]: {
+                 type: 'string',
+                 description: 'The current status of the task.',
+-                enum: ['pending', 'in_progress', 'completed', 'cancelled'],
++                enum: [
++                  'pending',
++                  'in_progress',
++                  'completed',
++                  'cancelled',
++                  'blocked',
++                ],
+               },
+             },
+             required: [TODOS_ITEM_PARAM_DESCRIPTION, TODOS_ITEM_PARAM_STATUS],
+diff --git a/packages/core/src/tools/tools.ts b/packages/core/src/tools/tools.ts
+index c94cef4a9..3865aaf35 100644
+--- a/packages/core/src/tools/tools.ts
++++ b/packages/core/src/tools/tools.ts
+@@ -823,7 +823,12 @@ export type ToolResultDisplay =
+   | TodoList
+   | SubagentProgress;
+ 
+-export type TodoStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled';
++export type TodoStatus =
++  | 'pending'
++  | 'in_progress'
++  | 'completed'
++  | 'cancelled'
++  | 'blocked';
+ 
+ export interface Todo {
+   description: string;
+diff --git a/packages/core/src/tools/trackerTools.ts b/packages/core/src/tools/trackerTools.ts
+index 18f3ccc3c..1594cceca 100644
+--- a/packages/core/src/tools/trackerTools.ts
++++ b/packages/core/src/tools/trackerTools.ts
+@@ -48,10 +48,11 @@ export async function buildTodosReturnDisplay(
+     }
+   }
+ 
+-  const statusOrder = {
++  const statusOrder: Record<TaskStatus, number> = {
+     [TaskStatus.IN_PROGRESS]: 0,
+     [TaskStatus.OPEN]: 1,
+-    [TaskStatus.CLOSED]: 2,
++    [TaskStatus.BLOCKED]: 2,
++    [TaskStatus.CLOSED]: 3,
+   };
+ 
+   const sortTasks = (a: TrackerTask, b: TrackerTask) => {
+@@ -80,6 +81,8 @@ export async function buildTodosReturnDisplay(
+       status = 'in_progress';
+     } else if (task.status === TaskStatus.CLOSED) {
+       status = 'completed';
++    } else if (task.status === TaskStatus.BLOCKED) {
++      status = 'blocked';
+     }
+ 
+     const indent = '  '.repeat(depth);
+@@ -585,6 +588,7 @@ class TrackerVisualizeInvocation extends BaseToolInvocation<
+     const statusEmojis: Record<TaskStatus, string> = {
+       open: '⭕',
+       in_progress: '🚧',
++      blocked: '⛔',
+       closed: '✅',
+     };
+ 
+diff --git a/packages/core/src/tools/write-todos.ts b/packages/core/src/tools/write-todos.ts
+index dd7ab780e..746219ecd 100644
+--- a/packages/core/src/tools/write-todos.ts
++++ b/packages/core/src/tools/write-todos.ts
+@@ -22,6 +22,7 @@ const TODO_STATUSES = [
+   'in_progress',
+   'completed',
+   'cancelled',
++  'blocked',
+ ] as const;
+ 
+ export interface WriteTodosToolParams {

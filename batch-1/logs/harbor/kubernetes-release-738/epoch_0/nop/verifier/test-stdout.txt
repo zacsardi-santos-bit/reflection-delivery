@@ -1,0 +1,24 @@
+patching file debian/build_test.go
+{"Time":"2026-06-29T15:29:26.814631653Z","Action":"start","Package":"github.com/kubernetes/release/debian"}
+{"Time":"2026-06-29T15:29:26.82726559Z","Action":"run","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmConfig"}
+{"Time":"2026-06-29T15:29:26.827314457Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmConfig","Output":"=== RUN   TestGetKubeadmConfig\n"}
+{"Time":"2026-06-29T15:29:26.827440175Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmConfig","Output":"--- PASS: TestGetKubeadmConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.827473898Z","Action":"pass","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmConfig","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.827486532Z","Action":"run","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies"}
+{"Time":"2026-06-29T15:29:26.827494017Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies","Output":"=== RUN   TestGetKubeadmDependencies\n"}
+{"Time":"2026-06-29T15:29:26.827504174Z","Action":"run","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/minimum_supported_kubernetes"}
+{"Time":"2026-06-29T15:29:26.827511893Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/minimum_supported_kubernetes","Output":"=== RUN   TestGetKubeadmDependencies/minimum_supported_kubernetes\n"}
+{"Time":"2026-06-29T15:29:26.829301391Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/minimum_supported_kubernetes","Output":"    build_test.go:96: expected [\"kubelet (\u003e= 1.13.0)\" \"kubectl (\u003e= 1.13.0)\" \"kubernetes-cni (\u003e= 0.7.5)\" \"${misc:Depends}\" \"cri-tools (\u003e= 1.13.0)\"] but got [\"kubelet (\u003e= 1.6.0)\" \"kubectl (\u003e= 1.6.0)\" \"kubernetes-cni (\u003e= 0.7.5)\" \"${misc:Depends}\" \"cri-tools (\u003e= 1.12.0)\"]\n"}
+{"Time":"2026-06-29T15:29:26.829649847Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/minimum_supported_kubernetes","Output":"--- FAIL: TestGetKubeadmDependencies/minimum_supported_kubernetes (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.829672846Z","Action":"fail","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/minimum_supported_kubernetes","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.829695106Z","Action":"run","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/latest_stable_minor_kubernetes"}
+{"Time":"2026-06-29T15:29:26.829705067Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/latest_stable_minor_kubernetes","Output":"=== RUN   TestGetKubeadmDependencies/latest_stable_minor_kubernetes\n"}
+{"Time":"2026-06-29T15:29:26.829719078Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/latest_stable_minor_kubernetes","Output":"    build_test.go:96: expected [\"kubelet (\u003e= 1.13.0)\" \"kubectl (\u003e= 1.13.0)\" \"kubernetes-cni (\u003e= 0.7.5)\" \"${misc:Depends}\" \"cri-tools (\u003e= 1.13.0)\"] but got [\"kubelet (\u003e= 1.6.0)\" \"kubectl (\u003e= 1.6.0)\" \"kubernetes-cni (\u003e= 0.7.5)\" \"${misc:Depends}\" \"cri-tools (\u003e= 1.12.0)\"]\n"}
+{"Time":"2026-06-29T15:29:26.829738167Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/latest_stable_minor_kubernetes","Output":"--- FAIL: TestGetKubeadmDependencies/latest_stable_minor_kubernetes (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.829746103Z","Action":"fail","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies/latest_stable_minor_kubernetes","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.82979489Z","Action":"output","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies","Output":"--- FAIL: TestGetKubeadmDependencies (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.82980285Z","Action":"fail","Package":"github.com/kubernetes/release/debian","Test":"TestGetKubeadmDependencies","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.829824839Z","Action":"output","Package":"github.com/kubernetes/release/debian","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:29:26.830341965Z","Action":"output","Package":"github.com/kubernetes/release/debian","Output":"FAIL\tgithub.com/kubernetes/release/debian\t0.015s\n"}
+{"Time":"2026-06-29T15:29:26.830372234Z","Action":"fail","Package":"github.com/kubernetes/release/debian","Elapsed":0.016}
+reward=0 graded=4 found=4 failed=3 parsed=5 framework=go exit_code=1

@@ -1,0 +1,125 @@
+patching file src/test/system_tests/test_utils.js
+patching file src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js
+patching file src/test/unit_tests/test_nc_nsfs_health.js
+  console.warn
+    Error accrued while getting the data from /etc/noobaa.conf.d/config_dir_redirect: Error: ENOENT: no such file or directory, open '/etc/noobaa.conf.d/config_dir_redirect'
+
+      873 |         data = fs.readFileSync(file_name).toString();
+      874 |     } catch (e) {
+    > 875 |         console.warn(`Error accrued while getting the data from ${file_name}: ${e}`);
+          |                 ^
+      876 |         return;
+      877 |     }
+      878 |     return data;
+
+      at warn (config.js:875:17)
+      at _get_data_from_file (config.js:888:22)
+      at _get_config_root (config.js:904:39)
+      at Object.load_nsfs_nc_config (config.js:961:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js:10:18)
+
+  console.warn
+    config.get_config_root - could not find custom config_root, will use the default config_root  /etc/noobaa.conf.d
+
+      889 |         config_root = data.toString().trim();
+      890 |     } catch (err) {
+    > 891 |         console.warn('config.get_config_root - could not find custom config_root, will use the default config_root ', config_root);
+          |                 ^
+      892 |     }
+      893 |     return config_root;
+      894 | }
+
+      at warn (config.js:891:17)
+      at _get_config_root (config.js:904:39)
+      at Object.load_nsfs_nc_config (config.js:961:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js:10:18)
+
+  console.warn
+    load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR /etc/noobaa.conf.d
+
+      903 |         if (!config.NSFS_NC_CONF_DIR) {
+      904 |             config.NSFS_NC_CONF_DIR = _get_config_root();
+    > 905 |             console.warn('load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR', config.NSFS_NC_CONF_DIR);
+          |                     ^
+      906 |         }
+      907 |         const config_path = path.join(config.NSFS_NC_CONF_DIR, 'config.json');
+      908 |         const config_data = require(config_path);
+
+      at warn (config.js:905:21)
+      at Object.load_nsfs_nc_config (config.js:961:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js:10:18)
+
+  console.warn
+    config.load_nsfs_nc_config could not find config.json... skipping
+
+      926 |     } catch (err) {
+      927 |         if (err.code !== 'MODULE_NOT_FOUND' && err.code !== 'ENOENT') throw err;
+    > 928 |         console.warn('config.load_nsfs_nc_config could not find config.json... skipping');
+          |                 ^
+      929 |     }
+      930 | }
+      931 | /**
+
+      at warn (config.js:928:17)
+      at Object.load_nsfs_nc_config (config.js:961:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js:10:18)
+
+[32mJun-29 15:27:00.348[35m [/59] [33m [WARN][39m CONSOLE:: config.load_nsfs_nc_config could not find config.json... skipping
+PASS src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js
+  new_buckets_path access validation account
+    account inaccessible dn (both rw)
+      ✓ account with dn inaccessible (both rw) - owner (7 ms)
+      ✓ account with dn inaccessible (both rw) - group (1 ms)
+      ✓ account with dn inaccessible (both rw) - other (1 ms)
+    account inaccessible uid gid (both rw)
+      ✓ account with uid gid inaccessible (both rw) - owner
+      ✓ account with uid gid inaccessible (both rw) - group (1 ms)
+      ✓ account with uid gid inaccessible (both rw) - other
+    account accessible dn (both rw)
+      ✓ account with dn accessible (both rw) - owner
+      ✓ account with dn accessible (both rw) - group
+      ✓ account with dn naccessible (both rw) - other (1 ms)
+    account accessible uid gid (both rw)
+      ✓ account with uid gid accessible (both rw) - owner (1 ms)
+      ✓ account with uid gid accessible (both rw) - group
+      ✓ account with uid gid accessible (both rw) - other
+    account inaccessible dn (r)
+      ✓ account with dn inaccessible (r) - owner (1 ms)
+      ✓ account with dn inaccessible (r) - group (1 ms)
+      ✓ account with dn inaccessible (both r) - other
+    account inaccessible uid gid (r)
+      ✓ account with uid gid inaccessible (r) - owner
+      ✓ account with uid gid inaccessible (r) - group
+      ✓ account with uid gid inaccessible (r) - other (1 ms)
+    account inaccessible dn (w)
+      ✓ account with dn inaccessible (w) - owner
+      ✓ account with dn inaccessible (w) - group (1 ms)
+      ✓ account with dn inaccessible (w) - other (1 ms)
+    account inaccessible uid gid (w)
+      ✓ account with uid gid inaccessible (w) - owner
+      ✓ account with uid gid inaccessible (w) - group (1 ms)
+      ✓ account with uid gid inaccessible (w) - other
+
+Test Suites: 1 passed, 1 total
+Tests:       24 passed, 24 total
+Snapshots:   0 total
+Time:        1.676 s
+Ran all test suites matching /src\/test\/unit_tests\/jest_tests\/test_nc_nsfs_new_buckets_path_validation.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":24,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":24,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746818991,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (both rw)"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (both rw) account with dn inaccessible (both rw) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (both rw) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (both rw)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (both rw) account with dn inaccessible (both rw) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (both rw) - group"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (both rw)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (both rw) account with dn inaccessible (both rw) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (both rw) - other"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (both rw)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (both rw) account with uid gid inaccessible (both rw) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (both rw) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (both rw)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (both rw) account with uid gid inaccessible (both rw) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (both rw) - group"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (both rw)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (both rw) account with uid gid inaccessible (both rw) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (both rw) - other"},{"ancestorTitles":["new_buckets_path access validation account","account accessible dn (both rw)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account accessible dn (both rw) account with dn accessible (both rw) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn accessible (both rw) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account accessible dn (both rw)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account accessible dn (both rw) account with dn accessible (both rw) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn accessible (both rw) - group"},{"ancestorTitles":["new_buckets_path access validation account","account accessible dn (both rw)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account accessible dn (both rw) account with dn naccessible (both rw) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn naccessible (both rw) - other"},{"ancestorTitles":["new_buckets_path access validation account","account accessible uid gid (both rw)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account accessible uid gid (both rw) account with uid gid accessible (both rw) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid accessible (both rw) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account accessible uid gid (both rw)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account accessible uid gid (both rw) account with uid gid accessible (both rw) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid accessible (both rw) - group"},{"ancestorTitles":["new_buckets_path access validation account","account accessible uid gid (both rw)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account accessible uid gid (both rw) account with uid gid accessible (both rw) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid accessible (both rw) - other"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (r)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (r) account with dn inaccessible (r) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (r) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (r)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (r) account with dn inaccessible (r) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (r) - group"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (r)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (r) account with dn inaccessible (both r) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (both r) - other"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (r)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (r) account with uid gid inaccessible (r) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (r) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (r)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (r) account with uid gid inaccessible (r) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (r) - group"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (r)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (r) account with uid gid inaccessible (r) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (r) - other"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (w)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (w) account with dn inaccessible (w) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (w) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (w)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (w) account with dn inaccessible (w) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (w) - group"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible dn (w)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible dn (w) account with dn inaccessible (w) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with dn inaccessible (w) - other"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (w)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (w) account with uid gid inaccessible (w) - owner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (w) - owner"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (w)"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (w) account with uid gid inaccessible (w) - group","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (w) - group"},{"ancestorTitles":["new_buckets_path access validation account","account inaccessible uid gid (w)"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"new_buckets_path access validation account account inaccessible uid gid (w) account with uid gid inaccessible (w) - other","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"account with uid gid inaccessible (w) - other"}],"endTime":1782746820663,"message":"","name":"/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js","startTime":1782746819025,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=24 found=24 failed=0 parsed=24 framework=jest exit_code=0

@@ -1,0 +1,29 @@
+{
+    "id": "aceb80ab-c620-44c5-b6c9-9ab7523ddfc2",
+    "started_at": "2026-07-06T12:17:23.662103",
+    "finished_at": "2026-07-06T12:17:49.121916",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__eventual-inc-daft-6420": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "eventual-inc-daft-6420__cPC6p69"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

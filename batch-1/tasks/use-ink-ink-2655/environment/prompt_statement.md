@@ -1,0 +1,5 @@
+I'm working with a Solidity ABI encoding library and I need a way to encode values directly into a pre-allocated byte buffer without any heap allocation. Right now, every encoding operation creates and returns a new heap-allocated buffer, but I often already know the encoded size in advance and want to write directly into memory I've already set aside. The write-to-buffer variant should return the number of bytes written, and the output must be identical to what the allocating version would have produced.
+
+This non-allocating encoding variant is needed at every level of the encoding hierarchy — for individual types, for the general encode trait, and for the parameter sequence encoding function (and its free-function wrapper). For parameter sequence encoding, the behavior around top-level offsets for dynamic types needs to be consistent with the existing allocating version.
+
+Additionally, I'd like encoding and decoding to work correctly for nested collection types: nested fixed-size arrays, nested dynamic arrays, and nested tuples. These composite structures should produce standard-compatible output and round-trip correctly through decode.

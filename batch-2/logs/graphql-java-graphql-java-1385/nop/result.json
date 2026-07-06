@@ -1,0 +1,29 @@
+{
+    "id": "19e6bdfc-fa9d-4722-a561-8f185631ae6c",
+    "started_at": "2026-07-04T15:37:23.356159",
+    "finished_at": "2026-07-04T15:39:59.041802",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__graphql-java-graphql-java-1385": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "graphql-java-graphql-java-1385__CXAyroU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

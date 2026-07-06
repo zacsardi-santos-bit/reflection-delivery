@@ -1,0 +1,591 @@
+diff --git a/appveyor-windows-al2023.yml b/appveyor-windows-al2023.yml
+index 29c512a3d..6b0e9e561 100644
+--- a/appveyor-windows-al2023.yml
++++ b/appveyor-windows-al2023.yml
+@@ -48,8 +48,6 @@ install:
+   - java --version
+   - javac --version
+   - choco install maven --version=3.9.12
+-  - 'set MAVEN_HOME=C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.12'
+-  - 'set PATH=%MAVEN_HOME%\bin;%PATH%'
+   - choco upgrade gradle --version=9.0.0
+   - choco install ruby --version=3.2.7.1
+   - choco install ruby --version=3.3.7.1
+diff --git a/samcli/commands/_utils/options.py b/samcli/commands/_utils/options.py
+index 4424c4db9..5f9957809 100644
+--- a/samcli/commands/_utils/options.py
++++ b/samcli/commands/_utils/options.py
+@@ -862,6 +862,20 @@ def use_container_build_option(f):
+     return use_container_build_click_option()(f)
+ 
+ 
++def use_buildkit_click_option():
++    return click.option(
++        "--use-buildkit/--no-use-buildkit",
++        required=False,
++        default=False,
++        is_flag=True,
++        help="Enable buildkit for container image builds. Requires Docker with buildx plugin or Finch CLI.",
++    )
++
++
++def use_buildkit_option(f):
++    return use_buildkit_click_option()(f)
++
++
+ def mount_symlinks_click_option():
+     return click.option(
+         "--mount-symlinks/--no-mount-symlinks",
+diff --git a/samcli/commands/build/build_context.py b/samcli/commands/build/build_context.py
+index 4f133a700..6d720e30a 100644
+--- a/samcli/commands/build/build_context.py
++++ b/samcli/commands/build/build_context.py
+@@ -83,6 +83,7 @@ class BuildContext:
+         build_in_source: Optional[bool] = None,
+         mount_with: str = MountMode.READ.value,
+         mount_symlinks: Optional[bool] = False,
++        use_buildkit: Optional[bool] = False,
+     ) -> None:
+         """
+         Initialize the class
+@@ -142,6 +143,8 @@ class BuildContext:
+             Mount mode of source code directory when building inside container, READ ONLY by default
+         mount_symlinks Optional[bool]:
+             Indicates if symlinks should be mounted inside the container
++        use_buildkit Optional[bool]:
++            Enable buildkit for container image builds
+         """
+ 
+         self._resource_identifier = resource_identifier
+@@ -184,6 +187,7 @@ class BuildContext:
+         self._build_result: Optional[ApplicationBuildResult] = None
+         self._mount_with = MountMode(mount_with)
+         self._mount_symlinks = mount_symlinks
++        self._use_buildkit = use_buildkit
+ 
+     def __enter__(self) -> "BuildContext":
+         self.set_up()
+@@ -278,6 +282,7 @@ class BuildContext:
+                 build_in_source=self._build_in_source,
+                 mount_with_write=mount_with_write,
+                 mount_symlinks=self._mount_symlinks,
++                use_buildkit=self._use_buildkit,
+             )
+ 
+             self._check_exclude_warning()
+diff --git a/samcli/commands/build/command.py b/samcli/commands/build/command.py
+index 077fffff3..14600b357 100644
+--- a/samcli/commands/build/command.py
++++ b/samcli/commands/build/command.py
+@@ -29,6 +29,7 @@ from samcli.commands._utils.options import (
+     skip_prepare_infra_option,
+     template_option_without_build,
+     terraform_project_root_path_option,
++    use_buildkit_option,
+     use_container_build_option,
+ )
+ from samcli.commands.build.click_container import ContainerOptions
+@@ -82,6 +83,7 @@ DESCRIPTION = """
+ )
+ @skip_prepare_infra_option
+ @use_container_build_option
++@use_buildkit_option
+ @build_in_source_option
+ @click.option(
+     "--container-env-var",
+@@ -161,6 +163,7 @@ def cli(
+     terraform_project_root_path: Optional[str],
+     build_in_source: Optional[bool],
+     mount_symlinks: Optional[bool],
++    use_buildkit: Optional[bool],
+ ) -> None:
+     """
+     `sam build` command entry point
+@@ -193,6 +196,7 @@ def cli(
+         build_in_source,
+         mount_with,
+         mount_symlinks,
++        use_buildkit,
+     )  # pragma: no cover
+ 
+ 
+@@ -220,6 +224,7 @@ def do_cli(  # pylint: disable=too-many-locals, too-many-statements
+     build_in_source: Optional[bool],
+     mount_with: str,
+     mount_symlinks: Optional[bool],
++    use_buildkit: Optional[bool],
+ ) -> None:
+     """
+     Implementation of the ``cli`` method
+@@ -260,6 +265,7 @@ def do_cli(  # pylint: disable=too-many-locals, too-many-statements
+         build_in_source=build_in_source,
+         mount_with=mount_with,
+         mount_symlinks=mount_symlinks,
++        use_buildkit=use_buildkit,
+     ) as ctx:
+         ctx.run()
+ 
+diff --git a/samcli/commands/build/core/options.py b/samcli/commands/build/core/options.py
+index dfb109436..b1a75bc2a 100644
+--- a/samcli/commands/build/core/options.py
++++ b/samcli/commands/build/core/options.py
+@@ -16,6 +16,7 @@ AWS_CREDENTIAL_OPTION_NAMES: List[str] = ["region", "profile"]
+ 
+ CONTAINER_OPTION_NAMES: List[str] = [
+     "use_container",
++    "use_buildkit",
+     "container_env_var",
+     "container_env_var_file",
+     "build_image",
+diff --git a/samcli/lib/build/app_builder.py b/samcli/lib/build/app_builder.py
+index ed1ede172..3eda99e0b 100644
+--- a/samcli/lib/build/app_builder.py
++++ b/samcli/lib/build/app_builder.py
+@@ -60,7 +60,9 @@ from samcli.lib.utils.resources import (
+ )
+ from samcli.lib.utils.stream_writer import StreamWriter
+ from samcli.local.docker.container import ContainerContext
+-from samcli.local.docker.exceptions import ContainerArchiveImageLoadFailedException
++from samcli.local.docker.container_client import ContainerClient
++from samcli.local.docker.exceptions import BuildkitNotAvailableException, ContainerArchiveImageLoadFailedException
++from samcli.local.docker.image_build_client import CLIBuildClient, ImageBuildClient, SDKBuildClient
+ from samcli.local.docker.lambda_build_container import LambdaBuildContainer
+ from samcli.local.docker.manager import ContainerManager, DockerImagePullFailedException
+ from samcli.local.docker.utils import (
+@@ -106,7 +108,7 @@ class ApplicationBuilder:
+         parallel: bool = False,
+         mode: Optional[str] = None,
+         stream_writer: Optional[StreamWriter] = None,
+-        docker_client: Optional[docker.DockerClient] = None,
++        container_client: Optional[ContainerClient] = None,
+         container_env_var: Optional[Dict] = None,
+         container_env_var_file: Optional[str] = None,
+         build_images: Optional[Dict] = None,
+@@ -114,6 +116,7 @@ class ApplicationBuilder:
+         build_in_source: Optional[bool] = None,
+         mount_with_write: bool = False,
+         mount_symlinks: Optional[bool] = False,
++        use_buildkit: Optional[bool] = False,
+     ) -> None:
+         """
+         Initialize the class
+@@ -144,8 +147,8 @@ class ApplicationBuilder:
+             Optional, name of the build mode to use ex: 'debug'
+         stream_writer : Optional[StreamWriter]
+             An optional stream writer to accept stderr output
+-        docker_client : Optional[docker.DockerClient]
+-            An optional Docker client object to replace the default one loaded from env
++        container_client : Optional[ContainerClient]
++            An optional container client object to replace the default one loaded from env
+         container_env_var : Optional[Dict]
+             An optional dictionary of environment variables to pass to the container
+         container_env_var_file : Optional[str]
+@@ -161,6 +164,8 @@ class ApplicationBuilder:
+             Mount source code directory with write permissions when building inside container.
+         mount_symlinks: Optional[bool]
+             True if symlinks should be mounted in the container.
++        use_buildkit: Optional[bool]
++            Optional flag for building Image functions with buildkit support.
+         """
+         self._resources_to_build = resources_to_build
+         self._build_dir = build_dir
+@@ -175,11 +180,12 @@ class ApplicationBuilder:
+         self._mode = mode
+         self._stream_writer = stream_writer if stream_writer else StreamWriter(stream=osutils.stderr(), auto_flush=True)
+ 
+-        # Store docker_client parameter for lazy initialization
+-        # Only validate container runtime when Docker client is actually accessed
++        # Store container_client parameter for lazy initialization
++        # Only validate container runtime when container client is actually accessed
+         # This prevents unnecessary validation for builds that don't require containers
+-        self._docker_client_param = docker_client
+-        self._validated_docker_client: Optional[docker.DockerClient] = None
++        # NOTE: It seems like at this point container_client is only ever passed in the tests for mocking.
++        self._container_client_param = container_client
++        self._validated_container_client: Optional[ContainerClient] = None
+ 
+         self._deprecated_runtimes = DEPRECATED_RUNTIMES
+         self._colored = Colored()
+@@ -190,16 +196,18 @@ class ApplicationBuilder:
+         self._build_in_source = build_in_source
+         self._mount_with_write = mount_with_write
+         self._mount_symlinks = mount_symlinks
++        self._use_buildkit = use_buildkit
++        self._image_build_client: Optional[ImageBuildClient] = None
+ 
+     @property
+-    def _docker_client(self) -> docker.DockerClient:
++    def _container_client(self) -> ContainerClient:
+         """
+-        Lazy initialization of Docker client. Only validates container runtime when actually accessed.
++        Lazy initialization of container client. Only validates container runtime when actually accessed.
+         This prevents unnecessary container runtime validation for builds that don't require containers.
+         """
+-        if self._validated_docker_client is None:
+-            self._validated_docker_client = self._docker_client_param or get_validated_container_client()
+-        return self._validated_docker_client
++        if self._validated_container_client is None:
++            self._validated_container_client = self._container_client_param or get_validated_container_client()
++        return self._validated_container_client
+ 
+     def build(self) -> ApplicationBuildResult:
+         """
+@@ -453,14 +461,28 @@ class ApplicationBuilder:
+             build_args["target"] = cast(str, docker_build_target)
+ 
+         try:
+-            (build_image, build_logs) = self._docker_client.images.build(**build_args)
+-            LOG.debug("%s image is built for %s function", build_image, function_name)
++            if not self._image_build_client:
++                if self._use_buildkit:
++                    container_client = self._container_client
++                    engine_type = container_client.get_runtime_type()
++
++                    is_available, error_msg = CLIBuildClient.is_available(engine_type)
++                    if not is_available:
++                        raise BuildkitNotAvailableException(error_msg)
++
++                    self._image_build_client = CLIBuildClient(engine_type=engine_type)
++                    LOG.debug(f"Using CLIBuildClient with engine_type {engine_type}")
++                else:
++                    self._image_build_client = SDKBuildClient(self._container_client)
++                    LOG.debug("Using SDKBuildClient")
++            build_logs = self._image_build_client.build_image(**build_args)  # type: ignore[arg-type]
++            LOG.debug(f"Image built for {function_name} function")
+         except docker.errors.BuildError as ex:
+             LOG.error("Failed building function %s", function_name)
+             self._stream_lambda_image_build_logs(ex.build_log, function_name, False)
+             raise DockerBuildFailed(str(ex)) from ex
+         except docker.errors.APIError as e:
+-            if self._docker_client.is_dockerfile_error(e):
++            if self._container_client.is_dockerfile_error(e):
+                 raise DockerfileOutSideOfContext(e.explanation) from e
+ 
+             # Re-raise other API errors
+@@ -469,9 +491,9 @@ class ApplicationBuilder:
+         # The Docker-py low level api will stream logs back but if an exception is raised by the api
+         # this is raised when accessing the generator. So we need to wrap accessing build_logs in a try: except.
+         try:
+-            self._stream_lambda_image_build_logs(build_logs, function_name)
++            self._stream_lambda_image_build_logs(build_logs, function_name)  # type: ignore[arg-type]
+         except docker.errors.APIError as e:
+-            if self._docker_client.is_dockerfile_error(e):
++            if self._container_client.is_dockerfile_error(e):
+                 raise DockerfileOutSideOfContext(e.explanation) from e
+ 
+             # Not sure what else can be raise that we should be catching but re-raising for now
+@@ -501,7 +523,7 @@ class ApplicationBuilder:
+     def _load_lambda_image(self, image_archive_path: str) -> str:
+         try:
+             with open(image_archive_path, mode="rb") as image_archive:
+-                image = self._docker_client.load_image_from_archive(image_archive)
++                image = self._container_client.load_image_from_archive(image_archive)
+                 return f"{image.id}"
+         except (docker.errors.APIError, OSError, ContainerArchiveImageLoadFailedException) as ex:
+             raise DockerBuildFailed(msg=str(ex)) from ex
+diff --git a/samcli/local/docker/exceptions.py b/samcli/local/docker/exceptions.py
+index 22cddce6b..ac59f4fe1 100644
+--- a/samcli/local/docker/exceptions.py
++++ b/samcli/local/docker/exceptions.py
+@@ -68,3 +68,9 @@ class ContainerInvalidSocketPathException(UserException):
+     """
+     Failed to load Docker/Finch container image from archive file
+     """
++
++
++class BuildkitNotAvailableException(UserException):
++    """
++    Raised when --with-buildkit is specified but buildkit is not available
++    """
+diff --git a/samcli/local/docker/image_build_client.py b/samcli/local/docker/image_build_client.py
+new file mode 100644
+index 000000000..71508e2ee
+--- /dev/null
++++ b/samcli/local/docker/image_build_client.py
+@@ -0,0 +1,240 @@
++"""
++Build client abstraction for container image builds.
++
++This module provides an abstract interface for building container images,
++allowing different implementations (SDK-based or CLI-based) to be used
++interchangeably.
++"""
++
++import logging
++import os
++import shutil
++import subprocess
++from abc import ABC, abstractmethod
++from typing import Any, Dict, Generator, Optional, Tuple
++
++import docker.errors
++
++from samcli.local.docker.container_client import ContainerClient
++
++LOG = logging.getLogger(__name__)
++
++
++class ImageBuildClient(ABC):
++    """
++    Abstract interface for building container images.
++
++    Implementations can use different methods (SDK via docker-py, or CLI via
++    docker/finch commands) while providing a consistent interface for building
++    Lambda function images.
++    """
++
++    @abstractmethod
++    def build_image(
++        self,
++        path: str,
++        dockerfile: str,
++        tag: str,
++        buildargs: Optional[Dict[str, str]] = None,
++        platform: Optional[str] = None,
++        target: Optional[str] = None,
++        rm: bool = True,
++    ) -> Generator[Dict[str, Any], None, None]:
++        """
++        Build a container image from a Dockerfile.
++
++        Parameters
++        ----------
++        path : str
++            Path to the build context directory
++        dockerfile : str
++            Path to the Dockerfile (relative to context or absolute)
++        tag : str
++            Tag for the built image (e.g., "myfunction:latest")
++        buildargs : dict, optional
++            Build arguments to pass (e.g., {"ARG_NAME": "value"})
++        platform : str, optional
++            Target platform (e.g., "linux/amd64", "linux/arm64")
++        target : str, optional
++            Build target stage in multi-stage Dockerfile
++        rm : bool
++            Remove intermediate containers after build (default: True)
++
++        Yields
++        ------
++        dict
++            Build log entries with keys like 'stream', 'error', 'status'.
++            Format matches docker-py SDK output.
++
++        Raises
++        ------
++        Exception
++            If build fails
++        """
++        pass
++
++    @staticmethod
++    @abstractmethod
++    def is_available(engine_type: str) -> Tuple[bool, Optional[str]]:
++        """
++        Check if this build method is available for the given container engine.
++
++        This method is called before creating a ImageBuildClient instance to validate
++        that the necessary tools (CLI, plugins, etc.) are available.
++
++        Parameters
++        ----------
++        engine_type : str
++            Container engine type: "docker" or "finch"
++
++        Returns
++        -------
++        tuple[bool, Optional[str]]
++            - (True, None) if the build method is available
++            - (False, "error message") if not available
++
++        Examples
++        --------
++        >>> CLIBuildClient.is_available("docker")
++        (True, None)
++
++        >>> CLIBuildClient.is_available("docker")
++        (False, "docker buildx plugin not found")
++        """
++        pass
++
++
++class SDKBuildClient(ImageBuildClient):
++    """Build client using docker-py SDK."""
++
++    def __init__(self, container_client: ContainerClient):
++        self.container_client = container_client
++
++    def build_image(
++        self,
++        path: str,
++        dockerfile: str,
++        tag: str,
++        buildargs: Optional[Dict[str, str]] = None,
++        platform: Optional[str] = None,
++        target: Optional[str] = None,
++        rm: bool = True,
++    ) -> Generator[Dict[str, Any], None, None]:
++        """Build image using docker-py SDK"""
++        build_kwargs = {
++            "path": path,
++            "dockerfile": dockerfile,
++            "tag": tag,
++            "rm": rm,
++        }
++
++        if buildargs is not None:
++            build_kwargs["buildargs"] = buildargs
++        if platform is not None:
++            build_kwargs["platform"] = platform
++        if target is not None:
++            build_kwargs["target"] = target
++
++        _, build_logs = self.container_client.images.build(**build_kwargs)
++        return build_logs  # type: ignore[no-any-return]
++
++    @staticmethod
++    def is_available(engine_type: str) -> Tuple[bool, Optional[str]]:
++        return (True, None)
++
++
++class CLIBuildClient(ImageBuildClient):
++    """Build client using docker/finch CLI commands."""
++
++    def __init__(self, engine_type: str):
++        self.engine_type = engine_type
++        self.cli_command = engine_type
++
++    def build_image(
++        self,
++        path: str,
++        dockerfile: str,
++        tag: str,
++        buildargs: Optional[Dict[str, str]] = None,
++        platform: Optional[str] = None,
++        target: Optional[str] = None,
++        rm: bool = True,
++    ) -> Generator[Dict[str, Any], None, None]:
++        # Make dockerfile path relative to context if not absolute
++        if not os.path.isabs(dockerfile):
++            dockerfile = os.path.join(path, dockerfile)
++
++        cmd = [self.cli_command]
++
++        if self.engine_type == "docker":
++            cmd.append("buildx")
++
++        cmd.extend(["build", "-f", dockerfile, "-t", tag])
++
++        if self.engine_type == "docker":
++            cmd.extend(["--provenance=false", "--sbom=false", "--load"])
++
++        if platform:
++            cmd.extend(["--platform", platform])
++
++        if buildargs:
++            for k, v in buildargs.items():
++                cmd.extend(["--build-arg", f"{k}={v}"])
++
++        if target:
++            cmd.extend(["--target", target])
++
++        if rm:
++            cmd.append("--rm")
++
++        cmd.append(path)
++
++        LOG.debug(f"Executing build command: {' '.join(cmd)}")
++
++        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
++
++        build_log: list[Dict[str, Any]] = []
++        if process.stdout:
++            for line in process.stdout:
++                build_log.append({"stream": line})
++
++        process.wait()
++
++        if process.returncode != 0:
++            raise docker.errors.BuildError(f"Build failed with exit code {process.returncode}", build_log)
++
++        for log in build_log:
++            yield log
++
++    @staticmethod
++    def is_available(engine_type: str) -> Tuple[bool, Optional[str]]:
++        if engine_type == "docker":
++            if not shutil.which("docker"):
++                return (False, "Docker CLI not found")
++
++            result = subprocess.run(
++                ["docker", "buildx", "version"],
++                capture_output=True,
++                check=False,
++            )
++            if result.returncode != 0:
++                return (False, "docker buildx plugin not available")
++
++            return (True, None)
++
++        elif engine_type == "finch":
++            if not shutil.which("finch"):
++                return (False, "Finch CLI not found")
++
++            result = subprocess.run(
++                ["finch", "version"],
++                capture_output=True,
++                check=False,
++            )
++
++            if result.returncode != 0:
++                return (False, "finch CLI not working")
++
++            return (True, None)
++
++        return (False, f"Unknown engine type: {engine_type}")
+diff --git a/samcli/local/docker/utils.py b/samcli/local/docker/utils.py
+index 9342a6160..71b04bd04 100644
+--- a/samcli/local/docker/utils.py
++++ b/samcli/local/docker/utils.py
+@@ -15,6 +15,7 @@ from typing import Optional
+ import docker
+ 
+ from samcli.lib.utils.architecture import ARM64, validate_architecture
++from samcli.local.docker.container_client import ContainerClient
+ from samcli.local.docker.container_client_factory import ContainerClientFactory
+ from samcli.local.docker.exceptions import (
+     NoFreePortsError,
+@@ -132,7 +133,7 @@ def get_docker_platform(architecture: str) -> str:
+     return f"linux/{get_image_arch(architecture)}"
+ 
+ 
+-def get_validated_container_client():
++def get_validated_container_client() -> ContainerClient:
+     """
+     Get validated container client using strategy pattern.
+     """
+diff --git a/schema/samcli.json b/schema/samcli.json
+index 343a22b82..5ddc99166 100644
+--- a/schema/samcli.json
++++ b/schema/samcli.json
+@@ -287,7 +287,7 @@
+           "properties": {
+             "parameters": {
+               "title": "Parameters for the build command",
+-              "description": "Available parameters for the build command:\n* terraform_project_root_path:\nUsed for passing the Terraform project root directory path. Current directory will be used as a default value, if this parameter is not provided.\n* hook_name:\nHook package id to extend AWS SAM CLI commands functionality. \n\nExample: `terraform` to extend AWS SAM CLI commands functionality to support terraform applications. \n\nAvailable Hook Names: ['terraform']\n* skip_prepare_infra:\nSkip preparation stage when there are no infrastructure changes. Only used in conjunction with --hook-name.\n* use_container:\nBuild functions within an AWS Lambda-like container.\n* build_in_source:\nOpts in to build project in the source folder. The following workflows support building in source: ['nodejs16.x', 'nodejs18.x', 'nodejs20.x', 'nodejs22.x', 'Makefile', 'esbuild']\n* container_env_var:\nEnvironment variables to be passed into build containers\nResource format (FuncName.VarName=Value) or Global format (VarName=Value).\n\n Example: --container-env-var Func1.VAR1=value1 --container-env-var VAR2=value2\n* container_env_var_file:\nEnvironment variables json file (e.g., env_vars.json) to be passed to containers.\n* build_image:\nContainer image URIs for building functions/layers. You can specify for all functions/layers with just the image URI (--build-image public.ecr.aws/sam/build-nodejs18.x:latest). You can specify for each individual function with (--build-image FunctionLogicalID=public.ecr.aws/sam/build-nodejs18.x:latest). A combination of the two can be used. If a function does not have build image specified or an image URI for all functions, the default SAM CLI build images will be used.\n* exclude:\nName of the resource(s) to exclude from AWS SAM CLI build.\n* parallel:\nEnable parallel builds for AWS SAM template's functions and layers.\n* mount_with:\nSpecify mount mode for building functions/layers inside container. If it is mounted with write permissions, some files in source code directory may be changed/added by the build process. By default the source code directory is read only.\n* mount_symlinks:\nSpecify if symlinks at the top level of the code should be mounted inside the container. Activating this flag could allow access to locations outside of your workspace by using a symbolic link. By default symlinks are not mounted.\n* build_dir:\nDirectory to store build artifacts.Note: This directory will be first removed before starting a build.\n* cache_dir:\nDirectory to store cached artifacts. The default cache directory is .aws-sam/cache\n* base_dir:\nResolve relative paths to function's source code with respect to this directory. Use this if SAM template and source code are not in same enclosing folder. By default, relative paths are resolved with respect to the SAM template's location.\n* manifest:\nPath to a custom dependency manifest. Example: custom-package.json\n* cached:\nEnable cached builds.Reuse build artifacts that have not changed from previous builds. \n\nAWS SAM CLI evaluates if files in your project directory have changed. \n\nNote: AWS SAM CLI does not evaluate changes made to third party modules that the project depends on.Example: Python function includes a requirements.txt file with the following entry requests=1.x and the latest request module version changes from 1.1 to 1.2, AWS SAM CLI will not pull the latest version until a non-cached build is run.\n* template_file:\nAWS SAM template file.\n* parameter_overrides:\nString that contains AWS CloudFormation parameter overrides encoded as key=value pairs.\n* skip_pull_image:\nSkip pulling down the latest Docker image for Lambda runtime.\n* docker_network:\nName or ID of an existing docker network for AWS Lambda docker containers to connect to, along with the default bridge network. If not specified, the Lambda containers will only connect to the default bridge docker network.\n* beta_features:\nEnable/Disable beta features.\n* debug:\nTurn on debug logging to print debug message generated by AWS SAM CLI and display timestamps.\n* profile:\nSelect a specific profile from your credential file to get AWS credentials.\n* region:\nSet the AWS Region of the service. (e.g. us-east-1)\n* save_params:\nSave the parameters provided via the command line to the configuration file.",
++              "description": "Available parameters for the build command:\n* terraform_project_root_path:\nUsed for passing the Terraform project root directory path. Current directory will be used as a default value, if this parameter is not provided.\n* hook_name:\nHook package id to extend AWS SAM CLI commands functionality. \n\nExample: `terraform` to extend AWS SAM CLI commands functionality to support terraform applications. \n\nAvailable Hook Names: ['terraform']\n* skip_prepare_infra:\nSkip preparation stage when there are no infrastructure changes. Only used in conjunction with --hook-name.\n* use_container:\nBuild functions within an AWS Lambda-like container.\n* use_buildkit:\nEnable buildkit for container image builds. Requires Docker with buildx plugin or Finch CLI.\n* build_in_source:\nOpts in to build project in the source folder. The following workflows support building in source: ['nodejs16.x', 'nodejs18.x', 'nodejs20.x', 'nodejs22.x', 'Makefile', 'esbuild']\n* container_env_var:\nEnvironment variables to be passed into build containers\nResource format (FuncName.VarName=Value) or Global format (VarName=Value).\n\n Example: --container-env-var Func1.VAR1=value1 --container-env-var VAR2=value2\n* container_env_var_file:\nEnvironment variables json file (e.g., env_vars.json) to be passed to containers.\n* build_image:\nContainer image URIs for building functions/layers. You can specify for all functions/layers with just the image URI (--build-image public.ecr.aws/sam/build-nodejs18.x:latest). You can specify for each individual function with (--build-image FunctionLogicalID=public.ecr.aws/sam/build-nodejs18.x:latest). A combination of the two can be used. If a function does not have build image specified or an image URI for all functions, the default SAM CLI build images will be used.\n* exclude:\nName of the resource(s) to exclude from AWS SAM CLI build.\n* parallel:\nEnable parallel builds for AWS SAM template's functions and layers.\n* mount_with:\nSpecify mount mode for building functions/layers inside container. If it is mounted with write permissions, some files in source code directory may be changed/added by the build process. By default the source code directory is read only.\n* mount_symlinks:\nSpecify if symlinks at the top level of the code should be mounted inside the container. Activating this flag could allow access to locations outside of your workspace by using a symbolic link. By default symlinks are not mounted.\n* build_dir:\nDirectory to store build artifacts.Note: This directory will be first removed before starting a build.\n* cache_dir:\nDirectory to store cached artifacts. The default cache directory is .aws-sam/cache\n* base_dir:\nResolve relative paths to function's source code with respect to this directory. Use this if SAM template and source code are not in same enclosing folder. By default, relative paths are resolved with respect to the SAM template's location.\n* manifest:\nPath to a custom dependency manifest. Example: custom-package.json\n* cached:\nEnable cached builds.Reuse build artifacts that have not changed from previous builds. \n\nAWS SAM CLI evaluates if files in your project directory have changed. \n\nNote: AWS SAM CLI does not evaluate changes made to third party modules that the project depends on.Example: Python function includes a requirements.txt file with the following entry requests=1.x and the latest request module version changes from 1.1 to 1.2, AWS SAM CLI will not pull the latest version until a non-cached build is run.\n* template_file:\nAWS SAM template file.\n* parameter_overrides:\nString that contains AWS CloudFormation parameter overrides encoded as key=value pairs.\n* skip_pull_image:\nSkip pulling down the latest Docker image for Lambda runtime.\n* docker_network:\nName or ID of an existing docker network for AWS Lambda docker containers to connect to, along with the default bridge network. If not specified, the Lambda containers will only connect to the default bridge docker network.\n* beta_features:\nEnable/Disable beta features.\n* debug:\nTurn on debug logging to print debug message generated by AWS SAM CLI and display timestamps.\n* profile:\nSelect a specific profile from your credential file to get AWS credentials.\n* region:\nSet the AWS Region of the service. (e.g. us-east-1)\n* save_params:\nSave the parameters provided via the command line to the configuration file.",
+               "type": "object",
+               "properties": {
+                 "terraform_project_root_path": {
+@@ -310,6 +310,11 @@
+                   "type": "boolean",
+                   "description": "Build functions within an AWS Lambda-like container."
+                 },
++                "use_buildkit": {
++                  "title": "use_buildkit",
++                  "type": "boolean",
++                  "description": "Enable buildkit for container image builds. Requires Docker with buildx plugin or Finch CLI."
++                },
+                 "build_in_source": {
+                   "title": "build_in_source",
+                   "type": "boolean",

@@ -1,0 +1,36 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && yarn mocha core/test/audits/webmcp-form-coverage-test.js core/test/audits/webmcp-registered-tools-test.js core/test/audits/webmcp-schema-validity-test.js core/test/gather/gatherers/webmcp-test.js",
+  "test_files": [
+    "core/test/audits/webmcp-form-coverage-test.js",
+    "core/test/audits/webmcp-registered-tools-test.js",
+    "core/test/audits/webmcp-schema-validity-test.js",
+    "core/test/gather/gatherers/webmcp-test.js",
+    "core/test/results/artifacts/artifacts.json"
+  ],
+  "num_test_files": 5,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "is not applicable if all forms have WebMCP annotations",
+    "is not applicable if no forms are found",
+    "renders a table with registered tools",
+    "is not applicable when webmcp not supported",
+    "passes when valid tools are found without issues",
+    "collects tools from events",
+    "removes duplicates",
+    "removes tools on toolsRemoved event",
+    "returns isSupported false when WebMCP.enable fails",
+    "returns isSupported false when modelContext is not found",
+    "returns empty array when no tools are registered",
+    "resolves backendNodeId to nodeDetails"
+  ],
+  "PASS_TO_PASS": [
+    "lists forms that lack WebMCP annotations",
+    "is not applicable when modelContext is not defined",
+    "handles empty tools list",
+    "not applicable when no issues and no tools were found",
+    "fails when WebMCP issues are found",
+    "deduplicates identical issues on the same node",
+    "no category score is null"
+  ]
+}

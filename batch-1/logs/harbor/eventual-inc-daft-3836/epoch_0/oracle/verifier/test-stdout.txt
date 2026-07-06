@@ -1,0 +1,84 @@
+patching file tests/sql/test_sql_table_functions.py
+🍹 Building a mixed python/rust project
+🐍 Found CPython 3.11 at /workspace/venv/bin/python
+🔗 Found pyo3 bindings with abi3-py3.9 support
+📡 Using build options features from pyproject.toml
+Ignoring typing-extensions: markers 'python_full_version < "3.10"' don't match your environment
+Ignoring getdaft: markers 'extra == "all"' don't match your environment
+Ignoring boto3: markers 'extra == "aws"' don't match your environment
+Ignoring daft-dashboard: markers 'extra == "dashboard"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring pyarrow: markers 'extra == "hudi"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "iceberg"' don't match your environment
+Ignoring packaging: markers 'extra == "iceberg"' don't match your environment
+Ignoring lancedb: markers 'extra == "lance"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring ray: markers 'platform_system != "Windows" and extra == "ray"' don't match your environment
+Ignoring ray: markers 'platform_system == "Windows" and extra == "ray"' don't match your environment
+Ignoring packaging: markers 'extra == "ray"' don't match your environment
+Ignoring connectorx: markers 'extra == "sql"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sql"' don't match your environment
+Ignoring sqlglot: markers 'extra == "sql"' don't match your environment
+Ignoring unitycatalog: markers 'extra == "unity"' don't match your environment
+Requirement already satisfied: pyarrow>=8.0.0 in /workspace/venv/lib/python3.11/site-packages (24.0.0)
+Requirement already satisfied: fsspec in /workspace/venv/lib/python3.11/site-packages (2026.6.0)
+Requirement already satisfied: tqdm in /workspace/venv/lib/python3.11/site-packages (4.68.3)
+   Compiling daft-dsl v0.3.0-dev0 (/workspace/repo/src/daft-dsl)
+   Compiling daft-algebra v0.3.0-dev0 (/workspace/repo/src/daft-algebra)
+   Compiling daft-functions v0.3.0-dev0 (/workspace/repo/src/daft-functions)
+   Compiling daft-functions-json v0.3.0-dev0 (/workspace/repo/src/daft-functions-json)
+   Compiling common-scan-info v0.3.0-dev0 (/workspace/repo/src/common/scan-info)
+   Compiling daft-logical-plan v0.3.0-dev0 (/workspace/repo/src/daft-logical-plan)
+   Compiling daft-recordbatch v0.3.0-dev0 (/workspace/repo/src/daft-recordbatch)
+   Compiling daft-catalog v0.3.0-dev0 (/workspace/repo/src/daft-catalog)
+   Compiling daft-physical-plan v0.3.0-dev0 (/workspace/repo/src/daft-physical-plan)
+   Compiling daft-local-plan v0.3.0-dev0 (/workspace/repo/src/daft-local-plan)
+   Compiling daft-session v0.3.0-dev0 (/workspace/repo/src/daft-session)
+   Compiling daft-catalog-python-catalog v0.3.0-dev0 (/workspace/repo/src/daft-catalog/python-catalog)
+   Compiling daft-stats v0.3.0-dev0 (/workspace/repo/src/daft-stats)
+   Compiling daft-json v0.3.0-dev0 (/workspace/repo/src/daft-json)
+   Compiling daft-csv v0.3.0-dev0 (/workspace/repo/src/daft-csv)
+   Compiling daft-parquet v0.3.0-dev0 (/workspace/repo/src/daft-parquet)
+   Compiling daft-scan v0.3.0-dev0 (/workspace/repo/src/daft-scan)
+   Compiling daft-micropartition v0.3.0-dev0 (/workspace/repo/src/daft-micropartition)
+   Compiling daft-sql v0.3.0-dev0 (/workspace/repo/src/daft-sql)
+   Compiling daft-scheduler v0.3.0-dev0 (/workspace/repo/src/daft-scheduler)
+   Compiling daft-py-runners v0.3.0-dev0 (/workspace/repo/src/daft-py-runners)
+   Compiling daft-writers v0.3.0-dev0 (/workspace/repo/src/daft-writers)
+   Compiling daft-context v0.3.0-dev0 (/workspace/repo/src/daft-context)
+   Compiling daft-local-execution v0.3.0-dev0 (/workspace/repo/src/daft-local-execution)
+   Compiling daft-connect v0.3.0-dev0 (/workspace/repo/src/daft-connect)
+   Compiling daft v0.3.0-dev0 (/workspace/repo)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 28.98s
+⚠️ Warning: Failed to set rpath for /workspace/repo/target/maturin/libdaft.so: Failed to execute 'patchelf', did you install it? Hint: Try `pip install maturin[patchelf]` (or just `pip install patchelf`)
+📦 Built wheel for abi3 Python ≥ 3.9 to /tmp/.tmpzxMWDz/getdaft-0.3.0.dev0-cp39-abi3-linux_x86_64.whl
+✏️ Setting installed package as editable
+🛠 Installed getdaft-0.3.0.dev0
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /workspace/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+collecting ... collected 17 items
+
+tests/sql/test_sql_table_functions.py::test_sql_read_json PASSED         [  5%]
+tests/sql/test_sql_table_functions.py::test_sql_read_json_path PASSED    [ 11%]
+tests/sql/test_sql_table_functions.py::test_sql_read_json_paths PASSED   [ 17%]
+tests/sql/test_sql_table_functions.py::test_sql_read_with_schema PASSED  [ 23%]
+tests/sql/test_sql_table_functions.py::test_sql_read_parquet PASSED      [ 29%]
+tests/sql/test_sql_table_functions.py::test_sql_read_parquet_path PASSED [ 35%]
+tests/sql/test_sql_table_functions.py::test_sql_read_parquet_paths PASSED [ 41%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv PASSED          [ 47%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv_path PASSED     [ 52%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv_paths PASSED    [ 58%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv_with_schema PASSED [ 64%]
+tests/sql/test_sql_table_functions.py::test_read_csv_headers[True] PASSED [ 70%]
+tests/sql/test_sql_table_functions.py::test_read_csv_headers[False] PASSED [ 76%]
+tests/sql/test_sql_table_functions.py::test_read_csv_quote[True] PASSED  [ 82%]
+tests/sql/test_sql_table_functions.py::test_read_csv_quote[False] PASSED [ 88%]
+tests/sql/test_sql_table_functions.py::test_read_csv_other_options[=>] PASSED [ 94%]
+tests/sql/test_sql_table_functions.py::test_read_csv_other_options[:=] PASSED [100%]
+
+============================== 17 passed in 1.36s ==============================
+reward=1 graded=17 found=0 failed=0 parsed=11 framework=pytest exit_code=0

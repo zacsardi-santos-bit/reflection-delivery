@@ -1,0 +1,343 @@
+patching file cedar-policy-validator/src/human_schema/test.rs
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /workspace/repo/cedar-wasm/Cargo.toml
+workspace: /workspace/repo/Cargo.toml
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /workspace/repo/cedar-wasm/Cargo.toml
+workspace: /workspace/repo/Cargo.toml
+warning: /workspace/repo/cedar-wasm/Cargo.toml: `crate_type` is deprecated in favor of `crate-type` and will not work in the 2024 edition
+(in the `cedar_wasm` library target)
+warning: /workspace/repo/cedar-policy/Cargo.toml: `crate_type` is deprecated in favor of `crate-type` and will not work in the 2024 edition
+(in the `cedar_policy` library target)
+   Compiling memchr v2.8.2
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling libc v0.2.186
+   Compiling unicode-ident v1.0.24
+   Compiling cfg-if v1.0.4
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.2
+   Compiling parking_lot_core v0.9.12
+   Compiling smallvec v1.15.2
+   Compiling crunchy v0.2.4
+   Compiling scopeguard v1.2.0
+   Compiling regex-syntax v0.8.11
+   Compiling serde_core v1.0.228
+   Compiling tiny-keccak v2.0.2
+   Compiling object v0.37.3
+   Compiling siphasher v1.0.3
+   Compiling find-msvc-tools v0.1.9
+   Compiling shlex v2.0.1
+   Compiling lock_api v0.4.14
+   Compiling either v1.16.0
+   Compiling bit-vec v0.6.3
+   Compiling phf_shared v0.11.3
+   Compiling cc v1.2.65
+   Compiling precomputed-hash v0.1.1
+   Compiling log v0.4.33
+   Compiling new_debug_unreachable v1.0.6
+   Compiling fixedbitset v0.4.2
+   Compiling same-file v1.0.6
+   Compiling itertools v0.11.0
+   Compiling bit-set v0.5.3
+   Compiling unicode-xid v0.2.6
+   Compiling walkdir v2.5.0
+   Compiling ena v0.14.4
+   Compiling aho-corasick v1.1.4
+   Compiling ident_case v1.0.1
+   Compiling pico-args v0.5.0
+   Compiling strsim v0.11.1
+   Compiling indexmap v2.14.0
+   Compiling serde v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.150
+   Compiling thiserror v1.0.69
+   Compiling tinyvec_macros v0.1.1
+   Compiling itoa v1.0.18
+   Compiling tinyvec v1.11.0
+   Compiling once_cell v1.21.4
+   Compiling unicode-width v0.1.14
+   Compiling itertools v0.12.1
+   Compiling rustc_lexer v0.1.0
+   Compiling petgraph v0.6.5
+   Compiling unicode-normalization v0.1.25
+   Compiling unicode-script v0.5.8
+   Compiling lazy_static v1.5.0
+   Compiling nonempty v0.9.0
+   Compiling indent_write v2.2.0
+   Compiling cool_asserts v2.0.4
+   Compiling syn v2.0.118
+   Compiling stacker v0.1.24
+   Compiling unicode-security v0.1.2
+   Compiling dirs-sys-next v0.1.2
+   Compiling regex-automata v0.4.14
+   Compiling dirs-next v2.0.0
+   Compiling parking_lot v0.12.5
+   Compiling term v0.7.0
+   Compiling string_cache v0.8.9
+   Compiling ascii-canvas v3.0.0
+   Compiling regex v1.12.4
+   Compiling lalrpop-util v0.20.2
+   Compiling ar_archive_writer v0.5.2
+   Compiling lalrpop v0.20.2
+   Compiling darling_core v0.23.0
+   Compiling psm v0.1.31
+   Compiling serde_derive v1.0.228
+   Compiling thiserror-impl v1.0.69
+   Compiling miette-derive v5.10.0
+   Compiling darling_macro v0.23.0
+   Compiling darling v0.23.0
+   Compiling serde_with_macros v3.21.0
+   Compiling miette v5.10.0
+   Compiling smol_str v0.2.2
+   Compiling serde_with v3.21.0
+   Compiling cedar-policy-core v3.0.0 (/workspace/repo/cedar-policy-core)
+   Compiling cedar-policy-validator v3.0.0 (/workspace/repo/cedar-policy-validator)
+warning: unexpected `cfg` condition name: `fuzzing`
+   --> cedar-policy-core/src/ast/entity.rs:336:21
+    |
+336 |     #[cfg(any(test, fuzzing))]
+    |                     ^^^^^^^
+    |
+    = help: expected names are: `docsrs`, `feature`, and `test` and 31 more
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+   --> cedar-policy-core/src/ast/entity.rs:350:15
+    |
+350 |     #[cfg(not(fuzzing))]
+    |               ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+   --> cedar-policy-core/src/ast/entity.rs:355:11
+    |
+355 |     #[cfg(fuzzing)]
+    |           ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: elided lifetime has a name
+   --> cedar-policy-core/src/ast/request.rs:316:66
+    |
+316 |     pub fn iter<'s>(&'s self) -> Option<Box<dyn Iterator<Item = (&SmolStr, PartialValue)> + 's>> {
+    |                 -- lifetime `'s` declared here                   ^ this elided lifetime gets resolved as `'s`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/rbac.rs:321:31
+    |
+318 |     pub(crate) fn get_apply_specs_for_action<'a>(
+    |                                              -- lifetime `'a` declared here
+...
+321 |     ) -> impl Iterator<Item = &ValidatorApplySpec> + 'a {
+    |                               ^ this elided lifetime gets resolved as `'a`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:531:83
+    |
+531 |     pub(crate) fn get_entity_types_in<'a>(&'a self, entity: &'a EntityUID) -> Vec<&Name> {
+    |                                       -- lifetime `'a` declared here              ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:551:31
+    |
+548 |     pub(crate) fn get_entity_types_in_set<'a>(
+    |                                           -- lifetime `'a` declared here
+...
+551 |     ) -> impl Iterator<Item = &Name> {
+    |                               ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:307:15
+    |
+304 |     pub fn typecheck_by_request_env<'b>(
+    |                                     -- lifetime `'b` declared here
+...
+307 |     ) -> Vec<(RequestEnv, PolicyCheck)> {
+    |               ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:336:15
+    |
+332 |     fn apply_typecheck_fn_by_request_env<'b, F, C>(
+    |                                          -- lifetime `'b` declared here
+...
+336 |     ) -> Vec<(RequestEnv, C)>
+    |               ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:442:34
+    |
+438 |     fn link_request_env<'b>(
+    |                         -- lifetime `'b` declared here
+...
+442 |     ) -> Box<dyn Iterator<Item = RequestEnv> + 'b> {
+    |                                  ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+    --> cedar-policy-validator/src/typecheck.rs:2446:17
+     |
+2443 |     fn lookup_extension_function<'b>(
+     |                                  -- lifetime `'b` declared here
+...
+2446 |     ) -> Result<&ExtensionFunctionType, impl FnOnce(Expr) -> TypeError + 'b> {
+     |                 ^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:120:31
+    |
+116 |     fn validate_policy<'a>(
+    |                        -- lifetime `'a` declared here
+...
+120 |     ) -> impl Iterator<Item = ValidationError> + 'a {
+    |                               ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:154:38
+    |
+150 |     fn validate_slots<'a>(
+    |                       -- lifetime `'a` declared here
+...
+154 |     ) -> Option<impl Iterator<Item = ValidationError> + 'a> {
+    |                                      ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:188:31
+    |
+184 |     fn typecheck_policy<'a>(
+    |                         -- lifetime `'a` declared here
+...
+188 |     ) -> impl Iterator<Item = ValidationError> + 'a {
+    |                               ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: `cedar-policy-core` (lib) generated 4 warnings
+warning: `cedar-policy-validator` (lib) generated 10 warnings
+warning: `cedar-policy-validator` (lib test) generated 10 warnings (10 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.46s
+────────────
+ Nextest run ID 43b21c09-79d9-4b4f-89ae-6465a1370d24 with nextest profile: default
+    Starting 411 tests across 1 binary
+        PASS [   0.032s] (  1/411) cedar-policy-validator coreschema::test::success_context_unknown
+        PASS [   0.039s] (  2/411) cedar-policy-validator coreschema::test::action_unspecified
+        PASS [   0.039s] (  3/411) cedar-policy-validator coreschema::test::context_missing_attribute
+        PASS [   0.044s] (  4/411) cedar-policy-validator coreschema::test::context_attribute_wrong_type
+        PASS [   0.044s] (  5/411) cedar-policy-validator coreschema::test::principal_type_invalid
+        PASS [   0.044s] (  6/411) cedar-policy-validator coreschema::test::principal_unspecified
+        PASS [   0.045s] (  7/411) cedar-policy-validator coreschema::test::success_concrete_request_no_context
+        PASS [   0.045s] (  8/411) cedar-policy-validator coreschema::test::principal_type_not_declared
+        PASS [   0.047s] (  9/411) cedar-policy-validator coreschema::test::success_action_unknown
+        PASS [   0.046s] ( 10/411) cedar-policy-validator coreschema::test::resource_unspecified
+        PASS [   0.048s] ( 11/411) cedar-policy-validator coreschema::test::success_concrete_request_with_context
+        PASS [   0.048s] ( 12/411) cedar-policy-validator coreschema::test::resource_type_not_declared_action_unspecified
+        PASS [   0.050s] ( 13/411) cedar-policy-validator coreschema::test::context_attribute_heterogeneous_set
+        PASS [   0.050s] ( 14/411) cedar-policy-validator coreschema::test::resource_type_not_declared
+        PASS [   0.050s] ( 15/411) cedar-policy-validator coreschema::test::resource_type_invalid
+        PASS [   0.050s] ( 16/411) cedar-policy-validator coreschema::test::principal_type_not_declared_action_unspecified
+        PASS [   0.050s] ( 17/411) cedar-policy-validator coreschema::test::context_extra_attribute
+        PASS [   0.051s] ( 18/411) cedar-policy-validator coreschema::test::action_not_declared
+        PASS [   0.023s] ( 19/411) cedar-policy-validator expr_iterator::tests::entity_eq
+        PASS [   0.036s] ( 20/411) cedar-policy-validator coreschema::test::success_everything_unspecified
+        PASS [   0.034s] ( 21/411) cedar-policy-validator coreschema::test::success_principal_unknown
+        PASS [   0.027s] ( 22/411) cedar-policy-validator expr_iterator::tests::entity_in
+        PASS [   0.030s] ( 23/411) cedar-policy-validator expr_iterator::tests::entity_full_head
+        PASS [   0.037s] ( 24/411) cedar-policy-validator coreschema::test::success_resource_unknown
+        PASS [   0.030s] ( 25/411) cedar-policy-validator expr_iterator::tests::entity_has_attr
+        PASS [   0.031s] ( 26/411) cedar-policy-validator expr_iterator::tests::entity_get_attr
+        PASS [   0.027s] ( 27/411) cedar-policy-validator expr_iterator::tests::no_entities
+        PASS [   0.031s] ( 28/411) cedar-policy-validator expr_iterator::tests::entity_if
+        PASS [   0.034s] ( 29/411) cedar-policy-validator expr_iterator::tests::entity_and
+        PASS [   0.031s] ( 30/411) cedar-policy-validator expr_iterator::tests::entity_in_set
+        PASS [   0.030s] ( 31/411) cedar-policy-validator expr_iterator::tests::entity_literal
+        PASS [   0.037s] ( 32/411) cedar-policy-validator coreschema::test::success_unknown_action_but_invalid_types
+        PASS [   0.031s] ( 33/411) cedar-policy-validator expr_iterator::tests::test_strs_atrs
+        PASS [   0.032s] ( 34/411) cedar-policy-validator expr_iterator::tests::entity_record
+        PASS [   0.032s] ( 35/411) cedar-policy-validator expr_iterator::tests::entity_record_get_attr
+        PASS [   0.033s] ( 36/411) cedar-policy-validator expr_iterator::tests::test_strs
+        PASS [   0.029s] ( 37/411) cedar-policy-validator expr_iterator::tests::test_strs_ext
+        PASS [   0.031s] ( 38/411) cedar-policy-validator expr_iterator::tests::test_strs_like
+        PASS [   0.030s] ( 39/411) cedar-policy-validator expr_iterator::tests::test_strs_lit
+        PASS [   0.030s] ( 40/411) cedar-policy-validator extensions::partial_evaluation::test::extension_schema_correctness
+        PASS [   0.030s] ( 41/411) cedar-policy-validator fuzzy_match::test::test_match5
+        PASS [   0.031s] ( 42/411) cedar-policy-validator fuzzy_match::test::test_match1
+        PASS [   0.031s] ( 43/411) cedar-policy-validator fuzzy_match::test::test_match4
+        PASS [   0.032s] ( 44/411) cedar-policy-validator fuzzy_match::test::test_match3
+        PASS [   0.033s] ( 45/411) cedar-policy-validator fuzzy_match::test::test_match2
+        PASS [   0.035s] ( 46/411) cedar-policy-validator extensions::ipaddr::test::extension_schema_correctness
+        PASS [   0.031s] ( 47/411) cedar-policy-validator fuzzy_match::test::test_match6
+        PASS [   0.030s] ( 48/411) cedar-policy-validator fuzzy_match::test::test_match_empty
+        PASS [   0.036s] ( 49/411) cedar-policy-validator extensions::decimal::test::extension_schema_correctness
+        PASS [   0.030s] ( 50/411) cedar-policy-validator fuzzy_match::test::test_match7
+        PASS [   0.035s] ( 51/411) cedar-policy-validator human_schema::ast::test::in_cedar3
+        PASS [   0.038s] ( 52/411) cedar-policy-validator human_schema::ast::test::in_cedar
+        PASS [   0.037s] ( 53/411) cedar-policy-validator human_schema::ast::test::in_unqual
+        PASS [   0.039s] ( 54/411) cedar-policy-validator human_schema::ast::test::in_cedar2
+        PASS [   0.026s] ( 55/411) cedar-policy-validator human_schema::ast::test::is_cedar
+        PASS [   0.030s] ( 56/411) cedar-policy-validator human_schema::ast::test::is_cedar2
+        PASS [   0.033s] ( 57/411) cedar-policy-validator human_schema::ast::test::path_iter
+        PASS [   0.031s] ( 58/411) cedar-policy-validator human_schema::ast::test::qual
+        FAIL [   0.030s] ( 59/411) cedar-policy-validator human_schema::test::appliesto_display_tests::test_empty_appliesto_display
+  stdout ───
+
+    running 1 test
+    test human_schema::test::appliesto_display_tests::test_empty_appliesto_display ... FAILED
+
+    failures:
+
+    failures:
+        human_schema::test::appliesto_display_tests::test_empty_appliesto_display
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 410 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'human_schema::test::appliesto_display_tests::test_empty_appliesto_display' panicked at cedar-policy-validator/src/human_schema/test.rs:955:9:
+    src was:
+    `namespace bar {action "foo" appliesTo { context : {} };
+    }`
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        PASS [   0.038s] ( 60/411) cedar-policy-validator human_schema::test::demo_tests::simple_cross
+        PASS [   0.041s] ( 61/411) cedar-policy-validator human_schema::test::demo_tests::simple_action
+        PASS [   0.041s] ( 62/411) cedar-policy-validator human_schema::test::parser_tests::mixed_decls
+        PASS [   0.034s] ( 63/411) cedar-policy-validator human_schema::test::translator_tests::duplicate_action_types
+        PASS [   0.031s] ( 64/411) cedar-policy-validator human_schema::test::translator_tests::duplicate_namespace
+        PASS [   0.042s] ( 65/411) cedar-policy-validator human_schema::test::demo_tests::test_github
+        PASS [   0.033s] ( 66/411) cedar-policy-validator human_schema::test::translator_tests::duplicate_common_types
+        PASS [   0.043s] ( 67/411) cedar-policy-validator human_schema::test::parser_tests::common_type_decl_basic
+        PASS [   0.046s] ( 68/411) cedar-policy-validator human_schema::test::demo_tests::test_doc_cloud
+        PASS [   0.044s] ( 69/411) cedar-policy-validator human_schema::test::demo_tests::tinytodo
+        PASS [   0.034s] ( 70/411) cedar-policy-validator human_schema::test::translator_tests::duplicate_entity_types
+        PASS [   0.045s] ( 71/411) cedar-policy-validator human_schema::test::parser_tests::entity_decl_basic
+        PASS [   0.045s] ( 72/411) cedar-policy-validator human_schema::test::parser_tests::action_decl_basic
+        PASS [   0.038s] ( 73/411) cedar-policy-validator human_schema::test::translator_tests::type_name_cross_namespace
+        PASS [   0.035s] ( 74/411) cedar-policy-validator human_schema::test::translator_tests::type_name_resolution_basic
+        PASS [   0.031s] ( 75/411) cedar-policy-validator human_schema::test::translator_tests::type_name_resolution_cross_namespace
+        PASS [   0.031s] ( 76/411) cedar-policy-validator human_schema::test::translator_tests::type_name_resolution_empty_namespace
+────────────
+     Summary [   0.171s] 76/411 tests run: 75 passed, 1 failed, 0 skipped
+        FAIL [   0.030s] ( 59/411) cedar-policy-validator human_schema::test::appliesto_display_tests::test_empty_appliesto_display
+warning: 335/411 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+reward=0 graded=427 found=0 failed=0 parsed=76 framework=cargo exit_code=100

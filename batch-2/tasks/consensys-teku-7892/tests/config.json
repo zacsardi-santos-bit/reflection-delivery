@@ -1,0 +1,36 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && ./gradlew :beacon:pow:test :services:powchain:test :teku:test --tests \"*DepositSnapshotFileLoaderTest\" --tests \"*DepositSnapshotsBundleTest\" --tests \"*PowchainConfigurationTest\" --tests \"*PowchainServiceTest\" --tests \"*DepositOptionsTest\" --no-daemon --no-watch-fs && python3 -c 'import xml.etree.ElementTree as ET,glob;[(print(\"Running \"+r.get(\"name\",\"\")),print(\"Tests run: \"+r.get(\"tests\",\"0\")+\", Failures: \"+r.get(\"failures\",\"0\")+\", Errors: \"+r.get(\"errors\",\"0\")+\", Skipped: \"+r.get(\"skipped\",\"0\"))) for f in sorted(glob.glob(\"**/test-results/test/TEST-*.xml\",recursive=True)) for r in [ET.parse(f).getroot()]]'",
+  "test_files": [
+    "beacon/pow/src/test/java/tech/pegasys/teku/beacon/pow/DepositSnapshotFileLoaderTest.java",
+    "services/powchain/src/test/java/tech/pegasys/teku/services/powchain/DepositSnapshotsBundleTest.java",
+    "services/powchain/src/test/java/tech/pegasys/teku/services/powchain/PowchainConfigurationTest.java",
+    "services/powchain/src/test/java/tech/pegasys/teku/services/powchain/PowchainServiceTest.java",
+    "teku/src/test/java/tech/pegasys/teku/cli/options/DepositOptionsTest.java"
+  ],
+  "num_test_files": 5,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "unknown::test_1",
+    "unknown::test_2",
+    "unknown::test_3",
+    "unknown::test_4",
+    "unknown::test_5",
+    "unknown::test_6",
+    "unknown::test_7",
+    "unknown::test_8",
+    "unknown::test_9",
+    "unknown::test_10",
+    "unknown::test_11",
+    "unknown::test_12",
+    "unknown::test_13",
+    "unknown::test_14",
+    "unknown::test_15",
+    "unknown::test_16",
+    "unknown::test_17",
+    "unknown::test_18",
+    "unknown::test_19",
+    "unknown::test_20"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,168 @@
+patching file pkg/agent/orm/checkpoint/checkpoint_test.go (renamed from pkg/agent/resourcemanager/outofband/checkpoint/checkpoint_test.go)
+patching file pkg/agent/orm/checkpoint_test.go (renamed from pkg/agent/resourcemanager/outofband/checkpoint_test.go)
+patching file pkg/agent/orm/endpoint/endpoint_test.go (renamed from pkg/agent/resourcemanager/outofband/endpoint/endpoint_test.go)
+patching file pkg/agent/orm/executor/executor_test.go (renamed from pkg/agent/resourcemanager/outofband/executor/executor_test.go)
+patching file pkg/agent/orm/manager_test.go (renamed from pkg/agent/resourcemanager/outofband/manager_test.go)
+patching file pkg/agent/orm/metamanager/manager_test.go (renamed from pkg/agent/resourcemanager/outofband/metamanager/manager_test.go)
+patching file pkg/agent/orm/pod_resource_test.go (renamed from pkg/agent/resourcemanager/outofband/pod_resource_test.go)
+{"Time":"2026-06-29T15:21:06.724748388Z","Action":"start","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm"}
+{"Time":"2026-06-29T15:21:06.724906118Z","Action":"start","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint"}
+{"Time":"2026-06-29T15:21:06.724952297Z","Action":"start","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint"}
+{"Time":"2026-06-29T15:21:06.724986507Z","Action":"start","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor"}
+{"Time":"2026-06-29T15:21:06.725018347Z","Action":"start","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager"}
+{"Time":"2026-06-29T15:21:06.734475003Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint"}
+{"Time":"2026-06-29T15:21:06.734528123Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint","Output":"=== RUN   TestData_UnmarshalCheckpoint\n"}
+{"Time":"2026-06-29T15:21:06.734571763Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint","Output":"=== PAUSE TestData_UnmarshalCheckpoint\n"}
+{"Time":"2026-06-29T15:21:06.734594483Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint"}
+{"Time":"2026-06-29T15:21:06.734619223Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint"}
+{"Time":"2026-06-29T15:21:06.734641963Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint","Output":"=== CONT  TestData_UnmarshalCheckpoint\n"}
+{"Time":"2026-06-29T15:21:06.734804743Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint","Output":"--- PASS: TestData_UnmarshalCheckpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.734853003Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Test":"TestData_UnmarshalCheckpoint","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.734891092Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:06.735336381Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Output":"ok  \tgithub.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint\t0.010s\n"}
+{"Time":"2026-06-29T15:21:06.735367091Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:06.737044237Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint"}
+{"Time":"2026-06-29T15:21:06.746310454Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint","Output":"=== RUN   TestNewEndpoint\n"}
+{"Time":"2026-06-29T15:21:06.746419963Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint","Output":"=== PAUSE TestNewEndpoint\n"}
+{"Time":"2026-06-29T15:21:06.746503753Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint"}
+{"Time":"2026-06-29T15:21:06.746669693Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate"}
+{"Time":"2026-06-29T15:21:06.746762553Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"=== RUN   TestAllocate\n"}
+{"Time":"2026-06-29T15:21:06.746790023Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"=== PAUSE TestAllocate\n"}
+{"Time":"2026-06-29T15:21:06.746812583Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate"}
+{"Time":"2026-06-29T15:21:06.746859142Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl"}
+{"Time":"2026-06-29T15:21:06.746882002Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl","Output":"=== RUN   TestNewStoppedEndpointImpl\n"}
+{"Time":"2026-06-29T15:21:06.746905582Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl","Output":"=== PAUSE TestNewStoppedEndpointImpl\n"}
+{"Time":"2026-06-29T15:21:06.746928172Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl"}
+{"Time":"2026-06-29T15:21:06.746951312Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod"}
+{"Time":"2026-06-29T15:21:06.746973022Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod","Output":"=== RUN   TestRemovePod\n"}
+{"Time":"2026-06-29T15:21:06.746996382Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod","Output":"=== PAUSE TestRemovePod\n"}
+{"Time":"2026-06-29T15:21:06.747018682Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod"}
+{"Time":"2026-06-29T15:21:06.747042882Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation"}
+{"Time":"2026-06-29T15:21:06.747065672Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation","Output":"=== RUN   TestGetResourceAllocation\n"}
+{"Time":"2026-06-29T15:21:06.747090262Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation","Output":"=== PAUSE TestGetResourceAllocation\n"}
+{"Time":"2026-06-29T15:21:06.747112762Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation"}
+{"Time":"2026-06-29T15:21:06.747136302Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient"}
+{"Time":"2026-06-29T15:21:06.747158932Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"=== RUN   TestClient\n"}
+{"Time":"2026-06-29T15:21:06.747182112Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"=== PAUSE TestClient\n"}
+{"Time":"2026-06-29T15:21:06.747203962Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient"}
+{"Time":"2026-06-29T15:21:06.747227941Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint"}
+{"Time":"2026-06-29T15:21:06.747250451Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint","Output":"=== CONT  TestNewEndpoint\n"}
+{"Time":"2026-06-29T15:21:06.747273901Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod"}
+{"Time":"2026-06-29T15:21:06.747296981Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod","Output":"=== CONT  TestRemovePod\n"}
+{"Time":"2026-06-29T15:21:06.747320011Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation"}
+{"Time":"2026-06-29T15:21:06.747342161Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation","Output":"=== CONT  TestGetResourceAllocation\n"}
+{"Time":"2026-06-29T15:21:06.747365291Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient"}
+{"Time":"2026-06-29T15:21:06.747387181Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"=== CONT  TestClient\n"}
+{"Time":"2026-06-29T15:21:06.747418971Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl"}
+{"Time":"2026-06-29T15:21:06.747441341Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl","Output":"=== CONT  TestNewStoppedEndpointImpl\n"}
+{"Time":"2026-06-29T15:21:06.747466171Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl","Output":"--- PASS: TestNewStoppedEndpointImpl (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.747489231Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewStoppedEndpointImpl","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.747512341Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate"}
+{"Time":"2026-06-29T15:21:06.747534621Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"=== CONT  TestAllocate\n"}
+{"Time":"2026-06-29T15:21:06.747558141Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"2026/06/29 15:21:06 Starting to serve on /tmp/TestRemovePodmock.sock\n"}
+{"Time":"2026-06-29T15:21:06.747590801Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"2026/06/29 15:21:06 Starting to serve on /tmp/TestNewEndpointmock.sock\n"}
+{"Time":"2026-06-29T15:21:06.747613331Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"2026/06/29 15:21:06 Starting to serve on /tmp/TestAllocatemock.sock\n"}
+{"Time":"2026-06-29T15:21:06.7476361Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"2026/06/29 15:21:06 Starting to serve on /tmp/TestClientmock.sock\n"}
+{"Time":"2026-06-29T15:21:06.74765861Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"2026/06/29 15:21:06 Starting to serve on /tmp/TestGetResourceAllocationmock.sock\n"}
+{"Time":"2026-06-29T15:21:06.749372146Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint","Output":"--- PASS: TestNewEndpoint (0.01s)\n"}
+{"Time":"2026-06-29T15:21:06.750195394Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestNewEndpoint","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:06.750234184Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"--- PASS: TestClient (0.01s)\n"}
+{"Time":"2026-06-29T15:21:06.75186751Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"2026/06/29 15:21:06 GetResourcesAllocation, \u0026GetResourcesAllocationRequest{}\n"}
+{"Time":"2026-06-29T15:21:06.752022809Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"2026/06/29 15:21:06 RemovePod, \u0026RemovePodRequest{PodUid:mock_pod,}\n"}
+{"Time":"2026-06-29T15:21:06.752077649Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Output":"2026/06/29 15:21:06 Allocate, \u0026ResourceRequest{PodUid:mock_pod,PodNamespace:mock_pod_ns,PodName:mock_pod_name,ContainerName:mock_con_name,ContainerType:INIT,ContainerIndex:0,PodRole:mock_role,PodType:mock_type,ResourceName:mock_res,Hint:\u0026TopologyHint{Nodes:[0 1],Preferred:true,},ResourceRequests:map[string]float64{mock_res: 2,},Labels:map[string]string{},Annotations:map[string]string{},NativeQosClass:,}\n"}
+{"Time":"2026-06-29T15:21:06.752171779Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestClient","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:06.752220879Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation","Output":"--- PASS: TestGetResourceAllocation (0.01s)\n"}
+{"Time":"2026-06-29T15:21:06.752249999Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestGetResourceAllocation","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:06.752273509Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod","Output":"--- PASS: TestRemovePod (0.01s)\n"}
+{"Time":"2026-06-29T15:21:06.752384529Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestRemovePod","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:06.752419988Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Output":"--- PASS: TestAllocate (0.01s)\n"}
+{"Time":"2026-06-29T15:21:06.752443648Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Test":"TestAllocate","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:06.752466958Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:06.753080267Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Output":"ok  \tgithub.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint\t0.028s\n"}
+{"Time":"2026-06-29T15:21:06.753125367Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint","Elapsed":0.028}
+{"Time":"2026-06-29T15:21:06.784124459Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources"}
+{"Time":"2026-06-29T15:21:06.784178949Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources","Output":"=== RUN   TestImpl_UpdateContainerResources\n"}
+{"Time":"2026-06-29T15:21:06.784205229Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources","Output":"=== PAUSE TestImpl_UpdateContainerResources\n"}
+{"Time":"2026-06-29T15:21:06.784228649Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources"}
+{"Time":"2026-06-29T15:21:06.784252219Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet"}
+{"Time":"2026-06-29T15:21:06.784275558Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Output":"=== RUN   TestCommitCPUSet\n"}
+{"Time":"2026-06-29T15:21:06.784305368Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Output":"=== PAUSE TestCommitCPUSet\n"}
+{"Time":"2026-06-29T15:21:06.784327148Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet"}
+{"Time":"2026-06-29T15:21:06.784350068Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources"}
+{"Time":"2026-06-29T15:21:06.784372068Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources","Output":"=== CONT  TestImpl_UpdateContainerResources\n"}
+{"Time":"2026-06-29T15:21:06.784395118Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet"}
+{"Time":"2026-06-29T15:21:06.784417358Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Output":"=== CONT  TestCommitCPUSet\n"}
+{"Time":"2026-06-29T15:21:06.784443608Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Output":"--- PASS: TestCommitCPUSet (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.784479108Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Output":"W0629 15:21:06.784119   13838 executor.go:49] UpdateContainerResources, pod or container is nil\n"}
+{"Time":"2026-06-29T15:21:06.784508178Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Output":"E0629 15:21:06.784299   13838 executor.go:77] [ORM] containerCgroupPath fail, pod: testPod, container: testContainer, err: failed to find absolute path of suffix: podtestUID/containerID, error: \u003cnil\u003e\n"}
+{"Time":"2026-06-29T15:21:06.784532018Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestCommitCPUSet","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.784555948Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources","Output":"--- PASS: TestImpl_UpdateContainerResources (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.784580818Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Test":"TestImpl_UpdateContainerResources","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.784603068Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:06.785048757Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Output":"ok  \tgithub.com/kubewharf/katalyst-core/pkg/agent/orm/executor\t0.060s\n"}
+{"Time":"2026-06-29T15:21:06.785130526Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/executor","Elapsed":0.06}
+{"Time":"2026-06-29T15:21:06.789305676Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint"}
+{"Time":"2026-06-29T15:21:06.793830444Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-06-29T15:21:06.860923246Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:06.860558397Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint","Output":"=== RUN   TestCheckpoint\n"}
+{"Time":"2026-06-29T15:21:06.861000856Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager","Output":"ok  \tgithub.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager\t0.136s [no tests to run]\n"}
+{"Time":"2026-06-29T15:21:06.861083916Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager","Elapsed":0.136}
+{"Time":"2026-06-29T15:21:06.861044416Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint","Output":"=== PAUSE TestCheckpoint\n"}
+{"Time":"2026-06-29T15:21:06.861240945Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint"}
+{"Time":"2026-06-29T15:21:06.861284805Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer"}
+{"Time":"2026-06-29T15:21:06.861309325Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer","Output":"=== RUN   TestIsSkippedContainer\n"}
+{"Time":"2026-06-29T15:21:06.861339375Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer","Output":"=== PAUSE TestIsSkippedContainer\n"}
+{"Time":"2026-06-29T15:21:06.861362565Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer"}
+{"Time":"2026-06-29T15:21:06.955261369Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName"}
+{"Time":"2026-06-29T15:21:06.955800958Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName","Output":"=== RUN   TestGetMappedResourceName\n"}
+{"Time":"2026-06-29T15:21:06.955871938Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName","Output":"=== PAUSE TestGetMappedResourceName\n"}
+{"Time":"2026-06-29T15:21:06.955895228Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName"}
+{"Time":"2026-06-29T15:21:06.955919488Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources"}
+{"Time":"2026-06-29T15:21:06.955941987Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources","Output":"=== RUN   TestPodResources\n"}
+{"Time":"2026-06-29T15:21:06.955965907Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources","Output":"=== PAUSE TestPodResources\n"}
+{"Time":"2026-06-29T15:21:06.955987797Z","Action":"pause","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources"}
+{"Time":"2026-06-29T15:21:06.956010827Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint"}
+{"Time":"2026-06-29T15:21:06.956033027Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint","Output":"=== CONT  TestCheckpoint\n"}
+{"Time":"2026-06-29T15:21:06.956055787Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName"}
+{"Time":"2026-06-29T15:21:06.956077467Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName","Output":"=== CONT  TestGetMappedResourceName\n"}
+{"Time":"2026-06-29T15:21:06.956100267Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer"}
+{"Time":"2026-06-29T15:21:06.956121827Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer","Output":"=== CONT  TestIsSkippedContainer\n"}
+{"Time":"2026-06-29T15:21:06.956144517Z","Action":"cont","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources"}
+{"Time":"2026-06-29T15:21:06.956171017Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources","Output":"=== CONT  TestPodResources\n"}
+{"Time":"2026-06-29T15:21:06.956193897Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/cpu"}
+{"Time":"2026-06-29T15:21:06.956215627Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/cpu","Output":"=== RUN   TestGetMappedResourceName/cpu\n"}
+{"Time":"2026-06-29T15:21:06.956239857Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/mainContainer"}
+{"Time":"2026-06-29T15:21:06.956261947Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/mainContainer","Output":"=== RUN   TestIsSkippedContainer/mainContainer\n"}
+{"Time":"2026-06-29T15:21:06.956287547Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/cpu","Output":"--- PASS: TestGetMappedResourceName/cpu (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956312967Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/cpu","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956336197Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/mainContainer","Output":"--- PASS: TestIsSkippedContainer/mainContainer (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956358806Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/mainContainer","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956394416Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/not_found"}
+{"Time":"2026-06-29T15:21:06.956416186Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/not_found","Output":"=== RUN   TestGetMappedResourceName/not_found\n"}
+{"Time":"2026-06-29T15:21:06.956441056Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/initContainer"}
+{"Time":"2026-06-29T15:21:06.956463526Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/initContainer","Output":"=== RUN   TestIsSkippedContainer/initContainer\n"}
+{"Time":"2026-06-29T15:21:06.956488176Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/not_found","Output":"--- PASS: TestGetMappedResourceName/not_found (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956511196Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/not_found","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956534736Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/initContainer","Output":"--- PASS: TestIsSkippedContainer/initContainer (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956559096Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/initContainer","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956583026Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/repetition"}
+{"Time":"2026-06-29T15:21:06.956604956Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/repetition","Output":"=== RUN   TestGetMappedResourceName/repetition\n"}
+{"Time":"2026-06-29T15:21:06.956628466Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/repetition","Output":"--- PASS: TestGetMappedResourceName/repetition (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956651196Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName/repetition","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956674806Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName","Output":"--- PASS: TestGetMappedResourceName (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956697486Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestGetMappedResourceName","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956719116Z","Action":"run","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/fail"}
+{"Time":"2026-06-29T15:21:06.956740755Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/fail","Output":"=== RUN   TestIsSkippedContainer/fail\n"}
+{"Time":"2026-06-29T15:21:06.956764525Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/fail","Output":"E0629 15:21:06.794494   13835 manager.go:566] GetContainerTypeAndIndex failed with error: got nil pod: nil or container: nil\n"}
+{"Time":"2026-06-29T15:21:06.956789395Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/fail","Output":"--- PASS: TestIsSkippedContainer/fail (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956812105Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer/fail","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956846305Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer","Output":"--- PASS: TestIsSkippedContainer (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956883455Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestIsSkippedContainer","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956905975Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources","Output":"--- PASS: TestPodResources (0.00s)\n"}
+{"Time":"2026-06-29T15:21:06.956956675Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestPodResources","Elapsed":0}
+{"Time":"2026-06-29T15:21:06.956981285Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint","Output":"--- PASS: TestCheckpoint (0.07s)\n"}
+{"Time":"2026-06-29T15:21:06.957004625Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Test":"TestCheckpoint","Elapsed":0.07}
+{"Time":"2026-06-29T15:21:06.957028345Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:06.957104565Z","Action":"output","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Output":"ok  \tgithub.com/kubewharf/katalyst-core/pkg/agent/orm\t0.232s\n"}
+{"Time":"2026-06-29T15:21:06.957134335Z","Action":"pass","Package":"github.com/kubewharf/katalyst-core/pkg/agent/orm","Elapsed":0.232}
+reward=1 graded=19 found=19 failed=0 parsed=19 framework=go exit_code=0

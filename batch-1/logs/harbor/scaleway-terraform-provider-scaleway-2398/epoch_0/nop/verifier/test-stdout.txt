@@ -1,0 +1,24 @@
+patching file scaleway/resource_job_definition_test.go
+{"Time":"2026-06-29T15:19:03.66515049Z","Action":"start","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway"}
+{"Time":"2026-06-29T15:19:03.721223461Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"2026/06/29 15:19:03 [INFO] start domain record test with domain: scaleway-terraform.com\n"}
+{"Time":"2026-06-29T15:19:03.721314993Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"2026/06/29 15:19:03 [INFO] environment variable TF_TEST_DOMAIN_ZONE is required\n"}
+{"Time":"2026-06-29T15:19:03.72360255Z","Action":"run","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron"}
+{"Time":"2026-06-29T15:19:03.723744693Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"=== RUN   TestAccScalewayJobDefinition_Cron\n"}
+{"Time":"2026-06-29T15:19:03.72553044Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"=== PAUSE TestAccScalewayJobDefinition_Cron\n"}
+{"Time":"2026-06-29T15:19:03.725574931Z","Action":"pause","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron"}
+{"Time":"2026-06-29T15:19:03.725771105Z","Action":"cont","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron"}
+{"Time":"2026-06-29T15:19:03.725892887Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"=== CONT  TestAccScalewayJobDefinition_Cron\n"}
+{"Time":"2026-06-29T15:19:04.115876236Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"    resource_job_definition_test.go:127: Step 1/3 error: Error running pre-apply refresh: exit status 1\n"}
+{"Time":"2026-06-29T15:19:04.116025469Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"        \n"}
+{"Time":"2026-06-29T15:19:04.11607437Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"        Error: Unsupported block type\n"}
+{"Time":"2026-06-29T15:19:04.116128481Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"        \n"}
+{"Time":"2026-06-29T15:19:04.116141861Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"          on terraform_plugin_test.tf line 7, in resource \"scaleway_job_definition\" \"main\":\n"}
+{"Time":"2026-06-29T15:19:04.116155472Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"           7: \t\t\t\t\t\tcron {\n"}
+{"Time":"2026-06-29T15:19:04.116166052Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"        \n"}
+{"Time":"2026-06-29T15:19:04.116176612Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"        Blocks of type \"cron\" are not expected here.\n"}
+{"Time":"2026-06-29T15:19:04.17353377Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"--- FAIL: TestAccScalewayJobDefinition_Cron (0.45s)\n"}
+{"Time":"2026-06-29T15:19:04.173667673Z","Action":"fail","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Elapsed":0.45}
+{"Time":"2026-06-29T15:19:04.173726764Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:19:04.175250005Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"FAIL\tgithub.com/scaleway/terraform-provider-scaleway/v2/scaleway\t0.510s\n"}
+{"Time":"2026-06-29T15:19:04.175322226Z","Action":"fail","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Elapsed":0.51}
+reward=0 graded=1 found=1 failed=1 parsed=2 framework=go exit_code=1

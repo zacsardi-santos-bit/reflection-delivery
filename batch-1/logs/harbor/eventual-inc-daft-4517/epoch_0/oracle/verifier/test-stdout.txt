@@ -1,0 +1,993 @@
+patching file src/daft-distributed/src/pipeline_node/translate.rs
+   Compiling proc-macro2 v1.0.95
+   Compiling unicode-ident v1.0.18
+   Compiling libc v0.2.172
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.4.0
+   Compiling serde v1.0.219
+   Compiling itoa v1.0.15
+   Compiling memchr v2.7.4
+   Compiling once_cell v1.21.3
+   Compiling smallvec v1.15.0
+   Compiling pin-project-lite v0.2.16
+   Compiling futures-core v0.3.31
+   Compiling parking_lot_core v0.9.11
+   Compiling scopeguard v1.2.0
+   Compiling bytes v1.10.1
+   Compiling version_check v0.9.5
+   Compiling ryu v1.0.20
+   Compiling futures-sink v0.3.31
+   Compiling futures-io v0.3.31
+   Compiling futures-task v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling semver v1.0.26
+   Compiling equivalent v1.0.2
+   Compiling futures-channel v0.3.31
+   Compiling hashbrown v0.15.3
+   Compiling log v0.4.27
+   Compiling fnv v1.0.7
+   Compiling tracing-core v0.1.33
+   Compiling bitflags v2.9.1
+   Compiling shlex v1.3.0
+   Compiling zerocopy v0.8.25
+   Compiling thiserror v1.0.69
+   Compiling either v1.15.0
+   Compiling time-core v0.1.4
+   Compiling cc v1.2.25
+   Compiling powerfmt v0.2.0
+   Compiling num-conv v0.1.0
+   Compiling typenum v1.18.0
+   Compiling num_threads v0.1.7
+   Compiling serde_json v1.0.140
+   Compiling percent-encoding v2.3.1
+   Compiling httparse v1.10.1
+   Compiling time-macros v0.2.22
+   Compiling syn v1.0.109
+   Compiling tower-service v0.3.3
+   Compiling try-lock v0.2.5
+   Compiling getrandom v0.3.3
+   Compiling pkg-config v0.3.32
+   Compiling vcpkg v0.2.15
+   Compiling aho-corasick v1.1.3
+   Compiling base64 v0.21.7
+   Compiling lock_api v0.4.13
+   Compiling num-traits v0.2.19
+   Compiling slab v0.4.9
+   Compiling rustc_version v0.4.1
+   Compiling quote v1.0.40
+   Compiling openssl-src v300.5.0+3.5.0
+   Compiling socket2 v0.5.10
+   Compiling signal-hook-registry v1.4.5
+   Compiling syn v2.0.101
+   Compiling mio v1.0.4
+   Compiling parking_lot v0.12.4
+   Compiling want v0.3.1
+   Compiling regex-syntax v0.8.5
+   Compiling siphasher v1.0.1
+   Compiling rand_core v0.6.4
+   Compiling static_assertions v1.1.0
+   Compiling zeroize v1.8.1
+   Compiling target-features v0.1.6
+   Compiling num-integer v0.1.46
+   Compiling phf_shared v0.11.3
+   Compiling rand v0.8.5
+   Compiling stable_deref_trait v1.2.0
+   Compiling lexical-util v0.8.5
+   Compiling openssl v0.10.73
+   Compiling vsimd v0.8.0
+   Compiling outref v0.5.2
+   Compiling foreign-types-shared v0.1.1
+   Compiling native-tls v0.2.14
+   Compiling iana-time-zone v0.1.63
+   Compiling foreign-types v0.3.2
+   Compiling dyn-clone v1.0.19
+   Compiling ahash v0.8.12
+   Compiling openssl-probe v0.1.6
+   Compiling phf_generator v0.11.3
+   Compiling lexical-parse-integer v0.8.6
+   Compiling lexical-write-integer v0.8.5
+   Compiling http v0.2.12
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling base64-simd v0.8.0
+   Compiling phf_codegen v0.11.3
+   Compiling array-init-cursor v0.2.1
+   Compiling fastrand v1.9.0
+   Compiling streaming-decompression v0.1.2
+   Compiling regex-automata v0.4.9
+   Compiling planus v0.3.1
+   Compiling phf v0.11.3
+   Compiling lexical-parse-float v0.8.5
+   Compiling lexical-write-float v0.8.5
+   Compiling arrow2 v0.17.4 (/workspace/repo/src/arrow2)
+   Compiling parquet-format-safe v0.2.4
+   Compiling seq-macro v0.3.6
+   Compiling cpufeatures v0.2.17
+   Compiling hashbrown v0.14.5
+   Compiling form_urlencoded v1.2.1
+   Compiling lexical-core v0.8.5
+   Compiling generic-array v0.14.7
+   Compiling hash_hasher v2.0.4
+   Compiling strength_reduce v0.2.4
+   Compiling openssl-sys v0.9.109
+   Compiling litemap v0.8.0
+   Compiling streaming-iterator v0.1.9
+   Compiling simdutf8 v0.1.5
+   Compiling writeable v0.6.1
+   Compiling ethnum v1.5.2
+   Compiling foreign_vec v0.1.0
+   Compiling http-body v0.4.6
+   Compiling getrandom v0.2.16
+   Compiling icu_properties_data v2.0.1
+   Compiling httpdate v1.0.3
+   Compiling icu_normalizer_data v2.0.0
+   Compiling tower-layer v0.3.3
+   Compiling ppv-lite86 v0.2.21
+   Compiling subtle v2.6.1
+   Compiling utf8_iter v1.0.4
+   Compiling synstructure v0.13.2
+   Compiling regex v1.11.1
+   Compiling crc32fast v1.4.2
+   Compiling rustix v0.38.44
+   Compiling bytes-utils v0.1.4
+   Compiling rand_chacha v0.3.1
+   Compiling ipnet v2.11.0
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling linux-raw-sys v0.4.15
+   Compiling http v1.3.1
+   Compiling parse-zoneinfo v0.3.1
+   Compiling crossbeam-utils v0.8.21
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling chrono-tz-build v0.4.1
+   Compiling mime v0.3.17
+   Compiling unicode-xid v0.2.6
+   Compiling http-body v1.0.1
+   Compiling encoding_rs v0.8.35
+   Compiling typeid v1.0.3
+   Compiling unicode-width v0.2.0
+   Compiling hybrid-array v0.3.1
+   Compiling base64 v0.22.1
+   Compiling smawk v0.3.2
+   Compiling unicode-segmentation v1.12.0
+   Compiling crossterm v0.28.1
+   Compiling doc-comment v0.3.3
+   Compiling getrandom v0.1.16
+   Compiling anyhow v1.0.98
+   Compiling unicode-linebreak v0.1.5
+   Compiling concurrent-queue v2.5.0
+   Compiling terminal_size v0.3.0
+   Compiling textwrap v0.16.2
+   Compiling aws-types v0.55.3
+   Compiling comfy-table v7.1.4
+   Compiling parking v2.2.1
+   Compiling unicase v2.8.1
+   Compiling heck v0.4.1
+   Compiling utf8-width v0.1.7
+   Compiling mime_guess v2.0.5
+   Compiling html-escape v0.2.13
+   Compiling crypto-common v0.2.0-rc.3
+   Compiling block-buffer v0.11.0-rc.4
+   Compiling hmac v0.12.1
+   Compiling matrixmultiply v0.3.10
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling sync_wrapper v1.0.2
+   Compiling const-oid v0.10.1
+   Compiling common-version v0.3.0-dev0 (/workspace/repo/src/common/version)
+   Compiling serde_arrow v0.11.8
+   Compiling inventory v0.3.20
+   Compiling hex v0.4.3
+   Compiling rand_core v0.5.1
+   Compiling http-body-util v0.1.3
+   Compiling secrecy v0.8.0
+   Compiling proc-macro-error v1.0.4
+   Compiling digest v0.11.0-rc.0
+   Compiling iri-string v0.7.8
+   Compiling toml_datetime v0.6.9
+   Compiling winnow v0.5.40
+   Compiling rawpointer v0.2.1
+   Compiling daft-minhash v0.3.0-dev0 (/workspace/repo/src/daft-minhash)
+   Compiling rand_chacha v0.2.2
+   Compiling chrono-tz v0.10.3
+   Compiling indexmap v2.9.0
+   Compiling sha1 v0.11.0-rc.0
+   Compiling rustls-pki-types v1.12.0
+   Compiling num-complex v0.4.6
+   Compiling itertools v0.11.0
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.11.1
+   Compiling paste v1.0.15
+   Compiling thiserror v2.0.12
+   Compiling event-listener v2.5.3
+   Compiling base64 v0.13.1
+   Compiling http-types v2.12.0
+   Compiling fastrand v2.3.0
+   Compiling waker-fn v1.2.0
+   Compiling mur3 v0.1.0
+   Compiling futures-lite v1.13.0
+   Compiling async-channel v1.9.0
+   Compiling ndarray v0.16.1
+   Compiling darling_core v0.20.11
+   Compiling rand v0.7.3
+   Compiling ring v0.17.14
+   Compiling azure_core v0.17.0
+   Compiling rustls-pemfile v1.0.4
+   Compiling base64ct v1.8.0
+   Compiling lazy_static v1.5.0
+   Compiling toml_edit v0.19.15
+   Compiling urlencoding v2.1.3
+   Compiling sync_wrapper v0.1.2
+   Compiling hyperloglog v0.3.0-dev0 (/workspace/repo/src/hyperloglog)
+   Compiling xxhash-rust v0.8.15
+   Compiling infer v0.2.3
+   Compiling pem-rfc7468 v0.7.0
+   Compiling num-bigint v0.4.6
+   Compiling crc32c v0.6.8
+   Compiling const-oid v0.9.6
+   Compiling xmlparser v0.13.6
+   Compiling const_fn v0.4.11
+   Compiling untrusted v0.9.0
+   Compiling der v0.7.10
+   Compiling event-listener v5.4.0
+   Compiling pem v3.0.5
+   Compiling ring v0.16.20
+   Compiling sha1 v0.10.6
+   Compiling md-5 v0.10.6
+   Compiling aws-smithy-xml v0.55.3
+   Compiling event-listener-strategy v0.5.4
+   Compiling spin v0.5.2
+   Compiling home v0.5.11
+   Compiling RustyXML v0.3.0
+   Compiling untrusted v0.7.1
+   Compiling async-lock v3.4.0
+   Compiling retry-policies v0.4.0
+   Compiling bstr v1.12.0
+   Compiling oneshot v0.1.11
+   Compiling rustversion v1.0.21
+   Compiling proc-macro-crate v1.3.1
+   Compiling spki v0.7.3
+   Compiling arrayvec v0.7.6
+   Compiling heck v0.5.0
+   Compiling pkcs8 v0.10.2
+   Compiling globset v0.4.16
+   Compiling num-format v0.4.4
+   Compiling tz-rs v0.6.14
+   Compiling serde_derive v1.0.219
+   Compiling futures-macro v0.3.31
+   Compiling tokio-macros v2.5.0
+   Compiling tracing-attributes v0.1.28
+   Compiling thiserror-impl v1.0.69
+   Compiling zerofrom-derive v0.1.6
+   Compiling yoke-derive v0.8.0
+   Compiling zerovec-derive v0.11.1
+   Compiling openssl-macros v0.1.1
+   Compiling displaydoc v0.2.5
+   Compiling pin-project-internal v1.1.10
+   Compiling bytemuck_derive v1.9.3
+   Compiling multiversion-macros v0.7.4
+   Compiling derive_more-impl v1.0.0
+   Compiling derivative v2.2.0
+   Compiling async-trait v0.1.88
+   Compiling snafu-derive v0.7.5
+   Compiling num-derive v0.3.3
+   Compiling typetag-impl v0.2.20
+   Compiling thiserror-impl v2.0.12
+   Compiling futures-util v0.3.31
+   Compiling tokio v1.45.1
+   Compiling darling_macro v0.20.11
+   Compiling common-macros v0.3.0-dev0 (/workspace/repo/src/common/macros)
+   Compiling bytemuck v1.23.0
+   Compiling half v2.6.0
+   Compiling futures-executor v0.3.31
+   Compiling pin-project v1.1.10
+   Compiling async-stream-impl v0.3.6
+   Compiling tracing v0.1.41
+   Compiling futures v0.3.31
+   Compiling async-recursion v1.1.1
+   Compiling darling v0.20.11
+   Compiling typed-builder-macro v0.20.1
+   Compiling tokio-util v0.7.15
+   Compiling multiversion v0.7.4
+   Compiling tokio-stream v0.1.17
+   Compiling derive_more v1.0.0
+   Compiling tower v0.4.13
+   Compiling hyper v1.6.0
+   Compiling tower v0.5.2
+   Compiling aws-smithy-async v0.55.3
+   Compiling zerofrom v0.1.6
+   Compiling derive_builder_core v0.20.2
+   Compiling yoke v0.8.0
+   Compiling strum_macros v0.26.4
+   Compiling snafu v0.7.5
+   Compiling zerovec v0.11.2
+   Compiling zerotrie v0.2.2
+   Compiling hyper-util v0.1.14
+   Compiling tower-http v0.6.6
+   Compiling tinystr v0.8.1
+   Compiling potential_utf v0.1.2
+   Compiling icu_collections v2.0.0
+   Compiling icu_locale_core v2.0.0
+   Compiling async-stream v0.3.6
+   Compiling icu_provider v2.0.0
+   Compiling google-cloud-token v0.1.2
+   Compiling icu_properties v2.0.1
+   Compiling icu_normalizer v2.0.0
+   Compiling typed-builder v0.20.1
+   Compiling derive_builder_macro v0.20.2
+   Compiling idna_adapter v1.2.1
+   Compiling strum v0.26.3
+   Compiling idna v1.0.3
+   Compiling deranged v0.4.0
+   Compiling chrono v0.4.39
+   Compiling arrow-format v0.8.1
+   Compiling bincode v1.3.3
+   Compiling serde_urlencoded v0.7.1
+   Compiling erased-serde v0.4.6
+   Compiling sketches-ddsketch v0.2.2
+   Compiling common-hashable-float-wrapper v0.3.0-dev0 (/workspace/repo/src/common/hashable-float-wrapper)
+   Compiling serde_qs v0.8.5
+   Compiling quick-xml v0.31.0
+   Compiling uuid v1.17.0
+   Compiling serde_path_to_error v0.1.17
+   Compiling url v2.5.4
+   Compiling derive_builder v0.20.2
+   Compiling common-py-serde v0.3.0-dev0 (/workspace/repo/src/common/py-serde)
+warning: unused imports: `fmt` and `sync::Arc`
+ --> src/common/py-serde/src/python.rs:1:11
+  |
+1 | use std::{fmt, sync::Arc};
+  |           ^^^  ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Deserializer`, `Error as DeError`, `Serializer`, `Visitor`, and `ser::Error as SerError`
+ --> src/common/py-serde/src/python.rs:6:10
+  |
+6 |     de::{Error as DeError, Visitor},
+  |          ^^^^^^^^^^^^^^^^  ^^^^^^^
+7 |     ser::Error as SerError,
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+8 |     Deserializer, Serializer,
+  |     ^^^^^^^^^^^^  ^^^^^^^^^^
+
+warning: `common-py-serde` (lib) generated 2 warnings (run `cargo fix --lib -p common-py-serde` to apply 2 suggestions)
+   Compiling typetag v0.2.20
+   Compiling parquet2 v0.17.2 (/workspace/repo/src/parquet2)
+   Compiling h2 v0.3.26
+   Compiling common-display v0.3.0-dev0 (/workspace/repo/src/common/display)
+   Compiling time v0.3.41
+   Compiling oauth2 v4.4.2
+warning: unused variable: `input_buf`
+  --> src/parquet2/src/compression.rs:30:5
+   |
+30 |     input_buf: &[u8],
+   |     ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_input_buf`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `output_buf`
+  --> src/parquet2/src/compression.rs:31:5
+   |
+31 |     output_buf: &mut Vec<u8>,
+   |     ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_output_buf`
+
+warning: unused variable: `input_buf`
+   --> src/parquet2/src/compression.rs:134:45
+    |
+134 | pub fn decompress(compression: Compression, input_buf: &[u8], output_buf: &mut [u8]) -> Result<()> {
+    |                                             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_input_buf`
+
+warning: unused variable: `output_buf`
+   --> src/parquet2/src/compression.rs:134:63
+    |
+134 | pub fn decompress(compression: Compression, input_buf: &[u8], output_buf: &mut [u8]) -> Result<()> {
+    |                                                               ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_output_buf`
+
+   Compiling aws-smithy-types v0.55.3
+   Compiling simple_asn1 v0.6.3
+   Compiling jsonwebtoken v9.3.1
+   Compiling aws-credential-types v0.55.3
+   Compiling aws-smithy-eventstream v0.55.3
+   Compiling aws-smithy-json v0.55.3
+warning: function `inner_compress` is never used
+ --> src/parquet2/src/compression.rs:8:4
+  |
+8 | fn inner_compress<G: Fn(usize) -> Result<usize>, F: Fn(&[u8], &mut [u8]) -> Result<usize>>(
+  |    ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+   Compiling aws-smithy-query v0.55.3
+   Compiling hyper v0.14.32
+   Compiling aws-smithy-http v0.55.3
+warning: `parquet2` (lib) generated 5 warnings
+   Compiling aws-smithy-http-tower v0.55.3
+   Compiling aws-sigv4 v0.55.3
+   Compiling aws-smithy-checksums v0.55.3
+   Compiling common-error v0.3.0-dev0 (/workspace/repo/src/common/error)
+   Compiling common-arrow-ffi v0.3.0-dev0 (/workspace/repo/src/common/arrow-ffi)
+warning: unused imports: `datatypes::Field` and `ffi`
+ --> src/common/arrow-ffi/src/lib.rs:3:28
+  |
+3 | use arrow2::{array::Array, datatypes::Field, ffi};
+  |                            ^^^^^^^^^^^^^^^^  ^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: function `fix_child_array_slice_offsets` is never used
+  --> src/common/arrow-ffi/src/lib.rs:97:4
+   |
+97 | fn fix_child_array_slice_offsets(array: ArrayRef) -> ArrayRef {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `common-arrow-ffi` (lib) generated 2 warnings (run `cargo fix --lib -p common-arrow-ffi` to apply 1 suggestion)
+   Compiling daft-schema v0.3.0-dev0 (/workspace/repo/src/daft-schema)
+   Compiling common-io-config v0.3.0-dev0 (/workspace/repo/src/common/io-config)
+   Compiling daft-hash v0.3.0-dev0 (/workspace/repo/src/daft-hash)
+   Compiling common-treenode v0.3.0-dev0 (/workspace/repo/src/common/treenode)
+   Compiling common-resource-request v0.3.0-dev0 (/workspace/repo/src/common/resource-request)
+   Compiling common-runtime v0.3.0-dev0 (/workspace/repo/src/common/runtime)
+   Compiling common-partitioning v0.3.0-dev0 (/workspace/repo/src/common/partitioning)
+   Compiling common-file-formats v0.3.0-dev0 (/workspace/repo/src/common/file-formats)
+   Compiling daft-sketch v0.3.0-dev0 (/workspace/repo/src/daft-sketch)
+   Compiling common-daft-config v0.3.0-dev0 (/workspace/repo/src/common/daft-config)
+   Compiling daft-core v0.3.0-dev0 (/workspace/repo/src/daft-core)
+warning: unused import: `std::sync::Arc`
+ --> src/daft-core/src/array/ops/as_arrow.rs:1:5
+  |
+1 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `DaftLogicalType` and `LogicalArray`
+  --> src/daft-core/src/array/ops/cast.rs:41:77
+   |
+41 |             FixedShapeSparseTensorArray, FixedShapeTensorArray, ImageArray, LogicalArray, MapArray,
+   |                                                                             ^^^^^^^^^^^^
+...
+44 |         DaftArrayType, DaftArrowBackedType, DaftLogicalType, DataType, Field, ImageMode,
+   |                                             ^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src/daft-core/src/array/ops/concat.rs:1:5
+  |
+1 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src/daft-core/src/array/ops/concat_agg.rs:1:5
+  |
+1 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `sync::Arc`
+ --> src/daft-core/src/array/ops/filter.rs:1:24
+  |
+1 | use std::{borrow::Cow, sync::Arc};
+  |                        ^^^^^^^^^
+
+warning: unused import: `pseudo_arrow::PseudoArrowArray`
+ --> src/daft-core/src/array/ops/full.rs:9:9
+  |
+9 |         pseudo_arrow::PseudoArrowArray, DataArray, FixedSizeListArray, ListArray, StructArray,
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src/daft-core/src/array/ops/get.rs:1:5
+  |
+1 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::cmp::min`
+ --> src/daft-core/src/array/ops/len.rs:1:5
+  |
+1 | use std::cmp::min;
+  |     ^^^^^^^^^^^^^
+
+warning: unused imports: `SeedableRng`, `rngs::StdRng`, and `seq::SliceRandom`
+ --> src/daft-core/src/array/ops/len.rs:6:12
+  |
+6 | use rand::{rngs::StdRng, seq::SliceRandom, SeedableRng};
+  |            ^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^  ^^^^^^^^^^^
+
+warning: unused import: `super::as_arrow::AsArrow`
+ --> src/daft-core/src/array/ops/len.rs:8:5
+  |
+8 | use super::as_arrow::AsArrow;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src/daft-core/src/array/ops/list_agg.rs:1:5
+  |
+1 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `as_arrow::AsArrow`
+ --> src/daft-core/src/array/ops/list_agg.rs:5:13
+  |
+5 | use super::{as_arrow::AsArrow, DaftListAggable, GroupIndices};
+  |             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src/daft-core/src/array/ops/take.rs:1:5
+  |
+1 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused macro definition: `impl_daft_non_arrow_datatype`
+  --> src/daft-core/src/datatypes/mod.rs:88:14
+   |
+88 | macro_rules! impl_daft_non_arrow_datatype {
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_macros)]` on by default
+
+warning: unused import: `BooleanArray`
+ --> src/daft-core/src/series/ops/between.rs:7:17
+  |
+7 |     datatypes::{BooleanArray, DataType, InferDataType},
+  |                 ^^^^^^^^^^^^
+
+warning: unused import: `array::Array`
+ --> src/daft-core/src/array/ops/cast.rs:8:5
+  |
+8 |     array::Array,
+  |     ^^^^^^^^^^^^
+
+warning: unused import: `from_arrow::FromArrow`
+  --> src/daft-core/src/array/ops/cast.rs:35:15
+   |
+35 |         ops::{from_arrow::FromArrow, full::FullNull, DaftCompare},
+   |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `field`
+  --> src/daft-core/src/array/ops/full.rs:33:13
+   |
+33 |         let field = Field::new(name, dtype.clone());
+   |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_field`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `field`
+  --> src/daft-core/src/array/ops/full.rs:57:13
+   |
+57 |         let field = Field::new(name, dtype.clone());
+   |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_field`
+
+warning: type alias `ArrayPayload` is never used
+   --> src/daft-core/src/array/ops/cast.rs:689:6
+    |
+689 | type ArrayPayload<Tgt> = (
+    |      ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+   Compiling daft-dsl v0.3.0-dev0 (/workspace/repo/src/daft-dsl)
+warning: unused import: `std::sync::Arc`
+ --> src/daft-dsl/src/functions/python/runtime_py_object.rs:3:5
+  |
+3 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `inputs`
+   --> src/daft-dsl/src/functions/python/udf.rs:119:24
+    |
+119 |     fn evaluate(&self, inputs: &[Series], _: &FunctionExpr) -> DaftResult<Series> {
+    |                        ^^^^^^ help: if this is intentional, prefix it with an underscore: `_inputs`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+   Compiling daft-algebra v0.3.0-dev0 (/workspace/repo/src/daft-algebra)
+   Compiling daft-functions v0.3.0-dev0 (/workspace/repo/src/daft-functions)
+   Compiling daft-functions-list v0.3.0-dev0 (/workspace/repo/src/daft-functions-list)
+   Compiling common-scan-info v0.3.0-dev0 (/workspace/repo/src/common/scan-info)
+warning: unused import: `FunctionExpr`
+ --> src/common/scan-info/src/expr_rewriter.rs:7:31
+  |
+7 |     functions::{partitioning, FunctionExpr},
+  |                               ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `daft-dsl` (lib) generated 2 warnings (run `cargo fix --lib -p daft-dsl` to apply 1 suggestion)
+warning: `daft-core` (lib) generated 20 warnings (run `cargo fix --lib -p daft-core` to apply 14 suggestions)
+warning: `common-scan-info` (lib) generated 1 warning (run `cargo fix --lib -p common-scan-info` to apply 1 suggestion)
+   Compiling tokio-native-tls v0.3.1
+   Compiling hyper-tls v0.5.0
+   Compiling hyper-tls v0.6.0
+   Compiling reqwest v0.12.19
+   Compiling aws-smithy-client v0.55.3
+   Compiling reqwest v0.11.27
+   Compiling aws-endpoint v0.55.3
+   Compiling aws-http v0.55.3
+   Compiling aws-sig-auth v0.55.3
+   Compiling google-cloud-metadata v0.5.1
+   Compiling reqwest-middleware v0.3.3
+   Compiling aws-sdk-sso v0.28.0
+   Compiling aws-sdk-sts v0.28.0
+   Compiling aws-sdk-s3 v0.28.0
+   Compiling google-cloud-auth v0.17.2
+   Compiling reqwest-retry v0.6.1
+   Compiling azure_storage v0.17.0
+   Compiling azure_identity v0.17.0
+   Compiling aws-config v0.55.3
+   Compiling google-cloud-storage v0.22.1
+   Compiling azure_storage_blobs v0.17.0
+   Compiling daft-io v0.3.0-dev0 (/workspace/repo/src/daft-io)
+   Compiling daft-functions-uri v0.3.0-dev0 (/workspace/repo/src/daft-functions-uri)
+   Compiling daft-logical-plan v0.3.0-dev0 (/workspace/repo/src/daft-logical-plan)
+warning: unused imports: `Column`, `Expr`, `UnresolvedColumn`, and `unresolved_col`
+  --> src/daft-logical-plan/src/builder/mod.rs:19:40
+   |
+19 |     left_col, resolved_col, right_col, unresolved_col, Column, Expr, ExprRef, UnresolvedColumn,
+   |                                        ^^^^^^^^^^^^^^  ^^^^^^  ^^^^           ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `sync::Arc`
+ --> src/daft-logical-plan/src/sink_info.rs:1:23
+  |
+1 | use std::{hash::Hash, sync::Arc};
+  |                       ^^^^^^^^^
+
+warning: unused import: `derivative::Derivative`
+  --> src/daft-logical-plan/src/sink_info.rs:10:5
+   |
+10 | use derivative::Derivative;
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+
+   Compiling daft-physical-plan v0.3.0-dev0 (/workspace/repo/src/daft-physical-plan)
+warning: unused import: `common_file_formats::FileFormatConfig`
+ --> src/daft-physical-plan/src/ops/scan.rs:4:5
+  |
+4 | use common_file_formats::FileFormatConfig;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `daft-logical-plan` (lib) generated 3 warnings (run `cargo fix --lib -p daft-logical-plan` to apply 3 suggestions)
+   Compiling daft-local-plan v0.3.0-dev0 (/workspace/repo/src/daft-local-plan)
+warning: `daft-physical-plan` (lib) generated 1 warning (run `cargo fix --lib -p daft-physical-plan` to apply 1 suggestion)
+   Compiling daft-distributed v0.3.0-dev0 (/workspace/repo/src/daft-distributed)
+warning: unused import: `PlanRunner`
+  --> src/daft-distributed/src/plan/mod.rs:22:33
+   |
+22 | pub(crate) use runner::{PlanID, PlanRunner};
+   |                                 ^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `super::*`
+  --> src/daft-distributed/src/scheduling/scheduler/linear.rs:57:9
+   |
+57 |     use super::*;
+   |         ^^^^^^^^
+
+warning: method `into_inner` is never used
+  --> src/daft-distributed/src/pipeline_node/mod.rs:63:12
+   |
+45 | impl MaterializedOutput {
+   | ----------------------- method in this implementation
+...
+63 |     pub fn into_inner(self) -> (PartitionRef, WorkerId) {
+   |            ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `viz_distributed_pipeline_mermaid` is never used
+  --> src/daft-distributed/src/pipeline_node/mod.rs:88:8
+   |
+88 | pub fn viz_distributed_pipeline_mermaid(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `viz_distributed_pipeline_ascii` is never used
+   --> src/daft-distributed/src/pipeline_node/mod.rs:102:8
+    |
+102 | pub fn viz_distributed_pipeline_ascii(root: &dyn DistributedPipelineNode, simple: bool) -> String {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `materialize_running` is never used
+   --> src/daft-distributed/src/pipeline_node/mod.rs:139:12
+    |
+119 | impl RunningPipelineNode {
+    | ------------------------ method in this implementation
+...
+139 |     pub fn materialize_running(
+    |            ^^^^^^^^^^^^^^^^^^^
+
+warning: method `execution_loop` is never used
+  --> src/daft-distributed/src/pipeline_node/in_memory_source.rs:57:14
+   |
+35 | impl InMemorySourceNode {
+   | ----------------------- method in this implementation
+...
+57 |     async fn execution_loop(
+   |              ^^^^^^^^^^^^^^
+
+warning: associated function `execution_loop` is never used
+  --> src/daft-distributed/src/pipeline_node/intermediate.rs:54:14
+   |
+33 | impl IntermediateNode {
+   | --------------------- associated function in this implementation
+...
+54 |     async fn execution_loop(
+   |              ^^^^^^^^^^^^^^
+
+warning: function `make_task_for_materialized_output` is never used
+   --> src/daft-distributed/src/pipeline_node/intermediate.rs:195:4
+    |
+195 | fn make_task_for_materialized_output(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `append_plan_to_task` is never used
+   --> src/daft-distributed/src/pipeline_node/intermediate.rs:239:4
+    |
+239 | fn append_plan_to_task(
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: methods `execution_loop` and `make_task_with_limit` are never used
+  --> src/daft-distributed/src/pipeline_node/limit.rs:59:14
+   |
+35 | impl LimitNode {
+   | -------------- methods in this implementation
+...
+59 |     async fn execution_loop(
+   |              ^^^^^^^^^^^^^^
+...
+99 |     fn make_task_with_limit(
+   |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `execution_loop` and `make_empty_scan_task` are never used
+   --> src/daft-distributed/src/pipeline_node/scan_source.rs:57:14
+    |
+35  | impl ScanSourceNode {
+    | ------------------- methods in this implementation
+...
+57  |     async fn execution_loop(
+    |              ^^^^^^^^^^^^^^
+...
+121 |     fn make_empty_scan_task(&self) -> DaftResult<SwordfishTask> {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: static `PLAN_ID_COUNTER` is never used
+  --> src/daft-distributed/src/plan/mod.rs:24:8
+   |
+24 | static PLAN_ID_COUNTER: AtomicUsize = AtomicUsize::new(0);
+   |        ^^^^^^^^^^^^^^^
+
+warning: associated items `from_logical_plan_builder`, `id`, and `stage_plan` are never used
+  --> src/daft-distributed/src/plan/mod.rs:33:12
+   |
+32 | impl DistributedPhysicalPlan {
+   | ---------------------------- associated items in this implementation
+33 |     pub fn from_logical_plan_builder(
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+46 |     pub fn id(&self) -> &str {
+   |            ^^
+...
+50 |     pub fn stage_plan(&self) -> &StagePlan {
+   |            ^^^^^^^^^^
+
+warning: type alias `PlanResultStream` is never used
+  --> src/daft-distributed/src/plan/mod.rs:55:17
+   |
+55 | pub(crate) type PlanResultStream = JoinableForwardingStream<ReceiverStream<MaterializedOutput>>;
+   |                 ^^^^^^^^^^^^^^^^
+
+warning: struct `PlanResult` is never constructed
+  --> src/daft-distributed/src/plan/mod.rs:57:19
+   |
+57 | pub(crate) struct PlanResult {
+   |                   ^^^^^^^^^^
+
+warning: associated items `new` and `into_stream` are never used
+  --> src/daft-distributed/src/plan/mod.rs:63:8
+   |
+62 | impl PlanResult {
+   | --------------- associated items in this implementation
+63 |     fn new(joinset: JoinSet<DaftResult<()>>, rx: Receiver<MaterializedOutput>) -> Self {
+   |        ^^^
+...
+67 |     pub fn into_stream(self) -> PlanResultStream {
+   |            ^^^^^^^^^^^
+
+warning: struct `PlanRunner` is never constructed
+  --> src/daft-distributed/src/plan/runner.rs:25:19
+   |
+25 | pub(crate) struct PlanRunner<W: Worker<Task = SwordfishTask>> {
+   |                   ^^^^^^^^^^
+
+warning: associated items `new`, `execute_stages`, and `run_plan` are never used
+  --> src/daft-distributed/src/plan/runner.rs:31:12
+   |
+30 | impl<W: Worker<Task = SwordfishTask>> PlanRunner<W> {
+   | --------------------------------------------------- associated items in this implementation
+31 |     pub fn new(worker_manager: Arc<dyn WorkerManager<Worker = W>>) -> Self {
+   |            ^^^
+...
+39 |     async fn execute_stages(
+   |              ^^^^^^^^^^^^^^
+...
+69 |     pub fn run_plan(
+   |            ^^^^^^^^
+
+warning: methods `task`, `with_notify_token`, and `with_new_task` are never used
+   --> src/daft-distributed/src/scheduling/scheduler/scheduler_actor.rs:227:12
+    |
+214 | impl<T: Task> SubmittableTask<T> {
+    | -------------------------------- methods in this implementation
+...
+227 |     pub fn task(&self) -> &T {
+    |            ^^^^
+...
+231 |     pub fn with_notify_token(mut self) -> (Self, OneshotReceiver<()>) {
+    |            ^^^^^^^^^^^^^^^^^
+...
+237 |     pub fn with_new_task(mut self, new_task: T) -> Self {
+    |            ^^^^^^^^^^^^^
+
+warning: methods `run_stage`, `repr_mermaid`, and `repr_ascii` are never used
+   --> src/daft-distributed/src/stage/mod.rs:93:19
+    |
+92  | impl Stage {
+    | ---------- methods in this implementation
+93  |     pub(crate) fn run_stage(
+    |                   ^^^^^^^^^
+...
+118 |     pub fn repr_mermaid(
+    |            ^^^^^^^^^^^^
+...
+150 |     pub fn repr_ascii(
+    |            ^^^^^^^^^^
+
+warning: struct `RunningStage` is never constructed
+   --> src/daft-distributed/src/stage/mod.rs:181:19
+    |
+181 | pub(crate) struct RunningStage {
+    |                   ^^^^^^^^^^^^
+
+warning: associated items `new`, `materialize`, and `into_stream` are never used
+   --> src/daft-distributed/src/stage/mod.rs:187:8
+    |
+186 | impl RunningStage {
+    | ----------------- associated items in this implementation
+187 |     fn new(running_pipeline_node: RunningPipelineNode, stage_context: StageContext) -> Self {
+    |        ^^^
+...
+194 |     pub fn materialize(
+    |            ^^^^^^^^^^^
+...
+202 |     pub fn into_stream(
+    |            ^^^^^^^^^^^
+
+warning: associated items `from_logical_plan`, `repr_mermaid`, `repr_ascii`, `num_stages`, `get_root_stage`, and `execution_config` are never used
+   --> src/daft-distributed/src/stage/mod.rs:261:19
+    |
+260 | impl StagePlan {
+    | -------------- associated items in this implementation
+261 |     pub(crate) fn from_logical_plan(
+    |                   ^^^^^^^^^^^^^^^^^
+...
+275 |     pub fn repr_mermaid(
+    |            ^^^^^^^^^^^^
+...
+286 |     pub fn repr_ascii(&self, plan_id: PlanID, simple: bool) -> DaftResult<String> {
+    |            ^^^^^^^^^^
+...
+292 |     pub(crate) fn num_stages(&self) -> usize {
+    |                   ^^^^^^^^^^
+...
+296 |     pub fn get_root_stage(&self) -> &Stage {
+    |            ^^^^^^^^^^^^^^
+...
+302 |     pub fn execution_config(&self) -> &Arc<DaftExecutionConfig> {
+    |            ^^^^^^^^^^^^^^^^
+
+warning: struct `StagePlanBuilder` is never constructed
+  --> src/daft-distributed/src/stage/stage_builder.rs:16:19
+   |
+16 | pub(crate) struct StagePlanBuilder {
+   |                   ^^^^^^^^^^^^^^^^
+
+warning: multiple associated items are never used
+   --> src/daft-distributed/src/stage/stage_builder.rs:22:12
+    |
+21  | impl StagePlanBuilder {
+    | --------------------- associated items in this implementation
+22  |     pub fn new() -> Self {
+    |            ^^^
+...
+29  |     fn next_stage_id(&mut self) -> StageID {
+    |        ^^^^^^^^^^^^^
+...
+35  |     fn can_translate_logical_plan(plan: &LogicalPlanRef) -> bool {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+67  |     fn build_stages_from_plan(&mut self, plan: LogicalPlanRef) -> DaftResult<StageID> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+...
+209 |     pub fn build_stage_plan(
+    |            ^^^^^^^^^^^^^^^^
+...
+222 |     fn create_input_channel(
+    |        ^^^^^^^^^^^^^^^^^^^^
+...
+239 |     fn create_output_channel(
+    |        ^^^^^^^^^^^^^^^^^^^^^
+
+warning: static `RUNTIME` is never used
+ --> src/daft-distributed/src/utils/runtime.rs:5:12
+  |
+5 | pub static RUNTIME: OnceLock<RuntimeRef> = OnceLock::new();
+  |            ^^^^^^^
+
+warning: static `PYO3_RUNTIME_INITIALIZED` is never used
+ --> src/daft-distributed/src/utils/runtime.rs:6:12
+  |
+6 | pub static PYO3_RUNTIME_INITIALIZED: Once = Once::new();
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_or_init_runtime` is never used
+ --> src/daft-distributed/src/utils/runtime.rs:8:8
+  |
+8 | pub fn get_or_init_runtime() -> &'static Runtime {
+  |        ^^^^^^^^^^^^^^^^^^^
+
+warning: `daft-distributed` (lib test) generated 29 warnings (run `cargo fix --lib -p daft-distributed --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3m 15s
+────────────
+ Nextest run ID 3984451c-c8a7-4d35-bc73-c34bf34153be with nextest profile: default
+    Starting 42 tests across 1 binary (8 tests skipped)
+        PASS [   0.219s] ( 1/42) daft-distributed pipeline_node::translate::tests::test_distributed_node_names
+        PASS [   0.225s] ( 2/42) daft-distributed pipeline_node::translate::tests::test_logical_in_memory_source_to_pipeline
+        PASS [   0.246s] ( 3/42) daft-distributed pipeline_node::translate::tests::test_logical_limit_to_pipeline
+        PASS [   0.251s] ( 4/42) daft-distributed pipeline_node::materialize::tests::test_materialize_running_pipeline_outputs_with_error
+        PASS [   0.254s] ( 5/42) daft-distributed scheduling::dispatcher::tests::test_dispatcher_actor_basic_task
+        PASS [   0.263s] ( 6/42) daft-distributed pipeline_node::translate::tests::test_logical_scan_source_to_pipeline
+        PASS [   0.266s] ( 7/42) daft-distributed scheduling::dispatcher::tests::test_dispatcher_actor_cancelled_task
+        PASS [   0.267s] ( 8/42) daft-distributed scheduling::dispatcher::tests::test_task_error_basic
+        PASS [   0.275s] ( 9/42) daft-distributed scheduling::dispatcher::tests::test_dispatcher_drops_if_task_panics
+        PASS [   0.276s] (10/42) daft-distributed pipeline_node::translate::tests::test_logical_project_to_pipeline
+        PASS [   0.277s] (11/42) daft-distributed scheduling::dispatcher::tests::test_task_panic_basic
+        PASS [   0.279s] (12/42) daft-distributed pipeline_node::translate::tests::test_map_logical_plan_to_pipeline
+        PASS [   0.302s] (13/42) daft-distributed pipeline_node::materialize::tests::test_materialize_all_pipeline_outputs_with_error
+        PASS [   0.318s] (14/42) daft-distributed pipeline_node::materialize::tests::test_materialize_running_pipeline_outputs_basic
+        PASS [   0.430s] (15/42) daft-distributed pipeline_node::materialize::tests::test_materialize_all_pipeline_outputs_basic
+        PASS [   0.225s] (16/42) daft-distributed scheduling::scheduler::default::tests::test_default_scheduler_hard_node_affinity_scheduling
+        PASS [   0.232s] (17/42) daft-distributed scheduling::scheduler::default::tests::test_default_scheduler_soft_node_affinity_scheduling
+        PASS [   0.215s] (18/42) daft-distributed scheduling::scheduler::default::tests::test_default_scheduler_spread_scheduling_heterogeneous_workers
+        PASS [   0.217s] (19/42) daft-distributed scheduling::scheduler::default::tests::test_default_scheduler_spread_scheduling_homogeneous_workers
+        PASS [   0.211s] (20/42) daft-distributed scheduling::scheduler::default::tests::test_scheduling_with_more_tasks_than_workers
+        PASS [   0.227s] (21/42) daft-distributed scheduling::scheduler::default::tests::test_default_scheduler_with_priority_scheduling
+        PASS [   0.219s] (22/42) daft-distributed scheduling::scheduler::default::tests::test_default_scheduler_with_resource_request_scheduling_big_tasks_first
+        PASS [   0.221s] (23/42) daft-distributed scheduling::scheduler::default::tests::test_scheduling_with_empty_workers
+        PASS [   0.249s] (24/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_error_from_task
+        PASS [   0.256s] (25/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_cancelled_task
+        PASS [   0.261s] (26/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_basic_task
+        PASS [   0.208s] (27/42) daft-distributed utils::joinset::tests::test_ordered_joinset_basic_mixed_success_error
+        PASS [   0.230s] (28/42) daft-distributed utils::joinset::tests::test_ordered_joinset_basic
+        PASS [   0.220s] (29/42) daft-distributed utils::joinset::tests::test_ordered_joinset_basic_error_handling
+        PASS [   0.196s] (30/42) daft-distributed utils::stream::tests::test_joinable_forwarding_stream_basic_error
+        PASS [   0.255s] (31/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_panic_from_task
+        PASS [   0.685s] (32/42) daft-distributed scheduling::dispatcher::tests::test_dispatcher_actor_multiple_tasks
+        PASS [   0.206s] (33/42) daft-distributed utils::stream::tests::test_joinable_forwarding_stream_basic
+        PASS [   0.181s] (34/42) daft-distributed utils::stream::tests::test_joinable_forwarding_stream_basic_panic
+        PASS [   0.399s] (35/42) daft-distributed utils::joinset::tests::test_ordered_joinset_basic_mixed_success_error_out_of_order
+        PASS [   0.410s] (36/42) daft-distributed utils::joinset::tests::test_ordered_joinset_basic_out_of_order
+        PASS [   1.834s] (37/42) daft-distributed pipeline_node::materialize::tests::test_materialize_running_pipeline_outputs_large
+        PASS [   2.418s] (38/42) daft-distributed pipeline_node::materialize::tests::test_materialize_all_pipeline_outputs_large
+        PASS [  12.114s] (39/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_multiple_concurrent_tasks_with_cancelled_tasks
+        PASS [  27.229s] (40/42) daft-distributed utils::joinset::tests::test_ordered_joinset_large_out_of_order
+        SLOW [> 60.000s] (─────) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_multiple_concurrent_tasks
+        SLOW [> 60.000s] (─────) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_multiple_tasks
+        PASS [ 102.056s] (41/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_multiple_concurrent_tasks
+        PASS [ 102.726s] (42/42) daft-distributed scheduling::scheduler::scheduler_actor::tests::test_scheduler_actor_multiple_tasks
+────────────
+     Summary [ 103.047s] 42 tests run: 42 passed (2 slow), 8 skipped
+reward=1 graded=42 found=8 failed=0 parsed=42 framework=cargo exit_code=0

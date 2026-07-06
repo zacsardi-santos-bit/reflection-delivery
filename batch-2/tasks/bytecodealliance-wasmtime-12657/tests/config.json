@@ -1,0 +1,25 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p wasmtime-internal-component-macro",
+  "test_files": [
+    "crates/component-macro/tests/codegen.rs",
+    "crates/component-macro/tests/expanded/resources-export.rs",
+    "crates/component-macro/tests/expanded/resources-export_async.rs",
+    "crates/component-macro/tests/expanded/resources-export_concurrent.rs",
+    "crates/component-macro/tests/expanded/resources-export_tracing_async.rs",
+    "crates/component-macro/tests/expanded/resources-import.rs",
+    "crates/component-macro/tests/expanded/resources-import_async.rs",
+    "crates/component-macro/tests/expanded/resources-import_concurrent.rs",
+    "crates/component-macro/tests/expanded/resources-import_tracing_async.rs",
+    "crates/component-macro/tests/expanded/unstable-features.rs",
+    "crates/component-macro/tests/expanded/unstable-features_async.rs",
+    "crates/component-macro/tests/expanded/unstable-features_concurrent.rs",
+    "crates/component-macro/tests/expanded/unstable-features_tracing_async.rs"
+  ],
+  "num_test_files": 13,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) wasmtime-internal-component-macro::expanded expand_wits"
+  ],
+  "PASS_TO_PASS": []
+}

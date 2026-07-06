@@ -1,0 +1,31 @@
+patching file crates/targets/x86_64_gnu/src/lib.rs
+   Compiling windows_x86_64_gnu v0.42.0 (/workspace/repo/crates/targets/x86_64_gnu)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.88s
+────────────
+ Nextest run ID 74ac09ee-4e12-472f-b46d-152d370dbaed with nextest profile: default
+    Starting 1 test across 1 binary
+        FAIL [   0.008s] (1/1) windows_x86_64_gnu tests::test_crate_version
+  stdout ───
+
+    running 1 test
+    test tests::test_crate_version ... FAILED
+
+    failures:
+
+    failures:
+        tests::test_crate_version
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'tests::test_crate_version' (236) panicked at crates/targets/x86_64_gnu/src/lib.rs:7:9:
+    assertion failed: env!("CARGO_PKG_VERSION") == "0.43.0"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.010s] 1 test run: 0 passed, 1 failed, 0 skipped
+        FAIL [   0.008s] (1/1) windows_x86_64_gnu tests::test_crate_version
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/providers/microsoft/azure/tests/unit/microsoft/azure/hooks/test_synapse_pipeline.py -v",
+  "test_files": [
+    "providers/microsoft/azure/tests/unit/microsoft/azure/hooks/test_synapse_pipeline.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_get_connection_by_credential_client_secret",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_get_conn_by_default_azure_credential",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_run_pipeline",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_get_pipeline_run",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_cancel_run_pipeline",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Succeeded_expected_Succeeded]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Failed_expected_Succeeded]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Cancelled_expected_Succeeded]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_InProgress_expected_Succeeded]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Queued_expected_Succeeded]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Canceling_expected_Succeeded]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Succeeded_expected_AnyTerminalStatus]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Failed_expected_AnyTerminalStatus]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineHook::test_wait_for_pipeline_run_status[run_status_Cancelled_expected_AnyTerminalStatus]",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_get_pipeline_run_status",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_get_async_conn_client_secret",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_get_async_conn_default_credential",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_get_async_conn_missing_tenant_id",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_refresh_conn",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_close",
+    "providers.microsoft.azure.tests.unit.microsoft.azure.hooks.test_synapse_pipeline.TestAzureSynapsePipelineAsyncHook::test_async_context_manager_calls_close"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/ClickHouse/ClickHouse/pull/102518"
+source_type = "pr"
+
+[task]
+name = "ClickHouse/ClickHouse"
+description = "I'm hitting a server crash in ClickHouse when I try to query a Tuple subcolumn whose name has a dot in it. Here's the setup: I've got a Tuple column with two elements, one is a JSON type with a sho..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["python", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:clickhouse-clickhouse-102518"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "medium"
+difficulty_explanation = "medium: solvable by a frontier model (opus-4.8 pass@8>0)"
+pass_at_k_opus_4_8 = "3/13"
+category = "Debugging and Repair"
+subcategory = "Runtime bug repair"
+objective_labels = ["Fix"]
+artifact_type_labels = ["Codebase", "Database or structured store"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

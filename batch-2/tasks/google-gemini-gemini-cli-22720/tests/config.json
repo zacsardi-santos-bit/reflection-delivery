@@ -1,0 +1,31 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --coverage.enabled=false src/config/config.test.ts src/config/models.test.ts || true; cd /workspace/repo && npm run build --workspace @google/gemini-cli-core > /dev/null 2>&1 || true; cd /workspace/repo/packages/cli && npx vitest run --coverage.enabled=false src/ui/components/ModelDialog.test.tsx",
+  "test_files": [
+    "packages/cli/src/ui/components/ModelDialog.test.tsx",
+    "packages/core/src/config/config.test.ts",
+    "packages/core/src/config/models.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> renders the \"manual\" view initially for users with no pro access and filters Pro models with correct order",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> Preview Models shows Flash Lite Preview model for free tier users"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> renders the initial \"main\" view correctly",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> closes dialog on escape in \"manual\" view for users with no pro access",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> switches to \"manual\" view when \"Manual\" is selected and uses getDisplayString for models",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> sets model and closes when a model is selected in \"main\" view",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> sets model and closes when a model is selected in \"manual\" view",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> toggles persist mode with Tab key",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> closes dialog on escape in \"main\" view",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> goes back to \"main\" view on escape in \"manual\" view",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> shows the preferred manual model in the main view option using getDisplayString",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> Preview Models shows Auto (Preview) in main view when access is granted",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> Preview Models shows Gemini 3 models in manual view when Gemini 3.1 is NOT launched",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> Preview Models shows Gemini 3.1 models in manual view when Gemini 3.1 IS launched",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> Preview Models uses custom tools model when Gemini 3.1 IS launched and auth is Gemini API Key",
+    "/workspace/repo/packages/cli/src/ui/components/ModelDialog.test.tsx::<ModelDialog /> Preview Models hides Flash Lite Preview model for users with pro access"
+  ]
+}

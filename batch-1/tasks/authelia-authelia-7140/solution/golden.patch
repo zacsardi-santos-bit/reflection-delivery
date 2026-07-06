@@ -1,0 +1,452 @@
+diff --git a/docs/content/configuration/miscellaneous/logging.md b/docs/content/configuration/miscellaneous/logging.md
+index 7d0153cb6..0865e003c 100644
+--- a/docs/content/configuration/miscellaneous/logging.md
++++ b/docs/content/configuration/miscellaneous/logging.md
+@@ -86,6 +86,10 @@ default uses the [RFC3339] layout, but optionally can be suffixed with the
+ [Go Layout](https://pkg.go.dev/time#pkg-constants) semantics in the format of `{datetime:<layout>}` where `<layout>` is
+ the layout supported by Go.
+ 
++When using a log file sending the Authelia process a SIGHUP will cause it to close and reopen the current log file and
++truncate it. This is useful for log rotation services which can force a reopen so the file descriptor open does not
++continue to append to the old log file.
++
+ #### File Path Examples
+ 
+ __Standard Example:__
+diff --git a/internal/commands/const.go b/internal/commands/const.go
+index 7009fc91d..9582426ef 100644
+--- a/internal/commands/const.go
++++ b/internal/commands/const.go
+@@ -847,6 +847,7 @@ const (
+ 
+ 	serviceTypeServer  = "server"
+ 	serviceTypeWatcher = "watcher"
++	serviceTypeSignal  = "signal"
+ 
+ 	logFieldProvider            = "provider"
+ 	logMessageStartupCheckError = "Error occurred running a startup check"
+diff --git a/internal/commands/context.go b/internal/commands/context.go
+index c36a17996..cb50ea1c7 100644
+--- a/internal/commands/context.go
++++ b/internal/commands/context.go
+@@ -83,6 +83,21 @@ type CmdCtxConfig struct {
+ // CobraRunECmd describes a function that can be used as a *cobra.Command RunE, PreRunE, or PostRunE.
+ type CobraRunECmd func(cmd *cobra.Command, args []string) (err error)
+ 
++// GetLogger returns the *logrus.Logger satisfying part of the ServiceCtx.
++func (ctx *CmdCtx) GetLogger() *logrus.Logger {
++	return ctx.log
++}
++
++// GetProviders returns middlewares.Providers satisfying part of the ServiceCtx.
++func (ctx *CmdCtx) GetProviders() middlewares.Providers {
++	return ctx.providers
++}
++
++// GetConfiguration returns *schema.Configuration satisfying part of the ServiceCtx.
++func (ctx *CmdCtx) GetConfiguration() *schema.Configuration {
++	return ctx.config
++}
++
+ func (ctx *CmdCtx) CheckSchemaVersion() (err error) {
+ 	if ctx.providers.StorageProvider == nil {
+ 		return fmt.Errorf("storage not loaded")
+diff --git a/internal/commands/services.go b/internal/commands/services.go
+index 653e0dc9b..332a29357 100644
+--- a/internal/commands/services.go
++++ b/internal/commands/services.go
+@@ -18,6 +18,9 @@ import (
+ 	"golang.org/x/sync/errgroup"
+ 
+ 	"github.com/authelia/authelia/v4/internal/authentication"
++	"github.com/authelia/authelia/v4/internal/configuration/schema"
++	"github.com/authelia/authelia/v4/internal/logging"
++	"github.com/authelia/authelia/v4/internal/middlewares"
+ 	"github.com/authelia/authelia/v4/internal/server"
+ )
+ 
+@@ -83,6 +86,24 @@ func NewFileWatcherService(name, path string, reload ProviderReload, log *logrus
+ 	return service, nil
+ }
+ 
++// NewSignalService creates a new SignalService with the appropriate logger etc.
++func NewSignalService(name string, action func() (err error), log *logrus.Logger, signals ...os.Signal) (service *SignalService) {
++	return &SignalService{
++		name:    name,
++		signals: signals,
++		action:  action,
++		log:     log.WithFields(map[string]any{logFieldService: serviceTypeSignal, serviceTypeSignal: name}),
++	}
++}
++
++type ServiceCtx interface {
++	GetLogger() *logrus.Logger
++	GetProviders() middlewares.Providers
++	GetConfiguration() *schema.Configuration
++
++	context.Context
++}
++
+ // ProviderReload represents the required methods to support reloading a provider.
+ type ProviderReload interface {
+ 	Reload() (reloaded bool, err error)
+@@ -246,46 +267,113 @@ func (service *FileWatcherService) Log() *logrus.Entry {
+ 	return service.log
+ }
+ 
+-func svcSvrMainFunc(ctx *CmdCtx) (service Service) {
+-	switch svr, listener, paths, isTLS, err := server.CreateDefaultServer(ctx.config, ctx.providers); {
++// SignalService is a Service which performs actions on signals.
++type SignalService struct {
++	name    string
++	signals []os.Signal
++	action  func() (err error)
++	log     *logrus.Entry
++
++	notify chan os.Signal
++	quit   chan struct{}
++}
++
++// ServiceType returns the service type for this service, which is always 'server'.
++func (service *SignalService) ServiceType() string {
++	return serviceTypeSignal
++}
++
++// ServiceName returns the individual name for this service.
++func (service *SignalService) ServiceName() string {
++	return service.name
++}
++
++// Run the ServerService.
++func (service *SignalService) Run() (err error) {
++	service.quit = make(chan struct{})
++
++	service.notify = make(chan os.Signal, 1)
++
++	signal.Notify(service.notify, service.signals...)
++
++	for {
++		select {
++		case s := <-service.notify:
++			if err = service.action(); err != nil {
++				service.log.WithError(err).Error("Error occurred executing service action.")
++			} else {
++				service.log.WithFields(map[string]any{"signal-received": s.String()}).Debug("Successfully executed service action.")
++			}
++		case <-service.quit:
++			return
++		}
++	}
++}
++
++// Shutdown the ServerService.
++func (service *SignalService) Shutdown() {
++	signal.Stop(service.notify)
++
++	service.quit <- struct{}{}
++}
++
++// Log returns the *logrus.Entry of the ServerService.
++func (service *SignalService) Log() *logrus.Entry {
++	return service.log
++}
++
++func svcSvrMainFunc(ctx ServiceCtx) (service Service) {
++	switch svr, listener, paths, isTLS, err := server.CreateDefaultServer(ctx.GetConfiguration(), ctx.GetProviders()); {
+ 	case err != nil:
+-		ctx.log.WithError(err).Fatal("Create Server Service (main) returned error")
++		ctx.GetLogger().WithError(err).Fatal("Create Server Service (main) returned error")
+ 	case svr != nil && listener != nil:
+-		service = NewServerService("main", svr, listener, paths, isTLS, ctx.log)
++		service = NewServerService("main", svr, listener, paths, isTLS, ctx.GetLogger())
+ 	default:
+-		ctx.log.Fatal("Create Server Service (main) failed")
++		ctx.GetLogger().Fatal("Create Server Service (main) failed")
+ 	}
+ 
+ 	return service
+ }
+ 
+-func svcSvrMetricsFunc(ctx *CmdCtx) (service Service) {
+-	switch svr, listener, paths, isTLS, err := server.CreateMetricsServer(ctx.config, ctx.providers); {
++func svcSvrMetricsFunc(ctx ServiceCtx) (service Service) {
++	switch svr, listener, paths, isTLS, err := server.CreateMetricsServer(ctx.GetConfiguration(), ctx.GetProviders()); {
+ 	case err != nil:
+-		ctx.log.WithError(err).Fatal("Create Server Service (metrics) returned error")
++		ctx.GetLogger().WithError(err).Fatal("Create Server Service (metrics) returned error")
+ 	case svr != nil && listener != nil:
+-		service = NewServerService("metrics", svr, listener, paths, isTLS, ctx.log)
++		service = NewServerService("metrics", svr, listener, paths, isTLS, ctx.GetLogger())
+ 	default:
+-		ctx.log.Debug("Create Server Service (metrics) skipped")
++		ctx.GetLogger().Debug("Create Server Service (metrics) skipped")
+ 	}
+ 
+ 	return service
+ }
+ 
+-func svcWatcherUsersFunc(ctx *CmdCtx) (service Service) {
++func svcWatcherUsersFunc(ctx ServiceCtx) (service Service) {
+ 	var err error
+ 
+-	if ctx.config.AuthenticationBackend.File != nil && ctx.config.AuthenticationBackend.File.Watch {
+-		provider := ctx.providers.UserProvider.(*authentication.FileUserProvider)
++	config := ctx.GetConfiguration()
++
++	if config.AuthenticationBackend.File != nil && config.AuthenticationBackend.File.Watch {
++		provider := ctx.GetProviders().UserProvider.(*authentication.FileUserProvider)
+ 
+-		if service, err = NewFileWatcherService("users", ctx.config.AuthenticationBackend.File.Path, provider, ctx.log); err != nil {
+-			ctx.log.WithError(err).Fatal("Create Watcher Service (users) returned error")
++		if service, err = NewFileWatcherService("users", config.AuthenticationBackend.File.Path, provider, ctx.GetLogger()); err != nil {
++			ctx.GetLogger().WithError(err).Fatal("Create Watcher Service (users) returned error")
+ 		}
+ 	}
+ 
+ 	return service
+ }
+ 
++func svcSignalLogReOpenFunc(ctx ServiceCtx) (service Service) {
++	config := ctx.GetConfiguration()
++
++	if config.Log.FilePath == "" {
++		return nil
++	}
++
++	return NewSignalService("log-reload", logging.Reopen, ctx.GetLogger(), syscall.SIGHUP)
++}
++
+ func connectionType(isTLS bool) string {
+ 	if isTLS {
+ 		return "TLS"
+@@ -294,7 +382,7 @@ func connectionType(isTLS bool) string {
+ 	return "non-TLS"
+ }
+ 
+-func servicesRun(ctx *CmdCtx) {
++func servicesRun(ctx ServiceCtx) {
+ 	cctx, cancel := context.WithCancel(ctx)
+ 
+ 	group, cctx := errgroup.WithContext(cctx)
+@@ -311,9 +399,9 @@ func servicesRun(ctx *CmdCtx) {
+ 		services []Service
+ 	)
+ 
+-	for _, serviceFunc := range []func(ctx *CmdCtx) Service{
++	for _, serviceFunc := range []func(ctx ServiceCtx) Service{
+ 		svcSvrMainFunc, svcSvrMetricsFunc,
+-		svcWatcherUsersFunc,
++		svcWatcherUsersFunc, svcSignalLogReOpenFunc,
+ 	} {
+ 		if service := serviceFunc(ctx); service != nil {
+ 			service.Log().Trace("Service Loaded")
+@@ -324,22 +412,22 @@ func servicesRun(ctx *CmdCtx) {
+ 		}
+ 	}
+ 
+-	ctx.log.Info("Startup complete")
++	ctx.GetLogger().Info("Startup complete")
+ 
+ 	select {
+ 	case s := <-quit:
+-		ctx.log.WithField("signal", s.String()).Debug("Shutdown initiated due to process signal")
++		ctx.GetLogger().WithField("signal", s.String()).Debug("Shutdown initiated due to process signal")
+ 	case <-cctx.Done():
+-		ctx.log.Debug("Shutdown initiated due to context completion")
++		ctx.GetLogger().Debug("Shutdown initiated due to context completion")
+ 	}
+ 
+ 	cancel()
+ 
+-	ctx.log.Info("Shutdown initiated")
++	ctx.GetLogger().Info("Shutdown initiated")
+ 
+ 	wgShutdown := &sync.WaitGroup{}
+ 
+-	ctx.log.Tracef("Shutdown of %d services is required", len(services))
++	ctx.GetLogger().Tracef("Shutdown of %d services is required", len(services))
+ 
+ 	for _, service := range services {
+ 		wgShutdown.Add(1)
+@@ -359,13 +447,13 @@ func servicesRun(ctx *CmdCtx) {
+ 
+ 	var err error
+ 
+-	if err = ctx.providers.StorageProvider.Close(); err != nil {
+-		ctx.log.WithError(err).Error("Error occurred closing database connections")
++	if err = ctx.GetProviders().StorageProvider.Close(); err != nil {
++		ctx.GetLogger().WithError(err).Error("Error occurred closing database connections")
+ 	}
+ 
+ 	if err = group.Wait(); err != nil {
+-		ctx.log.WithError(err).Error("Error occurred waiting for shutdown")
++		ctx.GetLogger().WithError(err).Error("Error occurred waiting for shutdown")
+ 	}
+ 
+-	ctx.log.Info("Shutdown complete")
++	ctx.GetLogger().Info("Shutdown complete")
+ }
+diff --git a/internal/logging/const.go b/internal/logging/const.go
+index 5b6f943f0..47e11be08 100644
+--- a/internal/logging/const.go
++++ b/internal/logging/const.go
+@@ -53,4 +53,5 @@ const (
+ var (
+ 	stacktrace       sync.Once
+ 	reFormatFilePath = regexp.MustCompile(`(%d|\{datetime(:([^}]+))?})`)
++	lf               *File
+ )
+diff --git a/internal/logging/file.go b/internal/logging/file.go
+new file mode 100644
+index 000000000..3409a48e8
+--- /dev/null
++++ b/internal/logging/file.go
+@@ -0,0 +1,96 @@
++package logging
++
++import (
++	"fmt"
++	"os"
++	"sync"
++	"time"
++)
++
++func NewFile(name string) *File {
++	return &File{
++		mu:   sync.Mutex{},
++		name: name,
++	}
++}
++
++type File struct {
++	mu   sync.Mutex
++	file *os.File
++	name string
++}
++
++// Open or reopen the file.
++func (f *File) Open() (err error) {
++	f.mu.Lock()
++
++	defer f.mu.Unlock()
++
++	if f.file != nil {
++		return fmt.Errorf("error opening log file: file is already open")
++	}
++
++	var file *os.File
++
++	if file, err = os.OpenFile(FormatFilePath(f.name, time.Now()), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600); err != nil {
++		return fmt.Errorf("error opening log file: %w", err)
++	}
++
++	f.file = file
++
++	return nil
++}
++
++func (f *File) Reopen() (err error) {
++	f.mu.Lock()
++
++	defer f.mu.Unlock()
++
++	if f.file == nil {
++		return fmt.Errorf("error reopening log file: file isn't open")
++	}
++
++	if err = f.file.Close(); err != nil {
++		return fmt.Errorf("error reopning log file: error closing current log file: %w", err)
++	}
++
++	f.file = nil
++
++	var file *os.File
++
++	if file, err = os.OpenFile(FormatFilePath(f.name, time.Now()), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600); err != nil {
++		return fmt.Errorf("error reopning log file: error opening new log file: %w", err)
++	}
++
++	f.file = file
++
++	return nil
++}
++
++// Close the file.
++func (f *File) Close() (err error) {
++	f.mu.Lock()
++
++	defer f.mu.Unlock()
++
++	if err = f.file.Close(); err != nil {
++		return fmt.Errorf("error closing log file: error closing current log file: %w", err)
++	}
++
++	f.file = nil
++
++	return nil
++}
++
++// Write to the file.
++func (f *File) Write(b []byte) (n int, err error) {
++	f.mu.Lock()
++
++	defer f.mu.Unlock()
++
++	if f.file == nil {
++		return 0, fmt.Errorf("error writing log file: file is not open")
++	}
++
++	return f.file.Write(b)
++}
+diff --git a/internal/logging/logger.go b/internal/logging/logger.go
+index e83c71145..569ad06e6 100644
+--- a/internal/logging/logger.go
++++ b/internal/logging/logger.go
+@@ -1,9 +1,9 @@
+ package logging
+ 
+ import (
++	"fmt"
+ 	"io"
+ 	"os"
+-	"time"
+ 
+ 	logrus_stack "github.com/Gurpartap/logrus-stack"
+ 	"github.com/sirupsen/logrus"
+@@ -59,9 +59,9 @@ func ConfigureLogger(config schema.Log, log bool) (err error) {
+ 
+ 	switch {
+ 	case config.FilePath != "":
+-		var file *os.File
++		lf = NewFile(config.FilePath)
+ 
+-		if file, err = os.OpenFile(FormatFilePath(config.FilePath, time.Now()), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600); err != nil {
++		if err = lf.Open(); err != nil {
+ 			return err
+ 		}
+ 
+@@ -72,7 +72,7 @@ func ConfigureLogger(config schema.Log, log bool) (err error) {
+ 			})
+ 		}
+ 
+-		writers = []io.Writer{file}
++		writers = []io.Writer{lf}
+ 
+ 		if config.KeepStdout {
+ 			writers = append(writers, os.Stdout)
+@@ -86,6 +86,15 @@ func ConfigureLogger(config schema.Log, log bool) (err error) {
+ 	return nil
+ }
+ 
++// Reopen handles safely reopening the log file.
++func Reopen() (err error) {
++	if lf == nil {
++		return fmt.Errorf("error reopening log file: file is not configured or open")
++	}
++
++	return lf.Reopen()
++}
++
+ func setLevelStr(level string, log bool) {
+ 	logrus.SetLevel(LogLevel(level).Level())
+ 

@@ -1,0 +1,29 @@
+{
+    "id": "32561132-9564-411a-96c5-f622f02d847d",
+    "started_at": "2026-07-04T15:42:15.583276",
+    "finished_at": "2026-07-04T15:43:01.463121",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__scipy-scipy-21483": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "scipy-scipy-21483__Jz4JF5o"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

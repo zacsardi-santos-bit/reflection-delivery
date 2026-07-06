@@ -1,0 +1,29 @@
+{
+    "id": "33eaf4db-89e7-468a-820a-a19b39982fd2",
+    "started_at": "2026-07-04T15:36:46.084074",
+    "finished_at": "2026-07-04T15:37:32.019153",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__netlify-cli-7019": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "netlify-cli-7019__ngHG2XV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "test_framework": "vitest",
+  "test_command": "service postgresql start && sleep 3 && cd /workspace/repo/packages/pg-meta && DATABASE_URL=postgresql://postgres:postgres@localhost:5432 npx vitest run test/query/table-row-query.test.ts --reporter=verbose",
+  "test_files": [
+    "packages/pg-meta/test/query/table-row-query.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getDefaultOrderByColumns should return empty array when no primary keys and no columns exist",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should handle array of enums correctly",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should handle array columns correctly",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate basic SELECT SQL for a table",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should truncate large arrays to maxArraySize elements if their size is > maxCharacters",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should truncate fields to maxCharacters avoid",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL with filtering",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL with sorting",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL for special/quoted column names",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL for tables with large text fields",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL with pagination",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL for view",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL for materialized view",
+    "/workspace/repo/packages/pg-meta/test/query/table-row-query.test.ts::Table Row Query getTableRowsSql should generate SQL for foreign table"
+  ],
+  "PASS_TO_PASS": []
+}

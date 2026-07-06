@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/pandas/tests/indexes/categorical/test_setops.py -v",
+  "test_files": [
+    "pandas/tests/indexes/categorical/test_setops.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "pandas.tests.indexes.categorical.test_setops::test_setop_mismatched_category_order[union]",
+    "pandas.tests.indexes.categorical.test_setops::test_setop_mismatched_category_order[intersection]"
+  ],
+  "PASS_TO_PASS": [
+    "pandas.tests.indexes.categorical.test_setops::test_difference_with_na[None]",
+    "pandas.tests.indexes.categorical.test_setops::test_difference_with_na[nan]"
+  ]
+}

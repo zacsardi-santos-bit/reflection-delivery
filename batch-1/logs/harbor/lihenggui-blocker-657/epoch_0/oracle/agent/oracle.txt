@@ -1,0 +1,10 @@
+patching file core/data/src/main/kotlin/com/merxury/blocker/core/data/di/DataModule.kt
+patching file core/data/src/main/kotlin/com/merxury/blocker/core/data/respository/componentdetail/ComponentDetailRepository.kt
+patching file core/data/src/main/kotlin/com/merxury/blocker/core/data/respository/componentdetail/LocalComponentDetailRepository.kt
+patching file core/domain/src/main/kotlin/com/merxury/blocker/core/domain/components/SearchComponentsUseCase.kt
+patching file core/domain/src/main/kotlin/com/merxury/blocker/core/domain/detail/SearchMatchedRuleInAppUseCase.kt
+patching file core/domain/src/main/kotlin/com/merxury/blocker/core/domain/model/ComponentSearchResult.kt (renamed from core/data/src/main/kotlin/com/merxury/blocker/core/data/respository/componentdetail/IComponentDetailRepository.kt)
+patching file core/testing/src/main/kotlin/com/merxury/blocker/core/testing/controller/FakeServiceController.kt
+patching file core/testing/src/main/kotlin/com/merxury/blocker/core/testing/repository/TestComponentDetailRepository.kt
+patching file feature/appdetail/src/main/kotlin/com/merxury/blocker/feature/appdetail/AppDetailViewModel.kt
+patching file feature/appdetail/src/main/kotlin/com/merxury/blocker/feature/appdetail/componentdetail/ComponentDetailViewModel.kt

@@ -1,0 +1,29 @@
+{
+    "id": "c2f422c9-81b3-4836-95b4-00e5c61a55a3",
+    "started_at": "2026-07-06T12:21:00.191208",
+    "finished_at": "2026-07-06T12:22:56.522872",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__rancher-rancher-53913": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "rancher-rancher-53913__Hf5t4Rr"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

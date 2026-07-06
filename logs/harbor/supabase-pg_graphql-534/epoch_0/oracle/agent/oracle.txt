@@ -1,2 +1,0 @@
-patching file docs/changelog.md
-patching file src/sql_types.rs

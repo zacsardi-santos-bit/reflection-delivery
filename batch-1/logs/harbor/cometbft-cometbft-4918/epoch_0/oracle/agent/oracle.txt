@@ -1,0 +1,2 @@
+patching file .changelog/unreleased/bug-fixes/2025-001-malicious-peer-can-make-node-stuck-in-blocksync.md
+patching file internal/blocksync/pool.go

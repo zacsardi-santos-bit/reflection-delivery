@@ -1,5 +1,0 @@
-patching file doc/releases/changelog-dev.md
-patching file pennylane/templates/subroutines/__init__.py
-patching file pennylane/templates/subroutines/mod_exp.py
-patching file pennylane/templates/subroutines/out_adder.py
-patching file pennylane/templates/subroutines/out_multiplier.py

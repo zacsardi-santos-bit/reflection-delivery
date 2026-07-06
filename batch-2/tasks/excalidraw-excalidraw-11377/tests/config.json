@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run packages/excalidraw/tests/MermaidToExcalidraw.test.tsx packages/excalidraw/tests/laser.test.tsx packages/excalidraw/tests/animation.test.ts",
+  "test_files": [
+    "packages/excalidraw/tests/MermaidToExcalidraw.test.tsx",
+    "packages/excalidraw/tests/__snapshots__/MermaidToExcalidraw.test.tsx.snap",
+    "packages/excalidraw/tests/animation.test.ts",
+    "packages/excalidraw/tests/laser.test.tsx"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/excalidraw/tests/animation.test.ts::AnimationController starts a new animation after the previous last animation was cancelled",
+    "/workspace/repo/packages/excalidraw/tests/animation.test.ts::AnimationController cancels a frame scheduled during a tick if no animations remain",
+    "/workspace/repo/packages/excalidraw/tests/laser.test.tsx::laser tool interactions cleans up remote laser trails when the last collaborator leaves"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/excalidraw/tests/MermaidToExcalidraw.test.tsx::Test <MermaidToExcalidraw/> should open mermaid popup when active tool is mermaid",
+    "/workspace/repo/packages/excalidraw/tests/MermaidToExcalidraw.test.tsx::Test <MermaidToExcalidraw/> should show error in preview when mermaid library throws error",
+    "/workspace/repo/packages/excalidraw/tests/laser.test.tsx::laser tool interactions opens links while using the laser tool",
+    "/workspace/repo/packages/excalidraw/tests/laser.test.tsx::laser tool interactions activates embeddables on center click while using the laser tool",
+    "/workspace/repo/packages/excalidraw/tests/laser.test.tsx::laser tool interactions doesn't pan in view mode when laser tool is active"
+  ]
+}

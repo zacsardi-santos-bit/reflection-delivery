@@ -1,0 +1,5 @@
+I'm working on Ray's runtime environment setup module and I need to add some utility functions that are missing. Right now, when the codebase tries to import several helper functions from the runtime environment setup module, the import fails because those functions don't exist yet. This import failure cascades and breaks several existing tests that are otherwise unrelated to these utilities.
+
+Specifically, the module needs three new utility functions: one that returns the currently-running Python version as a formatted string, one that reads and returns Ray's own dependency list from the source tree, and one that injects the local Ray source directory into a target conda environment so that environment can find and use the locally-built Ray. These are needed to support a local development mode where conda environments are bootstrapped from the current source checkout rather than requiring a published wheel.
+
+Could you add these three utility functions to the runtime environment setup module so that the module-level imports succeed and the existing tests can run again?

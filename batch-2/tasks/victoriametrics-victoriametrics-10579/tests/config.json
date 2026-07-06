@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "CGO_ENABLED=1 go build -o bin/victoria-metrics ./app/victoria-metrics && go test -json ./apptest/tests -run TestSingleTagSeries -count=1",
+  "test_files": [
+    "apptest/model.go",
+    "apptest/tests/graphite_test.go",
+    "apptest/vmselect.go",
+    "apptest/vmsingle.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/VictoriaMetrics/VictoriaMetrics/apptest/tests::TestSingleTagSeries"
+  ],
+  "PASS_TO_PASS": []
+}

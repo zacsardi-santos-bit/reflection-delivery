@@ -1,0 +1,21 @@
+patching file python/ray/tests/test_runtime_env_complicated.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.16, pytest-8.3.5, pluggy-1.5.0 -- /opt/conda/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo/python
+plugins: timeout-2.4.0
+collecting ... collected 21 items / 17 deselected / 4 selected
+
+python/ray/tests/test_runtime_env_complicated.py::test_get_conda_env_dir PASSED [ 25%]
+python/ray/tests/test_runtime_env_complicated.py::test_inject_dependencies PASSED [ 50%]
+python/ray/tests/test_runtime_env_complicated.py::test_conda_input_filepath[True] PASSED [ 75%]
+python/ray/tests/test_runtime_env_complicated.py::test_conda_input_filepath[False] PASSED [100%]
+
+=============================== warnings summary ===============================
+python/ray/autoscaler/_private/cli_logger.py:59
+  /workspace/repo/python/ray/autoscaler/_private/cli_logger.py:59: FutureWarning: Not all Ray CLI dependencies were found. In Ray 1.4+, the Ray CLI, autoscaler, and dashboard will only be usable via `pip install 'ray[default]'`. Please update your install command.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================= 4 passed, 17 deselected, 1 warning in 0.06s ==================
+reward=1 graded=4 found=0 failed=0 parsed=2 framework=pytest exit_code=0

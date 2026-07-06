@@ -1,0 +1,29 @@
+{
+    "id": "4d427ec4-4413-4f29-b90d-04a9f734375e",
+    "started_at": "2026-07-04T15:37:47.030243",
+    "finished_at": "2026-07-04T15:40:00.983877",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tursodatabase-libsql-939": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tursodatabase-libsql-939__85uxckz"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

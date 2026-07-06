@@ -1,0 +1,3 @@
+patching file processing/src/main/java/org/apache/druid/collections/CircularList.java
+patching file server/src/main/java/org/apache/druid/metadata/SegmentsMetadataManager.java
+patching file server/src/main/java/org/apache/druid/server/coordinator/duty/KillUnusedSegments.java

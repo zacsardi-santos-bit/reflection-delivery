@@ -1,0 +1,1 @@
+cd /workspace/repo && npm install --no-audit --no-fund 2>&1 | tail -5 && npx mocha test/unit/remote-config/condition-evaluator.spec.ts --require ts-node/register

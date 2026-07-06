@@ -1,0 +1,16 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/oxfmt && pnpm build-napi && pnpm build-js && pnpm vitest run test/lsp/outside_workspace/outside_workspace.test.ts",
+  "test_files": [
+    "apps/oxfmt/test/lsp/outside_workspace/__snapshots__/outside_workspace.test.ts.snap",
+    "apps/oxfmt/test/lsp/outside_workspace/outside_workspace.test.ts",
+    "apps/oxfmt/test/lsp/utils.ts",
+    "crates/oxc_language_server/src/tests.rs"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/oxfmt/test/lsp/outside_workspace/outside_workspace.test.ts::LSP formatting outside current workspace basic formatting should handle basic formatting"
+  ],
+  "PASS_TO_PASS": []
+}

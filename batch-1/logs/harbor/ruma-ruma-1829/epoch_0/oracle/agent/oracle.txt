@@ -1,0 +1,5 @@
+patching file crates/ruma-events/Cargo.toml
+patching file crates/ruma-events/src/call/member.rs
+patching file crates/ruma-events/src/call/member/focus.rs
+patching file crates/ruma-events/src/call/member/member_data.rs
+patching file crates/ruma-events/src/call/notify.rs

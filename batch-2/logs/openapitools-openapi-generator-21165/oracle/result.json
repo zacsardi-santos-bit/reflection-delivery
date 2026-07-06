@@ -1,0 +1,29 @@
+{
+    "id": "cd2ec31b-bf68-4792-8c86-2e874a7d7c95",
+    "started_at": "2026-07-04T15:43:51.992989",
+    "finished_at": "2026-07-04T15:44:32.328768",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__openapitools-openapi-generator-21165": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "openapitools-openapi-generator-2__8PimrsR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

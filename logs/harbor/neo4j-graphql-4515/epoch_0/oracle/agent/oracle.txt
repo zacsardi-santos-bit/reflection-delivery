@@ -1,3 +1,0 @@
-patching file .changeset/light-crews-cover.md
-patching file packages/graphql/src/schema/generation/interface-type.ts
-patching file packages/graphql/src/schema/make-augmented-schema.ts

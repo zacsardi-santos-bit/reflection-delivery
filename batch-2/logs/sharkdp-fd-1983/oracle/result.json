@@ -1,0 +1,29 @@
+{
+    "id": "2c40868d-2732-4bbd-9f40-8f3af3181711",
+    "started_at": "2026-07-06T12:20:30.130813",
+    "finished_at": "2026-07-06T12:20:56.332942",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__sharkdp-fd-1983": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "sharkdp-fd-1983__zSbtNR9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

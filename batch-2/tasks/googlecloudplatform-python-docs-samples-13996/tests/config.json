@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/retail/snippets && pytest search_offset_test.py search_pagination_test.py search_request_test.py -v",
+  "test_files": [
+    "retail/snippets/search_offset_test.py",
+    "retail/snippets/search_pagination_test.py",
+    "retail/snippets/search_request_test.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "retail.snippets.search_offset_test::test_search_offset",
+    "retail.snippets.search_pagination_test::test_search_pagination",
+    "retail.snippets.search_request_test::test_search_request_text",
+    "retail.snippets.search_request_test::test_search_request_browse",
+    "retail.snippets.search_request_test::test_search_request_error"
+  ],
+  "PASS_TO_PASS": []
+}

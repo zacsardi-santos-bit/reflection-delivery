@@ -1,0 +1,43 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./providers/dns/shellrent ./providers/dns/shellrent/internal -count=1",
+  "test_files": [
+    "providers/dns/shellrent/internal/client_test.go",
+    "providers/dns/shellrent/shellrent_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProvider/success",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProvider/missing_username",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProvider/missing_token",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProvider",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProviderConfig/success",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProviderConfig/missing_username",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProviderConfig/missing_token",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent::TestNewDNSProviderConfig",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_ListServices",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_ListServices_error",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_ListServices_error_status",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_GetServiceDetails",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_GetServiceDetails_error",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_GetServiceDetails_error_status",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_GetDomainDetails",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_GetDomainDetails_error",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_GetDomainDetails_error_status",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_CreateRecord",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_CreateRecord_error",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_CreateRecord_error_status",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_DeleteRecord",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_DeleteRecord_error",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestClient_DeleteRecord_error_status",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder/lower_than_3600",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder/default",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder/lower_than_57600",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder/lower_than_28800",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder/lower_than_14400",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder/rounded_to_86400",
+    "github.com/go-acme/lego/v4/providers/dns/shellrent/internal::TestTTLRounder"
+  ],
+  "PASS_TO_PASS": []
+}

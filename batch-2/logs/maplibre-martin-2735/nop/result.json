@@ -1,0 +1,29 @@
+{
+    "id": "157731b0-b111-476e-ab89-10c747fabd15",
+    "started_at": "2026-07-06T12:17:22.429992",
+    "finished_at": "2026-07-06T12:17:50.126543",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__maplibre-martin-2735": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "maplibre-martin-2735__9zjGpTb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

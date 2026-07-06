@@ -1,0 +1,36 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/export/torch_test.py -v",
+  "test_files": [
+    "keras/src/export/torch_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.export.torch_test.ExportTorchTest::test_export_functional_with_add_skip_connection",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_raises_runtime_error_on_export_failure",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_subclass_model",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_batch_normalization",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_concrete_shapes",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_conv2d_channels_last",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_custom_input_signature",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_dynamic_shapes",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_dynamic_slice_update",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_none_in_signature",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_repeat_op",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_slice_ops",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_supported_kwargs",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_unsupported_kwargs",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_with_verbose",
+    "keras.src.export.torch_test.ExportTorchTest::test_model_with_input_structure",
+    "keras.src.export.torch_test.ExportTorchTest::test_model_with_multiple_inputs",
+    "keras.src.export.torch_test.ExportTorchTest::test_model_with_named_inputs",
+    "keras.src.export.torch_test.ExportTorchTest::test_multi_output_model_export",
+    "keras.src.export.torch_test.ExportTorchTest::test_standard_model_export_functional",
+    "keras.src.export.torch_test.ExportTorchTest::test_standard_model_export_sequential"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.export.torch_test.ExportTorchTest::test_export_error_handling",
+    "keras.src.export.torch_test.ExportTorchTest::test_export_invalid_filepath"
+  ]
+}

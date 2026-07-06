@@ -1,5 +1,0 @@
-I'm working with a file-based routing system that generates navigation menu items from the application's route definitions. I noticed that routes with dynamic URL segments — path segments that act as placeholders for values like record IDs — are showing up in the generated menu. These shouldn't appear there at all, since they don't point to a fixed, navigable page.
-
-I need the menu generation logic to automatically exclude any route whose path contains a variable segment, and to also exclude all of that route's descendant routes (since their paths depend on the parent's dynamic segment anyway). This is different from the existing way to explicitly mark a route as excluded from the menu — that mechanism only hides the marked route itself but keeps its children visible. For variable-segment routes, both the route and all its children should be hidden.
-
-Could you add this filtering behavior to the menu generation logic? The result should be that only routes with fully static paths appear in the generated menu.

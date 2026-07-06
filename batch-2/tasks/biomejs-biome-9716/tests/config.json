@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_html_analyze -E 'test(use_heading_content)'",
+  "test_files": [
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/astro/invalid.astro",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/astro/invalid.astro.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/astro/valid.astro",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/astro/valid.astro.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/invalid.html",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/invalid.html.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/svelte/invalid.svelte",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/svelte/invalid.svelte.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/svelte/valid.svelte",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/svelte/valid.svelte.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/valid.html",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/valid.html.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/vue/invalid.vue",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/vue/invalid.vue.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/vue/valid.vue",
+    "crates/biome_html_analyze/tests/specs/a11y/useHeadingContent/vue/valid.vue.snap"
+  ],
+  "num_test_files": 16,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::vue::invalid_vue",
+    "(1/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::valid_html",
+    "(3/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::vue::valid_vue",
+    "(4/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::svelte::invalid_svelte",
+    "(5/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::svelte::valid_svelte",
+    "(6/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::astro::invalid_astro",
+    "(7/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::invalid_html",
+    "(8/8) biome_html_analyze::spec_tests specs::a11y::use_heading_content::astro::valid_astro"
+  ],
+  "PASS_TO_PASS": []
+}

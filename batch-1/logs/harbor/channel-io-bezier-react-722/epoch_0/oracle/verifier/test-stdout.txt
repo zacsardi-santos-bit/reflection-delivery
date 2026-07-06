@@ -1,0 +1,17 @@
+patching file src/components/Navigator/NavGroup/NavGroup.test.tsx
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+PASS src/components/Navigator/NavGroup/NavGroup.test.tsx (12.427 s)
+  NavItem Test >
+    ✓ Snapshot > active (73 ms)
+    ✓ Snapshot > not active (34 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   2 passed, 2 total
+Time:        13.071 s
+Ran all test suites matching /src\/components\/Navigator\/NavGroup\/NavGroup.test.tsx/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":2,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":2,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":2,"total":2,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746046013,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["NavItem Test >"],"failureMessages":[],"fullName":"NavItem Test > Snapshot > active","location":null,"status":"passed","title":"Snapshot > active"},{"ancestorTitles":["NavItem Test >"],"failureMessages":[],"fullName":"NavItem Test > Snapshot > not active","location":null,"status":"passed","title":"Snapshot > not active"}],"endTime":1782746059074,"message":"","name":"/workspace/repo/src/components/Navigator/NavGroup/NavGroup.test.tsx","startTime":1782746046647,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=2 found=2 failed=0 parsed=2 framework=jest exit_code=0

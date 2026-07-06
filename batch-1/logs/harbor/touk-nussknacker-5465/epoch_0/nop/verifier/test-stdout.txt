@@ -1,0 +1,150 @@
+patching file components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala
+patching file engine/lite/components/request-response-tests/src/test/scala/pl/touk/nussknacker/engine/lite/components/requestresponse/LiteRequestResponseFunctionalTest.scala
+patching file interpreter/src/test/java/pl/touk/nussknacker/engine/definition/clazz/JavaSampleDocumentedClass.java
+patching file interpreter/src/test/scala/pl/touk/nussknacker/engine/compile/ProcessValidatorSpec.scala
+patching file interpreter/src/test/scala/pl/touk/nussknacker/engine/compile/nodecompilation/LazyParameterSpec.scala
+patching file interpreter/src/test/scala/pl/touk/nussknacker/engine/definition/clazz/ClassDefinitionDiscoverySpec.scala
+patching file interpreter/src/test/scala/pl/touk/nussknacker/engine/spel/SpelExpressionGenSpec.scala
+patching file interpreter/src/test/scala/pl/touk/nussknacker/engine/spel/SpelExpressionSpec.scala
+patching file interpreter/src/test/scala/pl/touk/nussknacker/engine/spel/TyperSpec.scala
+[info] welcome to sbt 1.9.6 (Eclipse Adoptium Java 11.0.31)
+[info] loading settings for project repo-build from plugins.sbt ...
+[info] loading project definition from /workspace/repo/project
+/workspace/repo/build.sbt:565: warning: lazy value itSettings in object Defaults is deprecated (since 1.9.0): Create a separate subproject instead of using IntegrationTest and in addition avoid using itSettings
+  Defaults.itSettings ++ Seq(IntegrationTest / testOptions += scalaTestReports)
+           ^
+/workspace/repo/build.sbt:565: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  Defaults.itSettings ++ Seq(IntegrationTest / testOptions += scalaTestReports)
+                             ^
+/workspace/repo/build.sbt:593: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  .configs(IntegrationTest)
+           ^
+/workspace/repo/build.sbt:600: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / Keys.test                     := (IntegrationTest / Keys.test)
+    ^
+/workspace/repo/build.sbt:600: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / Keys.test                     := (IntegrationTest / Keys.test)
+                                                        ^
+/workspace/repo/build.sbt:610: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / parallelExecution             := false,
+    ^
+/workspace/repo/build.sbt:761: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / Keys.test := (IntegrationTest / Keys.test)
+    ^
+/workspace/repo/build.sbt:761: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / Keys.test := (IntegrationTest / Keys.test)
+                                    ^
+/workspace/repo/build.sbt:862: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  .configs(IntegrationTest)
+           ^
+/workspace/repo/build.sbt:1285: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  .configs(IntegrationTest)
+           ^
+/workspace/repo/build.sbt:1290: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / Keys.test := (IntegrationTest / Keys.test)
+    ^
+/workspace/repo/build.sbt:1290: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+    IntegrationTest / Keys.test := (IntegrationTest / Keys.test)
+                                    ^
+/workspace/repo/build.sbt:1530: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  .configs(IntegrationTest)
+           ^
+/workspace/repo/build.sbt:1586: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  .configs(IntegrationTest)
+           ^
+/workspace/repo/build.sbt:1619: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  .configs(IntegrationTest)
+           ^
+[info] loading settings for project root from build.sbt,version.sbt ...
+[info] resolving key references (93588 settings) ...
+2026-06-29 15:18:51,576 pool-4-thread-3 ERROR Could not determine local host name java.net.UnknownHostException: modal: modal: Temporary failure in name resolution
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1670)
+	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:54)
+	at org.apache.logging.log4j.core.LoggerContext.lambda$setConfiguration$0(LoggerContext.java:620)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1705)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:620)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:699)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:716)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:270)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:155)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:47)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:196)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:137)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:55)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:47)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:33)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:363)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:388)
+	at org.eclipse.jgit.util.FS.<clinit>(FS.java:89)
+	at org.eclipse.jgit.lib.BaseRepositoryBuilder.safeFS(BaseRepositoryBuilder.java:783)
+	at org.eclipse.jgit.lib.BaseRepositoryBuilder.findGitDir(BaseRepositoryBuilder.java:557)
+	at com.typesafe.sbt.git.JGit$.apply(JGit.scala:135)
+	at com.typesafe.sbt.git.DefaultReadableGit.<init>(ReadableGit.scala:38)
+	at com.typesafe.sbt.SbtGit$.$anonfun$buildSettings$1(SbtGit.scala:113)
+	at scala.Function1.$anonfun$compose$1(Function1.scala:49)
+	at sbt.internal.util.EvaluateSettings$MixedNode.evaluate0(INode.scala:229)
+	at sbt.internal.util.EvaluateSettings$INode.evaluate(INode.scala:171)
+	at sbt.internal.util.EvaluateSettings.$anonfun$submitEvaluate$1(INode.scala:88)
+	at sbt.internal.util.EvaluateSettings.sbt$internal$util$EvaluateSettings$$run0(INode.scala:100)
+	at sbt.internal.util.EvaluateSettings$$anon$3.run(INode.scala:95)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.UnknownHostException: modal: Temporary failure in name resolution
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:930)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:848)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1665)
+	... 31 more
+
+[info] set current project to nussknacker (in build file:/workspace/repo/)
+[success] Total time: 0 s, completed Jun 29, 2026, 3:18:58 PM
+[info] compiling 20 Scala sources to /workspace/repo/utils/test-utils/target/scala-2.13/classes ...
+[info] compiling 1 Scala source to /workspace/repo/common-api/target/scala-2.13/classes ...
+[info] done compiling
+[info] done compiling
+[info] compiling 7 Scala sources to /workspace/repo/components-api/target/scala-2.13/test-classes ...
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:15:45: not found: value CommonSupertypeFinder
+[error]   private val intersectionSuperTypeFinder = CommonSupertypeFinder.Intersection
+[error]                                             ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:133:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Default.commonSupertype(
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:347:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Default.commonSupertype(
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:348:7: overloaded method apply with alternatives:
+[error]   (fields: List[(String, pl.touk.nussknacker.engine.api.typed.typing.TypingResult)])pl.touk.nussknacker.engine.api.typed.typing.TypedObjectTypingResult <and>
+[error]   (fields: Map[String,pl.touk.nussknacker.engine.api.typed.typing.TypingResult])pl.touk.nussknacker.engine.api.typed.typing.TypedObjectTypingResult <and>
+[error]   (definition: pl.touk.nussknacker.engine.api.typed.TypedObjectDefinition)pl.touk.nussknacker.engine.api.typed.typing.TypedObjectTypingResult
+[error]  cannot be applied to (scala.collection.immutable.Map[Nothing,Nothing])
+[error]       TypedObjectTypingResult(Map.empty),
+[error]       ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:351:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Default.commonSupertype(
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:355:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Default.commonSupertype(
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:359:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Default.commonSupertype(Typed[Int], Typed[Long]) shouldEqual Typed[Number]
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:360:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Default.commonSupertype(
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:364:5: not found: value CommonSupertypeFinder
+[error]     CommonSupertypeFinder.Intersection.commonSupertype(
+[error]     ^
+[error] /workspace/repo/components-api/src/test/scala/pl/touk/nussknacker/engine/api/typed/TypingResultSpec.scala:367:61: overloaded method apply with alternatives:
+[error]   (fields: List[(String, pl.touk.nussknacker.engine.api.typed.typing.TypingResult)])pl.touk.nussknacker.engine.api.typed.typing.TypedObjectTypingResult <and>
+[error]   (fields: Map[String,pl.touk.nussknacker.engine.api.typed.typing.TypingResult])pl.touk.nussknacker.engine.api.typed.typing.TypedObjectTypingResult <and>
+[error]   (definition: pl.touk.nussknacker.engine.api.typed.TypedObjectDefinition)pl.touk.nussknacker.engine.api.typed.typing.TypedObjectTypingResult
+[error]  cannot be applied to (scala.collection.immutable.Map[Nothing,Nothing])
+[error]     )(NumberTypesPromotionStrategy.ToSupertype) shouldEqual TypedObjectTypingResult(Map.empty)
+[error]                                                             ^
+[error] 10 errors found
+[error] (componentsApi / Test / compileIncremental) Compilation failed
+[error] Total time: 11 s, completed Jun 29, 2026, 3:19:09 PM
+reward=0 graded=255 found=0 failed=0 parsed=0 framework=junit exit_code=1

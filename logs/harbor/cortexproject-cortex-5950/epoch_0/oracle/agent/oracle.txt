@@ -1,8 +1,0 @@
-patching file README.md
-patching file docs/configuration/config-file-reference.md
-patching file pkg/ingester/ingester.go
-patching file pkg/ingester/limiter.go
-patching file pkg/ingester/metrics.go
-patching file pkg/ingester/user_state.go
-patching file pkg/util/validation/limits.go
-patching file tools/doc-generator/parser.go

@@ -1,0 +1,29 @@
+{
+    "id": "70202590-ee3a-4e15-b540-7a76d6a51c74",
+    "started_at": "2026-07-06T12:17:18.085814",
+    "finished_at": "2026-07-06T12:17:55.216349",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rqlite-rqlite-2565": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rqlite-rqlite-2565__H4PyPLV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

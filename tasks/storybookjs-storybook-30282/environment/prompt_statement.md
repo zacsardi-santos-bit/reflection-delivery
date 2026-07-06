@@ -1,7 +1,0 @@
-I'm working on adding an automated migration to help users upgrade their Storybook story files to a new factory-based format. The migration needs to handle a broad range of existing story writing styles — both JavaScript and TypeScript — and convert them all to the new format consistently.
-
-The core transformation involves converting plain object exports for meta and stories into factory method calls. For meta, the existing default export pattern should become a factory call, and the variable should always be named "meta". For stories, each named export that's an object should be wrapped in a story factory call on the meta variable. If the file already has a local variable named "config", the imported factory configuration should be aliased to avoid conflicts.
-
-The tool also needs to handle older-style functional stories (where the export value is a function rather than an object), converting them into the new factory format with a render property. For TypeScript files, it should strip type annotations from meta and story declarations (covering all common TypeScript annotation variants), remove the now-unnecessary type imports from Storybook packages, and produce the same output regardless of which TypeScript annotation variant was originally used.
-
-The migration function should be exported as a named function. It takes a file info object (with source content and path) and returns a promise with the transformed source code.

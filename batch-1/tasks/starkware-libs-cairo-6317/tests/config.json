@@ -1,0 +1,40 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p cairo-lang-language-server --no-fail-fast",
+  "test_files": [
+    "crates/cairo-lang-doc/src/tests/mod.rs",
+    "crates/cairo-lang-doc/src/tests/test-data/basic.txt",
+    "crates/cairo-lang-doc/src/tests/test-data/submodule.txt",
+    "crates/cairo-lang-doc/src/tests/test.rs",
+    "crates/cairo-lang-doc/src/tests/test_utils.rs",
+    "crates/cairo-lang-language-server/tests/test_data/hover/basic.txt"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(19/22) cairo-lang-language-server::e2e hover::hover::basic",
+    "( 1/22) cairo-lang-language-server lang::lsp::ls_proto_group::test::file_url",
+    "( 2/22) cairo-lang-language-server project::project_manifest_path::project_manifest_path_test::discover_precedence",
+    "( 4/22) cairo-lang-language-server project::project_manifest_path::project_manifest_path_test::discover_cairo_project_toml",
+    "( 5/22) cairo-lang-language-server project::project_manifest_path::project_manifest_path_test::discover_scarb_toml",
+    "( 8/22) cairo-lang-language-server::e2e semantic_tokens::highlights_multiline_tokens",
+    "( 9/22) cairo-lang-language-server::e2e macro_expand::macro_expand::attribute",
+    "(10/22) cairo-lang-language-server::e2e hover::hover::missing_module",
+    "(11/22) cairo-lang-language-server::e2e macro_expand::macro_expand::derive",
+    "(13/22) cairo-lang-language-server::e2e goto::goto::struct_members",
+    "(14/22) cairo-lang-language-server::e2e hover::hover::partial",
+    "(15/22) cairo-lang-language-server::e2e completions::completions::methods_text_edits",
+    "(16/22) cairo-lang-language-server::e2e macro_expand::macro_expand::simple_inline",
+    "(17/22) cairo-lang-language-server::e2e hover::hover::starknet",
+    "(18/22) cairo-lang-language-server::e2e code_actions::quick_fix::macro_expand"
+  ],
+  "PASS_TO_PASS": [
+    "( 3/22) cairo-lang-language-server project::project_manifest_path::project_manifest_path_test::discover_no_manifest",
+    "( 6/22) cairo-lang-language-server::e2e support::cursor::test::test_cursors",
+    "( 7/22) cairo-lang-language-server::e2e workspace_configuration::relative_path_to_core",
+    "(12/22) cairo-lang-language-server::e2e macro_expand::macro_expand::empty",
+    "(20/22) cairo-lang-language-server::e2e analysis::test_reload",
+    "(21/22) cairo-lang-language-server::e2e analysis::cairo_projects",
+    "(22/22) cairo-lang-language-server::e2e code_actions::quick_fix::missing_trait"
+  ]
+}

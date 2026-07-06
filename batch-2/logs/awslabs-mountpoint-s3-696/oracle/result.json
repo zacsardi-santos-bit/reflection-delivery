@@ -1,0 +1,29 @@
+{
+    "id": "6de58693-8b61-4ef2-9eea-bd7309337349",
+    "started_at": "2026-07-04T15:40:32.630302",
+    "finished_at": "2026-07-04T15:42:28.551489",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__awslabs-mountpoint-s3-696": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "awslabs-mountpoint-s3-696__RS9pABS"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

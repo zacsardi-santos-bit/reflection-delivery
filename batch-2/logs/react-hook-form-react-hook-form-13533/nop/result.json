@@ -1,0 +1,29 @@
+{
+    "id": "127a8931-c05a-4d05-b252-d14f6e146564",
+    "started_at": "2026-07-06T12:17:36.624991",
+    "finished_at": "2026-07-06T12:19:08.749640",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__react-hook-form-react-hook-form-13533": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "react-hook-form-react-hook-form__5QarPqv"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

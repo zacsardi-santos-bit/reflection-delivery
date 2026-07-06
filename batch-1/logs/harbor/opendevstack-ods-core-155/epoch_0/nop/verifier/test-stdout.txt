@@ -1,0 +1,14 @@
+patching file jenkins/webhook-proxy/main_test.go
+patching file jenkins/webhook-proxy/test/fixtures/build-broken-payload.txt
+patching file jenkins/webhook-proxy/test/fixtures/build-invalid-payload.json
+patching file jenkins/webhook-proxy/test/fixtures/build-rejected-openshift-response.json
+patching file jenkins/webhook-proxy/test/fixtures/build-rejected-payload.json
+# github.com/opendevstack/ods-core/jenkins/webhook-proxy [github.com/opendevstack/ods-core/jenkins/webhook-proxy.test]
+./main_test.go:195:22: cannot use mc (variable of type *mockClient) as Client value in struct literal: *mockClient does not implement Client (wrong type for method CreatePipelineIfRequired)
+		have CreatePipelineIfRequired(*template.Template, *Event, BuildConfigData) (int, error)
+		want CreatePipelineIfRequired(*template.Template, *Event, BuildConfigData) error
+./main_test.go:516:22: cannot use &mockClient{} (value of type *mockClient) as Client value in struct literal: *mockClient does not implement Client (wrong type for method CreatePipelineIfRequired)
+		have CreatePipelineIfRequired(*template.Template, *Event, BuildConfigData) (int, error)
+		want CreatePipelineIfRequired(*template.Template, *Event, BuildConfigData) error
+FAIL	github.com/opendevstack/ods-core/jenkins/webhook-proxy [build failed]
+reward=0 graded=17 found=17 failed=17 parsed=1 framework=go exit_code=1

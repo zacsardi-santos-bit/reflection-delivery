@@ -1,0 +1,361 @@
+diff --git a/RELEASENOTES.md b/RELEASENOTES.md
+index 8b137891..a3289459 100644
+--- a/RELEASENOTES.md
++++ b/RELEASENOTES.md
+@@ -1 +1 @@
+-
++- Adds `--git-archive-path` and `--metadata-archive-path` options to `gh gei migrate-repo` for uploading (to selected storage) and migrating
+diff --git a/src/Octoshift/Extensions/EnumerableExtensions.cs b/src/Octoshift/Extensions/EnumerableExtensions.cs
+index 0d448bc6..b6bde1c4 100644
+--- a/src/Octoshift/Extensions/EnumerableExtensions.cs
++++ b/src/Octoshift/Extensions/EnumerableExtensions.cs
+@@ -1,6 +1,7 @@
+ using System;
+ using System.Collections.Generic;
+ using System.Linq;
++using System.Text;
+ using System.Threading.Tasks;
+ 
+ namespace OctoshiftCLI.Extensions
+@@ -23,5 +24,7 @@ namespace OctoshiftCLI.Extensions
+         }
+ 
+         public static IEnumerable<T> ToEmptyEnumerableIfNull<T>(this IEnumerable<T> enumerable) => enumerable ?? Enumerable.Empty<T>();
++
++        public static string GetString(this byte[] bytes) => Encoding.UTF8.GetString(bytes.ToArray());
+     }
+ }
+diff --git a/src/Octoshift/Extensions/StringExtensions.cs b/src/Octoshift/Extensions/StringExtensions.cs
+index 73173acb..8d323ff9 100644
+--- a/src/Octoshift/Extensions/StringExtensions.cs
++++ b/src/Octoshift/Extensions/StringExtensions.cs
+@@ -24,5 +24,7 @@ namespace OctoshiftCLI.Extensions
+         public static string ToUnixPath(this string path) => path?.Replace("\\", "/");
+ 
+         public static string EscapeDataString(this string value) => Uri.EscapeDataString(value);
++
++        public static byte[] ToBytes(this string s) => Encoding.UTF8.GetBytes(s);
+     }
+ }
+diff --git a/src/Octoshift/Services/FileSystemProvider.cs b/src/Octoshift/Services/FileSystemProvider.cs
+index 83369e66..de80bde9 100644
+--- a/src/Octoshift/Services/FileSystemProvider.cs
++++ b/src/Octoshift/Services/FileSystemProvider.cs
+@@ -15,7 +15,7 @@ public class FileSystemProvider
+ 
+     public virtual FileStream Open(string path, FileMode mode) => File.Open(path, mode);
+ 
+-    public virtual FileStream OpenRead(string path) => File.OpenRead(path);
++    public virtual Stream OpenRead(string path) => File.OpenRead(path);
+ 
+     public virtual async Task WriteAllTextAsync(string path, string contents) => await File.WriteAllTextAsync(path, contents);
+ 
+diff --git a/src/gei/Commands/MigrateRepo/MigrateRepoCommand.cs b/src/gei/Commands/MigrateRepo/MigrateRepoCommand.cs
+index 1009c37b..a0ce2d47 100644
+--- a/src/gei/Commands/MigrateRepo/MigrateRepoCommand.cs
++++ b/src/gei/Commands/MigrateRepo/MigrateRepoCommand.cs
+@@ -21,7 +21,6 @@ namespace OctoshiftCLI.GithubEnterpriseImporter.Commands.MigrateRepo
+             AddOption(GithubTargetOrg);
+             AddOption(TargetRepo);
+             AddOption(TargetApiUrl);
+-
+             AddOption(GhesApiUrl);
+             AddOption(AzureStorageConnectionString);
+             AddOption(AwsBucketName);
+@@ -30,13 +29,12 @@ namespace OctoshiftCLI.GithubEnterpriseImporter.Commands.MigrateRepo
+             AddOption(AwsSessionToken);
+             AddOption(AwsRegion);
+             AddOption(NoSslVerify);
+-
+             AddOption(GitArchiveUrl);
+             AddOption(MetadataArchiveUrl);
+-
++            AddOption(GitArchivePath);
++            AddOption(MetadataArchivePath);
+             AddOption(SkipReleases);
+             AddOption(LockSourceRepo);
+-
+             AddOption(QueueOnly);
+             AddOption(TargetRepoVisibility.FromAmong("public", "private", "internal"));
+             AddOption(GithubSourcePat);
+@@ -120,6 +118,16 @@ namespace OctoshiftCLI.GithubEnterpriseImporter.Commands.MigrateRepo
+             IsHidden = true,
+             Description = "An authenticated SAS URL to an Azure Blob Storage container with a pre-generated metadata archive. Only used when an archive has been generated and uploaded prior to running a migration (not common). Must be passed in when also using --git-archive-url"
+         };
++        public Option<string> GitArchivePath { get; } = new("--git-archive-path")
++        {
++            IsHidden = true,
++            Description = "Used to migrate an archive that is on disk, must be used with --metadata-archive-path"
++        };
++        public Option<string> MetadataArchivePath { get; } = new("--metadata-archive-path")
++        {
++            IsHidden = true,
++            Description = "Used to migrate an archive that is on disk, must be used with --git-archive-path"
++        };
+         public Option<bool> SkipReleases { get; } = new("--skip-releases")
+         {
+             Description = "Skip releases when migrating."
+@@ -171,7 +179,7 @@ namespace OctoshiftCLI.GithubEnterpriseImporter.Commands.MigrateRepo
+             AwsApi awsApi = null;
+             HttpDownloadService httpDownloadService = null;
+ 
+-            if (args.GhesApiUrl.HasValue())
++            if (args.GhesApiUrl.HasValue() || (args.GitArchivePath.HasValue() && args.MetadataArchivePath.HasValue()))
+             {
+                 var sourceGithubApiFactory = sp.GetRequiredService<ISourceGithubApiFactory>();
+                 var awsApiFactory = sp.GetRequiredService<AwsApiFactory>();
+diff --git a/src/gei/Commands/MigrateRepo/MigrateRepoCommandArgs.cs b/src/gei/Commands/MigrateRepo/MigrateRepoCommandArgs.cs
+index 73d02c8e..2287af0f 100644
+--- a/src/gei/Commands/MigrateRepo/MigrateRepoCommandArgs.cs
++++ b/src/gei/Commands/MigrateRepo/MigrateRepoCommandArgs.cs
+@@ -25,6 +25,8 @@ namespace OctoshiftCLI.GithubEnterpriseImporter.Commands.MigrateRepo
+         public bool NoSslVerify { get; set; }
+         public string GitArchiveUrl { get; set; }
+         public string MetadataArchiveUrl { get; set; }
++        public string GitArchivePath { get; set; }
++        public string MetadataArchivePath { get; set; }
+         public bool SkipReleases { get; set; }
+         public bool LockSourceRepo { get; set; }
+         public bool QueueOnly { get; set; }
+@@ -41,11 +43,26 @@ namespace OctoshiftCLI.GithubEnterpriseImporter.Commands.MigrateRepo
+             DefaultSourcePat(log);
+             DefaultTargetRepo(log);
+ 
++            if (GitArchiveUrl.HasValue() && GitArchivePath.HasValue())
++            {
++                throw new OctoshiftCliException("The options --git-archive-url and --git-archive-path may not be used together");
++            }
++
++            if (MetadataArchiveUrl.HasValue() && MetadataArchivePath.HasValue())
++            {
++                throw new OctoshiftCliException("The options --metadata-archive-url and --metadata-archive-path may not be used together");
++            }
++
+             if (string.IsNullOrWhiteSpace(GitArchiveUrl) != string.IsNullOrWhiteSpace(MetadataArchiveUrl))
+             {
+                 throw new OctoshiftCliException("When using archive urls, you must provide both --git-archive-url --metadata-archive-url");
+             }
+ 
++            if (string.IsNullOrWhiteSpace(GitArchivePath) != string.IsNullOrWhiteSpace(MetadataArchivePath))
++            {
++                throw new OctoshiftCliException("When using archive files, you must provide both --git-archive-path --metadata-archive-path");
++            }
++
+             if (GhesApiUrl.IsNullOrWhiteSpace())
+             {
+                 if (AwsBucketName.HasValue())
+diff --git a/src/gei/Commands/MigrateRepo/MigrateRepoCommandHandler.cs b/src/gei/Commands/MigrateRepo/MigrateRepoCommandHandler.cs
+index 0eb1acc2..875c4f94 100644
+--- a/src/gei/Commands/MigrateRepo/MigrateRepoCommandHandler.cs
++++ b/src/gei/Commands/MigrateRepo/MigrateRepoCommandHandler.cs
+@@ -27,6 +27,7 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+     private const int CHECK_STATUS_DELAY_IN_MILLISECONDS = 10000; // 10 seconds
+     private const string GIT_ARCHIVE_FILE_NAME = "git_archive.tar.gz";
+     private const string METADATA_ARCHIVE_FILE_NAME = "metadata_archive.tar.gz";
++    private const string DUPLICATE_ARCHIVE_FILE_NAME = "archive.tar.gz";
+     private const string DEFAULT_GITHUB_BASE_URL = "https://github.com";
+ 
+     public MigrateRepoCommandHandler(
+@@ -121,6 +122,32 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+                 _log.LogInformation("Archives uploaded to blob storage, now starting migration...");
+             }
+         }
++        else if (args.GitArchivePath.HasValue() && args.MetadataArchivePath.HasValue())
++        {
++            var timeNow = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
++            var gitArchiveUploadFileName = $"{timeNow}-{GIT_ARCHIVE_FILE_NAME}";
++            var metadataArchiveUploadFileName = $"{timeNow}-{METADATA_ARCHIVE_FILE_NAME}";
++            var duplicateArchiveUploadFileName = $"{timeNow}-{DUPLICATE_ARCHIVE_FILE_NAME}";
++            var shouldUploadOnce = args.GitArchivePath == args.MetadataArchivePath;
++
++            args.GitArchiveUrl = await UploadArchive(
++                args.GithubSourceOrg,
++                args.AwsBucketName,
++                args.UseGithubStorage,
++                args.GitArchivePath,
++                shouldUploadOnce ? duplicateArchiveUploadFileName : gitArchiveUploadFileName);
++
++            args.MetadataArchiveUrl = shouldUploadOnce
++                ? args.GitArchiveUrl
++                : await UploadArchive(
++                    args.GithubSourceOrg,
++                    args.AwsBucketName,
++                    args.UseGithubStorage,
++                    args.MetadataArchivePath,
++                    metadataArchiveUploadFileName);
++
++            _log.LogInformation("Archive(s) uploaded to blob storage, now starting migration...");
++        }
+ 
+         var sourceRepoUrl = GetSourceRepoUrl(args);
+         var sourceToken = GetSourceToken(args);
+@@ -192,8 +219,8 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+     private string ExtractGhesBaseUrl(string ghesApiUrl)
+     {
+         // We expect the GHES url template to be either http(s)://hostname/api/v3 or http(s)://api.hostname.com.
+-        // We are either going to be able to extract and return the base url based on the above templates or 
+-        // will fallback to ghesApiUrl and return it as the base url. 
++        // We are either going to be able to extract and return the base url based on the above templates or
++        // will fallback to ghesApiUrl and return it as the base url.
+ 
+         ghesApiUrl = ghesApiUrl.Trim().TrimEnd('/');
+ 
+@@ -219,7 +246,7 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+       bool useGithubStorage)
+     {
+         var (gitArchiveUrl, metadataArchiveUrl, gitArchiveId, metadataArchiveId) = await _retryPolicy.Retry(
+-            async () => await GenerateArchive(githubSourceOrg, sourceRepo, skipReleases, lockSourceRepo));
++            async () => await GenerateArchives(githubSourceOrg, sourceRepo, skipReleases, lockSourceRepo));
+ 
+         if (!useGithubStorage && !blobCredentialsRequired)
+         {
+@@ -235,47 +262,25 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+         {
+             _log.LogInformation($"Downloading archive from {gitArchiveUrl}");
+             await _httpDownloadService.DownloadToFile(gitArchiveUrl, gitArchiveDownloadFilePath);
++            _log.LogInformation("Download complete");
+ 
+             _log.LogInformation($"Downloading archive from {metadataArchiveUrl}");
+             await _httpDownloadService.DownloadToFile(metadataArchiveUrl, metadataArchiveDownloadFilePath);
+-
+-#pragma warning disable IDE0063
+-            await using (var gitArchiveContent = _fileSystemProvider.OpenRead(gitArchiveDownloadFilePath))
+-            await using (var metadataArchiveContent = _fileSystemProvider.OpenRead(metadataArchiveDownloadFilePath))
+-#pragma warning restore IDE0063
+-            {
+-                if (useGithubStorage)
+-                {
+-                    return await UploadArchivesToGithub(
+-                        githubTargetOrg,
+-                        gitArchiveUploadFileName,
+-                        gitArchiveContent,
+-                        metadataArchiveUploadFileName,
+-                        metadataArchiveContent
+-                    );
+-                }
+-#pragma warning disable IDE0046
+-                else if (_awsApi.HasValue())
+-#pragma warning restore IDE0046
+-                {
+-                    return await UploadArchivesToAws(
+-                        awsBucketName,
+-                        gitArchiveUploadFileName,
+-                        gitArchiveContent,
+-                        metadataArchiveUploadFileName,
+-                        metadataArchiveContent
+-                    );
+-                }
+-                else
+-                {
+-                    return await UploadArchivesToAzure(
+-                        gitArchiveUploadFileName,
+-                        gitArchiveContent,
+-                        metadataArchiveUploadFileName,
+-                        metadataArchiveContent
+-                    );
+-                }
+-            }
++            _log.LogInformation("Download complete");
++
++            return (
++                await UploadArchive(
++                    githubTargetOrg,
++                    awsBucketName,
++                    useGithubStorage,
++                    gitArchiveDownloadFilePath,
++                    gitArchiveUploadFileName),
++                await UploadArchive(
++                    githubTargetOrg,
++                    awsBucketName,
++                    useGithubStorage,
++                    metadataArchiveDownloadFilePath,
++                    metadataArchiveUploadFileName));
+         }
+         finally
+         {
+@@ -287,7 +292,31 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+         }
+     }
+ 
+-    private async Task<(string GitArchiveUrl, string MetadataArchiveUrl, int GitArchiveId, int MetadataArchiveId)> GenerateArchive(
++    private async Task<string> UploadArchive(
++      string githubTargetOrg,
++      string awsBucketName,
++      bool useGithubStorage,
++      string archiveDownloadFilePath,
++      string archiveUploadFileName)
++    {
++        await using var archiveContent = _fileSystemProvider.OpenRead(archiveDownloadFilePath);
++
++        if (useGithubStorage)
++        {
++            return await UploadArchiveToGithub(githubTargetOrg, archiveUploadFileName, archiveContent);
++        }
++
++#pragma warning disable IDE0046
++        if (_awsApi.HasValue())
++#pragma warning restore IDE0046
++        {
++            return await UploadArchiveToAws(awsBucketName, archiveUploadFileName, archiveContent);
++        }
++
++        return await UploadArchiveToAzure(archiveUploadFileName, archiveContent);
++    }
++
++    private async Task<(string GitArchiveUrl, string MetadataArchiveUrl, int GitArchiveId, int MetadataArchiveId)> GenerateArchives(
+         string githubSourceOrg,
+         string sourceRepo,
+         bool skipReleases,
+@@ -322,37 +351,33 @@ public class MigrateRepoCommandHandler : ICommandHandler<MigrateRepoCommandArgs>
+         }
+     }
+ 
+-    private async Task<(string, string)> UploadArchivesToAzure(string gitArchiveFileName, Stream gitArchiveContent, string metadataArchiveFileName, Stream metadataArchiveContent)
++    private async Task<string> UploadArchiveToAzure(string archiveFileName, Stream archiveContent)
+     {
+-        _log.LogInformation($"Uploading archive {gitArchiveFileName} to Azure Blob Storage");
+-        var authenticatedGitArchiveUri = await _azureApi.UploadToBlob(gitArchiveFileName, gitArchiveContent);
+-        _log.LogInformation($"Uploading archive {metadataArchiveFileName} to Azure Blob Storage");
+-        var authenticatedMetadataArchiveUri = await _azureApi.UploadToBlob(metadataArchiveFileName, metadataArchiveContent);
++        _log.LogInformation($"Uploading archive {archiveFileName} to Azure Blob Storage");
++        var authenticatedArchiveUri = await _azureApi.UploadToBlob(archiveFileName, archiveContent);
++        _log.LogInformation("Upload complete");
+ 
+-        return (authenticatedGitArchiveUri.ToString(), authenticatedMetadataArchiveUri.ToString());
++        return authenticatedArchiveUri.ToString();
+     }
+ 
+-    private async Task<(string, string)> UploadArchivesToAws(string bucketName, string gitArchiveFileName, Stream gitArchiveContent, string metadataArchiveFileName, Stream metadataArchiveContent)
++    private async Task<string> UploadArchiveToAws(string bucketName, string archiveFileName, Stream archiveContent)
+     {
+-        _log.LogInformation($"Uploading archive {gitArchiveFileName} to AWS S3");
+-        var authenticatedGitArchiveUri = await _awsApi.UploadToBucket(bucketName, gitArchiveContent, gitArchiveFileName);
+-        _log.LogInformation($"Uploading archive {metadataArchiveFileName} to AWS S3");
+-        var authenticatedMetadataArchiveUri = await _awsApi.UploadToBucket(bucketName, metadataArchiveContent, metadataArchiveFileName);
++        _log.LogInformation($"Uploading archive {archiveFileName} to AWS S3");
++        var authenticatedArchiveUri = await _awsApi.UploadToBucket(bucketName, archiveContent, archiveFileName);
++        _log.LogInformation("Upload complete");
+ 
+-        return (authenticatedGitArchiveUri.ToString(), authenticatedMetadataArchiveUri.ToString());
++        return authenticatedArchiveUri.ToString();
+     }
+ 
+-    private async Task<(string, string)> UploadArchivesToGithub(string org, string gitArchiveUploadFileName, Stream gitArchiveContent, string metadataArchiveUploadFileName, Stream metadataArchiveContent)
++    private async Task<string> UploadArchiveToGithub(string org, string archiveFileName, Stream archiveContent)
+     {
+         var githubOrgDatabaseId = await _targetGithubApi.GetOrganizationDatabaseId(org);
+ 
+-        _log.LogInformation($"Uploading git archive to GitHub Storage");
+-        var uploadedGitArchiveUrl = await _targetGithubApi.UploadArchiveToGithubStorage(githubOrgDatabaseId, gitArchiveUploadFileName, gitArchiveContent);
+-
+-        _log.LogInformation($"Uploading metadata archive to GitHub Storage");
+-        var uploadedMetadataArchiveUrl = await _targetGithubApi.UploadArchiveToGithubStorage(githubOrgDatabaseId, metadataArchiveUploadFileName, metadataArchiveContent);
++        _log.LogInformation($"Uploading archive {archiveFileName} to GitHub Storage");
++        var uploadedArchiveUrl = await _targetGithubApi.UploadArchiveToGithubStorage(githubOrgDatabaseId, archiveFileName, archiveContent);
++        _log.LogInformation("Upload complete");
+ 
+-        return (uploadedGitArchiveUrl, uploadedMetadataArchiveUrl);
++        return uploadedArchiveUrl;
+     }
+ 
+     private async Task<string> WaitForArchiveGeneration(GithubApi githubApi, string githubSourceOrg, int archiveId)

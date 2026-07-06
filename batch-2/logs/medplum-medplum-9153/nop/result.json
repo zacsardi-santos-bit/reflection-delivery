@@ -1,0 +1,29 @@
+{
+    "id": "661c8907-13d6-45cd-a22d-1d6d73a07314",
+    "started_at": "2026-07-06T12:17:30.845916",
+    "finished_at": "2026-07-06T12:18:15.490692",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__medplum-medplum-9153": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "medplum-medplum-9153__5efCryv"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

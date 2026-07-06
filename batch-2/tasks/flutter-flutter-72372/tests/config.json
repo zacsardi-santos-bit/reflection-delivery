@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && python3 /usr/local/bin/dart_test_runner.py test/general.shard/macos/macos_project_migration_test.dart",
+  "test_files": [
+    "dev/integration_tests/flutter_gallery/macos/Podfile",
+    "dev/integration_tests/flutter_gallery/macos/Runner.xcodeproj/project.pbxproj",
+    "dev/integration_tests/ui/macos/Runner.xcodeproj/project.pbxproj",
+    "dev/manual_tests/macos/Runner.xcodeproj/project.pbxproj",
+    "packages/flutter_tools/test/general.shard/macos/macos_project_migration_test.dart"
+  ],
+  "num_test_files": 5,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "test/general.shard/macos/macos_project_migration_test.dart::skipped_if_files_are_missing",
+    "test/general.shard/macos/macos_project_migration_test.dart::skipped_if_nothing_to_upgrade",
+    "test/general.shard/macos/macos_project_migration_test.dart::skips_migrating_script_with_embed",
+    "test/general.shard/macos/macos_project_migration_test.dart::Xcode_project_is_migrated",
+    "test/general.shard/macos/macos_project_migration_test.dart::migration_fails_with_leftover_App_framework_reference",
+    "test/general.shard/macos/macos_project_migration_test.dart::migration_fails_with_leftover_FlutterMacOS_framework_reference"
+  ],
+  "PASS_TO_PASS": []
+}

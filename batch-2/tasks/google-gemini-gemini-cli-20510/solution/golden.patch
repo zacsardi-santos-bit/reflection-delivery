@@ -1,0 +1,393 @@
+diff --git a/packages/a2a-server/src/http/app.ts b/packages/a2a-server/src/http/app.ts
+index 161139279..35ca48949 100644
+--- a/packages/a2a-server/src/http/app.ts
++++ b/packages/a2a-server/src/http/app.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import express from 'express';
++import express, { type Request } from 'express';
+ 
+ import type { AgentCard, Message } from '@a2a-js/sdk';
+ import {
+@@ -13,8 +13,9 @@ import {
+   InMemoryTaskStore,
+   DefaultExecutionEventBus,
+   type AgentExecutionEvent,
++  UnauthenticatedUser,
+ } from '@a2a-js/sdk/server';
+-import { A2AExpressApp } from '@a2a-js/sdk/server/express'; // Import server components
++import { A2AExpressApp, type UserBuilder } from '@a2a-js/sdk/server/express'; // Import server components
+ import { v4 as uuidv4 } from 'uuid';
+ import { logger } from '../utils/logger.js';
+ import type { AgentSettings } from '../types.js';
+@@ -55,8 +56,17 @@ const coderAgentCard: AgentCard = {
+     pushNotifications: false,
+     stateTransitionHistory: true,
+   },
+-  securitySchemes: undefined,
+-  security: undefined,
++  securitySchemes: {
++    bearerAuth: {
++      type: 'http',
++      scheme: 'bearer',
++    },
++    basicAuth: {
++      type: 'http',
++      scheme: 'basic',
++    },
++  },
++  security: [{ bearerAuth: [] }, { basicAuth: [] }],
+   defaultInputModes: ['text'],
+   defaultOutputModes: ['text'],
+   skills: [
+@@ -81,6 +91,35 @@ export function updateCoderAgentCardUrl(port: number) {
+   coderAgentCard.url = `http://localhost:${port}/`;
+ }
+ 
++const customUserBuilder: UserBuilder = async (req: Request) => {
++  const auth = req.headers['authorization'];
++  if (auth) {
++    const scheme = auth.split(' ')[0];
++    logger.info(
++      `[customUserBuilder] Received Authorization header with scheme: ${scheme}`,
++    );
++  }
++  if (!auth) return new UnauthenticatedUser();
++
++  // 1. Bearer Auth
++  if (auth.startsWith('Bearer ')) {
++    const token = auth.substring(7);
++    if (token === 'valid-token') {
++      return { userName: 'bearer-user', isAuthenticated: true };
++    }
++  }
++
++  // 2. Basic Auth
++  if (auth.startsWith('Basic ')) {
++    const credentials = Buffer.from(auth.substring(6), 'base64').toString();
++    if (credentials === 'admin:password') {
++      return { userName: 'basic-user', isAuthenticated: true };
++    }
++  }
++
++  return new UnauthenticatedUser();
++};
++
+ async function handleExecuteCommand(
+   req: express.Request,
+   res: express.Response,
+@@ -204,7 +243,7 @@ export async function createApp() {
+       requestStorage.run({ req }, next);
+     });
+ 
+-    const appBuilder = new A2AExpressApp(requestHandler);
++    const appBuilder = new A2AExpressApp(requestHandler, customUserBuilder);
+     expressApp = appBuilder.setupRoutes(expressApp, '');
+     expressApp.use(express.json());
+ 
+diff --git a/packages/core/src/agents/agentLoader.ts b/packages/core/src/agents/agentLoader.ts
+index bdc59de74..dc505c031 100644
+--- a/packages/core/src/agents/agentLoader.ts
++++ b/packages/core/src/agents/agentLoader.ts
+@@ -50,10 +50,11 @@ interface FrontmatterAuthConfig {
+   key?: string;
+   name?: string;
+   // HTTP
+-  scheme?: 'Bearer' | 'Basic';
++  scheme?: string;
+   token?: string;
+   username?: string;
+   password?: string;
++  value?: string;
+ }
+ 
+ interface FrontmatterRemoteAgentDefinition
+@@ -139,16 +140,21 @@ const apiKeyAuthSchema = z.object({
+ const httpAuthSchema = z.object({
+   ...baseAuthFields,
+   type: z.literal('http'),
+-  scheme: z.enum(['Bearer', 'Basic']),
++  scheme: z.string().min(1),
+   token: z.string().min(1).optional(),
+   username: z.string().min(1).optional(),
+   password: z.string().min(1).optional(),
++  value: z.string().min(1).optional(),
+ });
+ 
+ const authConfigSchema = z
+   .discriminatedUnion('type', [apiKeyAuthSchema, httpAuthSchema])
+   .superRefine((data, ctx) => {
+     if (data.type === 'http') {
++      if (data.value) {
++        // Raw mode - only scheme and value are needed
++        return;
++      }
+       if (data.scheme === 'Bearer' && !data.token) {
+         ctx.addIssue({
+           code: z.ZodIssueCode.custom,
+@@ -348,6 +354,14 @@ function convertFrontmatterAuthToConfig(
+           'Internal error: HTTP scheme missing after validation.',
+         );
+       }
++      if (frontmatter.value) {
++        return {
++          ...base,
++          type: 'http',
++          scheme: frontmatter.scheme,
++          value: frontmatter.value,
++        };
++      }
+       switch (frontmatter.scheme) {
+         case 'Bearer':
+           if (!frontmatter.token) {
+@@ -375,8 +389,8 @@ function convertFrontmatterAuthToConfig(
+             password: frontmatter.password,
+           };
+         default: {
+-          const exhaustive: never = frontmatter.scheme;
+-          throw new Error(`Unknown HTTP scheme: ${exhaustive}`);
++          // Other IANA schemes without a value should not reach here after validation
++          throw new Error(`Unknown HTTP scheme: ${frontmatter.scheme}`);
+         }
+       }
+     }
+diff --git a/packages/core/src/agents/auth-provider/factory.ts b/packages/core/src/agents/auth-provider/factory.ts
+index 956273734..66b14d0a3 100644
+--- a/packages/core/src/agents/auth-provider/factory.ts
++++ b/packages/core/src/agents/auth-provider/factory.ts
+@@ -11,6 +11,7 @@ import type {
+   AuthValidationResult,
+ } from './types.js';
+ import { ApiKeyAuthProvider } from './api-key-provider.js';
++import { HttpAuthProvider } from './http-provider.js';
+ 
+ export interface CreateAuthProviderOptions {
+   /** Required for OAuth/OIDC token storage. */
+@@ -50,9 +51,11 @@ export class A2AAuthProviderFactory {
+         return provider;
+       }
+ 
+-      case 'http':
+-        // TODO: Implement
+-        throw new Error('http auth provider not yet implemented');
++      case 'http': {
++        const provider = new HttpAuthProvider(authConfig);
++        await provider.initialize();
++        return provider;
++      }
+ 
+       case 'oauth2':
+         // TODO: Implement
+diff --git a/packages/core/src/agents/auth-provider/http-provider.ts b/packages/core/src/agents/auth-provider/http-provider.ts
+new file mode 100644
+index 000000000..920424c66
+--- /dev/null
++++ b/packages/core/src/agents/auth-provider/http-provider.ts
+@@ -0,0 +1,88 @@
++/**
++ * @license
++ * Copyright 2026 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import type { HttpHeaders } from '@a2a-js/sdk/client';
++import { BaseA2AAuthProvider } from './base-provider.js';
++import type { HttpAuthConfig } from './types.js';
++import { resolveAuthValue } from './value-resolver.js';
++import { debugLogger } from '../../utils/debugLogger.js';
++
++/**
++ * Authentication provider for HTTP authentication schemes.
++ * Supports Bearer, Basic, and any IANA-registered scheme via raw value.
++ */
++export class HttpAuthProvider extends BaseA2AAuthProvider {
++  readonly type = 'http' as const;
++
++  private resolvedToken?: string;
++  private resolvedUsername?: string;
++  private resolvedPassword?: string;
++  private resolvedValue?: string;
++
++  constructor(private readonly config: HttpAuthConfig) {
++    super();
++  }
++
++  override async initialize(): Promise<void> {
++    const config = this.config;
++    if ('token' in config) {
++      this.resolvedToken = await resolveAuthValue(config.token);
++    } else if ('username' in config) {
++      this.resolvedUsername = await resolveAuthValue(config.username);
++      this.resolvedPassword = await resolveAuthValue(config.password);
++    } else {
++      // Generic raw value for any other IANA-registered scheme
++      this.resolvedValue = await resolveAuthValue(config.value);
++    }
++    debugLogger.debug(
++      `[HttpAuthProvider] Initialized with scheme: ${this.config.scheme}`,
++    );
++  }
++
++  override async headers(): Promise<HttpHeaders> {
++    const config = this.config;
++    if ('token' in config) {
++      if (!this.resolvedToken)
++        throw new Error('HttpAuthProvider not initialized');
++      return { Authorization: `Bearer ${this.resolvedToken}` };
++    }
++
++    if ('username' in config) {
++      if (!this.resolvedUsername || !this.resolvedPassword) {
++        throw new Error('HttpAuthProvider not initialized');
++      }
++      const credentials = Buffer.from(
++        `${this.resolvedUsername}:${this.resolvedPassword}`,
++      ).toString('base64');
++      return { Authorization: `Basic ${credentials}` };
++    }
++
++    // Generic raw value for any other IANA-registered scheme
++    if (!this.resolvedValue)
++      throw new Error('HttpAuthProvider not initialized');
++    return { Authorization: `${config.scheme} ${this.resolvedValue}` };
++  }
++
++  /**
++   * Re-resolves credentials on auth failure (e.g. rotated tokens via $ENV or !command).
++   * Respects MAX_AUTH_RETRIES from the base class to prevent infinite loops.
++   */
++  override async shouldRetryWithHeaders(
++    req: RequestInit,
++    res: Response,
++  ): Promise<HttpHeaders | undefined> {
++    if (res.status === 401 || res.status === 403) {
++      if (this.authRetryCount >= BaseA2AAuthProvider.MAX_AUTH_RETRIES) {
++        return undefined;
++      }
++      debugLogger.debug(
++        '[HttpAuthProvider] Re-resolving values after auth failure',
++      );
++      await this.initialize();
++    }
++    return super.shouldRetryWithHeaders(req, res);
++  }
++}
+diff --git a/packages/core/src/agents/auth-provider/types.ts b/packages/core/src/agents/auth-provider/types.ts
+index 7d41b1b4a..05342c5d2 100644
+--- a/packages/core/src/agents/auth-provider/types.ts
++++ b/packages/core/src/agents/auth-provider/types.ts
+@@ -60,6 +60,12 @@ export type HttpAuthConfig = BaseAuthConfig & {
+         /** For Basic. Supports $ENV_VAR, !command, or literal. */
+         password: string;
+       }
++    | {
++        /** Any IANA-registered scheme (e.g., "Digest", "HOBA", "Custom"). */
++        scheme: string;
++        /** Raw value to be sent as "Authorization: <scheme> <value>". Supports $ENV_VAR, !command, or literal. */
++        value: string;
++      }
+   );
+ 
+ /** Client config corresponding to OAuth2SecurityScheme. */
+diff --git a/packages/core/src/agents/registry.ts b/packages/core/src/agents/registry.ts
+index 41483c9c2..2e1b88e53 100644
+--- a/packages/core/src/agents/registry.ts
++++ b/packages/core/src/agents/registry.ts
+@@ -14,7 +14,8 @@ import { CliHelpAgent } from './cli-help-agent.js';
+ import { GeneralistAgent } from './generalist-agent.js';
+ import { BrowserAgentDefinition } from './browser/browserAgentDefinition.js';
+ import { A2AClientManager } from './a2a-client-manager.js';
+-import { ADCHandler } from './remote-invocation.js';
++import { A2AAuthProviderFactory } from './auth-provider/factory.js';
++import type { AuthenticationHandler } from '@a2a-js/sdk/client';
+ import { type z } from 'zod';
+ import { debugLogger } from '../utils/debugLogger.js';
+ import { isAutoModel } from '../config/models.js';
+@@ -363,8 +364,20 @@ export class AgentRegistry {
+     // Log remote A2A agent registration for visibility.
+     try {
+       const clientManager = A2AClientManager.getInstance();
+-      // Use ADCHandler to ensure we can load agents hosted on secure platforms (e.g. Vertex AI)
+-      const authHandler = new ADCHandler();
++      let authHandler: AuthenticationHandler | undefined;
++      if (definition.auth) {
++        const provider = await A2AAuthProviderFactory.create({
++          authConfig: definition.auth,
++          agentName: definition.name,
++        });
++        if (!provider) {
++          throw new Error(
++            `Failed to create auth provider for agent '${definition.name}'`,
++          );
++        }
++        authHandler = provider;
++      }
++
+       const agentCard = await clientManager.loadAgent(
+         definition.name,
+         definition.agentCardUrl,
+diff --git a/packages/core/src/agents/remote-invocation.ts b/packages/core/src/agents/remote-invocation.ts
+index b76f216f3..dad7f8167 100644
+--- a/packages/core/src/agents/remote-invocation.ts
++++ b/packages/core/src/agents/remote-invocation.ts
+@@ -24,6 +24,7 @@ import type { AuthenticationHandler } from '@a2a-js/sdk/client';
+ import { debugLogger } from '../utils/debugLogger.js';
+ import type { AnsiOutput } from '../utils/terminalSerializer.js';
+ import type { SendMessageResult } from './a2a-client-manager.js';
++import { A2AAuthProviderFactory } from './auth-provider/factory.js';
+ 
+ /**
+  * Authentication handler implementation using Google Application Default Credentials (ADC).
+@@ -79,7 +80,7 @@ export class RemoteAgentInvocation extends BaseToolInvocation<
+   // TODO: See if we can reuse the singleton from AppContainer or similar, but for now use getInstance directly
+   // as per the current pattern in the codebase.
+   private readonly clientManager = A2AClientManager.getInstance();
+-  private readonly authHandler = new ADCHandler();
++  private authHandler: AuthenticationHandler | undefined;
+ 
+   constructor(
+     private readonly definition: RemoteAgentDefinition,
+@@ -107,6 +108,27 @@ export class RemoteAgentInvocation extends BaseToolInvocation<
+     return `Calling remote agent ${this.definition.displayName ?? this.definition.name}`;
+   }
+ 
++  private async getAuthHandler(): Promise<AuthenticationHandler | undefined> {
++    if (this.authHandler) {
++      return this.authHandler;
++    }
++
++    if (this.definition.auth) {
++      const provider = await A2AAuthProviderFactory.create({
++        authConfig: this.definition.auth,
++        agentName: this.definition.name,
++      });
++      if (!provider) {
++        throw new Error(
++          `Failed to create auth provider for agent '${this.definition.name}'`,
++        );
++      }
++      this.authHandler = provider;
++    }
++
++    return this.authHandler;
++  }
++
+   protected override async getConfirmationDetails(
+     _abortSignal: AbortSignal,
+   ): Promise<ToolCallConfirmationDetails | false> {
+@@ -138,11 +160,13 @@ export class RemoteAgentInvocation extends BaseToolInvocation<
+         this.taskId = priorState.taskId;
+       }
+ 
++      const authHandler = await this.getAuthHandler();
++
+       if (!this.clientManager.getClient(this.definition.name)) {
+         await this.clientManager.loadAgent(
+           this.definition.name,
+           this.definition.agentCardUrl,
+-          this.authHandler,
++          authHandler,
+         );
+       }

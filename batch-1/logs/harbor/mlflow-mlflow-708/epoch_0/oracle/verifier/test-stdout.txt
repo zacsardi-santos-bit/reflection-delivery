@@ -1,0 +1,132 @@
+patching file tests/h2o/test_h2o_model_export.py
+patching file tests/keras/test_keras_model_export.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: cov-4.1.0
+collecting ... collected 14 items / 1 deselected / 13 selected
+
+tests/h2o/test_h2o_model_export.py::test_model_save_load PASSED          [  7%]
+tests/h2o/test_h2o_model_export.py::test_model_log PASSED                [ 15%]
+tests/h2o/test_h2o_model_export.py::test_model_load_succeeds_with_missing_data_key_when_data_exists_at_default_path PASSED [ 23%]
+tests/h2o/test_h2o_model_export.py::test_model_save_persists_specified_conda_env_in_mlflow_model_directory PASSED [ 30%]
+tests/h2o/test_h2o_model_export.py::test_model_log_persists_specified_conda_env_in_mlflow_model_directory PASSED [ 38%]
+tests/h2o/test_h2o_model_export.py::test_model_save_without_specified_conda_env_uses_default_env_with_expected_dependencies PASSED [ 46%]
+tests/h2o/test_h2o_model_export.py::test_model_log_without_specified_conda_env_uses_default_env_with_expected_dependencies PASSED [ 53%]
+tests/keras/test_keras_model_export.py::test_model_log PASSED            [ 61%]
+tests/keras/test_keras_model_export.py::test_model_save_persists_specified_conda_env_in_mlflow_model_directory PASSED [ 69%]
+tests/keras/test_keras_model_export.py::test_model_log_persists_specified_conda_env_in_mlflow_model_directory PASSED [ 76%]
+tests/keras/test_keras_model_export.py::test_model_save_without_specified_conda_env_uses_default_env_with_expected_dependencies PASSED [ 84%]
+tests/keras/test_keras_model_export.py::test_model_log_without_specified_conda_env_uses_default_env_with_expected_dependencies PASSED [ 92%]
+tests/keras/test_keras_model_export.py::test_model_load_succeeds_with_missing_data_key_when_data_exists_at_default_path PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.7/site-packages/yaml/constructor.py:126
+  /usr/local/lib/python3.7/site-packages/yaml/constructor.py:126: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+    if not isinstance(key, collections.Hashable):
+
+../../usr/local/lib/python3.7/site-packages/h5py/__init__.py:46
+  /usr/local/lib/python3.7/site-packages/h5py/__init__.py:46: DeprecationWarning: `np.typeDict` is a deprecated alias for `np.sctypeDict`.
+    from ._conv import register_converters as _register_converters
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/pywrap_tensorflow_internal.py:15
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/pywrap_tensorflow_internal.py:15: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:597
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:597: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object,
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:605
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:605: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool,
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:639
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:639: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object,
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:649
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/dtypes.py:649: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool,
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_util.py:106
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_util.py:106: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object:
+
+../../usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_util.py:108
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_util.py:108: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool:
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:568
+  /usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:568: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    (np.object, string),
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:569
+  /usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:569: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    (np.bool, bool),
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:593
+  /usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:593: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    types_pb2.DT_STRING: np.object,
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:597
+  /usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:597: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    types_pb2.DT_BOOL: np.bool,
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:614
+  /usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:614: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    types_pb2.DT_STRING_REF: np.object,
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:619
+  /usr/local/lib/python3.7/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:619: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    types_pb2.DT_BOOL_REF: np.bool,
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/util/tensor_util.py:100
+  /usr/local/lib/python3.7/site-packages/tensorboard/util/tensor_util.py:100: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object: SlowAppendObjectArrayToTensorProto,
+
+../../usr/local/lib/python3.7/site-packages/tensorboard/util/tensor_util.py:101
+  /usr/local/lib/python3.7/site-packages/tensorboard/util/tensor_util.py:101: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool: SlowAppendBoolArrayToTensorProto,
+
+../../usr/local/lib/python3.7/site-packages/keras/callbacks.py:20
+  /usr/local/lib/python3.7/site-packages/keras/callbacks.py:20: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+    from collections import Iterable
+
+tests/h2o/test_h2o_model_export.py::test_model_save_load
+tests/h2o/test_h2o_model_export.py::test_model_log
+tests/h2o/test_h2o_model_export.py::test_model_load_succeeds_with_missing_data_key_when_data_exists_at_default_path
+  /usr/local/lib/python3.7/site-packages/h2o/frame.py:1985: H2ODependencyWarning: Converting H2O frame to pandas dataframe using single-thread.  For faster conversion using multi-thread, install polars and pyarrow and use it as pandas_df = h2o_df.as_data_frame(use_multi_thread=True)
+  
+    "pandas_df = h2o_df.as_data_frame(use_multi_thread=True)\n", H2ODependencyWarning)
+
+tests/keras/test_keras_model_export.py: 12 warnings
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_util.py:521: DeprecationWarning: tostring() is deprecated. Use tobytes() instead.
+    tensor_proto.tensor_content = nparray.tostring()
+
+tests/keras/test_keras_model_export.py::test_model_log
+  /usr/local/lib/python3.7/site-packages/tensorflow_core/python/framework/indexed_slices.py:339: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+    if not isinstance(values, collections.Sequence):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================ 13 passed, 1 deselected, 34 warnings in 18.33s ================
+Closing connection _sid_8d18 at exit
+H2O session _sid_8d18 closed.
+Closing connection _sid_9bb2 at exit
+H2O session _sid_9bb2 closed.
+reward=1 graded=13 found=0 failed=0 parsed=13 framework=pytest exit_code=0

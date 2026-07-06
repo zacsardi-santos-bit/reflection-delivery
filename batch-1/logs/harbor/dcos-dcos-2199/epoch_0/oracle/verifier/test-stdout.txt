@@ -1,0 +1,57 @@
+patching file gen/tests/test_adminrouter_tls_conf.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: tox.ini
+plugins: teamcity-messages-1.33
+collecting ... collected 19 items
+
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_master[true-TLSv1 TLSv1.1 TLSv1.2] PASSED [  5%]
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_master[false-TLSv1.1 TLSv1.2] PASSED [ 10%]
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_agent[true] PASSED [ 15%]
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_agent[false] PASSED [ 21%]
+gen/tests/test_adminrouter_tls_conf.py::TestSetCipherOverride::test_cipher_agent_default PASSED [ 26%]
+gen/tests/test_adminrouter_tls_conf.py::TestSetCipherOverride::test_cipher_master_default PASSED [ 31%]
+gen/tests/test_adminrouter_tls_conf.py::TestSetCipherOverride::test_cipher_master_custom PASSED [ 36%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_validation_1_0 PASSED [ 42%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_validation_1_1 PASSED [ 47%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_validation_1_2 PASSED [ 52%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_default[new_arguments0] PASSED [ 57%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_default[new_arguments1] PASSED [ 63%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled0-expected_protocols0] PASSED [ 68%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled1-expected_protocols1] PASSED [ 73%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled2-expected_protocols2] PASSED [ 78%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled3-expected_protocols3] PASSED [ 84%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled4-expected_protocols4] PASSED [ 89%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled5-expected_protocols5] PASSED [ 94%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_no_tls_version_enabled PASSED [100%]
+
+=============================== warnings summary ===============================
+gen/calc.py:660
+  /workspace/repo/gen/calc.py:660: DeprecationWarning: invalid escape sequence \d
+    match = re.match("([\d\.]+)(\w+)", mesos_recovery_timeout)
+
+gen/calc.py:825
+  /workspace/repo/gen/calc.py:825: DeprecationWarning: invalid escape sequence \d
+    '^\d+(\.\d+)?({})$'.format('|'.join(timeout_units)),
+
+pkgpanda/__init__.py:45
+  /workspace/repo/pkgpanda/__init__.py:45: DeprecationWarning: invalid escape sequence \-
+    name_regex = "^[a-zA-Z0-9@_+][a-zA-Z0-9@._+\-]*$"
+
+pkgpanda/__init__.py:20
+  /workspace/repo/pkgpanda/__init__.py:20: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import Iterable
+
+gen/template.py:20
+  /workspace/repo/gen/template.py:20: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import resource_string
+
+gen/build_deploy/bash.py:106
+  /workspace/repo/gen/build_deploy/bash.py:106: DeprecationWarning: invalid escape sequence \e
+    bash_template = """#!/bin/bash
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 19 passed, 6 warnings in 4.24s ========================
+reward=1 graded=19 found=0 failed=0 parsed=7 framework=pytest exit_code=0

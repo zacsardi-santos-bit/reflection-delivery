@@ -1,0 +1,134 @@
+patching file crates/oxc_minifier/tests/plugins/inject_global_variables.rs
+patching file crates/oxc_minifier/tests/plugins/mod.rs
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.3.0
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.155
+   Compiling rustversion v1.0.17
+   Compiling siphasher v0.3.11
+   Compiling thiserror v1.0.61
+   Compiling itoa v1.0.11
+   Compiling unicode-linebreak v0.1.5
+   Compiling smawk v0.3.2
+   Compiling rand_core v0.6.4
+   Compiling ryu v1.0.18
+   Compiling unicode-width v0.1.13
+   Compiling parking_lot_core v0.9.10
+   Compiling crossbeam-utils v0.8.20
+   Compiling allocator-api2 v0.2.18
+   Compiling hashbrown v0.14.5
+   Compiling owo-colors v4.0.0
+   Compiling static_assertions v1.1.0
+   Compiling rand v0.8.5
+   Compiling scopeguard v1.2.0
+   Compiling phf_shared v0.11.2
+   Compiling smallvec v1.13.2
+   Compiling textwrap v0.16.1
+   Compiling rustc-hash v2.0.0
+   Compiling once_cell v1.19.0
+   Compiling oxc_index v0.24.0 (/workspace/repo/crates/oxc_index)
+   Compiling ryu-js v1.0.1
+   Compiling unicode-id-start v1.2.0
+   Compiling nonmax v0.5.5
+   Compiling bitflags v2.6.0
+   Compiling lock_api v0.4.12
+   Compiling num-traits v0.2.19
+   Compiling bumpalo v3.16.0
+   Compiling equivalent v1.0.1
+   Compiling either v1.13.0
+   Compiling fixedbitset v0.4.2
+   Compiling indexmap v2.3.0
+   Compiling serde v1.0.204
+   Compiling assert-unchecked v0.1.2
+   Compiling memchr v2.7.4
+   Compiling phf_generator v0.11.2
+   Compiling itertools v0.13.0
+   Compiling serde_json v1.0.122
+   Compiling memoffset v0.9.1
+   Compiling vsimd v0.8.0
+   Compiling outref v0.5.1
+   Compiling oxc_traverse v0.24.0 (/workspace/repo/crates/oxc_traverse)
+   Compiling seq-macro v0.3.5
+   Compiling daachorse v1.0.0
+   Compiling oxc_allocator v0.24.0 (/workspace/repo/crates/oxc_allocator)
+   Compiling lazy_static v1.5.0
+   Compiling linked-hash-map v0.5.6
+   Compiling quote v1.0.36
+   Compiling similar v2.6.0
+   Compiling pico-args v0.5.0
+   Compiling petgraph v0.6.5
+   Compiling base64-simd v0.8.0
+   Compiling syn v2.0.69
+   Compiling console v0.15.8
+   Compiling dashmap v6.0.1
+   Compiling castaway v0.2.3
+   Compiling compact_str v0.8.0
+   Compiling insta v1.39.0
+   Compiling num-integer v0.1.46
+   Compiling num-bigint v0.4.6
+   Compiling thiserror-impl v1.0.61
+   Compiling miette-derive v7.2.0
+   Compiling phf_macros v0.11.2
+   Compiling oxc_ast_macros v0.24.0 (/workspace/repo/crates/oxc_ast_macros)
+   Compiling serde_derive v1.0.204
+   Compiling phf v0.11.2
+   Compiling miette v7.2.0
+   Compiling oxc_span v0.24.0 (/workspace/repo/crates/oxc_span)
+   Compiling oxc_diagnostics v0.24.0 (/workspace/repo/crates/oxc_diagnostics)
+   Compiling oxc_syntax v0.24.0 (/workspace/repo/crates/oxc_syntax)
+   Compiling oxc_ast v0.24.0 (/workspace/repo/crates/oxc_ast)
+   Compiling oxc_cfg v0.24.0 (/workspace/repo/crates/oxc_cfg)
+   Compiling oxc_sourcemap v0.24.0 (/workspace/repo/crates/oxc_sourcemap)
+   Compiling oxc_semantic v0.24.0 (/workspace/repo/crates/oxc_semantic)
+   Compiling oxc_parser v0.24.0 (/workspace/repo/crates/oxc_parser)
+   Compiling oxc_mangler v0.24.0 (/workspace/repo/crates/oxc_mangler)
+   Compiling oxc_codegen v0.24.0 (/workspace/repo/crates/oxc_codegen)
+   Compiling oxc_minifier v0.24.0 (/workspace/repo/crates/oxc_minifier)
+    Finished `test` profile [unoptimized] target(s) in 15.68s
+────────────
+ Nextest run ID 17a80de5-204b-4359-b2eb-c41d144ccf01 with nextest profile: default
+    Starting 40 tests across 1 binary (12 tests skipped)
+        PASS [   0.029s] ( 1/40) oxc_minifier::mod ast_passes::fold_constants::test_number_boolean_comparison
+        PASS [   0.032s] ( 2/40) oxc_minifier::mod ast_passes::fold_constants::test_undefined_comparison2
+        PASS [   0.033s] ( 3/40) oxc_minifier::mod ast_passes::fold_constants::test_boolean_string_comparison
+        PASS [   0.033s] ( 4/40) oxc_minifier::mod ast_passes::fold_constants::test_string_boolean_comparison
+        PASS [   0.034s] ( 5/40) oxc_minifier::mod ast_passes::remove_dead_code::dce_conditional_expression
+        PASS [   0.034s] ( 6/40) oxc_minifier::mod ast_passes::fold_constants::test_boolean_number_comparison
+        PASS [   0.036s] ( 7/40) oxc_minifier::mod ast_passes::fold_constants::cjs
+        PASS [   0.036s] ( 8/40) oxc_minifier::mod ast_passes::fold_constants::test_undefined_comparison3
+        PASS [   0.037s] ( 9/40) oxc_minifier::mod ast_passes::fold_constants::test_fold_logical_op2
+        PASS [   0.037s] (10/40) oxc_minifier::mod ast_passes::fold_constants::test_nan_comparison
+        PASS [   0.037s] (11/40) oxc_minifier::mod ast_passes::fold_constants::undefined_comparison1
+        PASS [   0.038s] (12/40) oxc_minifier::mod ast_passes::fold_constants::test_number_string_comparison
+        PASS [   0.038s] (13/40) oxc_minifier::mod ast_passes::fold_constants::test_boolean_boolean_comparison
+        PASS [   0.039s] (14/40) oxc_minifier::mod ast_passes::fold_constants::test_string_number_comparison
+        PASS [   0.039s] (15/40) oxc_minifier::mod ast_passes::remove_dead_code::dce_from_terser
+        PASS [   0.040s] (16/40) oxc_minifier::mod ast_passes::fold_constants::test_fold_bit_shift
+        PASS [   0.039s] (17/40) oxc_minifier::mod ast_passes::fold_constants::test_null_comparison1
+        PASS [   0.043s] (18/40) oxc_minifier::mod ast_passes::fold_constants::test_fold_logical_op
+        PASS [   0.027s] (19/40) oxc_minifier::mod ast_passes::remove_dead_code::dce_logical_expression
+        PASS [   0.026s] (20/40) oxc_minifier::mod ast_passes::remove_dead_code::dce_var_hoisting
+        PASS [   0.027s] (21/40) oxc_minifier::mod ast_passes::substitute_alternate_syntax::undefined
+        PASS [   0.028s] (22/40) oxc_minifier::mod ast_passes::substitute_alternate_syntax::fold_return_result
+        PASS [   0.032s] (23/40) oxc_minifier::mod ast_passes::remove_dead_code::dce_if_statement
+        PASS [   0.026s] (24/40) oxc_minifier::mod plugins::inject_global_variables::default
+        PASS [   0.028s] (25/40) oxc_minifier::mod plugins::inject_global_variables::basic
+        PASS [   0.026s] (26/40) oxc_minifier::mod plugins::inject_global_variables::named
+        PASS [   0.024s] (27/40) oxc_minifier::mod plugins::inject_global_variables::shorthand
+        PASS [   0.027s] (28/40) oxc_minifier::mod plugins::inject_global_variables::import_namespace
+        PASS [   0.027s] (29/40) oxc_minifier::mod plugins::inject_global_variables::is_reference
+        PASS [   0.028s] (30/40) oxc_minifier::mod plugins::inject_global_variables::existing
+        PASS [   0.024s] (31/40) oxc_minifier::mod plugins::inject_global_variables::shorthand_assignment
+        PASS [   0.028s] (32/40) oxc_minifier::mod plugins::inject_global_variables::keypaths
+        PASS [   0.028s] (33/40) oxc_minifier::mod plugins::inject_global_variables::non_js
+        PASS [   0.028s] (34/40) oxc_minifier::mod plugins::inject_global_variables::shadowing
+        PASS [   0.028s] (35/40) oxc_minifier::mod plugins::inject_global_variables::redundant_keys
+        PASS [   0.014s] (36/40) oxc_minifier::mod plugins::replace_global_defines::replace_global_definitions
+        PASS [   0.017s] (37/40) oxc_minifier::mod plugins::inject_global_variables::shorthand_func_fallback
+        PASS [   0.015s] (38/40) oxc_minifier::mod plugins::replace_global_defines::replace_global_definitions_dot
+        PASS [   0.017s] (39/40) oxc_minifier::mod plugins::inject_global_variables::shorthand_func
+        PASS [   0.093s] (40/40) oxc_minifier::mod mangler::mangler
+────────────
+     Summary [   0.129s] 40 tests run: 40 passed, 12 skipped
+reward=1 graded=40 found=10 failed=0 parsed=40 framework=cargo exit_code=0

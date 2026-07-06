@@ -1,0 +1,29 @@
+{
+    "id": "00ad2ad4-9f45-4d87-b588-c60b0477b5a8",
+    "started_at": "2026-07-06T12:17:45.394919",
+    "finished_at": "2026-07-06T12:18:06.018583",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__dependabot-dependabot-core-13998": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "dependabot-dependabot-core-13998__D7gUuHh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

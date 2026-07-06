@@ -1,0 +1,16 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm install --frozen-lockfile && cd packages/enhanced-img && npx vitest run --reporter=verbose",
+  "test_files": [
+    "packages/enhanced-img/test/markup-plugin.spec.js",
+    "packages/enhanced-img/test/preprocessor.spec.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/enhanced-img/test/markup-plugin.spec.js::Image preprocess snapshot test",
+    "/workspace/repo/packages/enhanced-img/test/markup-plugin.spec.js::parses a minimized object",
+    "/workspace/repo/packages/enhanced-img/test/markup-plugin.spec.js::parses a non-minimized object"
+  ],
+  "PASS_TO_PASS": []
+}

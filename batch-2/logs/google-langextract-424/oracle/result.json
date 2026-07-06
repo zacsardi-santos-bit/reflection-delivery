@@ -1,0 +1,29 @@
+{
+    "id": "d01a3714-560f-466c-a697-1e7695b0e246",
+    "started_at": "2026-07-06T12:19:31.809641",
+    "finished_at": "2026-07-06T12:19:46.902752",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__google-langextract-424": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "google-langextract-424__3ybvUFi"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

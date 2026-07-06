@@ -1,5 +1,0 @@
-patching file crates/ruff_linter/resources/test/fixtures/flake8_debugger/T100.py
-patching file crates/ruff_linter/src/rules/flake8_debugger/rules/debugger.rs
-patching file crates/ruff_linter/src/rules/flake8_debugger/snapshots/ruff_linter__rules__flake8_debugger__tests__T100_T100.py.snap
-patching file crates/ruff_linter/src/rules/pylint/rules/unnecessary_dunder_call.rs
-patching file crates/ruff_linter/src/rules/pylint/snapshots/ruff_linter__rules__pylint__tests__PLC2801_unnecessary_dunder_call.py.snap

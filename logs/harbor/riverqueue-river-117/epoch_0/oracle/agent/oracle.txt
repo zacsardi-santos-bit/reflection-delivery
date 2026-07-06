@@ -1,6 +1,0 @@
-patching file client.go
-patching file internal/dbadapter/db_adapter.go
-patching file internal/dblist/job_list.go
-patching file internal/dbsqlc/river_job_ext.go
-patching file internal/util/valutil/val_util.go
-patching file job_list_params.go

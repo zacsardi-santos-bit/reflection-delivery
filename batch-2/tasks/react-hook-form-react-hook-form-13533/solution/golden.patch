@@ -1,0 +1,15 @@
+diff --git a/src/utils/deepEqual.ts b/src/utils/deepEqual.ts
+index 36eb1e24..2ae30b4c 100644
+--- a/src/utils/deepEqual.ts
++++ b/src/utils/deepEqual.ts
+@@ -37,6 +37,10 @@ export default function deepEqual(
+     return Object.is(object1, object2);
+   }
+ 
++  if (!keys1.length && Array.isArray(object1) !== Array.isArray(object2)) {
++    return false;
++  }
++
+   const visitedPairs = visited.get(object1);
+ 
+   if (visitedPairs && visitedPairs.has(object2)) {

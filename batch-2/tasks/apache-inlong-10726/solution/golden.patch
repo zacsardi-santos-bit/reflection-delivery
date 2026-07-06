@@ -1,0 +1,316 @@
+diff --git a/.github/workflows/ci_ut.yml b/.github/workflows/ci_ut.yml
+index 5c433872b..0d67d4632 100644
+--- a/.github/workflows/ci_ut.yml
++++ b/.github/workflows/ci_ut.yml
+@@ -101,7 +101,7 @@ jobs:
+           CI: false
+ 
+       - name: Unit test with Maven
+-        run: mvn --batch-mode --update-snapshots -e -V test -pl !:sort-end-to-end-tests-v1.15,!:sort-end-to-end-tests-v1.13
++        run: mvn --batch-mode --update-snapshots -e -V test -pl !:sort-end-to-end-tests-v1.15,!:sort-end-to-end-tests-v1.13,!:sort-end-to-end-tests-v1.18
+         env:
+           CI: false
+ 
+diff --git a/.github/workflows/ci_ut_flink18.yml b/.github/workflows/ci_ut_flink18.yml
+new file mode 100644
+index 000000000..5c2f2709f
+--- /dev/null
++++ b/.github/workflows/ci_ut_flink18.yml
+@@ -0,0 +1,96 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one or more
++# contributor license agreements.  See the NOTICE file distributed with
++# this work for additional information regarding copyright ownership.
++# The ASF licenses this file to You under the Apache License, Version 2.0
++# (the "License"); you may not use this file except in compliance with
++# the License.  You may obtain a copy of the License at
++#
++#    http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++name:
++  InLong Unit Test For Flink 1.18
++
++on:
++  push:
++    paths:
++      - '.github/workflows/ci_ut_flink18.yml'
++      - 'inlong-sort/**'
++      - '!**.md'
++
++  pull_request:
++    paths:
++      - '.github/workflows/ci_ut_flink18.yml'
++      - 'inlong-sort/**'
++      - '!**.md'
++
++jobs:
++  unit-test:
++    name: Unit Test
++    runs-on: ubuntu-22.04
++    steps:
++      - name: Checkout
++        uses: actions/checkout@v4
++
++      # Release space size
++      - name: Remove unnecessary packages
++        run: |
++          echo "=== Before pruning ==="
++          df -h
++          sudo rm -rf /usr/share/dotnet
++          sudo rm -rf /usr/local/lib/android
++          sudo rm -rf /opt/ghc
++          sudo rm -rf /opt/hostedtoolcache
++          echo "=== After pruning ==="
++          df -h
++
++      - name: Set up JDK
++        uses: actions/setup-java@v4
++        with:
++          java-version: 8
++          distribution: adopt
++
++      - name: Cache Maven packages
++        uses: actions/cache@v4
++        with:
++          path: |
++            ~/.m2/repository/*/*/*
++            !~/.m2/repository/org/apache/inlong
++          key: ${{ runner.os }}-inlong-flink18-${{ hashFiles('**/pom.xml') }}
++          restore-keys: ${{ runner.os }}-inlong-flink18
++
++      - name: Build for Flink 1.18 with Maven
++        run: mvn --update-snapshots -e -V clean install -U -pl :sort-end-to-end-tests-v1.18 -am -Pv1.18 -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Daether.connector.http.reuseConnections=false -Daether.connector.requestTimeout=60000
++        env:
++          CI: false
++
++      - name: Unit test for Flink 1.18 with Maven
++        run: mvn --update-snapshots -e -V verify -pl :sort-end-to-end-tests-v1.18 -am -Pv1.18
++        env:
++          CI: false
++
++      - name: Upload unit test results
++        if: ${{ failure() }}
++        uses: actions/upload-artifact@v4
++        with:
++          name: surefire-reports
++          path: ./**/target/surefire-reports/
++          if-no-files-found: ignore
++
++      - name: Upload integration test results
++        if: ${{ failure() }}
++        uses: actions/upload-artifact@v4
++        with:
++          name: failsafe-reports
++          path: ./**/target/failsafe-reports/
++          if-no-files-found: ignore
++
++      - name: Clean up build packages
++        run: mvn clean
+\ No newline at end of file
+diff --git a/inlong-sort/sort-core/pom.xml b/inlong-sort/sort-core/pom.xml
+index 2ef950652..e4881e604 100644
+--- a/inlong-sort/sort-core/pom.xml
++++ b/inlong-sort/sort-core/pom.xml
+@@ -72,18 +72,6 @@
+             <version>${mysql.jdbc.version}</version>
+             <scope>provided</scope>
+         </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-inlongmsg-base</artifactId>
+-            <version>${project.version}</version>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-csv</artifactId>
+-            <version>${project.version}</version>
+-            <scope>test</scope>
+-        </dependency>
+         <dependency>
+             <groupId>org.apache.hadoop</groupId>
+             <artifactId>hadoop-common</artifactId>
+@@ -106,6 +94,18 @@
+                     <artifactId>flink-table-common</artifactId>
+                     <scope>provided</scope>
+                 </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-csv</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-base</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
+                 <dependency>
+                     <groupId>org.apache.inlong</groupId>
+                     <artifactId>sort-flink-dependencies-${sort.flink.version}</artifactId>
+@@ -251,6 +251,18 @@
+                     <artifactId>flink-table-common</artifactId>
+                     <scope>provided</scope>
+                 </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-csv</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-base</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
+                 <dependency>
+                     <groupId>org.apache.inlong</groupId>
+                     <artifactId>sort-flink-dependencies-${sort.flink.version}</artifactId>
+@@ -372,6 +384,24 @@
+                     <version>${project.version}</version>
+                     <scope>test</scope>
+                 </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-connector-jdbc-v1.18</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-connector-elasticsearch6-v1.18</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-connector-elasticsearch7-v1.18</artifactId>
++                    <version>${project.version}</version>
++                    <scope>test</scope>
++                </dependency>
+             </dependencies>
+             <build>
+                 <plugins>
+diff --git a/inlong-sort/sort-dist/pom.xml b/inlong-sort/sort-dist/pom.xml
+index 0f28f495b..4541bb37e 100644
+--- a/inlong-sort/sort-dist/pom.xml
++++ b/inlong-sort/sort-dist/pom.xml
+@@ -55,31 +55,6 @@
+             <artifactId>sort-format-common</artifactId>
+             <version>${project.version}</version>
+         </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-base</artifactId>
+-            <version>${project.version}</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-csv</artifactId>
+-            <version>${project.version}</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-inlongmsg-base</artifactId>
+-            <version>${project.version}</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-inlongmsg-csv</artifactId>
+-            <version>${project.version}</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.apache.inlong</groupId>
+-            <artifactId>sort-format-inlongmsg-kv</artifactId>
+-            <version>${project.version}</version>
+-        </dependency>
+         <dependency>
+             <groupId>org.apache.inlong</groupId>
+             <artifactId>sort-format-rowdata-kv</artifactId>
+@@ -134,6 +109,31 @@
+                     <artifactId>sort-format-json-v1.13</artifactId>
+                     <version>${project.version}</version>
+                 </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-csv</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-base</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-csv</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-kv</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-base</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
+                 <dependency>
+                     <groupId>org.apache.flink</groupId>
+                     <artifactId>flink-sql-parquet_${scala.binary.version}</artifactId>
+@@ -172,6 +172,31 @@
+                     <artifactId>sort-format-json-v1.15</artifactId>
+                     <version>${project.version}</version>
+                 </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-csv</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-base</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-csv</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-inlongmsg-kv</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
++                <dependency>
++                    <groupId>org.apache.inlong</groupId>
++                    <artifactId>sort-format-base</artifactId>
++                    <version>${project.version}</version>
++                </dependency>
+                 <dependency>
+                     <groupId>org.apache.flink</groupId>
+                     <artifactId>flink-sql-parquet</artifactId>
+diff --git a/inlong-sort/sort-formats/pom.xml b/inlong-sort/sort-formats/pom.xml
+index e36378306..3c392001f 100644
+--- a/inlong-sort/sort-formats/pom.xml
++++ b/inlong-sort/sort-formats/pom.xml
+@@ -249,7 +249,8 @@
+             <id>v1.18</id>
+             <modules>
+                 <module>format-common</module>
+-                <module>format-row/format-json-v1.18</module>
++                <module>format-row</module>
++                <module>format-rowdata</module>
+             </modules>
+             <dependencies>
+                 <!--flink dependency-->

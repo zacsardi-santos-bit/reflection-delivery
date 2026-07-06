@@ -1,0 +1,1 @@
+cd /workspace/repo && npm ci && npx mocha 'src/firebaseConfigValidate.spec.ts'

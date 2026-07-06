@@ -1,0 +1,9 @@
+I'm hitting some annoying formatting churn when my workspace manifest gets edited programmatically, like when a new catalog, overrides, or allowBuilds section gets added. The tool rewrites the file in ways I didn't ask for and it makes the diffs really noisy to review.
+
+First thing, I carefully put blank lines between my top-level sections as visual separators to keep things readable, and after an automated update those blank lines just vanish, or sometimes new blank lines appear where there weren't any before. I want the tool to detect the existing style and carry it over, so if the original uses blank lines between top-level sections they get preserved when a new section is inserted or appended, and if the original had no blank lines between sections then none get added. Basically match what was already there.
+
+Second, I keep my top-level sections in strict alphabetical order, including the packages entry which I put in its natural alphabetical spot rather than forcing it to be first like the usual convention. When a new section gets added it just gets appended at the end instead of sorted into the right place. The detection that figures out "are all these keys sorted alphabetically" is failing in this case, probably because it assumes packages goes first. I want it to recognize that all existing keys are sorted (regardless of where packages sits) and insert the new key into its correct alphabetical position.
+
+Third, when I've got a section whose keys are in a custom, non-alphabetical order on purpose, and I update the values of those keys while also adding a new one, the tool scrambles the original ordering. I'd expect the existing keys to stay exactly in their original order and the new key to just get tacked on at the end.
+
+The whole point is that automated updates should produce minimal, intentional-looking diffs and not stomp on my organizational style.

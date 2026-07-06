@@ -1,0 +1,29 @@
+{
+    "id": "4348433d-e498-47f2-ae68-19dc6e7ee7a9",
+    "started_at": "2026-07-04T15:40:51.583384",
+    "finished_at": "2026-07-04T15:41:12.214810",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__huggingface-transformers-46654": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "huggingface-transformers-46654__i4vVaya"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

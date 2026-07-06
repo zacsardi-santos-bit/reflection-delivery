@@ -1,0 +1,29 @@
+{
+    "id": "e133590e-db1e-47f8-a692-e39a34200770",
+    "started_at": "2026-07-04T15:39:10.950996",
+    "finished_at": "2026-07-04T15:39:53.084908",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__ls1intum-artemis-11264": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "ls1intum-artemis-11264__NFtTxs9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

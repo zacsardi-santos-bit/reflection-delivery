@@ -1,0 +1,153 @@
+patching file tests/integrations/litestar/__init__.py
+patching file tests/integrations/litestar/test_litestar.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: Faker-40.27.0, anyio-4.14.1, asyncio-1.4.0, localserver-0.10.0, forked-1.6.0, cov-7.1.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 10 items
+
+tests/integrations/litestar/test_litestar.py::test_catch_exceptions[/some_url-ZeroDivisionError-division by zero-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.homepage_handler] ERROR - 2026-07-01 14:41:15,950 - litestar - config - Uncaught exception (connection_type=http, path='/some_url'):
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/litestar/middleware/_internal/exceptions/middleware.py", line 158, in __call__
+    await self.app(scope, receive, capture_response_started)
+  File "/workspace/repo/sentry_sdk/integrations/litestar.py", line 252, in handle_wrapper
+    return await old_handle(self, scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 81, in handle
+    response = await self._get_response_for_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 133, in _get_response_for_request
+    return await self._call_handler_function(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 181, in _call_handler_function
+    else await route_handler.fn(**parsed_kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/tests/integrations/litestar/test_litestar.py", line 30, in homepage_handler
+    1 / 0
+    ~~^~~
+ZeroDivisionError: division by zero
+PASSEDINFO - 2026-07-01 14:41:15,971 - httpx - _client - HTTP Request: GET http://testserver.local/some_url "HTTP/1.1 500 Internal Server Error"
+
+tests/integrations/litestar/test_litestar.py::test_catch_exceptions[/custom_error-Exception-Too Hot-custom_name] ERROR - 2026-07-01 14:41:16,047 - litestar - config - Uncaught exception (connection_type=http, path='/custom_error'):
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/litestar/middleware/_internal/exceptions/middleware.py", line 158, in __call__
+    await self.app(scope, receive, capture_response_started)
+  File "/workspace/repo/sentry_sdk/integrations/litestar.py", line 252, in handle_wrapper
+    return await old_handle(self, scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 81, in handle
+    response = await self._get_response_for_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 133, in _get_response_for_request
+    return await self._call_handler_function(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 181, in _call_handler_function
+    else await route_handler.fn(**parsed_kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/tests/integrations/litestar/test_litestar.py", line 35, in custom_error
+    raise Exception("Too Hot")
+Exception: Too Hot
+PASSEDINFO - 2026-07-01 14:41:16,062 - httpx - _client - HTTP Request: GET http://testserver.local/custom_error "HTTP/1.1 500 Internal Server Error"
+
+tests/integrations/litestar/test_litestar.py::test_catch_exceptions[/controller/error-Exception-Whoa-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.MyController.controller_error] ERROR - 2026-07-01 14:41:16,122 - litestar - config - Uncaught exception (connection_type=http, path='/controller/error'):
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/litestar/middleware/_internal/exceptions/middleware.py", line 158, in __call__
+    await self.app(scope, receive, capture_response_started)
+  File "/workspace/repo/sentry_sdk/integrations/litestar.py", line 252, in handle_wrapper
+    return await old_handle(self, scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 81, in handle
+    response = await self._get_response_for_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 133, in _get_response_for_request
+    return await self._call_handler_function(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 181, in _call_handler_function
+    else await route_handler.fn(**parsed_kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/tests/integrations/litestar/test_litestar.py", line 26, in controller_error
+    raise Exception("Whoa")
+Exception: Whoa
+PASSEDINFO - 2026-07-01 14:41:16,139 - httpx - _client - HTTP Request: GET http://testserver.local/controller/error "HTTP/1.1 500 Internal Server Error"
+
+tests/integrations/litestar/test_litestar.py::test_middleware_spans INFO - 2026-07-01 14:41:16,203 - litestar - logging - HTTP Request: path=/message, method=GET, content_type=["",{}], headers={"host":"testserver.local","accept":"*/*","accept-encoding":"gzip, deflate","connection":"keep-alive","user-agent":"testclient"}, cookies={}, query=, path_params={}, body=None
+INFO - 2026-07-01 14:41:16,208 - litestar - logging - HTTP Response: status_code=200, cookies={"session":"*****","":"HttpOnly","Max-Age":"1209600","Path":"/","SameSite":"lax"}, headers={"content-type":"application/json","content-length":"15","ratelimit-policy":"5; w=3600","ratelimit-limit":"5","ratelimit-remaining":"4","ratelimit-reset":"3600"}, body={"status":"ok"}
+PASSEDINFO - 2026-07-01 14:41:16,215 - httpx - _client - HTTP Request: GET http://testserver.local/message "HTTP/1.1 200 OK"
+
+tests/integrations/litestar/test_litestar.py::test_middleware_callback_spans PASSEDINFO - 2026-07-01 14:41:16,283 - httpx - _client - HTTP Request: GET http://testserver.local/message "HTTP/1.1 200 OK"
+
+tests/integrations/litestar/test_litestar.py::test_middleware_receive_send PASSEDINFO - 2026-07-01 14:41:16,355 - httpx - _client - HTTP Request: GET http://testserver.local/message "HTTP/1.1 200 OK"
+
+tests/integrations/litestar/test_litestar.py::test_middleware_partial_receive_send PASSEDINFO - 2026-07-01 14:41:16,427 - httpx - _client - HTTP Request: GET http://testserver.local/message "HTTP/1.1 500 Internal Server Error"
+
+tests/integrations/litestar/test_litestar.py::test_span_origin INFO - 2026-07-01 14:41:16,488 - litestar - logging - HTTP Request: path=/message, method=GET, content_type=["",{}], headers={"host":"testserver.local","accept":"*/*","accept-encoding":"gzip, deflate","connection":"keep-alive","user-agent":"testclient"}, cookies={}, query=, path_params={}, body=None
+INFO - 2026-07-01 14:41:16,494 - litestar - logging - HTTP Response: status_code=200, cookies={"session":"*****","":"HttpOnly","Max-Age":"1209600","Path":"/","SameSite":"lax"}, headers={"content-type":"application/json","content-length":"15","ratelimit-policy":"5; w=3600","ratelimit-limit":"5","ratelimit-remaining":"4","ratelimit-reset":"3600"}, body={"status":"ok"}
+PASSEDINFO - 2026-07-01 14:41:16,500 - httpx - _client - HTTP Request: GET http://testserver.local/message "HTTP/1.1 200 OK"
+
+tests/integrations/litestar/test_litestar.py::test_litestar_scope_user_on_exception_event[send_default_pii=True] ERROR - 2026-07-01 14:41:16,561 - litestar - config - Uncaught exception (connection_type=http, path='/some_url'):
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/litestar/middleware/_internal/exceptions/middleware.py", line 158, in __call__
+    await self.app(scope, receive, capture_response_started)
+  File "/workspace/repo/sentry_sdk/integrations/litestar.py", line 252, in handle_wrapper
+    return await old_handle(self, scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 81, in handle
+    response = await self._get_response_for_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 133, in _get_response_for_request
+    return await self._call_handler_function(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 181, in _call_handler_function
+    else await route_handler.fn(**parsed_kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/tests/integrations/litestar/test_litestar.py", line 30, in homepage_handler
+    1 / 0
+    ~~^~~
+ZeroDivisionError: division by zero
+PASSEDINFO - 2026-07-01 14:41:16,575 - httpx - _client - HTTP Request: GET http://testserver.local/some_url "HTTP/1.1 500 Internal Server Error"
+
+tests/integrations/litestar/test_litestar.py::test_litestar_scope_user_on_exception_event[send_default_pii=False] ERROR - 2026-07-01 14:41:16,641 - litestar - config - Uncaught exception (connection_type=http, path='/some_url'):
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/litestar/middleware/_internal/exceptions/middleware.py", line 158, in __call__
+    await self.app(scope, receive, capture_response_started)
+  File "/workspace/repo/sentry_sdk/integrations/litestar.py", line 252, in handle_wrapper
+    return await old_handle(self, scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 81, in handle
+    response = await self._get_response_for_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 133, in _get_response_for_request
+    return await self._call_handler_function(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/litestar/routes/http.py", line 181, in _call_handler_function
+    else await route_handler.fn(**parsed_kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/tests/integrations/litestar/test_litestar.py", line 30, in homepage_handler
+    1 / 0
+    ~~^~~
+ZeroDivisionError: division by zero
+PASSEDINFO - 2026-07-01 14:41:16,655 - httpx - _client - HTTP Request: GET http://testserver.local/some_url "HTTP/1.1 500 Internal Server Error"
+
+
+=============================== warnings summary ===============================
+tests/integrations/litestar/test_litestar.py::test_middleware_callback_spans
+tests/integrations/litestar/test_litestar.py::test_middleware_receive_send
+tests/integrations/litestar/test_litestar.py::test_middleware_partial_receive_send
+tests/integrations/litestar/test_litestar.py::test_litestar_scope_user_on_exception_event[send_default_pii=True]
+tests/integrations/litestar/test_litestar.py::test_litestar_scope_user_on_exception_event[send_default_pii=False]
+  /usr/local/lib/python3.11/site-packages/litestar/middleware/base.py:129: LitestarDeprecationWarning: Use of deprecated class 'AbstractMiddleware'. Deprecated in litestar 2.15. This class will be removed in the next major version. Use 'litestar.middleware.ASGIMiddleware' instead
+    warn_deprecation(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+---------------- generated xml file: /workspace/repo/.junitxml -----------------
+============================= slowest 5 durations ==============================
+0.31s call     tests/integrations/litestar/test_litestar.py::test_catch_exceptions[/some_url-ZeroDivisionError-division by zero-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.homepage_handler]
+0.09s setup    tests/integrations/litestar/test_litestar.py::test_catch_exceptions[/some_url-ZeroDivisionError-division by zero-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.homepage_handler]
+0.08s call     tests/integrations/litestar/test_litestar.py::test_litestar_scope_user_on_exception_event[send_default_pii=False]
+0.07s call     tests/integrations/litestar/test_litestar.py::test_catch_exceptions[/controller/error-Exception-Whoa-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.MyController.controller_error]
+0.07s call     tests/integrations/litestar/test_litestar.py::test_middleware_spans
+======================== 10 passed, 5 warnings in 1.59s ========================
+reward=1 graded=10 found=0 failed=0 parsed=3 framework=pytest exit_code=0

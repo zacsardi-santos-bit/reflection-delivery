@@ -1,0 +1,751 @@
+diff --git a/front/src/config/demo.js b/front/src/config/demo.js
+index 00958c8e..3dcdf9ff 100644
+--- a/front/src/config/demo.js
++++ b/front/src/config/demo.js
+@@ -1738,23 +1738,26 @@ const data = {
+     Z2M_TCP_PORT: '12000'
+   },
+   'get /api/v1/service/zigbee2mqtt/adapter': [
+-    'ConBee',
+-    'ConBee II',
+-    'RaspBee',
+-    'RaspBee II',
+-    'SONOFF Zigbee 3.0 USB Dongle Plus ZBDongle-P',
+-    "Slaesh's CC2652RB stick",
+-    'SMLIGHT CC2652P Zigbee USB Adapter SLZB-02',
+-    'SMLIGHT SLZB-06 Zigbee ethernet USB POE WiFi LAN adapter',
+-    'SMLIGHT Zigbee LAN Adapter CC2652P Model SLZB-05',
+-    'Vision CC2538+CC2592 Dongle(VS203)',
+-    'Vision CC2652 dongle',
+-    'XGG Gateway',
+-    'XGG 52PZ2MGateway',
+-    'ZigStar LAN Coordinator',
+-    'ZigStar PoE Coordinator',
+-    'ZigStar Stick v4',
+-    'ZigStar ZigiHAT PoE'
++    { label: 'ConBee', configKey: 'deconz' },
++    { label: 'ConBee II', configKey: 'deconz' },
++    { label: 'RaspBee', configKey: 'deconz' },
++    { label: 'RaspBee II', configKey: 'deconz' },
++    { label: 'Home Assistant SkyConnect (by Nabu Casa)', configKey: 'ember' },
++    { label: 'ITead Sonoff Zigbee 3.0 USB Dongle Plus V2 model "ZBDongle-E"', configKey: 'ember' },
++    { label: 'TubesZB Zigbee EFR32 pro ethernet/USB serial coordinator', configKey: 'ember' },
++    { label: 'SONOFF Zigbee 3.0 USB Dongle Plus ZBDongle-P', configKey: 'zstack' },
++    { label: "Slaesh's CC2652RB stick", configKey: 'zstack' },
++    { label: 'SMLIGHT CC2652P Zigbee USB Adapter SLZB-02', configKey: 'zstack' },
++    { label: 'SMLIGHT SLZB-06 Zigbee ethernet USB POE WiFi LAN adapter', configKey: 'zstack' },
++    { label: 'SMLIGHT Zigbee LAN Adapter CC2652P Model SLZB-05', configKey: 'zstack' },
++    { label: 'Vision CC2538+CC2592 Dongle(VS203)', configKey: 'zstack' },
++    { label: 'Vision CC2652 dongle', configKey: 'zstack' },
++    { label: 'XGG Gateway', configKey: 'zstack' },
++    { label: 'XGG 52PZ2MGateway', configKey: 'zstack' },
++    { label: 'ZigStar LAN Coordinator', configKey: 'zstack' },
++    { label: 'ZigStar PoE Coordinator', configKey: 'zstack' },
++    { label: 'ZigStar Stick v4', configKey: 'zstack' },
++    { label: 'ZigStar ZigiHAT PoE', configKey: 'zstack' }
+   ],
+   'get /api/v1/service/zigbee2mqtt/status': {
+     usbConfigured: true,
+@@ -1766,7 +1769,14 @@ const data = {
+     zigbee2mqttConnected: true,
+     z2mEnabled: true,
+     dockerBased: true,
+-    networkModeValid: true
++    networkModeValid: true,
++    coordinatorFirmware: {
++      majorrel: 7,
++      minorrel: 0,
++      maintrel: 1,
++      revision: 74100,
++      type: 'EmberZNet'
++    }
+   },
+   'get /api/v1/service/nuki': {},
+   'get /api/v1/service/nuki/config': {},
+diff --git a/front/src/config/i18n/de.json b/front/src/config/i18n/de.json
+index e72d53ae..2e5f2988 100644
+--- a/front/src/config/i18n/de.json
++++ b/front/src/config/i18n/de.json
+@@ -932,6 +932,10 @@
+               "dongleName": "Dongle",
+               "unknownDongle": "Nicht definiert",
+               "tcpPort": "TCP-Port"
++            },
++            "containerErrors": {
++              "EZSP_PROTOCOL_VERSION": "Warnung: Die Firmware Ihres Ember-Koordinators ist veraltet. Version 7.4.x oder höher ist erforderlich. Bitte folgen Sie der <a href=\"https://www.zigbee2mqtt.io/guide/adapters/emberznet.html#firmware-flashing\" target=\"_blank\" rel=\"noopener noreferrer\">Firmware-Aktualisierungsanleitung</a>, um sie zu aktualisieren. Wählen Sie andernfalls den Dongle (legacy ezsp) in der Konfiguration aus.",
++              "unknownErrorPrefix": "Zigbee2MQTT-Containerfehler: "
+             }
+           },
+           "remote": {
+diff --git a/front/src/config/i18n/en.json b/front/src/config/i18n/en.json
+index 699a04f1..beb6d527 100644
+--- a/front/src/config/i18n/en.json
++++ b/front/src/config/i18n/en.json
+@@ -827,6 +827,10 @@
+               "dongleName": "Dongle",
+               "unknownDongle": "Not defined",
+               "tcpPort": "TCP Port"
++            },
++            "containerErrors": {
++              "EZSP_PROTOCOL_VERSION": "Warning: Your Ember coordinator firmware is outdated. Firmware version 7.4.x or higher is required. Please follow the <a href=\"https://www.zigbee2mqtt.io/guide/adapters/emberznet.html#firmware-flashing\" target=\"_blank\" rel=\"noopener noreferrer\">firmware flashing guide</a> to update it. Otherwise, select the dongle (legacy ezsp) in the configuration.",
++              "unknownErrorPrefix": "Zigbee2MQTT container error: "
+             }
+           },
+           "remote": {
+diff --git a/front/src/config/i18n/fr.json b/front/src/config/i18n/fr.json
+index c1bad3b0..d581f215 100644
+--- a/front/src/config/i18n/fr.json
++++ b/front/src/config/i18n/fr.json
+@@ -1062,6 +1062,10 @@
+               "dongleName": "Dongle",
+               "unknownDongle": "Non défini",
+               "tcpPort": "Port TCP"
++            },
++            "containerErrors": {
++              "EZSP_PROTOCOL_VERSION": "Attention : Le firmware de votre coordinateur Ember est obsolète. La version 7.4.x ou supérieure est requise. Vous pouvez suivre ce <a href=\"https://www.zigbee2mqtt.io/guide/adapters/emberznet.html#firmware-flashing\" target=\"_blank\" rel=\"noopener noreferrer\">guide</a> pour le mettre à jour. Dans le cas contraire, sélectionner le dongle (legacy ezsp) dans la configuration.",
++              "unknownErrorPrefix": "Erreur du conteneur Zigbee2MQTT : "
+             }
+           },
+           "remote": {
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx
+index c30267cd..3c5c4bdd 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx
+@@ -77,6 +77,7 @@ class SetupPanel extends Component {
+               saveConfiguration={this.saveConfiguration}
+               resetConfiguration={this.resetConfiguration}
+               disabled={disabled}
++              zigbee2mqttStatus={zigbee2mqttStatus}
+             />
+           </li>
+         )}
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx
+index 78866d0c..8e857eb1 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx
+@@ -9,6 +9,7 @@ import RunningStatus from './status/RunningStatus';
+ 
+ const SetupTab = props => {
+   const { loadZigbee2mqttStatus, loadZigbee2mqttConfig, setupZigee2mqttStatus, toggleZigee2mqttStatus } = props;
++  const { z2mContainerError } = props.zigbee2mqttStatus || {};
+   const loading = loadZigbee2mqttStatus === RequestStatus.Getting || loadZigbee2mqttConfig === RequestStatus.Getting;
+   const error = loadZigbee2mqttStatus === RequestStatus.Error || loadZigbee2mqttConfig === RequestStatus.Error;
+   const success = loadZigbee2mqttStatus === RequestStatus.Success && loadZigbee2mqttConfig === RequestStatus.Success;
+@@ -60,6 +61,22 @@ const SetupTab = props => {
+                   />
+                 </li>
+               )}
++              {z2mContainerError && (
++                <li class="list-group-item">
++                  <div class="alert alert-warning my-3">
++                    {z2mContainerError.code ? (
++                      <MarkupText
++                        id={`integration.zigbee2mqtt.setup.modes.local.containerErrors.${z2mContainerError.code}`}
++                      />
++                    ) : (
++                      <span>
++                        <Text id="integration.zigbee2mqtt.setup.modes.local.containerErrors.unknownErrorPrefix" />
++                        <code>{z2mContainerError.message}</code>
++                      </span>
++                    )}
++                  </div>
++                </li>
++              )}
+               <li class="list-group-item" data-cy="z2m-running-status">
+                 <RunningStatus {...props} disabled={disabled} />
+               </li>
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalMode.jsx b/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalMode.jsx
+index d25e9a44..512f297e 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalMode.jsx
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalMode.jsx
+@@ -41,7 +41,7 @@ class SetupLocalMode extends Component {
+     }
+   }
+ 
+-  render({ configuration, httpClient, disabled }, { editionMode }) {
++  render({ configuration, httpClient, disabled, zigbee2mqttStatus }, { editionMode }) {
+     if (editionMode) {
+       return (
+         <SetupLocalOptions
+@@ -50,12 +50,18 @@ class SetupLocalMode extends Component {
+           configuration={configuration}
+           saveConfiguration={this.saveConfiguration}
+           resetConfiguration={this.resetConfiguration}
++          zigbee2mqttStatus={zigbee2mqttStatus}
+         />
+       );
+     }
+ 
+     return (
+-      <SetupLocalSummary disabled={disabled} configuration={configuration} enableEditionMode={this.enableEditionMode} />
++      <SetupLocalSummary
++        disabled={disabled}
++        configuration={configuration}
++        enableEditionMode={this.enableEditionMode}
++        zigbee2mqttStatus={zigbee2mqttStatus}
++      />
+     );
+   }
+ }
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalOptions.jsx b/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalOptions.jsx
+index 33f3a9df..4326756b 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalOptions.jsx
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/local/SetupLocalOptions.jsx
+@@ -1,5 +1,5 @@
+ import { Component } from 'preact';
+-import { Text } from 'preact-i18n';
++import { Text, MarkupText } from 'preact-i18n';
+ import get from 'get-value';
+ 
+ import { RequestStatus } from '../../../../../../utils/consts';
+@@ -15,7 +15,8 @@ class SetupLocalOptions extends Component {
+ 
+   updateZigbeeDongleName = option => {
+     const z2mDongleName = get(option, 'value');
+-    this.setState({ z2mDongleName });
++    const z2mDongleConfigKey = get(option, 'configKey') || null;
++    this.setState({ z2mDongleName, z2mDongleConfigKey });
+   };
+ 
+   updateTcpPort = e => {
+@@ -33,7 +34,7 @@ class SetupLocalOptions extends Component {
+     const { configuration } = this.props;
+     const { z2mDriverPath, z2mDongleName, z2mTcpPort } = configuration;
+ 
+-    this.setState({ z2mDriverPath, z2mDongleName, z2mTcpPort });
++    this.setState({ z2mDriverPath, z2mDongleName, z2mTcpPort, z2mDongleConfigKey: null });
+     this.props.resetConfiguration();
+   };
+ 
+@@ -69,10 +70,11 @@ class SetupLocalOptions extends Component {
+     });
+ 
+     try {
+-      const zigbeeAdapterLabels = await this.props.httpClient.get('/api/v1/service/zigbee2mqtt/adapter');
+-      const zigbeeAdapters = zigbeeAdapterLabels.map(adapter => ({
+-        label: adapter,
+-        value: adapter
++      const adapters = await this.props.httpClient.get('/api/v1/service/zigbee2mqtt/adapter');
++      const zigbeeAdapters = adapters.map(adapter => ({
++        label: adapter.label,
++        value: adapter.label,
++        configKey: adapter.configKey
+       }));
+ 
+       this.setState({
+@@ -87,6 +89,23 @@ class SetupLocalOptions extends Component {
+     }
+   };
+ 
++  isEmberFirmwareTooOld = () => {
++    const { zigbee2mqttStatus = {} } = this.props;
++    const { coordinatorFirmware } = zigbee2mqttStatus;
++    const { z2mDongleConfigKey } = this.state;
++
++    if (z2mDongleConfigKey !== 'ember' || !coordinatorFirmware) {
++      return false;
++    }
++
++    const { majorrel, minorrel } = coordinatorFirmware;
++    if (majorrel === undefined || minorrel === undefined) {
++      return false;
++    }
++
++    return majorrel < 7 || (majorrel === 7 && minorrel < 4);
++  };
++
+   buildSelectOption = value => {
+     if (value) {
+       return { label: value, value };
+@@ -106,6 +125,7 @@ class SetupLocalOptions extends Component {
+       usbPorts: [],
+       loadUsbPortsStatus: RequestStatus.Getting,
+       z2mDongleName,
++      z2mDongleConfigKey: null,
+       zigbeeAdapters: [],
+       loadZigbeeAdaptersStatus: RequestStatus.Getting,
+       z2mTcpPort,
+@@ -122,6 +142,7 @@ class SetupLocalOptions extends Component {
+     { disabled },
+     { z2mDriverPath, usbPorts, loadUsbPortsStatus, z2mDongleName, zigbeeAdapters, loadZigbeeAdaptersStatus, z2mTcpPort }
+   ) {
++    const emberFirmwareTooOld = this.isEmberFirmwareTooOld();
+     return (
+       <div>
+         <p>
+@@ -182,6 +203,11 @@ class SetupLocalOptions extends Component {
+             </div>
+           </div>
+         </div>
++        {emberFirmwareTooOld && (
++          <div class="alert alert-warning">
++            <MarkupText id="integration.zigbee2mqtt.setup.modes.local.containerErrors.EZSP_PROTOCOL_VERSION" />
++          </div>
++        )}
+         <div class="form-group">
+           <label class="form-label">
+             <Text id="integration.zigbee2mqtt.setup.modes.local.z2mTcpPortLabel" />
+diff --git a/server/lib/system/index.js b/server/lib/system/index.js
+index fcf3b485..951dd9be 100644
+--- a/server/lib/system/index.js
++++ b/server/lib/system/index.js
+@@ -9,6 +9,7 @@ const { getGladysBasePath } = require('./system.getGladysBasePath');
+ const { getContainers } = require('./system.getContainers');
+ const { getContainerMounts } = require('./system.getContainerMounts');
+ const { inspectContainer } = require('./system.inspectContainer');
++const { getContainerLogs } = require('./system.getContainerLogs');
+ const { getGladysContainerId } = require('./system.getGladysContainerId');
+ const { getInfos } = require('./system.getInfos');
+ const { getDiskSpace } = require('./system.getDiskSpace');
+@@ -55,6 +56,7 @@ System.prototype.isDocker = isDocker;
+ System.prototype.getContainers = getContainers;
+ System.prototype.getContainerMounts = getContainerMounts;
+ System.prototype.inspectContainer = inspectContainer;
++System.prototype.getContainerLogs = getContainerLogs;
+ System.prototype.getGladysBasePath = getGladysBasePath;
+ System.prototype.getGladysContainerId = getGladysContainerId;
+ System.prototype.getInfos = getInfos;
+diff --git a/server/lib/system/system.getContainerLogs.js b/server/lib/system/system.getContainerLogs.js
+new file mode 100644
+index 00000000..eabfa282
+--- /dev/null
++++ b/server/lib/system/system.getContainerLogs.js
+@@ -0,0 +1,21 @@
++const { PlatformNotCompatible } = require('../../utils/coreErrors');
++
++/**
++ * @description Get logs of a Docker container.
++ * @param {string} containerId - Container id.
++ * @param {object} options - Options for logs (see https://docs.docker.com/engine/api/v1.37/#operation/ContainerLogs).
++ * @returns {Promise} Resolve with log stream.
++ * @example
++ * const stream = await getContainerLogs('abc123');
++ */
++async function getContainerLogs(containerId, options = {}) {
++  if (!this.dockerode) {
++    throw new PlatformNotCompatible('SYSTEM_NOT_RUNNING_DOCKER');
++  }
++  const container = this.dockerode.getContainer(containerId);
++  return container.logs({ stdout: true, stderr: true, tail: 100, follow: false, ...options });
++}
++
++module.exports = {
++  getContainerLogs,
++};
+diff --git a/server/migrations/20260216000000-zigbee2mqtt-ezsp-dongle-rename.js b/server/migrations/20260216000000-zigbee2mqtt-ezsp-dongle-rename.js
+new file mode 100644
+index 00000000..8718406b
+--- /dev/null
++++ b/server/migrations/20260216000000-zigbee2mqtt-ezsp-dongle-rename.js
+@@ -0,0 +1,65 @@
++const db = require('../models');
++const logger = require('../utils/logger');
++
++const EZSP_DONGLE_NAMES = [
++  'CoolKit ZB-GW04 USB dongle (a.k.a. easyiot stick)',
++  'Elelabs ELU013 and Popp ZB-STICK',
++  'Elelabs Zigbee Raspberry Pi Shield/Popp ZB-Shield',
++  'Home Assistant SkyConnect (by Nabu Casa)',
++  'ITead Sonoff Zigbee 3.0 USB Dongle Plus V2 model "ZBDongle-E"',
++  'TubesZB Zigbee EFR32 pro ethernet/USB serial coordinator',
++];
++
++module.exports = {
++  up: async () => {
++    const service = await db.Service.findOne({
++      where: { name: 'zigbee2mqtt' },
++    });
++    if (service === null) {
++      return;
++    }
++    logger.info(`Zigbee2MQTT migration: Found service zigbee2mqtt = ${service.id}`);
++    const variable = await db.Variable.findOne({
++      where: {
++        name: 'ZIGBEE_DONGLE_NAME',
++        service_id: service.id,
++      },
++    });
++    if (variable === null) {
++      return;
++    }
++    if (!EZSP_DONGLE_NAMES.includes(variable.value)) {
++      return;
++    }
++    logger.info(`Zigbee2MQTT migration: Renaming EZSP dongle "${variable.value}" to "${variable.value} (legacy ezsp)"`);
++    variable.set({ value: `${variable.value} (legacy ezsp)` });
++    await variable.save();
++  },
++  down: async () => {
++    const service = await db.Service.findOne({
++      where: { name: 'zigbee2mqtt' },
++    });
++    if (service === null) {
++      return;
++    }
++    const variable = await db.Variable.findOne({
++      where: {
++        name: 'ZIGBEE_DONGLE_NAME',
++        service_id: service.id,
++      },
++    });
++    if (variable === null) {
++      return;
++    }
++    const suffix = ' (legacy ezsp)';
++    if (!variable.value || !variable.value.endsWith(suffix)) {
++      return;
++    }
++    const original = variable.value.slice(0, -suffix.length);
++    if (!EZSP_DONGLE_NAMES.includes(original)) {
++      return;
++    }
++    variable.set({ value: original });
++    await variable.save();
++  },
++};
+diff --git a/server/services/zigbee2mqtt/adapters/index.js b/server/services/zigbee2mqtt/adapters/index.js
+index fb3498d2..9b83d95b 100644
+--- a/server/services/zigbee2mqtt/adapters/index.js
++++ b/server/services/zigbee2mqtt/adapters/index.js
+@@ -1,12 +1,13 @@
+ const CONFIG_KEYS = {
+   DECONZ: 'deconz',
++  EMBER: 'ember',
+   EZSP: 'ezsp',
+   ZSTACK: 'zstack',
+ };
+ 
+ const ADAPTERS_BY_CONFIG_KEY = {
+   [CONFIG_KEYS.DECONZ]: ['ConBee', 'ConBee II', 'RaspBee', 'RaspBee II'],
+-  [CONFIG_KEYS.EZSP]: [
++  [CONFIG_KEYS.EMBER]: [
+     'CoolKit ZB-GW04 USB dongle (a.k.a. easyiot stick)',
+     'Elelabs ELU013 and Popp ZB-STICK',
+     'Elelabs Zigbee Raspberry Pi Shield/Popp ZB-Shield',
+@@ -14,6 +15,15 @@ const ADAPTERS_BY_CONFIG_KEY = {
+     'ITead Sonoff Zigbee 3.0 USB Dongle Plus V2 model "ZBDongle-E"',
+     'TubesZB Zigbee EFR32 pro ethernet/USB serial coordinator',
+   ],
++  [CONFIG_KEYS.EZSP]: [
++    // Legacy entries — existing installations migrated to these names via Sequelize migration
++    'CoolKit ZB-GW04 USB dongle (a.k.a. easyiot stick) (legacy ezsp)',
++    'Elelabs ELU013 and Popp ZB-STICK (legacy ezsp)',
++    'Elelabs Zigbee Raspberry Pi Shield/Popp ZB-Shield (legacy ezsp)',
++    'Home Assistant SkyConnect (by Nabu Casa) (legacy ezsp)',
++    'ITead Sonoff Zigbee 3.0 USB Dongle Plus V2 model "ZBDongle-E" (legacy ezsp)',
++    'TubesZB Zigbee EFR32 pro ethernet/USB serial coordinator (legacy ezsp)',
++  ],
+   [CONFIG_KEYS.ZSTACK]: [
+     "CircuitSetup's CC2652P2 USB Coordinator",
+     'cod.m Zigbee CC2652P RPi Module',
+@@ -46,8 +56,8 @@ const ADAPTERS_BY_CONFIG_KEY = {
+   ],
+ };
+ 
+-const ADAPTERS = Object.values(ADAPTERS_BY_CONFIG_KEY)
+-  .flatMap((values) => values)
+-  .sort((a, b) => a.localeCompare(b));
++const ADAPTERS = Object.entries(ADAPTERS_BY_CONFIG_KEY)
++  .flatMap(([configKey, labels]) => labels.map((label) => ({ label, configKey })))
++  .sort((a, b) => a.label.localeCompare(b.label));
+ 
+ module.exports = { ADAPTERS, ADAPTERS_BY_CONFIG_KEY, CONFIG_KEYS, DEFAULT_KEY: CONFIG_KEYS.ZSTACK };
+diff --git a/server/services/zigbee2mqtt/lib/configureContainer.js b/server/services/zigbee2mqtt/lib/configureContainer.js
+index 39ebf912..d1c33020 100644
+--- a/server/services/zigbee2mqtt/lib/configureContainer.js
++++ b/server/services/zigbee2mqtt/lib/configureContainer.js
+@@ -46,6 +46,7 @@ async function configureContainer(basePathOnContainer, config, setupMode = false
+   const { mqtt = {} } = loadedConfig;
+ 
+   let configChanged = false;
++  let adapterChanged = false;
+   if (mqtt.user !== config.mqttUsername || mqtt.password !== config.mqttPassword) {
+     mqtt.user = config.mqttUsername;
+     mqtt.password = config.mqttPassword;
+@@ -65,6 +66,7 @@ async function configureContainer(basePathOnContainer, config, setupMode = false
+   if (serial.adapter !== adapterKey) {
+     loadedConfig.serial.adapter = adapterKey;
+     configChanged = true;
++    adapterChanged = true;
+   }
+ 
+   // Setup TCP port
+@@ -109,7 +111,7 @@ async function configureContainer(basePathOnContainer, config, setupMode = false
+     await fs.writeFile(configFilepath, yaml.stringify(loadedConfig, YAML_CONFIG));
+   }
+ 
+-  return configCreated || configChanged;
++  return { configChanged: configCreated || configChanged, adapterChanged };
+ }
+ 
+ module.exports = {
+diff --git a/server/services/zigbee2mqtt/lib/disconnect.js b/server/services/zigbee2mqtt/lib/disconnect.js
+index 44159731..31a7602c 100644
+--- a/server/services/zigbee2mqtt/lib/disconnect.js
++++ b/server/services/zigbee2mqtt/lib/disconnect.js
+@@ -53,6 +53,8 @@ async function disconnect() {
+   }
+   this.zigbee2mqttRunning = false;
+   this.zigbee2mqttConnected = false;
++  this.coordinatorFirmware = null;
++  this.z2mContainerError = null;
+   this.emitStatusEvent();
+ }
+ 
+diff --git a/server/services/zigbee2mqtt/lib/handleMqttMessage.js b/server/services/zigbee2mqtt/lib/handleMqttMessage.js
+index f18455bd..b918e2a9 100644
+--- a/server/services/zigbee2mqtt/lib/handleMqttMessage.js
++++ b/server/services/zigbee2mqtt/lib/handleMqttMessage.js
+@@ -79,6 +79,20 @@ async function handleMqttMessage(topic, message) {
+       });
+       break;
+     }
++    case 'zigbee2mqtt/bridge/info': {
++      const info = JSON.parse(message);
++      const { coordinator } = info;
++      if (coordinator && coordinator.meta) {
++        this.coordinatorFirmware = {
++          ...coordinator.meta,
++          type: coordinator.type,
++        };
++      } else {
++        this.coordinatorFirmware = null;
++      }
++      this.emitStatusEvent();
++      break;
++    }
+     case 'zigbee2mqtt/bridge/response/backup': {
+       const payload = JSON.parse(message);
+       await this.saveZ2mBackup(payload);
+diff --git a/server/services/zigbee2mqtt/lib/index.js b/server/services/zigbee2mqtt/lib/index.js
+index 15f70704..89bc0d46 100644
+--- a/server/services/zigbee2mqtt/lib/index.js
++++ b/server/services/zigbee2mqtt/lib/index.js
+@@ -25,6 +25,7 @@ const { saveZ2mBackup } = require('./saveZ2mBackup');
+ const { restoreZ2mBackup } = require('./restoreZ2mBackup');
+ const { backup } = require('./backup');
+ const { getManagedAdapters } = require('./getManagedAdapters');
++const { readZ2mContainerLogs } = require('./readZ2mContainerLogs');
+ const { JOB_TYPES } = require('../../../utils/constants');
+ 
+ // EVENTS
+@@ -56,6 +57,8 @@ const Zigbee2mqttManager = function Zigbee2mqttManager(gladys, mqttLibrary, serv
+   this.zigbee2mqttConnected = false;
+   this.z2mPermitJoin = false;
+   this.networkModeValid = false;
++  this.coordinatorFirmware = null;
++  this.z2mContainerError = null;
+   this.dockerBased = false;
+ 
+   this.containerRestartWaitTimeInMs = 5 * 1000;
+@@ -92,6 +95,7 @@ Zigbee2mqttManager.prototype.saveZ2mBackup = saveZ2mBackup;
+ Zigbee2mqttManager.prototype.restoreZ2mBackup = restoreZ2mBackup;
+ Zigbee2mqttManager.prototype.backup = backup;
+ Zigbee2mqttManager.prototype.getManagedAdapters = getManagedAdapters;
++Zigbee2mqttManager.prototype.readZ2mContainerLogs = readZ2mContainerLogs;
+ 
+ // EVENTS
+ Zigbee2mqttManager.prototype.emitStatusEvent = emitStatusEvent;
+diff --git a/server/services/zigbee2mqtt/lib/init.js b/server/services/zigbee2mqtt/lib/init.js
+index 823009d9..ec222f0f 100644
+--- a/server/services/zigbee2mqtt/lib/init.js
++++ b/server/services/zigbee2mqtt/lib/init.js
+@@ -22,6 +22,7 @@ async function init(setupMode = false) {
+   this.zigbee2mqttConnected = false;
+   this.z2mPermitJoin = false;
+   this.networkModeValid = false;
++  this.z2mContainerError = null;
+   this.dockerBased = false;
+ 
+   // Load stored configuration
+diff --git a/server/services/zigbee2mqtt/lib/installZ2mContainer.js b/server/services/zigbee2mqtt/lib/installZ2mContainer.js
+index d447b5b1..f7a90556 100644
+--- a/server/services/zigbee2mqtt/lib/installZ2mContainer.js
++++ b/server/services/zigbee2mqtt/lib/installZ2mContainer.js
+@@ -70,7 +70,7 @@ async function installZ2mContainer(config, setupMode = false) {
+     }
+   }
+ 
+-  const configChanged = await this.configureContainer(basePathOnContainer, config, setupMode);
++  const { configChanged, adapterChanged } = await this.configureContainer(basePathOnContainer, config, setupMode);
+ 
+   try {
+     dockerContainers = await this.gladys.system.getContainers({
+@@ -79,12 +79,32 @@ async function installZ2mContainer(config, setupMode = false) {
+     });
+     [container] = dockerContainers;
+ 
++    // If adapter type changed, remove and recreate container for clean state and fresh logs
++    if (adapterChanged && !creationNeeded && dockerContainers.length > 0) {
++      logger.info('Zigbee2mqtt adapter type changed, recreating container...');
++      await this.gladys.system.stopContainer(container.id);
++      await this.gladys.system.removeContainer(container.id);
++
++      const containerDescriptorToMutate = cloneDeep(containerDescriptor);
++      containerDescriptorToMutate.HostConfig.Binds.push(`${containerPath}:/app/data`);
++      containerDescriptorToMutate.HostConfig.Devices[0].PathOnHost = z2mDriverPath;
++      await this.gladys.system.createContainer(containerDescriptorToMutate);
++
++      dockerContainers = await this.gladys.system.getContainers({
++        all: true,
++        filters: { name: [containerDescriptor.name] },
++      });
++      [container] = dockerContainers;
++    }
++
+     // Check if we need to restart the container (container is not running / config changed)
+     if (container.state !== 'running' || configChanged) {
+       logger.info('Zigbee2mqtt container is (re)starting...');
+       await this.gladys.system.restartContainer(container.id);
+       // wait a few seconds for the container to restart
+       await sleep(this.containerRestartWaitTimeInMs);
++      // We read the logs in non blocking mode
++      this.readZ2mContainerLogs(container.id);
+     }
+ 
+     logger.info('Zigbee2mqtt container successfully started');
+diff --git a/server/services/zigbee2mqtt/lib/readZ2mContainerLogs.js b/server/services/zigbee2mqtt/lib/readZ2mContainerLogs.js
+new file mode 100644
+index 00000000..d368f0b9
+--- /dev/null
++++ b/server/services/zigbee2mqtt/lib/readZ2mContainerLogs.js
+@@ -0,0 +1,109 @@
++const logger = require('../../../utils/logger');
++
++const KNOWN_ERROR_PATTERNS = [
++  {
++    code: 'EZSP_PROTOCOL_VERSION',
++    test: (line) => line.includes('Adapter EZSP protocol version') && line.includes('is not supported by Host'),
++  },
++];
++
++/**
++ * @description Read Zigbee2mqtt container logs and detect fatal errors.
++ * @param {string} containerId - Docker container id.
++ * @returns {Promise} Resolve when logs have been read.
++ * @example
++ * await z2m.readZ2mContainerLogs('abc123');
++ */
++async function readZ2mContainerLogs(containerId) {
++  try {
++    const stream = await this.gladys.system.getContainerLogs(containerId, { follow: true });
++    await new Promise((resolve) => {
++      let leftover = '';
++      let knownError = null;
++      let lastRawError = null;
++      let resolved = false;
++
++      const processLine = (line) => {
++        // Remove Docker stream prefix byte, strip ANSI color codes, then remaining control chars
++        const cleanLine = line
++          .slice(1)
++          .replace(/\x1B\[[0-9;]*[A-Za-z]/g, '')
++          .replace(/[\x00-\x09\x0B-\x1F\x7F-\x9F]/g, ' ');
++        if (knownError === null) {
++          const matchedPattern = KNOWN_ERROR_PATTERNS.find((pattern) => pattern.test(cleanLine));
++          if (matchedPattern) {
++            logger.warn(`Zigbee2mqtt: known error detected in container logs: ${matchedPattern.code}`);
++            knownError = { code: matchedPattern.code, message: null };
++            return true;
++          }
++        }
++        if (/error:/i.test(cleanLine)) {
++          lastRawError = cleanLine.trim();
++        }
++        return false;
++      };
++
++      const finish = () => {
++        if (resolved) {
++          return;
++        }
++        resolved = true;
++        if (leftover) {
++          processLine(leftover);
++        }
++        if (typeof stream.destroy === 'function') {
++          stream.destroy();
++        }
++        if (knownError !== null) {
++          this.z2mContainerError = knownError;
++        } else if (lastRawError !== null) {
++          this.z2mContainerError = { code: null, message: lastRawError };
++        } else {
++          this.z2mContainerError = null;
++        }
++        resolve();
++      };
++
++      const timeout = setTimeout(finish, 30000);
++
++      stream.on('data', (chunk) => {
++        const combined = leftover + chunk.toString();
++        const parts = combined.split('\n');
++        leftover = parts[parts.length - 1];
++        for (let i = 0; i < parts.length - 1; i += 1) {
++          if (processLine(parts[i])) {
++            if (!resolved) {
++              resolved = true;
++              clearTimeout(timeout);
++              if (typeof stream.destroy === 'function') {
++                stream.destroy();
++              }
++              this.z2mContainerError = knownError;
++              resolve();
++            }
++            return;
++          }
++        }
++      });
++
++      stream.on('end', () => {
++        clearTimeout(timeout);
++        finish();
++      });
++
++      stream.on('error', () => {
++        clearTimeout(timeout);
++        finish();
++      });
++    });
++  } catch (e) {
++    logger.warn(`Zigbee2mqtt: failed to read container logs: ${e.message}`);
++    this.z2mContainerError = null;
++  }
++
++  this.emitStatusEvent();
++}
++
++module.exports = {
++  readZ2mContainerLogs,
++};
+diff --git a/server/services/zigbee2mqtt/lib/setup.js b/server/services/zigbee2mqtt/lib/setup.js
+index baa574ea..7d247074 100644
+--- a/server/services/zigbee2mqtt/lib/setup.js
++++ b/server/services/zigbee2mqtt/lib/setup.js
+@@ -9,7 +9,11 @@ const { SETUP_VARIABLES } = require('./constants');
+  */
+ async function setup(config) {
+   logger.debug('Zigbee2mqtt: storing setp...', config);
+-  await Promise.all(SETUP_VARIABLES.map((key) => this.saveOrDestroyVariable(key, config[key])));
++  await Promise.all(
++    SETUP_VARIABLES.filter((key) => config[key] !== undefined).map((key) =>
++      this.saveOrDestroyVariable(key, config[key]),
++    ),
++  );
+ 
+   // Reload z2m container with new USB configuration
+   await this.init(true);
+diff --git a/server/services/zigbee2mqtt/lib/status.js b/server/services/zigbee2mqtt/lib/status.js
+index a59d0c7e..aed2ebd2 100644
+--- a/server/services/zigbee2mqtt/lib/status.js
++++ b/server/services/zigbee2mqtt/lib/status.js
+@@ -17,6 +17,8 @@ function status() {
+     z2mEnabled,
+     dockerBased: this.dockerBased,
+     networkModeValid: this.networkModeValid,
++    coordinatorFirmware: this.coordinatorFirmware,
++    z2mContainerError: this.z2mContainerError,
+   };
+   return zigbee2mqttStatus;
+ }

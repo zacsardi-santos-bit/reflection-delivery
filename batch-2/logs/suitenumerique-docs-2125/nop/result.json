@@ -1,0 +1,29 @@
+{
+    "id": "a75d9e29-cdaa-48b6-b913-fe041b2b786b",
+    "started_at": "2026-07-06T12:17:39.230929",
+    "finished_at": "2026-07-06T12:18:07.299793",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__suitenumerique-docs-2125": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "suitenumerique-docs-2125__YJR6M2C"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

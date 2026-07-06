@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/v1/kv_offload/test_cpu_manager.py -v --noconftest",
+  "test_files": [
+    "tests/v1/kv_connector/unit/offloading_connector/test_scheduler.py",
+    "tests/v1/kv_connector/unit/offloading_connector/utils.py",
+    "tests/v1/kv_offload/test_cpu_manager.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.v1.kv_offload.test_cpu_manager::test_already_stored_block_not_evicted_during_prepare_store[lru]",
+    "tests.v1.kv_offload.test_cpu_manager::test_already_stored_block_not_evicted_during_prepare_store[arc]",
+    "tests.v1.kv_offload.test_cpu_manager::test_cpu_manager",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_basic",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_t1_to_t2_promotion",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_eviction_with_load",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_adaptive_target",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_t1_t2_eviction_policy",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_ghost_list_bounds",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_touch_ordering",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_failed_store",
+    "tests.v1.kv_offload.test_cpu_manager.TestARCPolicy::test_full_scenario",
+    "tests.v1.kv_offload.test_cpu_manager::test_filter_reused_manager"
+  ],
+  "PASS_TO_PASS": []
+}

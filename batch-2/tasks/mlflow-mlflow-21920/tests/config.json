@@ -1,0 +1,18 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/bedrock/test_genai_semconv_converter.py -v",
+  "test_files": [
+    "tests/bedrock/test_genai_semconv_converter.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.bedrock.test_genai_semconv_converter::test_autolog_basic",
+    "tests.bedrock.test_genai_semconv_converter::test_autolog_with_tool_calls",
+    "tests.bedrock.test_genai_semconv_converter::test_autolog_with_system_instructions",
+    "tests.bedrock.test_genai_semconv_converter::test_autolog_with_image",
+    "tests.bedrock.test_genai_semconv_converter::test_convert_image[image0-expected0]",
+    "tests.bedrock.test_genai_semconv_converter::test_convert_image[image1-expected1]"
+  ],
+  "PASS_TO_PASS": []
+}

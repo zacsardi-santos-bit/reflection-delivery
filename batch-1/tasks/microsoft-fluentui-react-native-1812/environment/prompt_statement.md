@@ -1,0 +1,5 @@
+I'm working on a Shadow component in a React Native design system. Right now it only supports neutral/standard shadow depths, but our design spec requires brand-specific shadow variants for elements sitting on brand-colored backgrounds. The brand shadows need different opacity values compared to the standard ones.
+
+On top of that, the current naming for depth values is just plain numbers and needs to be updated to include a descriptive prefix so that neutral and brand variants are clearly distinguished from each other. We're moving from bare number strings to a prefixed naming convention for all depth values.
+
+Can you update the Shadow component and its related types so that it supports six neutral shadow depths and six brand shadow depths — covering depths of 2, 4, 8, 16, 28, and 64 — with the correct shadow style values for each? The component should continue to render as two nested layers (ambient and key shadow), each with the appropriate color, opacity, blur radius, and offset for the given depth.

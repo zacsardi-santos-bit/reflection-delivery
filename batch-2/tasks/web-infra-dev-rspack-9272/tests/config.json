@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm install --no-frozen-lockfile 2>&1 | tail -10 && cd /workspace/repo/packages/rspack-test-tools && NO_COLOR=1 node --expose-gc --max-old-space-size=8192 --experimental-vm-modules /workspace/repo/node_modules/jest-cli/bin/jest tests/Config.test.js --testNamePattern=\"html-webpack-plugin\" --coverage=false --json",
+  "test_files": [
+    "packages/rspack-test-tools/tests/configCases/plugins/html-webpack-plugin/rspack.config.js",
+    "tests/plugin-test/html-plugin/basic.test.js",
+    "tests/plugin-test/package.json",
+    "tests/webpack-test/TestCases.template.js",
+    "tests/webpack-test/cases/loaders/pug-loader/index.js",
+    "tests/webpack-test/package.json"
+  ],
+  "num_test_files": 6,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/rspack-test-tools/tests/Config.test.js::config config/plugins/html-webpack-plugin step  should pass",
+    "/workspace/repo/packages/rspack-test-tools/tests/Config.test.js::config config/plugins/html-webpack-plugin exported tests html-webpack-plugin + html-loader"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/rspack-test-tools/tests/Config.test.js::config config/plugins/html-webpack-plugin exported tests should run the exported tests"
+  ]
+}

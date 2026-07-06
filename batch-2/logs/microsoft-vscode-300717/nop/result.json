@@ -1,0 +1,29 @@
+{
+    "id": "6b68240d-ef20-4859-8ddb-0295eecabf89",
+    "started_at": "2026-07-06T12:17:25.880357",
+    "finished_at": "2026-07-06T12:18:23.253330",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-vscode-300717": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-vscode-300717__CTqZLMn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

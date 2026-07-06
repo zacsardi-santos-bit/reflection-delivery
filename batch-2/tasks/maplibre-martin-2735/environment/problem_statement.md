@@ -1,0 +1,7 @@
+I'm working on the martin tile server dashboard and I want to add cache hit-rate stats to the analytics view. Right now it shows request throughput and latencies for tiles, fonts, sprites, and styles, but there's zero visibility into how well the server's internal caches are actually performing, so operators can't tell if caching is effective or if sizes/config need tweaking, or whether certain zoom levels are getting hammered with poor cache utilization.
+
+The server already exposes Prometheus metrics tracking cache hits and misses, so I need to parse those and surface them in the UI. There are two flavors: caches without a zoom dimension (like the font cache and sprite cache) and tile-coordinate caches that report hits and misses per zoom level (the tile cache and the PMTiles directory cache). For each cache type I want a hit rate shown as a percentage, and for the ones with per-zoom data I want an additional breakdown available showing per-zoom hit rates too.
+
+One thing that matters: if a cache hasn't received any requests yet, don't show me 0%, show a clear "no data" style message instead, since a raw zero is misleading.
+
+The analytics cards already exist for tiles, fonts, sprites, and styles, so the cache hit-rate info should show up inside the relevant cards. Also cache rows should only appear when the server has actually reported data for that cache. If there's no cache data for a card, it should look exactly like it does today, section hidden, nothing changed. Basically don't touch the existing layout when there's nothing to add.

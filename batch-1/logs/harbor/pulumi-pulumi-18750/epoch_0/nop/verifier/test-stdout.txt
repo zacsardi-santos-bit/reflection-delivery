@@ -1,0 +1,53 @@
+patching file sdk/nodejs/tests/automation/localWorkspace.spec.ts
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/sdk/nodejs/node_modules/.bin/mocha --timeout 120000 tests/automation/localWorkspace.spec.ts --grep 'correctly sets config on multiple stacks concurrently'
+
+TSError: ⨯ Unable to compile TypeScript:
+runtime/closure/codePaths.ts(22,27): error TS7016: Could not find a declaration file for module '@npmcli/arborist'. '/workspace/repo/sdk/nodejs/node_modules/@npmcli/arborist/lib/index.js' implicitly has an 'any' type.
+  Try `npm install @types/npmcli__arborist` if it exists or add a new declaration (.d.ts) file containing `declare module '@npmcli/arborist';`
+
+    at createTSError (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:261:12)
+    at getOutput (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:367:40)
+    at Object.compile (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:558:11)
+    at Module.m._compile (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:439:43)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Object.require.extensions.<computed> [as .ts] (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:442:12)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/runtime/index.ts:22:1)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module.m._compile (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Object.require.extensions.<computed> [as .ts] (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:442:12)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/index.ts:31:1)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module.m._compile (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Object.require.extensions.<computed> [as .ts] (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:442:12)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/tests/automation/localWorkspace.spec.ts:34:1)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module.m._compile (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Object.require.extensions.<computed> [as .ts] (/workspace/repo/sdk/nodejs/node_modules/ts-node/src/index.ts:442:12)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.exports.requireOrImport (/workspace/repo/sdk/nodejs/node_modules/mocha/lib/nodejs/esm-utils.js:60:20)
+    at Object.exports.loadFilesAsync (/workspace/repo/sdk/nodejs/node_modules/mocha/lib/nodejs/esm-utils.js:103:20)
+    at singleRun (/workspace/repo/sdk/nodejs/node_modules/mocha/lib/cli/run-helpers.js:125:3)
+    at Object.exports.handler (/workspace/repo/sdk/nodejs/node_modules/mocha/lib/cli/run.js:374:5)
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=mocha exit_code=1

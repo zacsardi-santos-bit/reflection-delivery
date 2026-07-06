@@ -1,2 +1,0 @@
-patching file pkg/generators/markers.go
-patching file pkg/generators/openapi.go

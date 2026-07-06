@@ -1,0 +1,4 @@
+patching file .changelog/unreleased/bug-fixes/3002-invalid-txs-results.md
+patching file rpc/core/blocks.go
+patching file state/errors.go
+patching file state/store.go

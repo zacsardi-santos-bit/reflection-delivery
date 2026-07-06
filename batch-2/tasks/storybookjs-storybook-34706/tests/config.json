@@ -1,0 +1,38 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code/core && NODE_OPTIONS=--max_old_space_size=4096 ../../node_modules/.bin/vitest run --config /workspace/repo/node_modules/vitest.ci.ts src/core-server/utils/ai-checklist-flags.test.ts src/core-server/utils/checklist.test.ts",
+  "test_files": [
+    "code/core/src/core-server/utils/ai-checklist-flags.test.ts",
+    "code/core/src/core-server/utils/checklist.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiInitOptIn returns false when nothing is cached",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiInitOptIn returns true when the cached configDir matches the resolved input",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiInitOptIn returns false when the cached configDir is for a different project",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiInitOptIn returns false when the cached entry lacks a configDir field",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiSetupRun returns false when nothing is cached",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiSetupRun returns true when the cached configDir matches",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiSetupRun returns false when the cached configDir is for a sibling monorepo project",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiSetupRun treats relative input as resolved against cwd",
+    "/workspace/repo/code/core/src/core-server/utils/ai-checklist-flags.test.ts::ai-checklist-flags hasAiSetupRun returns false when the cached entry lacks a configDir field",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist sets loaded immediately, even before the AI checks resolve",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist keeps aiSetup as open when ai-setup has never run",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist does NOT mark aiSetup done just because `storybook ai setup` ran (no agent work yet)",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist marks aiSetup done when ai-setup ran AND \u22651 story carries the ai-generated tag",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist still initializes when reading the AI cache fails",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist reflects \"done\" even if the persisted status was \"skipped\" once agent work appears",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist aiOptIn flag flips aiOptIn=true when the regular fs cache has it (telemetry-disabled path)",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist aiOptIn flag keeps aiOptIn=false when cache does not have the flag",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories does not emit events immediately when completed agent run is detected at startup",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories emits ghost stories and analytics after 4 min idle when completed agent run is detected at startup",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories does NOT emit ghost stories / final scoring when ai-setup ran but no agent work landed",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories detects agent work mid-session (stories appear after the timer was scheduled)",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories does not emit if user did not opt into AI",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories only emits once even after multiple idle cycles",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories reschedules when a recent external test-run is detected (e.g. npx vitest by AI agent)",
+    "/workspace/repo/code/core/src/core-server/utils/checklist.test.ts::initializeChecklist debounced analytics and ghost stories reschedules when a recent ai-setup-self-healing-scoring event is detected"
+  ],
+  "PASS_TO_PASS": []
+}

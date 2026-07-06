@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/docling-project/docling/pull/3291"
+source_type = "pr"
+
+[task]
+name = "docling-project/docling"
+description = "I'm hitting a bug with the rapid OCR path in docling where the language option I set just doesn't do anything for model selection. I've got it configured for English but it still loads the Chinese ..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["python", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:docling-project-docling-3291"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/8"
+category = "Machine Learning and AI"
+subcategory = "Model inference and prediction"
+objective_labels = ["Implement", "Configure"]
+artifact_type_labels = ["Codebase", "Model or checkpoint", "Configuration file"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

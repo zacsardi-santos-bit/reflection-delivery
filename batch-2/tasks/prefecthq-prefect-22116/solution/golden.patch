@@ -1,0 +1,98 @@
+diff --git a/docs/v3/how-to-guides/deployment_infra/docker.mdx b/docs/v3/how-to-guides/deployment_infra/docker.mdx
+index 5001eec1ec..802c299784 100644
+--- a/docs/v3/how-to-guides/deployment_infra/docker.mdx
++++ b/docs/v3/how-to-guides/deployment_infra/docker.mdx
+@@ -167,6 +167,14 @@ Prefect generates a Dockerfile for you that builds an image based off of one of
+ The generated Dockerfile copies the current directory into the Docker image and installs any dependencies listed
+ in a `requirements.txt` file.
+ 
++<Note>
++The generated Dockerfile installs dependencies from `requirements.txt`, but not dependencies declared only in
++`pyproject.toml`. If your project uses `pyproject.toml`, either install those dependencies in a custom Dockerfile,
++generate a `requirements.txt` file for the generated Dockerfile, or enable Prefect's
++[automatic dependency installation](/v3/how-to-guides/deployments/store-flow-code#python-project-dependencies-in-custom-images)
++when code is pulled at runtime.
++</Note>
++
+ ### Automatically build a custom Docker image with a local Dockerfile
+ 
+ If you want to use a custom image, specify the path to your Dockerfile via `DockerImage`:
+diff --git a/docs/v3/how-to-guides/deployments/store-flow-code.mdx b/docs/v3/how-to-guides/deployments/store-flow-code.mdx
+index 0a3cbc26f1..10da9eadb7 100644
+--- a/docs/v3/how-to-guides/deployments/store-flow-code.mdx
++++ b/docs/v3/how-to-guides/deployments/store-flow-code.mdx
+@@ -581,6 +581,19 @@ Alternatively, you can create a custom Docker image outside of Prefect by runnin
+ When you run `prefect deploy` with a custom image in `job_variables` and no build step, Prefect automatically adds a `set_working_directory` pull step to your deployment. In interactive mode, Prefect prompts you for the working directory inside your image (defaulting to `/opt/prefect/<project-dir>`). In non-interactive mode, it defaults to `/opt/prefect` and prints a warning. To use a different path, add an explicit `set_working_directory` step to the `pull` section of your `prefect.yaml`.
+ </Note>
+ 
++#### Python project dependencies in custom images
++
++When a deployment pulls code that includes a `pyproject.toml`, Prefect starts the flow run without installing project
++dependencies by default. This keeps custom images predictable and avoids unexpected package installation during flow run
++startup.
++
++If you want Prefect to prepare the project's runtime dependencies before starting the flow run, set
++`PREFECT_RUNNER_AUTO_INSTALL_DEPENDENCIES=true` in the image or work pool job variables. Default dependency groups are not
++installed.
++
++If your custom image already contains the required project code and dependencies, leave
++`PREFECT_RUNNER_AUTO_INSTALL_DEPENDENCIES` unset or set it to `false`.
++
+ For more information, see [this discussion of custom Docker images](/v3/how-to-guides/deployment_infra/docker/#automatically-build-a-custom-docker-image-with-a-local-dockerfile).
+ 
+ ## Blob storage
+diff --git a/src/prefect/runner/AGENTS.md b/src/prefect/runner/AGENTS.md
+index 8f14ccd369..63f4f404dc 100644
+--- a/src/prefect/runner/AGENTS.md
++++ b/src/prefect/runner/AGENTS.md
+@@ -142,7 +142,7 @@ These validations exist to prevent git argument injection. Do not bypass them wh
+ 
+ **Pull-step directory fallback:** When pull steps run but none produces a `directory` output or changes CWD, `_ensure_entrypoint_in_workspace` copies storage into the workspace root as a fallback. This handles setup-only pull steps (e.g., `run_shell_script` for environment prep) that do not control the working directory themselves.
+ 
+-**Automatic `uv` command selection:** When no explicit command is passed, `WorkspaceResolvingEngineCommandStarter` auto-selects `uv run --project <project_root> -m prefect.flow_engine` — but only when all three conditions hold: `pyproject.toml` exists at `project_root`, the `project.dependencies` list includes `prefect`, and `uv` is found via the workspace's `PATH` env var (not the system PATH). If any condition fails, the command falls back to `None`. Explicit commands always take precedence.
++**Automatic dependency installation:** By default, `WorkspaceResolvingEngineCommandStarter` does not install dependencies before starting a flow run. When no explicit command is passed and `PREFECT_RUNNER_AUTO_INSTALL_DEPENDENCIES` is true, it auto-selects `uv run --no-default-groups --project <project_root> -m prefect.flow_engine` — but only when all three conditions hold: `pyproject.toml` exists at `project_root`, the `project.dependencies` list includes `prefect`, and `uv` is found via the workspace's `PATH` env var (not the system PATH). If the setting is false or any condition fails, the command falls back to `None`. Explicit commands always take precedence.
+ 
+ ## Reference
+ 
+diff --git a/src/prefect/runner/_workspace_starter.py b/src/prefect/runner/_workspace_starter.py
+index f6d0d92eda..ac48946476 100644
+--- a/src/prefect/runner/_workspace_starter.py
++++ b/src/prefect/runner/_workspace_starter.py
+@@ -167,6 +167,9 @@ def _pyproject_declares_prefect_dependency(pyproject: Path) -> bool:
+ 
+ 
+ def _uv_run_command(workspace: PreparedWorkspace) -> str | None:
++    if not get_current_settings().runner.auto_install_dependencies:
++        return None
++
+     project_root = workspace.project_root
+     if project_root is None:
+         return None
+@@ -188,6 +191,7 @@ def _uv_run_command(workspace: PreparedWorkspace) -> str | None:
+         [
+             uv_executable,
+             "run",
++            "--no-default-groups",
+             "--project",
+             str(project_root),
+             "-m",
+diff --git a/src/prefect/settings/models/runner.py b/src/prefect/settings/models/runner.py
+index 8fb43b68bb..634f3ef2f7 100644
+--- a/src/prefect/settings/models/runner.py
++++ b/src/prefect/settings/models/runner.py
+@@ -71,6 +71,15 @@ class RunnerSettings(PrefectBaseSettings):
+         ),
+     )
+ 
++    auto_install_dependencies: bool = Field(
++        default=False,
++        description=(
++            "Whether runners may install dependencies before executing flow runs. "
++            "Enable this when deployments pull code that needs dependencies prepared "
++            "at runtime."
++        ),
++    )
++
+     server: RunnerServerSettings = Field(
+         default_factory=RunnerServerSettings,
+         description="Settings for controlling runner server behavior",

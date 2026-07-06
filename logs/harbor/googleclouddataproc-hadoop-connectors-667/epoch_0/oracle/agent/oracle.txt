@@ -1,4 +1,0 @@
-patching file gcs/src/main/java/com/google/cloud/hadoop/fs/gcs/GoogleHadoopFileSystemConfiguration.java
-patching file util-hadoop/pom.xml
-patching file util-hadoop/src/main/java/com/google/cloud/hadoop/util/HadoopConfigurationProperty.java
-patching file util-hadoop/src/main/java/com/google/cloud/hadoop/util/HadoopCredentialConfiguration.java

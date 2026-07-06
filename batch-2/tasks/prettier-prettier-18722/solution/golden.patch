@@ -1,0 +1,143 @@
+diff --git a/changelog_unreleased/angular/18722.md b/changelog_unreleased/angular/18722.md
+new file mode 100644
+index 000000000..61e69535e
+--- /dev/null
++++ b/changelog_unreleased/angular/18722.md
+@@ -0,0 +1,41 @@
++#### Support Angular v21.2 (#18722, #19034 by @fisker)
++
++Exhaustive typechecking with `@default never;`
++
++<!-- prettier-ignore -->
++```html
++<!-- Input -->
++@switch (foo) {
++  @case (1) {}
++  @default never;
++}
++
++<!-- Prettier stable -->
++SyntaxError: Incomplete block "default never". If you meant to write the @ character, you should use the "&#64;" HTML entity instead. (3:3)
++
++<!-- Prettier main -->
++@switch (foo) {
++  @case (1) {}
++  @default never;
++}
++```
++
++`arrow function` and `instanceof` expressions.
++
++<!-- prettier-ignore -->
++```html
++<!-- Input -->
++@let fn = (a) =>        a?    1:2;
++
++{{ fn ( a         instanceof b)}}
++
++<!-- Prettier stable -->
++@let fn = (a) =>        a?    1:2;
++
++{{ fn ( a         instanceof b)}}
++
++<!-- Prettier main -->
++@let fn = (a) => (a ? 1 : 2);
++
++{{ fn(a instanceof b) }}
++```
+diff --git a/package.json b/package.json
+index 717074756..8281c04dc 100644
+--- a/package.json
++++ b/package.json
+@@ -42,7 +42,7 @@
+     "bin"
+   ],
+   "dependencies": {
+-    "@angular/compiler": "21.2.4",
++    "@angular/compiler": "21.2.8",
+     "@babel/code-frame": "8.0.0-rc.3",
+     "@babel/parser": "8.0.0-rc.3",
+     "@babel/types": "8.0.0-rc.3",
+@@ -55,7 +55,7 @@
+     "@typescript-eslint/visitor-keys": "8.58.1",
+     "acorn": "8.16.0",
+     "acorn-jsx": "5.3.2",
+-    "angular-estree-parser": "15.3.0",
++    "angular-estree-parser": "15.4.3",
+     "angular-html-parser": "10.5.0",
+     "camelcase": "9.0.0",
+     "ci-info": "4.4.0",
+diff --git a/src/language-js/print/function-parameters.js b/src/language-js/print/function-parameters.js
+index 880954573..4c92e632c 100644
+--- a/src/language-js/print/function-parameters.js
++++ b/src/language-js/print/function-parameters.js
+@@ -185,7 +185,11 @@ function printFunctionParameters(
+     typeParametersDoc,
+     "(",
+     indent([softline, ...printed]),
+-    !hasRestParameter(functionNode) ? printTrailingComma(options, "all") : "",
++    !hasRestParameter(functionNode) &&
++    // Angular does not allow trailing comma
++    path.root.type !== "NGRoot"
++      ? printTrailingComma(options, "all")
++      : "",
+     softline,
+     ")",
+   ];
+diff --git a/yarn.lock b/yarn.lock
+index 98a4124eb..f6401693a 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -5,12 +5,12 @@ __metadata:
+   version: 8
+   cacheKey: 10
+ 
+-"@angular/compiler@npm:21.2.4":
+-  version: 21.2.4
+-  resolution: "@angular/compiler@npm:21.2.4"
++"@angular/compiler@npm:21.2.8":
++  version: 21.2.8
++  resolution: "@angular/compiler@npm:21.2.8"
+   dependencies:
+     tslib: "npm:^2.3.0"
+-  checksum: 10/f1071dbfa38d6183fd9fdccff10a6d0e77a08afcb471d631effe3ae4e242ceadd4960dd58c8f596647bf4a39e4b88fc4616bee5d80af393f214363b4455ab288
++  checksum: 10/5bcf866cf01fbc19b016df4c77aa662440ba5ea3b1615ea21b6c69cd52c5b6cf55fbf8003ee8bcfd9199deac7d33a37ccbf4b9feb4bcc21e65cae388d2fa6a88
+   languageName: node
+   linkType: hard
+ 
+@@ -3039,12 +3039,12 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"angular-estree-parser@npm:15.3.0":
+-  version: 15.3.0
+-  resolution: "angular-estree-parser@npm:15.3.0"
++"angular-estree-parser@npm:15.4.3":
++  version: 15.4.3
++  resolution: "angular-estree-parser@npm:15.4.3"
+   peerDependencies:
+-    "@angular/compiler": ">=21.0.7 || >= 21.1.0-0"
+-  checksum: 10/9266d6bf73fac7f2d96e6a7b306bef0a6b6563f4f11a36aa308d4ca2fda2868839c8831c2e95d5ea008636e061c1cdc0668c01fc9f9876eb1b5f6846217fc2ec
++    "@angular/compiler": ">=21.0.7 || >= 21.2.0-0"
++  checksum: 10/a31569c99bb89e20564c0caa77c8db28070170bbbb145fd5afdda77a0d535af71cd3bd13d1d25bd6fe6cffa81ae6ab57f37cd1a9ea1dcdb5039ac419945515ce
+   languageName: node
+   linkType: hard
+ 
+@@ -8579,7 +8579,7 @@ __metadata:
+   version: 0.0.0-use.local
+   resolution: "prettier@workspace:."
+   dependencies:
+-    "@angular/compiler": "npm:21.2.4"
++    "@angular/compiler": "npm:21.2.8"
+     "@babel/code-frame": "npm:8.0.0-rc.3"
+     "@babel/generator": "npm:8.0.0-rc.3"
+     "@babel/parser": "npm:8.0.0-rc.3"
+@@ -8598,7 +8598,7 @@ __metadata:
+     "@typescript-eslint/visitor-keys": "npm:8.58.1"
+     acorn: "npm:8.16.0"
+     acorn-jsx: "npm:5.3.2"
+-    angular-estree-parser: "npm:15.3.0"
++    angular-estree-parser: "npm:15.4.3"
+     angular-html-parser: "npm:10.5.0"
+     base64-arraybuffer-es6: "npm:3.1.0"
+     browserslist: "npm:4.28.2"

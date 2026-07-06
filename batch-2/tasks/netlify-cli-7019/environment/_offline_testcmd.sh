@@ -1,0 +1,1 @@
+cd /workspace/repo && npm ci 2>&1 | tail -5 && npm run build 2>&1 | tail -5 && npx vitest run tests/unit/utils/copy-template-dir/copy-template-dir.test.js

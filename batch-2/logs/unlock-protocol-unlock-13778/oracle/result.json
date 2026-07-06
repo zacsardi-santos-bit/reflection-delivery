@@ -1,0 +1,29 @@
+{
+    "id": "8ad2f81f-8b0f-4fa8-b98a-3df7e28db1c4",
+    "started_at": "2026-07-04T15:38:08.825916",
+    "finished_at": "2026-07-04T15:38:53.798061",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__unlock-protocol-unlock-13778": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "unlock-protocol-unlock-13778__4CDvCoo"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

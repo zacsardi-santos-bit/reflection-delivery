@@ -1,0 +1,69 @@
+patching file support/mesh/mesh_channel_core/tests/nosend.rs
+   Compiling cfg-if v1.0.0
+   Compiling once_cell v1.19.0
+   Compiling pin-project-lite v0.2.13
+   Compiling smallvec v1.13.0
+   Compiling futures-sink v0.3.31
+   Compiling futures-core v0.3.31
+   Compiling byteorder v1.5.0
+   Compiling scopeguard v1.2.0
+   Compiling log v0.4.20
+   Compiling memchr v2.7.1
+   Compiling slab v0.4.9
+   Compiling mesh_protobuf v0.0.0 (/workspace/repo/support/mesh/mesh_protobuf)
+   Compiling overload v0.1.1
+   Compiling libc v0.2.152
+   Compiling lazy_static v1.4.0
+   Compiling futures-task v0.3.31
+   Compiling lock_api v0.4.11
+   Compiling futures-io v0.3.31
+   Compiling futures-channel v0.3.31
+   Compiling tracing-core v0.1.30
+   Compiling thiserror v2.0.0
+   Compiling zerocopy v0.7.32
+   Compiling futures-macro v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling thread_local v1.1.7
+   Compiling sharded-slab v0.1.7
+   Compiling nu-ansi-term v0.46.0
+   Compiling open_enum v0.0.0 (/workspace/repo/support/open_enum)
+   Compiling test_with_tracing_macro v0.0.0 (/workspace/repo/support/test_with_tracing/test_with_tracing_macro)
+   Compiling static_assertions v1.1.0
+   Compiling tracing v0.1.37
+   Compiling tracing-log v0.2.0
+   Compiling parking_lot_core v0.9.9
+   Compiling getrandom v0.2.12
+   Compiling tracing-subscriber v0.3.18
+   Compiling parking_lot v0.12.1
+   Compiling test_with_tracing v0.0.0 (/workspace/repo/support/test_with_tracing)
+   Compiling mesh_node v0.0.0 (/workspace/repo/support/mesh/mesh_node)
+   Compiling futures-util v0.3.31
+   Compiling mesh_channel_core v0.0.0 (/workspace/repo/support/mesh/mesh_channel_core)
+   Compiling futures-executor v0.3.31
+   Compiling futures v0.3.31
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.17s
+────────────
+ Nextest run ID cd50bec0-78b6-4329-95bd-f13f1a243e9e with nextest profile: default
+    Starting 19 tests across 2 binaries
+        PASS [   0.077s] ( 1/19) mesh_channel_core oneshot::tests::test_oneshot_convert_sender_port
+        PASS [   0.082s] ( 2/19) mesh_channel_core mpsc::tests::test_convert_sender_port
+        PASS [   0.082s] ( 3/19) mesh_channel_core mpsc::tests::test_no_send
+        PASS [   0.082s] ( 4/19) mesh_channel_core oneshot::tests::test_oneshot
+        PASS [   0.085s] ( 5/19) mesh_channel_core oneshot::tests::test_oneshot_convert_both
+        PASS [   0.088s] ( 6/19) mesh_channel_core deque::tests::test_zst
+        PASS [   0.088s] ( 7/19) mesh_channel_core mpsc::tests::test_message_corruption
+        PASS [   0.090s] ( 8/19) mesh_channel_core oneshot::tests::test_oneshot_closed
+        PASS [   0.095s] ( 9/19) mesh_channel_core oneshot::tests::test_oneshot_convert_receiver_port_after_send
+        PASS [   0.096s] (10/19) mesh_channel_core oneshot::tests::test_oneshot_convert_both_poll_first
+        PASS [   0.094s] (11/19) mesh_channel_core mpsc::tests::test_basic
+        PASS [   0.096s] (12/19) mesh_channel_core mpsc::tests::test_port_receiver_with_senders_and_messages
+        PASS [   0.094s] (13/19) mesh_channel_core mpsc::tests::test_non_port_and_port_sender
+        PASS [   0.097s] (14/19) mesh_channel_core oneshot::tests::test_oneshot_extra_messages
+        PASS [   0.098s] (15/19) mesh_channel_core deque::tests::test_erased_vecdeque
+        PASS [   0.097s] (16/19) mesh_channel_core oneshot::tests::test_oneshot_message_corruption
+        PASS [   0.103s] (17/19) mesh_channel_core oneshot::tests::test_oneshot_convert_receiver_port
+        PASS [   0.106s] (18/19) mesh_channel_core mpsc::tests::test_convert_receiver_port
+        PASS [   0.040s] (19/19) mesh_channel_core::nosend test_no_send
+────────────
+     Summary [   0.120s] 19 tests run: 19 passed, 0 skipped
+reward=1 graded=19 found=3 failed=0 parsed=19 framework=cargo exit_code=0

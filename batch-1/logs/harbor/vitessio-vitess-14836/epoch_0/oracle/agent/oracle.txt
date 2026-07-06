@@ -1,0 +1,4 @@
+patching file go/vt/vttablet/tabletmanager/rpc_query.go
+patching file go/vt/vttablet/tabletmanager/rpc_replication.go
+patching file go/vt/vttablet/tabletmanager/tm_init.go
+patching file go/vt/vttablet/tabletserver/tabletserver.go

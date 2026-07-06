@@ -1,0 +1,29 @@
+{
+    "id": "f15bda73-d507-41e0-a076-e7a03dcb0675",
+    "started_at": "2026-07-06T12:18:36.487800",
+    "finished_at": "2026-07-06T12:19:16.293889",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__kubeflow-pipelines-13062": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "kubeflow-pipelines-13062__zig3wNF"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

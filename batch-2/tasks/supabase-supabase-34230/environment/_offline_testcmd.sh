@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install --no-frozen-lockfile > /tmp/pnpm-install.log 2>&1 && cd /workspace/repo/apps/studio && pnpm exec vitest run tests/pages/projects/logs-query.test.tsx

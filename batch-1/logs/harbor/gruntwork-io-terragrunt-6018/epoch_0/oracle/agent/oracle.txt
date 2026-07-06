@@ -1,0 +1,7 @@
+patching file docs/src/data/changelog/v1.0.4/stack-autoinclude-filename-split.mdx
+patching file docs/src/data/experiments/stack-dependencies.mdx
+patching file internal/hclparse/autoinclude.go
+patching file internal/hclparse/generate.go
+patching file internal/hclparse/parse.go
+patching file pkg/config/config.go
+patching file pkg/config/stack.go

@@ -1,0 +1,25 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl presto-raptor test -Dtest=\"TestRaptorConnector,TestRaptorFileBasedSecurity,TestRaptorReadOnlySecurity,TestRaptorSecurityConfig\" -Dsurefire.failIfNoSpecifiedTests=false -Dair.check.skip-all=true -Dmaven.javadoc.skip=true -DforkCount=0",
+  "test_files": [
+    "presto-raptor/src/test/java/com/facebook/presto/raptor/RaptorQueryRunner.java",
+    "presto-raptor/src/test/java/com/facebook/presto/raptor/TestRaptorConnector.java",
+    "presto-raptor/src/test/java/com/facebook/presto/raptor/security/TestRaptorFileBasedSecurity.java",
+    "presto-raptor/src/test/java/com/facebook/presto/raptor/security/TestRaptorReadOnlySecurity.java",
+    "presto-raptor/src/test/java/com/facebook/presto/raptor/security/TestRaptorSecurityConfig.java",
+    "presto-raptor/src/test/resources/com/facebook/presto/raptor/security/security.json"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "presto-raptor::test_1",
+    "presto-raptor::test_2",
+    "presto-raptor::test_3",
+    "presto-raptor::test_4",
+    "presto-raptor::test_5",
+    "presto-raptor::test_6",
+    "presto-raptor::test_7",
+    "presto-raptor::test_8"
+  ],
+  "PASS_TO_PASS": []
+}

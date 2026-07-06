@@ -1,0 +1,29 @@
+{
+    "id": "98cad52d-edd2-4a30-bc63-622822c54ca7",
+    "started_at": "2026-07-04T15:39:35.891629",
+    "finished_at": "2026-07-04T15:39:51.121049",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microsoft-semantic-kernel-1948": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microsoft-semantic-kernel-1948__NQ7FswE"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

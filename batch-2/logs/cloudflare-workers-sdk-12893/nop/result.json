@@ -1,0 +1,29 @@
+{
+    "id": "812a8e96-361a-4b9a-82c1-20a0f8fd60dc",
+    "started_at": "2026-07-06T12:17:16.962193",
+    "finished_at": "2026-07-06T12:18:08.730766",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__cloudflare-workers-sdk-12893": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "cloudflare-workers-sdk-12893__SBp6aun"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

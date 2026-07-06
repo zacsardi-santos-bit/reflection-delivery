@@ -1,0 +1,5 @@
+patching file metadata/src/main/java/org/apache/kafka/controller/BrokersToElrs.java
+patching file metadata/src/main/java/org/apache/kafka/controller/ClusterControlManager.java
+patching file metadata/src/main/java/org/apache/kafka/controller/PartitionChangeBuilder.java
+patching file metadata/src/main/java/org/apache/kafka/controller/QuorumController.java
+patching file metadata/src/main/java/org/apache/kafka/controller/ReplicationControlManager.java

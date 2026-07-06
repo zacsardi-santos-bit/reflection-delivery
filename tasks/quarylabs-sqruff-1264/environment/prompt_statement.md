@@ -1,5 +1,0 @@
-I'm working with a SQL linter and formatter that supports multiple dialects including PostgreSQL. I've noticed that when I try to run it against PostgreSQL files that contain statements for altering aggregate functions — renaming them, changing their owner, or moving them to a different schema — the parser fails to recognize the syntax. These are completely valid PostgreSQL statements but they aren't being parsed correctly, so I can't lint or format any file that includes them.
-
-I'd like support added for this statement type. It should handle renaming an aggregate to a new name (including aggregates that take multiple arguments separated by commas), changing ownership to either a named role or to the special system role identifiers, moving an aggregate to a different schema, and the wildcard argument form where you pass a star instead of a type name.
-
-I'd also like the parser to correctly handle all the standard join syntax variants in the PostgreSQL dialect — inner joins, left/right/full joins with and without the outer keyword, cross joins, and comma-separated table lists in the FROM clause.

@@ -1,0 +1,127 @@
+patching file src/sqlparser/tests/sqlparser_common.rs
+patching file src/sqlparser/tests/testdata/lambda.yaml
+patching file src/sqlparser/tests/testdata/select.yaml
+patching file src/tests/regress/data/sql/strings.sql
+patching file src/tests/sqlsmith/src/sql_gen/functions.rs
+warning: in config file .config/nextest.toml, ignoring unknown configuration key: profile.ci.junit.overrides
+   Compiling risingwave_sqlparser v1.7.0-alpha (/workspace/repo/src/sqlparser)
+error[E0599]: no variant named `Like` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:617:34
+    |
+617 |             expr: Box::new(Expr::Like {
+    |                                  ^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0599]: no variant named `Like` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:650:19
+    |
+650 |             Expr::Like {
+    |                   ^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0599]: no variant named `Like` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:666:19
+    |
+666 |             Expr::Like {
+    |                   ^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0433]: failed to resolve: use of undeclared type `EscapeChar`
+   --> src/sqlparser/tests/sqlparser_common.rs:670:35
+    |
+670 |                 escape_char: Some(EscapeChar::escape('\\')),
+    |                                   ^^^^^^^^^^ use of undeclared type `EscapeChar`
+
+error[E0599]: no variant named `Like` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:683:41
+    |
+683 |             Expr::IsNull(Box::new(Expr::Like {
+    |                                         ^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0599]: no variant named `ILike` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:705:19
+    |
+705 |             Expr::ILike {
+    |                   ^^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0599]: no variant named `ILike` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:721:19
+    |
+721 |             Expr::ILike {
+    |                   ^^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0433]: failed to resolve: use of undeclared type `EscapeChar`
+   --> src/sqlparser/tests/sqlparser_common.rs:725:35
+    |
+725 |                 escape_char: Some(EscapeChar::escape('^')),
+    |                                   ^^^^^^^^^^ use of undeclared type `EscapeChar`
+
+error[E0599]: no variant named `ILike` found for enum `risingwave_sqlparser::ast::Expr`
+   --> src/sqlparser/tests/sqlparser_common.rs:738:41
+    |
+738 |             Expr::IsNull(Box::new(Expr::ILike {
+    |                                         ^^^^^ variant not found in `risingwave_sqlparser::ast::Expr`
+
+error[E0559]: variant `risingwave_sqlparser::ast::Expr::SimilarTo` has no field named `pattern`
+   --> src/sqlparser/tests/sqlparser_common.rs:763:17
+    |
+763 |                 pattern: Box::new(Expr::Value(Value::SingleQuotedString("%a".to_string()))),
+    |                 ^^^^^^^ `risingwave_sqlparser::ast::Expr::SimilarTo` does not have this field
+    |
+    = note: available fields are: `pat`, `esc_text`
+
+error[E0559]: variant `risingwave_sqlparser::ast::Expr::SimilarTo` has no field named `escape_char`
+   --> src/sqlparser/tests/sqlparser_common.rs:764:17
+    |
+764 |                 escape_char: None,
+    |                 ^^^^^^^^^^^ `risingwave_sqlparser::ast::Expr::SimilarTo` does not have this field
+    |
+    = note: available fields are: `pat`, `esc_text`
+
+error[E0559]: variant `risingwave_sqlparser::ast::Expr::SimilarTo` has no field named `pattern`
+   --> src/sqlparser/tests/sqlparser_common.rs:779:17
+    |
+779 |                 pattern: Box::new(Expr::Value(Value::SingleQuotedString("%a".to_string()))),
+    |                 ^^^^^^^ `risingwave_sqlparser::ast::Expr::SimilarTo` does not have this field
+    |
+    = note: available fields are: `pat`, `esc_text`
+
+error[E0559]: variant `risingwave_sqlparser::ast::Expr::SimilarTo` has no field named `escape_char`
+   --> src/sqlparser/tests/sqlparser_common.rs:780:17
+    |
+780 |                 escape_char: Some(EscapeChar::escape('\\')),
+    |                 ^^^^^^^^^^^ `risingwave_sqlparser::ast::Expr::SimilarTo` does not have this field
+    |
+    = note: available fields are: `pat`, `esc_text`
+
+error[E0433]: failed to resolve: use of undeclared type `EscapeChar`
+   --> src/sqlparser/tests/sqlparser_common.rs:780:35
+    |
+780 |                 escape_char: Some(EscapeChar::escape('\\')),
+    |                                   ^^^^^^^^^^ use of undeclared type `EscapeChar`
+
+error[E0559]: variant `risingwave_sqlparser::ast::Expr::SimilarTo` has no field named `pattern`
+   --> src/sqlparser/tests/sqlparser_common.rs:795:17
+    |
+795 |                 pattern: Box::new(Expr::Value(Value::SingleQuotedString("%a".to_string()))),
+    |                 ^^^^^^^ `risingwave_sqlparser::ast::Expr::SimilarTo` does not have this field
+    |
+    = note: available fields are: `pat`, `esc_text`
+
+error[E0559]: variant `risingwave_sqlparser::ast::Expr::SimilarTo` has no field named `escape_char`
+   --> src/sqlparser/tests/sqlparser_common.rs:796:17
+    |
+796 |                 escape_char: Some(EscapeChar::escape('\\')),
+    |                 ^^^^^^^^^^^ `risingwave_sqlparser::ast::Expr::SimilarTo` does not have this field
+    |
+    = note: available fields are: `pat`, `esc_text`
+
+error[E0433]: failed to resolve: use of undeclared type `EscapeChar`
+   --> src/sqlparser/tests/sqlparser_common.rs:796:35
+    |
+796 |                 escape_char: Some(EscapeChar::escape('\\')),
+    |                                   ^^^^^^^^^^ use of undeclared type `EscapeChar`
+
+Some errors have detailed explanations: E0433, E0559, E0599.
+For more information about an error, try `rustc --explain E0433`.
+error: could not compile `risingwave_sqlparser` (test "sqlparser_common") due to 17 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/nightly-2023-12-26-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package risingwave_sqlparser` exited with code 101
+reward=0 graded=208 found=0 failed=0 parsed=0 framework=cargo exit_code=101

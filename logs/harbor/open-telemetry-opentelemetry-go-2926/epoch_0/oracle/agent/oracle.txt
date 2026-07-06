@@ -1,4 +1,0 @@
-patching file sdk/metric/config.go
-patching file sdk/metric/provider.go
-patching file sdk/metric/view/instrument.go
-patching file sdk/metric/view/view.go

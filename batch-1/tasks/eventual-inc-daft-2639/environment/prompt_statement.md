@@ -1,0 +1,5 @@
+I'm working on a data processing library that has an approximate percentile aggregation feature. The library includes inline documentation examples that are automatically validated as part of the test suite, and one of those examples is now failing because the expected output value in the docstring doesn't match what the function actually computes. The difference is tiny — just the last few decimal digits of a floating-point result — but the exact string comparison in the documentation test catches it.
+
+On top of that, some tests for logarithm and exponential operations are using exact floating-point equality to check results, which is fragile. When the computational environment changes slightly, these operations can produce results that differ at the last significant digit, causing tests to fail even though the results are numerically correct. I'd like those comparisons to be approximate rather than exact, so they're tolerant of normal floating-point rounding differences.
+
+Can you fix the documentation example to show the correct computed output, and update the numeric operation tests to use approximate comparison instead of exact equality?

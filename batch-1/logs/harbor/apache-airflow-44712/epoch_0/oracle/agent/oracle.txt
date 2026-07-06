@@ -1,0 +1,10 @@
+patching file airflow/migrations/versions/0052_3_0_0_add_deadline_alerts_table.py
+patching file airflow/models/__init__.py
+patching file airflow/models/deadline.py
+patching file airflow/utils/db.py
+patching file airflow/utils/db_cleanup.py
+patching file docs/apache-airflow/img/airflow_erd.sha256
+patching file docs/apache-airflow/img/airflow_erd.svg
+patching file docs/apache-airflow/migrations-ref.rst
+patching file newsfragments/44712.feature.rst
+patching file tests_common/test_utils/db.py

@@ -1,0 +1,29 @@
+{
+    "id": "520a8ab2-4bcb-4320-863b-3e2f9102de0a",
+    "started_at": "2026-07-04T15:36:43.436159",
+    "finished_at": "2026-07-04T15:38:00.142709",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tailcallhq-tailcall-1078": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tailcallhq-tailcall-1078__Z7WGVFr"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && node_modules/.bin/tsc --build config/reader/tsconfig.json installing/deps-resolver/tsconfig.json resolving/npm-resolver/tsconfig.json && NODE_OPTIONS='--experimental-vm-modules --disable-warning=ExperimentalWarning --disable-warning=DEP0169' node_modules/.bin/jest --config __utils__/jest-config/config.js --rootDir /workspace/repo config/reader/test/getOptionsFromRootManifest.test.ts installing/deps-resolver/test/replaceVersionInPref.test.ts resolving/npm-resolver/test/parseBareSpecifier.test.ts resolving/npm-resolver/test/resolveNamedRegistry.test.ts --coverage=false --verbose",
+  "test_files": [
+    "config/reader/test/getOptionsFromRootManifest.test.ts",
+    "installing/deps-resolver/test/replaceVersionInPref.test.ts",
+    "resolving/npm-resolver/test/fixtures/gh-acme-private.json",
+    "resolving/npm-resolver/test/parseBareSpecifier.test.ts",
+    "resolving/npm-resolver/test/resolveNamedRegistry.test.ts"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/installing/deps-resolver/test/replaceVersionInPref.test.ts::replaceVersionInBareSpecifier() applies the fast path to configured named-registry prefixes",
+    "/workspace/repo/config/reader/test/getOptionsFromRootManifest.test.ts::getOptionsFromPnpmSettings() expands env variables inside registries values",
+    "/workspace/repo/config/reader/test/getOptionsFromRootManifest.test.ts::getOptionsFromPnpmSettings() expands env variables inside namedRegistries values",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() resolves a scoped package published to GitHub Packages via the built-in gh: alias",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() preserves the scoped package name when the alias is a different name",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() looks up the auth header by the named registry URL",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() honours a user-defined named registry from config",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() allows user config to override the built-in gh alias (GHES)",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::creating the resolver throws when a user-defined registry URL is malformed",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() returns null for specifiers whose prefix is not a configured alias",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() does not claim the github: git shortcut scheme",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() returns null when no alias is provided for a bare version selector",
+    "/workspace/repo/resolving/npm-resolver/test/resolveNamedRegistry.test.ts::resolveFromNamedRegistry() throws when the specifier names an invalid scoped package",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseBareSpecifier npm:<version_selector> falls back to the outer alias as the package name",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec returns null on non-named-registry specifiers",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec does not intercept github: git shorthand (that scheme belongs to the git resolver)",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec parses <alias>:<version_selector> when a scoped package alias is given",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec parses <alias>:@<owner>/<name> and falls back to the default tag",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec parses <alias>:@<owner>/<name>@<version_selector>",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec preserves the original package name (no scope rewrite, unlike jsr)",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec throws when the scope has no package name",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec does not claim <alias>:<version_selector> when no package alias is provided",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec falls back to the dependency alias for <alias>:<version_selector>, scoped or not",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec parses unscoped <alias>:<name>[@<version_selector>]",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec matches any alias in the configured set and reports it back to the caller",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec returns null when the alias is not in the configured set",
+    "/workspace/repo/resolving/npm-resolver/test/parseBareSpecifier.test.ts::parseNamedRegistrySpecifierToRegistryPackageSpec includes the user-facing alias in error messages for user-defined aliases"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/installing/deps-resolver/test/replaceVersionInPref.test.ts::replaceVersionInBareSpecifier()",
+    "/workspace/repo/installing/deps-resolver/test/replaceVersionInPref.test.ts::replaceVersionInBareSpecifier() leaves unrecognized prefixes untouched",
+    "/workspace/repo/config/reader/test/getOptionsFromRootManifest.test.ts::getOptionsFromPnpmSettings() replaces env variables in settings",
+    "/workspace/repo/config/reader/test/getOptionsFromRootManifest.test.ts::getOptionsFromPnpmSettings() converts allowBuilds"
+  ]
+}

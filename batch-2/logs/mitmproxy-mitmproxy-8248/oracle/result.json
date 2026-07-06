@@ -1,0 +1,29 @@
+{
+    "id": "bf5edf7d-b954-4e06-8c75-1dc8bc4108ae",
+    "started_at": "2026-07-06T12:19:16.658183",
+    "finished_at": "2026-07-06T12:19:39.424773",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__mitmproxy-mitmproxy-8248": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "mitmproxy-mitmproxy-8248__GttaDx8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "c77f0916-90af-4920-9833-1ef3451584aa",
+    "started_at": "2026-07-02T19:09:24.002321",
+    "finished_at": "2026-07-02T19:11:41.326758",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pmndrs-react-spring-2431__ejXue9o"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

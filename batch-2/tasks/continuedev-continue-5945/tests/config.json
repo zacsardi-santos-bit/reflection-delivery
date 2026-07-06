@@ -1,0 +1,42 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/core && npm test -- config/markdown/createMarkdownRule.test.ts config/workspace/workspaceBlocks.test.ts tools/implementations/createRuleBlock.test.ts --watchAll=false",
+  "test_files": [
+    "core/config/markdown/createMarkdownRule.test.ts",
+    "core/config/workspace/workspaceBlocks.test.ts",
+    "core/tools/implementations/createRuleBlock.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/core/tools/implementations/createRuleBlock.test.ts::createRuleBlockImpl should create a rule with glob pattern",
+    "/workspace/repo/core/tools/implementations/createRuleBlock.test.ts::createRuleBlockImpl should create a filename based on sanitized rule name using shared path function",
+    "/workspace/repo/core/tools/implementations/createRuleBlock.test.ts::createRuleBlockImpl should create a rule with description pattern",
+    "/workspace/repo/core/tools/implementations/createRuleBlock.test.ts::createRuleBlockImpl should include both globs and description in frontmatter",
+    "/workspace/repo/core/tools/implementations/createRuleBlock.test.ts::createRuleBlockImpl should create a rule with alwaysApply set to false",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::getFileContent returns markdown content for rules block type",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::getFileContent returns YAML content for non-rules block types",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::getFileContent generates correct YAML for different block types",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename returns base filename when it doesn't exist",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename returns filename with counter when base exists",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename increments counter until available filename is found",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename handles different block types correctly with proper extensions",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename respects custom extension parameter",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename handles rules markdown files with counter",
+    "/workspace/repo/core/config/workspace/workspaceBlocks.test.ts::findAvailableFilename handles large counter values",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::sanitizeRuleName should sanitize rule names for filenames",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::sanitizeRuleName should handle empty and edge case inputs",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleFilePath should create correct rule file path",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleFilePath should handle special characters in rule name",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleFilePath should handle edge case rule names",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createMarkdownWithFrontmatter should create properly formatted markdown with frontmatter",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createMarkdownWithFrontmatter should handle empty frontmatter",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createMarkdownWithFrontmatter should create content that can be parsed back correctly",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleMarkdown should create rule markdown with all options",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleMarkdown should create rule markdown with minimal options",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleMarkdown should handle string globs",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleMarkdown should trim description and globs",
+    "/workspace/repo/core/config/markdown/createMarkdownRule.test.ts::createRuleMarkdown should handle alwaysApply false explicitly"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,3 +1,0 @@
-patching file api/src/backend/api/specs/v1.yaml
-patching file api/src/backend/api/v1/serializers.py
-patching file api/src/backend/api/v1/views.py

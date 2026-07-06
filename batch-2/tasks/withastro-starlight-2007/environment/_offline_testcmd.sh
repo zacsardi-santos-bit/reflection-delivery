@@ -1,0 +1,1 @@
+pnpm install && cd /workspace/repo/packages/starlight && npx vitest run __tests__/i18n/translations-ec.test.ts && cd /workspace/repo/packages/tailwind && npx vitest run __tests__/tailwind.test.ts

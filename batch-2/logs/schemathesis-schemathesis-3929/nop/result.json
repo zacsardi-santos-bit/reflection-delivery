@@ -1,0 +1,29 @@
+{
+    "id": "8a3b1a3d-52d0-4a44-ad36-a804722a77a3",
+    "started_at": "2026-07-06T12:17:20.425356",
+    "finished_at": "2026-07-06T12:17:49.932993",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__schemathesis-schemathesis-3929": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "schemathesis-schemathesis-3929__mt4TbrG"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,98 @@
+{
+    "id": "71091dea-da7d-4d0b-bafa-3f5a4f9d3afa",
+    "task_name": "offline/tensorchord-pgvecto.rs-350",
+    "trial_name": "tensorchord-pgvecto.rs-350__9S86moj",
+    "trial_uri": "file:///home/ubuntu/staging_reflection/logs/val_residual20/nop/tensorchord-pgvecto.rs-350/2026-07-01__15-35-32/tensorchord-pgvecto.rs-350__9S86moj",
+    "task_id": {
+        "path": "/home/ubuntu/staging_reflection/tasks/tensorchord-pgvecto.rs-350"
+    },
+    "source": null,
+    "task_checksum": "f363bd90c7b753299dd87591bf749e1ca196769f541d85f1ef0af39d26acd4c7",
+    "config": {
+        "task": {
+            "path": "/home/ubuntu/staging_reflection/tasks/tensorchord-pgvecto.rs-350",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": null
+        },
+        "trial_name": "tensorchord-pgvecto.rs-350__9S86moj",
+        "trials_dir": "/home/ubuntu/staging_reflection/logs/val_residual20/nop/tensorchord-pgvecto.rs-350/2026-07-01__15-35-32",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "modal",
+            "import_path": null,
+            "force_build": false,
+            "delete": false,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "2d9e9ee4-82c4-4e9d-b309-1c174050610b"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T15:35:36.893539Z",
+    "finished_at": "2026-07-01T15:37:54.605882Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T15:35:36.895300Z",
+        "finished_at": "2026-07-01T15:37:50.455901Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T15:37:50.455964Z",
+        "finished_at": "2026-07-01T15:37:50.456008Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T15:37:50.456072Z",
+        "finished_at": "2026-07-01T15:37:50.456107Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T15:37:50.632128Z",
+        "finished_at": "2026-07-01T15:37:54.221399Z"
+    }
+}

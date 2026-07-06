@@ -1,0 +1,138 @@
+patching file crates/ruff_linter/resources/test/fixtures/pyupgrade/UP040.py
+patching file crates/ruff_linter/resources/test/fixtures/pyupgrade/UP040.pyi
+   Compiling ruff_linter v0.9.4 (/workspace/repo/crates/ruff_linter)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 44.72s
+────────────
+ Nextest run ID 8dc7f69e-344e-4abc-8bd2-56cb33c52c8d with nextest profile: default
+    Starting 128 tests across 1 binary (2152 tests skipped)
+        PASS [   0.006s] (  1/128) ruff_linter rules::pyupgrade::fixes::tests::aliased
+        PASS [   0.007s] (  2/128) ruff_linter rules::pyupgrade::fixes::tests::first_import
+        PASS [   0.006s] (  3/128) ruff_linter rules::pyupgrade::fixes::tests::first_two_imports
+        PASS [   0.006s] (  4/128) ruff_linter rules::pyupgrade::fixes::tests::first_two_imports_multiline
+        PASS [   0.006s] (  5/128) ruff_linter rules::pyupgrade::fixes::tests::last_import
+        PASS [   0.006s] (  6/128) ruff_linter rules::pyupgrade::fixes::tests::multi_comment_first_import
+        PASS [   0.006s] (  7/128) ruff_linter rules::pyupgrade::fixes::tests::multiline_comment
+        PASS [   0.006s] (  8/128) ruff_linter rules::pyupgrade::fixes::tests::multiline_once
+        PASS [   0.006s] (  9/128) ruff_linter rules::pyupgrade::fixes::tests::multiline_twice
+        PASS [   0.006s] ( 10/128) ruff_linter rules::pyupgrade::fixes::tests::once
+        PASS [   0.006s] ( 11/128) ruff_linter rules::pyupgrade::fixes::tests::parenthesized
+        PASS [   0.006s] ( 12/128) ruff_linter rules::pyupgrade::fixes::tests::twice
+        PASS [   0.006s] ( 13/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_2_0
+        PASS [   0.006s] ( 14/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_2_0_whole
+        PASS [   0.007s] ( 15/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_0
+        PASS [   0.007s] ( 16/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_0_whole
+        PASS [   0.006s] ( 17/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_1
+        PASS [   0.006s] ( 18/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_11
+        PASS [   0.007s] ( 19/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_5
+        PASS [   0.007s] ( 20/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_7
+        PASS [   0.005s] ( 21/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_7_not_equal
+        PASS [   0.005s] ( 22/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_8
+        PASS [   0.005s] ( 23/128) ruff_linter rules::pyupgrade::rules::outdated_version_block::tests::test_compare_version::compare_3_9
+        PASS [   0.005s] ( 24/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::complex_format
+        PASS [   0.005s] ( 25/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::preserve_blanks
+        PASS [   0.006s] ( 26/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::preserve_space
+        PASS [   0.008s] ( 27/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::test_percent_to_format::format_an_a
+        PASS [   0.008s] ( 28/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::test_percent_to_format::format_an_r
+        PASS [   0.009s] ( 29/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::test_percent_to_format::formatting_in_string
+        PASS [   0.009s] ( 30/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::test_percent_to_format::simple_string
+        PASS [   0.008s] ( 31/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::test_percent_to_format::three_percents
+        PASS [   0.008s] ( 32/128) ruff_linter rules::pyupgrade::rules::printf_string_formatting::tests::test_percent_to_format::word_in_string
+        PASS [   0.089s] ( 33/128) ruff_linter rules::pyupgrade::tests::datetime_utc_alias_py311
+        PASS [   0.091s] ( 34/128) ruff_linter rules::pyupgrade::tests::async_timeout_error_alias_not_applied_py310
+        PASS [   0.058s] ( 35/128) ruff_linter rules::pyupgrade::tests::future_annotations_keep_runtime_typing_p37
+        PASS [   0.060s] ( 36/128) ruff_linter rules::pyupgrade::tests::future_annotations_keep_runtime_typing_p310
+        PASS [   0.062s] ( 37/128) ruff_linter rules::pyupgrade::tests::future_annotations_pep_585_p37
+        PASS [   0.068s] ( 38/128) ruff_linter rules::pyupgrade::tests::future_annotations_pep_585_py310
+        PASS [   0.060s] ( 39/128) ruff_linter rules::pyupgrade::tests::future_annotations_pep_604_p37
+        PASS [   0.058s] ( 40/128) ruff_linter rules::pyupgrade::tests::future_annotations_pep_604_py310
+        PASS [   0.054s] ( 41/128) ruff_linter rules::pyupgrade::tests::non_pep695_type_alias_not_applied_py311
+        PASS [   0.062s] ( 42/128) ruff_linter rules::pyupgrade::tests::rules::rule_convertnamedtuplefunctionaltoclass_path_new_up014_py_expects
+        PASS [   0.070s] ( 43/128) ruff_linter rules::pyupgrade::tests::rules::rule_converttypeddictfunctionaltoclass_path_new_up013_py_expects
+        PASS [   0.062s] ( 44/128) ruff_linter rules::pyupgrade::tests::rules::rule_deprecatedcelementtree_path_new_up023_py_expects
+        PASS [   0.086s] ( 45/128) ruff_linter rules::pyupgrade::tests::rules::rule_deprecatedmockimport_path_new_up026_py_expects
+        PASS [   0.100s] ( 46/128) ruff_linter rules::pyupgrade::tests::rules::rule_deprecatedimport_path_new_up035_py_expects
+        PASS [   0.071s] ( 47/128) ruff_linter rules::pyupgrade::tests::rules::rule_deprecatedunittestalias_path_new_up005_py_expects
+        PASS [   0.076s] ( 48/128) ruff_linter rules::pyupgrade::tests::rules::rule_extraneousparentheses_path_new_up034_py_expects
+        PASS [   0.055s] ( 49/128) ruff_linter rules::pyupgrade::tests::rules::rule_formatliterals_path_new_up030_1_py_expects
+        PASS [   0.092s] ( 50/128) ruff_linter rules::pyupgrade::tests::rules::rule_formatliterals_path_new_up030_0_py_expects
+        PASS [   0.068s] ( 51/128) ruff_linter rules::pyupgrade::tests::rules::rule_fstring_path_new_up032_1_py_expects
+        PASS [   0.128s] ( 52/128) ruff_linter rules::pyupgrade::tests::rules::rule_fstring_path_new_up032_0_py_expects
+        PASS [   0.075s] ( 53/128) ruff_linter rules::pyupgrade::tests::rules::rule_fstring_path_new_up032_2_py_expects
+        PASS [   0.073s] ( 54/128) ruff_linter rules::pyupgrade::tests::rules::rule_fstring_path_new_up032_3_py_expects
+        PASS [   0.066s] ( 55/128) ruff_linter rules::pyupgrade::tests::rules::rule_lrucachewithmaxsizenone_path_new_up033_0_py_expects
+        PASS [   0.061s] ( 56/128) ruff_linter rules::pyupgrade::tests::rules::rule_lrucachewithmaxsizenone_path_new_up033_1_py_expects
+        PASS [   0.062s] ( 57/128) ruff_linter rules::pyupgrade::tests::rules::rule_lrucachewithoutparameters_path_new_up011_py_expects
+        PASS [   0.072s] ( 58/128) ruff_linter rules::pyupgrade::tests::rules::rule_nativeliterals_path_new_up018_py_expects
+        PASS [   0.076s] ( 59/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep585annotation_path_new_up006_0_py_expects
+        PASS [   0.065s] ( 60/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep585annotation_path_new_up006_1_py_expects
+        PASS [   0.065s] ( 61/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep585annotation_path_new_up006_2_py_expects
+        PASS [   0.063s] ( 62/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep585annotation_path_new_up006_3_py_expects
+        PASS [   0.080s] ( 63/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep604annotationunion_path_new_up007_py_expects
+        PASS [   0.072s] ( 64/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep604annotationunion_path_new_up045_py_expects
+        PASS [   0.060s] ( 65/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep604isinstance_path_new_up038_py_expects
+        PASS [   0.069s] ( 66/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep695genericclass_path_new_up046_0_py_expects
+        PASS [   0.057s] ( 67/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep695genericclass_path_new_up046_1_py_expects
+        PASS [   0.057s] ( 68/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep695genericfunction_path_new_up047_py_expects
+        PASS [   0.067s] ( 69/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep695typealias_path_new_up040_py_expects
+        PASS [   0.059s] ( 70/128) ruff_linter rules::pyupgrade::tests::rules::rule_nonpep695typealias_path_new_up040_pyi_expects
+        PASS [   0.060s] ( 71/128) ruff_linter rules::pyupgrade::tests::rules::rule_openalias_path_new_up020_py_expects
+        PASS [   0.069s] ( 72/128) ruff_linter rules::pyupgrade::tests::rules::rule_oserroralias_path_new_up024_0_py_expects
+        PASS [   0.066s] ( 73/128) ruff_linter rules::pyupgrade::tests::rules::rule_oserroralias_path_new_up024_1_py_expects
+        PASS [   0.070s] ( 74/128) ruff_linter rules::pyupgrade::tests::rules::rule_oserroralias_path_new_up024_2_py_expects
+        PASS [   0.057s] ( 75/128) ruff_linter rules::pyupgrade::tests::rules::rule_oserroralias_path_new_up024_3_py_expects
+        PASS [   0.055s] ( 76/128) ruff_linter rules::pyupgrade::tests::rules::rule_oserroralias_path_new_up024_4_py_expects
+        PASS [   0.086s] ( 77/128) ruff_linter rules::pyupgrade::tests::rules::rule_outdatedversionblock_path_new_up036_0_py_expects
+        PASS [   0.058s] ( 78/128) ruff_linter rules::pyupgrade::tests::rules::rule_outdatedversionblock_path_new_up036_1_py_expects
+        PASS [   0.066s] ( 79/128) ruff_linter rules::pyupgrade::tests::rules::rule_outdatedversionblock_path_new_up036_2_py_expects
+        PASS [   0.078s] ( 80/128) ruff_linter rules::pyupgrade::tests::rules::rule_outdatedversionblock_path_new_up036_3_py_expects
+        PASS [   0.066s] ( 81/128) ruff_linter rules::pyupgrade::tests::rules::rule_outdatedversionblock_path_new_up036_4_py_expects
+        PASS [   0.062s] ( 82/128) ruff_linter rules::pyupgrade::tests::rules::rule_outdatedversionblock_path_new_up036_5_py_expects
+        PASS [   0.070s] ( 83/128) ruff_linter rules::pyupgrade::tests::rules::rule_printfstringformatting_path_new_up031_1_py_expects
+        PASS [   0.120s] ( 84/128) ruff_linter rules::pyupgrade::tests::rules::rule_printfstringformatting_path_new_up031_0_py_expects
+        PASS [   0.088s] ( 85/128) ruff_linter rules::pyupgrade::tests::rules::rule_quotedannotation_path_new_up037_0_py_expects
+        PASS [   0.072s] ( 86/128) ruff_linter rules::pyupgrade::tests::rules::rule_quotedannotation_path_new_up037_1_py_expects
+        PASS [   0.069s] ( 87/128) ruff_linter rules::pyupgrade::tests::rules::rule_quotedannotation_path_new_up037_2_pyi_expects
+        PASS [   0.061s] ( 88/128) ruff_linter rules::pyupgrade::tests::rules::rule_redundantopenmodes_path_new_up015_1_py_expects
+        PASS [   0.080s] ( 89/128) ruff_linter rules::pyupgrade::tests::rules::rule_redundantopenmodes_path_new_up015_py_expects
+        PASS [   0.064s] ( 90/128) ruff_linter rules::pyupgrade::tests::rules::rule_replacestdoutstderr_path_new_up022_py_expects
+        PASS [   0.060s] ( 91/128) ruff_linter rules::pyupgrade::tests::rules::rule_replaceuniversalnewlines_path_new_up021_py_expects
+        PASS [   0.062s] ( 92/128) ruff_linter rules::pyupgrade::tests::rules::rule_replacestrenum_path_new_up042_py_expects
+        PASS [   0.068s] ( 93/128) ruff_linter rules::pyupgrade::tests::rules::rule_timeouterroralias_path_new_up041_py_expects
+        PASS [   0.069s] ( 94/128) ruff_linter rules::pyupgrade::tests::rules::rule_supercallwithparameters_path_new_up008_py_expects
+        PASS [   0.057s] ( 95/128) ruff_linter rules::pyupgrade::tests::rules::rule_typingtextstralias_path_new_up019_py_expects
+        PASS [   0.057s] ( 96/128) ruff_linter rules::pyupgrade::tests::rules::rule_typeofprimitive_path_new_up003_py_expects
+        PASS [   0.061s] ( 97/128) ruff_linter rules::pyupgrade::tests::rules::rule_unicodekindprefix_path_new_up025_py_expects
+        PASS [   0.062s] ( 98/128) ruff_linter rules::pyupgrade::tests::rules::rule_unnecessarybuiltinimport_path_new_up029_py_expects
+        PASS [   0.063s] ( 99/128) ruff_linter rules::pyupgrade::tests::rules::rule_unnecessaryclassparentheses_path_new_up039_py_expects
+        PASS [   0.063s] (100/128) ruff_linter rules::pyupgrade::tests::rules::rule_unnecessarydefaulttypeargs_path_new_up043_py_expects
+        PASS [   0.069s] (101/128) ruff_linter rules::pyupgrade::tests::rules::rule_unnecessaryfutureimport_path_new_up010_py_expects
+        PASS [   0.072s] (102/128) ruff_linter rules::pyupgrade::tests::rules::rule_unnecessaryencodeutf8_path_new_up012_py_expects
+        PASS [   0.055s] (103/128) ruff_linter rules::pyupgrade::tests::rules::rule_uselessmetaclasstype_path_new_up001_py_expects
+        PASS [   0.063s] (104/128) ruff_linter rules::pyupgrade::tests::rules::rule_uselessobjectinheritance_path_new_up004_py_expects
+        PASS [   0.059s] (105/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_0_py_expects
+        PASS [   0.055s] (106/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_10_py_expects
+        PASS [   0.058s] (107/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_1_py_expects
+        PASS [   0.057s] (108/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_2_py_expects
+        PASS [   0.058s] (109/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_3_py_expects
+        PASS [   0.056s] (110/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_4_py_expects
+        PASS [   0.065s] (111/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_5_py_expects
+        PASS [   0.066s] (112/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_6_py_expects
+        PASS [   0.057s] (113/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_8_py_expects
+        PASS [   0.060s] (114/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_7_py_expects
+        PASS [   0.054s] (115/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_code_utf8_utf8_py_expects
+        PASS [   0.054s] (116/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_9_py_expects
+        PASS [   0.086s] (117/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_hashbang_utf8_other_py_expects
+        PASS [   0.087s] (118/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_many_empty_lines_py_expects
+        PASS [   0.056s] (119/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_other_utf8_py_expects
+        PASS [   0.056s] (120/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_other_other_py_expects
+        PASS [   0.056s] (121/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_utf8_other_py_expects
+        PASS [   0.056s] (122/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_utf8_code_other_py_expects
+        PASS [   0.069s] (123/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_utf8_utf8_other_py_expects
+        PASS [   0.070s] (124/128) ruff_linter rules::pyupgrade::tests::rules::rule_utf8encodingdeclaration_path_new_up009_utf8_utf8_py_expects
+        PASS [   0.071s] (125/128) ruff_linter rules::pyupgrade::tests::rules::rule_yieldinforloop_path_new_up028_1_py_expects
+        PASS [   0.083s] (126/128) ruff_linter rules::pyupgrade::tests::rules::rule_yieldinforloop_path_new_up028_0_py_expects
+        PASS [   0.078s] (127/128) ruff_linter rules::pyupgrade::tests::unpack_pep_646_py311
+        PASS [   0.071s] (128/128) ruff_linter rules::pyupgrade::tests::up007_preview
+────────────
+     Summary [   3.366s] 128 tests run: 128 passed, 2152 skipped
+reward=1 graded=128 found=27 failed=0 parsed=128 framework=cargo exit_code=0

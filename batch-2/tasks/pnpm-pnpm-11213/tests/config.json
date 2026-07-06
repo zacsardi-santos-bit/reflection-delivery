@@ -1,0 +1,25 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/auth/commands && npx jest --config /workspace/jest-no-workers.config.json test/logout.test.ts --coverage=false --verbose --json",
+  "test_files": [
+    "auth/commands/test/logout.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should throw when not logged in",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should throw when not logged in to a custom registry",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should revoke token on registry and remove from auth.ini",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should logout from a custom registry",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should still remove token locally when registry returns non-ok response",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should still remove token locally when fetch throws a network error",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should warn when token is not in auth.ini (e.g. from .npmrc)",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should throw when registry call fails and token is not in auth.ini",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should warn when auth.ini does not exist (ENOENT) and token comes from another source",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should propagate non-ENOENT errors from readIniFile",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should URL-encode the token when revoking",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should normalize the registry URL",
+    "/workspace/repo/auth/commands/test/logout.test.ts::logout should handle registry with a path"
+  ],
+  "PASS_TO_PASS": []
+}

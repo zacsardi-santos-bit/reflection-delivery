@@ -1,0 +1,29 @@
+{
+    "id": "62704969-405b-46ff-8005-29bc81edecf5",
+    "started_at": "2026-07-04T15:43:41.385413",
+    "finished_at": "2026-07-04T15:44:00.699277",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__taichi-dev-taichi-3299": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "taichi-dev-taichi-3299__ppgLtKd"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

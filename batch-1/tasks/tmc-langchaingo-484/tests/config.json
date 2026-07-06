@@ -1,0 +1,38 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./chains -count=1",
+  "test_files": [
+    "chains/chains_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/tmc/langchaingo/chains::TestApplyWithCanceledContext",
+    "github.com/tmc/langchaingo/chains::TestTransform",
+    "github.com/tmc/langchaingo/chains::TestConstitutionCritiqueParsing",
+    "github.com/tmc/langchaingo/chains::TestMapRerankInputVariables",
+    "github.com/tmc/langchaingo/chains::TestSimpleSequentialErrors/multiple_inputs",
+    "github.com/tmc/langchaingo/chains::TestSimpleSequentialErrors/chain_execution_error",
+    "github.com/tmc/langchaingo/chains::TestStuffDocuments_joinDocs/single",
+    "github.com/tmc/langchaingo/chains::TestMapReduceInputVariables",
+    "github.com/tmc/langchaingo/chains::TestSequentialChain",
+    "github.com/tmc/langchaingo/chains::TestSimpleSequential",
+    "github.com/tmc/langchaingo/chains::TestApply",
+    "github.com/tmc/langchaingo/chains::TestSequentialChainErrors/missing_input_key",
+    "github.com/tmc/langchaingo/chains::TestSequentialChainErrors/memory_key_collides_with_input_key",
+    "github.com/tmc/langchaingo/chains::TestSequentialChainErrors/chain_execution_error",
+    "github.com/tmc/langchaingo/chains::TestSequentialChainErrors/missing_output_key",
+    "github.com/tmc/langchaingo/chains::TestSequentialChainErrors/overlapping_output_key",
+    "github.com/tmc/langchaingo/chains::TestStuffDocuments_joinDocs/empty",
+    "github.com/tmc/langchaingo/chains::TestStuffDocuments_joinDocs/multiple_with_separator",
+    "github.com/tmc/langchaingo/chains::TestStuffDocuments_joinDocs/multiple",
+    "github.com/tmc/langchaingo/chains::TestSimpleSequentialErrors/multiple_outputs",
+    "github.com/tmc/langchaingo/chains::TestLLMChainWithChatPromptTemplate",
+    "github.com/tmc/langchaingo/chains::TestMapRerankDocumentsCall",
+    "github.com/tmc/langchaingo/chains::TestMapReduce",
+    "github.com/tmc/langchaingo/chains::TestSequentialChainErrors",
+    "github.com/tmc/langchaingo/chains::TestStuffDocuments_joinDocs",
+    "github.com/tmc/langchaingo/chains::TestSimpleSequentialErrors"
+  ],
+  "PASS_TO_PASS": []
+}

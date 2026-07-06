@@ -1,0 +1,11 @@
+patching file .changeset/cyan-dots-compete.md
+patching file config/cypress/support.ts
+patching file config/cypress/tsconfig.json
+patching file package.json
+patching file packages/perseus/src/styles/perseus-renderer.less
+patching file packages/perseus/src/widgets/__stories__/explanation.stories.tsx
+patching file packages/perseus/src/widgets/__testdata__/explanation.testdata.ts
+patching file packages/perseus/src/widgets/__testdata__/graded-group.testdata.ts
+patching file packages/perseus/src/widgets/explanation.tsx
+patching file yarn.lock
+Hunk #1 succeeded at 6930 (offset -9 lines).

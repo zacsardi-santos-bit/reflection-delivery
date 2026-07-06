@@ -1,0 +1,29 @@
+{
+    "id": "e11e31ca-4605-4f3d-bfdf-5d36f77c68f1",
+    "started_at": "2026-07-04T15:42:53.809856",
+    "finished_at": "2026-07-04T15:44:26.771825",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__foundationdb-fdb-record-layer-2278": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "foundationdb-fdb-record-layer-22__rE3qKUD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

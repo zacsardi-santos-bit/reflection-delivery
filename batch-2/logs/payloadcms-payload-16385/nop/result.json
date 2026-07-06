@@ -1,0 +1,29 @@
+{
+    "id": "d0f263d8-207f-41e2-aa5a-f37b1bfce970",
+    "started_at": "2026-07-06T12:17:07.786528",
+    "finished_at": "2026-07-06T12:18:37.211714",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__payloadcms-payload-16385": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "payloadcms-payload-16385__pn3dYnn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

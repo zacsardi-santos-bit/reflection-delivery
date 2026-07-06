@@ -1,5 +1,0 @@
-I'm working on the recursive group-change utility in uutils/coreutils and running into two issues with the root protection feature.
-
-First, the error message is always generic: it always says the operation is dangerous on the literal root directory, even when the user provided a completely different path — like a symbolic link, a path with extra slashes, or a relative traversal sequence — that just happens to resolve to root. It would be much more useful if the error showed the original path the user typed and then noted that it is equivalent to root.
-
-Second, some relative path forms that clearly point to root are not being caught. For example, when the current working directory is already the root directory, passing relative shorthands for the current or parent directory should also trigger the protection. Right now those cases slip through, which defeats the purpose of the safety check. At the same time, sequences of dots that look similar to those shorthands but are actually just regular filenames should not be falsely blocked — they should produce a normal file-not-found error instead.

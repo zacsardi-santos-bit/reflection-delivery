@@ -1,0 +1,7 @@
+I'm working on improving Trivy's support for Gradle projects. Right now, when Trivy scans a Gradle lockfile, it doesn't mark any of the discovered packages as indirect dependencies — but in Gradle, everything in a lockfile is a resolved dependency (which may well be transitive), so they should all be flagged as indirect.
+
+Beyond that, the current analyzer works on a single lockfile path rather than a whole project directory. I'd like it to scan a directory for lockfiles instead, so it fits the standard post-analysis pattern used by other language analyzers in the codebase.
+
+I'd also like to add enrichment from the local Gradle artifact cache. When the standard environment variable pointing to the Gradle user home is set, Trivy should look up the corresponding artifact metadata files in the cache and pull in license information and the list of direct dependencies for each discovered package. If the cache isn't available, the analyzer should still work fine — just without the extra metadata.
+
+The artifact metadata parsing needs to handle a few edge cases: if the group identifier or version is absent from the metadata file itself, it should be extracted from the file's cache path. And if a dependency's version is expressed as a reference to a build property rather than a literal value, it should be resolved to the actual version using the properties declared in the same metadata file.

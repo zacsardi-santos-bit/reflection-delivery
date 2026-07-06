@@ -1,0 +1,4 @@
+patching file python/paddle/fluid/backward.py
+patching file python/paddle/fluid/contrib/mixed_precision/fp16_utils.py
+patching file python/paddle/fluid/incubate/fleet/collective/__init__.py
+patching file python/paddle/fluid/optimizer.py

@@ -1,0 +1,33 @@
+patching file pkg/blockstorage/awsebs/zone_test.go
+patching file pkg/blockstorage/gcepd/zone_test.go
+patching file pkg/blockstorage/zone/zone_test.go
+# github.com/kanisterio/kanister/pkg/blockstorage/gcepd [github.com/kanisterio/kanister/pkg/blockstorage/gcepd.test]
+pkg/blockstorage/gcepd/zone_test.go:52:13: undefined: zone.SanitizeAvailableZones
+# github.com/kanisterio/kanister/pkg/blockstorage/zone [github.com/kanisterio/kanister/pkg/blockstorage/zone.test]
+pkg/blockstorage/zone/zone_test.go:401:10: undefined: SanitizeAvailableZones
+pkg/blockstorage/zone/zone_test.go:616:67: too many arguments in call to FromSourceRegionZone
+	have ("context".Context, *ebsTest, kubernetes.Interface, string, []string)
+	want ("context".Context, Mapper, string, ...string)
+pkg/blockstorage/zone/zone_test.go:714:7: assignment mismatch: 1 variable but consistentZone returns 2 values
+pkg/blockstorage/zone/zone_test.go:714:32: not enough arguments in call to consistentZone
+	have (string, map[string]struct{})
+	want (string, map[string]struct{}, map[string]struct{})
+pkg/blockstorage/zone/zone_test.go:729:8: assignment mismatch: 1 variable but consistentZone returns 2 values
+pkg/blockstorage/zone/zone_test.go:729:28: not enough arguments in call to consistentZone
+	have (string, map[string]struct{})
+	want (string, map[string]struct{}, map[string]struct{})
+pkg/blockstorage/zone/zone_test.go:730:8: assignment mismatch: 1 variable but consistentZone returns 2 values
+pkg/blockstorage/zone/zone_test.go:730:28: not enough arguments in call to consistentZone
+	have (string, map[string]struct{})
+	want (string, map[string]struct{}, map[string]struct{})
+pkg/blockstorage/zone/zone_test.go:736:7: assignment mismatch: 1 variable but consistentZone returns 2 values
+pkg/blockstorage/zone/zone_test.go:736:27: not enough arguments in call to consistentZone
+	have (string, map[string]struct{})
+	want (string, map[string]struct{}, map[string]struct{})
+pkg/blockstorage/zone/zone_test.go:736:7: too many errors
+# github.com/kanisterio/kanister/pkg/blockstorage/awsebs [github.com/kanisterio/kanister/pkg/blockstorage/awsebs.test]
+pkg/blockstorage/awsebs/zone_test.go:52:13: undefined: zone.SanitizeAvailableZones
+FAIL	github.com/kanisterio/kanister/pkg/blockstorage/awsebs [build failed]
+FAIL	github.com/kanisterio/kanister/pkg/blockstorage/gcepd [build failed]
+FAIL	github.com/kanisterio/kanister/pkg/blockstorage/zone [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=3 framework=go exit_code=1

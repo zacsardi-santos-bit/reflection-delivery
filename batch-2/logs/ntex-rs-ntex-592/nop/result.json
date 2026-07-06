@@ -1,0 +1,29 @@
+{
+    "id": "cf8caa3c-53a3-4552-9dd8-28f1e6dd685e",
+    "started_at": "2026-07-04T15:37:37.625842",
+    "finished_at": "2026-07-04T15:40:01.252622",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__ntex-rs-ntex-592": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "ntex-rs-ntex-592__EKD6Nvf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

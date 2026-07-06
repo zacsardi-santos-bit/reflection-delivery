@@ -1,7 +1,0 @@
-I'm working on the Braintree Android SDK and need help improving how the internal encrypted storage layer handles failures. Right now, if the underlying storage system throws an error — say, because of a keystore or security issue on the device — the error is silently swallowed. Read operations just return a default value and writes are quietly dropped, so callers have no idea anything went wrong. This makes it impossible to distinguish "nothing stored yet" from "storage is broken."
-
-I'd like to change this so that storage failures surface as a specific, typed exception that callers can catch and respond to, rather than being silently ignored. The Android context object should also no longer need to be passed into every individual read and write call — it should be provided once upfront.
-
-The Venmo payment flow uses storage to persist a vault option, and when that write fails, I'd like the error to be forwarded to the payment result listener through the existing failure callback, and an analytics event should be sent to track it. Similarly, when the Venmo result-handling path tries to read the vault option and that read fails, the same error forwarding and analytics event should happen.
-
-For the configuration loading path, if the local cache can't be read or written, the load should still succeed using a network fetch, but the system should report the cache read failure and the cache write failure as analytics events so we can monitor how often this is happening in production.

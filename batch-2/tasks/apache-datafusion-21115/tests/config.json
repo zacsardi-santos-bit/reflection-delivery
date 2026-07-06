@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "SLT_EXIT=0; cargo test -p datafusion-sqllogictest --test sqllogictests -- dictionary_struct >/tmp/slt.out 2>&1 || SLT_EXIT=$?; if [ $SLT_EXIT -eq 0 ]; then echo '     PASS [   0.001s] datafusion-sqllogictest tests::dictionary_struct'; else echo '     FAIL [   0.001s] datafusion-sqllogictest tests::dictionary_struct'; exit 1; fi",
+  "test_files": [
+    "datafusion/sqllogictest/src/test_context.rs",
+    "datafusion/sqllogictest/test_files/dictionary_struct.slt"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "datafusion-sqllogictest tests::dictionary_struct"
+  ],
+  "PASS_TO_PASS": []
+}

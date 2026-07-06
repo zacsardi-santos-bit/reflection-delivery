@@ -1,0 +1,40 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/controllers/webhook -count=1",
+  "test_files": [
+    "pkg/controllers/webhook/controller_test.go",
+    "pkg/controllers/webhook/utils_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConfMultiplePolicies/test-1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConfMultiplePolicies",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConf/Test_Case_1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConf/Test_Case_2",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConf/Test_Case_3",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConf/Test_Case_4",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForValidatingWebhookConf",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForMutatingtingWebhookConf/Test_Case_1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForMutatingtingWebhookConf/Test_Case_2",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForMutatingtingWebhookConf/Test_Case_3",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForMutatingtingWebhookConf/Test_Case_4",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestAddOperationsForMutatingtingWebhookConf",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::Test_webhook_isEmpty",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::Test_RuleCount",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestMergeOprations/Test_Case_1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestMergeOprations/Test_Case_2",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestMergeOprations",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForMutatingWebhookConf/Test_Case_1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForMutatingWebhookConf/Test_Case_2",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForMutatingWebhookConf/Test_Case_2#01",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForMutatingWebhookConf",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForValidatingWebhookConf/Test_Case_1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForValidatingWebhookConf/Test_Case_2",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForValidatingWebhookConf/Test_Case_3",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestComputeOperationsForValidatingWebhookConf",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestBuildRulesWithOperations/Test_Case_1",
+    "github.com/kyverno/kyverno/pkg/controllers/webhook::TestBuildRulesWithOperations"
+  ],
+  "PASS_TO_PASS": []
+}

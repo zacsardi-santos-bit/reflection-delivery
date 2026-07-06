@@ -1,0 +1,29 @@
+{
+    "id": "54dd68ff-6dbc-48ac-9dd3-c1584f582968",
+    "started_at": "2026-07-06T12:18:35.363955",
+    "finished_at": "2026-07-06T12:19:44.849310",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__nats-io-nats-server-8037": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "nats-io-nats-server-8037__A7dQ29g"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

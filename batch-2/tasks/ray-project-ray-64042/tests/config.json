@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/dashboard/modules/reporter/tests/test_reporter.py::test_report_stats /workspace/repo/python/ray/dashboard/modules/reporter/tests/test_reporter.py::test_report_per_component_stats /workspace/repo/python/ray/tests/unit/test_get_system_metric.py -v",
+  "test_files": [
+    "python/ray/dashboard/modules/reporter/tests/test_reporter.py",
+    "python/ray/tests/test_metrics_agent.py",
+    "python/ray/tests/unit/test_get_system_metric.py",
+    "release/benchmarks/distributed/many_nodes_tests/dashboard_test.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.dashboard.modules.reporter.tests.test_reporter::test_report_stats",
+    "python.ray.dashboard.modules.reporter.tests.test_reporter::test_report_per_component_stats"
+  ],
+  "PASS_TO_PASS": [
+    "python.ray.tests.unit.test_get_system_metric::test_success_first_try",
+    "python.ray.tests.unit.test_get_system_metric::test_500_500_200_retries_then_succeeds",
+    "python.ray.tests.unit.test_get_system_metric::test_all_500s_raises_with_full_context",
+    "python.ray.tests.unit.test_get_system_metric::test_500_body_truncated_to_500_chars",
+    "python.ray.tests.unit.test_get_system_metric::test_mixed_failures_then_success",
+    "python.ray.tests.unit.test_get_system_metric::test_4xx_not_retried[400]",
+    "python.ray.tests.unit.test_get_system_metric::test_4xx_not_retried[401]",
+    "python.ray.tests.unit.test_get_system_metric::test_4xx_not_retried[403]",
+    "python.ray.tests.unit.test_get_system_metric::test_4xx_not_retried[404]",
+    "python.ray.tests.unit.test_get_system_metric::test_4xx_not_retried[422]",
+    "python.ray.tests.unit.test_get_system_metric::test_all_timeouts_raises_with_error_class",
+    "python.ray.tests.unit.test_get_system_metric::test_max_attempts_kwarg_respected",
+    "python.ray.tests.unit.test_get_system_metric::test_request_timeout_kwarg_passed_through",
+    "python.ray.tests.unit.test_get_system_metric::test_backoff_base_kwarg",
+    "python.ray.tests.unit.test_get_system_metric::test_empty_result_returns_empty_list"
+  ]
+}

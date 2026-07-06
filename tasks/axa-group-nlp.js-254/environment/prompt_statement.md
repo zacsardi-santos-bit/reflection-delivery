@@ -1,7 +1,0 @@
-I'm working on adding support for an alternative entity recognition backend to the NLP library. Right now, entity recognition is always handled by the built-in local mechanism, but I'd like to add the ability to delegate to an external HTTP service for named entity extraction instead.
-
-I need a new module that wraps calls to this external service and handles translating its responses into the entity format the rest of the library expects. The module should handle a wide range of entity types — emails, phone numbers, URLs, integer and float numbers, distances, quantities, temperatures, volumes, currencies, durations, and date/time expressions — each with the correct entity type name and a properly structured resolution object.
-
-The module should also handle setup correctly: when given a URL, it should detect the right default port based on whether the URL is HTTP or HTTPS, and fall back to a sensible default address if no URL is configured. It should be able to convert 2-character language codes into the locale format the external service expects.
-
-Importantly, if the external service call fails for any reason, the module should catch the error and return an empty list of entities rather than propagating the failure. The NLP manager should be updated so that when configured to use this external service, it routes entity recognition through this new module, and the module's request method should be accessible so it can be replaced for testing purposes.

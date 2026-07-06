@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p query --no-fail-fast -E 'test(test_vec_sum_aggregator)'",
+  "test_files": [
+    "src/query/src/tests.rs",
+    "src/query/src/tests/function.rs",
+    "src/query/src/tests/vec_sum_test.rs",
+    "tests/cases/standalone/common/function/vector/vector.result",
+    "tests/cases/standalone/common/function/vector/vector.sql"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) query tests::vec_sum_test::test_vec_sum_aggregator"
+  ],
+  "PASS_TO_PASS": []
+}

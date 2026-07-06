@@ -1,0 +1,22 @@
+{
+  "test_framework": "go",
+  "test_command": "go test ./pkg/auth/providers/ldap -count=1 -v",
+  "test_files": [
+    "pkg/auth/providers/ldap/ldap_client_test.go",
+    "pkg/auth/providers/ldap/ldap_provider_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_ldapProvider_loginUser/successful_user_login",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_ldapProvider_loginUser/user_login_with_invalid_credentials",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_ldapProvider_loginUser/user_login_without_access_permissions",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_ldapProvider_loginUser",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_getBasicLogin/good_input_credentials",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_getBasicLogin/bad_input_credentials",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_getBasicLogin",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_ldapProvider_getLDAPConfig/get_LDAP_config_object",
+    "github.com/rancher/rancher/pkg/auth/providers/ldap::Test_ldapProvider_getLDAPConfig"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,851 @@
+diff --git a/app/client/src/ce/selectors/appIDESelectors.ts b/app/client/src/ce/selectors/appIDESelectors.ts
+deleted file mode 100644
+index 61b965eae0..0000000000
+--- a/app/client/src/ce/selectors/appIDESelectors.ts
++++ /dev/null
+@@ -1,107 +0,0 @@
+-import { groupBy, sortBy } from "lodash";
+-import { createSelector } from "reselect";
+-import { PluginType } from "entities/Action";
+-import { isEmbeddedRestDatasource } from "entities/Datasource";
+-import {
+-  getCurrentActions,
+-  getCurrentJSCollections,
+-  selectDatasourceIdToNameMap,
+-} from "./entitiesSelector";
+-
+-export type EditorSegmentList = Array<{
+-  group: string | "NA";
+-  items: EntityItem[];
+-}>;
+-
+-export interface EntityItem {
+-  title: string;
+-  type: PluginType;
+-  key: string;
+-  group?: string;
+-}
+-
+-const groupAndSortEntitySegmentList = (
+-  items: EntityItem[],
+-): EditorSegmentList => {
+-  const groups = groupBy(items, (item) => {
+-    if (item.group) return item.group;
+-    return "NA";
+-  });
+-
+-  // Entity Segment Lists are sorted alphabetically at both group and item level
+-  return sortBy(
+-    Object.keys(groups).map((group) => {
+-      return {
+-        group: group,
+-        items: sortBy(groups[group], "title"),
+-      };
+-    }),
+-    "group",
+-  );
+-};
+-
+-function recentSortEntitySegmentTabs(items: EntityItem[]) {
+-  // TODO Temp implementation
+-  return sortBy(items, "title");
+-}
+-
+-export const getQuerySegmentItems = createSelector(
+-  getCurrentActions,
+-  selectDatasourceIdToNameMap,
+-  (actions, datasourceIdToNameMap) => {
+-    const items: EntityItem[] = actions.map((action) => {
+-      let group;
+-      if (action.config.pluginType === PluginType.API) {
+-        group = isEmbeddedRestDatasource(action.config.datasource)
+-          ? "APIs"
+-          : datasourceIdToNameMap[action.config.datasource.id] ?? "APIs";
+-      } else {
+-        group = datasourceIdToNameMap[action.config.datasource.id];
+-      }
+-      return {
+-        title: action.config.name,
+-        key: action.config.id,
+-        type: action.config.pluginType,
+-        group,
+-      };
+-    });
+-    return items;
+-  },
+-);
+-export const selectQuerySegmentEditorList = createSelector(
+-  getQuerySegmentItems,
+-  (items) => {
+-    return groupAndSortEntitySegmentList(items);
+-  },
+-);
+-export const getJSSegmentItems = createSelector(
+-  getCurrentJSCollections,
+-  (jsActions) => {
+-    const items: EntityItem[] = jsActions.map((js) => ({
+-      title: js.config.name,
+-      key: js.config.id,
+-      type: PluginType.JS,
+-    }));
+-    return items;
+-  },
+-);
+-export const selectJSSegmentEditorList = createSelector(
+-  getJSSegmentItems,
+-  (items) => {
+-    return groupAndSortEntitySegmentList(items);
+-  },
+-);
+-
+-export const selectJSSegmentEditorTabs = createSelector(
+-  getJSSegmentItems,
+-  (items) => {
+-    return recentSortEntitySegmentTabs(items);
+-  },
+-);
+-
+-export const selectQuerySegmentEditorTabs = createSelector(
+-  getQuerySegmentItems,
+-  (items) => {
+-    return recentSortEntitySegmentTabs(items);
+-  },
+-);
+diff --git a/app/client/src/ce/selectors/entitiesSelector.ts b/app/client/src/ce/selectors/entitiesSelector.ts
+index c500c2040e..683b71d453 100644
+--- a/app/client/src/ce/selectors/entitiesSelector.ts
++++ b/app/client/src/ce/selectors/entitiesSelector.ts
+@@ -7,16 +7,14 @@ import type { ActionResponse } from "api/ActionAPI";
+ import { createSelector } from "reselect";
+ import type {
+   Datasource,
+-  DatasourceStructure,
+   MockDatasource,
++  DatasourceStructure,
+ } from "entities/Datasource";
+ import { isEmbeddedRestDatasource } from "entities/Datasource";
+ import type { Action } from "entities/Action";
+-import {
+-  isStoredDatasource,
+-  PluginPackageName,
+-  PluginType,
+-} from "entities/Action";
++import { PluginPackageName } from "entities/Action";
++import { isStoredDatasource } from "entities/Action";
++import { PluginType } from "entities/Action";
+ import { find, get, groupBy, keyBy, sortBy } from "lodash";
+ import ImageAlt from "assets/images/placeholder-image.svg";
+ import type { CanvasWidgetsReduxState } from "reducers/entityReducers/canvasWidgetsReducer";
+@@ -29,7 +27,6 @@ import type {
+ import type {
+   DefaultPlugin,
+   GenerateCRUDEnabledPluginMap,
+-  Plugin,
+ } from "api/PluginApi";
+ import type { JSAction, JSCollection } from "entities/JSCollection";
+ import { APP_MODE } from "entities/App";
+@@ -48,6 +45,7 @@ import { getEntityNameAndPropertyPath } from "@appsmith/workers/Evaluation/evalu
+ import { getFormValues } from "redux-form";
+ import { TEMP_DATASOURCE_ID } from "constants/Datasource";
+ import type { Module } from "@appsmith/constants/ModuleConstants";
++import type { Plugin } from "api/PluginApi";
+ import { getAnvilSpaceDistributionStatus } from "layoutSystems/anvil/integrations/selectors";
+ import {
+   getCurrentWorkflowActions,
+@@ -599,7 +597,7 @@ export const getPluginIdPackageNamesMap = createSelector(
+ export const getCurrentActions = createSelector(
+   getCurrentPageId,
+   getActions,
+-  (pageId, actions): ActionData[] => {
++  (pageId, actions) => {
+     if (!pageId) return [];
+     return actions.filter((a) => a.config.pageId === pageId);
+   },
+@@ -1402,6 +1400,69 @@ export const getModuleInstanceEntities = () => {
+   return null;
+ };
+ 
++export interface PagePaneDataObject {
++  id: string;
++  name: string;
++  type: PluginType;
++}
++
++export interface PagePaneData {
++  [key: string]: PagePaneDataObject[];
++}
++
++const GroupAndSortPagePaneData = (
++  files: ActionData[] | JSCollectionData[],
++  datasourceIdToNameMap: Record<string, string>,
++) => {
++  let data: PagePaneData = {};
++
++  files.forEach((file) => {
++    let group = "";
++
++    if (file.config.pluginType === PluginType.JS) {
++      group = "JS Objects";
++    } else if (file.config.pluginType === PluginType.API) {
++      group = isEmbeddedRestDatasource(file.config.datasource)
++        ? "APIs"
++        : datasourceIdToNameMap[file.config.datasource.id] ?? "APIs";
++    } else {
++      group = datasourceIdToNameMap[file.config.datasource.id];
++    }
++    if (!data[group]) {
++      data[group] = [];
++    }
++    data[group].push({
++      id: file.config.id,
++      name: file.config.name,
++      type: file.config.pluginType,
++    });
++  });
++
++  data = Object.keys(data)
++    .sort()
++    .reduce(function (acc, key) {
++      acc[key] = sortBy(data[key], (file) => file.name);
++      return acc;
++    }, {} as PagePaneData);
++  return data;
++};
++
++export const selectQueriesForPagespane = createSelector(
++  getCurrentActions,
++  selectDatasourceIdToNameMap,
++  (actions, datasourceIdToNameMap) => {
++    return GroupAndSortPagePaneData(actions, datasourceIdToNameMap);
++  },
++);
++
++export const selectJSForPagespane = createSelector(
++  getCurrentJSCollections,
++  selectDatasourceIdToNameMap,
++  (jsActions, datasourceIdToNameMap) => {
++    return GroupAndSortPagePaneData(jsActions, datasourceIdToNameMap);
++  },
++);
++
+ export const getQueryModuleInstances = () => {
+   return [];
+ };
+diff --git a/app/client/src/ee/selectors/appIDESelectors.ts b/app/client/src/ee/selectors/appIDESelectors.ts
+deleted file mode 100644
+index d02bbb5ecf..0000000000
+--- a/app/client/src/ee/selectors/appIDESelectors.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "ce/selectors/appIDESelectors";
+diff --git a/app/client/src/pages/Editor/IDE/EditorPane/JS/List.tsx b/app/client/src/pages/Editor/IDE/EditorPane/JS/List.tsx
+index ae02ce82af..17d76e1127 100644
+--- a/app/client/src/pages/Editor/IDE/EditorPane/JS/List.tsx
++++ b/app/client/src/pages/Editor/IDE/EditorPane/JS/List.tsx
+@@ -1,9 +1,9 @@
+ import React from "react";
+ import { useSelector } from "react-redux";
+-import { Button, Flex, Text } from "design-system";
++import { Button, Flex } from "design-system";
+ import styled from "styled-components";
+ 
+-import { selectJSSegmentEditorList } from "@appsmith/selectors/appIDESelectors";
++import { selectJSForPagespane } from "@appsmith/selectors/entitiesSelector";
+ import { useActiveAction } from "@appsmith/pages/Editor/Explorer/hooks";
+ import ExplorerJSCollectionEntity from "pages/Editor/Explorer/JSActions/JSActionEntity";
+ import type { PluginType } from "entities/Action";
+@@ -34,7 +34,8 @@ const JSContainer = styled(Flex)`
+ 
+ const ListJSObjects = () => {
+   const pageId = useSelector(getCurrentPageId);
+-  const jsList = useSelector(selectJSSegmentEditorList);
++  const files = useSelector(selectJSForPagespane);
++  const JSObjects = files["JS Objects"];
+   const activeActionId = useActiveAction();
+   const applicationId = useSelector(getCurrentApplicationId);
+ 
+@@ -57,7 +58,7 @@ const ListJSObjects = () => {
+       overflow="hidden"
+       py="spaces-3"
+     >
+-      {jsList && jsList.length > 0 && canCreateActions && (
++      {JSObjects && JSObjects.length > 0 && canCreateActions && (
+         <Flex flexDirection="column" px="spaces-3">
+           <Button
+             className="t--add-item"
+@@ -77,44 +78,27 @@ const ListJSObjects = () => {
+         parentEntityType={ActionParentEntityType.PAGE}
+       >
+         <Flex flex="1" flexDirection="column" overflowY="auto" px="spaces-3">
+-          {jsList.map(({ group, items }) => {
+-            return (
+-              <>
+-                {group !== "NA" ? (
+-                  <Flex px="spaces-3" py="spaces-1">
+-                    <Text
+-                      className="overflow-hidden overflow-ellipsis whitespace-nowrap"
+-                      kind="body-s"
+-                    >
+-                      {group}
+-                    </Text>
+-                  </Flex>
+-                ) : null}
+-                <>
+-                  {items.map((item) => {
+-                    return (
+-                      <Flex flexDirection={"column"} key={item.key}>
+-                        <ExplorerJSCollectionEntity
+-                          id={item.key}
+-                          isActive={item.key === activeActionId}
+-                          key={item.key}
+-                          parentEntityId={pageId}
+-                          parentEntityType={ActionParentEntityType.PAGE}
+-                          searchKeyword={""}
+-                          step={2}
+-                          type={item.type as PluginType}
+-                        />
+-                      </Flex>
+-                    );
+-                  })}
+-                </>
+-              </>
+-            );
+-          })}
++          {JSObjects &&
++            JSObjects.map((JSobject) => {
++              return (
++                <Flex flexDirection={"column"} key={JSobject.id}>
++                  <ExplorerJSCollectionEntity
++                    id={JSobject.id}
++                    isActive={JSobject.id === activeActionId}
++                    key={JSobject.id}
++                    parentEntityId={pageId}
++                    parentEntityType={ActionParentEntityType.PAGE}
++                    searchKeyword={""}
++                    step={2}
++                    type={JSobject.type as PluginType}
++                  />
++                </Flex>
++              );
++            })}
+         </Flex>
+       </FilesContextProvider>
+ 
+-      {(!jsList || jsList.length === 0) && (
++      {(!JSObjects || JSObjects.length === 0) && (
+         <EmptyState
+           buttonClassName="t--add-item"
+           buttonText={createMessage(EDITOR_PANE_TEXTS.js_add_button)}
+diff --git a/app/client/src/pages/Editor/IDE/EditorPane/Query/List.tsx b/app/client/src/pages/Editor/IDE/EditorPane/Query/List.tsx
+index 33a5d7f80e..24403720ed 100644
+--- a/app/client/src/pages/Editor/IDE/EditorPane/Query/List.tsx
++++ b/app/client/src/pages/Editor/IDE/EditorPane/Query/List.tsx
+@@ -11,8 +11,10 @@ import {
+ } from "selectors/editorSelectors";
+ import { useFeatureFlag } from "utils/hooks/useFeatureFlag";
+ import { FEATURE_FLAG } from "@appsmith/entities/FeatureFlag";
+-import { getCurrentPageId } from "@appsmith/selectors/entitiesSelector";
+-import { selectQuerySegmentEditorList } from "@appsmith/selectors/appIDESelectors";
++import {
++  getCurrentPageId,
++  selectQueriesForPagespane,
++} from "@appsmith/selectors/entitiesSelector";
+ import { ActionParentEntityType } from "@appsmith/entities/Engine/actionHelpers";
+ import { FilesContextProvider } from "pages/Editor/Explorer/Files/FilesContextProvider";
+ import { createMessage, EDITOR_PANE_TEXTS } from "@appsmith/constants/messages";
+@@ -21,7 +23,7 @@ import { useQueryAdd } from "./hooks";
+ 
+ const ListQuery = () => {
+   const pageId = useSelector(getCurrentPageId) as string;
+-  const files = useSelector(selectQuerySegmentEditorList);
++  const files = useSelector(selectQueriesForPagespane);
+   const activeActionId = useActiveAction();
+   const pagePermissions = useSelector(getPagePermissions);
+   const isFeatureEnabled = useFeatureFlag(FEATURE_FLAG.license_gac_enabled);
+@@ -61,15 +63,15 @@ const ListQuery = () => {
+         overflowY="auto"
+         px="spaces-3"
+       >
+-        {files.map(({ group, items }) => {
++        {Object.keys(files).map((key) => {
+           return (
+-            <Flex flexDirection={"column"} key={group}>
++            <Flex flexDirection={"column"} key={key}>
+               <Flex px="spaces-3" py="spaces-1">
+                 <Text
+                   className="overflow-hidden overflow-ellipsis whitespace-nowrap"
+                   kind="body-s"
+                 >
+-                  {group}
++                  {key}
+                 </Text>
+               </Flex>
+               <FilesContextProvider
+@@ -78,12 +80,12 @@ const ListQuery = () => {
+                 parentEntityId={pageId}
+                 parentEntityType={ActionParentEntityType.PAGE}
+               >
+-                {items.map((file) => {
++                {files[key].map((file: any) => {
+                   return (
+                     <ExplorerActionEntity
+-                      id={file.key}
+-                      isActive={file.key === activeActionId}
+-                      key={file.key}
++                      id={file.id}
++                      isActive={file.id === activeActionId}
++                      key={file.id}
+                       parentEntityId={pageId}
+                       parentEntityType={ActionParentEntityType.PAGE}
+                       searchKeyword={""}
+diff --git a/app/client/src/pages/Editor/IDE/EditorTabs/FileTabs.tsx b/app/client/src/pages/Editor/IDE/EditorTabs/FileTabs.tsx
+index b1622209bd..5e777ce780 100644
+--- a/app/client/src/pages/Editor/IDE/EditorTabs/FileTabs.tsx
++++ b/app/client/src/pages/Editor/IDE/EditorTabs/FileTabs.tsx
+@@ -3,11 +3,11 @@ import { Flex } from "design-system";
+ import { useCurrentEditorState } from "../hooks";
+ import { EditorEntityTab } from "@appsmith/entities/IDE/constants";
+ import { useSelector } from "react-redux";
+-import type { EntityItem } from "@appsmith/selectors/appIDESelectors";
++import type { PagePaneDataObject } from "@appsmith/selectors/entitiesSelector";
+ import {
+-  selectJSSegmentEditorTabs,
+-  selectQuerySegmentEditorTabs,
+-} from "@appsmith/selectors/appIDESelectors";
++  selectJSForPagespane,
++  selectQueriesForPagespane,
++} from "@appsmith/selectors/entitiesSelector";
+ import { JSTab } from "./JSTab";
+ import { QueryTab } from "./QueryTab";
+ 
+@@ -16,14 +16,20 @@ const FileTabs = () => {
+ 
+   const files = useSelector((state) => {
+     if (segment === EditorEntityTab.JS) {
+-      return selectJSSegmentEditorTabs(state);
++      return selectJSForPagespane(state);
+     } else if (segment === EditorEntityTab.QUERIES) {
+-      return selectQuerySegmentEditorTabs(state);
++      return selectQueriesForPagespane(state);
+     } else {
+-      return [];
++      return {};
+     }
+   });
+ 
++  // convert files object to array
++  const tabs: PagePaneDataObject[] = [];
++  Object.keys(files).forEach((key) => {
++    tabs.push(...files[key]);
++  });
++
+   if (segment === EditorEntityTab.UI) {
+     return null;
+   }
+@@ -36,11 +42,11 @@ const FileTabs = () => {
+       overflow="hidden"
+       paddingBottom="spaces-2"
+     >
+-      {files.map((tab: EntityItem) =>
++      {tabs.map((tab: PagePaneDataObject) =>
+         segment === EditorEntityTab.JS ? (
+-          <JSTab data={tab} key={tab.key} />
++          <JSTab data={tab} key={tab.id} />
+         ) : (
+-          <QueryTab data={tab} key={tab.key} />
++          <QueryTab data={tab} key={tab.id} />
+         ),
+       )}
+     </Flex>
+diff --git a/app/client/src/pages/Editor/IDE/EditorTabs/JSTab.tsx b/app/client/src/pages/Editor/IDE/EditorTabs/JSTab.tsx
+index aae38276a4..5bee969f61 100644
+--- a/app/client/src/pages/Editor/IDE/EditorTabs/JSTab.tsx
++++ b/app/client/src/pages/Editor/IDE/EditorTabs/JSTab.tsx
+@@ -2,21 +2,21 @@ import React from "react";
+ import clsx from "classnames";
+ import { useSelector } from "react-redux";
+ 
+-import type { EntityItem } from "@appsmith/selectors/appIDESelectors";
++import type { PagePaneDataObject } from "@appsmith/selectors/entitiesSelector";
+ import { getCurrentPageId } from "@appsmith/selectors/entitiesSelector";
+ import { useActiveAction } from "@appsmith/pages/Editor/Explorer/hooks";
+ import { jsCollectionIdURL } from "@appsmith/RouteBuilder";
+ import history, { NavigationMethod } from "utils/history";
+ import { StyledTab } from "./StyledComponents";
+ 
+-const JSTab = ({ data }: { data: EntityItem }) => {
++const JSTab = ({ data }: { data: PagePaneDataObject }) => {
+   const activeActionId = useActiveAction();
+   const pageId = useSelector(getCurrentPageId);
+ 
+   const navigateToJSCollection = () => {
+     const navigateToUrl = jsCollectionIdURL({
+       pageId,
+-      collectionId: data.key,
++      collectionId: data.id,
+       params: {},
+     });
+ 
+@@ -27,10 +27,10 @@ const JSTab = ({ data }: { data: EntityItem }) => {
+ 
+   return (
+     <StyledTab
+-      className={clsx("editor-tab", activeActionId === data.key && "active")}
++      className={clsx("editor-tab", activeActionId === data.id && "active")}
+       onClick={navigateToJSCollection}
+     >
+-      {data.title}
++      {data.name}
+     </StyledTab>
+   );
+ };
+diff --git a/app/client/src/pages/Editor/IDE/EditorTabs/QueryTab.tsx b/app/client/src/pages/Editor/IDE/EditorTabs/QueryTab.tsx
+index d9d1956b69..e179ad8a67 100644
+--- a/app/client/src/pages/Editor/IDE/EditorTabs/QueryTab.tsx
++++ b/app/client/src/pages/Editor/IDE/EditorTabs/QueryTab.tsx
+@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
+ import clsx from "classnames";
+ import { useSelector } from "react-redux";
+ 
+-import type { EntityItem } from "@appsmith/selectors/appIDESelectors";
++import type { PagePaneDataObject } from "@appsmith/selectors/entitiesSelector";
+ import { getAction } from "@appsmith/selectors/entitiesSelector";
+ import { getPlugins } from "@appsmith/selectors/entitiesSelector";
+ import { getCurrentPageId } from "@appsmith/selectors/entitiesSelector";
+@@ -13,12 +13,12 @@ import type { Action } from "entities/Action";
+ import keyBy from "lodash/keyBy";
+ import { StyledTab } from "./StyledComponents";
+ 
+-const QueryTab = ({ data }: { data: EntityItem }) => {
++const QueryTab = ({ data }: { data: PagePaneDataObject }) => {
+   const activeActionId = useActiveAction();
+   const pageId = useSelector(getCurrentPageId);
+   const plugins = useSelector(getPlugins);
+   const pluginGroups = useMemo(() => keyBy(plugins, "id"), [plugins]);
+-  const action = useSelector((state) => getAction(state, data.key)) as Action;
++  const action = useSelector((state) => getAction(state, data.id)) as Action;
+ 
+   const config = getActionConfig(data.type);
+   const url = config?.getURL(
+@@ -34,10 +34,10 @@ const QueryTab = ({ data }: { data: EntityItem }) => {
+ 
+   return (
+     <StyledTab
+-      className={clsx("editor-tab", activeActionId === data.key && "active")}
++      className={clsx("editor-tab", activeActionId === data.id && "active")}
+       onClick={navigateToQuery}
+     >
+-      {data.title}
++      {data.name}
+     </StyledTab>
+   );
+ };
+diff --git a/app/client/src/sagas/ActionSagas.ts b/app/client/src/sagas/ActionSagas.ts
+index 4f70cfab85..430a10a075 100644
+--- a/app/client/src/sagas/ActionSagas.ts
++++ b/app/client/src/sagas/ActionSagas.ts
+@@ -63,11 +63,7 @@ import {
+   SlashCommand,
+ } from "entities/Action";
+ import type { ActionData } from "@appsmith/reducers/entityReducers/actionsReducer";
+-import type {
+-  EditorSegmentList,
+-  EntityItem,
+-} from "@appsmith/selectors/appIDESelectors";
+-import { selectQuerySegmentEditorList } from "@appsmith/selectors/appIDESelectors";
++import type { PagePaneData } from "@appsmith/selectors/entitiesSelector";
+ import {
+   getAction,
+   getCurrentPageNameByActionId,
+@@ -78,6 +74,7 @@ import {
+   getPageNameByPageId,
+   getPlugin,
+   getSettingConfig,
++  selectQueriesForPagespane,
+   getPageActions,
+ } from "@appsmith/selectors/entitiesSelector";
+ import history from "utils/history";
+@@ -534,17 +531,20 @@ function* handleDeleteActionRedirect(deletedAction: Action) {
+ 
+   // Check if another action is present in the group and redirect to it, orelse
+   // navigate to tht top of the list
+-  const currentSortedList: EditorSegmentList = yield select(
+-    selectQuerySegmentEditorList,
++  const currentSortedList: PagePaneData = yield select(
++    selectQueriesForPagespane,
+   );
+-  let remainingGroupActions: EntityItem[] = [];
+-  for (const { items } of currentSortedList) {
+-    if (items.find((a) => a.key === deletedAction.id)) {
+-      remainingGroupActions = items.filter((a) => a.key !== deletedAction.id);
++  let deletedActionGroup;
++  for (const [group, actions] of Object.entries(currentSortedList)) {
++    if (actions.find((a) => a.id === deletedAction.id)) {
++      deletedActionGroup = group;
+       break;
+     }
+   }
+-
++  const groupActions = currentSortedList[deletedActionGroup || ""];
++  const remainingGroupActions = groupActions.filter(
++    (a) => a.id !== deletedAction.id,
++  );
+   let url;
+   if (remainingGroupActions.length === 0) {
+     const toRedirect = otherActions[0];
+@@ -557,7 +557,7 @@ function* handleDeleteActionRedirect(deletedAction: Action) {
+   } else {
+     const toRedirect = remainingGroupActions[0];
+     const config = getActionConfig(toRedirect.type);
+-    url = config?.getURL(pageId, toRedirect.key, toRedirect.type);
++    url = config?.getURL(pageId, toRedirect.id, toRedirect.type);
+   }
+   if (url) {
+     history.push(url);
+diff --git a/app/server/appsmith-interfaces/src/main/java/com/appsmith/external/helpers/restApiUtils/helpers/DataUtils.java b/app/server/appsmith-interfaces/src/main/java/com/appsmith/external/helpers/restApiUtils/helpers/DataUtils.java
+index f70494d2fc..4011a07882 100644
+--- a/app/server/appsmith-interfaces/src/main/java/com/appsmith/external/helpers/restApiUtils/helpers/DataUtils.java
++++ b/app/server/appsmith-interfaces/src/main/java/com/appsmith/external/helpers/restApiUtils/helpers/DataUtils.java
+@@ -11,9 +11,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
+ import com.fasterxml.jackson.databind.DeserializationFeature;
+ import com.fasterxml.jackson.databind.JsonNode;
+ import com.fasterxml.jackson.databind.ObjectMapper;
++import com.google.gson.Gson;
++import com.google.gson.GsonBuilder;
+ import com.google.gson.JsonSyntaxException;
++import com.google.gson.ToNumberPolicy;
+ import com.google.gson.reflect.TypeToken;
+-import net.minidev.json.JSONArray;
+ import net.minidev.json.parser.JSONParser;
+ import net.minidev.json.parser.ParseException;
+ import net.minidev.json.writer.CollectionMapper;
+@@ -47,6 +49,22 @@ public class DataUtils {
+ 
+     public static String FIELD_API_CONTENT_TYPE = "apiContentType";
+ 
++    /**
++     * this Gson builder has three parameters for creating a gson instances which is required to maintain the JSON as received
++     * setLenient() : allows parsing of JSONs which don't strictly adhere to RFC4627 (our older implementation is also more permissive)
++     * setObjectToNumberStrategy(): How to parse numbers which comes as a part of JSON objects
++     * i.e. [4, 5.5, 7] --> [4, 5.5, 7] (with lazily parsed numbers), default was [4.0, 5.5, 7.0]
++     * setNumberToNumberStrategy() : same as above but only applies to number json
++     * 4 -> 4,  4.7 --> 4.7
++     */
++    private static final Gson gson = new GsonBuilder()
++            .setLenient()
++            .setObjectToNumberStrategy(ToNumberPolicy.LAZILY_PARSED_NUMBER)
++            .setNumberToNumberStrategy(ToNumberPolicy.LAZILY_PARSED_NUMBER)
++            .create();
++
++    private static final JSONParser jsonParser = new JSONParser(JSONParser.MODE_PERMISSIVE);
++
+     private final ObjectMapper objectMapper;
+ 
+     public enum MultipartFormDataType {
+@@ -304,24 +322,44 @@ public class DataUtils {
+             return null;
+         }
+ 
+-        JSONParser jsonParser = new JSONParser(JSONParser.MODE_PERMISSIVE);
+-
+-        Object parsedJson;
++        // For both list and Map type we have used fallback parsing strategies, First GSON tries to parse
++        // the jsonString (we've used gson because the native jsonObject gson uses to parse JSON is implemented on top
++        // of linkedHashMaps, which preserves the order of attributes),
++        // however if gson encounters any errors, which could arise due to a lenient jsonString
++        // i.e. { "a" : "one", "b" : "two",} (Notice the comma at the end), this is not a valid json according to
++        // RFC4627. GSON would fail here, however JsonParser from net.minidev would parse this in permissive mode.
+ 
+         if (type.equals(List.class)) {
+-            parsedJson = (JSONArray) jsonParser.parse(jsonString);
++            return parseJsonIntoListWithOrderedObjects(jsonString, gson, jsonParser);
+         } else {
+             // We learned from issue #23456 that some use-cases require the order of keys to be preserved
+             //  i.e. for AWS authorisation, one signature header is required whose value holds the hash
+             // of the body.
++            return parseJsonIntoOrderedObject(jsonString, gson, jsonParser);
++        }
++    }
++
++    private static Object parseJsonIntoListWithOrderedObjects(String jsonString, Gson gson, JSONParser jsonParser)
++            throws ParseException {
++        TypeToken<List<Object>> listTypeToken = new TypeToken<>() {};
++        try {
++            return gson.fromJson(jsonString, listTypeToken.getType());
++        } catch (JsonSyntaxException jsonSyntaxException) {
++            return jsonParser.parse(jsonString);
++        }
++    }
++
++    private static Object parseJsonIntoOrderedObject(String jsonString, Gson gson, JSONParser jsonParser)
++            throws ParseException {
++        TypeToken<LinkedHashMap<String, Object>> linkedHashMapTypeToken = new TypeToken<>() {};
++        try {
++            return gson.fromJson(jsonString, linkedHashMapTypeToken.getType());
++        } catch (JsonSyntaxException jsonSyntaxException) {
+             JsonReader jsonReader = new JsonReader();
+-            TypeToken<LinkedHashMap<String, Object>> linkedHashMapTypeToken = new TypeToken<>() {};
+             CollectionMapper.MapClass<LinkedHashMap<String, Object>> collectionMapper =
+                     new CollectionMapper.MapClass<>(jsonReader, linkedHashMapTypeToken.getRawType());
+-            parsedJson = jsonParser.parse(jsonString, collectionMapper);
++            return jsonParser.parse(jsonString, collectionMapper);
+         }
+-
+-        return parsedJson;
+     }
+ 
+     public Object getRequestBodyObject(
+diff --git a/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/GitApplicationMetadata.java b/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/GitApplicationMetadata.java
+index 0b3f247e69..7af808bc4b 100644
+--- a/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/GitApplicationMetadata.java
++++ b/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/GitApplicationMetadata.java
+@@ -2,7 +2,6 @@ package com.appsmith.server.domains;
+ 
+ import com.appsmith.external.models.AppsmithDomain;
+ import com.appsmith.external.views.Views;
+-import com.appsmith.server.domains.ce.AutoDeployment;
+ import com.fasterxml.jackson.annotation.JsonFormat;
+ import com.fasterxml.jackson.annotation.JsonView;
+ import lombok.Data;
+@@ -11,7 +10,6 @@ import org.springframework.data.annotation.Transient;
+ import java.time.Instant;
+ import java.util.List;
+ import java.util.Map;
+-import java.util.Set;
+ 
+ // This class will be used for one-to-one mapping for the DB application and the application present in the git repo.
+ @Data
+@@ -81,16 +79,6 @@ public class GitApplicationMetadata implements AppsmithDomain {
+     @JsonView(Views.Metadata.class)
+     AutoCommitConfig autoCommitConfig;
+ 
+-    /**
+-     * autoDeploymentConfigs field will hold the list of branches that are enabled for auto deployment.
+-     * It'll also show the latest deployedAt date for the corresponding branch.
+-     * If auto deployment is enabled for 2 branches - main and develop, autoDeploymentConfigs will have two entries
+-     * each for one branch. This attribute will be present inside the root application only. The branched applications
+-     * will not have this field set.
+-     */
+-    @JsonView(Views.Metadata.class)
+-    Set<AutoDeployment> autoDeploymentConfigs;
+-
+     public AutoCommitConfig getAutoCommitConfig() {
+         // by default, the auto commit should be enabled.
+         // new AutoCommitConfig will have enabled=true so we're returning a new object when field is null
+diff --git a/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/ce/AutoDeployment.java b/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/ce/AutoDeployment.java
+deleted file mode 100644
+index 9a8ada5f69..0000000000
+--- a/app/server/appsmith-server/src/main/java/com/appsmith/server/domains/ce/AutoDeployment.java
++++ /dev/null
+@@ -1,25 +0,0 @@
+-package com.appsmith.server.domains.ce;
+-
+-import lombok.Data;
+-
+-import java.time.Instant;
+-import java.util.Objects;
+-
+-@Data
+-public class AutoDeployment {
+-    private Instant lastDeployedAt;
+-    private String branchName;
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) return true;
+-        if (o == null || getClass() != o.getClass()) return false;
+-        AutoDeployment that = (AutoDeployment) o;
+-        return branchName.equals(that.branchName);
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(branchName);
+-    }
+-}
+diff --git a/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImpl.java b/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImpl.java
+index 9386e84921..aa2e28d85a 100644
+--- a/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImpl.java
++++ b/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImpl.java
+@@ -15,6 +15,7 @@ import com.appsmith.server.helpers.DslUtils;
+ import com.appsmith.server.newpages.base.NewPageService;
+ import com.appsmith.server.refactors.entities.EntityRefactoringServiceCE;
+ import com.appsmith.server.services.AstService;
++import com.appsmith.server.solutions.PagePermission;
+ import com.fasterxml.jackson.databind.JsonNode;
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import com.fasterxml.jackson.databind.node.ArrayNode;
+@@ -46,6 +47,7 @@ public class WidgetRefactoringServiceCEImpl implements EntityRefactoringServiceC
+     private final NewPageService newPageService;
+     private final AstService astService;
+     private final ObjectMapper objectMapper;
++    private final PagePermission pagePermission;
+ 
+     @Override
+     public AnalyticsEvents getRefactorAnalyticsEvent(EntityType entityType) {
+@@ -115,7 +117,7 @@ public class WidgetRefactoringServiceCEImpl implements EntityRefactoringServiceC
+             String contextId, CreatorContextType contextType, String layoutId, boolean viewMode) {
+         return newPageService
+                 // fetch the unpublished page
+-                .findPageById(contextId, null, viewMode)
++                .findPageById(contextId, pagePermission.getReadPermission(), viewMode)
+                 .flatMapMany(page -> {
+                     List<Layout> layouts = page.getLayouts();
+                     for (Layout layout : layouts) {
+diff --git a/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceImpl.java b/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceImpl.java
+index 72c2ebb05a..574f78b8d8 100644
+--- a/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceImpl.java
++++ b/app/server/appsmith-server/src/main/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceImpl.java
+@@ -4,6 +4,7 @@ import com.appsmith.server.domains.Layout;
+ import com.appsmith.server.newpages.base.NewPageService;
+ import com.appsmith.server.refactors.entities.EntityRefactoringService;
+ import com.appsmith.server.services.AstService;
++import com.appsmith.server.solutions.PagePermission;
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.springframework.stereotype.Service;
+ 
+@@ -11,7 +12,10 @@ import org.springframework.stereotype.Service;
+ public class WidgetRefactoringServiceImpl extends WidgetRefactoringServiceCEImpl
+         implements EntityRefactoringService<Layout> {
+     public WidgetRefactoringServiceImpl(
+-            NewPageService newPageService, AstService astService, ObjectMapper objectMapper) {
+-        super(newPageService, astService, objectMapper);
++            NewPageService newPageService,
++            AstService astService,
++            ObjectMapper objectMapper,
++            PagePermission pagePermission) {
++        super(newPageService, astService, objectMapper, pagePermission);
+     }
+ }
+diff --git a/app/server/appsmith-server/src/test/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImplTest.java b/app/server/appsmith-server/src/test/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImplTest.java
+index 5390dfe973..c105fcd403 100644
+--- a/app/server/appsmith-server/src/test/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImplTest.java
++++ b/app/server/appsmith-server/src/test/java/com/appsmith/server/widgets/refactors/WidgetRefactoringServiceCEImplTest.java
+@@ -4,6 +4,7 @@ import com.appsmith.server.newpages.base.NewPageService;
+ import com.appsmith.server.repositories.ActionCollectionRepository;
+ import com.appsmith.server.services.AstService;
+ import com.appsmith.server.solutions.ActionPermission;
++import com.appsmith.server.solutions.PagePermission;
+ import com.fasterxml.jackson.databind.JsonNode;
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import lombok.extern.slf4j.Slf4j;
+@@ -32,6 +33,9 @@ class WidgetRefactoringServiceCEImplTest {
+     private final String preWord = "\\b(";
+     private final String postWord = ")\\b";
+ 
++    @Autowired
++    PagePermission pagePermission;
++
+     @Autowired
+     ActionPermission actionPermission;
+ 
+@@ -50,7 +54,8 @@ class WidgetRefactoringServiceCEImplTest {
+ 
+     @BeforeEach
+     public void setUp() {
+-        widgetRefactoringServiceCE = new WidgetRefactoringServiceCEImpl(newPageService, astService, mapper);
++        widgetRefactoringServiceCE =
++                new WidgetRefactoringServiceCEImpl(newPageService, astService, mapper, pagePermission);
+     }
+ 
+     @Test

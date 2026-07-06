@@ -1,0 +1,1 @@
+mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld && mysqld --user=mysql 2>/dev/null & sleep 8 && cd /workspace/repo && yarn install --frozen-lockfile 2>/dev/null && MYSQL_HOST=127.0.0.1 MYSQL_PORT=3306 MYSQL_USER=ghost MYSQL_PASSWORD=password MYSQL_DATABASE=activitypub npx vitest run src/http/api/views/account.follows.view.integration.test.ts

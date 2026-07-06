@@ -1,5 +1,0 @@
-I'm working on adding distributed tracing support to the CF CLI. Right now, when the CLI sends requests to the Cloud Controller, UAA, and Routing APIs, none of those requests carry any tracing headers, which makes it impossible to correlate activity across backend services.
-
-I'd like to add connection wrapper types for each of those three API clients that automatically inject B3-style distributed tracing headers — a trace ID and a span ID — into every outgoing request. The trace ID should come from a pre-configured value (passed when creating the wrapper), and the span ID should be freshly generated for each request. If the headers are already present on a request, the wrappers should leave them alone.
-
-I also need a shared utility for managing and setting those headers, as well as functions for generating the trace IDs themselves: one that produces a 32-character hex string suitable for use as a trace ID, and another that generates a random hex string of a configurable length (for generating span IDs).

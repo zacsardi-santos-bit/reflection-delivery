@@ -1,0 +1,531 @@
+patching file frontend/src/components/DetailsTable.test.tsx
+patching file frontend/src/components/MinioArtifactLink.test.tsx
+patching file frontend/src/lib/WorkflowParser.test.ts
+
+> pipelines-frontend@0.1.0 test /workspace/repo/frontend
+> react-scripts-ts test --env=jsdom "--testPathPattern=(DetailsTable|MinioArtifactLink|WorkflowParser)\.test\.(tsx?|ts)$" "--watchAll=false"
+
+FAIL src/components/MinioArtifactLink.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module './MinioArtifactLink' from 'MinioArtifactLink.test.tsx'
+
+      14 |  * limitations under the License.
+      15 |  */
+    > 16 | 
+      17 | import MinioArtifactLink from './MinioArtifactLink';
+      18 | 
+      19 | describe('MinioArtifactLink', () => {
+      
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:169:17)
+      at Object.<anonymous> (src/components/MinioArtifactLink.test.tsx:16:26)
+
+FAIL src/components/DetailsTable.test.tsx
+  ● DetailsTable › does render values with the provided valueComponent
+
+    expect(value).toMatchSnapshot()
+    
+    New snapshot was not written. The update flag must be explicitly passed to write a new snapshot.
+    
+    This is likely because this test is run in a continuous integration (CI) environment in which snapshots are not written by default.
+    
+    Received value 
+    <Fragment>
+      <div>
+        <div
+          className="row"
+          key="0"
+        >
+          <span
+            className="key"
+          >
+            key
+          </span>
+          <span
+            className="valueText"
+          >
+            <Component
+              key="foobar"
+            />
+          </span>
+        </div>
+      </div>
+    </Fragment>
+
+      110 |     const valueComponent: React.FC<any> = ({key}) => <a>{key}</a>;
+      111 |     const tree = shallow(<DetailsTable fields={[['key', {key: 'foobar'} as any ]]} valueComponent={valueComponent} />);
+    > 112 |     expect(tree).toMatchSnapshot();
+      113 |   });
+      114 | 
+      115 | });
+      
+      
+      at Object.<anonymous> (src/components/DetailsTable.test.tsx:112:18)
+
+ › 1 snapshot test failed.
+FAIL src/lib/WorkflowParser.test.ts
+  ● WorkflowParser › getNodeInputOutputParams › handles undefined workflow
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      340 |     const emptyParams = {inputParams: [], outputParams: []};
+      341 |     it('handles undefined workflow', () => {
+    > 342 |       expect(WorkflowParser.getNodeInputOutputParams(undefined as any, '')).toEqual(emptyParams);
+      343 |     });
+      344 | 
+      345 |     it('handles empty workflow, without status', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:342:77)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles empty workflow, without status
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      344 | 
+      345 |     it('handles empty workflow, without status', () => {
+    > 346 |       expect(WorkflowParser.getNodeInputOutputParams({} as any, '')).toEqual(emptyParams);
+      347 |     });
+      348 | 
+      349 |     it('handles workflow without nodes', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:346:70)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles workflow without nodes
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      349 |     it('handles workflow without nodes', () => {
+      350 |       const workflow = { status: {} };
+    > 351 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, '')).toEqual(emptyParams);
+      352 |     });
+      353 | 
+      354 |     it('handles node not existing in graph', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:351:76)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles node not existing in graph
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      354 |     it('handles node not existing in graph', () => {
+      355 |       const workflow = { status: { nodes: { node1: {} } } };
+    > 356 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node2')).toEqual(emptyParams);
+      357 |     });
+      358 | 
+      359 |     it('handles an empty node', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:356:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles an empty node
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      359 |     it('handles an empty node', () => {
+      360 |       const workflow = { status: { nodes: { node1: {} } } };
+    > 361 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual(emptyParams);
+      362 |     });
+      363 | 
+      364 |     it('handles a node with inputs but no parameters', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:361:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with inputs but no parameters
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      364 |     it('handles a node with inputs but no parameters', () => {
+      365 |       const workflow = { status: { nodes: { node1: { inputs: {} } } } };
+    > 366 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual(emptyParams);
+      367 |     });
+      368 | 
+      369 |     it('handles a node with inputs and empty parameters', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:366:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with inputs and empty parameters
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": []}
+    Received:
+      [[], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      369 |     it('handles a node with inputs and empty parameters', () => {
+      370 |       const workflow = { status: { nodes: { node1: { inputs: { parameters: [] } } } } };
+    > 371 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual(emptyParams);
+      372 |     });
+      373 | 
+      374 |     it('handles a node with one input parameter', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:371:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with one input parameter
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [["input param1", "input param1 value"]], "outputParams": []}
+    Received:
+      [[["input param1", "input param1 value"]], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      387 |         }
+      388 |       };
+    > 389 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual({
+      390 |         inputParams: [['input param1', 'input param1 value']],
+      391 |         outputParams: [],
+      392 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:389:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with one input parameter that has no value
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [["input param1", ""]], "outputParams": []}
+    Received:
+      [[["input param1", ""]], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      407 |         }
+      408 |       };
+    > 409 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual({
+      410 |         inputParams: [['input param1', '']],
+      411 |         outputParams: [],
+      412 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:409:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with one input parameter that is not the first node
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [["node2 input param1", "node2 input param1 value"]], "outputParams": []}
+    Received:
+      [[["node2 input param1", "node2 input param1 value"]], []]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      436 |         }
+      437 |       };
+    > 438 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node2')).toEqual({
+      439 |         inputParams: [['node2 input param1', 'node2 input param1 value']],
+      440 |         outputParams: [],
+      441 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:438:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with one output parameter
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [], "outputParams": [["output param1", "output param1 value"]]}
+    Received:
+      [[], [["output param1", "output param1 value"]]]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      457 |         }
+      458 |       };
+    > 459 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual({
+      460 |         inputParams: [],
+      461 |         outputParams: [['output param1', 'output param1 value']],
+      462 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:459:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with one input and one output parameter
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [["input param1", "input param1 value"]], "outputParams": [["output param1", "output param1 value"]]}
+    Received:
+      [[["input param1", "input param1 value"]], [["output param1", "output param1 value"]]]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      484 |         }
+      485 |       };
+    > 486 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual({
+      487 |         inputParams: [['input param1', 'input param1 value']],
+      488 |         outputParams: [['output param1', 'output param1 value']],
+      489 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:486:81)
+
+  ● WorkflowParser › getNodeInputOutputParams › handles a node with multiple input and output parameter
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"inputParams": [["input param1", "input param1 value"], ["input param2", "input param2 value"], ["input param3", "input param3 value"]], "outputParams": [["output param1", "output param1 value"], ["output param2", "output param2 value"]]}
+    Received:
+      [[["input param1", "input param1 value"], ["input param2", "input param2 value"], ["input param3", "input param3 value"]], [["output param1", "output param1 value"], ["output param2", "output param2 value"]]]
+    
+    Difference:
+    
+      Comparing two different types of values. Expected object but received array.
+
+      520 |         }
+      521 |       };
+    > 522 |       expect(WorkflowParser.getNodeInputOutputParams(workflow as any, 'node1')).toEqual({
+      523 |         inputParams: [
+      524 |           ['input param1', 'input param1 value'],
+      525 |           ['input param2', 'input param2 value'],
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:522:81)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles undefined workflow
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      545 | 
+      546 |     it('handles undefined workflow', () => {
+    > 547 |       expect(WorkflowParser.getNodeInputOutputArtifacts(undefined as any, '')).toEqual(emptyArtifacts);
+      548 |     });
+      549 | 
+      550 |     it('handles empty workflow, without status', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:547:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles empty workflow, without status
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      549 | 
+      550 |     it('handles empty workflow, without status', () => {
+    > 551 |       expect(WorkflowParser.getNodeInputOutputArtifacts({} as any, '')).toEqual(emptyArtifacts);
+      552 |     });
+      553 | 
+      554 |     it('handles workflow without nodes', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:551:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles workflow without nodes
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      554 |     it('handles workflow without nodes', () => {
+      555 |       const workflow = { status: {} };
+    > 556 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, '')).toEqual(emptyArtifacts);
+      557 |     });
+      558 | 
+      559 |     it('handles node not existing in graph', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:556:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles node not existing in graph
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      559 |     it('handles node not existing in graph', () => {
+      560 |       const workflow = { status: { nodes: { node1: {} } } };
+    > 561 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node2')).toEqual(emptyArtifacts);
+      562 |     });
+      563 | 
+      564 |     it('handles an empty node', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:561:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles an empty node
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      564 |     it('handles an empty node', () => {
+      565 |       const workflow = { status: { nodes: { node1: {} } } };
+    > 566 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual(emptyArtifacts);
+      567 |     });
+      568 | 
+      569 |     it('handles a node with inputs but no artifact', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:566:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with inputs but no artifact
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      569 |     it('handles a node with inputs but no artifact', () => {
+      570 |       const workflow = { status: { nodes: { node1: { inputs: {} } } } };
+    > 571 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual(emptyArtifacts);
+      572 |     });
+      573 | 
+      574 |     it('handles a node with inputs and empty artifact', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:571:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with inputs and empty artifact
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      574 |     it('handles a node with inputs and empty artifact', () => {
+      575 |       const workflow = { status: { nodes: { node1: { inputs: { artifacts: [] } } } } };
+    > 576 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual(emptyArtifacts);
+      577 |     });
+      578 | 
+      579 |     it('handles a node with one input artifact', () => {
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:576:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with one input artifact
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      592 |         }
+      593 |       };
+    > 594 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual({
+      595 |         inputArtifacts: [['input art1', s3]],
+      596 |         outputArtifacts: [],
+      597 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:594:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with one input artifact that has no s3 artifact config
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      612 |         }
+      613 |       };
+    > 614 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual({
+      615 |         inputArtifacts: [['input art1', undefined]],
+      616 |         outputArtifacts: [],
+      617 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:614:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with one input artifact that is not the first node
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      641 |         }
+      642 |       };
+    > 643 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node2')).toEqual({
+      644 |         inputArtifacts: [['node2 input art1', s3]],
+      645 |         outputArtifacts: [],
+      646 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:643:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with one output artifact
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      662 |         }
+      663 |       };
+    > 664 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual({
+      665 |         inputArtifacts: [],
+      666 |         outputArtifacts: [['output art1', s3]],
+      667 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:664:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with one input and one output artifacts
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      689 |         }
+      690 |       };
+    > 691 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual({
+      692 |         inputArtifacts: [['input art1', {...s3, key: 'in1'}]],
+      693 |         outputArtifacts: [['output art1', {...s3, key: 'out1'}]],
+      694 |       });
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:691:29)
+
+  ● WorkflowParser › getNodeInputOutputArtifacts › handles a node with multiple input and output artifacts
+
+    TypeError: _WorkflowParser2.default.getNodeInputOutputArtifacts is not a function
+
+      725 |         }
+      726 |       };
+    > 727 |       expect(WorkflowParser.getNodeInputOutputArtifacts(workflow as any, 'node1')).toEqual({
+      728 |         inputArtifacts: [
+      729 |           ['input art1', {...s3, key: 'in1'}],
+      730 |           ['input art2', {...s3, key: 'in2'}],
+      
+      at Object.<anonymous> (src/lib/WorkflowParser.test.ts:727:29)
+
+Snapshot Summary
+ › 1 snapshot test failed in 1 test suite. Inspect your code changes or re-run jest with `-u` to update them.
+
+Test Suites: 3 failed, 3 total
+Tests:       27 failed, 104 passed, 131 total
+Snapshots:   1 failed, 13 passed, 14 total
+Time:        5.524s
+Ran all test suites matching /(DetailsTable|MinioArtifactLink|WorkflowParser)\.test\.(tsx?|ts)$/i.
+npm ERR! Test failed.  See above for more details.
+reward=0 graded=136 found=0 failed=0 parsed=0 framework=jest exit_code=1

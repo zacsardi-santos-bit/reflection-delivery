@@ -1,0 +1,7 @@
+patching file Cargo.lock
+patching file naga/Cargo.toml
+patching file naga/build.rs
+patching file naga/src/back/mod.rs
+patching file naga/src/front/spv/mod.rs
+patching file naga/src/keywords/mod.rs
+patching file wgpu-hal/Cargo.toml

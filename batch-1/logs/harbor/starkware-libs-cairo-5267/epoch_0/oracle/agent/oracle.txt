@@ -1,0 +1,8 @@
+patching file crates/cairo-lang-runner/src/profiling_test_data/major_test_cases
+patching file crates/cairo-lang-runner/src/profiling_test_data/profiling
+patching file crates/cairo-lang-sierra-generator/src/block_generator.rs
+patching file crates/cairo-lang-sierra-generator/src/expr_generator_context.rs
+patching file crates/cairo-lang-sierra-generator/src/function_generator.rs
+patching file crates/cairo-lang-sierra-generator/src/statement_location_test_data/simple
+patching file crates/cairo-lang-sierra-generator/src/test_utils.rs
+patching file crates/cairo-lang-sierra-generator/src/utils.rs

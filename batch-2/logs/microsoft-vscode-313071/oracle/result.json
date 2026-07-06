@@ -1,0 +1,29 @@
+{
+    "id": "58de80a3-194a-41fe-a7ef-4ff7cf5bbd42",
+    "started_at": "2026-07-06T12:18:44.826152",
+    "finished_at": "2026-07-06T12:19:13.802837",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microsoft-vscode-313071": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microsoft-vscode-313071__eDe7tDA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+patching file codex-rs/Cargo.lock
+patching file codex-rs/chatgpt/Cargo.toml
+patching file codex-rs/chatgpt/README.md
+patching file codex-rs/chatgpt/src/apply_command.rs
+patching file codex-rs/chatgpt/src/chatgpt_client.rs
+patching file codex-rs/chatgpt/src/chatgpt_token.rs
+patching file codex-rs/chatgpt/src/get_task.rs
+patching file codex-rs/chatgpt/src/lib.rs
+patching file codex-rs/cli/Cargo.toml
+patching file codex-rs/cli/src/main.rs
+patching file codex-rs/core/src/config.rs
+patching file codex-rs/core/src/config_profile.rs
+patching file codex-rs/login/src/lib.rs
+patching file codex-rs/login/src/login_with_chatgpt.py

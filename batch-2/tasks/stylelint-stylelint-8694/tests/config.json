@@ -1,0 +1,40 @@
+{
+  "test_framework": "jest",
+  "test_command": "node --experimental-vm-modules node_modules/jest/bin/jest.js lib/rules/selector-no-deprecated/__tests__/index.mjs --coverage=false --watchAll=false",
+  "test_files": [
+    "lib/rules/selector-no-deprecated/__tests__/index.mjs"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] 'abbr {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] 'circle {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] 'a:hover {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] 'a::first-line {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] '::backdrop {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] 'a:nth-child(1) .user-error {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] ':fullscreen {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] '@font-face {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true ] 'svg hatchpath {}' Accepted because of svg case sensitivity",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'a:drop {}' Deprecated pseudo-class has no replacement",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'a:focus-ring {}' Deprecated pseudo-class has replacement",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'a:DROP {}' Deprecated pseudo-class in upper case",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'a::shadow {}' Deprecated pseudo-element",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'a::SHAdOW {}' Deprecated pseudo-element in upper case",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'a::content {}' Deprecated pseudo-element has replacement",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] ':matches(a) {}\\n:top-layer::backdrop {}\\n:drop(valid) {}' Some deprecated pseudo-classes have replacements, while others do not",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'popup {}' Deprecated html selector",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'POPUP {}' Deprecated html selector in upper case",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'abbr, popup {}' Deprecated html selector within selector grouping",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] ':contains(popup) {}' Deprecated selector inside deprecated pseudo-class",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'shadow:fullscreen-ancestor {}' Deprecated pseudo-class applied to deprecated selector",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'svg hatchPath {}' Deprecated svg selector",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] ':is(), :matches() {}' Deprecated pseudo-class and modern replacement together",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] ':-webkit-any() {}\\n:-moz-any() {}' Deprecated vendor-prefixed pseudo-classes have replacements",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true ] 'acronym {}' Deprecated type selector has no replacement",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true, { ignoreSelectors: [ 'contains', /ern/ ] } ] ':contains(a) {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated accept [ true, { ignoreSelectors: [ 'contains', /ern/ ] } ] 'svg hkern, vkern {}' no description",
+    "/workspace/repo/lib/rules/selector-no-deprecated/__tests__/index.mjs::selector-no-deprecated reject [ true, { ignoreSelectors: [ 'contains', /ern/ ] } ] 'noframes {}' no description"
+  ],
+  "PASS_TO_PASS": []
+}

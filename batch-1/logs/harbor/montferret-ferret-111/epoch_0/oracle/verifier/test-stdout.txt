@@ -1,0 +1,134 @@
+patching file pkg/stdlib/objects/merge_test.go
+{"Time":"2026-06-29T15:13:56.464264676Z","Action":"start","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects"}
+{"Time":"2026-06-29T15:13:56.467867887Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas"}
+{"Time":"2026-06-29T15:13:56.467900687Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"=== RUN   TestHas\n"}
+{"Time":"2026-06-29T15:13:56.467931894Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"...\n"}
+{"Time":"2026-06-29T15:13:56.467958304Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"3 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.467979116Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468006998Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"...\n"}
+{"Time":"2026-06-29T15:13:56.468031946Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"6 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468052096Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468077745Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"...\n"}
+{"Time":"2026-06-29T15:13:56.468121551Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"9 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468142232Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468167581Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"....\n"}
+{"Time":"2026-06-29T15:13:56.468191787Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"13 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468212178Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468278268Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.468300482Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"15 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468321554Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468348354Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.468368956Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"17 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468391019Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468427093Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Output":"--- PASS: TestHas (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.468448696Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestHas","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.468481646Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep"}
+{"Time":"2026-06-29T15:13:56.468503339Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"=== RUN   TestKeep\n"}
+{"Time":"2026-06-29T15:13:56.468529579Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"....\n"}
+{"Time":"2026-06-29T15:13:56.46855019Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"21 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468577882Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468602489Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.46862279Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"23 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468643861Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468678514Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"....\n"}
+{"Time":"2026-06-29T15:13:56.468699105Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"27 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468724954Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468746807Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Output":"--- PASS: TestKeep (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.468769822Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeep","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.468791635Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings"}
+{"Time":"2026-06-29T15:13:56.468812116Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"=== RUN   TestKeepStrings\n"}
+{"Time":"2026-06-29T15:13:56.468836643Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.468859508Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"29 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.46888061Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468905477Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.468926068Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"31 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.468947351Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.468981362Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.469002464Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"33 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469023436Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.46904579Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Output":"--- PASS: TestKeepStrings (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.469067342Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepStrings","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.469099551Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray"}
+{"Time":"2026-06-29T15:13:56.469123046Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"=== RUN   TestKeepArray\n"}
+{"Time":"2026-06-29T15:13:56.469144409Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.46917195Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"35 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469192562Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.46921819Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.469238762Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"37 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469259693Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469284601Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.469305082Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"39 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469326384Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469351392Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.469372464Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"41 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469394117Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469416911Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Output":"--- PASS: TestKeepArray (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.469438774Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeepArray","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.469460307Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys"}
+{"Time":"2026-06-29T15:13:56.469481048Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"=== RUN   TestKeys\n"}
+{"Time":"2026-06-29T15:13:56.469507749Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"......\n"}
+{"Time":"2026-06-29T15:13:56.469528169Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"47 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469549281Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.46957451Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"....\n"}
+{"Time":"2026-06-29T15:13:56.469595311Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"51 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469616283Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469652197Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"......\n"}
+{"Time":"2026-06-29T15:13:56.469672989Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"57 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469697626Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469721772Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":".\n"}
+{"Time":"2026-06-29T15:13:56.469747792Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"58 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469768894Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469793641Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":".\n"}
+{"Time":"2026-06-29T15:13:56.469813922Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"59 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469835755Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469861013Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":".\n"}
+{"Time":"2026-06-29T15:13:56.469882255Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"60 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.469903668Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.469925881Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Output":"--- PASS: TestKeys (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.469947804Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestKeys","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.469973183Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge"}
+{"Time":"2026-06-29T15:13:56.469993313Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"=== RUN   TestMerge\n"}
+{"Time":"2026-06-29T15:13:56.470014445Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470035427Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"62 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470056288Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470081937Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"....\n"}
+{"Time":"2026-06-29T15:13:56.470111953Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"66 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470133876Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470158934Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470179415Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"68 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470200597Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470226466Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470248119Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"70 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470269141Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470291184Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Output":"--- PASS: TestMerge (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.470312817Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMerge","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.470343773Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects"}
+{"Time":"2026-06-29T15:13:56.470363884Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"=== RUN   TestMergeObjects\n"}
+{"Time":"2026-06-29T15:13:56.470385867Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470407049Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"72 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470427901Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470454291Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470475353Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"74 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470496965Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470518077Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470538929Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"76 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470560011Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470582264Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Output":"--- PASS: TestMergeObjects (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.470609986Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeObjects","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.470631369Z","Action":"run","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray"}
+{"Time":"2026-06-29T15:13:56.47065233Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"=== RUN   TestMergeArray\n"}
+{"Time":"2026-06-29T15:13:56.470674424Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470695796Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"78 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.4707183Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470747044Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470768887Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"80 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470790519Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.470815197Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"..\n"}
+{"Time":"2026-06-29T15:13:56.470907536Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"82 total assertions\n"}
+{"Time":"2026-06-29T15:13:56.470965094Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"\n"}
+{"Time":"2026-06-29T15:13:56.471014749Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Output":"--- PASS: TestMergeArray (0.00s)\n"}
+{"Time":"2026-06-29T15:13:56.471037493Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Test":"TestMergeArray","Elapsed":0}
+{"Time":"2026-06-29T15:13:56.471064183Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Output":"PASS\n"}
+{"Time":"2026-06-29T15:13:56.471172277Z","Action":"output","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Output":"ok  \tgithub.com/MontFerret/ferret/pkg/stdlib/objects\t0.006s\n"}
+{"Time":"2026-06-29T15:13:56.471212508Z","Action":"pass","Package":"github.com/MontFerret/ferret/pkg/stdlib/objects","Elapsed":0.007}
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=go exit_code=0

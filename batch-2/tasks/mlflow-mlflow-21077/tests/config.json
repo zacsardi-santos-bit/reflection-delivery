@@ -1,0 +1,48 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/mlflow/server/js && node yarn/releases/yarn-4.12.0.cjs test --watchAll=false --forceExit --verbose --testPathPattern=\"EndpointUsageModal.test|TryItPanel.test|useTryIt.test\"",
+  "test_files": [
+    "mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx",
+    "mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx",
+    "mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx",
+    "tests/gateway/providers/test_mistral.py",
+    "tests/gateway/providers/test_openai.py",
+    "tests/gateway/providers/test_provider_utils.py"
+  ],
+  "num_test_files": 6,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal renders Try it by default in Unified APIs tab",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal Unified APIs tab shows Try it, cURL, and Python view options",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab sends request and displays response on success",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab sends request with auth headers when auth is enabled",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab shows error when request body is invalid JSON",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab shows error and response body when request fails with HTTP error",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab shows error when network request fails",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab switching to Passthrough APIs tab shows provider selector and updates request body",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab switching from Passthrough APIs back to Unified APIs resets request body to unified format",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab Unified OpenAI Chat Completions variant updates request body and sends to chat completions URL",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab provider selection in Try it passthrough updates request body",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab state reset when switching API type clears response and error",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab state reset when switching provider clears response and error",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab state reset when modal opens clears previous response and error",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.test.tsx::Try it tab Reset example restores default request body and clears response and error",
+    "/workspace/repo/mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx::useTryIt returns formatted response on success",
+    "/workspace/repo/mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx::useTryIt sets error with response body when request fails with NetworkRequestError",
+    "/workspace/repo/mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx::useTryIt sets error without response body when request fails with non-NetworkRequestError",
+    "/workspace/repo/mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx::useTryIt sets error and does not call fetch when request body is invalid JSON",
+    "/workspace/repo/mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx::useTryIt reset clears data and error",
+    "/workspace/repo/mlflow/server/js/src/gateway/hooks/useTryIt.test.tsx::useTryIt reset clears error state after failed request"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal renders modal with title when open",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal does not render modal when closed",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal shows code examples with endpoint name in unified APIs when cURL selected",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal switches to passthrough APIs tab when clicked",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal shows OpenAI passthrough example in passthrough tab when cURL selected",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal renders provider selector in passthrough tab",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal passthrough tab shows Try it, cURL, Python and code when cURL selected",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal uses window.location.origin when baseUrl is not provided",
+    "/workspace/repo/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.test.tsx::EndpointUsageModal renders copy buttons for code examples when cURL selected"
+  ]
+}

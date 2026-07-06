@@ -1,0 +1,691 @@
+patching file packages/experimental/Checkbox/src/__tests__/Checkbox.test.tsx
+patching file packages/experimental/Checkbox/src/__tests__/__snapshots__/Checkbox.test.tsx.snap
+warn Package tslib has been ignored because it contains invalid configuration. Reason: Package subpath './package.json' is not defined by "exports" in /workspace/repo/node_modules/tslib/package.json
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL src/__tests__/Checkbox.test.tsx (10.63 s)
+  ● Console
+
+    console.error
+      Warning: React does not recognize the `propList` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `proplist` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGPath
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Path (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Path.js:1:1307)
+          at RNSVGGroup
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at G (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/G.js:1:1688)
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `bbWidth` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `bbwidth` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `bbHeight` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `bbheight` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `tintColor` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `tintcolor` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `minX` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `minx` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `minY` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `miny` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `vbWidth` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `vbwidth` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `vbHeight` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `vbheight` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `meetOrSlice` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `meetorslice` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at RNSVGSvgView
+          at Component (/workspace/repo/node_modules/react-native/jest/setup.js:332:22)
+          at Svg (/workspace/repo/node_modules/react-native-svg/lib/commonjs/elements/Svg.js:1:2942)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onPress`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onStartShouldSetResponder`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onResponderGrant`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onResponderMove`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onResponderRelease`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onResponderTerminate`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onResponderTerminationRequest`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Received `true` for a non-boolean attribute `accessible`.
+      
+      If you want to write it to the DOM, pass a string instead: accessible="true" or accessible={value.toString()}.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3521:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `accessibilityRole` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilityrole` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `accessibilityState` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilitystate` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `accessibilityActions` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilityactions` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: Unknown event handler property `onAccessibilityAction`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3448:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `enableFocusRing` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `enablefocusring` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at component (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+  ● Checkbox component tests › Checkbox simple rendering does not invalidate styling
+
+    Shallow compare failed for Checkbox, key: accessibilityState
+
+      50 |   Object.keys(a.props).forEach((key) => {
+      51 |     if (a.props[key] !== b.props[key]) {
+    > 52 |       throw new Error(`Shallow compare failed for ${paths.join(': ')}, key: ${key}`);
+         |             ^
+      53 |     }
+      54 |   });
+      55 |   for (let i = 0; i < a.children.length; i++) {
+
+      at forEach (../../utils/test-tools/src/enzymeTests.ts:52:13)
+          at Array.forEach (<anonymous>)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:50:24)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:56:5)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.ts:64:3)
+      at Object.<anonymous> (src/__tests__/Checkbox.test.tsx:74:5)
+
+  ● Checkbox component tests › Checkbox re-renders correctly
+
+    Shallow compare failed for Checkbox, key: accessibilityState
+
+      50 |   Object.keys(a.props).forEach((key) => {
+      51 |     if (a.props[key] !== b.props[key]) {
+    > 52 |       throw new Error(`Shallow compare failed for ${paths.join(': ')}, key: ${key}`);
+         |             ^
+      53 |     }
+      54 |   });
+      55 |   for (let i = 0; i < a.children.length; i++) {
+
+      at forEach (../../utils/test-tools/src/enzymeTests.ts:52:13)
+          at Array.forEach (<anonymous>)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:50:24)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:56:5)
+      at checkReRender (../../utils/test-tools/src/enzymeTests.ts:74:3)
+      at Object.<anonymous> (src/__tests__/Checkbox.test.tsx:78:5)
+
+  ● Checkbox component tests › Checkbox shares produced styles across multiple renders
+
+    Shallow compare failed for Checkbox, key: accessibilityState
+
+      50 |   Object.keys(a.props).forEach((key) => {
+      51 |     if (a.props[key] !== b.props[key]) {
+    > 52 |       throw new Error(`Shallow compare failed for ${paths.join(': ')}, key: ${key}`);
+         |             ^
+      53 |     }
+      54 |   });
+      55 |   for (let i = 0; i < a.children.length; i++) {
+
+      at forEach (../../utils/test-tools/src/enzymeTests.ts:52:13)
+          at Array.forEach (<anonymous>)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:50:24)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:56:5)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.ts:64:3)
+      at Object.<anonymous> (src/__tests__/Checkbox.test.tsx:83:5)
+
+  ● Checkbox component tests › Checkbox re-renders correctly with style
+
+    Shallow compare failed for Checkbox, key: accessibilityState
+
+      50 |   Object.keys(a.props).forEach((key) => {
+      51 |     if (a.props[key] !== b.props[key]) {
+    > 52 |       throw new Error(`Shallow compare failed for ${paths.join(': ')}, key: ${key}`);
+         |             ^
+      53 |     }
+      54 |   });
+      55 |   for (let i = 0; i < a.children.length; i++) {
+
+      at forEach (../../utils/test-tools/src/enzymeTests.ts:52:13)
+          at Array.forEach (<anonymous>)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:50:24)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:56:5)
+      at checkReRender (../../utils/test-tools/src/enzymeTests.ts:74:3)
+      at Object.<anonymous> (src/__tests__/Checkbox.test.tsx:88:5)
+
+  ● Checkbox component tests › Checkbox re-renders correctly with accessibilityAction
+
+    Shallow compare failed for Checkbox, key: accessibilityState
+
+      50 |   Object.keys(a.props).forEach((key) => {
+      51 |     if (a.props[key] !== b.props[key]) {
+    > 52 |       throw new Error(`Shallow compare failed for ${paths.join(': ')}, key: ${key}`);
+         |             ^
+      53 |     }
+      54 |   });
+      55 |   for (let i = 0; i < a.children.length; i++) {
+
+      at forEach (../../utils/test-tools/src/enzymeTests.ts:52:13)
+          at Array.forEach (<anonymous>)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:50:24)
+      at compareTrees (../../utils/test-tools/src/enzymeTests.ts:56:5)
+      at checkReRender (../../utils/test-tools/src/enzymeTests.ts:74:3)
+      at Object.<anonymous> (src/__tests__/Checkbox.test.tsx:93:5)
+
+Test Suites: 1 failed, 1 total
+Tests:       5 failed, 4 passed, 9 total
+Snapshots:   4 passed, 4 total
+Time:        10.837 s
+Ran all test suites.
+reward=0 graded=9 found=0 failed=0 parsed=0 framework=jest exit_code=1

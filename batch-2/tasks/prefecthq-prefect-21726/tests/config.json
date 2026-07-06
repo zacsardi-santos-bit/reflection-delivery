@@ -1,0 +1,44 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/server/services/test_task_run_recorder.py -v",
+  "test_files": [
+    "tests/server/services/test_task_run_recorder.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.server.services.test_task_run_recorder::test_bulk_upsert_natural_key_conflict_updates_existing_task_run",
+    "tests.server.services.test_task_run_recorder::test_single_upsert_with_natural_key_conflict_does_not_raise",
+    "tests.server.services.test_task_run_recorder::test_bulk_upsert_keeps_existing_id_hidden_by_same_batch_conflict",
+    "tests.server.services.test_task_run_recorder::test_bulk_upsert_coalesces_natural_key_conflicts_in_same_batch"
+  ],
+  "PASS_TO_PASS": [
+    "tests.server.services.test_task_run_recorder::test_start_and_stop_service",
+    "tests.server.services.test_task_run_recorder::test_handle_client_orchestrated_task_run_event",
+    "tests.server.services.test_task_run_recorder::test_skip_non_task_run_event",
+    "tests.server.services.test_task_run_recorder::test_skip_server_side_orchestrated_task_run",
+    "tests.server.services.test_task_run_recorder::test_recording_single_event",
+    "tests.server.services.test_task_run_recorder::test_updates_task_run_on_subsequent_state_changes",
+    "tests.server.services.test_task_run_recorder::test_updates_only_fields_that_are_set",
+    "tests.server.services.test_task_run_recorder::test_updates_task_run_on_out_of_order_state_change",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_handles_all_out_of_order_permutations[PENDING->RUNNING->COMPLETED]",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_handles_all_out_of_order_permutations[PENDING->COMPLETED->RUNNING]",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_handles_all_out_of_order_permutations[RUNNING->PENDING->COMPLETED]",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_handles_all_out_of_order_permutations[RUNNING->COMPLETED->PENDING]",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_handles_all_out_of_order_permutations[COMPLETED->PENDING->RUNNING]",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_handles_all_out_of_order_permutations[COMPLETED->RUNNING->PENDING]",
+    "tests.server.services.test_task_run_recorder::test_task_run_recorder_sends_repeated_failed_messages_to_dead_letter",
+    "tests.server.services.test_task_run_recorder::test_batch_recording_of_task_run_events",
+    "tests.server.services.test_task_run_recorder::test_batch_record_timer_flush",
+    "tests.server.services.test_task_run_recorder::test_record_bulk_task_run_events",
+    "tests.server.services.test_task_run_recorder::test_record_bulk_task_run_events_with_coalescing",
+    "tests.server.services.test_task_run_recorder::test_record_bulk_task_run_events_with_different_column_sets",
+    "tests.server.services.test_task_run_recorder::test_subsequent_updates_move_update_timestamp",
+    "tests.server.services.test_task_run_recorder::test_event_retried_on_persist_failure",
+    "tests.server.services.test_task_run_recorder::test_event_dropped_after_max_retries_exceeded",
+    "tests.server.services.test_task_run_recorder::test_bulk_upsert_id_conflict_updates_existing_task_run",
+    "tests.server.services.test_task_run_recorder::test_bulk_upsert_coalesces_id_conflicts_in_same_batch",
+    "tests.server.services.test_task_run_recorder::test_bulk_insert_handles_shuffled_interleaved_events",
+    "tests.server.services.test_task_run_recorder::test_bulk_upserts_are_sorted_by_conflict_key"
+  ]
+}

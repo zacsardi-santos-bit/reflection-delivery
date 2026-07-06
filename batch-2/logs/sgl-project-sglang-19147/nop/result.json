@@ -1,0 +1,29 @@
+{
+    "id": "3e182d6c-5ed2-4e49-9b16-8a2781ecb90d",
+    "started_at": "2026-07-06T12:17:29.334058",
+    "finished_at": "2026-07-06T12:18:03.216774",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__sgl-project-sglang-19147": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "sgl-project-sglang-19147__98HuKLg"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

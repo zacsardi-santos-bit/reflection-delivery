@@ -1,0 +1,35 @@
+patching file pkg/deploy/shield/protection_synthesizer_test.go
+patching file pkg/deploy/wafregional/web_acl_association_synthesizer_test.go
+patching file pkg/deploy/wafv2/web_acl_association_synthesizer_test.go
+patching file pkg/ingress/model_build_load_balancer_addons_test.go
+# sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafregional [sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafregional.test]
+pkg/deploy/wafregional/web_acl_association_synthesizer_test.go:215:26: undefined: NewMockWebACLAssociationManager
+# sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafv2 [sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafv2.test]
+pkg/deploy/wafv2/web_acl_association_synthesizer_test.go:215:26: undefined: NewMockWebACLAssociationManager
+# sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/shield [sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/shield.test]
+pkg/deploy/shield/protection_synthesizer_test.go:55:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:76:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:101:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:128:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:149:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:169:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:196:7: unknown field Enabled in struct literal of type struct{ResourceARN core.StringToken "json:\"resourceARN\""}
+pkg/deploy/shield/protection_synthesizer_test.go:226:25: undefined: NewMockProtectionManager
+# sigs.k8s.io/aws-load-balancer-controller/pkg/ingress [sigs.k8s.io/aws-load-balancer-controller/pkg/ingress.test]
+pkg/ingress/model_build_load_balancer_addons_test.go:658:6: unknown field Enabled in struct literal of type "sigs.k8s.io/aws-load-balancer-controller/pkg/model/shield".ProtectionSpec
+pkg/ingress/model_build_load_balancer_addons_test.go:697:6: unknown field Enabled in struct literal of type "sigs.k8s.io/aws-load-balancer-controller/pkg/model/shield".ProtectionSpec
+pkg/ingress/model_build_load_balancer_addons_test.go:738:6: unknown field Enabled in struct literal of type "sigs.k8s.io/aws-load-balancer-controller/pkg/model/shield".ProtectionSpec
+pkg/ingress/model_build_load_balancer_addons_test.go:777:6: unknown field Enabled in struct literal of type "sigs.k8s.io/aws-load-balancer-controller/pkg/model/shield".ProtectionSpec
+{"Time":"2026-06-29T15:13:29.008067115Z","Action":"start","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/shield"}
+{"Time":"2026-06-29T15:13:29.008314548Z","Action":"output","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/shield","Output":"FAIL\tsigs.k8s.io/aws-load-balancer-controller/pkg/deploy/shield [build failed]\n"}
+{"Time":"2026-06-29T15:13:29.008370381Z","Action":"fail","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/shield","Elapsed":0}
+{"Time":"2026-06-29T15:13:29.009356632Z","Action":"start","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafregional"}
+{"Time":"2026-06-29T15:13:29.009475428Z","Action":"output","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafregional","Output":"FAIL\tsigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafregional [build failed]\n"}
+{"Time":"2026-06-29T15:13:29.00951947Z","Action":"fail","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafregional","Elapsed":0}
+{"Time":"2026-06-29T15:13:29.009840007Z","Action":"start","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafv2"}
+{"Time":"2026-06-29T15:13:29.009864438Z","Action":"output","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafv2","Output":"FAIL\tsigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafv2 [build failed]\n"}
+{"Time":"2026-06-29T15:13:29.009887749Z","Action":"fail","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/deploy/wafv2","Elapsed":0}
+{"Time":"2026-06-29T15:13:31.087474511Z","Action":"start","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/ingress"}
+{"Time":"2026-06-29T15:13:31.087530504Z","Action":"output","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/ingress","Output":"FAIL\tsigs.k8s.io/aws-load-balancer-controller/pkg/ingress [build failed]\n"}
+{"Time":"2026-06-29T15:13:31.087546354Z","Action":"fail","Package":"sigs.k8s.io/aws-load-balancer-controller/pkg/ingress","Elapsed":0}
+reward=0 graded=521 found=0 failed=0 parsed=4 framework=go exit_code=1

@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/libs/core/tests/unit_tests/messages/test_imports.py /workspace/repo/libs/core/tests/unit_tests/messages/test_utils.py -v",
+  "test_files": [
+    "libs/core/tests/unit_tests/messages/test_imports.py",
+    "libs/core/tests/unit_tests/messages/test_utils.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.messages.test_imports::test_all_imports",
+    "tests.unit_tests.messages.test_utils::test_merge_message_runs_str[HumanMessage]",
+    "tests.unit_tests.messages.test_utils::test_merge_message_runs_str[AIMessage]",
+    "tests.unit_tests.messages.test_utils::test_merge_message_runs_str[SystemMessage]",
+    "tests.unit_tests.messages.test_utils::test_merge_message_runs_content",
+    "tests.unit_tests.messages.test_utils::test_merge_messages_tool_messages",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters0]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters1]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters2]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters3]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters4]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters5]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters6]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters7]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters8]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters9]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters10]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters11]",
+    "tests.unit_tests.messages.test_utils::test_filter_message[filters12]",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_first_30",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_first_30_allow_partial",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_first_30_allow_partial_end_on_human",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_last_30_include_system",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_last_40_include_system_allow_partial",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_last_30_include_system_allow_partial_end_on_human",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_last_40_include_system_allow_partial_start_on_human",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_allow_partial_text_splitter",
+    "tests.unit_tests.messages.test_utils::test_trim_messages_invoke"
+  ],
+  "PASS_TO_PASS": []
+}

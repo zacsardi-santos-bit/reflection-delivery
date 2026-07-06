@@ -1,0 +1,102 @@
+patching file internal/ci/vulnerability_result_diff_test.go
+{"Time":"2026-06-29T15:31:43.494498749Z","Action":"start","Package":"github.com/google/osv-scanner/internal/ci"}
+{"Time":"2026-06-29T15:31:43.499311724Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults"}
+{"Time":"2026-06-29T15:31:43.499376624Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults","Output":"=== RUN   TestDiffVulnerabilityResults\n"}
+{"Time":"2026-06-29T15:31:43.499407224Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults","Output":"=== PAUSE TestDiffVulnerabilityResults\n"}
+{"Time":"2026-06-29T15:31:43.499429934Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults"}
+{"Time":"2026-06-29T15:31:43.499454344Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults"}
+{"Time":"2026-06-29T15:31:43.499477574Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults","Output":"=== RUN   TestDiffVulnerabilityByUniqueVulnCountResults\n"}
+{"Time":"2026-06-29T15:31:43.499502824Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults","Output":"=== PAUSE TestDiffVulnerabilityByUniqueVulnCountResults\n"}
+{"Time":"2026-06-29T15:31:43.499526264Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults"}
+{"Time":"2026-06-29T15:31:43.499549304Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults"}
+{"Time":"2026-06-29T15:31:43.499571474Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults","Output":"=== CONT  TestDiffVulnerabilityResults\n"}
+{"Time":"2026-06-29T15:31:43.499601654Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults"}
+{"Time":"2026-06-29T15:31:43.499623514Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults","Output":"=== CONT  TestDiffVulnerabilityByUniqueVulnCountResults\n"}
+{"Time":"2026-06-29T15:31:43.503378479Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00"}
+{"Time":"2026-06-29T15:31:43.503420059Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00","Output":"=== RUN   TestDiffVulnerabilityByUniqueVulnCountResults/#00\n"}
+{"Time":"2026-06-29T15:31:43.503449819Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00","Output":"=== PAUSE TestDiffVulnerabilityByUniqueVulnCountResults/#00\n"}
+{"Time":"2026-06-29T15:31:43.503472589Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00"}
+{"Time":"2026-06-29T15:31:43.503496339Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01"}
+{"Time":"2026-06-29T15:31:43.503518249Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01","Output":"=== RUN   TestDiffVulnerabilityByUniqueVulnCountResults/#01\n"}
+{"Time":"2026-06-29T15:31:43.503541729Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01","Output":"=== PAUSE TestDiffVulnerabilityByUniqueVulnCountResults/#01\n"}
+{"Time":"2026-06-29T15:31:43.503564849Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01"}
+{"Time":"2026-06-29T15:31:43.503587739Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02"}
+{"Time":"2026-06-29T15:31:43.503616249Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02","Output":"=== RUN   TestDiffVulnerabilityByUniqueVulnCountResults/#02\n"}
+{"Time":"2026-06-29T15:31:43.503639519Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02","Output":"=== PAUSE TestDiffVulnerabilityByUniqueVulnCountResults/#02\n"}
+{"Time":"2026-06-29T15:31:43.503662529Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02"}
+{"Time":"2026-06-29T15:31:43.503685589Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03"}
+{"Time":"2026-06-29T15:31:43.503707139Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03","Output":"=== RUN   TestDiffVulnerabilityByUniqueVulnCountResults/#03\n"}
+{"Time":"2026-06-29T15:31:43.503746799Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03","Output":"=== PAUSE TestDiffVulnerabilityByUniqueVulnCountResults/#03\n"}
+{"Time":"2026-06-29T15:31:43.503770119Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03"}
+{"Time":"2026-06-29T15:31:43.503792839Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00"}
+{"Time":"2026-06-29T15:31:43.503814689Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00","Output":"=== RUN   TestDiffVulnerabilityResults/#00\n"}
+{"Time":"2026-06-29T15:31:43.503840089Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00"}
+{"Time":"2026-06-29T15:31:43.503861959Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00","Output":"=== CONT  TestDiffVulnerabilityByUniqueVulnCountResults/#00\n"}
+{"Time":"2026-06-29T15:31:43.503885229Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00","Output":"=== PAUSE TestDiffVulnerabilityResults/#00\n"}
+{"Time":"2026-06-29T15:31:43.503907119Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00"}
+{"Time":"2026-06-29T15:31:43.503941979Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00","Output":"--- PASS: TestDiffVulnerabilityByUniqueVulnCountResults/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.503965859Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#00","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.504001789Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01"}
+{"Time":"2026-06-29T15:31:43.504023859Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01","Output":"=== CONT  TestDiffVulnerabilityByUniqueVulnCountResults/#01\n"}
+{"Time":"2026-06-29T15:31:43.504046549Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01"}
+{"Time":"2026-06-29T15:31:43.504068309Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01","Output":"=== RUN   TestDiffVulnerabilityResults/#01\n"}
+{"Time":"2026-06-29T15:31:43.504091219Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01","Output":"=== PAUSE TestDiffVulnerabilityResults/#01\n"}
+{"Time":"2026-06-29T15:31:43.504118819Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01"}
+{"Time":"2026-06-29T15:31:43.504142929Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02"}
+{"Time":"2026-06-29T15:31:43.504164829Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02","Output":"=== RUN   TestDiffVulnerabilityResults/#02\n"}
+{"Time":"2026-06-29T15:31:43.504188988Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01","Output":"--- PASS: TestDiffVulnerabilityByUniqueVulnCountResults/#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.504212548Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#01","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.504234708Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02","Output":"=== PAUSE TestDiffVulnerabilityResults/#02\n"}
+{"Time":"2026-06-29T15:31:43.504256948Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02"}
+{"Time":"2026-06-29T15:31:43.504280518Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03"}
+{"Time":"2026-06-29T15:31:43.504302398Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03","Output":"=== RUN   TestDiffVulnerabilityResults/#03\n"}
+{"Time":"2026-06-29T15:31:43.504325618Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03","Output":"=== PAUSE TestDiffVulnerabilityResults/#03\n"}
+{"Time":"2026-06-29T15:31:43.504349038Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03"}
+{"Time":"2026-06-29T15:31:43.504372518Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04"}
+{"Time":"2026-06-29T15:31:43.504394578Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04","Output":"=== RUN   TestDiffVulnerabilityResults/#04\n"}
+{"Time":"2026-06-29T15:31:43.504418318Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04","Output":"=== PAUSE TestDiffVulnerabilityResults/#04\n"}
+{"Time":"2026-06-29T15:31:43.504440278Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04"}
+{"Time":"2026-06-29T15:31:43.504463038Z","Action":"run","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05"}
+{"Time":"2026-06-29T15:31:43.504484588Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05","Output":"=== RUN   TestDiffVulnerabilityResults/#05\n"}
+{"Time":"2026-06-29T15:31:43.504507508Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02"}
+{"Time":"2026-06-29T15:31:43.504530288Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02","Output":"=== CONT  TestDiffVulnerabilityByUniqueVulnCountResults/#02\n"}
+{"Time":"2026-06-29T15:31:43.504560468Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02","Output":"--- PASS: TestDiffVulnerabilityByUniqueVulnCountResults/#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.504586918Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#02","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.504615038Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03"}
+{"Time":"2026-06-29T15:31:43.504638408Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03","Output":"=== CONT  TestDiffVulnerabilityByUniqueVulnCountResults/#03\n"}
+{"Time":"2026-06-29T15:31:43.504674188Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03","Output":"--- PASS: TestDiffVulnerabilityByUniqueVulnCountResults/#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.504697838Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults/#03","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.504725468Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults","Output":"--- PASS: TestDiffVulnerabilityByUniqueVulnCountResults (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.504753688Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityByUniqueVulnCountResults","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.504776038Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05","Output":"=== PAUSE TestDiffVulnerabilityResults/#05\n"}
+{"Time":"2026-06-29T15:31:43.504798378Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05"}
+{"Time":"2026-06-29T15:31:43.504821538Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00"}
+{"Time":"2026-06-29T15:31:43.504843208Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00","Output":"=== CONT  TestDiffVulnerabilityResults/#00\n"}
+{"Time":"2026-06-29T15:31:43.504866718Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00","Output":"--- PASS: TestDiffVulnerabilityResults/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.504889578Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#00","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.504911318Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05"}
+{"Time":"2026-06-29T15:31:43.504933018Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05","Output":"=== CONT  TestDiffVulnerabilityResults/#05\n"}
+{"Time":"2026-06-29T15:31:43.504955768Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03"}
+{"Time":"2026-06-29T15:31:43.504977528Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03","Output":"=== CONT  TestDiffVulnerabilityResults/#03\n"}
+{"Time":"2026-06-29T15:31:43.505000418Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02"}
+{"Time":"2026-06-29T15:31:43.505022868Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02","Output":"=== CONT  TestDiffVulnerabilityResults/#02\n"}
+{"Time":"2026-06-29T15:31:43.505049458Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05","Output":"--- PASS: TestDiffVulnerabilityResults/#05 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.505072567Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#05","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.505094437Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01"}
+{"Time":"2026-06-29T15:31:43.505116077Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01","Output":"=== CONT  TestDiffVulnerabilityResults/#01\n"}
+{"Time":"2026-06-29T15:31:43.505144667Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04"}
+{"Time":"2026-06-29T15:31:43.505166347Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04","Output":"=== CONT  TestDiffVulnerabilityResults/#04\n"}
+{"Time":"2026-06-29T15:31:43.505198627Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03","Output":"--- PASS: TestDiffVulnerabilityResults/#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.505222137Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#03","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.505244667Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01","Output":"--- PASS: TestDiffVulnerabilityResults/#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.505267917Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#01","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.505290127Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02","Output":"--- PASS: TestDiffVulnerabilityResults/#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.505317707Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#02","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.505345877Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04","Output":"--- PASS: TestDiffVulnerabilityResults/#04 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.505371397Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults/#04","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.505396467Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults","Output":"--- PASS: TestDiffVulnerabilityResults (0.00s)\n"}
+{"Time":"2026-06-29T15:31:43.505421637Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Test":"TestDiffVulnerabilityResults","Elapsed":0}
+{"Time":"2026-06-29T15:31:43.505452027Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:43.505541177Z","Action":"output","Package":"github.com/google/osv-scanner/internal/ci","Output":"ok  \tgithub.com/google/osv-scanner/internal/ci\t0.010s\n"}
+{"Time":"2026-06-29T15:31:43.505570567Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/ci","Elapsed":0.011}
+reward=1 graded=12 found=12 failed=0 parsed=12 framework=go exit_code=0

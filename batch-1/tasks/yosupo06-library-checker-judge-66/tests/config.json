@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "service postgresql start && for i in $(seq 1 30); do pg_isready -h localhost 2>/dev/null && break; sleep 1; done && cd /workspace/repo/api && go build -o /tmp/api_server . && (/tmp/api_server &) && sleep 5 && go test -json . -count=1 -timeout 60s",
+  "test_files": [
+    "api/main_test.go",
+    "test/cloudbuild.yaml",
+    "test/gce_test.sh"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/yosupo06/library-checker-judge/api::TestLangList",
+    "github.com/yosupo06/library-checker-judge/api::TestSubmitBig"
+  ],
+  "PASS_TO_PASS": []
+}

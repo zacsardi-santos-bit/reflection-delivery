@@ -1,0 +1,13 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/vite && npx vitest run src/node/__tests__/optimizer/pluginConverter.spec.ts",
+  "test_files": [
+    "packages/vite/src/node/__tests__/optimizer/pluginConverter.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/vite/src/node/__tests__/optimizer/pluginConverter.spec.ts::convertEsbuildPluginToRolldownPlugin passes a BuildResult to onEnd callbacks"
+  ],
+  "PASS_TO_PASS": []
+}

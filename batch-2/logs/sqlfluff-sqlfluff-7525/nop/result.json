@@ -1,0 +1,29 @@
+{
+    "id": "4958e627-a4a3-43fe-a1a5-e9f60b735ded",
+    "started_at": "2026-07-06T12:17:07.888243",
+    "finished_at": "2026-07-06T12:17:52.927894",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__sqlfluff-sqlfluff-7525": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "sqlfluff-sqlfluff-7525__d2hHrah"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

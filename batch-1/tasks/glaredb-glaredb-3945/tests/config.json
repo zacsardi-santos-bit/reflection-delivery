@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p glaredb_core series",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/7) glaredb_core functions::table::builtin::series::tests::generate_series_neverending_start_gt_stop",
+    "(2/7) glaredb_core functions::table::builtin::series::tests::test_poll_execute_with_bind_state",
+    "(3/7) glaredb_core functions::table::builtin::series::tests::generate_series_neverending_start_lt_stop",
+    "(4/7) glaredb_core functions::table::builtin::series::tests::generate_series_multiple_rows",
+    "(5/7) glaredb_core functions::table::builtin::series::tests::generate_series_single_row",
+    "(6/7) glaredb_core functions::table::builtin::series::tests::generate_series_single_row_out_lacks_capacity_by_1",
+    "(7/7) glaredb_core functions::table::builtin::series::tests::generate_series_single_row_out_lacks_capacity"
+  ],
+  "PASS_TO_PASS": []
+}

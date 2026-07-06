@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/dashboard/modules/reporter/tests/test_gpu_profiler_manager.py -v",
+  "test_files": [
+    "python/ray/dashboard/modules/reporter/tests/test_gpu_profiler_manager.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_node_has_gpus_uses_query_gpu_flag",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_enabled_does_not_call_node_has_gpus_when_dynolog_missing"
+  ],
+  "PASS_TO_PASS": [
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_enabled",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_disabled_no_gpus",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_disabled_no_dynolog_bin",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_start_monitoring_daemon",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_disabled",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_without_starting_daemon",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_with_dead_daemon",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_on_dead_process",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_no_matched_processes",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_timeout",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_process_dies_during_profiling",
+    "python.ray.dashboard.modules.reporter.tests.test_gpu_profiler_manager::test_gpu_profile_success"
+  ]
+}

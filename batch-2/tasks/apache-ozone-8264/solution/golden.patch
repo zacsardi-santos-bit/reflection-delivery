@@ -1,0 +1,1455 @@
+diff --git a/hadoop-hdds/client/src/main/java/org/apache/hadoop/hdds/scm/client/HddsClientUtils.java b/hadoop-hdds/client/src/main/java/org/apache/hadoop/hdds/scm/client/HddsClientUtils.java
+index ea5fc908a9..a09ab64eae 100644
+--- a/hadoop-hdds/client/src/main/java/org/apache/hadoop/hdds/scm/client/HddsClientUtils.java
++++ b/hadoop-hdds/client/src/main/java/org/apache/hadoop/hdds/scm/client/HddsClientUtils.java
+@@ -48,14 +48,6 @@
+ @InterfaceAudience.Public
+ @InterfaceStability.Unstable
+ public final class HddsClientUtils {
+-  static final int MAX_BUCKET_NAME_LENGTH_IN_LOG =
+-      2 * OzoneConsts.OZONE_MAX_BUCKET_NAME_LENGTH;
+-
+-  private static final String VALID_LENGTH_MESSAGE = String.format(
+-      "valid length is %d-%d characters",
+-      OzoneConsts.OZONE_MIN_BUCKET_NAME_LENGTH,
+-      OzoneConsts.OZONE_MAX_BUCKET_NAME_LENGTH);
+-
+   private static final List<Class<? extends Exception>> EXCEPTION_LIST =
+       ImmutableList.<Class<? extends Exception>>builder()
+           .add(TimeoutException.class)
+@@ -76,26 +68,10 @@ private static void doNameChecks(String resName, String resType) {
+       throw new IllegalArgumentException(resType + " name is null");
+     }
+ 
+-    if (resName.length() < OzoneConsts.OZONE_MIN_BUCKET_NAME_LENGTH) {
+-      throw new IllegalArgumentException(resType +
+-          " name '" + resName + "' is too short, " +
+-          VALID_LENGTH_MESSAGE);
+-    }
+-
+-    if (resName.length() > OzoneConsts.OZONE_MAX_BUCKET_NAME_LENGTH) {
+-      String nameToReport;
+-
+-      if (resName.length() > MAX_BUCKET_NAME_LENGTH_IN_LOG) {
+-        nameToReport = String.format(
+-            "%s...",
+-            resName.substring(0, MAX_BUCKET_NAME_LENGTH_IN_LOG));
+-      } else {
+-        nameToReport = resName;
+-      }
+-
++    if (resName.length() < OzoneConsts.OZONE_MIN_BUCKET_NAME_LENGTH ||
++        resName.length() > OzoneConsts.OZONE_MAX_BUCKET_NAME_LENGTH) {
+       throw new IllegalArgumentException(resType +
+-          " name '" + nameToReport + "' is too long, " +
+-          VALID_LENGTH_MESSAGE);
++          " length is illegal, " + "valid length is 3-63 characters");
+     }
+ 
+     if (resName.charAt(0) == '.' || resName.charAt(0) == '-') {
+@@ -174,6 +150,9 @@ public static void verifyResourceName(String resName, String resType) {
+    * @throws IllegalArgumentException
+    */
+   public static void verifyResourceName(String resName, String resType, boolean isStrictS3) {
++
++    doNameChecks(resName, resType);
++
+     boolean isIPv4 = true;
+     char prev = (char) 0;
+ 
+@@ -190,8 +169,6 @@ public static void verifyResourceName(String resName, String resType, boolean is
+       throw new IllegalArgumentException(resType +
+           " name cannot be an IPv4 address or all numeric");
+     }
+-
+-    doNameChecks(resName, resType);
+   }
+ 
+   /**
+diff --git a/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java b/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java
+index 281cc12fa3..8d0eae226c 100644
+--- a/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java
++++ b/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java
+@@ -23,15 +23,12 @@
+ import static org.apache.hadoop.hdds.scm.ScmConfigKeys.OZONE_SCM_CLIENT_PORT_DEFAULT;
+ import static org.apache.hadoop.hdds.scm.ScmConfigKeys.OZONE_SCM_CLIENT_PORT_KEY;
+ import static org.apache.hadoop.hdds.scm.ScmConfigKeys.OZONE_SCM_NAMES;
+-import static org.assertj.core.api.Assertions.assertThat;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+-import static org.junit.jupiter.api.Assertions.assertNotNull;
+ import static org.junit.jupiter.api.Assertions.assertNull;
+ import static org.junit.jupiter.api.Assertions.assertSame;
+ import static org.junit.jupiter.api.Assertions.assertThrows;
+ import static org.junit.jupiter.api.Assertions.assertTrue;
+ 
+-import com.google.common.collect.ImmutableList;
+ import java.io.IOException;
+ import java.net.ConnectException;
+ import java.net.InetSocketAddress;
+@@ -194,10 +191,6 @@ public void testBlockClientFallbackToClientWithPort() {
+     assertEquals(OZONE_SCM_BLOCK_CLIENT_PORT_DEFAULT, address.getPort());
+   }
+ 
+-  private String getInvalidNameMessage(String invalidString) {
+-    return "Did not reject invalid string [" + invalidString + "] as a name";
+-  }
+-
+   @Test
+   public void testVerifyResourceName() {
+     final String validName = "my-bucket.01";
+@@ -216,7 +209,8 @@ public void testVerifyResourceName() {
+     final String endDot = "notaname.";
+     final String startDot = ".notaname";
+     final String unicodeCharacters = "ｚｚｚ";
+-    // Other tests cover the "too short" case.
++    final String tooShort = StringUtils.repeat("a",
++        OzoneConsts.OZONE_MIN_BUCKET_NAME_LENGTH - 1);
+ 
+     List<String> invalidNames = new ArrayList<>();
+     invalidNames.add(ipaddr);
+@@ -227,99 +221,14 @@ public void testVerifyResourceName() {
+     invalidNames.add(endDot);
+     invalidNames.add(startDot);
+     invalidNames.add(unicodeCharacters);
++    invalidNames.add(tooShort);
+ 
+     for (String name : invalidNames) {
+       assertThrows(IllegalArgumentException.class, () -> HddsClientUtils.verifyResourceName(name),
+-          getInvalidNameMessage(name));
+-    }
+-  }
+-
+-  private void doTestBadResourceNameLengthReported(String name, String reason) {
+-    // The message should include the name, resource type, range for acceptable
+-    // length, and expected reason for rejecting the name.
+-    List<String> resourceTypes = ImmutableList.of("bucket", "volume");
+-    for (int i = 0; i < 2; i++) {
+-      String resType = resourceTypes.get(i);
+-      String otherResType = resourceTypes.get(1 - i);
+-      Throwable thrown = assertThrows(
+-          IllegalArgumentException.class,
+-          () -> HddsClientUtils.verifyResourceName(name, resType, true),
+-          getInvalidNameMessage(name));
+-
+-      String message = thrown.getMessage();
+-      assertNotNull(message);
+-      assertThat(message).contains(resType);
+-      assertThat(message).doesNotContain(otherResType);
+-      assertThat(message).contains(name);
+-      assertThat(message).contains(reason);
+-      assertThat(message).contains(
+-          Integer.toString(OzoneConsts.OZONE_MIN_BUCKET_NAME_LENGTH));
+-      assertThat(message).contains(
+-          Integer.toString(OzoneConsts.OZONE_MAX_BUCKET_NAME_LENGTH));
++          "Did not reject invalid string [" + name + "] as a name");
+     }
+   }
+ 
+-  @Test
+-  public void testNameTooShort() {
+-    final String tooShort = StringUtils.repeat("a",
+-        OzoneConsts.OZONE_MIN_BUCKET_NAME_LENGTH - 1);
+-
+-    doTestBadResourceNameLengthReported(tooShort, "too short");
+-  }
+-
+-  @Test
+-  public void testNameTooLong() {
+-    // Too long, but within the limit for logging (no truncation).
+-    final String tooLong = StringUtils.repeat("a",
+-        OzoneConsts.OZONE_MAX_BUCKET_NAME_LENGTH + 1);
+-
+-    doTestBadResourceNameLengthReported(tooLong, "too long");
+-  }
+-
+-  @Test
+-  public void testNameTooLongCapped() {
+-    // Logging arbitrarily long names is a readability concern and possibly a
+-    // vulnerability. Report a prefix with a truncation marker instead if the
+-    // maximum length is exceeded by a large margin.
+-
+-    final String exceedsLogLimit = "x" + StringUtils.repeat(
+-        "a", HddsClientUtils.MAX_BUCKET_NAME_LENGTH_IN_LOG);
+-    final String truncationMarker = "...";
+-
+-    Throwable thrown = assertThrows(
+-        IllegalArgumentException.class,
+-        () -> HddsClientUtils.verifyResourceName(exceedsLogLimit),
+-        getInvalidNameMessage(exceedsLogLimit));
+-
+-    String message = thrown.getMessage();
+-    assertNotNull(message);
+-
+-    String truncatedName = exceedsLogLimit.substring(
+-        0,
+-        HddsClientUtils.MAX_BUCKET_NAME_LENGTH_IN_LOG);
+-    String expectedInMessage = truncatedName + truncationMarker;
+-
+-    assertThat(message).contains(expectedInMessage);
+-    assertThat(message).doesNotContain(exceedsLogLimit);
+-  }
+-
+-  @Test
+-  public void testInvalidCharactersNotReported() {
+-    // Names of illegal length may appear in logs through the exception
+-    // message. If they also contain invalid characters, they should not be
+-    // included verbatim. This is to avoid vulnerabilities like Log4Shell.
+-
+-    final String tooShortInvalidChar = "$a";
+-    Throwable thrown = assertThrows(
+-        IllegalArgumentException.class,
+-        () -> HddsClientUtils.verifyResourceName(tooShortInvalidChar),
+-        getInvalidNameMessage(tooShortInvalidChar));
+-
+-    String message = thrown.getMessage();
+-    assertNotNull(message);
+-    assertThat(message).doesNotContain(tooShortInvalidChar);
+-  }
+-
+   @Test
+   void testVerifyKeyName() throws IllegalArgumentException {
+     List<String> invalidNames = new ArrayList<>();
+@@ -341,7 +250,7 @@ void testVerifyKeyName() throws IllegalArgumentException {
+ 
+     for (String name : invalidNames) {
+       assertThrows(IllegalArgumentException.class, () -> HddsClientUtils.verifyKeyName(name),
+-          getInvalidNameMessage(name));
++          "Did not reject invalid string [" + name + "] as a name");
+     }
+ 
+     List<String> validNames = new ArrayList<>();
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/ContainerDatanodeDatabase.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/ContainerDatanodeDatabase.java
+deleted file mode 100644
+index 9dcf3fb718..0000000000
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/ContainerDatanodeDatabase.java
++++ /dev/null
+@@ -1,291 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements. See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.hadoop.ozone.containerlog.parser;
+-
+-import java.io.OutputStreamWriter;
+-import java.io.PrintWriter;
+-import java.nio.charset.StandardCharsets;
+-import java.sql.Connection;
+-import java.sql.DriverManager;
+-import java.sql.PreparedStatement;
+-import java.sql.ResultSet;
+-import java.sql.SQLException;
+-import java.sql.Statement;
+-import java.util.List;
+-import org.sqlite.SQLiteConfig;
+-
+-/**
+- * Handles creation and interaction with the database.
+- * Provides methods for table creation, log data insertion, and index setup.
+- */
+-public class ContainerDatanodeDatabase {
+-  
+-  private static String databasePath;
+-  
+-  public static void setDatabasePath(String dbPath) {
+-    if (databasePath == null) {
+-      databasePath = dbPath;
+-    }
+-  }
+-
+-  private static Connection getConnection() throws Exception {
+-    if (databasePath == null) {
+-      throw new IllegalStateException("Database path not set");
+-    }
+-    
+-    Class.forName(DBConsts.DRIVER);
+-
+-    SQLiteConfig config = new SQLiteConfig();
+-
+-    config.setJournalMode(SQLiteConfig.JournalMode.OFF);
+-    config.setCacheSize(DBConsts.CACHE_SIZE);
+-    config.setLockingMode(SQLiteConfig.LockingMode.EXCLUSIVE);
+-    config.setSynchronous(SQLiteConfig.SynchronousMode.OFF);
+-    config.setTempStore(SQLiteConfig.TempStore.MEMORY);
+-
+-    return DriverManager.getConnection(DBConsts.CONNECTION_PREFIX + databasePath, config.toProperties());
+-  }
+-
+-  public void createDatanodeContainerLogTable() throws SQLException {
+-    String createTableSQL = DBConsts.CREATE_DATANODE_CONTAINER_LOG_TABLE;
+-    try (Connection connection = getConnection();
+-         Statement dropStmt = connection.createStatement();
+-         Statement createStmt = connection.createStatement()) {
+-      dropTable(DBConsts.DATANODE_CONTAINER_LOG_TABLE_NAME, dropStmt);
+-      createStmt.execute(createTableSQL);
+-      createDatanodeContainerIndex(createStmt);
+-    } catch (SQLException e) {
+-      System.err.println("Error while creating the table: " + e.getMessage());
+-      throw e;
+-    } catch (Exception e) {
+-      System.err.println("Unexpected error: " + e.getMessage());
+-      throw new RuntimeException(e);
+-    }
+-  }
+-
+-  private void createContainerLogTable() throws SQLException {
+-    String createTableSQL = DBConsts.CREATE_CONTAINER_LOG_TABLE;
+-    try (Connection connection = getConnection();
+-         Statement dropStmt = connection.createStatement();
+-         Statement createStmt = connection.createStatement()) {
+-      dropTable(DBConsts.CONTAINER_LOG_TABLE_NAME, dropStmt);
+-      createStmt.execute(createTableSQL);
+-    } catch (SQLException e) {
+-      System.err.println("Error while creating the table: " + e.getMessage());
+-      throw e;
+-    } catch (Exception e) {
+-      System.err.println("Unexpected error: " + e.getMessage());
+-      throw new RuntimeException(e);
+-    }
+-  }
+-
+-  /**
+-   * Inserts a list of container log entries into the DatanodeContainerLogTable.
+-   *
+-   * @param transitionList List of container log entries to insert into the table.
+-   */
+-  
+-  public synchronized void insertContainerDatanodeData(List<DatanodeContainerInfo> transitionList) throws SQLException {
+-
+-    String insertSQL = DBConsts.INSERT_DATANODE_CONTAINER_LOG;
+-
+-    long containerId = 0;
+-    String datanodeId = null;
+-    
+-    try (Connection connection = getConnection();
+-         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+-
+-      int count = 0;
+-
+-      for (DatanodeContainerInfo info : transitionList) {
+-        datanodeId = info.getDatanodeId();
+-        containerId = info.getContainerId();
+-
+-        preparedStatement.setString(1, datanodeId);
+-        preparedStatement.setLong(2, containerId);
+-        preparedStatement.setString(3, info.getTimestamp());
+-        preparedStatement.setString(4, info.getState());
+-        preparedStatement.setLong(5, info.getBcsid());
+-        preparedStatement.setString(6, info.getErrorMessage());
+-        preparedStatement.setString(7, info.getLogLevel());
+-        preparedStatement.setInt(8, info.getIndexValue());
+-        preparedStatement.addBatch();
+-
+-        count++;
+-
+-        if (count % DBConsts.BATCH_SIZE == 0) {
+-          preparedStatement.executeBatch();
+-          count = 0;
+-        }
+-      }
+-
+-      if (count != 0) {
+-        preparedStatement.executeBatch();
+-      }
+-    } catch (SQLException e) {
+-      System.err.println("Failed to insert container log for container " + containerId + " on datanode " + datanodeId);
+-      throw e;
+-    } catch (Exception e) {
+-      System.err.println("Unexpected error: " + e.getMessage());
+-      throw new RuntimeException(e);
+-    }
+-  }
+-
+-  private void createDatanodeContainerIndex(Statement stmt) throws SQLException {
+-    String createIndexSQL = DBConsts.CREATE_DATANODE_CONTAINER_INDEX;
+-    stmt.execute(createIndexSQL);
+-  }
+-
+-  /**
+-   * Extracts the latest container log data from the DatanodeContainerLogTable
+-   * and inserts it into ContainerLogTable.
+-   */
+-
+-  public void insertLatestContainerLogData() throws SQLException {
+-    createContainerLogTable();
+-    String selectSQL = DBConsts.SELECT_LATEST_CONTAINER_LOG;
+-    String insertSQL = DBConsts.INSERT_CONTAINER_LOG;
+-
+-    try (Connection connection = getConnection();
+-         PreparedStatement selectStmt = connection.prepareStatement(selectSQL);
+-         ResultSet resultSet = selectStmt.executeQuery();
+-         PreparedStatement insertStmt = connection.prepareStatement(insertSQL)) {
+-      
+-      int count = 0;
+-      
+-      while (resultSet.next()) {
+-        String datanodeId = resultSet.getString("datanode_id");
+-        long containerId = resultSet.getLong("container_id");
+-        String containerState = resultSet.getString("container_state");
+-        long bcsid = resultSet.getLong("bcsid");
+-        try {
+-          insertStmt.setString(1, datanodeId);
+-          insertStmt.setLong(2, containerId);
+-          insertStmt.setString(3, containerState);
+-          insertStmt.setLong(4, bcsid);
+-          insertStmt.addBatch();
+-
+-          count++;
+-
+-          if (count % DBConsts.BATCH_SIZE == 0) {
+-            insertStmt.executeBatch();
+-            count = 0;
+-          }
+-        } catch (SQLException e) {
+-          System.err.println("Failed to insert container log entry for container " + containerId + " on datanode "
+-              + datanodeId);
+-          throw e;
+-        }
+-      }
+-
+-      if (count != 0) {
+-        insertStmt.executeBatch();
+-      }
+-    } catch (SQLException e) {
+-      System.err.println("Failed to insert container log entry: " + e.getMessage());
+-      throw e;
+-    } catch (Exception e) {
+-      System.err.println("Unexpected error: " + e.getMessage());
+-      throw new RuntimeException(e);
+-    }
+-  }
+-
+-  private void dropTable(String tableName, Statement stmt) throws SQLException {
+-    String dropTableSQL = DBConsts.DROP_TABLE.replace("{table_name}", tableName);
+-    stmt.executeUpdate(dropTableSQL);
+-  }
+-
+-  private void createContainerLogIndex(Statement stmt) throws SQLException {
+-    String createIndexSQL = DBConsts.CREATE_INDEX_LATEST_STATE;
+-    stmt.execute(createIndexSQL);
+-  }
+-
+-  /**
+-   * Lists containers filtered by the specified state and writes their details to stdout 
+-   * unless redirected to a file explicitly.
+-   * The output includes timestamp, datanode ID, container ID, BCSID, error message, and index value,
+-   * written in a human-readable table format to a file or console.
+-   * Behavior based on the {@code limit} parameter:
+-   * If {@code limit} is provided, only up to the specified number of rows are printed.
+-   * If the number of matching containers exceeds the {@code limit},
+-   * a note is printed indicating more containers exist.
+-   *
+-   * @param state the container state to filter by (e.g., "OPEN", "CLOSED", "QUASI_CLOSED")
+-   * @param limit the maximum number of rows to display; use {@link Integer#MAX_VALUE} to fetch all rows
+-   */
+-
+-  public void listContainersByState(String state, Integer limit) throws SQLException {
+-    int count = 0;
+-
+-    boolean limitProvided = limit != Integer.MAX_VALUE;
+-
+-    String baseQuery = DBConsts.SELECT_LATEST_CONTAINER_LOGS_BY_STATE;
+-    String finalQuery = limitProvided ? baseQuery + " LIMIT ?" : baseQuery;
+-
+-    try (Connection connection = getConnection();
+-         Statement stmt = connection.createStatement()) {
+-
+-      createContainerLogIndex(stmt);
+-
+-      try (PreparedStatement pstmt = connection.prepareStatement(finalQuery)) {
+-        pstmt.setString(1, state);
+-        if (limitProvided) {
+-          pstmt.setInt(2, limit + 1);
+-        }
+-
+-        try (ResultSet rs = pstmt.executeQuery();
+-             PrintWriter writer = new PrintWriter(new OutputStreamWriter(System.out,
+-                 StandardCharsets.UTF_8), true)) {
+-
+-          writer.printf("%-25s | %-35s | %-15s | %-15s | %-40s | %-12s%n",
+-              "Timestamp", "Datanode ID", "Container ID", "BCSID", "Message", "Index Value");
+-          writer.println("-------------------------------------------------------------------------------------" +
+-              "---------------------------------------------------------------------------------------");
+-
+-          while (rs.next()) {
+-            if (limitProvided && count >= limit) {
+-              writer.println("Note: There might be more containers. Use -all option to list all entries");
+-              break;
+-            }
+-            String timestamp = rs.getString("timestamp");
+-            String datanodeId = rs.getString("datanode_id");
+-            long containerId = rs.getLong("container_id");
+-            long latestBcsid = rs.getLong("latest_bcsid");
+-            String errorMessage = rs.getString("error_message");
+-            int indexValue = rs.getInt("index_value");
+-            count++;
+-
+-            writer.printf("%-25s | %-35s | %-15d | %-15d | %-40s | %-12d%n",
+-                timestamp, datanodeId, containerId, latestBcsid, errorMessage, indexValue);
+-          }
+-          
+-          if (count == 0) {
+-            writer.printf("No containers found for state: %s%n", state);
+-          } else {
+-            writer.printf("Number of containers listed: %d%n", count);
+-          }
+-        }
+-      }
+-    } catch (SQLException e) {
+-      throw new SQLException("Error while retrieving containers with state " + state);
+-    } catch (Exception e) {
+-      throw new RuntimeException(e);
+-    }
+-  }
+-}
+-
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/LogParser.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/LogParser.java
+index 20847dde18..fe44955bf0 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/LogParser.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/LogParser.java
+@@ -31,8 +31,8 @@
+     subcommands = {
+         ContainerLogController.class
+     },
+-    description = "This serves as a common entry point for all commands that parse and analyze logs," +
+-        "regardless of their source or type and require logs to be extracted first."
++    description = "Command to parse and analyze logs, " +
++        "regardless of their source or type. It require logs to be extracted first."
+ )
+ @MetaInfServices(DebugSubcommand.class)
+ public class LogParser implements DebugSubcommand {
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerInfoCommand.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerInfoCommand.java
+new file mode 100644
+index 0000000000..7c5f8b32dc
+--- /dev/null
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerInfoCommand.java
+@@ -0,0 +1,63 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.hadoop.ozone.debug.logs.container;
++
++import java.nio.file.Path;
++import java.util.concurrent.Callable;
++import org.apache.hadoop.hdds.cli.AbstractSubcommand;
++import org.apache.hadoop.ozone.debug.logs.container.utils.ContainerDatanodeDatabase;
++import picocli.CommandLine;
++
++/**
++ * Command to display detailed information of a single container by ID.
++ */
++
++@CommandLine.Command(
++    name = "info",
++    description = "Provides complete state transition history of each replica for a single container along with " +
++        "analysis over the container"
++)
++public class ContainerInfoCommand extends AbstractSubcommand implements Callable<Void> {
++
++  @CommandLine.Parameters(index = "0", description = "Container ID")
++  private Long containerId;
++
++  @CommandLine.ParentCommand
++  private ContainerLogController parent;
++
++  @Override
++  public Void call() throws Exception {
++
++    if (containerId < 0) {
++      err().println("Invalid container ID: " + containerId);
++      return null;
++    }
++    
++    Path dbPath = parent.resolveDbPath();
++    if (dbPath == null) {
++      return null;
++    }
++
++    ContainerDatanodeDatabase cdd = new ContainerDatanodeDatabase(dbPath.toString());
++ 
++    cdd.showContainerDetails(containerId);
++    
++    return null;
++  }
++
++}
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogController.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogController.java
+index 4ba220c9d4..1d4972b9c0 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogController.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogController.java
+@@ -17,6 +17,11 @@
+ 
+ package org.apache.hadoop.ozone.debug.logs.container;
+ 
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.nio.file.Paths;
++import org.apache.hadoop.hdds.cli.AbstractSubcommand;
++import org.apache.hadoop.ozone.debug.logs.container.utils.SQLDBConstants;
+ import picocli.CommandLine;
+ 
+ /**
+@@ -26,6 +31,7 @@
+ @CommandLine.Command(
+     name = "container",
+     subcommands = {
++        ContainerInfoCommand.class,    
+         ContainerLogParser.class,
+         ListContainers.class
+     },
+@@ -33,7 +39,7 @@
+             " Supports querying state transitions of container replicas using various subcommands."
+ )
+ 
+-public class ContainerLogController {
++public class ContainerLogController extends AbstractSubcommand {
+   @CommandLine.Option(names = {"--db"},
+       scope = CommandLine.ScopeType.INHERIT,
+       description = "Path to the SQLite database file where the parsed information from logs is stored.")
+@@ -46,4 +52,30 @@ public String getDbPath() {
+   public void setDbPath(String dbPath) {
+     this.dbPath = dbPath;
+   }
++
++  public Path resolveDbPath() {
++    Path resolvedPath;
++
++    if (dbPath == null) {
++      resolvedPath = Paths.get(System.getProperty("user.dir"), SQLDBConstants.DEFAULT_DB_FILENAME);
++
++      if (Files.exists(resolvedPath) && Files.isRegularFile(resolvedPath)) {
++        out().println("Using default database file found in current directory: " + resolvedPath);
++      } else {
++        err().println("No database path provided and default file '" + SQLDBConstants.DEFAULT_DB_FILENAME + "' not " +
++            "found in current directory. Please provide a valid database path");
++        return null;
++      }
++    } else {
++      resolvedPath = Paths.get(dbPath);
++      Path parentDir = resolvedPath.getParent();
++
++      if (parentDir != null && !Files.exists(parentDir)) {
++        err().println("The parent directory of the provided database path does not exist: " + parentDir);
++        return null;
++      }
++    }
++
++    return resolvedPath;
++  }
+ }
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogParser.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogParser.java
+index df1288543b..e2d472e2e9 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogParser.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ContainerLogParser.java
+@@ -21,9 +21,10 @@
+ import java.nio.file.Path;
+ import java.nio.file.Paths;
+ import java.util.concurrent.Callable;
+-import org.apache.hadoop.ozone.containerlog.parser.ContainerDatanodeDatabase;
+-import org.apache.hadoop.ozone.containerlog.parser.ContainerLogFileParser;
+-import org.apache.hadoop.ozone.containerlog.parser.DBConsts;
++import org.apache.hadoop.hdds.cli.AbstractSubcommand;
++import org.apache.hadoop.ozone.debug.logs.container.utils.ContainerDatanodeDatabase;
++import org.apache.hadoop.ozone.debug.logs.container.utils.ContainerLogFileParser;
++import org.apache.hadoop.ozone.debug.logs.container.utils.SQLDBConstants;
+ import picocli.CommandLine;
+ 
+ /**
+@@ -35,7 +36,7 @@
+     description = "Parse container logs and extract key details such as datanode ID, container ID, state, " +
+             "BCSID, timestamp, log level, index value, and messages (if any)."
+ )
+-public class ContainerLogParser implements Callable<Void> {
++public class ContainerLogParser extends AbstractSubcommand implements Callable<Void> {
+   private static final int DEFAULT_THREAD_COUNT = 10;
+   
+   @CommandLine.Option(names = {"--path"},
+@@ -54,46 +55,42 @@ public class ContainerLogParser implements Callable<Void> {
+   @Override
+   public Void call() throws Exception {
+     if (threadCount <= 0) {
+-      System.out.println("Invalid threadCount value provided (" + threadCount + "). Using default value: "
++      out().println("Invalid threadCount value provided (" + threadCount + "). Using default value: "
+           + DEFAULT_THREAD_COUNT);
+       threadCount = DEFAULT_THREAD_COUNT;
+     }
+     
+     Path logPath = Paths.get(path);
+     if (!Files.exists(logPath) || !Files.isDirectory(logPath)) {
+-      System.err.println("Invalid path provided: " + path);
++      err().println("Invalid path provided: " + path);
+       return null;
+     }
+     
+     Path providedDbPath;
+     if (parent.getDbPath() == null) {
+-      providedDbPath = Paths.get(System.getProperty("user.dir"), DBConsts.DEFAULT_DB_FILENAME);
++      providedDbPath = Paths.get(System.getProperty("user.dir"), SQLDBConstants.DEFAULT_DB_FILENAME);
+ 
+-      System.out.println("No database path provided. Creating new database at: " + providedDbPath);
++      out().println("No database path provided. Creating new database at: " + providedDbPath);
+     } else {
+       providedDbPath = Paths.get(parent.getDbPath());
+       Path parentDir = providedDbPath.getParent();
+ 
+       if (parentDir != null && !Files.exists(parentDir)) {
+-        System.err.println("The parent directory of the provided database path does not exist: " + parentDir);
++        err().println("The parent directory of the provided database path does not exist: " + parentDir);
+         return null;
+       }
+     }
+     
+-    ContainerDatanodeDatabase.setDatabasePath(providedDbPath.toString());
+-    ContainerDatanodeDatabase cdd = new ContainerDatanodeDatabase();
++    ContainerDatanodeDatabase cdd = new ContainerDatanodeDatabase(providedDbPath.toString());
+     ContainerLogFileParser parser = new ContainerLogFileParser();
++    
++    cdd.createDatanodeContainerLogTable();
+ 
+-    try {
+-      cdd.createDatanodeContainerLogTable();
++    parser.processLogEntries(path, cdd, threadCount);
+ 
+-      parser.processLogEntries(path, cdd, threadCount);
++    cdd.insertLatestContainerLogData();
++    out().println("Successfully parsed the log files and updated the respective tables");
+ 
+-      cdd.insertLatestContainerLogData();
+-      System.out.println("Successfully parsed the log files and updated the respective tables");
+-    } catch (Exception e) {
+-      throw e;
+-    }
+     return null;
+   }
+ 
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ListContainers.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ListContainers.java
+index 7bfa66a742..6bc2e4b136 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ListContainers.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/ListContainers.java
+@@ -17,13 +17,11 @@
+ 
+ package org.apache.hadoop.ozone.debug.logs.container;
+ 
+-import java.nio.file.Files;
+ import java.nio.file.Path;
+-import java.nio.file.Paths;
+ import java.util.concurrent.Callable;
++import org.apache.hadoop.hdds.cli.AbstractSubcommand;
+ import org.apache.hadoop.hdds.protocol.proto.HddsProtos;
+-import org.apache.hadoop.ozone.containerlog.parser.ContainerDatanodeDatabase;
+-import org.apache.hadoop.ozone.containerlog.parser.DBConsts;
++import org.apache.hadoop.ozone.debug.logs.container.utils.ContainerDatanodeDatabase;
+ import org.apache.hadoop.ozone.shell.ListOptions;
+ import picocli.CommandLine;
+ 
+@@ -36,7 +34,7 @@
+     name = "list",
+     description = "Finds containers from the database based on the option provided."
+ )
+-public class ListContainers implements Callable<Void> {
++public class ListContainers extends AbstractSubcommand implements Callable<Void> {
+   
+   @CommandLine.Option(names = {"--state"},
+       description = "Life cycle state of the container.",
+@@ -51,35 +49,15 @@ public class ListContainers implements Callable<Void> {
+ 
+   @Override
+   public Void call() throws Exception {
+-    Path providedDbPath;
+-    if (parent.getDbPath() == null) {
+-      providedDbPath = Paths.get(System.getProperty("user.dir"), DBConsts.DEFAULT_DB_FILENAME);
+-
+-      if (Files.exists(providedDbPath) && Files.isRegularFile(providedDbPath)) {
+-        System.out.println("Using default database file found in current directory: " + providedDbPath);
+-      } else {
+-        System.err.println("No database path provided and default file '" + DBConsts.DEFAULT_DB_FILENAME + "' not " +
+-            "found in current directory. Please provide a valid database path");
+-        return null;
+-      }
+-    } else {
+-      providedDbPath = Paths.get(parent.getDbPath());
+-      Path parentDir = providedDbPath.getParent();
+-
+-      if (parentDir != null && !Files.exists(parentDir)) {
+-        System.err.println("The parent directory of the provided database path does not exist: " + parentDir);
+-        return null;
+-      }
+-    }
+-
+-    ContainerDatanodeDatabase.setDatabasePath(providedDbPath.toString());
+     
+-    ContainerDatanodeDatabase cdd = new ContainerDatanodeDatabase();
+-    try {
+-      cdd.listContainersByState(state.name(), listOptions.getLimit());
+-    } catch (Exception e) {
+-      throw e;
++    Path dbPath = parent.resolveDbPath();
++    if (dbPath == null) {
++      return null;
+     }
++
++    ContainerDatanodeDatabase cdd = new ContainerDatanodeDatabase(dbPath.toString());
++
++    cdd.listContainersByState(state.name(), listOptions.getLimit());
+     
+     return null;
+   }
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/ContainerDatanodeDatabase.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/ContainerDatanodeDatabase.java
+new file mode 100644
+index 0000000000..e05f70e7bb
+--- /dev/null
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/ContainerDatanodeDatabase.java
+@@ -0,0 +1,545 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.hadoop.ozone.debug.logs.container.utils;
++
++import java.io.OutputStreamWriter;
++import java.io.PrintWriter;
++import java.nio.charset.StandardCharsets;
++import java.sql.Connection;
++import java.sql.DriverManager;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.sql.Statement;
++import java.util.ArrayList;
++import java.util.Comparator;
++import java.util.HashMap;
++import java.util.HashSet;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++import org.apache.hadoop.hdds.conf.OzoneConfiguration;
++import org.apache.hadoop.hdds.protocol.proto.HddsProtos;
++import org.apache.hadoop.hdds.scm.container.ReplicationManagerReport;
++import org.apache.hadoop.ozone.om.OMConfigKeys;
++import org.sqlite.SQLiteConfig;
++
++/**
++ * Handles creation and interaction with the database.
++ * Provides methods for table creation, log data insertion, and index setup.
++ */
++public class ContainerDatanodeDatabase {
++  
++  private final String databasePath;
++  private static final int DEFAULT_REPLICATION_FACTOR;
++
++  private final PrintWriter out;
++
++  public ContainerDatanodeDatabase(String dbPath) {
++    this.databasePath = dbPath;
++    this.out = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true);
++  }
++
++  public ContainerDatanodeDatabase(String dbPath, PrintWriter out) {
++    this.databasePath = dbPath;
++    this.out = out;
++  }
++  
++  static {
++    OzoneConfiguration configuration = new OzoneConfiguration();
++    final String replication = configuration.getTrimmed(
++        OMConfigKeys.OZONE_SERVER_DEFAULT_REPLICATION_KEY,
++        OMConfigKeys.OZONE_SERVER_DEFAULT_REPLICATION_DEFAULT);
++
++    DEFAULT_REPLICATION_FACTOR = Integer.parseInt(replication.toUpperCase());
++  }
++  
++  private Connection getConnection() throws Exception {
++    if (databasePath == null) {
++      throw new IllegalStateException("Database path not set");
++    }
++    
++    Class.forName(SQLDBConstants.DRIVER);
++
++    SQLiteConfig config = new SQLiteConfig();
++
++    config.setJournalMode(SQLiteConfig.JournalMode.OFF);
++    config.setCacheSize(SQLDBConstants.CACHE_SIZE);
++    config.setLockingMode(SQLiteConfig.LockingMode.EXCLUSIVE);
++    config.setSynchronous(SQLiteConfig.SynchronousMode.OFF);
++    config.setTempStore(SQLiteConfig.TempStore.MEMORY);
++
++    return DriverManager.getConnection(SQLDBConstants.CONNECTION_PREFIX + databasePath, config.toProperties());
++  }
++
++  public void createDatanodeContainerLogTable() throws SQLException {
++    String createTableSQL = SQLDBConstants.CREATE_DATANODE_CONTAINER_LOG_TABLE;
++    try (Connection connection = getConnection();
++         Statement dropStmt = connection.createStatement();
++         Statement createStmt = connection.createStatement()) {
++      dropTable(SQLDBConstants.DATANODE_CONTAINER_LOG_TABLE_NAME, dropStmt);
++      createStmt.execute(createTableSQL);
++      createDatanodeContainerIndex(createStmt);
++    } catch (SQLException e) {
++      throw new SQLException("Error while creating the table: " + e.getMessage());
++    } catch (Exception e) {
++      throw new RuntimeException("Unexpected error: "  + e);
++    }
++  }
++
++  private void createContainerLogTable() throws SQLException {
++    String createTableSQL = SQLDBConstants.CREATE_CONTAINER_LOG_TABLE;
++    try (Connection connection = getConnection();
++         Statement dropStmt = connection.createStatement();
++         Statement createStmt = connection.createStatement()) {
++      dropTable(SQLDBConstants.CONTAINER_LOG_TABLE_NAME, dropStmt);
++      createStmt.execute(createTableSQL);
++    } catch (SQLException e) {
++      throw new SQLException("Error while creating the table: " + e.getMessage());
++    } catch (Exception e) {
++      throw new RuntimeException("Unexpected error: "  + e);
++    }
++  }
++
++  /**
++   * Inserts a list of container log entries into the DatanodeContainerLogTable.
++   *
++   * @param transitionList List of container log entries to insert into the table.
++   */
++  
++  public synchronized void insertContainerDatanodeData(List<DatanodeContainerInfo> transitionList) throws SQLException {
++
++    String insertSQL = SQLDBConstants.INSERT_DATANODE_CONTAINER_LOG;
++
++    long containerId = 0;
++    String datanodeId = null;
++    
++    try (Connection connection = getConnection();
++         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
++
++      int count = 0;
++
++      for (DatanodeContainerInfo info : transitionList) {
++        datanodeId = info.getDatanodeId();
++        containerId = info.getContainerId();
++
++        preparedStatement.setString(1, datanodeId);
++        preparedStatement.setLong(2, containerId);
++        preparedStatement.setString(3, info.getTimestamp());
++        preparedStatement.setString(4, info.getState());
++        preparedStatement.setLong(5, info.getBcsid());
++        preparedStatement.setString(6, info.getErrorMessage());
++        preparedStatement.setString(7, info.getLogLevel());
++        preparedStatement.setInt(8, info.getIndexValue());
++        preparedStatement.addBatch();
++
++        count++;
++
++        if (count % SQLDBConstants.BATCH_SIZE == 0) {
++          preparedStatement.executeBatch();
++          count = 0;
++        }
++      }
++
++      if (count != 0) {
++        preparedStatement.executeBatch();
++      }
++    } catch (SQLException e) {
++      throw new SQLException("Failed to insert container log for container " + containerId + 
++              " on datanode " + datanodeId);
++    } catch (Exception e) {
++      throw new RuntimeException("Unexpected error: "  + e);
++    }
++  }
++
++  private void createDatanodeContainerIndex(Statement stmt) throws SQLException {
++    String createIndexSQL = SQLDBConstants.CREATE_DATANODE_CONTAINER_INDEX;
++    stmt.execute(createIndexSQL);
++  }
++
++  /**
++   * Extracts the latest container log data from the DatanodeContainerLogTable
++   * and inserts it into ContainerLogTable.
++   */
++
++  public void insertLatestContainerLogData() throws SQLException {
++    createContainerLogTable();
++    String selectSQL = SQLDBConstants.SELECT_LATEST_CONTAINER_LOG;
++    String insertSQL = SQLDBConstants.INSERT_CONTAINER_LOG;
++
++    try (Connection connection = getConnection();
++         PreparedStatement selectStmt = connection.prepareStatement(selectSQL);
++         ResultSet resultSet = selectStmt.executeQuery();
++         PreparedStatement insertStmt = connection.prepareStatement(insertSQL)) {
++      
++      int count = 0;
++      
++      while (resultSet.next()) {
++        String datanodeId = resultSet.getString("datanode_id");
++        long containerId = resultSet.getLong("container_id");
++        String containerState = resultSet.getString("container_state");
++        long bcsid = resultSet.getLong("bcsid");
++        try {
++          insertStmt.setString(1, datanodeId);
++          insertStmt.setLong(2, containerId);
++          insertStmt.setString(3, containerState);
++          insertStmt.setLong(4, bcsid);
++          insertStmt.addBatch();
++
++          count++;
++
++          if (count % SQLDBConstants.BATCH_SIZE == 0) {
++            insertStmt.executeBatch();
++            count = 0;
++          }
++        } catch (SQLException e) {
++          throw new SQLException("Failed to insert container log entry for container " + containerId + " on datanode "
++                  + datanodeId);
++        }
++      }
++
++      if (count != 0) {
++        insertStmt.executeBatch();
++      }
++    } catch (SQLException e) {
++      throw new SQLException("Failed to insert container log entry: " + e.getMessage());
++    } catch (Exception e) {
++      throw new RuntimeException("Unexpected error: "  + e);
++    }
++  }
++
++  private void dropTable(String tableName, Statement stmt) throws SQLException {
++    String dropTableSQL = SQLDBConstants.DROP_TABLE.replace("{table_name}", tableName);
++    stmt.executeUpdate(dropTableSQL);
++  }
++
++  private void createContainerLogIndex(Statement stmt) throws SQLException {
++    String createIndexSQL = SQLDBConstants.CREATE_INDEX_LATEST_STATE;
++    stmt.execute(createIndexSQL);
++  }
++
++  /**
++   * Lists containers filtered by the specified state and writes their details to stdout 
++   * unless redirected to a file explicitly.
++   * The output includes timestamp, datanode ID, container ID, BCSID, error message, and index value,
++   * written in a human-readable table format to a file or console.
++   * Behavior based on the {@code limit} parameter:
++   * If {@code limit} is provided, only up to the specified number of rows are printed.
++   * If the number of matching containers exceeds the {@code limit},
++   * a note is printed indicating more containers exist.
++   *
++   * @param state the container state to filter by (e.g., "OPEN", "CLOSED", "QUASI_CLOSED")
++   * @param limit the maximum number of rows to display; use {@link Integer#MAX_VALUE} to fetch all rows
++   */
++
++  public void listContainersByState(String state, Integer limit) throws SQLException {
++    int count = 0;
++
++    boolean limitProvided = limit != Integer.MAX_VALUE;
++
++    String baseQuery = SQLDBConstants.SELECT_LATEST_CONTAINER_LOGS_BY_STATE;
++    String finalQuery = limitProvided ? baseQuery + " LIMIT ?" : baseQuery;
++
++    try (Connection connection = getConnection();
++         Statement stmt = connection.createStatement()) {
++
++      createContainerLogIndex(stmt);
++
++      try (PreparedStatement pstmt = connection.prepareStatement(finalQuery)) {
++        pstmt.setString(1, state);
++        if (limitProvided) {
++          pstmt.setInt(2, limit + 1);
++        }
++
++        try (ResultSet rs = pstmt.executeQuery()) {
++
++          out.printf("%-25s | %-35s | %-15s | %-15s | %-40s | %-12s%n",
++              "Timestamp", "Datanode ID", "Container ID", "BCSID", "Message", "Index Value");
++          out.println("-------------------------------------------------------------------------------------" +
++              "---------------------------------------------------------------------------------------");
++
++          while (rs.next()) {
++            if (limitProvided && count >= limit) {
++              out.println("Note: There might be more containers. Use -all option to list all entries");
++              break;
++            }
++            String timestamp = rs.getString("timestamp");
++            String datanodeId = rs.getString("datanode_id");
++            long containerId = rs.getLong("container_id");
++            long latestBcsid = rs.getLong("latest_bcsid");
++            String errorMessage = rs.getString("error_message");
++            int indexValue = rs.getInt("index_value");
++            count++;
++
++            out.printf("%-25s | %-35s | %-15d | %-15d | %-40s | %-12d%n",
++                timestamp, datanodeId, containerId, latestBcsid, errorMessage, indexValue);
++          }
++          
++          if (count == 0) {
++            out.printf("No containers found for state: %s%n", state);
++          } else {
++            out.printf("Number of containers listed: %d%n", count);
++          }
++        }
++      }
++    } catch (SQLException e) {
++      throw new SQLException("Error while retrieving containers with state " + state);
++    } catch (Exception e) {
++      throw new RuntimeException("Unexpected error: "  + e);
++    }
++  }
++
++  private void createIdxDclContainerStateTime(Connection conn) throws SQLException {
++    String sql = SQLDBConstants.CREATE_DCL_CONTAINER_STATE_TIME_INDEX;
++    try (Statement stmt = conn.createStatement()) {
++      stmt.execute(sql);
++    }
++  }
++
++  /**
++   * Displays detailed information about a container based on its ID, including its state, BCSID, 
++   * timestamp, message, and index value. It also checks for issues such as UNHEALTHY 
++   * replicas, under-replication, over-replication, OPEN_UNHEALTHY, OUASI_CLOSED_STUCK, mismatched replication
++   * and duplicate open.
++   *
++   * @param containerID The ID of the container to display details for.
++   */
++
++  public void showContainerDetails(Long containerID) throws SQLException {
++
++    try (Connection connection = getConnection()) {
++      createIdxDclContainerStateTime(connection);
++      List<DatanodeContainerInfo> logEntries = getContainerLogData(containerID, connection);
++
++      if (logEntries.isEmpty()) {
++        out.println("Missing container with ID: " + containerID);
++        return;
++      }
++
++      out.printf("%-25s | %-15s | %-35s | %-20s | %-10s | %-30s | %-12s%n",
++          "Timestamp", "Container ID", "Datanode ID", "Container State", "BCSID", "Message", "Index Value");
++      out.println("-----------------------------------------------------------------------------------" +
++          "-------------------------------------------------------------------------------------------------");
++
++      for (DatanodeContainerInfo entry : logEntries) {
++        out.printf("%-25s | %-15d | %-35s | %-20s | %-10d | %-30s | %-12d%n",
++            entry.getTimestamp(),
++            entry.getContainerId(),
++            entry.getDatanodeId(),
++            entry.getState(),
++            entry.getBcsid(),
++            entry.getErrorMessage(),
++            entry.getIndexValue());
++      }
++
++      logEntries.sort(Comparator.comparing(DatanodeContainerInfo::getTimestamp));
++
++      if (checkForMultipleOpenStates(logEntries)) {
++        out.println("Container " + containerID + " might have duplicate OPEN state.");
++        return;
++      }
++
++      Map<String, DatanodeContainerInfo> latestPerDatanode = new HashMap<>();
++      for (DatanodeContainerInfo entry : logEntries) {
++        String datanodeId = entry.getDatanodeId();
++        DatanodeContainerInfo existing = latestPerDatanode.get(datanodeId);
++        if (existing == null || entry.getTimestamp().compareTo(existing.getTimestamp()) > 0) {
++          latestPerDatanode.put(datanodeId, entry);
++        }
++      }
++
++      analyzeContainerHealth(containerID, latestPerDatanode);
++
++    } catch (SQLException e) {
++      throw new SQLException("Error while retrieving container with ID " + containerID);
++    } catch (Exception e) {
++      throw new RuntimeException("Unexpected error: "  + e);
++    }
++  }
++
++  private void analyzeContainerHealth(Long containerID, 
++      Map<String, DatanodeContainerInfo> latestPerDatanode) {
++
++    Set<String> lifeCycleStates = new HashSet<>();
++    for (HddsProtos.LifeCycleState state : HddsProtos.LifeCycleState.values()) {
++      lifeCycleStates.add(state.name());
++    }
++
++    Set<String> healthStates = new HashSet<>();
++    for (ReplicationManagerReport.HealthState state : ReplicationManagerReport.HealthState.values()) {
++      healthStates.add(state.name());
++    }
++
++    Set<String> unhealthyReplicas = new HashSet<>();
++    Set<String> closedReplicas = new HashSet<>();
++    Set<String> openReplicas = new HashSet<>();
++    Set<String> quasiclosedReplicas = new HashSet<>();
++    Set<String> deletedReplicas = new HashSet<>();
++    Set<Long> bcsids = new HashSet<>();
++    Set<String> datanodeIds = new HashSet<>();
++    List<String> closedTimestamps = new ArrayList<>();
++    List<String> otherTimestamps = new ArrayList<>();
++
++    for (DatanodeContainerInfo entry : latestPerDatanode.values()) {
++      String datanodeId = entry.getDatanodeId();
++      String state = entry.getState();
++      long bcsid = entry.getBcsid();
++      String stateTimestamp = entry.getTimestamp();
++
++      datanodeIds.add(datanodeId);
++      
++      if (healthStates.contains(state.toUpperCase())) {
++
++        ReplicationManagerReport.HealthState healthState =
++            ReplicationManagerReport.HealthState.valueOf(state.toUpperCase());
++
++        if (healthState == ReplicationManagerReport.HealthState.UNHEALTHY) {
++          unhealthyReplicas.add(datanodeId);
++        }
++
++      } else if (lifeCycleStates.contains(state.toUpperCase())) {
++
++        HddsProtos.LifeCycleState lifeCycleState = HddsProtos.LifeCycleState.valueOf(state.toUpperCase());
++
++        switch (lifeCycleState) {
++        case OPEN:
++          openReplicas.add(datanodeId);
++          otherTimestamps.add(stateTimestamp);
++          break;
++        case CLOSING:
++          otherTimestamps.add(stateTimestamp);
++          break;
++        case CLOSED:
++          closedReplicas.add(datanodeId);
++          bcsids.add(bcsid);
++          closedTimestamps.add(stateTimestamp);
++          break;
++        case QUASI_CLOSED:
++          quasiclosedReplicas.add(datanodeId);
++          otherTimestamps.add(stateTimestamp);
++          break;
++        case DELETED:
++          deletedReplicas.add(datanodeId);
++          break;
++        default:
++          break;
++        }
++
++      }
++    }
++
++    int closedCount = closedReplicas.size();
++    
++    boolean allClosedNewer = closedCount > 0 && closedTimestamps.stream()
++        .allMatch(ct -> otherTimestamps.stream().allMatch(ot -> ct.compareTo(ot) > 0));
++    
++    if (bcsids.size() > 1) {
++      out.println("Container " + containerID + " has MISMATCHED REPLICATION as there are multiple" +
++          " CLOSED containers with varying BCSIDs.");
++    } else if (closedCount == DEFAULT_REPLICATION_FACTOR && allClosedNewer) {
++      out.println("Container " + containerID + " has enough replicas.");
++    } else if (closedCount > DEFAULT_REPLICATION_FACTOR && allClosedNewer) {
++      out.println("Container " + containerID + " is OVER-REPLICATED.");
++    } else if (closedCount < DEFAULT_REPLICATION_FACTOR && closedCount != 0 && allClosedNewer) {
++      out.println("Container " + containerID + " is UNDER-REPLICATED.");
++    } else {
++      int replicaCount = datanodeIds.size();
++
++      if (!quasiclosedReplicas.isEmpty()
++              && closedReplicas.isEmpty()
++              && quasiclosedReplicas.size() >= DEFAULT_REPLICATION_FACTOR) {
++        out.println("Container " + containerID + " might be QUASI_CLOSED_STUCK.");
++      } else if (!unhealthyReplicas.isEmpty()) {
++        out.println("Container " + containerID + " has UNHEALTHY replicas.");
++      } else if (!openReplicas.isEmpty() &&
++              (replicaCount - openReplicas.size()) > 0) {
++        out.println("Container " + containerID + " might be OPEN_UNHEALTHY.");
++      } else if (replicaCount - deletedReplicas.size() < DEFAULT_REPLICATION_FACTOR) {
++        out.println("Container " + containerID + " is UNDER-REPLICATED.");
++      } else if (replicaCount - deletedReplicas.size() > DEFAULT_REPLICATION_FACTOR) {
++        out.println("Container " + containerID + " is OVER-REPLICATED.");
++      } else {
++        out.println("Container " + containerID + " has enough replicas.");
++      } 
++    }
++  }
++
++  /**
++   * Checks whether the specified container has multiple "OPEN" states.
++   * If multiple "OPEN" states are found, it returns {@code true}.
++   *
++   * @param entries The list of {@link DatanodeContainerInfo} entries to check for multiple "OPEN" states.
++   * @return {@code true} if multiple "OPEN" states are found, {@code false} otherwise.
++   */
++
++  private boolean checkForMultipleOpenStates(List<DatanodeContainerInfo> entries) {
++    List<String> firstOpenTimestamps = new ArrayList<>();
++    Set<String> firstOpenDatanodes = new HashSet<>();
++    boolean issueFound = false;
++
++    for (DatanodeContainerInfo entry : entries) {
++      if ("OPEN".equalsIgnoreCase(entry.getState())) {
++        if (firstOpenTimestamps.size() < DEFAULT_REPLICATION_FACTOR &&
++            !firstOpenDatanodes.contains(entry.getDatanodeId())) {
++          firstOpenTimestamps.add(entry.getTimestamp());
++          firstOpenDatanodes.add(entry.getDatanodeId());
++        } else if (isTimestampAfterFirstOpens(entry.getTimestamp(), firstOpenTimestamps)) {
++          issueFound = true;
++        }
++      }
++    }
++    return issueFound;
++  }
++
++  private boolean isTimestampAfterFirstOpens(String timestamp, List<String> firstOpenTimestamps) {
++    for (String firstTimestamp : firstOpenTimestamps) {
++      if (timestamp.compareTo(firstTimestamp) > 0) {
++        return true;
++      }
++    }
++    return false;
++  }
++
++  private List<DatanodeContainerInfo> getContainerLogData(Long containerID, Connection connection)
++      throws SQLException {
++    String query = SQLDBConstants.CONTAINER_DETAILS_QUERY;
++    List<DatanodeContainerInfo> logEntries = new ArrayList<>();
++
++    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
++      preparedStatement.setLong(1, containerID);
++      try (ResultSet rs = preparedStatement.executeQuery()) {
++        while (rs.next()) {
++          DatanodeContainerInfo entry = new DatanodeContainerInfo.Builder()
++              .setTimestamp(rs.getString("timestamp"))
++              .setContainerId(rs.getLong("container_id"))
++              .setDatanodeId(rs.getString("datanode_id"))
++              .setState(rs.getString("container_state"))
++              .setBcsid(rs.getLong("bcsid"))
++              .setErrorMessage(rs.getString("error_message"))
++              .setIndexValue(rs.getInt("index_value"))
++              .build();
++
++          logEntries.add(entry);
++        }
++      }
++    }
++
++    return logEntries;
++  }
++}
++
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/ContainerLogFileParser.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/ContainerLogFileParser.java
+similarity index 99%
+rename from hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/ContainerLogFileParser.java
+rename to hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/ContainerLogFileParser.java
+index c41beb328f..f4d5c53ad2 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/ContainerLogFileParser.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/ContainerLogFileParser.java
+@@ -15,7 +15,7 @@
+  * limitations under the License.
+  */
+ 
+-package org.apache.hadoop.ozone.containerlog.parser;
++package org.apache.hadoop.ozone.debug.logs.container.utils;
+ 
+ import java.io.BufferedReader;
+ import java.io.IOException;
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/DatanodeContainerInfo.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/DatanodeContainerInfo.java
+similarity index 98%
+rename from hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/DatanodeContainerInfo.java
+rename to hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/DatanodeContainerInfo.java
+index a4134c0b3a..1928bb2837 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/DatanodeContainerInfo.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/DatanodeContainerInfo.java
+@@ -15,7 +15,7 @@
+  * limitations under the License.
+  */
+ 
+-package org.apache.hadoop.ozone.containerlog.parser;
++package org.apache.hadoop.ozone.debug.logs.container.utils;
+ 
+ /**
+  *Holds information about a container.
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/DBConsts.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/SQLDBConstants.java
+similarity index 86%
+rename from hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/DBConsts.java
+rename to hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/SQLDBConstants.java
+index 5cef4a335d..c58b605a2f 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/DBConsts.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/SQLDBConstants.java
+@@ -15,12 +15,12 @@
+  * limitations under the License.
+  */
+ 
+-package org.apache.hadoop.ozone.containerlog.parser;
++package org.apache.hadoop.ozone.debug.logs.container.utils;
+ 
+ /**
+  * Constants used for ContainerDatanodeDatabase.
+  */
+-public final class DBConsts {
++public final class SQLDBConstants {
+   
+   public static final String DEFAULT_DB_FILENAME = "container_datanode.db";
+   public static final String DRIVER = "org.sqlite.JDBC";
+@@ -63,8 +63,13 @@ public final class DBConsts {
+           "WHERE sub_dcl.datanode_id = cl.datanode_id AND" +
+           " sub_dcl.container_id = cl.container_id AND sub_dcl.bcsid = cl.latest_bcsid" +
+           " AND sub_dcl.container_state = cl.latest_state)";
++  public static final String CONTAINER_DETAILS_QUERY = "SELECT d.timestamp, d.container_id, d.datanode_id, " +
++      "d.container_state, d.bcsid, d.error_message, d.index_value FROM DatanodeContainerLogTable d " +
++      "WHERE d.container_id = ? ORDER BY d.datanode_id ASC, d.timestamp ASC;";
++  public static final String CREATE_DCL_CONTAINER_STATE_TIME_INDEX = "CREATE INDEX IF NOT EXISTS " +
++      "idx_dcl_container_state_time ON DatanodeContainerLogTable(container_id, container_state, timestamp);";
+   
+-  private DBConsts() {
++  private SQLDBConstants() {
+     //Never constructed
+   }
+ }
+diff --git a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/package-info.java b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/package-info.java
+similarity index 93%
+rename from hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/package-info.java
+rename to hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/package-info.java
+index 9a22345a06..5c33e2b09b 100644
+--- a/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/containerlog/parser/package-info.java
++++ b/hadoop-ozone/tools/src/main/java/org/apache/hadoop/ozone/debug/logs/container/utils/package-info.java
+@@ -19,4 +19,4 @@
+  * Classes used for Ozone Container Log parser tool.
+  */
+ 
+-package org.apache.hadoop.ozone.containerlog.parser;
++package org.apache.hadoop.ozone.debug.logs.container.utils;

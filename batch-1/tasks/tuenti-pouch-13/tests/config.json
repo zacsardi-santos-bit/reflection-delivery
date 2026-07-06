@@ -1,0 +1,22 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json . -count=1",
+  "test_files": [
+    "state_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/tuenti/pouch::TestPouchRun",
+    "github.com/tuenti/pouch::TestPouchWatch",
+    "github.com/tuenti/pouch::TestDirPerms",
+    "github.com/tuenti/pouch::TestResolveDataTemplates",
+    "github.com/tuenti/pouch::TestLoadPouchfile",
+    "github.com/tuenti/pouch::TestWrongPouchfile",
+    "github.com/tuenti/pouch::TestSortingFilesUsing",
+    "github.com/tuenti/pouch::TestFilesUsingBySecrets",
+    "github.com/tuenti/pouch::TestPouchStateNextUpdate",
+    "github.com/tuenti/pouch::TestConsistentTTU"
+  ],
+  "PASS_TO_PASS": []
+}

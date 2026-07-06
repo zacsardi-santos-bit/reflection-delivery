@@ -1,0 +1,9 @@
+I'm working on a Go repository that has several internal developer tools — a formatter that renames method receiver variables to a standard name, a formatter that ensures test files have consistent blank-line structure, and a linter that enforces alphabetical ordering of struct fields. These tools each currently embed their own custom test-runner logic directly inside the main script (invoked with a special command-line argument), rather than using the standard Go test runner. I want to convert them to use the standard testing approach.
+
+Concretely, I need each tool's core logic to be exposed through exported functions in their respective packages, with proper standalone module declarations, and I need a Go workspace file at the repo root so all tools can be tested together with a single standard test command. The old embedded test-runner code in each tool should be removed, replaced by conventional test files that call those exported functions.
+
+For the method-receiver formatter, the exported functions should let callers check whether a file path is a regular (non-test) Go file, process a single line of source code to rename its receiver to the standard name, and process entire file contents at once.
+
+For the unit-test formatter, the exported functions should allow checking whether a file path is a Go test file, detecting whether a line is a top-level subtest invocation, and reformatting file contents to ensure blank lines before top-level subtests.
+
+For the struct-sorting linter, the core lint function should become exported and return a type with a string representation that reports each violation in the form of a file location, the struct name, and the expected sorted order of fields. Structs without fields and certain exempt struct names should continue to produce no violations. Both struct type definitions and composite literal instantiations should be checked.

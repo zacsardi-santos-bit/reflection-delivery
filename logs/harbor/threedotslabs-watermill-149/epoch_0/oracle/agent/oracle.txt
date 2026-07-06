@@ -1,6 +1,0 @@
-patching file _examples/real-world-examples/persistent-event-log/README.md
-patching file _examples/real-world-examples/transactional-events/README.md
-patching file docs/build.sh
-patching file docs/content/docs/middlewares.md
-patching file docs/content/pubsubs/sql.md
-patching file message/router.go

@@ -1,0 +1,1677 @@
+diff --git a/code/core/src/common/js-package-manager/BUNProxy.ts b/code/core/src/common/js-package-manager/BUNProxy.ts
+index 600f0a60e37..ab9d1172f89 100644
+--- a/code/core/src/common/js-package-manager/BUNProxy.ts
++++ b/code/core/src/common/js-package-manager/BUNProxy.ts
+@@ -1,13 +1,17 @@
+-import { readFileSync } from 'node:fs';
++import { readFileSync, writeFileSync } from 'node:fs';
+ import { join } from 'node:path';
+ 
+ import { logger, prompt } from 'storybook/internal/node-logger';
+-import { FindPackageVersionsError } from 'storybook/internal/server-errors';
++import {
++  FindPackageVersionsError,
++  MinimumReleaseAgeHandledError,
++} from 'storybook/internal/server-errors';
+ 
+ import * as find from 'empathic/find';
+ // eslint-disable-next-line depend/ban-dependencies
+ import type { ResultPromise } from 'execa';
+ import sort from 'semver/functions/sort.js';
++import { dedent } from 'ts-dedent';
+ 
+ import type { ExecuteCommandOptions } from '../utils/command.ts';
+ import { executeCommand } from '../utils/command.ts';
+@@ -15,6 +19,16 @@ import { getProjectRoot } from '../utils/paths.ts';
+ import { JsPackageManager, PackageManagerName } from './JsPackageManager.ts';
+ import type { PackageJson } from './PackageJson.ts';
+ import type { InstallationMetadata, PackageMetadata } from './types.ts';
++import {
++  getErrorLogs,
++  getLatestStableVersionAdheringToMinimumAgeGate,
++  getStorybookRerunCommand,
++  getStorybookRerunInstruction,
++  hasStorybookMinimumAgeExclusions,
++  parsePackageTimeMap,
++  parseReleaseTime,
++  STORYBOOK_PACKAGE_PATTERNS,
++} from './util.ts';
+ 
+ type NpmDependency = {
+   version: string;
+@@ -210,6 +224,135 @@ export class BUNProxy extends JsPackageManager {
+     });
+   }
+ 
++  async installDependencies(options?: { force?: boolean }) {
++    try {
++      await super.installDependencies(options);
++    } catch (error) {
++      const logs = getErrorLogs(error);
++
++      if (logs.includes('minimum-release-age') || logs.includes('minimum release age')) {
++        const handledError = new MinimumReleaseAgeHandledError({
++          packageManagerName: 'bun',
++          minimumReleaseAgeConfigName: 'minimumReleaseAge',
++          minimumReleaseAgeConfigDocs: 'https://bun.com/docs/pm/cli/install#minimum-release-age',
++          minimumReleaseAgeExclusionsConfigName: 'minimumReleaseAgeExcludes',
++          failedPackage: this.extractMinimumReleaseAgePackage(logs),
++          cause: error,
++        });
++
++        logger.error(handledError.message);
++        throw handledError;
++      }
++
++      throw error;
++    }
++  }
++
++  async precheckStorybookPackageInstall({
++    storybookVersion,
++    nonInteractive,
++    installContext,
++  }: {
++    storybookVersion: string;
++    nonInteractive: boolean;
++    installContext: 'create' | 'upgrade';
++  }): Promise<void> {
++    const bunfig = this.readBunfig();
++    const minimumReleaseAgeSeconds = this.getMinimumReleaseAgeSeconds(bunfig);
++
++    if (!minimumReleaseAgeSeconds) {
++      return;
++    }
++
++    if (hasStorybookMinimumAgeExclusions(this.getMinimumReleaseAgeExcludes(bunfig ?? ''))) {
++      return;
++    }
++
++    const timeMap = await this.getPackageTimeMap('storybook');
++    if (!timeMap) {
++      return;
++    }
++
++    const releaseTime = timeMap[storybookVersion];
++    if (!releaseTime) {
++      return;
++    }
++
++    const publishedAt = parseReleaseTime(releaseTime);
++    if (!publishedAt) {
++      return;
++    }
++
++    const ageSeconds = Math.floor((Date.now() - publishedAt.getTime()) / 1_000);
++    if (ageSeconds >= minimumReleaseAgeSeconds) {
++      return;
++    }
++
++    const compatibleVersion = getLatestStableVersionAdheringToMinimumAgeGate(
++      timeMap,
++      Math.ceil(minimumReleaseAgeSeconds / 60)
++    );
++
++    if (nonInteractive) {
++      this.updateMinimumReleaseAgeExcludes();
++      logger.info(
++        dedent`
++          bun minimumReleaseAge would block storybook@${storybookVersion} from being installed because it was released within the configured minimumReleaseAge window, so Storybook updated minimumReleaseAgeExcludes for this project automatically.
++
++          Added patterns: storybook, @storybook/*, eslint-plugin-storybook, @chromatic-com/storybook
++
++          Read more:
++          - https://bun.com/docs/pm/cli/install#minimum-release-age
++        `
++      );
++      return;
++    }
++
++    logger.warn(
++      `bun minimumReleaseAge will block storybook@${storybookVersion} from being installed because it was released within the disallowed immaturity window.`
++    );
++
++    const rerunError = new MinimumReleaseAgeHandledError({
++      message: this.createMinimumReleaseAgeRerunMessage({
++        currentVersion: storybookVersion,
++        compatibleVersion,
++        installContext,
++      }),
++    });
++
++    const selection = await prompt.select(
++      {
++        message: 'How would you like to proceed?',
++        options: [
++          {
++            label: 'Update bunfig.toml to exclude Storybook packages from minimumReleaseAge',
++            value: 'exclude',
++          },
++          {
++            label: compatibleVersion
++              ? `Stop now and rerun with the most recent allowed release: storybook@${compatibleVersion}`
++              : 'Stop now and rerun with an older stable Storybook release later',
++            value: 'rerun',
++          },
++        ],
++      },
++      {
++        onCancel: () => {
++          logger.error(rerunError.message);
++          throw rerunError;
++        },
++      }
++    );
++
++    if (selection === 'exclude') {
++      this.updateMinimumReleaseAgeExcludes();
++      return;
++    }
++
++    logger.error(rerunError.message);
++    throw rerunError;
++  }
++
+   public async getRegistryURL() {
+     const process = executeCommand({
+       command: 'npm',
+@@ -317,22 +460,180 @@ export class BUNProxy extends JsPackageManager {
+     };
+   }
+ 
+-  public parseErrorFromLogs(logs: string): string {
+-    let finalMessage = 'NPM error';
+-    const match = logs.match(NPM_ERROR_REGEX);
++  private getMinimumReleaseAgeSeconds(bunfig = this.readBunfig()): number | null {
++    if (!bunfig) {
++      return null;
++    }
+ 
+-    if (match) {
+-      const errorCode = match[1] as keyof typeof NPM_ERROR_CODES;
+-      if (errorCode) {
+-        finalMessage = `${finalMessage} ${errorCode}`;
+-      }
++    const match = bunfig.match(/^minimumReleaseAge\s*=\s*(\d+)\s*$/m);
++    if (!match) {
++      return null;
++    }
+ 
+-      const errorMessage = NPM_ERROR_CODES[errorCode];
+-      if (errorMessage) {
+-        finalMessage = `${finalMessage} - ${errorMessage}`;
+-      }
++    const parsedValue = Number.parseInt(match[1], 10);
++    return Number.isFinite(parsedValue) && parsedValue > 0 ? parsedValue : null;
++  }
++
++  private async getPackageTimeMap(packageName: string): Promise<Record<string, string> | null> {
++    const result = await executeCommand({
++      command: 'npm',
++      cwd: this.cwd,
++      args: ['info', packageName, 'time', '--json'],
++      stdio: 'pipe',
++    });
++    const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++
++    if (!normalizedValue) {
++      return null;
++    }
++
++    return parsePackageTimeMap(JSON.parse(normalizedValue));
++  }
++
++  private createMinimumReleaseAgeRerunMessage({
++    currentVersion,
++    compatibleVersion,
++    installContext,
++  }: {
++    currentVersion: string;
++    compatibleVersion: string | null;
++    installContext: 'create' | 'upgrade';
++  }) {
++    const rerunCommand = getStorybookRerunCommand(installContext, compatibleVersion);
++    const rerunInstruction = getStorybookRerunInstruction(installContext);
++
++    return dedent`
++      bun minimumReleaseAge blocked storybook@${currentVersion} from being installed.
++
++      ${rerunInstruction}
++      ${rerunCommand}
++
++      Read more:
++      - https://bun.com/docs/pm/cli/install#minimum-release-age
++    `;
++  }
++
++  private updateMinimumReleaseAgeExcludes() {
++    const bunfigPath = join(this.cwd, 'bunfig.toml');
++    const currentContent = this.readBunfig() ?? '';
++    const lineEnding = currentContent.includes('\r\n') ? '\r\n' : '\n';
++    const nextPatterns = Array.from(
++      new Set([...this.getMinimumReleaseAgeExcludes(currentContent), ...STORYBOOK_PACKAGE_PATTERNS])
++    );
++    const replacement = [
++      'minimumReleaseAgeExcludes = [',
++      ...nextPatterns.map((pattern) => `  "${pattern}",`),
++      ']',
++    ].join(lineEnding);
++
++    // `minimumReleaseAgeExcludes` belongs in Bun's `[install]` table. Restricting
++    // the rewrite to that slice avoids accidentally appending the key into a later table.
++    const installSectionRange = this.getTomlSectionRange(currentContent, 'install');
++    const nextContent = installSectionRange
++      ? [
++          currentContent.slice(0, installSectionRange.start),
++          this.updateMinimumReleaseAgeExcludesInContent(
++            currentContent.slice(installSectionRange.start, installSectionRange.end),
++            replacement,
++            lineEnding
++          ),
++          currentContent.slice(installSectionRange.end),
++        ].join('')
++      : this.updateMinimumReleaseAgeExcludesInContent(currentContent, replacement, lineEnding);
++
++    writeFileSync(bunfigPath, nextContent);
++  }
++
++  private updateMinimumReleaseAgeExcludesInContent(
++    content: string,
++    replacement: string,
++    lineEnding: string
++  ) {
++    // Keep an existing list in place when it already exists. Otherwise, insert the
++    // new property directly after `minimumReleaseAge` so related Bun settings stay together.
++    if (content.match(/^minimumReleaseAgeExcludes\s*=\s*\[[\s\S]*?\]/m)) {
++      return content.replace(/^minimumReleaseAgeExcludes\s*=\s*\[[\s\S]*?\]/m, replacement);
++    }
++
++    if (content.match(/^minimumReleaseAge\s*=\s*.+$/m)) {
++      return content.replace(
++        /^minimumReleaseAge\s*=\s*.+$/m,
++        (minimumReleaseAgeLine) => `${minimumReleaseAgeLine}${lineEnding}${replacement}`
++      );
++    }
++
++    return `${content}${content.trim().length > 0 ? `${lineEnding}${lineEnding}` : ''}${replacement}${lineEnding}`;
++  }
++
++  private getTomlSectionRange(content: string, sectionName: string) {
++    const escapedSectionName = sectionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
++    const sectionHeader = new RegExp(`^\\[${escapedSectionName}\\]\\s*$`, 'm');
++    const sectionMatch = sectionHeader.exec(content);
++
++    if (!sectionMatch || sectionMatch.index === undefined) {
++      return null;
++    }
++
++    const nextSectionHeader = /^\[[^\]]+\]\s*$/gm;
++    nextSectionHeader.lastIndex = sectionMatch.index + sectionMatch[0].length;
++    const nextSectionMatch = nextSectionHeader.exec(content);
++
++    return {
++      start: sectionMatch.index,
++      end: nextSectionMatch?.index ?? content.length,
++    };
++  }
++
++  private getMinimumReleaseAgeExcludes(bunfig: string): string[] {
++    const match = bunfig.match(/^minimumReleaseAgeExcludes\s*=\s*\[([\s\S]*?)\]/m);
++    if (!match) {
++      return [];
++    }
++
++    return Array.from(match[1].matchAll(/"([^"]+)"/g), (entry) => entry[1]);
++  }
++
++  private readBunfig(): string | null {
++    try {
++      return readFileSync(join(this.cwd, 'bunfig.toml'), 'utf-8');
++    } catch {
++      return null;
++    }
++  }
++
++  private extractMinimumReleaseAgePackage(logs: string): string | null {
++    const exactVersionMatch = logs.match(
++      /Version\s+"((?:@[^/\s"]+\/)?[^@\s"]+@[^\s"]+)"\s+was published within minimum release age/
++    );
++
++    if (exactVersionMatch) {
++      return exactVersionMatch[1];
++    }
++
++    const rangedSpecifierMatch = logs.match(
++      /No version matching\s+"((?:@[^/\s"]+\/)?[^\s"]+)"\s+found for specifier\s+"([^"]+)"\s+\(blocked by minimum-release-age:/
++    );
++
++    if (rangedSpecifierMatch) {
++      const [, packageName, specifier] = rangedSpecifierMatch;
++      return `${packageName}@${specifier}`;
++    }
++
++    const failedToResolveMatch = logs.match(
++      /error:\s+((?:@[^/\s]+\/)?[^@\s]+@[^\s]+)\s+failed to resolve/
++    );
++
++    if (failedToResolveMatch) {
++      return failedToResolveMatch[1];
++    }
++
++    const match = logs.match(/((?:@[^/\s]+\/)?[^@\s]+)@([^\s"']+)/);
++
++    if (!match) {
++      return null;
+     }
+ 
+-    return finalMessage.trim();
++    const [, packageName, version] = match;
++    return `${packageName}@${version}`;
+   }
+ }
+diff --git a/code/core/src/common/js-package-manager/JsPackageManager.ts b/code/core/src/common/js-package-manager/JsPackageManager.ts
+index 61a75385c4a..8b8322e77e2 100644
+--- a/code/core/src/common/js-package-manager/JsPackageManager.ts
++++ b/code/core/src/common/js-package-manager/JsPackageManager.ts
+@@ -189,6 +189,12 @@ export abstract class JsPackageManager {
+     this.clearInstalledVersionCache();
+   }
+ 
++  async precheckStorybookPackageInstall(options: {
++    storybookVersion: string;
++    nonInteractive: boolean;
++    installContext: 'create' | 'upgrade';
++  }): Promise<void> {}
++
+   async dedupeDependencies(options?: { force?: boolean }) {
+     await prompt.executeTask(
+       (_signal) =>
+@@ -665,7 +671,6 @@ export abstract class JsPackageManager {
+     pattern?: string[],
+     options?: { depth: number }
+   ): Promise<InstallationMetadata | undefined>;
+-  public abstract parseErrorFromLogs(logs?: string): string;
+ 
+   // TODO: Remove pnp compatibility code in SB11
+   /** Returns the installed (within node_modules or pnp zip) version of a specified package */
+diff --git a/code/core/src/common/js-package-manager/NPMProxy.ts b/code/core/src/common/js-package-manager/NPMProxy.ts
+index 521da495cc2..bb7f027fd90 100644
+--- a/code/core/src/common/js-package-manager/NPMProxy.ts
++++ b/code/core/src/common/js-package-manager/NPMProxy.ts
+@@ -3,12 +3,16 @@ import { platform } from 'node:os';
+ import { join } from 'node:path';
+ 
+ import { logger, prompt } from 'storybook/internal/node-logger';
+-import { FindPackageVersionsError } from 'storybook/internal/server-errors';
++import {
++  FindPackageVersionsError,
++  MinimumReleaseAgeHandledError,
++} from 'storybook/internal/server-errors';
+ 
+ import * as find from 'empathic/find';
+ // eslint-disable-next-line depend/ban-dependencies
+ import type { ResultPromise } from 'execa';
+ import sort from 'semver/functions/sort.js';
++import { dedent } from 'ts-dedent';
+ 
+ import type { ExecuteCommandOptions } from '../utils/command.ts';
+ import { executeCommand } from '../utils/command.ts';
+@@ -16,6 +20,16 @@ import { getProjectRoot } from '../utils/paths.ts';
+ import { JsPackageManager, PackageManagerName } from './JsPackageManager.ts';
+ import type { PackageJson } from './PackageJson.ts';
+ import type { InstallationMetadata, PackageMetadata } from './types.ts';
++import {
++  getAgeInMinutes,
++  getErrorLogs,
++  getLatestStableVersionAdheringToMinimumAgeGate,
++  getStorybookRerunCommand,
++  getStorybookRerunInstruction,
++  parsePackageTimeMap,
++  parsePositiveIntegerConfigValue,
++  parseReleaseTime,
++} from './util.ts';
+ 
+ type NpmDependency = {
+   version: string;
+@@ -31,6 +45,9 @@ type NpmDependencies = {
+ export type NpmListOutput = {
+   dependencies: NpmDependencies;
+ };
++
++const NPM_CONFIG_WORKSPACE_ARGS = ['--workspaces=false', '--include-workspace-root'] as const;
++
+ const NPM_ERROR_REGEX = /npm (ERR!|error) (code|errno) (\w+)/i;
+ 
+ const NPM_ERROR_CODES = {
+@@ -186,12 +203,89 @@ export class NPMProxy extends JsPackageManager {
+     });
+   }
+ 
++  async installDependencies(options?: { force?: boolean }) {
++    try {
++      await super.installDependencies(options);
++    } catch (error) {
++      const logs = getErrorLogs(error);
++
++      if (
++        logs.match(/npm\s+(ERR!|error)\s+code\s+ETARGET/i) &&
++        logs.includes('with a date before')
++      ) {
++        const handledError = new MinimumReleaseAgeHandledError({
++          packageManagerName: 'npm',
++          minimumReleaseAgeConfigName: 'min-release-age',
++          minimumReleaseAgeConfigDocs:
++            'https://docs.npmjs.com/cli/v11/using-npm/config#min-release-age',
++          failedPackage: this.extractMinimumReleaseAgePackage(logs),
++          cause: error,
++        });
++
++        logger.error(handledError.message);
++        throw handledError;
++      }
++
++      throw error;
++    }
++  }
++
++  async precheckStorybookPackageInstall({
++    storybookVersion,
++    installContext,
++  }: {
++    storybookVersion: string;
++    nonInteractive: boolean;
++    installContext: 'create' | 'upgrade';
++  }): Promise<void> {
++    const minimumReleaseAgeDays = await this.getMinimumReleaseAge();
++
++    if (!minimumReleaseAgeDays) {
++      return;
++    }
++
++    const timeMap = await this.getPackageTimeMap('storybook');
++    if (!timeMap) {
++      return;
++    }
++
++    const releaseTime = timeMap[storybookVersion];
++    if (!releaseTime) {
++      return;
++    }
++
++    const publishedAt = parseReleaseTime(releaseTime);
++    if (!publishedAt) {
++      return;
++    }
++
++    const ageDays = getAgeInMinutes(publishedAt, new Date()) / (24 * 60);
++    if (ageDays >= minimumReleaseAgeDays) {
++      return;
++    }
++
++    const compatibleVersion = getLatestStableVersionAdheringToMinimumAgeGate(
++      timeMap,
++      minimumReleaseAgeDays * 24 * 60
++    );
++    const error = new MinimumReleaseAgeHandledError({
++      message: this.createMinimumReleaseAgeRerunMessage({
++        currentVersion: storybookVersion,
++        compatibleVersion,
++        installContext,
++      }),
++    });
++
++    logger.error(error.message);
++    throw error;
++  }
++
+   public async getRegistryURL() {
+     const process = executeCommand({
+       command: 'npm',
+       // "npm config" commands are not allowed in workspaces per default
+       // https://github.com/npm/cli/issues/6099#issuecomment-1847584792
+-      args: ['config', 'get', 'registry', '-ws=false', '-iwr'],
++      args: ['config', 'get', 'registry', ...NPM_CONFIG_WORKSPACE_ARGS],
+     });
+     const result = await process;
+     const url = (typeof result.stdout === 'string' ? result.stdout : '').trim();
+@@ -291,22 +385,75 @@ export class NPMProxy extends JsPackageManager {
+     };
+   }
+ 
+-  public parseErrorFromLogs(logs: string): string {
+-    let finalMessage = 'NPM error';
+-    const match = logs.match(NPM_ERROR_REGEX);
++  private async getMinimumReleaseAge(): Promise<number | null> {
++    const result = await executeCommand({
++      command: 'npm',
++      args: ['config', 'get', 'min-release-age', ...NPM_CONFIG_WORKSPACE_ARGS],
++      cwd: this.cwd,
++      stdio: 'pipe',
++    });
+ 
+-    if (match) {
+-      const errorCode = match[3] as keyof typeof NPM_ERROR_CODES;
+-      if (errorCode) {
+-        finalMessage = `${finalMessage} ${errorCode}`;
+-      }
++    return parsePositiveIntegerConfigValue(
++      typeof result.stdout === 'string' ? result.stdout : undefined
++    );
++  }
+ 
+-      const errorMessage = NPM_ERROR_CODES[errorCode];
+-      if (errorMessage) {
+-        finalMessage = `${finalMessage} - ${errorMessage}`;
+-      }
++  private async getPackageTimeMap(packageName: string): Promise<Record<string, string> | null> {
++    const result = await executeCommand({
++      command: 'npm',
++      args: ['info', packageName, 'time', '--json'],
++      cwd: this.cwd,
++      stdio: 'pipe',
++    });
++
++    const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++    if (!normalizedValue) {
++      return null;
++    }
++
++    return parsePackageTimeMap(JSON.parse(normalizedValue));
++  }
++
++  private createMinimumReleaseAgeRerunMessage({
++    currentVersion,
++    compatibleVersion,
++    installContext,
++  }: {
++    currentVersion: string;
++    compatibleVersion: string | null;
++    installContext: 'create' | 'upgrade';
++  }) {
++    const rerunCommand = getStorybookRerunCommand(installContext, compatibleVersion);
++    const rerunInstruction = getStorybookRerunInstruction(installContext);
++
++    return dedent`
++      npm min-release-age blocked storybook@${currentVersion} from being installed.
++
++      ${rerunInstruction}
++      ${rerunCommand}
++
++      Read more:
++      - https://docs.npmjs.com/cli/v11/using-npm/config#min-release-age
++    `;
++  }
++
++  private extractMinimumReleaseAgePackage(logs: string): string | null {
++    const exactVersionMatch = logs.match(
++      /No matching version found for\s+((?:@[^/\s]+\/)?[^@\s]+)@([^\s]+)\s+with a date before/i
++    );
++
++    if (exactVersionMatch) {
++      const [, packageName, version] = exactVersionMatch;
++      return `${packageName}@${version}`;
++    }
++
++    const scopedMatch = logs.match(/((?:@[^/\s]+\/)?[^@\s]+)@([^\s"']+)/);
++
++    if (!scopedMatch) {
++      return null;
+     }
+ 
+-    return finalMessage.trim();
++    const [, packageName, version] = scopedMatch;
++    return `${packageName}@${version}`;
+   }
+ }
+diff --git a/code/core/src/common/js-package-manager/PNPMProxy.ts b/code/core/src/common/js-package-manager/PNPMProxy.ts
+index 1b47f92ba11..8eaf59f3b90 100644
+--- a/code/core/src/common/js-package-manager/PNPMProxy.ts
++++ b/code/core/src/common/js-package-manager/PNPMProxy.ts
+@@ -3,11 +3,15 @@ import { join } from 'node:path';
+ import { pathToFileURL } from 'node:url';
+ 
+ import { logger, prompt } from 'storybook/internal/node-logger';
+-import { FindPackageVersionsError } from 'storybook/internal/server-errors';
++import {
++  FindPackageVersionsError,
++  MinimumReleaseAgeHandledError,
++} from 'storybook/internal/server-errors';
+ 
+ import * as find from 'empathic/find';
+ // eslint-disable-next-line depend/ban-dependencies
+ import type { ResultPromise } from 'execa';
++import { dedent } from 'ts-dedent';
+ 
+ import type { ExecuteCommandOptions } from '../utils/command.ts';
+ import { executeCommand } from '../utils/command.ts';
+@@ -15,6 +19,18 @@ import { getProjectRoot } from '../utils/paths.ts';
+ import { JsPackageManager, PackageManagerName } from './JsPackageManager.ts';
+ import type { PackageJson } from './PackageJson.ts';
+ import type { InstallationMetadata, PackageMetadata } from './types.ts';
++import {
++  getAgeInMinutes,
++  getErrorLogs,
++  getLatestStableVersionAdheringToMinimumAgeGate,
++  getStorybookRerunCommand,
++  getStorybookRerunInstruction,
++  hasStorybookMinimumAgeExclusions,
++  parsePackageTimeMap,
++  parsePositiveIntegerConfigValue,
++  parseReleaseTime,
++  STORYBOOK_PACKAGE_PATTERNS,
++} from './util.ts';
+ 
+ type PnpmDependency = {
+   from: string;
+@@ -212,6 +228,128 @@ export class PNPMProxy extends JsPackageManager {
+     });
+   }
+ 
++  async installDependencies(options?: { force?: boolean }) {
++    try {
++      await super.installDependencies(options);
++    } catch (error) {
++      const logs = getErrorLogs(error);
++
++      if (logs.includes('ERR_PNPM_NO_MATURE_MATCHING_VERSION')) {
++        const handledError = new MinimumReleaseAgeHandledError({
++          packageManagerName: 'pnpm',
++          minimumReleaseAgeConfigName: 'minimumReleaseAge',
++          minimumReleaseAgeConfigDocs: 'https://pnpm.io/settings#minimumreleaseage',
++          minimumReleaseAgeExclusionsConfigName: 'minimumReleaseAgeExclude',
++          minimumReleaseAgeExclusionsConfigDocs:
++            'https://pnpm.io/settings#minimumreleaseageexclude',
++          failedPackage: this.extractFailedPackage(logs),
++          cause: error,
++        });
++
++        logger.error(handledError.message);
++        throw handledError;
++      }
++
++      throw error;
++    }
++  }
++
++  async precheckStorybookPackageInstall({
++    storybookVersion,
++    nonInteractive,
++    installContext,
++  }: {
++    storybookVersion: string;
++    nonInteractive: boolean;
++    installContext: 'create' | 'upgrade';
++  }): Promise<void> {
++    const minimumReleaseAge = await this.getMinimumReleaseAge();
++
++    if (!minimumReleaseAge) {
++      return;
++    }
++
++    if (hasStorybookMinimumAgeExclusions(await this.getMinimumReleaseAgeExclude())) {
++      return;
++    }
++
++    const publishedAt = await this.getPackageReleaseTime('storybook', storybookVersion);
++
++    if (!publishedAt) {
++      return;
++    }
++
++    const ageMinutes = getAgeInMinutes(publishedAt, new Date());
++    if (ageMinutes >= minimumReleaseAge) {
++      return;
++    }
++
++    const compatibleVersion = await this.getLatestStableVersionAdheringToMinimumReleaseAge(
++      'storybook',
++      minimumReleaseAge
++    );
++
++    if (nonInteractive) {
++      await this.updateMinimumReleaseAgeExclude();
++      logger.info(
++        dedent`
++          pnpm minimumReleaseAge would block storybook@${storybookVersion} from being installed because it was released within the configured minimumReleaseAge window, so Storybook updated minimumReleaseAgeExclude for this project automatically.
++
++          Added patterns: storybook, @storybook/*, eslint-plugin-storybook, @chromatic-com/storybook
++
++          Read more:
++          - https://pnpm.io/settings#minimumreleaseage
++          - https://pnpm.io/settings#minimumreleaseageexclude
++        `
++      );
++      return;
++    }
++
++    logger.warn(
++      `pnpm minimumReleaseAge will block storybook@${storybookVersion} from being installed because it was published within the configured minimum-release-age window.`
++    );
++
++    const rerunError = new MinimumReleaseAgeHandledError({
++      message: this.createMinimumReleaseAgeRerunMessage({
++        currentVersion: storybookVersion,
++        compatibleVersion,
++        installContext,
++      }),
++    });
++
++    const selection = await prompt.select(
++      {
++        message: 'How would you like to proceed?',
++        options: [
++          {
++            label: 'Update pnpm config to exclude Storybook packages',
++            value: 'exclude',
++          },
++          {
++            label: compatibleVersion
++              ? `Stop now and rerun with the most recent allowed release: storybook@${compatibleVersion}`
++              : 'Stop now and rerun with an older stable Storybook release later',
++            value: 'rerun',
++          },
++        ],
++      },
++      {
++        onCancel: () => {
++          logger.error(rerunError.message);
++          throw rerunError;
++        },
++      }
++    );
++
++    if (selection === 'exclude') {
++      await this.updateMinimumReleaseAgeExclude();
++      return;
++    }
++
++    logger.error(rerunError.message);
++    throw rerunError;
++  }
++
+   protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean) {
+     let args = [...dependencies];
+ 
+@@ -308,16 +446,143 @@ export class PNPMProxy extends JsPackageManager {
+     };
+   }
+ 
+-  public parseErrorFromLogs(logs: string): string {
+-    let finalMessage = 'PNPM error';
+-    const match = logs.match(PNPM_ERROR_REGEX);
+-    if (match) {
+-      const [errorCode] = match;
+-      if (errorCode) {
+-        finalMessage = `${finalMessage} ${errorCode}`;
++  private extractFailedPackage(logs: string): string | null {
++    const match = logs.match(
++      /Version\s+([^\s]+)\s+\([^)]*\)\s+of\s+((?:@[^/\s]+\/)?[^\s]+)\s+does not meet the minimumReleaseAge constraint/
++    );
++
++    if (!match) {
++      return null;
++    }
++
++    const [, version, packageName] = match;
++    return `${packageName}@${version}`;
++  }
++
++  private async getMinimumReleaseAge(): Promise<number | null> {
++    const result = await this.runInternalCommand(
++      'config',
++      ['get', 'minimumReleaseAge'],
++      undefined,
++      'pipe'
++    );
++
++    return parsePositiveIntegerConfigValue(
++      typeof result.stdout === 'string' ? result.stdout : undefined
++    );
++  }
++
++  private async getPackageReleaseTime(packageName: string, version: string): Promise<Date | null> {
++    const result = await this.runInternalCommand(
++      'view',
++      ['--json', packageName, `time[${version}]`],
++      undefined,
++      'pipe'
++    );
++
++    const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++    if (!normalizedValue) {
++      return null;
++    }
++
++    return parseReleaseTime(JSON.parse(normalizedValue));
++  }
++
++  private async getLatestStableVersionAdheringToMinimumReleaseAge(
++    packageName: string,
++    minimumReleaseAgeMinutes: number,
++    now = new Date()
++  ): Promise<string | null> {
++    const result = await this.runInternalCommand(
++      'view',
++      ['--json', packageName, 'time'],
++      undefined,
++      'pipe'
++    );
++
++    const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++    if (!normalizedValue) {
++      return null;
++    }
++
++    const timeMap = parsePackageTimeMap(JSON.parse(normalizedValue));
++    if (!timeMap) {
++      return null;
++    }
++
++    return getLatestStableVersionAdheringToMinimumAgeGate(timeMap, minimumReleaseAgeMinutes, now);
++  }
++
++  private createMinimumReleaseAgeRerunMessage({
++    currentVersion,
++    compatibleVersion,
++    installContext,
++  }: {
++    currentVersion: string;
++    compatibleVersion: string | null;
++    installContext: 'create' | 'upgrade';
++  }): string {
++    const rerunCommand = getStorybookRerunCommand(installContext, compatibleVersion);
++    const rerunInstruction = getStorybookRerunInstruction(installContext);
++
++    return dedent`
++      pnpm minimumReleaseAge blocked storybook@${currentVersion} from being installed.
++
++      ${rerunInstruction}
++      ${rerunCommand}
++
++      Read more:
++      - https://pnpm.io/settings#minimumreleaseage
++    `;
++  }
++
++  private async updateMinimumReleaseAgeExclude(): Promise<void> {
++    const currentMinimumReleaseAgeExclude = await this.getMinimumReleaseAgeExclude();
++    const nextMinimumReleaseAgeExclude = Array.from(
++      new Set([...currentMinimumReleaseAgeExclude, ...STORYBOOK_PACKAGE_PATTERNS])
++    );
++
++    await prompt.executeTaskWithSpinner(
++      () =>
++        this.runInternalCommand(
++          'config',
++          [
++            'set',
++            '--location=project',
++            '--json',
++            'minimumReleaseAgeExclude',
++            JSON.stringify(nextMinimumReleaseAgeExclude),
++          ],
++          undefined,
++          'pipe'
++        ),
++      {
++        id: 'update-pnpm-minimum-release-age-exclude',
++        intro: 'Updating pnpm minimumReleaseAgeExclude...',
++        error: 'Failed to update pnpm minimumReleaseAgeExclude.',
++        success: 'Updated pnpm minimumReleaseAgeExclude',
+       }
++    );
++  }
++
++  private async getMinimumReleaseAgeExclude(): Promise<string[]> {
++    const result = await this.runInternalCommand(
++      'config',
++      ['get', 'minimumReleaseAgeExclude', '--json'],
++      undefined,
++      'pipe'
++    );
++
++    const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++    if (!normalizedValue || normalizedValue === 'undefined' || normalizedValue === 'null') {
++      return [];
+     }
+ 
+-    return finalMessage.trim();
++    const parsedValue = JSON.parse(normalizedValue);
++    return Array.isArray(parsedValue)
++      ? parsedValue.filter(
++          (value): value is string => typeof value === 'string' && value.length > 0
++        )
++      : [];
+   }
+ }
+diff --git a/code/core/src/common/js-package-manager/Yarn1Proxy.ts b/code/core/src/common/js-package-manager/Yarn1Proxy.ts
+index ee22c848d6a..19a60db5435 100644
+--- a/code/core/src/common/js-package-manager/Yarn1Proxy.ts
++++ b/code/core/src/common/js-package-manager/Yarn1Proxy.ts
+@@ -253,18 +253,4 @@ export class Yarn1Proxy extends JsPackageManager {
+ 
+     throw new Error('Something went wrong while parsing yarn output');
+   }
+-
+-  public parseErrorFromLogs(logs: string): string {
+-    let finalMessage = 'YARN1 error';
+-    const match = logs.match(YARN1_ERROR_REGEX);
+-
+-    if (match) {
+-      const errorMessage = match[0]?.replace(/^error\s(.*)$/, '$1');
+-      if (errorMessage) {
+-        finalMessage = `${finalMessage}: ${errorMessage}`;
+-      }
+-    }
+-
+-    return finalMessage.trim();
+-  }
+ }
+diff --git a/code/core/src/common/js-package-manager/Yarn2Proxy.ts b/code/core/src/common/js-package-manager/Yarn2Proxy.ts
+index 14e55c50be5..516065f0689 100644
+--- a/code/core/src/common/js-package-manager/Yarn2Proxy.ts
++++ b/code/core/src/common/js-package-manager/Yarn2Proxy.ts
+@@ -3,13 +3,17 @@ import { join } from 'node:path';
+ import { pathToFileURL } from 'node:url';
+ 
+ import { prompt } from 'storybook/internal/node-logger';
+-import { FindPackageVersionsError } from 'storybook/internal/server-errors';
++import {
++  FindPackageVersionsError,
++  MinimumReleaseAgeHandledError,
++} from 'storybook/internal/server-errors';
+ 
+ import { PosixFS, VirtualFS, ZipOpenFS } from '@yarnpkg/fslib';
+ import { getLibzipSync } from '@yarnpkg/libzip';
+ import * as find from 'empathic/find';
+ // eslint-disable-next-line depend/ban-dependencies
+ import type { ResultPromise } from 'execa';
++import { dedent } from 'ts-dedent';
+ 
+ import { logger } from '../../node-logger/index.ts';
+ import type { ExecuteCommandOptions } from '../utils/command.ts';
+@@ -18,7 +22,19 @@ import { getProjectRoot } from '../utils/paths.ts';
+ import { JsPackageManager, PackageManagerName } from './JsPackageManager.ts';
+ import type { PackageJson } from './PackageJson.ts';
+ import type { InstallationMetadata, PackageMetadata } from './types.ts';
+-import { parsePackageData } from './util.ts';
++import {
++  getAgeInMinutes,
++  getErrorLogs,
++  getLatestStableVersionAdheringToMinimumAgeGate,
++  getStorybookRerunCommand,
++  getStorybookRerunInstruction,
++  hasStorybookMinimumAgeExclusions,
++  parsePackageData,
++  parsePackageTimeMap,
++  parsePositiveIntegerConfigValue,
++  parseReleaseTime,
++  STORYBOOK_PACKAGE_PATTERNS,
++} from './util.ts';
+ 
+ // more info at https://yarnpkg.com/advanced/error-codes
+ const CRITICAL_YARN2_ERROR_CODES = {
+@@ -243,6 +259,137 @@ export class Yarn2Proxy extends JsPackageManager {
+     });
+   }
+ 
++  async installDependencies(options?: { force?: boolean }) {
++    try {
++      await super.installDependencies(options);
++    } catch (error) {
++      const logs = getErrorLogs(error);
++
++      if (logs.includes('YN0016') && logs.includes('quarantined')) {
++        const handledError = new MinimumReleaseAgeHandledError({
++          packageManagerName: 'yarn',
++          minimumReleaseAgeConfigName: 'npmMinimalAgeGate',
++          minimumReleaseAgeConfigDocs: 'https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate',
++          minimumReleaseAgeExclusionsConfigName: 'npmPreapprovedPackages',
++          minimumReleaseAgeExclusionsConfigDocs:
++            'https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages',
++          failedPackage: this.extractQuarantinedPackage(logs),
++          cause: error,
++        });
++
++        logger.error(handledError.message);
++        throw handledError;
++      }
++
++      throw error;
++    }
++  }
++
++  async precheckStorybookPackageInstall({
++    storybookVersion,
++    nonInteractive,
++    installContext,
++  }: {
++    storybookVersion: string;
++    nonInteractive: boolean;
++    installContext: 'create' | 'upgrade';
++  }): Promise<void> {
++    const minimumAgeGate = await this.getMinimumAgeGate();
++
++    if (!minimumAgeGate) {
++      return;
++    }
++
++    if (hasStorybookMinimumAgeExclusions(await this.getPreapprovedPackages())) {
++      return;
++    }
++
++    const timeMap = await this.getPackageTimeMap('storybook');
++    if (!timeMap) {
++      return;
++    }
++
++    const releaseTime = timeMap[storybookVersion];
++    if (!releaseTime) {
++      return;
++    }
++
++    const publishedAt = parseReleaseTime(releaseTime);
++    if (!publishedAt) {
++      return;
++    }
++
++    const ageMinutes = getAgeInMinutes(publishedAt, new Date());
++    if (ageMinutes >= minimumAgeGate) {
++      return;
++    }
++
++    const compatibleVersion = getLatestStableVersionAdheringToMinimumAgeGate(
++      timeMap,
++      minimumAgeGate
++    );
++
++    if (nonInteractive) {
++      await this.updatePreapprovedPackages();
++      logger.info(
++        dedent`
++          yarn npmMinimalAgeGate would block storybook@${storybookVersion} from being installed because it was released within the configured npmMinimalAgeGate window, so Storybook updated npmPreapprovedPackages for this project automatically.
++
++          Added patterns: storybook, @storybook/*, eslint-plugin-storybook, @chromatic-com/storybook
++
++          Read more:
++          - https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate
++          - https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages
++        `
++      );
++      return;
++    }
++
++    logger.warn(
++      `yarn npmMinimalAgeGate will block storybook@${storybookVersion} from being installed because it was published within the configured minimum-release-age window.`
++    );
++
++    const rerunError = new MinimumReleaseAgeHandledError({
++      message: this.createMinimalAgeGateRerunMessage({
++        currentVersion: storybookVersion,
++        compatibleVersion,
++        installContext,
++      }),
++    });
++
++    const selection = await prompt.select(
++      {
++        message: 'How would you like to proceed?',
++        options: [
++          {
++            label: 'Update yarn config to preapprove Storybook packages',
++            value: 'exclude',
++          },
++          {
++            label: compatibleVersion
++              ? `Stop now and rerun with the most recent allowed release: storybook@${compatibleVersion}`
++              : 'Stop now and rerun with an older stable Storybook release later',
++            value: 'rerun',
++          },
++        ],
++      },
++      {
++        onCancel: () => {
++          logger.error(rerunError.message);
++          throw rerunError;
++        },
++      }
++    );
++
++    if (selection === 'exclude') {
++      await this.updatePreapprovedPackages();
++      return;
++    }
++
++    logger.error(rerunError.message);
++    throw rerunError;
++  }
++
+   protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean) {
+     let args = [...dependencies];
+ 
+@@ -332,28 +479,128 @@ export class Yarn2Proxy extends JsPackageManager {
+     };
+   }
+ 
+-  public parseErrorFromLogs(logs: string): string {
+-    const finalMessage = 'YARN2 error';
+-    const errorCodesWithMessages: { code: string; message: string }[] = [];
+-    const regex = /(YN\d{4}): (.+)/g;
+-    let match: RegExpExecArray | null;
+-
+-    while ((match = regex.exec(logs)) !== null) {
+-      const code = match[1];
+-      const message = match[2].replace(/[┌│└]/g, '').trim();
+-      if (code in CRITICAL_YARN2_ERROR_CODES) {
+-        errorCodesWithMessages.push({
+-          code,
+-          message: `${
+-            CRITICAL_YARN2_ERROR_CODES[code as keyof typeof CRITICAL_YARN2_ERROR_CODES]
+-          }\n-> ${message}\n`,
+-        });
++  private extractQuarantinedPackage(logs: string): string | null {
++    const match = logs.match(
++      /│\s+((?:@[^/\s]+\/)?[^@\s]+)@npm:([^:\s]+):\s+All versions satisfying/
++    );
++
++    if (!match) {
++      return null;
++    }
++
++    const [, packageName, version] = match;
++    return `${packageName}@${version}`;
++  }
++
++  private async getMinimumAgeGate(): Promise<number | null> {
++    try {
++      const result = await this.runInternalCommand(
++        'config',
++        ['get', 'npmMinimalAgeGate'],
++        undefined,
++        'pipe'
++      );
++
++      return parsePositiveIntegerConfigValue(
++        typeof result.stdout === 'string' ? result.stdout : undefined
++      );
++    } catch {
++      return null;
++    }
++  }
++
++  private async getPackageTimeMap(packageName: string): Promise<Record<string, string> | null> {
++    const result = await this.runInternalCommand(
++      'npm',
++      ['info', packageName, '--fields', 'time', '--json'],
++      undefined,
++      'pipe'
++    );
++    const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++
++    if (!normalizedValue) {
++      return null;
++    }
++
++    return parsePackageTimeMap(JSON.parse(normalizedValue)?.time);
++  }
++
++  private createMinimalAgeGateRerunMessage({
++    currentVersion,
++    compatibleVersion,
++    installContext,
++  }: {
++    currentVersion: string;
++    compatibleVersion: string | null;
++    installContext: 'create' | 'upgrade';
++  }): string {
++    const rerunCommand = getStorybookRerunCommand(installContext, compatibleVersion);
++    const rerunInstruction = getStorybookRerunInstruction(installContext);
++
++    return dedent`
++      yarn npmMinimalAgeGate blocked storybook@${currentVersion} from being installed.
++
++      ${rerunInstruction}
++      ${rerunCommand}
++
++      Read more:
++      - https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate
++    `;
++  }
++
++  private async updatePreapprovedPackages(): Promise<void> {
++    const currentPreapprovedPackages = await this.getPreapprovedPackages();
++    const nextPreapprovedPackages = Array.from(
++      new Set([...currentPreapprovedPackages, ...STORYBOOK_PACKAGE_PATTERNS])
++    );
++
++    await prompt.executeTaskWithSpinner(
++      () =>
++        this.runInternalCommand(
++          'config',
++          ['set', 'npmPreapprovedPackages', '--json', JSON.stringify(nextPreapprovedPackages)],
++          undefined,
++          'pipe'
++        ),
++      {
++        id: 'update-yarn-npm-preapproved-packages',
++        intro: 'Updating yarn npmPreapprovedPackages...',
++        error: 'Failed to update yarn npmPreapprovedPackages.',
++        success: 'Updated yarn npmPreapprovedPackages',
+       }
++    );
++  }
++
++  private async getPreapprovedPackages(): Promise<string[]> {
++    try {
++      const result = await this.runInternalCommand(
++        'config',
++        ['get', 'npmPreapprovedPackages'],
++        undefined,
++        'pipe'
++      );
++      const normalizedValue = typeof result.stdout === 'string' ? result.stdout.trim() : '';
++
++      if (!normalizedValue) {
++        return [];
++      }
++
++      return this.parsePreapprovedPackages(normalizedValue);
++    } catch {
++      return [];
+     }
++  }
+ 
+-    return [
+-      finalMessage,
+-      errorCodesWithMessages.map(({ code, message }) => `${code}: ${message}`).join('\n'),
+-    ].join('\n');
++  private parsePreapprovedPackages(value: string): string[] {
++    try {
++      const parsedValue = JSON.parse(value);
++      return Array.isArray(parsedValue)
++        ? parsedValue.filter(
++            (entry): entry is string => typeof entry === 'string' && entry.length > 0
++          )
++        : [];
++    } catch {
++      return Array.from(value.matchAll(/['"]([^'"\n]+)['"]/g), (match) => match[1]);
++    }
+   }
+ }
+diff --git a/code/core/src/common/js-package-manager/util.ts b/code/core/src/common/js-package-manager/util.ts
+index ccf07c3f56a..49f3aeae201 100644
+--- a/code/core/src/common/js-package-manager/util.ts
++++ b/code/core/src/common/js-package-manager/util.ts
+@@ -1,3 +1,27 @@
++import { gt, prerelease, valid } from 'semver';
++
++export type StorybookInstallContext = 'create' | 'upgrade';
++
++export const STORYBOOK_PACKAGE_PATTERNS = [
++  'storybook',
++  '@storybook/*',
++  'eslint-plugin-storybook',
++  '@chromatic-com/storybook',
++] as const;
++
++const escapePatternForRegex = (pattern: string) => pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
++
++const packagePatternToRegex = (pattern: string) =>
++  new RegExp(`^${escapePatternForRegex(pattern).replace(/\\\*/g, '.*')}$`);
++
++export const hasStorybookMinimumAgeExclusions = (configuredPatterns: string[]) => {
++  return STORYBOOK_PACKAGE_PATTERNS.every((storybookPattern) =>
++    configuredPatterns.some((configuredPattern) =>
++      packagePatternToRegex(configuredPattern).test(storybookPattern)
++    )
++  );
++};
++
+ // input: @storybook/addon-essentials@npm:7.0.0
+ // output: { name: '@storybook/addon-essentials', value: { version : '7.0.0', location: '' } }
+ export const parsePackageData = (packageName = '') => {
+@@ -11,3 +35,128 @@ export const parsePackageData = (packageName = '') => {
+   const value = { version, location: '' };
+   return { name, value };
+ };
++
++export const parsePositiveIntegerConfigValue = (value: string | null | undefined) => {
++  const normalizedValue = value?.trim() ?? '';
++
++  if (
++    !normalizedValue ||
++    normalizedValue === 'undefined' ||
++    normalizedValue === 'null' ||
++    normalizedValue === 'false'
++  ) {
++    return null;
++  }
++
++  const parsedValue = Number.parseInt(normalizedValue, 10);
++  if (!Number.isFinite(parsedValue) || parsedValue <= 0) {
++    return null;
++  }
++
++  return parsedValue;
++};
++
++export const parseReleaseTime = (value: unknown): Date | null => {
++  if (typeof value !== 'string' || value.length === 0) {
++    return null;
++  }
++
++  const releaseTime = new Date(value);
++  return Number.isNaN(releaseTime.getTime()) ? null : releaseTime;
++};
++
++export const parsePackageTimeMap = (value: unknown): Record<string, string> | null => {
++  if (!value || typeof value !== 'object' || Array.isArray(value)) {
++    return null;
++  }
++
++  const timeMap: Record<string, string> = {};
++  for (const [version, releaseTime] of Object.entries(value)) {
++    if (typeof releaseTime === 'string' && releaseTime.length > 0) {
++      timeMap[version] = releaseTime;
++    }
++  }
++
++  return timeMap;
++};
++
++export const getAgeInMinutes = (publishedAt: Date, now = new Date()) => {
++  return Math.floor((now.getTime() - publishedAt.getTime()) / 60_000);
++};
++
++export const getLatestStableVersionAdheringToMinimumAgeGate = (
++  timeMap: Record<string, string>,
++  minimumAgeGateMinutes: number,
++  now = new Date()
++): string | null => {
++  const cutoff = now.getTime() - minimumAgeGateMinutes * 60_000;
++  let latestStableVersion: string | null = null;
++
++  for (const [version, releaseTime] of Object.entries(timeMap)) {
++    if (!valid(version) || prerelease(version)) {
++      continue;
++    }
++
++    const publishedAt = parseReleaseTime(releaseTime);
++    if (!publishedAt || publishedAt.getTime() > cutoff) {
++      continue;
++    }
++
++    if (!latestStableVersion || gt(version, latestStableVersion)) {
++      latestStableVersion = version;
++    }
++  }
++
++  return latestStableVersion;
++};
++
++export const getStorybookRerunCommand = (
++  installContext: StorybookInstallContext,
++  compatibleVersion: string | null
++) => {
++  if (installContext === 'create') {
++    return compatibleVersion
++      ? `npx create-storybook@${compatibleVersion}`
++      : 'npx create-storybook@<compatible-version>';
++  }
++
++  return compatibleVersion
++    ? `npx storybook@${compatibleVersion} upgrade`
++    : 'npx storybook@<compatible-version> upgrade';
++};
++
++export const getStorybookRerunInstruction = (installContext: StorybookInstallContext) => {
++  return installContext === 'create'
++    ? 'Please rerun Storybook creation with:'
++    : 'Please rerun the Storybook upgrade with:';
++};
++
++export const getErrorLogs = (error: unknown): string => {
++  if (typeof error === 'string') {
++    return error;
++  }
++
++  if (error && typeof error === 'object') {
++    const structuredError = error as {
++      stderr?: string;
++      stdout?: string;
++      shortMessage?: string;
++      originalMessage?: string;
++      message?: string;
++    };
++
++    const structuredLogs = [
++      structuredError.shortMessage,
++      structuredError.originalMessage,
++      structuredError.stderr,
++      structuredError.stdout,
++      structuredError.message,
++    ].filter((entry): entry is string => typeof entry === 'string' && entry.length > 0);
++
++    if (structuredLogs.length > 0) {
++      return structuredLogs.join('\n');
++    }
++  }
++
++  return String(error);
++};
+diff --git a/code/core/src/server-errors.ts b/code/core/src/server-errors.ts
+index b71cce520e9..f862e185e94 100644
+--- a/code/core/src/server-errors.ts
++++ b/code/core/src/server-errors.ts
+@@ -457,6 +457,50 @@ export class GenerateNewProjectOnInitError extends StorybookError {
+   }
+ }
+ 
++type MinimumReleaseAgeHandledErrorData =
++  | {
++      message: string;
++      cause?: unknown;
++    }
++  | {
++      packageManagerName: string;
++      minimumReleaseAgeConfigName: string;
++      minimumReleaseAgeConfigDocs: string;
++      minimumReleaseAgeExclusionsConfigName?: string;
++      minimumReleaseAgeExclusionsConfigDocs?: string;
++      failedPackage?: string | null;
++      cause?: unknown;
++    };
++
++function createMinimumReleaseAgeHandledErrorMessage(data: MinimumReleaseAgeHandledErrorData) {
++  if ('message' in data) {
++    return data.message;
++  }
++
++  const followUp = data.minimumReleaseAgeExclusionsConfigName
++    ? `To fix this, either wait for the configured age window to pass and rerun the command, or add the blocked packages to ${data.packageManagerName}'s ${data.minimumReleaseAgeExclusionsConfigName} setting.`
++    : 'To fix this, either wait for the configured age window to pass and rerun the command, or rerun Storybook with an older compatible release.';
++
++  return dedent`
++    ${data.packageManagerName} blocked package installation because your project uses ${data.minimumReleaseAgeConfigName}.
++    ${data.failedPackage ? `\nFailed package: ${data.failedPackage}\n` : ''}
++    ${followUp}
++  `;
++}
++
++export class MinimumReleaseAgeHandledError extends StorybookError {
++  constructor(public data: MinimumReleaseAgeHandledErrorData) {
++    super({
++      name: 'MinimumReleaseAgeHandledError',
++      category: Category.CLI,
++      isHandledError: true,
++      code: 2,
++      cause: data.cause,
++      message: createMinimumReleaseAgeHandledErrorMessage(data),
++    });
++  }
++}
++
+ export class AddonVitestPostinstallPrerequisiteCheckError extends StorybookError {
+   constructor(public data: { reasons: string[] }) {
+     super({
+diff --git a/code/core/src/storybook-error.ts b/code/core/src/storybook-error.ts
+index bcee6a34a09..6fe3d142e02 100644
+--- a/code/core/src/storybook-error.ts
++++ b/code/core/src/storybook-error.ts
+@@ -95,6 +95,7 @@ export abstract class StorybookError extends Error {
+     category: string;
+     code: number;
+     message: string;
++    cause?: unknown;
+     documentation?: boolean | string | string[];
+     isHandledError?: boolean;
+     name: string;
+@@ -104,7 +105,10 @@ export abstract class StorybookError extends Error {
+      */
+     subErrors?: StorybookError[];
+   }) {
+-    super(StorybookError.getFullMessage(props));
++    super(
++      StorybookError.getFullMessage(props),
++      props.cause === undefined ? undefined : { cause: props.cause }
++    );
+     this.category = props.category;
+     this.documentation = props.documentation ?? false;
+     this.code = props.code;
+diff --git a/code/lib/cli-storybook/src/upgrade.ts b/code/lib/cli-storybook/src/upgrade.ts
+index 8060fd00b04..f1590daa604 100644
+--- a/code/lib/cli-storybook/src/upgrade.ts
++++ b/code/lib/cli-storybook/src/upgrade.ts
+@@ -1,5 +1,10 @@
+ import { PackageManagerName } from 'storybook/internal/common';
+-import { HandledError, JsPackageManagerFactory, isCorePackage } from 'storybook/internal/common';
++import {
++  HandledError,
++  JsPackageManagerFactory,
++  isCI,
++  isCorePackage,
++} from 'storybook/internal/common';
+ import {
+   CLI_COLORS,
+   createHyperlink,
+@@ -9,6 +14,7 @@ import {
+ } from 'storybook/internal/node-logger';
+ import type { LogLevel } from 'storybook/internal/node-logger';
+ import {
++  MinimumReleaseAgeHandledError,
+   UpgradeStorybookToLowerVersionError,
+   UpgradeStorybookUnknownCurrentVersionError,
+ } from 'storybook/internal/server-errors';
+@@ -385,6 +391,24 @@ export async function upgrade(options: UpgradeOptions): Promise<void> {
+ 
+     // Update dependencies in package.jsons for all projects
+     if (!options.dryRun) {
++      for (const project of storybookProjects) {
++        try {
++          await project.packageManager.precheckStorybookPackageInstall({
++            storybookVersion: project.currentCLIVersion,
++            nonInteractive: !!options.yes || !process.stdout.isTTY || !!isCI(),
++            installContext: 'upgrade',
++          });
++        } catch (error) {
++          if (error instanceof MinimumReleaseAgeHandledError) {
++            throw error;
++          }
++
++          logger.debug(
++            `Skipping minimum-release-age precheck for ${project.configDir} after an unexpected failure: ${error}`
++          );
++        }
++      }
++
+       const task = prompt.taskLog({
+         id: 'upgrade-dependencies',
+         title: `Fetching versions to update package.json files..`,
+diff --git a/code/lib/create-storybook/src/commands/DependencyInstallationCommand.ts b/code/lib/create-storybook/src/commands/DependencyInstallationCommand.ts
+index db55540eaec..c3cdfa98f0a 100644
+--- a/code/lib/create-storybook/src/commands/DependencyInstallationCommand.ts
++++ b/code/lib/create-storybook/src/commands/DependencyInstallationCommand.ts
+@@ -1,6 +1,7 @@
+ import { AddonVitestService } from 'storybook/internal/cli';
+ import type { JsPackageManager } from 'storybook/internal/common';
+ import { logger, prompt } from 'storybook/internal/node-logger';
++import { MinimumReleaseAgeHandledError } from 'storybook/internal/server-errors';
+ import { ErrorCollector } from 'storybook/internal/telemetry';
+ import { Feature } from 'storybook/internal/types';
+ 
+@@ -70,6 +71,10 @@ export class DependencyInstallationCommand {
+       try {
+         await this.packageManager.installDependencies();
+       } catch (err) {
++        if (err instanceof MinimumReleaseAgeHandledError) {
++          throw err;
++        }
++
+         ErrorCollector.addError(err);
+         return { status: 'failed' };
+       }
+diff --git a/code/lib/create-storybook/src/commands/PreflightCheckCommand.ts b/code/lib/create-storybook/src/commands/PreflightCheckCommand.ts
+index 5c6c749e977..32c22fe6fb5 100644
+--- a/code/lib/create-storybook/src/commands/PreflightCheckCommand.ts
++++ b/code/lib/create-storybook/src/commands/PreflightCheckCommand.ts
+@@ -4,9 +4,11 @@ import {
+   JsPackageManagerFactory,
+   PackageManagerName,
+   getPrettyPackageManagerName,
++  isCI,
+   invalidateProjectRootCache,
+ } from 'storybook/internal/common';
+ import { CLI_COLORS, deprecate, logger } from 'storybook/internal/node-logger';
++import { MinimumReleaseAgeHandledError } from 'storybook/internal/server-errors';
+ 
+ import { dedent } from 'ts-dedent';
+ 
+@@ -85,6 +87,19 @@ export class PreflightCheckCommand {
+     this.checkPackageNameConflict(packageManager);
+ 
+     await this.displayVersionInfo(packageManager);
++    try {
++      await packageManager.precheckStorybookPackageInstall({
++        storybookVersion: this.versionService.getCurrentVersion(),
++        nonInteractive: !!options.yes || !process.stdout.isTTY || !!isCI(),
++        installContext: 'create',
++      });
++    } catch (error) {
++      if (error instanceof MinimumReleaseAgeHandledError) {
++        throw error;
++      }
++
++      logger.debug(`Skipping minimum-release-age precheck after an unexpected failure: ${error}`);
++    }
+ 
+     return { packageManager, isEmptyProject: isEmptyDirProject };
+   }
+diff --git a/code/lib/create-storybook/src/initiate.ts b/code/lib/create-storybook/src/initiate.ts
+index 4278d23fa03..e92409d4748 100644
+--- a/code/lib/create-storybook/src/initiate.ts
++++ b/code/lib/create-storybook/src/initiate.ts
+@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
+ 
+ import { ProjectType } from 'storybook/internal/cli';
+ import {
++  HandledError,
+   type JsPackageManager,
+   PackageManagerName,
+   cache,
+@@ -204,6 +205,7 @@ export async function doInitiate(options: CommandOptions): Promise<
+ const handleCommandFailure = async (logFilePath: string | boolean | undefined): Promise<never> => {
+   const logFile = await logTracker.writeToFile(logFilePath);
+   logger.error('Storybook encountered an error during initialization');
++
+   logger.log(`Debug logs are written to: ${logFile}`);
+   logger.outro('Storybook exited with an error');
+   process.exit(1);
+@@ -229,7 +231,7 @@ export async function initiate(options: CommandOptions): Promise<void> {
+       return result;
+     }
+   ).catch(() => {
+-    handleCommandFailure(options.logfile);
++    return handleCommandFailure(options.logfile);
+   });
+ 
+   // Launch dev server only if --dev was explicitly passed

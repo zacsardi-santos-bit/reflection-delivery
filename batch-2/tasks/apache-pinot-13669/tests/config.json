@@ -1,0 +1,18 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-plugins/pinot-input-format/pinot-avro-base test -am -Dtest=AvroSchemaUtilTest -Dsurefire.failIfNoSpecifiedTests=false",
+  "test_files": [
+    "pinot-plugins/pinot-input-format/pinot-avro-base/src/test/java/org/apache/pinot/plugin/inputformat/avro/AvroSchemaUtilTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,49 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/martin/martin-ui && npx vitest run --reporter=verbose __tests__/components/analytics-section.test.tsx __tests__/lib/prometheus.test.ts",
+  "test_files": [
+    "martin/martin-ui/__tests__/components/analytics-section.test.tsx",
+    "martin/martin-ui/__tests__/lib/prometheus.test.ts",
+    "tests/expected/configured/metrics_1.fetched_with_compression.txt",
+    "tests/expected/configured/metrics_1.txt",
+    "tests/test.sh"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics parses zoom-less caches from martin_cache_requests_total",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics parses tile-coordinate caches from martin_tile_cache_requests_total with per-zoom breakdown",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics hitRate returns null for caches with no recorded requests",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics sorts byZoom by zoom level regardless of input order",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics omits caches that do not appear in the input",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics ignores unrelated metrics, malformed lines, and unknown result labels",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics handles empty input",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parseCacheMetrics sums duplicated label combinations (e.g. across workers)",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection renders cache hit-rates when present",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection shows a zoom-breakdown info button only for caches with per-zoom data"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics parses sum and count for multiple endpoints",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics ignores unrelated metrics",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics handles missing sum or count values gracefully",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics aggregateEndpointGroups aggregates metrics for defined endpoint groups",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics aggregateEndpointGroups handles empty input gracefully",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics parsePrometheusHistogram parses histogram buckets for an endpoint",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics parsePrometheusHistogram handles multiple endpoints with histograms",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics parsePrometheusHistogram ignores non-histogram metrics",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics parsePrometheusHistogram handles missing sum or count gracefully",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data parses the provided sample histogram data correctly",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data parseCompletePrometheusMetrics parses all metrics types (sum, count, histograms) in one call",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data aggregateHistogramGroups aggregates multiple endpoints into a single group histogram",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data aggregateHistogramGroups handles different bucket boundaries across endpoints",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data aggregateHistogramGroups handles single endpoint in group",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data aggregateHistogramGroups returns empty result when no histogram data available",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Real world histogram data aggregateHistogramGroups handles partial histogram data (some endpoints missing)",
+    "/workspace/repo/martin/martin-ui/__tests__/lib/prometheus.test.ts::parsePrometheusMetrics Integration test: Corrected histogram processing properly handles cumulative histogram buckets and multi-endpoint aggregation",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection renders loading state (skeletons)",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection renders analytics data",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection renders error state and calls onRetry",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection hides cache rows when cache data is absent",
+    "/workspace/repo/martin/martin-ui/__tests__/components/analytics-section.test.tsx::AnalyticsSection renders retrying state (button disabled)"
+  ]
+}

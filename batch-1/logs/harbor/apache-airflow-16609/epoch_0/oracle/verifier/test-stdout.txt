@@ -1,0 +1,179 @@
+patching file tests/api_connexion/endpoints/test_user_endpoint.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-6.2.5, py-1.11.0, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: pytest.ini
+plugins: cov-5.0.0, anyio-4.5.2
+collecting ... collected 43 items
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200 PASSED [  2%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_404 PASSED [  4%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_raises_401_unauthenticated PASSED [  6%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_raise_403_forbidden PASSED [  9%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsers::test_should_response_200 PASSED [ 11%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsers::test_should_raises_401_unauthenticated PASSED [ 13%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsers::test_should_raise_403_forbidden PASSED [ 16%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_0__api_v1_users_limit_1 PASSED [ 18%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_1__api_v1_users_limit_2 PASSED [ 20%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_2__api_v1_users_offset_5 PASSED [ 23%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_3__api_v1_users_offset_0 PASSED [ 25%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_4__api_v1_users_limit_1_offset_5 PASSED [ 27%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_5__api_v1_users_limit_1_offset_1 PASSED [ 30%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_6__api_v1_users_limit_2_offset_2 PASSED [ 32%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_should_respect_page_size_limit_default PASSED [ 34%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_should_response_400_with_invalid_order_by PASSED [ 37%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_limit_of_zero_should_return_default PASSED [ 39%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_should_return_conf_max_if_req_max_above_conf PASSED [ 41%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_with_default_role PASSED [ 44%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_with_custom_roles PASSED [ 46%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_unauthenticated PASSED [ 48%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_forbidden PASSED [ 51%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_already_exists PASSED [ 53%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[missing-required] PASSED [ 55%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-user-field] PASSED [ 58%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-role-field] PASSED [ 60%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-role] PASSED [ 62%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_change PASSED [ 65%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_change_with_update_maek PASSED [ 67%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_password_hashed PASSED [ 69%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_replace_roles PASSED [ 72%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_unchanged PASSED [ 74%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_unauthenticated PASSED [ 76%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_forbidden PASSED [ 79%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_not_found PASSED [ 81%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[missing-required] PASSED [ 83%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-user-field] PASSED [ 86%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-role-field] PASSED [ 88%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-role] PASSED [ 90%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_delete PASSED [ 93%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_unauthenticated PASSED [ 95%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_forbidden PASSED [ 97%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_not_found PASSED [100%]
+
+=============================== warnings summary ===============================
+airflow/configuration.py:242
+  /workspace/repo/airflow/configuration.py:242: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    if StrictVersion(sqlite3.sqlite_version) < StrictVersion(min_sqlite_version):
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/utils/db.py:749: SADeprecationWarning: The Table.exists() method is deprecated and will be removed in a future release.  Please refer to Inspector.has_table(). (deprecated since: 1.4)
+    if version.exists(connection):
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/e3a246e0dc1_current_schema.py:43: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/1507a7289a2f_create_is_encrypted.py:46: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/cc1e65623dc7_add_max_tries_column_to_task_instance.py:67: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(connection)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/33ae817a1ff4_add_kubernetes_resource_checkpointing.py:41: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/92c57b58940d_add_fab_tables.py:41: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/03afc6b6f902_increase_length_of_fab_ab_view_menu_.py:41: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/cf5dc11e79ad_drop_user_and_chart.py:45: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/bbf4a7ad0465_remove_id_column_from_xcom.py:101: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/3c20cacc0044_add_dagrun_run_type.py:74: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/e38be357a868_update_schema_for_smart_sensor.py:54: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/bef4f3d11e8b_drop_kuberesourceversion_and_.py:45: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/flask_caching/__init__.py:158: DeprecationWarning: Using the initialization functions in flask_caching.backend is deprecated.  Use the a full path to backend classes directly.
+    warnings.warn(
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/flask_appbuilder/security/sqla/manager.py:92: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(engine)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:571: RemovedInMarshmallow4Warning: The 'default' argument to fields is deprecated. Use 'dump_default' instead.
+    super().__init__(default=default, dump_default=dump_default, **kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:948: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:948: RemovedInMarshmallow4Warning: Passing field metadata as keyword arguments is deprecated. Use the explicit `metadata=...` argument instead. Additional metadata: {'min': 0}
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:948: RemovedInMarshmallow4Warning: Passing field metadata as keyword arguments is deprecated. Use the explicit `metadata=...` argument instead. Additional metadata: {'min': 1}
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:755: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py: 14 warnings
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1264: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1182: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1182: RemovedInMarshmallow4Warning: The 'default' argument to fields is deprecated. Use 'dump_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/models/serialized_dag.py:120: SAWarning: TypeDecorator UtcDateTime(timezone=True) will not produce a cache key because the ``cache_ok`` attribute is not set to True.  This can have significant performance implications including some performance degradations in comparison to prior SQLAlchemy versions.  Set this attribute to True if this type object's state is safe to use in a cache key, or False to disable this warning. (Background on this error at: https://sqlalche.me/e/14/cprf)
+    session.query(literal(True))
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/models/dag.py:2016: SAWarning: TypeDecorator UtcDateTime(timezone=True) will not produce a cache key because the ``cache_ok`` attribute is not set to True.  This can have significant performance implications including some performance degradations in comparison to prior SQLAlchemy versions.  Set this attribute to True if this type object's state is safe to use in a cache key, or False to disable this warning. (Background on this error at: https://sqlalche.me/e/14/cprf)
+    session.query(DagRun.dag_id, func.max_(DagRun.execution_date))
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+======================= 43 passed, 61 warnings in 13.53s =======================
+reward=1 graded=43 found=0 failed=0 parsed=35 framework=pytest exit_code=0

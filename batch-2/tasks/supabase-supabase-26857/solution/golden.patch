@@ -1,0 +1,994 @@
+diff --git a/apps/studio/components/grid/components/footer/Footer.tsx b/apps/studio/components/grid/components/footer/Footer.tsx
+index 98d023d30c..e2482f54bb 100644
+--- a/apps/studio/components/grid/components/footer/Footer.tsx
++++ b/apps/studio/components/grid/components/footer/Footer.tsx
+@@ -4,6 +4,7 @@ import { useParams } from 'common'
+ import TwoOptionToggle from 'components/ui/TwoOptionToggle'
+ import { useUrlState } from 'hooks'
+ import RefreshButton from '../header/RefreshButton'
++import { GridFooter } from 'components/ui/GridFooter'
+ 
+ export interface FooterProps {
+   isLoading?: boolean
+@@ -26,8 +27,8 @@ const Footer = ({ isLoading, isRefetching }: FooterProps) => {
+   }
+ 
+   return (
+-    <div className="flex min-h-9 overflow-hidden items-center px-5 w-full border-t">
+-      {selectedView === 'data' && <Pagination isLoading={isLoading} />}
++    <GridFooter>
++      {selectedView === 'data' && <Pagination />}
+ 
+       <div className="ml-auto flex items-center gap-2">
+         {selectedTable && selectedView === 'data' && (
+@@ -42,7 +43,7 @@ const Footer = ({ isLoading, isRefetching }: FooterProps) => {
+           onClickOption={setSelectedView}
+         />
+       </div>
+-    </div>
++    </GridFooter>
+   )
+ }
+ 
+diff --git a/apps/studio/components/grid/components/footer/pagination/Pagination.tsx b/apps/studio/components/grid/components/footer/pagination/Pagination.tsx
+index 5df372be14..f9d391e2c7 100644
+--- a/apps/studio/components/grid/components/footer/pagination/Pagination.tsx
++++ b/apps/studio/components/grid/components/footer/pagination/Pagination.tsx
+@@ -1,15 +1,16 @@
++import { ArrowLeft, ArrowRight } from 'lucide-react'
+ import { useEffect, useState } from 'react'
+ 
+ import { formatFilterURLParams } from 'components/grid/SupabaseGrid.utils'
+ import { useProjectContext } from 'components/layouts/ProjectLayout/ProjectContext'
+-import ConfirmationModal from 'ui-patterns/Dialogs/ConfirmationModal'
+ import { useTableRowsCountQuery } from 'data/table-rows/table-rows-count-query'
+ import { useUrlState } from 'hooks'
+ import { useRoleImpersonationStateSnapshot } from 'state/role-impersonation-state'
+-import { Button, IconArrowLeft, IconArrowRight, IconLoader, InputNumber, Modal } from 'ui'
++import { useTableEditorStateSnapshot } from 'state/table-editor'
++import { Button, InputNumber } from 'ui'
++import ConfirmationModal from 'ui-patterns/Dialogs/ConfirmationModal'
+ import { useDispatch, useTrackedState } from '../../../store'
+ import { DropdownControl } from '../../common'
+-import { useTableEditorStateSnapshot } from 'state/table-editor'
+ 
+ const rowsPerPageOptions = [
+   { value: 100, label: '100 rows' },
+@@ -17,11 +18,7 @@ const rowsPerPageOptions = [
+   { value: 1000, label: '1000 rows' },
+ ]
+ 
+-export interface PaginationProps {
+-  isLoading?: boolean
+-}
+-
+-const Pagination = ({ isLoading: isLoadingRows = false }: PaginationProps) => {
++const Pagination = () => {
+   const state = useTrackedState()
+   const dispatch = useDispatch()
+ 
+@@ -144,11 +141,11 @@ const Pagination = ({ isLoading: isLoadingRows = false }: PaginationProps) => {
+       {isSuccess && (
+         <>
+           <Button
+-            icon={<IconArrowLeft />}
++            icon={<ArrowLeft />}
+             type="outline"
++            className="px-1.5"
+             disabled={page <= 1 || isLoading}
+             onClick={onPreviousPage}
+-            style={{ padding: '3px 10px' }}
+           />
+           <p className="text-sm text-foreground-light">Page</p>
+           <div className="sb-grid-pagination-input-container">
+@@ -165,13 +162,13 @@ const Pagination = ({ isLoading: isLoadingRows = false }: PaginationProps) => {
+               min={1}
+             />
+           </div>
+-          <p className="text-sm text-foreground-light">{`of ${totalPages}`}</p>
++          <p className="text-sm text-foreground-light">of {totalPages}</p>
+           <Button
+-            icon={<IconArrowRight />}
++            icon={<ArrowRight />}
+             type="outline"
++            className="px-1.5"
+             disabled={page >= maxPages || isLoading}
+             onClick={onNextPage}
+-            style={{ padding: '3px 10px' }}
+           />
+ 
+           <DropdownControl
+diff --git a/apps/studio/components/interfaces/SQLEditor/SQLEditor.tsx b/apps/studio/components/interfaces/SQLEditor/SQLEditor.tsx
+index 608d6b3af3..bf8b05eba9 100644
+--- a/apps/studio/components/interfaces/SQLEditor/SQLEditor.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/SQLEditor.tsx
+@@ -49,10 +49,12 @@ import {
+ } from './SQLEditor.types'
+ import {
+   checkDestructiveQuery,
++  checkIfAppendLimitRequired,
+   compareAsAddition,
+   compareAsModification,
+   compareAsNewSnippet,
+   createSqlSnippetSkeleton,
++  suffixWithLimit,
+ } from './SQLEditor.utils'
+ import UtilityPanel from './UtilityPanel/UtilityPanel'
+ 
+@@ -99,7 +101,7 @@ const SQLEditor = () => {
+   // Customers on HIPAA plans should not have access to Supabase AI
+   const hasHipaaAddon = subscriptionHasHipaaAddon(subscription)
+ 
+-  const [isAiOpen, setIsAiOpen] = useLocalStorageQuery('supabase_sql-editor-ai-open', true)
++  const [isAiOpen, setIsAiOpen] = useLocalStorageQuery(LOCAL_STORAGE_KEYS.SQL_EDITOR_AI_OPEN, true)
+   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
+ 
+   const selectedOrganization = useSelectedOrganization()
+@@ -169,13 +171,13 @@ const SQLEditor = () => {
+   }, [chatMessages])
+ 
+   const { mutate: execute, isLoading: isExecuting } = useExecuteSqlMutation({
+-    onSuccess(data) {
+-      if (id) snap.addResult(id, data.result)
++    onSuccess(data, vars) {
++      if (id) snap.addResult(id, data.result, vars.autoLimit)
+ 
+       // Refetching instead of invalidating since invalidate doesn't work with `enabled` flag
+       refetchEntityDefinitions()
+     },
+-    onError(error: any) {
++    onError(error: any, vars) {
+       if (id) {
+         if (error.position && monacoRef.current) {
+           const editor = editorRef.current
+@@ -208,7 +210,7 @@ const SQLEditor = () => {
+           }
+         }
+ 
+-        snap.addResultError(id, error)
++        snap.addResultError(id, error, vars.autoLimit)
+       }
+     },
+   })
+@@ -312,13 +314,17 @@ const SQLEditor = () => {
+           return toast.error('Unable to run query: Connection string is missing')
+         }
+ 
++        const { appendAutoLimit } = checkIfAppendLimitRequired(sql, snap.limit)
++        const formattedSql = suffixWithLimit(sql, snap.limit)
++
+         execute({
+           projectRef: project.ref,
+           connectionString: connectionString,
+-          sql: wrapWithRoleImpersonation(sql, {
++          sql: wrapWithRoleImpersonation(formattedSql, {
+             projectRef: project.ref,
+             role: impersonatedRole,
+           }),
++          autoLimit: appendAutoLimit ? snap.limit : undefined,
+           isRoleImpersonationEnabled: isRoleImpersonationEnabled(impersonatedRole),
+           handleError: (error) => {
+             throw error
+diff --git a/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.ts b/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.ts
+index d76787eb06..fe5e5a7404 100644
+--- a/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.ts
++++ b/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.ts
+@@ -109,3 +109,43 @@ export const compareAsNewSnippet = (sqlDiff: ContentDiff) => {
+     modified: sqlDiff.modified,
+   }
+ }
++
++// [Joshen] Just FYI as well the checks here on whether to append limit is quite restricted
++// This is to prevent dashboard from accidentally appending limit to the end of a query
++// thats not supposed to have any, since there's too many cases to cover.
++// We can however look into making this logic better in the future
++// i.e It's harder to append the limit param, than just leaving the query as it is
++// Otherwise we'd need a full on parser to do this properly
++export const checkIfAppendLimitRequired = (sql: string, limit: number = 0) => {
++  // Remove lines and whitespaces to use for checking
++  const cleanedSql = sql.trim().replaceAll('\n', ' ').replaceAll(/\s+/g, ' ')
++
++  // Check how many queries
++  const regMatch = cleanedSql.matchAll(/[a-zA-Z]*[0-9]*[;]+/g)
++  const queries = new Array(...regMatch)
++  const indexSemiColon = cleanedSql.lastIndexOf(';')
++  const hasComments = cleanedSql.includes('--')
++  const hasMultipleQueries =
++    queries.length > 1 || (indexSemiColon > 0 && indexSemiColon !== cleanedSql.length - 1)
++
++  // Check if need to auto limit rows
++  const appendAutoLimit =
++    limit > 0 &&
++    !hasComments &&
++    !hasMultipleQueries &&
++    cleanedSql.toLowerCase().startsWith('select') &&
++    !cleanedSql.endsWith('limit') &&
++    !cleanedSql.endsWith('limit;') &&
++    !cleanedSql.match('limit [0-9]*[;]?$')
++  return { cleanedSql, appendAutoLimit }
++}
++
++export const suffixWithLimit = (sql: string, limit: number = 0) => {
++  const { cleanedSql, appendAutoLimit } = checkIfAppendLimitRequired(sql, limit)
++  const formattedSql = appendAutoLimit
++    ? cleanedSql.endsWith(';')
++      ? sql.replace(/[;]+$/, ` limit ${limit};`)
++      : `${sql} limit ${limit};`
++    : sql
++  return formattedSql
++}
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/FavoriteButton.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/FavoriteButton.tsx
+deleted file mode 100644
+index 53b373ffa9..0000000000
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/FavoriteButton.tsx
++++ /dev/null
+@@ -1,109 +0,0 @@
+-import {
+-  Button,
+-  IconHeart,
+-  TooltipContent_Shadcn_,
+-  TooltipTrigger_Shadcn_,
+-  Tooltip_Shadcn_,
+-} from 'ui'
+-import { useQueryClient } from '@tanstack/react-query'
+-import { contentKeys } from 'data/content/keys'
+-import type { Content, ContentData } from 'data/content/content-query'
+-import { useProjectContext } from 'components/layouts/ProjectLayout/ProjectContext'
+-import { useSqlEditorStateSnapshot } from 'state/sql-editor'
+-
+-export type FavoriteButtonProps = { id: string }
+-const FavoriteButton = ({ id }: FavoriteButtonProps) => {
+-  const client = useQueryClient()
+-  const { project } = useProjectContext()
+-  const snap = useSqlEditorStateSnapshot()
+-
+-  const snippet = snap.snippets[id]
+-  const isFavorite = snippet !== undefined ? snippet.snippet.content.favorite : false
+-
+-  async function addFavorite() {
+-    snap.addFavorite(id)
+-
+-    client.setQueryData<ContentData>(
+-      contentKeys.list(project?.ref),
+-      (oldData: ContentData | undefined) => {
+-        if (!oldData) {
+-          return
+-        }
+-
+-        return {
+-          ...oldData,
+-          content: oldData.content.map((content: Content) => {
+-            if (content.type === 'sql' && content.id === id) {
+-              return {
+-                ...content,
+-                content: {
+-                  ...content.content,
+-                  favorite: true,
+-                },
+-              }
+-            }
+-
+-            return content
+-          }),
+-        }
+-      }
+-    )
+-  }
+-
+-  async function removeFavorite() {
+-    snap.removeFavorite(id)
+-
+-    client.setQueryData<ContentData>(
+-      contentKeys.list(project?.ref),
+-      (oldData: ContentData | undefined) => {
+-        if (!oldData) {
+-          return
+-        }
+-
+-        return {
+-          ...oldData,
+-          content: oldData.content.map((content: Content) => {
+-            if (content.type === 'sql' && content.id === id) {
+-              return {
+-                ...content,
+-                content: {
+-                  ...content.content,
+-                  favorite: false,
+-                },
+-              }
+-            }
+-
+-            return content
+-          }),
+-        }
+-      }
+-    )
+-  }
+-
+-  return (
+-    <Tooltip_Shadcn_>
+-      <TooltipTrigger_Shadcn_ asChild>
+-        {isFavorite ? (
+-          <Button
+-            type="text"
+-            size="tiny"
+-            onClick={removeFavorite}
+-            className="px-1"
+-            icon={<IconHeart size="tiny" fill="#48bb78" />}
+-          />
+-        ) : (
+-          <Button
+-            type="text"
+-            size="tiny"
+-            onClick={addFavorite}
+-            className="px-1"
+-            icon={<IconHeart size="tiny" fill="gray" />}
+-          />
+-        )}
+-      </TooltipTrigger_Shadcn_>
+-      <TooltipContent_Shadcn_ side="bottom">Add to favorites</TooltipContent_Shadcn_>
+-    </Tooltip_Shadcn_>
+-  )
+-}
+-
+-export default FavoriteButton
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/Results.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/Results.tsx
+index 1186c76612..3e1e1577da 100644
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/Results.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/Results.tsx
+@@ -1,17 +1,22 @@
+-import { useKeyboardShortcuts } from 'hooks'
+-import { copyToClipboard } from 'lib/helpers'
++import { Clipboard } from 'lucide-react'
+ import { useState } from 'react'
+ import { Item, Menu, useContextMenu } from 'react-contexify'
+ import DataGrid, { CalculatedColumn } from 'react-data-grid'
+ import { createPortal } from 'react-dom'
+-import { IconClipboard } from 'ui'
++
++import { useKeyboardShortcuts } from 'hooks'
++import { copyToClipboard } from 'lib/helpers'
++import { useSqlEditorStateSnapshot } from 'state/sql-editor'
++import { GridFooter } from 'components/ui/GridFooter'
+ 
+ const Results = ({ id, rows }: { id: string; rows: readonly any[] }) => {
+   const SQL_CONTEXT_EDITOR_ID = 'sql-context-menu-' + id
+-
+   const [cellPosition, setCellPosition] = useState<any>(undefined)
+ 
+-  function onCopyCell() {
++  const snap = useSqlEditorStateSnapshot()
++  const results = snap.results[id]?.[0]
++
++  const onCopyCell = () => {
+     if (cellPosition) {
+       const { rowIdx, column } = cellPosition
+       const colKey = column.key
+@@ -109,16 +114,24 @@ const Results = ({ id, rows }: { id: string; rows: readonly any[] }) => {
+         rowClass={() => '[&>.rdg-cell]:items-center'}
+         onSelectedCellChange={onSelectedCellChange}
+       />
++
+       {typeof window !== 'undefined' &&
+         createPortal(
+           <Menu id={SQL_CONTEXT_EDITOR_ID} animation={false}>
+             <Item onClick={onCopyCell}>
+-              <IconClipboard size="tiny" />
++              <Clipboard size={14} />
+               <span className="ml-2 text-xs">Copy cell content</span>
+             </Item>
+           </Menu>,
+           document.body
+         )}
++
++      <GridFooter className="flex items-center justify-center">
++        <p className="text-xs text-foreground-light">
++          {rows.length} row{rows.length > 1 ? 's' : ''}
++          {results.autoLimit !== undefined && ` (auto limit ${results.autoLimit} rows)`}
++        </p>
++      </GridFooter>
+     </>
+   )
+ }
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/ResultsDropdown.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/ResultsDropdown.tsx
+index 7cd4448d15..67f8e01874 100644
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/ResultsDropdown.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/ResultsDropdown.tsx
+@@ -9,6 +9,7 @@ import { useTelemetryProps } from 'common'
+ import { useProjectContext } from 'components/layouts/ProjectLayout/ProjectContext'
+ import { copyToClipboard } from 'lib/helpers'
+ import Telemetry from 'lib/telemetry'
++import { ChevronDownIcon, Clipboard, Download } from 'lucide-react'
+ import { useSqlEditorStateSnapshot } from 'state/sql-editor'
+ import {
+   Button,
+@@ -16,9 +17,6 @@ import {
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuTrigger,
+-  IconChevronDown,
+-  IconClipboard,
+-  IconDownload,
+ } from 'ui'
+ 
+ export type ResultsDropdownProps = {
+@@ -122,7 +120,7 @@ const ResultsDropdown = ({ id }: ResultsDropdownProps) => {
+   return (
+     <DropdownMenu>
+       <DropdownMenuTrigger asChild>
+-        <Button type="text" iconRight={<IconChevronDown />}>
++        <Button type="text" iconRight={<ChevronDownIcon size={14} />}>
+           Export
+         </Button>
+       </DropdownMenuTrigger>
+@@ -137,15 +135,15 @@ const ResultsDropdown = ({ id }: ResultsDropdownProps) => {
+ 
+       <DropdownMenuContent side="bottom" align="start">
+         <DropdownMenuItem onClick={onDownloadCSV} className="space-x-2">
+-          <IconDownload size="tiny" />
++          <Download size={14} />
+           <p>Download CSV</p>
+         </DropdownMenuItem>
+         <DropdownMenuItem onClick={onCopyAsMarkdown} className="space-x-2">
+-          <IconClipboard size="tiny" />
++          <Clipboard size={14} />
+           <p>Copy as markdown</p>
+         </DropdownMenuItem>
+         <DropdownMenuItem onClick={onCopyAsJSON} className="space-x-2">
+-          <IconClipboard size="tiny" />
++          <Clipboard size={14} />
+           <p>Copy as JSON</p>
+         </DropdownMenuItem>
+       </DropdownMenuContent>
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/SavingIndicator.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/SavingIndicator.tsx
+index bde673d308..17f13f6e77 100644
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/SavingIndicator.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/SavingIndicator.tsx
+@@ -1,9 +1,10 @@
+ import * as Tooltip from '@radix-ui/react-tooltip'
+ import { useUser } from 'common'
+ import { usePrevious } from 'hooks'
++import { AlertCircle, Check, Loader2, RefreshCcw } from 'lucide-react'
+ import { useEffect, useState } from 'react'
+ import { useSqlEditorStateSnapshot } from 'state/sql-editor'
+-import { Button, IconAlertCircle, IconCheck, IconLoader, IconRefreshCcw } from 'ui'
++import { Button, IconCheck, IconRefreshCcw } from 'ui'
+ import ReadOnlyBadge from './ReadOnlyBadge'
+ 
+ export type SavingIndicatorProps = { id: string }
+@@ -44,7 +45,7 @@ const SavingIndicator = ({ id }: SavingIndicatorProps) => {
+           <Button
+             type="text"
+             size="tiny"
+-            icon={<IconRefreshCcw className="text-gray-1100" size="tiny" strokeWidth={2} />}
++            icon={<RefreshCcw className="text-gray-1100" size="tiny" strokeWidth={2} />}
+             onClick={retry}
+           >
+             Retry
+@@ -53,7 +54,7 @@ const SavingIndicator = ({ id }: SavingIndicatorProps) => {
+         {showSavedText ? (
+           <Tooltip.Root delayDuration={0}>
+             <Tooltip.Trigger>
+-              <IconCheck className="text-brand" size={14} strokeWidth={3} />
++              <Check className="text-brand" size={14} strokeWidth={3} />
+             </Tooltip.Trigger>
+             <Tooltip.Content side="bottom">
+               <Tooltip.Arrow className="radix-tooltip-arrow" />
+@@ -70,7 +71,7 @@ const SavingIndicator = ({ id }: SavingIndicatorProps) => {
+         ) : isSnippetOwner && savingState === 'UPDATING' ? (
+           <Tooltip.Root delayDuration={0}>
+             <Tooltip.Trigger>
+-              <IconLoader className="animate-spin" size={14} strokeWidth={2} />
++              <Loader2 className="animate-spin" size={14} strokeWidth={2} />
+             </Tooltip.Trigger>
+             <Tooltip.Content side="bottom">
+               <Tooltip.Arrow className="radix-tooltip-arrow" />
+@@ -88,7 +89,7 @@ const SavingIndicator = ({ id }: SavingIndicatorProps) => {
+           isSnippetOwner ? (
+             <Tooltip.Root delayDuration={0}>
+               <Tooltip.Trigger>
+-                <IconAlertCircle className="text-red-900" size={14} strokeWidth={2} />
++                <AlertCircle className="text-red-900" size={14} strokeWidth={2} />
+               </Tooltip.Trigger>
+               <Tooltip.Content side="bottom">
+                 <Tooltip.Arrow className="radix-tooltip-arrow" />
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityActions.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityActions.tsx
+index 4165c8dff6..f0d3769580 100644
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityActions.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityActions.tsx
+@@ -1,8 +1,22 @@
+-import { AlignLeft, Check, Command, CornerDownLeft, Keyboard, Loader2 } from 'lucide-react'
++import { useQueryClient } from '@tanstack/react-query'
++import {
++  AlignLeft,
++  Check,
++  ChevronDown,
++  Command,
++  CornerDownLeft,
++  Heart,
++  Keyboard,
++  Loader2,
++  MoreVertical,
++} from 'lucide-react'
+ import toast from 'react-hot-toast'
+ 
+ import { RoleImpersonationPopover } from 'components/interfaces/RoleImpersonationSelector'
++import { useProjectContext } from 'components/layouts/ProjectLayout/ProjectContext'
+ import DatabaseSelector from 'components/ui/DatabaseSelector'
++import { Content, ContentData } from 'data/content/content-query'
++import { contentKeys } from 'data/content/keys'
+ import { useLocalStorageQuery } from 'hooks'
+ import { IS_PLATFORM, LOCAL_STORAGE_KEYS } from 'lib/constants'
+ import { detectOS } from 'lib/helpers'
+@@ -12,14 +26,24 @@ import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
++  DropdownMenuRadioGroup,
++  DropdownMenuRadioItem,
++  DropdownMenuSeparator,
+   DropdownMenuTrigger,
+   TooltipContent_Shadcn_,
+   TooltipTrigger_Shadcn_,
+   Tooltip_Shadcn_,
++  cn,
+ } from 'ui'
+-import FavoriteButton from './FavoriteButton'
+ import SavingIndicator from './SavingIndicator'
+ 
++const ROWS_PER_PAGE_OPTIONS = [
++  { value: -1, label: 'No limit' },
++  { value: 100, label: '100 rows' },
++  { value: 500, label: '500 rows' },
++  { value: 1000, label: '1,000 rows' },
++]
++
+ export type UtilityActionsProps = {
+   id: string
+   isExecuting?: boolean
+@@ -38,13 +62,72 @@ const UtilityActions = ({
+   executeQuery,
+ }: UtilityActionsProps) => {
+   const os = detectOS()
++  const client = useQueryClient()
++  const { project } = useProjectContext()
+   const snap = useSqlEditorStateSnapshot()
+ 
++  const [isAiOpen] = useLocalStorageQuery(LOCAL_STORAGE_KEYS.SQL_EDITOR_AI_OPEN, true)
+   const [intellisenseEnabled, setIntellisenseEnabled] = useLocalStorageQuery(
+     LOCAL_STORAGE_KEYS.SQL_EDITOR_INTELLISENSE,
+     true
+   )
+ 
++  const snippet = snap.snippets[id]
++  const isFavorite = snippet !== undefined ? snippet.snippet.content.favorite : false
++
++  const toggleIntellisense = () => {
++    setIntellisenseEnabled(!intellisenseEnabled)
++    toast.success(
++      `Successfully ${intellisenseEnabled ? 'disabled' : 'enabled'} intellisense. ${intellisenseEnabled ? 'Please refresh your browser for changes to take place.' : ''}`
++    )
++  }
++
++  const addFavorite = async () => {
++    snap.addFavorite(id)
++    client.setQueryData<ContentData>(
++      contentKeys.list(project?.ref),
++      (oldData: ContentData | undefined) => {
++        if (!oldData) return
++
++        return {
++          ...oldData,
++          content: oldData.content.map((content: Content) => {
++            if (content.type === 'sql' && content.id === id) {
++              return {
++                ...content,
++                content: { ...content.content, favorite: true },
++              }
++            }
++            return content
++          }),
++        }
++      }
++    )
++  }
++
++  const removeFavorite = async () => {
++    snap.removeFavorite(id)
++    client.setQueryData<ContentData>(
++      contentKeys.list(project?.ref),
++      (oldData: ContentData | undefined) => {
++        if (!oldData) return
++
++        return {
++          ...oldData,
++          content: oldData.content.map((content: Content) => {
++            if (content.type === 'sql' && content.id === id) {
++              return {
++                ...content,
++                content: { ...content.content, favorite: false },
++              }
++            }
++            return content
++          }),
++        }
++      }
++    )
++  }
++
+   return (
+     <div className="inline-flex items-center justify-end gap-x-2">
+       {IS_PLATFORM && <SavingIndicator id={id} />}
+@@ -52,42 +135,121 @@ const UtilityActions = ({
+       <DropdownMenu>
+         <DropdownMenuTrigger asChild>
+           <Button
+-            type="text"
+-            className="px-1"
+-            icon={<Keyboard size={14} className="text-foreground-light" />}
++            type="default"
++            className={cn('px-1', isAiOpen ? 'block 2xl:hidden' : 'hidden')}
++            icon={<MoreVertical size={14} className="text-foreground-light" />}
+           />
+         </DropdownMenuTrigger>
+         <DropdownMenuContent className="w-48">
++          <DropdownMenuItem className="justify-between" onClick={toggleIntellisense}>
++            <span className="flex items-center gap-x-2">
++              <Keyboard size={14} className="text-foreground-light" />
++              Intellisense enabled
++            </span>
++            {intellisenseEnabled && <Check className="text-brand" size={16} />}
++          </DropdownMenuItem>
++          <DropdownMenuSeparator />
+           <DropdownMenuItem
+-            className="justify-between"
++            className="gap-x-2"
+             onClick={() => {
+-              setIntellisenseEnabled(!intellisenseEnabled)
+-              toast.success(
+-                `Successfully ${intellisenseEnabled ? 'disabled' : 'enabled'} intellisense. ${intellisenseEnabled ? 'Please refresh your browser for changes to take place.' : ''}`
+-              )
++              if (isFavorite) removeFavorite()
++              else addFavorite()
+             }}
+           >
+-            <p>Intellisense enabled</p>
+-            {intellisenseEnabled && <Check className="text-brand" />}
++            <Heart
++              size={14}
++              strokeWidth={2}
++              className={
++                isFavorite ? 'fill-brand stroke-none' : 'fill-none stroke-foreground-light'
++              }
++            />
++            {isFavorite ? 'Remove from' : 'Add to'} favorites
++          </DropdownMenuItem>
++          <DropdownMenuItem className="gap-x-2" onClick={prettifyQuery}>
++            <AlignLeft size={14} strokeWidth={2} />
++            Prettify SQL
+           </DropdownMenuItem>
+         </DropdownMenuContent>
+       </DropdownMenu>
+ 
+-      {IS_PLATFORM && <FavoriteButton id={id} />}
++      <div className={cn('items-center gap-x-2', isAiOpen ? 'hidden 2xl:flex' : 'flex')}>
++        <DropdownMenu>
++          <DropdownMenuTrigger asChild>
++            <Button
++              type="text"
++              className="px-1"
++              icon={<Keyboard size={14} className="text-foreground-light" />}
++            />
++          </DropdownMenuTrigger>
++          <DropdownMenuContent className="w-48">
++            <DropdownMenuItem className="justify-between" onClick={toggleIntellisense}>
++              Intellisense enabled
++              {intellisenseEnabled && <Check className="text-brand" size={16} />}
++            </DropdownMenuItem>
++          </DropdownMenuContent>
++        </DropdownMenu>
+ 
+-      <Tooltip_Shadcn_>
+-        <TooltipTrigger_Shadcn_ asChild>
+-          <Button
+-            type="text"
+-            onClick={() => prettifyQuery()}
+-            className="px-1"
+-            icon={<AlignLeft size="tiny" strokeWidth={2} />}
+-          />
+-        </TooltipTrigger_Shadcn_>
+-        <TooltipContent_Shadcn_ side="bottom">Prettify SQL</TooltipContent_Shadcn_>
+-      </Tooltip_Shadcn_>
++        {IS_PLATFORM && (
++          <Tooltip_Shadcn_>
++            <TooltipTrigger_Shadcn_ asChild>
++              {isFavorite ? (
++                <Button
++                  type="text"
++                  size="tiny"
++                  onClick={removeFavorite}
++                  className="px-1"
++                  icon={<Heart className="fill-brand stroke-none" />}
++                />
++              ) : (
++                <Button
++                  type="text"
++                  size="tiny"
++                  onClick={addFavorite}
++                  className="px-1"
++                  icon={<Heart className="fill-none stroke-foreground-light" />}
++                />
++              )}
++            </TooltipTrigger_Shadcn_>
++            <TooltipContent_Shadcn_ side="bottom">
++              {isFavorite ? 'Remove from' : 'Add to'} favorites
++            </TooltipContent_Shadcn_>
++          </Tooltip_Shadcn_>
++        )}
++
++        <Tooltip_Shadcn_>
++          <TooltipTrigger_Shadcn_ asChild>
++            <Button
++              type="text"
++              onClick={prettifyQuery}
++              className="px-1"
++              icon={<AlignLeft size="tiny" strokeWidth={2} />}
++            />
++          </TooltipTrigger_Shadcn_>
++          <TooltipContent_Shadcn_ side="bottom">Prettify SQL</TooltipContent_Shadcn_>
++        </Tooltip_Shadcn_>
++      </div>
++
++      <DropdownMenu>
++        <DropdownMenuTrigger asChild>
++          <Button type="default" iconRight={<ChevronDown size={14} />}>
++            {ROWS_PER_PAGE_OPTIONS.find((opt) => opt.value === snap.limit)?.label}
++          </Button>
++        </DropdownMenuTrigger>
++        <DropdownMenuContent className="w-42">
++          <DropdownMenuRadioGroup
++            value={snap.limit.toString()}
++            onValueChange={(val) => snap.setLimit(Number(val))}
++          >
++            {ROWS_PER_PAGE_OPTIONS.map((option) => (
++              <DropdownMenuRadioItem key={option.label} value={option.value.toString()}>
++                {option.label}
++              </DropdownMenuRadioItem>
++            ))}
++          </DropdownMenuRadioGroup>
++        </DropdownMenuContent>
++      </DropdownMenu>
+ 
+-      <div className="flex items-center justify-between gap-x-2 mx-2">
++      <div className="flex items-center justify-between gap-x-2">
+         <div className="flex items-center">
+           <DatabaseSelector variant="connected-on-right" onSelectId={() => snap.resetResult(id)} />
+           <RoleImpersonationPopover serviceRoleLabel="postgres" variant="connected-on-both" />
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityPanel.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityPanel.tsx
+index 308400594a..7c044980ec 100644
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityPanel.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityPanel.tsx
+@@ -1,7 +1,7 @@
+ import { useQueryClient } from '@tanstack/react-query'
+-import { useParams } from 'common'
+ import toast from 'react-hot-toast'
+ 
++import { useParams } from 'common'
+ import { useContentUpsertMutation } from 'data/content/content-upsert-mutation'
+ import { contentKeys } from 'data/content/keys'
+ import { useSqlEditorStateSnapshot } from 'state/sql-editor'
+@@ -111,28 +111,23 @@ const UtilityPanel = ({
+   return (
+     <Tabs_Shadcn_ defaultValue="results" className="w-full h-full flex flex-col">
+       <TabsList_Shadcn_ className="flex justify-between gap-2 px-2">
+-        <div className="flex gap-4">
++        <div className="flex items-center gap-4">
+           <TabsTrigger_Shadcn_ className="py-3 text-xs" value="results">
+-            Results{' '}
+-            {!isExecuting &&
+-              (result?.rows ?? []).length > 0 &&
+-              `(${result.rows.length.toLocaleString()})`}
++            <span className="translate-y-[1px]">Results</span>
+           </TabsTrigger_Shadcn_>
+           <TabsTrigger_Shadcn_ className="py-3 text-xs" value="chart">
+-            Chart
++            <span className="translate-y-[1px]">Chart</span>
+           </TabsTrigger_Shadcn_>
++          {result?.rows && <ResultsDropdown id={id} />}
+         </div>
+-        <div className="flex gap-1 h-full items-center">
+-          {result && result.rows && <ResultsDropdown id={id} />}
+-          <UtilityActions
+-            id={id}
+-            isExecuting={isExecuting}
+-            isDisabled={isDisabled}
+-            hasSelection={hasSelection}
+-            prettifyQuery={prettifyQuery}
+-            executeQuery={executeQuery}
+-          />
+-        </div>
++        <UtilityActions
++          id={id}
++          isExecuting={isExecuting}
++          isDisabled={isDisabled}
++          hasSelection={hasSelection}
++          prettifyQuery={prettifyQuery}
++          executeQuery={executeQuery}
++        />
+       </TabsList_Shadcn_>
+       <TabsContent_Shadcn_ className="mt-0 h-full" value="results">
+         <UtilityTabResults
+diff --git a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityTabResults.tsx b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityTabResults.tsx
+index dbb6920be3..199beee180 100644
+--- a/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityTabResults.tsx
++++ b/apps/studio/components/interfaces/SQLEditor/UtilityPanel/UtilityTabResults.tsx
+@@ -1,13 +1,13 @@
+-import { useParams } from 'common'
+-import { AiIconAnimation, Button } from 'ui'
++import { Loader2 } from 'lucide-react'
+ 
++import { useParams } from 'common'
+ import { subscriptionHasHipaaAddon } from 'components/interfaces/Billing/Subscription/Subscription.utils'
+ import { useOrgSubscriptionQuery } from 'data/subscriptions/org-subscription-query'
+ import { useSelectedOrganization } from 'hooks'
+ import { useDatabaseSelectorStateSnapshot } from 'state/database-selector'
+ import { useSqlEditorStateSnapshot } from 'state/sql-editor'
++import { AiIconAnimation, Button } from 'ui'
+ import Results from './Results'
+-import { Loader2 } from 'lucide-react'
+ 
+ export type UtilityTabResultsProps = {
+   id: string
+@@ -29,10 +29,7 @@ const UtilityTabResults = ({
+   const state = useDatabaseSelectorStateSnapshot()
+   const organization = useSelectedOrganization()
+ 
+-  const snippet = snap.snippets[id]
+   const result = snap.results[id]?.[0]
+-  const isUtilityPanelCollapsed = (snippet?.splitSizes?.[1] ?? 0) === 0
+-
+   const { data: subscription } = useOrgSubscriptionQuery({ orgSlug: organization?.slug })
+ 
+   // Customers on HIPAA plans should not have access to Supabase AI
+@@ -42,8 +39,6 @@ const UtilityTabResults = ({
+     result?.error?.message?.includes('canceling statement due to statement timeout') ||
+     result?.error?.message?.includes('upstream request timeout')
+ 
+-  if (isUtilityPanelCollapsed) return null
+-
+   if (isExecuting) {
+     return (
+       <div className="flex items-center gap-x-4 px-6 py-4 bg-table-header-light [[data-theme*=dark]_&]:bg-table-header-dark">
+@@ -96,15 +91,19 @@ const UtilityTabResults = ({
+                   </pre>
+                 ))
+               ) : (
+-                <>
+-                  <p className="font-mono text-sm">Error: {result.error?.message}</p>
+-                  {readReplicaError && (
+-                    <p className="text-sm text-foreground-light">
+-                      Note: Read replicas are for read only queries. Run write queries on the
+-                      primary database instead.
+-                    </p>
+-                  )}
+-                </>
++                <p className="font-mono text-sm">Error: {result.error?.message}</p>
++              )}
++              {result.autoLimit && (
++                <p className="text-sm text-foreground-light">
++                  Note: A limit of {result.autoLimit} was applied to your query. If this was the
++                  cause of a syntax error, try selecting "No limit" instead and re-run the query.
++                </p>
++              )}
++              {readReplicaError && (
++                <p className="text-sm text-foreground-light">
++                  Note: Read replicas are for read only queries. Run write queries on the primary
++                  database instead.
++                </p>
+               )}
+             </div>
+           )}
+diff --git a/apps/studio/components/ui/GridFooter.tsx b/apps/studio/components/ui/GridFooter.tsx
+new file mode 100644
+index 0000000000..b46168e957
+--- /dev/null
++++ b/apps/studio/components/ui/GridFooter.tsx
+@@ -0,0 +1,12 @@
++import { PropsWithChildren } from 'react'
++import { cn } from 'ui'
++
++export const GridFooter = ({ children, className }: PropsWithChildren<{ className?: string }>) => {
++  return (
++    <div
++      className={cn('flex min-h-9 overflow-hidden items-center px-5 w-full border-t', className)}
++    >
++      {children}
++    </div>
++  )
++}
+diff --git a/apps/studio/data/sql/execute-sql-query.ts b/apps/studio/data/sql/execute-sql-query.ts
+index 0d5bdbb432..ad6798e513 100644
+--- a/apps/studio/data/sql/execute-sql-query.ts
++++ b/apps/studio/data/sql/execute-sql-query.ts
+@@ -15,6 +15,7 @@ export type ExecuteSqlVariables = {
+   queryKey?: QueryKey
+   handleError?: (error: ResponseError) => { result: any }
+   isRoleImpersonationEnabled?: boolean
++  autoLimit?: number
+ }
+ 
+ export async function executeSql(
+diff --git a/apps/studio/lib/constants/index.ts b/apps/studio/lib/constants/index.ts
+index b22e7e9b35..a43d862e2a 100644
+--- a/apps/studio/lib/constants/index.ts
++++ b/apps/studio/lib/constants/index.ts
+@@ -40,6 +40,7 @@ export const LOCAL_STORAGE_KEYS = {
+   SQL_EDITOR_INTELLISENSE: 'supabase_sql-editor-intellisense-enabled',
+   SQL_EDITOR_SPLIT_SIZE: 'supabase_sql-editor-split-size',
+   SQL_EDITOR_AI_SCHEMA: 'supabase_sql-editor-ai-schema-enabled',
++  SQL_EDITOR_AI_OPEN: 'supabase_sql-editor-ai-open',
+   LOG_EXPLORER_SPLIT_SIZE: 'supabase_log-explorer-split-size',
+   GRAPHIQL_RLS_BYPASS_WARNING: 'graphiql-rls-bypass-warning-dismissed',
+   CLS_DIFF_WARNING: 'cls-diff-warning-dismissed',
+diff --git a/apps/studio/state/sql-editor.ts b/apps/studio/state/sql-editor.ts
+index f7b7924e2c..b26fd1da4e 100644
+--- a/apps/studio/state/sql-editor.ts
++++ b/apps/studio/state/sql-editor.ts
+@@ -21,6 +21,7 @@ export const sqlEditorState = proxy({
+     [key: string]: {
+       rows: any[]
+       error?: any
++      autoLimit?: number
+     }[]
+   },
+   // Project ref as the key, ids of each snippet as the order
+@@ -30,12 +31,14 @@ export const sqlEditorState = proxy({
+   loaded: {} as {
+     [key: string]: boolean
+   },
++  limit: 100,
+ 
+   needsSaving: proxySet<string>([]),
+   savingStates: {} as {
+     [key: string]: 'IDLE' | 'UPDATING' | 'UPDATING_FAILED'
+   },
+ 
++  setLimit: (value: number) => (sqlEditorState.limit = value),
+   orderSnippets: (snippets: SqlSnippet[]) => {
+     return (
+       snippets
+@@ -151,14 +154,14 @@ export const sqlEditorState = proxy({
+       sqlEditorState.results[id] = []
+     }
+   },
+-  addResult: (id: string, results: any[]) => {
++  addResult: (id: string, results: any[], autoLimit?: number) => {
+     if (sqlEditorState.results[id]) {
+-      sqlEditorState.results[id].unshift({ rows: results })
++      sqlEditorState.results[id].unshift({ rows: results, autoLimit })
+     }
+   },
+-  addResultError: (id: string, error: any) => {
++  addResultError: (id: string, error: any, autoLimit?: number) => {
+     if (sqlEditorState.results[id]) {
+-      sqlEditorState.results[id].unshift({ rows: [], error })
++      sqlEditorState.results[id].unshift({ rows: [], error, autoLimit })
+     }
+   },
+   addFavorite: (id: string) => {
+diff --git a/apps/studio/vitest.config.mts b/apps/studio/vitest.config.mts
+index 683e302d6e..c255ef58ca 100644
+--- a/apps/studio/vitest.config.mts
++++ b/apps/studio/vitest.config.mts
+@@ -25,7 +25,10 @@ export default defineConfig({
+   test: {
+     globals: true,
+     environment: 'jsdom', // TODO(kamil): This should be set per test via header in .tsx files only
+-    include: [resolve(dirname, './tests/**/*.test.{ts,tsx}')],
++    include: [
++      resolve(dirname, './tests/**/*.test.{ts,tsx}'),
++      resolve(dirname, './components/**/*.test.{ts,tsx}'),
++    ],
+     restoreMocks: true,
+     setupFiles: [
+       resolve(dirname, './tests/vitestSetup.ts'),

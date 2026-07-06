@@ -1,0 +1,396 @@
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilder.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilder.java
+index 39b3d0f7c3b5..abee58d55fe2 100644
+--- a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilder.java
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilder.java
+@@ -381,10 +381,11 @@ public class JsGraphBuilder {
+                         infuse(executingNode, dynamicallyBuiltBaseNode.get());
+                     }
+ 
+-                } catch (ScriptException | FrameworkException e) {
++                } catch (Throwable e) {
++                    //We need to catch all the javascript errors here, then log and handle.
+                     //TODO: do proper error handling
+                     log.error("Error in executing the javascript for service provider : " + authenticationContext
+-                            .getServiceProviderName(), e);
++                            .getServiceProviderName() + ", Javascript Fragment : \n" + jsFunction.getSource(), e);
+                 } finally {
+                     contextForJs.remove();
+                     dynamicallyBuiltBaseNode.remove();
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilderFactory.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilderFactory.java
+index 7b22a9dc9999..2578c177301d 100644
+--- a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilderFactory.java
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/JsGraphBuilderFactory.java
+@@ -18,6 +18,7 @@
+ 
+ package org.wso2.carbon.identity.application.authentication.framework.config.model.graph;
+ 
++import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+ import jdk.nashorn.api.scripting.ScriptObjectMirror;
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+@@ -61,8 +62,6 @@ public class JsGraphBuilderFactory {
+         ScriptEngine engine = nashornScriptManager.getEngineByName("nashorn");
+ 
+         Bindings bindings = engine.getBindings(ScriptContext.GLOBAL_SCOPE);
+-        bindings.put("log", jsLog); //TODO: Depricated. Remove log.x()
+-        bindings.put("Log", jsLog); //TODO: Depricated. Remove log.x()
+         SelectAcrFromFunction selectAcrFromFunction = new SelectAcrFromFunction();
+         bindings.put(FrameworkConstants.JSAttributes.JS_FUNC_SELECT_ACR_FROM,
+                 (SelectOneFunction) selectAcrFromFunction::evaluate);
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticatedUser.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticatedUser.java
+index 50b07310074f..fe73bcf4de4e 100644
+--- a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticatedUser.java
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticatedUser.java
+@@ -40,6 +40,7 @@ public class JsAuthenticatedUser extends AbstractJSObjectWrapper<AuthenticatedUs
+     public JsAuthenticatedUser(AuthenticatedUser wrapped) {
+         super(wrapped);
+     }
++    private JsClaimSet jsClaimSet;
+ 
+     @Override
+     public Object getMember(String name) {
+@@ -53,6 +54,8 @@ public class JsAuthenticatedUser extends AbstractJSObjectWrapper<AuthenticatedUs
+                 return getWrapped().getUserStoreDomain();
+             case FrameworkConstants.JSAttributes.JS_TENANT_DOMAIN:
+                 return getWrapped().getTenantDomain();
++            case FrameworkConstants.JSAttributes.JS_USER_CLAIMS:
++                return getCliamsSet();
+             default:
+                 return super.getMember(name);
+         }
+@@ -70,8 +73,17 @@ public class JsAuthenticatedUser extends AbstractJSObjectWrapper<AuthenticatedUs
+                 return getWrapped().getUserStoreDomain() != null;
+             case FrameworkConstants.JSAttributes.JS_TENANT_DOMAIN:
+                 return getWrapped().getTenantDomain() != null;
++            case FrameworkConstants.JSAttributes.JS_USER_CLAIMS:
++                return !getCliamsSet().isEmpty();
+             default:
+                 return super.hasMember(name);
+         }
+     }
++
++    private JsClaimSet getCliamsSet() {
++        if(jsClaimSet == null) {
++            jsClaimSet = new JsClaimSet(getWrapped().getUserAttributes());
++        }
++        return jsClaimSet;
++    }
+ }
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticationContext.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticationContext.java
+index 641bca64e181..b5fe034b08c9 100644
+--- a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticationContext.java
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticationContext.java
+@@ -47,6 +47,8 @@ public class JsAuthenticationContext extends AbstractJSObjectWrapper<Authenticat
+         switch (name) {
+             case FrameworkConstants.JSAttributes.JS_REQUESTED_ACR:
+                 return getWrapped().getRequestedAcr();
++            case FrameworkConstants.JSAttributes.JS_AUTHENTICATED_SUBJECT:
++                return new JsAuthenticatedUser(getWrapped().getSubject());
+             case FrameworkConstants.JSAttributes.JS_LAST_AUTHENTICATED_USER:
+                 return new JsAuthenticatedUser(getWrapped().getLastAuthenticatedUser());
+             case FrameworkConstants.JSAttributes.JS_TENANT_DOMAIN:
+@@ -68,6 +70,8 @@ public class JsAuthenticationContext extends AbstractJSObjectWrapper<Authenticat
+         switch (name) {
+             case FrameworkConstants.JSAttributes.JS_REQUESTED_ACR:
+                 return getWrapped().getRequestedAcr() != null;
++            case FrameworkConstants.JSAttributes.JS_AUTHENTICATED_SUBJECT:
++                return getWrapped().getSubject() != null;
+             case FrameworkConstants.JSAttributes.JS_LAST_AUTHENTICATED_USER:
+                 return getWrapped().getLastAuthenticatedUser() != null;
+             case FrameworkConstants.JSAttributes.JS_TENANT_DOMAIN:
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsClaimSet.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsClaimSet.java
+new file mode 100644
+index 000000000000..01100fea6b80
+--- /dev/null
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsClaimSet.java
+@@ -0,0 +1,125 @@
++/*
++ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
++ *
++ * WSO2 Inc. licenses this file to you under the Apache License,
++ * Version 2.0 (the "License"); you may not use this file except
++ * in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++package org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js;
++
++import org.wso2.carbon.identity.application.authentication.framework.util.FrameworkConstants;
++import org.wso2.carbon.identity.application.common.model.Claim;
++import org.wso2.carbon.identity.application.common.model.ClaimMapping;
++
++import java.util.Map;
++import java.util.function.Consumer;
++
++/**
++ * Javascript wrapper for Java level User Claims.
++ */
++public class JsClaimSet extends AbstractJSObjectWrapper<Map<ClaimMapping, String>> {
++
++    private JsClaimView localView;
++    private JsClaimView remoteView;
++
++    public JsClaimSet(Map<ClaimMapping, String> wrapped) {
++
++        super(wrapped);
++        localView = new JsClaimView(wrapped, claimMapping -> claimMapping.getLocalClaim().getClaimUri());
++        remoteView = new JsClaimView(wrapped, claimMapping -> claimMapping.getRemoteClaim().getClaimUri());
++    }
++
++    @Override
++    public Object getMember(String name) {
++
++        switch (name) {
++        case FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_LOCAL:
++            return localView;
++        case FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_REMOTE:
++            return remoteView;
++        case FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_PUSH:
++            return (Consumer<Object>) this::addClaim;
++        default:
++            return super.getMember(name);
++        }
++    }
++
++    @Override
++    public boolean hasMember(String name) {
++
++        switch (name) {
++
++        default:
++            return super.hasMember(name);
++        }
++    }
++
++    /**
++     * Checks if claim mappings is empty.
++     * @return
++     */
++    public boolean isEmpty() {
++
++        return getWrapped().isEmpty();
++    }
++
++    /**
++     * Function to add claim.
++     * Used in javascript
++     * <code>
++     *       user.claims.put(someClaim);
++     * </code>
++     * @param o
++     */
++    private void addClaim(Object o) {
++
++        if (o instanceof Map) {
++            Map<String, Object> map = (Map<String, Object>) o;
++            Object local = map.get(FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_LOCAL);
++            Object remote = map.get(FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_REMOTE);
++            Object value = map.get(FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_VALUE);
++
++            if (local instanceof Map && remote instanceof Map && value instanceof String) {
++                Map<String, String> localClaimConfig = (Map<String, String>) local;
++                Map<String, String> remoteClaimConfig = (Map<String, String>) remote;
++
++                addClaim(localClaimConfig, remoteClaimConfig, (String) value);
++            } else {
++                JsLogger.getInstance()
++                        .error("Adding a claim to claims[] requires, local.uri, remote.uri and a value. Offending script fragment :"
++                                + o.toString());
++            }
++        }
++    }
++
++    /**
++     * Add claim mapings given the local and remote claim in Javascript level map interface.
++     *
++     * @param localClaimConfig
++     * @param remoteClaimConfig
++     * @param value
++     */
++    private void addClaim(Map<String, String> localClaimConfig, Map<String, String> remoteClaimConfig, String value) {
++
++        Claim localClaim = new Claim();
++        Claim remoteClaim = new Claim();
++        localClaim.setClaimUri(localClaimConfig.get(FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_URI));
++        remoteClaim.setClaimUri(remoteClaimConfig.get(FrameworkConstants.JSAttributes.JS_CLAIM_MEMBER_URI));
++
++        ClaimMapping claimMapping = new ClaimMapping();
++        claimMapping.setLocalClaim(localClaim);
++        claimMapping.setRemoteClaim(remoteClaim);
++        getWrapped().put(claimMapping, value);
++    }
++}
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsClaimView.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsClaimView.java
+new file mode 100644
+index 000000000000..9f2e4f8d2bb7
+--- /dev/null
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsClaimView.java
+@@ -0,0 +1,74 @@
++/*
++ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
++ *
++ * WSO2 Inc. licenses this file to you under the Apache License,
++ * Version 2.0 (the "License"); you may not use this file except
++ * in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++package org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js;
++
++import org.wso2.carbon.identity.application.common.model.ClaimMapping;
++
++import java.util.Map;
++
++/**
++ * Provides an array like view inJavascript for the Claim Mapping in the User attibutes.
++ */
++public class JsClaimView extends AbstractJSObjectWrapper<Map<ClaimMapping, String>> {
++
++    private IdMapper idMapper;
++
++    public JsClaimView(Map<ClaimMapping, String> wrapped, IdMapper idMapper) {
++
++        super(wrapped);
++        this.idMapper = idMapper;
++    }
++
++    @Override
++    public boolean isArray() {
++
++        return true;
++    }
++
++    @Override
++    public Object getMember(String name) {
++
++        String value = getWrapped().entrySet().stream().filter(e -> name.equals(idMapper.toId(e.getKey()))).findAny()
++                .map(e -> e.getValue()).orElse(null);
++        if (value != null) {
++            return value;
++        }
++        return super.getMember(name);
++    }
++
++    @Override
++    public void setMember(String name, Object value) {
++
++        String valueStr = String.valueOf(value);
++        getWrapped().entrySet().stream().filter(e -> name.equals(idMapper.toId(e.getKey())))
++                .forEach(e -> e.setValue(valueStr));
++    }
++
++    @FunctionalInterface
++    public interface IdMapper {
++
++        /**
++         * Get the Identifier for the claim mapping.
++         *
++         * @param claimMapping
++         * @return
++         */
++        String toId(ClaimMapping claimMapping);
++    }
++}
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsLogger.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsLogger.java
+index 99673172108b..ad95aadfa4ab 100644
+--- a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsLogger.java
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsLogger.java
+@@ -23,12 +23,14 @@ import org.apache.commons.logging.LogFactory;
+ 
+ /**
+  * Logger For javascript engine.
+- * Supports console.log, console.warn, console.error and console.info
++ * Supports Log.log, Log.warn, Log.error and Log.info
+  */
+ public class JsLogger {
+ 
+     private static final Log logger = LogFactory.getLog(JsLogger.class);
+ 
++    private static JsLogger jsLogger = new JsLogger();
++
+     /**
+      * Logs with list of objects.
+      * @param values
+@@ -52,18 +54,31 @@ public class JsLogger {
+     }
+ 
+     public void debug(String value) {
++
+         logger.debug(value);
+     }
+ 
+     public void info(String value) {
++
+         logger.info(value);
+     }
+ 
+     public void error(String value) {
++
+         logger.error(value);
+     }
+ 
+     public void log(String message, Object... values) {
+ 
+     }
++
++    /**
++     * Returns an instance to log the javascript errors.
++     *
++     * @return
++     */
++    public static JsLogger getInstance() {
++
++        return jsLogger;
++    }
+ }
+diff --git a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/util/FrameworkConstants.java b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/util/FrameworkConstants.java
+index aed7f470e839..34a682265455 100644
+--- a/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/util/FrameworkConstants.java
++++ b/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/util/FrameworkConstants.java
+@@ -242,6 +242,7 @@ public abstract class FrameworkConstants {
+         public static final String JS_TENANT_DOMAIN = "tenantDomain";
+         public static final String JS_REQUESTED_ACR = "requestedAcr";
+         public static final String JS_LAST_AUTHENTICATED_USER = "lastAuthenticatedUser";
++        public static final String JS_AUTHENTICATED_SUBJECT = "subject";
+         public static final String JS_SELECTED_ACR = "selectedAcr";
+         public static final String JS_REQUEST = "request";
+         public static final String JS_RESPONSE = "response";
+@@ -259,6 +260,8 @@ public abstract class FrameworkConstants {
+         public static final String JS_COOKIE_VERSION = "version";
+         public static final String JS_COOKIE_HTTP_ONLY = "httpOnly";
+ 
++        public static final String JS_USER_CLAIMS = "claims";
++
+         public static final String PROP_CURRENT_NODE = "Adaptive.Auth.Current.Graph.Node";
+ 
+         public static final String JS_FUNC_EXECUTE_STEP = "executeStep";
+@@ -267,5 +270,11 @@ public abstract class FrameworkConstants {
+         public static final String JS_FUNC_SEND_ERROR = "sendError";
+         public static final String JS_SHOW_ERROR_PAGE = "showErrorPage";
+         public static final String JS_PAGE_URI = "pageUri";
++
++        public static final String JS_CLAIM_MEMBER_LOCAL = "local";
++        public static final String JS_CLAIM_MEMBER_REMOTE = "remote";
++        public static final String JS_CLAIM_MEMBER_PUSH = "push";
++        public static final String JS_CLAIM_MEMBER_VALUE = "value";
++        public static final String JS_CLAIM_MEMBER_URI = "uri";
+     }
+ }

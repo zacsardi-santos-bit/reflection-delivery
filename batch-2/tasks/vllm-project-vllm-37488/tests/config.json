@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/v1/worker/test_gpu_model_runner_v2_eplb.py -v --noconftest",
+  "test_files": [
+    "tests/v1/worker/test_gpu_model_runner_v2_eplb.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.v1.worker.test_gpu_model_runner_v2_eplb::test_v2_load_model_registers_moe_with_eplb",
+    "tests.v1.worker.test_gpu_model_runner_v2_eplb::test_v2_load_model_with_dummy_weights_skips_eplb_registration",
+    "tests.v1.worker.test_gpu_model_runner_v2_eplb::test_v2_setup_eplb_from_mapping_rebuilds_state",
+    "tests.v1.worker.test_gpu_model_runner_v2_eplb::test_v2_sample_tokens_runs_eplb_on_non_last_pp_rank"
+  ],
+  "PASS_TO_PASS": []
+}

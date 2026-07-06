@@ -1,0 +1,17 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts --coverage=false --watchAll=false --json",
+  "test_files": [
+    "packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts::testPluginOptionsSchema should partially validate one value of a schema",
+    "/workspace/repo/packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts::testPluginOptionsSchema should partially validate multiples value of a schema",
+    "/workspace/repo/packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts::testPluginOptionsSchema should validate half of a real world plugin schema",
+    "/workspace/repo/packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts::testPluginOptionsSchema should validate an entire real world plugin schema",
+    "/workspace/repo/packages/gatsby-plugin-utils/src/__tests__/test-plugin-options-schema.ts::testPluginOptionsSchema should check the validity of a schema"
+  ],
+  "PASS_TO_PASS": []
+}

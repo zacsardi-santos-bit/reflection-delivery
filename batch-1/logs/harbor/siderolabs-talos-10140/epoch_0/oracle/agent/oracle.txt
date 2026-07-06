@@ -1,0 +1,12 @@
+patching file .github/workflows/ci.yaml
+patching file .github/workflows/integration-qemu-csi-openebs-cron.yaml
+patching file .github/workflows/slack-notify.yaml
+patching file .kres.yaml
+patching file internal/integration/api/extensions_qemu.go
+patching file internal/integration/api/volumes.go
+patching file internal/integration/api/wipe.go
+patching file internal/integration/base/api.go
+patching file internal/integration/k8s/constants.go
+patching file internal/integration/k8s/openebs.go
+patching file internal/integration/k8s/testdata/openebs-diskpool.yaml
+patching file internal/integration/k8s/testdata/openebs-values.yaml

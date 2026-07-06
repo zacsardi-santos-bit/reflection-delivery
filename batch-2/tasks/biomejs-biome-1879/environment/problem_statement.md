@@ -1,0 +1,7 @@
+I'm adding a new nursery lint rule to the Biome JavaScript linter and I could use a hand wiring it up. The idea is to catch files that are test files but also export stuff, because if a test file exports anything then any other file importing from it re-runs all those tests, which gives you duplicate confusing test executions that are a pain to trace down in CI. It's a well-known footgun and I want the linter to flag it automatically.
+
+Here's the behavior I'm after. A file counts as a test file when it contains calls to test framework functions, so the rule should only kick in when it sees those calls present in a JS or CommonJS file. When that's the case, any export statement in the file should produce a lint warning. I want it to cover both the modern module export syntax (named exports and default exports) and the CommonJS exports object pattern, meaning direct assignment to exports, bracket-notation property assignment on it, and dot-notation property assignment on it too.
+
+Couple of important negatives: if the file doesn't have any test framework calls, then exports are totally fine and shouldn't warn at all even when the exact same export shapes show up. And property assignments on some other object (not the CommonJS exports object) shouldn't be flagged either, even inside a test file, so only genuine module export patterns get caught.
+
+This one lives in the nursery lint category and should be marked as recommended. Thanks!

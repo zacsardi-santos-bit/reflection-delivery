@@ -1,0 +1,201 @@
+diff --git a/cypress/e2e/useFieldArray.cy.ts b/cypress/e2e/useFieldArray.cy.ts
+index 065be66d..da6a7841 100644
+--- a/cypress/e2e/useFieldArray.cy.ts
++++ b/cypress/e2e/useFieldArray.cy.ts
+@@ -461,7 +461,7 @@ describe('useFieldArray', () => {
+     cy.get('#update').click();
+     cy.get('#dirtyFields').should(($state) =>
+       expect(JSON.parse($state.text())).to.be.deep.equal({
+-        data: [{ name: true }, { name: false }, { name: false }],
++        data: [{ name: true }, null, null],
+       }),
+     );
+     cy.get('#dirty').contains('yes');
+@@ -473,7 +473,7 @@ describe('useFieldArray', () => {
+     cy.get('#delete2').click();
+     cy.get('#dirtyFields').should(($state) =>
+       expect(JSON.parse($state.text())).to.be.deep.equal({
+-        data: [{ name: true }, { name: true }, { name: false }, { name: true }],
++        data: [{ name: true }, { name: true }, null, { name: true }],
+       }),
+     );
+     cy.get('#delete2').click();
+@@ -543,7 +543,7 @@ describe('useFieldArray', () => {
+ 
+     cy.get('#delete0').click();
+     cy.get('#dirtyFields').should(($state) =>
+-      expect(JSON.parse($state.text())).to.be.deep.equal({ data: [] }),
++      expect(JSON.parse($state.text())).to.be.deep.equal({}),
+     );
+ 
+     cy.get('#dirty').contains('yes');
+diff --git a/cypress/e2e/useFieldArrayNested.cy.ts b/cypress/e2e/useFieldArrayNested.cy.ts
+index f7e1a242..a5bc6c9d 100644
+--- a/cypress/e2e/useFieldArrayNested.cy.ts
++++ b/cypress/e2e/useFieldArrayNested.cy.ts
+@@ -34,8 +34,6 @@ describe('useFieldArrayNested', () => {
+       expect(JSON.parse($state.text())).to.be.deep.equal({
+         test: [
+           {
+-            firstName: false,
+-            lastName: false,
+             keyValue: [
+               { name: true },
+               { name: true },
+@@ -129,7 +127,7 @@ describe('useFieldArrayNested', () => {
+             lastName: true,
+           },
+           { firstName: true },
+-          { firstName: true, keyValue: [] },
++          { firstName: true },
+           {
+             firstName: true,
+             lastName: true,
+@@ -194,8 +192,8 @@ describe('useFieldArrayNested', () => {
+             keyValue: [{ name: true }, { name: true }, { name: true }],
+             lastName: true,
+           },
+-          { firstName: true, keyValue: [] },
+-          { firstName: true, keyValue: [] },
++          { firstName: true },
++          { firstName: true },
+           {
+             firstName: true,
+             lastName: true,
+@@ -253,9 +251,9 @@ describe('useFieldArrayNested', () => {
+             keyValue: [{ name: true }, { name: true }],
+             lastName: true,
+           },
+-          { firstName: true, keyValue: [] },
+-          { firstName: true, keyValue: [] },
+-          { firstName: true, lastName: true, keyValue: [] },
++          { firstName: true },
++          { firstName: true },
++          { firstName: true, lastName: true },
+         ],
+       }),
+     );
+diff --git a/cypress/e2e/useFieldArrayUnregister.cy.ts b/cypress/e2e/useFieldArrayUnregister.cy.ts
+index 814eaa30..14e55092 100644
+--- a/cypress/e2e/useFieldArrayUnregister.cy.ts
++++ b/cypress/e2e/useFieldArrayUnregister.cy.ts
+@@ -54,7 +54,7 @@ describe('useFieldArrayUnregister', () => {
+       expect(JSON.parse($state.text())).to.be.deep.equal({
+         data: [
+           { name: true },
+-          { name: false },
++          null,
+           { name: true, conditional: true },
+           { name: true },
+         ],
+diff --git a/src/logic/createFormControl.ts b/src/logic/createFormControl.ts
+index e09bf6e9..f999cfbc 100644
+--- a/src/logic/createFormControl.ts
++++ b/src/logic/createFormControl.ts
+@@ -82,7 +82,6 @@ import getDirtyFields from './getDirtyFields';
+ import getEventValue from './getEventValue';
+ import getFieldValue from './getFieldValue';
+ import getFieldValueAs from './getFieldValueAs';
+-import getNodeParentName from './getNodeParentName';
+ import getResolverOptions from './getResolverOptions';
+ import getRuleValue from './getRuleValue';
+ import getValidationModes from './getValidationModes';
+@@ -254,10 +253,8 @@ export function createFormControl<
+     }
+   };
+ 
+-  const _updateDirtyFields = (name: InternalFieldName) => {
+-    const fullDirtyFields = getDirtyFields(_defaultValues, _formValues);
+-    const rootName = getNodeParentName(name);
+-    set(_formState.dirtyFields, rootName, get(fullDirtyFields, rootName));
++  const _updateDirtyFields = () => {
++    _formState.dirtyFields = getDirtyFields(_defaultValues, _formValues);
+   };
+ 
+   const _setFieldArray: BatchFieldArrayUpdate = (
+@@ -303,7 +300,7 @@ export function createFormControl<
+       }
+ 
+       if (_proxyFormState.dirtyFields || _proxySubscribeFormState.dirtyFields) {
+-        _updateDirtyFields(name);
++        _updateDirtyFields();
+       }
+ 
+       _subjects.state.next({
+@@ -835,8 +832,14 @@ export function createFormControl<
+         values: cloneObject(_formValues),
+       });
+ 
+-      if (options.shouldDirty) {
+-        _updateDirtyFields(name);
++      if (
++        (_proxyFormState.isDirty ||
++          _proxyFormState.dirtyFields ||
++          _proxySubscribeFormState.isDirty ||
++          _proxySubscribeFormState.dirtyFields) &&
++        options.shouldDirty
++      ) {
++        _updateDirtyFields();
+ 
+         _subjects.state.next({
+           name,
+diff --git a/src/logic/getDirtyFields.ts b/src/logic/getDirtyFields.ts
+index 50496698..d1db8112 100644
+--- a/src/logic/getDirtyFields.ts
++++ b/src/logic/getDirtyFields.ts
+@@ -5,7 +5,7 @@ import isPrimitive from '../utils/isPrimitive';
+ import isUndefined from '../utils/isUndefined';
+ import objectHasFunction from '../utils/objectHasFunction';
+ 
+-function isTraversable(value: any): boolean {
++function isTraversable<T>(value: T): boolean {
+   return Array.isArray(value) || (isObject(value) && !objectHasFunction(value));
+ }
+ 
+@@ -24,6 +24,39 @@ function markFieldsDirty<T>(data: T, fields: Record<string, any> = {}) {
+   return fields;
+ }
+ 
++function pruneDirtyFields<T>(value: T): T {
++  if (value === false) {
++    return undefined as T;
++  }
++
++  if (value === true) {
++    return true as T;
++  }
++
++  if (Array.isArray(value)) {
++    const result = value.map((value) => pruneDirtyFields(value));
++    return (
++      result.some((value) => value !== undefined) ? result : undefined
++    ) as T;
++  }
++
++  if (isObject(value)) {
++    const result: Record<string, unknown> = {};
++
++    for (const key in value) {
++      const pruned = pruneDirtyFields(value[key]);
++
++      if (!isUndefined(pruned)) {
++        result[key] = pruned;
++      }
++    }
++
++    return (Object.keys(result).length ? result : undefined) as T;
++  }
++
++  return undefined as T;
++}
++
+ export default function getDirtyFields<T>(
+   data: T,
+   formValues: T,
+@@ -58,5 +91,5 @@ export default function getDirtyFields<T>(
+     }
+   }
+ 
+-  return dirtyFieldsFromValues;
++  return pruneDirtyFields(dirtyFieldsFromValues) || {};
+ }

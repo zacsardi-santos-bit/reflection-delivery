@@ -1,0 +1,29 @@
+{
+    "id": "4f5bef3a-a1cf-4ad8-8a26-8aaec3df9a7d",
+    "started_at": "2026-07-06T12:16:32.689861",
+    "finished_at": "2026-07-06T12:17:32.715326",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-solr-2522": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-solr-2522__bciDXcB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

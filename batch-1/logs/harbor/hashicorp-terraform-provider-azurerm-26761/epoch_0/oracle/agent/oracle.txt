@@ -1,0 +1,60 @@
+patching file CHANGELOG.md
+patching file go.mod
+patching file go.sum
+patching file internal/services/arckubernetes/arc_kubernetes_cluster_extension_resource.go
+patching file internal/services/arckubernetes/arc_kubernetes_cluster_resource.go
+patching file internal/services/arckubernetes/arc_kubernetes_flux_configuration_resource.go
+patching file internal/services/arckubernetes/client/client.go
+patching file internal/services/compute/image_data_source_test.go
+patching file internal/services/compute/linux_virtual_machine_resource_network_test.go
+patching file internal/services/compute/linux_virtual_machine_scale_set_resource_images_test.go
+patching file internal/services/compute/linux_virtual_machine_scale_set_resource_network_test.go
+patching file internal/services/compute/linux_virtual_machine_scale_set_resource_other_test.go
+patching file internal/services/compute/orchestrated_virtual_machine_scale_set_resource_test.go
+patching file internal/services/compute/windows_virtual_machine_resource_network_test.go
+patching file internal/services/compute/windows_virtual_machine_scale_set_resource_images_test.go
+patching file internal/services/compute/windows_virtual_machine_scale_set_resource_network_test.go
+patching file internal/services/compute/windows_virtual_machine_scale_set_resource_other_test.go
+patching file internal/services/containers/kubernetes_cluster_auth_resource_test.go
+patching file internal/services/containers/kubernetes_cluster_network_resource_test.go
+patching file internal/services/datafactory/data_factory_managed_private_endpoint_resource_test.go
+patching file internal/services/devtestlabs/dev_test_lab_resource.go
+patching file internal/services/devtestlabs/dev_test_lab_resource_test.go
+patching file internal/services/eventhub/eventhub_resource_test.go
+patching file internal/services/hybridcompute/arc_machine_data_source_test.go
+patching file internal/services/keyvault/key_vault_certificate_contacts_resource_test.go
+patching file internal/services/keyvault/key_vault_certificate_resource_test.go
+patching file internal/services/keyvault/key_vault_key_resource_test.go
+patching file internal/services/keyvault/key_vault_resource_test.go
+patching file internal/services/keyvault/key_vault_secret_resource_test.go
+patching file internal/services/kusto/kusto_cluster_resource_test.go
+patching file internal/services/logic/logic_app_standard_data_source_test.go
+patching file internal/services/machinelearning/machine_learning_compute_instance_resource_test.go
+patching file internal/services/machinelearning/machine_learning_inference_cluster_resource_test.go
+patching file internal/services/machinelearning/machine_learning_synapse_spark_resource_test.go
+patching file vendor/github.com/hashicorp/go-azure-helpers/resourcemanager/commonschema/resource_id_reference.go
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/README.md (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/README.md)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/client.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/client.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/constants.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/constants.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/id_connectedcluster.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/id_connectedcluster.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclustercreate.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclustercreate.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclusterdelete.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclusterdelete.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclusterget.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclusterget.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclusterlistbyresourcegroup.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclusterlistbyresourcegroup.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclusterlistbysubscription.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclusterlistbysubscription.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclusterlistclusterusercredential.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclusterlistclusterusercredential.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/method_connectedclusterupdate.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/method_connectedclusterupdate.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_aadprofile.go
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_arcagentprofile.go
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_connectedcluster.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_connectedcluster.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_connectedclusterpatch.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_connectedclusterpatch.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_connectedclusterpatchproperties.go
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_connectedclusterproperties.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_connectedclusterproperties.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_credentialresult.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_credentialresult.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_credentialresults.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_credentialresults.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_hybridconnectionconfig.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_hybridconnectionconfig.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/model_listclusterusercredentialproperties.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/model_listclusterusercredentialproperties.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/predicates.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/predicates.go)
+patching file vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters/version.go (renamed from vendor/github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2021-10-01/connectedclusters/version.go)
+patching file vendor/modules.txt
+patching file website/docs/functions/normalise_resource_id.html.markdown

@@ -1,0 +1,29 @@
+{
+    "id": "70f54719-55a6-4ce9-ad6b-8cdcdf011088",
+    "started_at": "2026-07-06T12:22:17.623685",
+    "finished_at": "2026-07-06T12:23:02.666349",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__qdrant-qdrant-8343": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "qdrant-qdrant-8343__iRpPpew"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

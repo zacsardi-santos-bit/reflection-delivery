@@ -1,0 +1,24 @@
+{
+  "test_framework": "ctest",
+  "test_command": "cd /workspace/repo/lib/cfl && mkdir -p build && cd build && cmake .. -DCFL_TESTS=On && make -j$(nproc) && ctest --output-on-failure",
+  "test_files": [
+    "lib/cfl/tests/CMakeLists.txt",
+    "lib/cfl/tests/array.c",
+    "lib/cfl/tests/kvlist.c",
+    "lib/cfl/tests/variant.c",
+    "lib/ctraces/tests/decoding.c"
+  ],
+  "num_test_files": 5,
+  "language": "c",
+  "FAIL_TO_PASS": [
+    "cfl-test-kv::cfl-test-kv",
+    "cfl-test-kvlist::cfl-test-kvlist",
+    "cfl-test-array::cfl-test-array",
+    "cfl-test-sds::cfl-test-sds",
+    "cfl-test-hash::cfl-test-hash",
+    "cfl-test-list::cfl-test-list",
+    "cfl-test-variant::cfl-test-variant",
+    "cfl-test-object::cfl-test-object"
+  ],
+  "PASS_TO_PASS": []
+}

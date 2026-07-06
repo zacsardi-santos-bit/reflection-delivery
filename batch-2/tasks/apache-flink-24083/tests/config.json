@@ -1,0 +1,22 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl flink-runtime test -Dtest=\"CompressibleFSDataInputStreamTest,OperatorStateRestoreOperationTest\" -DfailIfNoTests=false",
+  "test_files": [
+    "flink-runtime/src/test/java/org/apache/flink/runtime/state/CompressibleFSDataInputStreamTest.java",
+    "flink-runtime/src/test/java/org/apache/flink/runtime/state/OperatorStateRestoreOperationTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Flink::test_1",
+    "Flink::test_2",
+    "Flink::test_3",
+    "Flink::test_4",
+    "Flink::test_5",
+    "Flink::test_6",
+    "Flink::test_7",
+    "Flink::test_8",
+    "Flink::test_9"
+  ],
+  "PASS_TO_PASS": []
+}

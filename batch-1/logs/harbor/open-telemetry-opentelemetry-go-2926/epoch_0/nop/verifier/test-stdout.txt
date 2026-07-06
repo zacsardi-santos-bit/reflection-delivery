@@ -1,0 +1,15 @@
+patching file sdk/metric/view/view_test.go
+# go.opentelemetry.io/otel/sdk/metric/view [go.opentelemetry.io/otel/sdk/metric/view.test]
+view/view_test.go:27:23: undefined: Instrument
+view/view_test.go:37:25: undefined: Instrument
+view/view_test.go:47:24: undefined: Instrument
+view/view_test.go:53:12: undefined: Instrument
+view/view_test.go:54:12: undefined: Instrument
+view/view_test.go:59:5: undefined: MatchInstrumentName
+view/view_test.go:67:5: undefined: MatchInstrumentationLibrary
+view/view_test.go:77:5: undefined: MatchInstrumentationLibrary
+view/view_test.go:88:5: undefined: MatchInstrumentationLibrary
+view/view_test.go:98:5: undefined: MatchInstrumentName
+view/view_test.go:98:5: too many errors
+FAIL	go.opentelemetry.io/otel/sdk/metric/view [build failed]
+reward=0 graded=52 found=52 failed=52 parsed=1 framework=go exit_code=2

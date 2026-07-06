@@ -1,0 +1,318 @@
+patching file internal/topo/node/dedup_trigger_op_test.go
+{"Time":"2026-06-29T15:25:29.243445313Z","Action":"start","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node"}
+{"Time":"2026-06-29T15:25:29.287416181Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun"}
+{"Time":"2026-06-29T15:25:29.287500703Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun","Output":"=== RUN   TestRun\n"}
+{"Time":"2026-06-29T15:25:29.287677097Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_0"}
+{"Time":"2026-06-29T15:25:29.287710988Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_0","Output":"=== RUN   TestRun/testcase_0\n"}
+{"Time":"2026-06-29T15:25:29.287836711Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_0","Output":"--- PASS: TestRun/testcase_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.287876582Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_0","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.287909153Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_1"}
+{"Time":"2026-06-29T15:25:29.287921893Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_1","Output":"=== RUN   TestRun/testcase_1\n"}
+{"Time":"2026-06-29T15:25:29.289105372Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_1","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.293102442Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_1","Output":"--- PASS: TestRun/testcase_1 (0.01s)\n"}
+{"Time":"2026-06-29T15:25:29.293203324Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_1","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:29.293251645Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_2"}
+{"Time":"2026-06-29T15:25:29.293271116Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_2","Output":"=== RUN   TestRun/testcase_2\n"}
+{"Time":"2026-06-29T15:25:29.293292746Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_2","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.299028938Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_2","Output":"--- PASS: TestRun/testcase_2 (0.01s)\n"}
+{"Time":"2026-06-29T15:25:29.299079639Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_2","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:29.299123351Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_3"}
+{"Time":"2026-06-29T15:25:29.299141641Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_3","Output":"=== RUN   TestRun/testcase_3\n"}
+{"Time":"2026-06-29T15:25:29.299180482Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_3","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.306116924Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_3","Output":"--- PASS: TestRun/testcase_3 (0.01s)\n"}
+{"Time":"2026-06-29T15:25:29.306162435Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_3","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:29.306223776Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_4"}
+{"Time":"2026-06-29T15:25:29.306262377Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_4","Output":"=== RUN   TestRun/testcase_4\n"}
+{"Time":"2026-06-29T15:25:29.306298078Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_4","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.318391667Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_4","Output":"--- PASS: TestRun/testcase_4 (0.01s)\n"}
+{"Time":"2026-06-29T15:25:29.318430518Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun/testcase_4","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:29.318452989Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun","Output":"--- PASS: TestRun (0.03s)\n"}
+{"Time":"2026-06-29T15:25:29.31850754Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestRun","Elapsed":0.03}
+{"Time":"2026-06-29T15:25:29.318532191Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON"}
+{"Time":"2026-06-29T15:25:29.318543681Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON","Output":"=== RUN   TestJSON\n"}
+{"Time":"2026-06-29T15:25:29.318556261Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/single"}
+{"Time":"2026-06-29T15:25:29.318566512Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/single","Output":"=== RUN   TestJSON/single\n"}
+{"Time":"2026-06-29T15:25:29.318657964Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/single","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.319477784Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/single","Output":"--- PASS: TestJSON/single (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.319524645Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/single","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.319577637Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/multi"}
+{"Time":"2026-06-29T15:25:29.319597127Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/multi","Output":"=== RUN   TestJSON/multi\n"}
+{"Time":"2026-06-29T15:25:29.319609227Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/multi","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.319864364Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/multi","Output":"--- PASS: TestJSON/multi (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.319898905Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON/multi","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.319937426Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON","Output":"--- PASS: TestJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.320017317Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSON","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.320073479Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema"}
+{"Time":"2026-06-29T15:25:29.320085519Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema","Output":"=== RUN   TestJSONWithSchema\n"}
+{"Time":"2026-06-29T15:25:29.32009755Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single"}
+{"Time":"2026-06-29T15:25:29.32012093Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single","Output":"=== RUN   TestJSONWithSchema/single\n"}
+{"Time":"2026-06-29T15:25:29.320245603Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.320441108Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"attach schema to shared stream\" file=\"node/decode_op.go:36\" rule=test2\n"}
+{"Time":"2026-06-29T15:25:29.320545721Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"detach schema for shared stream rule test1\" file=\"node/decode_op.go:45\"\n"}
+{"Time":"2026-06-29T15:25:29.320579391Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single","Output":"--- PASS: TestJSONWithSchema/single (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.320619223Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/single","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.320641653Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi"}
+{"Time":"2026-06-29T15:25:29.320654423Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi","Output":"=== RUN   TestJSONWithSchema/multi\n"}
+{"Time":"2026-06-29T15:25:29.320681804Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.320861098Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"attach schema to shared stream\" file=\"node/decode_op.go:36\" rule=test2\n"}
+{"Time":"2026-06-29T15:25:29.32094498Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"detach schema for shared stream rule test1\" file=\"node/decode_op.go:45\"\n"}
+{"Time":"2026-06-29T15:25:29.321000442Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi","Output":"--- PASS: TestJSONWithSchema/multi (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.321028582Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema/multi","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.321047823Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema","Output":"--- PASS: TestJSONWithSchema (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.321072224Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestJSONWithSchema","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.321171496Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestValidate"}
+{"Time":"2026-06-29T15:25:29.321250558Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestValidate","Output":"=== RUN   TestValidate\n"}
+{"Time":"2026-06-29T15:25:29.321308889Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestValidate","Output":"--- PASS: TestValidate (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.32132976Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestValidate","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.321412092Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewDecompressOp"}
+{"Time":"2026-06-29T15:25:29.321435193Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewDecompressOp","Output":"=== RUN   TestNewDecompressOp\n"}
+{"Time":"2026-06-29T15:25:29.321544535Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewDecompressOp","Output":"--- PASS: TestNewDecompressOp (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.321657658Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewDecompressOp","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.32172503Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDecompressOp_Exec"}
+{"Time":"2026-06-29T15:25:29.32173764Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDecompressOp_Exec","Output":"=== RUN   TestDecompressOp_Exec\n"}
+{"Time":"2026-06-29T15:25:29.321764071Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDecompressOp_Exec","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.321948545Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDecompressOp_Exec","Output":"--- PASS: TestDecompressOp_Exec (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.321971556Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDecompressOp_Exec","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.321990126Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger"}
+{"Time":"2026-06-29T15:25:29.322000767Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger","Output":"=== RUN   TestDedupTrigger\n"}
+{"Time":"2026-06-29T15:25:29.322024557Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/initial"}
+{"Time":"2026-06-29T15:25:29.322101429Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/initial","Output":"=== RUN   TestDedupTrigger/initial\n"}
+{"Time":"2026-06-29T15:25:29.322195731Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/initial","Output":"--- PASS: TestDedupTrigger/initial (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322226022Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/initial","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322252563Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty"}
+{"Time":"2026-06-29T15:25:29.322274344Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty","Output":"=== RUN   TestDedupTrigger/left_empty\n"}
+{"Time":"2026-06-29T15:25:29.322323675Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty","Output":"--- PASS: TestDedupTrigger/left_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322353035Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322363556Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty"}
+{"Time":"2026-06-29T15:25:29.322375626Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty","Output":"=== RUN   TestDedupTrigger/right_empty\n"}
+{"Time":"2026-06-29T15:25:29.322387396Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty","Output":"--- PASS: TestDedupTrigger/right_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322411937Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322433677Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_overlap"}
+{"Time":"2026-06-29T15:25:29.322442637Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_overlap","Output":"=== RUN   TestDedupTrigger/right_overlap\n"}
+{"Time":"2026-06-29T15:25:29.322452768Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_overlap","Output":"--- PASS: TestDedupTrigger/right_overlap (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322512009Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_overlap","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.32255056Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty_2"}
+{"Time":"2026-06-29T15:25:29.322573311Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty_2","Output":"=== RUN   TestDedupTrigger/right_empty_2\n"}
+{"Time":"2026-06-29T15:25:29.322586531Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty_2","Output":"--- PASS: TestDedupTrigger/right_empty_2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322596741Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/right_empty_2","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322615752Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty_2"}
+{"Time":"2026-06-29T15:25:29.322624442Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty_2","Output":"=== RUN   TestDedupTrigger/left_empty_2\n"}
+{"Time":"2026-06-29T15:25:29.322635322Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty_2","Output":"--- PASS: TestDedupTrigger/left_empty_2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322645402Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_empty_2","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322660033Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_overlap"}
+{"Time":"2026-06-29T15:25:29.322668103Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_overlap","Output":"=== RUN   TestDedupTrigger/left_overlap\n"}
+{"Time":"2026-06-29T15:25:29.322676633Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_overlap","Output":"--- PASS: TestDedupTrigger/left_overlap (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322685683Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/left_overlap","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322694264Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/both_overlap"}
+{"Time":"2026-06-29T15:25:29.322706254Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/both_overlap","Output":"=== RUN   TestDedupTrigger/both_overlap\n"}
+{"Time":"2026-06-29T15:25:29.322716194Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/both_overlap","Output":"--- PASS: TestDedupTrigger/both_overlap (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322724684Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/both_overlap","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322743635Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/inclusion"}
+{"Time":"2026-06-29T15:25:29.322761736Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/inclusion","Output":"=== RUN   TestDedupTrigger/inclusion\n"}
+{"Time":"2026-06-29T15:25:29.322770586Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/inclusion","Output":"--- PASS: TestDedupTrigger/inclusion (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322779466Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger/inclusion","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322793396Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger","Output":"--- PASS: TestDedupTrigger (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322804886Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTrigger","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.322872608Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp"}
+{"Time":"2026-06-29T15:25:29.322924149Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp","Output":"=== RUN   TestDedupTriggerWithExp\n"}
+{"Time":"2026-06-29T15:25:29.32294856Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/initial"}
+{"Time":"2026-06-29T15:25:29.32295976Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/initial","Output":"=== RUN   TestDedupTriggerWithExp/initial\n"}
+{"Time":"2026-06-29T15:25:29.322976921Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/initial","Output":"--- PASS: TestDedupTriggerWithExp/initial (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.322992311Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/initial","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323007191Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty"}
+{"Time":"2026-06-29T15:25:29.323017622Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty","Output":"=== RUN   TestDedupTriggerWithExp/left_empty\n"}
+{"Time":"2026-06-29T15:25:29.323070223Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty","Output":"--- PASS: TestDedupTriggerWithExp/left_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323102624Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323113954Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty"}
+{"Time":"2026-06-29T15:25:29.323132095Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty","Output":"=== RUN   TestDedupTriggerWithExp/right_empty\n"}
+{"Time":"2026-06-29T15:25:29.323142535Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty","Output":"--- PASS: TestDedupTriggerWithExp/right_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323163886Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323175216Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_overlap"}
+{"Time":"2026-06-29T15:25:29.323184176Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_overlap","Output":"=== RUN   TestDedupTriggerWithExp/right_overlap\n"}
+{"Time":"2026-06-29T15:25:29.323194356Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_overlap","Output":"--- PASS: TestDedupTriggerWithExp/right_overlap (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323220537Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_overlap","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323236657Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty_2"}
+{"Time":"2026-06-29T15:25:29.323248597Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty_2","Output":"=== RUN   TestDedupTriggerWithExp/right_empty_2\n"}
+{"Time":"2026-06-29T15:25:29.323259708Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty_2","Output":"--- PASS: TestDedupTriggerWithExp/right_empty_2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323312959Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/right_empty_2","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.32333825Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty_2"}
+{"Time":"2026-06-29T15:25:29.323472393Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty_2","Output":"=== RUN   TestDedupTriggerWithExp/left_empty_2\n"}
+{"Time":"2026-06-29T15:25:29.323507704Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty_2","Output":"--- PASS: TestDedupTriggerWithExp/left_empty_2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323519574Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_empty_2","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323533975Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_overlap"}
+{"Time":"2026-06-29T15:25:29.323545405Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_overlap","Output":"=== RUN   TestDedupTriggerWithExp/left_overlap\n"}
+{"Time":"2026-06-29T15:25:29.323565895Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_overlap","Output":"--- PASS: TestDedupTriggerWithExp/left_overlap (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323637217Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/left_overlap","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323657158Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/both_overlap"}
+{"Time":"2026-06-29T15:25:29.323682818Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/both_overlap","Output":"=== RUN   TestDedupTriggerWithExp/both_overlap\n"}
+{"Time":"2026-06-29T15:25:29.323693879Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/both_overlap","Output":"--- PASS: TestDedupTriggerWithExp/both_overlap (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323719689Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/both_overlap","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.32373891Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/inclusion"}
+{"Time":"2026-06-29T15:25:29.32374936Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/inclusion","Output":"=== RUN   TestDedupTriggerWithExp/inclusion\n"}
+{"Time":"2026-06-29T15:25:29.32375977Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/inclusion","Output":"--- PASS: TestDedupTriggerWithExp/inclusion (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323780111Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp/inclusion","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323790641Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp","Output":"--- PASS: TestDedupTriggerWithExp (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323801121Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestDedupTriggerWithExp","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.323827062Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestQueue"}
+{"Time":"2026-06-29T15:25:29.323899044Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestQueue","Output":"=== RUN   TestQueue\n"}
+{"Time":"2026-06-29T15:25:29.323939795Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestQueue","Output":"--- PASS: TestQueue (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.323951455Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestQueue","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.324025717Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestExec"}
+{"Time":"2026-06-29T15:25:29.324058688Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestExec","Output":"=== RUN   TestExec\n"}
+{"Time":"2026-06-29T15:25:29.324077458Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestExec","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"dt started\" file=\"node/node.go:165\" rule=test\n"}
+{"Time":"2026-06-29T15:25:29.33264215Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestExec","Output":"--- PASS: TestExec (0.01s)\n"}
+{"Time":"2026-06-29T15:25:29.332670681Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestExec","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:29.332706742Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON"}
+{"Time":"2026-06-29T15:25:29.332720382Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON","Output":"=== RUN   TestEncodeJSON\n"}
+{"Time":"2026-06-29T15:25:29.332750993Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.332779803Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/normal"}
+{"Time":"2026-06-29T15:25:29.332797474Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/normal","Output":"=== RUN   TestEncodeJSON/normal\n"}
+{"Time":"2026-06-29T15:25:29.332852645Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/normal","Output":"--- PASS: TestEncodeJSON/normal (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.332920117Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/normal","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.332978868Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/list"}
+{"Time":"2026-06-29T15:25:29.332990439Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/list","Output":"=== RUN   TestEncodeJSON/list\n"}
+{"Time":"2026-06-29T15:25:29.3330344Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/list","Output":"--- PASS: TestEncodeJSON/list (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.33305192Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/list","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.333087871Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/unknown_type"}
+{"Time":"2026-06-29T15:25:29.333105392Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/unknown_type","Output":"=== RUN   TestEncodeJSON/unknown_type\n"}
+{"Time":"2026-06-29T15:25:29.333121552Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/unknown_type","Output":"--- PASS: TestEncodeJSON/unknown_type (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.333147633Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/unknown_type","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.333163613Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/bytes"}
+{"Time":"2026-06-29T15:25:29.333173223Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/bytes","Output":"=== RUN   TestEncodeJSON/bytes\n"}
+{"Time":"2026-06-29T15:25:29.333183323Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/bytes","Output":"--- PASS: TestEncodeJSON/bytes (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.333193144Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON/bytes","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.333210824Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON","Output":"--- PASS: TestEncodeJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.333220844Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeJSON","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.333235665Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeValidate"}
+{"Time":"2026-06-29T15:25:29.333256785Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeValidate","Output":"=== RUN   TestEncodeValidate\n"}
+{"Time":"2026-06-29T15:25:29.333272805Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeValidate","Output":"--- PASS: TestEncodeValidate (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.333394268Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestEncodeValidate","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.3334274Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSCNLC"}
+{"Time":"2026-06-29T15:25:29.33344619Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSCNLC","Output":"=== RUN   TestSCNLC\n"}
+{"Time":"2026-06-29T15:25:29.333652275Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSCNLC","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"provision source mock_connector with props map[datasource:demo]\" file=\"node/source_node.go:43\" rule=rule1\n"}
+{"Time":"2026-06-29T15:25:29.333699906Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSCNLC","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"mock_connector started\" file=\"node/node.go:165\" rule=rule1\n"}
+{"Time":"2026-06-29T15:25:29.334336142Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSCNLC","Output":"--- PASS: TestSCNLC (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.334376793Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSCNLC","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.334393243Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewError"}
+{"Time":"2026-06-29T15:25:29.334405984Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewError","Output":"=== RUN   TestNewError\n"}
+{"Time":"2026-06-29T15:25:29.334453295Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewError","Output":"--- PASS: TestNewError (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.334518987Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewError","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.334541207Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError"}
+{"Time":"2026-06-29T15:25:29.334562168Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError","Output":"=== RUN   TestConnError\n"}
+{"Time":"2026-06-29T15:25:29.334599178Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"provision source mock_connector with props map[datasource:demo2]\" file=\"node/source_node.go:43\" rule=rule1\n"}
+{"Time":"2026-06-29T15:25:29.334615639Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"mock_connector started\" file=\"node/node.go:165\" rule=rule1\n"}
+{"Time":"2026-06-29T15:25:29.334836444Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError","Output":"time=\"2026-06-29T15:25:29Z\" level=error msg=\"runtime error: data is nil\" file=\"infra/saferun.go:56\" rule=rule1\n"}
+{"Time":"2026-06-29T15:25:29.334876325Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError","Output":"--- PASS: TestConnError (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.334918366Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestConnError","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.334936897Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple"}
+{"Time":"2026-06-29T15:25:29.334963278Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"=== RUN   TestTuple\n"}
+{"Time":"2026-06-29T15:25:29.335364307Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=TestSwitchTuple\n"}
+{"Time":"2026-06-29T15:25:29.335659795Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 0\n"}
+{"Time":"2026-06-29T15:25:29.335683555Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 1\n"}
+{"Time":"2026-06-29T15:25:29.335703726Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 2\n"}
+{"Time":"2026-06-29T15:25:29.335741627Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 3\n"}
+{"Time":"2026-06-29T15:25:29.335761647Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 4\n"}
+{"Time":"2026-06-29T15:25:29.335780168Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 5\n"}
+{"Time":"2026-06-29T15:25:29.335821689Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 6\n"}
+{"Time":"2026-06-29T15:25:29.335857969Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"    switch_node_test.go:181: send input 7\n"}
+{"Time":"2026-06-29T15:25:29.43648425Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Output":"--- PASS: TestTuple (0.10s)\n"}
+{"Time":"2026-06-29T15:25:29.436627773Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTuple","Elapsed":0.1}
+{"Time":"2026-06-29T15:25:29.436699565Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection"}
+{"Time":"2026-06-29T15:25:29.436718585Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Output":"=== RUN   TestCollection\n"}
+{"Time":"2026-06-29T15:25:29.436861869Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=TestSwitchWindow\n"}
+{"Time":"2026-06-29T15:25:29.43689727Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Output":"    switch_node_test.go:376: send input 0\n"}
+{"Time":"2026-06-29T15:25:29.436963522Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Output":"    switch_node_test.go:376: send input 1\n"}
+{"Time":"2026-06-29T15:25:29.437000283Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Output":"    switch_node_test.go:376: send input 2\n"}
+{"Time":"2026-06-29T15:25:29.537828308Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Output":"--- PASS: TestCollection (0.10s)\n"}
+{"Time":"2026-06-29T15:25:29.53794399Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCollection","Elapsed":0.1}
+{"Time":"2026-06-29T15:25:29.537998582Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun"}
+{"Time":"2026-06-29T15:25:29.538077304Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun","Output":"=== RUN   TestTransformRun\n"}
+{"Time":"2026-06-29T15:25:29.538119985Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/field_transform"}
+{"Time":"2026-06-29T15:25:29.538139525Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/field_transform","Output":"=== RUN   TestTransformRun/field_transform\n"}
+{"Time":"2026-06-29T15:25:29.538157906Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/field_transform","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.538168516Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/field_transform","Output":"--- PASS: TestTransformRun/field_transform (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.538177686Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/field_transform","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.538191857Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_fields_without_omit_empty"}
+{"Time":"2026-06-29T15:25:29.538217057Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_fields_without_omit_empty","Output":"=== RUN   TestTransformRun/only_fields_without_omit_empty\n"}
+{"Time":"2026-06-29T15:25:29.538233508Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_fields_without_omit_empty","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.538381361Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_fields_without_omit_empty","Output":"--- PASS: TestTransformRun/only_fields_without_omit_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.538522725Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_fields_without_omit_empty","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.538576446Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/allow_empty"}
+{"Time":"2026-06-29T15:25:29.538604477Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/allow_empty","Output":"=== RUN   TestTransformRun/allow_empty\n"}
+{"Time":"2026-06-29T15:25:29.539033277Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/allow_empty","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.539058778Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/allow_empty","Output":"--- PASS: TestTransformRun/allow_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.539071338Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/allow_empty","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.539082489Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_data_field"}
+{"Time":"2026-06-29T15:25:29.53911955Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_data_field","Output":"=== RUN   TestTransformRun/only_data_field\n"}
+{"Time":"2026-06-29T15:25:29.539230162Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_data_field","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.539334375Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_data_field","Output":"--- PASS: TestTransformRun/only_data_field (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.539366666Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/only_data_field","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.539391126Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_with_text_format_single"}
+{"Time":"2026-06-29T15:25:29.539423187Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_with_text_format_single","Output":"=== RUN   TestTransformRun/data_template_with_text_format_single\n"}
+{"Time":"2026-06-29T15:25:29.539504639Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_with_text_format_single","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.539571451Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_with_text_format_single","Output":"--- PASS: TestTransformRun/data_template_with_text_format_single (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.539648123Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_with_text_format_single","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.539695644Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_collection"}
+{"Time":"2026-06-29T15:25:29.539721754Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_collection","Output":"=== RUN   TestTransformRun/data_template_collection\n"}
+{"Time":"2026-06-29T15:25:29.539758315Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_collection","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"test started\" file=\"node/node.go:165\" rule=test1\n"}
+{"Time":"2026-06-29T15:25:29.539792196Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_collection","Output":"--- PASS: TestTransformRun/data_template_collection (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.539839197Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun/data_template_collection","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.539859428Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun","Output":"--- PASS: TestTransformRun (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.539879229Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTransformRun","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.539891339Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark"}
+{"Time":"2026-06-29T15:25:29.539901519Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark","Output":"=== RUN   TestSingleStreamWatermark\n"}
+{"Time":"2026-06-29T15:25:29.53992871Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/ordered_tuple"}
+{"Time":"2026-06-29T15:25:29.53995924Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/ordered_tuple","Output":"=== RUN   TestSingleStreamWatermark/ordered_tuple\n"}
+{"Time":"2026-06-29T15:25:29.539978481Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/ordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"mock started\" file=\"node/node.go:165\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540002312Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/ordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"Start with state lastWatermarkTs: 0\" file=\"node/watermark_op.go:97\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540023032Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/ordered_tuple","Output":"--- PASS: TestSingleStreamWatermark/ordered_tuple (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.540103164Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/ordered_tuple","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.540153585Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/disordered_tuple"}
+{"Time":"2026-06-29T15:25:29.540174376Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/disordered_tuple","Output":"=== RUN   TestSingleStreamWatermark/disordered_tuple\n"}
+{"Time":"2026-06-29T15:25:29.540209066Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/disordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"mock started\" file=\"node/node.go:165\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540222027Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/disordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"Start with state lastWatermarkTs: 0\" file=\"node/watermark_op.go:97\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540249287Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/disordered_tuple","Output":"--- PASS: TestSingleStreamWatermark/disordered_tuple (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.540276108Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark/disordered_tuple","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.540300419Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark","Output":"--- PASS: TestSingleStreamWatermark (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.54032344Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestSingleStreamWatermark","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.54033961Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark"}
+{"Time":"2026-06-29T15:25:29.54035009Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark","Output":"=== RUN   TestMultiStreamWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540403882Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/ordered_tuple"}
+{"Time":"2026-06-29T15:25:29.540420252Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/ordered_tuple","Output":"=== RUN   TestMultiStreamWatermark/ordered_tuple\n"}
+{"Time":"2026-06-29T15:25:29.540433462Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/ordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"mock started\" file=\"node/node.go:165\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540445923Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/ordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"Start with state lastWatermarkTs: 0\" file=\"node/watermark_op.go:97\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540648988Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/ordered_tuple","Output":"--- PASS: TestMultiStreamWatermark/ordered_tuple (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.540676568Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/ordered_tuple","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.540696709Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/disordered_tuple"}
+{"Time":"2026-06-29T15:25:29.540706869Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/disordered_tuple","Output":"=== RUN   TestMultiStreamWatermark/disordered_tuple\n"}
+{"Time":"2026-06-29T15:25:29.540725449Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/disordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"mock started\" file=\"node/node.go:165\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.54075906Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/disordered_tuple","Output":"time=\"2026-06-29T15:25:29Z\" level=info msg=\"Start with state lastWatermarkTs: 0\" file=\"node/watermark_op.go:97\" rule=TestWatermark\n"}
+{"Time":"2026-06-29T15:25:29.540874193Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/disordered_tuple","Output":"--- PASS: TestMultiStreamWatermark/disordered_tuple (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.540899664Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark/disordered_tuple","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.540933075Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark","Output":"--- PASS: TestMultiStreamWatermark (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.541023147Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestMultiStreamWatermark","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.541066388Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime"}
+{"Time":"2026-06-29T15:25:29.541088008Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime","Output":"=== RUN   TestTime\n"}
+{"Time":"2026-06-29T15:25:29.541621821Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime","Output":"2022-07-19 16:12:51.337 +0800 CST\n"}
+{"Time":"2026-06-29T15:25:29.541644492Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime","Output":"The test bucket size is 11.\n"}
+{"Time":"2026-06-29T15:25:29.541667543Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime","Output":"\n"}
+{"Time":"2026-06-29T15:25:29.541684373Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime","Output":"--- PASS: TestTime (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.541722204Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestTime","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.541742295Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewTupleList"}
+{"Time":"2026-06-29T15:25:29.541754805Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewTupleList","Output":"=== RUN   TestNewTupleList\n"}
+{"Time":"2026-06-29T15:25:29.541766805Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewTupleList","Output":"--- PASS: TestNewTupleList (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.541775895Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestNewTupleList","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.541784665Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCountWindow"}
+{"Time":"2026-06-29T15:25:29.541801796Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCountWindow","Output":"=== RUN   TestCountWindow\n"}
+{"Time":"2026-06-29T15:25:29.541821866Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCountWindow","Output":"The test bucket size is 4.\n"}
+{"Time":"2026-06-29T15:25:29.541830417Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCountWindow","Output":"\n"}
+{"Time":"2026-06-29T15:25:29.541840137Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCountWindow","Output":"--- PASS: TestCountWindow (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.541849027Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestCountWindow","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.541857637Z","Action":"run","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestGCInputsForConditionNotMatch"}
+{"Time":"2026-06-29T15:25:29.541870868Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestGCInputsForConditionNotMatch","Output":"=== RUN   TestGCInputsForConditionNotMatch\n"}
+{"Time":"2026-06-29T15:25:29.541887028Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestGCInputsForConditionNotMatch","Output":"--- PASS: TestGCInputsForConditionNotMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:25:29.54197672Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Test":"TestGCInputsForConditionNotMatch","Elapsed":0}
+{"Time":"2026-06-29T15:25:29.542025902Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:29.542973025Z","Action":"output","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Output":"ok  \tgithub.com/lf-edge/ekuiper/v2/internal/topo/node\t0.299s\n"}
+{"Time":"2026-06-29T15:25:29.543023676Z","Action":"pass","Package":"github.com/lf-edge/ekuiper/v2/internal/topo/node","Elapsed":0.3}
+reward=1 graded=65 found=65 failed=0 parsed=65 framework=go exit_code=0

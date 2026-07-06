@@ -1,0 +1,49 @@
+patching file .travis.yml
+patching file Cargo.toml
+Hunk #1 succeeded at 58 (offset -1 lines).
+patching file src/sync.rs
+patching file tokio-async-await/Cargo.toml
+patching file tokio-async-await/README.md
+patching file tokio-async-await/examples/src/chat.rs
+patching file tokio-async-await/examples/src/echo_server.rs
+patching file tokio-async-await/src/compat/backward.rs
+patching file tokio-async-await/src/compat/forward.rs
+patching file tokio-async-await/src/io/flush.rs
+patching file tokio-async-await/src/io/read.rs
+patching file tokio-async-await/src/io/read_exact.rs
+patching file tokio-async-await/src/io/write.rs
+patching file tokio-async-await/src/io/write_all.rs
+patching file tokio-async-await/src/lib.rs
+patching file tokio-async-await/src/sink/mod.rs
+patching file tokio-async-await/src/sink/send.rs
+patching file tokio-async-await/src/stream/mod.rs
+patching file tokio-async-await/src/stream/next.rs
+patching file tokio-buf/CHANGELOG.md
+patching file tokio-buf/Cargo.toml
+patching file tokio-buf/README.md
+patching file tokio-buf/src/errors.rs
+patching file tokio-buf/src/ext/chain.rs (renamed from tokio-buf/src/util/chain.rs)
+patching file tokio-buf/src/ext/collect.rs (renamed from tokio-buf/src/util/collect.rs)
+patching file tokio-buf/src/ext/from.rs (renamed from tokio-buf/src/util/from.rs)
+patching file tokio-buf/src/ext/limit.rs (renamed from tokio-buf/src/util/limit.rs)
+patching file tokio-buf/src/ext/mod.rs (renamed from tokio-buf/src/util/mod.rs)
+patching file tokio-buf/src/lib.rs
+patching file tokio-buf/src/never.rs
+patching file tokio-buf/src/str.rs
+patching file tokio-buf/src/u8.rs
+patching file tokio-io/src/async_read.rs
+patching file tokio-io/src/split.rs
+patching file tokio-sync/Cargo.toml
+patching file tokio-sync/src/lib.rs
+patching file tokio-sync/src/watch.rs
+patching file tokio-sync/tests/watch.rs
+patching file tokio-trace/benches/subscriber.rs
+patching file tokio-trace/examples/counters.rs
+patching file tokio-trace/examples/sloggish/sloggish_subscriber.rs
+patching file tokio-trace/src/lib.rs
+patching file tokio-trace/src/span.rs
+patching file tokio-trace/tokio-trace-core/src/dispatcher.rs
+patching file tokio-trace/tokio-trace-core/src/lib.rs
+patching file tokio-trace/tokio-trace-core/src/metadata.rs
+patching file tokio-trace/tokio-trace-core/src/span.rs
+patching file tokio-trace/tokio-trace-core/src/subscriber.rs

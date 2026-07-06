@@ -1,0 +1,21 @@
+patching file pkg/media/h265reader/h265reader_test.go
+patching file pkg/media/h265writer/h265writer_test.go
+# github.com/pion/webrtc/v4/pkg/media/h265reader [github.com/pion/webrtc/v4/pkg/media/h265reader.test]
+pkg/media/h265reader/h265reader_test.go:16:17: undefined: NewReader
+pkg/media/h265reader/h265reader_test.go:20:18: undefined: errDataIsNotH265Stream
+pkg/media/h265reader/h265reader_test.go:23:16: undefined: NewReader
+pkg/media/h265reader/h265reader_test.go:34:16: undefined: NewReader
+pkg/media/h265reader/h265reader_test.go:41:18: undefined: NalUnitTypeVps
+pkg/media/h265reader/h265reader_test.go:51:16: undefined: NewReader
+pkg/media/h265reader/h265reader_test.go:57:18: undefined: NalUnitTypeVps
+pkg/media/h265reader/h265reader_test.go:62:18: undefined: NalUnitTypeSps
+pkg/media/h265reader/h265reader_test.go:70:13: undefined: H265Reader
+pkg/media/h265reader/h265reader_test.go:96:9: undefined: newNal
+pkg/media/h265reader/h265reader_test.go:96:9: too many errors
+# github.com/pion/webrtc/v4/pkg/media/h265writer [github.com/pion/webrtc/v4/pkg/media/h265writer.test]
+pkg/media/h265writer/h265writer_test.go:16:12: undefined: NewWith
+pkg/media/h265writer/h265writer_test.go:98:14: undefined: isKeyFrame
+pkg/media/h265writer/h265writer_test.go:153:14: undefined: checkAggregationPacketForKeyFrame
+FAIL	github.com/pion/webrtc/v4/pkg/media/h265reader [build failed]
+FAIL	github.com/pion/webrtc/v4/pkg/media/h265writer [build failed]
+reward=0 graded=21 found=21 failed=21 parsed=2 framework=go exit_code=1

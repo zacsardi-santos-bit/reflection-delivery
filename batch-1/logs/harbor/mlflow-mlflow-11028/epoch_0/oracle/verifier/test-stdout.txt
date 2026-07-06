@@ -1,0 +1,52 @@
+patching file tests/langchain/test_langchain_autolog.py
+patching file tests/store/artifact/test_optimized_s3_artifact_repo.py
+patching file tests/tracking/fluent/test_fluent_autolog.py
+patching file tests/tracking/test_client.py
+patching file tests/transformers/test_transformers_model_export.py
+patching file tests/transformers/test_transformers_prompt_templating.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: cov-7.1.0, timeout-2.4.0
+timeout: 1200.0s
+timeout method: signal
+timeout func_only: False
+[1mcollecting ... [0mcollected 15 items
+
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_hits_cache [32mPASSED[0m[33m [  6%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[0-None] [32mPASSED[0m[33m [ 13%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[1-False] [32mPASSED[0m[33m [ 20%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[true-False] [32mPASSED[0m[33m [ 26%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[false-None] [32mPASSED[0m[33m [ 33%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly[True] [32mPASSED[0m[33m [ 40%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly[False] [32mPASSED[0m[33m [ 46%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly_with_non_throwing_response [32mPASSED[0m[33m [ 53%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_client_config_set_correctly [32mPASSED[0m[33m [ 60%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_creds_passed_to_client [32mPASSED[0m[33m [ 66%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_log_artifacts_in_parallel_when_necessary [32mPASSED[0m[33m [ 73%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[None-False] [32mPASSED[0m[33m [ 80%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[100-False] [32mPASSED[0m[33m [ 86%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524287999-False] [32mPASSED[0m[33m [ 93%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524288000-True] [32mPASSED[0m[33m [100%][0m
+
+[33m=============================== warnings summary ===============================[0m
+mlflow/utils/requirements_utils.py:20
+  /workspace/repo/mlflow/utils/requirements_utils.py:20: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources  # noqa: TID251
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 10 durations =============================
+0.99s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_hits_cache
+0.26s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_log_artifacts_in_parallel_when_necessary
+0.23s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly[True]
+0.22s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[1-False]
+0.22s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[100-False]
+0.21s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly_with_non_throwing_response
+0.21s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524288000-True]
+0.13s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[0-None]
+0.11s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_creds_passed_to_client
+0.11s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[None-False]
+[33m======================== [32m15 passed[0m, [33m[1m1 warning[0m[33m in 3.35s[0m[33m =========================[0m
+reward=1 graded=15 found=0 failed=0 parsed=15 framework=pytest exit_code=0

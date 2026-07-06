@@ -1,0 +1,24 @@
+patching file exercises/rectangles/cases_test.go
+patching file exercises/rectangles/rectangles_test.go
+{"Time":"2026-06-29T15:25:42.975352417Z","Action":"start","Package":"_/workspace/repo/exercises/rectangles"}
+{"Time":"2026-06-29T15:25:42.98448545Z","Action":"run","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles"}
+{"Time":"2026-06-29T15:25:42.984593774Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"=== RUN   TestRectangles\n"}
+{"Time":"2026-06-29T15:25:42.984672216Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: no rows\n"}
+{"Time":"2026-06-29T15:25:42.984688507Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: no columns\n"}
+{"Time":"2026-06-29T15:25:42.984719387Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: no rectangles\n"}
+{"Time":"2026-06-29T15:25:42.984761779Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: one rectangle\n"}
+{"Time":"2026-06-29T15:25:42.984774734Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: two rectangles without shared parts\n"}
+{"Time":"2026-06-29T15:25:42.984786026Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: five rectangles with shared parts\n"}
+{"Time":"2026-06-29T15:25:42.984813529Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: rectangle of height 1 is counted\n"}
+{"Time":"2026-06-29T15:25:42.984824481Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: rectangle of width 1 is counted\n"}
+{"Time":"2026-06-29T15:25:42.984833819Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: 1x1 square is counted\n"}
+{"Time":"2026-06-29T15:25:42.984843748Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: only complete rectangles are counted\n"}
+{"Time":"2026-06-29T15:25:42.984853406Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: rectangles can be of different sizes\n"}
+{"Time":"2026-06-29T15:25:42.984863907Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: corner is required for a rectangle to be complete\n"}
+{"Time":"2026-06-29T15:25:42.984874477Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"    rectangles_test.go:12: PASS: large input with many rectangles\n"}
+{"Time":"2026-06-29T15:25:42.984887683Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Output":"--- PASS: TestRectangles (0.00s)\n"}
+{"Time":"2026-06-29T15:25:42.984897892Z","Action":"pass","Package":"_/workspace/repo/exercises/rectangles","Test":"TestRectangles","Elapsed":0}
+{"Time":"2026-06-29T15:25:42.984919113Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:42.985409787Z","Action":"output","Package":"_/workspace/repo/exercises/rectangles","Output":"ok  \t_/workspace/repo/exercises/rectangles\t0.009s\n"}
+{"Time":"2026-06-29T15:25:42.98545257Z","Action":"pass","Package":"_/workspace/repo/exercises/rectangles","Elapsed":0.01}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

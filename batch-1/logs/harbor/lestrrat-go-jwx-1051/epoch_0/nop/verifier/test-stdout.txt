@@ -1,0 +1,5 @@
+patching file jws/jws_test.go
+# github.com/lestrrat-go/jwx/v2/jws_test [github.com/lestrrat-go/jwx/v2/jws.test]
+jws/jws_test.go:1224:27: undefined: jws.IsVerificationError
+FAIL	github.com/lestrrat-go/jwx/v2/jws [build failed]
+reward=0 graded=375 found=375 failed=375 parsed=1 framework=go exit_code=1

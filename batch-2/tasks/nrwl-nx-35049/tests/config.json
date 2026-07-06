@@ -1,0 +1,40 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/angular && npx jest tailwind.spec.ts --no-coverage --forceExit --watchAll=false --verbose",
+  "test_files": [
+    "e2e/angular/src/cypress-component-tests-buildable.test.ts",
+    "e2e/angular/src/cypress-component-tests-implicit-dep.test.ts",
+    "e2e/angular/src/tailwind.test.ts",
+    "e2e/next/src/next-component-tests.test.ts",
+    "e2e/next/src/next-styles.test.ts",
+    "e2e/react/src/cypress-component-tests.test.ts",
+    "e2e/react/src/react.test.ts",
+    "e2e/vue/src/vue-tailwind.test.ts",
+    "nx-dev/nx-dev-e2e/src/packages.spec.ts",
+    "packages/angular/src/generators/application/application.spec.ts",
+    "packages/angular/src/generators/library/library.spec.ts",
+    "packages/angular/src/generators/setup-tailwind/setup-tailwind.application.spec.ts",
+    "packages/angular/src/generators/setup-tailwind/setup-tailwind.library.spec.ts",
+    "packages/angular/tailwind.spec.ts",
+    "packages/cypress/src/executors/cypress/cypress.impl.spec.ts",
+    "packages/next/src/generators/application/application.spec.ts",
+    "packages/next/src/generators/cypress-component-configuration/cypress-component-configuration.spec.ts",
+    "packages/next/src/generators/setup-tailwind/setup-tailwind.spec.ts",
+    "packages/next/tailwind.spec.ts",
+    "packages/react/src/generators/application/application.legacy.spec.ts",
+    "packages/react/src/generators/application/application.spec.ts",
+    "packages/react/src/generators/component/component.spec.ts",
+    "packages/react/src/generators/library/library.spec.ts",
+    "packages/react/src/generators/setup-tailwind/setup-tailwind.spec.ts",
+    "packages/react/tailwind.spec.ts",
+    "packages/remix/src/generators/setup-tailwind/setup-tailwind.impl.spec.ts",
+    "packages/vue/src/generators/setup-tailwind/setup-tailwind.spec.ts",
+    "packages/vue/tailwind.spec.ts"
+  ],
+  "num_test_files": 28,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/angular/tailwind.spec.ts::@nx/angular/tailwind deprecation warning warns once per process when createGlobPatternsForDependencies is invoked"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,18 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && sed -i '/^plugins {/,/^}/d' build.gradle && python3 /tmp/fix_bintray.py && (./gradlew test --tests \"graphql.analysis.QueryTransformationTraversalTest\" --no-daemon; STATUS=$?; cat build/test-results/test/TEST-*.xml 2>/dev/null; exit $STATUS)",
+  "test_files": [
+    "src/test/groovy/graphql/analysis/QueryTransformationTraversalTest.groovy"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "graphql.analysis.QueryTransformationTraversalTest::transform query rename query fields based on type information ",
+    "graphql.analysis.QueryTransformationTraversalTest::transform query delete midA nodes",
+    "graphql.analysis.QueryTransformationTraversalTest::transform query add midA sibling",
+    "graphql.analysis.QueryTransformationTraversalTest::transform query delete fragment spread and inline fragment",
+    "graphql.analysis.QueryTransformationTraversalTest::transform query does not traverse named fragments ",
+    "graphql.analysis.QueryTransformationTraversalTest::named fragment is traversed if it is a root and can be transformed"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,108 @@
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/integration/ConnectWorkerIntegrationTest.java
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedConnectCluster.java
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedKafkaCluster.java
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/5.4.1/userguide/gradle_daemon.html.
+Daemon will be stopped at the end of the build stopping after processing
+
+> Configure project :
+Building project 'core' with Scala version 2.12.8
+Building project 'streams-scala' with Scala version 2.12.8
+
+> Task :generator:compileJava UP-TO-DATE
+> Task :generator:processResources NO-SOURCE
+> Task :generator:classes UP-TO-DATE
+> Task :clients:processMessages UP-TO-DATE
+> Task :clients:compileJava UP-TO-DATE
+> Task :clients:processResources UP-TO-DATE
+> Task :clients:classes UP-TO-DATE
+> Task :clients:determineCommitId UP-TO-DATE
+> Task :clients:createVersionFile
+> Task :clients:jar UP-TO-DATE
+> Task :clients:compileTestJava UP-TO-DATE
+> Task :clients:processTestResources UP-TO-DATE
+> Task :clients:testClasses UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:compileScala UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:copyDependantLibs UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:compileTestScala UP-TO-DATE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:testClasses UP-TO-DATE
+> Task :log4j-appender:compileJava UP-TO-DATE
+> Task :log4j-appender:processResources NO-SOURCE
+> Task :log4j-appender:classes UP-TO-DATE
+> Task :log4j-appender:jar UP-TO-DATE
+> Task :tools:compileJava UP-TO-DATE
+> Task :tools:processResources NO-SOURCE
+> Task :tools:classes UP-TO-DATE
+> Task :tools:copyDependantLibs UP-TO-DATE
+> Task :tools:jar UP-TO-DATE
+> Task :connect:api:compileJava UP-TO-DATE
+> Task :connect:api:processResources NO-SOURCE
+> Task :connect:api:classes UP-TO-DATE
+> Task :connect:api:copyDependantLibs UP-TO-DATE
+> Task :connect:api:jar UP-TO-DATE
+> Task :connect:json:compileJava UP-TO-DATE
+> Task :connect:json:processResources NO-SOURCE
+> Task :connect:json:classes UP-TO-DATE
+> Task :connect:json:copyDependantLibs UP-TO-DATE
+> Task :connect:json:jar UP-TO-DATE
+> Task :connect:transforms:compileJava UP-TO-DATE
+> Task :connect:transforms:processResources NO-SOURCE
+> Task :connect:transforms:classes UP-TO-DATE
+> Task :connect:transforms:copyDependantLibs UP-TO-DATE
+> Task :connect:transforms:jar UP-TO-DATE
+> Task :connect:runtime:compileJava
+> Task :connect:runtime:processResources UP-TO-DATE
+> Task :connect:runtime:classes
+> Task :connect:runtime:checkstyleMain
+> Task :connect:runtime:compileTestJava
+> Task :connect:runtime:processTestResources UP-TO-DATE
+> Task :connect:runtime:testClasses
+> Task :connect:runtime:checkstyleTest
+> Task :connect:runtime:spotbugsMain
+
+> Task :connect:runtime:test
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testLostAssignmentHandlingWhenWorkerLeavesPermanently PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenLeaderBounces PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenWorkerBounces PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testLostAssignmentHandlingWhenWorkerBouncesBackButFinallyLeaves PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testLostAssignmentHandlingWhenWorkerBounces PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenWorkerJoins PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testLostAssignmentHandlingWithMoreThanOneCandidates PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testAssignTasksWhenBalanced PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenWorkerLeavesPermanently PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testAssignConnectorsWhenImbalanced PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenConnectorsAreDeleted PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testAssignConnectorsWhenBalanced PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenSubsequentAssignmentAttemptFails PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenFirstAssignmentAttemptFails PASSED
+
+org.apache.kafka.connect.runtime.distributed.IncrementalCooperativeAssignorTest > testTaskAssignmentWhenLeaderLeavesPermanently PASSED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 28s
+35 actionable tasks: 7 executed, 28 up-to-date
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+reward=1 graded=15 found=15 failed=0 parsed=15 framework=maven exit_code=0

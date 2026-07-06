@@ -1,0 +1,29 @@
+{
+    "id": "dfd16a19-53de-4828-a2b0-6d48392f7605",
+    "started_at": "2026-07-02T18:46:03.765834",
+    "finished_at": "2026-07-02T18:48:17.869006",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "googlechrome-lighthouse-16987__QJzzHPF"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "835524e3-d4fa-4dc5-81a9-061f299709f4",
+    "started_at": "2026-07-06T12:18:34.046252",
+    "finished_at": "2026-07-06T12:19:03.820200",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__streamlit-streamlit-15178": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "streamlit-streamlit-15178__io7tKuw"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

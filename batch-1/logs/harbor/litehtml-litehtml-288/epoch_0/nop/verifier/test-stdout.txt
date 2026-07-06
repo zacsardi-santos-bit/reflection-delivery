@@ -1,0 +1,48 @@
+patching file containers/test/Font.cpp
+patching file containers/test/test_container.cpp
+patching file containers/test/test_container.h
+patching file test/url_test.cpp
+CMake Warning (dev) at /usr/share/cmake-3.25/Modules/FetchContent.cmake:1279 (message):
+  The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy CMP0135 is
+  not set.  The policy's OLD behavior will be used.  When using a URL
+  download, the timestamps of extracted files should preferably be that of
+  the time of extraction, otherwise code that depends on the extracted
+  contents might not be rebuilt if the URL changes.  The OLD behavior
+  preserves the timestamps from the archive instead, but this is usually not
+  what you want.  Update your project to the NEW behavior or specify the
+  DOWNLOAD_EXTRACT_TIMESTAMP option with a value of true to avoid this
+  robustness issue.
+Call Stack (most recent call first):
+  CMakeLists.txt:202 (FetchContent_Declare)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workspace/repo/build
+[  2%] Building C object src/gumbo/CMakeFiles/gumbo.dir/attribute.c.o
+[  2%] Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+[  3%] Building C object src/gumbo/CMakeFiles/gumbo.dir/char_ref.c.o
+[  4%] Building C object src/gumbo/CMakeFiles/gumbo.dir/error.c.o
+[  5%] Building C object src/gumbo/CMakeFiles/gumbo.dir/parser.c.o
+[  6%] Building C object src/gumbo/CMakeFiles/gumbo.dir/string_buffer.c.o
+[  8%] Building C object src/gumbo/CMakeFiles/gumbo.dir/string_piece.c.o
+[  9%] Building C object src/gumbo/CMakeFiles/gumbo.dir/tag.c.o
+[ 10%] Building C object src/gumbo/CMakeFiles/gumbo.dir/tokenizer.c.o
+[ 11%] Building C object src/gumbo/CMakeFiles/gumbo.dir/utf8.c.o
+[ 12%] Building C object src/gumbo/CMakeFiles/gumbo.dir/util.c.o
+[ 13%] Building C object src/gumbo/CMakeFiles/gumbo.dir/vector.c.o
+[ 14%] Linking C static library libgumbo.a
+[ 14%] Built target gumbo
+[ 16%] Building CXX object CMakeFiles/litehtml.dir/src/codepoint.cpp.o
+/workspace/repo/src/codepoint.cpp: In function 'bool litehtml::is_ascii_codepoint(char)':
+/workspace/repo/src/codepoint.cpp:47:15: error: comparison is always true due to limited range of data type [-Werror=type-limits]
+   47 |     return (c < 128);
+      |             ~~^~~~~
+cc1plus: all warnings being treated as errors
+make[2]: *** [CMakeFiles/litehtml.dir/build.make:76: CMakeFiles/litehtml.dir/src/codepoint.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:912: CMakeFiles/litehtml.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 17%] Linking CXX static library ../../../lib/libgtest.a
+[ 17%] Built target gtest
+make: *** [Makefile:146: all] Error 2
+reward=0 graded=476 found=0 failed=0 parsed=0 framework=gtest exit_code=2

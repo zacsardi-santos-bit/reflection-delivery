@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -m pytest -v /opt/tests/test_fix.py",
+  "test_files": [
+    "tests/queries/0_stateless/02346_text_index_function_ilike.reference",
+    "tests/queries/0_stateless/02346_text_index_function_ilike.sql",
+    "tests/queries/0_stateless/02346_text_index_function_like.reference",
+    "tests/queries/0_stateless/02346_text_index_function_like.sql"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_fix::test_02346_like_array_tokenizer_optimization",
+    "test_fix::test_02346_ilike_array_tokenizer_optimization"
+  ],
+  "PASS_TO_PASS": []
+}

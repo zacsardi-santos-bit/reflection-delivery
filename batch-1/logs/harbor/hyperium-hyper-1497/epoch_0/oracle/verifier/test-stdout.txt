@@ -1,0 +1,41 @@
+patching file tests/client.rs
+   Compiling hyper v0.12.0-pre.0 (/workspace/repo)
+    Finished test [unoptimized + debuginfo] target(s) in 7.56s
+------------
+ Nextest run ID e413b7be-5ffd-42cd-8dac-5db50f08a881 with nextest profile: default
+    Starting 32 tests across 1 binary
+        PASS [   0.035s] hyper::client client_100_continue
+        PASS [   0.034s] hyper::client client_101_upgrade
+        PASS [   0.032s] hyper::client client_connect_method
+        PASS [   0.031s] hyper::client client_error_parse_version
+        PASS [   0.029s] hyper::client client_error_unexpected_eof
+        PASS [   0.028s] hyper::client client_get
+        PASS [   0.033s] hyper::client client_post_empty
+        PASS [   0.043s] hyper::client client_get_implicitly_empty
+        PASS [   0.040s] hyper::client client_head_ignores_body
+        PASS [   0.041s] hyper::client client_get_query
+        PASS [   0.038s] hyper::client client_pipeline_responses_extra
+        PASS [   0.035s] hyper::client client_post_chunked
+        PASS [   0.046s] hyper::client client_post_sized
+        PASS [   0.044s] hyper::client client_set_host_false
+        PASS [   0.041s] hyper::client client_set_http1_title_case_headers
+        PASS [   0.028s] hyper::client dispatch_impl::connect_call_is_lazy
+        PASS [   0.033s] hyper::client dispatch_impl::client_keep_alive_extra_body
+        PASS [   0.034s] hyper::client dispatch_impl::connect_proxy_sends_absolute_uri
+        PASS [   0.031s] hyper::client dispatch_impl::drop_client_closes_idle_connections
+        PASS [   0.029s] hyper::client dispatch_impl::drop_response_body_closes_in_progress_connection
+        PASS [   0.028s] hyper::client dispatch_impl::drop_response_future_closes_in_progress_connection
+        PASS [   0.025s] hyper::client dispatch_impl::socket_disconnect_closes_idle_conn
+        PASS [   0.030s] hyper::client dispatch_impl::no_keep_alive_closes_connection
+        PASS [   0.086s] hyper::client dispatch_impl::client_keep_alive_0
+        PASS [   0.228s] hyper::client conn::get
+        PASS [   0.231s] hyper::client conn::connect_method
+        PASS [   0.228s] hyper::client conn::upgrade
+        PASS [   0.230s] hyper::client conn::pipeline
+        PASS [   0.229s] hyper::client conn::uri_absolute_form
+        PASS [   0.231s] hyper::client dispatch_impl::client_custom_executor
+        PASS [   1.032s] hyper::client dispatch_impl::drop_body_before_eof_closes_connection
+        PASS [   1.028s] hyper::client dispatch_impl::dropped_client_closes_connection
+------------
+     Summary [   1.094s] 32 tests run: 32 passed, 0 skipped
+reward=1 graded=32 found=32 failed=0 parsed=32 framework=cargo exit_code=0

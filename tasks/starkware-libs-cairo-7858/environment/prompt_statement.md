@@ -1,5 +1,0 @@
-I've been investigating how the semantic layer infers the type of code blocks, and I think there's a bug in how it handles certain diverging statements. When a block ends with a statement that guarantees control never reaches the end — like a loop continuation or a call to a function that is typed as never-returning — the block itself should be typed as "never." But right now, these blocks are being typed as the unit type instead, which is wrong.
-
-There's also an issue with item declarations (like constant definitions) that appear after a diverging statement. The block's type is being determined by those trailing items rather than the diverging statement that precedes them, so blocks that should be "never" end up typed as unit.
-
-Can you fix the block type inference logic so that: (1) blocks ending with a loop continuation are typed as "never", (2) blocks ending with an expression that is itself typed as "never" are typed as "never", and (3) item declarations following a diverging statement are ignored when computing the block's type? Blocks that contain only items or are empty should remain typed as unit.

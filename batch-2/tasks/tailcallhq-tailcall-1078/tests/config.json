@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --lib --no-default-features --features cli -E 'test(cache_key)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/6) tailcall cache::tests::test_cache_key_trait_exists",
+    "(2/6) tailcall http::request_template::tests::cache_key::test_body_diff",
+    "(3/6) tailcall http::request_template::tests::cache_key::test_headers_diff",
+    "(4/6) tailcall http::request_template::tests::cache_key::test_url_diff",
+    "(5/6) tailcall graphql::request_template::tests::test_cache_key_collision",
+    "(6/6) tailcall grpc::request_template::tests::test_grpc_cache_key_collision"
+  ],
+  "PASS_TO_PASS": []
+}

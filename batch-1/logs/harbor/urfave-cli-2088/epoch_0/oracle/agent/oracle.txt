@@ -1,0 +1,4 @@
+patching file args.go
+patching file command_parse.go
+patching file godoc-current.txt
+patching file testdata/godoc-v3.x.txt

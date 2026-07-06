@@ -1,0 +1,29 @@
+{
+    "id": "9f4c3e75-5a9e-415d-9b2e-692cec8fdaf5",
+    "started_at": "2026-07-04T15:42:26.365662",
+    "finished_at": "2026-07-04T15:43:19.312522",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__datadog-dd-trace-java-7185": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "datadog-dd-trace-java-7185__nBw46kL"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

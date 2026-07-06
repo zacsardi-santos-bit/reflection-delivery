@@ -1,0 +1,7 @@
+I'm reworking setup for the Hue BLE lighting integration and I want to flip how devices get configured. Right now it only works through automatic Bluetooth discovery, so the scanner finds a compatible device and a setup flow pops up on its own for each one, which is annoying because you're at the mercy of discovery timing and can't pick which device you want. I want to make this user-initiated instead.
+
+So the flow should be: user manually kicks off setup, we scan for nearby Bluetooth devices, filter out anything that isn't compatible with this integration (unrelated BLE stuff shouldn't show up), and present whatever's left in a dropdown so they choose which one to pair. If there aren't any compatible devices around when they start, don't show an empty form, just abort with a "no devices found" message. And if they pick a device that's already configured, abort gracefully too rather than creating a duplicate entry.
+
+Oh and the old automatic discovery-triggered flow needs to be disabled entirely. When the scanner detects a compatible device it should no longer open a setup flow by itself, people use the manual path now.
+
+Also need to update the localization strings file. Remove the old abort reason for the user-initiated flow and replace it with two new ones, one saying automatic discovery-triggered setup isn't supported and one for the no-devices-found case. And add a new user step entry to the strings with the right field label and description for the device selection dropdown.

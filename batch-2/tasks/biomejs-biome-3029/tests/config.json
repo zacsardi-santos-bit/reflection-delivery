@@ -1,0 +1,31 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p biome_cli --no-fail-fast -E 'test(/reports_diagnostics_github|reports_diagnostics_junit/)'",
+  "test_files": [
+    "crates/biome_cli/tests/cases/mod.rs",
+    "crates/biome_cli/tests/cases/reporter_github.rs",
+    "crates/biome_cli/tests/cases/reporter_junit.rs",
+    "crates/biome_cli/tests/snap_test.rs",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_check_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_ci_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_format_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_lint_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_format_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap"
+  ],
+  "num_test_files": 12,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(5/8) biome_cli::main cases::reporter_github::reports_diagnostics_github_check_command",
+    "(1/8) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_format_command",
+    "(2/8) biome_cli::main cases::reporter_github::reports_diagnostics_github_format_command",
+    "(3/8) biome_cli::main cases::reporter_github::reports_diagnostics_github_lint_command",
+    "(4/8) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_lint_command",
+    "(6/8) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_ci_command",
+    "(7/8) biome_cli::main cases::reporter_github::reports_diagnostics_github_ci_command",
+    "(8/8) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_check_command"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,7 @@
+I'm hitting a rough edge with the diffusion decoder and how it builds attention masks for static (pre-allocated) caches. Right now the decoder mask creation helper makes me pass a mask sized to the full static cache capacity, so I have to include all the unfilled/empty cache slots and manually zero them out myself. That's confusing since I just want to say which real input tokens are valid, not babysit the internal cache allocation layout.
+
+I want to change it so the mask I hand in only needs to cover the actual input tokens I genuinely processed and stored in the cache, plus the canvas tokens, and nothing else. No padding out to full capacity, no zeroing empty slots. The function should figure out the empty/unfilled cache positions on its own and handle them correctly internally.
+
+Also, small annoyance, I currently have to dig the inner text config out of the top-level config object just to call this thing. I'd rather pass the top-level model configuration directly and let the function extract the sub-config itself.
+
+So basically simplify the decoder attention mask creation logic for static caches: accept the top-level config, take a mask covering only real inputs plus canvas tokens, and derive the unfilled positions internally. This matters because compiled (static cache) forward passes for diffusion generation currently leak that cache layout detail into the public API and it's easy to pass a wrong-shaped mask. Making the expected mask shape intuitive cuts down on those mistakes.

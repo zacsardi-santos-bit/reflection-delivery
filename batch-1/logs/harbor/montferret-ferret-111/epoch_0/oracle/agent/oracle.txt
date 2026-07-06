@@ -1,0 +1,2 @@
+patching file pkg/stdlib/objects/lib.go
+patching file pkg/stdlib/objects/merge.go

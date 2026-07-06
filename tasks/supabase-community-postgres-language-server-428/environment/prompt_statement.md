@@ -1,5 +1,0 @@
-I'm seeing a bug in the Postgres language server where making multiple edits at once causes false error diagnostics to appear. In my editor, when I do a rename or a multi-cursor edit that changes the same word in two places simultaneously, the editor sends all those changes together in a single notification. After that, the language server reports errors even though the resulting SQL is perfectly valid.
-
-I believe the problem is that when multiple range-based changes arrive in the same batch, the server is computing the position of every change using the original document layout. But once the first change is applied, the positions of everything after it shift — so the second change ends up getting applied at the wrong location. The server then sees the resulting (incorrectly modified) document as invalid and fires off diagnostics that shouldn't be there.
-
-After applying a batch of changes that produces a valid SQL document referencing tables that actually exist in the database, the server should produce no diagnostics. Could you fix the multi-change handling so that all edits in a single batch are applied at the correct positions?

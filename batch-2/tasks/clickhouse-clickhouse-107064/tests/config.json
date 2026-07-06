@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/tests/ci && pytest test_cherry_pick_branches.py -v -k 'stale'",
+  "test_files": [
+    "tests/queries/0_stateless/03990_alter_rename_column_swap_different_types.reference",
+    "tests/queries/0_stateless/03990_alter_rename_column_swap_different_types.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.test_cherry_pick_branches.TestBackportFloor::test_stale_inactive_label_does_not_lower_floor",
+    "tests.ci.test_cherry_pick_branches.TestSelectVersionSpecific::test_stale_label_does_not_widen_selection"
+  ],
+  "PASS_TO_PASS": []
+}

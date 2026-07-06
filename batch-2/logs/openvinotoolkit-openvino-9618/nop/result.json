@@ -1,0 +1,29 @@
+{
+    "id": "e379d2f7-fe4e-402d-8bff-902790321d74",
+    "started_at": "2026-07-06T12:17:05.604459",
+    "finished_at": "2026-07-06T12:17:58.812485",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__openvinotoolkit-openvino-9618": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "openvinotoolkit-openvino-9618__8V5sjYq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

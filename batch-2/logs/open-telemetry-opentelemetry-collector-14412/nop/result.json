@@ -1,0 +1,29 @@
+{
+    "id": "8c6f8caf-2a97-43fb-8014-a3ce70060980",
+    "started_at": "2026-07-06T12:17:07.659031",
+    "finished_at": "2026-07-06T12:17:56.455933",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__open-telemetry-opentelemetry-collector-14412": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "open-telemetry-opentelemetry-col__aPxA3Az"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

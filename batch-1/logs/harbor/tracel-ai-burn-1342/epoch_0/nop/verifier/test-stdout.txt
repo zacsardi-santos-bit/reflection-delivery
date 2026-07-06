@@ -1,0 +1,107 @@
+patching file crates/burn-tensor/src/tests/mod.rs
+patching file crates/burn-tensor/src/tests/ops/all.rs
+patching file crates/burn-tensor/src/tests/ops/any.rs
+patching file crates/burn-tensor/src/tests/ops/mod.rs
+   Compiling burn-tensor v0.13.0 (/workspace/repo/crates/burn-tensor)
+   Compiling burn-autodiff v0.13.0 (/workspace/repo/crates/burn-autodiff)
+   Compiling burn-ndarray v0.13.0 (/workspace/repo/crates/burn-ndarray)
+error[E0599]: no method named `any` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_any` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `any` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Int>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_any` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `any` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Bool>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_any` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `any_dim` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_any` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `any_dim` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Int>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_any` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `any_dim` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Bool>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_any` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `all` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_all_op` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `all` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Int>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_all_op` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `all` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Bool>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_all_op` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `all_dim` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_all_op` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `all_dim` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Int>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_all_op` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `all_dim` found for struct `Tensor` in the current scope
+  --> crates/burn-ndarray/src/lib.rs:40:5
+   |
+40 |     burn_tensor::testgen_all!();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Tensor<NdArray, 2, Bool>`
+   |
+   = note: this error originates in the macro `burn_tensor::testgen_all_op` which comes from the expansion of the macro `burn_tensor::testgen_all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `burn-ndarray` (lib test) due to 18 previous errors
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package burn-ndarray` exited with code 101
+reward=0 graded=570 found=0 failed=0 parsed=0 framework=cargo exit_code=101

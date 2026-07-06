@@ -1,0 +1,12 @@
+patching file adapter/internal/oasparser/envoyconf/envoyconf_internal_test.go
+patching file integration/test-integration/src/test/java/org/wso2am/micro/gw/tests/testCaseBefore/MgwWithJwtConfig.java
+patching file integration/test-integration/src/test/java/org/wso2am/micro/gw/tests/testCases/security/CorsTestCase.java
+patching file integration/test-integration/src/test/resources/apim/config.toml
+patching file integration/test-integration/src/test/resources/jwtGenerator/config.toml
+patching file integration/test-integration/src/test/resources/openAPIs/cors_openAPI.yaml
+patching file integration/test-integration/src/test/resources/openAPIs/global_cors_openAPI.yaml
+patching file integration/test-integration/src/test/resources/testng.xml
+# github.com/wso2/micro-gw/internal/oasparser/envoyconf [github.com/wso2/micro-gw/internal/oasparser/envoyconf.test]
+internal/oasparser/envoyconf/envoyconf_internal_test.go:374:3: unknown field 'AccessControlExposeHeaders' in struct literal of type model.CorsConfig
+FAIL	github.com/wso2/micro-gw/internal/oasparser/envoyconf [build failed]
+reward=0 graded=19 found=19 failed=19 parsed=1 framework=go exit_code=2

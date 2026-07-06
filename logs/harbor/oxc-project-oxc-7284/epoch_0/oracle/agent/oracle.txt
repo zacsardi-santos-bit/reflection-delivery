@@ -1,4 +1,0 @@
-patching file crates/oxc_transformer/src/options/env.rs
-patching file crates/oxc_transformer/src/options/es_features.rs
-patching file tasks/compat_data/data.json
-patching file tasks/compat_data/es-features.js

@@ -1,0 +1,20 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -Dmaven.test.skip=true -am -pl :sort-end-to-end-tests-v1.18 -Pv1.18 -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false && mvn test -pl :sort-end-to-end-tests-v1.18 -Pv1.18 --no-snapshot-updates -Dtest=TestUtils#testReplaceholder -DfailIfNoTests=false",
+  "test_files": [
+    "inlong-sort/sort-end-to-end-tests/pom.xml",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/pom.xml",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/src/test/java/org/apache/inlong/sort/tests/utils/FlinkContainerTestEnv.java",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/src/test/java/org/apache/inlong/sort/tests/utils/FlinkContainerTestEnvJRE11.java",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/src/test/java/org/apache/inlong/sort/tests/utils/FlinkContainerTestEnvJRE8.java",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/src/test/java/org/apache/inlong/sort/tests/utils/PlaceholderResolver.java",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/src/test/java/org/apache/inlong/sort/tests/utils/TestUtils.java",
+    "inlong-sort/sort-end-to-end-tests/sort-end-to-end-tests-v1.18/src/test/resources/log4j2-test.properties"
+  ],
+  "num_test_files": 8,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Apache::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

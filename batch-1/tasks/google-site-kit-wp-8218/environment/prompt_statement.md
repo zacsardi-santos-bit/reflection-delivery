@@ -1,0 +1,7 @@
+I'm working on the Analytics 4 module in Site Kit and I need to add audience management support to the data layer. Right now there's no way to fetch the list of audiences for a GA4 property or create new ones through the plugin's data store patterns.
+
+I need a new datastore module that provides two main capabilities: a selector that retrieves the list of audiences (making a network request only when the data isn't already loaded), and an action to create a new audience by sending the audience definition to the appropriate endpoint. The creation action should validate its input before doing anything — it should reject values that are not objects, objects with unrecognized property names (reporting which key is invalid), objects missing required properties (reporting which key is missing), and objects where the filter clauses property isn't an array. After a successful creation, the new audience should be reflected in the store state.
+
+I also need two new constants exported from the existing constants file — one representing the valid audience filter clause types and one representing the valid audience filter scope values — so the rest of the codebase doesn't have to use raw strings. Additionally, the fixture file for the datastore should include a sample list of at least three audience objects so tests can reference them by index.
+
+The new module needs to be wired into the existing combined store for the analytics-4 module so that the actions and selectors are accessible through the standard registry dispatch and select patterns.

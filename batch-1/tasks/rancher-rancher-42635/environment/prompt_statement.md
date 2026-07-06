@@ -1,0 +1,5 @@
+I'm working on adding unit tests for the LDAP authentication provider, but the existing code structure makes it impossible to test the core login and configuration logic without a real LDAP server. The authentication function creates its own server connection internally and the configuration function directly accesses the internal client — so there's no way to substitute mock implementations.
+
+I need to refactor these functions so that they accept their external dependencies (the server connection and the data access client) as parameters instead of creating or accessing them internally. A small helper function also needs to be extracted that handles converting untyped input into a typed login credential, and it should return a clear error for unexpected input types. All existing callers of these functions need to be updated to pass in the appropriate dependency they already have.
+
+Once these changes are in place, I can write unit tests covering successful logins, invalid credential handling, and access-denied scenarios using lightweight mock objects instead of live infrastructure.

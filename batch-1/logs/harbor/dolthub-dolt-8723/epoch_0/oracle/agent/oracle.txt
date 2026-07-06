@@ -1,0 +1,9 @@
+patching file go/go.mod
+patching file go/go.sum
+patching file go/store/prolly/tree/indexed_json_diff.go
+patching file go/store/prolly/tree/json_chunker.go
+patching file go/store/prolly/tree/json_cursor.go
+patching file go/store/prolly/tree/json_indexed_document.go
+patching file go/store/prolly/tree/json_location.go
+patching file go/store/prolly/tree/json_scanner.go
+patching file go/store/prolly/tree/prolly_fields.go

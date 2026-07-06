@@ -1,0 +1,50 @@
+patching file crates/red_knot_python_semantic/resources/mdtest/suppressions/knot-ignore.md
+patching file crates/red_knot_python_semantic/resources/mdtest/suppressions/type-ignore.md
+patching file crates/red_knot_test/src/db.rs
+   Compiling red_knot_python_semantic v0.0.0 (/workspace/repo/crates/red_knot_python_semantic)
+   Compiling red_knot_test v0.0.0 (/workspace/repo/crates/red_knot_test)
+error[E0407]: method `lint_registry` is not a member of trait `SemanticDb`
+   --> crates/red_knot_test/src/db.rs:101:5
+    |
+101 | /     fn lint_registry(&self) -> &LintRegistry {
+102 | |         default_lint_registry()
+103 | |     }
+    | |_____^ not a member of trait `SemanticDb`
+
+error[E0308]: mismatched types
+   --> crates/red_knot_test/src/db.rs:24:59
+    |
+24  |         let rule_selection = RuleSelection::from_registry(default_lint_registry());
+    |                              ---------------------------- ^^^^^^^^^^^^^^^^^^^^^^^ expected `&LintRegistry`, found `LintRegistry`
+    |                              |
+    |                              arguments to this function are incorrect
+    |
+note: associated function defined here
+   --> /workspace/repo/crates/red_knot_python_semantic/src/lint.rs:418:12
+    |
+418 |     pub fn from_registry(registry: &LintRegistry) -> Self {
+    |            ^^^^^^^^^^^^^
+help: consider borrowing here
+    |
+24  |         let rule_selection = RuleSelection::from_registry(&default_lint_registry());
+    |                                                           +
+
+error[E0308]: mismatched types
+   --> crates/red_knot_test/src/db.rs:102:9
+    |
+101 |     fn lint_registry(&self) -> &LintRegistry {
+    |                                ------------- expected `&LintRegistry` because of return type
+102 |         default_lint_registry()
+    |         ^^^^^^^^^^^^^^^^^^^^^^^ expected `&LintRegistry`, found `LintRegistry`
+    |
+help: consider borrowing here
+    |
+102 |         &default_lint_registry()
+    |         +
+
+Some errors have detailed explanations: E0308, E0407.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `red_knot_test` (lib) due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.83-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package red_knot_python_semantic` exited with code 101
+reward=0 graded=651 found=0 failed=0 parsed=0 framework=cargo exit_code=101

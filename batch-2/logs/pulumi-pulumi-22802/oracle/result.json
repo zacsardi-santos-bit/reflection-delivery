@@ -1,0 +1,29 @@
+{
+    "id": "8d3bb965-c080-4769-9118-12564befcff2",
+    "started_at": "2026-07-06T12:19:14.950656",
+    "finished_at": "2026-07-06T12:20:11.334700",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pulumi-pulumi-22802": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pulumi-pulumi-22802__8AcJ9bR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

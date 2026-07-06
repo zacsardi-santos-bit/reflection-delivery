@@ -1,0 +1,29 @@
+{
+    "id": "d02c8f67-2878-4339-b482-6a14b63a1e76",
+    "started_at": "2026-07-06T12:18:16.493658",
+    "finished_at": "2026-07-06T12:18:53.140531",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__gladysassistant-gladys-2482": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "gladysassistant-gladys-2482__mbiZpL9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

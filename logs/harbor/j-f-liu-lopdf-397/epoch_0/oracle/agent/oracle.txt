@@ -1,7 +1,0 @@
-patching file examples/decrypt.rs
-patching file examples/encrypt.rs
-patching file src/document.rs
-patching file src/encryption.rs
-patching file src/encryption/algorithms.rs
-patching file src/encryption/crypt_filters.rs
-patching file src/lib.rs

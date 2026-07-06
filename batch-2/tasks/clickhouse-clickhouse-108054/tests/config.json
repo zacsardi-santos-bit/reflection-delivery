@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "echo 'ZGVmIHRlc3Rfbm9fbWF4X3Jvd3NfdG9fcmVhZF9pbl9jb3ZlcmFnZV9vcHRpb25zKCk6CiAgICB3aXRoIG9wZW4oIi93b3Jrc3BhY2UvcmVwby9jaS9qb2JzL3NjcmlwdHMvZnVuY3Rpb25hbF90ZXN0cy9leHBvcnRfY292ZXJhZ2UucHkiKSBhcyBmOgogICAgICAgIGRhdGEgPSBmLnJlYWQoKQogICAgYXNzZXJ0ICItLW1heF9yb3dzX3RvX3JlYWRfbGVhZiIgbm90IGluIGRhdGEKCmRlZiB0ZXN0X3dhaXRfYmF0Y2hfbG9nX2Z1bmN0aW9uX3JlbmFtZWQoKToKICAgIHdpdGggb3BlbigiL3dvcmtzcGFjZS9yZXBvL3Rlc3RzL2ludGVncmF0aW9uL3Rlc3RfcmVmcmVzaGFibGVfbWF0X3ZpZXdfcmVwbGljYXRlZC90ZXN0LnB5IikgYXMgZjoKICAgICAgICBkYXRhID0gZi5yZWFkKCkKICAgIGFzc2VydCAiX3dhaXRfYmF0Y2hfbG9nX2NvdW50IiBpbiBkYXRhCiAgICBhc3NlcnQgIl93YWl0X2JhdGNoX2xvZ19tYXhfdCIgbm90IGluIGRhdGEK' | base64 -d > /tmp/test_pr.py && python3 -m pytest /tmp/test_pr.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04401_parameterized_view_scalar_subquery_in_with.reference",
+    "tests/queries/0_stateless/04401_parameterized_view_scalar_subquery_in_with.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_pr::test_no_max_rows_to_read_in_coverage_options",
+    "test_pr::test_wait_batch_log_function_renamed"
+  ],
+  "PASS_TO_PASS": []
+}

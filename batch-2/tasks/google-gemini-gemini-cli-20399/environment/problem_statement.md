@@ -1,0 +1,9 @@
+I'm trying to make our CLI feel less alarming by default. Right now it dumps everything unconditionally, error counts in the footer, keyboard hints to pop open the diagnostics panel, failed tool output details, blow-by-blow retry progress, even for transient hiccups that the system recovers from on its own. It's noisy and it makes people think something's broken when it isn't.
+
+What I want is a configurable error verbosity setting with two levels, "low" and "full", and low should be the default. In low mode I want recoverable error indicators suppressed: the footer shouldn't show error counts or the key hint to open the diagnostics view, model-initiated tool failures should be hidden from the conversation, and retry loading messages should just say something generic like "still working" after the first attempt instead of showing per-attempt counters. Also transient quota/capacity failures should get retried silently without asking the user anything.
+
+But (this part matters) when execution actually stops because of a terminal error while we're in low mode, the UI still needs to emit a compact note that some internal steps were suppressed, plus the real stop reason, plus a hint about how to get at fuller diagnostics. And terminal quota errors that genuinely need a user decision should still prompt no matter what the verbosity is set to. Oh and client-initiated tool failures stay visible regardless of level, only the model-initiated ones get hidden.
+
+Full verbosity mode should just restore all the current detailed behavior exactly as it is today. And running in debug mode should always behave as full, overriding any lower setting.
+
+So basically most folks don't need to see every recoverable stumble, low noise by default lets them focus, while power users and anyone troubleshooting can flip to full and get everything back.

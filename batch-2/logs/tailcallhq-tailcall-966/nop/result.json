@@ -1,0 +1,29 @@
+{
+    "id": "03613ba6-adc2-49d9-8069-fb1fdffa99f0",
+    "started_at": "2026-07-04T15:36:43.440904",
+    "finished_at": "2026-07-04T15:38:01.830915",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tailcallhq-tailcall-966": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tailcallhq-tailcall-966__pfTCFut"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

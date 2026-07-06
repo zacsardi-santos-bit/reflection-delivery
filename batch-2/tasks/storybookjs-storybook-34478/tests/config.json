@@ -1,0 +1,21 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=--max_old_space_size=4096 yarn vitest run --config code/core/vitest.config.ts code/core/src/manager-api/tests/addons.test.js",
+  "test_files": [
+    "code/addons/vitest/src/manager.tsx",
+    "code/core/src/manager-api/tests/addons.test.js"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #clearStatuses calls clear() on every test provider that has it",
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #clearStatuses skips providers without a clear() function",
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #clearStatuses continues clearing remaining providers when one throws"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #getElements should return provider elements",
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #getSelectedPanel should return provider panels",
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #getSelectedPanel should return first panel when selected is not a panel",
+    "/workspace/repo/code/core/src/manager-api/tests/addons.test.js::Addons API #setSelectedPanel should set value inn store"
+  ]
+}

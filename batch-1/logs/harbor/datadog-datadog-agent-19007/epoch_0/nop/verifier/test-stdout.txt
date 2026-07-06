@@ -1,0 +1,50 @@
+patching file pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go
+patching file pkg/workloadmeta/collectors/internal/kubeapiserver/kubeapiserver_test.go
+patching file pkg/workloadmeta/collectors/internal/kubeapiserver/node_test.go
+patching file pkg/workloadmeta/collectors/internal/kubeapiserver/pod_test.go
+patching file pkg/workloadmeta/collectors/internal/remote/process_collector/process_collector_test.go
+patching file pkg/workloadmeta/store_test.go
+# github.com/DataDog/datadog-agent/pkg/workloadmeta [github.com/DataDog/datadog-agent/pkg/workloadmeta.test]
+pkg/workloadmeta/store_test.go:606:17: undefined: KubernetesDeployment
+pkg/workloadmeta/store_test.go:608:10: undefined: KindKubernetesDeployment
+pkg/workloadmeta/store_test.go:621:32: s.GetKubernetesDeployment undefined (type *store has no field or method GetKubernetesDeployment)
+pkg/workloadmeta/store_test.go:636:13: s.GetKubernetesDeployment undefined (type *store has no field or method GetKubernetesDeployment)
+# github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/kubeapiserver [github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/kubeapiserver.test]
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:28:28: undefined: workloadmeta.KubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:33:28: undefined: workloadmeta.KubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:35:25: undefined: workloadmeta.KindKubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:75:28: undefined: workloadmeta.KubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:77:25: undefined: workloadmeta.KindKubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:101:28: undefined: workloadmeta.KubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:103:25: undefined: workloadmeta.KindKubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:138:14: undefined: newdeploymentParser
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:151:32: undefined: workloadmeta.KubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:173:30: undefined: workloadmeta.KubernetesDeployment
+pkg/workloadmeta/collectors/internal/kubeapiserver/deployments_test.go:173:30: too many errors
+FAIL	github.com/DataDog/datadog-agent/pkg/workloadmeta [build failed]
+{"Time":"2026-06-29T15:13:34.863801566Z","Action":"start","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector"}
+FAIL	github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/kubeapiserver [build failed]
+{"Time":"2026-06-29T15:13:34.92198648Z","Action":"run","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection"}
+{"Time":"2026-06-29T15:13:34.922054281Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection","Output":"=== RUN   TestCollection\n"}
+{"Time":"2026-06-29T15:13:34.924184221Z","Action":"run","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/initially_empty"}
+{"Time":"2026-06-29T15:13:34.924257832Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/initially_empty","Output":"=== RUN   TestCollection/initially_empty\n"}
+{"Time":"2026-06-29T15:13:36.9296578Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/initially_empty","Output":"--- PASS: TestCollection/initially_empty (2.01s)\n"}
+{"Time":"2026-06-29T15:13:36.929727012Z","Action":"pass","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/initially_empty","Elapsed":2.01}
+{"Time":"2026-06-29T15:13:36.929796806Z","Action":"run","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/two_response_with_set"}
+{"Time":"2026-06-29T15:13:36.929822776Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/two_response_with_set","Output":"=== RUN   TestCollection/two_response_with_set\n"}
+{"Time":"2026-06-29T15:13:38.933142509Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/two_response_with_set","Output":"--- PASS: TestCollection/two_response_with_set (2.00s)\n"}
+{"Time":"2026-06-29T15:13:38.933215681Z","Action":"pass","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/two_response_with_set","Elapsed":2}
+{"Time":"2026-06-29T15:13:38.933268432Z","Action":"run","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/one_set_one_unset"}
+{"Time":"2026-06-29T15:13:38.933281608Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/one_set_one_unset","Output":"=== RUN   TestCollection/one_set_one_unset\n"}
+{"Time":"2026-06-29T15:13:40.939440359Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/one_set_one_unset","Output":"--- PASS: TestCollection/one_set_one_unset (2.01s)\n"}
+{"Time":"2026-06-29T15:13:40.939524081Z","Action":"pass","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/one_set_one_unset","Elapsed":2.01}
+{"Time":"2026-06-29T15:13:40.939568266Z","Action":"run","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/on_resync"}
+{"Time":"2026-06-29T15:13:40.939581211Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/on_resync","Output":"=== RUN   TestCollection/on_resync\n"}
+{"Time":"2026-06-29T15:13:42.945387676Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/on_resync","Output":"--- PASS: TestCollection/on_resync (2.01s)\n"}
+{"Time":"2026-06-29T15:13:42.94555713Z","Action":"pass","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection/on_resync","Elapsed":2.01}
+{"Time":"2026-06-29T15:13:42.945736072Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection","Output":"--- PASS: TestCollection (8.02s)\n"}
+{"Time":"2026-06-29T15:13:42.945865513Z","Action":"pass","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Test":"TestCollection","Elapsed":8.02}
+{"Time":"2026-06-29T15:13:42.945923465Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Output":"PASS\n"}
+{"Time":"2026-06-29T15:13:42.949759793Z","Action":"output","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Output":"ok  \tgithub.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector\t8.086s\n"}
+{"Time":"2026-06-29T15:13:42.94981503Z","Action":"pass","Package":"github.com/DataDog/datadog-agent/pkg/workloadmeta/collectors/internal/remote/process_collector","Elapsed":8.086}
+reward=0 graded=77 found=77 failed=72 parsed=7 framework=go exit_code=1

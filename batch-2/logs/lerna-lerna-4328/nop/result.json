@@ -1,0 +1,29 @@
+{
+    "id": "95094cc9-cd8f-420a-b8b8-391e464cf836",
+    "started_at": "2026-07-06T12:17:28.216987",
+    "finished_at": "2026-07-06T12:18:09.577161",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__lerna-lerna-4328": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "lerna-lerna-4328__ykX86aY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

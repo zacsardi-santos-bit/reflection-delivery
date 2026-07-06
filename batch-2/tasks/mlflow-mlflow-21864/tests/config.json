@@ -1,0 +1,42 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/genai/discovery/test_utils.py -v",
+  "test_files": [
+    "tests/genai/discovery/test_utils.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.genai.discovery.test_utils::test_call_llm_handles_gateway_models",
+    "tests.genai.discovery.test_utils::test_call_llm_handles_non_gateway_models",
+    "tests.genai.discovery.test_utils::test_call_llm_with_json_mode",
+    "tests.genai.discovery.test_utils::test_call_llm_with_response_format",
+    "tests.genai.discovery.test_utils::test_call_llm_tracks_tokens"
+  ],
+  "PASS_TO_PASS": [
+    "tests.genai.discovery.test_utils::test_format_trace_content_includes_errors",
+    "tests.genai.discovery.test_utils::test_format_trace_content_no_errors",
+    "tests.genai.discovery.test_utils::test_collect_affected_trace_ids_gathers_from_analyses",
+    "tests.genai.discovery.test_utils::test_collect_affected_trace_ids_skips_out_of_bounds",
+    "tests.genai.discovery.test_utils::test_get_session_id[sess-123-sess-123]",
+    "tests.genai.discovery.test_utils::test_get_session_id[None-None]",
+    "tests.genai.discovery.test_utils::test_log_discovery_artifacts_logs_text",
+    "tests.genai.discovery.test_utils::test_log_discovery_artifacts_skips_empty_run_id",
+    "tests.genai.discovery.test_utils::test_log_discovery_artifacts_handles_exception",
+    "tests.genai.discovery.test_utils::test_format_annotation_prompt",
+    "tests.genai.discovery.test_utils::test_build_summary_no_issues",
+    "tests.genai.discovery.test_utils::test_build_summary_with_issues",
+    "tests.genai.discovery.test_utils::test_token_counter_tracks_usage",
+    "tests.genai.discovery.test_utils::test_token_counter_tracks_gateway_response_without_hidden_params",
+    "tests.genai.discovery.test_utils::test_token_counter_to_dict_looks_up_cost_when_zero",
+    "tests.genai.discovery.test_utils::test_group_traces_by_session_groups_by_session_id",
+    "tests.genai.discovery.test_utils::test_group_traces_by_session_creates_standalone_groups_for_no_session",
+    "tests.genai.discovery.test_utils::test_group_traces_by_session_sorts_by_timestamp",
+    "tests.genai.discovery.test_utils::test_call_llm_uses_gateway_when_litellm_unavailable",
+    "tests.genai.discovery.test_utils::test_call_llm_uses_litellm_when_available",
+    "tests.genai.discovery.test_utils::test_pydantic_to_response_format",
+    "tests.genai.discovery.test_utils::test_lookup_model_cost_returns_calculated_cost",
+    "tests.genai.discovery.test_utils::test_lookup_model_cost_returns_none_on_missing_model",
+    "tests.genai.discovery.test_utils::test_lookup_model_cost_returns_none_on_network_error"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/Packs/GoogleThreatIntelligence/Integrations/FeedThreatLists && pytest FeedThreatLists_test.py -v",
+  "test_files": [
+    "Packs/GoogleThreatIntelligence/Integrations/FeedThreatLists/FeedThreatLists_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.GoogleThreatIntelligence.Integrations.FeedThreatLists.FeedThreatLists_test::test_fetch_indicators_command",
+    "Packs.GoogleThreatIntelligence.Integrations.FeedThreatLists.FeedThreatLists_test::test_get_indicators_command",
+    "Packs.GoogleThreatIntelligence.Integrations.FeedThreatLists.FeedThreatLists_test::test_main_manual_command",
+    "Packs.GoogleThreatIntelligence.Integrations.FeedThreatLists.FeedThreatLists_test::test_main_default_command",
+    "Packs.GoogleThreatIntelligence.Integrations.FeedThreatLists.FeedThreatLists_test::test_main_test_command"
+  ],
+  "PASS_TO_PASS": []
+}

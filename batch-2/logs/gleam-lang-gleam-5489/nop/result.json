@@ -1,0 +1,29 @@
+{
+    "id": "5ac3a2e6-b604-4f28-86ac-b1d04c918a48",
+    "started_at": "2026-07-06T12:17:11.818297",
+    "finished_at": "2026-07-06T12:18:56.232723",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__gleam-lang-gleam-5489": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "gleam-lang-gleam-5489__CGZ2Krm"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

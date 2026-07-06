@@ -1,3 +1,0 @@
-I'm working on the Cloud Foundry API layer and noticed that when a task is created, the response body is missing timestamp fields. Other resource types include a creation timestamp and a last-updated timestamp in their responses, but tasks don't expose these at all. The underlying resource already has creation time information — it's just not being surfaced in the API response.
-
-I need the task data record to capture the creation time from the underlying resource, and I need the API response to include both a creation timestamp and a last-updated timestamp formatted as standard UTC date-time strings. Since tasks can't be updated after they're created, both timestamps should reflect the same creation moment.

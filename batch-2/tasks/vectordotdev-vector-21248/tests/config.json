@@ -1,0 +1,12 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p vector --no-default-features --features sinks-postgres 'sinks::postgres::config'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) vector sinks::postgres::config::tests::parse_config",
+    "(2/2) vector sinks::postgres::config::tests::generate_config"
+  ],
+  "PASS_TO_PASS": []
+}

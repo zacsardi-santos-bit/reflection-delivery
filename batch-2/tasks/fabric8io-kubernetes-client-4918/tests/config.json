@@ -1,0 +1,42 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl kubernetes-client test -Dtest=\"URLFromEnvVarsImplTest,URLFromIngressImplTest,URLFromServiceUtilTest\" -DfailIfNoTests=false",
+  "test_files": [
+    "kubernetes-client/src/test/java/io/fabric8/kubernetes/client/impl/URLFromEnvVarsImplTest.java",
+    "kubernetes-client/src/test/java/io/fabric8/kubernetes/client/impl/URLFromIngressImplTest.java",
+    "kubernetes-client/src/test/java/io/fabric8/kubernetes/client/utils/internal/URLFromServiceUtilTest.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Fabric8::test_1",
+    "Fabric8::test_2",
+    "Fabric8::test_3",
+    "Fabric8::test_4",
+    "Fabric8::test_5",
+    "Fabric8::test_6",
+    "Fabric8::test_7",
+    "Fabric8::test_8",
+    "Fabric8::test_9",
+    "Fabric8::test_10",
+    "Fabric8::test_11",
+    "Fabric8::test_12",
+    "Fabric8::test_13",
+    "Fabric8::test_14",
+    "Fabric8::test_15",
+    "Fabric8::test_16",
+    "Fabric8::test_17",
+    "Fabric8::test_18",
+    "Fabric8::test_19",
+    "Fabric8::test_20",
+    "Fabric8::test_21",
+    "Fabric8::test_22",
+    "Fabric8::test_23",
+    "Fabric8::test_24",
+    "Fabric8::test_25",
+    "Fabric8::test_26",
+    "Fabric8::test_27",
+    "Fabric8::test_28"
+  ],
+  "PASS_TO_PASS": []
+}

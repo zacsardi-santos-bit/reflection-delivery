@@ -1,0 +1,869 @@
+patching file crates/biome_cli/tests/cases/suppressions.rs
+patching file crates/biome_cli/tests/snapshots/main_cases_suppressions/misplaced_top_level_suppression.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_suppressions/unused_range_suppression.snap
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.8
+   Compiling once_cell v1.20.0
+   Compiling serde v1.0.215
+   Compiling hashbrown v0.15.0
+   Compiling equivalent v1.0.1
+   Compiling itoa v1.0.6
+   Compiling memchr v2.7.4
+   Compiling ryu v1.0.13
+   Compiling pin-project-lite v0.2.13
+   Compiling schemars v0.8.21
+   Compiling autocfg v1.1.0
+   Compiling dyn-clone v1.0.11
+   Compiling syn v1.0.109
+   Compiling unicode-segmentation v1.12.0
+   Compiling hashbrown v0.14.5
+   Compiling cfg-if v1.0.0
+   Compiling serde_json v1.0.133
+   Compiling libc v0.2.164
+   Compiling rustc-hash v2.0.0
+   Compiling version_check v0.9.4
+   Compiling countme v3.0.1
+   Compiling log v0.4.20
+   Compiling tracing-core v0.1.32
+   Compiling crossbeam-utils v0.8.19
+   Compiling parking_lot_core v0.9.9
+   Compiling scopeguard v1.1.0
+   Compiling thiserror v1.0.63
+   Compiling biome_string_case v0.5.7 (/workspace/repo/crates/biome_string_case)
+   Compiling similar v2.6.0
+   Compiling unicode-width v0.1.12
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling gimli v0.31.0
+   Compiling adler2 v2.0.0
+   Compiling termcolor v1.4.1
+   Compiling rustc-demangle v0.1.24
+   Compiling void v1.0.2
+   Compiling miniz_oxide v0.8.0
+   Compiling result v1.0.0
+   Compiling dunce v1.0.4
+   Compiling simdutf8 v0.1.4
+   Compiling json-strip-comments v1.0.2
+   Compiling lock_api v0.4.11
+   Compiling bitflags v1.3.2
+   Compiling unicode-bom v2.0.3
+   Compiling drop_bomb v0.1.5
+   Compiling biome_unicode_table v0.5.7 (/workspace/repo/crates/biome_unicode_table)
+   Compiling io-lifetimes v1.0.6
+   Compiling rustix v0.37.7
+   Compiling linux-raw-sys v0.3.8
+   Compiling is_ci v1.1.1
+   Compiling object v0.36.0
+   Compiling owo-colors v3.5.0
+   Compiling smallvec v1.13.2
+   Compiling quote v1.0.37
+   Compiling syn v2.0.87
+   Compiling biome_diagnostics_categories v0.5.7 (/workspace/repo/crates/biome_diagnostics_categories)
+   Compiling stable_deref_trait v1.2.0
+   Compiling prettyplease v0.2.25
+   Compiling aho-corasick v1.1.2
+   Compiling regex-syntax v0.8.5
+   Compiling writeable v0.5.5
+   Compiling litemap v0.7.3
+   Compiling num-traits v0.2.19
+   Compiling ident_case v1.0.1
+   Compiling fnv v1.0.7
+   Compiling strsim v0.10.0
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling addr2line v0.24.1
+   Compiling slab v0.4.8
+   Compiling icu_properties_data v1.5.0
+   Compiling futures-sink v0.3.31
+   Compiling futures-core v0.3.31
+   Compiling crossbeam-epoch v0.9.18
+   Compiling utf16_iter v1.0.5
+   Compiling utf8_iter v1.0.4
+   Compiling icu_normalizer_data v1.5.0
+   Compiling write16 v1.0.0
+   Compiling futures-channel v0.3.31
+   Compiling dashmap v6.1.0
+   Compiling getrandom v0.2.15
+   Compiling minimal-lexical v0.2.1
+   Compiling futures-task v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling crossbeam-deque v0.8.5
+   Compiling radium v0.7.0
+   Compiling either v1.13.0
+   Compiling futures-io v0.3.31
+   Compiling rand_core v0.6.4
+   Compiling bstr v1.8.0
+   Compiling byteorder v1.5.0
+   Compiling nom v7.1.3
+   Compiling rayon-core v1.12.1
+   Compiling natord v1.0.9
+   Compiling ppv-lite86 v0.2.17
+   Compiling lazy_static v1.5.0
+   Compiling tap v1.0.1
+   Compiling is-terminal v0.4.7
+   Compiling percent-encoding v2.3.1
+   Compiling bytecount v0.6.7
+   Compiling supports-color v2.1.0
+   Compiling wyz v0.5.1
+   Compiling socket2 v0.5.6
+   Compiling form_urlencoded v1.2.1
+   Compiling rust-lapper v1.1.0
+   Compiling signal-hook-registry v1.4.1
+   Compiling regex-automata v0.4.8
+   Compiling rand_chacha v0.3.1
+   Compiling mio v1.0.1
+   Compiling crossbeam-channel v0.5.11
+   Compiling bytes v1.4.0
+   Compiling option-ext v0.2.0
+   Compiling async-trait v0.1.66
+   Compiling regex-syntax v0.6.28
+   Compiling httparse v1.8.0
+   Compiling bytemuck v1.16.1
+   Compiling backtrace v0.3.74
+   Compiling funty v2.0.0
+   Compiling roaring v0.10.6
+   Compiling rand v0.8.5
+   Compiling dirs-sys v0.4.1
+   Compiling itertools v0.10.5
+   Compiling elsa v1.10.0
+   Compiling crossbeam-queue v0.3.11
+   Compiling slotmap v1.0.7
+   Compiling bitvec v1.0.1
+   Compiling darling_core v0.14.4
+   Compiling serde_derive_internals v0.29.0
+   Compiling synstructure v0.13.1
+   Compiling path-dedot v3.1.1
+   Compiling same-file v1.0.6
+   Compiling overload v0.1.1
+   Compiling tower-layer v0.3.2
+   Compiling cc v1.0.98
+   Compiling anyhow v1.0.93
+   Compiling tower-service v0.3.2
+   Compiling walkdir v2.5.0
+   Compiling nu-ansi-term v0.46.0
+   Compiling path-absolutize v3.1.1
+   Compiling regex-automata v0.1.10
+   Compiling rayon v1.10.0
+   Compiling regex v1.11.1
+   Compiling globset v0.4.15
+   Compiling crossbeam v0.8.4
+   Compiling directories v5.0.1
+   Compiling sharded-slab v0.1.4
+   Compiling vte_generate_state_changes v0.1.1
+   Compiling tracing-log v0.2.0
+   Compiling thread_local v1.1.7
+   Compiling matchers v0.1.0
+   Compiling newtype-uuid v1.1.3
+   Compiling utf8parse v0.2.1
+   Compiling thiserror v2.0.3
+   Compiling powerfmt v0.2.0
+   Compiling ignore v0.4.23
+   Compiling tikv-jemalloc-sys v0.6.0+5.3.0-1-ge13ca993e8ccb9ba9847cc330696e02839f328f7
+   Compiling deranged v0.3.11
+   Compiling num-conv v0.1.0
+   Compiling biome_markup v0.5.7 (/workspace/repo/crates/biome_markup)
+   Compiling biome_diagnostics_macros v0.5.7 (/workspace/repo/crates/biome_diagnostics_macros)
+   Compiling biome_deserialize_macros v0.6.0 (/workspace/repo/crates/biome_deserialize_macros)
+   Compiling pin-project-internal v1.0.12
+   Compiling serde_repr v0.1.11
+   Compiling serde_derive v1.0.215
+   Compiling schemars_derive v0.8.21
+   Compiling tracing-attributes v0.1.27
+   Compiling thiserror-impl v1.0.63
+   Compiling enumflags2_derive v0.7.10
+   Compiling bpaf_derive v0.5.13
+   Compiling zerofrom-derive v0.1.4
+   Compiling yoke-derive v0.7.4
+   Compiling zerovec-derive v0.10.3
+   Compiling displaydoc v0.2.5
+   Compiling icu_provider_macros v1.5.0
+   Compiling darling_macro v0.14.4
+   Compiling futures-macro v0.3.31
+   Compiling miette-derive v5.10.0
+   Compiling enumflags2 v0.7.10
+   Compiling tokio-macros v2.4.0
+   Compiling tower-lsp-macros v0.9.0
+   Compiling auto_impl v1.0.1
+   Compiling pin-project v1.0.12
+   Compiling thiserror-impl v2.0.3
+   Compiling bpaf v0.9.15
+   Compiling vte v0.11.1
+   Compiling uuid v1.10.0
+   Compiling time-core v0.1.2
+   Compiling chrono v0.4.38
+   Compiling time v0.3.36
+   Compiling tracing v0.1.40
+   Compiling zerofrom v0.1.4
+   Compiling futures-util v0.3.31
+   Compiling quick-xml v0.37.1
+   Compiling nu-ansi-term v0.50.0
+   Compiling yoke v0.7.4
+   Compiling darling v0.14.4
+   Compiling strip-ansi-escapes v0.2.0
+   Compiling hdrhistogram v7.5.4
+   Compiling derive_builder_core v0.13.1
+   Compiling zerovec v0.10.4
+   Compiling console v0.15.5
+   Compiling miette v5.10.0
+   Compiling linked-hash-map v0.5.6
+   Compiling tokio v1.41.1
+   Compiling insta v1.41.1
+   Compiling derive_builder_macro v0.13.1
+   Compiling tinystr v0.7.6
+   Compiling icu_collections v1.5.0
+   Compiling icu_locid v1.5.0
+   Compiling icu_provider v1.5.0
+   Compiling futures-executor v0.3.31
+   Compiling tower v0.4.13
+   Compiling icu_locid_transform v1.5.0
+   Compiling futures v0.3.31
+   Compiling derive_builder v0.13.1
+   Compiling indexmap v2.6.0
+   Compiling serde_ini v0.2.0
+   Compiling node-semver v2.1.0
+   Compiling grit-util v0.5.0
+   Compiling tracing-serde v0.1.3
+   Compiling icu_properties v1.5.1
+   Compiling dashmap v5.5.3
+   Compiling parking_lot v0.12.3
+   Compiling grit-pattern-matcher v0.5.0
+   Compiling quick-junit v0.5.1
+   Compiling tokio-util v0.7.2
+   Compiling oxc_resolver v1.12.0
+   Compiling tracing-subscriber v0.3.18
+   Compiling icu_normalizer v1.5.0
+   Compiling biome_text_size v0.5.7 (/workspace/repo/crates/biome_text_size)
+   Compiling biome_text_edit v0.5.7 (/workspace/repo/crates/biome_text_edit)
+   Compiling biome_console v0.5.7 (/workspace/repo/crates/biome_console)
+   Compiling idna_adapter v1.2.0
+   Compiling idna v1.0.3
+   Compiling biome_rowan v0.5.7 (/workspace/repo/crates/biome_rowan)
+   Compiling tracing-tree v0.4.0
+   Compiling tracing-appender v0.2.3
+   Compiling url v2.5.3
+   Compiling biome_flags v0.0.0 (/workspace/repo/crates/biome_flags)
+   Compiling lsp-types v0.94.1
+   Compiling biome_diagnostics v0.5.7 (/workspace/repo/crates/biome_diagnostics)
+   Compiling biome_json_syntax v0.5.7 (/workspace/repo/crates/biome_json_syntax)
+   Compiling biome_css_syntax v0.5.7 (/workspace/repo/crates/biome_css_syntax)
+   Compiling biome_graphql_syntax v0.1.0 (/workspace/repo/crates/biome_graphql_syntax)
+   Compiling biome_html_syntax v0.5.7 (/workspace/repo/crates/biome_html_syntax)
+   Compiling biome_grit_syntax v0.5.7 (/workspace/repo/crates/biome_grit_syntax)
+   Compiling biome_control_flow v0.5.7 (/workspace/repo/crates/biome_control_flow)
+   Compiling biome_json_factory v0.5.7 (/workspace/repo/crates/biome_json_factory)
+   Compiling biome_html_factory v0.5.7 (/workspace/repo/crates/biome_html_factory)
+   Compiling biome_parser v0.5.7 (/workspace/repo/crates/biome_parser)
+   Compiling biome_suppression v0.5.7 (/workspace/repo/crates/biome_suppression)
+   Compiling biome_fs v0.5.7 (/workspace/repo/crates/biome_fs)
+   Compiling biome_graphql_factory v0.1.0 (/workspace/repo/crates/biome_graphql_factory)
+   Compiling biome_json_parser v0.5.7 (/workspace/repo/crates/biome_json_parser)
+   Compiling biome_deserialize v0.6.0 (/workspace/repo/crates/biome_deserialize)
+   Compiling biome_grit_factory v0.5.7 (/workspace/repo/crates/biome_grit_factory)
+   Compiling biome_html_parser v0.0.1 (/workspace/repo/crates/biome_html_parser)
+   Compiling biome_graphql_parser v0.1.0 (/workspace/repo/crates/biome_graphql_parser)
+   Compiling biome_grit_parser v0.1.0 (/workspace/repo/crates/biome_grit_parser)
+   Compiling biome_aria_metadata v0.5.7 (/workspace/repo/crates/biome_aria_metadata)
+   Compiling biome_formatter v0.5.7 (/workspace/repo/crates/biome_formatter)
+   Compiling biome_analyze v0.5.7 (/workspace/repo/crates/biome_analyze)
+   Compiling biome_project v0.5.7 (/workspace/repo/crates/biome_project)
+   Compiling biome_css_factory v0.5.7 (/workspace/repo/crates/biome_css_factory)
+   Compiling biome_css_semantic v0.0.0 (/workspace/repo/crates/biome_css_semantic)
+   Compiling biome_css_parser v0.5.7 (/workspace/repo/crates/biome_css_parser)
+   Compiling biome_json_analyze v0.5.7 (/workspace/repo/crates/biome_json_analyze)
+   Compiling biome_graphql_analyze v0.0.1 (/workspace/repo/crates/biome_graphql_analyze)
+   Compiling biome_css_analyze v0.5.7 (/workspace/repo/crates/biome_css_analyze)
+   Compiling biome_json_formatter v0.5.7 (/workspace/repo/crates/biome_json_formatter)
+   Compiling biome_css_formatter v0.5.7 (/workspace/repo/crates/biome_css_formatter)
+   Compiling biome_graphql_formatter v0.1.0 (/workspace/repo/crates/biome_graphql_formatter)
+   Compiling biome_html_formatter v0.0.0 (/workspace/repo/crates/biome_html_formatter)
+   Compiling biome_grit_formatter v0.0.0 (/workspace/repo/crates/biome_grit_formatter)
+   Compiling biome_migrate v0.0.0 (/workspace/repo/crates/biome_migrate)
+   Compiling tower-lsp v0.20.0
+   Compiling biome_aria v0.5.7 (/workspace/repo/crates/biome_aria)
+   Compiling biome_js_syntax v0.5.7 (/workspace/repo/crates/biome_js_syntax)
+   Compiling biome_lsp_converters v0.1.0 (/workspace/repo/crates/biome_lsp_converters)
+   Compiling biome_js_factory v0.5.7 (/workspace/repo/crates/biome_js_factory)
+   Compiling biome_js_semantic v0.5.7 (/workspace/repo/crates/biome_js_semantic)
+   Compiling biome_js_formatter v0.5.7 (/workspace/repo/crates/biome_js_formatter)
+   Compiling biome_js_parser v0.5.7 (/workspace/repo/crates/biome_js_parser)
+   Compiling biome_js_analyze v0.5.7 (/workspace/repo/crates/biome_js_analyze)
+   Compiling biome_grit_patterns v0.0.1 (/workspace/repo/crates/biome_grit_patterns)
+   Compiling biome_configuration v0.0.1 (/workspace/repo/crates/biome_configuration)
+   Compiling biome_service v0.0.0 (/workspace/repo/crates/biome_service)
+   Compiling tikv-jemallocator v0.6.0
+   Compiling biome_lsp v0.0.0 (/workspace/repo/crates/biome_lsp)
+   Compiling biome_cli v0.0.0 (/workspace/repo/crates/biome_cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 41s
+────────────
+ Nextest run ID 9e0c9fea-896d-452c-be53-04941211219e with nextest profile: default
+    Starting 568 tests across 5 binaries (3 tests skipped)
+        PASS [   0.090s] (  1/568) biome_cli execute::migrate::eslint::tests::eslint_package_resolve_name
+        PASS [   0.092s] (  2/568) biome_cli commands::tests::safe_fixes
+        PASS [   0.093s] (  3/568) biome_cli commands::tests::incompatible_arguments
+        PASS [   0.092s] (  4/568) biome_cli execute::migrate::ignorefile::tests::empty
+        PASS [   0.093s] (  5/568) biome_cli diagnostics::test::termination_diagnostic_size
+        PASS [   0.095s] (  6/568) biome_cli commands::tests::no_fix
+        PASS [   0.094s] (  7/568) biome_cli execute::migrate::ignorefile::tests::negated_pattern
+        PASS [   0.096s] (  8/568) biome_cli commands::tests::safe_and_unsafe_fixes
+        PASS [   0.096s] (  9/568) biome_cli execute::migrate::ignorefile::tests::relative_patterns
+        PASS [   0.096s] ( 10/568) biome_cli execute::migrate::ignorefile::tests::take_leading_spaces_into_account
+        PASS [   0.096s] ( 11/568) biome_cli execute::migrate::ignorefile::tests::comments_and_empty_lines
+        PASS [   0.101s] ( 12/568) biome_cli execute::migrate::eslint_to_biome::tests::flat_config_multiple_config_object
+        PASS [   0.101s] ( 13/568) biome_cli execute::migrate::ignorefile::tests::relative_patterns_starting_with_root_slash
+        PASS [   0.102s] ( 14/568) biome_cli execute::migrate::eslint_to_biome::tests::flat_config_single_config_object
+        PASS [   0.104s] ( 15/568) biome_cli execute::migrate::ignorefile::tests::non_relative_patterns
+        PASS [   0.108s] ( 16/568) biome_cli execute::migrate::prettier::tests::some_properties
+        PASS [   0.110s] ( 17/568) biome_cli execute::migrate::prettier::tests::ok
+        PASS [   0.085s] ( 18/568) biome_cli metrics::tests::test_timing
+        PASS [   0.106s] ( 19/568) biome_cli metrics::tests::test_layer
+        PASS [   0.737s] ( 20/568) biome_cli commands::tests::check_options
+        PASS [   0.766s] ( 21/568) biome_cli::main cases::config_extends::extends_should_raise_an_error_for_unresolved_configuration_and_show_verbose
+        PASS [   0.835s] ( 22/568) biome_cli::main cases::config_extends::extends_should_raise_an_error_for_unresolved_configuration
+        PASS [   0.896s] ( 23/568) biome_cli::main cases::assist::assist_writes
+        PASS [   0.951s] ( 24/568) biome_cli::main cases::biome_json_support::always_disable_trailing_commas_biome_json
+        PASS [   0.978s] ( 25/568) biome_cli::main cases::config_extends::extends_config_ok_formatter_no_linter
+        PASS [   0.999s] ( 26/568) biome_cli::main cases::biome_json_support::ci_biome_json
+        PASS [   1.002s] ( 27/568) biome_cli::main cases::biome_json_support::formatter_biome_json
+        PASS [   1.006s] ( 28/568) biome_cli::main cases::assist::assist_emit_diagnostic
+        PASS [   1.008s] ( 29/568) biome_cli::main cases::biome_json_support::linter_biome_json
+        PASS [   1.010s] ( 30/568) biome_cli::main cases::config_extends::allows_reverting_fields_in_extended_config_to_default
+        PASS [   1.023s] ( 31/568) biome_cli::main cases::config_extends::extends_config_ok_linter_not_formatter
+        PASS [   1.033s] ( 32/568) biome_cli::main cases::config_extends::applies_extended_values_in_current_config
+        PASS [   1.040s] ( 33/568) biome_cli::main cases::config_extends::extends_config_merge_overrides
+        PASS [   1.048s] ( 34/568) biome_cli::main cases::biome_json_support::biome_json_is_not_ignored
+        PASS [   1.050s] ( 35/568) biome_cli::main cases::biome_json_support::check_biome_json
+        PASS [   0.954s] ( 36/568) biome_cli::main cases::config_extends::respects_unaffected_values_from_extended_config
+        PASS [   1.073s] ( 37/568) biome_cli::main cases::config_extends::extends_resolves_when_using_config_path
+        PASS [   1.003s] ( 38/568) biome_cli::main cases::config_path::set_config_path_to_directory
+        PASS [   0.923s] ( 39/568) biome_cli::main cases::config_path::set_config_path_to_file
+        PASS [   0.921s] ( 40/568) biome_cli::main cases::diagnostics::diagnostic_level
+        PASS [   1.030s] ( 41/568) biome_cli::main cases::cts_files::should_allow_using_export_statements
+        PASS [   0.945s] ( 42/568) biome_cli::main cases::diagnostics::logs_the_appropriate_messages_according_to_set_diagnostics_level
+        PASS [   0.910s] ( 43/568) biome_cli::main cases::editorconfig::should_emit_diagnostics
+        PASS [   0.908s] ( 44/568) biome_cli::main cases::editorconfig::should_use_editorconfig
+        PASS [   0.961s] ( 45/568) biome_cli::main cases::editorconfig::should_have_biome_override_editorconfig
+        PASS [   0.985s] ( 46/568) biome_cli::main cases::editorconfig::should_apply_path_overrides
+        PASS [   0.981s] ( 47/568) biome_cli::main cases::editorconfig::should_use_editorconfig_ci
+        PASS [   1.006s] ( 48/568) biome_cli::main cases::editorconfig::should_use_editorconfig_check
+        PASS [   1.007s] ( 49/568) biome_cli::main cases::editorconfig::should_use_editorconfig_check_enabled_from_biome_conf
+        PASS [   0.981s] ( 50/568) biome_cli::main cases::editorconfig::should_use_editorconfig_enabled_from_biome_conf
+        PASS [   1.080s] ( 51/568) biome_cli::main cases::diagnostics::max_diagnostics_verbose
+        PASS [   1.087s] ( 52/568) biome_cli::main cases::diagnostics::max_diagnostics_no_verbose
+        PASS [   1.086s] ( 53/568) biome_cli::main cases::editorconfig::should_have_cli_override_editorconfig
+        PASS [   1.096s] ( 54/568) biome_cli::main cases::editorconfig::should_use_editorconfig_ci_enabled_from_biome_conf
+        PASS [   0.764s] ( 55/568) biome_cli::main cases::graphql::format_and_write_graphql_files
+        PASS [   0.826s] ( 56/568) biome_cli::main cases::graphql::format_graphql_files
+        PASS [   0.826s] ( 57/568) biome_cli::main cases::graphql::lint_single_rule
+        PASS [   0.829s] ( 58/568) biome_cli::main cases::handle_astro_files::check_stdin_successfully
+        PASS [   0.945s] ( 59/568) biome_cli::main cases::handle_astro_files::astro_global_object
+        PASS [   0.933s] ( 60/568) biome_cli::main cases::handle_astro_files::check_stdin_write_successfully
+        PASS [   0.911s] ( 61/568) biome_cli::main cases::handle_astro_files::check_stdin_write_unsafe_successfully
+        PASS [   0.929s] ( 62/568) biome_cli::main cases::handle_astro_files::does_not_throw_parse_error_for_return
+        PASS [   0.764s] ( 63/568) biome_cli::main cases::handle_astro_files::lint_stdin_successfully
+        PASS [   0.850s] ( 64/568) biome_cli::main cases::handle_astro_files::format_stdin_successfully
+        PASS [   0.875s] ( 65/568) biome_cli::main cases::handle_astro_files::format_astro_files_write
+        PASS [   0.962s] ( 66/568) biome_cli::main cases::handle_astro_files::format_astro_carriage_return_line_feed_files
+        PASS [   0.898s] ( 67/568) biome_cli::main cases::handle_astro_files::format_empty_astro_files_write
+        PASS [   0.885s] ( 68/568) biome_cli::main cases::handle_astro_files::format_stdin_write_successfully
+        PASS [   0.963s] ( 69/568) biome_cli::main cases::handle_astro_files::format_astro_files
+        PASS [   0.937s] ( 70/568) biome_cli::main cases::handle_astro_files::lint_and_fix_astro_files
+        PASS [   0.906s] ( 71/568) biome_cli::main cases::handle_astro_files::lint_astro_files
+        PASS [   0.934s] ( 72/568) biome_cli::main cases::handle_astro_files::lint_stdin_write_successfully
+        PASS [   0.885s] ( 73/568) biome_cli::main cases::handle_astro_files::lint_stdin_write_unsafe_successfully
+        PASS [   0.884s] ( 74/568) biome_cli::main cases::handle_astro_files::sorts_imports_check
+        PASS [   0.900s] ( 75/568) biome_cli::main cases::handle_astro_files::sorts_imports_write
+        PASS [   0.806s] ( 76/568) biome_cli::main cases::handle_css_files::should_format_files_by_when_opt_in
+        PASS [   0.853s] ( 77/568) biome_cli::main cases::handle_css_files::should_format_write_files_by_when_opt_in
+        PASS [   0.877s] ( 78/568) biome_cli::main cases::handle_css_files::should_not_format_files_by_default
+        PASS [   0.865s] ( 79/568) biome_cli::main cases::handle_svelte_files::check_stdin_successfully
+        PASS [   0.927s] ( 80/568) biome_cli::main cases::handle_css_files::should_lint_files_by_when_enabled
+        PASS [   0.883s] ( 81/568) biome_cli::main cases::handle_css_files::should_not_lint_files_by_default
+        PASS [   0.888s] ( 82/568) biome_cli::main cases::handle_svelte_files::format_stdin_successfully
+        PASS [   0.873s] ( 83/568) biome_cli::main cases::handle_svelte_files::format_stdin_write_successfully
+        PASS [   0.904s] ( 84/568) biome_cli::main cases::handle_svelte_files::format_svelte_carriage_return_line_feed_files
+        PASS [   0.973s] ( 85/568) biome_cli::main cases::handle_svelte_files::check_stdin_write_successfully
+        PASS [   0.899s] ( 86/568) biome_cli::main cases::handle_svelte_files::format_svelte_ts_context_module_files_write
+        PASS [   0.945s] ( 87/568) biome_cli::main cases::handle_svelte_files::format_svelte_ts_context_module_files
+        PASS [   1.022s] ( 88/568) biome_cli::main cases::handle_svelte_files::check_stdin_write_unsafe_successfully
+        PASS [   0.743s] ( 89/568) biome_cli::main cases::handle_svelte_files::lint_stdin_successfully
+        PASS [   0.855s] ( 90/568) biome_cli::main cases::handle_svelte_files::lint_stdin_write_successfully
+        PASS [   0.915s] ( 91/568) biome_cli::main cases::handle_svelte_files::lint_stdin_write_unsafe_successfully
+        PASS [   0.858s] ( 92/568) biome_cli::main cases::handle_svelte_files::sorts_imports_check
+        PASS [   0.789s] ( 93/568) biome_cli::main cases::handle_vue_files::check_stdin_successfully
+        PASS [   0.887s] ( 94/568) biome_cli::main cases::handle_svelte_files::sorts_imports_write
+        PASS [   0.836s] ( 95/568) biome_cli::main cases::handle_vue_files::format_empty_vue_js_files_write
+        PASS [   0.848s] ( 96/568) biome_cli::main cases::handle_vue_files::format_empty_vue_ts_files_write
+        PASS [   0.845s] ( 97/568) biome_cli::main cases::handle_vue_files::format_stdin_write_successfully
+        PASS [   0.877s] ( 98/568) biome_cli::main cases::handle_vue_files::format_stdin_successfully
+        PASS [   0.945s] ( 99/568) biome_cli::main cases::handle_vue_files::check_stdin_write_unsafe_successfully
+        PASS [   0.974s] (100/568) biome_cli::main cases::handle_vue_files::check_stdin_write_successfully
+        PASS [   0.886s] (101/568) biome_cli::main cases::handle_vue_files::format_vue_carriage_return_line_feed_files
+        PASS [   0.921s] (102/568) biome_cli::main cases::handle_vue_files::format_vue_explicit_js_files
+        PASS [   0.860s] (103/568) biome_cli::main cases::handle_vue_files::format_vue_generic_component_files
+        PASS [   0.892s] (104/568) biome_cli::main cases::handle_vue_files::format_vue_implicit_js_files
+        PASS [   0.941s] (105/568) biome_cli::main cases::handle_vue_files::format_vue_explicit_js_files_write
+        PASS [   0.880s] (106/568) biome_cli::main cases::handle_vue_files::format_vue_implicit_js_files_write
+        PASS [   0.733s] (107/568) biome_cli::main cases::handle_vue_files::lint_stdin_successfully
+        PASS [   0.910s] (108/568) biome_cli::main cases::handle_vue_files::format_vue_ts_files
+        PASS [   0.879s] (109/568) biome_cli::main cases::handle_vue_files::format_vue_ts_files_write
+        PASS [   0.898s] (110/568) biome_cli::main cases::handle_vue_files::lint_stdin_write_successfully
+        PASS [   0.926s] (111/568) biome_cli::main cases::handle_vue_files::lint_stdin_write_unsafe_successfully
+        PASS [   0.913s] (112/568) biome_cli::main cases::handle_vue_files::lint_vue_js_files
+        PASS [   0.931s] (113/568) biome_cli::main cases::handle_vue_files::lint_vue_ts_files
+        PASS [   0.910s] (114/568) biome_cli::main cases::handle_vue_files::sorts_imports_check
+        PASS [   0.925s] (115/568) biome_cli::main cases::handle_vue_files::sorts_imports_write
+        PASS [   0.931s] (116/568) biome_cli::main cases::included_files::does_handle_only_included_files
+        PASS [   0.960s] (117/568) biome_cli::main cases::handle_vue_files::vue_compiler_macros_as_globals
+        PASS [   0.911s] (118/568) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_ignore
+        PASS [   0.901s] (119/568) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_ignore_formatter
+        PASS [   0.859s] (120/568) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_organize_imports
+        PASS [   0.951s] (121/568) biome_cli::main cases::overrides_formatter::allow_trailing_commas_on_well_known_files
+        PASS [   0.992s] (122/568) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_ignore_linter
+        PASS [   0.865s] (123/568) biome_cli::main cases::overrides_formatter::complex_enable_disable_overrides
+        PASS [   0.913s] (124/568) biome_cli::main cases::overrides_formatter::disallow_comments_on_well_known_files
+        PASS [   0.913s] (125/568) biome_cli::main cases::overrides_formatter::does_handle_included_file_and_disable_formatter
+        PASS [   0.915s] (126/568) biome_cli::main cases::overrides_formatter::does_include_file_with_different_formatting
+        PASS [   0.924s] (127/568) biome_cli::main cases::overrides_formatter::does_include_file_with_different_formatting_and_all_of_them
+        PASS [   0.944s] (128/568) biome_cli::main cases::overrides_formatter::does_include_file_with_different_languages
+        PASS [   0.902s] (129/568) biome_cli::main cases::overrides_formatter::does_include_file_with_different_overrides
+        PASS [   0.920s] (130/568) biome_cli::main cases::overrides_formatter::does_not_change_formatting_language_settings
+        PASS [   0.908s] (131/568) biome_cli::main cases::overrides_formatter::does_not_change_formatting_language_settings_2
+        PASS [   0.935s] (132/568) biome_cli::main cases::overrides_formatter::does_not_override_well_known_special_files_when_config_override_is_present
+        PASS [   0.984s] (133/568) biome_cli::main cases::overrides_formatter::does_not_change_formatting_settings
+        PASS [   0.935s] (134/568) biome_cli::main cases::overrides_formatter::takes_last_formatter_enabled_into_account
+        PASS [   0.950s] (135/568) biome_cli::main cases::overrides_formatter::does_not_conceal_previous_overrides
+        PASS [   0.962s] (136/568) biome_cli::main cases::overrides_linter::does_include_file_with_different_linting_and_applies_all_of_them
+        PASS [   0.982s] (137/568) biome_cli::main cases::overrides_linter::does_handle_included_file_and_disable_linter
+        PASS [   0.971s] (138/568) biome_cli::main cases::overrides_linter::does_include_file_with_different_overrides
+        PASS [   0.989s] (139/568) biome_cli::main cases::overrides_linter::does_include_file_with_different_rules
+        PASS [   0.980s] (140/568) biome_cli::main cases::overrides_linter::does_merge_all_overrides
+        PASS [   0.919s] (141/568) biome_cli::main cases::overrides_linter::does_not_change_linting_settings
+        PASS [   0.952s] (142/568) biome_cli::main cases::overrides_linter::does_not_conceal_overrides_globals
+        PASS [   0.953s] (143/568) biome_cli::main cases::overrides_linter::does_override_groupe_recommended
+        PASS [   0.915s] (144/568) biome_cli::main cases::overrides_linter::does_override_recommended
+        PASS [   1.008s] (145/568) biome_cli::main cases::overrides_linter::does_override_the_rules
+        PASS [   6.427s] (146/568) biome_cli::main cases::diagnostics::max_diagnostics_are_lifted
+        PASS [   0.975s] (147/568) biome_cli::main cases::overrides_linter::does_preserve_group_recommended_when_override_global_recommened
+        PASS [   0.938s] (148/568) biome_cli::main cases::overrides_linter::takes_last_linter_enabled_into_account
+        PASS [   0.826s] (149/568) biome_cli::main cases::protected_files::not_process_file_from_cli_verbose
+        PASS [   0.839s] (150/568) biome_cli::main cases::protected_files::not_process_file_from_cli
+        PASS [   0.779s] (151/568) biome_cli::main cases::protected_files::not_process_file_from_stdin_lint
+        PASS [   0.844s] (152/568) biome_cli::main cases::protected_files::not_process_file_from_stdin_format
+        PASS [   0.800s] (153/568) biome_cli::main cases::protected_files::not_process_file_from_stdin_verbose_format
+        PASS [   1.035s] (154/568) biome_cli::main cases::overrides_linter::does_preserve_individually_diabled_rules_in_overrides
+        PASS [   0.763s] (155/568) biome_cli::main cases::protected_files::not_process_file_from_stdin_verbose_lint
+        PASS [   0.938s] (156/568) biome_cli::main cases::overrides_organize_imports::does_handle_included_file_and_disable_organize_imports
+        PASS [   0.841s] (157/568) biome_cli::main cases::protected_files::not_process_ignored_file_from_cli_verbose
+        PASS [   0.886s] (158/568) biome_cli::main cases::protected_files::not_process_file_linter_disabled_from_cli_verbose
+        PASS [   0.760s] (159/568) biome_cli::main cases::protected_files::should_return_the_content_of_protected_files_via_stdin
+        PASS [   1.031s] (160/568) biome_cli::main cases::reporter_github::reports_diagnostics_github_check_command
+        PASS [   0.917s] (161/568) biome_cli::main cases::reporter_github::reports_diagnostics_github_format_command
+        PASS [   1.066s] (162/568) biome_cli::main cases::reporter_github::reports_diagnostics_github_ci_command
+        PASS [   0.855s] (163/568) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_format_command
+        PASS [   0.906s] (164/568) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_format_command
+        PASS [   0.947s] (165/568) biome_cli::main cases::reporter_github::reports_diagnostics_github_lint_command
+        PASS [   0.939s] (166/568) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_lint_command
+        PASS [   0.983s] (167/568) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_check_command
+        PASS [   1.064s] (168/568) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_ci_command
+        PASS [   1.019s] (169/568) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_lint_command
+        PASS [   0.920s] (170/568) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_format_command
+        PASS [   1.073s] (171/568) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_check_command
+        PASS [   1.022s] (172/568) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_ci_command
+        PASS [   0.715s] (173/568) biome_cli::main cases::suppressions::err_when_both_write_and_suppress_are_passed
+        PASS [   1.080s] (174/568) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_check_command
+        PASS [   0.921s] (175/568) biome_cli::main cases::suppressions::custom_explanation_with_reason
+        PASS [   1.088s] (176/568) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_ci_command
+        PASS [   0.999s] (177/568) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_lint_command
+        PASS [   0.492s] (178/568) biome_cli::main cases::suppressions::ok
+        PASS [   0.706s] (179/568) biome_cli::main cases::suppressions::err_when_only_reason
+        PASS [   0.911s] (180/568) biome_cli::main cases::suppressions::misplaced_top_level_suppression
+        PASS [   0.869s] (181/568) biome_cli::main cases::suppressions::suppress_only_ok
+        PASS [   0.921s] (182/568) biome_cli::main cases::suppressions::suppress_multiple_ok
+        PASS [   0.931s] (183/568) biome_cli::main cases::suppressions::suppress_ok
+        PASS [   0.899s] (184/568) biome_cli::main cases::suppressions::unused_range_suppression
+        PASS [   0.895s] (185/568) biome_cli::main cases::suppressions::unused_suppression_after_top_level
+        PASS [   0.896s] (186/568) biome_cli::main cases::unknown_files::should_not_print_a_diagnostic_unknown_file_because_ignored
+        PASS [   0.943s] (187/568) biome_cli::main cases::suppressions::suppress_skip_ok
+        PASS [   0.915s] (188/568) biome_cli::main cases::unknown_files::should_print_a_diagnostic_unknown_file
+        PASS [   0.891s] (189/568) biome_cli::main commands::check::applies_organize_imports_from_cli
+        PASS [   0.945s] (190/568) biome_cli::main commands::check::all_rules
+        PASS [   0.962s] (191/568) biome_cli::main commands::check::applies_organize_imports
+        PASS [   0.923s] (192/568) biome_cli::main commands::check::apply_bogus_argument
+        PASS [   0.920s] (193/568) biome_cli::main commands::check::apply_noop
+        PASS [   0.928s] (194/568) biome_cli::main commands::check::apply_ok
+        PASS [   0.932s] (195/568) biome_cli::main commands::check::apply_suggested
+        PASS [   0.934s] (196/568) biome_cli::main commands::check::apply_suggested_error
+        PASS [   0.700s] (197/568) biome_cli::main commands::check::check_help
+        PASS [   0.971s] (198/568) biome_cli::main commands::check::apply_unsafe_with_error
+        PASS [   0.736s] (199/568) biome_cli::main commands::check::check_stdin_returns_content_when_not_write
+        PASS [   0.863s] (200/568) biome_cli::main commands::check::check_json_files
+        PASS [   0.722s] (201/568) biome_cli::main commands::check::doesnt_error_if_no_files_were_processed
+        PASS [   0.870s] (202/568) biome_cli::main commands::check::check_stdin_returns_text_if_content_is_not_changed
+        PASS [   0.796s] (203/568) biome_cli::main commands::check::check_stdin_write_unsafe_only_organize_imports
+        PASS [   0.877s] (204/568) biome_cli::main commands::check::check_stdin_write_successfully
+        PASS [   0.721s] (205/568) biome_cli::main commands::check::file_too_large
+        PASS [   0.895s] (206/568) biome_cli::main commands::check::config_recommended_group
+        PASS [   0.710s] (207/568) biome_cli::main commands::check::files_max_size_parse_error
+        PASS [   0.936s] (208/568) biome_cli::main commands::check::check_stdin_write_unsafe_successfully
+        PASS [   0.798s] (209/568) biome_cli::main commands::check::file_too_large_cli_limit
+        PASS [   0.915s] (210/568) biome_cli::main commands::check::downgrade_severity
+        PASS [   0.975s] (211/568) biome_cli::main commands::check::does_error_with_only_warnings
+        PASS [   0.828s] (212/568) biome_cli::main commands::check::file_too_large_config_limit
+        PASS [   0.968s] (213/568) biome_cli::main commands::check::dont_applies_organize_imports_for_ignored_file
+        PASS [   0.373s] (214/568) biome_cli::main commands::check::fs_error_infinite_symlink_expansion_to_files
+        PASS [   0.719s] (215/568) biome_cli::main commands::check::fix_suggested_error
+        PASS [   0.913s] (216/568) biome_cli::main commands::check::fix_noop
+        PASS [   0.990s] (217/568) biome_cli::main commands::check::fix_ok
+        PASS [   0.786s] (218/568) biome_cli::main commands::check::fs_error_dereferenced_symlink
+        PASS [   0.808s] (219/568) biome_cli::main commands::check::fs_error_infinite_symlink_expansion_to_dirs
+        PASS [   1.007s] (220/568) biome_cli::main commands::check::fix_unsafe_ok
+        PASS [   0.794s] (221/568) biome_cli::main commands::check::fs_error_read_only
+        PASS [   0.791s] (222/568) biome_cli::main commands::check::fs_error_unknown
+        PASS [   1.030s] (223/568) biome_cli::main commands::check::fix_unsafe_with_error
+        PASS [   0.792s] (224/568) biome_cli::main commands::check::ignores_file_inside_directory
+        PASS [   0.936s] (225/568) biome_cli::main commands::check::ignore_configured_globals
+        PASS [   0.975s] (226/568) biome_cli::main commands::check::fs_files_ignore_symlink
+        PASS [   0.951s] (227/568) biome_cli::main commands::check::ignore_vcs_os_independent_parse
+        PASS [   0.932s] (228/568) biome_cli::main commands::check::ignores_unknown_file
+        PASS [   0.997s] (229/568) biome_cli::main commands::check::ignore_vcs_ignored_file_via_cli
+        PASS [   0.935s] (230/568) biome_cli::main commands::check::lint_error
+        PASS [   1.033s] (231/568) biome_cli::main commands::check::ignore_vcs_ignored_file
+        PASS [   0.880s] (232/568) biome_cli::main commands::check::max_diagnostics
+        PASS [   0.948s] (233/568) biome_cli::main commands::check::lint_error_without_file_paths
+        PASS [   0.475s] (234/568) biome_cli::main commands::check::ok
+        PASS [   0.482s] (235/568) biome_cli::main commands::check::ok_read_only
+        PASS [   0.999s] (236/568) biome_cli::main commands::check::maximum_diagnostics
+        PASS [   0.847s] (237/568) biome_cli::main commands::check::no_lint_if_linter_is_disabled
+        PASS [   0.889s] (238/568) biome_cli::main commands::check::no_lint_if_files_are_listed_in_ignore_option
+        PASS [   1.245s] (239/568) biome_cli::main commands::check::max_diagnostics_default
+        PASS [   0.817s] (240/568) biome_cli::main commands::check::no_lint_when_file_is_ignored
+        PASS [   0.872s] (241/568) biome_cli::main commands::check::no_lint_if_linter_is_disabled_when_run_apply
+        PASS [   0.765s] (242/568) biome_cli::main commands::check::no_supported_file_found
+        PASS [   0.890s] (243/568) biome_cli::main commands::check::no_lint_if_linter_is_disabled_when_run_apply_biome_jsonc
+        PASS [   0.846s] (244/568) biome_cli::main commands::check::nursery_unstable
+        PASS [   0.881s] (245/568) biome_cli::main commands::check::print_json
+        PASS [   0.894s] (246/568) biome_cli::main commands::check::parse_error
+        PASS [   0.882s] (247/568) biome_cli::main commands::check::print_verbose_write
+        PASS [   0.927s] (248/568) biome_cli::main commands::check::print_verbose
+        PASS [   0.962s] (249/568) biome_cli::main commands::check::print_json_pretty
+        PASS [   0.893s] (250/568) biome_cli::main commands::check::should_apply_correct_file_source
+        PASS [   0.877s] (251/568) biome_cli::main commands::check::should_disable_a_rule
+        PASS [   0.701s] (252/568) biome_cli::main commands::check::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.736s] (253/568) biome_cli::main commands::check::should_error_if_unstaged_files_only_with_staged_flag
+        PASS [   0.933s] (254/568) biome_cli::main commands::check::should_disable_a_rule_group
+        PASS [   0.865s] (255/568) biome_cli::main commands::check::should_organize_imports_diff_on_check
+        PASS [   0.927s] (256/568) biome_cli::main commands::check::should_not_enable_all_recommended_rules
+        PASS [   0.878s] (257/568) biome_cli::main commands::check::should_show_formatter_diagnostics_for_files_ignored_by_linter
+        PASS [   0.924s] (258/568) biome_cli::main commands::check::shows_organize_imports_diff_on_check
+        PASS [   1.030s] (259/568) biome_cli::main commands::check::should_not_disable_recommended_rules_for_a_group
+        PASS [   0.952s] (260/568) biome_cli::main commands::check::suppression_syntax_error
+        PASS [   1.062s] (261/568) biome_cli::main commands::check::should_pass_if_there_are_only_warnings
+        PASS [   0.751s] (262/568) biome_cli::main commands::check::unsupported_file
+        PASS [   0.746s] (263/568) biome_cli::main commands::check::unsupported_file_verbose
+        PASS [   1.015s] (264/568) biome_cli::main commands::check::top_level_all_down_level_not_all
+        PASS [   0.672s] (265/568) biome_cli::main commands::check::write_suggested_error
+        PASS [   0.928s] (266/568) biome_cli::main commands::check::upgrade_severity
+        PASS [   0.992s] (267/568) biome_cli::main commands::check::top_level_not_all_down_level_all
+        PASS [   0.890s] (268/568) biome_cli::main commands::check::write_noop
+        PASS [   0.931s] (269/568) biome_cli::main commands::check::use_literal_keys_should_emit_correct_ast_issue_266
+        PASS [   0.951s] (270/568) biome_cli::main commands::check::write_ok
+        PASS [   0.935s] (271/568) biome_cli::main commands::check::write_unsafe_ok
+        PASS [   0.901s] (272/568) biome_cli::main commands::ci::ci_does_not_organize_imports_via_cli
+        PASS [   0.872s] (273/568) biome_cli::main commands::ci::ci_does_not_run_formatter_biome_jsonc
+        PASS [   0.703s] (274/568) biome_cli::main commands::ci::ci_errors_for_all_disabled_checks
+        PASS [   0.697s] (275/568) biome_cli::main commands::ci::ci_help
+        PASS [   1.033s] (276/568) biome_cli::main commands::check::write_unsafe_with_error
+        PASS [   0.939s] (277/568) biome_cli::main commands::ci::ci_does_not_run_formatter
+        PASS [   0.880s] (278/568) biome_cli::main commands::ci::ci_does_not_run_formatter_via_cli
+        PASS [   0.867s] (279/568) biome_cli::main commands::ci::ci_does_not_run_linter
+        PASS [   0.883s] (280/568) biome_cli::main commands::ci::ci_does_not_run_linter_via_cli
+        PASS [   0.900s] (281/568) biome_cli::main commands::ci::ci_formatter_linter_organize_imports
+        PASS [   0.911s] (282/568) biome_cli::main commands::ci::ci_lint_error
+        PASS [   0.859s] (283/568) biome_cli::main commands::ci::ci_parse_error
+        PASS [   0.753s] (284/568) biome_cli::main commands::ci::doesnt_error_if_no_files_were_processed
+        PASS [   0.901s] (285/568) biome_cli::main commands::ci::ci_runs_linter_not_formatter_issue_3495
+        PASS [   0.885s] (286/568) biome_cli::main commands::ci::does_formatting_error_without_file_paths
+        PASS [   0.921s] (287/568) biome_cli::main commands::ci::does_error_with_only_warnings
+        PASS [   0.930s] (288/568) biome_cli::main commands::ci::correctly_handles_ignored_and_not_ignored_files
+        PASS [   0.723s] (289/568) biome_cli::main commands::ci::file_too_large
+        PASS [   0.670s] (290/568) biome_cli::main commands::ci::files_max_size_parse_error
+        PASS [   0.752s] (291/568) biome_cli::main commands::ci::file_too_large_cli_limit
+        PASS [   0.792s] (292/568) biome_cli::main commands::ci::file_too_large_config_limit
+        PASS [   0.890s] (293/568) biome_cli::main commands::ci::formatting_error
+        PASS [   0.934s] (294/568) biome_cli::main commands::ci::ignore_vcs_ignored_file
+        PASS [   0.944s] (295/568) biome_cli::main commands::ci::ignore_vcs_ignored_file_via_cli
+        PASS [   0.951s] (296/568) biome_cli::main commands::ci::ignores_unknown_file
+        PASS [   0.647s] (297/568) biome_cli::main commands::explain::explain_help
+        PASS [   0.650s] (298/568) biome_cli::main commands::explain::explain_logs
+        PASS [   0.788s] (299/568) biome_cli::main commands::ci::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.934s] (300/568) biome_cli::main commands::ci::ok
+        PASS [   0.673s] (301/568) biome_cli::main commands::explain::explain_valid_rule
+        PASS [   0.723s] (302/568) biome_cli::main commands::explain::explain_not_found
+        PASS [   0.916s] (303/568) biome_cli::main commands::ci::print_verbose
+        PASS [   0.878s] (304/568) biome_cli::main commands::format::applies_configuration_from_biome_jsonc
+        PASS [   0.876s] (305/568) biome_cli::main commands::format::applies_custom_arrow_parentheses
+        PASS [   0.862s] (306/568) biome_cli::main commands::format::applies_custom_attribute_position
+        PASS [   0.873s] (307/568) biome_cli::main commands::format::applies_custom_bracket_same_line
+        PASS [   0.873s] (308/568) biome_cli::main commands::format::applies_custom_bracket_spacing
+        PASS [   0.828s] (309/568) biome_cli::main commands::format::applies_custom_bracket_spacing_for_graphql
+        PASS [   0.840s] (310/568) biome_cli::main commands::format::applies_custom_configuration_over_config_file
+        PASS [   0.868s] (311/568) biome_cli::main commands::format::applies_custom_configuration
+        PASS [   0.852s] (312/568) biome_cli::main commands::format::applies_custom_configuration_over_config_file_issue_3175_v1
+        PASS [   0.753s] (313/568) biome_cli::main commands::format::does_not_format_if_disabled
+        PASS [   0.832s] (314/568) biome_cli::main commands::format::applies_custom_quote_style
+        PASS [   0.743s] (315/568) biome_cli::main commands::format::does_not_format_if_files_are_listed_in_ignore_option
+        PASS [   0.881s] (316/568) biome_cli::main commands::format::applies_custom_jsx_quote_style
+        PASS [   0.915s] (317/568) biome_cli::main commands::format::applies_custom_configuration_over_config_file_issue_3175_v2
+        PASS [   0.836s] (318/568) biome_cli::main commands::format::applies_custom_trailing_commas
+        PASS [   1.937s] (319/568) biome_cli::main commands::ci::max_diagnostics
+        PASS [   1.936s] (320/568) biome_cli::main commands::ci::max_diagnostics_default
+        PASS [   0.886s] (321/568) biome_cli::main commands::format::custom_config_file_path
+        PASS [   0.865s] (322/568) biome_cli::main commands::format::does_not_format_ignored_directories
+        PASS [   0.867s] (323/568) biome_cli::main commands::format::does_not_format_ignored_file_in_included_directory
+        PASS [   0.793s] (324/568) biome_cli::main commands::format::does_not_format_ignored_files
+        PASS [   0.744s] (325/568) biome_cli::main commands::format::doesnt_error_if_no_files_were_processed
+        PASS [   0.808s] (326/568) biome_cli::main commands::format::don_t_format_ignored_known_jsonc_files
+        PASS [   0.725s] (327/568) biome_cli::main commands::format::file_too_large
+        PASS [   0.668s] (328/568) biome_cli::main commands::format::files_max_size_parse_error
+        PASS [   0.733s] (329/568) biome_cli::main commands::format::file_too_large_cli_limit
+        PASS [   0.728s] (330/568) biome_cli::main commands::format::file_too_large_config_limit
+        PASS [   0.656s] (331/568) biome_cli::main commands::format::format_help
+        PASS [   0.759s] (332/568) biome_cli::main commands::format::format_is_disabled
+        PASS [   0.809s] (333/568) biome_cli::main commands::format::format_empty_svelte_ts_files_write
+        PASS [   0.776s] (334/568) biome_cli::main commands::format::format_json_trailing_commas_all
+        PASS [   0.817s] (335/568) biome_cli::main commands::format::format_empty_svelte_js_files_write
+        PASS [   0.826s] (336/568) biome_cli::main commands::format::fix
+        PASS [   0.781s] (337/568) biome_cli::main commands::format::format_json_trailing_commas_none
+        PASS [   0.768s] (338/568) biome_cli::main commands::format::format_json_trailing_commas_overrides_none
+        PASS [   0.797s] (339/568) biome_cli::main commands::format::format_json_trailing_commas_overrides_all
+        PASS [   0.776s] (340/568) biome_cli::main commands::format::format_json_when_allow_trailing_commas
+        PASS [   0.775s] (341/568) biome_cli::main commands::format::format_json_when_allow_trailing_commas_write
+        PASS [   0.777s] (342/568) biome_cli::main commands::format::format_package_json
+        PASS [   0.826s] (343/568) biome_cli::main commands::format::format_jsonc_files
+        PASS [   0.651s] (344/568) biome_cli::main commands::format::format_stdin_with_errors
+        PASS [   0.742s] (345/568) biome_cli::main commands::format::format_stdin_successfully
+        PASS [   0.790s] (346/568) biome_cli::main commands::format::format_shows_parse_diagnostics
+        PASS [   0.473s] (347/568) biome_cli::main commands::format::format_with_configured_line_ending
+        PASS [   0.830s] (348/568) biome_cli::main commands::format::format_svelte_explicit_js_files
+        PASS [   0.861s] (349/568) biome_cli::main commands::format::format_svelte_explicit_js_files_write
+        PASS [   0.847s] (350/568) biome_cli::main commands::format::format_svelte_implicit_js_files
+        PASS [   0.801s] (351/568) biome_cli::main commands::format::format_without_file_paths
+        PASS [   0.769s] (352/568) biome_cli::main commands::format::fs_error_read_only
+        PASS [   0.846s] (353/568) biome_cli::main commands::format::format_svelte_implicit_js_files_write
+        PASS [   0.834s] (354/568) biome_cli::main commands::format::format_svelte_ts_files
+        PASS [   0.843s] (355/568) biome_cli::main commands::format::format_with_configuration
+        PASS [   0.847s] (356/568) biome_cli::main commands::format::format_svelte_ts_files_write
+        PASS [   0.839s] (357/568) biome_cli::main commands::format::ignore_comments_error_when_allow_comments
+        PASS [   0.631s] (358/568) biome_cli::main commands::format::indent_size_parse_errors_negative
+        PASS [   0.836s] (359/568) biome_cli::main commands::format::ignore_vcs_ignored_file_via_cli
+        PASS [   0.634s] (360/568) biome_cli::main commands::format::indent_style_parse_errors
+        PASS [   0.875s] (361/568) biome_cli::main commands::format::ignore_vcs_ignored_file
+        PASS [   0.683s] (362/568) biome_cli::main commands::format::indent_size_parse_errors_overflow
+        PASS [   0.832s] (363/568) biome_cli::main commands::format::ignores_unknown_file
+        PASS [   0.827s] (364/568) biome_cli::main commands::format::include_ignore_cascade
+        PASS [   0.640s] (365/568) biome_cli::main commands::format::invalid_config_file_path
+        PASS [   0.872s] (366/568) biome_cli::main commands::format::include_vcs_ignore_cascade
+        PASS [   0.639s] (367/568) biome_cli::main commands::format::line_width_parse_errors_negative
+        PASS [   0.608s] (368/568) biome_cli::main commands::format::line_width_parse_errors_overflow
+        PASS [   0.662s] (369/568) biome_cli::main commands::format::no_supported_file_found
+        PASS [   0.796s] (370/568) biome_cli::main commands::format::lint_warning
+        PASS [   0.811s] (371/568) biome_cli::main commands::format::print
+        PASS [   0.835s] (372/568) biome_cli::main commands::format::override_don_t_affect_ignored_files
+        PASS [   0.796s] (373/568) biome_cli::main commands::format::print_json
+        PASS [   0.626s] (374/568) biome_cli::main commands::format::quote_properties_parse_errors_letter_case
+        PASS [   0.678s] (375/568) biome_cli::main commands::format::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.826s] (376/568) biome_cli::main commands::format::print_verbose
+        PASS [   0.853s] (377/568) biome_cli::main commands::format::print_json_pretty
+        PASS [   0.727s] (378/568) biome_cli::main commands::format::should_error_if_unstaged_files_only_with_staged_flag
+        PASS [   0.846s] (379/568) biome_cli::main commands::format::should_apply_different_formatting_with_cli
+        PASS [   0.888s] (380/568) biome_cli::main commands::format::should_apply_different_formatting
+        PASS [   1.213s] (381/568) biome_cli::main commands::format::max_diagnostics
+        PASS [   0.868s] (382/568) biome_cli::main commands::format::should_apply_different_indent_style
+        PASS [   0.751s] (383/568) biome_cli::main commands::format::should_not_format_js_files_if_disabled
+        PASS [   0.787s] (384/568) biome_cli::main commands::format::should_not_format_css_files_if_disabled
+        PASS [   0.831s] (385/568) biome_cli::main commands::format::should_format_files_in_folders_ignored_by_linter
+        PASS [   1.273s] (386/568) biome_cli::main commands::format::max_diagnostics_default
+        PASS [   0.607s] (387/568) biome_cli::main commands::format::trailing_commas_parse_errors
+        PASS [   0.616s] (388/568) biome_cli::main commands::format::with_invalid_semicolons_option
+        PASS [   0.840s] (389/568) biome_cli::main commands::format::should_not_format_json_files_if_disabled
+        PASS [   0.768s] (390/568) biome_cli::main commands::format::treat_known_json_files_as_jsonc_files
+        PASS [   0.814s] (391/568) biome_cli::main commands::format::vcs_absolute_path
+        PASS [   0.771s] (392/568) biome_cli::main commands::format::with_semicolons_options
+        PASS [   0.660s] (393/568) biome_cli::main commands::init::creates_config_file
+        PASS [   0.624s] (394/568) biome_cli::main commands::init::does_not_create_config_file_if_json_exists
+        PASS [   0.646s] (395/568) biome_cli::main commands::init::creates_config_file_when_biome_installed_via_package_manager
+        PASS [   0.631s] (396/568) biome_cli::main commands::init::creates_config_jsonc_file
+        PASS [   0.616s] (397/568) biome_cli::main commands::init::init_help
+        PASS [   0.796s] (398/568) biome_cli::main commands::format::write
+        PASS [   0.778s] (399/568) biome_cli::main commands::format::write_only_files_in_correct_base
+        PASS [   0.672s] (400/568) biome_cli::main commands::init::does_not_create_config_file_if_jsonc_exists
+        PASS [   0.802s] (401/568) biome_cli::main commands::lint::apply_noop
+        PASS [   0.797s] (402/568) biome_cli::main commands::lint::apply_ok
+        PASS [   0.802s] (403/568) biome_cli::main commands::lint::apply_suggested
+        PASS [   0.833s] (404/568) biome_cli::main commands::lint::apply_bogus_argument
+        PASS [   0.798s] (405/568) biome_cli::main commands::lint::apply_suggested_error
+        PASS [   0.763s] (406/568) biome_cli::main commands::lint::check_json_files
+        PASS [   0.769s] (407/568) biome_cli::main commands::lint::check_stdin_shows_parse_diagnostics
+        PASS [   0.887s] (408/568) biome_cli::main commands::lint::apply_unsafe_with_error
+        PASS [   0.651s] (409/568) biome_cli::main commands::lint::doesnt_error_if_no_files_were_processed
+        PASS [   0.795s] (410/568) biome_cli::main commands::lint::check_stdin_write_successfully
+        PASS [   0.821s] (411/568) biome_cli::main commands::lint::check_stdin_write_unsafe_successfully
+        PASS [   0.654s] (412/568) biome_cli::main commands::lint::file_too_large
+        PASS [   0.689s] (413/568) biome_cli::main commands::lint::file_too_large_cli_limit
+        PASS [   0.818s] (414/568) biome_cli::main commands::lint::config_recommended_group
+        PASS [   0.714s] (415/568) biome_cli::main commands::lint::file_too_large_config_limit
+        PASS [   0.799s] (416/568) biome_cli::main commands::lint::downgrade_severity_info
+        PASS [   0.838s] (417/568) biome_cli::main commands::lint::downgrade_severity
+        PASS [   0.866s] (418/568) biome_cli::main commands::lint::does_error_with_only_warnings
+        PASS [   0.636s] (419/568) biome_cli::main commands::lint::files_max_size_parse_error
+        PASS [   0.288s] (420/568) biome_cli::main commands::lint::fs_error_infinite_symlink_expansion_to_files
+        PASS [   0.629s] (421/568) biome_cli::main commands::lint::fix_suggested_error
+        PASS [   0.769s] (422/568) biome_cli::main commands::lint::fix_noop
+        PASS [   0.826s] (423/568) biome_cli::main commands::lint::fix_ok
+        PASS [   0.824s] (424/568) biome_cli::main commands::lint::fix_suggested
+        PASS [   0.677s] (425/568) biome_cli::main commands::lint::fs_error_dereferenced_symlink
+        PASS [   0.676s] (426/568) biome_cli::main commands::lint::fs_error_infinite_symlink_expansion_to_dirs
+        PASS [   0.668s] (427/568) biome_cli::main commands::lint::fs_error_read_only
+        PASS [   0.629s] (428/568) biome_cli::main commands::lint::fs_error_unknown
+        PASS [   0.902s] (429/568) biome_cli::main commands::lint::fix_unsafe_with_error
+        PASS [   0.727s] (430/568) biome_cli::main commands::lint::ignore_file_in_subdir_in_symlinked_dir
+        PASS [   0.811s] (431/568) biome_cli::main commands::lint::group_level_recommended_false_enable_specific
+        PASS [   0.811s] (432/568) biome_cli::main commands::lint::ignore_configured_globals
+        PASS [   0.805s] (433/568) biome_cli::main commands::lint::ignore_vcs_ignored_file
+        PASS [   0.811s] (434/568) biome_cli::main commands::lint::ignore_vcs_ignored_file_via_cli
+        PASS [   0.809s] (435/568) biome_cli::main commands::lint::ignore_vcs_os_independent_parse
+        PASS [   0.789s] (436/568) biome_cli::main commands::lint::ignores_unknown_file
+        PASS [   0.623s] (437/568) biome_cli::main commands::lint::lint_help
+        PASS [   0.810s] (438/568) biome_cli::main commands::lint::include_files_in_subdir
+        PASS [   0.815s] (439/568) biome_cli::main commands::lint::include_files_in_symlinked_subdir
+        PASS [   0.802s] (440/568) biome_cli::main commands::lint::lint_error
+        PASS [   0.777s] (441/568) biome_cli::main commands::lint::lint_only_group
+        PASS [   0.626s] (442/568) biome_cli::main commands::lint::lint_only_missing_group
+        PASS [   0.800s] (443/568) biome_cli::main commands::lint::lint_only_group_skip_rule
+        PASS [   0.796s] (444/568) biome_cli::main commands::lint::lint_only_group_with_disabled_rule
+        PASS [   0.769s] (445/568) biome_cli::main commands::lint::lint_only_rule
+        PASS [   0.629s] (446/568) biome_cli::main commands::lint::lint_only_rule_doesnt_exist
+        PASS [   0.807s] (447/568) biome_cli::main commands::lint::lint_only_rule_and_group
+        PASS [   0.850s] (448/568) biome_cli::main commands::lint::lint_only_multiple_rules
+        PASS [   0.841s] (449/568) biome_cli::main commands::lint::lint_only_rule_ignore_suppression_comments
+        PASS [   0.844s] (450/568) biome_cli::main commands::lint::lint_only_rule_skip_group
+        PASS [   0.817s] (451/568) biome_cli::main commands::lint::lint_only_rule_with_linter_disabled
+        PASS [   0.833s] (452/568) biome_cli::main commands::lint::lint_only_skip_group
+        PASS [   0.850s] (453/568) biome_cli::main commands::lint::lint_only_skip_rule
+        PASS [   0.957s] (454/568) biome_cli::main commands::lint::lint_only_rule_with_config
+        PASS [   0.916s] (455/568) biome_cli::main commands::lint::lint_only_rule_with_recommended_disabled
+        PASS [   0.908s] (456/568) biome_cli::main commands::lint::lint_only_write
+        PASS [   0.879s] (457/568) biome_cli::main commands::lint::lint_skip_multiple_rules
+        PASS [   0.945s] (458/568) biome_cli::main commands::lint::lint_skip_group_with_enabled_rule
+        PASS [   0.906s] (459/568) biome_cli::main commands::lint::lint_skip_rule_and_group
+        PASS [   0.705s] (460/568) biome_cli::main commands::lint::max_diagnostics
+        PASS [   0.950s] (461/568) biome_cli::main commands::lint::lint_skip_rule
+        PASS [   0.945s] (462/568) biome_cli::main commands::lint::lint_skip_write
+        PASS [   0.850s] (463/568) biome_cli::main commands::lint::lint_syntax_rules
+        PASS [   0.791s] (464/568) biome_cli::main commands::lint::no_lint_if_files_are_listed_in_ignore_option
+        PASS [   0.460s] (465/568) biome_cli::main commands::lint::ok
+        PASS [   0.955s] (466/568) biome_cli::main commands::lint::max_diagnostics_default
+        PASS [   0.732s] (467/568) biome_cli::main commands::lint::no_lint_if_linter_is_disabled_when_run_apply
+        PASS [   0.803s] (468/568) biome_cli::main commands::lint::no_lint_if_linter_is_disabled
+        PASS [   0.475s] (469/568) biome_cli::main commands::lint::ok_read_only
+        PASS [   0.718s] (470/568) biome_cli::main commands::lint::no_supported_file_found
+        PASS [   1.053s] (471/568) biome_cli::main commands::lint::maximum_diagnostics
+        PASS [   0.746s] (472/568) biome_cli::main commands::lint::no_lint_when_file_is_ignored
+        PASS [   0.800s] (473/568) biome_cli::main commands::lint::no_lint_if_linter_is_disabled_when_run_apply_biome_jsonc
+        PASS [   0.842s] (474/568) biome_cli::main commands::lint::nursery_unstable
+        PASS [   0.921s] (475/568) biome_cli::main commands::lint::no_unused_dependencies
+        PASS [   0.799s] (476/568) biome_cli::main commands::lint::parse_error
+        PASS [   0.681s] (477/568) biome_cli::main commands::lint::should_error_if_changed_flag_and_staged_flag_are_active_at_the_same_time
+        PASS [   0.827s] (478/568) biome_cli::main commands::lint::should_disable_a_rule
+        PASS [   0.697s] (479/568) biome_cli::main commands::lint::should_error_if_changed_flag_is_used_without_since_or_default_branch_config
+        PASS [   0.890s] (480/568) biome_cli::main commands::lint::should_apply_correct_file_source
+        PASS [   0.915s] (481/568) biome_cli::main commands::lint::print_verbose
+        PASS [   0.644s] (482/568) biome_cli::main commands::lint::should_error_if_since_arg_is_used_without_changed
+        PASS [   0.678s] (483/568) biome_cli::main commands::lint::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.933s] (484/568) biome_cli::main commands::lint::should_disable_a_rule_group
+        PASS [   0.736s] (485/568) biome_cli::main commands::lint::should_error_if_unstaged_files_only_with_staged_flag
+        PASS [   0.691s] (486/568) biome_cli::main commands::lint::should_not_error_for_no_changed_files_with_no_errors_on_unmatched
+        PASS [   0.759s] (487/568) biome_cli::main commands::lint::should_not_process_ignored_file_even_if_its_changed
+        PASS [   0.762s] (488/568) biome_cli::main commands::lint::should_not_process_ignored_file_even_if_its_staged
+        PASS [   0.861s] (489/568) biome_cli::main commands::lint::should_lint_error_without_file_paths
+        PASS [   0.818s] (490/568) biome_cli::main commands::lint::should_not_enable_all_recommended_rules
+        PASS [   0.937s] (491/568) biome_cli::main commands::lint::should_not_disable_recommended_rules_for_a_group
+        PASS [   0.802s] (492/568) biome_cli::main commands::lint::should_only_process_changed_file_if_its_included
+        PASS [   0.847s] (493/568) biome_cli::main commands::lint::should_only_process_staged_file_if_its_included
+        PASS [   0.838s] (494/568) biome_cli::main commands::lint::should_only_processes_changed_files_when_changed_flag_is_set
+        PASS [   0.812s] (495/568) biome_cli::main commands::lint::should_only_processes_staged_files_when_staged_flag_is_set
+        PASS [   0.834s] (496/568) biome_cli::main commands::lint::should_pass_if_there_are_only_warnings
+        PASS [   0.812s] (497/568) biome_cli::main commands::lint::suppression_syntax_error
+        PASS [   0.841s] (498/568) biome_cli::main commands::lint::should_process_changed_files_if_changed_flag_is_set_and_default_branch_is_configured
+        PASS [   0.833s] (499/568) biome_cli::main commands::lint::top_level_all_true
+        PASS [   0.858s] (500/568) biome_cli::main commands::lint::top_level_all_false_group_level_all_true
+        PASS [   0.639s] (501/568) biome_cli::main commands::lint::unsupported_file
+        PASS [   0.824s] (502/568) biome_cli::main commands::lint::top_level_all_true_group_level_all_false
+        PASS [   0.569s] (503/568) biome_cli::main commands::lsp_proxy::lsp_proxy_help
+        PASS [   0.831s] (504/568) biome_cli::main commands::lint::top_level_all_true_group_level_empty
+        PASS [   0.624s] (505/568) biome_cli::main commands::lint::unsupported_file_verbose
+        PASS [   0.525s] (506/568) biome_cli::main commands::migrate::migrate_help
+        PASS [   0.778s] (507/568) biome_cli::main commands::lint::top_level_recommended_true_group_level_all_false
+        PASS [   0.607s] (508/568) biome_cli::main commands::migrate::migrate_config_up_to_date
+        PASS [   0.535s] (509/568) biome_cli::main commands::migrate::missing_configuration_file
+        PASS [   0.730s] (510/568) biome_cli::main commands::lint::upgrade_severity
+        PASS [   0.527s] (511/568) biome_cli::main commands::migrate::should_emit_incompatible_arguments_error
+        PASS [   0.588s] (512/568) biome_cli::main commands::migrate_eslint::migrate_eslint_config_packagejson
+        PASS [   0.603s] (513/568) biome_cli::main commands::migrate_eslint::migrate_eslintignore
+        PASS [   0.630s] (514/568) biome_cli::main commands::migrate_eslint::migrate_eslintignore_and_ignore_patterns
+        PASS [   0.641s] (515/568) biome_cli::main commands::migrate_eslint::migrate_eslintignore_negated_patterns
+        PASS [   0.644s] (516/568) biome_cli::main commands::migrate_eslint::migrate_eslintrc
+        PASS [   0.577s] (517/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_missing_biomejson
+        PASS [   0.642s] (518/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_exclude_inspired
+        PASS [   0.649s] (519/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_empty
+        PASS [   0.662s] (520/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson
+        PASS [   0.617s] (521/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_include_inspired
+        PASS [   0.660s] (522/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_extended_rules
+        PASS [   0.660s] (523/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_fix
+        PASS [   0.630s] (524/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_override_existing_config
+        PASS [   0.619s] (525/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_write
+        PASS [   0.588s] (526/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcyaml_unsupported
+        PASS [   0.604s] (527/568) biome_cli::main commands::migrate_eslint::migrate_merge_with_overrides
+        PASS [   0.577s] (528/568) biome_cli::main commands::migrate_eslint::migrate_no_eslint_config_packagejson
+        PASS [   0.806s] (529/568) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_rule_options
+        PASS [   0.611s] (530/568) biome_cli::main commands::migrate_prettier::prettier_migrate
+        PASS [   0.580s] (531/568) biome_cli::main commands::migrate_prettier::prettier_migrate_end_of_line
+        PASS [   0.559s] (532/568) biome_cli::main commands::migrate_prettier::prettier_migrate_fix
+        PASS [   0.599s] (533/568) biome_cli::main commands::migrate_prettier::prettier_migrate_no_file
+        PASS [   0.644s] (534/568) biome_cli::main commands::migrate_prettier::prettier_migrate_jsonc
+        PASS [   0.564s] (535/568) biome_cli::main commands::rage::ok
+        PASS [   0.634s] (536/568) biome_cli::main commands::migrate_prettier::prettier_migrate_write
+        PASS [   0.649s] (537/568) biome_cli::main commands::migrate_prettier::prettier_migrate_with_ignore
+        PASS [   0.645s] (538/568) biome_cli::main commands::migrate_prettier::prettier_migrate_write_biome_jsonc
+        PASS [   0.664s] (539/568) biome_cli::main commands::migrate_prettier::prettier_migrate_overrides
+        PASS [   0.638s] (540/568) biome_cli::main commands::migrate_prettier::prettier_migrate_write_packagejson
+        PASS [   0.624s] (541/568) biome_cli::main commands::migrate_prettier::prettier_migrate_yml_file
+        PASS [   0.634s] (542/568) biome_cli::main commands::migrate_prettier::prettier_migrate_write_with_ignore_file
+        PASS [   0.547s] (543/568) biome_cli::main commands::rage::rage_help
+        PASS [   0.621s] (544/568) biome_cli::main commands::migrate_prettier::prettierjson_migrate_write
+        PASS [   0.557s] (545/568) biome_cli::main commands::rage::with_configuration
+        PASS [   0.542s] (546/568) biome_cli::main commands::rage::with_formatter_configuration
+        PASS [   0.526s] (547/568) biome_cli::main commands::rage::with_jsonc_configuration
+        PASS [   0.518s] (548/568) biome_cli::main commands::rage::with_linter_configuration
+        PASS [   0.231s] (549/568) biome_cli::main help::unknown_command
+        PASS [   0.574s] (550/568) biome_cli::main commands::rage::with_malformed_configuration
+        PASS [   0.221s] (551/568) biome_cli::main main::incorrect_value
+        PASS [   0.276s] (552/568) biome_cli::main main::empty_arguments
+        PASS [   0.542s] (553/568) biome_cli::main commands::rage::with_server_logs
+        PASS [   0.261s] (554/568) biome_cli::main main::missing_argument
+        PASS [   0.400s] (555/568) biome_cli::main configuration::ignore_globals
+        PASS [   0.249s] (556/568) biome_cli::main main::overflow_value
+        PASS [   0.206s] (557/568) biome_cli::main main::unexpected_argument
+        PASS [   0.199s] (558/568) biome_cli::main main::unknown_command
+        PASS [   0.535s] (559/568) biome_cli::main commands::version::full
+        PASS [   0.542s] (560/568) biome_cli::main commands::version::ok
+        PASS [   0.554s] (561/568) biome_cli::main configuration::incorrect_globals
+        PASS [   0.671s] (562/568) biome_cli::main commands::search::search_css_pattern
+        PASS [   0.544s] (563/568) biome_cli::main configuration::line_width_error
+        PASS [   0.558s] (564/568) biome_cli::main configuration::incorrect_rule_name
+        PASS [   0.641s] (565/568) biome_cli::main commands::search::search_css_pattern_shorthand
+        PASS [   0.586s] (566/568) biome_cli::main configuration::correct_root
+        PASS [   0.633s] (567/568) biome_cli::main commands::search::search_js_pattern
+        PASS [   0.650s] (568/568) biome_cli::main configuration::override_globals
+────────────
+     Summary [  25.671s] 568 tests run: 568 passed, 3 skipped
+reward=1 graded=568 found=118 failed=0 parsed=568 framework=cargo exit_code=0

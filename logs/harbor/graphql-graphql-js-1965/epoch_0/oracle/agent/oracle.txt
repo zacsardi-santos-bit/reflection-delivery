@@ -1,8 +1,0 @@
-patching file src/__fixtures__/schema-kitchen-sink.graphql
-patching file src/language/ast.js
-patching file src/language/parser.js
-patching file src/language/printer.js
-patching file src/type/directives.js
-patching file src/utilities/buildASTSchema.js
-patching file src/utilities/schemaPrinter.js
-patching file src/validation/rules/UniqueDirectivesPerLocation.js

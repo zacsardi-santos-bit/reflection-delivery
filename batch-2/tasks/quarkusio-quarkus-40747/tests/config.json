@@ -1,0 +1,35 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl extensions/websockets-next/runtime install -DskipTests -Dformat.skip -Denforcer.skip -DskipDocs -DskipExtensionValidation -Dforbiddenapis.skip && mvn -pl extensions/websockets-next/deployment test -Dtest=\"RuntimeErrorTest,UniFailureErrorTest\" -DfailIfNoTests=false -Dformat.skip -Denforcer.skip -DskipDocs -DskipExtensionValidation -Dforbiddenapis.skip",
+  "test_files": [
+    "extensions/resteasy-classic/resteasy/deployment/src/test/java/io/quarkus/resteasy/test/UserFriendlyQuarkusRESTCapabilityCombinationTest.java",
+    "extensions/resteasy-reactive/rest-client/deployment/src/test/java/io/quarkus/rest/client/reactive/FormListTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/RuntimeErrorTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/UniFailureErrorTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/AdminService.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityUniTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityUniTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/RbacServiceSecurityTest.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/SecurityTestBase.java",
+    "extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/UserService.java",
+    "integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/CustomTenantResolver.java",
+    "integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/GlobalOidcRedirectFilter.java",
+    "integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/SessionExpiredOidcRedirectFilter.java",
+    "integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/TenantRefresh.java",
+    "integration-tests/oidc-code-flow/src/main/resources/application.properties",
+    "integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/CodeFlowTest.java",
+    "integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/KeycloakRealmResourceManager.java",
+    "test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusProdModeTest.java",
+    "test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusUnitTest.java",
+    "test-framework/junit5-internal/src/test/java/io/quarkus/test/QuarkusProdModeTestConfusingLogTest.java"
+  ],
+  "num_test_files": 22,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Quarkus::test_1",
+    "Quarkus::test_2"
+  ],
+  "PASS_TO_PASS": []
+}

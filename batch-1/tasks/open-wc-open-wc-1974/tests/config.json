@@ -1,0 +1,27 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/packages/storybook-addon-markdown-docs && npx mocha test-node/createStoriesCode.test.js test-node/mdToJsx.test.js test-node/mdjsToCsf.test.js",
+  "test_files": [
+    "packages/storybook-addon-markdown-docs/test-node/createStoriesCode.test.js",
+    "packages/storybook-addon-markdown-docs/test-node/mdToJsx.test.js",
+    "packages/storybook-addon-markdown-docs/test-node/mdjsToCsf.test.js"
+  ],
+  "num_test_files": 3,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "::createStoriesCode returns a single stories as js string",
+    "::createStoriesCode returns multiple stories as js string",
+    "::createStoriesCode sets the story name if it is different from the key",
+    "::createStoriesCode handles a multiline story",
+    "::createDocsPage() creates a docs page default export",
+    "::mdjsToCsf passes on filePath and options to mdjsToMd"
+  ],
+  "PASS_TO_PASS": [
+    "::createStoriesCode throws when given invalid input",
+    "::compileMdToJsx turns MD into JSX",
+    "::compileMdToJsx turns HTML into JSX",
+    "::compileMdToJsx turns MD with HTML into JSX",
+    "::createDocsPage() registers the story name to key mappings",
+    "::mdjsToCsf transforms a mdjs file to csf"
+  ]
+}

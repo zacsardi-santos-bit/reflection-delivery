@@ -1,0 +1,8 @@
+patching file plugins/source/alicloud/Makefile
+patching file plugins/source/alicloud/client/schema.json
+patching file plugins/source/alicloud/client/spec.go
+patching file plugins/source/alicloud/go.mod
+patching file plugins/source/alicloud/go.sum
+Hunk #1 succeeded at 103 (offset 40 lines).
+Hunk #2 succeeded at 268 with fuzz 3 (offset 119 lines).
+patching file plugins/source/alicloud/resources/plugin/plugin.go

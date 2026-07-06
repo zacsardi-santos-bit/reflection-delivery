@@ -1,0 +1,43 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.spec.ts src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.spec.ts src/main/webapp/app/shared/util/base64.util.spec.ts --coverage=false --verbose --json --testEnvironment=jsdom",
+  "test_files": [
+    "src/main/webapp/app/assessment/manage/grading-system/detailed-grading-system/detailed-grading-system.component.spec.ts",
+    "src/main/webapp/app/core/user/settings/passkey-settings/passkey-settings.component.spec.ts",
+    "src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.spec.ts",
+    "src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.spec.ts",
+    "src/main/webapp/app/core/user/settings/passkey-settings/util/credential.util.spec.ts",
+    "src/main/webapp/app/shared/util/base64.util.spec.ts"
+  ],
+  "num_test_files": 6,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions encodeAsBase64Url encodes Uint8Array to URL-safe Base64",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions encodeAsBase64Url encodes Base64 with URL-safe replacements",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions encodeAsBase64Url replaces / with _ and + with -",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions encodeAsBase64Url handles empty input",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions encodeAsBase64Url encodes data without padding",
+    "/workspace/repo/src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.spec.ts::Credential Option Util should create valid credential options",
+    "/workspace/repo/src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.spec.ts::Credential Option Util should throw an error if user ID or email is missing",
+    "/workspace/repo/src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.spec.ts::Credential Option Util should handle missing excludeCredentials gracefully",
+    "/workspace/repo/src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.spec.ts::Bitwarden Util should convert a malformed Bitwarden credential to a valid Credential object",
+    "/workspace/repo/src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.spec.ts::Bitwarden Util should return null for a null input",
+    "/workspace/repo/src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.spec.ts::Bitwarden Util should return null for an invalid object"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes standard base64url without padding",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes base64url with missing padding",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes padded base64url strings",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes URL-safe characters",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes ArrayBuffer input",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes Uint8Array view input",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url returns correct ArrayBuffer length",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url handles empty string input",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes minimal input without padding",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url throws on non-string, non-BufferSource inputs",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url throws on invalid base64url strings",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url decodes DataView input",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url throws on inputs with length mod 4 == 1",
+    "/workspace/repo/src/main/webapp/app/shared/util/base64.util.spec.ts::Base64 Utility Functions decodeBase64url throws on improper padding positions"
+  ]
+}

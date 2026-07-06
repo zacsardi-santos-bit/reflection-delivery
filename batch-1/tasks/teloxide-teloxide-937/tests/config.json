@@ -1,0 +1,41 @@
+{
+  "test_framework": "cargo",
+  "test_command": "RUSTUP_TOOLCHAIN=stable cargo nextest run -p teloxide --features macros --test command --no-fail-fast",
+  "test_files": [
+    "crates/teloxide/tests/command.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/29) teloxide::command parse_custom_parser",
+    "( 2/29) teloxide::command hide_aliases_for_unaliases_command",
+    "( 3/29) teloxide::command hide_aliases_with_aliases",
+    "( 4/29) teloxide::command alias_help_message",
+    "( 5/29) teloxide::command parse_command_with_non_string_arg",
+    "( 6/29) teloxide::command description_with_doc_attr",
+    "( 7/29) teloxide::command parse_command_with_bot_name",
+    "( 8/29) teloxide::command descriptions_off",
+    "( 9/29) teloxide::command aliases",
+    "(10/29) teloxide::command alias",
+    "(11/29) teloxide::command custom_result",
+    "(12/29) teloxide::command global_attributes",
+    "(13/29) teloxide::command hide_command_with_aliases",
+    "(14/29) teloxide::command attribute_prefix",
+    "(15/29) teloxide::command parse_command_with_args",
+    "(16/29) teloxide::command many_attributes",
+    "(17/29) teloxide::command aliases_help_message",
+    "(18/29) teloxide::command description_with_doc_attr_and_command",
+    "(19/29) teloxide::command parse_named_fields",
+    "(20/29) teloxide::command hide_aliases_with_alias",
+    "(21/29) teloxide::command rename_rules",
+    "(22/29) teloxide::command parse_with_split3",
+    "(23/29) teloxide::command parse_with_command_separator2",
+    "(24/29) teloxide::command parse_with_command_separator4",
+    "(25/29) teloxide::command parse_with_command_separator1",
+    "(26/29) teloxide::command parse_with_split",
+    "(27/29) teloxide::command parse_with_split4",
+    "(28/29) teloxide::command parse_with_command_separator3",
+    "(29/29) teloxide::command parse_with_split2"
+  ],
+  "PASS_TO_PASS": []
+}

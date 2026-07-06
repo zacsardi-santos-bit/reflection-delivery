@@ -1,0 +1,53 @@
+patching file packages/manager/cypress/e2e/core/parentChild/token-expiration.spec.ts
+patching file packages/manager/src/components/AccessPanel/UserSSHKeyPanel.test.tsx
+patching file packages/manager/src/features/Profile/DisplaySettings/TimezoneForm.test.tsx
+patching file packages/manager/src/layouts/Logout.test.tsx
+patching file packages/manager/src/layouts/OAuthCallback.test.tsx (renamed from packages/manager/src/layouts/OAuth.test.tsx)
+patching file packages/manager/src/request.test.tsx
+patching file packages/manager/src/store/authentication/authentication.test.ts
+
+ RUN  v3.0.5 /workspace/repo/packages/manager
+
+ ✓ src/request.test.tsx (7 tests) 61ms
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+stderr | src/layouts/OAuthCallback.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/layouts/Logout.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/components/AccessPanel/UserSSHKeyPanel.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/Profile/DisplaySettings/TimezoneForm.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/layouts/Logout.test.tsx > Logout > clears Auth token from local storage when mounted
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/workspace/repo/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/workspace/repo/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/workspace/repo/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at LocationImpl._locationObjectNavigate (/workspace/repo/node_modules/jsdom/lib/jsdom/living/window/Location-impl.js:31:5)
+    at LocationImpl.assign (/workspace/repo/node_modules/jsdom/lib/jsdom/living/window/Location-impl.js:207:10)
+    at Location.assign (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/Location.js:72:36)
+    at /workspace/repo/packages/manager/src/layouts/Logout.tsx:21:21
+    at commitHookEffectListMount (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:24930:9) [90mundefined[39m
+
+stderr | src/layouts/OAuthCallback.test.tsx > layouts/OAuth > parseQueryParams > Should redirect to logout path when nonce is different
+Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ✓ src/layouts/Logout.test.tsx (1 test) 152ms
+ ✓ src/layouts/OAuthCallback.test.tsx (9 tests) 190ms
+ ✓ src/features/Profile/DisplaySettings/TimezoneForm.test.tsx (6 tests) 465ms
+ ✓ src/components/AccessPanel/UserSSHKeyPanel.test.tsx (4 tests) 677ms
+
+ Test Files  5 passed (5)
+      Tests  27 passed (27)
+   Start at  15:19:32
+   Duration  11.82s (transform 3.35s, setup 12.19s, collect 30.83s, tests 1.55s, environment 3.43s, prepare 737ms)
+
+reward=1 graded=26 found=0 failed=0 parsed=0 framework=vitest exit_code=0

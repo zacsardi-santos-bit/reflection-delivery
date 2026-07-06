@@ -1,0 +1,12 @@
+patching file pkg/boot/linux/load_linux_image_test.go
+patching file pkg/boot/linux/pkg_test.go
+# github.com/u-root/u-root/pkg/boot/linux [github.com/u-root/u-root/pkg/boot/linux.test]
+pkg/boot/linux/load_linux_image_test.go:196:20: undefined: errNoChosenNode
+pkg/boot/linux/load_linux_image_test.go:205:20: undefined: errKernelSegmentFailed
+pkg/boot/linux/load_linux_image_test.go:235:20: undefined: errInitramfsSegmentFailed
+pkg/boot/linux/load_linux_image_test.go:247:20: undefined: errDTBSegmentFailed
+pkg/boot/linux/load_linux_image_test.go:251:16: undefined: kexecLoadImageMM
+pkg/boot/linux/load_linux_image_test.go:263:14: undefined: kexec.SegmentsEqual
+pkg/boot/linux/load_linux_image_test.go:267:15: undefined: kexec.SegmentEqual
+FAIL	github.com/u-root/u-root/pkg/boot/linux [build failed]
+reward=0 graded=10 found=10 failed=10 parsed=1 framework=go exit_code=1

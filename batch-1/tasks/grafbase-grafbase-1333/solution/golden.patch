@@ -1,0 +1,1626 @@
+diff --git a/engine/crates/engine/parser/src/parse/executable.rs b/engine/crates/engine/parser/src/parse/executable.rs
+index 0f805df8e..fde5c0967 100644
+--- a/engine/crates/engine/parser/src/parse/executable.rs
++++ b/engine/crates/engine/parser/src/parse/executable.rs
+@@ -106,7 +106,7 @@ pub fn parse_selection_set<T: AsRef<str>>(input: T) -> Result<Positioned<Selecti
+ ///
+ /// # Errors
+ ///
+-/// Fails if the input is not a valid GraphQL selection set
++/// Fails if the input is not a valid GraphQL field
+ pub fn parse_field<T: AsRef<str>>(input: T) -> Result<Positioned<Field>> {
+     let mut pc = PositionCalculator::new(input.as_ref());
+ 
+diff --git a/engine/crates/engine/src/context/field.rs b/engine/crates/engine/src/context/field.rs
+index e8d699f2f..9b7893e69 100644
+--- a/engine/crates/engine/src/context/field.rs
++++ b/engine/crates/engine/src/context/field.rs
+@@ -91,6 +91,13 @@ impl<'a> ContextField<'a> {
+         }
+     }
+ 
++    pub fn with_alternative_field(&self, field: &'a Positioned<Field>) -> Self {
++        ContextField {
++            item: field,
++            ..self.clone()
++        }
++    }
++
+     pub fn to_join_context(
+         &self,
+         item: &'a Positioned<Field>,
+diff --git a/engine/crates/engine/src/registry/resolvers/federation.rs b/engine/crates/engine/src/registry/resolvers/federation.rs
+index 3a2369082..c2bc3252f 100644
+--- a/engine/crates/engine/src/registry/resolvers/federation.rs
++++ b/engine/crates/engine/src/registry/resolvers/federation.rs
+@@ -1,3 +1,4 @@
++use engine_parser::{types::Field, Positioned};
+ use futures_util::future::join_all;
+ use serde::Deserialize;
+ use serde_json::Value;
+@@ -5,6 +6,7 @@ use serde_json::Value;
+ use super::{ResolvedValue, ResolverContext};
+ use crate::{
+     registry::{federation::FederationResolver, NamedType},
++    resolver_utils::resolve_joined_field,
+     Context, ContextExt, ContextField, Error,
+ };
+ 
+@@ -69,9 +71,13 @@ async fn resolve_representation(ctx: &ContextField<'_>, representation: Represen
+             resolver.resolve(ctx, &resolver_context, last_resolver_value).await
+         }
+         Some(FederationResolver::BasicType) => Ok(ResolvedValue::new(serde_json::to_value(&representation)?)),
+-        Some(FederationResolver::Join(resolver)) => {
+-            let last_resolver_value = Some(ResolvedValue::new(representation.data));
+-            resolver.resolve(ctx, last_resolver_value).await
++        Some(FederationResolver::Join(join)) => {
++            let mut field = ctx.item.clone();
++            prune_entity_query(&mut field, representation.ty.borrow(), ctx);
++            let ctx = ctx.with_alternative_field(&field);
++
++            let last_resolver_value = ResolvedValue::new(representation.data);
++            resolve_joined_field(&ctx, join, last_resolver_value).await
+         }
+         None => {
+             return Err(Error::new(format!(
+@@ -93,3 +99,60 @@ async fn resolve_representation(ctx: &ContextField<'_>, representation: Represen
+ 
+     Ok(data)
+ }
++
++/// Takes the query AST for selecting an Entity, and prunes any
++/// selected fragments that aren't valid for the given type.
++///
++/// Subgraph queries generally look like:
++///
++/// ```graphql
++/// _entities(representations: $reprs) {
++///    ... on Foo {
++///      fooFields
++///    }
++///    ... on Bar {
++///      barFields
++///    }
++///    // etc
++/// }
++/// ```
++///
++/// Where `Foo` & `Bar` might be completely independent types.
++///
++/// Some connectors (e.g. the GraphQL connector) pay attention to the
++/// query AST, and those would fail if they saw selections for `Bar`
++/// when they were trying to resolve `Foo`.
++///
++/// Pruning like this allows connectors to be unaware of this
++/// complication.
++fn prune_entity_query(field: &mut Positioned<Field>, ty: NamedType<'_>, context: &dyn Context) {
++    let is_type_compatible: Box<dyn Fn(&str) -> bool> = match context.registry().implements.get(ty.as_str()) {
++        Some(implements) => Box::new(|name: &str| name == ty.as_str() || implements.contains(name)),
++        None => Box::new(|name: &str| name == ty.as_str()),
++    };
++
++    field.node.selection_set.node.items = std::mem::take(&mut field.node.selection_set.node.items)
++        .into_iter()
++        .filter(|selection| match &selection.node {
++            engine_parser::types::Selection::Field(_) => {
++                // Entity is a union so shouldn't have fields of its own...
++                // lets assume this is the __typename and let it through
++                true
++            }
++            engine_parser::types::Selection::FragmentSpread(spread) => {
++                let Some(fragment) = context.get_fragment(spread.node.fragment_name()) else {
++                    return false;
++                };
++                is_type_compatible(fragment.type_condition.node.on.node.as_str())
++            }
++            engine_parser::types::Selection::InlineFragment(fragment) => {
++                let Some(condition) = &fragment.node.type_condition else {
++                    // No type condition would be very weird.
++                    // Not sure how to handle that so for now lets just filter out
++                    return false;
++                };
++                is_type_compatible(condition.node.on.node.as_str())
++            }
++        })
++        .collect();
++}
+diff --git a/engine/crates/engine/src/registry/resolvers/graphql.rs b/engine/crates/engine/src/registry/resolvers/graphql.rs
+index 29748b18a..4091f4cad 100644
+--- a/engine/crates/engine/src/registry/resolvers/graphql.rs
++++ b/engine/crates/engine/src/registry/resolvers/graphql.rs
+@@ -432,19 +432,13 @@ impl Resolver {
+                 prefix_result_typename(&mut data, &prefix);
+             }
+ 
+-            let mut resolved_value = ResolvedValue::new(match wrapping_field {
++            Ok(ResolvedValue::new(match wrapping_field {
+                 Some(field) => data
+                     .as_object_mut()
+                     .and_then(|m| m.remove(&field))
+                     .unwrap_or(serde_json::Value::Null),
+                 None => data,
+-            });
+-
+-            if resolved_value.data_resolved().is_null() {
+-                resolved_value.early_return_null = true;
+-            }
+-
+-            Ok(resolved_value)
++            }))
+         }))
+     }
+ }
+diff --git a/engine/crates/engine/src/registry/resolvers/http/mod.rs b/engine/crates/engine/src/registry/resolvers/http/mod.rs
+index 9a218417e..2469c4435 100644
+--- a/engine/crates/engine/src/registry/resolvers/http/mod.rs
++++ b/engine/crates/engine/src/registry/resolvers/http/mod.rs
+@@ -124,14 +124,7 @@ impl HttpResolver {
+                 .await
+                 .map_err(|e| Error::new(e.to_string()))?;
+ 
+-            let is_null = data.is_null();
+-            let mut resolved_value = ResolvedValue::new(data);
+-
+-            if is_null {
+-                resolved_value.early_return_null = true;
+-            }
+-
+-            Ok(resolved_value)
++            Ok(ResolvedValue::new(data))
+         }))
+     }
+ 
+diff --git a/engine/crates/engine/src/registry/resolvers/join.rs b/engine/crates/engine/src/registry/resolvers/join.rs
+index 9add87db7..00fc2b58b 100644
+--- a/engine/crates/engine/src/registry/resolvers/join.rs
++++ b/engine/crates/engine/src/registry/resolvers/join.rs
+@@ -1,132 +1,29 @@
+-use std::{
+-    collections::BTreeMap,
+-    sync::atomic::{AtomicU64, Ordering},
+-};
+-
+-use engine_parser::{types::Field, Positioned};
+-use engine_value::{argument_set::ArgumentSet, ConstValue, Name, Value};
+-
+-use super::{ResolvedValue, ResolverContext};
+-use crate::{Context, ContextField, Error};
++use engine_value::{argument_set::ArgumentSet, Name, Value};
+ 
+ #[derive(Clone, Debug, serde::Deserialize, serde::Serialize, PartialEq, Eq)]
+ #[serde_with::minify_field_names(serialize = "minified", deserialize = "minified")]
+ pub struct JoinResolver {
+-    pub field_name: String,
+-    pub arguments: ArgumentSet,
++    pub fields: Vec<(String, ArgumentSet)>,
+ }
+ 
+ // ArgumentSet can't be hashed so we've got a manual impl here that goes via JSON.
+ // Would be nice to get rid of the Hash requirement from these types
+ impl core::hash::Hash for JoinResolver {
+     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+-        self.field_name.hash(state);
+-        serde_json::to_string(&self.arguments).unwrap_or_default().hash(state);
+-    }
+-}
+-
+-impl JoinResolver {
+-    pub fn new(field_name: String, arguments: Vec<(Name, Value)>) -> Self {
+-        JoinResolver {
+-            field_name,
+-            arguments: ArgumentSet::new(arguments),
++        for (name, arguments) in &self.fields {
++            name.hash(state);
++            serde_json::to_string(&arguments).unwrap_or_default().hash(state);
+         }
+     }
+ }
+ 
+ impl JoinResolver {
+-    pub async fn resolve(
+-        &self,
+-        ctx: &ContextField<'_>,
+-        last_resolver_value: Option<ResolvedValue>,
+-    ) -> Result<ResolvedValue, Error> {
+-        let root_type = ctx
+-            .schema_env()
+-            .registry
+-            .root_type(engine_parser::types::OperationType::Query);
+-
+-        let last_resolver_value = last_resolver_value.unwrap_or_default();
+-        let meta_field = root_type.field(&self.field_name).ok_or_else(|| {
+-            Error::new(format!(
+-                "Internal error: could not find joined field {}",
+-                &self.field_name
+-            ))
+-        })?;
+-
+-        let fake_query_field = self.field_for_join(ctx.item, last_resolver_value)?;
+-        let join_context = ctx.to_join_context(&fake_query_field, meta_field, root_type);
+-        let resolver_context = ResolverContext::new(&join_context);
+-
+-        meta_field
+-            .resolver
+-            .resolve(&join_context, &resolver_context, None)
+-            .await
+-    }
+-}
+-
+-static FIELD_COUNTER: AtomicU64 = AtomicU64::new(0);
+-
+-impl JoinResolver {
+-    fn field_for_join(
+-        &self,
+-        actual_field: &Positioned<Field>,
+-        last_resolver_value: ResolvedValue,
+-    ) -> Result<Positioned<Field>, Error> {
+-        let arguments = self.resolve_arguments(last_resolver_value)?;
+-
+-        let Positioned { pos, node: field } = actual_field;
+-
+-        Ok(Positioned::new(
+-            Field {
+-                alias: Some(Positioned::new(
+-                    Name::new(format!("field_{}", FIELD_COUNTER.fetch_add(1, Ordering::Relaxed))),
+-                    *pos,
+-                )),
+-                name: Positioned::new(Name::new(&self.field_name), *pos),
+-                arguments: arguments
+-                    .into_iter()
+-                    .map(|(name, value)| (Positioned::new(Name::new(name), *pos), Positioned::new(value, *pos)))
+-                    .collect(),
+-                directives: field.directives.clone(),
+-                selection_set: field.selection_set.clone(),
+-            },
+-            *pos,
+-        ))
+-    }
+-
+-    fn resolve_arguments(&self, last_resolver_value: ResolvedValue) -> Result<Vec<(String, Value)>, Error> {
+-        let serde_json::Value::Object(parent_object) = last_resolver_value.data_resolved() else {
+-            // This might be an error but I'm going to defer reporting to the child resolver for now.
+-            // Saves us some work here.  Can revisit if it doesn't work very well (which is very possible)
+-            return Ok(vec![]);
+-        };
+-
+-        let mut arguments = BTreeMap::new();
+-
+-        for (name, value) in self.arguments.clone() {
+-            // Any variables this value refers to are actually fields on the last_resolver_value
+-            // so we need to resolve with into_const_with then convert back to a value.
+-            arguments.insert(
+-                name.to_string(),
+-                value
+-                    .into_const_with(|variable_name| {
+-                        let value = parent_object.get(variable_name.as_str()).cloned().ok_or_else(|| {
+-                            Error::new(format!(
+-                                "Internal error: couldn't find {variable_name} in parent_resolver_value"
+-                            ))
+-                        })?;
+-
+-                        ConstValue::from_json(value)
+-                            .map_err(|_| Error::new("Internal error converting intermediate values"))
+-                    })?
+-                    .into_value(),
+-            );
++    pub fn new(fields: impl IntoIterator<Item = (String, Vec<(Name, Value)>)>) -> Self {
++        JoinResolver {
++            fields: fields
++                .into_iter()
++                .map(|(name, arguments)| (name, ArgumentSet::new(arguments)))
++                .collect(),
+         }
+-
+-        // At some point we'll probably want to think about forwarding arguments from the current field
+-        // to the joined field.  But we can handle that when the need comes up, this PR is already too
+-        // big
+-
+-        Ok(arguments.into_iter().collect())
+     }
+ }
+diff --git a/engine/crates/engine/src/registry/resolvers/mod.rs b/engine/crates/engine/src/registry/resolvers/mod.rs
+index 40e16da55..e78348805 100644
+--- a/engine/crates/engine/src/registry/resolvers/mod.rs
++++ b/engine/crates/engine/src/registry/resolvers/mod.rs
+@@ -264,11 +264,9 @@ impl Resolver {
+                 .instrument(info_span!("introspection_resolver"))
+                 .await
+                 .map_err(Into::into),
+-            Resolver::Join(resolver) => resolver
+-                .resolve(ctx, last_resolver_value)
+-                .instrument(info_span!("join_resolver"))
+-                .await
+-                .map_err(Into::into),
++            Resolver::Join(_) => {
++                unreachable!("join resolvers should be dealt with in resolver_utils and not get here");
++            }
+         }
+     }
+ 
+diff --git a/engine/crates/engine/src/registry/resolvers/resolved_value.rs b/engine/crates/engine/src/registry/resolvers/resolved_value.rs
+index 7af855078..a27e1b8fa 100644
+--- a/engine/crates/engine/src/registry/resolvers/resolved_value.rs
++++ b/engine/crates/engine/src/registry/resolvers/resolved_value.rs
+@@ -31,9 +31,6 @@ pub struct ResolvedValue {
+     data_path: Vec<QueryPathSegment>,
+     /// Optional pagination data for Paginated Resolvers
+     pub pagination: Option<ResolvedPaginationInfo>,
+-    /// Resolvers can set this value when resolving so the engine will know it's
+-    /// not usefull to continue iterating over the ResolverChain.
+-    pub early_return_null: bool,
+     /// Selection-specific data for resolvers to use.
+     pub selection_data: Option<SelectionData>,
+ }
+@@ -83,7 +80,6 @@ impl ResolvedValue {
+             data_root: Arc::new(value),
+             data_path: vec![],
+             pagination: None,
+-            early_return_null: false,
+             selection_data: None,
+         }
+     }
+@@ -97,11 +93,6 @@ impl ResolvedValue {
+         self
+     }
+ 
+-    pub fn with_early_return(mut self) -> Self {
+-        self.early_return_null = true;
+-        self
+-    }
+-
+     pub fn with_selection_data(mut self, connector_data: SelectionData) -> Self {
+         self.selection_data = Some(connector_data);
+         self
+@@ -145,10 +136,6 @@ impl ResolvedValue {
+         })
+     }
+ 
+-    pub fn is_early_returned(&self) -> bool {
+-        self.early_return_null
+-    }
+-
+     pub fn data_resolved(&self) -> &Value {
+         self.data_path.iter().fold(self.data_root.as_ref(), |value, index| {
+             match index {
+@@ -169,7 +156,6 @@ impl ResolvedValue {
+         Some(ResolvedValue {
+             data_root: Arc::clone(&self.data_root),
+             data_path,
+-            early_return_null: false,
+             pagination: None,
+             selection_data: self.selection_data.clone(),
+         })
+@@ -185,7 +171,6 @@ impl ResolvedValue {
+         Some(ResolvedValue {
+             data_root: Arc::clone(&self.data_root),
+             data_path,
+-            early_return_null: false,
+             pagination: None,
+             selection_data: self.selection_data.clone(),
+         })
+@@ -222,7 +207,6 @@ impl ResolvedValue {
+                     ResolvedValue {
+                         data_root: Arc::clone(&self.data_root),
+                         data_path,
+-                        early_return_null: false,
+                         pagination: None,
+                         selection_data: self.selection_data.clone(),
+                     }
+diff --git a/engine/crates/engine/src/resolver_utils/field.rs b/engine/crates/engine/src/resolver_utils/field.rs
+index 0917c3caf..1dfe17715 100644
+--- a/engine/crates/engine/src/resolver_utils/field.rs
++++ b/engine/crates/engine/src/resolver_utils/field.rs
+@@ -3,15 +3,15 @@ use engine_value::ConstValue;
+ use graph_entities::{CompactValue, NodeID, ResponseNodeId, ResponsePrimitive};
+ use serde_json::Value;
+ 
+-use super::{introspection, resolve_container, resolve_list};
++use super::{introspection, joins::resolve_joined_field, resolve_container, resolve_list};
+ use crate::{
+     registry::{
+-        resolvers::{ResolvedValue, ResolverContext},
++        resolvers::{ResolvedValue, Resolver, ResolverContext},
+         scalars::{DynamicScalar, PossibleScalar},
+         type_kinds::OutputType,
+         FieldSet, MetaField, MetaType, ScalarParser, TypeReference,
+     },
+-    Context, ContextExt, ContextField, Error, QueryPathSegment, ServerError,
++    Context, ContextExt, ContextField, Error, ServerError,
+ };
+ 
+ /// Resolves the field inside `ctx` within the type `root`
+@@ -94,29 +94,9 @@ async fn resolve_primitive_field(
+         .map_err(|err| err.into_server_error(ctx.item.pos));
+ 
+     let result = match resolved_value {
+-        Ok(result) => {
+-            if field.ty.is_non_null() && *result.data_resolved() == serde_json::Value::Null {
+-                log::warn!(
+-                    ctx.trace_id(),
+-                    "{}",
+-                    serde_json::to_string_pretty(&serde_json::json!({
+-                        "message": "Something went wrong here",
+-                        "expected": serde_json::Value::String(field.ty.to_string()),
+-                        "path": serde_json::Value::String(ctx.path.to_string()),
+-                    }))
+-                    .unwrap(),
+-                );
+-                Err(ServerError::new(
+-                    format!(
+-                        "An error happened while fetching `{}`, expected a non null value but found a null",
+-                        field.name
+-                    ),
+-                    Some(ctx.item.pos),
+-                ))
+-            } else {
+-                Ok(result.take())
+-            }
+-        }
++        Ok(Some(result)) if result.data_resolved().is_null() => handle_null_primitive(field, ctx),
++        Ok(None) => handle_null_primitive(field, ctx),
++        Ok(Some(result)) => Ok(result.take()),
+         Err(err) => return Err(err),
+     }?;
+ 
+@@ -168,6 +148,30 @@ async fn resolve_primitive_field(
+     Ok(ctx.response().await.insert_node(ResponsePrimitive::new(result.into())))
+ }
+ 
++fn handle_null_primitive(field: &MetaField, ctx: &ContextField<'_>) -> Result<Value, ServerError> {
++    if field.ty.is_non_null() {
++        log::warn!(
++            ctx.trace_id(),
++            "{}",
++            serde_json::to_string_pretty(&serde_json::json!({
++                "message": "Something went wrong here",
++                "expected": serde_json::Value::String(field.ty.to_string()),
++                "path": serde_json::Value::String(ctx.path.to_string()),
++            }))
++            .unwrap(),
++        );
++        return Err(ServerError::new(
++            format!(
++                "An error happened while fetching `{}`, expected a non null value but found a null",
++                field.name
++            ),
++            Some(ctx.item.pos),
++        ));
++    }
++
++    Ok(serde_json::Value::Null)
++}
++
+ async fn resolve_container_field(
+     ctx: &ContextField<'_>,
+     field: &MetaField,
+@@ -179,7 +183,7 @@ async fn resolve_container_field(
+         .await
+         .map_err(|err| err.into_server_error(ctx.item.pos))?;
+ 
+-    if resolved_value.is_early_returned() {
++    if resolved_value.is_none() {
+         if field.ty.is_non_null() {
+             return Err(ServerError::new(
+                 format!(
+@@ -195,6 +199,7 @@ async fn resolve_container_field(
+                 .insert_node(ResponsePrimitive::new(CompactValue::Null)));
+         }
+     }
++    let resolved_value = resolved_value.unwrap();
+ 
+     let field_type = ctx
+         .registry()
+@@ -258,7 +263,8 @@ async fn resolve_array_field(
+ 
+     let resolved_value = run_field_resolver(ctx, parent_resolver_value)
+         .await
+-        .map_err(|err| err.into_server_error(ctx.item.pos))?;
++        .map_err(|err| err.into_server_error(ctx.item.pos))?
++        .unwrap_or_default();
+ 
+     field
+         .check_cache_tag(ctx, container_type.name(), &field.name, None)
+@@ -268,31 +274,34 @@ async fn resolve_array_field(
+     resolve_list(list_ctx, ctx.item, container_type, resolved_value).await
+ }
+ 
+-async fn run_field_resolver(
++pub(super) async fn run_field_resolver(
+     ctx: &ContextField<'_>,
+     parent_resolver_value: ResolvedValue,
+-) -> Result<ResolvedValue, Error> {
+-    let mut final_result = parent_resolver_value;
+-
+-    if let Some(QueryPathSegment::Index(idx)) = ctx.path.last() {
+-        // If we are in an index segment, it means we do not have a current resolver (YET).
+-        final_result = final_result.get_index(*idx).unwrap_or_default();
+-    } else {
+-        let resolver = &ctx.field.resolver;
+-        // Avoiding the early return when we're just propagating downwards data. Container
+-        // fields used as namespaces have no value (so Null) but their fields have resolvers.
+-        if !resolver.is_parent() {
+-            let resolver_context = ResolverContext::new(ctx);
+-
+-            final_result = resolver.resolve(ctx, &resolver_context, Some(final_result)).await?;
+-
+-            if final_result.data_resolved().is_null() {
+-                final_result = final_result.with_early_return();
+-            }
++) -> Result<Option<ResolvedValue>, Error> {
++    let resolver = &ctx.field.resolver;
++
++    match resolver {
++        Resolver::Parent => {
++            // Some fields just pass their parents data down to their children (or have no data at all).
++            // For those we early return with the parent data
++            return Ok(Some(parent_resolver_value));
+         }
++        Resolver::Join(join) => {
++            return resolve_joined_field(ctx, join, parent_resolver_value).await.map(Some);
++        }
++        _ => {}
++    }
++
++    let resolved_value = resolver
++        .resolve(ctx, &ResolverContext::new(ctx), Some(parent_resolver_value))
++        .await?;
++
++    if resolved_value.data_resolved().is_null() {
++        // Convert nulls into `None` which will stop us executing child fields
++        return Ok(None);
+     }
+ 
+-    Ok(final_result)
++    Ok(Some(resolved_value))
+ }
+ 
+ async fn resolve_requires_fieldset(
+@@ -325,7 +334,7 @@ async fn resolve_requires_fieldset(
+     let data = ctx
+         .response()
+         .await
+-        .take_node_into_const_value(node_id)
++        .take_node_into_compact_value(node_id)
+         .expect("this has to work");
+ 
+     Ok(ResolvedValue::new(data.into()))
+diff --git a/engine/crates/engine/src/resolver_utils/joins.rs b/engine/crates/engine/src/resolver_utils/joins.rs
+new file mode 100644
+index 000000000..8552af1e2
+--- /dev/null
++++ b/engine/crates/engine/src/resolver_utils/joins.rs
+@@ -0,0 +1,169 @@
++use std::{
++    collections::BTreeMap,
++    sync::atomic::{AtomicU64, Ordering},
++};
++
++use engine_parser::{
++    types::{Field, Selection, SelectionSet},
++    Positioned,
++};
++use engine_value::{argument_set::ArgumentSet, ConstValue, Name, Value};
++
++use crate::{
++    registry::resolvers::{join::JoinResolver, ResolvedValue},
++    resolver_utils::field::run_field_resolver,
++    Context, ContextField, Error,
++};
++
++#[async_recursion::async_recursion]
++pub async fn resolve_joined_field(
++    ctx: &ContextField<'_>,
++    join: &JoinResolver,
++    parent_resolve_value_for_join: ResolvedValue,
++) -> Result<ResolvedValue, Error> {
++    let mut query_field = fake_query_ast(ctx.item, join, parent_resolve_value_for_join)?;
++    let mut field_iter = join.fields.iter().peekable();
++    let mut resolved_value = ResolvedValue::default();
++    let mut current_type = ctx
++        .schema_env()
++        .registry
++        .root_type(engine_parser::types::OperationType::Query);
++
++    while let Some((name, _)) = field_iter.next() {
++        let meta_field = current_type.field(name).ok_or_else(|| {
++            Error::new(format!(
++                "Internal error: could not find joined field {}.{}",
++                current_type.name(),
++                &name
++            ))
++        })?;
++
++        let join_context = ctx.to_join_context(&query_field, meta_field, current_type);
++
++        resolved_value = match run_field_resolver(&join_context, resolved_value).await? {
++            Some(value) => value,
++            None => {
++                // None indicates we should stop traversing so break out with null as our result
++                resolved_value = ResolvedValue::default();
++                break;
++            }
++        };
++
++        if field_iter.peek().is_some() {
++            current_type = ctx.registry().lookup_expecting(&meta_field.ty)?;
++
++            let Selection::Field(inner_field) = query_field
++                .node
++                .selection_set
++                .node
++                .items
++                .into_iter()
++                .next()
++                .expect("joined selection sets always have one field")
++                .node
++            else {
++                unreachable!("join selection sets only have fields");
++            };
++
++            query_field = inner_field
++        }
++    }
++
++    Ok(resolved_value)
++}
++
++// The GraphQL connector might end up batching multiple joined fields into a single operation.
++// We use this counter to generate unique aliases for those to avoid clashes.
++// See its use in fake_query_ast below for more details
++static FIELD_COUNTER: AtomicU64 = AtomicU64::new(0);
++
++fn fake_query_ast(
++    actual_field: &Positioned<Field>,
++    join: &JoinResolver,
++    parent_resolve_value_for_join: ResolvedValue,
++) -> Result<Positioned<Field>, Error> {
++    let pos = actual_field.pos;
++
++    let mut selection_set = actual_field.selection_set.clone();
++
++    let mut iter = join.fields.iter().rev().peekable();
++    let mut field = loop {
++        let Some((name, arguments)) = iter.next() else {
++            return Err(Error::new("internal error in join directive"));
++        };
++        let arguments = resolve_arguments(arguments, &parent_resolve_value_for_join)?;
++        let field = Positioned::new(
++            Field {
++                name: Positioned::new(Name::new(name), pos),
++                alias: None,
++                arguments: arguments
++                    .into_iter()
++                    .map(|(name, value)| (Positioned::new(Name::new(name), pos), Positioned::new(value, pos)))
++                    .collect(),
++                directives: vec![],
++                selection_set,
++            },
++            pos,
++        );
++
++        if iter.peek().is_none() {
++            break field;
++        }
++
++        selection_set = Positioned::new(
++            SelectionSet {
++                items: vec![Positioned::new(engine_parser::types::Selection::Field(field), pos)],
++            },
++            pos,
++        );
++    };
++
++    // The GraphQL connector might end up batching multiple joined fields into a single operation.
++    // In order for that to work we need to make sure we put an alias on our top level field.  This
++    // means we won't clash with any other joins for the same field that are batched into the same
++    // operation.
++    field.node.alias = Some(Positioned::new(
++        Name::new(format!("field_{}", FIELD_COUNTER.fetch_add(1, Ordering::Relaxed))),
++        pos,
++    ));
++
++    Ok(field)
++}
++
++fn resolve_arguments(
++    arguments: &ArgumentSet,
++    parent_resolve_value_for_join: &ResolvedValue,
++) -> Result<Vec<(String, Value)>, Error> {
++    let serde_json::Value::Object(parent_object) = parent_resolve_value_for_join.data_resolved() else {
++        // This might be an error but I'm going to defer reporting to the child resolver for now.
++        // Saves us some work here.  Can revisit if it doesn't work very well (which is very possible)
++        return Ok(vec![]);
++    };
++
++    let mut output = BTreeMap::new();
++
++    for (name, value) in arguments.clone() {
++        // Any variables this value refers to are actually fields on the last_resolver_value
++        // so we need to resolve with into_const_with then convert back to a value.
++        output.insert(
++            name.to_string(),
++            value
++                .into_const_with(|variable_name| {
++                    let value = parent_object.get(variable_name.as_str()).cloned().ok_or_else(|| {
++                        Error::new(format!(
++                            "Internal error: couldn't find {variable_name} in parent_resolver_value"
++                        ))
++                    })?;
++
++                    ConstValue::from_json(value)
++                        .map_err(|_| Error::new("Internal error converting intermediate values"))
++                })?
++                .into_value(),
++        );
++    }
++
++    // At some point we'll probably want to think about forwarding arguments from the current field
++    // to the joined field.  But we can handle that when the need comes up.
++
++    Ok(output.into_iter().collect())
++}
+diff --git a/engine/crates/engine/src/resolver_utils/mod.rs b/engine/crates/engine/src/resolver_utils/mod.rs
+index f809cdf72..15f95bca9 100644
+--- a/engine/crates/engine/src/resolver_utils/mod.rs
++++ b/engine/crates/engine/src/resolver_utils/mod.rs
+@@ -7,6 +7,7 @@ mod r#enum;
+ mod field;
+ mod fragment;
+ mod introspection;
++mod joins;
+ mod list;
+ mod scalar;
+ 
+@@ -15,3 +16,5 @@ pub use dynamic::*;
+ pub use list::*;
+ pub use r#enum::*;
+ pub use scalar::*;
++
++pub use joins::resolve_joined_field;
+diff --git a/engine/crates/engine/value/src/argument_set.rs b/engine/crates/engine/value/src/argument_set.rs
+index 0378eae5e..cca675248 100644
+--- a/engine/crates/engine/value/src/argument_set.rs
++++ b/engine/crates/engine/value/src/argument_set.rs
+@@ -36,6 +36,16 @@ impl ArgumentSet {
+     pub fn contains_argument(&self, name: &str) -> bool {
+         self.0.iter().any(|(argument_name, _)| argument_name == name)
+     }
++
++    /// Returns true if the ArgumentSet is empty
++    pub fn is_empty(&self) -> bool {
++        self.0.is_empty()
++    }
++
++    /// Iterator over the names of the arguments
++    pub fn iter_names(&self) -> impl Iterator<Item = &str> {
++        self.0.iter().map(|(name, _)| name.as_str())
++    }
+ }
+ 
+ impl IntoIterator for ArgumentSet {
+diff --git a/engine/crates/graph-entities/src/response/mod.rs b/engine/crates/graph-entities/src/response/mod.rs
+index 1893fd463..bd86c0392 100644
+--- a/engine/crates/graph-entities/src/response/mod.rs
++++ b/engine/crates/graph-entities/src/response/mod.rs
+@@ -340,7 +340,7 @@ impl QueryResponse {
+     pub fn into_compact_value(mut self) -> serde_json::Result<CompactValue> {
+         Ok(match self.root {
+             Some(root_id) => self
+-                .take_node_into_const_value(root_id)
++                .take_node_into_compact_value(root_id)
+                 .expect("graph root should always exist"),
+             None => CompactValue::Object(Default::default()),
+         })
+@@ -355,14 +355,14 @@ impl QueryResponse {
+     }
+ 
+     /// Removes a node and it's children from the Graph, and returns a CompactValue of its data.
+-    pub fn take_node_into_const_value(&mut self, node_id: ResponseNodeId) -> Option<CompactValue> {
++    pub fn take_node_into_compact_value(&mut self, node_id: ResponseNodeId) -> Option<CompactValue> {
+         match self.delete_node(node_id).ok()? {
+             QueryResponseNode::Container(container) => {
+                 let ResponseContainer { children, .. } = *container;
+                 let mut fields = Vec::with_capacity(children.len());
+ 
+                 for (relation, nested_id) in children {
+-                    match self.take_node_into_const_value(nested_id)? {
++                    match self.take_node_into_compact_value(nested_id)? {
+                         // Skipping nested empty objects
+                         CompactValue::Object(fields) if fields.is_empty() => (),
+                         value => {
+@@ -376,7 +376,7 @@ impl QueryResponse {
+                 let ResponseList { children, .. } = *list;
+                 let mut list = Vec::with_capacity(children.len());
+                 for node in children {
+-                    list.push(self.take_node_into_const_value(node)?);
++                    list.push(self.take_node_into_compact_value(node)?);
+                 }
+                 Some(CompactValue::List(list))
+             }
+diff --git a/engine/crates/parser-sdl/src/rules/federation/key.rs b/engine/crates/parser-sdl/src/rules/federation/key.rs
+index 72b5e716d..6d31a8335 100644
+--- a/engine/crates/parser-sdl/src/rules/federation/key.rs
++++ b/engine/crates/parser-sdl/src/rules/federation/key.rs
+@@ -104,13 +104,17 @@ mod tests {
+             ],
+             "resolver": {
+               "Join": {
+-                "field_name": "blah",
+-                "arguments": [
++                "fields": [
+                   [
+-                    "id",
+-                    {
+-                      "$var": "id"
+-                    }
++                    "blah",
++                    [
++                      [
++                        "id",
++                        {
++                          "$var": "id"
++                        }
++                      ]
++                    ]
+                   ]
+                 ]
+               }
+@@ -149,13 +153,17 @@ mod tests {
+             ],
+             "resolver": {
+               "Join": {
+-                "field_name": "blah",
+-                "arguments": [
++                "fields": [
+                   [
+-                    "id",
+-                    {
+-                      "$var": "id"
+-                    }
++                    "blah",
++                    [
++                      [
++                        "id",
++                        {
++                          "$var": "id"
++                        }
++                      ]
++                    ]
+                   ]
+                 ]
+               }
+@@ -212,7 +220,7 @@ mod tests {
+                 id: ID!
+             }
+             "#,
+-            "The federation key `id` on the type User is trying to join with the field named blah, but those fields do not have compatible types"
++            "federation key `id` on the type User is trying to join with Query.blah, but those fields do not have compatible types"
+         );
+     }
+ }
+diff --git a/engine/crates/parser-sdl/src/rules/join_directive.rs b/engine/crates/parser-sdl/src/rules/join_directive.rs
+index 0590a1391..16c566940 100644
+--- a/engine/crates/parser-sdl/src/rules/join_directive.rs
++++ b/engine/crates/parser-sdl/src/rules/join_directive.rs
+@@ -1,7 +1,11 @@
+ use std::collections::{BTreeSet, HashMap};
+ 
+-use engine::registry::{field_set::Selection, resolvers::join::JoinResolver, FieldSet};
+-use engine_parser::{parse_field, types::ConstDirective, Positioned};
++use engine::registry::{field_set, resolvers::join::JoinResolver, FieldSet};
++use engine_parser::{
++    parse_field,
++    types::{ConstDirective, Field},
++    Positioned,
++};
+ use engine_value::{Name, Value};
+ use serde::de::Error;
+ 
+@@ -16,9 +20,14 @@ pub struct JoinDirective {
+ 
+ #[derive(Debug)]
+ pub struct FieldSelection {
++    selections: Vec<Selection>,
++    required_fields: Vec<String>,
++}
++
++#[derive(Debug)]
++struct Selection {
+     field_name: String,
+     arguments: Vec<(Name, Value)>,
+-    required_fields: Vec<String>,
+ }
+ 
+ impl Directive for JoinDirective {
+@@ -53,14 +62,20 @@ impl FieldSelection {
+             return None;
+         }
+ 
+-        Some(FieldSet::new(self.required_fields.iter().map(|field| Selection {
+-            field: field.clone(),
+-            selections: vec![],
++        Some(FieldSet::new(self.required_fields.iter().map(|field| {
++            field_set::Selection {
++                field: field.clone(),
++                selections: vec![],
++            }
+         })))
+     }
+ 
+     pub fn to_join_resolver(&self) -> JoinResolver {
+-        JoinResolver::new(self.field_name.clone(), self.arguments.clone())
++        JoinResolver::new(
++            self.selections
++                .iter()
++                .map(|selection| (selection.field_name.clone(), selection.arguments.clone())),
++        )
+     }
+ }
+ 
+@@ -73,20 +88,11 @@ impl<'de> serde::Deserialize<'de> for FieldSelection {
+ 
+         let field = parse_field(select).map_err(|error| D::Error::custom(format!("Could not parse join: {error}")))?;
+ 
+-        if !field.node.selection_set.items.is_empty() {
+-            return Err(D::Error::custom(
+-                "this join attempts to select children, but joins can only select a single field",
+-            ));
+-        }
++        validate_field(&field).map_err(D::Error::custom)?;
+ 
+-        let arguments = field
++        let required_fields = field
+             .node
+             .arguments
+-            .into_iter()
+-            .map(|(name, value)| (name.node, value.node))
+-            .collect::<Vec<_>>();
+-
+-        let required_fields = arguments
+             .iter()
+             .flat_map(|(_, value)| value.variables_used())
+             .map(|variable| variable.to_string())
+@@ -95,13 +101,65 @@ impl<'de> serde::Deserialize<'de> for FieldSelection {
+             .collect::<Vec<_>>();
+ 
+         Ok(FieldSelection {
+-            field_name: field.node.name.node.to_string(),
+-            arguments,
++            selections: SelectionIter {
++                field: Some(field.node),
++            }
++            .collect(),
+             required_fields,
+         })
+     }
+ }
+ 
++fn validate_field(mut field: &Positioned<Field>) -> Result<(), String> {
++    loop {
++        match field.node.selection_set.node.items.as_slice() {
++            [] => return Ok(()),
++            [item] => match &item.node {
++                engine_parser::types::Selection::Field(inner_field) => {
++                    field = inner_field;
++                    continue;
++                }
++                _ => return Err("joins can't make use of spreads".into()),
++            },
++            _ => return Err("joins can contain at most a single field per selection set".into()),
++        }
++    }
++}
++
++struct SelectionIter {
++    field: Option<Field>,
++}
++
++impl Iterator for SelectionIter {
++    type Item = Selection;
++
++    fn next(&mut self) -> Option<Self::Item> {
++        let field = std::mem::take(&mut self.field)?;
++
++        let next = Selection {
++            field_name: field.name.to_string(),
++            arguments: field
++                .arguments
++                .into_iter()
++                .map(|(name, value)| (name.node, value.node))
++                .collect(),
++        };
++
++        self.field = field
++            .selection_set
++            .node
++            .items
++            .into_iter()
++            .next()
++            .and_then(|selection| match selection.node {
++                engine_parser::types::Selection::Field(inner_field) => Some(inner_field.node),
++                _ => None,
++            });
++
++        Some(next)
++    }
++}
++
+ #[cfg(test)]
+ mod tests {
+     use insta::{assert_debug_snapshot, assert_json_snapshot};
+@@ -135,13 +193,80 @@ mod tests {
+         assert_json_snapshot!(resolver, @r###"
+         {
+           "J": {
+-            "field_name": "blah",
+-            "arguments": [
++            "fields": [
+               [
+-                "id",
+-                {
+-                  "$var": "id"
+-                }
++                "blah",
++                [
++                  [
++                    "id",
++                    {
++                      "$var": "id"
++                    }
++                  ]
++                ]
++              ]
++            ]
++          }
++        }
++        "###);
++    }
++
++    #[test]
++    fn nested_join_with_arguments_and_such() {
++        let schema = r#"
++            extend type Query {
++                greetings(name: String!): Greetings @resolver(name: "greetings")
++                user: User! @resolver(name: "user")
++            }
++
++            type User {
++                id: ID!
++                name: String!
++                greeting: String! @join(
++                    select: "greetings(name: $name) { forTimeOfDay(id: $id, timeOfDay: \"morning\") }"
++                )
++            }
++
++            type Greetings {
++                forTimeOfDay(id: String!, timeOfDay: String!): String! @resolver(name: "timeOfDayGreeting")
++            }
++        "#;
++
++        let registry = crate::to_parse_result_with_variables(schema, &HashMap::new())
++            .unwrap()
++            .registry;
++
++        let resolver = &registry.types["User"].fields().as_ref().unwrap()["greeting"].resolver;
++
++        assert_json_snapshot!(resolver, @r###"
++        {
++          "J": {
++            "fields": [
++              [
++                "greetings",
++                [
++                  [
++                    "name",
++                    {
++                      "$var": "name"
++                    }
++                  ]
++                ]
++              ],
++              [
++                "forTimeOfDay",
++                [
++                  [
++                    "id",
++                    {
++                      "$var": "id"
++                    }
++                  ],
++                  [
++                    "timeOfDay",
++                    "morning"
++                  ]
++                ]
+               ]
+             ]
+           }
+@@ -164,7 +289,51 @@ mod tests {
+                 nickname: String! @join(select: "blah(id: $id)")
+             }
+             "#,
+-            "The field nickname on the type User is trying to join with the field named blah, but does not provide the non-nullable argument name"
++            "User.nickname is trying to join with Query.blah, but does not provide the non-nullable argument name"
++        );
++    }
++
++    #[test]
++    fn join_with_list_in_path() {
++        assert_validation_error!(
++            r#"
++            extend type Query {
++                greetings(name: String!): [Greetings] @resolver(name: "greetings")
++                user: User! @resolver(name: "user")
++            }
++
++            type User {
++                id: ID!
++                name: String!
++                greeting: String! @join(
++                    select: "greetings(name: $name) { forTimeOfDay(id: $id, timeOfDay: \"morning\") }"
++                )
++            }
++
++            type Greetings {
++                forTimeOfDay(id: String!, timeOfDay: String!): String! @resolver(name: "timeOfDayGreeting")
++            }
++            "#,
++            "The join on User.greeting passes through Query.greetings, which is a list.  This is not supported"
++        );
++    }
++
++    #[test]
++    fn join_with_nested_multiple_fields() {
++        assert_validation_error!(
++            r#"
++            extend schema @federation(version: "2.3")
++
++            extend type Query {
++                blah(id: String!, name: String!): String! @resolver(name: "blah")
++            }
++
++            type User @key(fields: "id", resolvable: false) {
++                id: ID!
++                nickname: String! @join(select: "blah(id: $id) { foo bar }")
++            }
++            "#,
++            "joins can contain at most a single field per selection set"
+         );
+     }
+ 
+@@ -179,7 +348,57 @@ mod tests {
+                 nickname: String! @join(select: "blah(id: $id)")
+             }
+             "#,
+-            "The field nickname on the type User is trying to join with a field named blah, which doesn't exist on the Query type"
++            "User.nickname is trying to join with a field named blah, which doesn't exist on the Query type"
++        );
++    }
++
++    #[test]
++    fn join_through_scalar() {
++        assert_validation_error!(
++            r#"
++            extend schema @federation(version: "2.3")
++
++            extend type Query {
++                foo: String! @resolver(name: "foo")
++            }
++
++            type User @key(fields: "id", resolvable: false) {
++                id: ID!
++                nickname: String! @join(select: "foo { bar }")
++            }
++            "#,
++            "The join on User.nickname tries to select children of String, but String is not a composite type"
++        );
++    }
++
++    #[test]
++    fn join_with_a_spread() {
++        assert_validation_error!(
++            r#"
++            extend type Query {
++                greetings(name: String!): Greetings @resolver(name: "greetings")
++                user: User! @resolver(name: "user")
++            }
++
++            type User {
++                id: ID!
++                name: String!
++                greeting: String! @join(
++                    select: """
++                        greetings(name: $name) {
++                            ... on Greetings {
++                                forTimeOfDay(id: $id, timeOfDay: "morning")
++                            }
++                        }
++                    """
++                )
++            }
++
++            type Greetings {
++                forTimeOfDay(id: String!, timeOfDay: String!): String! @resolver(name: "timeOfDayGreeting")
++            }
++            "#,
++            "joins can't make use of spreads"
+         );
+     }
+ 
+@@ -198,7 +417,7 @@ mod tests {
+                 nickname: String! @join(select: "blah(id: $id)")
+             }
+             "#,
+-            "The field nickname on the type User is trying to join with the field named blah, but those fields do not have compatible types"
++            "User.nickname is trying to join with Query.blah, but those fields do not have compatible types"
+         );
+     }
+ 
+@@ -217,7 +436,7 @@ mod tests {
+                 nickname: String! @join(select: "blah(id: $whatever)")
+             }
+             "#,
+-            "The field nickname on the type User declares that it requires the field whatever on User but that field doesn't exist"
++            "User.nickname declares that it requires the field whatever on User but that field doesn't exist"
+         );
+     }
+ 
+@@ -260,7 +479,7 @@ mod tests {
+                 nickname: String! @join(select: "blah(id: $id)")
+             }
+             "#,
+-            "The field nickname on the type User is trying to join with the field named blah, but those fields do not have compatible types"
++            "User.nickname is trying to join with Query.blah, but those fields do not have compatible types"
+         );
+     }
+ 
+@@ -303,7 +522,7 @@ mod tests {
+                 nickname: [String]! @join(select: "blah(id: $id)")
+             }
+             "#,
+-            "The field nickname on the type User is trying to join with the field named blah, but those fields do not have compatible types"
++            "User.nickname is trying to join with Query.blah, but those fields do not have compatible types"
+         );
+     }
+ 
+@@ -322,7 +541,7 @@ mod tests {
+                 nickname: String @join(select: "blah(id: $id)")
+             }
+             "#,
+-            "The field nickname on the type User is trying to join with the field named blah, but those fields do not have compatible types"
++            "User.nickname is trying to join with Query.blah, but those fields do not have compatible types"
+         );
+     }
+ 
+@@ -334,34 +553,38 @@ mod tests {
+         Ok(
+             JoinDirective {
+                 select: FieldSelection {
+-                    field_name: "findUser",
+-                    arguments: [
+-                        (
+-                            Name(
+-                                "name",
+-                            ),
+-                            Variable(
+-                                Name(
+-                                    "name",
+-                                ),
+-                            ),
+-                        ),
+-                        (
+-                            Name(
+-                                "filters",
+-                            ),
+-                            Object(
+-                                {
++                    selections: [
++                        Selection {
++                            field_name: "findUser",
++                            arguments: [
++                                (
+                                     Name(
+-                                        "eq",
+-                                    ): Variable(
++                                        "name",
++                                    ),
++                                    Variable(
+                                         Name(
+-                                            "filters",
++                                            "name",
+                                         ),
+                                     ),
+-                                },
+-                            ),
+-                        ),
++                                ),
++                                (
++                                    Name(
++                                        "filters",
++                                    ),
++                                    Object(
++                                        {
++                                            Name(
++                                                "eq",
++                                            ): Variable(
++                                                Name(
++                                                    "filters",
++                                                ),
++                                            ),
++                                        },
++                                    ),
++                                ),
++                            ],
++                        },
+                     ],
+                     required_fields: [
+                         "filters",
+diff --git a/engine/crates/parser-sdl/src/rules/requires_directive.rs b/engine/crates/parser-sdl/src/rules/requires_directive.rs
+index 3eed31fde..f6b3923b9 100644
+--- a/engine/crates/parser-sdl/src/rules/requires_directive.rs
++++ b/engine/crates/parser-sdl/src/rules/requires_directive.rs
+@@ -87,7 +87,7 @@ mod tests {
+                 nickname: String! @requires(fields: "id name")
+             }
+             "#,
+-            "The field nickname on the type User declares that it requires the field name on User but that field doesn't exist"
++            "User.nickname declares that it requires the field name on User but that field doesn't exist"
+         );
+     }
+ 
+@@ -107,7 +107,7 @@ mod tests {
+                 id: ID!
+             }
+             "#,
+-            "The field nickname on the type User declares that it requires the field name on Account but that field doesn't exist"
++            "User.nickname declares that it requires the field name on Account but that field doesn't exist"
+         );
+     }
+ 
+@@ -123,7 +123,7 @@ mod tests {
+                 nickname: String! @requires(fields: "id name { blah }")
+             }
+             "#,
+-            "The field nickname on the type User tries to require subfields of name on User but that field is a leaf type"
++            "User.nickname tries to require subfields of name on User but that field is a leaf type"
+         );
+     }
+ }
+diff --git a/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__acceptable_return_type_nullability_mismatch.snap b/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__acceptable_return_type_nullability_mismatch.snap
+index 897a9b5a7..87034dff0 100644
+--- a/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__acceptable_return_type_nullability_mismatch.snap
++++ b/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__acceptable_return_type_nullability_mismatch.snap
+@@ -1,16 +1,20 @@
+ ---
+-source: crates/parser-sdl/src/rules/join_directive.rs
++source: engine/crates/parser-sdl/src/rules/join_directive.rs
+ expression: resolver
+ ---
+ {
+   "J": {
+-    "field_name": "blah",
+-    "arguments": [
++    "fields": [
+       [
+-        "id",
+-        {
+-          "$var": "id"
+-        }
++        "blah",
++        [
++          [
++            "id",
++            {
++              "$var": "id"
++            }
++          ]
++        ]
+       ]
+     ]
+   }
+diff --git a/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__return_type_lists_success.snap b/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__return_type_lists_success.snap
+index 897a9b5a7..87034dff0 100644
+--- a/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__return_type_lists_success.snap
++++ b/engine/crates/parser-sdl/src/rules/snapshots/parser_sdl__rules__join_directive__tests__return_type_lists_success.snap
+@@ -1,16 +1,20 @@
+ ---
+-source: crates/parser-sdl/src/rules/join_directive.rs
++source: engine/crates/parser-sdl/src/rules/join_directive.rs
+ expression: resolver
+ ---
+ {
+   "J": {
+-    "field_name": "blah",
+-    "arguments": [
++    "fields": [
+       [
+-        "id",
+-        {
+-          "$var": "id"
+-        }
++        "blah",
++        [
++          [
++            "id",
++            {
++              "$var": "id"
++            }
++          ]
++        ]
+       ]
+     ]
+   }
+diff --git a/engine/crates/parser-sdl/src/validations.rs b/engine/crates/parser-sdl/src/validations.rs
+index eebe65db2..54504f940 100644
+--- a/engine/crates/parser-sdl/src/validations.rs
++++ b/engine/crates/parser-sdl/src/validations.rs
+@@ -5,6 +5,7 @@ use engine::{
+         federation::FederationResolver,
+         field_set::Selection,
+         resolvers::{join::JoinResolver, Resolver},
++        type_kinds::SelectionSetTarget,
+         MetaField, MetaFieldType,
+     },
+     Registry,
+@@ -144,44 +145,128 @@ fn validate_join(
+ ) -> Vec<RuleError> {
+     let mut errors = vec![];
+ 
+-    let root_query_type = registry.root_type(engine_parser::types::OperationType::Query);
+-    let Some(destination_field) = root_query_type.field(&join.field_name) else {
+-        errors.push(RuleError::new(
+-            vec![],
+-            format!(
+-                "{coord} is trying to join with a field named {}, which doesn't exist on the {} type",
+-                join.field_name,
+-                root_query_type.name()
+-            ),
+-        ));
+-        return errors;
++    let (destination_field, containing_type) = match traverse_join_fields(join, registry, coord) {
++        Ok(field) => field,
++        Err(errors) => return errors,
+     };
+ 
+-    // TODO: Make this a bit more forgiving.
+     // If destination_field is non-null but expected_return is null that's fine...
+     if !types_are_compatible(&destination_field.ty, expected_return_type) {
+         errors.push(RuleError::new(
+             vec![],
+             format!(
+-                "{coord} is trying to join with the field named {}, but those fields do not have compatible types",
+-                join.field_name
++                "{coord} is trying to join with {}.{}, but those fields do not have compatible types",
++                containing_type.name(),
++                &destination_field.name
+             ),
+         ));
+     }
+ 
+-    for (name, argument) in &destination_field.args {
+-        if argument.ty.is_non_null() && !join.arguments.contains_argument(name) {
++    // I'd like to check that the argument types matches, but unfortunately
++    // we don't have type information by the time we get here...
++
++    errors
++}
++
++/// Traverses all the fields involved in a join, validating as we go.
++///
++/// Will return the target MetaField if succesful, errors if not
++fn traverse_join_fields<'a>(
++    join: &JoinResolver,
++    registry: &'a Registry,
++    coord: SchemaCoord<'_>,
++) -> Result<(&'a MetaField, SelectionSetTarget<'a>), Vec<RuleError>> {
++    let mut current_type = registry.root_type(engine_parser::types::OperationType::Query);
++
++    let mut errors = vec![];
++
++    let mut field_iter = join.fields.iter().peekable();
++    while let Some((name, join_arguments)) = field_iter.next() {
++        let Some(field) = current_type.field(name) else {
++            errors.push(RuleError::new(
++                vec![],
++                format!(
++                    "{coord} is trying to join with a field named {}, which doesn't exist on the {} type",
++                    name,
++                    current_type.name()
++                ),
++            ));
++            break;
++        };
++
++        for (name, argument) in &field.args {
++            if argument.ty.is_non_null() && !join_arguments.contains_argument(name) {
++                errors.push(RuleError::new(
++                    vec![],
++                    format!(
++                        "{coord} is trying to join with {}.{}, but does not provide the non-nullable argument {name}",
++                        current_type.name(),
++                        &field.name,
++                    ),
++                ));
++            }
++        }
++
++        for name in join_arguments.iter_names() {
++            if !field.args.contains_key(name) {
++                errors.push(RuleError::new(
++                    vec![],
++                    format!(
++                        "{coord} has a join that provides the {} argument to {}.{}, but there is no such argument",
++                        name,
++                        current_type.name(),
++                        &field.name,
++                    ),
++                ));
++            }
++        }
++
++        if field_iter.peek().is_none() {
++            if errors.is_empty() {
++                return Ok((field, current_type));
++            }
++            break;
++        }
++
++        if field.ty.is_list() {
+             errors.push(RuleError::new(
+                 vec![],
+-            format!("{coord} is trying to join with the field named {}, but does not provide the non-nullable argument {name}", join.field_name),
++                format!(
++                    "The join on {coord} passes through {}.{}, which is a list.  This is not supported",
++                    current_type.name(),
++                    &field.name,
++                ),
+             ));
+         }
+ 
+-        // I'd like to check that the argument type matches, but unfortunately
+-        // we don't have type information by the time we get here...
++        // Lookup the type for the next iteration
++        let ty = match registry.lookup(&field.ty) {
++            Ok(ty) => ty,
++            Err(error) => {
++                errors.push(RuleError::new(vec![], error.message));
++                break;
++            }
++        };
++        match ty.try_into() {
++            Ok(ty) => {
++                current_type = ty;
++            }
++            Err(_) => {
++                let name = ty.name();
++                errors.push(RuleError::new(
++                    vec![],
++                    format!(
++                        "The join on {coord} tries to select children of {name}, but {name} is not a composite type",
++                    ),
++                ));
++                break;
++            }
++        }
+     }
+ 
+-    errors
++    assert!(!errors.is_empty(), "we shouldnt ger here if errors is empty");
++
++    Err(errors)
+ }
+ 
+ fn types_are_compatible(actual_type: &MetaFieldType, expected_type: &MetaFieldType) -> bool {
+@@ -248,10 +333,10 @@ impl std::fmt::Display for SchemaCoord<'_> {
+     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+         match self {
+             SchemaCoord::Field(ty, field) => {
+-                write!(f, "The field {field} on the type {ty}")
++                write!(f, "{ty}.{field}")
+             }
+             SchemaCoord::Entity(ty, key) => {
+-                write!(f, "The federation key `{key}` on the type {ty}")
++                write!(f, "federation key `{key}` on the type {ty}")
+             }
+         }
+     }

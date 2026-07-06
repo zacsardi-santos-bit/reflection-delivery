@@ -1,0 +1,39 @@
+patching file client_test.go
+patching file example_periodic_job_test.go
+patching file internal/maintenance/periodic_job_enqueuer_test.go
+patching file internal/riverinternaltest/riverinternaltest.go
+Starting PostgreSQL 15 database server: main.
+created: river_testdb         [and migrated]
+created: river_testdb_example [and migrated]
+created: river_testdb_0       [and migrated]
+created: river_testdb_1       [and migrated]
+created: river_testdb_2       [and migrated]
+created: river_testdb_3       [and migrated]
+created: river_testdb_4       [and migrated]
+created: river_testdb_5       [and migrated]
+created: river_testdb_6       [and migrated]
+created: river_testdb_7       [and migrated]
+created: river_testdb_8       [and migrated]
+created: river_testdb_9       [and migrated]
+created: river_testdb_10      [and migrated]
+created: river_testdb_11      [and migrated]
+created: river_testdb_12      [and migrated]
+created: river_testdb_13      [and migrated]
+created: river_testdb_14      [and migrated]
+created: river_testdb_15      [and migrated]
+created: river_testdb_16      [and migrated]
+created: river_testdb_17      [and migrated]
+# github.com/riverqueue/river/internal/maintenance [github.com/riverqueue/river/internal/maintenance.test]
+internal/maintenance/periodic_job_enqueuer_test.go:107:7: svc.AddMany undefined (type *PeriodicJobEnqueuer has no field or method AddMany)
+internal/maintenance/periodic_job_enqueuer_test.go:133:7: svc.AddMany undefined (type *PeriodicJobEnqueuer has no field or method AddMany)
+internal/maintenance/periodic_job_enqueuer_test.go:159:7: svc.AddMany undefined (type *PeriodicJobEnqueuer has no field or method AddMany)
+internal/maintenance/periodic_job_enqueuer_test.go:180:7: svc.AddMany undefined (type *PeriodicJobEnqueuer has no field or method AddMany)
+internal/maintenance/periodic_job_enqueuer_test.go:200:41: undefined: rivertype.PeriodicJobHandle
+internal/maintenance/periodic_job_enqueuer_test.go:201:29: svc.AddMany undefined (type *PeriodicJobEnqueuer has no field or method AddMany)
+internal/maintenance/periodic_job_enqueuer_test.go:262:7: svc.Add undefined (type *PeriodicJobEnqueuer has no field or method Add)
+internal/maintenance/periodic_job_enqueuer_test.go:265:8: svc.Add undefined (type *PeriodicJobEnqueuer has no field or method Add)
+internal/maintenance/periodic_job_enqueuer_test.go:310:7: svc.Add undefined (type *PeriodicJobEnqueuer has no field or method Add)
+internal/maintenance/periodic_job_enqueuer_test.go:313:7: svc.Add undefined (type *PeriodicJobEnqueuer has no field or method Add)
+internal/maintenance/periodic_job_enqueuer_test.go:313:7: too many errors
+FAIL	github.com/riverqueue/river/internal/maintenance [build failed]
+reward=0 graded=63 found=63 failed=63 parsed=1 framework=go exit_code=1

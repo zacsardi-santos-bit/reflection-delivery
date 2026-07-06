@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_html_analyze --test spec_tests use_focusable_interactive",
+  "test_files": [
+    "crates/biome_html_analyze/tests/specs/a11y/useFocusableInteractive/invalid.html",
+    "crates/biome_html_analyze/tests/specs/a11y/useFocusableInteractive/invalid.html.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useFocusableInteractive/valid.html",
+    "crates/biome_html_analyze/tests/specs/a11y/useFocusableInteractive/valid.html.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_html_analyze::spec_tests specs::a11y::use_focusable_interactive::valid_html",
+    "(2/2) biome_html_analyze::spec_tests specs::a11y::use_focusable_interactive::invalid_html"
+  ],
+  "PASS_TO_PASS": []
+}

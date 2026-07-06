@@ -1,0 +1,9 @@
+I've been chasing a handful of bugs in the sandboxed filesystem layer of our CLI and could use a hand landing all the fixes together. The nastiest one is a command injection on Windows: when a sandboxed command reads or writes a file we're interpolating the file path straight into the shell command string, so a path with quotes or semicolons can break out and run arbitrary code. I want the path passed safely through an environment variable instead of embedded in the command args directly.
+
+Also the sandboxed file service isn't sending any access policy when it asks the sandbox to read or write, so the sandbox has no idea which paths to allow. For reads it should grant read access to the target path, and for writes it should grant both read and write access to that path.
+
+Then there's the error handling, when a sandboxed read fails because the file doesn't exist the thrown error has no code on it, so callers can't tell "file not found" apart from anything else. It needs to carry the standard not-found code, and that applies to both the Linux/macOS message and the Windows equivalent.
+
+On Linux, if a sandbox policy allows a path that doesn't exist yet, we currently skip granting it entirely, which makes creating new files impossible. Instead when the target doesn't exist we should grant access to the parent directory so new files can land there. Oh and the macOS sandbox is defaulting to write access across the whole workspace even when no write perms were requested, that default should be read-only unless the request explicitly includes write.
+
+Last thing, when entering plan mode the tool assumes the plans directory already exists, which blows up in fresh or sandboxed workspaces since nothing created it yet, so any plan file write fails. Just create the directory if it's missing before writing.

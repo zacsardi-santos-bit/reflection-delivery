@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p turborepo-lockfiles --no-fail-fast -E 'test(test_subgraph_with)' 2>&1 | sed 's| ( *[0-9]* */ *[0-9]*) | |g'",
+  "test_files": [
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/apps/my-app/package.json",
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/meta.json",
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/package.json",
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/packages/shared/package.json",
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/pnpm-lock.yaml",
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/pnpm-workspace.yaml",
+    "lockfile-tests/fixtures/pnpm-10-inject-workspace-packages/turbo.json"
+  ],
+  "num_test_files": 7,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "turborepo-lockfiles pnpm::data::tests::test_subgraph_with_injected_workspace_packages_setting",
+    "turborepo-lockfiles pnpm::data::tests::test_subgraph_with_per_dep_injected_meta_and_file_version"
+  ],
+  "PASS_TO_PASS": []
+}

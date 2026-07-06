@@ -1,0 +1,13 @@
+{
+  "test_framework": "ctest",
+  "test_command": "cd /workspace/repo/build && cmake .. -DFLB_TESTS_RUNTIME=On -DFLB_TESTS_INTERNAL=Off -DFLB_BINARY=Off -DFLB_SHARED_LIB=Off -DFLB_EXAMPLES=Off -DFLB_LUAJIT=Off -DFLB_WASM=Off -DFLB_PROXY_GO=Off -DFLB_CUSTOM_CALYPTIA=Off -DFLB_OUT_CALYPTIA=Off && make -j$(nproc) flb-rt-in_opentelemetry && ctest -R flb-rt-in_opentelemetry --output-on-failure",
+  "test_files": [
+    "tests/runtime/in_opentelemetry.c"
+  ],
+  "num_test_files": 1,
+  "language": "c",
+  "FAIL_TO_PASS": [
+    "flb-rt-in_opentelemetry::flb-rt-in_opentelemetry"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,9 +1,0 @@
-patching file MODULE.bazel.lock
-patching file src/internal/client/client.go
-patching file src/internal/log/field.go
-patching file src/internal/log/log.go
-patching file src/internal/log/pgx.go
-patching file src/internal/log/span.go
-patching file src/internal/log/testing.go
-patching file src/internal/pachctl/pachctl.go
-patching file src/server/cmd/pachctl/cmd/cmd.go

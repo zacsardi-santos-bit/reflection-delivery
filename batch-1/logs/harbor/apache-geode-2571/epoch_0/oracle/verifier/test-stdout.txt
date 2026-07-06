@@ -1,0 +1,242 @@
+patching file geode-core/src/test/java/org/apache/geode/internal/cache/TXCommitMessageTest.java
+patching file geode-core/src/test/java/org/apache/geode/internal/cache/TXFarSideCMTrackerTest.java
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/4.10.1/userguide/gradle_daemon.html.
+Daemon will be stopped at the end of the build stopping after processing
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:compileTestJava UP-TO-DATE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Task :geode-common:compileJava UP-TO-DATE
+> Task :geode-common:processResources NO-SOURCE
+> Task :geode-common:classes UP-TO-DATE
+> Task :geode-common:jar UP-TO-DATE
+> Task :geode-concurrency-test:compileJava UP-TO-DATE
+> Task :geode-concurrency-test:processResources NO-SOURCE
+> Task :geode-concurrency-test:classes UP-TO-DATE
+> Task :geode-concurrency-test:jar UP-TO-DATE
+> Task :geode-core:generateGrammarSource UP-TO-DATE
+> Task :geode-json:compileJava UP-TO-DATE
+> Task :geode-json:processResources NO-SOURCE
+> Task :geode-json:classes UP-TO-DATE
+> Task :geode-json:jar UP-TO-DATE
+
+> Task :geode-core:compileJava
+Processing annotations
+Annotations processed
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:19: warning: Unsafe is internal proprietary API and may be removed in a future release
+import sun.misc.Unsafe;
+               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:21: warning: SignalHandler is internal proprietary API and may be removed in a future release
+import sun.misc.SignalHandler;
+               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/unsafe/ReadOpFileAccessController.java:24: warning: MBeanServerFileAccessController is internal proprietary API and may be removed in a future release
+import com.sun.jmx.remote.security.MBeanServerFileAccessController;
+                                  ^
+Processing annotations
+No elements to process
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:19: warning: Unsafe is internal proprietary API and may be removed in a future release
+import sun.misc.Unsafe;
+               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:21: warning: SignalHandler is internal proprietary API and may be removed in a future release
+import sun.misc.SignalHandler;
+               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/unsafe/ReadOpFileAccessController.java:24: warning: MBeanServerFileAccessController is internal proprietary API and may be removed in a future release
+import com.sun.jmx.remote.security.MBeanServerFileAccessController;
+                                  ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:19: warning: Unsafe is internal proprietary API and may be removed in a future release
+import sun.misc.Unsafe;
+               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:21: warning: SignalHandler is internal proprietary API and may be removed in a future release
+import sun.misc.SignalHandler;
+               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/unsafe/ReadOpFileAccessController.java:24: warning: MBeanServerFileAccessController is internal proprietary API and may be removed in a future release
+import com.sun.jmx.remote.security.MBeanServerFileAccessController;
+                                  ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:29: warning: Unsafe is internal proprietary API and may be removed in a future release
+  private final Unsafe unsafe;
+                ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+    Unsafe tmp = null;
+    ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:33: warning: Unsafe is internal proprietary API and may be removed in a future release
+      Field field = Unsafe.class.getDeclaredField("theUnsafe");
+                    ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/pdx/internal/unsafe/UnsafeWrapper.java:35: warning: Unsafe is internal proprietary API and may be removed in a future release
+      tmp = (Unsafe) field.get(null);
+             ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/commands/CreateRegionCommand.java:391: warning: non-varargs call of varargs method with inexact argument type for last parameter;
+              gatewaySenderIds));
+              ^
+  cast to Object for a varargs call
+  cast to Object[] for a non-varargs call and to suppress this warning
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/commands/CreateRegionCommand.java:433: warning: non-varargs call of varargs method with inexact argument type for last parameter;
+            CliStrings.format(CliStrings.CREATE_REGION__MSG__GROUPS_0_ARE_INVALID, groups));
+                                                                                   ^
+  cast to Object for a varargs call
+  cast to Object[] for a non-varargs call and to suppress this warning
+/workspace/repo/geode-core/src/main/java/org/apache/geode/internal/concurrent/CompactConcurrentHashSet2.java:1961: warning: Unsafe is internal proprietary API and may be removed in a future release
+    private static final sun.misc.Unsafe U;
+                                 ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/internal/concurrent/CompactConcurrentHashSet2.java:1965: warning: Unsafe is internal proprietary API and may be removed in a future release
+        Field f = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
+                          ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/internal/concurrent/CompactConcurrentHashSet2.java:1967: warning: Unsafe is internal proprietary API and may be removed in a future release
+        U = (sun.misc.Unsafe) f.get(null);
+                     ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/internal/concurrent/CompactConcurrentHashSet2.java:2283: warning: Unsafe is internal proprietary API and may be removed in a future release
+  private static final sun.misc.Unsafe U;
+                               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/internal/concurrent/CompactConcurrentHashSet2.java:2294: warning: Unsafe is internal proprietary API and may be removed in a future release
+      Field f = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
+                        ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/internal/concurrent/CompactConcurrentHashSet2.java:2296: warning: Unsafe is internal proprietary API and may be removed in a future release
+      U = (sun.misc.Unsafe) f.get(null);
+                   ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/distributed/internal/unsafe/RegisterSignalHandlerSupport.java:27: warning: Signal is internal proprietary API and may be removed in a future release
+    sun.misc.Signal.handle(new sun.misc.Signal("INT"), new sun.misc.SignalHandler() {
+                                       ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/distributed/internal/unsafe/RegisterSignalHandlerSupport.java:27: warning: SignalHandler is internal proprietary API and may be removed in a future release
+    sun.misc.Signal.handle(new sun.misc.Signal("INT"), new sun.misc.SignalHandler() {
+                                                                   ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/distributed/internal/unsafe/RegisterSignalHandlerSupport.java:28: warning: Signal is internal proprietary API and may be removed in a future release
+      public void handle(final sun.misc.Signal sig) {}
+                                       ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/distributed/internal/unsafe/RegisterSignalHandlerSupport.java:27: warning: Signal is internal proprietary API and may be removed in a future release
+    sun.misc.Signal.handle(new sun.misc.Signal("INT"), new sun.misc.SignalHandler() {
+            ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:38: warning: SignalHandler is internal proprietary API and may be removed in a future release
+public class GfshSignalHandler extends AbstractSignalNotificationHandler implements SignalHandler {
+                                                                                    ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:40: warning: SignalHandler is internal proprietary API and may be removed in a future release
+  private final Map<Signal, SignalHandler> originalSignalHandlers =
+                            ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:41: warning: SignalHandler is internal proprietary API and may be removed in a future release
+      Collections.synchronizedMap(new Hashtable<Signal, SignalHandler>(Signal.values().length));
+                                                        ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:47: warning: Signal is internal proprietary API and may be removed in a future release
+            sun.misc.Signal.handle(new sun.misc.Signal(signal.getName()), this));
+                                               ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:47: warning: Signal is internal proprietary API and may be removed in a future release
+            sun.misc.Signal.handle(new sun.misc.Signal(signal.getName()), this));
+                    ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:53: warning: Signal is internal proprietary API and may be removed in a future release
+  public void handle(final sun.misc.Signal sig) {
+                                   ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:58: warning: Signal is internal proprietary API and may be removed in a future release
+  protected void handleDefault(final sun.misc.Signal sig) {
+                                             ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:64: warning: SignalHandler is internal proprietary API and may be removed in a future release
+        final SignalHandler handler = getOriginalSignalHandler(signal);
+              ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:71: warning: SignalHandler is internal proprietary API and may be removed in a future release
+  protected SignalHandler getOriginalSignalHandler(final Signal signal) {
+            ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:72: warning: SignalHandler is internal proprietary API and may be removed in a future release
+    final SignalHandler handler = originalSignalHandlers.get(signal);
+          ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:73: warning: SignalHandler is internal proprietary API and may be removed in a future release
+    return (handler == SignalHandler.SIG_DFL || handler == SignalHandler.SIG_IGN ? null : handler);
+                       ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/cli/shell/unsafe/GfshSignalHandler.java:73: warning: SignalHandler is internal proprietary API and may be removed in a future release
+    return (handler == SignalHandler.SIG_DFL || handler == SignalHandler.SIG_IGN ? null : handler);
+                                                           ^
+/workspace/repo/geode-core/src/main/java/org/apache/geode/management/internal/unsafe/ReadOpFileAccessController.java:36: warning: MBeanServerFileAccessController is internal proprietary API and may be removed in a future release
+public class ReadOpFileAccessController extends MBeanServerFileAccessController {
+                                                ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+38 warnings
+
+> Task :writeBuildInfo UP-TO-DATE
+> Task :geode-core:createVersionPropertiesFile UP-TO-DATE
+> Task :geode-core:processResources UP-TO-DATE
+> Task :geode-core:classes
+> Task :geode-core:generateTestGrammarSource NO-SOURCE
+> Task :geode-core:generateJcaGrammarSource NO-SOURCE
+
+> Task :geode-core:compileJcaJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :geode-core:processJcaResources NO-SOURCE
+> Task :geode-core:jcaClasses
+> Task :geode-core:jar
+
+> Task :geode-junit:compileJava
+/workspace/repo/geode-junit/src/main/java/org/apache/geode/codeAnalysis/AnalyzeSerializablesJUnitTestBase.java:55: warning: ReflectionFactory is internal proprietary API and may be removed in a future release
+import sun.reflect.ReflectionFactory;
+                  ^
+/workspace/repo/geode-junit/src/main/java/org/apache/geode/codeAnalysis/AnalyzeSerializablesJUnitTestBase.java:55: warning: ReflectionFactory is internal proprietary API and may be removed in a future release
+import sun.reflect.ReflectionFactory;
+                  ^
+/workspace/repo/geode-junit/src/main/java/org/apache/geode/codeAnalysis/AnalyzeSerializablesJUnitTestBase.java:55: warning: ReflectionFactory is internal proprietary API and may be removed in a future release
+import sun.reflect.ReflectionFactory;
+                  ^
+/workspace/repo/geode-junit/src/main/java/org/apache/geode/codeAnalysis/AnalyzeSerializablesJUnitTestBase.java:342: warning: ReflectionFactory is internal proprietary API and may be removed in a future release
+          constructor = ReflectionFactory.getReflectionFactory()
+                        ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+4 warnings
+
+> Task :geode-junit:processResources UP-TO-DATE
+> Task :geode-junit:classes
+> Task :geode-junit:jar UP-TO-DATE
+
+> Task :geode-core:compileTestJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :geode-core:processTestResources UP-TO-DATE
+> Task :geode-core:testClasses
+> Task :geode-old-versions:compileJava NO-SOURCE
+> Task :geode-old-versions:downloadAndUnzipFile1.2.0 UP-TO-DATE
+> Task :geode-old-versions:downloadAndUnzipFile1.3.0 UP-TO-DATE
+> Task :geode-old-versions:downloadAndUnzipFile1.4.0 UP-TO-DATE
+> Task :geode-old-versions:downloadAndUnzipFile1.5.0 UP-TO-DATE
+> Task :geode-old-versions:downloadAndUnzipFile1.6.0 UP-TO-DATE
+> Task :geode-old-versions:createGeodeClasspathsFile UP-TO-DATE
+> Task :geode-old-versions:processResources NO-SOURCE
+> Task :geode-old-versions:classes UP-TO-DATE
+> Task :geode-old-versions:jar UP-TO-DATE
+
+> Task :geode-core:test
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > commitProcessReceivedIfFoundFromHistory PASSED
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > commitProcessReceivedIfFoundInProgress PASSED
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > commitProcessNotReceivedIfMessageNotFoundInTxProcessMapAndNotFoundFromHistory PASSED
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > findTxInProgressReturnsTrueIfMessageIsProcessing PASSED
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > commitProcessNotReceivedIfFoundMessageIsNotProcessing PASSED
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > findTxInProgressReturnsFalseIfMessageIsNotProcessing PASSED
+
+org.apache.geode.internal.cache.TXFarSideCMTrackerTest > findTxInProgressReturnsFalseIfMessageIsNull PASSED
+
+org.apache.geode.internal.cache.TXCommitMessageTest > commitProcessQueryMessageIsSentIfHostDeparted PASSED
+
+> Task :combineReports
+All test reports at /workspace/repo/build/reports/combined
+
+BUILD SUCCESSFUL in 1m 19s
+27 actionable tasks: 7 executed, 20 up-to-date
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=maven exit_code=0

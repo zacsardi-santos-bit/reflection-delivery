@@ -1,7 +1,0 @@
-I'm working on a distributed object storage system that collects per-node storage statistics and aggregates them cluster-wide. We recently migrated to a MySQL-backed stats store that uses structured typed objects instead of the older generic snapshot format, but we don't yet have a dedicated aggregation component that works with these new types.
-
-I need a new cluster aggregator class that takes a map of per-instance storage stats wrappers and produces two aggregated results: one that sums all raw data from every node, and another that intelligently selects the best replica's data for each partition. The selection logic should prefer a replica with larger physical storage usage when both are within a recent time window, but should fall back to the more recently-reported replica when the time difference exceeds a configurable threshold. Stale nodes should be excluded from the "valid" aggregation entirely.
-
-This needs to work for both account-level storage stats (organized by partition, account, and container) and partition class storage stats (organized by partition class name, then partition, account, and container).
-
-I also need to fix a related issue: the partition class storage stats object currently requires a data map argument to its constructor, which means code that just wants to create an empty instance is forced to supply an empty placeholder value — and this causes problems. I need a no-argument constructor that creates an empty instance, and a copy constructor for deep-copying an existing instance.

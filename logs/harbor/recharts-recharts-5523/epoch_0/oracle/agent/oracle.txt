@@ -1,7 +1,0 @@
-patching file src/chart/generateCategoricalChart.tsx
-patching file src/state/selectors/containerSelectors.ts
-patching file src/state/selectors/polarAxisSelectors.ts
-patching file src/util/useElementOffset.ts
-patching file storybook/stories/Examples/Tooltip.stories.tsx
-patching file storybook/storybook-addon-recharts/CartesianChartInspector.tsx
-patching file storybook/storybook-addon-recharts/RechartsHookInspector.tsx

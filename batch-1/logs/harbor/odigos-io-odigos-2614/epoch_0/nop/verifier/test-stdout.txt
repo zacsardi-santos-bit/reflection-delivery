@@ -1,0 +1,12 @@
+patching file collector/processors/odigossamplingprocessor/internal/sampling/error_test.go
+patching file collector/processors/odigossamplingprocessor/internal/sampling/latency_test.go
+patching file collector/processors/odigossamplingprocessor/rule_engine_test.go
+# github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor
+rule_engine_test.go:8:2: no required module provides package github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling/testutil; to add it:
+	go get github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling/testutil
+FAIL	github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor [setup failed]
+# github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling
+rule_engine_test.go:8:2: no required module provides package github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling/testutil; to add it:
+	go get github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling/testutil
+FAIL	github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling [setup failed]
+reward=0 graded=20 found=0 failed=0 parsed=0 framework=go exit_code=1

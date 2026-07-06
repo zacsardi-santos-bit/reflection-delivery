@@ -1,0 +1,40 @@
+patching file packages/core/test/lib/integrations/zoderrrors.test.ts
+FAIL test/lib/integrations/zoderrrors.test.ts
+  ● Test suite failed to run
+
+    [96mtest/lib/integrations/zoderrrors.test.ts[0m:[93m6[0m:[93m3[0m - [91merror[0m[90m TS2305: [0mModule '"../../../src/integrations/zoderrors"' has no exported member 'flattenIssue'.
+
+    [7m6[0m   flattenIssue,
+    [7m [0m [91m  ~~~~~~~~~~~~[0m
+    [96mtest/lib/integrations/zoderrrors.test.ts[0m:[93m7[0m:[93m3[0m - [91merror[0m[90m TS2305: [0mModule '"../../../src/integrations/zoderrors"' has no exported member 'flattenIssuePath'.
+
+    [7m7[0m   flattenIssuePath,
+    [7m [0m [91m  ~~~~~~~~~~~~~~~~[0m
+    [96mtest/lib/integrations/zoderrrors.test.ts[0m:[93m8[0m:[93m3[0m - [91merror[0m[90m TS2459: [0mModule '"../../../src/integrations/zoderrors"' declares 'formatIssueMessage' locally, but it is not exported.
+
+    [7m8[0m   formatIssueMessage,
+    [7m [0m [91m  ~~~~~~~~~~~~~~~~~~[0m
+
+      [96msrc/integrations/zoderrors.ts[0m:[93m63[0m:[93m10[0m
+        [7m63[0m function formatIssueMessage(zodError: ZodError): string {
+        [7m  [0m [96m         ~~~~~~~~~~~~~~~~~~[0m
+        'formatIssueMessage' is declared here.
+    [96mtest/lib/integrations/zoderrrors.test.ts[0m:[93m53[0m:[93m46[0m - [91merror[0m[90m TS2554: [0mExpected 2-3 arguments, but got 4.
+
+    [7m53[0m     applyZodErrorsToEvent(100, false, event, eventHint);
+    [7m  [0m [91m                                             ~~~~~~~~~[0m
+    [96mtest/lib/integrations/zoderrrors.test.ts[0m:[93m84[0m:[93m69[0m - [91merror[0m[90m TS2554: [0mExpected 2-3 arguments, but got 4.
+
+    [7m84[0m     const processedEvent = applyZodErrorsToEvent(100, false, event, eventHint);
+    [7m  [0m [91m                                                                    ~~~~~~~~~[0m
+    [96mtest/lib/integrations/zoderrrors.test.ts[0m:[93m143[0m:[93m66[0m - [91merror[0m[90m TS2554: [0mExpected 2-3 arguments, but got 4.
+
+    [7m143[0m     const processedEvent = applyZodErrorsToEvent(1, true, event, eventHint);
+    [7m   [0m [91m                                                                 ~~~~~~~~~[0m
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.756 s
+Ran all test suites matching /test\/lib\/integrations\/zoderrrors.test.ts/i.
+reward=0 graded=14 found=0 failed=0 parsed=0 framework=jest exit_code=1

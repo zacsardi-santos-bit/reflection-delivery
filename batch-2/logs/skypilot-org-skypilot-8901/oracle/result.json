@@ -1,0 +1,29 @@
+{
+    "id": "fac35731-fab1-49ac-a1f3-d37cc34cc48b",
+    "started_at": "2026-07-06T12:18:47.311910",
+    "finished_at": "2026-07-06T12:19:27.144654",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__skypilot-org-skypilot-8901": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "skypilot-org-skypilot-8901__EZ3v9o4"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

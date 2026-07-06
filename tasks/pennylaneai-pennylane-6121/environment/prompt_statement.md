@@ -1,7 +1,0 @@
-I'm working on a quantum computing library and need to add two new arithmetic subroutines that are currently missing. The library already has in-place modular addition and multiplication templates, but I need out-of-place versions for modular addition and also a modular exponentiation template.
-
-The first one should take two input quantum registers and a separate output register and compute the sum of both inputs modulo some value, accumulating into the output register without disturbing the inputs. When no modulus is provided it should default to the largest value representable by the output register. It needs wire overlap validation with clear error messages for each type of conflict between registers, and it should support just-in-time (JIT) compilation.
-
-The second one should take an exponent register and a separate output register and compute a fixed integer base raised to the power encoded in the exponent register, multiplied by whatever value is currently in the output register, all modulo some value. It also needs a default modulus behavior, wire overlap validation, and validation that sufficient auxiliary wires are provided — with the required number of auxiliary wires depending on whether the modulus is a power of two. It should also be JIT-compatible.
-
-Both templates should be accessible directly from the top-level library namespace and should pass standard operation validity checks. They should be implemented following the same patterns as the existing arithmetic templates in the library.

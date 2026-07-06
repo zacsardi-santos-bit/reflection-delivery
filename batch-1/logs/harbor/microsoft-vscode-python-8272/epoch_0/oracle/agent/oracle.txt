@@ -1,0 +1,18 @@
+patching file build/ci/templates/globals.yml
+patching file build/ci/templates/jobs/uitest.yml
+patching file 'news/1 Enhancements/8103.md'
+patching file 'news/1 Enhancements/8106.md'
+patching file 'news/1 Enhancements/8320.md'
+patching file 'news/2 Fixes/8296.md'
+patching file package.nls.json
+patching file package.nls.tr.json
+patching file src/client/common/utils/localize.ts
+patching file src/client/datascience/constants.ts
+patching file src/client/datascience/errorHandler/errorHandler.ts
+patching file src/client/debugger/extension/adapter/activator.ts
+patching file src/client/debugger/extension/adapter/logging.ts
+patching file src/client/debugger/extension/serviceRegistry.ts
+patching file src/client/debugger/extension/types.ts
+patching file src/client/interpreter/configuration/interpreterSelector.ts
+patching file src/client/telemetry/index.ts
+patching file src/datascience-ui/native-editor/nativeEditor.less

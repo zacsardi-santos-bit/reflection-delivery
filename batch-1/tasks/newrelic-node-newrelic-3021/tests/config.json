@@ -1,0 +1,31 @@
+{
+  "test_framework": "telescope",
+  "test_command": "cd /workspace/repo && node_modules/.bin/borp --reporter tap test/unit/instrumentation/@azure/functions.test.js test/unit/util/logger.test.js test/versioned/azure-functions/http.test.js | awk '/^ok [0-9]/{sub(/^ok [0-9]+ - /,\"\");sub(/ #.*/,\"\");printf \"\\342\\234\\223 %s\\n\",$0}/^not ok [0-9]/{sub(/^not ok [0-9]+ - /,\"\");sub(/ #.*/,\"\");printf \"\\342\\234\\227 %s\\n\",$0;f=1}END{exit f+0}'",
+  "test_files": [
+    "test/unit/instrumentation/@azure/functions.test.js",
+    "test/unit/util/logger.test.js",
+    "test/versioned/azure-functions/http.test.js",
+    "test/versioned/azure-functions/newrelic.js",
+    "test/versioned/azure-functions/package.json"
+  ],
+  "num_test_files": 5,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "addAttributes adds expected attributes",
+    "buildCloudResourceId returns correct string",
+    "buildCloudResourceId returns correct string (missing WEBSITE_RESOURCE_GROUP)",
+    "mapTriggerType maps recognized keys",
+    "warns for missing env vars",
+    "wraps expected methods",
+    "instruments all HTTP methods",
+    "handles distributed tracing information",
+    "handles queue time headers",
+    "set cold start attribute correctly",
+    "recognizes handler as second parameter instead of options",
+    "uses port provided in url"
+  ],
+  "PASS_TO_PASS": [
+    "logger",
+    "logger write queue should buffer writes"
+  ]
+}

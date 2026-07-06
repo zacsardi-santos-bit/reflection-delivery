@@ -1,0 +1,29 @@
+{
+    "id": "3732b4a8-df4e-4b9a-9ace-74a031423102",
+    "started_at": "2026-07-06T12:18:50.724690",
+    "finished_at": "2026-07-06T12:19:18.874355",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__wevm-wagmi-4128": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "wevm-wagmi-4128__XkV4RKE"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

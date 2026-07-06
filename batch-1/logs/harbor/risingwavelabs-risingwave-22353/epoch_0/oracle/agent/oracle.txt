@@ -1,0 +1,5 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file ci/scripts/e2e-source-test.sh
+patching file ci/workflows/main-cron.yml
+patching file src/connector/src/source/cdc/external/mysql.rs

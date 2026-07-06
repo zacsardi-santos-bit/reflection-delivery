@@ -1,0 +1,2480 @@
+diff --git a/.changeset/fix-card-scroll-shadow.md b/.changeset/fix-card-scroll-shadow.md
+deleted file mode 100644
+index 53a1b28ee2bd..000000000000
+--- a/.changeset/fix-card-scroll-shadow.md
++++ /dev/null
+@@ -1,7 +0,0 @@
+----
+-'@backstage/ui': patch
+----
+-
+-Disabled `Card` scroll shadow in browsers that don't support `animation-timeline: scroll()`. Prevents the shadow from being always visible over the `CardBody` when there's nothing to scroll or the body is not scrolled.
+-
+-**Affected components:** Card
+diff --git a/.changeset/fix-lockfile-removal-detection.md b/.changeset/fix-lockfile-removal-detection.md
+deleted file mode 100644
+index 3f7d9541ae48..000000000000
+--- a/.changeset/fix-lockfile-removal-detection.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@backstage/cli-node': patch
+----
+-
+-Fixed a bug in `PackageGraph.listChangedPackages` where removed dependencies were not detected during lockfile analysis. The dependency graph from the previous lockfile was not being merged, causing transitive dependency removals to be missed.
+diff --git a/.changeset/mean-monkeys-create.md b/.changeset/mean-monkeys-create.md
+deleted file mode 100644
+index d2f2571b46ae..000000000000
+--- a/.changeset/mean-monkeys-create.md
++++ /dev/null
+@@ -1,7 +0,0 @@
+----
+-'@backstage/ui': patch
+----
+-
+-Added invalid-state styling for Checkbox and corresponding Storybook variants for verification.
+-
+-**Affected components:** Checkbox, CheckboxGroup
+diff --git a/.changeset/remove-uuid-dependency.md b/.changeset/remove-uuid-dependency.md
+deleted file mode 100644
+index b32c5a846d2d..000000000000
+--- a/.changeset/remove-uuid-dependency.md
++++ /dev/null
+@@ -1,33 +0,0 @@
+----
+-'@backstage/backend-defaults': patch
+-'@backstage/backend-test-utils': patch
+-'@backstage/cli-module-new': patch
+-'@backstage/plugin-auth-backend': patch
+-'@backstage/plugin-auth-backend-module-cloudflare-access-provider': patch
+-'@backstage/plugin-auth-node': patch
+-'@backstage/plugin-catalog-backend': patch
+-'@backstage/plugin-catalog-backend-module-aws': patch
+-'@backstage/plugin-catalog-backend-module-azure': patch
+-'@backstage/plugin-catalog-backend-module-backstage-openapi': patch
+-'@backstage/plugin-catalog-backend-module-bitbucket-cloud': patch
+-'@backstage/plugin-catalog-backend-module-bitbucket-server': patch
+-'@backstage/plugin-catalog-backend-module-gerrit': patch
+-'@backstage/plugin-catalog-backend-module-gitea': patch
+-'@backstage/plugin-catalog-backend-module-github': patch
+-'@backstage/plugin-catalog-backend-module-gitlab': patch
+-'@backstage/plugin-catalog-backend-module-incremental-ingestion': patch
+-'@backstage/plugin-catalog-backend-module-ldap': patch
+-'@backstage/plugin-catalog-backend-module-msgraph': patch
+-'@backstage/plugin-catalog-backend-module-puppetdb': patch
+-'@backstage/plugin-notifications-backend': patch
+-'@backstage/plugin-permission-common': patch
+-'@backstage/plugin-scaffolder-backend': patch
+-'@backstage/plugin-search-backend-module-elasticsearch': patch
+-'@backstage/plugin-search-backend-module-pg': patch
+-'@backstage/plugin-search-backend-node': patch
+-'@backstage/plugin-search-react': patch
+-'@backstage/plugin-signals': patch
+-'@backstage/plugin-signals-backend': patch
+----
+-
+-Removed the `uuid` dependency and replaced usage with the built-in `crypto.randomUUID()`.
+diff --git a/docs/golden-path/plugins/backend/003-persistence.md b/docs/golden-path/plugins/backend/003-persistence.md
+index a164d89995f0..60d275d7ecd0 100644
+--- a/docs/golden-path/plugins/backend/003-persistence.md
++++ b/docs/golden-path/plugins/backend/003-persistence.md
+@@ -13,323 +13,8 @@ You may have noticed that your list of TODOs disappears after you restart your B
+ 
+ SQLite is the default database for local development. It runs in memory (and can also run from a file on disk). It supports quick iteration cycles and can be easily deleted if anything goes wrong.
+ 
+-### What does our data look like at rest?
+-
+-Writing to a database requires a table, which requires us to chat quickly about what we want to store. Our TODO object with `title`, `id`, `createdBy` and `createdAt` keys is a good fit to map 1:1 with our database schema.
+-
+ ## Adding the `databaseService` to your plugin
+ 
+-### The plumbing
+-
+-To start, let's just plumb through the general `databaseService` usage we expect.
+-
+-First, add a new service dependency on `databaseService`,
+-
+-```diff file="src/services/TodoListService.ts"
+-
+-export const todoListServiceRef = createServiceRef<Expand<TodoListService>>({
+-  id: 'todo.list',
+-  defaultFactory: async service =>
+-    createServiceFactory({
+-      service,
+-      deps: {
+-        logger: coreServices.logger,
+-        catalog: catalogServiceRef,
+-+        database: coreServices.database,
+-      },
+-      async factory(deps) {
+-        return TodoListService.create(deps);
+-      },
+-    }),
+-});
+-```
+-
+-We then need to add it to our service,
+-
+-```diff file="src/services/TodoListService.ts"
+-+import type { Knex } from 'knex';
+-import {
+-  coreServices,
+-  createServiceFactory,
+-  createServiceRef,
+-  LoggerService,
+-+ DatabaseService,
+-} from '@backstage/backend-plugin-api';
+-
+-export class TodoListService {
+-+  readonly #database: Knex;
+-
+--  readonly #storedTodos = new Array<TodoItem>();
+-
+--  static create(options: {
+-+  static async create(options: {
+-    logger: LoggerService;
+-    catalog: typeof catalogServiceRef.T;
+-+    database: DatabaseService;
+-  }) {
+-     const knex = await options.database.getClient();
+--    return new TodoListService(options.logger, options.catalog);
+-+    return new TodoListService(options.logger, options.catalog, knex);
+-  }
+-
+-  private constructor(
+-    logger: LoggerService,
+-    catalog: typeof catalogServiceRef.T,
+-+    database: Knex,
+-  ) {
+-    this.#logger = logger;
+-    this.#catalog = catalog;
+-+    this.#database = database;
+-  }
+-```
+-
+-And with that, we have an isolated `knex` client to communicate with our database!
+-
+-### Creating your table
+-
+-Unfortunately, without tables in our database, our `knex` client is not doing much. We need to create a _migration_. Knex stores migrations as JavaScript/TypeScript files that get executed as part of a call to `knex.migrate.latest()`. By default, these are stored in a `migrations/` directory.
+-
+-Let's get started. First, we need to install `knex` as a dependency so both its CLI and imported `Knex` types are available,
+-
+-```bash
+-yarn workspace @internal/plugin-todo-backend add knex
+-```
+-
+-Now, running this command will scaffold a file in that `migrations/` directory for us.
+-
+-```bash
+-yarn workspace @internal/plugin-todo-backend knex migrate:make init --migrations-directory ./migrations
+-```
+-
+-This should spit out a message like
+-
+-```bash
+-Created Migration: ~/Projects/backstage/backstage/plugins/todo-backend/migrations/20260323130057_init.js
+-```
+-
+-Let's open that file,
+-
+-```js
+-/**
+- * @param { import("knex").Knex } knex
+- * @returns { Promise<void> }
+- */
+-exports.up = async function up(knex) {
+-  // await knex.schema...
+-};
+-
+-/**
+- * @param { import("knex").Knex } knex
+- * @returns { Promise<void> }
+- */
+-exports.down = async function down(knex) {
+-  // await knex.schema...
+-};
+-```
+-
+-You can see two functions, `up` and `down`. `up` is called to apply a migration and `down` is used to undo a previous migration. These should be reversible - if you call `up` and then `down` the database should generally be in the same state if those commands hadn't been run.
+-
+-Let's create our table,
+-
+-```diff
+-exports.up = async function up(knex) {
+-+  await knex.schema.createTable('todo', table => {
+-+    table.uuid('id').primary();
+-+    table.string('created_by', 255).notNullable();
+-+    table.string('title').notNullable();
+-+    table.datetime('created_at').defaultTo(knex.fn.now()).notNullable();
+-
+-+    table.index(['created_by'], 'todo_user_idx');
+-  });
+-};
+-```
+-
+-You'll notice that we use `snake_case` instead of `camelCase` - that's how SQL is conventionally written.
+-
+-Let's make sure that we don't forget to add a `down` migration as well!
+-
+-```diff
+-/**
+- * @param {import('knex').Knex} knex
+- */
+-exports.down = async function down(knex) {
+-+  await knex.schema.dropTable('todo');
+-};
+-```
+-
+-Now, we need to actually tell our `knex` client to automatically apply these migrations. We'll add the `database` service to our plugin's `init` function,
+-
+-```diff file="src/plugin.ts"
+-import {
+-  coreServices,
+-  createBackendPlugin,
+-+  resolvePackagePath,
+-} from '@backstage/backend-plugin-api';
+-
+-// ...
+-
+-      deps: {
+-        httpAuth: coreServices.httpAuth,
+-        httpRouter: coreServices.httpRouter,
+-+        logger: coreServices.logger,
+-+        database: coreServices.database,
+-        todoList: todoListServiceRef,
+-      },
+--      async init({ httpAuth, httpRouter, todoList }) {
+-+      async init({ httpAuth, logger, httpRouter, database, todoList }) {
+-+        const knex = await database.getClient();
+-+
+-+        if (!database.migrations?.skip) {
+-+          logger.info('Running database migrations...');
+-+
+-+          const migrationsDir = resolvePackagePath(
+-+            '@internal/plugin-todo-backend',
+-+            'migrations',
+-+          );
+-+
+-+          await knex.migrate.latest({
+-+            directory: migrationsDir,
+-+          });
+-+        }
+-
+-        httpRouter.use(
+-          await createRouter({
+-            httpAuth,
+-            todoList,
+-          }),
+-        );
+-```
+-
+-Walking through what we've written -
+-
+-1. `database.migrations?.skip` - convention for migrations to allow them to be skipped through config.
+-1. `const migrationsDir = resolvePackagePath` - ensure the correct migrations directory is passed regardless of environment.
+-1. `await knex.migrate.latest(` - actually run the migration, calls our `up` method we wrote above.
+-
+-We also need to do 1 more thing,
+-
+-```diff file="package.json"
+-"files": [
+--    "dist"
+-+    "dist",
+-+    "migrations"
+-  ],
+-```
+-
+-This will make sure the migrations in our plugin work for all users.
+-
+-For those who want more details, the full [Knex migration docs](https://knexjs.org/guide/migrations.html#migration-cli) are very informative!
+-
+-### Defining our types
+-
+-Now that we have our table, we need to add types for it to protect against runtime incompatibilities. For now, these are hand written.
+-
+-```diff title="src/services/TodoListService.ts"
+-+export interface TodoDatabaseRow {
+-+  title: string;
+-+  id: string;
+-+  created_by: string;
+-+  created_at: string;
+-+}
+-
+-export interface TodoItem {
+-  title: string;
+-  id: string;
+-  createdBy: string;
+-  createdAt: string;
+-}
+-```
+-
+-Notice the change to snake case as it has to match the database schema we have above. Now we need to transform `TodoItem` to `TodoDatabaseRow` for writes and `TodoDatabaseRow` to `TodoItem` for reads.
+-
+-```diff title="src/services/TodoListService.ts"
+-  private constructor(
+-    logger: LoggerService,
+-    catalog: typeof catalogServiceRef.T,
+-+    database: Knex,
+-  ) {
+-    this.#logger = logger;
+-    this.#catalog = catalog;
+-+    this.#database = database;
+-  }
+-
+-+  private toDatabaseRow(todo: TodoItem): TodoDatabaseRow {
+-+    return {
+-+      id: todo.id,
+-+      title: todo.title,
+-+      created_by: todo.createdBy,
+-+      created_at: todo.createdAt,
+-+    };
+-+  }
+-
+-+  private fromDatabaseRow(row: TodoDatabaseRow): TodoItem {
+-+    return {
+-+      id: row.id,
+-+      title: row.title,
+-+      createdBy: row.created_by,
+-+      createdAt: row.created_at,
+-+    };
+-+  }
+-```
+-
+-And that's it! You're now set up to actually read from and write to your database.
+-
+-### Writing to your table
+-
+-Creating your table was a solid chunk of work - thankfully, writing to it is going to be much easier!
+-
+-```diff title="src/services/TodoListService.ts"
+-
+-  async createTodo(
+-    // ...
+-    const id = crypto.randomUUID();
+-    const createdBy = options.credentials.principal.userEntityRef;
+-    const newTodo = {
+-      title,
+-      id,
+-      createdBy,
+-      createdAt: new Date().toISOString(),
+-    };
+-
+--    this.#storedTodos.push(newTodo);
+-+    await this.#database
+-+      .insert(this.toDatabaseRow(newTodo))
+-+      .into('todo');
+-
+-    return newTodo;
+-  }
+-```
+-
+-We've basically just updated our service call to use `this.#database` instead of `this.#storedTodos`.
+-
+-### Reading from your table
+-
+-Now that we have things in our database, how do we actually get them back out again?
+-
+-```diff title="src/services/TodoListService.ts"
+-
+-  async listTodos(): Promise<{ items: TodoItem[] }> {
+--    return { items: Array.from(this.#storedTodos) };
+-+    const rows = await this.#database('todo').select();
+-+    return { items: rows.map(row => this.fromDatabaseRow(row)) };
+-  }
+-
+-  async getTodo(request: { id: string }): Promise<TodoItem> {
+--    const todo = this.#storedTodos.find(item => item.id === request.id);
+-+    const item = await this.#database('todo').where({ id: request.id }).first();
+--    if (!todo) {
+-+    if (!item) {
+-      throw new NotFoundError(`No todo found with id '${request.id}'`);
+-    }
+--    return todo;
+-+    return this.fromDatabaseRow(item);
+-  }
+-```
+-
+-And we're done!
++<!--TODO-->
+ 
+ ## Testing your changes
+-
+-To validate this flow, let's use the same commands that we ran in [the last section of this guide](./002-poking-around.md#testing-locally).
+-
+-If everything is working correctly, you will see the same response that you did last time.
+diff --git a/docs/golden-path/plugins/backend/004-reading-from-source.md b/docs/golden-path/plugins/backend/004-source-tracked.md
+similarity index 93%
+rename from docs/golden-path/plugins/backend/004-reading-from-source.md
+rename to docs/golden-path/plugins/backend/004-source-tracked.md
+index 87ca4b210e82..54013cceade9 100644
+--- a/docs/golden-path/plugins/backend/004-reading-from-source.md
++++ b/docs/golden-path/plugins/backend/004-source-tracked.md
+@@ -1,5 +1,5 @@
+ ---
+-id: reading-from-source
++id: source-tracked
+ sidebar_label: 004 - Integrating with SCMs
+ title: 004 - Git-tracked TODOs
+ description: How to ingest TODOs from source code repositories into your plugin
+diff --git a/microsite/sidebars.ts b/microsite/sidebars.ts
+index 565c09feb468..df39e911ff07 100644
+--- a/microsite/sidebars.ts
++++ b/microsite/sidebars.ts
+@@ -108,32 +108,9 @@ export default {
+               'golden-path/plugins/why-build-plugins',
+               'golden-path/plugins/sustainable-plugin-development',
+               sidebarElementWithIndex({ label: 'Backend Plugins' }, [
+-                'golden-path/plugins/backend/first-steps',
+-                'golden-path/plugins/backend/poking-around',
+-                'golden-path/plugins/backend/persistence',
+-                'golden-path/plugins/backend/reading-from-source',
+-                'golden-path/plugins/backend/testing',
++                'golden-path/plugins/backend/001-first-steps',
++                'golden-path/plugins/backend/002-poking-around',
+               ]),
+-              sidebarElementWithIndex({ label: 'Frontend Plugins' }, [
+-                'golden-path/plugins/frontend/first-steps',
+-                'golden-path/plugins/frontend/poking-around',
+-                'golden-path/plugins/frontend/dynamic-config',
+-                'golden-path/plugins/frontend/http-client',
+-                'golden-path/plugins/frontend/testing',
+-              ]),
+-            ]),
+-            sidebarElementWithIndex({ label: '003 - Deployment' }, [
+-              'golden-path/deployment/index',
+-            ]),
+-            sidebarElementWithIndex({ label: '004 - Adoption' }, [
+-              'golden-path/adoption/getting-started',
+-              'golden-path/adoption/leadership-buy-in',
+-              'golden-path/adoption/setting-up-a-poc',
+-              'golden-path/adoption/first-stakeholder-feedback',
+-              'golden-path/adoption/customize-your-instance',
+-              'golden-path/adoption/preparing-for-ga',
+-              'golden-path/adoption/plugin-ownership',
+-              'golden-path/adoption/full-catalog',
+             ]),
+           ]),
+         ]
+diff --git a/packages/backend-defaults/package.json b/packages/backend-defaults/package.json
+index 73bfad1dbed1..7bd7d55918bd 100644
+--- a/packages/backend-defaults/package.json
++++ b/packages/backend-defaults/package.json
+@@ -192,6 +192,7 @@
+     "selfsigned": "^2.0.0",
+     "tar": "^7.5.6",
+     "triple-beam": "^1.4.1",
++    "uuid": "^11.0.0",
+     "winston": "^3.2.1",
+     "winston-transport": "^4.5.0",
+     "yauzl": "^3.2.1",
+diff --git a/packages/backend-defaults/src/entrypoints/auth/external/ExternalAuthTokenHandler.test.ts b/packages/backend-defaults/src/entrypoints/auth/external/ExternalAuthTokenHandler.test.ts
+index 97eb72e36c8a..349ad9bc1934 100644
+--- a/packages/backend-defaults/src/entrypoints/auth/external/ExternalAuthTokenHandler.test.ts
++++ b/packages/backend-defaults/src/entrypoints/auth/external/ExternalAuthTokenHandler.test.ts
+@@ -25,7 +25,7 @@ import {
+ import { randomBytes } from 'node:crypto';
+ import { SignJWT, exportJWK, generateKeyPair } from 'jose';
+ import { DateTime } from 'luxon';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { rest } from 'msw';
+ import { setupServer } from 'msw/node';
+ 
+diff --git a/packages/backend-defaults/src/entrypoints/auth/external/jwks.test.ts b/packages/backend-defaults/src/entrypoints/auth/external/jwks.test.ts
+index f8164dae1943..327173fdee63 100644
+--- a/packages/backend-defaults/src/entrypoints/auth/external/jwks.test.ts
++++ b/packages/backend-defaults/src/entrypoints/auth/external/jwks.test.ts
+@@ -19,7 +19,7 @@ import { ConfigReader } from '@backstage/config';
+ import { SignJWT, exportJWK, generateKeyPair } from 'jose';
+ import { rest } from 'msw';
+ import { setupServer } from 'msw/node';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { jwksTokenHandler } from './jwks';
+ 
+ // Simplified copy of TokenFactory in @backstage/plugin-auth-backend
+diff --git a/packages/backend-defaults/src/entrypoints/auth/plugin/keys/DatabasePluginKeySource.ts b/packages/backend-defaults/src/entrypoints/auth/plugin/keys/DatabasePluginKeySource.ts
+index 40a47c4ea2a0..562086a07f09 100644
+--- a/packages/backend-defaults/src/entrypoints/auth/plugin/keys/DatabasePluginKeySource.ts
++++ b/packages/backend-defaults/src/entrypoints/auth/plugin/keys/DatabasePluginKeySource.ts
+@@ -17,7 +17,7 @@
+ import { DatabaseService, LoggerService } from '@backstage/backend-plugin-api';
+ import { HumanDuration, durationToMilliseconds } from '@backstage/types';
+ import { JWK, exportJWK, generateKeyPair } from 'jose';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { DatabaseKeyStore } from './DatabaseKeyStore';
+ import { InternalKey, KeyPayload, KeyStore } from './types';
+ import { PluginKeySource } from './types';
+diff --git a/packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.ts b/packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.ts
+index 8481302ba32f..4f32dc686335 100644
+--- a/packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.ts
++++ b/packages/backend-defaults/src/entrypoints/scheduler/lib/TaskWorker.ts
+@@ -19,7 +19,7 @@ import { ConflictError, NotFoundError } from '@backstage/errors';
+ import { CronTime } from 'cron';
+ import { Knex } from 'knex';
+ import { DateTime, Duration } from 'luxon';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { DB_TASKS_TABLE, DbTasksRow } from '../database/tables';
+ import {
+   TaskSettingsV2,
+diff --git a/packages/backend-test-utils/package.json b/packages/backend-test-utils/package.json
+index bfc8a3a4484b..200f975238ed 100644
+--- a/packages/backend-test-utils/package.json
++++ b/packages/backend-test-utils/package.json
+@@ -77,6 +77,7 @@
+     "pg-connection-string": "^2.3.0",
+     "testcontainers": "^11.9.0",
+     "text-extensions": "^2.4.0",
++    "uuid": "^11.0.0",
+     "yn": "^4.0.0",
+     "zod": "^3.25.76 || ^4.0.0",
+     "zod-to-json-schema": "^3.25.1"
+diff --git a/packages/backend-test-utils/src/cache/helpers.ts b/packages/backend-test-utils/src/cache/helpers.ts
+index 6f339fc326d5..7a18240fc890 100644
+--- a/packages/backend-test-utils/src/cache/helpers.ts
++++ b/packages/backend-test-utils/src/cache/helpers.ts
+@@ -15,7 +15,7 @@
+  */
+ 
+ import Keyv, { type KeyvStoreAdapter } from 'keyv';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { waitForReady } from '../util/waitForReady';
+ import { Instance } from './types';
+ 
+diff --git a/packages/backend-test-utils/src/cache/memcache.test.ts b/packages/backend-test-utils/src/cache/memcache.test.ts
+index 95522a5b6514..bd912ce9d2d2 100644
+--- a/packages/backend-test-utils/src/cache/memcache.test.ts
++++ b/packages/backend-test-utils/src/cache/memcache.test.ts
+@@ -16,7 +16,7 @@
+ 
+ import { isDockerDisabledForTests } from '../util/isDockerDisabledForTests';
+ import { startMemcachedContainer } from './memcache';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ 
+ const itIfDocker = isDockerDisabledForTests() ? it.skip : it;
+ 
+diff --git a/packages/backend-test-utils/src/cache/redis.test.ts b/packages/backend-test-utils/src/cache/redis.test.ts
+index d003a4f44966..6555a266778f 100644
+--- a/packages/backend-test-utils/src/cache/redis.test.ts
++++ b/packages/backend-test-utils/src/cache/redis.test.ts
+@@ -16,7 +16,7 @@
+ 
+ import { isDockerDisabledForTests } from '../util/isDockerDisabledForTests';
+ import { startRedisContainer } from './redis';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ 
+ const itIfDocker = isDockerDisabledForTests() ? it.skip : it;
+ 
+diff --git a/packages/backend-test-utils/src/cache/valkey.test.ts b/packages/backend-test-utils/src/cache/valkey.test.ts
+index 0f1ee3e834b0..d7064586594f 100644
+--- a/packages/backend-test-utils/src/cache/valkey.test.ts
++++ b/packages/backend-test-utils/src/cache/valkey.test.ts
+@@ -15,7 +15,7 @@
+  */
+ 
+ import { isDockerDisabledForTests } from '../util/isDockerDisabledForTests';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { startValkeyContainer } from './valkey';
+ 
+ const itIfDocker = isDockerDisabledForTests() ? it.skip : it;
+diff --git a/packages/backend-test-utils/src/database/mysql.ts b/packages/backend-test-utils/src/database/mysql.ts
+index b4d677bd1f13..042aa74405ce 100644
+--- a/packages/backend-test-utils/src/database/mysql.ts
++++ b/packages/backend-test-utils/src/database/mysql.ts
+@@ -16,7 +16,7 @@
+ 
+ import { randomBytes } from 'node:crypto';
+ import knexFactory, { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import yn from 'yn';
+ import { waitForReady } from '../util/waitForReady';
+ import { Engine, LARGER_POOL_CONFIG, TestDatabaseProperties } from './types';
+diff --git a/packages/backend-test-utils/src/database/postgres.ts b/packages/backend-test-utils/src/database/postgres.ts
+index e9a80862305c..8d85470252ef 100644
+--- a/packages/backend-test-utils/src/database/postgres.ts
++++ b/packages/backend-test-utils/src/database/postgres.ts
+@@ -17,7 +17,7 @@
+ import { randomBytes } from 'node:crypto';
+ import knexFactory, { Knex } from 'knex';
+ import { parse as parsePgConnectionString } from 'pg-connection-string';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { waitForReady } from '../util/waitForReady';
+ import { Engine, LARGER_POOL_CONFIG, TestDatabaseProperties } from './types';
+ 
+diff --git a/packages/cli-module-new/templates/catalog-provider-module/src/provider/{{providerClass}}.ts.hbs b/packages/cli-module-new/templates/catalog-provider-module/src/provider/{{providerClass}}.ts.hbs
+index 443091e81a2c..3e4c5718ae13 100644
+--- a/packages/cli-module-new/templates/catalog-provider-module/src/provider/{{providerClass}}.ts.hbs
++++ b/packages/cli-module-new/templates/catalog-provider-module/src/provider/{{providerClass}}.ts.hbs
+@@ -4,7 +4,7 @@ import {
+   EntityProvider,
+   EntityProviderConnection,
+ } from '@backstage/plugin-catalog-node';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { readProviderConfigs } from './readProviderConfigs';
+ import {
+   LoggerService,
+@@ -74,7 +74,7 @@ export class {{providerClass}} implements EntityProvider {
+       fn: async () => {
+         const logger = this.#logger.child({
+           taskId: id,
+-          taskInstanceId: randomUUID(),
++          taskInstanceId: uuid.v4(),
+         });
+ 
+         try {
+diff --git a/packages/cli-node/src/monorepo/PackageGraph.test.ts b/packages/cli-node/src/monorepo/PackageGraph.test.ts
+index 7ee41e939d41..51d8f7b7bed6 100644
+--- a/packages/cli-node/src/monorepo/PackageGraph.test.ts
++++ b/packages/cli-node/src/monorepo/PackageGraph.test.ts
+@@ -222,51 +222,4 @@ c-dep@^2:
+       'origin/master',
+     );
+   });
+-
+-  it('detects packages affected by a removed dependency in the lockfile', async () => {
+-    const graph = PackageGraph.fromPackages(testPackages);
+-
+-    mockListChangedFiles.mockResolvedValueOnce(['yarn.lock']);
+-
+-    // The old lockfile (at the ref) has b depending on b-dep
+-    mockReadFileAtRef.mockResolvedValueOnce(`
+-a@^1:
+-  version: "1.0.0"
+-
+-b@^1:
+-  version: "1.0.0"
+-  dependencies:
+-      b-dep: ^1
+-
+-b-dep@^1:
+-  version: "1.0.0"
+-  integrity: sha512-old
+-
+-c@^1:
+-  version: "1.0.0"
+-`);
+-
+-    // The current lockfile no longer has b-dep at all
+-    jest.spyOn(Lockfile, 'load').mockResolvedValueOnce(
+-      Lockfile.parse(`
+-a@^1:
+-  version: "1.0.0"
+-
+-b@^1:
+-  version: "1.0.0"
+-
+-c@^1:
+-  version: "1.0.0"
+-`),
+-    );
+-
+-    await expect(
+-      graph
+-        .listChangedPackages({
+-          ref: 'origin/master',
+-          analyzeLockfile: true,
+-        })
+-        .then(pkgs => pkgs.map(pkg => pkg.name)),
+-    ).resolves.toEqual(['b']);
+-  });
+ });
+diff --git a/packages/cli-node/src/monorepo/PackageGraph.ts b/packages/cli-node/src/monorepo/PackageGraph.ts
+index 35fe943606ec..9d1745c7c56c 100644
+--- a/packages/cli-node/src/monorepo/PackageGraph.ts
++++ b/packages/cli-node/src/monorepo/PackageGraph.ts
+@@ -393,7 +393,7 @@ export class PackageGraph extends Map<string, PackageGraphNode> {
+       // Merge the dependency graph from the other lockfile into this one in
+       // order to be able to detect removals accurately.
+       {
+-        const otherGraph = otherLockfile.createSimplifiedDependencyGraph();
++        const otherGraph = thisLockfile.createSimplifiedDependencyGraph();
+         for (const [name, dependencies] of otherGraph) {
+           const node = graph.get(name);
+           if (node) {
+diff --git a/packages/ui/package.json b/packages/ui/package.json
+index 2b705dca4185..18d2336c2568 100644
+--- a/packages/ui/package.json
++++ b/packages/ui/package.json
+@@ -59,6 +59,8 @@
+   "devDependencies": {
+     "@backstage/cli": "workspace:^",
+     "@storybook/react-vite": "^10.3.3",
++    "@testing-library/jest-dom": "^6.0.0",
++    "@testing-library/react": "^16.0.0",
+     "@types/react": "^18.0.0",
+     "@types/react-dom": "^18.0.0",
+     "@types/use-sync-external-store": "^1.0.0",
+diff --git a/packages/ui/src/components/Card/Card.module.css b/packages/ui/src/components/Card/Card.module.css
+index 39af87ccc0bf..eced185550da 100644
+--- a/packages/ui/src/components/Card/Card.module.css
++++ b/packages/ui/src/components/Card/Card.module.css
+@@ -111,14 +111,8 @@
+ 
+   .bui-Card:has(.bui-CardHeader) .bui-CardBody {
+     padding-block-start: 0;
+-  }
+-
+-  .bui-Card:has(.bui-CardFooter) .bui-CardBody {
+-    padding-block-end: 0;
+-  }
+ 
+-  @supports (animation-timeline: scroll()) {
+-    .bui-Card:has(.bui-CardHeader) .bui-CardBody::before {
++    &::before {
+       content: '';
+       position: sticky;
+       top: 0;
+@@ -136,8 +130,12 @@
+       animation-timeline: scroll();
+       animation-range: 0px 2.5rem;
+     }
++  }
+ 
+-    .bui-Card:has(.bui-CardFooter) .bui-CardBody::after {
++  .bui-Card:has(.bui-CardFooter) .bui-CardBody {
++    padding-block-end: 0;
++
++    &::after {
+       content: '';
+       position: sticky;
+       bottom: 0;
+diff --git a/packages/ui/src/components/Checkbox/Checkbox.module.css b/packages/ui/src/components/Checkbox/Checkbox.module.css
+index 09fc386ff1bf..54705d95e938 100644
+--- a/packages/ui/src/components/Checkbox/Checkbox.module.css
++++ b/packages/ui/src/components/Checkbox/Checkbox.module.css
+@@ -68,19 +68,6 @@
+       color: var(--bui-fg-primary);
+     }
+ 
+-    .bui-Checkbox[data-invalid] & {
+-      box-shadow: inset 0 0 0 1px var(--bui-border-danger);
+-    }
+-
+-    .bui-Checkbox[data-invalid][data-selected] & {
+-      background-color: var(--bui-border-danger);
+-      box-shadow: none;
+-    }
+-
+-    .bui-Checkbox[data-invalid][data-indeterminate] & {
+-      box-shadow: inset 0 0 0 1px var(--bui-border-danger);
+-    }
+-
+     @media (prefers-reduced-motion: reduce) {
+       & {
+         transition: none;
+diff --git a/packages/ui/src/components/Checkbox/Checkbox.stories.tsx b/packages/ui/src/components/Checkbox/Checkbox.stories.tsx
+index 1ef1e873f492..94811d5cb65a 100644
+--- a/packages/ui/src/components/Checkbox/Checkbox.stories.tsx
++++ b/packages/ui/src/components/Checkbox/Checkbox.stories.tsx
+@@ -62,12 +62,6 @@ export const WithLongText = Default.extend({
+   ],
+ });
+ 
+-export const Invalid = Default.extend({
+-  args: {
+-    isInvalid: true,
+-  },
+-});
+-
+ export const AllVariants = meta.story({
+   ...Default.input,
+   render: () => (
+@@ -82,13 +76,6 @@ export const AllVariants = meta.story({
+       <Checkbox isIndeterminate isDisabled>
+         Indeterminate & Disabled
+       </Checkbox>
+-      <Checkbox isInvalid>Invalid</Checkbox>
+-      <Checkbox isInvalid isSelected>
+-        Invalid & Checked
+-      </Checkbox>
+-      <Checkbox isInvalid isIndeterminate>
+-        Invalid & Indeterminate
+-      </Checkbox>
+     </Flex>
+   ),
+ });
+diff --git a/packages/ui/src/hooks/useDefinition/useDefinition.tsx b/packages/ui/src/hooks/useDefinition/useDefinition.tsx
+index a6faf58d1faa..a0e3c53164ea 100644
+--- a/packages/ui/src/hooks/useDefinition/useDefinition.tsx
++++ b/packages/ui/src/hooks/useDefinition/useDefinition.tsx
+@@ -122,8 +122,10 @@ export function useDefinition<
+     analytics = ownPropsResolved.noTrack ? noopTracker : tracker;
+   }
+ 
+-  const utilityTarget = options?.utilityTarget ?? 'root';
+-  const classNameTarget = options?.classNameTarget ?? 'root';
++  const utilityTarget =
++    options?.utilityTarget !== undefined ? options.utilityTarget : 'root';
++  const classNameTarget =
++    options?.classNameTarget !== undefined ? options.classNameTarget : 'root';
+ 
+   const classes: Record<string, string> = {};
+ 
+diff --git a/packages/ui/src/setupTests.ts b/packages/ui/src/setupTests.ts
+new file mode 100644
+index 000000000000..5f11bab1c2c2
+--- /dev/null
++++ b/packages/ui/src/setupTests.ts
+@@ -0,0 +1,16 @@
++/*
++ * Copyright 2026 The Backstage Authors
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++import '@testing-library/jest-dom';
+diff --git a/plugins/auth-backend-module-cloudflare-access-provider/package.json b/plugins/auth-backend-module-cloudflare-access-provider/package.json
+index 226b7737d1ab..ad1979fae434 100644
+--- a/plugins/auth-backend-module-cloudflare-access-provider/package.json
++++ b/plugins/auth-backend-module-cloudflare-access-provider/package.json
+@@ -49,7 +49,8 @@
+     "@backstage/plugin-auth-backend": "workspace:^",
+     "@backstage/types": "workspace:^",
+     "msw": "^2.0.0",
+-    "node-mocks-http": "^1.0.0"
++    "node-mocks-http": "^1.0.0",
++    "uuid": "^11.0.0"
+   },
+   "configSchema": "config.d.ts"
+ }
+diff --git a/plugins/auth-backend-module-cloudflare-access-provider/src/helpers.test.ts b/plugins/auth-backend-module-cloudflare-access-provider/src/helpers.test.ts
+index 84236a5f149f..07e9860d9843 100644
+--- a/plugins/auth-backend-module-cloudflare-access-provider/src/helpers.test.ts
++++ b/plugins/auth-backend-module-cloudflare-access-provider/src/helpers.test.ts
+@@ -23,7 +23,7 @@ import { SignJWT, exportJWK, generateKeyPair } from 'jose';
+ import { HttpResponse, http } from 'msw';
+ import { setupServer } from 'msw/node';
+ import { createRequest } from 'node-mocks-http';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { AuthHelper } from './helpers';
+ import { CF_JWT_HEADER, CloudflareAccessIdentityProfile } from './types';
+ 
+diff --git a/plugins/auth-backend/package.json b/plugins/auth-backend/package.json
+index a142ebca6d41..a44188cca4ba 100644
+--- a/plugins/auth-backend/package.json
++++ b/plugins/auth-backend/package.json
+@@ -65,6 +65,7 @@
+     "matcher": "^4.0.0",
+     "minimatch": "^10.2.1",
+     "passport": "^0.7.0",
++    "uuid": "^11.0.0",
+     "zod": "^3.25.76 || ^4.0.0",
+     "zod-validation-error": "^5.0.0"
+   },
+diff --git a/plugins/auth-backend/src/identity/TokenFactory.ts b/plugins/auth-backend/src/identity/TokenFactory.ts
+index 457f9b793c18..d94825e32274 100644
+--- a/plugins/auth-backend/src/identity/TokenFactory.ts
++++ b/plugins/auth-backend/src/identity/TokenFactory.ts
+@@ -16,7 +16,7 @@
+ 
+ import { exportJWK, generateKeyPair, JWK } from 'jose';
+ import { DateTime } from 'luxon';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { LoggerService } from '@backstage/backend-plugin-api';
+ import {
+   BackstageSignInResult,
+diff --git a/plugins/auth-backend/src/service/OfflineAccessService.ts b/plugins/auth-backend/src/service/OfflineAccessService.ts
+index f9883fce3a3d..e8a8cae1f18a 100644
+--- a/plugins/auth-backend/src/service/OfflineAccessService.ts
++++ b/plugins/auth-backend/src/service/OfflineAccessService.ts
+@@ -23,7 +23,7 @@ import {
+ import { AuthenticationError } from '@backstage/errors';
+ import { readDurationFromConfig } from '@backstage/config';
+ import { durationToMilliseconds } from '@backstage/types';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { OfflineSessionDatabase } from '../database/OfflineSessionDatabase';
+ import {
+   generateRefreshToken,
+diff --git a/plugins/auth-node/package.json b/plugins/auth-node/package.json
+index 34dfab67d52d..8aa8a711a7c6 100644
+--- a/plugins/auth-node/package.json
++++ b/plugins/auth-node/package.json
+@@ -61,6 +61,7 @@
+     "cookie-parser": "^1.4.6",
+     "express-promise-router": "^4.1.1",
+     "msw": "^1.0.0",
+-    "supertest": "^7.0.0"
++    "supertest": "^7.0.0",
++    "uuid": "^11.0.0"
+   }
+ }
+diff --git a/plugins/auth-node/src/identity/DefaultIdentityClient.test.ts b/plugins/auth-node/src/identity/DefaultIdentityClient.test.ts
+index 4feec0d32cce..68765c6befac 100644
+--- a/plugins/auth-node/src/identity/DefaultIdentityClient.test.ts
++++ b/plugins/auth-node/src/identity/DefaultIdentityClient.test.ts
+@@ -23,7 +23,7 @@ import {
+ import { cloneDeep } from 'lodash';
+ import { rest } from 'msw';
+ import { setupServer } from 'msw/node';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ 
+ import { DefaultIdentityClient } from './DefaultIdentityClient';
+ import { IdentityApiGetIdentityRequest } from './IdentityApi';
+diff --git a/plugins/auth-node/src/identity/IdentityClient.test.ts b/plugins/auth-node/src/identity/IdentityClient.test.ts
+index a0c32d6a82e1..91cd1759aa95 100644
+--- a/plugins/auth-node/src/identity/IdentityClient.test.ts
++++ b/plugins/auth-node/src/identity/IdentityClient.test.ts
+@@ -24,7 +24,7 @@ import {
+ import { cloneDeep } from 'lodash';
+ import { rest } from 'msw';
+ import { setupServer } from 'msw/node';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ 
+ import { IdentityClient } from './IdentityClient';
+ import { DiscoveryService } from '@backstage/backend-plugin-api';
+diff --git a/plugins/catalog-backend-module-aws/package.json b/plugins/catalog-backend-module-aws/package.json
+index 38374c6b73f2..a9482910fc28 100644
+--- a/plugins/catalog-backend-module-aws/package.json
++++ b/plugins/catalog-backend-module-aws/package.json
+@@ -66,7 +66,8 @@
+     "@backstage/plugin-catalog-common": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+     "@backstage/plugin-kubernetes-common": "workspace:^",
+-    "p-limit": "^3.0.2"
++    "p-limit": "^3.0.2",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@aws-sdk/util-stream-node": "^3.350.0",
+diff --git a/plugins/catalog-backend-module-aws/src/providers/AwsS3EntityProvider.ts b/plugins/catalog-backend-module-aws/src/providers/AwsS3EntityProvider.ts
+index a522a7904a7f..fa731882137b 100644
+--- a/plugins/catalog-backend-module-aws/src/providers/AwsS3EntityProvider.ts
++++ b/plugins/catalog-backend-module-aws/src/providers/AwsS3EntityProvider.ts
+@@ -29,7 +29,7 @@ import {
+   ListObjectsV2Output,
+   S3,
+ } from '@aws-sdk/client-s3';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { getEndpointFromInstructions } from '@aws-sdk/middleware-endpoint';
+ import {
+   AwsCredentialsManager,
+@@ -137,7 +137,7 @@ export class AwsS3EntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: AwsS3EntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-azure/package.json b/plugins/catalog-backend-module-azure/package.json
+index a1df8542af37..544ec7e677b8 100644
+--- a/plugins/catalog-backend-module-azure/package.json
++++ b/plugins/catalog-backend-module-azure/package.json
+@@ -59,7 +59,8 @@
+     "@backstage/integration": "workspace:^",
+     "@backstage/plugin-catalog-common": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+-    "@backstage/plugin-events-node": "workspace:^"
++    "@backstage/plugin-events-node": "workspace:^",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-azure/src/providers/AzureBlobStorageEntityProvider.ts b/plugins/catalog-backend-module-azure/src/providers/AzureBlobStorageEntityProvider.ts
+index c9e548932639..fdb05b078195 100644
+--- a/plugins/catalog-backend-module-azure/src/providers/AzureBlobStorageEntityProvider.ts
++++ b/plugins/catalog-backend-module-azure/src/providers/AzureBlobStorageEntityProvider.ts
+@@ -32,7 +32,7 @@ import {
+   locationSpecToLocationEntity,
+ } from '@backstage/plugin-catalog-node';
+ import { LocationSpec } from '@backstage/plugin-catalog-common';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { readAzureBlobStorageConfigs } from './config';
+ import {
+   AzureBlobStorageIntergation,
+@@ -134,7 +134,7 @@ export class AzureBlobStorageEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: AzureBlobStorageEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-azure/src/providers/AzureDevOpsEntityProvider.ts b/plugins/catalog-backend-module-azure/src/providers/AzureDevOpsEntityProvider.ts
+index 3e626f282f85..5869d0e2ba16 100644
+--- a/plugins/catalog-backend-module-azure/src/providers/AzureDevOpsEntityProvider.ts
++++ b/plugins/catalog-backend-module-azure/src/providers/AzureDevOpsEntityProvider.ts
+@@ -29,7 +29,7 @@ import {
+ import { LocationSpec } from '@backstage/plugin-catalog-common';
+ import { readAzureDevOpsConfigs } from './config';
+ import { AzureDevOpsConfig } from './types';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { codeSearch, CodeSearchResultItem } from '../lib';
+ import {
+   SchedulerService,
+@@ -129,7 +129,7 @@ export class AzureDevOpsEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: AzureDevOpsEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-backstage-openapi/package.json b/plugins/catalog-backend-module-backstage-openapi/package.json
+index e42ee5ed551b..c1927c591272 100644
+--- a/plugins/catalog-backend-module-backstage-openapi/package.json
++++ b/plugins/catalog-backend-module-backstage-openapi/package.json
+@@ -42,6 +42,7 @@
+     "cross-fetch": "^4.0.0",
+     "lodash": "^4.17.21",
+     "openapi-merge": "^1.3.2",
++    "uuid": "^11.0.0",
+     "yaml": "^2.7.0"
+   },
+   "devDependencies": {
+diff --git a/plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts b/plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
+index 9c9316f68612..d488831ec6f6 100644
+--- a/plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
++++ b/plugins/catalog-backend-module-backstage-openapi/src/InternalOpenApiDocumentationProvider.ts
+@@ -40,7 +40,7 @@ import {
+   SchedulerService,
+   SchedulerServiceTaskRunner,
+ } from '@backstage/backend-plugin-api';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import lodash from 'lodash';
+ 
+ const HTTP_VERBS: (keyof PathItemObject)[] = [
+@@ -238,7 +238,7 @@ export class InternalOpenApiDocumentationProvider implements EntityProvider {
+             class:
+               InternalOpenApiDocumentationProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+           await this.refresh(logger);
+         },
+diff --git a/plugins/catalog-backend-module-bitbucket-cloud/package.json b/plugins/catalog-backend-module-bitbucket-cloud/package.json
+index 2641d77e4b88..63905bd97ffa 100644
+--- a/plugins/catalog-backend-module-bitbucket-cloud/package.json
++++ b/plugins/catalog-backend-module-bitbucket-cloud/package.json
+@@ -59,7 +59,8 @@
+     "@backstage/plugin-bitbucket-cloud-common": "workspace:^",
+     "@backstage/plugin-catalog-common": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+-    "@backstage/plugin-events-node": "workspace:^"
++    "@backstage/plugin-events-node": "workspace:^",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.ts b/plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.ts
+index 7a059f879364..33327e1f33b5 100644
+--- a/plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.ts
++++ b/plugins/catalog-backend-module-bitbucket-cloud/src/providers/BitbucketCloudEntityProvider.ts
+@@ -44,7 +44,7 @@ import {
+   BitbucketCloudEntityProviderConfig,
+   readProviderConfigs,
+ } from './BitbucketCloudEntityProviderConfig';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ 
+ const DEFAULT_BRANCH = 'master';
+ const TOPIC_REPO_PUSH = 'bitbucketCloud.repo:push';
+@@ -154,7 +154,7 @@ export class BitbucketCloudEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: BitbucketCloudEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-bitbucket-server/package.json b/plugins/catalog-backend-module-bitbucket-server/package.json
+index e5ad23324f69..da623fd60d78 100644
+--- a/plugins/catalog-backend-module-bitbucket-server/package.json
++++ b/plugins/catalog-backend-module-bitbucket-server/package.json
+@@ -53,7 +53,8 @@
+     "@backstage/integration": "workspace:^",
+     "@backstage/plugin-catalog-common": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+-    "@backstage/plugin-events-node": "workspace:^"
++    "@backstage/plugin-events-node": "workspace:^",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-bitbucket-server/src/providers/BitbucketServerEntityProvider.ts b/plugins/catalog-backend-module-bitbucket-server/src/providers/BitbucketServerEntityProvider.ts
+index 809c2276f2cd..4b02632892c6 100644
+--- a/plugins/catalog-backend-module-bitbucket-server/src/providers/BitbucketServerEntityProvider.ts
++++ b/plugins/catalog-backend-module-bitbucket-server/src/providers/BitbucketServerEntityProvider.ts
+@@ -27,7 +27,7 @@ import {
+   DeferredEntity,
+   CatalogService,
+ } from '@backstage/plugin-catalog-node';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { BitbucketServerClient, paginated } from '../lib';
+ import {
+   BitbucketServerEntityProviderConfig,
+@@ -157,7 +157,7 @@ export class BitbucketServerEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: BitbucketServerEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-gerrit/package.json b/plugins/catalog-backend-module-gerrit/package.json
+index 30a7aca3d613..87317eec0043 100644
+--- a/plugins/catalog-backend-module-gerrit/package.json
++++ b/plugins/catalog-backend-module-gerrit/package.json
+@@ -54,7 +54,8 @@
+     "@backstage/plugin-catalog-common": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+     "fs-extra": "^11.2.0",
+-    "p-limit": "^3.1.0"
++    "p-limit": "^3.1.0",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.ts b/plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.ts
+index 8bfa6a9fe0e3..bd23c4b59c81 100644
+--- a/plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.ts
++++ b/plugins/catalog-backend-module-gerrit/src/providers/GerritEntityProvider.ts
+@@ -29,7 +29,7 @@ import {
+   parseGerritJsonResponse,
+   ScmIntegrations,
+ } from '@backstage/integration';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import pLimit from 'p-limit';
+ 
+ import { readGerritConfigs } from './config';
+@@ -128,7 +128,7 @@ export class GerritEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: GerritEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-gitea/package.json b/plugins/catalog-backend-module-gitea/package.json
+index 80a2cead6bdf..7e6c01ce68c2 100644
+--- a/plugins/catalog-backend-module-gitea/package.json
++++ b/plugins/catalog-backend-module-gitea/package.json
+@@ -39,7 +39,8 @@
+     "@backstage/integration": "workspace:^",
+     "@backstage/plugin-catalog-common": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+-    "p-limit": "^3.0.2"
++    "p-limit": "^3.0.2",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.test.ts b/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.test.ts
+index fbc59a0b1c6e..539d432793de 100644
+--- a/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.test.ts
++++ b/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.test.ts
+@@ -17,17 +17,14 @@ import { mockServices } from '@backstage/backend-test-utils';
+ import { ConfigReader } from '@backstage/config';
+ import { EntityProviderConnection } from '@backstage/plugin-catalog-node';
+ import { GiteaEntityProvider } from './GiteaEntityProvider';
+-import * as nodeCrypto from 'node:crypto';
++import * as uuid from 'uuid';
+ import { readGiteaConfigs } from './config';
+ import { getGiteaApiUrl } from './core';
+ import { GiteaIntegration } from '@backstage/integration';
+ 
+ jest.mock('./config');
+ jest.mock('./core');
+-jest.mock('node:crypto', () => ({
+-  ...jest.requireActual('node:crypto'),
+-  randomUUID: jest.fn(),
+-}));
++jest.mock('uuid');
+ 
+ describe('GiteaEntityProvider', () => {
+   const logger = mockServices.logger.mock();
+@@ -62,7 +59,7 @@ describe('GiteaEntityProvider', () => {
+       'https://gitea.example.com/api/v1/',
+     );
+     mockScheduler.createScheduledTaskRunner.mockReturnValue(mockTaskRunner);
+-    (nodeCrypto.randomUUID as jest.Mock).mockReturnValue('test-uuid');
++    (uuid.v4 as jest.Mock).mockReturnValue('test-uuid');
+ 
+     // Mock global fetch
+     global.fetch = jest.fn();
+diff --git a/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts b/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts
+index a1cf506f5287..2f9475af26ea 100644
+--- a/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts
++++ b/plugins/catalog-backend-module-gitea/src/providers/GiteaEntityProvider.ts
+@@ -13,7 +13,7 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { Config } from '@backstage/config';
+ import { InputError } from '@backstage/errors';
+ import {
+@@ -141,7 +141,7 @@ export class GiteaEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: GiteaEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-github/package.json b/plugins/catalog-backend-module-github/package.json
+index 768052ec4e2c..a64968c981f8 100644
+--- a/plugins/catalog-backend-module-github/package.json
++++ b/plugins/catalog-backend-module-github/package.json
+@@ -70,7 +70,8 @@
+     "git-url-parse": "^15.0.0",
+     "lodash": "^4.17.21",
+     "minimatch": "^10.2.1",
+-    "octokit": "^3.0.0"
++    "octokit": "^3.0.0",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-defaults": "workspace:^",
+diff --git a/plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts b/plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
+index a89845465f1e..5a830c20b5f0 100644
+--- a/plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
++++ b/plugins/catalog-backend-module-github/src/providers/GithubEntityProvider.ts
+@@ -32,7 +32,7 @@ import {
+ 
+ import { LocationSpec } from '@backstage/plugin-catalog-common';
+ 
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import {
+   GithubEntityProviderConfig,
+   readProviderConfigs,
+@@ -189,7 +189,7 @@ export class GithubEntityProvider implements EntityProvider, EventSubscriber {
+           const logger = this.logger.child({
+             class: GithubEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+           try {
+             await this.refresh(logger);
+diff --git a/plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts b/plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
+index 426a67eadb72..28d598b5b16b 100644
+--- a/plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
++++ b/plugins/catalog-backend-module-github/src/providers/GithubMultiOrgEntityProvider.ts
+@@ -52,7 +52,7 @@ import {
+   TeamEvent,
+ } from '@octokit/webhooks-types';
+ import { merge } from 'lodash';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ 
+ import {
+   assignGroupsToUsers,
+@@ -894,7 +894,7 @@ export class GithubMultiOrgEntityProvider implements EntityProvider {
+           const logger = this.options.logger.child({
+             class: GithubMultiOrgEntityProvider.prototype.constructor.name,
+             taskId: id,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts b/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
+index ce9ae13af6af..d13520f1129b 100644
+--- a/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
++++ b/plugins/catalog-backend-module-github/src/providers/GithubOrgEntityProvider.ts
+@@ -41,7 +41,7 @@ import {
+   TeamEditedEvent,
+   TeamEvent,
+ } from '@octokit/webhooks-types';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import {
+   defaultOrganizationTeamTransformer,
+   defaultUserTransformer,
+@@ -653,7 +653,7 @@ export class GithubOrgEntityProvider implements EntityProvider {
+           const logger = this.options.logger.child({
+             class: GithubOrgEntityProvider.prototype.constructor.name,
+             taskId: id,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-gitlab/package.json b/plugins/catalog-backend-module-gitlab/package.json
+index 86a01cf35033..8d413c52105b 100644
+--- a/plugins/catalog-backend-module-gitlab/package.json
++++ b/plugins/catalog-backend-module-gitlab/package.json
+@@ -61,7 +61,8 @@
+     "@backstage/plugin-catalog-node": "workspace:^",
+     "@backstage/plugin-events-node": "workspace:^",
+     "@gitbeaker/rest": "^40.0.3",
+-    "lodash": "^4.17.21"
++    "lodash": "^4.17.21",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-gitlab/src/providers/GitlabDiscoveryEntityProvider.ts b/plugins/catalog-backend-module-gitlab/src/providers/GitlabDiscoveryEntityProvider.ts
+index c171e66801b6..92f4ac797aeb 100644
+--- a/plugins/catalog-backend-module-gitlab/src/providers/GitlabDiscoveryEntityProvider.ts
++++ b/plugins/catalog-backend-module-gitlab/src/providers/GitlabDiscoveryEntityProvider.ts
+@@ -30,7 +30,7 @@ import {
+ } from '@backstage/plugin-catalog-node';
+ import { EventsService } from '@backstage/plugin-events-node';
+ import { WebhookProjectSchema, WebhookPushEventSchema } from '@gitbeaker/rest';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import {
+   GitLabClient,
+   GitLabGroup,
+@@ -180,7 +180,7 @@ export class GitlabDiscoveryEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: GitlabDiscoveryEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts b/plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts
+index 7e0f1aed2727..37b446fd9547 100644
+--- a/plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts
++++ b/plugins/catalog-backend-module-gitlab/src/providers/GitlabOrgDiscoveryEntityProvider.ts
+@@ -31,7 +31,7 @@ import {
+ } from '@backstage/plugin-catalog-node';
+ import { EventsService } from '@backstage/plugin-events-node';
+ import { merge } from 'lodash';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ 
+ import {
+   GitLabClient,
+@@ -340,7 +340,7 @@ export class GitlabOrgDiscoveryEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: GitlabOrgDiscoveryEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-incremental-ingestion/package.json b/plugins/catalog-backend-module-incremental-ingestion/package.json
+index 49ec3eb41576..8fa3963d35fc 100644
+--- a/plugins/catalog-backend-module-incremental-ingestion/package.json
++++ b/plugins/catalog-backend-module-incremental-ingestion/package.json
+@@ -59,7 +59,8 @@
+     "express": "^4.22.0",
+     "express-promise-router": "^4.1.0",
+     "knex": "^3.0.0",
+-    "luxon": "^3.0.0"
++    "luxon": "^3.0.0",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.test.ts b/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.test.ts
+index a99ca1cb9481..03a0488cb0ab 100644
+--- a/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.test.ts
++++ b/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.test.ts
+@@ -16,7 +16,7 @@
+ 
+ import { TestDatabases } from '@backstage/backend-test-utils';
+ import { IncrementalIngestionDatabaseManager } from './IncrementalIngestionDatabaseManager';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { DeferredEntity } from '@backstage/plugin-catalog-node';
+ 
+ const migrationsDir = `${__dirname}/../../migrations`;
+diff --git a/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts b/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
+index ff1b98508f8e..d5f6487c5dc5 100644
+--- a/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
++++ b/plugins/catalog-backend-module-incremental-ingestion/src/database/IncrementalIngestionDatabaseManager.ts
+@@ -18,7 +18,7 @@ import { Knex } from 'knex';
+ import type { DeferredEntity } from '@backstage/plugin-catalog-node';
+ import { stringifyEntityRef } from '@backstage/catalog-model';
+ import { Duration } from 'luxon';
+-import { randomUUID as v4 } from 'node:crypto';
++import { v4 } from 'uuid';
+ import {
+   IngestionRecord,
+   IngestionRecordUpdate,
+diff --git a/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts b/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+index 0907648be087..2cfa5904f413 100644
+--- a/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
++++ b/plugins/catalog-backend-module-incremental-ingestion/src/engine/IncrementalIngestionEngine.ts
+@@ -20,7 +20,7 @@ import { IterationEngine, IterationEngineOptions } from '../types';
+ import { IncrementalIngestionDatabaseManager } from '../database/IncrementalIngestionDatabaseManager';
+ import { performance } from 'node:perf_hooks';
+ import { Duration } from 'luxon';
+-import { randomUUID as v4 } from 'node:crypto';
++import { v4 } from 'uuid';
+ import { stringifyError, toError } from '@backstage/errors';
+ import { EventParams } from '@backstage/plugin-events-node';
+ import { HumanDuration } from '@backstage/types';
+diff --git a/plugins/catalog-backend-module-ldap/package.json b/plugins/catalog-backend-module-ldap/package.json
+index 7b2ea60ada19..b634b020ec6e 100644
+--- a/plugins/catalog-backend-module-ldap/package.json
++++ b/plugins/catalog-backend-module-ldap/package.json
+@@ -46,7 +46,8 @@
+     "@backstage/plugin-catalog-node": "workspace:^",
+     "@backstage/types": "workspace:^",
+     "ldapts": "^8.0.6",
+-    "lodash": "^4.17.21"
++    "lodash": "^4.17.21",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/cli": "workspace:^",
+diff --git a/plugins/catalog-backend-module-ldap/src/processors/LdapOrgEntityProvider.ts b/plugins/catalog-backend-module-ldap/src/processors/LdapOrgEntityProvider.ts
+index ccfb5d17d6ed..5edd3b06d0b4 100644
+--- a/plugins/catalog-backend-module-ldap/src/processors/LdapOrgEntityProvider.ts
++++ b/plugins/catalog-backend-module-ldap/src/processors/LdapOrgEntityProvider.ts
+@@ -25,7 +25,7 @@ import {
+   EntityProviderConnection,
+ } from '@backstage/plugin-catalog-node';
+ import { merge } from 'lodash';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import {
+   GroupTransformer,
+   LdapClient,
+@@ -324,7 +324,7 @@ export class LdapOrgEntityProvider implements EntityProvider {
+           const logger = this.options.logger.child({
+             class: LdapOrgEntityProvider.prototype.constructor.name,
+             taskId: id,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-msgraph/package.json b/plugins/catalog-backend-module-msgraph/package.json
+index 8133c04ea842..b016f3ce7be8 100644
+--- a/plugins/catalog-backend-module-msgraph/package.json
++++ b/plugins/catalog-backend-module-msgraph/package.json
+@@ -60,7 +60,8 @@
+     "@microsoft/microsoft-graph-types": "^2.6.0",
+     "lodash": "^4.17.21",
+     "p-limit": "^3.0.2",
+-    "qs": "^6.9.4"
++    "qs": "^6.9.4",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-msgraph/src/processors/MicrosoftGraphOrgEntityProvider.ts b/plugins/catalog-backend-module-msgraph/src/processors/MicrosoftGraphOrgEntityProvider.ts
+index 572931537d62..a6f2ee78d7c7 100644
+--- a/plugins/catalog-backend-module-msgraph/src/processors/MicrosoftGraphOrgEntityProvider.ts
++++ b/plugins/catalog-backend-module-msgraph/src/processors/MicrosoftGraphOrgEntityProvider.ts
+@@ -25,7 +25,7 @@ import {
+   EntityProviderConnection,
+ } from '@backstage/plugin-catalog-node';
+ import { merge } from 'lodash';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import {
+   GroupTransformer,
+   MICROSOFT_GRAPH_GROUP_ID_ANNOTATION,
+@@ -391,7 +391,7 @@ export class MicrosoftGraphOrgEntityProvider implements EntityProvider {
+           const logger = this.options.logger.child({
+             class: MicrosoftGraphOrgEntityProvider.prototype.constructor.name,
+             taskId: id,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+ 
+           try {
+diff --git a/plugins/catalog-backend-module-puppetdb/package.json b/plugins/catalog-backend-module-puppetdb/package.json
+index a5443faae10e..8adf244bffbf 100644
+--- a/plugins/catalog-backend-module-puppetdb/package.json
++++ b/plugins/catalog-backend-module-puppetdb/package.json
+@@ -55,7 +55,8 @@
+     "@backstage/errors": "workspace:^",
+     "@backstage/plugin-catalog-node": "workspace:^",
+     "@backstage/types": "workspace:^",
+-    "lodash": "^4.17.21"
++    "lodash": "^4.17.21",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.ts b/plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.ts
+index d44c44783214..8849e32c16e7 100644
+--- a/plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.ts
++++ b/plugins/catalog-backend-module-puppetdb/src/providers/PuppetDbEntityProvider.ts
+@@ -23,7 +23,7 @@ import {
+   readProviderConfigs,
+ } from './PuppetDbEntityProviderConfig';
+ import { Config } from '@backstage/config';
+-import { randomUUID } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { defaultResourceTransformer, ResourceTransformer } from '../puppet';
+ import {
+   ANNOTATION_LOCATION,
+@@ -145,7 +145,7 @@ export class PuppetDbEntityProvider implements EntityProvider {
+           const logger = this.logger.child({
+             class: PuppetDbEntityProvider.prototype.constructor.name,
+             taskId,
+-            taskInstanceId: randomUUID(),
++            taskInstanceId: uuid.v4(),
+           });
+           try {
+             await this.refresh(logger);
+diff --git a/plugins/catalog-backend/migrations/20200809202832_add_bootstrap_location.js b/plugins/catalog-backend/migrations/20200809202832_add_bootstrap_location.js
+index 6adf798b07bd..5afb069d49a4 100644
+--- a/plugins/catalog-backend/migrations/20200809202832_add_bootstrap_location.js
++++ b/plugins/catalog-backend/migrations/20200809202832_add_bootstrap_location.js
+@@ -23,7 +23,7 @@ exports.up = async function up(knex) {
+   // Adds a single 'bootstrap' location that can be used to trigger work in processors.
+   // This is primarily here to fulfill foreign key constraints.
+   await knex('locations').insert({
+-    id: require('node:crypto').randomUUID(),
++    id: require('uuid').v4(),
+     type: 'bootstrap',
+     target: 'bootstrap',
+   });
+diff --git a/plugins/catalog-backend/package.json b/plugins/catalog-backend/package.json
+index 47d9da1650d2..d28fb2befe42 100644
+--- a/plugins/catalog-backend/package.json
++++ b/plugins/catalog-backend/package.json
+@@ -94,6 +94,7 @@
+     "minimatch": "^10.2.1",
+     "p-limit": "^3.0.2",
+     "prom-client": "^15.0.0",
++    "uuid": "^11.0.0",
+     "yaml": "^2.0.0",
+     "yn": "^4.0.0",
+     "zod": "^3.25.76 || ^4.0.0",
+diff --git a/plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts b/plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
+index d1501c073dd7..b9f3599b1984 100644
+--- a/plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
++++ b/plugins/catalog-backend/src/database/DefaultProcessingDatabase.test.ts
+@@ -21,7 +21,7 @@ import {
+ } from '@backstage/backend-test-utils';
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { Logger } from 'winston';
+ import { DateTime } from 'luxon';
+ import { applyDatabaseMigrations } from './migrations';
+@@ -80,7 +80,7 @@ describe('DefaultProcessingDatabase', () => {
+     let processedEntity: Entity;
+ 
+     beforeEach(() => {
+-      id = uuid();
++      id = uuid.v4();
+       processedEntity = {
+         apiVersion: '1',
+         kind: 'Location',
+diff --git a/plugins/catalog-backend/src/database/DefaultProviderDatabase.test.ts b/plugins/catalog-backend/src/database/DefaultProviderDatabase.test.ts
+index b193564102f1..d9465b27a6dd 100644
+--- a/plugins/catalog-backend/src/database/DefaultProviderDatabase.test.ts
++++ b/plugins/catalog-backend/src/database/DefaultProviderDatabase.test.ts
+@@ -21,7 +21,7 @@ import {
+ } from '@backstage/backend-test-utils';
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { DefaultProviderDatabase } from './DefaultProviderDatabase';
+ import { applyDatabaseMigrations } from './migrations';
+ import { DbRefreshStateReferencesRow, DbRefreshStateRow } from './tables';
+@@ -62,7 +62,7 @@ describe('DefaultProviderDatabase', () => {
+   const createLocations = async (db: Knex, entityRefs: string[]) => {
+     for (const ref of entityRefs) {
+       await insertRefreshStateRow(db, {
+-        entity_id: uuid(),
++        entity_id: uuid.v4(),
+         entity_ref: ref,
+         unprocessed_entity: '{}',
+         processed_entity: '{}',
+@@ -501,7 +501,7 @@ describe('DefaultProviderDatabase', () => {
+         const { knex, db } = await createDatabase(databaseId);
+         await createLocations(knex, ['location:default/removed']);
+         await insertRefreshStateRow(knex, {
+-          entity_id: uuid(),
++          entity_id: uuid.v4(),
+           entity_ref: 'location:default/replaced',
+           unprocessed_entity: '{}',
+           processed_entity: '{}',
+diff --git a/plugins/catalog-backend/src/database/DefaultProviderDatabase.ts b/plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
+index fd844ca5e7d7..f6f89d066c4e 100644
+--- a/plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
++++ b/plugins/catalog-backend/src/database/DefaultProviderDatabase.ts
+@@ -18,7 +18,7 @@ import { stringifyEntityRef } from '@backstage/catalog-model';
+ import { DeferredEntity } from '@backstage/plugin-catalog-node';
+ import { Knex } from 'knex';
+ import lodash from 'lodash';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { rethrowError } from './conversion';
+ import { deleteWithEagerPruningOfChildren } from './operations/provider/deleteWithEagerPruningOfChildren';
+ import { refreshByRefreshKeys } from './operations/provider/refreshByRefreshKeys';
+diff --git a/plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.test.ts b/plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.test.ts
+index 1ec061134785..451f7bc1ac19 100644
+--- a/plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.test.ts
++++ b/plugins/catalog-backend/src/database/operations/provider/deleteWithEagerPruningOfChildren.test.ts
+@@ -16,7 +16,7 @@
+ 
+ import { TestDatabaseId, TestDatabases } from '@backstage/backend-test-utils';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { applyDatabaseMigrations } from '../../migrations';
+ import {
+   DbRefreshStateReferencesRow,
+@@ -64,7 +64,7 @@ describe('deleteWithEagerPruningOfChildren', () => {
+   async function insertEntity(knex: Knex, ...entityRefs: string[]) {
+     for (const ref of entityRefs) {
+       await knex<DbRefreshStateRow>('refresh_state').insert({
+-        entity_id: uuid(),
++        entity_id: uuid.v4(),
+         entity_ref: ref,
+         unprocessed_entity: '{}',
+         processed_entity: '{}',
+diff --git a/plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.test.ts b/plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.test.ts
+index e37f764ce04f..cd3a3c717ee2 100644
+--- a/plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.test.ts
++++ b/plugins/catalog-backend/src/database/operations/provider/refreshByRefreshKeys.test.ts
+@@ -15,7 +15,7 @@
+  */
+ 
+ import { TestDatabaseId, TestDatabases } from '@backstage/backend-test-utils';
+-import { randomUUID as uuid } from 'node:crypto';
++import * as uuid from 'uuid';
+ import { applyDatabaseMigrations } from '../../migrations';
+ import { DbRefreshKeysRow, DbRefreshStateRow } from '../../tables';
+ import { generateTargetKey } from '../../util';
+@@ -37,7 +37,7 @@ describe('refreshByRefreshKeys', () => {
+     async databaseId => {
+       const knex = await createDatabase(databaseId);
+ 
+-      const eid1 = uuid();
++      const eid1 = uuid.v4();
+       await knex<DbRefreshStateRow>('refresh_state').insert({
+         entity_id: eid1,
+         entity_ref: 'k:ns/n1',
+@@ -48,7 +48,7 @@ describe('refreshByRefreshKeys', () => {
+         last_discovery_at: '2021-04-01 13:37:00',
+       });
+ 
+-      const eid2 = uuid();
++      const eid2 = uuid.v4();
+       await knex<DbRefreshStateRow>('refresh_state').insert({
+         entity_id: eid2,
+         entity_ref: 'k:ns/n2',
+diff --git a/plugins/catalog-backend/src/database/operations/refreshState/insertUnprocessedEntity.ts b/plugins/catalog-backend/src/database/operations/refreshState/insertUnprocessedEntity.ts
+index 83675d05a2bc..54067c3f2ecb 100644
+--- a/plugins/catalog-backend/src/database/operations/refreshState/insertUnprocessedEntity.ts
++++ b/plugins/catalog-backend/src/database/operations/refreshState/insertUnprocessedEntity.ts
+@@ -17,7 +17,7 @@
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+ import { Knex } from 'knex';
+ import { DbRefreshStateRow } from '../../tables';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import {
+   LoggerService,
+   isDatabaseConflictError,
+diff --git a/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts b/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts
+index f0dfc5db7129..9e22a65e7bc8 100644
+--- a/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts
++++ b/plugins/catalog-backend/src/database/operations/stitcher/markForStitching.ts
+@@ -16,7 +16,7 @@
+ 
+ import { Knex } from 'knex';
+ import splitToChunks from 'lodash/chunk';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { StitchingStrategy } from '../../../stitching/types';
+ import {
+   DbFinalEntitiesRow,
+diff --git a/plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts b/plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
+index 91b6f7b29f39..b11687e33f19 100644
+--- a/plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
++++ b/plugins/catalog-backend/src/providers/DefaultLocationStore.test.ts
+@@ -19,7 +19,7 @@ import {
+   ANNOTATION_ORIGIN_LOCATION,
+   stringifyEntityRef,
+ } from '@backstage/catalog-model';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { applyDatabaseMigrations } from '../database/migrations';
+ import {
+   DbFinalEntitiesRow,
+diff --git a/plugins/catalog-backend/src/providers/DefaultLocationStore.ts b/plugins/catalog-backend/src/providers/DefaultLocationStore.ts
+index 7ebbd47aa1c5..519835439f41 100644
+--- a/plugins/catalog-backend/src/providers/DefaultLocationStore.ts
++++ b/plugins/catalog-backend/src/providers/DefaultLocationStore.ts
+@@ -17,7 +17,7 @@
+ import { Location } from '@backstage/catalog-client';
+ import { ConflictError, InputError, NotFoundError } from '@backstage/errors';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import {
+   DbLocationsRow,
+   DbRefreshStateRow,
+diff --git a/plugins/catalog-backend/src/service/DefaultEntitiesCatalog.test.ts b/plugins/catalog-backend/src/service/DefaultEntitiesCatalog.test.ts
+index 2bc70a6e940c..e714d6e3a75a 100644
+--- a/plugins/catalog-backend/src/service/DefaultEntitiesCatalog.test.ts
++++ b/plugins/catalog-backend/src/service/DefaultEntitiesCatalog.test.ts
+@@ -22,7 +22,7 @@ import {
+ } from '@backstage/backend-test-utils';
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid, v4 } from 'uuid';
+ import {
+   QueryEntitiesCursorRequest,
+   QueryEntitiesInitialRequest,
+@@ -99,7 +99,7 @@ describe('DefaultEntitiesCatalog', () => {
+   }
+ 
+   async function addEntityToSearch(entity: Entity) {
+-    const id = entity.metadata.uid || uuid();
++    const id = entity.metadata.uid || v4();
+     const entityRef = stringifyEntityRef(entity);
+     const entityJson = JSON.stringify(entity);
+ 
+@@ -1518,7 +1518,7 @@ describe('DefaultEntitiesCatalog', () => {
+               addEntityToSearch({
+                 apiVersion: 'a',
+                 kind: 'k',
+-                metadata: { name: uuid() },
++                metadata: { name: v4() },
+               }),
+             ),
+         );
+@@ -1554,7 +1554,7 @@ describe('DefaultEntitiesCatalog', () => {
+               addEntityToSearch({
+                 apiVersion: 'a',
+                 kind: 'k',
+-                metadata: { name: uuid() },
++                metadata: { name: v4() },
+               }),
+             ),
+         );
+@@ -2465,7 +2465,7 @@ describe('DefaultEntitiesCatalog', () => {
+ 
+         // Insert an unstitched entity: final_entity is NULL but search
+         // rows exist. This simulates a race or future tombstone state.
+-        const unstitchedId = uuid();
++        const unstitchedId = v4();
+         await knex<DbRefreshStateRow>('refresh_state').insert({
+           entity_id: unstitchedId,
+           entity_ref: 'component:default/unstitched',
+diff --git a/plugins/catalog-backend/src/service/DefaultRefreshService.test.ts b/plugins/catalog-backend/src/service/DefaultRefreshService.test.ts
+index d659f8394e33..00ce749b4a84 100644
+--- a/plugins/catalog-backend/src/service/DefaultRefreshService.test.ts
++++ b/plugins/catalog-backend/src/service/DefaultRefreshService.test.ts
+@@ -23,7 +23,7 @@ import {
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+ import { createHash } from 'node:crypto';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { DefaultCatalogDatabase } from '../database/DefaultCatalogDatabase';
+ import { DefaultProcessingDatabase } from '../database/DefaultProcessingDatabase';
+ import { applyDatabaseMigrations } from '../database/migrations';
+diff --git a/plugins/catalog-backend/src/service/request/applyEntityFilterToQuery.test.ts b/plugins/catalog-backend/src/service/request/applyEntityFilterToQuery.test.ts
+index eac85635c1c2..92b1cd093f75 100644
+--- a/plugins/catalog-backend/src/service/request/applyEntityFilterToQuery.test.ts
++++ b/plugins/catalog-backend/src/service/request/applyEntityFilterToQuery.test.ts
+@@ -25,7 +25,7 @@ import { Knex } from 'knex';
+ import { applyDatabaseMigrations } from '../../database/migrations';
+ import { EntityFilter } from '@backstage/plugin-catalog-node';
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { buildEntitySearch } from '../../database/operations/stitcher/buildEntitySearch';
+ 
+ jest.setTimeout(60_000);
+diff --git a/plugins/catalog-backend/src/service/request/applyPredicateEntityFilterToQuery.test.ts b/plugins/catalog-backend/src/service/request/applyPredicateEntityFilterToQuery.test.ts
+index 0a9eb4560c76..6755ed5cc2f3 100644
+--- a/plugins/catalog-backend/src/service/request/applyPredicateEntityFilterToQuery.test.ts
++++ b/plugins/catalog-backend/src/service/request/applyPredicateEntityFilterToQuery.test.ts
+@@ -25,7 +25,7 @@ import { Knex } from 'knex';
+ import { applyDatabaseMigrations } from '../../database/migrations';
+ import { FilterPredicate } from '@backstage/filter-predicates';
+ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { buildEntitySearch } from '../../database/operations/stitcher/buildEntitySearch';
+ 
+ jest.setTimeout(60_000);
+diff --git a/plugins/example-todo-list-backend/package.json b/plugins/example-todo-list-backend/package.json
+index 7d61b9f43fc1..7d541db65a0e 100644
+--- a/plugins/example-todo-list-backend/package.json
++++ b/plugins/example-todo-list-backend/package.json
+@@ -42,7 +42,8 @@
+     "@backstage/errors": "workspace:^",
+     "@types/express": "^4.17.6",
+     "express": "^4.22.0",
+-    "express-promise-router": "^4.1.0"
++    "express-promise-router": "^4.1.0",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-defaults": "workspace:^",
+diff --git a/plugins/example-todo-list-backend/src/service/todos.ts b/plugins/example-todo-list-backend/src/service/todos.ts
+index 69fec8a73fb9..75de25b845f6 100644
+--- a/plugins/example-todo-list-backend/src/service/todos.ts
++++ b/plugins/example-todo-list-backend/src/service/todos.ts
+@@ -14,7 +14,7 @@
+  * limitations under the License.
+  */
+ 
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { NotFoundError } from '@backstage/errors';
+ 
+ export type Todo = {
+diff --git a/plugins/notifications-backend/package.json b/plugins/notifications-backend/package.json
+index cffd331ef633..13275fbfb36a 100644
+--- a/plugins/notifications-backend/package.json
++++ b/plugins/notifications-backend/package.json
+@@ -54,7 +54,8 @@
+     "express": "^4.22.0",
+     "express-promise-router": "^4.1.0",
+     "knex": "^3.0.0",
+-    "p-throttle": "^4.1.1"
++    "p-throttle": "^4.1.1",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-defaults": "workspace:^",
+diff --git a/plugins/notifications-backend/src/service/router.test.ts b/plugins/notifications-backend/src/service/router.test.ts
+index 4ea63a95546d..b15f753e1b62 100644
+--- a/plugins/notifications-backend/src/service/router.test.ts
++++ b/plugins/notifications-backend/src/service/router.test.ts
+@@ -32,7 +32,7 @@ import {
+ } from '@backstage/plugin-notifications-node';
+ import { catalogServiceMock } from '@backstage/plugin-catalog-node/testUtils';
+ import { DatabaseService } from '@backstage/backend-plugin-api';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { DatabaseNotificationsStore, generateSettingsHash } from '../database';
+ 
+ const databases = TestDatabases.create();
+diff --git a/plugins/notifications-backend/src/service/router.ts b/plugins/notifications-backend/src/service/router.ts
+index 6867eb9bbcf5..3bdd4d4c6a04 100644
+--- a/plugins/notifications-backend/src/service/router.ts
++++ b/plugins/notifications-backend/src/service/router.ts
+@@ -22,7 +22,7 @@ import {
+   NotificationsStore,
+   TopicGetOptions,
+ } from '../database';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { CatalogService } from '@backstage/plugin-catalog-node';
+ import {
+   NotificationProcessor,
+diff --git a/plugins/permission-common/package.json b/plugins/permission-common/package.json
+index dc7f80b0d828..a06de5ab424b 100644
+--- a/plugins/permission-common/package.json
++++ b/plugins/permission-common/package.json
+@@ -52,6 +52,7 @@
+     "@backstage/errors": "workspace:^",
+     "@backstage/types": "workspace:^",
+     "cross-fetch": "^4.0.0",
++    "uuid": "^11.0.0",
+     "zod": "^3.25.76 || ^4.0.0",
+     "zod-to-json-schema": "^3.25.1"
+   },
+diff --git a/plugins/permission-common/src/PermissionClient.ts b/plugins/permission-common/src/PermissionClient.ts
+index 6f311b71be7f..d178dcf2afde 100644
+--- a/plugins/permission-common/src/PermissionClient.ts
++++ b/plugins/permission-common/src/PermissionClient.ts
+@@ -17,7 +17,7 @@
+ import { Config } from '@backstage/config';
+ import { ResponseError } from '@backstage/errors';
+ import fetch from 'cross-fetch';
+-
++import * as uuid from 'uuid';
+ import { z } from 'zod/v3';
+ import {
+   AuthorizeResult,
+@@ -181,7 +181,7 @@ export class PermissionClient implements PermissionEvaluator {
+   ) {
+     const request: PermissionMessageBatch<TQuery> = {
+       items: queries.map(query => ({
+-        id: globalThis.crypto.randomUUID(),
++        id: uuid.v4(),
+         ...query,
+       })),
+     };
+@@ -213,7 +213,7 @@ export class PermissionClient implements PermissionEvaluator {
+         request[permission.name] ||= {
+           permission,
+           resourceRef: [],
+-          id: globalThis.crypto.randomUUID(),
++          id: uuid.v4(),
+         };
+ 
+         if (resourceRef) {
+@@ -222,7 +222,7 @@ export class PermissionClient implements PermissionEvaluator {
+       } else {
+         request[permission.name] ||= {
+           permission,
+-          id: globalThis.crypto.randomUUID(),
++          id: uuid.v4(),
+         };
+       }
+     }
+diff --git a/plugins/scaffolder-backend/package.json b/plugins/scaffolder-backend/package.json
+index 5aa2596dd67b..68073451da3d 100644
+--- a/plugins/scaffolder-backend/package.json
++++ b/plugins/scaffolder-backend/package.json
+@@ -93,6 +93,7 @@
+     "p-queue": "^6.6.2",
+     "prom-client": "^15.0.0",
+     "triple-beam": "^1.4.1",
++    "uuid": "^11.0.0",
+     "winston": "^3.2.1",
+     "winston-transport": "^4.7.0",
+     "yaml": "^2.0.0",
+diff --git a/plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts b/plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
+index 197ea1b0c163..1c562480819a 100644
+--- a/plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
++++ b/plugins/scaffolder-backend/src/scaffolder/dryrun/createDryRunner.ts
+@@ -42,7 +42,7 @@ import { JsonObject } from '@backstage/types';
+ import fs from 'fs-extra';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { NunjucksWorkflowRunner } from '../tasks/NunjucksWorkflowRunner';
+ import { DecoratedActionsRegistry } from './DecoratedActionsRegistry';
+ import { TemplateActionRegistry } from '../actions';
+diff --git a/plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.ts b/plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.ts
+index b899350b797a..22ce3e83b756 100644
+--- a/plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.ts
++++ b/plugins/scaffolder-backend/src/scaffolder/tasks/DatabaseTaskStore.ts
+@@ -21,7 +21,7 @@ import {
+ } from '@backstage/backend-plugin-api';
+ import { ConflictError, NotFoundError } from '@backstage/errors';
+ import { Knex } from 'knex';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import {
+   TaskStore,
+   TaskStoreCreateTaskOptions,
+diff --git a/plugins/scaffolder-backend/src/service/router.ts b/plugins/scaffolder-backend/src/service/router.ts
+index 623067eddcb5..10d81cc51500 100644
+--- a/plugins/scaffolder-backend/src/service/router.ts
++++ b/plugins/scaffolder-backend/src/service/router.ts
+@@ -84,7 +84,7 @@ import { HumanDuration, JsonObject } from '@backstage/types';
+ import express from 'express';
+ import { Duration } from 'luxon';
+ import { pathToFileURL } from 'node:url';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { z } from 'zod/v3';
+ import {
+   DatabaseTaskStore,
+diff --git a/plugins/search-backend-module-elasticsearch/package.json b/plugins/search-backend-module-elasticsearch/package.json
+index 279a3fc3f005..06aae55aa723 100644
+--- a/plugins/search-backend-module-elasticsearch/package.json
++++ b/plugins/search-backend-module-elasticsearch/package.json
+@@ -57,7 +57,8 @@
+     "@opensearch-project/opensearch": "^2.2.1",
+     "aws4": "^1.12.0",
+     "elastic-builder": "^2.16.0",
+-    "lodash": "^4.17.21"
++    "lodash": "^4.17.21",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.test.ts b/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.test.ts
+index 9c17a46d109d..a17d6850ab81 100644
+--- a/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.test.ts
++++ b/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.test.ts
+@@ -27,10 +27,7 @@ import {
+ import { ElasticSearchSearchEngineIndexer } from './ElasticSearchSearchEngineIndexer';
+ import { mockServices } from '@backstage/backend-test-utils';
+ 
+-jest.mock('node:crypto', () => ({
+-  ...jest.requireActual('node:crypto'),
+-  randomUUID: () => 'tag',
+-}));
++jest.mock('uuid', () => ({ v4: () => 'tag' }));
+ 
+ class ElasticSearchSearchEngineForTranslatorTests extends ElasticSearchSearchEngine {
+   getTranslator() {
+diff --git a/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.ts b/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.ts
+index 175e82af5a50..96c2b99d84a6 100644
+--- a/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.ts
++++ b/plugins/search-backend-module-elasticsearch/src/engines/ElasticSearchSearchEngine.ts
+@@ -35,7 +35,7 @@ import { ElasticSearchCustomIndexTemplate } from './types';
+ import { ElasticSearchSearchEngineIndexer } from './ElasticSearchSearchEngineIndexer';
+ import { MissingIndexError } from '@backstage/plugin-search-backend-node';
+ import esb from 'elastic-builder';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import {
+   AwsCredentialProvider,
+   DefaultAwsCredentialsManager,
+diff --git a/plugins/search-backend-module-pg/package.json b/plugins/search-backend-module-pg/package.json
+index e1ac76534e87..5d687c87fc47 100644
+--- a/plugins/search-backend-module-pg/package.json
++++ b/plugins/search-backend-module-pg/package.json
+@@ -54,7 +54,8 @@
+     "@backstage/plugin-search-backend-node": "workspace:^",
+     "@backstage/plugin-search-common": "workspace:^",
+     "knex": "^3.0.0",
+-    "lodash": "^4.17.21"
++    "lodash": "^4.17.21",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-test-utils": "workspace:^",
+diff --git a/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts b/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+index e3da8f28f8a0..9c77a04e4473 100644
+--- a/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
++++ b/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.test.ts
+@@ -36,10 +36,7 @@ const highlightOptions: PgSearchHighlightOptions = {
+   fragmentDelimiter: ' ... ',
+ };
+ 
+-jest.mock('node:crypto', () => ({
+-  ...jest.requireActual('node:crypto'),
+-  randomUUID: () => 'tag',
+-}));
++jest.mock('uuid', () => ({ v4: () => 'tag' }));
+ 
+ jest.mock('./PgSearchEngineIndexer', () => ({
+   PgSearchEngineIndexer: jest
+diff --git a/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts b/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+index 3e993bcdf83c..ea75b1a73991 100644
+--- a/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
++++ b/plugins/search-backend-module-pg/src/PgSearchEngine/PgSearchEngine.ts
+@@ -26,7 +26,7 @@ import {
+   DatabaseStore,
+   PgSearchQuery,
+ } from '../database';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { Config } from '@backstage/config';
+ import { DatabaseService, LoggerService } from '@backstage/backend-plugin-api';
+ 
+diff --git a/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts b/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
+index ac7c72cbfbea..7ef48d83984a 100644
+--- a/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
++++ b/plugins/search-backend-module-pg/src/database/DatabaseDocumentStore.test.ts
+@@ -22,7 +22,7 @@ import {
+ import { IndexableDocument } from '@backstage/plugin-search-common';
+ import { PgSearchHighlightOptions } from '../PgSearchEngine';
+ import { DatabaseDocumentStore } from './DatabaseDocumentStore';
+-import { randomUUID as uuidv4 } from 'node:crypto';
++import { v4 as uuidv4 } from 'uuid';
+ 
+ const highlightOptions: PgSearchHighlightOptions = {
+   preTag: '<tag>',
+diff --git a/plugins/search-backend-node/package.json b/plugins/search-backend-node/package.json
+index a9b0c0a9f6d2..70c941505061 100644
+--- a/plugins/search-backend-node/package.json
++++ b/plugins/search-backend-node/package.json
+@@ -61,7 +61,8 @@
+     "@types/lunr": "^2.3.3",
+     "lodash": "^4.17.21",
+     "lunr": "^2.3.9",
+-    "ndjson": "^2.0.0"
++    "ndjson": "^2.0.0",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/backend-defaults": "workspace:^",
+diff --git a/plugins/search-backend-node/src/engines/LunrSearchEngine.ts b/plugins/search-backend-node/src/engines/LunrSearchEngine.ts
+index 03e87c7b1205..1786d07a9dcf 100644
+--- a/plugins/search-backend-node/src/engines/LunrSearchEngine.ts
++++ b/plugins/search-backend-node/src/engines/LunrSearchEngine.ts
+@@ -22,7 +22,7 @@ import {
+ import { QueryTranslator, SearchEngine } from '../types';
+ import { MissingIndexError } from '../errors';
+ import lunr from 'lunr';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { LunrSearchEngineIndexer } from './LunrSearchEngineIndexer';
+ import { LoggerService } from '@backstage/backend-plugin-api';
+ 
+diff --git a/plugins/search-react/package.json b/plugins/search-react/package.json
+index 74926da6bd3e..c75e03a2166b 100644
+--- a/plugins/search-react/package.json
++++ b/plugins/search-react/package.json
+@@ -69,6 +69,7 @@
+     "lodash": "^4.17.21",
+     "qs": "^6.9.4",
+     "react-use": "^17.3.2",
++    "uuid": "^11.0.2",
+     "zod": "^4.0.0"
+   },
+   "devDependencies": {
+diff --git a/plugins/search-react/src/components/SearchFilter/SearchFilter.tsx b/plugins/search-react/src/components/SearchFilter/SearchFilter.tsx
+index 3e5dc338548e..1d0ce79f756d 100644
+--- a/plugins/search-react/src/components/SearchFilter/SearchFilter.tsx
++++ b/plugins/search-react/src/components/SearchFilter/SearchFilter.tsx
+@@ -16,7 +16,7 @@
+ 
+ import { ReactElement, ChangeEvent, useRef } from 'react';
+ import { capitalize } from 'lodash';
+-
++import { v4 as uuid } from 'uuid';
+ import FormControl from '@material-ui/core/FormControl';
+ import FormControlLabel from '@material-ui/core/FormControlLabel';
+ import Checkbox from '@material-ui/core/Checkbox';
+@@ -181,7 +181,7 @@ export const SelectFilter = (props: SearchFilterComponentProps) => {
+     defaultValues,
+     valuesDebounceMs,
+   );
+-  const allOptionValue = useRef(globalThis.crypto.randomUUID());
++  const allOptionValue = useRef(uuid());
+   const allOption = {
+     value: allOptionValue.current,
+     label: t('searchFilter.allOptionTitle'),
+diff --git a/plugins/signals-backend/package.json b/plugins/signals-backend/package.json
+index 95a59db530ec..06ce3bbbeef5 100644
+--- a/plugins/signals-backend/package.json
++++ b/plugins/signals-backend/package.json
+@@ -44,6 +44,7 @@
+     "@backstage/types": "workspace:^",
+     "express": "^4.22.0",
+     "express-promise-router": "^4.1.0",
++    "uuid": "^11.0.0",
+     "ws": "^8.18.0"
+   },
+   "devDependencies": {
+diff --git a/plugins/signals-backend/src/service/SignalManager.ts b/plugins/signals-backend/src/service/SignalManager.ts
+index 142278ec8463..352d54d62887 100644
+--- a/plugins/signals-backend/src/service/SignalManager.ts
++++ b/plugins/signals-backend/src/service/SignalManager.ts
+@@ -18,7 +18,7 @@ import { EventParams, EventsService } from '@backstage/plugin-events-node';
+ import { SignalPayload } from '@backstage/plugin-signals-node';
+ import crypto from 'node:crypto';
+ import { RawData, WebSocket } from 'ws';
+-import { randomUUID as uuid } from 'node:crypto';
++import { v4 as uuid } from 'uuid';
+ import { JsonObject } from '@backstage/types';
+ import {
+   BackstageUserInfo,
+diff --git a/plugins/signals/package.json b/plugins/signals/package.json
+index a5dedde0a7f3..262e86de9c0f 100644
+--- a/plugins/signals/package.json
++++ b/plugins/signals/package.json
+@@ -58,7 +58,8 @@
+     "@backstage/theme": "workspace:^",
+     "@backstage/types": "workspace:^",
+     "@material-ui/core": "^4.12.4",
+-    "@remixicon/react": "^4.6.0"
++    "@remixicon/react": "^4.6.0",
++    "uuid": "^11.0.0"
+   },
+   "devDependencies": {
+     "@backstage/cli": "workspace:^",
+diff --git a/plugins/signals/src/api/SignalClient.ts b/plugins/signals/src/api/SignalClient.ts
+index 02d3ba47c7e6..5a4362fdfda9 100644
+--- a/plugins/signals/src/api/SignalClient.ts
++++ b/plugins/signals/src/api/SignalClient.ts
+@@ -16,6 +16,7 @@
+ import { SignalApi, SignalSubscriber } from '@backstage/plugin-signals-react';
+ import { JsonObject } from '@backstage/types';
+ import { DiscoveryApi, IdentityApi } from '@backstage/core-plugin-api';
++import { v4 as uuid } from 'uuid';
+ 
+ type Subscription = {
+   channel: string;
+@@ -75,7 +76,7 @@ export class SignalClient implements SignalApi {
+     channel: string,
+     onMessage: (message: TMessage) => void,
+   ): SignalSubscriber {
+-    const subscriptionId = globalThis.crypto.randomUUID();
++    const subscriptionId = uuid();
+     const exists = [...this.subscriptions.values()].find(
+       sub => sub.channel === channel,
+     );
+diff --git a/yarn.lock b/yarn.lock
+index 1f5038975f4d..33d68e51f1bf 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -2623,6 +2623,7 @@ __metadata:
+     supertest: "npm:^7.0.0"
+     tar: "npm:^7.5.6"
+     triple-beam: "npm:^1.4.1"
++    uuid: "npm:^11.0.0"
+     wait-for-expect: "npm:^4.0.0"
+     winston: "npm:^3.2.1"
+     winston-transport: "npm:^4.5.0"
+@@ -2778,6 +2779,7 @@ __metadata:
+     supertest: "npm:^7.0.0"
+     testcontainers: "npm:^11.9.0"
+     text-extensions: "npm:^2.4.0"
++    uuid: "npm:^11.0.0"
+     yn: "npm:^4.0.0"
+     zod: "npm:^3.25.76 || ^4.0.0"
+     zod-to-json-schema: "npm:^3.25.1"
+@@ -4338,6 +4340,7 @@ __metadata:
+     jose: "npm:^5.0.0"
+     msw: "npm:^2.0.0"
+     node-mocks-http: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+     zod: "npm:^3.25.76 || ^4.0.0"
+   languageName: unknown
+   linkType: soft
+@@ -4649,6 +4652,7 @@ __metadata:
+     msw: "npm:^1.0.0"
+     passport: "npm:^0.7.0"
+     supertest: "npm:^7.0.0"
++    uuid: "npm:^11.0.0"
+     zod: "npm:^3.25.76 || ^4.0.0"
+     zod-validation-error: "npm:^5.0.0"
+   languageName: unknown
+@@ -4677,6 +4681,7 @@ __metadata:
+     msw: "npm:^1.0.0"
+     passport: "npm:^0.7.0"
+     supertest: "npm:^7.0.0"
++    uuid: "npm:^11.0.0"
+     zod: "npm:^3.25.76 || ^4.0.0"
+     zod-to-json-schema: "npm:^3.25.1"
+     zod-validation-error: "npm:^4.0.2"
+@@ -4784,6 +4789,7 @@ __metadata:
+     aws-sdk-client-mock: "npm:^4.0.0"
+     aws-sdk-client-mock-jest: "npm:^4.0.0"
+     p-limit: "npm:^3.0.2"
++    uuid: "npm:^11.0.0"
+     yaml: "npm:^2.0.0"
+   languageName: unknown
+   linkType: soft
+@@ -4804,6 +4810,7 @@ __metadata:
+     "@backstage/plugin-catalog-node": "workspace:^"
+     "@backstage/plugin-events-node": "workspace:^"
+     msw: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -4822,6 +4829,7 @@ __metadata:
+     lodash: "npm:^4.17.21"
+     openapi-merge: "npm:^1.3.2"
+     openapi3-ts: "npm:^3.1.2"
++    uuid: "npm:^11.0.0"
+     yaml: "npm:^2.7.0"
+   languageName: unknown
+   linkType: soft
+@@ -4843,6 +4851,7 @@ __metadata:
+     "@backstage/plugin-events-backend-test-utils": "workspace:^"
+     "@backstage/plugin-events-node": "workspace:^"
+     msw: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -4862,6 +4871,7 @@ __metadata:
+     "@backstage/plugin-events-backend-test-utils": "workspace:^"
+     "@backstage/plugin-events-node": "workspace:^"
+     msw: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -4896,6 +4906,7 @@ __metadata:
+     fs-extra: "npm:^11.2.0"
+     msw: "npm:^1.0.0"
+     p-limit: "npm:^3.1.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -4912,6 +4923,7 @@ __metadata:
+     "@backstage/plugin-catalog-common": "workspace:^"
+     "@backstage/plugin-catalog-node": "workspace:^"
+     p-limit: "npm:^3.0.2"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -4962,6 +4974,7 @@ __metadata:
+     minimatch: "npm:^10.2.1"
+     msw: "npm:^2.0.0"
+     octokit: "npm:^3.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -4999,6 +5012,7 @@ __metadata:
+     "@types/lodash": "npm:^4.14.151"
+     lodash: "npm:^4.17.21"
+     msw: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -5022,6 +5036,7 @@ __metadata:
+     express-promise-router: "npm:^4.1.0"
+     knex: "npm:^3.0.0"
+     luxon: "npm:^3.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -5040,6 +5055,7 @@ __metadata:
+     "@types/lodash": "npm:^4.14.151"
+     ldapts: "npm:^8.0.6"
+     lodash: "npm:^4.17.21"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -5074,6 +5090,7 @@ __metadata:
+     msw: "npm:^1.0.0"
+     p-limit: "npm:^3.0.2"
+     qs: "npm:^6.9.4"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -5110,6 +5127,7 @@ __metadata:
+     "@types/lodash": "npm:^4.14.151"
+     lodash: "npm:^4.17.21"
+     msw: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -5193,6 +5211,7 @@ __metadata:
+     p-limit: "npm:^3.0.2"
+     prom-client: "npm:^15.0.0"
+     supertest: "npm:^7.0.0"
++    uuid: "npm:^11.0.0"
+     wait-for-expect: "npm:^4.0.0"
+     winston: "npm:^3.13.0"
+     yaml: "npm:^2.0.0"
+@@ -6260,6 +6279,7 @@ __metadata:
+     knex: "npm:^3.0.0"
+     p-throttle: "npm:^4.1.1"
+     supertest: "npm:^7.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -6460,6 +6480,7 @@ __metadata:
+     "@backstage/types": "workspace:^"
+     cross-fetch: "npm:^4.0.0"
+     msw: "npm:^1.0.0"
++    uuid: "npm:^11.0.0"
+     zod: "npm:^3.25.76 || ^4.0.0"
+     zod-to-json-schema: "npm:^3.25.1"
+   languageName: unknown
+@@ -6855,6 +6876,7 @@ __metadata:
+     strip-ansi: "npm:^7.1.0"
+     supertest: "npm:^7.0.0"
+     triple-beam: "npm:^1.4.1"
++    uuid: "npm:^11.0.0"
+     wait-for-expect: "npm:^4.0.0"
+     winston: "npm:^3.2.1"
+     winston-transport: "npm:^4.7.0"
+@@ -7143,6 +7165,7 @@ __metadata:
+     aws4: "npm:^1.12.0"
+     elastic-builder: "npm:^2.16.0"
+     lodash: "npm:^4.17.21"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -7173,6 +7196,7 @@ __metadata:
+     "@backstage/plugin-search-common": "workspace:^"
+     knex: "npm:^3.0.0"
+     lodash: "npm:^4.17.21"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -7230,6 +7254,7 @@ __metadata:
+     lodash: "npm:^4.17.21"
+     lunr: "npm:^2.3.9"
+     ndjson: "npm:^2.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -7301,6 +7326,7 @@ __metadata:
+     react-dom: "npm:^18.0.2"
+     react-router-dom: "npm:^6.30.2"
+     react-use: "npm:^17.3.2"
++    uuid: "npm:^11.0.2"
+     zod: "npm:^4.0.0"
+   peerDependencies:
+     "@types/react": ^17.0.0 || ^18.0.0
+@@ -7377,6 +7403,7 @@ __metadata:
+     express: "npm:^4.22.0"
+     express-promise-router: "npm:^4.1.0"
+     supertest: "npm:^7.0.0"
++    uuid: "npm:^11.0.0"
+     ws: "npm:^8.18.0"
+   languageName: unknown
+   linkType: soft
+@@ -7441,6 +7468,7 @@ __metadata:
+     react: "npm:^18.0.2"
+     react-dom: "npm:^18.0.2"
+     react-router-dom: "npm:^6.30.2"
++    uuid: "npm:^11.0.0"
+     wait-for-expect: "npm:^4.0.0"
+   peerDependencies:
+     "@types/react": ^17.0.0 || ^18.0.0
+@@ -7949,6 +7977,8 @@ __metadata:
+     "@remixicon/react": "npm:^4.6.0"
+     "@storybook/react-vite": "npm:^10.3.3"
+     "@tanstack/react-table": "npm:^8.21.3"
++    "@testing-library/jest-dom": "npm:^6.0.0"
++    "@testing-library/react": "npm:^16.0.0"
+     "@types/react": "npm:^18.0.0"
+     "@types/react-dom": "npm:^18.0.0"
+     "@types/use-sync-external-store": "npm:^1.0.0"
+@@ -10048,6 +10078,7 @@ __metadata:
+     express: "npm:^4.22.0"
+     express-promise-router: "npm:^4.1.0"
+     supertest: "npm:^7.0.0"
++    uuid: "npm:^11.0.0"
+   languageName: unknown
+   linkType: soft
+ 
+@@ -47853,7 +47884,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"uuid@npm:^11.0.3":
++"uuid@npm:^11.0.0, uuid@npm:^11.0.2, uuid@npm:^11.0.3":
+   version: 11.1.0
+   resolution: "uuid@npm:11.1.0"
+   bin:

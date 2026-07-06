@@ -1,0 +1,1071 @@
+patching file timeseries/tests/unittests/models/test_abstract.py
+patching file timeseries/tests/unittests/models/test_ensemble.py
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 92f143f4-5216-4b31-b5e5-fdbeb86fec43)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 4a716150-c91d-48ff-b3a7-8a95b7cf0a2f)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 6df41ad8-f924-4321-95bf-4ced161f2348)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: cb3cbab5-6ba8-4d44-9e1d-ef839e8b12b5)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: b19c5fb3-dac8-4241-810b-62f35e3fa7a8)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: e1c3e171-46f1-4c9c-b4bb-15fc70581573)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 21ae2783-bafb-45f8-b4f3-6cd0228d6f16)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 99f32db5-bc29-4551-b8c5-20c64a5d4bb3)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: da43f962-bf22-4a4d-aef7-49e5cb5c0500)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: e78f6043-8490-4b83-95e7-61201283c408)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: a57fa33f-d829-49ac-9b9b-3922815043ce)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+'(MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 28696bc2-9723-4ca3-8baf-a13730b57384)')' thrown while requesting HEAD https://huggingface.co/autogluon/chronos-t5-tiny/resolve/main/config.json
+Process Process-1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 974, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py", line 1106, in _validate_conn
+    conn.connect()
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connection.py", line 211, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='huggingface.co', port=443): Failed to resolve 'huggingface.co' ([Errno -3] Temporary failure in name resolution)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py", line 842, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/urllib3/util/retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host='huggingface.co', port=443): Failed to resolve 'huggingface.co' ([Errno -3] Temporary failure in name resolution)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1550, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1467, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 283, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 306, in _request_wrapper
+    response = http_backoff(method=method, url=url, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 326, in http_backoff
+    raise err
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 307, in http_backoff
+    response = session.request(method=method, url=url, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 96, in send
+    return super().send(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/requests/adapters.py", line 729, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: (MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /autogluon/chronos-t5-tiny/resolve/main/config.json (Caused by NameResolutionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to resolve \'huggingface.co\' ([Errno -3] Temporary failure in name resolution)"))'), '(Request ID: 28696bc2-9723-4ca3-8baf-a13730b57384)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/transformers/utils/hub.py", line 479, in cached_files
+    hf_hub_download(
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1665, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: An error happened while trying to locate the file on the Hub and we cannot find the requested files in the local cache. Please check your connection and try again or make sure your Internet connection is on.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/workspace/repo/timeseries/tests/conftest.py", line 17, in download_and_cache_hf_hub_dependencies
+    _ = AutoModel.from_pretrained(dependency)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 549, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/transformers/models/auto/configuration_auto.py", line 1332, in from_pretrained
+    config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/transformers/configuration_utils.py", line 662, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/transformers/configuration_utils.py", line 721, in _get_config_dict
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/transformers/utils/hub.py", line 322, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/transformers/utils/hub.py", line 553, in cached_files
+    raise OSError(
+OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Fugue tests will be initialized with options:
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: fugue-0.9.7, flaky-3.8.1, timeout-2.4.0
+collecting ... collected 51 items
+
+timeseries/tests/unittests/models/test_abstract.py::test_when_model_is_initialized_then_key_fields_set_correctly PASSED [  1%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_model_receives_median_then_must_not_drop_median_set_to_false PASSED [  3%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_model_does_not_receive_median_then_must_not_drop_median_set_to_true PASSED [  5%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_model_saved_and_loaded_with_load_oof_then_load_oof_called PASSED [  7%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_support_model_covariate_properties_are_accessed_then_their_values_are_correct PASSED [  9%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_model_is_initialized_with_ag_args_fit_then_they_are_included_in_get_params PASSED [ 11%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_create_covariate_regressor_is_called_then_covariate_regressor_is_constructed[dummy_argument] PASSED [ 13%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_create_covariate_regressor_is_called_then_covariate_regressor_is_constructed[covariate_regressor_hyperparameter1] PASSED [ 15%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_hyperparameter_tune_called_with_empty_search_space_then_skip_hpo_called FAILED [ 17%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_time_limit_is_capped_with_aux_params_then_time_limit_is_adjusted PASSED [ 19%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_max_time_limit_ratio_is_provided_with_aux_params_then_time_limit_is_adjusted PASSED [ 21%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_model_is_fit_with_time_limit_less_than_zero_then_error_is_raised PASSED [ 23%]
+timeseries/tests/unittests/models/test_abstract.py::test_when_convert_to_refit_full_via_copy_called_then_output_is_correct PASSED [ 25%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAbstractTimeSeriesEnsembleModel::test_given_model_when_fit_called_with_small_time_limit_then_exception_raised PASSED [ 27%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAbstractTimeSeriesEnsembleModel::test_given_model_when_fit_called_with_missing_data_windows_then_value_error_raised PASSED [ 29%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAbstractTimeSeriesEnsembleModel::test_given_model_when_fit_ensemble_called_with_single_data_frame_then_value_error_raised PASSED [ 31%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAbstractTimeSeriesEnsembleModel::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly PASSED [ 33%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_be_initialized[TimeSeriesGreedyEnsemble] FAILED [ 35%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] FAILED [ 37%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] FAILED [ 39%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] FAILED [ 41%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] FAILED [ 43%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] FAILED [ 45%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] FAILED [ 47%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] FAILED [ 49%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] FAILED [ 50%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] FAILED [ 52%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] FAILED [ 54%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] FAILED [ 56%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] FAILED [ 58%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] FAILED [ 60%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] FAILED [ 62%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] FAILED [ 64%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] FAILED [ 66%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] FAILED [ 68%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] FAILED [ 70%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] FAILED [ 72%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] FAILED [ 74%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] FAILED [ 76%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] FAILED [ 78%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] FAILED [ 80%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] FAILED [ 82%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] FAILED [ 84%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] FAILED [ 86%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] FAILED [ 88%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] FAILED [ 90%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] FAILED [ 92%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] FAILED [ 94%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] FAILED [ 96%]
+timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] FAILED [ 98%]
+timeseries/tests/unittests/models/test_ensemble.py::TestTimeSeriesGreedyEnsemble::test_when_some_base_models_fail_during_prediction_then_ensemble_raises_runtime_error FAILED [100%]
+
+=================================== FAILURES ===================================
+_ test_when_hyperparameter_tune_called_with_empty_search_space_then_skip_hpo_called _
+
+temp_model_path = '/tmp/pytest-of-root/pytest-0/8cc23d0'
+train_data =                                target
+item_id timestamp                    
+A       2022-01-01 00:00:00  0.477324
+    ... 01:00:00  0.212508
+        2022-01-05 02:00:00  0.032423
+        2022-01-05 03:00:00  0.212116
+
+[200 rows x 1 columns]
+
+    def test_when_hyperparameter_tune_called_with_empty_search_space_then_skip_hpo_called(temp_model_path, train_data):
+        model = ConcreteTimeSeriesModel(path=temp_model_path)
+>       with mock.patch("autogluon.timeseries.models.abstract.tunable.skip_hpo") as mock_skip_hpo:
+
+timeseries/tests/unittests/models/test_abstract.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+                  ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'autogluon.timeseries.models.abstract.tunable'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+                     ^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'autogluon.timeseries.models.abstract' has no attribute 'tunable'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_be_initialized[TimeSeriesGreedyEnsemble] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b64390>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+
+    def test_ensemble_models_can_be_initialized(self, model_constructor):
+        try:
+>           model_constructor()
+E           TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:108: TypeError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b64390>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+
+    def test_ensemble_models_can_be_initialized(self, model_constructor):
+        try:
+            model_constructor()
+        except:
+>           pytest.fail(f"Could not initialize {model_constructor}")
+E           Failed: Could not initialize <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+
+timeseries/tests/unittests/models/test_ensemble.py:110: Failed
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b65610>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...602
+        2022-04-18  0.679531
+        2022-04-19  0.680462
+        2022-04-20  0.644523
+
+[330 rows x 1 columns]], 1)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b65790>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...328
+        2022-04-18  0.901108
+        2022-04-19  0.283954
+        2022-04-20  0.712257
+
+[330 rows x 1 columns]], 3)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b64f50>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...903
+        2022-04-18  0.609526
+        2022-04-19  0.906919
+        2022-04-20  0.488330
+
+[330 rows x 1 columns]], 1)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b677d0>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...409
+        2022-04-18  0.273765
+        2022-04-19  0.228063
+        2022-04-20  0.393118
+
+[330 rows x 1 columns]], 3)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b66690>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...078
+        2022-04-18  0.469203
+        2022-04-19  0.494712
+        2022-04-20  0.017582
+
+[330 rows x 1 columns]], 1)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b66290>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...595
+        2022-04-18  0.673695
+        2022-04-19  0.894434
+        2022-04-20  0.409831
+
+[330 rows x 1 columns]], 3)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b66fd0>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...870
+        2022-04-18  0.284259
+        2022-04-19  0.280220
+        2022-04-20  0.713565
+
+[330 rows x 1 columns]], 1)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade98b66c50>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...681
+        2022-04-18  0.629404
+        2022-04-19  0.660116
+        2022-04-20  0.755545
+
+[330 rows x 1 columns]], 3)
+
+    def test_ensemble_models_can_fit_and_predict(self, model_constructor, predictions_data_and_prediction_length):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:115: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989a96d0>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...847
+        2022-04-18  0.454340
+        2022-04-19  0.436116
+        2022-04-20  0.008907
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989a9810>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...736
+        2022-04-18  0.839852
+        2022-04-19  0.941804
+        2022-04-20  0.430802
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989a9c90>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...434
+        2022-04-18  0.938896
+        2022-04-19  0.489367
+        2022-04-20  0.716591
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989a9e90>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...872
+        2022-04-18  0.975534
+        2022-04-19  0.342119
+        2022-04-20  0.919562
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989aa490>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...329
+        2022-04-18  0.243556
+        2022-04-19  0.236737
+        2022-04-20  0.037013
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989aa410>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...325
+        2022-04-18  0.775204
+        2022-04-19  0.097111
+        2022-04-20  0.280988
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989aa810>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...240
+        2022-04-18  0.677226
+        2022-04-19  0.069746
+        2022-04-20  0.934020
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989aac10>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...749
+        2022-04-18  0.341057
+        2022-04-19  0.462124
+        2022-04-20  0.844858
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:127: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989abc50>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...974
+        2022-04-18  0.730939
+        2022-04-19  0.741876
+        2022-04-20  0.625843
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989abb50>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...540
+        2022-04-18  0.100542
+        2022-04-19  0.379774
+        2022-04-20  0.141119
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989ab9d0>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...049
+        2022-04-18  0.540108
+        2022-04-19  0.008031
+        2022-04-20  0.911210
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989abf50>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...905
+        2022-04-18  0.587125
+        2022-04-19  0.173723
+        2022-04-20  0.519284
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989aba90>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...585
+        2022-04-18  0.423533
+        2022-04-19  0.936842
+        2022-04-20  0.982655
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989ab810>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...765
+        2022-04-18  0.099480
+        2022-04-19  0.751448
+        2022-04-20  0.188033
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989a8110>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...070
+        2022-04-18  0.696959
+        2022-04-19  0.402176
+        2022-04-20  0.445607
+
+[330 rows x 1 columns]], 1)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade989a8310>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...203
+        2022-04-18  0.036747
+        2022-04-19  0.975362
+        2022-04-20  0.967821
+
+[330 rows x 1 columns]], 3)
+
+    def test_when_ensemble_models_predict_then_prediction_contains_no_nans(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+    
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:139: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899a390>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...211
+        2022-04-18  0.439853
+        2022-04-19  0.386613
+        2022-04-20  0.402283
+
+[330 rows x 1 columns]], 1)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899a550>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...331
+        2022-04-18  0.723962
+        2022-04-19  0.789256
+        2022-04-20  0.408677
+
+[330 rows x 1 columns]], 3)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899b3d0>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...542
+        2022-04-18  0.136239
+        2022-04-19  0.806255
+        2022-04-20  0.510396
+
+[330 rows x 1 columns]], 1)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899afd0>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...440
+        2022-04-18  0.168059
+        2022-04-19  0.654297
+        2022-04-20  0.095539
+
+[330 rows x 1 columns]], 3)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899b150>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...979
+        2022-04-18  0.763014
+        2022-04-19  0.603791
+        2022-04-20  0.977822
+
+[330 rows x 1 columns]], 1)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899bc90>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...301
+        2022-04-18  0.055016
+        2022-04-19  0.250850
+        2022-04-20  0.239656
+
+[330 rows x 1 columns]], 3)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899ac50>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...225
+        2022-04-18  0.251998
+        2022-04-19  0.602026
+        2022-04-20  0.052982
+
+[330 rows x 1 columns]], 1)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestAllTimeSeriesEnsembleModels.test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7] _
+
+self = <tests.unittests.models.test_ensemble.TestAllTimeSeriesEnsembleModels object at 0x2ade9899be10>
+model_constructor = <class 'autogluon.timeseries.models.ensemble.greedy_ensemble.TimeSeriesGreedyEnsemble'>
+predictions_data_and_prediction_length = ({'SNaive1': [                        mean       0.1       0.2  ...       0.7       0.8       0.9
+item_id timestamp   ...676
+        2022-04-18  0.376094
+        2022-04-19  0.527700
+        2022-04-20  0.859779
+
+[330 rows x 1 columns]], 3)
+
+    def test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly(
+        self, model_constructor, predictions_data_and_prediction_length
+    ):
+        predictions_per_window, data_per_window, prediction_length = predictions_data_and_prediction_length
+>       model = model_constructor(prediction_length=prediction_length)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:149: TypeError
+_ TestTimeSeriesGreedyEnsemble.test_when_some_base_models_fail_during_prediction_then_ensemble_raises_runtime_error _
+
+self = <tests.unittests.models.test_ensemble.TestTimeSeriesGreedyEnsemble object at 0x2ade98998590>
+
+    def test_when_some_base_models_fail_during_prediction_then_ensemble_raises_runtime_error(self):
+        base_model = SeasonalNaiveModel(prediction_length=1, freq=DUMMY_TS_DATAFRAME.freq)
+        base_model.fit(train_data=DUMMY_TS_DATAFRAME)
+        base_model_preds = base_model.predict(DUMMY_TS_DATAFRAME)
+    
+>       ensemble = TimeSeriesGreedyEnsemble()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: TimeSeriesGreedyEnsemble.__init__() missing 1 required positional argument: 'name'
+
+timeseries/tests/unittests/models/test_ensemble.py:167: TypeError
+=========================== short test summary info ============================
+FAILED timeseries/tests/unittests/models/test_abstract.py::test_when_hyperparameter_tune_called_with_empty_search_space_then_skip_hpo_called
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_be_initialized[TimeSeriesGreedyEnsemble]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_ensemble_models_can_fit_and_predict[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_horizon_aligns_with_input[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_when_ensemble_models_predict_then_prediction_contains_no_nans[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length0]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length1]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length2]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length3]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length4]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length5]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length6]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestAllTimeSeriesEnsembleModels::test_given_model_when_fit_ensemble_called_then_internal_fit_method_called_correctly[TimeSeriesGreedyEnsemble-predictions_data_and_prediction_length7]
+FAILED timeseries/tests/unittests/models/test_ensemble.py::TestTimeSeriesGreedyEnsemble::test_when_some_base_models_fail_during_prediction_then_ensemble_raises_runtime_error
+======================== 35 failed, 16 passed in 6.49s =========================
+reward=0 graded=51 found=0 failed=0 parsed=16 framework=pytest exit_code=1

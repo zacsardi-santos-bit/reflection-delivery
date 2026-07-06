@@ -1,0 +1,29 @@
+{
+    "id": "b6a09ba5-37d0-47a8-b6e9-cf9cb7553fb4",
+    "started_at": "2026-07-06T12:19:15.076373",
+    "finished_at": "2026-07-06T12:21:11.213201",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__gleam-lang-gleam-5500": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "gleam-lang-gleam-5500__kHR2cxk"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

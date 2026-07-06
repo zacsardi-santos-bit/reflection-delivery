@@ -1,0 +1,7 @@
+I'd like to add a new CSS lint rule to detect a subtle but common mistake: when a developer declares a CSS custom property somewhere in scope but then references it directly as a value instead of wrapping it with the proper accessor function. This silently breaks styling in the browser with no error message, which makes it really frustrating to debug.
+
+The rule should be smart about scope — it should only fire when the custom property being referenced is actually declared somewhere that's accessible from where it's being used (the same block, an ancestor selector, or globally registered). If the property hasn't been declared anywhere in the document, it might just be an intentional custom identifier for a specific CSS feature, so those cases should be left alone. The rule should also skip certain CSS properties where bare custom property names are intentionally valid, like transition, animation, grid, counter, and view transition related properties.
+
+For nested CSS, the rule should correctly understand that a custom property declared in a parent block is accessible in child blocks (and should be flagged if not wrapped), but not the other way around.
+
+I also need the existing rule for detecting dependencies that are imported in source code but missing from the package manifest to be moved from the experimental/nursery category into the stable correctness category. Currently, referencing it under the correctness group in configuration produces a configuration error, and I'd like that to work properly.

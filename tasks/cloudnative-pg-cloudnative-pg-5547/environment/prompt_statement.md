@@ -1,7 +1,0 @@
-I'm working on the database controller in our CloudNativePG operator and I want to improve both its testability and how it handles errors. Right now the SQL operations for managing PostgreSQL databases — checking if one exists, creating it, modifying its properties, and dropping it — are all embedded directly inside the reconciler methods, which makes it really hard to unit test them without a full cluster setup.
-
-I'd like to pull those SQL operations out into their own standalone functions so they can be tested in isolation. The four operations I need are: detecting whether a database exists, creating a new database with the full set of options (owner, tablespace, connection limits, template flag), updating an existing database's properties, and dropping a database.
-
-I also want to clean up how errors are handled during reconciliation. When a SQL operation fails, the reconciler currently propagates the error up, but the better behaviour would be to record the failure on the managed database object's status — setting it to "not ready" with the error message stored in the status — while the reconciler itself returns cleanly. Similarly, on success the status should be updated to "ready" with no error message. I want explicit helper methods for these two status transitions.
-
-Finally, the reconciler's dependency on the running PostgreSQL instance should be expressed as an interface rather than a concrete type, so that tests can inject a fake that returns a mock database connection without needing a real instance running.

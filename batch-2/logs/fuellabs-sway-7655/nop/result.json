@@ -1,0 +1,29 @@
+{
+    "id": "d250b1e9-2e4d-456c-8d13-9c63c556b62d",
+    "started_at": "2026-07-04T15:36:46.372360",
+    "finished_at": "2026-07-04T15:37:44.627054",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__fuellabs-sway-7655": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "fuellabs-sway-7655__B7ENbuM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

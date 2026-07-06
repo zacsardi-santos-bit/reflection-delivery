@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/Packs/PaloAltoNetworks_SecurityAdvisories/Integrations/PaloAltoNetworksSecurityAdvisories && pytest PaloAltoNetworksSecurityAdvisories_test.py -v",
+  "test_files": [
+    "Packs/PaloAltoNetworks_SecurityAdvisories/Integrations/PaloAltoNetworksSecurityAdvisories/PaloAltoNetworksSecurityAdvisories_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.PaloAltoNetworks_SecurityAdvisories.Integrations.PaloAltoNetworksSecurityAdvisories.PaloAltoNetworksSecurityAdvisories_test::test_advisory_to_indicator"
+  ],
+  "PASS_TO_PASS": [
+    "Packs.PaloAltoNetworks_SecurityAdvisories.Integrations.PaloAltoNetworksSecurityAdvisories.PaloAltoNetworksSecurityAdvisories_test::test_get_advisories_command",
+    "Packs.PaloAltoNetworks_SecurityAdvisories.Integrations.PaloAltoNetworksSecurityAdvisories.PaloAltoNetworksSecurityAdvisories_test::test_fetch_indicators_command"
+  ]
+}

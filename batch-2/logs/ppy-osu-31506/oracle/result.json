@@ -1,0 +1,29 @@
+{
+    "id": "9c04ad37-bf20-4d34-a362-0af54cb58e42",
+    "started_at": "2026-07-04T15:39:42.062788",
+    "finished_at": "2026-07-04T15:42:02.071917",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__ppy-osu-31506": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "ppy-osu-31506__U69pZVV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

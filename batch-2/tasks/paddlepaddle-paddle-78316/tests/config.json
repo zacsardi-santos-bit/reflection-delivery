@@ -1,0 +1,18 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/test/legacy_test && pytest test_layers.py::TestBook::test_warpctc_with_padding test_warpctc_op.py::TestWarpCTCOpError -v",
+  "test_files": [
+    "test/legacy_test/test_layers.py",
+    "test/legacy_test/test_warpctc_op.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.legacy_test.test_warpctc_op.TestWarpCTCOpError::test_dygraph_zero_size_with_padding"
+  ],
+  "PASS_TO_PASS": [
+    "test.legacy_test.test_layers.TestBook::test_warpctc_with_padding",
+    "test.legacy_test.test_warpctc_op.TestWarpCTCOpError::test_dygraph_errors",
+    "test.legacy_test.test_warpctc_op.TestWarpCTCOpError::test_errors"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/config ./pkg/xds/ingress ./pkg/xds/sync ./pkg/zone -count=1",
+  "test_files": [
+    "pkg/config/loader_test.go",
+    "pkg/xds/ingress/dataplane_test.go",
+    "pkg/xds/sync/proxy_builder_test.go",
+    "pkg/zone/available_services_test.go",
+    "pkg/zone/zone_suite_test.go",
+    "test/e2e_env/multizone/connectivity/available_services.go",
+    "test/e2e_env/multizone/multizone_suite_test.go",
+    "test/e2e_env/multizone/sync/sync.go",
+    "test/framework/constants.go",
+    "test/framework/setup.go",
+    "test/framework/universal_app.go",
+    "test/framework/universal_cluster.go"
+  ],
+  "num_test_files": 12,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kumahq/kuma/pkg/config::TestConfig",
+    "github.com/kumahq/kuma/pkg/xds/ingress::TestIngress",
+    "github.com/kumahq/kuma/pkg/zone::TestZone"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/kumahq/kuma/pkg/xds/sync::TestSync"
+  ]
+}

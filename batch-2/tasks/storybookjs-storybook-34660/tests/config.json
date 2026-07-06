@@ -1,0 +1,37 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && node -e 'const fs=require(\"fs\"),p=\"code/core/package.json\",d=JSON.parse(fs.readFileSync(p,\"utf8\"));Object.values(d.exports||{}).forEach(function(v){if(v&&v.code)v.default=v.code;});fs.writeFileSync(p,JSON.stringify(d,null,2));' && cd code/lib/create-storybook && npx vitest run src/generators/REACT_NATIVE/metroConfig.test.ts",
+  "test_files": [
+    "code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod wraps module.exports object config and injects require import",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod wraps existing wrapper as outermost withStorybook",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod wraps export default async function in ts config with ESM import",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod uses ESM import for a .js config that uses export default",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod reuses aliased ESM withStorybook import when wrapping export default",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod treats aliased ESM withStorybook wrapper as already configured",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod reuses aliased CJS withStorybook binding when wrapping module.exports",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod uses ESM import for an .mjs config even without existing import/export",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod does not treat import/export text inside template literals as ESM for .ts import injection",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod preserves TypeScript return type and type parameters on default exported functions",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod is idempotent when run twice",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod skips codemod when storybook import already exists",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod prompts for file selection when multiple metro configs exist",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod skips automatically in --yes mode when non-expo metro config is missing",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod tries Expo command to create metro config when expo is detected",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod warns when Expo metro config creation command fails",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod uses prompt path for missing non-expo metro config",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod adds fallback comment on unsupported config shape",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod inserts require after 'use strict' directive prologue when present in body",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod keeps // @ts-nocheck pragma as the first line after CJS require injection",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod keeps /* eslint-disable */ pragma as the first line after CJS require injection",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod keeps // @ts-nocheck pragma as the first line after ESM import injection",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod containsStorybookImport detects import/require across top-level statement forms",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod fallback heuristic does not false-positive on storybook-like identifiers",
+    "/workspace/repo/code/lib/create-storybook/src/generators/REACT_NATIVE/metroConfig.test.ts::metroConfig codemod prepends fallback comment only once"
+  ],
+  "PASS_TO_PASS": []
+}

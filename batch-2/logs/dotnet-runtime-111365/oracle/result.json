@@ -1,0 +1,29 @@
+{
+    "id": "f63fbf72-9c50-49de-b5d7-345e8d581a65",
+    "started_at": "2026-07-06T12:17:49.615175",
+    "finished_at": "2026-07-06T12:18:12.198423",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__dotnet-runtime-111365": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "dotnet-runtime-111365__9gRrNM4"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

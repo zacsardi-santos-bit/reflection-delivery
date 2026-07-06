@@ -1,0 +1,222 @@
+patching file cmds/exp/tsort/graph_test.go
+patching file cmds/exp/tsort/multiset_test.go
+patching file cmds/exp/tsort/queue_test.go
+patching file cmds/exp/tsort/set_test.go
+patching file cmds/exp/tsort/tsort_test.go
+{"Time":"2026-06-29T15:27:17.505669216Z","Action":"start","Package":"github.com/u-root/u-root/cmds/exp/tsort"}
+{"Time":"2026-06-29T15:27:17.512072674Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestGraph"}
+{"Time":"2026-06-29T15:27:17.512139579Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestGraph","Output":"=== RUN   TestGraph\n"}
+{"Time":"2026-06-29T15:27:17.512331096Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestGraph","Output":"--- PASS: TestGraph (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.512349427Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestGraph","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.512369442Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetIsEmpty"}
+{"Time":"2026-06-29T15:27:17.512402934Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetIsEmpty","Output":"=== RUN   TestMultisetIsEmpty\n"}
+{"Time":"2026-06-29T15:27:17.512506293Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetIsEmpty","Output":"--- PASS: TestMultisetIsEmpty (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.512525724Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetIsEmpty","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.512548843Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetHas"}
+{"Time":"2026-06-29T15:27:17.512557021Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetHas","Output":"=== RUN   TestMultisetHas\n"}
+{"Time":"2026-06-29T15:27:17.512565535Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetHas","Output":"--- PASS: TestMultisetHas (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.512588937Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetHas","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.512597737Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetCount"}
+{"Time":"2026-06-29T15:27:17.512606143Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetCount","Output":"=== RUN   TestMultisetCount\n"}
+{"Time":"2026-06-29T15:27:17.512625016Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetCount","Output":"--- PASS: TestMultisetCount (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.512642081Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetCount","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.512680927Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetAdd"}
+{"Time":"2026-06-29T15:27:17.512688239Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetAdd","Output":"=== RUN   TestMultisetAdd\n"}
+{"Time":"2026-06-29T15:27:17.512774893Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetAdd","Output":"--- PASS: TestMultisetAdd (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.512790373Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetAdd","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.512803938Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetRemoveOne"}
+{"Time":"2026-06-29T15:27:17.512825999Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetRemoveOne","Output":"=== RUN   TestMultisetRemoveOne\n"}
+{"Time":"2026-06-29T15:27:17.512857395Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetRemoveOne","Output":"--- PASS: TestMultisetRemoveOne (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.512871576Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetRemoveOne","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.512884497Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetForEachUnique"}
+{"Time":"2026-06-29T15:27:17.512898077Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetForEachUnique","Output":"=== RUN   TestMultisetForEachUnique\n"}
+{"Time":"2026-06-29T15:27:17.513189929Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetForEachUnique","Output":"--- PASS: TestMultisetForEachUnique (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513210874Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestMultisetForEachUnique","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513226467Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestQueue"}
+{"Time":"2026-06-29T15:27:17.513236125Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestQueue","Output":"=== RUN   TestQueue\n"}
+{"Time":"2026-06-29T15:27:17.513273097Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestQueue","Output":"--- PASS: TestQueue (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513293414Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestQueue","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513302822Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestSet"}
+{"Time":"2026-06-29T15:27:17.513309771Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestSet","Output":"=== RUN   TestSet\n"}
+{"Time":"2026-06-29T15:27:17.513323251Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestSet","Output":"--- PASS: TestSet (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513336137Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestSet","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513349105Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort"}
+{"Time":"2026-06-29T15:27:17.513356473Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort","Output":"=== RUN   TestTsort\n"}
+{"Time":"2026-06-29T15:27:17.513661925Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_empty"}
+{"Time":"2026-06-29T15:27:17.513691333Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_empty","Output":"=== RUN   TestTsort/stdin:_empty\n"}
+{"Time":"2026-06-29T15:27:17.513711298Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_empty","Output":"--- PASS: TestTsort/stdin:_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513737834Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_empty","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513758749Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_space"}
+{"Time":"2026-06-29T15:27:17.513770084Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_space","Output":"=== RUN   TestTsort/stdin:_space\n"}
+{"Time":"2026-06-29T15:27:17.513794219Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_space","Output":"--- PASS: TestTsort/stdin:_space (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513810299Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_space","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513818801Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\n"}
+{"Time":"2026-06-29T15:27:17.513835163Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\n","Output":"=== RUN   TestTsort/stdin:_\\n\n"}
+{"Time":"2026-06-29T15:27:17.513868877Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\n","Output":"--- PASS: TestTsort/stdin:_\\n (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513887107Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\n","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513911987Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\r"}
+{"Time":"2026-06-29T15:27:17.513923986Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\r","Output":"=== RUN   TestTsort/stdin:_\\r\n"}
+{"Time":"2026-06-29T15:27:17.51393984Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\r","Output":"--- PASS: TestTsort/stdin:_\\r (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.513952142Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\r","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.513973872Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\t"}
+{"Time":"2026-06-29T15:27:17.513991255Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\t","Output":"=== RUN   TestTsort/stdin:_\\t\n"}
+{"Time":"2026-06-29T15:27:17.514008579Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\t","Output":"--- PASS: TestTsort/stdin:_\\t (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514032782Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\t","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514047057Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\v"}
+{"Time":"2026-06-29T15:27:17.514056415Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\v","Output":"=== RUN   TestTsort/stdin:_\\v\n"}
+{"Time":"2026-06-29T15:27:17.514071112Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\v","Output":"--- PASS: TestTsort/stdin:_\\v (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514079954Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\v","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514091016Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\f"}
+{"Time":"2026-06-29T15:27:17.51410217Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\f","Output":"=== RUN   TestTsort/stdin:_\\f\n"}
+{"Time":"2026-06-29T15:27:17.514121692Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\f","Output":"--- PASS: TestTsort/stdin:_\\f (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514131085Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_\\f","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514144914Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_a"}
+{"Time":"2026-06-29T15:27:17.514153577Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_a","Output":"=== RUN   TestTsort/stdin:_one_node:_a\n"}
+{"Time":"2026-06-29T15:27:17.51416783Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_a","Output":"--- PASS: TestTsort/stdin:_one_node:_a (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514177064Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_a","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514185592Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_b"}
+{"Time":"2026-06-29T15:27:17.51419514Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_b","Output":"=== RUN   TestTsort/stdin:_one_node:_b\n"}
+{"Time":"2026-06-29T15:27:17.514210138Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_b","Output":"--- PASS: TestTsort/stdin:_one_node:_b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514219847Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_node:_b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514237045Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_b"}
+{"Time":"2026-06-29T15:27:17.514245702Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_b","Output":"=== RUN   TestTsort/stdin:_one_edge:_a_b\n"}
+{"Time":"2026-06-29T15:27:17.514260761Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_b","Output":"--- PASS: TestTsort/stdin:_one_edge:_a_b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514270285Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514284515Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_b_a"}
+{"Time":"2026-06-29T15:27:17.514292835Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_b_a","Output":"=== RUN   TestTsort/stdin:_one_edge:_b_a\n"}
+{"Time":"2026-06-29T15:27:17.514307564Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_b_a","Output":"--- PASS: TestTsort/stdin:_one_edge:_b_a (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514316323Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_b_a","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514326224Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_A"}
+{"Time":"2026-06-29T15:27:17.514334543Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_A","Output":"=== RUN   TestTsort/stdin:_one_edge:_a_A\n"}
+{"Time":"2026-06-29T15:27:17.514358106Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_A","Output":"--- PASS: TestTsort/stdin:_one_edge:_a_A (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514368011Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a_A","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514378772Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a__b"}
+{"Time":"2026-06-29T15:27:17.514387397Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a__b","Output":"=== RUN   TestTsort/stdin:_one_edge:_a__b\n"}
+{"Time":"2026-06-29T15:27:17.514402612Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a__b","Output":"--- PASS: TestTsort/stdin:_one_edge:_a__b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.51441228Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a__b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514421299Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_1"}
+{"Time":"2026-06-29T15:27:17.514431401Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_1","Output":"=== RUN   TestTsort/stdin:_odd_data_count:_1\n"}
+{"Time":"2026-06-29T15:27:17.514443123Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_1","Output":"--- PASS: TestTsort/stdin:_odd_data_count:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.51445964Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_1","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514470338Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_3"}
+{"Time":"2026-06-29T15:27:17.514479898Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_3","Output":"=== RUN   TestTsort/stdin:_odd_data_count:_3\n"}
+{"Time":"2026-06-29T15:27:17.514495087Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_3","Output":"--- PASS: TestTsort/stdin:_odd_data_count:_3 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514503913Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_3","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514513519Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_5"}
+{"Time":"2026-06-29T15:27:17.514523758Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_5","Output":"=== RUN   TestTsort/stdin:_odd_data_count:_5\n"}
+{"Time":"2026-06-29T15:27:17.514552833Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_5","Output":"--- PASS: TestTsort/stdin:_odd_data_count:_5 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514565913Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_odd_data_count:_5","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514577323Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb"}
+{"Time":"2026-06-29T15:27:17.514585616Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\nb\n"}
+{"Time":"2026-06-29T15:27:17.514596831Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\nb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514606419Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514617961Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\n\\nb"}
+{"Time":"2026-06-29T15:27:17.514627322Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\n\\nb","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\n\\nb\n"}
+{"Time":"2026-06-29T15:27:17.51463669Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\n\\nb","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\n\\nb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514652217Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\n\\nb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514660763Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_\\na\\nb"}
+{"Time":"2026-06-29T15:27:17.514670018Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_\\na\\nb","Output":"=== RUN   TestTsort/stdin:_one_edge:_\\na\\nb\n"}
+{"Time":"2026-06-29T15:27:17.514678863Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_\\na\\nb","Output":"--- PASS: TestTsort/stdin:_one_edge:_\\na\\nb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514689282Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_\\na\\nb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.51470957Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb\\n"}
+{"Time":"2026-06-29T15:27:17.514720866Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb\\n","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\nb\\n\n"}
+{"Time":"2026-06-29T15:27:17.514732651Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb\\n","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\nb\\n (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514749384Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\nb\\n","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514762217Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\rb"}
+{"Time":"2026-06-29T15:27:17.514770992Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\rb","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\rb\n"}
+{"Time":"2026-06-29T15:27:17.514789904Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\rb","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\rb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514808852Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\rb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514820769Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\tb"}
+{"Time":"2026-06-29T15:27:17.514840083Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\tb","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\tb\n"}
+{"Time":"2026-06-29T15:27:17.514850639Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\tb","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\tb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514866594Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\tb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514875182Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\vb"}
+{"Time":"2026-06-29T15:27:17.514884327Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\vb","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\vb\n"}
+{"Time":"2026-06-29T15:27:17.514894676Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\vb","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\vb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514902813Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\vb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514911462Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\fb"}
+{"Time":"2026-06-29T15:27:17.514920109Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\fb","Output":"=== RUN   TestTsort/stdin:_one_edge:_a\\fb\n"}
+{"Time":"2026-06-29T15:27:17.514934919Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\fb","Output":"--- PASS: TestTsort/stdin:_one_edge:_a\\fb (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.514944385Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_one_edge:_a\\fb","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.514994699Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_error-returning_stdin"}
+{"Time":"2026-06-29T15:27:17.51501122Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_error-returning_stdin","Output":"=== RUN   TestTsort/stdin:_error-returning_stdin\n"}
+{"Time":"2026-06-29T15:27:17.515030883Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_error-returning_stdin","Output":"--- PASS: TestTsort/stdin:_error-returning_stdin (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515042574Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_error-returning_stdin","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.515062407Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_line:_a_b_b_c_c_d"}
+{"Time":"2026-06-29T15:27:17.515074992Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_line:_a_b_b_c_c_d","Output":"=== RUN   TestTsort/file:_line:_a_b_b_c_c_d\n"}
+{"Time":"2026-06-29T15:27:17.515089145Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_line:_a_b_b_c_c_d","Output":"--- PASS: TestTsort/file:_line:_a_b_b_c_c_d (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515107718Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_line:_a_b_b_c_c_d","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.515119472Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_non-existent"}
+{"Time":"2026-06-29T15:27:17.515131463Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_non-existent","Output":"=== RUN   TestTsort/file:_non-existent\n"}
+{"Time":"2026-06-29T15:27:17.515146632Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_non-existent","Output":"--- PASS: TestTsort/file:_non-existent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515153988Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/file:_non-existent","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.515163301Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_b_c_c_d"}
+{"Time":"2026-06-29T15:27:17.515172098Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_b_c_c_d","Output":"=== RUN   TestTsort/stdin:_line:_a_b_b_c_c_d\n"}
+{"Time":"2026-06-29T15:27:17.515283564Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_b_c_c_d","Output":"--- PASS: TestTsort/stdin:_line:_a_b_b_c_c_d (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515309316Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_b_c_c_d","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.515327181Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_c_d_b_c"}
+{"Time":"2026-06-29T15:27:17.515346128Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_c_d_b_c","Output":"=== RUN   TestTsort/stdin:_line:_a_b_c_d_b_c\n"}
+{"Time":"2026-06-29T15:27:17.515421015Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_c_d_b_c","Output":"--- PASS: TestTsort/stdin:_line:_a_b_c_d_b_c (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515446302Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_a_b_c_d_b_c","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.51546464Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_a_b_c_d"}
+{"Time":"2026-06-29T15:27:17.515474358Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_a_b_c_d","Output":"=== RUN   TestTsort/stdin:_line:_b_c_a_b_c_d\n"}
+{"Time":"2026-06-29T15:27:17.515668578Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_a_b_c_d","Output":"--- PASS: TestTsort/stdin:_line:_b_c_a_b_c_d (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515686674Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_a_b_c_d","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.515696522Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_c_d_a_b"}
+{"Time":"2026-06-29T15:27:17.51570676Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_c_d_a_b","Output":"=== RUN   TestTsort/stdin:_line:_b_c_c_d_a_b\n"}
+{"Time":"2026-06-29T15:27:17.515827835Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_c_d_a_b","Output":"--- PASS: TestTsort/stdin:_line:_b_c_c_d_a_b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.515849021Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_b_c_c_d_a_b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.515874204Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_a_b_b_c"}
+{"Time":"2026-06-29T15:27:17.515887044Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_a_b_b_c","Output":"=== RUN   TestTsort/stdin:_line:_c_d_a_b_b_c\n"}
+{"Time":"2026-06-29T15:27:17.515992243Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_a_b_b_c","Output":"--- PASS: TestTsort/stdin:_line:_c_d_a_b_b_c (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516013646Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_a_b_b_c","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516022917Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_b_c_a_b"}
+{"Time":"2026-06-29T15:27:17.516032065Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_b_c_a_b","Output":"=== RUN   TestTsort/stdin:_line:_c_d_b_c_a_b\n"}
+{"Time":"2026-06-29T15:27:17.51613152Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_b_c_a_b","Output":"--- PASS: TestTsort/stdin:_line:_c_d_b_c_a_b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516147017Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_line:_c_d_b_c_a_b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516160654Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond:_a_b_a_c_b_d_c_d"}
+{"Time":"2026-06-29T15:27:17.516168692Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond:_a_b_a_c_b_d_c_d","Output":"=== RUN   TestTsort/stdin:_diamond:_a_b_a_c_b_d_c_d\n"}
+{"Time":"2026-06-29T15:27:17.516224527Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond:_a_b_a_c_b_d_c_d","Output":"--- PASS: TestTsort/stdin:_diamond:_a_b_a_c_b_d_c_d (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516241555Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond:_a_b_a_c_b_d_c_d","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516256335Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_dag:_a_d_a_e_b_e_b_f_e_h_e_i_f_i_c_g"}
+{"Time":"2026-06-29T15:27:17.516265419Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_dag:_a_d_a_e_b_e_b_f_e_h_e_i_f_i_c_g","Output":"=== RUN   TestTsort/stdin:_dag:_a_d_a_e_b_e_b_f_e_h_e_i_f_i_c_g\n"}
+{"Time":"2026-06-29T15:27:17.516492835Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_dag:_a_d_a_e_b_e_b_f_e_h_e_i_f_i_c_g","Output":"--- PASS: TestTsort/stdin:_dag:_a_d_a_e_b_e_b_f_e_h_e_i_f_i_c_g (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516514378Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_dag:_a_d_a_e_b_e_b_f_e_h_e_i_f_i_c_g","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516532394Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_a_b_b_a"}
+{"Time":"2026-06-29T15:27:17.516541645Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_a_b_b_a","Output":"=== RUN   TestTsort/stdin:_cycle:_a_b_b_a\n"}
+{"Time":"2026-06-29T15:27:17.516551416Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_a_b_b_a","Output":"--- PASS: TestTsort/stdin:_cycle:_a_b_b_a (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516570366Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_a_b_b_a","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516580429Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_b_c_c_d_d_b"}
+{"Time":"2026-06-29T15:27:17.516596732Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_b_c_c_d_d_b","Output":"=== RUN   TestTsort/stdin:_cycle:_b_c_c_d_d_b\n"}
+{"Time":"2026-06-29T15:27:17.516619244Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_b_c_c_d_d_b","Output":"--- PASS: TestTsort/stdin:_cycle:_b_c_c_d_d_b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516628377Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle:_b_c_c_d_d_b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516653392Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_cycles:_a_b_b_a_c_d_d_c"}
+{"Time":"2026-06-29T15:27:17.516664466Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_cycles:_a_b_b_a_c_d_d_c","Output":"=== RUN   TestTsort/stdin:_two_cycles:_a_b_b_a_c_d_d_c\n"}
+{"Time":"2026-06-29T15:27:17.516756739Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_cycles:_a_b_b_a_c_d_d_c","Output":"--- PASS: TestTsort/stdin:_two_cycles:_a_b_b_a_c_d_d_c (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.516775472Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_cycles:_a_b_b_a_c_d_d_c","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.516788966Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_orphan_node_then_cycle:_d_d_a_b_b_c_c_a"}
+{"Time":"2026-06-29T15:27:17.516799031Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_orphan_node_then_cycle:_d_d_a_b_b_c_c_a","Output":"=== RUN   TestTsort/stdin:_orphan_node_then_cycle:_d_d_a_b_b_c_c_a\n"}
+{"Time":"2026-06-29T15:27:17.51743403Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_orphan_node_then_cycle:_d_d_a_b_b_c_c_a","Output":"--- PASS: TestTsort/stdin:_orphan_node_then_cycle:_d_d_a_b_b_c_c_a (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.517463956Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_orphan_node_then_cycle:_d_d_a_b_b_c_c_a","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.517476914Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_then_orphan_node:_a_b_b_c_c_a_d_d"}
+{"Time":"2026-06-29T15:27:17.517486139Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_then_orphan_node:_a_b_b_c_c_a_d_d","Output":"=== RUN   TestTsort/stdin:_cycle_then_orphan_node:_a_b_b_c_c_a_d_d\n"}
+{"Time":"2026-06-29T15:27:17.517505985Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_then_orphan_node:_a_b_b_c_c_a_d_d","Output":"--- PASS: TestTsort/stdin:_cycle_then_orphan_node:_a_b_b_c_c_a_d_d (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.51752482Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_then_orphan_node:_a_b_b_c_c_a_d_d","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.517539222Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_connected_cycles:_a_b_b_a_a_c_c_a"}
+{"Time":"2026-06-29T15:27:17.517549155Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_connected_cycles:_a_b_b_a_a_c_c_a","Output":"=== RUN   TestTsort/stdin:_two_connected_cycles:_a_b_b_a_a_c_c_a\n"}
+{"Time":"2026-06-29T15:27:17.517588787Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_connected_cycles:_a_b_b_a_a_c_c_a","Output":"--- PASS: TestTsort/stdin:_two_connected_cycles:_a_b_b_a_a_c_c_a (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.517599476Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_two_connected_cycles:_a_b_b_a_a_c_c_a","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.517623573Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_with_duplicate_edges:_a_b_a_b_b_a"}
+{"Time":"2026-06-29T15:27:17.517636906Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_with_duplicate_edges:_a_b_a_b_b_a","Output":"=== RUN   TestTsort/stdin:_cycle_with_duplicate_edges:_a_b_a_b_b_a\n"}
+{"Time":"2026-06-29T15:27:17.517650412Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_with_duplicate_edges:_a_b_a_b_b_a","Output":"--- PASS: TestTsort/stdin:_cycle_with_duplicate_edges:_a_b_a_b_b_a (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.517665536Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_cycle_with_duplicate_edges:_a_b_a_b_b_a","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.51767413Z","Action":"run","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond_and_cycle:_a_b_a_c_b_d_c_d_b_e_e_f_f_b"}
+{"Time":"2026-06-29T15:27:17.517683087Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond_and_cycle:_a_b_a_c_b_d_c_d_b_e_e_f_f_b","Output":"=== RUN   TestTsort/stdin:_diamond_and_cycle:_a_b_a_c_b_d_c_d_b_e_e_f_f_b\n"}
+{"Time":"2026-06-29T15:27:17.51770393Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond_and_cycle:_a_b_a_c_b_d_c_d_b_e_e_f_f_b","Output":"--- PASS: TestTsort/stdin:_diamond_and_cycle:_a_b_a_c_b_d_c_d_b_e_e_f_f_b (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.517718255Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort/stdin:_diamond_and_cycle:_a_b_a_c_b_d_c_d_b_e_e_f_f_b","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.517936418Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort","Output":"--- PASS: TestTsort (0.00s)\n"}
+{"Time":"2026-06-29T15:27:17.518014829Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Test":"TestTsort","Elapsed":0}
+{"Time":"2026-06-29T15:27:17.518030126Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:17.518434456Z","Action":"output","Package":"github.com/u-root/u-root/cmds/exp/tsort","Output":"ok  \tgithub.com/u-root/u-root/cmds/exp/tsort\t0.012s\n"}
+{"Time":"2026-06-29T15:27:17.518452528Z","Action":"pass","Package":"github.com/u-root/u-root/cmds/exp/tsort","Elapsed":0.013}
+reward=1 graded=53 found=53 failed=0 parsed=53 framework=go exit_code=0

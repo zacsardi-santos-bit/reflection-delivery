@@ -1,0 +1,29 @@
+{
+    "id": "8523793e-0cf3-4a3a-888a-b26b218b2700",
+    "started_at": "2026-07-04T15:37:23.798487",
+    "finished_at": "2026-07-04T15:38:43.502157",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tree-sitter-tree-sitter-3060": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tree-sitter-tree-sitter-3060__kQ9aubC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

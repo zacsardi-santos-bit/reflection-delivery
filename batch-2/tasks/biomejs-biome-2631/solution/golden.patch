@@ -1,0 +1,950 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index a4a109c442..0470c586ea 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -33,6 +33,10 @@ our [guidelines for writing a good changelog entry](https://github.com/biomejs/b
+ 
+ ### Linter
+ 
++#### New features
++
++- Add [nursery/useExplicitLengthCheck](https://biomejs.dev/linter/rules/use-explicit-length-check/).
++
+ #### Bug fixes
+ 
+ - [noBlankTarget](https://biomejs.dev/linter/rules/no-blank-target/) no longer hangs when applying a code fix ([#2675](https://github.com/biomejs/biome/issues/2675)).
+diff --git a/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs b/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+index 3fa7665f61..c46feab300 100644
+--- a/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
++++ b/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+@@ -1254,6 +1254,20 @@ pub(crate) fn migrate_eslint_any_rule(
+                 .get_or_insert(Default::default());
+             rule.set_level(rule_severity.into());
+         }
++        "unicorn/explicit-length-check" => {
++            if !options.include_inspired {
++                results.has_inspired_rules = true;
++                return false;
++            }
++            if !options.include_nursery {
++                return false;
++            }
++            let group = rules.nursery.get_or_insert_with(Default::default);
++            let rule = group
++                .use_explicit_length_check
++                .get_or_insert(Default::default());
++            rule.set_level(rule_severity.into());
++        }
+         "unicorn/filename-case" => {
+             if !options.include_inspired {
+                 results.has_inspired_rules = true;
+diff --git a/crates/biome_configuration/src/linter/rules.rs b/crates/biome_configuration/src/linter/rules.rs
+index 19b5a58c18..b6140d00ed 100644
+--- a/crates/biome_configuration/src/linter/rules.rs
++++ b/crates/biome_configuration/src/linter/rules.rs
+@@ -2726,6 +2726,9 @@ pub struct Nursery {
+     #[doc = "Require the default clause in switch statements."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub use_default_switch_clause: Option<RuleConfiguration<UseDefaultSwitchClause>>,
++    #[doc = "Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value."]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub use_explicit_length_check: Option<RuleConfiguration<UseExplicitLengthCheck>>,
+     #[doc = "Disallow a missing generic family keyword within font families."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub use_generic_font_names: Option<RuleConfiguration<UseGenericFontNames>>,
+@@ -2778,6 +2781,7 @@ impl Nursery {
+         "useArrayLiterals",
+         "useConsistentBuiltinInstantiation",
+         "useDefaultSwitchClause",
++        "useExplicitLengthCheck",
+         "useGenericFontNames",
+         "useImportRestrictions",
+         "useSortedClasses",
+@@ -2812,7 +2816,7 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]),
+     ];
+     const ALL_RULES_AS_FILTERS: &'static [RuleFilter<'static>] = &[
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
+@@ -2843,6 +2847,7 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]),
+     ];
+     #[doc = r" Retrieves the recommended rules"]
+     pub(crate) fn is_recommended_true(&self) -> bool {
+@@ -2984,21 +2989,26 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
+             }
+         }
+-        if let Some(rule) = self.use_generic_font_names.as_ref() {
++        if let Some(rule) = self.use_explicit_length_check.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.use_generic_font_names.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
+             }
+         }
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
++            if rule.is_enabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
++            }
++        }
+         index_set
+     }
+     pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
+@@ -3128,21 +3138,26 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
+             }
+         }
+-        if let Some(rule) = self.use_generic_font_names.as_ref() {
++        if let Some(rule) = self.use_explicit_length_check.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.use_generic_font_names.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
+             }
+         }
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
++            if rule.is_disabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
++            }
++        }
+         index_set
+     }
+     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
+@@ -3279,6 +3294,10 @@ impl Nursery {
+                 .use_default_switch_clause
+                 .as_ref()
+                 .map(|conf| (conf.level(), conf.get_options())),
++            "useExplicitLengthCheck" => self
++                .use_explicit_length_check
++                .as_ref()
++                .map(|conf| (conf.level(), conf.get_options())),
+             "useGenericFontNames" => self
+                 .use_generic_font_names
+                 .as_ref()
+diff --git a/crates/biome_diagnostics_categories/src/categories.rs b/crates/biome_diagnostics_categories/src/categories.rs
+index 218c023ec0..7b11222c24 100644
+--- a/crates/biome_diagnostics_categories/src/categories.rs
++++ b/crates/biome_diagnostics_categories/src/categories.rs
+@@ -136,6 +136,7 @@ define_categories! {
+     "lint/nursery/noUselessUndefinedInitialization": "https://biomejs.dev/linter/rules/no-useless-undefined-initialization",
+     "lint/nursery/useArrayLiterals": "https://biomejs.dev/linter/rules/use-array-literals",
+     "lint/nursery/useBiomeSuppressionComment": "https://biomejs.dev/linter/rules/use-biome-suppression-comment",
++    "lint/nursery/useExplicitLengthCheck": "https://biomejs.dev/linter/rules/use-explicit-length-check",
+     "lint/nursery/useConsistentBuiltinInstantiation": "https://biomejs.dev/linter/rules/use-consistent-new-builtin",
+     "lint/nursery/useDefaultSwitchClause": "https://biomejs.dev/linter/rules/use-default-switch-clause",
+     "lint/nursery/useGenericFontNames": "https://biomejs.dev/linter/rules/use-generic-font-names",
+diff --git a/crates/biome_js_analyze/src/lint/complexity/no_extra_boolean_cast.rs b/crates/biome_js_analyze/src/lint/complexity/no_extra_boolean_cast.rs
+index 58b4f3d703..208f298e9b 100644
+--- a/crates/biome_js_analyze/src/lint/complexity/no_extra_boolean_cast.rs
++++ b/crates/biome_js_analyze/src/lint/complexity/no_extra_boolean_cast.rs
+@@ -5,11 +5,10 @@ use biome_analyze::{
+ use biome_console::markup;
+ use biome_diagnostics::Applicability;
+ use biome_js_syntax::{
+-    AnyJsExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
+-    JsConditionalExpression, JsDoWhileStatement, JsForStatement, JsIfStatement, JsNewExpression,
+-    JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement,
++    is_in_boolean_context, is_negation, AnyJsExpression, JsCallArgumentList, JsCallArguments,
++    JsCallExpression, JsNewExpression, JsSyntaxNode, JsUnaryOperator,
+ };
+-use biome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, SyntaxNodeCast};
++use biome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
+ 
+ use crate::JsRuleAction;
+ 
+@@ -65,52 +64,17 @@ declare_rule! {
+     }
+ }
+ 
+-/// Check if this node is in the position of `test` slot of parent syntax node.
+-/// ## Example
+-/// ```js
+-/// if (!!x) {
+-///     ^^^ this is a boolean context
+-/// }
+-/// ```
+-fn is_in_boolean_context(node: &JsSyntaxNode) -> Option<bool> {
+-    let parent = node.parent()?;
+-    match parent.kind() {
+-        JsSyntaxKind::JS_IF_STATEMENT => {
+-            Some(parent.cast::<JsIfStatement>()?.test().ok()?.syntax() == node)
+-        }
+-        JsSyntaxKind::JS_DO_WHILE_STATEMENT => {
+-            Some(parent.cast::<JsDoWhileStatement>()?.test().ok()?.syntax() == node)
+-        }
+-        JsSyntaxKind::JS_WHILE_STATEMENT => {
+-            Some(parent.cast::<JsWhileStatement>()?.test().ok()?.syntax() == node)
+-        }
+-        JsSyntaxKind::JS_FOR_STATEMENT => {
+-            Some(parent.cast::<JsForStatement>()?.test()?.syntax() == node)
+-        }
+-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => Some(
+-            parent
+-                .cast::<JsConditionalExpression>()?
+-                .test()
+-                .ok()?
+-                .syntax()
+-                == node,
+-        ),
+-        _ => None,
+-    }
+-}
+-
+ /// Checks if the node is a `Boolean` Constructor Call
+ /// # Example
+ /// ```js
+ /// new Boolean(x);
+ /// ```
+-/// The checking algorithm of [JsNewExpression] is a little different from [JsCallExpression] due to
+-/// two nodes have different shapes
+-fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
++pub fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<JsNewExpression> {
+     let expr = JsCallArgumentList::cast_ref(node)?
+         .parent::<JsCallArguments>()?
+         .parent::<JsNewExpression>()?;
+-    Some(expr.has_callee("Boolean"))
++
++    expr.has_callee("Boolean").then_some(expr)
+ }
+ 
+ /// Check if the SyntaxNode is a `Boolean` Call Expression
+@@ -123,20 +87,6 @@ fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
+     Some(expr.has_callee("Boolean"))
+ }
+ 
+-/// Check if the SyntaxNode is a Negate Unary Expression
+-/// ## Example
+-/// ```js
+-/// !!x
+-/// ```
+-fn is_negation(node: &JsSyntaxNode) -> Option<JsUnaryExpression> {
+-    let unary_expr = JsUnaryExpression::cast_ref(node)?;
+-    if unary_expr.operator().ok()? == JsUnaryOperator::LogicalNot {
+-        Some(unary_expr)
+-    } else {
+-        None
+-    }
+-}
+-
+ impl Rule for NoExtraBooleanCast {
+     type Query = Ast<AnyJsExpression>;
+     type State = (AnyJsExpression, ExtraBooleanCastType);
+@@ -151,7 +101,7 @@ impl Rule for NoExtraBooleanCast {
+         // reference https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+         let parent_node_in_boolean_cast_context = is_in_boolean_context(n.syntax())
+             .unwrap_or(false)
+-            || is_boolean_constructor_call(&parent).unwrap_or(false)
++            || is_boolean_constructor_call(&parent).is_some()
+             || is_negation(&parent).is_some()
+             || is_boolean_call(&parent).unwrap_or(false);
+         // Convert `!!x` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
+diff --git a/crates/biome_js_analyze/src/lint/nursery.rs b/crates/biome_js_analyze/src/lint/nursery.rs
+index f191e90e5a..ec05b4dcfe 100644
+--- a/crates/biome_js_analyze/src/lint/nursery.rs
++++ b/crates/biome_js_analyze/src/lint/nursery.rs
+@@ -17,6 +17,7 @@ pub mod no_useless_undefined_initialization;
+ pub mod use_array_literals;
+ pub mod use_consistent_builtin_instantiation;
+ pub mod use_default_switch_clause;
++pub mod use_explicit_length_check;
+ pub mod use_import_restrictions;
+ pub mod use_sorted_classes;
+ 
+@@ -39,6 +40,7 @@ declare_group! {
+             self :: use_array_literals :: UseArrayLiterals ,
+             self :: use_consistent_builtin_instantiation :: UseConsistentBuiltinInstantiation ,
+             self :: use_default_switch_clause :: UseDefaultSwitchClause ,
++            self :: use_explicit_length_check :: UseExplicitLengthCheck ,
+             self :: use_import_restrictions :: UseImportRestrictions ,
+             self :: use_sorted_classes :: UseSortedClasses ,
+         ]
+diff --git a/crates/biome_js_analyze/src/lint/nursery/use_explicit_length_check.rs b/crates/biome_js_analyze/src/lint/nursery/use_explicit_length_check.rs
+new file mode 100644
+index 0000000000..3c538a0078
+--- /dev/null
++++ b/crates/biome_js_analyze/src/lint/nursery/use_explicit_length_check.rs
+@@ -0,0 +1,474 @@
++use biome_analyze::{
++    context::RuleContext, declare_rule, ActionCategory, Ast, FixKind, Rule, RuleDiagnostic,
++    RuleSource, RuleSourceKind,
++};
++use biome_console::markup;
++use biome_diagnostics::Applicability;
++use biome_js_factory::make;
++use biome_js_syntax::{
++    is_in_boolean_context, is_negation, AnyJsExpression, AnyJsLiteralExpression,
++    JsBinaryExpression, JsBinaryOperator, JsCallArgumentList, JsCallArguments, JsCallExpression,
++    JsLogicalExpression, JsLogicalOperator, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
++    JsUnaryExpression, JsUnaryOperator, T,
++};
++use biome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
++
++use crate::JsRuleAction;
++
++declare_rule! {
++    /// Enforce explicitly comparing the `length`, `size`, `byteLength` or `byteOffset` property of a value.
++    ///
++    /// This rule enforces a specific style length comparisons to make them more clear.
++    ///
++    /// ## Zero comparison examples
++    /// Enforce comparison with === 0 when checking for zero length.
++    ///
++    /// ### Invalid
++    ///
++    /// ```js,expect_diagnostic
++    /// const isEmpty = !foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isEmpty = foo.length == 0;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isEmpty = foo.length < 1;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isEmpty = 0 === foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isEmpty = 0 == foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isEmpty = 1 > foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// // Negative style is disallowed too
++    /// const isEmpty = !(foo.length > 0);
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isEmptySet = !foo.size;
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```js
++    /// const isEmpty = foo.length === 0;
++    /// ```
++    ///
++    /// ## Non-zero comparison examples
++    /// Enforce comparison with > 0 when checking for non-zero length.
++    ///
++    /// ### Invalid
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = foo.length !== 0;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = foo.length != 0;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = foo.length >= 1;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = 0 !== foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = 0 != foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = 1 <= foo.length;
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const isNotEmpty = Boolean(foo.length);
++    /// ```
++    /// ```js,expect_diagnostic
++    /// // Negative style is disallowed too
++    /// const isNotEmpty = !(foo.length === 0);
++    /// ```
++    /// ```js,expect_diagnostic
++    /// if (foo.length || bar.length) {}
++    /// ```
++    /// ```js,expect_diagnostic
++    /// const biome = foo.length ? 1 : 2
++    /// ```
++    /// ```js,expect_diagnostic
++    /// while (foo.length) {}
++    /// ```
++    /// ```js,expect_diagnostic
++    /// do {} while (foo.length);
++    /// ```
++    /// ```js,expect_diagnostic
++    /// for (; foo.length; ) {};
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```js
++    /// const isNotEmpty = foo.length > 0;
++    /// ```
++    /// ```js
++    /// if (foo.length > 0 || bar.length > 0) {}
++    /// ```
++    ///
++    /// ## Caveats
++    /// This rule assumes that the `length` property is always numeric, even if it actually is not.
++    /// In the example below the rule will trigger a warning, even though the `length` property is a string.
++    /// ```js
++    /// const foo1 = { size: "small" }; if (foo1.size) {}
++    /// ```
++    /// To properly handle this case, type inference would be required, which is not supported by Biome at the moment.
++    /// We recommend disabling this rule when working with non-numeric `length` properties.
++    ///
++    pub UseExplicitLengthCheck {
++        version: "next",
++        name: "useExplicitLengthCheck",
++        recommended: false,
++        sources: &[RuleSource::EslintUnicorn("explicit-length-check")],
++        source_kind: RuleSourceKind::Inspired,
++        recommended: false,
++        fix_kind: FixKind::Unsafe,
++    }
++}
++
++impl Rule for UseExplicitLengthCheck {
++    type Query = Ast<JsStaticMemberExpression>;
++    type State = UseExplicitLengthCheckState;
++    type Signals = Option<Self::State>;
++    type Options = ();
++
++    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
++        let node = ctx.query();
++        let member_name = node.member().ok()?.text();
++
++        if !LENGTH_MEMBER_NAMES.contains(&member_name.as_str()) {
++            return None;
++        }
++
++        // TODO. Handle cases when `length` property is not numeric
++        // That requires type inference. Example: `{ length: "not a number" }`
++
++        let member_expr_syntax = node.syntax();
++        let parent_syntax = member_expr_syntax.parent()?;
++
++        if let Some((binary_expr, mut len_check, is_possibly_valid)) =
++            is_binary_expr_length_check(&parent_syntax)
++        {
++            return get_boolean_ancestor(binary_expr.syntax())
++                .map(|(expr, is_negative)| {
++                    if is_negative {
++                        len_check = len_check.opposite();
++                    }
++
++                    UseExplicitLengthCheckState {
++                        check: len_check,
++                        node: expr,
++                        member_name: member_name.clone(),
++                    }
++                })
++                .or_else(|| {
++                    // Binary expression is valid and was not wrapped in a boolean ancestor
++                    if is_possibly_valid {
++                        return None;
++                    }
++
++                    Some(UseExplicitLengthCheckState {
++                        check: len_check,
++                        node: AnyJsExpression::cast_ref(binary_expr.syntax())?,
++                        member_name: member_name.clone(),
++                    })
++                });
++        }
++
++        if is_in_boolean_context(member_expr_syntax).unwrap_or(false) {
++            return Some(UseExplicitLengthCheckState {
++                check: LengthCheck::NonZero,
++                node: AnyJsExpression::cast_ref(member_expr_syntax)?,
++                member_name,
++            });
++        }
++
++        if let Some(logical_expr) = is_logical_expr(&parent_syntax) {
++            // `const x = foo.length || 0` is valid case
++            // TODO. This handles simple cases. To know if right side is a number, we need type inference.
++            if logical_expr.operator().ok()? == JsLogicalOperator::LogicalOr
++                && logical_expr.right().ok()?.syntax().kind()
++                    == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
++            {
++                return None;
++            }
++
++            return Some(UseExplicitLengthCheckState {
++                check: LengthCheck::NonZero,
++                node: AnyJsExpression::cast_ref(member_expr_syntax)?,
++                member_name,
++            });
++        }
++
++        if let Some((boolean_expr, is_negative)) = get_boolean_ancestor(member_expr_syntax) {
++            let check = if is_negative {
++                LengthCheck::Zero
++            } else {
++                LengthCheck::NonZero
++            };
++
++            return Some(UseExplicitLengthCheckState {
++                check,
++                node: boolean_expr,
++                member_name,
++            });
++        }
++
++        None
++    }
++
++    fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
++        let (code, type_text) = match state.check {
++            LengthCheck::Zero => ("=== 0", "zero"),
++            LengthCheck::NonZero => ("> 0", "not zero"),
++        };
++
++        Some(RuleDiagnostic::new(
++            rule_category!(),
++            state.node.range(),
++            markup! {
++                "Use "<Emphasis>"."{state.member_name}" "{code}</Emphasis>" when checking "<Emphasis>"."{state.member_name}</Emphasis>" is "{type_text}"."
++            },
++        ))
++    }
++
++    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
++        let member_expr = ctx.query();
++        let mut mutation = ctx.root().begin();
++
++        let operator_kind = match state.check {
++            LengthCheck::Zero => T![===],
++            LengthCheck::NonZero => T![>],
++        };
++
++        let new_binary_expr = make::js_binary_expression(
++            member_expr.clone().trim_trailing_trivia()?.into(),
++            make::token_decorated_with_space(operator_kind),
++            AnyJsExpression::AnyJsLiteralExpression(
++                AnyJsLiteralExpression::JsNumberLiteralExpression(
++                    make::js_number_literal_expression(make::js_number_literal("0")),
++                ),
++            ),
++        );
++
++        let mut new_node = new_binary_expr.into_syntax();
++        let parent = state.node.syntax().parent()?;
++        // In cases like `export default!foo.length` -> `export default foo.length === 0`
++        // we need to add a space between keyword and expression
++        if matches!(
++            parent.kind(),
++            JsSyntaxKind::JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE
++                | JsSyntaxKind::JS_INSTANCEOF_EXPRESSION
++                | JsSyntaxKind::JS_YIELD_EXPRESSION
++                | JsSyntaxKind::JS_RETURN_STATEMENT
++                | JsSyntaxKind::JS_THROW_STATEMENT
++                | JsSyntaxKind::JS_NEW_EXPRESSION
++                | JsSyntaxKind::JS_AWAIT_EXPRESSION
++                | JsSyntaxKind::JS_IN_EXPRESSION
++                | JsSyntaxKind::JS_FOR_OF_STATEMENT
++                | JsSyntaxKind::JS_FOR_IN_STATEMENT
++                | JsSyntaxKind::JS_DO_WHILE_STATEMENT
++                | JsSyntaxKind::JS_CASE_CLAUSE
++        ) || does_unary_expr_needs_space(&parent)
++        {
++            // Make fake token to get leading trivia
++            let leading_trivia = make::token_decorated_with_space(T![=])
++                .leading_trivia()
++                .pieces();
++
++            new_node = new_node
++                .trim_leading_trivia()?
++                .prepend_trivia_pieces(leading_trivia)?;
++        }
++
++        mutation.replace_element_discard_trivia(
++            state.node.clone().into_syntax().into(),
++            new_node.into(),
++        );
++
++        let code = match state.check {
++            LengthCheck::Zero => "=== 0",
++            LengthCheck::NonZero => "> 0",
++        };
++
++        Some(JsRuleAction {
++            category: ActionCategory::QuickFix,
++            applicability: Applicability::MaybeIncorrect,
++            message: markup! { "Replace "<Emphasis>"."{state.member_name}</Emphasis>" with "<Emphasis>"."{state.member_name}" "{code}</Emphasis> }.to_owned(),
++            mutation,
++        })
++    }
++}
++
++/// Sorted by how common they are in the wild
++const LENGTH_MEMBER_NAMES: &[&str] = &["length", "size", "byteLength", "byteOffset"];
++
++pub struct UseExplicitLengthCheckState {
++    check: LengthCheck,
++    node: AnyJsExpression,
++    member_name: String,
++}
++
++enum MemberPosition {
++    Left,
++    Right,
++}
++
++#[derive(Clone, Copy)]
++enum LengthCheck {
++    Zero,
++    NonZero,
++}
++
++impl LengthCheck {
++    fn opposite(&self) -> Self {
++        match self {
++            LengthCheck::Zero => LengthCheck::NonZero,
++            LengthCheck::NonZero => LengthCheck::Zero,
++        }
++    }
++}
++
++fn extract_binary_position_and_literal(
++    node: &JsBinaryExpression,
++) -> Option<(MemberPosition, AnyJsLiteralExpression)> {
++    match (node.left().ok()?, node.right().ok()?) {
++        (
++            AnyJsExpression::JsStaticMemberExpression(_),
++            AnyJsExpression::AnyJsLiteralExpression(literal),
++        ) => Some((MemberPosition::Right, literal)),
++        (
++            AnyJsExpression::AnyJsLiteralExpression(literal),
++            AnyJsExpression::JsStaticMemberExpression(_),
++        ) => Some((MemberPosition::Left, literal)),
++        _ => None,
++    }
++}
++
++fn is_binary_expr_length_check(
++    node: &JsSyntaxNode,
++) -> Option<(JsBinaryExpression, LengthCheck, bool)> {
++    let binary_expr = JsBinaryExpression::cast_ref(node)?;
++
++    let (member_position, literal) = extract_binary_position_and_literal(&binary_expr)?;
++    let number = literal
++        .as_js_number_literal_expression()?
++        .as_number()?
++        .round() as i64;
++
++    let (length_check, is_valid) = match (member_position, binary_expr.operator().ok()?, number) {
++        // Zero length checks
++        // -------------------------
++        // `0 == foo.length` or `foo.length == 0`
++        (MemberPosition::Left | MemberPosition::Right, JsBinaryOperator::Equality, 0) |
++        // `foo.length < 1`
++        (MemberPosition::Right, JsBinaryOperator::LessThan, 1) |
++        // `1 > foo.length`
++        (MemberPosition::Left, JsBinaryOperator::GreaterThan, 1) |
++        // 0 === foo.length. We prefer right side to be a number
++        (MemberPosition::Left, JsBinaryOperator::StrictEquality, 0) => Some((LengthCheck::Zero, false)),
++        // `foo.length === 0`. Valid, but might still be wrapped in a boolean ancestor
++        (MemberPosition::Right, JsBinaryOperator::StrictEquality, 0) => Some((LengthCheck::Zero, true)),
++        // -------------------------
++        // Non-zero length checks
++        // -------------------------
++        // `0 !== foo.length` or `foo.length !== 0` or
++        // `0 != foo.length` or `foo.length != 0`
++        (
++            MemberPosition::Left | MemberPosition::Right,
++            JsBinaryOperator::StrictInequality | JsBinaryOperator::Inequality,
++            0,
++        ) |
++        // `foo.length >= 1`
++        (MemberPosition::Right, JsBinaryOperator::GreaterThanOrEqual, 1) |
++        // `1 <= foo.length`
++        (MemberPosition::Left, JsBinaryOperator::LessThanOrEqual, 1) |
++        // 0 < foo.length. We prefer right side to be a number
++        (MemberPosition::Left, JsBinaryOperator::LessThan, 0) => Some((LengthCheck::NonZero, false)),
++        // `foo.length > 0`. Valid, but might still be wrapped in a boolean ancestor
++        (MemberPosition::Right, JsBinaryOperator::GreaterThan, 0) => Some((LengthCheck::NonZero, true)),
++        _ => None,
++    }?;
++
++    Some((binary_expr, length_check, is_valid))
++}
++
++/// Get the boolean ancestor of the node
++/// ## Example
++/// Includes following cases:
++/// - `Boolean(x)`
++/// - `!!x`
++/// - `!x`
++/// - `!(x)`
++/// - `!(!x)`
++/// and combination of them nested
++/// ```js
++/// !(Boolean(!(!x)))
++/// ```
++/// Returns ancestor expression and whether it is negated
++fn get_boolean_ancestor(node: &JsSyntaxNode) -> Option<(AnyJsExpression, bool)> {
++    let mut boolean_node: Option<JsSyntaxNode> = None;
++    let mut current_node = node.parent()?;
++    let mut is_negative = false;
++
++    loop {
++        if let Some(expr) = is_boolean_call(&current_node) {
++            let syntax = expr.syntax().clone();
++            current_node = syntax.parent()?;
++            boolean_node = Some(syntax);
++        } else if let Some(expr) = is_negation(&current_node) {
++            let syntax = expr.syntax().clone();
++            current_node = syntax.parent()?;
++            boolean_node = Some(syntax);
++            is_negative = !is_negative;
++        } else if current_node.kind() == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION {
++            current_node = current_node.parent()?;
++        } else {
++            break;
++        }
++    }
++
++    Some((AnyJsExpression::cast(boolean_node?)?, is_negative))
++}
++
++/// Check if the SyntaxNode is a `Boolean` Call Expression
++/// ## Example
++/// ```js
++/// Boolean(x)
++/// ```
++pub fn is_boolean_call(node: &JsSyntaxNode) -> Option<JsCallExpression> {
++    let expr = JsCallArgumentList::cast_ref(node)?
++        .parent::<JsCallArguments>()?
++        .parent::<JsCallExpression>()?;
++
++    if expr.has_callee("Boolean") && expr.arguments().ok()?.args().len() < 2 {
++        Some(expr)
++    } else {
++        None
++    }
++}
++
++/// Checks if expression is a logical expression with `&&` or `||` operator
++fn is_logical_expr(node: &JsSyntaxNode) -> Option<JsLogicalExpression> {
++    let expr: JsLogicalExpression = JsLogicalExpression::cast_ref(node)?;
++
++    match expr.operator().ok()? {
++        JsLogicalOperator::LogicalAnd | JsLogicalOperator::LogicalOr => Some(expr),
++        _ => None,
++    }
++}
++
++fn does_unary_expr_needs_space(node: &JsSyntaxNode) -> bool {
++    JsUnaryExpression::cast_ref(node)
++        .and_then(|expr| expr.operator().ok())
++        .and_then(|operator| match operator {
++            JsUnaryOperator::Typeof | JsUnaryOperator::Void | JsUnaryOperator::Delete => Some(()),
++            _ => None,
++        })
++        .is_some()
++}
+diff --git a/crates/biome_js_analyze/src/lint/suspicious/no_unsafe_negation.rs b/crates/biome_js_analyze/src/lint/suspicious/no_unsafe_negation.rs
+index 7d86b70e65..eddaddbdef 100644
+--- a/crates/biome_js_analyze/src/lint/suspicious/no_unsafe_negation.rs
++++ b/crates/biome_js_analyze/src/lint/suspicious/no_unsafe_negation.rs
+@@ -6,7 +6,7 @@ use biome_analyze::{
+ use biome_console::markup;
+ use biome_diagnostics::Applicability;
+ use biome_js_factory::make;
+-use biome_js_syntax::{AnyJsExpression, JsInExpression, JsInstanceofExpression};
++use biome_js_syntax::{is_negation, AnyJsExpression, JsInExpression, JsInstanceofExpression};
+ use biome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
+ 
+ declare_rule! {
+@@ -53,27 +53,13 @@ impl Rule for NoUnsafeNegation {
+         match node {
+             JsInOrInstanceOfExpression::JsInstanceofExpression(expr) => {
+                 let left = expr.left().ok()?;
+-                if let Some(unary) = left.as_js_unary_expression() {
+-                    match unary.operator().ok()? {
+-                        biome_js_syntax::JsUnaryOperator::LogicalNot => Some(()),
+-                        _ => None,
+-                    }
+-                } else {
+-                    None
+-                }
++
++                is_negation(left.syntax()).and(Some(()))
+             }
+             JsInOrInstanceOfExpression::JsInExpression(expr) => {
+                 let left = expr.property().ok()?;
+-                if let Some(biome_js_syntax::AnyJsExpression::JsUnaryExpression(unary)) =
+-                    left.as_any_js_expression()
+-                {
+-                    match unary.operator().ok()? {
+-                        biome_js_syntax::JsUnaryOperator::LogicalNot => Some(()),
+-                        _ => None,
+-                    }
+-                } else {
+-                    None
+-                }
++
++                is_negation(left.syntax()).and(Some(()))
+             }
+         }
+     }
+diff --git a/crates/biome_js_analyze/src/options.rs b/crates/biome_js_analyze/src/options.rs
+index bc03d12d55..8f8c032d7c 100644
+--- a/crates/biome_js_analyze/src/options.rs
++++ b/crates/biome_js_analyze/src/options.rs
+@@ -268,6 +268,7 @@ pub type UseDefaultSwitchClauseLast = < lint :: suspicious :: use_default_switch
+ pub type UseEnumInitializers =
+     <lint::style::use_enum_initializers::UseEnumInitializers as biome_analyze::Rule>::Options;
+ pub type UseExhaustiveDependencies = < lint :: correctness :: use_exhaustive_dependencies :: UseExhaustiveDependencies as biome_analyze :: Rule > :: Options ;
++pub type UseExplicitLengthCheck = < lint :: nursery :: use_explicit_length_check :: UseExplicitLengthCheck as biome_analyze :: Rule > :: Options ;
+ pub type UseExponentiationOperator = < lint :: style :: use_exponentiation_operator :: UseExponentiationOperator as biome_analyze :: Rule > :: Options ;
+ pub type UseExportType =
+     <lint::style::use_export_type::UseExportType as biome_analyze::Rule>::Options;
+diff --git a/crates/biome_js_syntax/src/expr_ext.rs b/crates/biome_js_syntax/src/expr_ext.rs
+index 7715e44614..c5e1613eba 100644
+--- a/crates/biome_js_syntax/src/expr_ext.rs
++++ b/crates/biome_js_syntax/src/expr_ext.rs
+@@ -6,16 +6,18 @@ use crate::{
+     AnyJsExpression, AnyJsFunctionBody, AnyJsLiteralExpression, AnyJsName, AnyJsObjectMemberName,
+     AnyJsTemplateElement, JsArrayExpression, JsArrayHole, JsAssignmentExpression,
+     JsBinaryExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
+-    JsComputedMemberAssignment, JsComputedMemberExpression, JsLiteralMemberName,
+-    JsLogicalExpression, JsNewExpression, JsNumberLiteralExpression, JsObjectExpression,
+-    JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
+-    JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxToken, JsTemplateChunkElement,
+-    JsTemplateExpression, JsUnaryExpression, OperatorPrecedence, TsStringLiteralType, T,
++    JsComputedMemberAssignment, JsComputedMemberExpression, JsConditionalExpression,
++    JsDoWhileStatement, JsForStatement, JsIfStatement, JsLiteralMemberName, JsLogicalExpression,
++    JsNewExpression, JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression,
++    JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
++    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsTemplateChunkElement,
++    JsTemplateExpression, JsUnaryExpression, JsWhileStatement, OperatorPrecedence,
++    TsStringLiteralType, T,
+ };
+ use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
+ use biome_rowan::{
+-    declare_node_union, AstNode, AstNodeList, AstSeparatedList, NodeOrToken, SyntaxResult,
+-    TextRange, TextSize, TokenText,
++    declare_node_union, AstNode, AstNodeList, AstSeparatedList, NodeOrToken, SyntaxNodeCast,
++    SyntaxResult, TextRange, TextSize, TokenText,
+ };
+ use core::iter;
+ 
+@@ -1836,6 +1838,54 @@ impl TsStringLiteralType {
+     }
+ }
+ 
++/// Check if the SyntaxNode is a Negate Unary Expression
++/// ## Example
++/// ```js
++/// !x
++/// ```
++pub fn is_negation(node: &JsSyntaxNode) -> Option<JsUnaryExpression> {
++    let unary_expr = JsUnaryExpression::cast_ref(node)?;
++    if unary_expr.operator().ok()? == JsUnaryOperator::LogicalNot {
++        Some(unary_expr)
++    } else {
++        None
++    }
++}
++
++/// Check if this node is in the position of `test` slot of parent syntax node.
++/// ## Example
++/// ```js
++/// if (!!x) {
++///     ^^^ this is a boolean context
++/// }
++/// ```
++pub fn is_in_boolean_context(node: &JsSyntaxNode) -> Option<bool> {
++    let parent = node.parent()?;
++    match parent.kind() {
++        JsSyntaxKind::JS_IF_STATEMENT => {
++            Some(parent.cast::<JsIfStatement>()?.test().ok()?.syntax() == node)
++        }
++        JsSyntaxKind::JS_DO_WHILE_STATEMENT => {
++            Some(parent.cast::<JsDoWhileStatement>()?.test().ok()?.syntax() == node)
++        }
++        JsSyntaxKind::JS_WHILE_STATEMENT => {
++            Some(parent.cast::<JsWhileStatement>()?.test().ok()?.syntax() == node)
++        }
++        JsSyntaxKind::JS_FOR_STATEMENT => {
++            Some(parent.cast::<JsForStatement>()?.test()?.syntax() == node)
++        }
++        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => Some(
++            parent
++                .cast::<JsConditionalExpression>()?
++                .test()
++                .ok()?
++                .syntax()
++                == node,
++        ),
++        _ => None,
++    }
++}
++
+ #[cfg(test)]
+ mod test {
+     use biome_js_factory::syntax::{JsCallExpression, JsTemplateExpression};
+diff --git a/packages/@biomejs/backend-jsonrpc/src/workspace.ts b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+index 82549c6934..4be08ef8e6 100644
+--- a/packages/@biomejs/backend-jsonrpc/src/workspace.ts
++++ b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+@@ -1012,6 +1012,10 @@ export interface Nursery {
+ 	 * Require the default clause in switch statements.
+ 	 */
+ 	useDefaultSwitchClause?: RuleConfiguration_for_Null;
++	/**
++	 * Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value.
++	 */
++	useExplicitLengthCheck?: RuleConfiguration_for_Null;
+ 	/**
+ 	 * Disallow a missing generic family keyword within font families.
+ 	 */
+@@ -2015,6 +2019,7 @@ export type Category =
+ 	| "lint/nursery/noUselessUndefinedInitialization"
+ 	| "lint/nursery/useArrayLiterals"
+ 	| "lint/nursery/useBiomeSuppressionComment"
++	| "lint/nursery/useExplicitLengthCheck"
+ 	| "lint/nursery/useConsistentBuiltinInstantiation"
+ 	| "lint/nursery/useDefaultSwitchClause"
+ 	| "lint/nursery/useGenericFontNames"
+diff --git a/packages/@biomejs/biome/configuration_schema.json b/packages/@biomejs/biome/configuration_schema.json
+index a383697a81..d07313a3c2 100644
+--- a/packages/@biomejs/biome/configuration_schema.json
++++ b/packages/@biomejs/biome/configuration_schema.json
+@@ -1612,6 +1612,13 @@
+ 						{ "type": "null" }
+ 					]
+ 				},
++				"useExplicitLengthCheck": {
++					"description": "Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value.",
++					"anyOf": [
++						{ "$ref": "#/definitions/RuleConfiguration" },
++						{ "type": "null" }
++					]
++				},
+ 				"useGenericFontNames": {
+ 					"description": "Disallow a missing generic family keyword within font families.",
+ 					"anyOf": [

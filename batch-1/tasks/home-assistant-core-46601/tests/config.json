@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/zwave_js/test_api.py -v",
+  "test_files": [
+    "tests/components/zwave_js/test_api.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.zwave_js.test_api::test_websocket_api[pyloop]",
+    "tests.components.zwave_js.test_api::test_add_node[pyloop]",
+    "tests.components.zwave_js.test_api::test_cancel_inclusion_exclusion[pyloop]",
+    "tests.components.zwave_js.test_api::test_remove_node[pyloop]",
+    "tests.components.zwave_js.test_api::test_dump_view[pyloop]",
+    "tests.components.zwave_js.test_api::test_dump_view_invalid_entry_id[pyloop]",
+    "tests.components.zwave_js.test_api::test_update_log_config[pyloop]",
+    "tests.components.zwave_js.test_api::test_get_log_config[pyloop]"
+  ],
+  "PASS_TO_PASS": []
+}

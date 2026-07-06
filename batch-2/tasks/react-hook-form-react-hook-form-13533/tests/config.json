@@ -1,0 +1,25 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --config ./scripts/jest/jest.config.js src/__tests__/utils/deepEqual.test.ts --coverage=false --watchAll=false --verbose --json",
+  "test_files": [
+    "src/__tests__/utils/deepEqual.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return false when comparing an empty array with an empty plain object"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return false when two sets not match",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return false when either type is primitive",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return true when two sets matches",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return true when comparing sparse array against plain object with numeric string keys (issue #13346)",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should compare date time object valueOf",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return true when comparing invalid Date objects",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should be capable of comparing objects with circular references",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should not treat different values as equal when one side reuses an object reference",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return true when comparing NaN values",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should return false when comparing NaN with other values",
+    "/workspace/repo/src/__tests__/utils/deepEqual.test.ts::deepEqual should compare empty non-plain objects by reference"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "test_framework": "cargo",
+  "test_command": "touch /workspace/repo/crates/biome_js_analyze/tests/spec_tests.rs && cargo nextest run -p biome_js_analyze -E 'test(no_yoda_expression)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/invalidRange.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/invalidRange.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/valid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/validRange.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noYodaExpression/validRange.js.snap"
+  ],
+  "num_test_files": 8,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) biome_js_analyze::spec_tests specs::nursery::no_yoda_expression::valid_js",
+    "(2/4) biome_js_analyze::spec_tests specs::nursery::no_yoda_expression::valid_range_js",
+    "(3/4) biome_js_analyze::spec_tests specs::nursery::no_yoda_expression::invalid_range_js",
+    "(4/4) biome_js_analyze::spec_tests specs::nursery::no_yoda_expression::invalid_js"
+  ],
+  "PASS_TO_PASS": []
+}

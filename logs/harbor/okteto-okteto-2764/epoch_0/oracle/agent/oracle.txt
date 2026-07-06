@@ -1,3 +1,0 @@
-patching file cmd/build/v1/build.go
-patching file cmd/deploy/deploy.go
-patching file pkg/errors/errors.go

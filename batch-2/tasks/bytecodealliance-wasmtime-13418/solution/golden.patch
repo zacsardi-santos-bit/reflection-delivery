@@ -1,0 +1,1462 @@
+diff --git a/crates/c-api/src/component/types/component.rs b/crates/c-api/src/component/types/component.rs
+index d700962568..9079e69f2d 100644
+--- a/crates/c-api/src/component/types/component.rs
++++ b/crates/c-api/src/component/types/component.rs
+@@ -37,7 +37,7 @@ pub unsafe extern "C" fn wasmtime_component_type_import_get(
+     };
+     match ty.ty.get_import(&engine.engine, name) {
+         Some(item) => {
+-            ret.write(item.ty.into());
++            ret.write(item.into());
+             true
+         }
+         None => false,
+@@ -58,7 +58,7 @@ pub extern "C" fn wasmtime_component_type_import_nth(
+             let name: &str = name;
+             name_ret.write(name.as_ptr());
+             name_len_ret.write(name.len());
+-            type_ret.write(item.ty.into());
++            type_ret.write(item.into());
+             true
+         }
+         None => false,
+@@ -87,7 +87,7 @@ pub unsafe extern "C" fn wasmtime_component_type_export_get(
+     };
+     match ty.ty.get_export(&engine.engine, name) {
+         Some(item) => {
+-            ret.write(item.ty.into());
++            ret.write(item.into());
+             true
+         }
+         None => false,
+@@ -108,7 +108,7 @@ pub extern "C" fn wasmtime_component_type_export_nth(
+             let name: &str = name;
+             name_ret.write(name.as_ptr());
+             name_len_ret.write(name.len());
+-            type_ret.write(item.ty.into());
++            type_ret.write(item.into());
+             true
+         }
+         None => false,
+diff --git a/crates/c-api/src/component/types/instance.rs b/crates/c-api/src/component/types/instance.rs
+index 4e3bafaa23..55ea85f09b 100644
+--- a/crates/c-api/src/component/types/instance.rs
++++ b/crates/c-api/src/component/types/instance.rs
+@@ -33,7 +33,7 @@ pub unsafe extern "C" fn wasmtime_component_instance_type_export_get(
+     };
+     match ty.ty.get_export(&engine.engine, name) {
+         Some(item) => {
+-            ret.write(item.ty.into());
++            ret.write(item.into());
+             true
+         }
+         None => false,
+@@ -54,7 +54,7 @@ pub extern "C" fn wasmtime_component_instance_type_export_nth(
+             let name: &str = name;
+             name_ret.write(name.as_ptr());
+             name_len_ret.write(name.len());
+-            type_ret.write(item.ty.into());
++            type_ret.write(item.into());
+             true
+         }
+         None => false,
+diff --git a/crates/cli-flags/src/lib.rs b/crates/cli-flags/src/lib.rs
+index 5a81ca87fc..e8d15bc5bd 100644
+--- a/crates/cli-flags/src/lib.rs
++++ b/crates/cli-flags/src/lib.rs
+@@ -460,9 +460,6 @@ wasmtime_option_group! {
+         /// Component model support for fixed-length lists: this corresponds
+         /// to the 🔧 emoji in the component model specification
+         pub component_model_fixed_length_lists: Option<bool>,
+-        /// Component model support for `(implements ...)`, corresponds to the
+-        /// 🏷️ emoji in the upstream spec.
+-        pub component_model_implements: Option<bool>,
+         /// Whether or not any concurrency infrastructure in Wasmtime is
+         /// enabled or not.
+         pub concurrency_support: Option<bool>,
+@@ -1226,7 +1223,6 @@ impl CommonOptions {
+             ("component-model", component_model_error_context, wasm_component_model_error_context)
+             ("component-model", component_model_map, wasm_component_model_map)
+             ("component-model", component_model_fixed_length_lists, wasm_component_model_fixed_length_lists)
+-            ("component-model", component_model_implements, wasm_component_model_implements)
+             ("threads", threads, wasm_threads)
+             ("gc", gc, wasm_gc)
+             ("gc", reference_types, wasm_reference_types)
+diff --git a/crates/environ/src/component/dfg.rs b/crates/environ/src/component/dfg.rs
+index 4f604dda09..9e8211cf67 100644
+--- a/crates/environ/src/component/dfg.rs
++++ b/crates/environ/src/component/dfg.rs
+@@ -43,13 +43,13 @@ use wasmparser::component_types::ComponentCoreModuleTypeId;
+ #[derive(Default)]
+ pub struct ComponentDfg {
+     /// Same as `Component::import_types`
+-    pub import_types: PrimaryMap<ImportIndex, (String, ComponentExtern)>,
++    pub import_types: PrimaryMap<ImportIndex, (String, TypeDef)>,
+ 
+     /// Same as `Component::imports`
+     pub imports: PrimaryMap<RuntimeImportIndex, (ImportIndex, Vec<String>)>,
+ 
+     /// Same as `Component::exports`
+-    pub exports: IndexMap<String, (Export, ComponentExternData)>,
++    pub exports: IndexMap<String, Export>,
+ 
+     /// All trampolines and their type signature which will need to get
+     /// compiled by Cranelift.
+@@ -254,7 +254,7 @@ pub enum Export {
+     },
+     Instance {
+         ty: TypeComponentInstanceIndex,
+-        exports: IndexMap<String, (Export, ComponentExternData)>,
++        exports: IndexMap<String, Export>,
+     },
+     Type(TypeDef),
+ }
+@@ -639,10 +639,10 @@ impl ComponentDfg {
+         // creating some lowered imports, perhaps some saved modules, etc.
+         let mut export_items = PrimaryMap::new();
+         let mut exports = NameMap::default();
+-        for (name, (export, data)) in self.exports.iter() {
++        for (name, export) in self.exports.iter() {
+             let export =
+                 linearize.export(export, &mut export_items, wasmtime_types, wasmparser_types)?;
+-            exports.insert(name, &mut NameMapNoIntern, false, (export, data.clone()))?;
++            exports.insert(name, &mut NameMapNoIntern, false, export)?;
+         }
+ 
+         // With all those pieces done the results of the dataflow-based
+@@ -802,10 +802,10 @@ impl LinearizeDfg<'_> {
+                 ty: *ty,
+                 exports: {
+                     let mut map = NameMap::default();
+-                    for (name, (export, data)) in exports {
++                    for (name, export) in exports {
+                         let export =
+                             self.export(export, items, wasmtime_types, wasmparser_types)?;
+-                        map.insert(name, &mut NameMapNoIntern, false, (export, data.clone()))?;
++                        map.insert(name, &mut NameMapNoIntern, false, export)?;
+                     }
+                     map
+                 },
+diff --git a/crates/environ/src/component/info.rs b/crates/environ/src/component/info.rs
+index ad8850f481..a0fb76d0a0 100644
+--- a/crates/environ/src/component/info.rs
++++ b/crates/environ/src/component/info.rs
+@@ -76,7 +76,7 @@ pub struct Component {
+     ///
+     /// Note that each name is given an `ImportIndex` here for the next map to
+     /// refer back to.
+-    pub import_types: PrimaryMap<ImportIndex, (String, ComponentExtern)>,
++    pub import_types: PrimaryMap<ImportIndex, (String, TypeDef)>,
+ 
+     /// A list of "flattened" imports that are used by this instance.
+     ///
+@@ -107,7 +107,7 @@ pub struct Component {
+     pub imports: PrimaryMap<RuntimeImportIndex, (ImportIndex, Vec<String>)>,
+ 
+     /// This component's own root exports from the component itself.
+-    pub exports: NameMap<TryString, (ExportIndex, ComponentExternData)>,
++    pub exports: NameMap<TryString, ExportIndex>,
+ 
+     /// All exports of this component and exported instances of this component.
+     ///
+@@ -491,7 +491,7 @@ pub enum Export {
+         /// Instance type index, if such is assigned
+         ty: TypeComponentInstanceIndex,
+         /// Instance export map
+-        exports: NameMap<TryString, (ExportIndex, ComponentExternData)>,
++        exports: NameMap<TryString, ExportIndex>,
+     },
+     /// An exported type from a component or instance, currently only
+     /// informational.
+diff --git a/crates/environ/src/component/translate.rs b/crates/environ/src/component/translate.rs
+index 447ec4faa8..0bf7dd5d0b 100644
+--- a/crates/environ/src/component/translate.rs
++++ b/crates/environ/src/component/translate.rs
+@@ -159,7 +159,7 @@ struct Translation<'data> {
+ 
+     /// The list of exports from this component, as pairs of names and an
+     /// index into an index space of what's being exported.
+-    exports: IndexMap<&'data str, (ComponentItem, wasmparser::ComponentExternName<'data>)>,
++    exports: IndexMap<&'data str, ComponentItem>,
+ 
+     /// Type information produced by `wasmparser` for this component.
+     ///
+@@ -355,10 +355,7 @@ enum LocalInitializer<'data> {
+         HashMap<&'data str, ComponentItem>,
+         ComponentInstanceTypeId,
+     ),
+-    ComponentSynthetic(
+-        HashMap<&'data str, (ComponentItem, wasmparser::ComponentExternName<'data>)>,
+-        ComponentInstanceTypeId,
+-    ),
++    ComponentSynthetic(HashMap<&'data str, ComponentItem>, ComponentInstanceTypeId),
+ 
+     // alias section
+     AliasExportFunc(ModuleInstanceIndex, &'data str),
+@@ -1313,10 +1310,7 @@ impl<'a, 'data> Translator<'a, 'data> {
+                 for export in s {
+                     let export = export?;
+                     let item = self.kind_to_item(export.kind, export.index)?;
+-                    let prev = self
+-                        .result
+-                        .exports
+-                        .insert(export.name.name, (item, export.name));
++                    let prev = self.result.exports.insert(export.name.name, item);
+                     assert!(prev.is_none());
+                     self.result
+                         .initializers
+@@ -1458,7 +1452,7 @@ impl<'a, 'data> Translator<'a, 'data> {
+         let mut map = HashMap::with_capacity(exports.len());
+         for export in exports {
+             let idx = self.kind_to_item(export.kind, export.index)?;
+-            map.insert(export.name.name, (idx, export.name));
++            map.insert(export.name.name, idx);
+         }
+ 
+         Ok(LocalInitializer::ComponentSynthetic(map, ty))
+diff --git a/crates/environ/src/component/translate/inline.rs b/crates/environ/src/component/translate/inline.rs
+index a4916df832..ca174a6ee0 100644
+--- a/crates/environ/src/component/translate/inline.rs
++++ b/crates/environ/src/component/translate/inline.rs
+@@ -114,13 +114,10 @@ pub(super) fn run(
+         if let TypeDef::Interface(_) = ty {
+             continue;
+         }
+-        let index = inliner.result.import_types.push((
+-            name.name.to_string(),
+-            ComponentExtern {
+-                ty,
+-                data: ComponentExternData::new(name),
+-            },
+-        ));
++        let index = inliner
++            .result
++            .import_types
++            .push((name.name.to_string(), ty));
+         let path = ImportPath::root(index);
+         args.insert(name.name, ComponentItemDef::from_import(path, ty)?);
+     }
+@@ -137,9 +134,8 @@ pub(super) fn run(
+     assert!(frames.is_empty());
+ 
+     let mut export_map = Default::default();
+-    for (name, (def, data)) in exports {
+-        let data = ComponentExternData::new(data);
+-        inliner.record_export(name, def, data, types, &mut export_map)?;
++    for (name, def) in exports {
++        inliner.record_export(name, def, types, &mut export_map)?;
+     }
+     inliner.result.exports = export_map;
+     inliner.result.num_future_tables = types.num_future_tables();
+@@ -350,7 +346,7 @@ enum ComponentInstanceDef<'a> {
+     // FIXME: same as the issue on `ComponentClosure` where this is cloned a lot
+     // and may need `Rc`.
+     Items(
+-        IndexMap<&'a str, (ComponentItemDef<'a>, wasmparser::ComponentExternName<'a>)>,
++        IndexMap<&'a str, ComponentItemDef<'a>>,
+         TypeComponentInstanceIndex,
+     ),
+ }
+@@ -380,8 +376,7 @@ impl<'a> Inliner<'a> {
+         &mut self,
+         types: &mut ComponentTypesBuilder,
+         frames: &mut Vec<(InlinerFrame<'a>, ResourcesBuilder)>,
+-    ) -> Result<IndexMap<&'a str, (ComponentItemDef<'a>, wasmparser::ComponentExternName<'a>)>>
+-    {
++    ) -> Result<IndexMap<&'a str, ComponentItemDef<'a>>> {
+         // This loop represents the execution of the instantiation of a
+         // component. This is an iterative process which is finished once all
+         // initializers are processed. Currently this is modeled as an infinite
+@@ -412,7 +407,7 @@ impl<'a> Inliner<'a> {
+                         .translation
+                         .exports
+                         .iter()
+-                        .map(|(name, (item, data))| Ok((*name, (frame.item(*item, types)?, *data))))
++                        .map(|(name, item)| Ok((*name, frame.item(*item, types)?)))
+                         .collect::<Result<_>>()?;
+                     let instance_ty = frame.instance_ty;
+                     let (_, snapshot) = frames.pop().unwrap();
+@@ -1300,7 +1295,7 @@ impl<'a> Inliner<'a> {
+             ComponentSynthetic(map, ty) => {
+                 let items = map
+                     .iter()
+-                    .map(|(name, (index, data))| Ok((*name, (frame.item(*index, types)?, *data))))
++                    .map(|(name, index)| Ok((*name, frame.item(*index, types)?)))
+                     .collect::<Result<_>>()?;
+                 let types_ref = frame.translation.types_ref();
+                 let ty = types.convert_instance(types_ref, *ty)?;
+@@ -1406,8 +1401,7 @@ impl<'a> Inliner<'a> {
+                     // item is then pushed in the relevant index space.
+                     ComponentInstanceDef::Import(path, ty) => {
+                         let path = path.push(*name);
+-                        let def =
+-                            ComponentItemDef::from_import(path, types[*ty].exports[*name].ty)?;
++                        let def = ComponentItemDef::from_import(path, types[*ty].exports[*name])?;
+                         frame.push_item(def);
+                     }
+ 
+@@ -1415,7 +1409,7 @@ impl<'a> Inliner<'a> {
+                     // through instantiation of a component or through a
+                     // synthetic renaming of items we just schlep around the
+                     // definitions of various items here.
+-                    ComponentInstanceDef::Items(map, _) => frame.push_item(map[*name].0.clone()),
++                    ComponentInstanceDef::Items(map, _) => frame.push_item(map[*name].clone()),
+                 }
+             }
+ 
+@@ -1621,9 +1615,8 @@ impl<'a> Inliner<'a> {
+         &mut self,
+         name: &str,
+         def: ComponentItemDef<'a>,
+-        data: ComponentExternData,
+         types: &'a ComponentTypesBuilder,
+-        map: &mut IndexMap<String, (dfg::Export, ComponentExternData)>,
++        map: &mut IndexMap<String, dfg::Export>,
+     ) -> Result<()> {
+         let export = match def {
+             // Exported modules are currently saved in a `PrimaryMap`, at
+@@ -1683,8 +1676,8 @@ impl<'a> Inliner<'a> {
+                     ComponentInstanceDef::Import(path, ty) => {
+                         for (name, ty) in types[ty].exports.iter() {
+                             let path = path.push(name);
+-                            let def = ComponentItemDef::from_import(path, ty.ty)?;
+-                            self.record_export(name, def, ty.data.clone(), types, &mut exports)?;
++                            let def = ComponentItemDef::from_import(path, *ty)?;
++                            self.record_export(name, def, types, &mut exports)?;
+                         }
+                         dfg::Export::Instance { ty, exports }
+                     }
+@@ -1693,9 +1686,8 @@ impl<'a> Inliner<'a> {
+                     // translated recursively here to our `exports` map which is
+                     // the bag of items we're exporting.
+                     ComponentInstanceDef::Items(map, ty) => {
+-                        for (name, (def, data)) in map {
+-                            let data = ComponentExternData::new(data);
+-                            self.record_export(name, def, data.clone(), types, &mut exports)?;
++                        for (name, def) in map {
++                            self.record_export(name, def, types, &mut exports)?;
+                         }
+                         dfg::Export::Instance { ty, exports }
+                     }
+@@ -1711,7 +1703,7 @@ impl<'a> Inliner<'a> {
+             ComponentItemDef::Type(def) => dfg::Export::Type(def),
+         };
+ 
+-        map.insert(name.to_string(), (export, data));
++        map.insert(name.to_string(), export);
+         Ok(())
+     }
+ }
+@@ -1846,7 +1838,7 @@ impl<'a> InlinerFrame<'a> {
+     /// and which component instantiated it.
+     fn finish_instantiate(
+         &mut self,
+-        exports: IndexMap<&'a str, (ComponentItemDef<'a>, wasmparser::ComponentExternName<'a>)>,
++        exports: IndexMap<&'a str, ComponentItemDef<'a>>,
+         ty: ComponentInstanceTypeId,
+         types: &mut ComponentTypesBuilder,
+     ) -> Result<()> {
+@@ -1860,7 +1852,7 @@ impl<'a> InlinerFrame<'a> {
+                 &mut path,
+                 &mut |path| match path {
+                     [] => unreachable!(),
+-                    [name, rest @ ..] => exports[name].0.lookup_resource(rest, types),
++                    [name, rest @ ..] => exports[name].lookup_resource(rest, types),
+                 },
+             );
+         }
+@@ -1924,7 +1916,7 @@ impl<'a> ComponentItemDef<'a> {
+             cur = match instance {
+                 // If this instance is a "bag of things" then this is as easy as
+                 // looking up the name in the bag of names.
+-                ComponentInstanceDef::Items(names, _) => names[element].0.clone(),
++                ComponentInstanceDef::Items(names, _) => names[element].clone(),
+ 
+                 // If, however, this instance is an imported instance then this
+                 // is a further projection within the import with one more path
+@@ -1933,7 +1925,7 @@ impl<'a> ComponentItemDef<'a> {
+                 // in conjunction with a one-longer `path` to produce a new item
+                 // definition.
+                 ComponentInstanceDef::Import(path, ty) => {
+-                    ComponentItemDef::from_import(path.push(element), types[ty].exports[element].ty)
++                    ComponentItemDef::from_import(path.push(element), types[ty].exports[element])
+                         .unwrap()
+                 }
+                 ComponentInstanceDef::Intrinsics => {
+@@ -1956,11 +1948,3 @@ enum InstanceModule {
+     Static(StaticModuleIndex),
+     Import(TypeModuleIndex),
+ }
+-
+-impl ComponentExternData {
+-    fn new(data: wasmparser::ComponentExternName<'_>) -> Self {
+-        ComponentExternData {
+-            implements: data.implements.map(|s| s.to_string()),
+-        }
+-    }
+-}
+diff --git a/crates/environ/src/component/types.rs b/crates/environ/src/component/types.rs
+index 1400159cbe..fb46dfce8c 100644
+--- a/crates/environ/src/component/types.rs
++++ b/crates/environ/src/component/types.rs
+@@ -449,22 +449,6 @@ where
+     }
+ }
+ 
+-/// TODO
+-#[derive(Clone, Debug, Serialize, Deserialize)]
+-pub struct ComponentExtern {
+-    /// TODO
+-    pub data: ComponentExternData,
+-    /// TODO
+-    pub ty: TypeDef,
+-}
+-
+-/// TODO
+-#[derive(Clone, Debug, Serialize, Deserialize)]
+-pub struct ComponentExternData {
+-    /// TODO
+-    pub implements: Option<String>,
+-}
+-
+ /// Types of imports and exports in the component model.
+ ///
+ /// These types are what's available for import and export in components. Note
+@@ -565,9 +549,9 @@ impl TypeTrace for TypeModule {
+ #[derive(Serialize, Deserialize, Default)]
+ pub struct TypeComponent {
+     /// The named values that this component imports.
+-    pub imports: IndexMap<String, ComponentExtern>,
++    pub imports: IndexMap<String, TypeDef>,
+     /// The named values that this component exports.
+-    pub exports: IndexMap<String, ComponentExtern>,
++    pub exports: IndexMap<String, TypeDef>,
+ }
+ 
+ /// The type of a component instance in the component model, or an instantiated
+@@ -577,7 +561,7 @@ pub struct TypeComponent {
+ #[derive(Serialize, Deserialize, Default)]
+ pub struct TypeComponentInstance {
+     /// The list of exports that this component has along with their types.
+-    pub exports: IndexMap<String, ComponentExtern>,
++    pub exports: IndexMap<String, TypeDef>,
+ }
+ 
+ /// A component function type in the component model.
+diff --git a/crates/environ/src/component/types_builder.rs b/crates/environ/src/component/types_builder.rs
+index 3f8f7d9495..a91c73e240 100644
+--- a/crates/environ/src/component/types_builder.rs
++++ b/crates/environ/src/component/types_builder.rs
+@@ -146,15 +146,12 @@ impl ComponentTypesBuilder {
+     pub fn finish(mut self, component: &Component) -> (ComponentTypes, TypeComponentIndex) {
+         let mut component_ty = TypeComponent::default();
+         for (_, (name, ty)) in component.import_types.iter() {
+-            component_ty.imports.insert(name.clone(), ty.clone());
++            component_ty.imports.insert(name.clone(), *ty);
+         }
+-        for (name, (ty, data)) in component.exports.raw_iter() {
++        for (name, ty) in component.exports.raw_iter() {
+             component_ty.exports.insert(
+                 name.clone_panic_on_oom().into(),
+-                ComponentExtern {
+-                    data: data.clone(),
+-                    ty: self.export_type_def(&component.export_items, *ty),
+-                },
++                self.export_type_def(&component.export_items, *ty),
+             );
+         }
+         let ty = self.component_types.components.push(component_ty);
+@@ -269,21 +266,6 @@ impl ComponentTypesBuilder {
+         Ok(self.add_func_type(ty))
+     }
+ 
+-    /// Converts a wasmparser `wasmparser::ComponentItem` into Wasmtime's type
+-    /// representation.
+-    pub fn convert_component_item(
+-        &mut self,
+-        types: TypesRef<'_>,
+-        ty: &wasmparser::component_types::ComponentItem,
+-    ) -> Result<ComponentExtern> {
+-        Ok(ComponentExtern {
+-            ty: self.convert_component_entity_type(types, ty.ty)?,
+-            data: ComponentExternData {
+-                implements: ty.implements.clone(),
+-            },
+-        })
+-    }
+-
+     /// Converts a wasmparser `ComponentEntityType` into Wasmtime's type
+     /// representation.
+     pub fn convert_component_entity_type(
+@@ -344,15 +326,17 @@ impl ComponentTypesBuilder {
+         let mut result = TypeComponent::default();
+         for (name, ty) in ty.imports.iter() {
+             self.register_abstract_component_entity_type(types, ty.ty);
+-            result
+-                .imports
+-                .insert(name.clone(), self.convert_component_item(types, ty)?);
++            result.imports.insert(
++                name.clone(),
++                self.convert_component_entity_type(types, ty.ty)?,
++            );
+         }
+         for (name, ty) in ty.exports.iter() {
+             self.register_abstract_component_entity_type(types, ty.ty);
+-            result
+-                .exports
+-                .insert(name.clone(), self.convert_component_item(types, ty)?);
++            result.exports.insert(
++                name.clone(),
++                self.convert_component_entity_type(types, ty.ty)?,
++            );
+         }
+         Ok(self.component_types.components.push(result))
+     }
+@@ -367,9 +351,10 @@ impl ComponentTypesBuilder {
+         let mut result = TypeComponentInstance::default();
+         for (name, ty) in ty.exports.iter() {
+             self.register_abstract_component_entity_type(types, ty.ty);
+-            result
+-                .exports
+-                .insert(name.clone(), self.convert_component_item(types, ty)?);
++            result.exports.insert(
++                name.clone(),
++                self.convert_component_entity_type(types, ty.ty)?,
++            );
+         }
+         Ok(self.component_types.component_instances.push(result))
+     }
+diff --git a/crates/fuzzing/src/generators/config.rs b/crates/fuzzing/src/generators/config.rs
+index ce43cffa3b..f3fea142f4 100644
+--- a/crates/fuzzing/src/generators/config.rs
++++ b/crates/fuzzing/src/generators/config.rs
+@@ -146,7 +146,6 @@ impl Config {
+             component_model_gc,
+             component_model_map,
+             component_model_fixed_length_lists,
+-            component_model_implements,
+             simd,
+             exceptions,
+             legacy_exceptions: _,
+@@ -175,7 +174,6 @@ impl Config {
+         self.module_config.component_model_map = component_model_map.unwrap_or(false);
+         self.module_config.component_model_fixed_length_lists =
+             component_model_fixed_length_lists.unwrap_or(false);
+-        self.module_config.component_model_implements = component_model_implements.unwrap_or(false);
+         self.module_config.stack_switching = stack_switching.unwrap_or(false);
+ 
+         // Enable/disable proposals that wasm-smith has knobs for which will be
+@@ -328,7 +326,6 @@ impl Config {
+         cfg.wasm.component_model_map = Some(self.module_config.component_model_map);
+         cfg.wasm.component_model_fixed_length_lists =
+             Some(self.module_config.component_model_fixed_length_lists);
+-        cfg.wasm.component_model_implements = Some(self.module_config.component_model_implements);
+         cfg.wasm.custom_page_sizes = Some(self.module_config.config.custom_page_sizes_enabled);
+         cfg.wasm.epoch_interruption = Some(self.wasmtime.epoch_interruption);
+         cfg.wasm.extended_const = Some(self.module_config.config.extended_const_enabled);
+diff --git a/crates/fuzzing/src/generators/module.rs b/crates/fuzzing/src/generators/module.rs
+index 6b31472232..40f58964fc 100644
+--- a/crates/fuzzing/src/generators/module.rs
++++ b/crates/fuzzing/src/generators/module.rs
+@@ -24,7 +24,6 @@ pub struct ModuleConfig {
+     pub component_model_gc: bool,
+     pub component_model_map: bool,
+     pub component_model_fixed_length_lists: bool,
+-    pub component_model_implements: bool,
+     pub legacy_exceptions: bool,
+     pub shared_memory: bool,
+     pub stack_switching: bool,
+@@ -85,7 +84,6 @@ impl<'a> Arbitrary<'a> for ModuleConfig {
+             component_model_gc: false,
+             component_model_map: false,
+             component_model_fixed_length_lists: false,
+-            component_model_implements: false,
+             legacy_exceptions: false,
+             shared_memory: false,
+             stack_switching: false,
+diff --git a/crates/test-programs/src/bin/async_cross_instance_source.rs b/crates/test-programs/src/bin/async_cross_instance_source.rs
+new file mode 100644
+index 0000000000..0df26ef993
+--- /dev/null
++++ b/crates/test-programs/src/bin/async_cross_instance_source.rs
+@@ -0,0 +1,33 @@
++mod bindings {
++    wit_bindgen::generate!({
++        path: "../misc/component-async-tests/wit",
++        world: "cross-instance-source",
++    });
++
++    use super::Component;
++    export!(Component);
++}
++
++use {
++    bindings::{exports::local::local::cross_instance::Guest, wit_future, wit_stream},
++    wit_bindgen::{FutureReader, StreamReader},
++};
++
++struct Component;
++
++impl Guest for Component {
++    async fn make() -> (StreamReader<u8>, FutureReader<u8>) {
++        let (mut stream_tx, stream_rx) = wit_stream::new();
++        let (future_tx, future_rx) = wit_future::new(|| 0);
++
++        wit_bindgen::spawn(async move {
++            assert!(stream_tx.write_all(vec![2, 4, 6, 8, 9]).await.is_empty());
++            future_tx.write(10).await.unwrap();
++        });
++
++        (stream_rx, future_rx)
++    }
++}
++
++// Unused function; required since this file is built as a `bin`:
++fn main() {}
+diff --git a/crates/test-util/src/wasmtime_wast.rs b/crates/test-util/src/wasmtime_wast.rs
+index cf7a3bca6f..e4fe7d43fa 100644
+--- a/crates/test-util/src/wasmtime_wast.rs
++++ b/crates/test-util/src/wasmtime_wast.rs
+@@ -47,7 +47,6 @@ pub fn apply_test_config(config: &mut Config, test_config: &wast::TestConfig) {
+         component_model_gc,
+         component_model_map,
+         component_model_fixed_length_lists,
+-        component_model_implements,
+         nan_canonicalization,
+         simd,
+         exceptions,
+@@ -80,7 +79,6 @@ pub fn apply_test_config(config: &mut Config, test_config: &wast::TestConfig) {
+     let component_model_gc = component_model_gc.unwrap_or(false);
+     let component_model_map = component_model_map.unwrap_or(false);
+     let component_model_fixed_length_lists = component_model_fixed_length_lists.unwrap_or(false);
+-    let component_model_implements = component_model_implements.unwrap_or(false);
+     let nan_canonicalization = nan_canonicalization.unwrap_or(false);
+     let relaxed_simd = relaxed_simd.unwrap_or(false);
+     let legacy_exceptions = legacy_exceptions.unwrap_or(false);
+@@ -123,7 +121,6 @@ pub fn apply_test_config(config: &mut Config, test_config: &wast::TestConfig) {
+         .wasm_component_model_gc(component_model_gc)
+         .wasm_component_model_map(component_model_map)
+         .wasm_component_model_fixed_length_lists(component_model_fixed_length_lists)
+-        .wasm_component_model_implements(component_model_implements)
+         .wasm_exceptions(exceptions)
+         .wasm_stack_switching(stack_switching)
+         .cranelift_nan_canonicalization(nan_canonicalization);
+diff --git a/crates/test-util/src/wast.rs b/crates/test-util/src/wast.rs
+index cc394ee8cf..be8a7ce244 100644
+--- a/crates/test-util/src/wast.rs
++++ b/crates/test-util/src/wast.rs
+@@ -283,7 +283,6 @@ macro_rules! foreach_config_option {
+             component_model_gc
+             component_model_map
+             component_model_fixed_length_lists
+-            component_model_implements
+             simd
+             gc_types
+             exceptions
+diff --git a/crates/wasmtime/src/config.rs b/crates/wasmtime/src/config.rs
+index 3180c64be3..7fdc18e8cc 100644
+--- a/crates/wasmtime/src/config.rs
++++ b/crates/wasmtime/src/config.rs
+@@ -1314,16 +1314,6 @@ impl Config {
+         self
+     }
+ 
+-    /// This corresponds to the 🏷️ emoji in the component model specification.
+-    ///
+-    /// Please note that Wasmtime's support for this feature is a work in
+-    /// progress.
+-    #[cfg(feature = "component-model")]
+-    pub fn wasm_component_model_implements(&mut self, enable: bool) -> &mut Self {
+-        self.wasm_features(WasmFeatures::CM_IMPLEMENTS, enable);
+-        self
+-    }
+-
+     /// Configures whether the [Exception-handling proposal][proposal] is enabled or not.
+     ///
+     /// [proposal]: https://github.com/WebAssembly/exception-handling
+@@ -2336,8 +2326,7 @@ impl Config {
+             | WasmFeatures::CM_ERROR_CONTEXT
+             | WasmFeatures::CM_GC
+             | WasmFeatures::CM_MAP
+-            | WasmFeatures::CM_FIXED_LENGTH_LISTS
+-            | WasmFeatures::CM_IMPLEMENTS;
++            | WasmFeatures::CM_FIXED_LENGTH_LISTS;
+ 
+         #[allow(unused_mut, reason = "easier to avoid #[cfg]")]
+         let mut unsupported = !features_known_to_wasmtime;
+diff --git a/crates/wasmtime/src/runtime/component/component.rs b/crates/wasmtime/src/runtime/component/component.rs
+index 00f519bb70..cbf29f5425 100644
+--- a/crates/wasmtime/src/runtime/component/component.rs
++++ b/crates/wasmtime/src/runtime/component/component.rs
+@@ -294,16 +294,14 @@ impl Component {
+     ///     (component (import "x" (type (sub resource))))
+     /// "#)?;
+     ///
+-    /// let aty = a.component_type();
+-    /// let bty = b.component_type();
+-    /// let (_, a_ty) = aty.imports(&engine).next().unwrap();
+-    /// let (_, b_ty) = bty.imports(&engine).next().unwrap();
++    /// let (_, a_ty) = a.component_type().imports(&engine).next().unwrap();
++    /// let (_, b_ty) = b.component_type().imports(&engine).next().unwrap();
+     ///
+-    /// let a_ty = match a_ty.ty {
++    /// let a_ty = match a_ty {
+     ///     ComponentItem::Resource(ty) => ty,
+     ///     _ => unreachable!(),
+     /// };
+-    /// let b_ty = match b_ty.ty {
++    /// let b_ty = match b_ty {
+     ///     ComponentItem::Resource(ty) => ty,
+     ///     _ => unreachable!(),
+     /// };
+@@ -331,15 +329,14 @@ impl Component {
+     ///     )
+     /// "#)?;
+     ///
+-    /// let ty = a.component_type();
+-    /// let (_, import) = ty.imports(&engine).next().unwrap();
+-    /// let (_, export) = ty.exports(&engine).next().unwrap();
++    /// let (_, import) = a.component_type().imports(&engine).next().unwrap();
++    /// let (_, export) = a.component_type().exports(&engine).next().unwrap();
+     ///
+-    /// let import = match import.ty {
++    /// let import = match import {
+     ///     ComponentItem::Resource(ty) => ty,
+     ///     _ => unreachable!(),
+     /// };
+-    /// let export = match export.ty {
++    /// let export = match export {
+     ///     ComponentItem::Resource(ty) => ty,
+     ///     _ => unreachable!(),
+     /// };
+@@ -893,7 +890,7 @@ impl Component {
+             }
+             None => &info.exports,
+         };
+-        exports.get(name, &NameMapNoIntern).map(|pair| pair.0)
++        exports.get(name, &NameMapNoIntern).copied()
+     }
+ 
+     pub(crate) fn id(&self) -> CompiledModuleId {
+diff --git a/crates/wasmtime/src/runtime/component/concurrent/futures_and_streams.rs b/crates/wasmtime/src/runtime/component/concurrent/futures_and_streams.rs
+index b10a4769b0..d1b5510ee2 100644
+--- a/crates/wasmtime/src/runtime/component/concurrent/futures_and_streams.rs
++++ b/crates/wasmtime/src/runtime/component/concurrent/futures_and_streams.rs
+@@ -3269,13 +3269,14 @@ impl Instance {
+     /// Copy `count` items from `read_address` to `write_address` for the
+     /// specified stream or future.
+     fn copy<T: 'static>(
+-        self,
+         store: StoreContextMut<T>,
+         flat_abi: Option<FlatAbi>,
++        write_instance: Instance,
+         write_caller_instance: RuntimeComponentInstanceIndex,
+         write_ty: TransmitIndex,
+         write_options: OptionsIndex,
+         write_address: usize,
++        read_instance: Instance,
+         read_caller_instance: RuntimeComponentInstanceIndex,
+         read_caller_thread: QualifiedThreadId,
+         read_ty: TransmitIndex,
+@@ -3284,15 +3285,17 @@ impl Instance {
+         count: ItemCount,
+         rep: u32,
+     ) -> Result<()> {
+-        let (component, mut store) = self.component_and_store_mut(store.0);
+-        let types = component.types();
++        let (write_component, store) = write_instance.component_and_store_mut(store.0);
++        let (read_component, mut store) = read_instance.component_and_store_mut(store);
++        let write_types = write_component.types();
++        let read_types = read_component.types();
+         let count = count.as_usize();
+ 
+         // Validate `write_ty` w.r.t. `write_address` to ensure it's properly
+         // aligned and in-bounds.
+-        let write_payload_ty = write_ty.payload(types);
++        let write_payload_ty = write_ty.payload(write_types);
+         let write_abi = match write_payload_ty {
+-            Some(ty) => types.canonical_abi(ty),
++            Some(ty) => write_types.canonical_abi(ty),
+             None => &CanonicalAbiInfo::ZERO,
+         };
+         let write_length_in_bytes = match flat_abi {
+@@ -3303,15 +3306,16 @@ impl Instance {
+             if write_address % usize::try_from(write_abi.align32)? != 0 {
+                 bail!("write pointer not aligned");
+             }
+-            self.options_memory(store, write_options)
++            write_instance
++                .options_memory(store, write_options)
+                 .get(write_address..)
+                 .and_then(|b| b.get(..write_length_in_bytes))
+                 .ok_or_else(|| crate::format_err!("write pointer out of bounds"))?;
+         }
+ 
+-        let read_payload_ty = read_ty.payload(types);
++        let read_payload_ty = read_ty.payload(read_types);
+         let read_abi = match read_payload_ty {
+-            Some(ty) => types.canonical_abi(ty),
++            Some(ty) => read_types.canonical_abi(ty),
+             None => &CanonicalAbiInfo::ZERO,
+         };
+         let read_length_in_bytes = match flat_abi {
+@@ -3322,7 +3326,8 @@ impl Instance {
+             if read_address % usize::try_from(read_abi.align32)? != 0 {
+                 bail!("read pointer not aligned");
+             }
+-            self.options_memory(store, read_options)
++            read_instance
++                .options_memory(store, read_options)
+                 .get(read_address..)
+                 .and_then(|b| b.get(..read_length_in_bytes))
+                 .ok_or_else(|| crate::format_err!("read pointer out of bounds"))?;
+@@ -3344,7 +3349,7 @@ impl Instance {
+ 
+                 let val = write_payload_ty
+                     .map(|ty| {
+-                        let lift = &mut LiftContext::new(store, write_options, self);
++                        let lift = &mut LiftContext::new(store, write_options, write_instance);
+                         let bytes = &lift.memory()[write_address..][..write_length_in_bytes];
+                         Val::load(lift, *ty, bytes)
+                     })
+@@ -3355,7 +3360,8 @@ impl Instance {
+                     // set the guest's thread context in case realloc requires it, and restore the original
+                     // thread context after the copy is complete.
+                     let old_thread = store.set_thread(read_caller_thread)?;
+-                    let lower = &mut LowerContext::new(store.as_context_mut(), read_options, self);
++                    let lower =
++                        &mut LowerContext::new(store.as_context_mut(), read_options, read_instance);
+                     let ptr = func::validate_inbounds_dynamic(
+                         read_abi,
+                         lower.as_slice_mut(),
+@@ -3387,19 +3393,23 @@ impl Instance {
+ 
+                     assert_eq!(read_length_in_bytes, write_length_in_bytes);
+ 
+-                    if self.options_memory(store_opaque, read_options).as_ptr()
+-                        == self.options_memory(store_opaque, write_options).as_ptr()
++                    if read_instance
++                        .options_memory(store_opaque, read_options)
++                        .as_ptr()
++                        == write_instance
++                            .options_memory(store_opaque, write_options)
++                            .as_ptr()
+                     {
+-                        let memory = self.options_memory_mut(store_opaque, read_options);
++                        let memory = read_instance.options_memory_mut(store_opaque, read_options);
+                         memory.copy_within(
+                             write_address..write_address + write_length_in_bytes,
+                             read_address,
+                         );
+                     } else {
+-                        let src = self.options_memory(store_opaque, write_options)[write_address..]
+-                            [..write_length_in_bytes]
++                        let src = write_instance.options_memory(store_opaque, write_options)
++                            [write_address..][..write_length_in_bytes]
+                             .as_ptr();
+-                        let dst = self.options_memory_mut(store_opaque, read_options)
++                        let dst = read_instance.options_memory_mut(store_opaque, read_options)
+                             [read_address..][..read_length_in_bytes]
+                             .as_mut_ptr();
+ 
+@@ -3418,7 +3428,7 @@ impl Instance {
+                     }
+                 } else {
+                     let store_opaque = store.store_opaque_mut();
+-                    let lift = &mut LiftContext::new(store_opaque, write_options, self);
++                    let lift = &mut LiftContext::new(store_opaque, write_options, write_instance);
+                     let bytes = &lift.memory()[write_address..][..write_length_in_bytes];
+                     lift.consume_fuel_array(count, size_of::<Val>())?;
+ 
+@@ -3436,7 +3446,8 @@ impl Instance {
+                     // set the guest's thread context in case realloc requires it, and restore the original
+                     // thread context after the copy is complete.
+                     let old_thread = store.set_thread(read_caller_thread)?;
+-                    let lower = &mut LowerContext::new(store.as_context_mut(), read_options, self);
++                    let lower =
++                        &mut LowerContext::new(store.as_context_mut(), read_options, read_instance);
+                     let mut ptr = read_address;
+                     for value in values {
+                         value.store(lower, *read_payload_ty, ptr)?;
+@@ -3602,13 +3613,15 @@ impl Instance {
+ 
+                 let count = count.min(read_count);
+ 
+-                self.copy(
++                Instance::copy(
+                     store.as_context_mut(),
+                     flat_abi,
++                    self,
+                     caller,
+                     ty,
+                     options,
+                     address,
++                    read_instance,
+                     read_caller_instance,
+                     read_caller_thread,
+                     read_ty,
+@@ -3618,9 +3631,9 @@ impl Instance {
+                     rep,
+                 )?;
+ 
+-                let instance = self.id().get_mut(store.0);
++                let instance = read_instance.id().get(store.0);
+                 let types = instance.component().types();
+-                let item_size = match ty.payload(types) {
++                let item_size = match read_ty.payload(types) {
+                     Some(ty) => usize::try_from(types.canonical_abi(ty).size32)?,
+                     None => 0,
+                 };
+@@ -3809,7 +3822,7 @@ impl Instance {
+ 
+         let mut result = match mem::replace(&mut transmit.write, new_state) {
+             WriteState::GuestReady {
+-                instance: _,
++                instance: write_instance,
+                 ty: write_ty,
+                 flat_abi: write_flat_abi,
+                 options: write_options,
+@@ -3838,13 +3851,15 @@ impl Instance {
+ 
+                 let count = count.min(write_count);
+ 
+-                self.copy(
++                Instance::copy(
+                     store.as_context_mut(),
+                     flat_abi,
++                    write_instance,
+                     write_caller,
+                     write_ty,
+                     write_options,
+                     write_address,
++                    self,
+                     caller_instance,
+                     caller_thread,
+                     ty,
+@@ -3854,9 +3869,9 @@ impl Instance {
+                     rep,
+                 )?;
+ 
+-                let instance = self.id().get_mut(store.0);
++                let instance = write_instance.id().get(store.0);
+                 let types = instance.component().types();
+-                let item_size = match ty.payload(types) {
++                let item_size = match write_ty.payload(types) {
+                     Some(ty) => usize::try_from(types.canonical_abi(ty).size32)?,
+                     None => 0,
+                 };
+@@ -3886,7 +3901,7 @@ impl Instance {
+                 if write_buffer_remaining {
+                     let transmit = concurrent_state.get_mut(transmit_id)?;
+                     transmit.write = WriteState::GuestReady {
+-                        instance: self,
++                        instance: write_instance,
+                         caller: write_caller,
+                         ty: write_ty,
+                         flat_abi: write_flat_abi,
+diff --git a/crates/wasmtime/src/runtime/component/instance.rs b/crates/wasmtime/src/runtime/component/instance.rs
+index f099d2674f..0f5145fc35 100644
+--- a/crates/wasmtime/src/runtime/component/instance.rs
++++ b/crates/wasmtime/src/runtime/component/instance.rs
+@@ -681,11 +681,11 @@ where
+ 
+ impl InstanceExportLookup for str {
+     fn lookup(&self, component: &Component) -> Option<ExportIndex> {
+-        let (index, _) = component
++        component
+             .env_component()
+             .exports
+-            .get(self, &NameMapNoIntern)?;
+-        Some(*index)
++            .get(self, &NameMapNoIntern)
++            .copied()
+     }
+ }
+ 
+diff --git a/crates/wasmtime/src/runtime/component/linker.rs b/crates/wasmtime/src/runtime/component/linker.rs
+index eef6040989..889cfc8a71 100644
+--- a/crates/wasmtime/src/runtime/component/linker.rs
++++ b/crates/wasmtime/src/runtime/component/linker.rs
+@@ -178,13 +178,8 @@ impl<T: 'static> Linker<T> {
+         let env_component = component.env_component();
+         for (_idx, (name, ty)) in env_component.import_types.iter() {
+             let import = self.map.get(name, &self.strings);
+-            cx.definition(&ty.ty, import).with_context(|| {
+-                format!(
+-                    "component imports {desc} `{name}`, but \
+-                     a matching implementation was not found in the linker",
+-                    desc = ty.ty.desc()
+-                )
+-            })?;
++            cx.definition(ty, import)
++                .with_context(|| format!("component imports {desc} `{name}`, but a matching implementation was not found in the linker", desc = ty.desc()))?;
+         }
+         Ok(cx)
+     }
+@@ -391,7 +386,7 @@ impl<T: 'static> Linker<T> {
+                         stub_item(
+                             &mut linker_instance,
+                             export_name,
+-                            &export.ty,
++                            export,
+                             Some(item_name),
+                             types,
+                         )?;
+@@ -413,7 +408,7 @@ impl<T: 'static> Linker<T> {
+             stub_item(
+                 &mut self.root(),
+                 import_name,
+-                &import_type.ty,
++                import_type,
+                 None,
+                 component.types(),
+             )?;
+diff --git a/crates/wasmtime/src/runtime/component/matching.rs b/crates/wasmtime/src/runtime/component/matching.rs
+index 47aeeabaf9..318e01cbdb 100644
+--- a/crates/wasmtime/src/runtime/component/matching.rs
++++ b/crates/wasmtime/src/runtime/component/matching.rs
+@@ -163,11 +163,11 @@ impl TypeChecker<'_> {
+             // Interface types may be exported from a component in order to give them a name, but
+             // they don't have a definition in the sense that this search is interested in, so
+             // ignore them.
+-            if let TypeDef::Interface(_) = expected.ty {
++            if let TypeDef::Interface(_) = expected {
+                 continue;
+             }
+             let actual = actual.and_then(|actual| actual.get(name, self.strings));
+-            self.definition(&expected.ty, actual)
++            self.definition(expected, actual)
+                 .with_context(|| format!("instance export `{name}` has the wrong type"))?;
+         }
+         Ok(())
+diff --git a/crates/wasmtime/src/runtime/component/types.rs b/crates/wasmtime/src/runtime/component/types.rs
+index d559aae9ad..b175a7d9a3 100644
+--- a/crates/wasmtime/src/runtime/component/types.rs
++++ b/crates/wasmtime/src/runtime/component/types.rs
+@@ -1031,43 +1031,43 @@ impl Component {
+     }
+ 
+     /// Returns import associated with `name`, if such exists in the component
+-    pub fn get_import<'a>(&'a self, engine: &'a Engine, name: &str) -> Option<ComponentExtern<'a>> {
++    pub fn get_import(&self, engine: &Engine, name: &str) -> Option<ComponentItem> {
+         self.0.types[self.0.index]
+             .imports
+             .get(name)
+-            .map(|e| ComponentExtern::new(engine, &self.0.instance(), e))
++            .map(|ty| ComponentItem::from(engine, ty, &self.0.instance()))
+     }
+ 
+     /// Iterates over imports of the component
+     pub fn imports<'a>(
+         &'a self,
+         engine: &'a Engine,
+-    ) -> impl ExactSizeIterator<Item = (&'a str, ComponentExtern<'a>)> + 'a {
+-        self.0.types[self.0.index].imports.iter().map(|(name, e)| {
++    ) -> impl ExactSizeIterator<Item = (&'a str, ComponentItem)> + 'a {
++        self.0.types[self.0.index].imports.iter().map(|(name, ty)| {
+             (
+                 name.as_str(),
+-                ComponentExtern::new(engine, &self.0.instance(), e),
++                ComponentItem::from(engine, ty, &self.0.instance()),
+             )
+         })
+     }
+ 
+     /// Returns export associated with `name`, if such exists in the component
+-    pub fn get_export<'a>(&'a self, engine: &'a Engine, name: &str) -> Option<ComponentExtern<'a>> {
++    pub fn get_export(&self, engine: &Engine, name: &str) -> Option<ComponentItem> {
+         self.0.types[self.0.index]
+             .exports
+             .get(name)
+-            .map(|e| ComponentExtern::new(engine, &self.0.instance(), e))
++            .map(|ty| ComponentItem::from(engine, ty, &self.0.instance()))
+     }
+ 
+     /// Iterates over exports of the component
+     pub fn exports<'a>(
+         &'a self,
+         engine: &'a Engine,
+-    ) -> impl ExactSizeIterator<Item = (&'a str, ComponentExtern<'a>)> + 'a {
+-        self.0.types[self.0.index].exports.iter().map(|(name, e)| {
++    ) -> impl ExactSizeIterator<Item = (&'a str, ComponentItem)> + 'a {
++        self.0.types[self.0.index].exports.iter().map(|(name, ty)| {
+             (
+                 name.as_str(),
+-                ComponentExtern::new(engine, &self.0.instance(), e),
++                ComponentItem::from(engine, ty, &self.0.instance()),
+             )
+         })
+     }
+@@ -1091,52 +1091,27 @@ impl ComponentInstance {
+     }
+ 
+     /// Returns export associated with `name`, if such exists in the component instance
+-    pub fn get_export<'a>(&'a self, engine: &'a Engine, name: &str) -> Option<ComponentExtern<'a>> {
++    pub fn get_export(&self, engine: &Engine, name: &str) -> Option<ComponentItem> {
+         self.0.types[self.0.index]
+             .exports
+             .get(name)
+-            .map(|e| ComponentExtern::new(engine, &self.0.instance(), e))
++            .map(|ty| ComponentItem::from(engine, ty, &self.0.instance()))
+     }
+ 
+     /// Iterates over exports of the component instance
+     pub fn exports<'a>(
+         &'a self,
+         engine: &'a Engine,
+-    ) -> impl ExactSizeIterator<Item = (&'a str, ComponentExtern<'a>)> {
+-        self.0.types[self.0.index].exports.iter().map(|(name, e)| {
++    ) -> impl ExactSizeIterator<Item = (&'a str, ComponentItem)> {
++        self.0.types[self.0.index].exports.iter().map(|(name, ty)| {
+             (
+                 name.as_str(),
+-                ComponentExtern::new(engine, &self.0.instance(), e),
++                ComponentItem::from(engine, ty, &self.0.instance()),
+             )
+         })
+     }
+ }
+ 
+-/// An import or an export from either [`Component`] or [`ComponentInstance`].
+-///
+-/// This records the type of the item that is being imported or exported along
+-/// with any other metadata associated.
+-#[derive(Clone, Debug)]
+-pub struct ComponentExtern<'a> {
+-    /// The type of this item.
+-    pub ty: ComponentItem,
+-    /// The `(implements "...")` annotation, if present.
+-    pub implements: Option<&'a str>,
+-}
+-
+-impl<'a> ComponentExtern<'a> {
+-    fn new(
+-        engine: &'a Engine,
+-        instance_ty: &InstanceType<'_>,
+-        env: &'a wasmtime_environ::component::ComponentExtern,
+-    ) -> Self {
+-        Self {
+-            implements: env.data.implements.as_deref(),
+-            ty: ComponentItem::from(engine, &env.ty, instance_ty),
+-        }
+-    }
+-}
+-
+ /// Type of an item contained within the component
+ #[derive(Clone, Debug)]
+ pub enum ComponentItem {
+diff --git a/crates/wast/src/wast.rs b/crates/wast/src/wast.rs
+index d2dcb42c35..668361490c 100644
+--- a/crates/wast/src/wast.rs
++++ b/crates/wast/src/wast.rs
+@@ -380,7 +380,7 @@ impl WastContext {
+                     let engine = self.engine().clone();
+                     let mut linker = self.component_linker.instance(name)?;
+                     for (name, item) in ty.exports(&engine) {
+-                        match item.ty {
++                        match item {
+                             component::types::ComponentItem::Module(_) => {
+                                 let module = instance.get_module(&mut store, name).unwrap();
+                                 linker.module(name, &module)?;
+diff --git a/src/commands/run.rs b/src/commands/run.rs
+index 1a69fab547..100ab696f0 100644
+--- a/src/commands/run.rs
++++ b/src/commands/run.rs
+@@ -960,7 +960,7 @@ impl RunCommand {
+                     .flat_map(move |(name, item)| {
+                         let mut names = basename.clone();
+                         names.push(name.to_string());
+-                        collect_exports(engine, item.ty, names)
++                        collect_exports(engine, item, names)
+                     })
+                     .collect::<Vec<_>>(),
+                 CItem::ComponentInstance(c) => c
+@@ -968,7 +968,7 @@ impl RunCommand {
+                     .flat_map(move |(name, item)| {
+                         let mut names = basename.clone();
+                         names.push(name.to_string());
+-                        collect_exports(engine, item.ty, names)
++                        collect_exports(engine, item, names)
+                     })
+                     .collect::<Vec<_>>(),
+                 _ => vec![(basename, item)],
+diff --git a/tests/all/component_model/aot.rs b/tests/all/component_model/aot.rs
+index 53adee2048..43db793943 100644
+--- a/tests/all/component_model/aot.rs
++++ b/tests/all/component_model/aot.rs
+@@ -1,7 +1,7 @@
+ use wasmtime::Result;
+ use wasmtime::component::types::ComponentItem;
+ use wasmtime::component::{Component, Linker, Type};
+-use wasmtime::{Config, Engine, Module, Precompiled, Store};
++use wasmtime::{Engine, Module, Precompiled, Store};
+ 
+ #[test]
+ fn module_component_mismatch() -> Result<()> {
+@@ -152,11 +152,11 @@ fn reflect_resource_import() -> Result<()> {
+     let mut imports = ty.imports(&engine);
+     let (_, x) = imports.next().unwrap();
+     let (_, y) = imports.next().unwrap();
+-    let x = match x.ty {
++    let x = match x {
+         ComponentItem::Resource(t) => t,
+         _ => unreachable!(),
+     };
+-    let y = match y.ty {
++    let y = match y {
+         ComponentItem::ComponentFunc(t) => t,
+         _ => unreachable!(),
+     };
+@@ -208,30 +208,3 @@ fn truncated_component_binaries_dont_panic() -> Result<()> {
+ 
+     Ok(())
+ }
+-
+-#[test]
+-#[cfg_attr(miri, ignore)]
+-fn implements_shows_up() -> Result<()> {
+-    let mut config = Config::new();
+-    config.wasm_component_model_implements(true);
+-    let engine = Engine::new(&config)?;
+-    let component = Component::new(
+-        &engine,
+-        r#"
+-            (component
+-                (import "a" (implements "a1:b1/c1") (instance $a))
+-                (export "b" (implements "a2:b2/c2") (instance $a))
+-            )
+-        "#,
+-    )?;
+-
+-    let ty = component.component_type();
+-    let mut imports = ty.imports(&engine);
+-    let (_, a) = imports.next().unwrap();
+-    assert_eq!(a.implements.as_deref(), Some("a1:b1/c1"));
+-    let mut exports = ty.exports(&engine);
+-    let (_, b) = exports.next().unwrap();
+-    assert_eq!(b.implements.as_deref(), Some("a2:b2/c2"));
+-
+-    Ok(())
+-}
+diff --git a/tests/all/component_model/dynamic.rs b/tests/all/component_model/dynamic.rs
+index 95f6d6ba27..e1a0202728 100644
+--- a/tests/all/component_model/dynamic.rs
++++ b/tests/all/component_model/dynamic.rs
+@@ -994,28 +994,28 @@ fn introspection() -> Result<()> {
+     assert_eq!(imports.len(), 3);
+     let (name, res_ty) = imports.next().unwrap();
+     assert_eq!(name, "res");
+-    let ComponentItem::Resource(res_ty) = res_ty.ty else {
++    let ComponentItem::Resource(res_ty) = res_ty else {
+         panic!("`res` import item of wrong type")
+     };
+     assert_eq!(res_ty, ResourceType::host::<MyType>());
+ 
+     let (name, ai_ty) = imports.next().unwrap();
+     assert_eq!(name, "ai");
+-    let ComponentItem::ComponentInstance(ai_ty) = ai_ty.ty else {
++    let ComponentItem::ComponentInstance(ai_ty) = ai_ty else {
+         panic!("`ai` import item of wrong type")
+     };
+     assert_eq!(ai_ty.exports(linker.engine()).len(), 0);
+ 
+     let (name, bi_ty) = imports.next().unwrap();
+     assert_eq!(name, "bi");
+-    let ComponentItem::ComponentInstance(bi_ty) = bi_ty.ty else {
++    let ComponentItem::ComponentInstance(bi_ty) = bi_ty else {
+         panic!("`bi` import item of wrong type")
+     };
+     let mut bi_exports = bi_ty.exports(linker.engine());
+     assert_eq!(bi_exports.len(), 1);
+     let (name, bi_m_ty) = bi_exports.next().unwrap();
+     assert_eq!(name, "m");
+-    let ComponentItem::Module(bi_m_ty) = bi_m_ty.ty else {
++    let ComponentItem::Module(bi_m_ty) = bi_m_ty else {
+         panic!("`bi.m` import item of wrong type")
+     };
+     assert_eq!(bi_m_ty.imports(linker.engine()).len(), 0);
+@@ -1026,7 +1026,7 @@ fn introspection() -> Result<()> {
+ 
+     let (name, run_ty) = exports.next().unwrap();
+     assert_eq!(name, "run");
+-    let ComponentItem::ComponentFunc(run_ty) = run_ty.ty else {
++    let ComponentItem::ComponentFunc(run_ty) = run_ty else {
+         panic!("`run` export item of wrong type")
+     };
+     assert_eq!(run_ty.params().len(), 0);
+@@ -1037,21 +1037,21 @@ fn introspection() -> Result<()> {
+ 
+     let (name, i_ty) = exports.next().unwrap();
+     assert_eq!(name, "i");
+-    let ComponentItem::ComponentInstance(i_ty) = i_ty.ty else {
++    let ComponentItem::ComponentInstance(i_ty) = i_ty else {
+         panic!("`i` export item of wrong type")
+     };
+     let mut i_ty_exports = i_ty.exports(linker.engine());
+     assert_eq!(i_ty_exports.len(), 1);
+     let (name, i_i_ty) = i_ty_exports.next().unwrap();
+     assert_eq!(name, "i");
+-    let ComponentItem::ComponentInstance(i_i_ty) = i_i_ty.ty else {
++    let ComponentItem::ComponentInstance(i_i_ty) = i_i_ty else {
+         panic!("`i.i` import item of wrong type")
+     };
+     let mut i_i_ty_exports = i_i_ty.exports(linker.engine());
+     assert_eq!(i_i_ty_exports.len(), 1);
+     let (name, i_i_m_ty) = i_i_ty_exports.next().unwrap();
+     assert_eq!(name, "m");
+-    let ComponentItem::Module(i_i_m_ty) = i_i_m_ty.ty else {
++    let ComponentItem::Module(i_i_m_ty) = i_i_m_ty else {
+         panic!("`i.i.m` import item of wrong type")
+     };
+     assert_eq!(i_i_m_ty.imports(linker.engine()).len(), 0);
+@@ -1059,21 +1059,21 @@ fn introspection() -> Result<()> {
+ 
+     let (name, r_ty) = exports.next().unwrap();
+     assert_eq!(name, "r");
+-    let ComponentItem::ComponentInstance(r_ty) = r_ty.ty else {
++    let ComponentItem::ComponentInstance(r_ty) = r_ty else {
+         panic!("`r` export item of wrong type")
+     };
+     assert_eq!(r_ty.exports(linker.engine()).len(), 0);
+ 
+     let (name, r2_ty) = exports.next().unwrap();
+     assert_eq!(name, "r2");
+-    let ComponentItem::ComponentInstance(r2_ty) = r2_ty.ty else {
++    let ComponentItem::ComponentInstance(r2_ty) = r2_ty else {
+         panic!("`r2` export item of wrong type")
+     };
+     let mut r2_exports = r2_ty.exports(linker.engine());
+     assert_eq!(r2_exports.len(), 1);
+     let (name, r2_m_ty) = r2_exports.next().unwrap();
+     assert_eq!(name, "m");
+-    let ComponentItem::Module(r2_m_ty) = r2_m_ty.ty else {
++    let ComponentItem::Module(r2_m_ty) = r2_m_ty else {
+         panic!("`r2.m` export item of wrong type")
+     };
+     assert_eq!(r2_m_ty.imports(linker.engine()).len(), 0);
+@@ -1081,14 +1081,14 @@ fn introspection() -> Result<()> {
+ 
+     let (name, b_ty) = exports.next().unwrap();
+     assert_eq!(name, "b");
+-    let ComponentItem::Type(b_ty) = b_ty.ty else {
++    let ComponentItem::Type(b_ty) = b_ty else {
+         panic!("`b` export item of wrong type")
+     };
+     assert_eq!(b_ty.unwrap_enum().names().collect::<Vec<_>>(), ["a", "b"]);
+ 
+     let (name, c_ty) = exports.next().unwrap();
+     assert_eq!(name, "c");
+-    let ComponentItem::Type(c_ty) = c_ty.ty else {
++    let ComponentItem::Type(c_ty) = c_ty else {
+         panic!("`c` export item of wrong type")
+     };
+     let mut fields = c_ty.unwrap_record().fields();
+@@ -1103,7 +1103,7 @@ fn introspection() -> Result<()> {
+ 
+     let (name, f_ty) = exports.next().unwrap();
+     assert_eq!(name, "f");
+-    let ComponentItem::Type(f_ty) = f_ty.ty else {
++    let ComponentItem::Type(f_ty) = f_ty else {
+         panic!("`f` export item of wrong type")
+     };
+     assert_eq!(
+@@ -1113,7 +1113,7 @@ fn introspection() -> Result<()> {
+ 
+     let (name, m_ty) = exports.next().unwrap();
+     assert_eq!(name, "m");
+-    let ComponentItem::Type(m_ty) = m_ty.ty else {
++    let ComponentItem::Type(m_ty) = m_ty else {
+         panic!("`m` export item of wrong type")
+     };
+     {
+@@ -1128,7 +1128,7 @@ fn introspection() -> Result<()> {
+ 
+     let (name, j_ty) = exports.next().unwrap();
+     assert_eq!(name, "j");
+-    let ComponentItem::Type(j_ty) = j_ty.ty else {
++    let ComponentItem::Type(j_ty) = j_ty else {
+         panic!("`j` export item of wrong type")
+     };
+     let mut cases = j_ty.unwrap_variant().cases();
+@@ -1146,7 +1146,7 @@ fn introspection() -> Result<()> {
+ 
+     let (name, foo_ty) = exports.next().unwrap();
+     assert_eq!(name, "foo");
+-    let ComponentItem::Type(foo_ty) = foo_ty.ty else {
++    let ComponentItem::Type(foo_ty) = foo_ty else {
+         panic!("`foo` export item of wrong type")
+     };
+     {
+@@ -1213,7 +1213,7 @@ fn introspection() -> Result<()> {
+ 
+     let (name, fn_ty) = exports.next().unwrap();
+     assert_eq!(name, "fn");
+-    let ComponentItem::ComponentFunc(fn_ty) = fn_ty.ty else {
++    let ComponentItem::ComponentFunc(fn_ty) = fn_ty else {
+         panic!("`fn` export item of wrong type")
+     };
+     let mut params = fn_ty.params();
+diff --git a/tests/all/component_model/linker.rs b/tests/all/component_model/linker.rs
+index 6c770c369a..7564ec52ee 100644
+--- a/tests/all/component_model/linker.rs
++++ b/tests/all/component_model/linker.rs
+@@ -135,7 +135,7 @@ fn linker_substituting_types_issue_8003() -> Result<()> {
+     let component_ty = linker.substituted_component_type(&component)?;
+     let exports = component_ty.exports(&engine);
+     for (_name, item) in exports {
+-        match item.ty {
++        match item {
+             ComponentItem::ComponentInstance(instance) => {
+                 for _ in instance.exports(&engine) {
+                     // ..
+diff --git a/tests/misc_testsuite/component-model/implements-disabled.wast b/tests/misc_testsuite/component-model/implements-disabled.wast
+deleted file mode 100644
+index e4db929d96..0000000000
+--- a/tests/misc_testsuite/component-model/implements-disabled.wast
++++ /dev/null
+@@ -1,5 +0,0 @@
+-;;! component_model_implements = false
+-
+-(assert_invalid
+-  (component (import "a" (implements "a:b/c") (instance)))
+-  "the `cm-implements` feature is not active")
+diff --git a/tests/misc_testsuite/component-model/implements.wast b/tests/misc_testsuite/component-model/implements.wast
+deleted file mode 100644
+index 1a84a6289d..0000000000
+--- a/tests/misc_testsuite/component-model/implements.wast
++++ /dev/null
+@@ -1,34 +0,0 @@
+-;;! component_model_implements = true
+-
+-(component
+-  (component
+-    (import "a" (implements "a:b/c") (instance))
+-    (import "b" (implements "a:b/c") (instance))
+-    (import "c" (implements "a:b/c@1.0.0") (instance))
+-    (import "my-label" (implements "ns:pkg/iface") (instance))
+-    (import "a:b/c" (instance))
+-    (import "a:b/c@1.0.0" (instance))
+-
+-    (instance $a)
+-
+-    (export "a" (implements "a:b/c") (instance $a))
+-    (export "b" (implements "a:b/c") (instance $a))
+-    (export "c" (implements "a:b/c@1.0.0") (instance $a))
+-    (export "my-label" (implements "ns:pkg/iface") (instance $a))
+-    (export "a:b/c" (instance $a))
+-    (export "a:b/c@1.0.0" (instance $a))
+-  )
+-
+-  (type (instance
+-    (export "a" (implements "a:b/c") (instance))
+-  ))
+-  (type (component
+-    (import "a" (implements "a:b/c") (instance))
+-    (export "a" (implements "a:b/c") (instance))
+-  ))
+-
+-  (instance $a)
+-  (instance
+-    (export "a" (implements "a:b/c") (instance $a))
+-  )
+-)

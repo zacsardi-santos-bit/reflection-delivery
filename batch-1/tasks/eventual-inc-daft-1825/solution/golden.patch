@@ -1,0 +1,520 @@
+diff --git a/daft/dataframe/dataframe.py b/daft/dataframe/dataframe.py
+index 6060c586f..8f6c493da 100644
+--- a/daft/dataframe/dataframe.py
++++ b/daft/dataframe/dataframe.py
+@@ -896,6 +896,10 @@ class DataFrame:
+         builder = self._builder.agg(exprs_to_agg, list(group_by) if group_by is not None else None)
+         return DataFrame(builder)
+ 
++    def _map_groups(self, udf: Expression, group_by: Optional[ExpressionsProjection] = None) -> "DataFrame":
++        builder = self._builder.map_groups(udf, list(group_by) if group_by is not None else None)
++        return DataFrame(builder)
++
+     @DataframePublicAPI
+     def sum(self, *cols: ColumnInputType) -> "DataFrame":
+         """Performs a global sum on the DataFrame
+@@ -1554,3 +1558,35 @@ class GroupedDataFrame:
+             DataFrame: DataFrame with grouped aggregations
+         """
+         return self.df._agg(to_agg, group_by=self.group_by)
++
++    def map_groups(self, udf: Expression) -> "DataFrame":
++        """Apply a user-defined function to each group. The name of the resultant column will default to the name of the first input column.
++
++        Example:
++            >>> df = daft.from_pydict({"group": ["a", "a", "a", "b", "b", "b"], "data": [1, 20, 30, 4, 50, 600]})
++            >>>
++            >>> @daft.udf(return_dtype=daft.DataType.float64())
++            ... def std_dev(data):
++            ...     return [statistics.stdev(data.to_pylist())]
++            >>>
++            >>> df = df.groupby("group").map_groups(std_dev(df["data"]))
++            >>> df.show()
++            ╭───────┬────────────────────╮
++            │ group ┆ data               │
++            │ ---   ┆ ---                │
++            │ Utf8  ┆ Float64            │
++            ╞═══════╪════════════════════╡
++            │ a     ┆ 14.730919862656235 │
++            ├╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
++            │ b     ┆ 331.62026476076517 │
++            ╰───────┴────────────────────╯
++
++            (Showing first 2 of 2 rows)
++
++        Args:
++            udf (Expression): User-defined function to apply to each group.
++
++        Returns:
++            DataFrame: DataFrame with grouped aggregations
++        """
++        return self.df._map_groups(udf, group_by=self.group_by)
+diff --git a/daft/logical/builder.py b/daft/logical/builder.py
+index 7fa2def97..1a92fb6c3 100644
+--- a/daft/logical/builder.py
++++ b/daft/logical/builder.py
+@@ -181,6 +181,11 @@ class LogicalPlanBuilder:
+         builder = self._builder.aggregate([expr._expr for expr in exprs], group_by_pyexprs)
+         return LogicalPlanBuilder(builder)
+ 
++    def map_groups(self, udf: Expression, group_by: list[Expression] | None) -> LogicalPlanBuilder:
++        group_by_pyexprs = [expr._expr for expr in group_by] if group_by is not None else []
++        builder = self._builder.aggregate([udf._expr], group_by_pyexprs)
++        return LogicalPlanBuilder(builder)
++
+     def join(  # type: ignore[override]
+         self,
+         right: LogicalPlanBuilder,
+diff --git a/src/daft-dsl/src/expr.rs b/src/daft-dsl/src/expr.rs
+index 770af0a04..22bae7ea8 100644
+--- a/src/daft-dsl/src/expr.rs
++++ b/src/daft-dsl/src/expr.rs
+@@ -7,7 +7,7 @@ use daft_core::{
+ };
+ 
+ use crate::{
+-    functions::FunctionEvaluator,
++    functions::{function_display, function_semantic_id, FunctionEvaluator},
+     lit,
+     optimization::{get_required_columns, requires_computation},
+ };
+@@ -60,6 +60,10 @@ pub enum AggExpr {
+     Max(ExprRef),
+     List(ExprRef),
+     Concat(ExprRef),
++    MapGroups {
++        func: FunctionExpr,
++        inputs: Vec<Expr>,
++    },
+ }
+ 
+ pub fn col<S: Into<Arc<str>>>(name: S) -> Expr {
+@@ -85,6 +89,7 @@ impl AggExpr {
+             | Max(expr)
+             | List(expr)
+             | Concat(expr) => expr.name(),
++            MapGroups { func: _, inputs } => inputs.first().unwrap().name(),
+         }
+     }
+ 
+@@ -119,10 +124,11 @@ impl AggExpr {
+                 let child_id = expr.semantic_id(schema);
+                 FieldID::new(format!("{child_id}.local_concat()"))
+             }
++            MapGroups { func, inputs } => function_semantic_id(func, inputs, schema),
+         }
+     }
+ 
+-    pub fn child(&self) -> ExprRef {
++    pub fn children(&self) -> Vec<ExprRef> {
+         use AggExpr::*;
+         match self {
+             Count(expr, ..)
+@@ -131,7 +137,8 @@ impl AggExpr {
+             | Min(expr)
+             | Max(expr)
+             | List(expr)
+-            | Concat(expr) => expr.clone(),
++            | Concat(expr) => vec![expr.clone()],
++            MapGroups { func: _, inputs } => inputs.iter().map(|e| e.clone().into()).collect(),
+         }
+     }
+ 
+@@ -206,6 +213,9 @@ impl AggExpr {
+                     ))),
+                 }
+             }
++            MapGroups { func, inputs } => {
++                func.to_field(inputs.as_slice(), schema, &Expr::Agg(self.clone()))
++            }
+         }
+     }
+ 
+@@ -357,15 +367,7 @@ impl Expr {
+                 let items_id = items.semantic_id(schema);
+                 FieldID::new(format!("{child_id}.is_in({items_id})"))
+             }
+-            Function { func, inputs } => {
+-                let inputs = inputs
+-                    .iter()
+-                    .map(|expr| expr.semantic_id(schema).id.to_string())
+-                    .collect::<Vec<String>>()
+-                    .join(", ");
+-                // TODO: check for function idempotency here.
+-                FieldID::new(format!("Function_{func:?}({inputs})"))
+-            }
++            Function { func, inputs } => function_semantic_id(func, inputs, schema),
+             BinaryOp { op, left, right } => {
+                 let left_id = left.semantic_id(schema);
+                 let right_id = right.semantic_id(schema);
+@@ -403,7 +405,7 @@ impl Expr {
+             Not(expr) | IsNull(expr) | NotNull(expr) | Cast(expr, ..) | Alias(expr, ..) => {
+                 vec![expr.clone()]
+             }
+-            Agg(agg_expr) => vec![agg_expr.child()],
++            Agg(agg_expr) => agg_expr.children(),
+ 
+             // Multiple children.
+             Function { inputs, .. } => inputs.iter().map(|e| e.clone().into()).collect(),
+@@ -578,17 +580,7 @@ impl Display for Expr {
+             NotNull(expr) => write!(f, "not_null({expr})"),
+             IsIn(expr, items) => write!(f, "{expr} in {items}"),
+             Literal(val) => write!(f, "lit({val})"),
+-            Function { func, inputs } => {
+-                write!(f, "{}(", func.fn_name())?;
+-                for (i, input) in inputs.iter().enumerate() {
+-                    if i != 0 {
+-                        write!(f, ", ")?;
+-                    }
+-                    write!(f, "{input}")?;
+-                }
+-                write!(f, ")")?;
+-                Ok(())
+-            }
++            Function { func, inputs } => function_display(f, func, inputs),
+             IfElse {
+                 if_true,
+                 if_false,
+@@ -611,6 +603,7 @@ impl Display for AggExpr {
+             Max(expr) => write!(f, "max({expr})"),
+             List(expr) => write!(f, "list({expr})"),
+             Concat(expr) => write!(f, "list({expr})"),
++            MapGroups { func, inputs } => function_display(f, func, inputs),
+         }
+     }
+ }
+diff --git a/src/daft-dsl/src/functions/mod.rs b/src/daft-dsl/src/functions/mod.rs
+index f17f16147..0df74c8fd 100644
+--- a/src/daft-dsl/src/functions/mod.rs
++++ b/src/daft-dsl/src/functions/mod.rs
+@@ -8,6 +8,8 @@ pub mod temporal;
+ pub mod uri;
+ pub mod utf8;
+ 
++use std::fmt::{Formatter, Result};
++
+ use self::image::ImageExpr;
+ use self::list::ListExpr;
+ use self::numeric::NumericExpr;
+@@ -17,6 +19,7 @@ use self::temporal::TemporalExpr;
+ use self::utf8::Utf8Expr;
+ use self::{float::FloatExpr, uri::UriExpr};
+ use common_error::DaftResult;
++use daft_core::datatypes::FieldID;
+ use daft_core::{datatypes::Field, schema::Schema, series::Series};
+ use serde::{Deserialize, Serialize};
+ 
+@@ -81,3 +84,25 @@ impl FunctionEvaluator for FunctionExpr {
+         self.get_evaluator().evaluate(inputs, expr)
+     }
+ }
++
++pub fn function_display(f: &mut Formatter, func: &FunctionExpr, inputs: &[Expr]) -> Result {
++    write!(f, "{}(", func.fn_name())?;
++    for (i, input) in inputs.iter().enumerate() {
++        if i != 0 {
++            write!(f, ", ")?;
++        }
++        write!(f, "{input}")?;
++    }
++    write!(f, ")")?;
++    Ok(())
++}
++
++pub fn function_semantic_id(func: &FunctionExpr, inputs: &[Expr], schema: &Schema) -> FieldID {
++    let inputs = inputs
++        .iter()
++        .map(|expr| expr.semantic_id(schema).id.to_string())
++        .collect::<Vec<String>>()
++        .join(", ");
++    // TODO: check for function idempotency here.
++    FieldID::new(format!("Function_{func:?}({inputs})"))
++}
+diff --git a/src/daft-dsl/src/functions/python/udf.rs b/src/daft-dsl/src/functions/python/udf.rs
+index a52e38e69..5300a15d4 100644
+--- a/src/daft-dsl/src/functions/python/udf.rs
++++ b/src/daft-dsl/src/functions/python/udf.rs
+@@ -32,6 +32,12 @@ impl FunctionEvaluator for PythonUDF {
+     }
+ 
+     fn evaluate(&self, inputs: &[Series], _: &Expr) -> DaftResult<Series> {
++        self.call_udf(inputs)
++    }
++}
++
++impl PythonUDF {
++    pub fn call_udf(&self, inputs: &[Series]) -> DaftResult<Series> {
+         use pyo3::Python;
+ 
+         if inputs.len() != self.num_expressions {
+diff --git a/src/daft-dsl/src/treenode.rs b/src/daft-dsl/src/treenode.rs
+index 8e86abb4f..81452bcda 100644
+--- a/src/daft-dsl/src/treenode.rs
++++ b/src/daft-dsl/src/treenode.rs
+@@ -23,6 +23,7 @@ impl TreeNode for Expr {
+                     | Max(expr)
+                     | List(expr)
+                     | Concat(expr) => vec![expr.as_ref()],
++                    MapGroups { func: _, inputs } => inputs.iter().collect::<Vec<_>>(),
+                 }
+             }
+             BinaryOp { op: _, left, right } => vec![left.as_ref(), right.as_ref()],
+@@ -66,6 +67,13 @@ impl TreeNode for Expr {
+                     Max(expr) => transform(expr.as_ref().clone())?.max(),
+                     List(expr) => transform(expr.as_ref().clone())?.agg_list(),
+                     Concat(expr) => transform(expr.as_ref().clone())?.agg_concat(),
++                    MapGroups { func, inputs } => Expr::Agg(MapGroups {
++                        func,
++                        inputs: inputs
++                            .into_iter()
++                            .map(transform)
++                            .collect::<DaftResult<Vec<_>>>()?,
++                    }),
+                 }
+             }
+             Not(expr) => Not(transform(expr.as_ref().clone())?.into()),
+diff --git a/src/daft-plan/src/builder.rs b/src/daft-plan/src/builder.rs
+index 4fd2b5ec0..da189d116 100644
+--- a/src/daft-plan/src/builder.rs
++++ b/src/daft-plan/src/builder.rs
+@@ -195,6 +195,10 @@ impl LogicalPlanBuilder {
+             .iter()
+             .map(|expr| match expr {
+                 Expr::Agg(agg_expr) => Ok(agg_expr.clone()),
++                Expr::Function { func, inputs } => Ok(daft_dsl::AggExpr::MapGroups {
++                    func: func.clone(),
++                    inputs: inputs.clone(),
++                }),
+                 _ => Err(DaftError::ValueError(format!(
+                     "Expected aggregation expression, but got: {expr}"
+                 ))),
+diff --git a/src/daft-plan/src/logical_ops/project.rs b/src/daft-plan/src/logical_ops/project.rs
+index f05b3d79a..687b838ee 100644
+--- a/src/daft-plan/src/logical_ops/project.rs
++++ b/src/daft-plan/src/logical_ops/project.rs
+@@ -381,6 +381,26 @@ fn replace_column_with_semantic_id_aggexpr(
+             replace_column_with_semantic_id(child.clone(), subexprs_to_replace, schema)
+                 .map_yes_no(AggExpr::Concat, |_| e.clone())
+         }
++        AggExpr::MapGroups { func, inputs } => {
++            let transforms = inputs
++                .iter()
++                .map(|e| {
++                    replace_column_with_semantic_id(e.clone().into(), subexprs_to_replace, schema)
++                })
++                .collect::<Vec<_>>();
++            if transforms.iter().all(|e| e.is_no()) {
++                Transformed::No(AggExpr::MapGroups { func, inputs })
++            } else {
++                Transformed::Yes(AggExpr::MapGroups {
++                    func: func.clone(),
++                    inputs: transforms
++                        .iter()
++                        .map(|t| t.unwrap().as_ref())
++                        .cloned()
++                        .collect(),
++                })
++            }
++        }
+     }
+ }
+ 
+diff --git a/src/daft-plan/src/planner.rs b/src/daft-plan/src/planner.rs
+index 5a92d3248..b8a24c0a5 100644
+--- a/src/daft-plan/src/planner.rs
++++ b/src/daft-plan/src/planner.rs
+@@ -456,14 +456,29 @@ pub fn plan(logical_plan: &LogicalPlan, cfg: Arc<DaftExecutionConfig>) -> DaftRe
+                                 final_exprs
+                                     .push(Column(concat_of_concat_id.clone()).alias(output_name));
+                             }
++                            MapGroups { func, inputs } => {
++                                let func_id = agg_expr.semantic_id(&schema).id;
++                                // No first stage aggregation for MapGroups, do all the work in the second stage.
++                                second_stage_aggs
++                                    .entry(func_id.clone())
++                                    .or_insert(MapGroups {
++                                        func: func.clone(),
++                                        inputs: inputs.to_vec(),
++                                    });
++                                final_exprs.push(Column(output_name.into()));
++                            }
+                         }
+                     }
+ 
+-                    let first_stage_agg = PhysicalPlan::Aggregate(Aggregate::new(
+-                        input_plan.into(),
+-                        first_stage_aggs.values().cloned().collect(),
+-                        groupby.clone(),
+-                    ));
++                    let first_stage_agg = if first_stage_aggs.is_empty() {
++                        input_plan
++                    } else {
++                        PhysicalPlan::Aggregate(Aggregate::new(
++                            input_plan.into(),
++                            first_stage_aggs.values().cloned().collect(),
++                            groupby.clone(),
++                        ))
++                    };
+                     let gather_plan = if groupby.is_empty() {
+                         PhysicalPlan::Coalesce(Coalesce::new(
+                             first_stage_agg.into(),
+diff --git a/src/daft-table/src/lib.rs b/src/daft-table/src/lib.rs
+index 9cb4bb96a..5c2605622 100644
+--- a/src/daft-table/src/lib.rs
++++ b/src/daft-table/src/lib.rs
+@@ -312,6 +312,9 @@ impl Table {
+             Max(expr) => Series::max(&self.eval_expression(expr)?, groups),
+             List(expr) => Series::agg_list(&self.eval_expression(expr)?, groups),
+             Concat(expr) => Series::agg_concat(&self.eval_expression(expr)?, groups),
++            MapGroups { .. } => Err(DaftError::ValueError(
++                "MapGroups not supported via aggregation, use map_groups instead".to_string(),
++            )),
+         }
+     }
+ 
+diff --git a/src/daft-table/src/ops/agg.rs b/src/daft-table/src/ops/agg.rs
+index 7d3e2e2f7..f6200e0de 100644
+--- a/src/daft-table/src/ops/agg.rs
++++ b/src/daft-table/src/ops/agg.rs
+@@ -1,5 +1,5 @@
+-use daft_core::{array::ops::IntoGroups, datatypes::UInt64Array, series::IntoSeries};
+-use daft_dsl::Expr;
++use daft_core::{array::ops::IntoGroups, datatypes::UInt64Array, series::IntoSeries, Series};
++use daft_dsl::{functions::FunctionExpr, AggExpr, Expr};
+ 
+ use common_error::{DaftError, DaftResult};
+ 
+@@ -19,6 +19,21 @@ impl Table {
+     }
+ 
+     pub fn agg_groupby(&self, to_agg: &[Expr], group_by: &[Expr]) -> DaftResult<Table> {
++        let agg_exprs = to_agg
++            .iter()
++            .map(|e| match e {
++                Expr::Agg(e) => Ok(e),
++                _ => Err(DaftError::ValueError(format!(
++                    "Trying to run non-Agg expression in Grouped Agg! {e}"
++                ))),
++            })
++            .collect::<DaftResult<Vec<_>>>()?;
++
++        #[cfg(feature = "python")]
++        if let [AggExpr::MapGroups { func, inputs }] = &agg_exprs[..] {
++            return self.map_groups(func, inputs, group_by);
++        }
++
+         // Table with just the groupby columns.
+         let groupby_table = self.eval_expression_list(group_by)?;
+ 
+@@ -31,15 +46,6 @@ impl Table {
+             let indices_as_series = UInt64Array::from(("", groupkey_indices)).into_series();
+             groupby_table.take(&indices_as_series)?
+         };
+-        let agg_exprs = to_agg
+-            .iter()
+-            .map(|e| match e {
+-                Expr::Agg(e) => Ok(e),
+-                _ => Err(DaftError::ValueError(format!(
+-                    "Trying to run non-Agg expression in Grouped Agg! {e}"
+-                ))),
+-            })
+-            .collect::<DaftResult<Vec<_>>>()?;
+ 
+         // Take fast path short circuit if there is only 1 group
+         let group_idx_input = if groupvals_indices.len() == 1 {
+@@ -56,4 +62,95 @@ impl Table {
+         // Combine the groupkey columns and the aggregation result columns.
+         Self::from_columns([&groupkeys_table.columns[..], &grouped_cols].concat())
+     }
++
++    #[cfg(feature = "python")]
++    pub fn map_groups(
++        &self,
++        func: &FunctionExpr,
++        inputs: &[Expr],
++        group_by: &[Expr],
++    ) -> DaftResult<Table> {
++        let udf = match func {
++            FunctionExpr::Python(udf) => udf,
++            _ => {
++                return Err(DaftError::ComputeError(
++                    "Trying to run non-UDF function in MapGroups!".to_string(),
++                ))
++            }
++        };
++
++        // Table with just the groupby columns.
++        let groupby_table = self.eval_expression_list(group_by)?;
++
++        // Get the unique group keys (by indices)
++        // and the grouped values (also by indices, one array of indices per group).
++        let (groupkey_indices, groupvals_indices) = groupby_table.make_groups()?;
++
++        let evaluated_inputs = inputs
++            .iter()
++            .map(|e| self.eval_expression(e))
++            .collect::<DaftResult<Vec<_>>>()?;
++
++        // Take fast path short circuit if there is only 1 group
++        let (groupkeys_table, grouped_col) = if groupvals_indices.len() <= 1 {
++            let grouped_col = udf.call_udf(evaluated_inputs.as_slice())?;
++            let groupkeys_table = {
++                let indices_as_series = UInt64Array::from(("", groupkey_indices)).into_series();
++                groupby_table.take(&indices_as_series)?
++            };
++            (groupkeys_table, grouped_col)
++        } else {
++            let grouped_results = groupkey_indices
++                .iter()
++                .zip(groupvals_indices.iter())
++                .map(|(groupkey_index, groupval_indices)| {
++                    let evaluated_grouped_col = {
++                        // Convert group indices to Series
++                        let indices_as_series =
++                            UInt64Array::from(("", groupval_indices.clone())).into_series();
++
++                        // Take each input Series by the group indices
++                        let input_groups = evaluated_inputs
++                            .iter()
++                            .map(|s| s.take(&indices_as_series))
++                            .collect::<DaftResult<Vec<_>>>()?;
++
++                        // Call the UDF on the grouped inputs
++                        udf.call_udf(input_groups.as_slice())?
++                    };
++
++                    let broadcasted_groupkeys_table = {
++                        // Convert groupkey indices to Series
++                        let groupkey_indices_as_series =
++                            UInt64Array::from(("", vec![*groupkey_index])).into_series();
++
++                        // Take the group keys by the groupkey indices
++                        let groupkeys_table = groupby_table.take(&groupkey_indices_as_series)?;
++
++                        // Broadcast the group keys to the length of the grouped column, because output of UDF can be more than one row
++                        let broacasted_groupkeys = groupkeys_table
++                            .columns
++                            .iter()
++                            .map(|c| c.broadcast(evaluated_grouped_col.len()))
++                            .collect::<DaftResult<Vec<_>>>()?;
++
++                        // Combine the broadcasted group keys into a Table
++                        Table::from_columns(broacasted_groupkeys)?
++                    };
++
++                    Ok((broadcasted_groupkeys_table, evaluated_grouped_col))
++                })
++                .collect::<DaftResult<Vec<_>>>()?;
++
++            let series_refs = grouped_results.iter().map(|(_, s)| s).collect::<Vec<_>>();
++            let concatenated_grouped_col = Series::concat(series_refs.as_slice())?;
++
++            let table_refs = grouped_results.iter().map(|(t, _)| t).collect::<Vec<_>>();
++            let concatenated_groupkeys_table = Table::concat(table_refs.as_slice())?;
++
++            (concatenated_groupkeys_table, concatenated_grouped_col)
++        };
++
++        Self::from_columns([&groupkeys_table.columns[..], &[grouped_col]].concat())
++    }
+ }

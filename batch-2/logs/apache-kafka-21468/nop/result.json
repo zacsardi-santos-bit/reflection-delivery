@@ -1,0 +1,29 @@
+{
+    "id": "d8cdbb0f-ccbe-4337-9baf-00e751069b54",
+    "started_at": "2026-07-06T12:16:26.756809",
+    "finished_at": "2026-07-06T12:22:32.141410",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-kafka-21468": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-kafka-21468__KxqAoAb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

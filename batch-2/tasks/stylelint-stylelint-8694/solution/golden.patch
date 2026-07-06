@@ -1,0 +1,1612 @@
+diff --git a/.changeset/bright-peaches-notice.md b/.changeset/bright-peaches-notice.md
+deleted file mode 100644
+index 565599a42..000000000
+--- a/.changeset/bright-peaches-notice.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-"stylelint": patch
+----
+-
+-Fixed: `--print-config` CLI flag to hide internal properties
+diff --git a/.changeset/shaggy-ears-fail.md b/.changeset/shaggy-ears-fail.md
+new file mode 100644
+index 000000000..92db4b96f
+--- /dev/null
++++ b/.changeset/shaggy-ears-fail.md
+@@ -0,0 +1,5 @@
++---
++"stylelint": minor
++---
++
++Added: `selector-no-deprecated` rule
+diff --git a/.changeset/spicy-colts-give.md b/.changeset/spicy-colts-give.md
+deleted file mode 100644
+index c8121a4f9..000000000
+--- a/.changeset/spicy-colts-give.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-"stylelint": patch
+----
+-
+-Fixed: `selector-no-qualifying-type` false positives for `:has()`
+diff --git a/.github/dependabot.yml b/.github/dependabot.yml
+index 7a84858c9..56fd2f0c1 100644
+--- a/.github/dependabot.yml
++++ b/.github/dependabot.yml
+@@ -39,4 +39,3 @@ updates:
+       - 'pr: dependencies'
+     cooldown:
+       default-days: 7
+-      exclude: ['stylelint/.github/*']
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7e4e31b0a..7868021f1 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -15,12 +15,12 @@ permissions:
+ 
+ jobs:
+   lint:
+-    uses: stylelint/.github/.github/workflows/call-lint.yml@56c5d6e7e35009b7748db7558eac5377ec88f446 # 0.6.1
++    uses: stylelint/.github/.github/workflows/call-lint.yml@60889da59f384526b8185d2aa85b35620aa6bcc0 # 0.6.0
+     permissions:
+       contents: read
+ 
+   test:
+-    uses: stylelint/.github/.github/workflows/call-test.yml@56c5d6e7e35009b7748db7558eac5377ec88f446 # 0.6.1
++    uses: stylelint/.github/.github/workflows/call-test.yml@60889da59f384526b8185d2aa85b35620aa6bcc0 # 0.6.0
+     with:
+       node-version: '["20", "22", "24"]'
+       os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+diff --git a/.github/workflows/release-pr.yml b/.github/workflows/release-pr.yml
+index 1eecc3afe..ed306ea37 100644
+--- a/.github/workflows/release-pr.yml
++++ b/.github/workflows/release-pr.yml
+@@ -5,7 +5,7 @@ on:
+ 
+ jobs:
+   release-pr:
+-    uses: stylelint/.github/.github/workflows/call-release-pr.yml@56c5d6e7e35009b7748db7558eac5377ec88f446 # 0.6.1
++    uses: stylelint/.github/.github/workflows/call-release-pr.yml@60889da59f384526b8185d2aa85b35620aa6bcc0 # 0.6.0
+     with:
+       new-version-command: npm run changeset
+     permissions:
+diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml
+index 127ba83b6..9cf151799 100644
+--- a/.github/workflows/release.yml
++++ b/.github/workflows/release.yml
+@@ -7,7 +7,7 @@ on:
+ 
+ jobs:
+   release:
+-    uses: stylelint/.github/.github/workflows/call-release.yml@56c5d6e7e35009b7748db7558eac5377ec88f446 # 0.6.1
++    uses: stylelint/.github/.github/workflows/call-release.yml@60889da59f384526b8185d2aa85b35620aa6bcc0 # 0.6.0
+     permissions:
+       contents: write
+       id-token: write
+diff --git a/docs/user-guide/rules.md b/docs/user-guide/rules.md
+index 8e03e3da4..aa46a28c7 100644
+--- a/docs/user-guide/rules.md
++++ b/docs/user-guide/rules.md
+@@ -22,6 +22,7 @@ Disallow deprecated things with these `no-deprecated` rules.
+ | [`declaration-property-value-keyword-no-deprecated`](../../lib/rules/declaration-property-value-keyword-no-deprecated/README.md)<br/>Disallow deprecated keywords for properties within declarations. | ✅ | 🔧 |
+ | [`media-type-no-deprecated`](../../lib/rules/media-type-no-deprecated/README.md)<br/>Disallow deprecated media types. | ✅ | |
+ | [`property-no-deprecated`](../../lib/rules/property-no-deprecated/README.md)<br/>Disallow deprecated properties. | ✅ | 🔧 |
++| [`selector-no-deprecated`](../../lib/rules/selector-no-deprecated/README.md)<br/>Disallow deprecated selectors. | ✅ | 🔧 |
+ <!-- prettier-ignore-end -->
+ 
+ ### Descending
+diff --git a/lib/__tests__/__snapshots__/cli.test.mjs.snap b/lib/__tests__/__snapshots__/cli.test.mjs.snap
+index f4927554c..e64e3fca6 100644
+--- a/lib/__tests__/__snapshots__/cli.test.mjs.snap
++++ b/lib/__tests__/__snapshots__/cli.test.mjs.snap
+@@ -175,7 +175,7 @@ exports[`CLI --help 1`] = `
+ 
+     --suppress [<rule>]
+       Suppress problems and record them in a file. If no rule is specified,
+-      all problems are suppressed. Otherwise, only problems with the given
++      all problems are suppressed. Otherwise, only problems with the given 
+       rules are suppressed, e.g., "--suppress rule1 --suppress rule2".
+       See also "--suppress-location".
+ 
+diff --git a/lib/__tests__/cli.test.mjs b/lib/__tests__/cli.test.mjs
+index a49162768..4c33643ae 100644
+--- a/lib/__tests__/cli.test.mjs
++++ b/lib/__tests__/cli.test.mjs
+@@ -270,7 +270,7 @@ describe('CLI', () => {
+ 		await cli([
+ 			'--print-config',
+ 			'--config',
+-			fixturesPath('config-relative-plugin.json'),
++			fixturesPath('config-color-no-invalid-hex.json'),
+ 			fixturesPath('invalid-hex.css'),
+ 		]);
+ 
+@@ -280,11 +280,8 @@ describe('CLI', () => {
+ 		expect(process.stdout.write).toHaveBeenLastCalledWith(
+ 			JSON.stringify(
+ 				{
+-					plugins: [
+-						fileURLToPath(new URL('./fixtures/plugin-warn-about-foo.mjs', import.meta.url)),
+-					],
+ 					rules: {
+-						'plugin/warn-about-foo': ['always'],
++						'color-no-invalid-hex': [true],
+ 					},
+ 				},
+ 				null,
+diff --git a/lib/__tests__/getConfigForFile.test.mjs b/lib/__tests__/getConfigForFile.test.mjs
+index 4642cdcb8..e3daa5707 100644
+--- a/lib/__tests__/getConfigForFile.test.mjs
++++ b/lib/__tests__/getConfigForFile.test.mjs
+@@ -18,7 +18,7 @@ test('augmented config loads', async () => {
+ 				'block-no-empty': [true],
+ 				'plugin/warn-about-foo': ['always'],
+ 			},
+-			_pluginFunctions: {
++			pluginFunctions: {
+ 				'plugin/warn-about-foo': pluginWarnAboutFoo.rule,
+ 			},
+ 		},
+diff --git a/lib/__tests__/printConfig.test.mjs b/lib/__tests__/printConfig.test.mjs
+index ae33eedd8..09b841313 100644
+--- a/lib/__tests__/printConfig.test.mjs
++++ b/lib/__tests__/printConfig.test.mjs
+@@ -18,7 +18,7 @@ it('printConfig uses getConfigForFile to retrieve the config', async () => {
+ 			'block-no-empty': [true],
+ 			'plugin/warn-about-foo': ['always'],
+ 		},
+-		_pluginFunctions: {
++		pluginFunctions: {
+ 			'plugin/warn-about-foo': pluginWarnAboutFoo.rule,
+ 		},
+ 	});
+diff --git a/lib/__tests__/resolveConfig.test.mjs b/lib/__tests__/resolveConfig.test.mjs
+index a46f8c5e7..a5ee169e5 100644
+--- a/lib/__tests__/resolveConfig.test.mjs
++++ b/lib/__tests__/resolveConfig.test.mjs
+@@ -23,7 +23,7 @@ describe('resolveConfig', () => {
+ 				'block-no-empty': [true],
+ 				'plugin/warn-about-foo': ['always'],
+ 			},
+-			_pluginFunctions: {
++			pluginFunctions: {
+ 				'plugin/warn-about-foo': pluginWarnAboutFoo.rule,
+ 			},
+ 		});
+@@ -76,7 +76,7 @@ describe('resolveConfig', () => {
+ 		});
+ 
+ 		expect(config).toStrictEqual({
+-			_pluginFunctions: {
++			pluginFunctions: {
+ 				'plugin/warn-about-foo': expect.any(Function),
+ 			},
+ 			plugins: [expect.stringMatching(/plugin-warn-about-foo/)],
+diff --git a/lib/augmentConfig.mjs b/lib/augmentConfig.mjs
+index 1923b682a..c40cb8af3 100644
+--- a/lib/augmentConfig.mjs
++++ b/lib/augmentConfig.mjs
+@@ -350,7 +350,7 @@ async function addPluginFunctions(config) {
+ 
+ 	const normalizedPlugins = [config.plugins].flat();
+ 
+-	/** @type {StylelintConfig['_pluginFunctions']} */
++	/** @type {StylelintConfig['pluginFunctions']} */
+ 	const pluginFunctions = {};
+ 
+ 	for (const pluginLookup of normalizedPlugins) {
+@@ -386,7 +386,7 @@ async function addPluginFunctions(config) {
+ 		}
+ 	}
+ 
+-	config._pluginFunctions = pluginFunctions;
++	config.pluginFunctions = pluginFunctions;
+ 
+ 	return config;
+ }
+diff --git a/lib/cli.mjs b/lib/cli.mjs
+index da8f55072..684ff0954 100644
+--- a/lib/cli.mjs
++++ b/lib/cli.mjs
+@@ -10,7 +10,6 @@ import meow from 'meow';
+ import { isBoolean, isNumber, isObject, isPlainObject, isString } from './utils/validateTypes.mjs';
+ import checkInvalidCLIOptions from './utils/checkInvalidCLIOptions.mjs';
+ import dynamicImport from './utils/dynamicImport.mjs';
+-import omitPrivateProperties from './utils/omitPrivateProperties.mjs';
+ import pathExists from './utils/pathExists.mjs';
+ import printConfig from './printConfig.mjs';
+ import resolveSilent from './utils/resolveSilent.mjs';
+@@ -202,7 +201,7 @@ const helpText = `
+ 
+       --suppress [<rule>]
+         Suppress problems and record them in a file. If no rule is specified,
+-        all problems are suppressed. Otherwise, only problems with the given
++        all problems are suppressed. Otherwise, only problems with the given 
+         rules are suppressed, e.g., "--suppress rule1 --suppress rule2".
+         See also "--suppress-location".
+ 
+@@ -596,7 +595,7 @@ export default async function main(argv) {
+ 	if (printConfigFlag) {
+ 		await printConfig(options)
+ 			.then((config) => {
+-				process.stdout.write(JSON.stringify(config, omitPrivateProperties, 2));
++				process.stdout.write(JSON.stringify(config, null, 2));
+ 			})
+ 			.catch(handleError);
+ 
+diff --git a/lib/formatters/jsonFormatter.mjs b/lib/formatters/jsonFormatter.mjs
+index ef233a7e8..c84056494 100644
+--- a/lib/formatters/jsonFormatter.mjs
++++ b/lib/formatters/jsonFormatter.mjs
+@@ -1,10 +1,10 @@
+-import omitPrivateProperties from '../utils/omitPrivateProperties.mjs';
+-
+ /**
+  * Omit any properties starting with `_`, which are fake-private
+  *
+  * @type {import('stylelint').Formatter}
+  */
+ export default function jsonFormatter(results) {
+-	return JSON.stringify(results, omitPrivateProperties);
++	return JSON.stringify(results, (key, value) => {
++		return key[0] === '_' ? undefined : value;
++	});
+ }
+diff --git a/lib/reference/selectors.mjs b/lib/reference/selectors.mjs
+index 8ddcf2a82..0ca064700 100644
+--- a/lib/reference/selectors.mjs
++++ b/lib/reference/selectors.mjs
+@@ -3,7 +3,7 @@ import htmlTags from 'html-tags';
+ import uniteSets from '../utils/uniteSets.mjs';
+ 
+ /** @type {ReadonlySet<string>} */
+-const deprecatedHtmlTypeSelectors = new Set([
++export const deprecatedHtmlTypeSelectors = new Set([
+ 	'acronym',
+ 	'applet',
+ 	'basefont',
+@@ -230,7 +230,7 @@ const vendorSpecificPseudoElements = uniteSets(webkitScrollbarPseudoElements, [
+ ]);
+ 
+ /** @type {ReadonlySet<string>} */
+-export const deprecatedPseudoElements = new Set(['shadow']);
++export const deprecatedPseudoElements = new Set(['content', 'shadow']);
+ 
+ /** @type {ReadonlySet<string>} */
+ export const pseudoElements = uniteSets(
+@@ -243,7 +243,6 @@ export const pseudoElements = uniteSets(
+ 		'checkmark',
+ 		'clear-icon',
+ 		'color-swatch',
+-		'content',
+ 		'cue',
+ 		'details-content',
+ 		'field-component',
+@@ -311,6 +310,8 @@ export const logicalCombinationsPseudoClasses = new Set(['has', 'is', 'matches',
+ 
+ /** @type {ReadonlySet<string>} */
+ export const deprecatedPseudoClasses = new Set([
++	'-moz-any',
++	'-webkit-any',
+ 	'contains',
+ 	'drop',
+ 	'focus-ring',
+diff --git a/lib/rules/index.mjs b/lib/rules/index.mjs
+index 0cf4b90e0..65733de9c 100644
+--- a/lib/rules/index.mjs
++++ b/lib/rules/index.mjs
+@@ -142,6 +142,7 @@ const ruleNames = [
+ 	'selector-max-type',
+ 	'selector-max-universal',
+ 	'selector-nested-pattern',
++	'selector-no-deprecated',
+ 	'selector-no-qualifying-type',
+ 	'selector-no-vendor-prefix',
+ 	'selector-not-notation',
+diff --git a/lib/rules/selector-no-deprecated/README.md b/lib/rules/selector-no-deprecated/README.md
+new file mode 100644
+index 000000000..d29368cba
+--- /dev/null
++++ b/lib/rules/selector-no-deprecated/README.md
+@@ -0,0 +1,87 @@
++# selector-no-deprecated
++
++Disallow deprecated selectors.
++
++<!-- prettier-ignore -->
++```css
++nobr {}
++/** ↑
++ * This selector */
++```
++
++This rule flags selectors that were removed or deprecated after being in the CSS specifications, including Editor Drafts, and were either:
++
++- shipped in a release browser version
++- shipped in a pre-release browser version
++- shipped but behind feature flags
++- polyfilled with some adoption before any browser shipped
++- given an MDN page
++
++The [`fix` option](../../../docs/user-guide/options.md#fix) can automatically fix some of the problems reported by this rule.
++
++## Options
++
++### `true`
++
++```json
++{
++  "selector-no-deprecated": true
++}
++```
++
++The following patterns are considered problems:
++
++<!-- prettier-ignore -->
++```css
++acronym {}
++```
++
++<!-- prettier-ignore -->
++```css
++a:focus-ring {}
++```
++
++<!-- prettier-ignore -->
++```css
++.foo::shadow a {}
++```
++
++The following patterns are _not_ considered problems:
++
++<!-- prettier-ignore -->
++```css
++abbr {}
++```
++
++<!-- prettier-ignore -->
++```css
++a:focus-visible {}
++```
++
++## Optional secondary options
++
++### `ignoreSelectors`
++
++```json
++{ "ignoreSelectors": ["array", "of", "selectors", "/regex/"] }
++```
++
++Given:
++
++```json
++{
++  "selector-no-deprecated": [true, { "ignoreSelectors": ["contains", "/ern/"] }]
++}
++```
++
++The following patterns are _not_ considered problems:
++
++<!-- prettier-ignore -->
++```css
++:contains(a) {}
++```
++
++<!-- prettier-ignore -->
++```css
++svg hkern, vkern {}
++```
+diff --git a/lib/rules/selector-no-deprecated/index.mjs b/lib/rules/selector-no-deprecated/index.mjs
+new file mode 100644
+index 000000000..572bc35e1
+--- /dev/null
++++ b/lib/rules/selector-no-deprecated/index.mjs
+@@ -0,0 +1,179 @@
++import selectorParser from 'postcss-selector-parser';
++
++import {
++	deprecatedHtmlTypeSelectors,
++	deprecatedPseudoClasses,
++	deprecatedPseudoElements,
++	deprecatedSvgTypeSelectors,
++} from '../../reference/selectors.mjs';
++import { isRegExp, isString } from '../../utils/validateTypes.mjs';
++import getRuleSelector from '../../utils/getRuleSelector.mjs';
++import isCustomSelector from '../../utils/isCustomSelector.mjs';
++import isStandardSyntaxRule from '../../utils/isStandardSyntaxRule.mjs';
++import isStandardSyntaxSelector from '../../utils/isStandardSyntaxSelector.mjs';
++import { mayIncludeRegexes } from '../../utils/regexes.mjs';
++import optionsMatches from '../../utils/optionsMatches.mjs';
++import parseSelector from '../../utils/parseSelector.mjs';
++import report from '../../utils/report.mjs';
++import ruleMessages from '../../utils/ruleMessages.mjs';
++import validateOptions from '../../utils/validateOptions.mjs';
++
++const ruleName = 'selector-no-deprecated';
++
++const messages = ruleMessages(ruleName, {
++	expected: (unfixed, fixed) => `Expected "${unfixed}" to be "${fixed}"`,
++	rejected: (selector) => `Deprecated selector "${selector}"`,
++});
++
++const meta = {
++	url: 'https://stylelint.io/user-guide/rules/selector-no-deprecated',
++	fixable: true,
++};
++
++const { isPseudoElement } = selectorParser;
++
++/** @type {Record<string, string>} */
++const DEPRECATED_PSEUDO_CLASSES_REMAP = {
++	'focus-ring': 'focus-visible',
++	matches: 'is',
++	'-webkit-any': 'is',
++	'-moz-any': 'is',
++	'top-layer': 'open',
++	'popup-open': 'open',
++	'user-error': 'user-invalid',
++};
++
++/** @type {Record<string, string>} */
++const DEPRECATED_PSEUDO_ELEMENTS_REMAP = {
++	content: 'slotted',
++};
++
++/** @type {import('stylelint').CoreRules[ruleName]} */
++const rule = (primary, secondaryOptions) => {
++	return (root, result) => {
++		const validOptions = validateOptions(
++			result,
++			ruleName,
++			{ actual: primary },
++			{
++				actual: secondaryOptions,
++				possible: {
++					ignoreSelectors: [isString, isRegExp],
++				},
++				optional: true,
++			},
++		);
++
++		if (!validOptions) return;
++
++		root.walkRules((ruleNode) => {
++			if (!isStandardSyntaxRule(ruleNode)) return;
++
++			const selector = getRuleSelector(ruleNode);
++			const mayIncludeDeprecatedPseudo = mayIncludeRegexes.deprecatedPseudo.test(selector);
++			const mayIncludeDeprecatedTypeSelector =
++				mayIncludeRegexes.deprecatedTypeSelector.test(selector);
++
++			if (!mayIncludeDeprecatedPseudo && !mayIncludeDeprecatedTypeSelector) return;
++
++			const resolvedRoot = parseSelector(selector, result, ruleNode);
++
++			if (!resolvedRoot) return;
++
++			if (mayIncludeDeprecatedPseudo) {
++				resolvedRoot.walkPseudos((node) => {
++					const { value, sourceIndex } = node;
++
++					if (!isStandardSyntaxSelector(value)) return;
++
++					if (isCustomSelector(value)) return;
++
++					let namedValue;
++					let mappedValue;
++
++					if (isPseudoElement(node)) {
++						namedValue = value.slice(2);
++						const normalized = namedValue.toLowerCase();
++
++						if (!deprecatedPseudoElements.has(normalized)) return;
++
++						const remap = DEPRECATED_PSEUDO_ELEMENTS_REMAP[normalized];
++
++						if (remap) mappedValue = `::${remap}`;
++					} else {
++						namedValue = value.slice(1);
++						const normalized = namedValue.toLowerCase();
++
++						if (!deprecatedPseudoClasses.has(normalized)) return;
++
++						const remap = DEPRECATED_PSEUDO_CLASSES_REMAP[normalized];
++
++						if (remap) mappedValue = `:${remap}`;
++					}
++
++					if (optionsMatches(secondaryOptions, 'ignoreSelectors', namedValue)) return;
++
++					let fix;
++					let message;
++					let messageArgs;
++
++					if (typeof mappedValue === 'string') {
++						message = messages.expected;
++						messageArgs = [value, mappedValue];
++						fix = () => {
++							node.value = mappedValue;
++							ruleNode.selector = resolvedRoot.toString();
++						};
++					} else {
++						message = messages.rejected;
++						messageArgs = [value];
++					}
++
++					report({
++						result,
++						ruleName,
++						message,
++						messageArgs,
++						node: ruleNode,
++						index: sourceIndex,
++						endIndex: sourceIndex + value.length,
++						fix: {
++							apply: fix,
++							node: ruleNode,
++						},
++					});
++				});
++			}
++
++			if (mayIncludeDeprecatedTypeSelector) {
++				resolvedRoot.walkTags((node) => {
++					const { sourceIndex, value } = node;
++
++					if (optionsMatches(secondaryOptions, 'ignoreSelectors', value)) return;
++
++					if (
++						!deprecatedHtmlTypeSelectors.has(value.toLowerCase()) &&
++						!deprecatedSvgTypeSelectors.has(value)
++					) {
++						return;
++					}
++
++					report({
++						result,
++						ruleName,
++						message: messages.rejected,
++						messageArgs: [value],
++						node: ruleNode,
++						index: sourceIndex,
++						endIndex: sourceIndex + value.length,
++					});
++				});
++			}
++		});
++	};
++};
++
++rule.ruleName = ruleName;
++rule.messages = messages;
++rule.meta = meta;
++export default rule;
+diff --git a/lib/rules/selector-no-qualifying-type/__tests__/groupByCompoundSelectors.test.mjs b/lib/rules/selector-no-qualifying-type/__tests__/groupByCompoundSelectors.test.mjs
+deleted file mode 100644
+index a0863618b..000000000
+--- a/lib/rules/selector-no-qualifying-type/__tests__/groupByCompoundSelectors.test.mjs
++++ /dev/null
+@@ -1,98 +0,0 @@
+-import selectorParser from 'postcss-selector-parser';
+-
+-import { groupByCompoundSelectors } from '../getCompoundSelectors.mjs';
+-
+-describe('groupByCompoundSelectors', () => {
+-	const parser = selectorParser();
+-
+-	const testCases = [
+-		{
+-			input: 'a',
+-			output: ['a'],
+-		},
+-		{
+-			input: 'a b',
+-			output: ['a', 'b'],
+-		},
+-		{
+-			input: 'a:is(.b, .c)',
+-			output: ['a.b', 'a.c'],
+-		},
+-		{
+-			input: 'a:is(.b .c)',
+-			output: ['.b', 'a.c'],
+-		},
+-		{
+-			input: ':is(.a, .b):is(.c, .d):is(.e, .f)',
+-			output: ['.a.c.e', '.b.c.e', '.a.d.e', '.b.d.e', '.a.c.f', '.b.c.f', '.a.d.f', '.b.d.f'],
+-		},
+-		{
+-			input: 'a:has(b)',
+-			output: ['b', 'a'],
+-		},
+-		{
+-			input: 'a:has(b:is(.c, .d))',
+-			output: ['b.c', 'b.d', 'a'],
+-		},
+-		{
+-			input: 'a:has(b:is(.c, .d), c)',
+-			output: ['b.c', 'b.d', 'c', 'a'],
+-		},
+-		{
+-			input: 'a:has(b, c:is(.c, .d))',
+-			output: ['b', 'c.c', 'c.d', 'a'],
+-		},
+-		{
+-			input: 'a:has(b:is(.c, .d)):is(.e, .f .g)',
+-			output: ['b.c', 'b.d', '.f', 'a.e', 'a.g'],
+-		},
+-		{
+-			input: 'a:is(:is(.b, .c), :is(.d, .e))',
+-			output: ['a.b', 'a.c', 'a.d', 'a.e'],
+-		},
+-		{
+-			input: 'a:is(:has(b, c), :has(d, e))',
+-			output: ['b', 'c', 'd', 'e', 'a'],
+-		},
+-		{
+-			input: 'a:is()',
+-			output: ['a'],
+-		},
+-		{
+-			input: 'a:is(,)',
+-			output: ['a'],
+-		},
+-		{
+-			input: 'a.class:is(,)',
+-			output: ['a.class'],
+-		},
+-		{
+-			input: 'a:has()',
+-			output: ['a'],
+-		},
+-		{
+-			input: 'a:has(,)',
+-			output: ['a'],
+-		},
+-	];
+-
+-	for (const { input, output } of testCases) {
+-		it(`input: ${input}`, () => {
+-			const root = parser.astSync(input);
+-
+-			const result = groupByCompoundSelectors(root.nodes[0]).map((compound) => {
+-				compound.forEach((node) => {
+-					node.rawSpaceBefore = '';
+-					node.rawSpaceAfter = '';
+-
+-					node.spaces.before = '';
+-					node.spaces.after = '';
+-				});
+-
+-				return selectorParser.selector({ nodes: compound }).toString();
+-			});
+-
+-			expect(result).toEqual(output);
+-		});
+-	}
+-});
+diff --git a/lib/rules/selector-no-qualifying-type/__tests__/index.mjs b/lib/rules/selector-no-qualifying-type/__tests__/index.mjs
+index da8ead8ae..074968cc8 100644
+--- a/lib/rules/selector-no-qualifying-type/__tests__/index.mjs
++++ b/lib/rules/selector-no-qualifying-type/__tests__/index.mjs
+@@ -278,15 +278,6 @@ testRule({
+ 		{
+ 			code: ':is(a, [attribute]) {}',
+ 		},
+-		{
+-			code: '.foo:has(a) {}',
+-			description: 'type selector inside :has() does not qualify the current element',
+-		},
+-		{
+-			code: '.foo:has(a:hover) {}',
+-			description:
+-				'type selector with pseudo-class inside :has() does not qualify the current element',
+-		},
+ 	],
+ 
+ 	reject: [
+@@ -782,35 +773,6 @@ testRule({
+ 			endLine: 1,
+ 			endColumn: 25,
+ 		},
+-		{
+-			code: '.foo:has(a.bar) {}',
+-			message: messages.rejected('a.bar', 'a'),
+-			line: 1,
+-			column: 10,
+-			endLine: 1,
+-			endColumn: 11,
+-			description: 'qualified type selector inside :has() is still flagged',
+-		},
+-		{
+-			code: '.foo:has(a.bar, a.baz) {}',
+-			warnings: [
+-				{
+-					message: messages.rejected('a.bar', 'a'),
+-					line: 1,
+-					column: 10,
+-					endLine: 1,
+-					endColumn: 11,
+-				},
+-				{
+-					message: messages.rejected('a.baz', 'a'),
+-					line: 1,
+-					column: 17,
+-					endLine: 1,
+-					endColumn: 18,
+-				},
+-			],
+-			description: 'multiple qualified type selectors inside :has() are each flagged',
+-		},
+ 		{
+ 			code: 'a/* comment */.class {}',
+ 			message: messages.rejected('a.class', 'a'),
+@@ -819,57 +781,6 @@ testRule({
+ 			endLine: 1,
+ 			endColumn: 2,
+ 		},
+-		{
+-			code: 'a.class:is(,) {}',
+-			message: messages.rejected('a.class:is(,)', 'a'),
+-			description: 'empty selectors in functional pseudo selectors do not multiply reports',
+-			line: 1,
+-			column: 1,
+-			endLine: 1,
+-			endColumn: 2,
+-		},
+-		{
+-			code: 'a.class:has(,) {}',
+-			message: messages.rejected('a.class', 'a'),
+-			description: 'empty selectors in functional pseudo selectors do not multiply reports',
+-			line: 1,
+-			column: 1,
+-			endLine: 1,
+-			endColumn: 2,
+-		},
+-		{
+-			code: 'a:is(:is(.b, .c), :is(.d, .e)) {}',
+-			warnings: [
+-				{
+-					message: messages.rejected('a:is(:is(.b, .c), :is(.d, .e))', 'a'),
+-					line: 1,
+-					column: 1,
+-					endLine: 1,
+-					endColumn: 2,
+-				},
+-				{
+-					message: messages.rejected('a:is(:is(.b, .c), :is(.d, .e))', 'a'),
+-					line: 1,
+-					column: 1,
+-					endLine: 1,
+-					endColumn: 2,
+-				},
+-				{
+-					message: messages.rejected('a:is(:is(.b, .c), :is(.d, .e))', 'a'),
+-					line: 1,
+-					column: 1,
+-					endLine: 1,
+-					endColumn: 2,
+-				},
+-				{
+-					message: messages.rejected('a:is(:is(.b, .c), :is(.d, .e))', 'a'),
+-					line: 1,
+-					column: 1,
+-					endLine: 1,
+-					endColumn: 2,
+-				},
+-			],
+-		},
+ 	],
+ });
+ 
+diff --git a/lib/rules/selector-no-qualifying-type/getCompoundSelectors.mjs b/lib/rules/selector-no-qualifying-type/getCompoundSelectors.mjs
+deleted file mode 100644
+index d82325a7b..000000000
+--- a/lib/rules/selector-no-qualifying-type/getCompoundSelectors.mjs
++++ /dev/null
+@@ -1,139 +0,0 @@
+-import selectorParser from 'postcss-selector-parser';
+-
+-import isSelectorContainingPseudoClass from './isSelectorContainingPseudoClass.mjs';
+-
+-/** @import { Tag, Node, Selector, Root } from 'postcss-selector-parser' */
+-
+-/**
+- * @typedef {Exclude<Node, Selector>} NonSelector
+- */
+-
+-/**
+- * @param {Root} root
+- * @returns {{compoundSelectors: Root, lookupMap: Map<Tag, Tag>}}
+- */
+-export default function getCompoundSelectors(root) {
+-	const compoundSelectors = selectorParser.root({
+-		source: root.source,
+-		sourceIndex: root.sourceIndex,
+-		value: '',
+-		nodes: [],
+-	});
+-
+-	/** @type {Map<Tag, Tag>} */
+-	const lookupMap = new Map();
+-
+-	root.each((selector) => {
+-		groupByCompoundSelectors(selector).forEach((compoundSelector) => {
+-			const selectorClone = selector.clone({
+-				nodes: [],
+-			});
+-
+-			compoundSelector.forEach((node) => {
+-				const clone = node.clone();
+-
+-				if (selectorParser.isTag(node)) {
+-					lookupMap.set(/** @type {typeof node} */ (clone), node);
+-				}
+-
+-				selectorClone.append(clone);
+-			});
+-
+-			compoundSelectors.append(selectorClone);
+-		});
+-	});
+-
+-	return {
+-		compoundSelectors,
+-		lookupMap,
+-	};
+-}
+-
+-/**
+- * @param {Selector} selector
+- * @returns {Array<Array<NonSelector>>}
+- */
+-export function groupByCompoundSelectors(selector) {
+-	const { terminatedCompoundSelectors, currentCompoundSelectors } =
+-		groupByCompoundSelectorsRecursive(selector);
+-
+-	return [...terminatedCompoundSelectors, ...currentCompoundSelectors].filter(
+-		(compound) => compound.length,
+-	);
+-}
+-
+-/**
+- * @param {Selector} selector
+- * @returns {{ terminatedCompoundSelectors: Array<Array<NonSelector>>, currentCompoundSelectors: Array<Array<NonSelector>> }}
+- */
+-function groupByCompoundSelectorsRecursive(selector) {
+-	/** @type {Array<Array<NonSelector>>} */
+-	const terminatedCompoundSelectors = [];
+-	/** @type {Array<Array<NonSelector>>} */
+-	let currentCompoundSelectors = [[]];
+-
+-	selector.each((node) => {
+-		if (selectorParser.isCombinator(node)) {
+-			terminatedCompoundSelectors.push(...currentCompoundSelectors);
+-			currentCompoundSelectors = [[]];
+-
+-			return;
+-		}
+-
+-		if (selectorParser.isPseudoElement(node)) {
+-			terminatedCompoundSelectors.push(...currentCompoundSelectors);
+-			currentCompoundSelectors = [[]];
+-		}
+-
+-		if (
+-			selectorParser.isPseudoClass(node) &&
+-			node.value.toLowerCase() === ':has' &&
+-			Boolean(node.nodes.length)
+-		) {
+-			node.each((childSelector) => {
+-				const childCompounds = groupByCompoundSelectorsRecursive(childSelector);
+-
+-				terminatedCompoundSelectors.push(
+-					...childCompounds.terminatedCompoundSelectors,
+-					...childCompounds.currentCompoundSelectors,
+-				);
+-			});
+-
+-			return;
+-		}
+-
+-		if (isSelectorContainingPseudoClass(node)) {
+-			/** @type {Array<Array<NonSelector>>} */
+-			const compoundSelectorsCombinations = [];
+-
+-			node.each((childSelector) => {
+-				const childCompounds = groupByCompoundSelectorsRecursive(childSelector);
+-
+-				terminatedCompoundSelectors.push(...childCompounds.terminatedCompoundSelectors);
+-
+-				childCompounds.currentCompoundSelectors.forEach((childCompound) => {
+-					if (!childCompound.length) return;
+-
+-					currentCompoundSelectors.forEach((compoundSelector) => {
+-						compoundSelectorsCombinations.push([...compoundSelector, ...childCompound]);
+-					});
+-				});
+-			});
+-
+-			if (compoundSelectorsCombinations.length) {
+-				currentCompoundSelectors = compoundSelectorsCombinations;
+-			}
+-
+-			return;
+-		}
+-
+-		currentCompoundSelectors.forEach((compoundSelector) => {
+-			compoundSelector.push(node);
+-		});
+-	});
+-
+-	return {
+-		terminatedCompoundSelectors,
+-		currentCompoundSelectors,
+-	};
+-}
+diff --git a/lib/rules/selector-no-qualifying-type/index.mjs b/lib/rules/selector-no-qualifying-type/index.mjs
+index f6eb25b4f..4e489a73e 100644
+--- a/lib/rules/selector-no-qualifying-type/index.mjs
++++ b/lib/rules/selector-no-qualifying-type/index.mjs
+@@ -1,11 +1,10 @@
+ import selectorParser from 'postcss-selector-parser';
+ 
+-import getCompoundSelectors from './getCompoundSelectors.mjs';
+ import getStrippedSelectorSource from '../../utils/getStrippedSelectorSource.mjs';
+ import isKeyframeRule from '../../utils/isKeyframeRule.mjs';
+-import isSelectorContainingPseudoClass from './isSelectorContainingPseudoClass.mjs';
+ import isStandardSyntaxRule from '../../utils/isStandardSyntaxRule.mjs';
+ import isStandardSyntaxTypeSelector from '../../utils/isStandardSyntaxTypeSelector.mjs';
++import { logicalCombinationsPseudoClasses } from '../../reference/selectors.mjs';
+ import { mayIncludeRegexes } from '../../utils/regexes.mjs';
+ import optionsMatches from '../../utils/optionsMatches.mjs';
+ import report from '../../utils/report.mjs';
+@@ -25,12 +24,129 @@ const meta = {
+ 	url: 'https://stylelint.io/user-guide/rules/selector-no-qualifying-type',
+ };
+ 
+-/** @import { Node, Selector, Root } from 'postcss-selector-parser' */
++const SELECTOR_CONTAINING_PSEUDO_CLASSES = new Set(
++	[...logicalCombinationsPseudoClasses, 'host'].map((s) => `:${s}`),
++);
++
++/** @import { Tag, Node, Selector, Root } from 'postcss-selector-parser' */
+ 
+ /**
+  * @typedef {Exclude<Node, Selector>} NonSelector
+  */
+ 
++/**
++ * @param {unknown} node
++ * @returns {node is selectorParser.Pseudo}
++ */
++function isSelectorContainingPseudoClass(node) {
++	return (
++		selectorParser.isPseudoClass(node) &&
++		SELECTOR_CONTAINING_PSEUDO_CLASSES.has(node.value) &&
++		Boolean(node.nodes.length)
++	);
++}
++
++/**
++ * @param {Root} root
++ * @returns {{compoundSelectors: Root, lookupMap: Map<Tag, Tag>}}
++ */
++function getCompoundSelectors(root) {
++	const compoundSelectors = selectorParser.root({
++		source: root.source,
++		sourceIndex: root.sourceIndex,
++		value: '',
++		nodes: [],
++	});
++
++	/** @type {Map<Tag, Tag>} */
++	const lookupMap = new Map();
++
++	root.each((selector) => {
++		groupByCompoundSelectors(selector).forEach((compoundSelector) => {
++			const selectorClone = selector.clone({
++				nodes: [],
++			});
++
++			compoundSelector.forEach((node) => {
++				const clone = node.clone();
++
++				if (selectorParser.isTag(node)) {
++					lookupMap.set(/** @type {typeof node} */ (clone), node);
++				}
++
++				selectorClone.append(clone);
++			});
++
++			compoundSelectors.append(selectorClone);
++		});
++	});
++
++	return {
++		compoundSelectors,
++		lookupMap,
++	};
++}
++
++/**
++ * @param {Selector} selector
++ * @returns {Array<Array<NonSelector>>}
++ */
++function groupByCompoundSelectors(selector) {
++	/** @type {Array<Array<NonSelector>>} */
++	const compoundSelectors = [];
++	/** @type {Array<Array<NonSelector>>} */
++	let currentCompoundSelectors = [[]];
++
++	selector.each((node) => {
++		if (selectorParser.isCombinator(node)) {
++			compoundSelectors.push(...currentCompoundSelectors);
++			currentCompoundSelectors = [[]];
++
++			return;
++		}
++
++		if (selectorParser.isPseudoElement(node)) {
++			compoundSelectors.push(...currentCompoundSelectors);
++			currentCompoundSelectors = [[]];
++		}
++
++		if (isSelectorContainingPseudoClass(node)) {
++			/** @type {Array<Array<NonSelector>>} */
++			const compoundSelectorsCombinations = [];
++
++			node.each((childSelector) => {
++				const childCompounds = groupByCompoundSelectors(childSelector);
++
++				const rightMost = childCompounds.at(-1);
++
++				if (!rightMost) return;
++
++				const remainder = childCompounds.slice(0, -1);
++
++				compoundSelectors.push(...remainder);
++
++				currentCompoundSelectors.forEach((compoundSelector) => {
++					compoundSelectorsCombinations.push([...compoundSelector, ...rightMost]);
++				});
++			});
++
++			currentCompoundSelectors = compoundSelectorsCombinations;
++
++			return;
++		}
++
++		currentCompoundSelectors.forEach((compoundSelector) => {
++			compoundSelector.push(node);
++		});
++	});
++
++	if (currentCompoundSelectors.length) {
++		compoundSelectors.push(...currentCompoundSelectors);
++	}
++
++	return compoundSelectors;
++}
++
+ /**
+  * @param {Node} node
+  * @returns {Array<Node>}
+diff --git a/lib/rules/selector-no-qualifying-type/isSelectorContainingPseudoClass.mjs b/lib/rules/selector-no-qualifying-type/isSelectorContainingPseudoClass.mjs
+deleted file mode 100644
+index 4a6e7a016..000000000
+--- a/lib/rules/selector-no-qualifying-type/isSelectorContainingPseudoClass.mjs
++++ /dev/null
+@@ -1,17 +0,0 @@
+-import selectorParser from 'postcss-selector-parser';
+-
+-const SELECTOR_CONTAINING_PSEUDO_CLASSES = new Set(
+-	['is', 'matches', 'not', 'where', 'host'].map((s) => `:${s}`),
+-);
+-
+-/**
+- * @param {unknown} node
+- * @returns {node is selectorParser.Pseudo}
+- */
+-export default function isSelectorContainingPseudoClass(node) {
+-	return (
+-		selectorParser.isPseudoClass(node) &&
+-		node.nodes.length > 0 &&
+-		SELECTOR_CONTAINING_PSEUDO_CLASSES.has(node.value.toLowerCase())
+-	);
+-}
+diff --git a/lib/utils/__tests__/checkAgainstRule.test.mjs b/lib/utils/__tests__/checkAgainstRule.test.mjs
+index 624b1ecb1..ed939e573 100644
+--- a/lib/utils/__tests__/checkAgainstRule.test.mjs
++++ b/lib/utils/__tests__/checkAgainstRule.test.mjs
+@@ -20,7 +20,7 @@ const mockRuleName = 'custom/no-empty-source';
+ const mockResult = {
+ 	stylelint: resultStylelint({
+ 		config: {
+-			_pluginFunctions: {
++			pluginFunctions: {
+ 				[mockRuleName]: (primary) => (root, result) => {
+ 					const validOptions = validateOptions(result, mockRuleName, {
+ 						actual: primary,
+@@ -173,7 +173,7 @@ describe('checkAgainstRule', () => {
+ 				result: {
+ 					stylelint: resultStylelint({
+ 						config: {
+-							_pluginFunctions: {
++							pluginFunctions: {
+ 								[customRuleAsync.ruleName]: customRuleAsync.rule,
+ 							},
+ 						},
+diff --git a/lib/utils/getStylelintRule.mjs b/lib/utils/getStylelintRule.mjs
+index 2c217eb03..87383c4ec 100644
+--- a/lib/utils/getStylelintRule.mjs
++++ b/lib/utils/getStylelintRule.mjs
+@@ -10,7 +10,7 @@ export default function getStylelintRule(ruleName, config) {
+ 		return rules[ruleName];
+ 	}
+ 
+-	return Promise.resolve(config?._pluginFunctions?.[ruleName]);
++	return Promise.resolve(config?.pluginFunctions?.[ruleName]);
+ }
+ 
+ /**
+diff --git a/lib/utils/omitPrivateProperties.mjs b/lib/utils/omitPrivateProperties.mjs
+deleted file mode 100644
+index 5ca14866d..000000000
+--- a/lib/utils/omitPrivateProperties.mjs
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/**
+- * A replacer function for `JSON.stringify()` that omits properties whose keys start with an underscore (`_`).
+- *
+- * @example
+- * const object = { name: 'Alice', _password: 'secret' };
+- * JSON.stringify(object, omitPrivateProperties);
+- * //=> '{"name":"Alice"}'
+- *
+- * @param {string} key
+- * @param {unknown} value
+- * @returns {unknown}
+- */
+-export default function omitPrivateProperties(key, value) {
+-	return key.startsWith('_') ? undefined : value;
+-}
+diff --git a/lib/utils/regexes.mjs b/lib/utils/regexes.mjs
+index b7f9c93a8..1cef14c21 100644
+--- a/lib/utils/regexes.mjs
++++ b/lib/utils/regexes.mjs
+@@ -1,6 +1,10 @@
+ import {
+ 	aNPlusBNotationPseudoClasses,
+ 	aNPlusBOfSNotationPseudoClasses,
++	deprecatedHtmlTypeSelectors,
++	deprecatedPseudoClasses,
++	deprecatedPseudoElements,
++	deprecatedSvgTypeSelectors,
+ 	percentageKeyframeWithNamedEquivalent,
+ } from '../reference/selectors.mjs';
+ import {
+@@ -75,6 +79,14 @@ export const mayIncludeRegexes = {
+ 	combinator: /[>+~\s]/,
+ 	customProperty: /--/,
+ 	deprecatedMediaType: new RegExp(`\\b(?:${[...deprecatedMediaTypesNames].join('|')})\\b`, 'i'),
++	deprecatedPseudo: new RegExp(
++		`\\:(?:${[...deprecatedPseudoClasses, ...deprecatedPseudoElements].join('|')})\\b`,
++		'i',
++	),
++	deprecatedTypeSelector: new RegExp(
++		`\\b(?:${[...deprecatedHtmlTypeSelectors, ...deprecatedSvgTypeSelectors].join('|')})\\b`,
++		'i',
++	),
+ 	displayKeyword: new RegExp(
+ 		`\\b(?:${[...displayListItemKeyword, ...displayOutsideKeywords, ...displayInsideKeywords, ...displayLegacyKeywords].join('|')})\\b`,
+ 		'i',
+diff --git a/package-lock.json b/package-lock.json
+index 7c663dcc5..ec778bed6 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -66,7 +66,7 @@
+         "@stylelint/prettier-config": "^4.0.0",
+         "@stylelint/remark-preset": "^5.1.1",
+         "@types/css-tree": "^2.3.11",
+-        "@types/debug": "^4.1.13",
++        "@types/debug": "^4.1.12",
+         "@types/global-modules": "^2.0.2",
+         "@types/globjoin": "^0.1.2",
+         "@types/micromatch": "^4.0.10",
+@@ -79,9 +79,9 @@
+         "benchmark": "^2.1.4",
+         "common-tags": "^1.8.2",
+         "deepmerge": "^4.3.1",
+-        "eslint": "^10.1.0",
++        "eslint": "^10.0.3",
+         "eslint-config-stylelint": "^27.0.0",
+-        "eslint-plugin-jest": "^29.15.1",
++        "eslint-plugin-jest": "^29.12.2",
+         "jest": "^30.3.0",
+         "jest-preset-stylelint": "^9.1.0",
+         "jest-watch-typeahead": "^3.0.1",
+@@ -98,7 +98,7 @@
+         "prettier": "^3.8.1",
+         "remark-cli": "^12.0.1",
+         "sugarss": "^5.0.1",
+-        "typescript": "^6.0.2"
++        "typescript": "^5.9.3"
+       },
+       "engines": {
+         "node": ">=20.19.0"
+@@ -2911,11 +2911,10 @@
+       "license": "MIT"
+     },
+     "node_modules/@types/debug": {
+-      "version": "4.1.13",
+-      "resolved": "https://registry.npmjs.org/@types/debug/-/debug-4.1.13.tgz",
+-      "integrity": "sha512-KSVgmQmzMwPlmtljOomayoR89W4FynCAi3E8PPs7vmDVPe84hT+vGPKkJfThkmXs0x0jAaa9U8uW8bbfyS2fWw==",
++      "version": "4.1.12",
++      "resolved": "https://registry.npmjs.org/@types/debug/-/debug-4.1.12.tgz",
++      "integrity": "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==",
+       "dev": true,
+-      "license": "MIT",
+       "dependencies": {
+         "@types/ms": "*"
+       }
+@@ -3122,14 +3121,14 @@
+       "dev": true
+     },
+     "node_modules/@typescript-eslint/project-service": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.58.0.tgz",
+-      "integrity": "sha512-8Q/wBPWLQP1j16NxoPNIKpDZFMaxl7yWIoqXWYeWO+Bbd2mjgvoF0dxP2jKZg5+x49rgKdf7Ck473M8PC3V9lg==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.57.0.tgz",
++      "integrity": "sha512-pR+dK0BlxCLxtWfaKQWtYr7MhKmzqZxuii+ZjuFlZlIGRZm22HnXFqa2eY+90MUz8/i80YJmzFGDUsi8dMOV5w==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@typescript-eslint/tsconfig-utils": "^8.58.0",
+-        "@typescript-eslint/types": "^8.58.0",
++        "@typescript-eslint/tsconfig-utils": "^8.57.0",
++        "@typescript-eslint/types": "^8.57.0",
+         "debug": "^4.4.3"
+       },
+       "engines": {
+@@ -3140,18 +3139,18 @@
+         "url": "https://opencollective.com/typescript-eslint"
+       },
+       "peerDependencies": {
+-        "typescript": ">=4.8.4 <6.1.0"
++        "typescript": ">=4.8.4 <6.0.0"
+       }
+     },
+     "node_modules/@typescript-eslint/scope-manager": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.58.0.tgz",
+-      "integrity": "sha512-W1Lur1oF50FxSnNdGp3Vs6P+yBRSmZiw4IIjEeYxd8UQJwhUF0gDgDD/W/Tgmh73mxgEU3qX0Bzdl/NGuSPEpQ==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.57.0.tgz",
++      "integrity": "sha512-nvExQqAHF01lUM66MskSaZulpPL5pgy5hI5RfrxviLgzZVffB5yYzw27uK/ft8QnKXI2X0LBrHJFr1TaZtAibw==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@typescript-eslint/types": "8.58.0",
+-        "@typescript-eslint/visitor-keys": "8.58.0"
++        "@typescript-eslint/types": "8.57.0",
++        "@typescript-eslint/visitor-keys": "8.57.0"
+       },
+       "engines": {
+         "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+@@ -3162,9 +3161,9 @@
+       }
+     },
+     "node_modules/@typescript-eslint/tsconfig-utils": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.58.0.tgz",
+-      "integrity": "sha512-doNSZEVJsWEu4htiVC+PR6NpM+pa+a4ClH9INRWOWCUzMst/VA9c4gXq92F8GUD1rwhNvRLkgjfYtFXegXQF7A==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.57.0.tgz",
++      "integrity": "sha512-LtXRihc5ytjJIQEH+xqjB0+YgsV4/tW35XKX3GTZHpWtcC8SPkT/d4tqdf1cKtesryHm2bgp6l555NYcT2NLvA==",
+       "dev": true,
+       "license": "MIT",
+       "engines": {
+@@ -3175,13 +3174,13 @@
+         "url": "https://opencollective.com/typescript-eslint"
+       },
+       "peerDependencies": {
+-        "typescript": ">=4.8.4 <6.1.0"
++        "typescript": ">=4.8.4 <6.0.0"
+       }
+     },
+     "node_modules/@typescript-eslint/types": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.58.0.tgz",
+-      "integrity": "sha512-O9CjxypDT89fbHxRfETNoAnHj/i6IpRK0CvbVN3qibxlLdo5p5hcLmUuCCrHMpxiWSwKyI8mCP7qRNYuOJ0Uww==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.57.0.tgz",
++      "integrity": "sha512-dTLI8PEXhjUC7B9Kre+u0XznO696BhXcTlOn0/6kf1fHaQW8+VjJAVHJ3eTI14ZapTxdkOmc80HblPQLaEeJdg==",
+       "dev": true,
+       "license": "MIT",
+       "engines": {
+@@ -3193,21 +3192,21 @@
+       }
+     },
+     "node_modules/@typescript-eslint/typescript-estree": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.58.0.tgz",
+-      "integrity": "sha512-7vv5UWbHqew/dvs+D3e1RvLv1v2eeZ9txRHPnEEBUgSNLx5ghdzjHa0sgLWYVKssH+lYmV0JaWdoubo0ncGYLA==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.57.0.tgz",
++      "integrity": "sha512-m7faHcyVg0BT3VdYTlX8GdJEM7COexXxS6KqGopxdtkQRvBanK377QDHr4W/vIPAR+ah9+B/RclSW5ldVniO1Q==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@typescript-eslint/project-service": "8.58.0",
+-        "@typescript-eslint/tsconfig-utils": "8.58.0",
+-        "@typescript-eslint/types": "8.58.0",
+-        "@typescript-eslint/visitor-keys": "8.58.0",
++        "@typescript-eslint/project-service": "8.57.0",
++        "@typescript-eslint/tsconfig-utils": "8.57.0",
++        "@typescript-eslint/types": "8.57.0",
++        "@typescript-eslint/visitor-keys": "8.57.0",
+         "debug": "^4.4.3",
+         "minimatch": "^10.2.2",
+         "semver": "^7.7.3",
+         "tinyglobby": "^0.2.15",
+-        "ts-api-utils": "^2.5.0"
++        "ts-api-utils": "^2.4.0"
+       },
+       "engines": {
+         "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+@@ -3217,13 +3216,13 @@
+         "url": "https://opencollective.com/typescript-eslint"
+       },
+       "peerDependencies": {
+-        "typescript": ">=4.8.4 <6.1.0"
++        "typescript": ">=4.8.4 <6.0.0"
+       }
+     },
+     "node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion": {
+-      "version": "5.0.5",
+-      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz",
+-      "integrity": "sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ==",
++      "version": "5.0.4",
++      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.4.tgz",
++      "integrity": "sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -3234,13 +3233,13 @@
+       }
+     },
+     "node_modules/@typescript-eslint/typescript-estree/node_modules/minimatch": {
+-      "version": "10.2.5",
+-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.5.tgz",
+-      "integrity": "sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==",
++      "version": "10.2.4",
++      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.4.tgz",
++      "integrity": "sha512-oRjTw/97aTBN0RHbYCdtF1MQfvusSIBQM0IZEgzl6426+8jSC0nF1a/GmnVLpfB9yyr6g6FTqWqiZVbxrtaCIg==",
+       "dev": true,
+       "license": "BlueOak-1.0.0",
+       "dependencies": {
+-        "brace-expansion": "^5.0.5"
++        "brace-expansion": "^5.0.2"
+       },
+       "engines": {
+         "node": "18 || 20 || >=22"
+@@ -3250,16 +3249,16 @@
+       }
+     },
+     "node_modules/@typescript-eslint/utils": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.58.0.tgz",
+-      "integrity": "sha512-RfeSqcFeHMHlAWzt4TBjWOAtoW9lnsAGiP3GbaX9uVgTYYrMbVnGONEfUCiSss+xMHFl+eHZiipmA8WkQ7FuNA==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.57.0.tgz",
++      "integrity": "sha512-5iIHvpD3CZe06riAsbNxxreP+MuYgVUsV0n4bwLH//VJmgtt54sQeY2GszntJ4BjYCpMzrfVh2SBnUQTtys2lQ==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "@eslint-community/eslint-utils": "^4.9.1",
+-        "@typescript-eslint/scope-manager": "8.58.0",
+-        "@typescript-eslint/types": "8.58.0",
+-        "@typescript-eslint/typescript-estree": "8.58.0"
++        "@typescript-eslint/scope-manager": "8.57.0",
++        "@typescript-eslint/types": "8.57.0",
++        "@typescript-eslint/typescript-estree": "8.57.0"
+       },
+       "engines": {
+         "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+@@ -3270,17 +3269,17 @@
+       },
+       "peerDependencies": {
+         "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+-        "typescript": ">=4.8.4 <6.1.0"
++        "typescript": ">=4.8.4 <6.0.0"
+       }
+     },
+     "node_modules/@typescript-eslint/visitor-keys": {
+-      "version": "8.58.0",
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.58.0.tgz",
+-      "integrity": "sha512-XJ9UD9+bbDo4a4epraTwG3TsNPeiB9aShrUneAVXy8q4LuwowN+qu89/6ByLMINqvIMeI9H9hOHQtg/ijrYXzQ==",
++      "version": "8.57.0",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.57.0.tgz",
++      "integrity": "sha512-zm6xx8UT/Xy2oSr2ZXD0pZo7Jx2XsCoID2IUh9YSTFRu7z+WdwYTRk6LhUftm1crwqbuoF6I8zAFeCMw0YjwDg==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@typescript-eslint/types": "8.58.0",
++        "@typescript-eslint/types": "8.57.0",
+         "eslint-visitor-keys": "^5.0.0"
+       },
+       "engines": {
+@@ -5187,16 +5186,16 @@
+       }
+     },
+     "node_modules/eslint": {
+-      "version": "10.1.0",
+-      "resolved": "https://registry.npmjs.org/eslint/-/eslint-10.1.0.tgz",
+-      "integrity": "sha512-S9jlY/ELKEUwwQnqWDO+f+m6sercqOPSqXM5Go94l7DOmxHVDgmSFGWEzeE/gwgTAr0W103BWt0QLe/7mabIvA==",
++      "version": "10.0.3",
++      "resolved": "https://registry.npmjs.org/eslint/-/eslint-10.0.3.tgz",
++      "integrity": "sha512-COV33RzXZkqhG9P2rZCFl9ZmJ7WL+gQSCRzE7RhkbclbQPtLAWReL7ysA0Sh4c8Im2U9ynybdR56PV0XcKvqaQ==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "@eslint-community/eslint-utils": "^4.8.0",
+         "@eslint-community/regexpp": "^4.12.2",
+         "@eslint/config-array": "^0.23.3",
+-        "@eslint/config-helpers": "^0.5.3",
++        "@eslint/config-helpers": "^0.5.2",
+         "@eslint/core": "^1.1.1",
+         "@eslint/plugin-kit": "^0.6.1",
+         "@humanfs/node": "^0.16.6",
+@@ -5209,7 +5208,7 @@
+         "escape-string-regexp": "^4.0.0",
+         "eslint-scope": "^9.1.2",
+         "eslint-visitor-keys": "^5.0.1",
+-        "espree": "^11.2.0",
++        "espree": "^11.1.1",
+         "esquery": "^1.7.0",
+         "esutils": "^2.0.2",
+         "fast-deep-equal": "^3.1.3",
+@@ -5317,9 +5316,9 @@
+       }
+     },
+     "node_modules/eslint-plugin-jest": {
+-      "version": "29.15.1",
+-      "resolved": "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-29.15.1.tgz",
+-      "integrity": "sha512-6BjyErCQauz3zfJvzLw/kAez2lf4LEpbHLvWBfEcG4EI0ZiRSwjoH2uZulMouU8kRkBH+S0rhqn11IhTvxKgKw==",
++      "version": "29.15.0",
++      "resolved": "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-29.15.0.tgz",
++      "integrity": "sha512-ZCGr7vTH2WSo2hrK5oM2RULFmMruQ7W3cX7YfwoTiPfzTGTFBMmrVIz45jZHd++cGKj/kWf02li/RhTGcANJSA==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -5332,7 +5331,7 @@
+         "@typescript-eslint/eslint-plugin": "^8.0.0",
+         "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+         "jest": "*",
+-        "typescript": ">=4.8.4 <7.0.0"
++        "typescript": ">=4.8.4 <6.0.0"
+       },
+       "peerDependenciesMeta": {
+         "@typescript-eslint/eslint-plugin": {
+@@ -13742,9 +13741,9 @@
+       }
+     },
+     "node_modules/ts-api-utils": {
+-      "version": "2.5.0",
+-      "resolved": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.5.0.tgz",
+-      "integrity": "sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA==",
++      "version": "2.4.0",
++      "resolved": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.4.0.tgz",
++      "integrity": "sha512-3TaVTaAv2gTiMB35i3FiGJaRfwb3Pyn/j3m/bfAvGe8FB7CF6u+LMYqYlDh7reQf7UNvoTvdfAqHGmPGOSsPmA==",
+       "dev": true,
+       "license": "MIT",
+       "engines": {
+@@ -13905,9 +13904,9 @@
+       "dev": true
+     },
+     "node_modules/typescript": {
+-      "version": "6.0.2",
+-      "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.2.tgz",
+-      "integrity": "sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==",
++      "version": "5.9.3",
++      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
++      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+       "devOptional": true,
+       "license": "Apache-2.0",
+       "bin": {
+diff --git a/package.json b/package.json
+index aa6d31892..3b846f49e 100644
+--- a/package.json
++++ b/package.json
+@@ -169,7 +169,7 @@
+     "@stylelint/prettier-config": "^4.0.0",
+     "@stylelint/remark-preset": "^5.1.1",
+     "@types/css-tree": "^2.3.11",
+-    "@types/debug": "^4.1.13",
++    "@types/debug": "^4.1.12",
+     "@types/global-modules": "^2.0.2",
+     "@types/globjoin": "^0.1.2",
+     "@types/micromatch": "^4.0.10",
+@@ -182,9 +182,9 @@
+     "benchmark": "^2.1.4",
+     "common-tags": "^1.8.2",
+     "deepmerge": "^4.3.1",
+-    "eslint": "^10.1.0",
++    "eslint": "^10.0.3",
+     "eslint-config-stylelint": "^27.0.0",
+-    "eslint-plugin-jest": "^29.15.1",
++    "eslint-plugin-jest": "^29.12.2",
+     "jest": "^30.3.0",
+     "jest-preset-stylelint": "^9.1.0",
+     "jest-watch-typeahead": "^3.0.1",
+@@ -201,7 +201,7 @@
+     "prettier": "^3.8.1",
+     "remark-cli": "^12.0.1",
+     "sugarss": "^5.0.1",
+-    "typescript": "^6.0.2"
++    "typescript": "^5.9.3"
+   },
+   "engines": {
+     "node": ">=20.19.0"
+diff --git a/types/stylelint/index.d.ts b/types/stylelint/index.d.ts
+index 2dd0dfccb..8667d523a 100644
+--- a/types/stylelint/index.d.ts
++++ b/types/stylelint/index.d.ts
+@@ -121,8 +121,7 @@ declare namespace stylelint {
+ 		 * @see [plugins](https://stylelint.io/user-guide/configure/#plugins)
+ 		 */
+ 		plugins?: ConfigPlugins;
+-		/** @internal */
+-		_pluginFunctions?: {
++		pluginFunctions?: {
+ 			[pluginName: string]: Rule;
+ 		};
+ 		/**
+@@ -133,6 +132,7 @@ declare namespace stylelint {
+ 		 * @see [ignoreFiles](https://stylelint.io/user-guide/configure/#ignorefiles)
+ 		 */
+ 		ignoreFiles?: ConfigIgnoreFiles;
++		ignorePatterns?: string;
+ 		/**
+ 		 * An object containing the configured rules
+ 		 *
+@@ -215,14 +215,9 @@ declare namespace stylelint {
+ 		 * @see [processors](https://stylelint.io/user-guide/configure#processors)
+ 		 */
+ 		processors?: ConfigProcessors;
++		languageOptions?: LanguageOptions;
+ 		/** @internal */
+ 		_processorFunctions?: Map<string, ReturnType<Processor>['postprocess']>;
+-		/**
+-		 * Language options to extend the syntax.
+-		 *
+-		 * @see [languageOptions](https://stylelint.io/user-guide/configure#languageoptions)
+-		 */
+-		languageOptions?: LanguageOptions;
+ 		/**
+ 		 * If true, Stylelint does not throw an error when the glob pattern matches no files.
+ 		 *
+@@ -247,7 +242,6 @@ declare namespace stylelint {
+ 		 * @see [fix](https://stylelint.io/user-guide/configure#fix)
+ 		 */
+ 		fix?: boolean;
+-		/** @internal */
+ 		computeEditInfo?: boolean;
+ 		/**
+ 		 * Force enable/disable the validation of the rules' options
+@@ -964,6 +958,11 @@ declare namespace stylelint {
+ 		}>;
+ 		'selector-max-universal': MaxRule<{ ignoreAfterCombinators: OneOrMany<string> }>;
+ 		'selector-nested-pattern': PatternRule<{ splitList: boolean }>;
++		'selector-no-deprecated': CoreRule<
++			true,
++			{ ignoreSelectors: OneOrMany<StringOrRegex> },
++			AutofixMessage & RejectedMessage<[selector: string]>
++		>;
+ 		'selector-no-qualifying-type': CoreRule<
+ 			true,
+ 			{ ignore: OneOrMany<'attribute' | 'class' | 'id'> },

@@ -1,0 +1,9 @@
+patching file Cargo.lock
+patching file src/frontend/src/binder/expr/binary_op.rs
+patching file src/frontend/src/binder/expr/mod.rs
+patching file src/meta/src/controller/rename.rs
+patching file src/sqlparser/Cargo.toml
+patching file src/sqlparser/src/ast/mod.rs
+patching file src/sqlparser/src/ast/operator.rs
+patching file src/sqlparser/src/bin/sqlparser.rs
+patching file src/sqlparser/src/parser.rs

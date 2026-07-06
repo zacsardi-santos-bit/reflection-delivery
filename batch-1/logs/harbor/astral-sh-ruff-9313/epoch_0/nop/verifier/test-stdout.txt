@@ -1,0 +1,11 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pyi/PYI058.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pyi/PYI058.pyi
+    Finished test [unoptimized + debuginfo] target(s) in 0.90s
+────────────
+ Nextest run ID 25383725-a323-4976-8d46-572d73e9e596 with nextest profile: default
+    Starting 0 tests across 1 binary (1780 tests skipped)
+────────────
+     Summary [   0.008s] 0 tests run: 0 passed, 1780 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo-nextest exit_code=4

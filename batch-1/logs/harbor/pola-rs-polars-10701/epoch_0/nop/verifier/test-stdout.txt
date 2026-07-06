@@ -1,0 +1,35 @@
+patching file py-polars/tests/unit/interchange/test_buffer.py
+patching file py-polars/tests/unit/interchange/test_column.py
+patching file py-polars/tests/unit/interchange/test_from_dataframe.py
+patching file py-polars/tests/unit/interchange/test_roundtrip.py
+patching file py-polars/tests/unit/interchange/test_utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.0, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase(PosixPath('/workspace/repo/.hypothesis/examples'))
+rootdir: /workspace/repo/py-polars
+configfile: pyproject.toml
+plugins: xdist-3.5.0, hypothesis-6.92.1, cov-4.1.0
+collecting ... collected 71 items / 2 errors / 10 deselected / 61 selected
+
+==================================== ERRORS ====================================
+________ ERROR collecting tests/unit/interchange/test_from_dataframe.py ________
+ImportError while importing test module '/workspace/repo/py-polars/tests/unit/interchange/test_from_dataframe.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+py-polars/tests/unit/interchange/test_from_dataframe.py:14: in <module>
+    from polars.interchange.from_dataframe import (
+E   ImportError: cannot import name '_categorical_column_to_series' from 'polars.interchange.from_dataframe' (/workspace/repo/py-polars/polars/interchange/from_dataframe.py)
+____________ ERROR collecting tests/unit/interchange/test_utils.py _____________
+ImportError while importing test module '/workspace/repo/py-polars/tests/unit/interchange/test_utils.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+py-polars/tests/unit/interchange/test_utils.py:9: in <module>
+    from polars.interchange.utils import (
+E   ImportError: cannot import name 'dtype_to_polars_dtype' from 'polars.interchange.utils' (/workspace/repo/py-polars/polars/interchange/utils.py)
+=========================== short test summary info ============================
+ERROR py-polars/tests/unit/interchange/test_from_dataframe.py
+ERROR py-polars/tests/unit/interchange/test_utils.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+======================= 10 deselected, 2 errors in 1.23s =======================
+reward=0 graded=143 found=0 failed=0 parsed=0 framework=pytest exit_code=2

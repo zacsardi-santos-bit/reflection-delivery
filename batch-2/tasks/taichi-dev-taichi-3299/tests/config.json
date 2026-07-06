@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/python/test_ast_refactor.py -v",
+  "test_files": [
+    "tests/python/test_ast_refactor.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.python.test_ast_refactor::test_augassign",
+    "tests.python.test_ast_refactor::test_ifexp",
+    "tests.python.test_ast_refactor::test_static_ifexp",
+    "tests.python.test_ast_refactor::test_static_assign",
+    "tests.python.test_ast_refactor::test_static_assign_element",
+    "tests.python.test_ast_refactor::test_recreate_variable",
+    "tests.python.test_ast_refactor::test_taichi_other_than_ti"
+  ],
+  "PASS_TO_PASS": [
+    "tests.python.test_ast_refactor::test_binop",
+    "tests.python.test_ast_refactor::test_unaryop",
+    "tests.python.test_ast_refactor::test_compare_fail",
+    "tests.python.test_ast_refactor::test_single_compare",
+    "tests.python.test_ast_refactor::test_chain_compare",
+    "tests.python.test_ast_refactor::test_return",
+    "tests.python.test_ast_refactor::test_if",
+    "tests.python.test_ast_refactor::test_static_if",
+    "tests.python.test_ast_refactor::test_struct_for",
+    "tests.python.test_ast_refactor::test_static_for",
+    "tests.python.test_ast_refactor::test_func",
+    "tests.python.test_ast_refactor::test_func_in_python_func"
+  ]
+}

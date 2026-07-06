@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_networkmanager/__init__.py /workspace/repo/tests/test_networkmanager/test_networkmanager.py /workspace/repo/tests/test_networkmanager/test_server.py -v",
+  "test_files": [
+    "tests/test_networkmanager/__init__.py",
+    "tests/test_networkmanager/test_networkmanager.py",
+    "tests/test_networkmanager/test_server.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_networkmanager.test_networkmanager::test_create_global_network",
+    "tests.test_networkmanager.test_networkmanager::test_create_core_network",
+    "tests.test_networkmanager.test_networkmanager::test_delete_core_network",
+    "tests.test_networkmanager.test_networkmanager::test_tag_resource",
+    "tests.test_networkmanager.test_networkmanager::test_untag_resource",
+    "tests.test_networkmanager.test_networkmanager::test_list_core_networks",
+    "tests.test_networkmanager.test_networkmanager::test_get_core_network",
+    "tests.test_networkmanager.test_networkmanager::test_describe_global_networks",
+    "tests.test_networkmanager.test_server::test_list_global_networks",
+    "tests.test_networkmanager.test_server::test_list_core_networks",
+    "tests.test_networkmanager.test_server::test_tag_resource"
+  ],
+  "PASS_TO_PASS": []
+}

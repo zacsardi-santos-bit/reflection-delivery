@@ -1,0 +1,35 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --reporter=json --coverage=false src/utils/fetch.test.ts",
+  "test_files": [
+    "packages/core/src/utils/fetch.test.ts",
+    "packages/vscode-ide-companion/src/ide-server.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify private IPv4 addresses",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify non-routable and reserved IPv4 addresses (RFC 6890)",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify private IPv6 addresses",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify special local addresses",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify link-local addresses",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify IPv4-mapped IPv6 private addresses",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isAddressPrivate should identify public addresses as non-private",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIp should identify private IPs in URLs",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIpAsync should identify private IPs directly",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIpAsync should identify domains resolving to private IPs",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIpAsync should identify domains resolving to public IPs as non-private",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIpAsync should throw error if DNS resolution fails (fail closed)",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIpAsync should return false for invalid URLs instead of throwing verification error",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils safeLookup should filter out private IPs",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils safeLookup should allow explicit localhost",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils safeFetch should forward to fetch with dispatcher",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils safeFetch should handle Refusing to connect errors",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils fetchWithTimeout should handle private IP errors via handleFetchError"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils isPrivateIp should identify public IPs in URLs as non-private",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils safeLookup should error if all resolved IPs are private",
+    "/workspace/repo/packages/core/src/utils/fetch.test.ts::fetch utils fetchWithTimeout should handle timeouts"
+  ]
+}

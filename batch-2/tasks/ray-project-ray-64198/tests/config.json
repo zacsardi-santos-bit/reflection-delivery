@@ -1,0 +1,28 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/data/tests/test_issue_detection_manager.py /workspace/repo/python/ray/data/tests/test_usage.py -v --noconftest",
+  "test_files": [
+    "python/ray/data/tests/test_issue_detection_manager.py",
+    "python/ray/data/tests/test_usage.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.data.tests.test_issue_detection_manager::test_report_issues",
+    "python.ray.data.tests.test_usage::test_round_trip_payload_shape",
+    "python.ray.data.tests.test_usage::test_detected_issues_in_payload",
+    "python.ray.data.tests.test_usage::test_build_usage_id_map",
+    "python.ray.data.tests.test_usage::test_self_zip_one_usage_id_per_operator",
+    "python.ray.data.tests.test_usage::test_detected_issues_absent_defaults_empty",
+    "python.ray.data.tests.test_usage::test_physical_op_name_joins_fused_logical_ops",
+    "python.ray.data.tests.test_usage::test_physical_op_name_includes_usage_ids",
+    "python.ray.data.tests.test_usage::test_physical_op_name_without_logical_ops"
+  ],
+  "PASS_TO_PASS": [
+    "python.ray.data.tests.test_usage::test_unknown_operators_anonymized",
+    "python.ray.data.tests.test_usage::test_limit_anonymized_to_class_name",
+    "python.ray.data.tests.test_usage::test_does_not_record_when_disabled_via_env_var",
+    "python.ray.data.tests.test_usage::test_does_not_record_when_usage_stats_opted_out",
+    "python.ray.data.tests.test_usage::test_does_not_raise_on_internal_errors"
+  ]
+}

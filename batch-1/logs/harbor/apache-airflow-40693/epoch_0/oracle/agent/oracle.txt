@@ -1,0 +1,12 @@
+patching file airflow/datasets/__init__.py
+patching file airflow/datasets/manager.py
+patching file airflow/migrations/versions/0150_2_10_0_dataset_alias_dataset.py
+patching file airflow/models/dag.py
+patching file airflow/models/dataset.py
+patching file airflow/models/taskinstance.py
+patching file airflow/timetables/simple.py
+patching file airflow/utils/db.py
+patching file docs/apache-airflow/authoring-and-scheduling/datasets.rst
+patching file docs/apache-airflow/img/airflow_erd.sha256
+patching file docs/apache-airflow/img/airflow_erd.svg
+patching file docs/apache-airflow/migrations-ref.rst

@@ -1,0 +1,474 @@
+patching file Dockerfile
+patching file Dockerfile.release
+patching file e2e/go.mod
+patching file e2e/go.sum
+Hunk #1 succeeded at 11 with fuzz 1 (offset 8 lines).
+Hunk #2 FAILED at 28.
+Hunk #3 succeeded at 182 with fuzz 3 (offset 93 lines).
+Hunk #4 succeeded at 221 with fuzz 3 (offset 113 lines).
+Hunk #5 succeeded at 345 with fuzz 3 (offset 194 lines).
+Hunk #6 succeeded at 375 with fuzz 3 (offset 212 lines).
+Hunk #7 succeeded at 446 with fuzz 3 (offset 265 lines).
+Hunk #8 succeeded at 582 with fuzz 3 (offset 367 lines).
+Hunk #9 FAILED at 233.
+Hunk #10 FAILED at 263.
+Hunk #11 succeeded at 797 (offset 515 lines).
+Hunk #12 succeeded at 811 (offset 518 lines).
+Hunk #13 succeeded at 821 (offset 518 lines).
+Hunk #14 FAILED at 324.
+Hunk #15 FAILED at 343.
+5 out of 15 hunks FAILED -- saving rejects to file e2e/go.sum.rej
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 6 with fuzz 1 (offset 2 lines).
+Hunk #2 succeeded at 136 with fuzz 3 (offset 27 lines).
+Hunk #3 succeeded at 445 (offset 118 lines).
+Hunk #4 succeeded at 493 (offset 132 lines).
+Hunk #5 succeeded at 736 (offset 204 lines).
+Hunk #6 FAILED at 633.
+Hunk #7 FAILED at 658.
+Hunk #8 succeeded at 967 (offset 267 lines).
+Hunk #9 succeeded at 978 (offset 267 lines).
+Hunk #10 succeeded at 1023 with fuzz 2 (offset 269 lines).
+Hunk #11 FAILED at 815.
+Hunk #12 succeeded at 1134 (offset 291 lines).
+Hunk #13 succeeded at 1166 (offset 292 lines).
+Hunk #14 succeeded at 1199 (offset 293 lines).
+Hunk #15 FAILED at 951.
+Hunk #16 succeeded at 1297 (offset 307 lines).
+Hunk #17 succeeded at 1353 (offset 312 lines).
+Hunk #18 succeeded at 1428 (offset 324 lines).
+Hunk #19 succeeded at 1500 with fuzz 3 (offset 332 lines).
+Hunk #20 succeeded at 1540 with fuzz 2 (offset 345 lines).
+Hunk #21 succeeded at 1564 (offset 345 lines).
+Hunk #22 succeeded at 1619 with fuzz 1 (offset 355 lines).
+Hunk #23 succeeded at 1644 (offset 359 lines).
+Hunk #24 FAILED at 1339.
+Hunk #25 succeeded at 1738 with fuzz 1 (offset 376 lines).
+Hunk #26 FAILED at 1390.
+Hunk #27 succeeded at 1841 with fuzz 3 (offset 407 lines).
+Hunk #28 succeeded at 1855 (offset 409 lines).
+Hunk #29 succeeded at 1872 (offset 409 lines).
+Hunk #30 FAILED at 1495.
+Hunk #31 succeeded at 1934 (offset 419 lines).
+Hunk #32 succeeded at 1946 (offset 419 lines).
+Hunk #33 succeeded at 1983 (offset 429 lines).
+Hunk #34 succeeded at 2038 with fuzz 3 (offset 429 lines).
+Hunk #35 FAILED at 1633.
+Hunk #36 succeeded at 2125 with fuzz 3 (offset 456 lines).
+Hunk #37 succeeded at 2146 (offset 465 lines).
+Hunk #38 succeeded at 2199 (offset 465 lines).
+Hunk #39 succeeded at 2270 (offset 468 lines).
+Hunk #40 succeeded at 2333 (offset 468 lines).
+Hunk #41 succeeded at 2364 (offset 468 lines).
+Hunk #42 succeeded at 2382 (offset 468 lines).
+Hunk #43 succeeded at 2464 (offset 468 lines).
+Hunk #44 succeeded at 2479 (offset 468 lines).
+Hunk #45 succeeded at 2492 (offset 468 lines).
+Hunk #46 succeeded at 2510 (offset 468 lines).
+Hunk #47 succeeded at 2591 (offset 468 lines).
+Hunk #48 succeeded at 2599 (offset 468 lines).
+Hunk #49 succeeded at 2611 (offset 468 lines).
+Hunk #50 succeeded at 2685 (offset 470 lines).
+Hunk #51 FAILED at 2357.
+Hunk #52 succeeded at 2878 with fuzz 3 (offset 474 lines).
+Hunk #53 succeeded at 2910 with fuzz 2 (offset 477 lines).
+Hunk #54 succeeded at 2929 (offset 478 lines).
+Hunk #55 FAILED at 2461.
+Hunk #56 succeeded at 3025 with fuzz 3 (offset 504 lines).
+10 out of 56 hunks FAILED -- saving rejects to file go.sum.rej
+patching file internal/datasets/subjectsetbytype.go
+patching file internal/datastore/common/errors.go
+patching file internal/datastore/proxy/hedging.go
+patching file internal/developmentmembership/foundsubject.go
+patching file internal/developmentmembership/onrset.go
+patching file internal/developmentmembership/trackingsubjectset.go
+patching file internal/graph/check.go
+patching file internal/graph/checkdispatchset.go
+patching file internal/graph/membershipset.go
+patching file pkg/datastore/test/tuples.go
+patching file pkg/tuple/onrbytypeset.go
+patching file pkg/tuple/onrset.go
+patching file tools/analyzers/go.work.sum
+patching file Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Dockerfile.rej
+patching file Dockerfile.release
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Dockerfile.release.rej
+patching file e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file e2e/go.mod.rej
+patching file e2e/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+15 out of 15 hunks ignored -- saving rejects to file e2e/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+19 out of 19 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+56 out of 56 hunks ignored -- saving rejects to file go.sum.rej
+patching file internal/datasets/subjectsetbytype.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/datasets/subjectsetbytype.go.rej
+patching file internal/datastore/common/errors.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/datastore/common/errors.go.rej
+patching file internal/datastore/proxy/hedging.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/datastore/proxy/hedging.go.rej
+patching file internal/developmentmembership/foundsubject.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file internal/developmentmembership/foundsubject.go.rej
+The next patch would create the file internal/developmentmembership/onrset.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file internal/developmentmembership/trackingsubjectset.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/developmentmembership/trackingsubjectset.go.rej
+patching file internal/graph/check.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file internal/graph/check.go.rej
+The next patch would create the file internal/graph/checkdispatchset.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file internal/graph/membershipset.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/graph/membershipset.go.rej
+patching file pkg/datastore/test/tuples.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/datastore/test/tuples.go.rej
+patching file pkg/tuple/onrbytypeset.go
+patching file pkg/tuple/onrset.go
+patching file tools/analyzers/go.work.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tools/analyzers/go.work.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Dockerfile b/Dockerfile
+|index 1b769e15..05af60b5 100644
+|--- a/Dockerfile
+|+++ b/Dockerfile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 22
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Dockerfile.release b/Dockerfile.release
+|index a02b6648..8447e3c6 100644
+|--- a/Dockerfile.release
+|+++ b/Dockerfile.release
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 35
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/e2e/go.mod b/e2e/go.mod
+|index 1c80084a..ee36cdeb 100644
+|--- a/e2e/go.mod
+|+++ b/e2e/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 143
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/e2e/go.sum b/e2e/go.sum
+|index ac49ce43..3b4fd7f8 100644
+|--- a/e2e/go.sum
+|+++ b/e2e/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+15 out of 15 hunks ignored
+can't find file to patch at input line 484
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 35e4a4ae..5de9fc79 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+19 out of 19 hunks ignored
+can't find file to patch at input line 900
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index f40291ae..7345f582 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+56 out of 56 hunks ignored
+can't find file to patch at input line 1750
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/datasets/subjectsetbytype.go b/internal/datasets/subjectsetbytype.go
+|index 4ece06ec..0ba66cd4 100644
+|--- a/internal/datasets/subjectsetbytype.go
+|+++ b/internal/datasets/subjectsetbytype.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1763
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/datastore/common/errors.go b/internal/datastore/common/errors.go
+|index 5182fa7a..81537bab 100644
+|--- a/internal/datastore/common/errors.go
+|+++ b/internal/datastore/common/errors.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1776
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/datastore/proxy/hedging.go b/internal/datastore/proxy/hedging.go
+|index 05d5cab5..4ff8ea9a 100644
+|--- a/internal/datastore/proxy/hedging.go
+|+++ b/internal/datastore/proxy/hedging.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1789
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/developmentmembership/foundsubject.go b/internal/developmentmembership/foundsubject.go
+|index 9b4509aa..520ee72a 100644
+|--- a/internal/developmentmembership/foundsubject.go
+|+++ b/internal/developmentmembership/foundsubject.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/internal/developmentmembership/onrset.go
+can't find file to patch at input line 1911
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/developmentmembership/trackingsubjectset.go b/internal/developmentmembership/trackingsubjectset.go
+|index 6cdd8ee4..b66a0894 100644
+|--- a/internal/developmentmembership/trackingsubjectset.go
+|+++ b/internal/developmentmembership/trackingsubjectset.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1926
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/graph/check.go b/internal/graph/check.go
+|index b9880acd..77f498ed 100644
+|--- a/internal/graph/check.go
+|+++ b/internal/graph/check.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+13 out of 13 hunks ignored
+patching file b/internal/graph/checkdispatchset.go
+can't find file to patch at input line 2413
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/graph/membershipset.go b/internal/graph/membershipset.go
+|index 1eacf1fd..6c9157a3 100644
+|--- a/internal/graph/membershipset.go
+|+++ b/internal/graph/membershipset.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2436
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/datastore/test/tuples.go b/pkg/datastore/test/tuples.go
+|index 3dcf7818..d9429dd7 100644
+|--- a/pkg/datastore/test/tuples.go
+|+++ b/pkg/datastore/test/tuples.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file a/pkg/tuple/onrbytypeset.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/pkg/tuple/onrset.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2686
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/analyzers/go.work.sum b/tools/analyzers/go.work.sum
+|index 6325faf9..32ffeee2 100644
+|--- a/tools/analyzers/go.work.sum
+|+++ b/tools/analyzers/go.work.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+patching file Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Dockerfile.rej
+patching file Dockerfile.release
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Dockerfile.release.rej
+patching file e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file e2e/go.mod.rej
+patching file e2e/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+15 out of 15 hunks ignored -- saving rejects to file e2e/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+19 out of 19 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+56 out of 56 hunks ignored -- saving rejects to file go.sum.rej
+patching file internal/datasets/subjectsetbytype.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/datasets/subjectsetbytype.go.rej
+patching file internal/datastore/common/errors.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/datastore/common/errors.go.rej
+patching file internal/datastore/proxy/hedging.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/datastore/proxy/hedging.go.rej
+patching file internal/developmentmembership/foundsubject.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file internal/developmentmembership/foundsubject.go.rej
+The next patch would create the file internal/developmentmembership/onrset.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file internal/developmentmembership/trackingsubjectset.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/developmentmembership/trackingsubjectset.go.rej
+patching file internal/graph/check.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file internal/graph/check.go.rej
+The next patch would create the file internal/graph/checkdispatchset.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file internal/graph/membershipset.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/graph/membershipset.go.rej
+patching file pkg/datastore/test/tuples.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/datastore/test/tuples.go.rej
+patching file pkg/tuple/onrbytypeset.go
+patching file pkg/tuple/onrset.go
+patching file tools/analyzers/go.work.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tools/analyzers/go.work.sum.rej
+ERROR: golden patch failed to apply by all strategies

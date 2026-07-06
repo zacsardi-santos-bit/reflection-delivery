@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/Packs/AnomaliSecurityAnalyticsAlerts/Integrations/AnomaliSecurityAnalyticsAlerts && PYTHONPATH=.:$PYTHONPATH pytest AnomaliSecurityAnalyticsAlerts_test.py -v",
+  "test_files": [
+    "Packs/AnomaliSecurityAnalyticsAlerts/Integrations/AnomaliSecurityAnalyticsAlerts/AnomaliSecurityAnalyticsAlerts_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_create_search_job",
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_get_search_job_results_running",
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_get_search_job_results_completed_with_fields",
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_get_search_job_results_invalid",
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_get_search_job_results_no_fields_records",
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_update_alert_status_and_comment",
+    "Packs.AnomaliSecurityAnalyticsAlerts.Integrations.AnomaliSecurityAnalyticsAlerts.AnomaliSecurityAnalyticsAlerts_test::test_command_update_alert_missing_params"
+  ],
+  "PASS_TO_PASS": []
+}

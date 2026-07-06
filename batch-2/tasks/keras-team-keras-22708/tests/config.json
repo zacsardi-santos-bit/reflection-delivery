@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/backend/common/backend_utils_test.py::CanonicalizeAxesTest /workspace/repo/keras/src/ops/nn_test.py::NNOpsDynamicShapeTest::test_log_softmax /workspace/repo/keras/src/ops/nn_test.py::NNOpsDynamicShapeTest::test_sparsemax /workspace/repo/keras/src/ops/nn_test.py::NNOpsStaticShapeTest::test_sparse_categorical_crossentropy /workspace/repo/keras/src/ops/numpy_test.py::NumpyOneInputOpsDynamicShapeTest::test_flip /workspace/repo/keras/src/ops/numpy_test.py::NumpyOneInputOpsDynamicShapeTest::test_roll /workspace/repo/keras/src/ops/numpy_test.py::NumpyOneInputOpsDynamicShapeTest::test_trace -v",
+  "test_files": [
+    "keras/src/backend/common/backend_utils_test.py",
+    "keras/src/ops/nn_test.py",
+    "keras/src/ops/numpy_test.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.backend.common.backend_utils_test.CanonicalizeAxesTest::test_int_axis",
+    "keras.src.backend.common.backend_utils_test.CanonicalizeAxesTest::test_invalid_axis_element_type",
+    "keras.src.backend.common.backend_utils_test.CanonicalizeAxesTest::test_invalid_axis_type",
+    "keras.src.backend.common.backend_utils_test.CanonicalizeAxesTest::test_numpy_int_axis",
+    "keras.src.backend.common.backend_utils_test.CanonicalizeAxesTest::test_sequence_axis",
+    "keras.src.ops.nn_test.NNOpsDynamicShapeTest::test_log_softmax",
+    "keras.src.ops.nn_test.NNOpsDynamicShapeTest::test_sparsemax",
+    "keras.src.ops.nn_test.NNOpsStaticShapeTest::test_sparse_categorical_crossentropy",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsDynamicShapeTest::test_flip",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsDynamicShapeTest::test_roll",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsDynamicShapeTest::test_trace"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "f795b4e9-d2dc-488d-b251-7c1abf24e865",
+    "started_at": "2026-07-06T12:18:34.223149",
+    "finished_at": "2026-07-06T12:18:56.341250",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__schemastore-schemastore-5396": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "schemastore-schemastore-5396__jkjjoLA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

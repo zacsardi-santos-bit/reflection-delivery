@@ -1,0 +1,29 @@
+{
+    "id": "5421ccd4-cab1-4a0a-800f-872e5cf90692",
+    "started_at": "2026-07-06T12:17:07.244552",
+    "finished_at": "2026-07-06T12:17:46.603044",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__firebase-firebase-tools-10144": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "firebase-firebase-tools-10144__LtanhaU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

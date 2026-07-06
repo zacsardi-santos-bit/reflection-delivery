@@ -1,0 +1,6 @@
+patching file change/@fluentui-react-native-avatar-678aab2a-84d6-4099-855b-3657112ef048.json
+patching file change/@fluentui-react-native-win32-theme-f7ea3a95-2521-4172-ae1d-7893a6f572ba.json
+patching file packages/components/Avatar/src/Avatar.styling.ts
+patching file packages/components/Avatar/src/Avatar.tsx
+patching file packages/components/Avatar/src/Avatar.types.ts
+patching file packages/theming/win32-theme/src/createAliasesFromPalette.ts

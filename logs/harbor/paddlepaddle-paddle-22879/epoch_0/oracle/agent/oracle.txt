@@ -1,5 +1,0 @@
-patching file paddle/fluid/operators/strided_slice_op.h
-patching file paddle/fluid/pybind/imperative.cc
-patching file python/paddle/fluid/backward.py
-patching file python/paddle/fluid/dygraph/varbase_patch_methods.py
-patching file python/paddle/fluid/tests/unittests/test_device_guard.py

@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python -m script.translations develop --all && pytest tests/components/elgato/test_button.py tests/components/elgato/test_light.py tests/components/elgato/test_switch.py -v",
+  "test_files": [
+    "tests/components/elgato/test_button.py",
+    "tests/components/elgato/test_light.py",
+    "tests/components/elgato/test_switch.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.elgato.test_button::test_buttons[button.frenck_identify-identify-key-light-mini]",
+    "tests.components.elgato.test_button::test_buttons[button.frenck_restart-restart-key-light-mini]",
+    "tests.components.elgato.test_light::test_light_unavailable[turn_on]",
+    "tests.components.elgato.test_light::test_light_unavailable[turn_off]",
+    "tests.components.elgato.test_light::test_light_identify",
+    "tests.components.elgato.test_switch::test_switches[switch.frenck_studio_mode-battery_bypass-key-light-mini]",
+    "tests.components.elgato.test_switch::test_switches[switch.frenck_energy_saving-energy_saving-key-light-mini]"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.elgato.test_light::test_light_state_temperature[key-light-state]",
+    "tests.components.elgato.test_light::test_light_state_temperature[light-strip-state]",
+    "tests.components.elgato.test_light::test_light_state_temperature[light-strip-state-color-temperature]",
+    "tests.components.elgato.test_light::test_light_change_state_temperature[light-strip-state-color-temperature]"
+  ]
+}

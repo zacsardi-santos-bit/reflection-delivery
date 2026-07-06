@@ -1,0 +1,5 @@
+patching file engine/api/workflow/dao_run_test.go
+# github.com/ovh/cds/engine/api/workflow [github.com/ovh/cds/engine/api/workflow.test]
+engine/api/workflow/dao_run_test.go:54:17: undefined: canBeRun
+FAIL	github.com/ovh/cds/engine/api/workflow [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

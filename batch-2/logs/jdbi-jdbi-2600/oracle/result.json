@@ -1,0 +1,29 @@
+{
+    "id": "72583739-c04f-4f71-8f49-645bf639b563",
+    "started_at": "2026-07-04T15:42:14.557831",
+    "finished_at": "2026-07-04T15:42:32.546110",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__jdbi-jdbi-2600": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "jdbi-jdbi-2600__Uu9Li2W"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

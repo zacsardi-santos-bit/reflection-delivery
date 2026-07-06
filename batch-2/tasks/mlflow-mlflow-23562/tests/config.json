@@ -1,0 +1,31 @@
+{
+  "test_framework": "jest",
+  "test_command": "node -e \"require('http').createServer((q,s)=>{s.writeHead(200);s.end('ok')}).listen(5000)\" & sleep 1 && cd /workspace/repo/libs/typescript/core && ../node_modules/.bin/jest tests/core/provider.test.ts tests/core/uc_trace.test.ts tests/exporters/uc_table.test.ts tests/exporters/uc_table_processor.test.ts",
+  "test_files": [
+    "libs/typescript/core/tests/core/provider.test.ts",
+    "libs/typescript/core/tests/core/uc_trace.test.ts",
+    "libs/typescript/core/tests/exporters/uc_table.test.ts",
+    "libs/typescript/core/tests/exporters/uc_table_processor.test.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/libs/typescript/core/tests/exporters/uc_table_processor.test.ts::DatabricksUCTableSpanProcessor + Exporter end-to-end persists tags set via updateCurrentTrace through the V4 endpoint and uploads spans via OTLP",
+    "/workspace/repo/libs/typescript/core/tests/exporters/uc_table.test.ts::MlflowClient UC methods createTraceInfoV4 POSTs trace_info to the V4 endpoint with tags preserved",
+    "/workspace/repo/libs/typescript/core/tests/exporters/uc_table.test.ts::MlflowClient UC methods exportOtlpSpansToUc constructs an OTLP proto exporter with the UC table header",
+    "/workspace/repo/libs/typescript/core/tests/exporters/uc_table.test.ts::MlflowClient UC methods exportOtlpSpansToUc short-circuits with no spans",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::Trace ID v4 helpers parses a v4 trace ID into location and otel trace ID",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::Trace ID v4 helpers returns [null, raw] for v3 trace IDs",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::Trace ID v4 helpers throws on a malformed v4 trace ID",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::Trace ID v4 helpers constructs v4 and v3 IDs in their canonical formats",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::UC trace location helpers builds a UC table-prefix TraceLocation and returns its location string",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::UC trace location helpers respects an explicit backend-populated spans table name",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::ucLocationFromExperimentTags returns null when the experiment has no Databricks trace tags",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::ucLocationFromExperimentTags returns null when the destination path is not three-segment",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::ucLocationFromExperimentTags returns null when any path segment is empty",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::ucLocationFromExperimentTags parses a UC table-prefix location and copies the spans / logs / annotations tables",
+    "/workspace/repo/libs/typescript/core/tests/core/uc_trace.test.ts::TraceInfo serialization with UC locations serializes and deserializes a UC table-prefix TraceLocation",
+    "/workspace/repo/libs/typescript/core/tests/core/provider.test.ts::init() with traceLocation wires the UC span processor routes spans through the V4 endpoint with the configured UC location"
+  ],
+  "PASS_TO_PASS": []
+}

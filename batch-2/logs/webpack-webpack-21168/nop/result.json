@@ -1,0 +1,29 @@
+{
+    "id": "5d57e33b-bf2e-4260-9613-2014a4104786",
+    "started_at": "2026-07-06T12:17:16.670701",
+    "finished_at": "2026-07-06T12:17:58.928876",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__webpack-webpack-21168": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "webpack-webpack-21168__ic4Wvek"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

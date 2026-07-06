@@ -1,7 +1,0 @@
-I'm working on the gRPC Swift library and I want to refactor the message deframing layer to separate two concerns that are currently mixed together. Right now, the deframing component is directly built on top of the channel pipeline interface, which makes it hard to use independently.
-
-I'd like to split it into two components. The first is a low-level wire format decoder that plugs into the channel pipeline — it reads the gRPC framing header (compression flag and payload length), checks that the payload fits within a configured size limit before reading any bytes, and optionally decompresses the payload. The second is a higher-level buffered deframer that wraps the low-level decoder and provides a simple push/pull interface: you push bytes in whenever they arrive, and you pull decoded messages out one at a time. If a full message isn't available yet, the pull method returns nothing rather than blocking.
-
-The higher-level deframer should also manage memory efficiently: when new bytes are appended after some messages have already been decoded, any already-consumed bytes in the internal buffer should be discarded so the buffer doesn't grow without bound.
-
-The error handling should be precise: exceeding the size limit should produce a resource exhaustion error with the configured maximum and actual sizes in the message, receiving a compressed payload without a configured decompressor should produce an internal error, and a decompressed payload that's too large should also produce a resource exhaustion error.

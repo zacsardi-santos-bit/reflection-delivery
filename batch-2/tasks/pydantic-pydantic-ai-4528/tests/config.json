@@ -1,0 +1,52 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/models/test_openrouter.py -v",
+  "test_files": [
+    "tests/models/test_openrouter.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.models.test_openrouter::test_openrouter_nested_provider_response",
+    "tests.models.test_openrouter::test_openrouter_nested_provider_null_name",
+    "tests.models.test_openrouter::test_openrouter_error_with_null_fields",
+    "tests.models.test_openrouter::test_openrouter_error_with_metadata"
+  ],
+  "PASS_TO_PASS": [
+    "tests.models.test_openrouter::test_openrouter_with_preset",
+    "tests.models.test_openrouter::test_openrouter_with_native_options",
+    "tests.models.test_openrouter::test_openrouter_stream_with_native_options",
+    "tests.models.test_openrouter::test_openrouter_stream_with_reasoning",
+    "tests.models.test_openrouter::test_openrouter_stream_error",
+    "tests.models.test_openrouter::test_openrouter_tool_calling",
+    "tests.models.test_openrouter::test_openrouter_with_reasoning",
+    "tests.models.test_openrouter::test_openrouter_preserve_reasoning_block",
+    "tests.models.test_openrouter::test_openrouter_video_url_mapping",
+    "tests.models.test_openrouter::test_openrouter_binary_content_video_mapping",
+    "tests.models.test_openrouter::test_openrouter_video_url_force_download",
+    "tests.models.test_openrouter::test_openrouter_video_url_no_force_download",
+    "tests.models.test_openrouter::test_openrouter_video_url_public_api",
+    "tests.models.test_openrouter::test_openrouter_binary_content_video_public_api",
+    "tests.models.test_openrouter::test_openrouter_errors_raised",
+    "tests.models.test_openrouter::test_openrouter_usage",
+    "tests.models.test_openrouter::test_openrouter_validate_non_json_response",
+    "tests.models.test_openrouter::test_openrouter_validate_error_response",
+    "tests.models.test_openrouter::test_openrouter_with_provider_details_but_no_parent_details",
+    "tests.models.test_openrouter::test_openrouter_map_messages_reasoning",
+    "tests.models.test_openrouter::test_openrouter_tool_optional_parameters",
+    "tests.models.test_openrouter::test_openrouter_streaming_reasoning",
+    "tests.models.test_openrouter::test_openrouter_no_openrouter_details",
+    "tests.models.test_openrouter::test_openrouter_google_nested_schema",
+    "tests.models.test_openrouter::test_openrouter_file_annotation",
+    "tests.models.test_openrouter::test_openrouter_file_annotation_validation",
+    "tests.models.test_openrouter::test_openrouter_url_citation_annotation_validation",
+    "tests.models.test_openrouter::test_openrouter_document_url_no_force_download",
+    "tests.models.test_openrouter::test_openrouter_supported_builtin_tools",
+    "tests.models.test_openrouter::test_openrouter_web_search_prepare_request",
+    "tests.models.test_openrouter::test_openrouter_no_web_search_without_tool",
+    "tests.models.test_openrouter::test_openrouter_settings_to_openai_settings_with_web_search",
+    "tests.models.test_openrouter::test_openrouter_prepare_request_loop_with_non_websearch_first",
+    "tests.models.test_openrouter::test_openrouter_provider_dict_without_choices_raises",
+    "tests.models.test_openrouter::test_openrouter_malformed_error_fallthrough"
+  ]
+}

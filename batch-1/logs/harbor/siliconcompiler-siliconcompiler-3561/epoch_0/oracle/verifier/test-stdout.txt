@@ -1,0 +1,61 @@
+patching file tests/core/data/defaults.json
+patching file tests/core/test_tool_version_check.py
+patching file tests/test_tool.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.5, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: asyncio-0.26.0, cov-6.1.1, xdist-3.6.1, timeout-2.4.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+timeout: 180.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 43 items
+
+tests/core/test_tool_version_check.py::test_check_tool_version_failed_error_code PASSED [  2%]
+tests/core/test_tool_version_check.py::test_check_tool_version_failed PASSED [  4%]
+tests/test_tool.py::test_init PASSED                                     [  6%]
+tests/test_tool.py::test_set_runtime_invalid_step PASSED                 [  9%]
+tests/test_tool.py::test_set_runtime_invalid_index PASSED                [ 11%]
+tests/test_tool.py::test_set_runtime_invalid_flow PASSED                 [ 13%]
+tests/test_tool.py::test_set_runtime PASSED                              [ 16%]
+tests/test_tool.py::test_schema_access PASSED                            [ 18%]
+tests/test_tool.py::test_schema_access_invalid PASSED                    [ 20%]
+tests/test_tool.py::test_get_exe_empty PASSED                            [ 23%]
+tests/test_tool.py::test_get_exe_not_found PASSED                        [ 25%]
+tests/test_tool.py::test_get_exe_found PASSED                            [ 27%]
+tests/test_tool.py::test_get_exe_version_no_vswitch PASSED               [ 30%]
+tests/test_tool.py::test_get_exe_version_no_exe PASSED                   [ 32%]
+tests/test_tool.py::test_get_exe_version PASSED                          [ 34%]
+tests/test_tool.py::test_get_exe_version_not_implemented PASSED          [ 37%]
+tests/test_tool.py::test_get_exe_version_non_zero_return PASSED          [ 39%]
+tests/test_tool.py::test_get_exe_version_internal_error PASSED           [ 41%]
+tests/test_tool.py::test_check_exe_version_not_set PASSED                [ 44%]
+tests/test_tool.py::test_check_exe_version_valid PASSED                  [ 46%]
+tests/test_tool.py::test_check_exe_version_invalid PASSED                [ 48%]
+tests/test_tool.py::test_check_exe_version_value_ge PASSED               [ 51%]
+tests/test_tool.py::test_check_exe_version_value_compound PASSED         [ 53%]
+tests/test_tool.py::test_check_exe_version_value_multiple_fail PASSED    [ 55%]
+tests/test_tool.py::test_check_exe_version_value_multiple_pass PASSED    [ 58%]
+tests/test_tool.py::test_check_exe_version_value_invalid_spec PASSED     [ 60%]
+tests/test_tool.py::test_check_exe_version_value_invalid_spec_fail PASSED [ 62%]
+tests/test_tool.py::test_check_exe_version_normalize_error PASSED        [ 65%]
+tests/test_tool.py::test_check_exe_version_normalize_pass PASSED         [ 67%]
+tests/test_tool.py::test_check_exe_version_normalize_error_spec PASSED   [ 69%]
+tests/test_tool.py::test_check_exe_version_normalize_invalid_version PASSED [ 72%]
+tests/test_tool.py::test_check_exe_version_normalize_invalid_spec_version PASSED [ 74%]
+tests/test_tool.py::test_get_runtime_environmental_variables PASSED      [ 76%]
+tests/test_tool.py::test_get_runtime_environmental_variables_no_path PASSED [ 79%]
+tests/test_tool.py::test_get_runtime_environmental_variables_envs PASSED [ 81%]
+tests/test_tool.py::test_get_runtime_environmental_variables_tool_path PASSED [ 83%]
+tests/test_tool.py::test_get_runtime_command PASSED                      [ 86%]
+tests/test_tool.py::test_get_runtime_command_all PASSED                  [ 88%]
+tests/test_tool.py::test_get_runtime_command_error PASSED                [ 90%]
+tests/test_tool.py::test_parse_version_not_implemented PASSED            [ 93%]
+tests/test_tool.py::test_normalize_version PASSED                        [ 95%]
+tests/test_tool.py::test_runtime_options PASSED                          [ 97%]
+tests/test_tool.py::test_resetting_state_in_copy PASSED                  [100%]
+
+============================== 43 passed in 0.82s ==============================
+reward=1 graded=43 found=0 failed=0 parsed=43 framework=pytest exit_code=0

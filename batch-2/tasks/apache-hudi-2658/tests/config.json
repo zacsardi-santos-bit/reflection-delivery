@@ -1,0 +1,16 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl hudi-flink test -Dtest=\"TestHoodieTableFactory,HoodieDataSourceITCase\" -DfailIfNoTests=false",
+  "test_files": [
+    "hudi-flink/src/test/java/org/apache/hudi/factory/TestHoodieTableFactory.java",
+    "hudi-flink/src/test/java/org/apache/hudi/operator/utils/TestConfigurations.java",
+    "hudi-flink/src/test/java/org/apache/hudi/source/HoodieDataSourceITCase.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.apache.hudi.factory.TestHoodieTableFactory::testInferAvroSchemaForSource",
+    "org.apache.hudi.factory.TestHoodieTableFactory::testInferAvroSchemaForSink"
+  ],
+  "PASS_TO_PASS": []
+}

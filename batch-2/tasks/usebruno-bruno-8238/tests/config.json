@@ -1,0 +1,23 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/bruno-app && npx jest src/components/Devtools/Console/NetworkTab/index.spec.js --coverage=false --verbose --json",
+  "test_files": [
+    "packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort state cycle shows no sort icon by default",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort state cycle first click on a column shows ascending icon",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort state cycle second click on same column shows descending icon",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort state cycle third click on same column clears sort",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort state cycle clicking a different column resets to ascending on the new column",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort state cycle sort icon only appears on the active column",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort results sorts by method ascending (A \u2192 Z)",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort results sorts by method descending (Z \u2192 A)",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort results sorts by status ascending",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort results sorts mixed-case methods case-insensitively",
+    "/workspace/repo/packages/bruno-app/src/components/Devtools/Console/NetworkTab/index.spec.js::sort results preserves insertion order when sort is cleared"
+  ],
+  "PASS_TO_PASS": []
+}

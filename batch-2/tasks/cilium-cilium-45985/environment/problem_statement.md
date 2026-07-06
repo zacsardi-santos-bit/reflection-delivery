@@ -1,0 +1,9 @@
+I'm working on the Azure IPAM bits in Cilium and I want to move subnet tracking off individual IP addresses and up to the network interface level. Right now every IP config inside a NIC carries its own subnet reference, but Azure only allows a single subnet per interface so it's redundant, and it doesn't match how the AWS and Alibaba Cloud IPAM components do it (subnet tracked once per interface). Aligning the data model simplifies the cross-cloud paths.
+
+So I need a dedicated subnet struct at the interface level that holds both the subnet resource ID and the CIDR range. Keep the old per-address subnet field and the flat per-interface CIDR field around but mark them deprecated and populate them as mirrors for one release so rolling upgrades between old and new operator versions don't break.
+
+There's also a real bug: when an interface's only IP config is the primary one and the primary is excluded from allocation, all subnet info (the CIDR and gateway) gets silently dropped, so some interfaces end up with no CIDR or gateway even though the data was right there. I want subnet info derived from whatever IP config is present, even the primary, before any primary/secondary filtering happens, and the gateway populated whenever CIDR info is available regardless of whether the primary is used for allocation.
+
+Also the address iterator callback type used across the IPAM layer currently passes a pool/subnet ID as a separate arg, and since subnet's now tracked per interface that redundant param should come out of the callback signature.
+
+Last thing, add a small helper that reads the new preferred CIDR field off an interface struct but falls back to the deprecated flat CIDR field for data written by older operators, with the new field winning when both are set and they disagree. The Azure types live under `@pkg/azure/types/types.go`, so weave the new struct, deprecations, and helper in there and update the iterator callback wherever it's referenced.

@@ -1,0 +1,28 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/typescript && npm test -- tests/core/entities/trace.test.ts tests/core/entities/trace_info.test.ts tests/core/entities/trace_location.test.ts tests/core/entities/trace_state.test.ts",
+  "test_files": [
+    "packages/typescript/tests/core/entities/trace.test.ts",
+    "packages/typescript/tests/core/entities/trace_info.test.ts",
+    "packages/typescript/tests/core/entities/trace_location.test.ts",
+    "packages/typescript/tests/core/entities/trace_state.test.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_location.test.ts::TraceLocation constructor and basic functionality should create a TraceLocation with MLflow experiment",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_location.test.ts::TraceLocation constructor and basic functionality should create a TraceLocation with inference table",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_location.test.ts::TraceLocation validation should validate that only one location type can be provided",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_location.test.ts::TraceLocation validation should validate type matches MLflow experiment location",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_location.test.ts::TraceLocation validation should validate type matches inference table location",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_location.test.ts::TraceLocation createTraceLocationFromExperimentId should create a TraceLocation with MLflow experiment",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_state.test.ts::TraceState enum values should have the correct enum values",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_state.test.ts::TraceState fromOtelStatus should convert OpenTelemetry OK status to TraceState.OK",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_state.test.ts::TraceState fromOtelStatus should convert OpenTelemetry ERROR status to TraceState.ERROR",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_state.test.ts::TraceState fromOtelStatus should convert OpenTelemetry UNSET status to TraceState.STATE_UNSPECIFIED",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace_info.test.ts::TraceInfo constructor should create a TraceInfo instance with all properties",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace.test.ts::Trace constructor should create a Trace with info and data",
+    "/workspace/repo/packages/typescript/tests/core/entities/trace.test.ts::Trace toJson/fromJson round-trip serialization should serialize and deserialize a complete trace correctly"
+  ],
+  "PASS_TO_PASS": []
+}

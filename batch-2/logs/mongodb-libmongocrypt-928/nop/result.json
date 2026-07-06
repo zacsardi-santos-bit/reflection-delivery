@@ -1,0 +1,29 @@
+{
+    "id": "590d6aa8-b0da-4228-a84a-0ce09a29030b",
+    "started_at": "2026-07-04T15:37:34.333317",
+    "finished_at": "2026-07-04T15:38:15.927437",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__mongodb-libmongocrypt-928": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "mongodb-libmongocrypt-928__rEMHRTC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

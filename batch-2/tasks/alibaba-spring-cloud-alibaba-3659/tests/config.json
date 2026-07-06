@@ -1,0 +1,11 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai -am -Dgpg.skip=true --batch-mode",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Spring::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

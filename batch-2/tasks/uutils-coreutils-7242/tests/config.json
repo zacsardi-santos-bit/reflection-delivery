@@ -1,0 +1,40 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci --hide-progress-bar -p coreutils -E 'test(test_random)'",
+  "test_files": [
+    "fuzz/fuzz_targets/fuzz_test.rs",
+    "tests/by-util/test_factor.rs",
+    "tests/by-util/test_sort.rs",
+    "tests/by-util/test_split.rs",
+    "tests/by-util/test_tail.rs",
+    "tests/common/random.rs"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_should_not_end_with_delimiter",
+    "coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_when_length_is_zero",
+    "coreutils::test_util_name common::random::tests::test_random_string_generate",
+    "coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_should_end_with_delimiter",
+    "coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_when_num_delimiter_is_greater_than_length",
+    "coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_should_end_with_delimiter",
+    "coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_should_not_end_with_delimiter",
+    "coreutils::tests common::random::tests::test_random_string_generate",
+    "coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_when_length_is_zero",
+    "coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_when_num_delimiter_is_greater_than_length",
+    "coreutils::tests test_factor::test_random",
+    "coreutils::tests test_dd::test_random_73k_test_not_a_multiple_obs_gt_ibs",
+    "coreutils::tests test_dd::test_random_73k_test_count_reads",
+    "coreutils::tests test_dd::test_random_73k_test_count_bytes",
+    "coreutils::tests test_dd::test_random_73k_test_bs_prime_obs_gt_ibs_sync",
+    "coreutils::tests test_dd::test_random_73k_test_obs_lt_not_a_multiple_ibs",
+    "coreutils::tests test_dd::test_random_73k_test_bs_prime_ibs_gt_obs_sync",
+    "coreutils::tests test_sort::test_random_ignore_case",
+    "coreutils::tests test_sort::test_random_shuffle_len",
+    "coreutils::tests test_sort::test_random_shuffle_contains_all_lines",
+    "coreutils::tests test_sort::test_random_shuffle_two_runs_not_the_same",
+    "coreutils::tests test_factor::test_random_big",
+    "coreutils::tests test_dd::test_random_73k_test_lazy_fullblock"
+  ],
+  "PASS_TO_PASS": []
+}

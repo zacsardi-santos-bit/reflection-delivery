@@ -1,0 +1,241 @@
+patching file test/expected/issue_533.out
+patching file test/sql/issue_533.sql
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+[32m[1m       Using[0m[39m [37m[1mPgConfig("pg16")[0m[39m and `pg_config` from [36m/usr/lib/postgresql/16/bin/pg_config[39m
+[32m[1m    Building[0m[39m extension with features [36mpg16[39m
+[32m[1m     Running[0m[39m command [36m"/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo" "build" "--features" "pg16" "--no-default-features" "--message-format=json-render-diagnostics"[39m
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: unexpected `cfg` condition value: `pg11`
+  --> src/lib.rs:18:1
+   |
+18 | pg_module_magic!();
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `default`, `pg14`, `pg15`, `pg16`, and `pg_test`
+   = note: using a cfg inside a macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `$crate::pg_magic_func` crate for guidance on how handle this unexpected cfg
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+   = note: this warning originates in the macro `$crate::pg_magic_func` which comes from the expansion of the macro `pg_module_magic` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `pg12`
+  --> src/lib.rs:18:1
+   |
+18 | pg_module_magic!();
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `default`, `pg14`, `pg15`, `pg16`, and `pg_test`
+   = note: using a cfg inside a macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `$crate::pg_magic_func` crate for guidance on how handle this unexpected cfg
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `$crate::pg_magic_func` which comes from the expansion of the macro `pg_module_magic` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `pg13`
+  --> src/lib.rs:18:1
+   |
+18 | pg_module_magic!();
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `default`, `pg14`, `pg15`, `pg16`, and `pg_test`
+   = note: using a cfg inside a macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `$crate::pg_magic_func` crate for guidance on how handle this unexpected cfg
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `$crate::pg_magic_func` which comes from the expansion of the macro `pg_module_magic` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: field `alias` is never read
+  --> src/builder.rs:15:9
+   |
+14 | pub struct InsertBuilder {
+   |            ------------- field in this struct
+15 |     pub alias: String,
+   |         ^^^^^
+   |
+   = note: `InsertBuilder` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `alias` is never read
+   --> src/builder.rs:338:9
+    |
+337 | pub struct UpdateBuilder {
+    |            ------------- field in this struct
+338 |     pub alias: String,
+    |         ^^^^^
+    |
+    = note: `UpdateBuilder` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `alias` is never read
+   --> src/builder.rs:510:9
+    |
+509 | pub struct DeleteBuilder {
+    |            ------------- field in this struct
+510 |     pub alias: String,
+    |         ^^^^^
+    |
+    = note: `DeleteBuilder` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `alias` is never read
+   --> src/builder.rs:612:9
+    |
+611 | pub struct FunctionCallBuilder {
+    |            ------------------- field in this struct
+612 |     pub alias: String,
+    |         ^^^^^
+
+warning: field `schema` is never read
+    --> src/builder.rs:1980:9
+     |
+1979 | pub struct __SchemaBuilder {
+     |            --------------- field in this struct
+1980 |     pub schema: __Schema,
+     |         ^^^^^^
+     |
+     = note: `__SchemaBuilder` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: method `arg_map` is never used
+   --> src/graphql.rs:349:8
+    |
+325 | pub trait ___Field {
+    |           -------- method in this trait
+...
+349 |     fn arg_map(&self) -> HashMap<String, __InputValue> {
+    |        ^^^^^^^
+
+warning: struct `SchemaType` is never constructed
+   --> src/graphql.rs:933:12
+    |
+933 | pub struct SchemaType {
+    |            ^^^^^^^^^^
+
+warning: `pg_graphql` (lib) generated 10 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.88s
+[32m[1m  Installing[0m[39m extension
+[32m[1m     Copying[0m[39m control file to [36m/usr/share/postgresql/16/extension/pg_graphql.control[39m
+[32m[1m     Copying[0m[39m shared library to [36m/usr/lib/postgresql/16/lib/pg_graphql.so[39m
+[32m[1m Discovering[0m[39m SQL entities
+[32m[1m  Discovered[0m[39m [36m[1m5[0m[39m SQL entities: [36m[1m0[0m[39m schemas ([36m[1m0[0m[39m unique), [36m[1m1[0m[39m functions, [36m[1m0[0m[39m types, [36m[1m0[0m[39m enums, [36m[1m4[0m[39m sqls, [36m[1m0[0m[39m ords, [36m[1m0[0m[39m hashes, [36m[1m0[0m[39m aggregates, [36m[1m0[0m[39m triggers
+[32m[1m     Writing[0m[39m SQL entities to [36m/usr/share/postgresql/16/extension/pg_graphql--1.5.6.sql[39m
+[32m[1m    Finished[0m[39m installing pg_graphql
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+psql:test/fixtures.sql:1: NOTICE:  extension "pg_graphql" does not exist, skipping
+# 1 of 113 tests failed.
+# The differences that caused some tests to fail can be viewed in the file "/workspace/repo/regression.diffs".
+# A copy of the test summary that you see above is saved in the file "/workspace/repo/regression.out".
+PASS [   0.001s] aliases
+PASS [   0.001s] allow_camel_names
+PASS [   0.001s] array_args_and_return_types
+PASS [   0.001s] bigint_is_string
+PASS [   0.001s] builtin_directives
+PASS [   0.001s] comment_directive
+PASS [   0.001s] comment_directive_description
+PASS [   0.001s] compound_filters
+PASS [   0.001s] empty_mutations
+PASS [   0.001s] enum_mappings
+PASS [   0.001s] extend_type_with_function
+PASS [   0.001s] extend_type_with_function_relation
+PASS [   0.001s] extend_type_with_generated_column
+PASS [   0.001s] filter_by_node_id
+PASS [   0.001s] fragment_on_mutation
+PASS [   0.001s] fragment_on_query
+PASS [   0.001s] function_calls
+PASS [   0.001s] function_calls_default_args
+PASS [   0.001s] function_calls_unsupported
+PASS [   0.001s] function_return_row_is_selectable
+PASS [   0.001s] function_return_view_has_pkey
+PASS [   0.001s] inflection_fields
+PASS [   0.001s] inflection_function
+PASS [   0.001s] inflection_relationships
+PASS [   0.001s] inflection_types
+PASS [   0.001s] issue_163
+PASS [   0.001s] issue_170
+PASS [   0.001s] issue_225
+PASS [   0.001s] issue_237_field_merging
+PASS [   0.001s] issue_237_field_merging_mismatched
+PASS [   0.001s] issue_300
+PASS [   0.001s] issue_306
+PASS [   0.001s] issue_312
+PASS [   0.001s] issue_334_ambiguous_function
+PASS [   0.001s] issue_337
+PASS [   0.001s] issue_339_function_return_json
+PASS [   0.001s] issue_339_function_return_table
+PASS [   0.001s] issue_353_too_many_fields
+PASS [   0.001s] issue_370_citext_as_string
+PASS [   0.001s] issue_373
+PASS [   0.001s] issue_377_enum_search_path
+PASS [   0.001s] issue_444
+PASS [   0.001s] issue_463
+PASS [   0.001s] issue_511
+FAIL [   0.001s] issue_533
+PASS [   0.001s] issue_fragment_spread_cycles
+PASS [   0.001s] json_is_stringified
+PASS [   0.001s] max_page_size
+PASS [   0.001s] max_rows_directive
+PASS [   0.001s] multi_column_primary_key
+PASS [   0.001s] multiple_mutations
+PASS [   0.001s] multiple_queries
+PASS [   0.001s] mutation_delete
+PASS [   0.001s] mutation_delete_variable
+PASS [   0.001s] mutation_insert
+PASS [   0.001s] mutation_update
+PASS [   0.001s] null_argument
+PASS [   0.001s] omit_exotic_types
+PASS [   0.001s] omit_weird_names
+PASS [   0.001s] operation_name
+PASS [   0.001s] override_enum_name
+PASS [   0.001s] override_field_name
+PASS [   0.001s] override_func_field_name
+PASS [   0.001s] override_relationship_field_name
+PASS [   0.001s] override_type_name
+PASS [   0.001s] page_info
+PASS [   0.001s] permissions_connection_column
+PASS [   0.001s] permissions_functions
+PASS [   0.001s] permissions_node_column
+PASS [   0.001s] permissions_table_level
+PASS [   0.001s] permissions_types
+PASS [   0.001s] primary_key_is_required
+PASS [   0.001s] relationship_one_to_one
+PASS [   0.001s] resolve_array_type
+PASS [   0.001s] resolve_connection_filter
+PASS [   0.001s] resolve_connection_named
+PASS [   0.001s] resolve_connection_order_by
+PASS [   0.001s] resolve_connection_pagination_args
+PASS [   0.001s] resolve_connection_to_conn
+PASS [   0.001s] resolve_connection_to_node
+PASS [   0.001s] resolve_error_connection_edge_node_no_field
+PASS [   0.001s] resolve_error_connection_edge_no_field
+PASS [   0.001s] resolve_error_connection_no_field
+PASS [   0.001s] resolve_error_from_parser
+PASS [   0.001s] resolve_error_mutation_no_field
+PASS [   0.001s] resolve_error_node_no_field
+PASS [   0.001s] resolve_error_query_no_field
+PASS [   0.001s] resolve_fragment
+PASS [   0.001s] resolve_graphiql_schema
+PASS [   0.001s] resolve_one
+PASS [   0.001s] resolve___schema
+PASS [   0.001s] resolve___type
+PASS [   0.001s] resolve___typename
+PASS [   0.001s] roundtrip_types
+PASS [   0.001s] row_level_security
+PASS [   0.001s] sqli_connection
+PASS [   0.001s] string_filters
+PASS [   0.001s] test_error_anon_and_named_operations
+PASS [   0.001s] test_error_invalid_offset
+PASS [   0.001s] test_error_multiple_anon_operations
+PASS [   0.001s] test_error_mutation_transpilation
+PASS [   0.001s] test_error_operation_name_not_found
+PASS [   0.001s] test_error_operation_names_not_unique
+PASS [   0.001s] test_error_parsing
+PASS [   0.001s] test_error_query_transpilation
+PASS [   0.001s] test_error_subscription
+PASS [   0.001s] test_query__type
+PASS [   0.001s] total_count
+PASS [   0.001s] type_bigfloat
+PASS [   0.001s] type_modifier_max_length
+PASS [   0.001s] type_opaque
+PASS [   0.001s] variable_default
+PASS [   0.001s] views_integration
+reward=0 graded=113 found=113 failed=1 parsed=113 framework=cargo exit_code=1

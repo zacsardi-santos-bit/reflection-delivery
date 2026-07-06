@@ -1,0 +1,247 @@
+diff --git a/.changeset/spring-ref-events-strictmode.md b/.changeset/spring-ref-events-strictmode.md
+deleted file mode 100644
+index a3a88e0f..00000000
+--- a/.changeset/spring-ref-events-strictmode.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@react-spring/core': patch
+----
+-
+-fix: events not firing when SpringRef attached manually under StrictMode
+diff --git a/.changeset/strict-mode-stop-no-goal.md b/.changeset/strict-mode-stop-no-goal.md
+new file mode 100644
+index 00000000..8ad3832b
+--- /dev/null
++++ b/.changeset/strict-mode-stop-no-goal.md
+@@ -0,0 +1,5 @@
++---
++'@react-spring/core': patch
++---
++
++fix(SpringValue): `stop()` no longer establishes a goal on a spring that never had one. The previous implementation always called `_focus(this.get())` to snap `animation.to` to the current value — useful for freezing a live animation, but wrong for a paused or never-started spring whose underlying value was seeded by `_prepareNode` via `from`. The bug became observable under React.StrictMode, whose simulated unmount fires `useSprings`'s cleanup (`ctrl.stop(true)`) on a freshly-mounted, paused spring, leaving `t.goal` equal to the `from` value instead of `undefined`.
+diff --git a/.changeset/strict-mode-trail-chaining.md b/.changeset/strict-mode-trail-chaining.md
+new file mode 100644
+index 00000000..990209f9
+--- /dev/null
++++ b/.changeset/strict-mode-trail-chaining.md
+@@ -0,0 +1,5 @@
++---
++'@react-spring/core': patch
++---
++
++fix(useTrail): chaining no longer breaks under React.StrictMode. The `reverse` and `passedRef` accumulators inside the `useSprings` wrapper relied on the wrapper being invoked at least once per render. Under StrictMode's second render pass, `useSprings`'s internal `useMemo` caches and the wrapper is skipped, leaving the accumulators at their initial values and reversing the trail direction. For the object-form props the values are now derived directly from the shared props. Fixes #1991.
+diff --git a/packages/core/src/SpringValue.ts b/packages/core/src/SpringValue.ts
+index 4918348c..caa7a985 100644
+--- a/packages/core/src/SpringValue.ts
++++ b/packages/core/src/SpringValue.ts
+@@ -477,8 +477,16 @@ export class SpringValue<T = any> extends FrameValue<T> {
+   stop(cancel?: boolean) {
+     const { to } = this.animation
+ 
+-    // The current value becomes the goal value.
+-    this._focus(this.get())
++    // The current value becomes the goal value — but only if a goal
++    // ever existed. Otherwise we'd be establishing one where none was
++    // set (matters for paused/uninitialised springs whose underlying
++    // value was seeded via `from` during `_prepareNode`). This becomes
++    // observable under React.StrictMode, whose simulated unmount fires
++    // the useSprings cleanup `ctrl.stop(true)` on springs that never
++    // got a chance to start.
++    if (!is.und(to)) {
++      this._focus(this.get())
++    }
+ 
+     stopAsync(this._state, cancel && this._lastCallId)
+     raf.batchedUpdates(() => this._stop(to, cancel))
+diff --git a/packages/core/src/hooks/useSpring.test.tsx b/packages/core/src/hooks/useSpring.test.tsx
+index 9d26f618..dbcccf88 100644
+--- a/packages/core/src/hooks/useSpring.test.tsx
++++ b/packages/core/src/hooks/useSpring.test.tsx
+@@ -6,7 +6,6 @@ import { SpringContextProvider, type ISpringContext } from '../SpringContext'
+ import { SpringValue } from '../SpringValue'
+ import { SpringRef } from '../SpringRef'
+ import { useSpring } from './useSpring'
+-import { useSpringRef } from './useSpringRef'
+ 
+ describe('useSpring', () => {
+   let springs: Lookup<SpringValue>
+@@ -109,119 +108,6 @@ describe('useSpring', () => {
+       testIsRef(ref)
+     })
+   })
+-
+-  // Regression test for https://github.com/pmndrs/react-spring/issues/1991
+-  describe('when an external SpringRef is attached via the `ref` prop', () => {
+-    it('fires events declared on render when `ref.start()` is called with no args', async () => {
+-      const externalRef = SpringRef()
+-      const onStart = vi.fn()
+-      const onRest = vi.fn()
+-
+-      function Component() {
+-        useSpring({
+-          ref: externalRef,
+-          from: { x: 0 },
+-          to: { x: 100 },
+-          onStart,
+-          onRest,
+-        })
+-        return null
+-      }
+-
+-      render(<Component />)
+-
+-      // Animation should not start until `ref.start()` is called.
+-      expect(onStart).not.toHaveBeenCalled()
+-
+-      externalRef.start()
+-      await advanceUntilIdle()
+-
+-      expect(onStart).toHaveBeenCalledTimes(1)
+-      expect(onRest).toHaveBeenCalledTimes(1)
+-    })
+-
+-    it('fires events under StrictMode (double-mount)', async () => {
+-      const onStart = vi.fn()
+-      const onRest = vi.fn()
+-      let capturedRef: SpringRef | undefined
+-
+-      function Component() {
+-        const springRef = useSpringRef()
+-        capturedRef = springRef
+-
+-        useSpring({
+-          ref: springRef,
+-          from: { x: 0 },
+-          to: { x: 100 },
+-          onStart,
+-          onRest,
+-        })
+-
+-        React.useEffect(() => {
+-          springRef.start()
+-        }, [springRef])
+-
+-        return null
+-      }
+-
+-      render(
+-        <React.StrictMode>
+-          <Component />
+-        </React.StrictMode>
+-      )
+-      await advanceUntilIdle()
+-
+-      expect(capturedRef).toBeDefined()
+-      expect(onStart).toHaveBeenCalledTimes(1)
+-      expect(onRest).toHaveBeenCalledTimes(1)
+-    })
+-
+-    // Exact reproduction from the issue body.
+-    it('fires events when `springRef.start()` is called from a useEffect (issue #1991 repro)', async () => {
+-      const onStart = vi.fn()
+-      const onRest = vi.fn()
+-      let capturedRef: SpringRef | undefined
+-
+-      function Component() {
+-        const springRef = useSpringRef()
+-        capturedRef = springRef
+-
+-        useSpring({
+-          ref: springRef,
+-          config: { duration: 1000 },
+-          from: {
+-            position: 'relative',
+-            opacity: 1,
+-            right: 0,
+-          },
+-          to: {
+-            position: 'relative',
+-            opacity: 0,
+-            right: -300,
+-          },
+-          onStart,
+-          onRest,
+-        })
+-
+-        React.useEffect(() => {
+-          springRef.start()
+-        }, [springRef])
+-
+-        return null
+-      }
+-
+-      render(
+-        <React.StrictMode>
+-          <Component />
+-        </React.StrictMode>
+-      )
+-      await advanceUntilIdle()
+-
+-      expect(capturedRef).toBeDefined()
+-      expect(onStart).toHaveBeenCalledTimes(1)
+-      expect(onRest).toHaveBeenCalledTimes(1)
+-    })
+-  })
+ })
+ 
+ interface TestContext extends ISpringContext {
+diff --git a/packages/core/src/hooks/useSprings.ts b/packages/core/src/hooks/useSprings.ts
+index b2d8f911..5b90cced 100644
+--- a/packages/core/src/hooks/useSprings.ts
++++ b/packages/core/src/hooks/useSprings.ts
+@@ -220,15 +220,7 @@ export function useSprings(
+         // When an injected ref exists, the update is postponed
+         // until the ref has its `start` method called.
+         if (ctrl.ref) {
+-          // Push a shallow copy so `flushUpdate` mutations (e.g. wrapping event
+-          // handlers for batching) do not leak back into `updates.current[i]`,
+-          // which is reused across renders and StrictMode double-mounts.
+-          ctrl.queue.push({
+-            ...update,
+-            default: is.obj(update.default)
+-              ? { ...update.default }
+-              : update.default,
+-          })
++          ctrl.queue.push(update)
+         } else {
+           ctrl.start(update)
+         }
+diff --git a/packages/core/src/hooks/useTrail.ts b/packages/core/src/hooks/useTrail.ts
+index 8477c9f2..0227ef8c 100644
+--- a/packages/core/src/hooks/useTrail.ts
++++ b/packages/core/src/hooks/useTrail.ts
+@@ -88,15 +88,30 @@ export function useTrail(
+   if (propsFn && !deps) deps = []
+ 
+   // The trail is reversed when every render-based update is reversed.
+-  let reverse = true
++  // For the object-form props, derive reverse and ref directly from the
++  // shared props — every spring receives the same props, so accumulating
++  // them via the useSprings wrapper is unnecessary and unsafe: under
++  // React.StrictMode the wrapper is not invoked on the second render
++  // pass (useSprings caches via useMemo with [length] deps), which would
++  // leave the accumulator stuck at its initial value.
++  let reverse: boolean | undefined
+   let passedRef: SpringRef | undefined = undefined
+ 
++  if (!propsFn) {
++    reverse = (propsArg as UseTrailProps).reverse
++    passedRef = (propsArg as UseTrailProps).ref
++  } else {
++    reverse = true
++  }
++
+   const result = useSprings(
+     length,
+     (i, ctrl) => {
+       const props = propsFn ? propsFn(i, ctrl) : propsArg
+-      passedRef = props.ref
+-      reverse = reverse && props.reverse
++      if (propsFn) {
++        passedRef = props.ref
++        reverse = reverse && props.reverse
++      }
+ 
+       return props
+     },

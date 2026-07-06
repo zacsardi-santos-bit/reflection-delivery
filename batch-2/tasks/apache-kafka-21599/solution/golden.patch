@@ -1,0 +1,531 @@
+diff --git a/streams/src/main/java/org/apache/kafka/streams/kstream/internals/SlidingWindowStoreMaterializer.java b/streams/src/main/java/org/apache/kafka/streams/kstream/internals/SlidingWindowStoreMaterializer.java
+index 0aca2643be..6f06198405 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/kstream/internals/SlidingWindowStoreMaterializer.java
++++ b/streams/src/main/java/org/apache/kafka/streams/kstream/internals/SlidingWindowStoreMaterializer.java
+@@ -17,12 +17,12 @@
+ package org.apache.kafka.streams.kstream.internals;
+ 
+ import org.apache.kafka.common.utils.Bytes;
++import org.apache.kafka.streams.DslStoreFormat;
+ import org.apache.kafka.streams.kstream.EmitStrategy;
+ import org.apache.kafka.streams.kstream.SlidingWindows;
+ import org.apache.kafka.streams.state.DslWindowParams;
+ import org.apache.kafka.streams.state.StoreBuilder;
+ import org.apache.kafka.streams.state.Stores;
+-import org.apache.kafka.streams.state.TimestampedWindowStore;
+ import org.apache.kafka.streams.state.WindowBytesStoreSupplier;
+ import org.apache.kafka.streams.state.WindowStore;
+ 
+@@ -58,6 +58,7 @@ public class SlidingWindowStoreMaterializer<K, V> extends MaterializedStoreFacto
+ 
+     @Override
+     public StoreBuilder<?> builder() {
++        final DslStoreFormat storeFormat = dslStoreFormat() == null ? DslStoreFormat.TIMESTAMPED : dslStoreFormat();
+         final WindowBytesStoreSupplier supplier = materialized.storeSupplier() == null
+                 ? dslStoreSuppliers().windowStore(new DslWindowParams(
+                         materialized.storeName(),
+@@ -66,16 +67,22 @@ public class SlidingWindowStoreMaterializer<K, V> extends MaterializedStoreFacto
+                         false,
+                         emitStrategy,
+                         true,
+-                        true
++                        storeFormat
+                 ))
+                 : (WindowBytesStoreSupplier) materialized.storeSupplier();
+ 
+-        final StoreBuilder<TimestampedWindowStore<K, V>> builder = Stores
+-                .timestampedWindowStoreBuilder(
+-                        supplier,
+-                        materialized.keySerde(),
+-                        materialized.valueSerde()
+-                );
++        final StoreBuilder<?> builder;
++        if (storeFormat == DslStoreFormat.HEADERS) {
++            builder = Stores.timestampedWindowStoreWithHeadersBuilder(
++                    supplier,
++                    materialized.keySerde(),
++                    materialized.valueSerde());
++        } else {
++            builder = Stores.timestampedWindowStoreBuilder(
++                    supplier,
++                    materialized.keySerde(),
++                    materialized.valueSerde());
++        }
+ 
+         if (materialized.loggingEnabled()) {
+             builder.withLoggingEnabled(materialized.logConfig());
+diff --git a/streams/src/main/java/org/apache/kafka/streams/kstream/internals/StreamJoinedStoreFactory.java b/streams/src/main/java/org/apache/kafka/streams/kstream/internals/StreamJoinedStoreFactory.java
+index 4da99a71d6..9061cbb8b7 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/kstream/internals/StreamJoinedStoreFactory.java
++++ b/streams/src/main/java/org/apache/kafka/streams/kstream/internals/StreamJoinedStoreFactory.java
+@@ -18,6 +18,7 @@ package org.apache.kafka.streams.kstream.internals;
+ 
+ import org.apache.kafka.common.config.TopicConfig;
+ import org.apache.kafka.common.serialization.Serde;
++import org.apache.kafka.streams.DslStoreFormat;
+ import org.apache.kafka.streams.kstream.EmitStrategy;
+ import org.apache.kafka.streams.kstream.JoinWindows;
+ import org.apache.kafka.streams.processor.internals.StoreFactory;
+@@ -81,6 +82,7 @@ public class StreamJoinedStoreFactory<K, V1, V2> extends AbstractConfigurableSto
+ 
+     @Override
+     public StoreBuilder<?> builder() {
++        final DslStoreFormat storeFormat = dslStoreFormat() == null ? DslStoreFormat.PLAIN : dslStoreFormat();
+         final WindowBytesStoreSupplier supplier = storeSupplier == null
+                 ? dslStoreSuppliers().windowStore(new DslWindowParams(
+                         this.name,
+@@ -89,7 +91,7 @@ public class StreamJoinedStoreFactory<K, V1, V2> extends AbstractConfigurableSto
+                         true,
+                         EmitStrategy.onWindowUpdate(),
+                         false,
+-                        false
++                        storeFormat
+                 ))
+                 : storeSupplier;
+ 
+diff --git a/streams/src/main/java/org/apache/kafka/streams/kstream/internals/WindowStoreMaterializer.java b/streams/src/main/java/org/apache/kafka/streams/kstream/internals/WindowStoreMaterializer.java
+index 2b9f3d3381..47de6789c6 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/kstream/internals/WindowStoreMaterializer.java
++++ b/streams/src/main/java/org/apache/kafka/streams/kstream/internals/WindowStoreMaterializer.java
+@@ -17,12 +17,12 @@
+ package org.apache.kafka.streams.kstream.internals;
+ 
+ import org.apache.kafka.common.utils.Bytes;
++import org.apache.kafka.streams.DslStoreFormat;
+ import org.apache.kafka.streams.kstream.EmitStrategy;
+ import org.apache.kafka.streams.kstream.Windows;
+ import org.apache.kafka.streams.state.DslWindowParams;
+ import org.apache.kafka.streams.state.StoreBuilder;
+ import org.apache.kafka.streams.state.Stores;
+-import org.apache.kafka.streams.state.TimestampedWindowStore;
+ import org.apache.kafka.streams.state.WindowBytesStoreSupplier;
+ import org.apache.kafka.streams.state.WindowStore;
+ 
+@@ -56,6 +56,7 @@ public class WindowStoreMaterializer<K, V> extends MaterializedStoreFactory<K, V
+ 
+     @Override
+     public StoreBuilder<?> builder() {
++        final DslStoreFormat storeFormat = dslStoreFormat() == null ? DslStoreFormat.TIMESTAMPED : dslStoreFormat();
+         final WindowBytesStoreSupplier supplier = materialized.storeSupplier() == null
+                 ? dslStoreSuppliers().windowStore(new DslWindowParams(
+                         materialized.storeName(),
+@@ -64,15 +65,22 @@ public class WindowStoreMaterializer<K, V> extends MaterializedStoreFactory<K, V
+                         false,
+                         emitStrategy,
+                         false,
+-                        true
++                        storeFormat
+                 ))
+                 : (WindowBytesStoreSupplier) materialized.storeSupplier();
+ 
+-        final StoreBuilder<TimestampedWindowStore<K, V>> builder = Stores.timestampedWindowStoreBuilder(
++        final StoreBuilder<?> builder;
++        if (storeFormat == DslStoreFormat.HEADERS) {
++            builder = Stores.timestampedWindowStoreWithHeadersBuilder(
+                 supplier,
+                 materialized.keySerde(),
+-                materialized.valueSerde()
+-        );
++                materialized.valueSerde());
++        } else {
++            builder = Stores.timestampedWindowStoreBuilder(
++                supplier,
++                materialized.keySerde(),
++                materialized.valueSerde());
++        }
+ 
+         if (materialized.loggingEnabled()) {
+             builder.withLoggingEnabled(materialized.logConfig());
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/BuiltInDslStoreSuppliers.java b/streams/src/main/java/org/apache/kafka/streams/state/BuiltInDslStoreSuppliers.java
+index cfe95d515e..ef81c86937 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/BuiltInDslStoreSuppliers.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/BuiltInDslStoreSuppliers.java
+@@ -53,27 +53,42 @@ public class BuiltInDslStoreSuppliers {
+ 
+         @Override
+         public WindowBytesStoreSupplier windowStore(final DslWindowParams params) {
++            final DslStoreFormat storeFormat = params.dslStoreFormat();
+             if (params.emitStrategy().type() == EmitStrategy.StrategyType.ON_WINDOW_CLOSE) {
++                final boolean withHeaders = (storeFormat == DslStoreFormat.HEADERS);
+                 return RocksDbIndexedTimeOrderedWindowBytesStoreSupplier.create(
+                         params.name(),
+                         params.retentionPeriod(),
+                         params.windowSize(),
+                         params.retainDuplicates(),
+-                        params.isSlidingWindow());
++                        params.isSlidingWindow(),
++                        withHeaders);
+             }
+ 
+-            if (params.isTimestamped()) {
+-                return Stores.persistentTimestampedWindowStore(
++            final DslStoreFormat format = (storeFormat == null) ? DslStoreFormat.TIMESTAMPED : storeFormat;
++            switch (format) {
++                case HEADERS:
++                    return Stores.persistentTimestampedWindowStoreWithHeaders(
++                        params.name(),
++                        params.retentionPeriod(),
++                        params.windowSize(),
++                        params.retainDuplicates()
++                    );
++                case TIMESTAMPED:
++                    return Stores.persistentTimestampedWindowStore(
+                         params.name(),
+                         params.retentionPeriod(),
+                         params.windowSize(),
+                         params.retainDuplicates());
+-            } else {
+-                return Stores.persistentWindowStore(
++                case PLAIN:
++                    return Stores.persistentWindowStore(
+                         params.name(),
+                         params.retentionPeriod(),
+                         params.windowSize(),
+                         params.retainDuplicates());
++                default:
++                    throw new IllegalStateException("Unsupported DslStoreFormat: " + format +
++                        ". Expected one of: HEADERS, TIMESTAMPED, or PLAIN");
+             }
+         }
+ 
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/DslWindowParams.java b/streams/src/main/java/org/apache/kafka/streams/state/DslWindowParams.java
+index 6ab2b4b2a2..3d81c24671 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/DslWindowParams.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/DslWindowParams.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.kafka.streams.state;
+ 
++import org.apache.kafka.streams.DslStoreFormat;
+ import org.apache.kafka.streams.kstream.EmitStrategy;
+ 
+ import java.time.Duration;
+@@ -33,9 +34,10 @@ public class DslWindowParams {
+     private final boolean retainDuplicates;
+     private final EmitStrategy emitStrategy;
+     private final boolean isSlidingWindow;
+-    private final boolean isTimestamped;
++    private final DslStoreFormat dslStoreFormat;
+ 
+     /**
++     * @deprecated Since 4.3. Use {@link #DslWindowParams(String, Duration, Duration, boolean, EmitStrategy, boolean, DslStoreFormat)} Params(String, DslStoreFormat)} instead.
+      * @param name             name of the store (cannot be {@code null})
+      * @param retentionPeriod  length of time to retain data in the store (cannot be negative)
+      *                         (note that the retention period must be at least long enough to contain the
+@@ -48,6 +50,7 @@ public class DslWindowParams {
+      * @param isSlidingWindow  whether the requested store is a sliding window
+      * @param isTimestamped    whether the requested store should be timestamped (see {@link TimestampedWindowStore}
+      */
++    @Deprecated
+     public DslWindowParams(
+             final String name,
+             final Duration retentionPeriod,
+@@ -57,14 +60,45 @@ public class DslWindowParams {
+             final boolean isSlidingWindow,
+             final boolean isTimestamped
+     ) {
+-        this.isTimestamped = isTimestamped;
+-        Objects.requireNonNull(name);
+-        this.name = name;
++        this.name = Objects.requireNonNull(name);
+         this.retentionPeriod = retentionPeriod;
+         this.windowSize = windowSize;
+         this.retainDuplicates = retainDuplicates;
+         this.emitStrategy = emitStrategy;
+         this.isSlidingWindow = isSlidingWindow;
++        // If isTimestamped is false and the user is still calling the old deprecated constructor, we should assume they mean plain.
++        this.dslStoreFormat = isTimestamped ? DslStoreFormat.TIMESTAMPED : DslStoreFormat.PLAIN;
++    }
++
++    /**
++     * @param name             name of the store (cannot be {@code null})
++     * @param retentionPeriod  length of time to retain data in the store (cannot be negative)
++     *                         (note that the retention period must be at least long enough to contain the
++     *                         windowed data's entire life cycle, from window-start through window-end,
++     *                         and for the entire grace period)
++     * @param windowSize       size of the windows (cannot be negative)
++     * @param retainDuplicates whether to retain duplicates. Turning this on will automatically disable
++     *                         caching and means that null values will be ignored.
++     * @param emitStrategy     defines how to emit results
++     * @param isSlidingWindow  whether the requested store is a sliding window
++     * @param dslStoreFormat   indicate the dsl store format (see {@link DslStoreFormat}
++     */
++    public DslWindowParams(
++            final String name,
++            final Duration retentionPeriod,
++            final Duration windowSize,
++            final boolean retainDuplicates,
++            final EmitStrategy emitStrategy,
++            final boolean isSlidingWindow,
++            final DslStoreFormat dslStoreFormat
++    ) {
++        this.name = Objects.requireNonNull(name);
++        this.retentionPeriod = retentionPeriod;
++        this.windowSize = windowSize;
++        this.retainDuplicates = retainDuplicates;
++        this.emitStrategy = emitStrategy;
++        this.isSlidingWindow = isSlidingWindow;
++        this.dslStoreFormat = dslStoreFormat;
+     }
+ 
+     public String name() {
+@@ -91,8 +125,22 @@ public class DslWindowParams {
+         return isSlidingWindow;
+     }
+ 
++    /**
++     * @deprecated Since 4.3. Use {@link #dslStoreFormat()} instead to check the store format.
++     * @return {@code true} if the store format is {@link DslStoreFormat#TIMESTAMPED}, {@code false} otherwise
++     */
++    @Deprecated
+     public boolean isTimestamped() {
+-        return isTimestamped;
++        return dslStoreFormat == DslStoreFormat.TIMESTAMPED;
++    }
++
++    /**
++     * Returns the store format for this window store.
++     *`
++     * @return the {@link DslStoreFormat} specifying whether to use plain, timestamped, or headers-aware stores
++     */
++    public DslStoreFormat dslStoreFormat() {
++        return dslStoreFormat;
+     }
+ 
+     @Override
+@@ -110,7 +158,7 @@ public class DslWindowParams {
+                 && Objects.equals(windowSize, that.windowSize)
+                 && Objects.equals(emitStrategy, that.emitStrategy)
+                 && Objects.equals(isSlidingWindow, that.isSlidingWindow)
+-                && Objects.equals(isTimestamped, that.isTimestamped);
++                && Objects.equals(dslStoreFormat, that.dslStoreFormat);
+     }
+ 
+     @Override
+@@ -122,7 +170,7 @@ public class DslWindowParams {
+                 retainDuplicates,
+                 emitStrategy,
+                 isSlidingWindow,
+-                isTimestamped
++                dslStoreFormat
+         );
+     }
+ 
+@@ -135,7 +183,7 @@ public class DslWindowParams {
+                 ", retainDuplicates=" + retainDuplicates +
+                 ", emitStrategy=" + emitStrategy +
+                 ", isSlidingWindow=" + isSlidingWindow +
+-                ", isTimestamped=" + isTimestamped +
++                ", dslStoreFormat=" + dslStoreFormat +
+                 '}';
+     }
+ }
+\ No newline at end of file
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/CachingWindowStore.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/CachingWindowStore.java
+index 3bdbe24fe1..5d68349eeb 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/CachingWindowStore.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/CachingWindowStore.java
+@@ -46,7 +46,7 @@ import static org.apache.kafka.streams.processor.internals.ProcessorContextUtils
+ import static org.apache.kafka.streams.state.internals.ExceptionUtils.executeAll;
+ import static org.apache.kafka.streams.state.internals.ExceptionUtils.throwSuppressed;
+ 
+-class CachingWindowStore
++public class CachingWindowStore
+     extends WrappedStateStore<WindowStore<Bytes, byte[]>, byte[], byte[]>
+     implements WindowStore<Bytes, byte[]>, CachedStateStore<byte[], byte[]> {
+ 
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStore.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStore.java
+index 9f9a4b05c9..d51b7f38a9 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStore.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStore.java
+@@ -23,7 +23,7 @@ import org.apache.kafka.streams.state.WindowStore;
+ import static org.apache.kafka.streams.state.internals.ValueAndTimestampDeserializer.rawValue;
+ import static org.apache.kafka.streams.state.internals.ValueAndTimestampDeserializer.timestamp;
+ 
+-class ChangeLoggingTimestampedWindowBytesStore extends ChangeLoggingWindowBytesStore {
++public class ChangeLoggingTimestampedWindowBytesStore extends ChangeLoggingWindowBytesStore {
+ 
+     ChangeLoggingTimestampedWindowBytesStore(final WindowStore<Bytes, byte[]> bytesStore,
+                                              final boolean retainDuplicates) {
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStoreWithHeaders.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStoreWithHeaders.java
+index 374d47892a..baf99ecc34 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStoreWithHeaders.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/ChangeLoggingTimestampedWindowBytesStoreWithHeaders.java
+@@ -34,7 +34,7 @@ import static org.apache.kafka.streams.state.internals.ValueTimestampHeadersDese
+  * this class uses {@link ValueTimestampHeadersDeserializer} to extract
+  * the timestamp from the correct position in the byte array.
+  */
+-class ChangeLoggingTimestampedWindowBytesStoreWithHeaders extends ChangeLoggingWindowBytesStore {
++public class ChangeLoggingTimestampedWindowBytesStoreWithHeaders extends ChangeLoggingWindowBytesStore {
+ 
+     ChangeLoggingTimestampedWindowBytesStoreWithHeaders(final WindowStore<Bytes, byte[]> bytesStore,
+                                                         final boolean retainDuplicates) {
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStore.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStore.java
+index dd489f861a..f172222baa 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStore.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStore.java
+@@ -33,7 +33,7 @@ import org.apache.kafka.streams.state.WindowStore;
+  * @param <K>
+  * @param <V>
+  */
+-class MeteredTimestampedWindowStore<K, V>
++public class MeteredTimestampedWindowStore<K, V>
+     extends MeteredWindowStore<K, ValueAndTimestamp<V>>
+     implements TimestampedWindowStore<K, V> {
+ 
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStoreWithHeaders.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStoreWithHeaders.java
+index b950184fb2..be47980ea4 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStoreWithHeaders.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/MeteredTimestampedWindowStoreWithHeaders.java
+@@ -54,7 +54,7 @@ import static org.apache.kafka.streams.processor.internals.metrics.StreamsMetric
+  * @param <K> key type
+  * @param <V> value type
+  */
+-class MeteredTimestampedWindowStoreWithHeaders<K, V>
++public class MeteredTimestampedWindowStoreWithHeaders<K, V>
+     extends MeteredWindowStore<K, ValueTimestampHeaders<V>>
+     implements TimestampedWindowStoreWithHeaders<K, V> {
+ 
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDBTimeOrderedWindowStoreWithHeaders.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDBTimeOrderedWindowStoreWithHeaders.java
+new file mode 100644
+index 0000000000..7c6c300617
+--- /dev/null
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDBTimeOrderedWindowStoreWithHeaders.java
+@@ -0,0 +1,50 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ *    http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.kafka.streams.state.internals;
++
++import org.apache.kafka.streams.state.HeadersBytesStore;
++import org.apache.kafka.streams.state.TimestampedBytesStore;
++
++/**
++ * RocksDB-backed time-ordered window store with support for record headers.
++ * <p>
++ * This store extends {@link RocksDBTimeOrderedWindowStore} and implements both
++ * {@link TimestampedBytesStore} (for timestamp support) and {@link HeadersBytesStore}
++ * (for header support) marker interfaces.
++ * <p>
++ * The storage format for values is: [headersSize(varint)][headersBytes][timestamp(8)][value]
++ * <p>
++ * This implementation uses segment-level versioning for backward compatibility:
++ * <ul>
++ * <li>Old segments continue to use the legacy format without headers</li>
++ * <li>New segments use the header-embedded format</li>
++ * <li>Legacy values are served with empty headers on read</li>
++ * <li>All new writes use the new format</li>
++ * </ul>
++ *
++ * @see RocksDBTimeOrderedWindowStore
++ * @see HeadersBytesStore
++ * @see TimestampedBytesStore
++ */
++class RocksDBTimeOrderedWindowStoreWithHeaders extends RocksDBTimeOrderedWindowStore implements TimestampedBytesStore, HeadersBytesStore {
++
++    RocksDBTimeOrderedWindowStoreWithHeaders(final RocksDBTimeOrderedWindowSegmentedBytesStore store,
++                                             final boolean retainDuplicates,
++                                             final long windowSize) {
++        super(store, retainDuplicates, windowSize);
++    }
++}
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDbIndexedTimeOrderedWindowBytesStoreSupplier.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDbIndexedTimeOrderedWindowBytesStoreSupplier.java
+index 150ae11c55..c9c9a015c8 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDbIndexedTimeOrderedWindowBytesStoreSupplier.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/RocksDbIndexedTimeOrderedWindowBytesStoreSupplier.java
+@@ -29,7 +29,8 @@ import static org.apache.kafka.streams.internals.ApiUtils.validateMillisecondDur
+ public class RocksDbIndexedTimeOrderedWindowBytesStoreSupplier implements WindowBytesStoreSupplier {
+     public enum WindowStoreTypes {
+         DEFAULT_WINDOW_STORE,
+-        INDEXED_WINDOW_STORE
++        INDEXED_WINDOW_STORE,
++        INDEXED_WINDOW_STORE_WITH_HEADERS
+     }
+ 
+     private final String name;
+@@ -43,7 +44,8 @@ public class RocksDbIndexedTimeOrderedWindowBytesStoreSupplier implements Window
+                                                                            final Duration retentionPeriod,
+                                                                            final Duration windowSize,
+                                                                            final boolean retainDuplicates,
+-                                                                           final boolean hasIndex) {
++                                                                           final boolean hasIndex,
++                                                                           final boolean withHeaders) {
+         Objects.requireNonNull(name, "name cannot be null");
+         final String rpMsgPrefix = prepareMillisCheckFailMsgPrefix(retentionPeriod, "retentionPeriod");
+         final long retentionMs = validateMillisecondDuration(retentionPeriod, rpMsgPrefix);
+@@ -68,7 +70,7 @@ public class RocksDbIndexedTimeOrderedWindowBytesStoreSupplier implements Window
+         }
+ 
+         return new RocksDbIndexedTimeOrderedWindowBytesStoreSupplier(name, retentionMs,
+-            defaultSegmentInterval, windowSizeMs, retainDuplicates, hasIndex);
++            defaultSegmentInterval, windowSizeMs, retainDuplicates, hasIndex, withHeaders);
+     }
+ 
+     public RocksDbIndexedTimeOrderedWindowBytesStoreSupplier(final String name,
+@@ -76,11 +78,20 @@ public class RocksDbIndexedTimeOrderedWindowBytesStoreSupplier implements Window
+                                            final long segmentInterval,
+                                            final long windowSize,
+                                            final boolean retainDuplicates,
+-                                           final boolean withIndex) {
++                                           final boolean withIndex,
++                                           final boolean withHeaders) {
+         this(name, retentionPeriod, segmentInterval, windowSize, retainDuplicates,
+-            withIndex
+-                ? WindowStoreTypes.INDEXED_WINDOW_STORE
+-                : WindowStoreTypes.DEFAULT_WINDOW_STORE);
++            determineStoreType(withIndex, withHeaders));
++    }
++
++    private static WindowStoreTypes determineStoreType(final boolean withIndex, final boolean withHeaders) {
++        if (withHeaders) {
++            return WindowStoreTypes.INDEXED_WINDOW_STORE_WITH_HEADERS;
++        } else if (withIndex) {
++            return WindowStoreTypes.INDEXED_WINDOW_STORE;
++        } else {
++            return WindowStoreTypes.DEFAULT_WINDOW_STORE;
++        }
+     }
+ 
+     public RocksDbIndexedTimeOrderedWindowBytesStoreSupplier(final String name,
+@@ -125,6 +136,16 @@ public class RocksDbIndexedTimeOrderedWindowBytesStoreSupplier implements Window
+                         true),
+                     retainDuplicates,
+                     windowSize);
++            case INDEXED_WINDOW_STORE_WITH_HEADERS:
++                return new RocksDBTimeOrderedWindowStoreWithHeaders(
++                    new RocksDBTimeOrderedWindowSegmentedBytesStore(
++                        name,
++                        metricsScope(),
++                        retentionPeriod,
++                        segmentInterval,
++                        true),
++                    retainDuplicates,
++                    windowSize);
+             default:
+                 throw new IllegalArgumentException("invalid window store type: " + windowStoreType);
+         }
+diff --git a/streams/src/main/java/org/apache/kafka/streams/state/internals/TimeOrderedCachingWindowStore.java b/streams/src/main/java/org/apache/kafka/streams/state/internals/TimeOrderedCachingWindowStore.java
+index b347f383ec..4ee73bdbd0 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/state/internals/TimeOrderedCachingWindowStore.java
++++ b/streams/src/main/java/org/apache/kafka/streams/state/internals/TimeOrderedCachingWindowStore.java
+@@ -58,7 +58,7 @@ import static org.apache.kafka.streams.processor.internals.ProcessorContextUtils
+ import static org.apache.kafka.streams.state.internals.ExceptionUtils.executeAll;
+ import static org.apache.kafka.streams.state.internals.ExceptionUtils.throwSuppressed;
+ 
+-class TimeOrderedCachingWindowStore
++public class TimeOrderedCachingWindowStore
+     extends WrappedStateStore<WindowStore<Bytes, byte[]>, byte[], byte[]>
+     implements WindowStore<Bytes, byte[]>, CachedStateStore<byte[], byte[]> {

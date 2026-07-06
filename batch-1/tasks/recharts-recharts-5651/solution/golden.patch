@@ -1,0 +1,589 @@
+diff --git a/src/cartesian/Scatter.tsx b/src/cartesian/Scatter.tsx
+index 044caaa165e..044ec484eb0 100644
+--- a/src/cartesian/Scatter.tsx
++++ b/src/cartesian/Scatter.tsx
+@@ -1,8 +1,16 @@
+ // eslint-disable-next-line max-classes-per-file
+-import React, { Component, PureComponent, ReactElement, useMemo } from 'react';
++import React, {
++  Component,
++  MutableRefObject,
++  PureComponent,
++  ReactElement,
++  useCallback,
++  useMemo,
++  useRef,
++  useState,
++} from 'react';
+ import Animate from 'react-smooth';
+ 
+-import isEqual from 'lodash/isEqual';
+ import clsx from 'clsx';
+ import { Layer } from '../container/Layer';
+ import { ImplicitLabelListType, LabelList } from '../component/LabelList';
+@@ -43,7 +51,6 @@ import { GraphicalItemClipPath, useNeedsClip } from './GraphicalItemClipPath';
+ import { ResolvedScatterSettings, selectScatterPoints } from '../state/selectors/scatterSelectors';
+ import { useAppSelector } from '../state/hooks';
+ import { BaseAxisWithScale, ZAxisWithScale } from '../state/selectors/axisSelectors';
+-import { UpdateId, useUpdateId } from '../context/chartLayoutContext';
+ import { useIsPanorama } from '../context/PanoramaContext';
+ import { selectActiveTooltipIndex } from '../state/selectors/tooltipSelectors';
+ import { SetLegendPayload } from '../state/SetLegendPayload';
+@@ -92,7 +99,6 @@ interface ScatterInternalProps {
+   label?: ImplicitLabelListType<any>;
+ 
+   isAnimationActive: boolean;
+-  animationId: UpdateId;
+   animationBegin: number;
+   animationDuration: AnimationDuration;
+   animationEasing: AnimationTiming;
+@@ -139,13 +145,6 @@ type InternalProps = BaseScatterSvgProps & ScatterInternalProps;
+ 
+ export type Props = BaseScatterSvgProps & ScatterProps;
+ 
+-interface State {
+-  isAnimationFinished?: boolean;
+-  prevPoints?: ReadonlyArray<ScatterPointItem>;
+-  curPoints?: ReadonlyArray<ScatterPointItem>;
+-  prevAnimationId?: string;
+-}
+-
+ const computeLegendPayloadFromScatterProps = (props: Props): ReadonlyArray<LegendPayload> => {
+   const { dataKey, name, fill, legendType, hide } = props;
+   return [
+@@ -162,11 +161,56 @@ const computeLegendPayloadFromScatterProps = (props: Props): ReadonlyArray<Legen
+ 
+ type ScatterSymbolsProps = {
+   points: ReadonlyArray<ScatterPointItem>;
++  showLabels: boolean;
+   allOtherScatterProps: InternalProps;
+ };
+ 
++function ScatterLine({ points, props }: { points: ReadonlyArray<ScatterPointItem>; props: InternalProps }) {
++  const { line, lineType, lineJointType } = props;
++
++  if (!line) {
++    return null;
++  }
++
++  const scatterProps = filterProps(props, false);
++  const customLineProps = filterProps(line, false);
++  let linePoints, lineItem;
++
++  if (lineType === 'joint') {
++    linePoints = points.map(entry => ({ x: entry.cx, y: entry.cy }));
++  } else if (lineType === 'fitting') {
++    const { xmin, xmax, a, b } = getLinearRegression(points);
++    const linearExp = (x: number) => a * x + b;
++    linePoints = [
++      { x: xmin, y: linearExp(xmin) },
++      { x: xmax, y: linearExp(xmax) },
++    ];
++  }
++  const lineProps = {
++    ...scatterProps,
++    fill: 'none',
++    stroke: scatterProps && scatterProps.fill,
++    ...customLineProps,
++    points: linePoints,
++  };
++
++  if (React.isValidElement(line)) {
++    lineItem = React.cloneElement(line as any, lineProps);
++  } else if (typeof line === 'function') {
++    lineItem = line(lineProps);
++  } else {
++    lineItem = <Curve {...lineProps} type={lineJointType} />;
++  }
++
++  return (
++    <Layer className="recharts-scatter-line" key="recharts-scatter-line">
++      {lineItem}
++    </Layer>
++  );
++}
++
+ function ScatterSymbols(props: ScatterSymbolsProps) {
+-  const { points, allOtherScatterProps } = props;
++  const { points, showLabels, allOtherScatterProps } = props;
+   const { shape, activeShape } = allOtherScatterProps;
+   const baseProps = filterProps(allOtherScatterProps, false);
+ 
+@@ -181,9 +225,12 @@ function ScatterSymbols(props: ScatterSymbolsProps) {
+   const onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, allOtherScatterProps.dataKey);
+   const onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
+   const onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, allOtherScatterProps.dataKey);
+-
++  if (points == null) {
++    return null;
++  }
+   return (
+     <>
++      <ScatterLine points={points} props={allOtherScatterProps} />
+       {points.map((entry, i) => {
+         const isActive = activeShape && activeIndex === String(i);
+         const option = isActive ? activeShape : shape;
+@@ -207,10 +254,99 @@ function ScatterSymbols(props: ScatterSymbolsProps) {
+           </Layer>
+         );
+       })}
++      {showLabels && LabelList.renderCallByParent(allOtherScatterProps, points)}
+     </>
+   );
+ }
+ 
++function SymbolsWithAnimation({
++  previousPointsRef,
++  props,
++}: {
++  previousPointsRef: MutableRefObject<ReadonlyArray<ScatterPointItem>>;
++  props: InternalProps;
++}) {
++  const { points, isAnimationActive, animationBegin, animationDuration, animationEasing } = props;
++  const prevPoints = previousPointsRef.current;
++
++  const [isAnimating, setIsAnimating] = useState(false);
++
++  const handleAnimationEnd = useCallback(() => {
++    // Scatter doesn't have onAnimationEnd prop, and if we want to add it we do it here
++    // if (typeof onAnimationEnd === 'function') {
++    //   onAnimationEnd();
++    // }
++    setIsAnimating(false);
++  }, []);
++
++  const handleAnimationStart = useCallback(() => {
++    // Scatter doesn't have onAnimationStart prop, and if we want to add it we do it here
++    // if (typeof onAnimationStart === 'function') {
++    //   onAnimationStart();
++    // }
++    setIsAnimating(true);
++  }, []);
++  return (
++    <Animate
++      begin={animationBegin}
++      duration={animationDuration}
++      isActive={isAnimationActive}
++      easing={animationEasing}
++      from={{ t: 0 }}
++      to={{ t: 1 }}
++      onAnimationEnd={handleAnimationEnd}
++      onAnimationStart={handleAnimationStart}
++    >
++      {({ t }: { t: number }) => {
++        const stepData =
++          t === 1
++            ? points
++            : points.map((entry, index) => {
++                const prev = prevPoints && prevPoints[index];
++
++                if (prev) {
++                  const interpolatorCx = interpolateNumber(prev.cx, entry.cx);
++                  const interpolatorCy = interpolateNumber(prev.cy, entry.cy);
++                  const interpolatorSize = interpolateNumber(prev.size, entry.size);
++
++                  return {
++                    ...entry,
++                    cx: interpolatorCx(t),
++                    cy: interpolatorCy(t),
++                    size: interpolatorSize(t),
++                  };
++                }
++
++                const interpolator = interpolateNumber(0, entry.size);
++
++                return { ...entry, size: interpolator(t) };
++              });
++
++        // eslint-disable-next-line no-param-reassign
++        previousPointsRef.current = stepData;
++        return (
++          <Layer>
++            <ScatterSymbols points={stepData} allOtherScatterProps={props} showLabels={!isAnimating} />
++          </Layer>
++        );
++      }}
++    </Animate>
++  );
++}
++
++function RenderSymbols(props: InternalProps) {
++  const { points, isAnimationActive } = props;
++  const previousPointsRef = useRef<ReadonlyArray<ScatterPointItem> | null>(null);
++
++  const prevPoints = previousPointsRef.current;
++
++  if (isAnimationActive && points && points.length && (!prevPoints || prevPoints !== points)) {
++    return <SymbolsWithAnimation props={props} previousPointsRef={previousPointsRef} />;
++  }
++
++  return <ScatterSymbols points={points} allOtherScatterProps={props} showLabels />;
++}
++
+ type InputRequiredToComputeTooltipEntrySettings = {
+   dataKey?: DataKey<any> | undefined;
+   points?: ReadonlyArray<ScatterPointItem>;
+@@ -350,50 +486,6 @@ export function computeScatterPoints({
+   });
+ }
+ 
+-function ScatterLine(props: InternalProps) {
+-  const { points, line, lineType, lineJointType } = props;
+-
+-  if (!line) {
+-    return null;
+-  }
+-
+-  const scatterProps = filterProps(props, false);
+-  const customLineProps = filterProps(line, false);
+-  let linePoints, lineItem;
+-
+-  if (lineType === 'joint') {
+-    linePoints = points.map(entry => ({ x: entry.cx, y: entry.cy }));
+-  } else if (lineType === 'fitting') {
+-    const { xmin, xmax, a, b } = getLinearRegression(points);
+-    const linearExp = (x: number) => a * x + b;
+-    linePoints = [
+-      { x: xmin, y: linearExp(xmin) },
+-      { x: xmax, y: linearExp(xmax) },
+-    ];
+-  }
+-  const lineProps = {
+-    ...scatterProps,
+-    fill: 'none',
+-    stroke: scatterProps && scatterProps.fill,
+-    ...customLineProps,
+-    points: linePoints,
+-  };
+-
+-  if (React.isValidElement(line)) {
+-    lineItem = React.cloneElement(line as any, lineProps);
+-  } else if (typeof line === 'function') {
+-    lineItem = line(lineProps);
+-  } else {
+-    lineItem = <Curve {...lineProps} type={lineJointType} />;
+-  }
+-
+-  return (
+-    <Layer className="recharts-scatter-line" key="recharts-scatter-line">
+-      {lineItem}
+-    </Layer>
+-  );
+-}
+-
+ const errorBarDataPointFormatter = (
+   dataPoint: ScatterPointItem,
+   dataKey: Props['dataKey'],
+@@ -408,101 +500,14 @@ const errorBarDataPointFormatter = (
+   };
+ };
+ 
+-class ScatterWithState extends PureComponent<InternalProps, State> {
+-  state: State = { isAnimationFinished: false };
+-
+-  static getDerivedStateFromProps(nextProps: InternalProps, prevState: State): State {
+-    if (nextProps.animationId !== prevState.prevAnimationId) {
+-      return {
+-        prevAnimationId: nextProps.animationId,
+-        curPoints: nextProps.points,
+-        prevPoints: prevState.curPoints,
+-      };
+-    }
+-    if (nextProps.points !== prevState.curPoints) {
+-      return {
+-        curPoints: nextProps.points,
+-      };
+-    }
+-
+-    return null;
+-  }
+-
+-  handleAnimationEnd = () => {
+-    this.setState({ isAnimationFinished: true });
+-  };
+-
+-  handleAnimationStart = () => {
+-    this.setState({ isAnimationFinished: false });
+-  };
+-
++class ScatterWithState extends PureComponent<InternalProps> {
+   id = uniqueId('recharts-scatter-');
+ 
+-  renderSymbolsStatically(points: ReadonlyArray<ScatterPointItem>) {
+-    return <ScatterSymbols points={points} allOtherScatterProps={this.props} />;
+-  }
+-
+-  renderSymbolsWithAnimation() {
+-    const { points, isAnimationActive, animationBegin, animationDuration, animationEasing, animationId } = this.props;
+-    const { prevPoints } = this.state;
+-
+-    return (
+-      <Animate
+-        begin={animationBegin}
+-        duration={animationDuration}
+-        isActive={isAnimationActive}
+-        easing={animationEasing}
+-        from={{ t: 0 }}
+-        to={{ t: 1 }}
+-        key={`pie-${animationId}`}
+-        onAnimationEnd={this.handleAnimationEnd}
+-        onAnimationStart={this.handleAnimationStart}
+-      >
+-        {({ t }: { t: number }) => {
+-          const stepData = points.map((entry, index) => {
+-            const prev = prevPoints && prevPoints[index];
+-
+-            if (prev) {
+-              const interpolatorCx = interpolateNumber(prev.cx, entry.cx);
+-              const interpolatorCy = interpolateNumber(prev.cy, entry.cy);
+-              const interpolatorSize = interpolateNumber(prev.size, entry.size);
+-
+-              return {
+-                ...entry,
+-                cx: interpolatorCx(t),
+-                cy: interpolatorCy(t),
+-                size: interpolatorSize(t),
+-              };
+-            }
+-
+-            const interpolator = interpolateNumber(0, entry.size);
+-
+-            return { ...entry, size: interpolator(t) };
+-          });
+-
+-          return <Layer>{this.renderSymbolsStatically(stepData)}</Layer>;
+-        }}
+-      </Animate>
+-    );
+-  }
+-
+-  renderSymbols() {
+-    const { points, isAnimationActive } = this.props;
+-    const { prevPoints } = this.state;
+-
+-    if (isAnimationActive && points && points.length && (!prevPoints || !isEqual(prevPoints, points))) {
+-      return this.renderSymbolsWithAnimation();
+-    }
+-
+-    return this.renderSymbolsStatically(points);
+-  }
+-
+   render() {
+-    const { hide, points, className, needClip, xAxisId, yAxisId, id, isAnimationActive } = this.props;
+-    if (hide || !points || !points.length) {
++    const { hide, points, className, needClip, xAxisId, yAxisId, id } = this.props;
++    if (hide) {
+       return null;
+     }
+-    const { isAnimationFinished } = this.state;
+     const layerClass = clsx('recharts-scatter', className);
+     const clipPathId = isNullish(id) ? this.id : id;
+     return (
+@@ -512,7 +517,6 @@ class ScatterWithState extends PureComponent<InternalProps, State> {
+             <GraphicalItemClipPath clipPathId={clipPathId} xAxisId={xAxisId} yAxisId={yAxisId} />
+           </defs>
+         )}
+-        <ScatterLine {...this.props} />
+         <SetErrorBarContext
+           xAxisId={xAxisId}
+           yAxisId={yAxisId}
+@@ -522,8 +526,9 @@ class ScatterWithState extends PureComponent<InternalProps, State> {
+         >
+           {this.props.children}
+         </SetErrorBarContext>
+-        <Layer key="recharts-scatter-symbols">{this.renderSymbols()}</Layer>
+-        {(!isAnimationActive || isAnimationFinished) && LabelList.renderCallByParent(this.props, points)}
++        <Layer key="recharts-scatter-symbols">
++          <RenderSymbols {...this.props} />
++        </Layer>
+       </Layer>
+     );
+   }
+@@ -549,7 +554,6 @@ const defaultScatterProps: Partial<Props> = {
+ function ScatterImpl(props: Props) {
+   const { needClip } = useNeedsClip(props.xAxisId, props.yAxisId);
+   const cells = useMemo(() => findAllByType(props.children, Cell), [props.children]);
+-  const updateId = useUpdateId();
+   const scatterSettings: ResolvedScatterSettings = useMemo(
+     () => ({
+       name: props.name,
+@@ -599,7 +603,6 @@ function ScatterImpl(props: Props) {
+         animationEasing={animationEasing}
+         points={points}
+         needClip={needClip}
+-        animationId={updateId}
+       />
+     </>
+   );
+diff --git a/src/state/selectors/scatterSelectors.ts b/src/state/selectors/scatterSelectors.ts
+index 2c836f00725..b1ea160c3b2 100644
+--- a/src/state/selectors/scatterSelectors.ts
++++ b/src/state/selectors/scatterSelectors.ts
+@@ -5,7 +5,13 @@ import { RechartsRootState } from '../store';
+ import { AxisId } from '../cartesianAxisSlice';
+ import { selectChartDataWithIndexesIfNotInPanorama } from './dataSelectors';
+ import { ChartData, ChartDataState } from '../chartDataSlice';
+-import { selectAxisWithScale, selectZAxisWithScale, selectTicksOfGraphicalItem, ZAxisWithScale } from './axisSelectors';
++import {
++  selectAxisWithScale,
++  selectZAxisWithScale,
++  selectTicksOfGraphicalItem,
++  ZAxisWithScale,
++  selectUnfilteredCartesianItems,
++} from './axisSelectors';
+ import { DataKey } from '../../util/types';
+ import { TooltipType } from '../../component/DefaultTooltipContent';
+ 
+@@ -86,6 +92,29 @@ const scatterChartDataSelector = (
+   isPanorama: boolean,
+ ): ChartDataState => selectChartDataWithIndexesIfNotInPanorama(state, xAxisId, yAxisId, isPanorama);
+ 
++const selectSynchronisedScatterSettings: (
++  state: RechartsRootState,
++  xAxisId: AxisId,
++  yAxisId: AxisId,
++  _zAxisId: AxisId,
++  scatterSettings: ResolvedScatterSettings,
++) => ResolvedScatterSettings | undefined = createSelector(
++  [selectUnfilteredCartesianItems, pickScatterSettings],
++  (graphicalItems, scatterSettingsFromProps) => {
++    if (
++      graphicalItems.some(
++        cgis =>
++          cgis.type === 'scatter' &&
++          scatterSettingsFromProps.dataKey === cgis.dataKey &&
++          scatterSettingsFromProps.data === cgis.data,
++      )
++    ) {
++      return scatterSettingsFromProps;
++    }
++    return undefined;
++  },
++);
++
+ export const selectScatterPoints: (
+   state: RechartsRootState,
+   xAxisId: AxisId,
+@@ -102,7 +131,7 @@ export const selectScatterPoints: (
+     selectYAxisWithScale,
+     selectYAxisTicks,
+     selectZAxis,
+-    pickScatterSettings,
++    selectSynchronisedScatterSettings,
+     pickCells,
+   ],
+   (
+@@ -115,6 +144,9 @@ export const selectScatterPoints: (
+     scatterSettings: ResolvedScatterSettings,
+     cells,
+   ): ReadonlyArray<ScatterPointItem> | undefined => {
++    if (scatterSettings == null) {
++      return undefined;
++    }
+     let displayedData: ChartData | undefined;
+     if (scatterSettings?.data?.length > 0) {
+       displayedData = scatterSettings.data;
+diff --git a/storybook/stories/Examples/ScatterChart.stories.tsx b/storybook/stories/Examples/ScatterChart.stories.tsx
+index 65853b52261..6d18efcb411 100644
+--- a/storybook/stories/Examples/ScatterChart.stories.tsx
++++ b/storybook/stories/Examples/ScatterChart.stories.tsx
+@@ -1,5 +1,5 @@
+ import { Meta, StoryContext, StoryObj } from '@storybook/react';
+-import React from 'react';
++import React, { useState } from 'react';
+ import {
+   ScatterChart,
+   ResponsiveContainer,
+@@ -613,3 +613,92 @@ export const WithDuplicatedCategory: StoryObj<StorybookArgs> = {
+     allowDuplicatedCategory: false,
+   },
+ };
++
++export const ChangingDataKey = {
++  render: (args: Record<string, any>, context: StoryContext) => {
++    const data1 = [
++      { x: { value: 1 }, name: 'x1' },
++      { x: { value: 2 }, name: 'x2' },
++      { x: { value: 3 }, name: 'x3' },
++    ];
++    const data2 = [
++      { y: { value: 3 }, name: 'y1' },
++      { y: { value: 2 }, name: 'y2' },
++      { y: { value: 1 }, name: 'y3' },
++    ];
++
++    const dataKey1 = (d: any) => {
++      return d.x.value;
++    };
++    const dataKey2 = (d: any) => {
++      return d.y.value;
++    };
++
++    const [useData2, setUseData2] = useState(false);
++    const [visible, setVisible] = useState(true);
++
++    return (
++      <>
++        <button
++          type="button"
++          onClick={() => {
++            setUseData2(false);
++            setVisible(true);
++          }}
++        >
++          Use data1
++        </button>
++        <button
++          type="button"
++          onClick={() => {
++            setUseData2(true);
++            setVisible(true);
++          }}
++        >
++          Use data2
++        </button>
++        <button
++          type="button"
++          onClick={() => {
++            setVisible(false);
++          }}
++        >
++          Hide
++        </button>
++        <ScatterChart {...args} data={useData2 ? data2 : data1}>
++          <CartesianGrid strokeDasharray="3 3" />
++          <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
++          <YAxis dataKey={useData2 ? dataKey2 : dataKey1} />
++          <ZAxis range={[200, 200]} />
++          <Tooltip />
++          <Legend />
++          <RechartsHookInspector rechartsInspectorEnabled={context.rechartsInspectorEnabled} />
++          <Scatter
++            name="Animated Scatter"
++            lineType="joint"
++            line
++            hide={!visible}
++            dataKey={useData2 ? dataKey2 : dataKey1}
++            stroke="#8884d8"
++            fill="#8884d8"
++            strokeWidth={3}
++            strokeDasharray="2 2"
++            label={{ fill: 'red', dy: -25, dataKey: useData2 ? dataKey2 : dataKey1 }}
++            animationDuration={3000}
++          />
++        </ScatterChart>
++      </>
++    );
++  },
++  args: {
++    ...getStoryArgsFromArgsTypesObject(CategoricalChartProps),
++    width: 500,
++    height: 300,
++    margin: {
++      top: 30,
++      right: 30,
++      left: 20,
++      bottom: 5,
++    },
++  },
++};

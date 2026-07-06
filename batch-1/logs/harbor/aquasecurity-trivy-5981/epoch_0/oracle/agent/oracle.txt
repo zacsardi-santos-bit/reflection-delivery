@@ -1,0 +1,23 @@
+patching file docs/docs/supply-chain/attestation/vuln.md
+patching file docs/docs/supply-chain/sbom.md
+patching file docs/tutorials/kubernetes/kyverno.md
+patching file docs/tutorials/signing/vuln-attestation.md
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 480 with fuzz 2 (offset 243 lines).
+patching file integration/testdata/conda-cyclonedx.json.golden
+patching file integration/testdata/fluentd-multiple-lockfiles.cdx.json.golden
+patching file integration/testdata/pom-cyclonedx.json.golden
+patching file pkg/fanal/analyzer/sbom/testdata/cdx.json
+patching file pkg/fanal/artifact/sbom/testdata/bom.json
+patching file pkg/fanal/artifact/sbom/testdata/os-only-bom.json
+patching file pkg/sbom/cyclonedx/core/cyclonedx.go
+patching file pkg/sbom/cyclonedx/testdata/happy/bom.json
+patching file pkg/sbom/cyclonedx/testdata/happy/empty-metadata-component-bom.json
+patching file pkg/sbom/cyclonedx/testdata/happy/group-in-name.json
+patching file pkg/sbom/cyclonedx/testdata/happy/independent-library-bom.json
+patching file pkg/sbom/cyclonedx/testdata/happy/infinite-loop-bom.json
+patching file pkg/sbom/cyclonedx/testdata/happy/kbom.json
+patching file pkg/sbom/cyclonedx/testdata/happy/os-only-bom.json
+patching file pkg/sbom/cyclonedx/testdata/happy/unrelated-bom.json
+patching file pkg/sbom/cyclonedx/testdata/sad/invalid-purl.json

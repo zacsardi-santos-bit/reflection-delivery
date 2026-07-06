@@ -1,0 +1,32 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/workspace/workspace-manifest-writer && node /workspace/transpile-ts.mjs && NODE_OPTIONS='--experimental-vm-modules --disable-warning=ExperimentalWarning --disable-warning=DEP0169' pnpm exec jest test/updateWorkspaceManifest.test.ts --coverage=false --verbose",
+  "test_files": [
+    "workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves blank lines between top-level fields when inserting a new field",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves blank lines when appending a new field at the end",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves blank lines when a new key sorts to the front",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves a fully alphabetical top-level layout (packages not first)",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves the order of existing keys"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest adds a new setting",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest removes an existing setting",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest updates an existing setting",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves comments",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest updates allowBuilds",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest with updatedOverrides adds overrides when none exist",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest with updatedOverrides merges into existing overrides",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest with updatedOverrides updates existing override values",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest with updatedOverrides does not update when values are equal",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest with updatedOverrides preserves comments",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest adds a new catalog",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest preserves quotes",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest does not add blank lines when the original layout has none",
+    "/workspace/repo/workspace/workspace-manifest-writer/test/updateWorkspaceManifest.test.ts::updateWorkspaceManifest inserts new keys in sorted position when existing keys are sorted"
+  ]
+}

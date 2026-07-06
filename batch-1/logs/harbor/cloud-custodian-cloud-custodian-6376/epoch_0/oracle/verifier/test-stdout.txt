@@ -1,0 +1,99 @@
+patching file tests/data/placebo/test_rest_client_certificate_resource/apigateway.GetClientCertificates_1.json
+patching file tests/data/placebo/test_rest_stage_certificate_filter_config_source/apigateway.GetClientCertificates_1.json
+patching file tests/data/placebo/test_rest_stage_certificate_filter_config_source/config.SelectResourceConfig_1.json
+patching file tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetClientCertificates_1.json
+patching file tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetRestApis_1.json
+patching file tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_1.json
+patching file tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_2.json
+patching file tests/test_apigw.py
+patching file tests/test_policy.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-6.2.5, py-1.11.0, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: tox.ini
+plugins: sugar-1.1.1, xdist-3.5.0, cov-6.3.0
+collecting ... collected 82 items / 2 deselected / 80 selected
+
+tests/test_apigw.py::TestRestAccount::test_missing_rest_account PASSED   [  1%]
+tests/test_apigw.py::TestRestAccount::test_rest_api_update PASSED        [  2%]
+tests/test_apigw.py::TestRestApi::test_rest_api_delete PASSED            [  3%]
+tests/test_apigw.py::TestRestApi::test_rest_api_tag_untag_mark PASSED    [  5%]
+tests/test_apigw.py::TestRestApi::test_rest_api_update PASSED            [  6%]
+tests/test_apigw.py::TestRestResource::test_rest_integration_delete PASSED [  7%]
+tests/test_apigw.py::TestRestResource::test_rest_integration_filter PASSED [  8%]
+tests/test_apigw.py::TestRestResource::test_rest_integration_update PASSED [ 10%]
+tests/test_apigw.py::TestRestResource::test_rest_resource_method_update PASSED [ 11%]
+tests/test_apigw.py::TestRestResource::test_rest_resource_query PASSED   [ 12%]
+tests/test_apigw.py::TestRestStage::test_rest_stage_delete PASSED        [ 13%]
+tests/test_apigw.py::TestRestStage::test_rest_stage_resource PASSED      [ 15%]
+tests/test_apigw.py::TestRestStage::test_rest_stage_tag_untag_mark PASSED [ 16%]
+tests/test_apigw.py::TestRestStage::test_rest_stage_update PASSED        [ 17%]
+tests/test_apigw.py::TestRestClientCertificate::test_rest_client_certificate_resource PASSED [ 18%]
+tests/test_apigw.py::TestRestClientCertificate::test_rest_stage_certificate_filter_config_source PASSED [ 20%]
+tests/test_apigw.py::TestRestClientCertificate::test_rest_stage_client_certificate_filter PASSED [ 21%]
+tests/test_policy.py::PolicyMetaLint::test_cfn_resource_validity PASSED  [ 22%]
+tests/test_policy.py::PolicyMetaLint::test_filter_action_additional PASSED [ 23%]
+tests/test_policy.py::PolicyMetaLint::test_filter_action_type PASSED     [ 25%]
+tests/test_policy.py::PolicyMetaLint::test_policy_detail_spec_permissions PASSED [ 26%]
+tests/test_policy.py::PolicyMetaLint::test_policy_missing_provider_session PASSED [ 27%]
+tests/test_policy.py::PolicyMetaLint::test_resource_arn_info PASSED      [ 28%]
+tests/test_policy.py::PolicyMetaLint::test_resource_arn_override_generator PASSED [ 30%]
+tests/test_policy.py::PolicyMetaLint::test_resource_augment_universal_mask PASSED [ 31%]
+tests/test_policy.py::PolicyMetaLint::test_resource_legacy_type PASSED   [ 32%]
+tests/test_policy.py::PolicyMetaLint::test_resource_meta_with_class PASSED [ 33%]
+tests/test_policy.py::PolicyMetaLint::test_resource_name PASSED          [ 35%]
+tests/test_policy.py::PolicyMetaLint::test_resource_permissions PASSED   [ 36%]
+tests/test_policy.py::PolicyMetaLint::test_resource_shadow_source_augment PASSED [ 37%]
+tests/test_policy.py::PolicyMetaLint::test_resource_type_empty_metadata PASSED [ 38%]
+tests/test_policy.py::PolicyMetaLint::test_resource_type_repr PASSED     [ 40%]
+tests/test_policy.py::PolicyMetaLint::test_resource_type_repr_with_arn_type PASSED [ 41%]
+tests/test_policy.py::PolicyMetaLint::test_resource_universal_taggable_arn_type PASSED [ 42%]
+tests/test_policy.py::PolicyMetaLint::test_schema PASSED                 [ 43%]
+tests/test_policy.py::PolicyMetaLint::test_schema_plugin_name_mismatch PASSED [ 45%]
+tests/test_policy.py::PolicyMetaLint::test_schema_serialization PASSED   [ 46%]
+tests/test_policy.py::PolicyMeta::test_policy_detail_spec_permissions PASSED [ 47%]
+tests/test_policy.py::PolicyMeta::test_policy_manager_custom_permissions PASSED [ 48%]
+tests/test_policy.py::TestPolicyCollection::test_expand_partitions PASSED [ 50%]
+tests/test_policy.py::TestPolicyCollection::test_policy_expand_group_region PASSED [ 51%]
+tests/test_policy.py::TestPolicyCollection::test_policy_region_expand_global PASSED [ 52%]
+tests/test_policy.py::TestPolicy::test_child_resource_trail_validation PASSED [ 53%]
+tests/test_policy.py::TestPolicy::test_file_not_found PASSED             [ 55%]
+tests/test_policy.py::TestPolicy::test_get_resource_manager PASSED       [ 56%]
+tests/test_policy.py::TestPolicy::test_load_policy_validation_error PASSED [ 57%]
+tests/test_policy.py::TestPolicy::test_policy_name_and_resource_type_filtering PASSED [ 58%]
+tests/test_policy.py::TestPolicy::test_policy_resource_limit_and_percent PASSED [ 60%]
+tests/test_policy.py::TestPolicy::test_policy_resource_limits PASSED     [ 61%]
+tests/test_policy.py::TestPolicy::test_policy_resource_limits_count PASSED [ 62%]
+tests/test_policy.py::TestPolicy::test_policy_resource_limits_with_filter PASSED [ 63%]
+tests/test_policy.py::TestPolicy::test_policy_validation PASSED          [ 65%]
+tests/test_policy.py::TestPolicy::test_policy_variable_interpolation PASSED [ 66%]
+tests/test_policy.py::TestPolicy::test_policy_variable_precedent PASSED  [ 67%]
+tests/test_policy.py::TestPolicy::test_policy_with_role_complete PASSED  [ 68%]
+tests/test_policy.py::TestPolicy::test_validate_policy_start_stop PASSED [ 70%]
+tests/test_policy.py::PolicyConditionsTest::test_boolean_and_blocks PASSED [ 71%]
+tests/test_policy.py::PolicyConditionsTest::test_boolean_not_blocks PASSED [ 72%]
+tests/test_policy.py::PolicyConditionsTest::test_boolean_not_event PASSED [ 73%]
+tests/test_policy.py::PolicyConditionsTest::test_boolean_or_blocks PASSED [ 75%]
+tests/test_policy.py::PolicyConditionsTest::test_dryrun_event_filter PASSED [ 76%]
+tests/test_policy.py::PolicyConditionsTest::test_env_var_extension PASSED [ 77%]
+tests/test_policy.py::PolicyConditionsTest::test_event_filter PASSED     [ 78%]
+tests/test_policy.py::PolicyConditionsTest::test_value_from PASSED       [ 80%]
+tests/test_policy.py::PolicyExecutionModeTest::test_get_logs_unimplemented PASSED [ 81%]
+tests/test_policy.py::PolicyExecutionModeTest::test_run_unimplemented PASSED [ 82%]
+tests/test_policy.py::LambdaModeTest::test_tags_injection PASSED         [ 83%]
+tests/test_policy.py::LambdaModeTest::test_tags_validation PASSED        [ 85%]
+tests/test_policy.py::PullModeTest::test_is_runnable_dates PASSED        [ 86%]
+tests/test_policy.py::PullModeTest::test_is_runnable_mismatch_region PASSED [ 87%]
+tests/test_policy.py::PullModeTest::test_is_runnable_parse_dates PASSED  [ 88%]
+tests/test_policy.py::PullModeTest::test_skip_when_region_not_equal PASSED [ 90%]
+tests/test_policy.py::PhdModeTest::test_validation PASSED                [ 91%]
+tests/test_policy.py::ConfigModeTest::test_config_poll PASSED            [ 92%]
+tests/test_policy.py::GuardModeTest::test_ec2_guard_event_pattern PASSED [ 93%]
+tests/test_policy.py::GuardModeTest::test_ec2_instance_guard PASSED      [ 95%]
+tests/test_policy.py::GuardModeTest::test_iam_guard_event_pattern PASSED [ 96%]
+tests/test_policy.py::GuardModeTest::test_iam_user_access_key_annotate PASSED [ 97%]
+tests/test_policy.py::GuardModeTest::test_lambda_policy_validate_name PASSED [ 98%]
+tests/test_policy.py::GuardModeTest::test_unsupported_resource PASSED    [100%]
+
+======================= 80 passed, 2 deselected in 6.67s =======================
+reward=1 graded=80 found=0 failed=0 parsed=80 framework=pytest exit_code=0

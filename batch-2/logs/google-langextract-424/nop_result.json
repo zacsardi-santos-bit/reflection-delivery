@@ -1,0 +1,29 @@
+{
+    "id": "51ffcc4c-6132-4f51-aab1-54e4d482c60d",
+    "started_at": "2026-07-02T18:45:55.796390",
+    "finished_at": "2026-07-02T18:46:13.118054",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "google-langextract-424__sm4Jmte"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

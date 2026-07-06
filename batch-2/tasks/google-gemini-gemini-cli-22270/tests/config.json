@@ -1,0 +1,25 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/agent/mock.test.ts --coverage=false",
+  "test_files": [
+    "packages/core/src/agent/mock.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should yield queued events on send and stream",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should handle multiple responses",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should allow streaming by streamId",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should throw when streaming non-existent streamId",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should throw when streaming non-existent eventId",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should handle abort on a waiting stream",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should handle pushToStream on a waiting stream",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should handle pushToStream with close option",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should not double up on stream_end if provided manually",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should stream after eventId",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should handle elicitations",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should handle updates and track state",
+    "/workspace/repo/packages/core/src/agent/mock.test.ts::MockAgentSession should throw on action"
+  ],
+  "PASS_TO_PASS": []
+}

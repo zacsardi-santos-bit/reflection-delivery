@@ -1,0 +1,20 @@
+patching file pkg/apis/operator/v1alpha1/validation/validation_test.go
+patching file pkg/component/extensions/extension/extension_test.go
+patching file test/e2e/operator/garden/common.go
+patching file test/e2e/operator/garden/create_delete.go
+patching file test/integration/operator/garden/garden/garden_suite_test.go
+patching file test/integration/operator/garden/garden/garden_test.go
+# github.com/gardener/gardener/pkg/component/extensions/extension_test [github.com/gardener/gardener/pkg/component/extensions/extension.test]
+pkg/component/extensions/extension/extension_test.go:706:15: ext.DeleteResources undefined (type extension.Interface has no field or method DeleteResources)
+pkg/component/extensions/extension/extension_test.go:722:15: ext.WaitCleanupResources undefined (type extension.Interface has no field or method WaitCleanupResources)
+# github.com/gardener/gardener/pkg/apis/operator/v1alpha1/validation_test [github.com/gardener/gardener/pkg/apis/operator/v1alpha1/validation.test]
+pkg/apis/operator/v1alpha1/validation/validation_test.go:1013:17: garden.Spec.Extensions undefined (type "github.com/gardener/gardener/pkg/apis/operator/v1alpha1".GardenSpec has no field or method Extensions)
+pkg/apis/operator/v1alpha1/validation/validation_test.go:1013:49: undefined: operatorv1alpha1.GardenExtension
+pkg/apis/operator/v1alpha1/validation/validation_test.go:1029:49: garden.Spec.Extensions undefined (type "github.com/gardener/gardener/pkg/apis/operator/v1alpha1".GardenSpec has no field or method Extensions)
+{"Time":"2026-06-29T15:15:45.705370194Z","Action":"start","Package":"github.com/gardener/gardener/pkg/apis/operator/v1alpha1/validation"}
+{"Time":"2026-06-29T15:15:45.70547032Z","Action":"output","Package":"github.com/gardener/gardener/pkg/apis/operator/v1alpha1/validation","Output":"FAIL\tgithub.com/gardener/gardener/pkg/apis/operator/v1alpha1/validation [build failed]\n"}
+{"Time":"2026-06-29T15:15:45.705494324Z","Action":"fail","Package":"github.com/gardener/gardener/pkg/apis/operator/v1alpha1/validation","Elapsed":0}
+{"Time":"2026-06-29T15:15:45.7055037Z","Action":"start","Package":"github.com/gardener/gardener/pkg/component/extensions/extension"}
+{"Time":"2026-06-29T15:15:45.705548642Z","Action":"output","Package":"github.com/gardener/gardener/pkg/component/extensions/extension","Output":"FAIL\tgithub.com/gardener/gardener/pkg/component/extensions/extension [build failed]\n"}
+{"Time":"2026-06-29T15:15:45.705571439Z","Action":"fail","Package":"github.com/gardener/gardener/pkg/component/extensions/extension","Elapsed":0}
+reward=0 graded=2 found=0 failed=0 parsed=2 framework=go exit_code=1

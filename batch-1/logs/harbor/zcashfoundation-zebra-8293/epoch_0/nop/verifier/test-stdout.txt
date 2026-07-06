@@ -1,0 +1,13 @@
+patching file zebra-grpc/src/tests.rs
+patching file zebra-grpc/src/tests/vectors.rs
+   Compiling zebra-grpc v0.1.0-alpha.1 (/workspace/repo/zebra-grpc)
+error[E0432]: unresolved import `crate::server::MAX_KEYS_PER_REQUEST`
+  --> zebra-grpc/src/tests/vectors.rs:18:20
+   |
+18 |     server::{init, MAX_KEYS_PER_REQUEST},
+   |                    ^^^^^^^^^^^^^^^^^^^^ no `MAX_KEYS_PER_REQUEST` in `server`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `zebra-grpc` (lib test) due to previous error
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package zebra-grpc` exited with code 101
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo exit_code=101

@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gix --features blocking-network-client -E 'test(fetching_a_missing_explicit_ref_fails_even_if_ls_refs_returns_nothing)' --no-fail-fast",
+  "test_files": [
+    "gix-refspec/src/spec.rs",
+    "gix-refspec/tests/refspec/spec.rs",
+    "gix/tests/gix/remote/fetch.rs",
+    "tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-non-existing-single-ref",
+    "tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-single-ref"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) gix::gix remote::fetch::blocking_and_async_io::fetching_a_missing_explicit_ref_fails_even_if_ls_refs_returns_nothing"
+  ],
+  "PASS_TO_PASS": []
+}

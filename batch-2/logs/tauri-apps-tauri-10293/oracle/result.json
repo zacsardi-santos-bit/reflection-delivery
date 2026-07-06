@@ -1,0 +1,29 @@
+{
+    "id": "bcaacc9a-d2ba-4848-845b-0c5fc1a123f0",
+    "started_at": "2026-07-04T15:38:15.245047",
+    "finished_at": "2026-07-04T15:39:17.491769",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tauri-apps-tauri-10293": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tauri-apps-tauri-10293__c5SPY54"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

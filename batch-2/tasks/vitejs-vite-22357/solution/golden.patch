@@ -1,0 +1,32 @@
+diff --git a/packages/vite/src/node/optimizer/pluginConverter.ts b/packages/vite/src/node/optimizer/pluginConverter.ts
+index 0fc1e3f7e..3e2d49b55 100644
+--- a/packages/vite/src/node/optimizer/pluginConverter.ts
++++ b/packages/vite/src/node/optimizer/pluginConverter.ts
+@@ -134,15 +134,22 @@ export function convertEsbuildPluginToRolldownPlugin(
+         cb()
+       }
+     },
+-    generateBundle() {
++    generateBundle(_outputOpts, _bundle, isWrite) {
+       const buildResult = new Proxy(
+-        {},
+         {
+-          get(_target, _prop) {
+-            throw new Error('Not implemented')
++          metafile: undefined,
++          mangleCache: undefined,
++          ...(isWrite ? { outputFiles: undefined } : {}),
++        } as esbuild.BuildResult,
++        {
++          get(_target, prop) {
++            if (prop in _target || typeof prop === 'symbol') {
++              return (_target as any)[prop]
++            }
++            throw new Error('Not implemented property: ' + prop)
+           },
+         },
+-      ) as esbuild.BuildResult
++      )
+       for (const cb of onEndCallbacks) {
+         cb(buildResult)
+       }

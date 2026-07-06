@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/podman-desktop/podman-desktop/pull/16546"
+source_type = "pr"
+
+[task]
+name = "podman-desktop/podman-desktop"
+description = "I'm working on the Podman Desktop extension and I want to add a feature that syncs the host machine's trusted CA certs into running Podman VMs. On macOS and Windows Podman runs inside a VM, so any ..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["typescript", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:podman-desktop-podman-desktop-16546"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Systems, Infrastructure, and Operations"
+subcategory = "Users, permissions, and access control"
+objective_labels = ["Implement", "Secure or harden"]
+artifact_type_labels = ["Codebase", "Security artifact", "Service or daemon"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600

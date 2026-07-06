@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/scripts/py_matter_idl && pytest matter_idl/test_generators.py -v",
+  "test_files": [
+    "scripts/py_matter_idl/matter_idl/tests/outputs/several_clusters/java/ChipClusters.java"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "matter_idl.test_generators.TestGenerators::test_generators"
+  ],
+  "PASS_TO_PASS": []
+}

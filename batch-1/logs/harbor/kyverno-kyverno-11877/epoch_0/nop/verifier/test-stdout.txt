@@ -1,0 +1,385 @@
+patching file api/kyverno/v1/clusterpolicy_test.go
+patching file api/kyverno/v1/policy_test.go
+patching file api/kyverno/v2/cleanup_policy_test.go
+patching file api/kyverno/v2beta1/cleanup_policy_test.go
+patching file api/kyverno/v2beta1/clusterpolicy_test.go
+patching file api/kyverno/v2beta1/policy_test.go
+{"Time":"2026-07-01T14:58:41.797595443Z","Action":"start","Package":"github.com/kyverno/kyverno/api/kyverno/v1"}
+{"Time":"2026-07-01T14:58:41.797748684Z","Action":"start","Package":"github.com/kyverno/kyverno/api/kyverno/v2"}
+{"Time":"2026-07-01T14:58:41.797838714Z","Action":"start","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1"}
+{"Time":"2026-07-01T14:58:41.833358532Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Name"}
+{"Time":"2026-07-01T14:58:41.833394345Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Name","Output":"=== RUN   Test_ClusterPolicy_Name\n"}
+{"Time":"2026-07-01T14:58:41.837843375Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Name","Output":"    clusterpolicy_test.go:23: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.837874897Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Name","Output":"--- FAIL: Test_ClusterPolicy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.837884371Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.837894221Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_IsNamespaced"}
+{"Time":"2026-07-01T14:58:41.837900691Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_IsNamespaced","Output":"=== RUN   Test_ClusterPolicy_IsNamespaced\n"}
+{"Time":"2026-07-01T14:58:41.837907674Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_IsNamespaced","Output":"--- PASS: Test_ClusterPolicy_IsNamespaced (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.83791834Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_IsNamespaced","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.837924259Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Autogen_All"}
+{"Time":"2026-07-01T14:58:41.837928904Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Autogen_All","Output":"=== RUN   Test_ClusterPolicy_Autogen_All\n"}
+{"Time":"2026-07-01T14:58:41.837935354Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Autogen_All","Output":"--- PASS: Test_ClusterPolicy_Autogen_All (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.837940666Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_Autogen_All","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.83794734Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation"}
+{"Time":"2026-07-01T14:58:41.837951748Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation","Output":"=== RUN   Test_ClusterPolicy_HasAutoGenAnnotation\n"}
+{"Time":"2026-07-01T14:58:41.837958934Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(true)"}
+{"Time":"2026-07-01T14:58:41.837963306Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(true)","Output":"=== RUN   Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(true)\n"}
+{"Time":"2026-07-01T14:58:41.837973289Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(true)","Output":"--- PASS: Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(true) (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.837979704Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(true)","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.83799464Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(false)"}
+{"Time":"2026-07-01T14:58:41.837999834Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(false)","Output":"=== RUN   Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(false)\n"}
+{"Time":"2026-07-01T14:58:41.838006339Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(false)","Output":"--- PASS: Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(false) (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.838014607Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_with_AutoGen_annotation_(false)","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.838020318Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_without_AutoGen_annotation"}
+{"Time":"2026-07-01T14:58:41.838025028Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_without_AutoGen_annotation","Output":"=== RUN   Test_ClusterPolicy_HasAutoGenAnnotation/Policy_without_AutoGen_annotation\n"}
+{"Time":"2026-07-01T14:58:41.838032054Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_without_AutoGen_annotation","Output":"--- PASS: Test_ClusterPolicy_HasAutoGenAnnotation/Policy_without_AutoGen_annotation (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.838037548Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation/Policy_without_AutoGen_annotation","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.838043312Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation","Output":"--- PASS: Test_ClusterPolicy_HasAutoGenAnnotation (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.8380483Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ClusterPolicy_HasAutoGenAnnotation","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.838053064Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ImageVerification"}
+{"Time":"2026-07-01T14:58:41.83805748Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ImageVerification","Output":"=== RUN   Test_ImageVerification\n"}
+{"Time":"2026-07-01T14:58:41.841239864Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ImageVerification","Output":"--- PASS: Test_ImageVerification (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841259999Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ImageVerification","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.84126764Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Audit_VerifyImageRule"}
+{"Time":"2026-07-01T14:58:41.841271724Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Audit_VerifyImageRule","Output":"=== RUN   Test_Audit_VerifyImageRule\n"}
+{"Time":"2026-07-01T14:58:41.841277433Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Audit_VerifyImageRule","Output":"--- PASS: Test_Audit_VerifyImageRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841281981Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Audit_VerifyImageRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841286401Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Enforce_VerifyImageRule"}
+{"Time":"2026-07-01T14:58:41.841296232Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Enforce_VerifyImageRule","Output":"=== RUN   Test_Enforce_VerifyImageRule\n"}
+{"Time":"2026-07-01T14:58:41.841305073Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Enforce_VerifyImageRule","Output":"--- PASS: Test_Enforce_VerifyImageRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841309639Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Enforce_VerifyImageRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841314282Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_MatchResources"}
+{"Time":"2026-07-01T14:58:41.841318337Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_MatchResources","Output":"=== RUN   Test_MatchResources\n"}
+{"Time":"2026-07-01T14:58:41.841323556Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_MatchResources","Output":"--- PASS: Test_MatchResources (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841327808Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_MatchResources","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841331896Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Name"}
+{"Time":"2026-07-01T14:58:41.841335518Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Name","Output":"=== RUN   Test_Policy_Name\n"}
+{"Time":"2026-07-01T14:58:41.841339798Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Name","Output":"    policy_test.go:22: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.841345141Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Name","Output":"--- FAIL: Test_Policy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841349146Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.84135315Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_IsNamespaced"}
+{"Time":"2026-07-01T14:58:41.841356772Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_IsNamespaced","Output":"=== RUN   Test_Policy_IsNamespaced\n"}
+{"Time":"2026-07-01T14:58:41.841361577Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_IsNamespaced","Output":"--- PASS: Test_Policy_IsNamespaced (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841366001Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_IsNamespaced","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841370068Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Autogen_All"}
+{"Time":"2026-07-01T14:58:41.841373818Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Autogen_All","Output":"=== RUN   Test_Policy_Autogen_All\n"}
+{"Time":"2026-07-01T14:58:41.841378928Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Autogen_All","Output":"--- PASS: Test_Policy_Autogen_All (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841383366Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Policy_Autogen_All","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841387544Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ResourceDescription"}
+{"Time":"2026-07-01T14:58:41.841391637Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ResourceDescription","Output":"=== RUN   Test_ResourceDescription\n"}
+{"Time":"2026-07-01T14:58:41.841396681Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ResourceDescription","Output":"--- PASS: Test_ResourceDescription (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841403433Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ResourceDescription","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841407517Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_EmptyRule"}
+{"Time":"2026-07-01T14:58:41.841411314Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_EmptyRule","Output":"=== RUN   Test_Validate_RuleType_EmptyRule\n"}
+{"Time":"2026-07-01T14:58:41.841416252Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_EmptyRule","Output":"--- PASS: Test_Validate_RuleType_EmptyRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.841420704Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_EmptyRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.841424837Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_MultipleRule"}
+{"Time":"2026-07-01T14:58:41.841428891Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_MultipleRule","Output":"=== RUN   Test_Validate_RuleType_MultipleRule\n"}
+{"Time":"2026-07-01T14:58:41.842874377Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_MultipleRule","Output":"--- PASS: Test_Validate_RuleType_MultipleRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.842947516Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_MultipleRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.843515184Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_SingleRule"}
+{"Time":"2026-07-01T14:58:41.843529201Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_SingleRule","Output":"=== RUN   Test_Validate_RuleType_SingleRule\n"}
+{"Time":"2026-07-01T14:58:41.843769567Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_SingleRule","Output":"--- PASS: Test_Validate_RuleType_SingleRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.843785014Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_RuleType_SingleRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.843793758Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_doesMatchExcludeConflict"}
+{"Time":"2026-07-01T14:58:41.843798654Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_doesMatchExcludeConflict","Output":"=== RUN   Test_doesMatchExcludeConflict\n"}
+{"Time":"2026-07-01T14:58:41.844412732Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Name"}
+{"Time":"2026-07-01T14:58:41.844426217Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Name","Output":"=== RUN   Test_CleanupPolicy_Name\n"}
+{"Time":"2026-07-01T14:58:41.84457469Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_doesMatchExcludeConflict","Output":"--- PASS: Test_doesMatchExcludeConflict (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.845013678Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_doesMatchExcludeConflict","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.845025811Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_NamespacedPolicy_MutateRuleTargetNamespace"}
+{"Time":"2026-07-01T14:58:41.845030927Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_NamespacedPolicy_MutateRuleTargetNamespace","Output":"=== RUN   Test_Validate_NamespacedPolicy_MutateRuleTargetNamespace\n"}
+{"Time":"2026-07-01T14:58:41.845037826Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_NamespacedPolicy_MutateRuleTargetNamespace","Output":"--- PASS: Test_Validate_NamespacedPolicy_MutateRuleTargetNamespace (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.845048346Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_NamespacedPolicy_MutateRuleTargetNamespace","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.845065637Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames"}
+{"Time":"2026-07-01T14:58:41.84507013Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"=== RUN   Test_ValidatePSaControlNames\n"}
+{"Time":"2026-07-01T14:58:41.845209616Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Name","Output":"    cleanup_policy_test.go:26: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.845224271Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Name","Output":"--- FAIL: Test_CleanupPolicy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.845230857Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.845254689Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Schedule"}
+{"Time":"2026-07-01T14:58:41.845259687Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Schedule","Output":"=== RUN   Test_CleanupPolicy_Schedule\n"}
+{"Time":"2026-07-01T14:58:41.845331839Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Schedule","Output":"--- PASS: Test_CleanupPolicy_Schedule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.845340571Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_CleanupPolicy_Schedule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.845345726Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Name"}
+{"Time":"2026-07-01T14:58:41.845349575Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Name","Output":"=== RUN   Test_ClusterCleanupPolicy_Name\n"}
+{"Time":"2026-07-01T14:58:41.845358907Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs [dummy.podSecurity.exclude[0].controlName: Invalid value: \"Running as Non-root\": Invalid control name defined at the given level]\n"}
+{"Time":"2026-07-01T14:58:41.84539386Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845472709Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.84552356Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845529997Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs [dummy.podSecurity.exclude[0].controlName: Invalid value: \"Privilege Escalation\": exclude.images must be specified for the container level control]\n"}
+{"Time":"2026-07-01T14:58:41.845550514Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845591914Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs [dummy.podSecurity.exclude[0].controlName: Invalid value: \"Host Namespaces\": exclude.images must not be specified for the pod level control]\n"}
+{"Time":"2026-07-01T14:58:41.845622271Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845679459Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845770952Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845839523Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs [dummy.podSecurity.exclude[0].controlName: Invalid value: \"Volume Types\": Invalid control name defined at the given level]\n"}
+{"Time":"2026-07-01T14:58:41.845906747Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"errs []\n"}
+{"Time":"2026-07-01T14:58:41.845945861Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Output":"--- PASS: Test_ValidatePSaControlNames (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.845974391Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_ValidatePSaControlNames","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846017639Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_MutateRuleTargetNamespace"}
+{"Time":"2026-07-01T14:58:41.846023163Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_MutateRuleTargetNamespace","Output":"=== RUN   Test_Validate_ClusterPolicy_MutateRuleTargetNamespace\n"}
+{"Time":"2026-07-01T14:58:41.846069365Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Name","Output":"    cleanup_policy_test.go:60: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.846082513Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Name","Output":"--- FAIL: Test_ClusterCleanupPolicy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846102462Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_MutateRuleTargetNamespace","Output":"--- PASS: Test_Validate_ClusterPolicy_MutateRuleTargetNamespace (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846108824Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_MutateRuleTargetNamespace","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846118258Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.8461237Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Schedule"}
+{"Time":"2026-07-01T14:58:41.846128053Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Schedule","Output":"=== RUN   Test_ClusterCleanupPolicy_Schedule\n"}
+{"Time":"2026-07-01T14:58:41.846136786Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_Generate_Variables"}
+{"Time":"2026-07-01T14:58:41.846143886Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_Generate_Variables","Output":"=== RUN   Test_Validate_ClusterPolicy_Generate_Variables\n"}
+{"Time":"2026-07-01T14:58:41.846153927Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Schedule","Output":"--- PASS: Test_ClusterCleanupPolicy_Schedule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846165729Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_ClusterCleanupPolicy_Schedule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846172235Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy"}
+{"Time":"2026-07-01T14:58:41.846182516Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy\n"}
+{"Time":"2026-07-01T14:58:41.846192924Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude"}
+{"Time":"2026-07-01T14:58:41.846197889Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude\n"}
+{"Time":"2026-07-01T14:58:41.846479075Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_Generate_Variables","Output":"--- PASS: Test_Validate_ClusterPolicy_Generate_Variables (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846489764Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ClusterPolicy_Generate_Variables","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.84649887Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_UniqueRuleName"}
+{"Time":"2026-07-01T14:58:41.84650409Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_UniqueRuleName","Output":"=== RUN   Test_Validate_UniqueRuleName\n"}
+{"Time":"2026-07-01T14:58:41.84654031Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_UniqueRuleName","Output":"--- PASS: Test_Validate_UniqueRuleName (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846548423Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_UniqueRuleName","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846553781Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ServiceAccount"}
+{"Time":"2026-07-01T14:58:41.846558219Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ServiceAccount","Output":"=== RUN   Test_Validate_ServiceAccount\n"}
+{"Time":"2026-07-01T14:58:41.846577764Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ServiceAccount","Output":"--- PASS: Test_Validate_ServiceAccount (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846594735Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_ServiceAccount","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846600992Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_EmptyUserInfo"}
+{"Time":"2026-07-01T14:58:41.846605283Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_EmptyUserInfo","Output":"=== RUN   Test_Validate_EmptyUserInfo\n"}
+{"Time":"2026-07-01T14:58:41.84661228Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_EmptyUserInfo","Output":"--- PASS: Test_Validate_EmptyUserInfo (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846619326Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_EmptyUserInfo","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846625991Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_Roles"}
+{"Time":"2026-07-01T14:58:41.846631062Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_Roles","Output":"=== RUN   Test_Validate_Roles\n"}
+{"Time":"2026-07-01T14:58:41.846637738Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_Roles","Output":"--- PASS: Test_Validate_Roles (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846642282Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"Test_Validate_Roles","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846658465Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1PolicyValidate"}
+{"Time":"2026-07-01T14:58:41.846663287Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1PolicyValidate","Output":"=== RUN   FuzzV1PolicyValidate\n"}
+{"Time":"2026-07-01T14:58:41.846670166Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1PolicyValidate","Output":"--- PASS: FuzzV1PolicyValidate (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.84667679Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1PolicyValidate","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846681907Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ImageVerification"}
+{"Time":"2026-07-01T14:58:41.846686453Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ImageVerification","Output":"=== RUN   FuzzV1ImageVerification\n"}
+{"Time":"2026-07-01T14:58:41.846693694Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ImageVerification","Output":"--- PASS: FuzzV1ImageVerification (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846699124Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ImageVerification","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846704006Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1MatchResources"}
+{"Time":"2026-07-01T14:58:41.846708366Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1MatchResources","Output":"=== RUN   FuzzV1MatchResources\n"}
+{"Time":"2026-07-01T14:58:41.84671554Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1MatchResources","Output":"--- PASS: FuzzV1MatchResources (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846720341Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1MatchResources","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846724741Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ClusterPolicy"}
+{"Time":"2026-07-01T14:58:41.846728692Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ClusterPolicy","Output":"=== RUN   FuzzV1ClusterPolicy\n"}
+{"Time":"2026-07-01T14:58:41.846733653Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ClusterPolicy","Output":"--- PASS: FuzzV1ClusterPolicy (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846740161Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Test":"FuzzV1ClusterPolicy","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846744876Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Output":"FAIL\n"}
+{"Time":"2026-07-01T14:58:41.846753959Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Output":"0\n"}
+{"Time":"2026-07-01T14:58:41.846759946Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846767235Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846771963Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind"}
+{"Time":"2026-07-01T14:58:41.84677599Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind\n"}
+{"Time":"2026-07-01T14:58:41.846850165Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846862309Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.846869064Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name"}
+{"Time":"2026-07-01T14:58:41.846873381Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name\n"}
+{"Time":"2026-07-01T14:58:41.846983639Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.846990792Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.84699548Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace"}
+{"Time":"2026-07-01T14:58:41.84699949Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace\n"}
+{"Time":"2026-07-01T14:58:41.847055196Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847064498Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847070668Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels"}
+{"Time":"2026-07-01T14:58:41.847074706Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels\n"}
+{"Time":"2026-07-01T14:58:41.847152901Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847159306Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847165482Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression"}
+{"Time":"2026-07-01T14:58:41.847170067Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression\n"}
+{"Time":"2026-07-01T14:58:41.847236422Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847247136Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847251994Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects"}
+{"Time":"2026-07-01T14:58:41.84726473Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects\n"}
+{"Time":"2026-07-01T14:58:41.847325989Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.84733115Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847337449Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles"}
+{"Time":"2026-07-01T14:58:41.847341727Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles\n"}
+{"Time":"2026-07-01T14:58:41.847408839Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847415437Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.84742153Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles"}
+{"Time":"2026-07-01T14:58:41.847433567Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles\n"}
+{"Time":"2026-07-01T14:58:41.847496754Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847502212Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847508489Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case"}
+{"Time":"2026-07-01T14:58:41.847512684Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/empty_case\n"}
+{"Time":"2026-07-01T14:58:41.84755023Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/empty_case (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847557187Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847562292Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847569911Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_doesMatchExcludeConflict_cleanupPolicy","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.84757653Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal"}
+{"Time":"2026-07-01T14:58:41.847580755Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal","Output":"=== RUN   TestCondition_Marshal\n"}
+{"Time":"2026-07-01T14:58:41.847586671Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/empty"}
+{"Time":"2026-07-01T14:58:41.847590707Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/empty","Output":"=== RUN   TestCondition_Marshal/empty\n"}
+{"Time":"2026-07-01T14:58:41.847633697Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/empty","Output":"--- PASS: TestCondition_Marshal/empty (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847646084Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/empty","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847651354Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/with_key"}
+{"Time":"2026-07-01T14:58:41.847670597Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/with_key","Output":"=== RUN   TestCondition_Marshal/with_key\n"}
+{"Time":"2026-07-01T14:58:41.847704479Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/with_key","Output":"--- PASS: TestCondition_Marshal/with_key (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847710509Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal/with_key","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847715636Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal","Output":"--- PASS: TestCondition_Marshal (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847720245Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"TestCondition_Marshal","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847726353Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_MatchResources"}
+{"Time":"2026-07-01T14:58:41.847730511Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_MatchResources","Output":"=== RUN   Test_MatchResources\n"}
+{"Time":"2026-07-01T14:58:41.847826419Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_MatchResources","Output":"--- PASS: Test_MatchResources (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.847832678Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Test":"Test_MatchResources","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.847839039Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Output":"FAIL\n"}
+{"Time":"2026-07-01T14:58:41.848874517Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Output":"FAIL\tgithub.com/kyverno/kyverno/api/kyverno/v1\t0.051s\n"}
+{"Time":"2026-07-01T14:58:41.848893259Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v1","Elapsed":0.051}
+{"Time":"2026-07-01T14:58:41.857906827Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Output":"FAIL\tgithub.com/kyverno/kyverno/api/kyverno/v2\t0.060s\n"}
+{"Time":"2026-07-01T14:58:41.857926186Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2","Elapsed":0.06}
+{"Time":"2026-07-01T14:58:41.858456664Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Name"}
+{"Time":"2026-07-01T14:58:41.858472032Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Name","Output":"=== RUN   Test_CleanupPolicy_Name\n"}
+{"Time":"2026-07-01T14:58:41.862403573Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Name","Output":"    cleanup_policy_test.go:26: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.862426325Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Name","Output":"--- FAIL: Test_CleanupPolicy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.862438802Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.862445056Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Schedule"}
+{"Time":"2026-07-01T14:58:41.862449645Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Schedule","Output":"=== RUN   Test_CleanupPolicy_Schedule\n"}
+{"Time":"2026-07-01T14:58:41.862484988Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Schedule","Output":"--- PASS: Test_CleanupPolicy_Schedule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.862493371Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_CleanupPolicy_Schedule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.862498475Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Name"}
+{"Time":"2026-07-01T14:58:41.862502641Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Name","Output":"=== RUN   Test_ClusterCleanupPolicy_Name\n"}
+{"Time":"2026-07-01T14:58:41.862954002Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Name","Output":"    cleanup_policy_test.go:60: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.862963113Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Name","Output":"--- FAIL: Test_ClusterCleanupPolicy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.862969461Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.862976031Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Schedule"}
+{"Time":"2026-07-01T14:58:41.862980452Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Schedule","Output":"=== RUN   Test_ClusterCleanupPolicy_Schedule\n"}
+{"Time":"2026-07-01T14:58:41.863014302Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Schedule","Output":"--- PASS: Test_ClusterCleanupPolicy_Schedule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863022504Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterCleanupPolicy_Schedule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863027456Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy"}
+{"Time":"2026-07-01T14:58:41.863031742Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy\n"}
+{"Time":"2026-07-01T14:58:41.863056558Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude"}
+{"Time":"2026-07-01T14:58:41.863062582Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude\n"}
+{"Time":"2026-07-01T14:58:41.863338148Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Output":"0\n"}
+{"Time":"2026-07-01T14:58:41.863366842Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863375484Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Same_match_and_exclude","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863380639Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind"}
+{"Time":"2026-07-01T14:58:41.863385086Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind\n"}
+{"Time":"2026-07-01T14:58:41.863441757Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863449094Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_kind","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863454109Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name"}
+{"Time":"2026-07-01T14:58:41.863458376Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name\n"}
+{"Time":"2026-07-01T14:58:41.863505697Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863513146Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863519968Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace"}
+{"Time":"2026-07-01T14:58:41.863524301Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace\n"}
+{"Time":"2026-07-01T14:58:41.863583676Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863590878Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_namespace","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863597328Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels"}
+{"Time":"2026-07-01T14:58:41.863604441Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels\n"}
+{"Time":"2026-07-01T14:58:41.863653636Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863677654Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_labels","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863682778Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression"}
+{"Time":"2026-07-01T14:58:41.863687041Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression\n"}
+{"Time":"2026-07-01T14:58:41.863733677Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863740902Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_expression","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863746264Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects"}
+{"Time":"2026-07-01T14:58:41.863750737Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects\n"}
+{"Time":"2026-07-01T14:58:41.863793636Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863801037Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_subjects","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863807526Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles"}
+{"Time":"2026-07-01T14:58:41.863812608Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles\n"}
+{"Time":"2026-07-01T14:58:41.863851763Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863859073Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_clusterroles","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863863871Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles"}
+{"Time":"2026-07-01T14:58:41.863868346Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles\n"}
+{"Time":"2026-07-01T14:58:41.863911984Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.86391943Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/Failed_to_exclude_roles","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863924714Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case"}
+{"Time":"2026-07-01T14:58:41.86392937Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case","Output":"=== RUN   Test_doesMatchExcludeConflict_cleanupPolicy/empty_case\n"}
+{"Time":"2026-07-01T14:58:41.86395528Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy/empty_case (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863962726Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy/empty_case","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.8639684Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy","Output":"--- PASS: Test_doesMatchExcludeConflict_cleanupPolicy (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.863975594Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict_cleanupPolicy","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.863980518Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Name"}
+{"Time":"2026-07-01T14:58:41.863985058Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Name","Output":"=== RUN   Test_ClusterPolicy_Name\n"}
+{"Time":"2026-07-01T14:58:41.864219033Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Name","Output":"    clusterpolicy_test.go:23: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.86422714Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Name","Output":"--- FAIL: Test_ClusterPolicy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864233842Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864244787Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_IsNamespaced"}
+{"Time":"2026-07-01T14:58:41.864249507Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_IsNamespaced","Output":"=== RUN   Test_ClusterPolicy_IsNamespaced\n"}
+{"Time":"2026-07-01T14:58:41.864273415Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_IsNamespaced","Output":"--- PASS: Test_ClusterPolicy_IsNamespaced (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864280406Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_IsNamespaced","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864285642Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Autogen_All"}
+{"Time":"2026-07-01T14:58:41.864289843Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Autogen_All","Output":"=== RUN   Test_ClusterPolicy_Autogen_All\n"}
+{"Time":"2026-07-01T14:58:41.864303952Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Autogen_All","Output":"--- PASS: Test_ClusterPolicy_Autogen_All (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864310783Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ClusterPolicy_Autogen_All","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864317729Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ImageVerification"}
+{"Time":"2026-07-01T14:58:41.864321875Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ImageVerification","Output":"=== RUN   Test_ImageVerification\n"}
+{"Time":"2026-07-01T14:58:41.864498935Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ImageVerification","Output":"--- PASS: Test_ImageVerification (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864506061Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ImageVerification","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864512771Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Audit_VerifyImageRule"}
+{"Time":"2026-07-01T14:58:41.864518281Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Audit_VerifyImageRule","Output":"=== RUN   Test_Audit_VerifyImageRule\n"}
+{"Time":"2026-07-01T14:58:41.864563099Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Audit_VerifyImageRule","Output":"--- PASS: Test_Audit_VerifyImageRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864570181Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Audit_VerifyImageRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864576521Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Enforce_VerifyImageRule"}
+{"Time":"2026-07-01T14:58:41.864580632Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Enforce_VerifyImageRule","Output":"=== RUN   Test_Enforce_VerifyImageRule\n"}
+{"Time":"2026-07-01T14:58:41.864592354Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Enforce_VerifyImageRule","Output":"--- PASS: Test_Enforce_VerifyImageRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864598787Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Enforce_VerifyImageRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864605229Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_MatchResources"}
+{"Time":"2026-07-01T14:58:41.864609819Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_MatchResources","Output":"=== RUN   Test_MatchResources\n"}
+{"Time":"2026-07-01T14:58:41.864665529Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_MatchResources","Output":"--- PASS: Test_MatchResources (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864672366Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_MatchResources","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864677003Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Name"}
+{"Time":"2026-07-01T14:58:41.86468137Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Name","Output":"=== RUN   Test_Policy_Name\n"}
+{"Time":"2026-07-01T14:58:41.864923696Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Name","Output":"    policy_test.go:22: assertion failed: must have at most 63 bytes (errs[0].Detail string) != may not be more than 63 bytes (string)\n"}
+{"Time":"2026-07-01T14:58:41.864931592Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Name","Output":"--- FAIL: Test_Policy_Name (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.86494252Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Name","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864947352Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_IsNamespaced"}
+{"Time":"2026-07-01T14:58:41.864951364Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_IsNamespaced","Output":"=== RUN   Test_Policy_IsNamespaced\n"}
+{"Time":"2026-07-01T14:58:41.864970854Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_IsNamespaced","Output":"--- PASS: Test_Policy_IsNamespaced (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.864981341Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_IsNamespaced","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.864987892Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Autogen_All"}
+{"Time":"2026-07-01T14:58:41.864992238Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Autogen_All","Output":"=== RUN   Test_Policy_Autogen_All\n"}
+{"Time":"2026-07-01T14:58:41.864999024Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Autogen_All","Output":"--- PASS: Test_Policy_Autogen_All (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.865005326Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Policy_Autogen_All","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.865011588Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ResourceDescription"}
+{"Time":"2026-07-01T14:58:41.865015582Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ResourceDescription","Output":"=== RUN   Test_ResourceDescription\n"}
+{"Time":"2026-07-01T14:58:41.865090372Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ResourceDescription","Output":"--- PASS: Test_ResourceDescription (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.865097652Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_ResourceDescription","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.865102201Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_EmptyRule"}
+{"Time":"2026-07-01T14:58:41.865106347Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_EmptyRule","Output":"=== RUN   Test_Validate_RuleType_EmptyRule\n"}
+{"Time":"2026-07-01T14:58:41.865129185Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_EmptyRule","Output":"--- PASS: Test_Validate_RuleType_EmptyRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.865136545Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_EmptyRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.865141332Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_MultipleRule"}
+{"Time":"2026-07-01T14:58:41.865145485Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_MultipleRule","Output":"=== RUN   Test_Validate_RuleType_MultipleRule\n"}
+{"Time":"2026-07-01T14:58:41.865934465Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_MultipleRule","Output":"--- PASS: Test_Validate_RuleType_MultipleRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.865946878Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_MultipleRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.86595367Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_SingleRule"}
+{"Time":"2026-07-01T14:58:41.865960629Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_SingleRule","Output":"=== RUN   Test_Validate_RuleType_SingleRule\n"}
+{"Time":"2026-07-01T14:58:41.866013897Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_SingleRule","Output":"--- PASS: Test_Validate_RuleType_SingleRule (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.86602038Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_RuleType_SingleRule","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866026686Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict"}
+{"Time":"2026-07-01T14:58:41.866030982Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict","Output":"=== RUN   Test_doesMatchExcludeConflict\n"}
+{"Time":"2026-07-01T14:58:41.86636838Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict","Output":"--- PASS: Test_doesMatchExcludeConflict (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866375802Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_doesMatchExcludeConflict","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866382252Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_ClusterPolicy_Generate_Variables"}
+{"Time":"2026-07-01T14:58:41.866386508Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_ClusterPolicy_Generate_Variables","Output":"=== RUN   Test_Validate_ClusterPolicy_Generate_Variables\n"}
+{"Time":"2026-07-01T14:58:41.866641197Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_ClusterPolicy_Generate_Variables","Output":"--- PASS: Test_Validate_ClusterPolicy_Generate_Variables (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866648543Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_ClusterPolicy_Generate_Variables","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866653173Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_UniqueRuleName"}
+{"Time":"2026-07-01T14:58:41.86665597Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_UniqueRuleName","Output":"=== RUN   Test_Validate_UniqueRuleName\n"}
+{"Time":"2026-07-01T14:58:41.866698825Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_UniqueRuleName","Output":"--- PASS: Test_Validate_UniqueRuleName (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866704225Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"Test_Validate_UniqueRuleName","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866708384Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1PolicyValidate"}
+{"Time":"2026-07-01T14:58:41.86671086Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1PolicyValidate","Output":"=== RUN   FuzzV2beta1PolicyValidate\n"}
+{"Time":"2026-07-01T14:58:41.866746581Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1PolicyValidate","Output":"--- PASS: FuzzV2beta1PolicyValidate (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866751427Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1PolicyValidate","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866754285Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ImageVerification"}
+{"Time":"2026-07-01T14:58:41.866756703Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ImageVerification","Output":"=== RUN   FuzzV2beta1ImageVerification\n"}
+{"Time":"2026-07-01T14:58:41.866775064Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ImageVerification","Output":"--- PASS: FuzzV2beta1ImageVerification (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866781399Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ImageVerification","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866785524Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1MatchResources"}
+{"Time":"2026-07-01T14:58:41.866787909Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1MatchResources","Output":"=== RUN   FuzzV2beta1MatchResources\n"}
+{"Time":"2026-07-01T14:58:41.866807138Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1MatchResources","Output":"--- PASS: FuzzV2beta1MatchResources (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866812037Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1MatchResources","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866814858Z","Action":"run","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ClusterPolicy"}
+{"Time":"2026-07-01T14:58:41.866817609Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ClusterPolicy","Output":"=== RUN   FuzzV2beta1ClusterPolicy\n"}
+{"Time":"2026-07-01T14:58:41.866833569Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ClusterPolicy","Output":"--- PASS: FuzzV2beta1ClusterPolicy (0.00s)\n"}
+{"Time":"2026-07-01T14:58:41.866838677Z","Action":"pass","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Test":"FuzzV2beta1ClusterPolicy","Elapsed":0}
+{"Time":"2026-07-01T14:58:41.866841326Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Output":"FAIL\n"}
+{"Time":"2026-07-01T14:58:41.868505748Z","Action":"output","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Output":"FAIL\tgithub.com/kyverno/kyverno/api/kyverno/v2beta1\t0.071s\n"}
+{"Time":"2026-07-01T14:58:41.868518309Z","Action":"fail","Package":"github.com/kyverno/kyverno/api/kyverno/v2beta1","Elapsed":0.071}
+reward=0 graded=86 found=86 failed=8 parsed=89 framework=go exit_code=1

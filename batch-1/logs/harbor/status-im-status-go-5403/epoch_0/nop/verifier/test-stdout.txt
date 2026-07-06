@@ -1,0 +1,21 @@
+patching file appdatabase/node_config_test.go
+patching file services/connector/api_test.go
+patching file services/connector/service_test.go
+# github.com/status-im/status-go/appdatabase [github.com/status-im/status-go/appdatabase.test]
+appdatabase/node_config_test.go:149:3: unknown field ConnectorConfig in struct literal of type "github.com/status-im/status-go/params".NodeConfig
+appdatabase/node_config_test.go:149:37: undefined: params.ConnectorConfig
+FAIL	github.com/status-im/status-go/appdatabase [build failed]
+# github.com/status-im/status-go/services/connector [github.com/status-im/status-go/services/connector.test]
+services/connector/api_test.go:25:35: undefined: API
+services/connector/api_test.go:41:13: undefined: NewService
+services/connector/api_test.go:43:10: undefined: API
+services/connector/service_test.go:33:27: undefined: Service
+services/connector/service_test.go:34:13: undefined: NewService
+services/connector/service_test.go:42:13: undefined: NewService
+services/connector/service_test.go:42:40: undefined: Service
+services/connector/service_test.go:48:13: undefined: NewService
+services/connector/service_test.go:48:40: undefined: Service
+services/connector/service_test.go:66:13: undefined: NewService
+services/connector/service_test.go:66:13: too many errors
+FAIL	github.com/status-im/status-go/services/connector [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=2 framework=go exit_code=1

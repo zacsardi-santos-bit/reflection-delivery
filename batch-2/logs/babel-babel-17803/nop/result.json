@@ -1,0 +1,29 @@
+{
+    "id": "3ac92b0d-20e6-4e5b-9aff-1ef28414872b",
+    "started_at": "2026-07-06T12:16:38.668246",
+    "finished_at": "2026-07-06T12:17:27.603560",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__babel-babel-17803": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "babel-babel-17803__Gyp6eLW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code/core && npx vitest run src/bin/dev-options.test.ts src/shared/utils/agent-environment.test.ts --reporter=verbose",
+  "test_files": [
+    "code/core/src/bin/dev-options.test.ts",
+    "code/core/src/shared/utils/agent-environment.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions preserves truthy getEnvConfig-style env overrides for existing dev options",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions uses PORT when no explicit port or SBCONFIG_PORT was provided",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions keeps explicit --port precedence over PORT outside Claude preview",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions uses SBCONFIG_PORT over PORT outside Claude preview",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions keeps explicit --port precedence over SBCONFIG_PORT outside Claude preview",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions uses Claude preview PORT over explicit --port",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions uses explicit --port over SBCONFIG_PORT in Claude preview when PORT is absent",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions uses SBCONFIG_PORT in Claude preview when PORT and explicit --port are absent",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions defaults browser opening to false for Claude preview launches",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions keeps the browser opening default outside Claude preview",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions keeps unrelated dev command options after validation",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions rejects invalid selected PORT values",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions rejects empty selected PORT values",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions rejects invalid Claude preview PORT values before explicit --port fallback",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions rejects invalid selected SBCONFIG_PORT values",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions does not treat --port placeholders as PORT interpolation",
+    "/workspace/repo/code/core/src/bin/dev-options.test.ts::resolveDevCommandOptions rejects selected ports outside the valid range",
+    "/workspace/repo/code/core/src/shared/utils/agent-environment.test.ts::isClaudePreviewLaunch detects Claude preview launcher environments",
+    "/workspace/repo/code/core/src/shared/utils/agent-environment.test.ts::isClaudePreviewLaunch does not detect Claude preview when an explicit agent is present",
+    "/workspace/repo/code/core/src/shared/utils/agent-environment.test.ts::isClaudePreviewLaunch does not detect Claude preview without the Claude launcher signal"
+  ],
+  "PASS_TO_PASS": []
+}

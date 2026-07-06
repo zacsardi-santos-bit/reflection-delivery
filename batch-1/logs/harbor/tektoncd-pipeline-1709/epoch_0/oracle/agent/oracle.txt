@@ -1,0 +1,3 @@
+patching file pkg/reconciler/taskrun/cancel.go
+patching file pkg/reconciler/taskrun/metrics.go
+patching file pkg/reconciler/taskrun/taskrun.go

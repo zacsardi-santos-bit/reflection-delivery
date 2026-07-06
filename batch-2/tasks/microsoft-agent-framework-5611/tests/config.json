@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/packages/core/tests/core/test_harness_mode.py -v",
+  "test_files": [
+    "python/packages/core/tests/core/test_harness_mode.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.core.test_harness_mode::test_get_and_set_agent_mode_manage_session_state",
+    "tests.core.test_harness_mode::test_agent_mode_helpers_reject_non_dict_provider_state",
+    "tests.core.test_harness_mode::test_agent_mode_context_provider_validates_configuration_and_is_experimental",
+    "tests.core.test_harness_mode::test_agent_mode_context_provider_normalizes_custom_modes",
+    "tests.core.test_harness_mode::test_agent_mode_context_provider_serializes_tool_outputs_as_json",
+    "tests.core.test_harness_mode::test_agent_mode_context_provider_updates_agent_mode",
+    "tests.core.test_harness_mode::test_default_mode_falls_back_to_first_available_mode",
+    "tests.core.test_harness_mode::test_get_agent_mode_falls_back_when_stored_mode_not_in_available_modes"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,23 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest tests/typescript/custom/typeParameters/jsfmt.spec.js tests/typescript_generic/jsfmt.spec.js --coverage=false --watchAll=false --json",
+  "test_files": [
+    "tests/typescript/custom/typeParameters/__snapshots__/jsfmt.spec.js.snap",
+    "tests/typescript/custom/typeParameters/variables.ts",
+    "tests/typescript_generic/__snapshots__/jsfmt.spec.js.snap",
+    "tests/typescript_generic/arrow-return-type.ts"
+  ],
+  "num_test_files": 4,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/typescript_generic/jsfmt.spec.js::arrow-return-type.ts",
+    "/workspace/repo/tests/typescript/custom/typeParameters/jsfmt.spec.js::variables.ts"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/tests/typescript_generic/jsfmt.spec.js::object-method.ts",
+    "/workspace/repo/tests/typescript/custom/typeParameters/jsfmt.spec.js::callAndConstructSignatureLong.ts",
+    "/workspace/repo/tests/typescript/custom/typeParameters/jsfmt.spec.js::functionTypeLong.ts",
+    "/workspace/repo/tests/typescript/custom/typeParameters/jsfmt.spec.js::interfaceParamsLong.ts",
+    "/workspace/repo/tests/typescript/custom/typeParameters/jsfmt.spec.js::typeParametersLong.ts"
+  ]
+}

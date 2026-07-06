@@ -1,0 +1,696 @@
+diff --git a/airflow/auth/managers/simple/__init__.py b/airflow/auth/managers/simple/__init__.py
+new file mode 100644
+index 0000000000..217e5db960
+--- /dev/null
++++ b/airflow/auth/managers/simple/__init__.py
+@@ -0,0 +1,17 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
+diff --git a/airflow/auth/managers/simple/simple_auth_manager.py b/airflow/auth/managers/simple/simple_auth_manager.py
+new file mode 100644
+index 0000000000..1d73341719
+--- /dev/null
++++ b/airflow/auth/managers/simple/simple_auth_manager.py
+@@ -0,0 +1,238 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++import json
++import os
++import random
++from collections import namedtuple
++from enum import Enum
++from typing import TYPE_CHECKING
++
++from flask import session, url_for
++from termcolor import colored
++
++from airflow.auth.managers.base_auth_manager import BaseAuthManager, ResourceMethod
++from airflow.auth.managers.simple.views.auth import SimpleAuthManagerAuthenticationViews
++from hatch_build import AIRFLOW_ROOT_PATH
++
++if TYPE_CHECKING:
++    from airflow.auth.managers.models.base_user import BaseUser
++    from airflow.auth.managers.models.resource_details import (
++        AccessView,
++        ConfigurationDetails,
++        ConnectionDetails,
++        DagAccessEntity,
++        DagDetails,
++        DatasetDetails,
++        PoolDetails,
++        VariableDetails,
++    )
++    from airflow.auth.managers.simple.user import SimpleAuthManagerUser
++
++
++class SimpleAuthManagerRole(namedtuple("SimpleAuthManagerRole", "name order"), Enum):
++    """
++    List of pre-defined roles in simple auth manager.
++
++    The first attribute defines the name that references this role in the config.
++    The second attribute defines the order between roles. The role with order X means it grants access to
++    resources under its umbrella and all resources under the umbrella of roles of lower order
++    """
++
++    # VIEWER role gives all read-only permissions
++    VIEWER = "VIEWER", 0
++
++    # USER role gives viewer role permissions + access to DAGs
++    USER = "USER", 1
++
++    # OP role gives user role permissions + access to connections, config, pools, variables
++    OP = "OP", 2
++
++    # ADMIN role gives all permissions
++    ADMIN = "ADMIN", 3
++
++
++class SimpleAuthManager(BaseAuthManager):
++    """
++    Simple auth manager.
++
++    Default auth manager used in Airflow. This auth manager should not be used in production.
++    This auth manager is very basic and only intended for development and testing purposes.
++
++    :param appbuilder: the flask app builder
++    """
++
++    # File that contains the generated passwords
++    GENERATED_PASSWORDS_FILE = (
++        AIRFLOW_ROOT_PATH / "generated" / "simple_auth_manager_passwords.json.generated"
++    )
++
++    # Cache containing the password associated to a username
++    passwords: dict[str, str] = {}
++
++    def init(self) -> None:
++        user_passwords_from_file = {}
++
++        # Read passwords from file
++        if os.path.isfile(self.GENERATED_PASSWORDS_FILE):
++            with open(self.GENERATED_PASSWORDS_FILE) as file:
++                passwords_str = file.read().strip()
++                user_passwords_from_file = json.loads(passwords_str)
++
++        users = self.appbuilder.get_app.config.get("SIMPLE_AUTH_MANAGER_USERS", [])
++        usernames = {user["username"] for user in users}
++        self.passwords = {
++            username: password
++            for username, password in user_passwords_from_file.items()
++            if username in usernames
++        }
++        for user in users:
++            if user["username"] not in self.passwords:
++                # User dot not exist in the file, adding it
++                self.passwords[user["username"]] = self._generate_password()
++
++            self._print_output(f"Password for user '{user['username']}': {self.passwords[user['username']]}")
++
++        with open(self.GENERATED_PASSWORDS_FILE, "w") as file:
++            file.write(json.dumps(self.passwords))
++
++    def is_logged_in(self) -> bool:
++        return "user" in session
++
++    def get_url_login(self, **kwargs) -> str:
++        return url_for("SimpleAuthManagerAuthenticationViews.login")
++
++    def get_url_logout(self) -> str:
++        return url_for("SimpleAuthManagerAuthenticationViews.logout")
++
++    def get_user(self) -> SimpleAuthManagerUser | None:
++        return session["user"] if self.is_logged_in() else None
++
++    def is_authorized_configuration(
++        self,
++        *,
++        method: ResourceMethod,
++        details: ConfigurationDetails | None = None,
++        user: BaseUser | None = None,
++    ) -> bool:
++        return self._is_authorized(method=method, allow_role=SimpleAuthManagerRole.OP)
++
++    def is_authorized_connection(
++        self,
++        *,
++        method: ResourceMethod,
++        details: ConnectionDetails | None = None,
++        user: BaseUser | None = None,
++    ) -> bool:
++        return self._is_authorized(method=method, allow_role=SimpleAuthManagerRole.OP)
++
++    def is_authorized_dag(
++        self,
++        *,
++        method: ResourceMethod,
++        access_entity: DagAccessEntity | None = None,
++        details: DagDetails | None = None,
++        user: BaseUser | None = None,
++    ) -> bool:
++        return self._is_authorized(
++            method=method,
++            allow_get_role=SimpleAuthManagerRole.VIEWER,
++            allow_role=SimpleAuthManagerRole.USER,
++        )
++
++    def is_authorized_dataset(
++        self, *, method: ResourceMethod, details: DatasetDetails | None = None, user: BaseUser | None = None
++    ) -> bool:
++        return self._is_authorized(
++            method=method,
++            allow_get_role=SimpleAuthManagerRole.VIEWER,
++            allow_role=SimpleAuthManagerRole.OP,
++        )
++
++    def is_authorized_pool(
++        self, *, method: ResourceMethod, details: PoolDetails | None = None, user: BaseUser | None = None
++    ) -> bool:
++        return self._is_authorized(
++            method=method,
++            allow_get_role=SimpleAuthManagerRole.VIEWER,
++            allow_role=SimpleAuthManagerRole.OP,
++        )
++
++    def is_authorized_variable(
++        self, *, method: ResourceMethod, details: VariableDetails | None = None, user: BaseUser | None = None
++    ) -> bool:
++        return self._is_authorized(method=method, allow_role=SimpleAuthManagerRole.OP)
++
++    def is_authorized_view(self, *, access_view: AccessView, user: BaseUser | None = None) -> bool:
++        return self._is_authorized(method="GET", allow_role=SimpleAuthManagerRole.VIEWER)
++
++    def is_authorized_custom_view(
++        self, *, method: ResourceMethod | str, resource_name: str, user: BaseUser | None = None
++    ):
++        return self._is_authorized(method="GET", allow_role=SimpleAuthManagerRole.VIEWER)
++
++    def register_views(self) -> None:
++        self.appbuilder.add_view_no_menu(
++            SimpleAuthManagerAuthenticationViews(
++                users=self.appbuilder.get_app.config.get("SIMPLE_AUTH_MANAGER_USERS", []),
++                passwords=self.passwords,
++            )
++        )
++
++    def _is_authorized(
++        self,
++        *,
++        method: ResourceMethod,
++        allow_role: SimpleAuthManagerRole,
++        allow_get_role: SimpleAuthManagerRole | None = None,
++    ):
++        """
++        Return whether the user is authorized to access a given resource.
++
++        :param method: the method to perform
++        :param allow_role: minimal role giving access to the resource, if the user's role is greater or
++            equal than this role, they have access
++        :param allow_get_role: minimal role giving access to the resource, if the user's role is greater or
++            equal than this role, they have access. If not provided, ``allow_role`` is used
++        """
++        user = self.get_user()
++        if not user:
++            return False
++        role_str = user.get_role().upper()
++        role = SimpleAuthManagerRole[role_str]
++        if role == SimpleAuthManagerRole.ADMIN:
++            return True
++
++        if not allow_get_role:
++            allow_get_role = allow_role
++
++        if method == "GET":
++            return role.order >= allow_get_role.order
++        return role.order >= allow_role.order
++
++    @staticmethod
++    def _generate_password() -> str:
++        return "".join(random.choices("abcdefghkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ23456789", k=16))
++
++    @staticmethod
++    def _print_output(output: str):
++        name = "Simple auth manager"
++        colorized_name = colored(f"{name:10}", "white")
++        for line in output.splitlines():
++            print(f"{colorized_name} | {line.strip()}")
+diff --git a/airflow/auth/managers/simple/user.py b/airflow/auth/managers/simple/user.py
+new file mode 100644
+index 0000000000..fa032f596e
+--- /dev/null
++++ b/airflow/auth/managers/simple/user.py
+@@ -0,0 +1,41 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++from airflow.auth.managers.models.base_user import BaseUser
++
++
++class SimpleAuthManagerUser(BaseUser):
++    """
++    User model for users managed by the simple auth manager.
++
++    :param username: The username
++    :param role: The role associated to the user
++    """
++
++    def __init__(self, *, username: str, role: str) -> None:
++        self.username = username
++        self.role = role
++
++    def get_id(self) -> str:
++        return self.username
++
++    def get_name(self) -> str:
++        return self.username
++
++    def get_role(self):
++        return self.role
+diff --git a/airflow/auth/managers/simple/views/__init__.py b/airflow/auth/managers/simple/views/__init__.py
+new file mode 100644
+index 0000000000..217e5db960
+--- /dev/null
++++ b/airflow/auth/managers/simple/views/__init__.py
+@@ -0,0 +1,17 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
+diff --git a/airflow/auth/managers/simple/views/auth.py b/airflow/auth/managers/simple/views/auth.py
+new file mode 100644
+index 0000000000..8ab02d0a01
+--- /dev/null
++++ b/airflow/auth/managers/simple/views/auth.py
+@@ -0,0 +1,88 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++import logging
++
++from flask import redirect, request, session, url_for
++from flask_appbuilder import expose
++
++from airflow.auth.managers.simple.user import SimpleAuthManagerUser
++from airflow.configuration import conf
++from airflow.utils.state import State
++from airflow.www.app import csrf
++from airflow.www.views import AirflowBaseView
++
++logger = logging.getLogger(__name__)
++
++
++class SimpleAuthManagerAuthenticationViews(AirflowBaseView):
++    """
++    Views to authenticate using the simple auth manager.
++
++    :param users: the list of users defined in the config
++    :param passwords: dict associating a username to its password
++    """
++
++    def __init__(self, users: list, passwords: dict[str, str]):
++        super().__init__()
++        self.users = users
++        self.passwords = passwords
++
++    @expose("/login")
++    def login(self):
++        """Start login process."""
++        state_color_mapping = State.state_color.copy()
++        state_color_mapping["no_status"] = state_color_mapping.pop(None)
++        standalone_dag_processor = conf.getboolean("scheduler", "standalone_dag_processor")
++        return self.render_template(
++            "airflow/login.html",
++            disable_nav_bar=True,
++            login_submit_url=url_for("SimpleAuthManagerAuthenticationViews.login_submit"),
++            auto_refresh_interval=conf.getint("webserver", "auto_refresh_interval"),
++            state_color_mapping=state_color_mapping,
++            standalone_dag_processor=standalone_dag_processor,
++        )
++
++    @expose("/logout", methods=["GET", "POST"])
++    def logout(self):
++        """Start logout process."""
++        session.clear()
++        return redirect(url_for("SimpleAuthManagerAuthenticationViews.login"))
++
++    @csrf.exempt
++    @expose("/login_submit", methods=("GET", "POST"))
++    def login_submit(self):
++        """Redirect the user to this callback after login attempt."""
++        username = request.form.get("username")
++        password = request.form.get("password")
++
++        found_users = [
++            user
++            for user in self.users
++            if user["username"] == username and self.passwords[user["username"]] == password
++        ]
++
++        if not username or not password or len(found_users) == 0:
++            return redirect(url_for("SimpleAuthManagerAuthenticationViews.login", error=["1"]))
++
++        session["user"] = SimpleAuthManagerUser(
++            username=username,
++            role=found_users[0]["role"],
++        )
++
++        return redirect(url_for("Airflow.index"))
+diff --git a/airflow/config_templates/default_webserver_config.py b/airflow/config_templates/default_webserver_config.py
+index 3048bb21f4..71bdf9e99d 100644
+--- a/airflow/config_templates/default_webserver_config.py
++++ b/airflow/config_templates/default_webserver_config.py
+@@ -130,3 +130,20 @@ AUTH_TYPE = AUTH_DB
+ # APP_THEME = "superhero.css"
+ # APP_THEME = "united.css"
+ # APP_THEME = "yeti.css"
++
++# ----------------------------------------------------
++# Simple auth manager config
++# ----------------------------------------------------
++# This list contains the list of users and their associated role in simple auth manager.
++# If the simple auth manager is used in your environment, this list controls who can access the environment.
++# Example:
++# [{
++#     "username": "admin",
++#     "role": "admin",
++# }]
++SIMPLE_AUTH_MANAGER_USERS = [
++    {
++        "username": "admin",
++        "role": "admin",
++    }
++]
+diff --git a/airflow/www/app.py b/airflow/www/app.py
+index 270ffe5719..f5e1191fb4 100644
+--- a/airflow/www/app.py
++++ b/airflow/www/app.py
+@@ -36,7 +36,6 @@ from airflow.settings import _ENABLE_AIP_44
+ from airflow.utils.json import AirflowJsonProvider
+ from airflow.www.extensions.init_appbuilder import init_appbuilder
+ from airflow.www.extensions.init_appbuilder_links import init_appbuilder_links
+-from airflow.www.extensions.init_auth_manager import get_auth_manager
+ from airflow.www.extensions.init_cache import init_cache
+ from airflow.www.extensions.init_dagbag import init_dagbag
+ from airflow.www.extensions.init_jinja_globals import init_jinja_globals
+@@ -168,9 +167,6 @@ def create_app(config=None, testing=False):
+             init_api_internal(flask_app)
+         init_api_auth_provider(flask_app)
+         init_api_error_handlers(flask_app)  # needs to be after all api inits to let them add their path first
+-
+-        get_auth_manager().init()
+-
+         init_jinja_globals(flask_app)
+         init_xframe_protection(flask_app)
+         init_cache_control(flask_app)
+diff --git a/airflow/www/extensions/init_auth_manager.py b/airflow/www/extensions/init_auth_manager.py
+index f69734ce8a..6e6f1f8af1 100644
+--- a/airflow/www/extensions/init_auth_manager.py
++++ b/airflow/www/extensions/init_auth_manager.py
+@@ -54,6 +54,7 @@ def init_auth_manager(appbuilder: AirflowAppBuilder) -> BaseAuthManager:
+     global auth_manager
+     auth_manager_cls = get_auth_manager_cls()
+     auth_manager = auth_manager_cls(appbuilder)
++    auth_manager.init()
+     return auth_manager
+ 
+ 
+diff --git a/airflow/www/static/js/login/Form.tsx b/airflow/www/static/js/login/Form.tsx
+new file mode 100644
+index 0000000000..e8ca124f5a
+--- /dev/null
++++ b/airflow/www/static/js/login/Form.tsx
+@@ -0,0 +1,44 @@
++/*!
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++import React from "react";
++import { FormControl, FormLabel, Input, Stack, Button } from "@chakra-ui/react";
++import { getMetaValue } from "src/utils";
++
++const LoginForm = () => (
++  <form action={getMetaValue("login_submit_url")} method="post">
++    <Stack spacing={4}>
++      <FormControl isRequired>
++        <FormLabel>Username</FormLabel>
++        <Input name="username" />
++      </FormControl>
++
++      <FormControl isRequired>
++        <FormLabel>Password</FormLabel>
++        <Input name="password" type="password" />
++      </FormControl>
++
++      <Button colorScheme="blue" type="submit">
++        Sign in
++      </Button>
++    </Stack>
++  </form>
++);
++
++export default LoginForm;
+diff --git a/airflow/www/static/js/login/index.tsx b/airflow/www/static/js/login/index.tsx
+new file mode 100644
+index 0000000000..2153eef354
+--- /dev/null
++++ b/airflow/www/static/js/login/index.tsx
+@@ -0,0 +1,73 @@
++/*!
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++/* global document */
++
++import React from "react";
++import { createRoot } from "react-dom/client";
++import createCache from "@emotion/cache";
++import { Alert, AlertIcon, Container, Heading, Text } from "@chakra-ui/react";
++
++import App from "src/App";
++import LoginForm from "src/login/Form";
++import { useSearchParams } from "react-router-dom";
++
++// create shadowRoot
++const root = document.querySelector("#root");
++const shadowRoot = root?.attachShadow({ mode: "open" });
++const cache = createCache({
++  container: shadowRoot,
++  key: "c",
++});
++const mainElement = document.getElementById("react-container");
++
++const Login = () => {
++  const [searchParams] = useSearchParams();
++  const error = searchParams.get("error");
++
++  return (
++    <Container maxW="2xl" p="4" border="1px" borderColor="gray.500">
++      <Heading mb={6} fontWeight="normal" size="lg">
++        Sign in
++      </Heading>
++
++      {error && (
++        <Alert status="warning" mb="2">
++          <AlertIcon />
++          Invalid credentials, please try again.
++        </Alert>
++      )}
++
++      <Text mb={4}>Enter your login and password below:</Text>
++      <LoginForm />
++    </Container>
++  );
++};
++
++export default Login;
++
++if (mainElement) {
++  shadowRoot?.appendChild(mainElement);
++  const reactRoot = createRoot(mainElement);
++  reactRoot.render(
++    <App cache={cache}>
++      <Login />
++    </App>
++  );
++}
+diff --git a/airflow/www/templates/airflow/login.html b/airflow/www/templates/airflow/login.html
+new file mode 100644
+index 0000000000..5a25fb3b5f
+--- /dev/null
++++ b/airflow/www/templates/airflow/login.html
+@@ -0,0 +1,45 @@
++{#
++  Licensed to the Apache Software Foundation (ASF) under one
++  or more contributor license agreements.  See the NOTICE file
++  distributed with this work for additional information
++  regarding copyright ownership.  The ASF licenses this file
++  to you under the Apache License, Version 2.0 (the
++  "License"); you may not use this file except in compliance
++  with the License.  You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing,
++  software distributed under the License is distributed on an
++  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++  KIND, either express or implied.  See the License for the
++  specific language governing permissions and limitations
++  under the License.
++ #}
++
++{% extends base_template %}
++
++{% block head_meta %}
++  {{ super() }}
++  <meta name="login_submit_url" content="{{ url_for('SimpleAuthManagerAuthenticationViews.login_submit') }}">
++{% endblock %}
++
++{% block messages %}
++{% endblock %}
++
++{% block content %}
++  {{ super() }}
++  <div id="root">
++    <div id="react-container"></div>
++  </div>
++{% endblock %}
++
++{% block tail_js %}
++  {{ super()}}
++  <script>
++    const stateColors = {{ state_color_mapping|tojson }};
++    const autoRefreshInterval = {{ auto_refresh_interval }};
++    const standaloneDagProcessor = {{ standalone_dag_processor|tojson }} === true ;
++  </script>
++  <script src="{{ url_for_asset('login.js') }}"></script>
++{% endblock %}
+diff --git a/airflow/www/templates/appbuilder/navbar.html b/airflow/www/templates/appbuilder/navbar.html
+index 141d778d23..6f22d65343 100644
+--- a/airflow/www/templates/appbuilder/navbar.html
++++ b/airflow/www/templates/appbuilder/navbar.html
+@@ -47,7 +47,9 @@
+     </div>
+     <div class="navbar-collapse collapse">
+       <ul class="nav navbar-nav">
++        {%- if disable_nav_bar is not defined or not disable_nav_bar -%}
+         {% include 'appbuilder/navbar_menu.html' %}
++        {%- endif -%}
+       </ul>
+       <ul class="nav navbar-nav navbar-right">
+         <li class="active">
+diff --git a/airflow/www/webpack.config.js b/airflow/www/webpack.config.js
+index df4e11042c..45d3f90a4d 100644
+--- a/airflow/www/webpack.config.js
++++ b/airflow/www/webpack.config.js
+@@ -66,6 +66,7 @@ const config = {
+     flash: `${CSS_DIR}/flash.css`,
+     graph: `${CSS_DIR}/graph.css`,
+     loadingDots: `${CSS_DIR}/loading-dots.css`,
++    login: `${JS_DIR}/login/index.tsx`,
+     main: [`${CSS_DIR}/main.css`, `${JS_DIR}/main.js`],
+     materialIcons: `${CSS_DIR}/material-icons.css`,
+     moment: "moment-timezone",

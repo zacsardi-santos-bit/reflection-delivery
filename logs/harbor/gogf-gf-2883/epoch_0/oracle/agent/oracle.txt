@@ -1,3 +1,0 @@
-patching file os/gmutex/gmutex.go
-patching file os/gmutex/gmutex_mutex.go
-patching file os/gmutex/gmutex_rwmutex.go

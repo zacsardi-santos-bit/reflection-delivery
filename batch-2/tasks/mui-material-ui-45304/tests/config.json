@@ -1,0 +1,53 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && NODE_ENV=test ./node_modules/.bin/mocha --reporter spec --timeout 30000 packages/api-docs-builder/utils/replaceUrl.test.js packages/mui-system/src/Grid/Grid.test.js",
+  "test_files": [
+    "packages/api-docs-builder/utils/replaceUrl.test.js",
+    "packages/mui-system/src/Grid/Grid.test.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn once if the `item` prop is used",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn if the `zeroMinWidth` prop is used",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn if the `xs` prop is used",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn if the `sm` prop is used",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn if the `md` prop is used",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn if the `lg` prop is used",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> legacy Grid component warnings should warn if the `xl` prop is used"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl replace material related pathname",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl should not change if links have been updated",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl replace correct component links",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl replace correct API links",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl should do nothing if the components have updated",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl should do nothing if the APIs have updated",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl only replace links for new routes (/material-ui/* & /x/*)",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl [i18n] only replace links for new routes (/material-ui/* & /x/*)",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl does not replace for old routes",
+    "/workspace/repo/packages/api-docs-builder/utils/replaceUrl.test.js::replaceUrl does not replace for x marketing page",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> combines system properties with the sx prop",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API applies the className to the root component",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API spreads props to the root component",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API applies the root class to the root component if it has this class",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API prop: component can render another root component with the `component` prop",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API ref attaches the ref",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API theme default components: respect theme's defaultProps",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> MUI component API theme extended palette: should render without errors",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: container should apply the container class",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: xs should apply the flex-grow class",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: xs should apply the flex size class",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: xs should apply the flex auto class",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: spacing should have a spacing",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: spacing should not support undefined values",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: spacing should not support zero values",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: spacing should support object values",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: spacing should ignore object values of zero",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: wrap should wrap by default",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: wrap should apply nowrap class and style",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> prop: wrap should apply wrap-reverse class and style",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> Custom breakpoints should apply the custom breakpoint class",
+    "/workspace/repo/packages/mui-system/src/Grid/Grid.test.js::System <Grid /> Custom breakpoints should apply the custom breakpoint spacing class"
+  ]
+}

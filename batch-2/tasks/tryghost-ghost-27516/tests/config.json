@@ -1,0 +1,16 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/admin-x-settings && pnpm exec vitest run test/unit/membership/welcome-email-customize-modal.test.tsx",
+  "test_files": [
+    "apps/admin-x-settings/test/unit/membership/welcome-email-customize-modal.test.tsx",
+    "e2e/tests/admin/settings/member-welcome-emails.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/admin-x-settings/test/unit/membership/welcome-email-customize-modal.test.tsx:: Welcome email customize modal keeps the customize modal open when Escape is pressed immediately after opening the color picker"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/apps/admin-x-settings/test/unit/membership/welcome-email-customize-modal.test.tsx:: Welcome email customize modal keeps the customize modal open when Escape is pressed after the color picker has mounted"
+  ]
+}

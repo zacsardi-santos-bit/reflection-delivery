@@ -1,0 +1,139 @@
+patching file api/openapi-spec/swagger.json
+patching file pkg/reduce/data_forward_test.go
+patching file pkg/reduce/pnf/processandforward_test.go
+patching file pkg/sources/generator/tickgen_test.go
+patching file pkg/watermark/wmb/wmb_test.go
+patching file pkg/window/strategy/fixed/fixed_test.go
+patching file pkg/window/strategy/session/session_test.go
+patching file pkg/window/strategy/sliding/sliding_test.go
+# github.com/numaproj/numaflow/pkg/window/strategy/fixed [github.com/numaproj/numaflow/pkg/window/strategy/fixed.test]
+pkg/window/strategy/fixed/fixed_test.go:44:42: too many arguments in call to NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/window/strategy/fixed/fixed_test.go:128:42: too many arguments in call to NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+# github.com/numaproj/numaflow/pkg/window/strategy/sliding [github.com/numaproj/numaflow/pkg/window/strategy/sliding.test]
+pkg/window/strategy/sliding/sliding_test.go:44:55: too many arguments in call to NewWindower
+	have (time.Duration, time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration, time.Duration)
+pkg/window/strategy/sliding/sliding_test.go:91:55: too many arguments in call to NewWindower
+	have (time.Duration, time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration, time.Duration)
+pkg/window/strategy/sliding/sliding_test.go:175:58: too many arguments in call to NewWindower
+	have (time.Duration, time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration, time.Duration)
+# github.com/numaproj/numaflow/pkg/window/strategy/session [github.com/numaproj/numaflow/pkg/window/strategy/session.test]
+pkg/window/strategy/session/session_test.go:59:31: too many arguments in call to NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/window/strategy/session/session_test.go:167:42: too many arguments in call to NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/window/strategy/session/session_test.go:214:42: too many arguments in call to NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/window/strategy/session/session_test.go:570:42: too many arguments in call to NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+# github.com/numaproj/numaflow/pkg/reduce/pnf [github.com/numaproj/numaflow/pkg/reduce/pnf.test]
+pkg/reduce/pnf/processandforward_test.go:176:48: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+# github.com/numaproj/numaflow/pkg/reduce [github.com/numaproj/numaflow/pkg/reduce.test]
+pkg/reduce/data_forward_test.go:409:44: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:503:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:709:48: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:790:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:875:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:957:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:1039:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:1142:49: too many arguments in call to session.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:1243:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:1333:47: too many arguments in call to fixed.NewWindower
+	have (time.Duration, *v1alpha1.VertexInstance)
+	want (time.Duration)
+pkg/reduce/data_forward_test.go:1333:47: too many errors
+# github.com/numaproj/numaflow/pkg/sources/generator [github.com/numaproj/numaflow/pkg/sources/generator.test]
+pkg/sources/generator/tickgen_test.go:181:40: too many arguments in call to timeFromNanos
+	have (int64, number)
+	want (int64)
+pkg/sources/generator/tickgen_test.go:187:40: too many arguments in call to timeFromNanos
+	have (int64, number)
+	want (int64)
+FAIL	github.com/numaproj/numaflow/pkg/reduce [build failed]
+FAIL	github.com/numaproj/numaflow/pkg/reduce/pnf [build failed]
+{"Time":"2026-06-29T15:25:05.221429863Z","Action":"start","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb"}
+FAIL	github.com/numaproj/numaflow/pkg/sources/generator [build failed]
+{"Time":"2026-06-29T15:25:05.233092597Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMBChecker_ValidateHeadWMB"}
+{"Time":"2026-06-29T15:25:05.233158665Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMBChecker_ValidateHeadWMB","Output":"=== RUN   TestWMBChecker_ValidateHeadWMB\n"}
+{"Time":"2026-06-29T15:25:05.23328557Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMBChecker_ValidateHeadWMB","Output":"--- PASS: TestWMBChecker_ValidateHeadWMB (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.233395939Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMBChecker_ValidateHeadWMB","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.233416802Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestNewIdleManager"}
+{"Time":"2026-06-29T15:25:05.233425205Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestNewIdleManager","Output":"=== RUN   TestNewIdleManager\n"}
+{"Time":"2026-06-29T15:25:05.233446295Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestNewIdleManager","Output":"--- PASS: TestNewIdleManager (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.233567187Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestNewIdleManager","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.23358645Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB"}
+{"Time":"2026-06-29T15:25:05.233594927Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB","Output":"=== RUN   TestDecodeToWMB\n"}
+{"Time":"2026-06-29T15:25:05.233623434Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_ot_value"}
+{"Time":"2026-06-29T15:25:05.233631903Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_ot_value","Output":"=== RUN   TestDecodeToWMB/decode_success_using_ot_value\n"}
+{"Time":"2026-06-29T15:25:05.233641608Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_ot_value","Output":"--- PASS: TestDecodeToWMB/decode_success_using_ot_value (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.23365126Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_ot_value","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.23376309Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_1_field_struct"}
+{"Time":"2026-06-29T15:25:05.233794019Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_1_field_struct","Output":"=== RUN   TestDecodeToWMB/decode_failure_using_1_field_struct\n"}
+{"Time":"2026-06-29T15:25:05.233815264Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_1_field_struct","Output":"--- PASS: TestDecodeToWMB/decode_failure_using_1_field_struct (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.233838363Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_1_field_struct","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.233850024Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_2_field_struct"}
+{"Time":"2026-06-29T15:25:05.233871887Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_2_field_struct","Output":"=== RUN   TestDecodeToWMB/decode_failure_using_2_field_struct\n"}
+{"Time":"2026-06-29T15:25:05.233893127Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_2_field_struct","Output":"--- PASS: TestDecodeToWMB/decode_failure_using_2_field_struct (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.233900796Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_failure_using_2_field_struct","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.233908148Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_4_field_struct"}
+{"Time":"2026-06-29T15:25:05.233920662Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_4_field_struct","Output":"=== RUN   TestDecodeToWMB/decode_success_using_4_field_struct\n"}
+{"Time":"2026-06-29T15:25:05.233931011Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_4_field_struct","Output":"--- PASS: TestDecodeToWMB/decode_success_using_4_field_struct (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.23393826Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_4_field_struct","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.233947619Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_5_field_struct"}
+{"Time":"2026-06-29T15:25:05.233956062Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_5_field_struct","Output":"=== RUN   TestDecodeToWMB/decode_success_using_5_field_struct\n"}
+{"Time":"2026-06-29T15:25:05.23396396Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_5_field_struct","Output":"--- PASS: TestDecodeToWMB/decode_success_using_5_field_struct (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.233971501Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB/decode_success_using_5_field_struct","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.233980897Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB","Output":"--- PASS: TestDecodeToWMB (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.233988411Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.233996036Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes"}
+{"Time":"2026-06-29T15:25:05.234003212Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes","Output":"=== RUN   TestWMB_EncodeToBytes\n"}
+{"Time":"2026-06-29T15:25:05.234016606Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes/encode_success"}
+{"Time":"2026-06-29T15:25:05.234025281Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes/encode_success","Output":"=== RUN   TestWMB_EncodeToBytes/encode_success\n"}
+{"Time":"2026-06-29T15:25:05.234037592Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes/encode_success","Output":"--- PASS: TestWMB_EncodeToBytes/encode_success (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.234054804Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes/encode_success","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.234062288Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes","Output":"--- PASS: TestWMB_EncodeToBytes (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.23408789Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestWMB_EncodeToBytes","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.234098181Z","Action":"run","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2"}
+{"Time":"2026-06-29T15:25:05.234105228Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2","Output":"=== RUN   TestDecodeToWMB2\n"}
+{"Time":"2026-06-29T15:25:05.234112664Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2","Output":"1303068\n"}
+{"Time":"2026-06-29T15:25:05.234119764Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2","Output":"1303031\n"}
+{"Time":"2026-06-29T15:25:05.23412711Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2","Output":"1303066\n"}
+{"Time":"2026-06-29T15:25:05.234134942Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2","Output":"--- PASS: TestDecodeToWMB2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:05.234146577Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Test":"TestDecodeToWMB2","Elapsed":0}
+{"Time":"2026-06-29T15:25:05.234160276Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:05.23465391Z","Action":"output","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Output":"ok  \tgithub.com/numaproj/numaflow/pkg/watermark/wmb\t0.013s\n"}
+{"Time":"2026-06-29T15:25:05.234675052Z","Action":"pass","Package":"github.com/numaproj/numaflow/pkg/watermark/wmb","Elapsed":0.013}
+FAIL	github.com/numaproj/numaflow/pkg/window/strategy/fixed [build failed]
+FAIL	github.com/numaproj/numaflow/pkg/window/strategy/session [build failed]
+FAIL	github.com/numaproj/numaflow/pkg/window/strategy/sliding [build failed]
+reward=0 graded=52 found=52 failed=41 parsed=17 framework=go exit_code=1

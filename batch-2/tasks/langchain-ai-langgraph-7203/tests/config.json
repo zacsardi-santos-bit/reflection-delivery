@@ -1,0 +1,28 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/libs/langgraph/tests/test_pregel.py::test_tags_stream_mode_messages /workspace/repo/libs/langgraph/tests/test_pregel.py::test_stream_mode_messages_command /workspace/repo/libs/langgraph/tests/test_pregel_async.py::test_tags_stream_mode_messages /workspace/repo/libs/langgraph/tests/test_pregel_async.py::test_stream_mode_messages_command /workspace/repo/libs/langgraph/tests/test_pregel_async.py::test_imp_exception /workspace/repo/libs/langgraph/tests/test_large_cases.py::test_prebuilt_tool_chat /workspace/repo/libs/langgraph/tests/test_large_cases.py::test_weather_subgraph /workspace/repo/libs/langgraph/tests/test_large_cases_async.py::test_prebuilt_tool_chat /workspace/repo/libs/langgraph/tests/test_large_cases_async.py::test_weather_subgraph -v",
+  "test_files": [
+    "libs/langgraph/tests/test_large_cases.py",
+    "libs/langgraph/tests/test_large_cases_async.py",
+    "libs/langgraph/tests/test_pregel.py",
+    "libs/langgraph/tests/test_pregel_async.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_pregel::test_tags_stream_mode_messages",
+    "tests.test_pregel::test_stream_mode_messages_command",
+    "tests.test_pregel_async::test_tags_stream_mode_messages",
+    "tests.test_pregel_async::test_stream_mode_messages_command",
+    "tests.test_pregel_async::test_imp_exception[memory]",
+    "tests.test_pregel_async::test_imp_exception[sqlite_aio]",
+    "tests.test_large_cases::test_prebuilt_tool_chat",
+    "tests.test_large_cases::test_weather_subgraph[memory]",
+    "tests.test_large_cases::test_weather_subgraph[sqlite]",
+    "tests.test_large_cases::test_weather_subgraph[sqlite_aes]",
+    "tests.test_large_cases_async::test_prebuilt_tool_chat",
+    "tests.test_large_cases_async::test_weather_subgraph[memory]",
+    "tests.test_large_cases_async::test_weather_subgraph[sqlite_aio]"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,7 @@
+I'm working on the git cloning code in the Docker builder and want to make it more secure and easier to extend. Right now, there are a couple of issues I need to address.
+
+First, there's a security concern: when the builder clones a remote repository, it also initializes any submodules that repository might have. Those submodules are currently allowed to reference local file paths on the host machine. That means a maliciously crafted image build context could potentially expose sensitive files from the host. I want to block the file-based transport so that submodule sources (and any other git remote references) must go over a network protocol.
+
+Second, the git helper utilities are currently structured as standalone package-level functions. This makes it hard to thread any per-operation context through to the underlying git invocations. I'd like to convert these helpers into methods on the repository configuration struct so they naturally carry that context. Specifically, the function that runs git commands in a directory should become a method on the repository struct, and the function that performs the full clone-and-checkout should also become a method on that struct.
+
+The method that executes git commands in a directory should use the directory as the working directory of the subprocess — not by passing it as flags to git — so that it works correctly with the full range of git subcommands including repository initialization and configuration.

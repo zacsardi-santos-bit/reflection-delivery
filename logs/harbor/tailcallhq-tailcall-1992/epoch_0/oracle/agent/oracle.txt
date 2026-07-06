@@ -1,8 +1,0 @@
-patching file src/core/config/config.rs
-patching file src/core/generator/from_proto.rs
-patching file src/core/generator/snapshots/tailcall__core__generator__from_proto__test__from_proto.snap
-patching file src/core/generator/snapshots/tailcall__core__generator__from_proto__test__movies.snap
-patching file src/core/generator/snapshots/tailcall__core__generator__from_proto__test__oneof_types.snap
-patching file src/core/grpc/protobuf.rs
-patching file src/core/json/json_schema.rs
-patching file tailcall-fixtures/fixtures/protobuf/oneof.proto

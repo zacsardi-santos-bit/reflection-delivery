@@ -1,0 +1,43 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/utils/test_core_model_loading.py -v -p no:cacheprovider",
+  "test_files": [
+    "tests/utils/test_core_model_loading.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_scoped_match_falls_back_when_checkpoint_omits_base_prefix",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_scoped_match_round_trips_when_scope_equals_base_model_prefix",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_scoped_match_strips_one_base_prefix_level_for_nested_scope"
+  ],
+  "PASS_TO_PASS": [
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_anchor_full_match_only",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_anychar_star_accepts_nondigits",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_digits_only_star_accepts_digits",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_exact_match",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_large_batch_performance_smoke",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_leftmost_alternative_wins_for_overlapping_patterns",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_multiple_patterns_same_prefix",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_no_match",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_sub_key_no_match_returns_original",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_sub_key_rewrites_targets",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_ernie4_5_vl_moe_conversion",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_ernie4_5_vl_moe_conversion_reversed",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_interleaved_renaming_and_converter_round_trip",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_moe_and_qkv_conversion",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_moe_and_qkv_conversion_reversed",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_scoped_renaming_does_not_leak_to_sibling_or_parent",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_can_add_prefix",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_can_add_prefix_submodule",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_can_remove_prefix",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_can_remove_prefix_submodule",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_child_with_same_model_type_as_root_is_skipped",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_class_name_wins_over_model_type",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_conv3d_linear_conversion_ops",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_register_checkpoint_conversion_mapping",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_register_checkpoint_conversion_mapping_overwrites",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_sibling_submodels_same_class_both_get_transforms",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_sibling_submodels_same_model_type_both_get_transforms"
+  ]
+}

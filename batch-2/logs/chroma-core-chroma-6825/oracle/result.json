@@ -1,0 +1,29 @@
+{
+    "id": "74b4742a-3417-4629-a3d6-14173bec2ca2",
+    "started_at": "2026-07-06T12:19:27.443956",
+    "finished_at": "2026-07-06T12:21:32.845158",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__chroma-core-chroma-6825": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "chroma-core-chroma-6825__uryxSiA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

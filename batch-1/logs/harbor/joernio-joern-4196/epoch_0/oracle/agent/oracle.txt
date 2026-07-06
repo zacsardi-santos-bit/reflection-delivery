@@ -1,0 +1,15 @@
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/resources/builtin_types.json
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/CSharpSrc2Cpg.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/Constants.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/TypeMap.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreator.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreatorHelper.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForDeclarationsCreator.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForExpressionsCreator.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForPrimitivesCreator.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstSummaryVisitor.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpProgramSummary.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpScope.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/ScopeType.scala
+patching file joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/parser/DotNetJsonAst.scala
+patching file joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/datastructures/ProgramSummary.scala

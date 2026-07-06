@@ -1,0 +1,98 @@
+{
+    "id": "c9938262-c58a-49e8-b14b-95d2788b79bb",
+    "task_name": "offline/lihenggui-blocker-657",
+    "trial_name": "lihenggui-blocker-657__d7CcWVS",
+    "trial_uri": "file:///tmp/nop/2026-07-01__15-02-51/lihenggui-blocker-657__d7CcWVS",
+    "task_id": {
+        "path": "lihenggui-blocker-657"
+    },
+    "source": "src",
+    "task_checksum": "3daac2909d06e68d1f1ba57f8c6515355b951f2644b99549c5035f05cb3e56d4",
+    "config": {
+        "task": {
+            "path": "lihenggui-blocker-657",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "lihenggui-blocker-657__d7CcWVS",
+        "trials_dir": "/tmp/nop/2026-07-01__15-02-51",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "4d5c394b-7976-4dc4-85ff-6eac7b30cad6"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T15:02:59.529319Z",
+    "finished_at": "2026-07-01T15:04:54.017819Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T15:02:59.531416Z",
+        "finished_at": "2026-07-01T15:03:21.369373Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T15:03:21.369412Z",
+        "finished_at": "2026-07-01T15:03:21.369459Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T15:03:21.369510Z",
+        "finished_at": "2026-07-01T15:03:21.369540Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T15:03:21.369635Z",
+        "finished_at": "2026-07-01T15:04:42.807116Z"
+    }
+}

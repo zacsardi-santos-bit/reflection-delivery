@@ -1,8 +1,0 @@
-patching file docs/user-guide/example-config.md
-patching file docs/user-guide/rules.md
-patching file lib/rules/index.js
-patching file lib/rules/selector-combinator-blacklist/README.md
-patching file lib/rules/selector-combinator-blacklist/index.js
-patching file lib/rules/selector-combinator-whitelist/README.md
-patching file lib/rules/selector-combinator-whitelist/index.js
-patching file lib/utils/isStandardSyntaxCombinator.js

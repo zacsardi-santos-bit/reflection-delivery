@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cd /workspace/repo && cargo nextest run -p biome_js_formatter --test spec_tests -E 'test(multi_line)'",
+  "test_files": [
+    "crates/biome_js_formatter/tests/specs/js/module/expression/member-chain/multi_line.js",
+    "crates/biome_js_formatter/tests/specs/js/module/expression/member-chain/multi_line.js.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_js_formatter::spec_tests formatter::js_module::specs::js::module::expression::member_chain::multi_line_js"
+  ],
+  "PASS_TO_PASS": []
+}

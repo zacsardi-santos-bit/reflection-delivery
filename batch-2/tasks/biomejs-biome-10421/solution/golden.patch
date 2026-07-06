@@ -1,0 +1,613 @@
+diff --git a/crates/biome_css_parser/src/syntax/at_rule/feature.rs b/crates/biome_css_parser/src/syntax/at_rule/feature.rs
+index aa51b0017d..c081f26f1c 100644
+--- a/crates/biome_css_parser/src/syntax/at_rule/feature.rs
++++ b/crates/biome_css_parser/src/syntax/at_rule/feature.rs
+@@ -2,27 +2,25 @@ use crate::parser::CssParser;
+ use crate::syntax::parse_error::expected_component_value;
+ use crate::syntax::parse_error::expected_identifier;
+ use crate::syntax::scss::{
+-    is_at_scss_interpolated_identifier, is_at_scss_interpolation,
+-    parse_scss_interpolated_identifier, parse_scss_regular_interpolation,
+-};
+-use crate::syntax::{
+-    CssSyntaxFeatures, is_at_any_value, is_at_identifier, parse_any_value, parse_regular_identifier,
++    is_at_scss_interpolated_identifier, is_at_scss_interpolation, parse_scss_interpolated_name,
++    parse_scss_interpolated_query_feature, parse_scss_interpolation_or_identifier,
+ };
++use crate::syntax::{is_at_any_value, is_at_identifier, parse_any_value};
+ use biome_css_syntax::CssSyntaxKind::*;
+ use biome_css_syntax::{CssSyntaxKind, T, TextRange};
+ use biome_parser::diagnostic::{ParseDiagnostic, ToDiagnostic, expect_one_of};
+ use biome_parser::parsed_syntax::ParsedSyntax;
+ use biome_parser::parsed_syntax::ParsedSyntax::{Absent, Present};
+-use biome_parser::{Parser, SyntaxFeature, TokenSet, token_set};
++use biome_parser::{Marker, Parser, TokenSet, token_set};
+ 
+ /// Parses a CSS query feature used by `@media` and `@container`.
+ #[inline]
+ pub fn parse_any_query_feature(p: &mut CssParser) -> ParsedSyntax {
+     if is_at_scss_interpolation(p) {
+-        parse_interpolated_query_feature(p)
++        parse_scss_interpolated_query_feature(p)
+     } else if is_at_query_feature_name(p) {
+         parse_named_query_feature(p)
+-    } else if is_at_value_prefixed_query_feature(p) {
++    } else if is_at_any_query_feature_value(p) {
+         parse_value_prefixed_query_feature(p)
+     } else {
+         Absent
+@@ -31,11 +29,7 @@ pub fn parse_any_query_feature(p: &mut CssParser) -> ParsedSyntax {
+ 
+ #[inline]
+ fn is_at_query_feature_name(p: &mut CssParser) -> bool {
+-    if CssSyntaxFeatures::Scss.is_supported(p) {
+-        is_at_scss_interpolated_identifier(p)
+-    } else {
+-        is_at_identifier(p)
+-    }
++    is_at_scss_interpolated_identifier(p) || is_at_identifier(p)
+ }
+ 
+ /// Parses a query feature that starts with a feature name.
+@@ -51,6 +45,23 @@ fn parse_named_query_feature(p: &mut CssParser) -> ParsedSyntax {
+     let m = p.start();
+     parse_query_feature_name(p).or_add_diagnostic(p, expected_identifier);
+ 
++    parse_query_feature_from_name(p, m)
++}
++
++#[inline]
++pub(crate) fn parse_query_feature_name(p: &mut CssParser) -> ParsedSyntax {
++    if !is_at_query_feature_name(p) {
++        return Absent;
++    }
++
++    parse_scss_interpolated_name(p)
++}
++
++/// Parses a query feature after its name is already parsed.
++///
++/// Examples: `(color)`, `(width: 500px)`, or `(width <= #{$value})`.
++#[inline]
++pub(crate) fn parse_query_feature_from_name(p: &mut CssParser, m: Marker) -> ParsedSyntax {
+     let kind = if is_at_query_feature_range_comparison(p) {
+         // Checked by `is_at_query_feature_range_comparison` above.
+         parse_query_feature_range_comparison(p).ok();
+@@ -67,79 +78,33 @@ fn parse_named_query_feature(p: &mut CssParser) -> ParsedSyntax {
+     Present(m.complete(p, kind))
+ }
+ 
+-#[inline]
+-fn parse_query_feature_name(p: &mut CssParser) -> ParsedSyntax {
+-    if !is_at_query_feature_name(p) {
+-        return Absent;
+-    }
+-
+-    if CssSyntaxFeatures::Scss.is_supported(p) {
+-        parse_scss_interpolated_identifier(p)
+-    } else {
+-        parse_regular_identifier(p)
+-    }
+-}
+-
+-#[inline]
+-fn parse_interpolated_query_feature(p: &mut CssParser) -> ParsedSyntax {
+-    if !is_at_scss_interpolation(p) {
+-        return Absent;
+-    }
+-
+-    let feature_start = p.checkpoint();
+-
+-    // Interpolation can start either a feature name or a feature value.
+-    // Classify from what follows the interpolation so we only speculate over
+-    // the ambiguous prefix instead of the whole feature.
+-    // Guarded by `is_at_scss_interpolation` above.
+-    parse_scss_regular_interpolation(p).ok();
+-
+-    if p.at(T![:]) || !is_at_query_feature_range_comparison(p) {
+-        p.rewind(feature_start);
+-        return parse_named_query_feature(p);
+-    }
+-
+-    // Checked by `is_at_query_feature_range_comparison` above.
+-    parse_query_feature_range_comparison(p).ok();
+-
+-    if !is_at_query_feature_name(p) {
+-        p.rewind(feature_start);
+-        return parse_named_query_feature(p);
+-    }
+-
+-    // Checked by `is_at_query_feature_name` above.
+-    parse_query_feature_name(p).ok();
+-    p.rewind(feature_start);
+-
+-    // For interpolation-first forms like `#{$min} <= width`, prefer the
+-    // value-first interpretation so the canonical identifier in the middle
+-    // becomes the feature name.
+-    parse_value_prefixed_query_feature(p)
+-}
+-
+-#[inline]
+-fn is_at_value_prefixed_query_feature(p: &mut CssParser) -> bool {
+-    is_at_any_query_feature_value(p)
+-}
+-
+ /// Parses a query feature that starts with a feature value.
+ ///
+ /// This covers reverse ranges such as `(500px <= width)` and interval ranges
+ /// such as `(500px <= width <= 1000px)`.
+ #[inline]
+ fn parse_value_prefixed_query_feature(p: &mut CssParser) -> ParsedSyntax {
+-    if !is_at_value_prefixed_query_feature(p) {
++    if !is_at_any_query_feature_value(p) {
+         return Absent;
+     }
+ 
+     let m = p.start();
+ 
+-    // Guarded by `is_at_value_prefixed_query_feature` above.
++    // Guarded by `is_at_any_query_feature_value` above.
+     parse_any_query_feature_value(p).ok();
+     parse_query_feature_range_comparison(p)
+         .or_add_diagnostic(p, expected_query_feature_range_comparison);
+     parse_query_feature_name(p).or_add_diagnostic(p, expected_identifier);
+ 
++    parse_query_feature_interval_end(p, m)
++}
++
++/// Parses the optional upper bound after `value <= name`.
++///
++/// Examples: `@media (#{$min} <= width) {}` or
++/// `@media (#{$min} <= width <= #{$max}) {}`.
++#[inline]
++pub(crate) fn parse_query_feature_interval_end(p: &mut CssParser, m: Marker) -> ParsedSyntax {
+     if is_at_query_feature_range_comparison(p) {
+         // Checked by `is_at_query_feature_range_comparison` above.
+         parse_query_feature_range_comparison(p).ok();
+@@ -152,12 +117,12 @@ fn parse_value_prefixed_query_feature(p: &mut CssParser) -> ParsedSyntax {
+ }
+ 
+ #[inline]
+-fn is_at_query_feature_range_comparison(p: &mut CssParser) -> bool {
++pub(crate) fn is_at_query_feature_range_comparison(p: &mut CssParser) -> bool {
+     p.at_ts(QUERY_FEATURE_RANGE_COMPARISON_OPERATOR_SET)
+ }
+ 
+ #[inline]
+-fn parse_query_feature_range_comparison(p: &mut CssParser) -> ParsedSyntax {
++pub(crate) fn parse_query_feature_range_comparison(p: &mut CssParser) -> ParsedSyntax {
+     if !is_at_query_feature_range_comparison(p) {
+         return Absent;
+     }
+@@ -179,10 +144,8 @@ pub(crate) fn is_at_any_query_feature_value(p: &mut CssParser) -> bool {
+ 
+ #[inline]
+ fn parse_any_query_feature_value(p: &mut CssParser) -> ParsedSyntax {
+-    if is_at_scss_interpolated_query_feature_value(p) {
+-        parse_scss_interpolated_identifier(p)
+-    } else if is_at_scss_interpolation(p) {
+-        parse_scss_regular_interpolation(p)
++    if is_at_scss_interpolation(p) {
++        parse_scss_interpolation_or_identifier(p)
+     } else {
+         // The concrete query-feature value grammar is narrower than `AnyCssValue`,
+         // but this shared value parser gives us the right recovery for the current
+@@ -191,20 +154,6 @@ fn parse_any_query_feature_value(p: &mut CssParser) -> ParsedSyntax {
+     }
+ }
+ 
+-#[inline]
+-fn is_at_scss_interpolated_query_feature_value(p: &mut CssParser) -> bool {
+-    if !CssSyntaxFeatures::Scss.is_supported(p) || !is_at_scss_interpolation(p) {
+-        return false;
+-    }
+-
+-    let checkpoint = p.checkpoint();
+-    parse_scss_regular_interpolation(p).ok();
+-    let continues_as_identifier = is_at_scss_interpolated_identifier(p);
+-    p.rewind(checkpoint);
+-
+-    continues_as_identifier
+-}
+-
+ pub(crate) fn expected_any_query_feature(p: &CssParser, range: TextRange) -> ParseDiagnostic {
+     expect_one_of(
+         &[
+diff --git a/crates/biome_css_parser/src/syntax/at_rule/unknown.rs b/crates/biome_css_parser/src/syntax/at_rule/unknown.rs
+index cd73e63d5b..481d0ce30c 100644
+--- a/crates/biome_css_parser/src/syntax/at_rule/unknown.rs
++++ b/crates/biome_css_parser/src/syntax/at_rule/unknown.rs
+@@ -1,7 +1,7 @@
+ use crate::parser::CssParser;
+ use crate::syntax::block::parse_declaration_or_rule_list_block;
+ use crate::syntax::scss::{
+-    is_at_scss_interpolation, parse_scss_identifier_or_interpolation,
++    is_at_scss_interpolation, parse_scss_interpolation_or_identifier,
+     parse_scss_regular_interpolation,
+ };
+ use crate::syntax::{CssSyntaxFeatures, is_at_identifier, parse_regular_identifier};
+@@ -54,7 +54,7 @@ pub(crate) fn parse_unknown_at_rule(p: &mut CssParser) -> ParsedSyntax {
+ #[inline]
+ fn parse_unknown_at_rule_name(p: &mut CssParser) -> ParsedSyntax {
+     if CssSyntaxFeatures::Scss.is_supported(p) {
+-        parse_scss_identifier_or_interpolation(p)
++        parse_scss_interpolation_or_identifier(p)
+     } else {
+         parse_regular_identifier(p)
+     }
+diff --git a/crates/biome_css_parser/src/syntax/scss/at_rule/mod.rs b/crates/biome_css_parser/src/syntax/scss/at_rule/mod.rs
+index 49a9ce0ed4..8f6bef2074 100644
+--- a/crates/biome_css_parser/src/syntax/scss/at_rule/mod.rs
++++ b/crates/biome_css_parser/src/syntax/scss/at_rule/mod.rs
+@@ -15,6 +15,7 @@ mod keyframes;
+ mod mixin_at_rule;
+ mod module_clauses;
+ mod parameter;
++mod query_feature;
+ mod return_at_rule;
+ mod use_at_rule;
+ mod warn;
+@@ -42,6 +43,7 @@ pub(crate) use import_at_rule::parse_scss_import_at_rule;
+ pub(crate) use include_at_rule::parse_scss_include_at_rule;
+ pub(crate) use keyframes::{is_at_scss_keyframes_selector, parse_scss_keyframes_selector};
+ pub(crate) use mixin_at_rule::parse_scss_mixin_at_rule;
++pub(crate) use query_feature::parse_scss_interpolated_query_feature;
+ pub(crate) use return_at_rule::parse_scss_return_at_rule;
+ pub(crate) use use_at_rule::parse_scss_use_at_rule;
+ pub(crate) use warn::parse_scss_warn_at_rule;
+diff --git a/crates/biome_css_parser/src/syntax/scss/at_rule/query_feature.rs b/crates/biome_css_parser/src/syntax/scss/at_rule/query_feature.rs
+new file mode 100644
+index 0000000000..b0321c6c67
+--- /dev/null
++++ b/crates/biome_css_parser/src/syntax/scss/at_rule/query_feature.rs
+@@ -0,0 +1,61 @@
++use crate::parser::CssParser;
++use crate::syntax::at_rule::feature::{
++    is_at_query_feature_range_comparison, parse_query_feature_from_name,
++    parse_query_feature_interval_end, parse_query_feature_name,
++    parse_query_feature_range_comparison,
++};
++use crate::syntax::scss::{
++    is_at_scss_interpolation, is_nth_at_scss_interpolated_identifier,
++    parse_scss_interpolation_or_identifier,
++};
++use biome_css_syntax::CssSyntaxKind::{
++    SCSS_INTERPOLATED_IDENTIFIER, SCSS_INTERPOLATED_IDENTIFIER_PART_LIST, SCSS_INTERPOLATION,
++};
++use biome_parser::Parser;
++use biome_parser::parsed_syntax::ParsedSyntax;
++use biome_parser::parsed_syntax::ParsedSyntax::{Absent, Present};
++
++/// Parses an interpolation-led query feature.
++///
++/// Examples:
++/// ```scss
++/// @media (#{$feature}: #{$value}) {}
++/// @media (#{$min} <= width <= #{$max}) {}
++/// ```
++///
++/// Docs: https://sass-lang.com/documentation/interpolation
++#[inline]
++pub(crate) fn parse_scss_interpolated_query_feature(p: &mut CssParser) -> ParsedSyntax {
++    if !is_at_scss_interpolation(p) {
++        return Absent;
++    }
++
++    let m = p.start();
++
++    let Present(head) = parse_scss_interpolation_or_identifier(p) else {
++        return Absent;
++    };
++
++    if is_at_query_feature_name_after_comparison(p) {
++        // `#{$min}px <= width`: keep the canonical identifier as the feature name.
++        // Safe: `is_at_query_feature_name_after_comparison` checks both tokens.
++        parse_query_feature_range_comparison(p).ok();
++        parse_query_feature_name(p).ok();
++        return parse_query_feature_interval_end(p, m);
++    }
++
++    // `#{$feature}: value` and `#{$feature} <= 10px`: the interpolation is the name.
++    if head.kind(p) == SCSS_INTERPOLATION {
++        let parts = head
++            .precede(p)
++            .complete(p, SCSS_INTERPOLATED_IDENTIFIER_PART_LIST);
++        parts.precede(p).complete(p, SCSS_INTERPOLATED_IDENTIFIER);
++    }
++
++    parse_query_feature_from_name(p, m)
++}
++
++#[inline]
++fn is_at_query_feature_name_after_comparison(p: &mut CssParser) -> bool {
++    is_at_query_feature_range_comparison(p) && is_nth_at_scss_interpolated_identifier(p, 1)
++}
+diff --git a/crates/biome_css_parser/src/syntax/scss/function_name.rs b/crates/biome_css_parser/src/syntax/scss/function_name.rs
+index 669bfa9e27..e4880fce1d 100644
+--- a/crates/biome_css_parser/src/syntax/scss/function_name.rs
++++ b/crates/biome_css_parser/src/syntax/scss/function_name.rs
+@@ -1,5 +1,4 @@
+ use crate::parser::CssParser;
+-use crate::syntax::parse_regular_identifier;
+ use biome_css_syntax::T;
+ use biome_parser::CompletedMarker;
+ use biome_parser::Parser;
+@@ -8,7 +7,7 @@ use biome_parser::prelude::ParsedSyntax::Absent;
+ 
+ use super::{
+     is_at_scss_interpolated_identifier, is_at_scss_module_member_access,
+-    parse_scss_interpolated_identifier, parse_scss_module_member_access,
++    parse_scss_interpolated_name, parse_scss_module_member_access,
+ };
+ 
+ #[inline]
+@@ -39,10 +38,8 @@ pub(crate) fn parse_scss_function_name(p: &mut CssParser) -> ParsedSyntax {
+         parse_scss_module_member_access(p).map(|marker| {
+             add_scss_variable_member_function_name_diagnostic(p, has_dollar_member, marker)
+         })
+-    } else if is_at_scss_interpolated_identifier(p) {
+-        parse_scss_interpolated_identifier(p)
+     } else {
+-        parse_regular_identifier(p)
++        parse_scss_interpolated_name(p)
+     }
+ }
+ 
+diff --git a/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_regular.rs b/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_regular.rs
+index e2846fdcd1..9cb58715e9 100644
+--- a/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_regular.rs
++++ b/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_regular.rs
+@@ -10,6 +10,28 @@ use biome_css_syntax::CssSyntaxKind::{SCSS_INTERPOLATED_IDENTIFIER, SCSS_INTERPO
+ use biome_parser::prelude::ParsedSyntax;
+ use biome_parser::prelude::ParsedSyntax::{Absent, Present};
+ 
++/// Parses SCSS-interpolated name slots.
++///
++/// Bare interpolation like `#{$feature}` becomes an interpolated identifier
++/// because callers expect a name node.
++///
++/// Examples:
++/// ```scss
++/// @media (#{$feature}: block) {}
++/// [data-#{$name}] {}
++/// .a { value: foo#{1 + 1}(arg); }
++/// ```
++///
++/// Docs: https://sass-lang.com/documentation/interpolation
++#[inline]
++pub(crate) fn parse_scss_interpolated_name(p: &mut CssParser) -> ParsedSyntax {
++    if is_at_scss_interpolated_identifier(p) {
++        parse_scss_interpolated_identifier(p)
++    } else {
++        parse_regular_identifier(p)
++    }
++}
++
+ /// Parses identifier-shaped SCSS syntax that may contain interpolation parts.
+ ///
+ /// This is different from [`parse_scss_regular_interpolation`],
+@@ -48,8 +70,7 @@ pub(crate) fn parse_scss_interpolated_identifier(p: &mut CssParser) -> ParsedSyn
+     Present(parts.precede(p).complete(p, SCSS_INTERPOLATED_IDENTIFIER))
+ }
+ 
+-/// Parses an interpolation-led SCSS value as an interpolated identifier only
+-/// when adjacent identifier fragments follow immediately.
++/// Parses SCSS interpolation or adjacent identifier fragments in value slots.
+ ///
+ /// Standalone interpolation like `#{$name}` remains a `ScssInterpolation`,
+ /// while adjacent forms such as `#{$name}-suffix` become a
+@@ -63,7 +84,7 @@ pub(crate) fn parse_scss_interpolated_identifier(p: &mut CssParser) -> ParsedSyn
+ ///
+ /// Docs: https://sass-lang.com/documentation/interpolation
+ #[inline]
+-pub(crate) fn parse_scss_identifier_or_interpolation(p: &mut CssParser) -> ParsedSyntax {
++pub(crate) fn parse_scss_interpolation_or_identifier(p: &mut CssParser) -> ParsedSyntax {
+     if !is_at_scss_interpolated_identifier(p) {
+         return Absent;
+     }
+diff --git a/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_selector.rs b/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_selector.rs
+index 4dfebd63ea..7f9688251f 100644
+--- a/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_selector.rs
++++ b/crates/biome_css_parser/src/syntax/scss/identifiers/interpolated_selector.rs
+@@ -12,13 +12,7 @@ use biome_css_syntax::CssSyntaxKind::{SCSS_INTERPOLATED_IDENTIFIER, SCSS_INTERPO
+ use biome_parser::prelude::ParsedSyntax;
+ use biome_parser::prelude::ParsedSyntax::{Absent, Present};
+ 
+-/// Parses selector identifier grammar that may contain interpolation parts.
+-///
+-/// This is different from [`parse_scss_selector_interpolation`], which parses
+-/// exactly one standalone selector interpolation such as `#{$type}`. This
+-/// helper parses selector identifier grammar, so it can merge adjacent selector
+-/// identifier fragments and interpolation fragments into one identifier-shaped
+-/// node.
++/// Parses SCSS-interpolated selector name slots.
+ ///
+ /// This selector-specific variant keeps the closing `}` of an interpolation in
+ /// selector lexing mode so following whitespace is tokenized as a selector
+@@ -32,16 +26,11 @@ use biome_parser::prelude::ParsedSyntax::{Absent, Present};
+ ///
+ /// Docs: https://sass-lang.com/documentation/interpolation/
+ #[inline]
+-pub(crate) fn parse_scss_selector_interpolated_identifier(p: &mut CssParser) -> ParsedSyntax {
+-    parse_selector_interpolated_identifier(p, parse_selector_identifier_fragment)
++pub(crate) fn parse_scss_selector_identifier(p: &mut CssParser) -> ParsedSyntax {
++    parse_scss_selector_identifier_with_fragment(p, parse_selector_identifier_fragment)
+ }
+ 
+-/// Parses selector custom identifiers such as `.foo-#{$name}` and preserves the
+-/// selector-specific custom-identifier rules used by class and id selectors.
+-///
+-/// Like `parse_scss_selector_interpolated_identifier`, this keeps selector
+-/// whitespace after `#{$...}` visible as a combinator rather than treating it
+-/// as trivia.
++/// Parses SCSS-interpolated selector custom identifiers.
+ ///
+ /// Example:
+ /// ```scss
+@@ -50,20 +39,14 @@ pub(crate) fn parse_scss_selector_interpolated_identifier(p: &mut CssParser) ->
+ ///
+ /// Docs: https://sass-lang.com/documentation/interpolation/
+ #[inline]
+-pub(crate) fn parse_scss_selector_custom_interpolated_identifier(
+-    p: &mut CssParser,
+-) -> ParsedSyntax {
+-    parse_selector_interpolated_identifier(p, parse_selector_custom_identifier_fragment)
++pub(crate) fn parse_scss_selector_custom_identifier(p: &mut CssParser) -> ParsedSyntax {
++    parse_scss_selector_identifier_with_fragment(p, parse_selector_custom_identifier_fragment)
+ }
+ 
+-/// Parses selector identifier grammar using `parse_selector_fragment` for the
+-/// non-interpolation fragments.
++/// Parses selector identifier grammar with caller-owned non-interpolation parts.
+ ///
+-/// `parse_selector_fragment` keeps the selector-specific identifier rules at
+-/// the call site. Class/id custom identifiers pass
+-/// [`parse_selector_custom_identifier_fragment`], while regular selector
+-/// identifiers pass [`parse_selector_identifier_fragment`].
+-fn parse_selector_interpolated_identifier(
++/// Examples: `button-#{$variant}` and `.button-#{$variant}`.
++fn parse_scss_selector_identifier_with_fragment(
+     p: &mut CssParser,
+     parse_selector_fragment: fn(&mut CssParser) -> ParsedSyntax,
+ ) -> ParsedSyntax {
+diff --git a/crates/biome_css_parser/src/syntax/scss/identifiers/mod.rs b/crates/biome_css_parser/src/syntax/scss/identifiers/mod.rs
+index 236b6689a1..aff93bf928 100644
+--- a/crates/biome_css_parser/src/syntax/scss/identifiers/mod.rs
++++ b/crates/biome_css_parser/src/syntax/scss/identifiers/mod.rs
+@@ -17,10 +17,11 @@ pub(crate) use interpolated_identifier::{
+     is_at_scss_interpolated_identifier, is_nth_at_scss_interpolated_identifier,
+ };
+ pub(crate) use interpolated_regular::{
+-    parse_scss_identifier_or_interpolation, parse_scss_interpolated_identifier,
++    parse_scss_interpolated_identifier, parse_scss_interpolated_name,
++    parse_scss_interpolation_or_identifier,
+ };
+ pub(crate) use interpolated_selector::{
+-    parse_scss_selector_custom_interpolated_identifier, parse_scss_selector_interpolated_identifier,
++    parse_scss_selector_custom_identifier, parse_scss_selector_identifier,
+ };
+ pub(crate) use module_member_access::{
+     is_at_scss_module_member_access, is_nth_at_scss_module_member_access,
+diff --git a/crates/biome_css_parser/src/syntax/scss/mod.rs b/crates/biome_css_parser/src/syntax/scss/mod.rs
+index 4124b02a96..ffca77a781 100644
+--- a/crates/biome_css_parser/src/syntax/scss/mod.rs
++++ b/crates/biome_css_parser/src/syntax/scss/mod.rs
+@@ -14,9 +14,9 @@ pub(crate) use at_rule::{
+     parse_scss_content_at_rule, parse_scss_debug_at_rule, parse_scss_each_at_rule,
+     parse_scss_error_at_rule, parse_scss_extend_at_rule, parse_scss_for_at_rule,
+     parse_scss_forward_at_rule, parse_scss_function_at_rule, parse_scss_if_at_rule,
+-    parse_scss_import_at_rule, parse_scss_include_at_rule, parse_scss_keyframes_selector,
+-    parse_scss_mixin_at_rule, parse_scss_return_at_rule, parse_scss_use_at_rule,
+-    parse_scss_warn_at_rule, parse_scss_while_at_rule,
++    parse_scss_import_at_rule, parse_scss_include_at_rule, parse_scss_interpolated_query_feature,
++    parse_scss_keyframes_selector, parse_scss_mixin_at_rule, parse_scss_return_at_rule,
++    parse_scss_use_at_rule, parse_scss_warn_at_rule, parse_scss_while_at_rule,
+ };
+ pub(crate) use declaration::{
+     is_at_scss_nesting_declaration, is_at_scss_variable_declaration, is_at_scss_variable_modifier,
+@@ -38,11 +38,11 @@ pub(crate) use identifiers::{
+     is_at_scss_interpolated_dashed_identifier, is_at_scss_interpolated_identifier,
+     is_at_scss_module_member_access, is_at_scss_namespaced_variable, is_at_scss_variable,
+     is_nth_at_scss_interpolated_dashed_identifier, is_nth_at_scss_interpolated_identifier,
+-    is_nth_at_scss_module_member_access, parse_scss_identifier_or_interpolation,
+-    parse_scss_interpolated_dashed_identifier, parse_scss_interpolated_identifier,
+-    parse_scss_module_member_access, parse_scss_namespaced_variable,
+-    parse_scss_selector_custom_interpolated_identifier,
+-    parse_scss_selector_interpolated_identifier, parse_scss_variable,
++    is_nth_at_scss_module_member_access, parse_scss_interpolated_dashed_identifier,
++    parse_scss_interpolated_identifier, parse_scss_interpolated_name,
++    parse_scss_interpolation_or_identifier, parse_scss_module_member_access,
++    parse_scss_namespaced_variable, parse_scss_selector_custom_identifier,
++    parse_scss_selector_identifier, parse_scss_variable,
+ };
+ pub(crate) use parse_error::{
+     expected_scss_expression, expected_scss_variable_modifier, scss_ellipsis_not_allowed,
+diff --git a/crates/biome_css_parser/src/syntax/scss/value/interpolated_value.rs b/crates/biome_css_parser/src/syntax/scss/value/interpolated_value.rs
+index 7c4033dafa..180b1cffc6 100644
+--- a/crates/biome_css_parser/src/syntax/scss/value/interpolated_value.rs
++++ b/crates/biome_css_parser/src/syntax/scss/value/interpolated_value.rs
+@@ -1,7 +1,7 @@
+ use crate::parser::CssParser;
+ use crate::syntax::scss::{
+     is_at_scss_interpolation, is_at_scss_namespaced_variable, is_at_scss_variable,
+-    is_nth_at_scss_interpolation, parse_scss_identifier_or_interpolation,
++    is_nth_at_scss_interpolation, parse_scss_interpolation_or_identifier,
+     parse_scss_namespaced_variable, parse_scss_regular_interpolation, parse_scss_variable,
+ };
+ use crate::syntax::value::dimension::{is_at_any_dimension, parse_any_dimension};
+@@ -71,7 +71,7 @@ pub(crate) fn parse_scss_interpolated_function_or_value_until(
+         return Absent;
+     }
+ 
+-    let head = match parse_scss_identifier_or_interpolation(p) {
++    let head = match parse_scss_interpolation_or_identifier(p) {
+         Present(head) => head,
+         Absent => return Absent,
+     };
+diff --git a/crates/biome_css_parser/src/syntax/selector/attribute.rs b/crates/biome_css_parser/src/syntax/selector/attribute.rs
+index a308c51647..adb252fb81 100644
+--- a/crates/biome_css_parser/src/syntax/selector/attribute.rs
++++ b/crates/biome_css_parser/src/syntax/selector/attribute.rs
+@@ -82,6 +82,8 @@ fn parse_attribute_name_identifier(p: &mut CssParser) -> ParsedSyntax {
+     }
+ 
+     if is_at_scss_interpolated_attribute_identifier(p) {
++        // `[lang=#{$locale}]` keeps `lang` as CssIdentifier; only
++        // `[data-#{$name}=x]` needs an interpolated attribute name.
+         parse_scss_interpolated_identifier(p)
+     } else {
+         parse_regular_identifier(p)
+diff --git a/crates/biome_css_parser/src/syntax/selector/mod.rs b/crates/biome_css_parser/src/syntax/selector/mod.rs
+index d73d53b115..4842af860a 100644
+--- a/crates/biome_css_parser/src/syntax/selector/mod.rs
++++ b/crates/biome_css_parser/src/syntax/selector/mod.rs
+@@ -13,8 +13,7 @@ use crate::syntax::parse_error::{
+ use crate::syntax::scss::{
+     is_at_scss_interpolated_identifier, is_nth_at_scss_interpolated_identifier,
+     is_nth_at_scss_placeholder_selector, parse_scss_placeholder_selector,
+-    parse_scss_selector_custom_interpolated_identifier,
+-    parse_scss_selector_interpolated_identifier,
++    parse_scss_selector_custom_identifier, parse_scss_selector_identifier,
+ };
+ use crate::syntax::selector::attribute::parse_attribute_selector;
+ use crate::syntax::selector::nested_selector::NestedSelectorList;
+@@ -545,7 +544,7 @@ fn is_at_selector_identifier(p: &mut CssParser) -> bool {
+ #[inline]
+ fn parse_selector_identifier(p: &mut CssParser) -> ParsedSyntax {
+     if CssSyntaxFeatures::Scss.is_supported(p) {
+-        parse_scss_selector_interpolated_identifier(p)
++        parse_scss_selector_identifier(p)
+     } else {
+         parse_selector_identifier_fragment(p)
+     }
+@@ -563,7 +562,7 @@ pub(crate) fn parse_selector_identifier_fragment(p: &mut CssParser) -> ParsedSyn
+ #[inline]
+ pub(crate) fn parse_selector_custom_identifier(p: &mut CssParser) -> ParsedSyntax {
+     if CssSyntaxFeatures::Scss.is_supported(p) {
+-        parse_scss_selector_custom_interpolated_identifier(p)
++        parse_scss_selector_custom_identifier(p)
+     } else {
+         parse_selector_custom_identifier_fragment(p)
+     }
+diff --git a/crates/biome_css_parser/src/syntax/selector/pseudo_class/function_value_list.rs b/crates/biome_css_parser/src/syntax/selector/pseudo_class/function_value_list.rs
+index e59dd0e944..0f52662a2b 100644
+--- a/crates/biome_css_parser/src/syntax/selector/pseudo_class/function_value_list.rs
++++ b/crates/biome_css_parser/src/syntax/selector/pseudo_class/function_value_list.rs
+@@ -2,7 +2,7 @@ use crate::parser::CssParser;
+ use crate::syntax::parse_error::expected_identifier;
+ use crate::syntax::scss::{
+     is_at_scss_interpolated_identifier, is_at_scss_interpolated_string,
+-    parse_scss_identifier_or_interpolation, parse_scss_interpolated_string,
++    parse_scss_interpolated_string, parse_scss_interpolation_or_identifier,
+ };
+ use crate::syntax::selector::eat_or_recover_selector_function_close_token;
+ use crate::syntax::{is_at_identifier, is_at_string, parse_regular_identifier, parse_string};
+@@ -102,7 +102,7 @@ fn parse_pseudo_value(p: &mut CssParser) -> ParsedSyntax {
+     } else if is_at_string(p) {
+         parse_string(p)
+     } else if is_at_scss_interpolated_identifier(p) {
+-        parse_scss_identifier_or_interpolation(p)
++        parse_scss_interpolation_or_identifier(p)
+     } else {
+         parse_regular_identifier(p)
+     }

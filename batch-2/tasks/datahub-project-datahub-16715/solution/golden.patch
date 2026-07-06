@@ -1,0 +1,445 @@
+diff --git a/metadata-ingestion/setup.py b/metadata-ingestion/setup.py
+index 7cf6714d5b..3f851a78b1 100644
+--- a/metadata-ingestion/setup.py
++++ b/metadata-ingestion/setup.py
+@@ -1226,6 +1226,7 @@ See the [DataHub docs](https://docs.datahub.com/docs/metadata-ingestion).
+                 ]
+             )
+         ),
++        "sso": list(framework_common | {"playwright>=1.40.0,<2.0.0"}),
+         "cloud": ["acryl-datahub-cloud"],
+         "dev": list(dev_requirements),
+         "docs": list(
+diff --git a/metadata-ingestion/src/datahub/cli/resources/INIT_AGENT_CONTEXT.md b/metadata-ingestion/src/datahub/cli/resources/INIT_AGENT_CONTEXT.md
+index 197a04f294..6197ba026e 100644
+--- a/metadata-ingestion/src/datahub/cli/resources/INIT_AGENT_CONTEXT.md
++++ b/metadata-ingestion/src/datahub/cli/resources/INIT_AGENT_CONTEXT.md
+@@ -48,6 +48,39 @@ export DATAHUB_GMS_TOKEN=<your-token>
+ datahub init
+ ```
+ 
++## SSO browser login
++
++For DataHub instances using SSO (OIDC/SAML), use `--sso` to authenticate via browser:
++
++```bash
++# Opens browser — complete SSO, CLI captures session and generates token
++datahub init --sso --host https://your-instance.example.com/gms
++
++# Custom token duration
++datahub init --sso --host https://your-instance.example.com/gms --token-duration ONE_MONTH
++```
++
++**Prerequisites** (one-time setup):
++
++```bash
++pip install 'acryl-datahub[sso]'   # or: uv pip install 'acryl-datahub[sso]'
++playwright install chromium
++```
++
++`--sso` is mutually exclusive with `--token`, `--username`, and `--password`.
++If Playwright is not installed, the command prints step-by-step install instructions and exits.
++
++### Support login (DataHub Cloud)
++
++For the support team debugging customer instances, add `--support` to use the
++`/support/authenticate` login path:
++
++```bash
++datahub init --sso --support --host https://customer.acryl.io/gms
++```
++
++`--support` requires `--sso`.
++
+ ## Environment variables
+ 
+ | Variable            | CLI equivalent |
+diff --git a/metadata-ingestion/src/datahub/cli/sso_cli.py b/metadata-ingestion/src/datahub/cli/sso_cli.py
+new file mode 100644
+index 0000000000..31b8162046
+--- /dev/null
++++ b/metadata-ingestion/src/datahub/cli/sso_cli.py
+@@ -0,0 +1,216 @@
++import logging
++import urllib.parse
++from datetime import datetime
++from typing import Tuple
++
++import click
++import requests
++
++logger = logging.getLogger(__name__)
++
++CLI_TOKEN_PREFIX = "cli token "
++
++_INSTALL_HELP = """\
++The --sso flag requires Playwright and a Chromium browser.
++
++Step 1 — Install the Python package (pick your package manager):
++    pip install 'acryl-datahub[sso]'
++    uv pip install 'acryl-datahub[sso]'
++    pip install 'playwright>=1.40.0'
++
++Step 2 — Download the Chromium browser binary:
++    playwright install chromium\
++"""
++
++
++def _check_playwright_ready() -> None:
++    """Verify that playwright is importable.
++
++    Raises click.UsageError with step-by-step install instructions if not.
++    If the chromium browser binary is missing, Playwright itself will raise
++    a clear error at launch time telling the user to run `playwright install`.
++    """
++    try:
++        from playwright.sync_api import sync_playwright  # noqa: F401
++    except ImportError as e:
++        raise click.UsageError(
++            "Playwright is not installed.\n\n" + _INSTALL_HELP
++        ) from e
++
++
++def _warn_about_existing_cli_tokens(
++    session: requests.Session,
++    frontend_url: str,
++    actor_urn: str,
++) -> None:
++    """Best-effort warning about existing CLI tokens for the current user."""
++    try:
++        response = session.post(
++            f"{frontend_url}/api/v2/graphql",
++            json={
++                "query": """query listAccessTokens($input: ListAccessTokenInput!) {
++                    listAccessTokens(input: $input) {
++                        total
++                        tokens { name }
++                    }
++                }""",
++                "variables": {
++                    "input": {
++                        "start": 0,
++                        "count": 100,
++                        "filters": [
++                            {
++                                "field": "ownerUrn",
++                                "values": [actor_urn],
++                            }
++                        ],
++                    }
++                },
++            },
++        )
++        response.raise_for_status()
++        data = response.json()
++        tokens = data.get("data", {}).get("listAccessTokens", {}).get("tokens", [])
++        cli_token_count = sum(
++            1 for t in tokens if t.get("name", "").startswith(CLI_TOKEN_PREFIX)
++        )
++        if cli_token_count > 0:
++            click.echo(
++                f"⚠ You have {cli_token_count} existing CLI token(s). "
++                f"Manage them at {frontend_url}/settings/tokens"
++            )
++    except Exception:
++        logger.debug("Failed to check existing CLI tokens", exc_info=True)
++
++
++def browser_sso_login(
++    frontend_url: str,
++    token_duration: str,
++    timeout_ms: int = 120_000,
++    support: bool = False,
++) -> Tuple[str, str]:
++    """Open browser for SSO login, extract session, generate access token.
++
++    Args:
++        frontend_url: The DataHub frontend URL (e.g. http://localhost:9002).
++        token_duration: Token validity duration (e.g. ONE_HOUR).
++        timeout_ms: How long to wait for SSO login to complete, in milliseconds.
++        support: If True, use /support/authenticate path for DataHub Cloud
++            support team access to customer instances.
++
++    Returns:
++        Tuple of (token_name, access_token).
++
++    Raises:
++        click.ClickException: On timeout or missing session cookies.
++    """
++    _check_playwright_ready()
++
++    from playwright.sync_api import sync_playwright
++
++    auth_path = "/support/authenticate" if support else "/authenticate"
++    if support:
++        click.echo("Opening browser for support SSO login...")
++    else:
++        click.echo("Opening browser for SSO login...")
++    click.echo("Complete the login in your browser.\n")
++
++    with sync_playwright() as p:
++        browser = p.chromium.launch(headless=False)
++        try:
++            context = browser.new_context()
++            page = context.new_page()
++
++            page.goto(f"{frontend_url}{auth_path}")
++
++            # Wait for the actor cookie, which signals successful SSO login.
++            actor_urn = None
++            try:
++                page.wait_for_function(
++                    """() => document.cookie.split('; ').some(c => c.startsWith('actor='))""",
++                    timeout=timeout_ms,
++                )
++            except Exception as e:
++                raise click.ClickException(
++                    f"SSO login timed out after {timeout_ms // 1000} seconds. "
++                    "Please try again."
++                ) from e
++
++            # Extract cookies from the browser context
++            cookies = context.cookies()
++        finally:
++            browser.close()
++
++    # Build a requests.Session with the extracted cookies
++    session = requests.Session()
++    for cookie in cookies:
++        session.cookies.set(
++            cookie["name"],
++            cookie["value"],
++            domain=cookie.get("domain", ""),
++            path=cookie.get("path", "/"),
++        )
++
++    # Extract actor URN from the actor cookie
++    for cookie in cookies:
++        if cookie["name"] == "actor":
++            actor_urn = urllib.parse.unquote(cookie["value"])
++            break
++
++    if not actor_urn:
++        raise click.ClickException(
++            "SSO login succeeded but no actor cookie found. "
++            "This may indicate an incompatible DataHub version."
++        )
++
++    click.echo(f"✓ Logged in as {actor_urn}")
++
++    _warn_about_existing_cli_tokens(session, frontend_url, actor_urn)
++
++    # Generate an access token via the frontend GraphQL API
++    now = datetime.now()
++    timestamp = now.astimezone().isoformat()
++    token_name = f"cli token {timestamp}"
++
++    json_payload = {
++        "query": """mutation createAccessToken($input: CreateAccessTokenInput!) {
++            createAccessToken(input: $input) {
++              accessToken
++              metadata {
++                id
++                actorUrn
++                ownerUrn
++                name
++                description
++              }
++            }
++        }""",
++        "variables": {
++            "input": {
++                "type": "PERSONAL",
++                "actorUrn": actor_urn,
++                "duration": token_duration,
++                "name": token_name,
++            }
++        },
++    }
++
++    response = session.post(
++        f"{frontend_url}/api/v2/graphql", json=json_payload, timeout=30
++    )
++    response.raise_for_status()
++
++    data = response.json()
++    if data.get("errors"):
++        error_msg = data["errors"][0].get("message", str(data["errors"]))
++        raise click.ClickException(
++            f"Failed to create access token: {error_msg}\n"
++            "Check that personal access tokens are enabled and your account has permission."
++        )
++    access_token = data.get("data", {}).get("createAccessToken", {}).get("accessToken")
++    if not access_token:
++        raise click.ClickException(
++            "Server returned empty access token. Contact your DataHub administrator."
++        )
++
++    return token_name, access_token
+diff --git a/metadata-ingestion/src/datahub/entrypoints.py b/metadata-ingestion/src/datahub/entrypoints.py
+index bcbc2725e5..f77a1231ec 100644
+--- a/metadata-ingestion/src/datahub/entrypoints.py
++++ b/metadata-ingestion/src/datahub/entrypoints.py
+@@ -154,6 +154,7 @@ def _validate_init_inputs(
+     username: Optional[str],
+     password: Optional[str],
+     token_duration: Optional[str],
++    sso: bool = False,
+ ) -> None:
+     """Validate init command inputs for consistency.
+ 
+@@ -163,10 +164,25 @@ def _validate_init_inputs(
+         username: Username value (if provided)
+         password: Password value (if provided)
+         token_duration: Token expiration duration (if provided)
++        sso: Whether SSO browser login is requested
+ 
+     Raises:
+         click.UsageError: If inputs are invalid or inconsistent
+     """
++    # SSO is mutually exclusive with other auth methods
++    if sso:
++        if token or os.environ.get("DATAHUB_GMS_TOKEN"):
++            raise click.UsageError(
++                "--sso cannot be used with --token. "
++                "Use --sso alone to authenticate via browser SSO."
++            )
++        if username or password or get_username() or get_password():
++            raise click.UsageError(
++                "--sso cannot be used with --username/--password. "
++                "Use --sso alone to authenticate via browser SSO."
++            )
++        return
++
+     # Check if credentials will come from CLI args or env vars
+     username_provided = username or get_username()
+     password_provided = password or get_password()
+@@ -258,6 +274,18 @@ def _validate_init_inputs(
+     default=False,
+     help="Overwrite existing config without confirmation",
+ )
++@click.option(
++    "--sso",
++    is_flag=True,
++    default=False,
++    help="Open browser for SSO login (requires: pip install 'acryl-datahub[sso]' && playwright install chromium)",
++)
++@click.option(
++    "--support",
++    is_flag=True,
++    default=False,
++    help="Use support login path for DataHub Cloud customer debugging (use with --sso)",
++)
+ @click.option(
+     "--agent-context",
+     is_flag=True,
+@@ -272,6 +300,8 @@ def init(
+     password: Optional[str] = None,
+     token_duration: Optional[str] = None,
+     force: bool = False,
++    sso: bool = False,
++    support: bool = False,
+     agent_context: bool = False,
+ ) -> None:
+     """Configure which DataHub instance to connect to.
+@@ -290,19 +320,27 @@ def init(
+ 
+     \b
+     Mode 1: Auto-Generate Token from Username/Password
+-        # Default duration: ONE_MONTH for localhost, ONE_HOUR for remote instances
+         datahub init --username alice --password secret
+-
+-        # Custom duration (for long-running jobs)
+-        datahub init --username alice --password secret --token-duration ONE_MONTH
+-
+-        # Non-expiring token (for CI/CD)
+-        datahub init --username alice --password secret --token-duration NO_EXPIRY
++        datahub init --username alice --password secret \\
++            --token-duration ONE_MONTH
++        datahub init --username alice --password secret \\
++            --token-duration NO_EXPIRY
+ 
+     \b
+     Mode 2: Use Existing Token
+         datahub init --token <your-existing-token>
+ 
++    \b
++    Mode 3: SSO Browser Login (OIDC/SAML)
++        datahub init --sso --host https://example.com/gms
++        datahub init --sso --host https://example.com/gms \\
++            --token-duration ONE_MONTH
++
++    \b
++    Support Login (DataHub Cloud — customer debugging):
++        datahub init --sso --support \\
++            --host https://customer.acryl.io/gms
++
+     \b
+     Environment Variables (for automation):
+         export DATAHUB_GMS_URL=http://localhost:8080
+@@ -318,7 +356,8 @@ def init(
+ 
+     \b
+     DataHub Cloud (Acryl-hosted instances):
+-        datahub init --host https://your-instance.acryl.io/gms --token <your-token>
++        datahub init --token <token> \\
++            --host https://your-instance.acryl.io/gms
+     """
+     if agent_context:
+         text: str = (
+@@ -329,6 +368,10 @@ def init(
+         click.echo(text)
+         return
+ 
++    # Validate: --support requires --sso
++    if support and not sso:
++        raise click.UsageError("--support requires --sso")
++
+     # Show deprecation warning if --use-password used
+     if use_password:
+         click.echo(
+@@ -338,7 +381,9 @@ def init(
+         )
+ 
+     # Validate input combinations
+-    _validate_init_inputs(use_password, token, username, password, token_duration)
++    _validate_init_inputs(
++        use_password, token, username, password, token_duration, sso=sso
++    )
+ 
+     # Handle overwrite confirmation: prompt only on interactive TTYs.
+     # Non-TTY environments (agents, CI) silently overwrite — same as --force.
+@@ -348,9 +393,11 @@ def init(
+     # Get host (CLI arg > Env var > silent default if credentials provided > prompt)
+     # When credentials are supplied non-interactively, skip the prompt and default to
+     # localhost:8080 — users connecting to a different host will pass --host explicitly.
+-    _credentials_non_interactive = bool(
+-        (username or get_username()) and (password or get_password())
+-    ) or bool(token or os.environ.get("DATAHUB_GMS_TOKEN"))
++    _credentials_non_interactive = (
++        bool((username or get_username()) and (password or get_password()))
++        or bool(token or os.environ.get("DATAHUB_GMS_TOKEN"))
++        or sso
++    )
+     if (
+         host is None
+         and not os.environ.get("DATAHUB_GMS_URL")
+@@ -380,7 +427,17 @@ def init(
+     password_provided = password or get_password()
+     should_generate_token = bool(username_provided and password_provided)
+ 
+-    if should_generate_token or use_password:
++    if sso:
++        # SSO browser login flow
++        from datahub.cli.cli_utils import guess_frontend_url_from_gms_url
++        from datahub.cli.sso_cli import browser_sso_login
++
++        frontend_url = guess_frontend_url_from_gms_url(host_value)
++        _, token_value = browser_sso_login(
++            frontend_url, effective_duration, support=support
++        )
++        click.echo(f"✓ Generated token (expires: {effective_duration})")
++    elif should_generate_token or use_password:
+         # Generate token from credentials
+         username_value = get_init_config_value(
+             arg_value=username,

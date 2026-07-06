@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p oxc_minifier -E 'test(test_new_expressions)'",
+  "test_files": [
+    "crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/2) oxc_minifier::mod ecmascript::may_have_side_effects::test_new_expressions"
+  ],
+  "PASS_TO_PASS": [
+    "(1/2) oxc_minifier::mod ecmascript::is_pure_function::test_new_expressions"
+  ]
+}

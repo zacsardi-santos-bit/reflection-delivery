@@ -1,0 +1,29 @@
+{
+    "id": "0c94b2a0-92c1-4665-8e1b-a10605abd4c9",
+    "started_at": "2026-07-04T15:36:19.452703",
+    "finished_at": "2026-07-04T15:37:38.745731",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-trafficserver-11951": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-trafficserver-11951__JAhwU8X"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+patching file app/vlinsert/loki/loki_json_test.go
+patching file app/vlinsert/loki/loki_json_timing_test.go
+patching file app/vlinsert/loki/loki_protobuf_test.go
+patching file app/vlinsert/loki/loki_protobuf_timing_test.go
+patching file lib/logstorage/tenant_id_test.go
+# github.com/VictoriaMetrics/VictoriaMetrics/app/vlinsert/loki [github.com/VictoriaMetrics/VictoriaMetrics/app/vlinsert/loki.test]
+app/vlinsert/loki/loki_json_test.go:21:13: undefined: processJSONRequest
+app/vlinsert/loki/loki_json_test.go:51:13: undefined: processJSONRequest
+app/vlinsert/loki/loki_json_test.go:88:18: undefined: parseLokiTimestamp
+app/vlinsert/loki/loki_json_timing_test.go:31:14: undefined: processJSONRequest
+app/vlinsert/loki/loki_protobuf_test.go:18:12: undefined: processProtobufRequest
+app/vlinsert/loki/loki_protobuf_test.go:25:9: undefined: PushRequest
+app/vlinsert/loki/loki_protobuf_test.go:28:10: undefined: Stream
+app/vlinsert/loki/loki_protobuf_test.go:40:36: undefined: Entry
+app/vlinsert/loki/loki_protobuf_timing_test.go:29:14: undefined: processProtobufRequest
+# github.com/VictoriaMetrics/VictoriaMetrics/lib/logstorage [github.com/VictoriaMetrics/VictoriaMetrics/lib/logstorage.test]
+lib/logstorage/tenant_id_test.go:130:15: undefined: GetTenantIDFromString
+FAIL	github.com/VictoriaMetrics/VictoriaMetrics/app/vlinsert/loki [build failed]
+FAIL	github.com/VictoriaMetrics/VictoriaMetrics/lib/logstorage [build failed]
+reward=0 graded=287 found=287 failed=287 parsed=2 framework=go exit_code=1

@@ -1,0 +1,41 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p tokio-stream --test stream_stream_map --no-fail-fast",
+  "test_files": [
+    "tokio-stream/tests/stream_stream_map.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(21/28) tokio-stream::stream_stream_map size_hint_overflow",
+    "( 1/28) tokio-stream::stream_stream_map iter_values_mut",
+    "( 3/28) tokio-stream::stream_stream_map next_many_empty",
+    "( 4/28) tokio-stream::stream_stream_map poll_next_many_correctly_loops_around",
+    "( 5/28) tokio-stream::stream_stream_map contains_key_borrow",
+    "( 6/28) tokio-stream::stream_stream_map multiple_entries",
+    "( 7/28) tokio-stream::stream_stream_map next_many_correctly_loops_around",
+    "( 8/28) tokio-stream::stream_stream_map next_many_pending",
+    "( 9/28) tokio-stream::stream_stream_map next_many_enough",
+    "(10/28) tokio-stream::stream_stream_map insert_remove",
+    "(11/28) tokio-stream::stream_stream_map clear",
+    "(12/28) tokio-stream::stream_stream_map poll_next_many_not_enough",
+    "(13/28) tokio-stream::stream_stream_map iter_keys",
+    "(15/28) tokio-stream::stream_stream_map poll_next_many_enough",
+    "(16/28) tokio-stream::stream_stream_map next_many_zero",
+    "(17/28) tokio-stream::stream_stream_map iter_values",
+    "(18/28) tokio-stream::stream_stream_map next_many_not_enough",
+    "(19/28) tokio-stream::stream_stream_map one_ready_many_none",
+    "(20/28) tokio-stream::stream_stream_map empty",
+    "(22/28) tokio-stream::stream_stream_map single_entry",
+    "(23/28) tokio-stream::stream_stream_map poll_next_many_zero",
+    "(24/28) tokio-stream::stream_stream_map poll_next_many_pending",
+    "(26/28) tokio-stream::stream_stream_map size_hint_with_upper",
+    "(28/28) tokio-stream::stream_stream_map replace"
+  ],
+  "PASS_TO_PASS": [
+    "( 2/28) tokio-stream::stream_stream_map new_capacity_zero",
+    "(14/28) tokio-stream::stream_stream_map poll_next_many_empty",
+    "(25/28) tokio-stream::stream_stream_map with_capacity",
+    "(27/28) tokio-stream::stream_stream_map size_hint_without_upper"
+  ]
+}

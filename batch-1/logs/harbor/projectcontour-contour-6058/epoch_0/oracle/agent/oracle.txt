@@ -1,0 +1,381 @@
+patching file CONTRIBUTING.md
+patching file apis/projectcontour/v1alpha1/contourconfig.go
+patching file apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+patching file changelogs/unreleased/6058-flawedmatrix-minor.md
+patching file cmd/contour/serve.go
+patching file cmd/contour/servecontext.go
+patching file examples/contour/01-crds.yaml
+patching file examples/render/contour-deployment.yaml
+patching file examples/render/contour-gateway-provisioner.yaml
+patching file examples/render/contour-gateway.yaml
+patching file examples/render/contour.yaml
+patching file internal/envoy/cluster.go
+patching file internal/xdscache/v3/listener.go
+patching file internal/xdscache/v3/runtime.go
+patching file pkg/config/parameters.go
+patching file site/content/docs/main/config/api-reference.html
+patching file site/content/resources/adopters.md
+patching file site/themes/contour/static/img/adopters/snappcloud.png
+Not deleting file site/themes/contour/static/img/adopters/snappcloud.png as content differs from patch
+patching file CONTRIBUTING.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file CONTRIBUTING.md.rej
+patching file apis/projectcontour/v1alpha1/contourconfig.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file apis/projectcontour/v1alpha1/contourconfig.go.rej
+patching file apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+Hunk #1 succeeded at 612 (offset 5 lines).
+The next patch would create the file changelogs/unreleased/6058-flawedmatrix-minor.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file cmd/contour/serve.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/contour/serve.go.rej
+patching file cmd/contour/servecontext.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/contour/servecontext.go.rej
+patching file examples/contour/01-crds.yaml
+Hunk #1 succeeded at 287 (offset 7 lines).
+Hunk #2 succeeded at 3946 (offset 14 lines).
+patching file examples/render/contour-deployment.yaml
+Hunk #1 succeeded at 506 (offset 7 lines).
+Hunk #2 succeeded at 4165 (offset 14 lines).
+patching file examples/render/contour-gateway-provisioner.yaml
+Hunk #1 succeeded at 298 (offset 7 lines).
+Hunk #2 succeeded at 3957 (offset 14 lines).
+patching file examples/render/contour-gateway.yaml
+Hunk #1 succeeded at 509 (offset 7 lines).
+Hunk #2 succeeded at 4168 (offset 14 lines).
+patching file examples/render/contour.yaml
+Hunk #1 succeeded at 506 (offset 7 lines).
+Hunk #2 succeeded at 4165 (offset 14 lines).
+patching file internal/envoy/cluster.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/envoy/cluster.go.rej
+patching file internal/xdscache/v3/listener.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/xdscache/v3/listener.go.rej
+patching file internal/xdscache/v3/runtime.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file internal/xdscache/v3/runtime.go.rej
+patching file pkg/config/parameters.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/config/parameters.go.rej
+patching file site/content/docs/main/config/api-reference.html
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file site/content/docs/main/config/api-reference.html.rej
+patching file site/content/resources/adopters.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file site/content/resources/adopters.md.rej
+patching file site/themes/contour/static/img/adopters/snappcloud.png
+Not deleting file site/themes/contour/static/img/adopters/snappcloud.png as content differs from patch
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+|index 2a70deab..dc9039eb 100644
+|--- a/CONTRIBUTING.md
+|+++ b/CONTRIBUTING.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 81
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apis/projectcontour/v1alpha1/contourconfig.go b/apis/projectcontour/v1alpha1/contourconfig.go
+|index 3e50f1ef..e8b1e6af 100644
+|--- a/apis/projectcontour/v1alpha1/contourconfig.go
+|+++ b/apis/projectcontour/v1alpha1/contourconfig.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 99
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apis/projectcontour/v1alpha1/zz_generated.deepcopy.go b/apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+|index 125d9949..8647d3d3 100644
+|--- a/apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+|+++ b/apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/changelogs/unreleased/6058-flawedmatrix-minor.md
+can't find file to patch at input line 126
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/contour/serve.go b/cmd/contour/serve.go
+|index 333f573b..a59295a7 100644
+|--- a/cmd/contour/serve.go
+|+++ b/cmd/contour/serve.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 140
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/contour/servecontext.go b/cmd/contour/servecontext.go
+|index c6b71d07..a81a308b 100644
+|--- a/cmd/contour/servecontext.go
+|+++ b/cmd/contour/servecontext.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 152
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/contour/01-crds.yaml b/examples/contour/01-crds.yaml
+|index 1e4531f6..0f332781 100644
+|--- a/examples/contour/01-crds.yaml
+|+++ b/examples/contour/01-crds.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 184
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/render/contour-deployment.yaml b/examples/render/contour-deployment.yaml
+|index f605afb8..7eedc8dd 100644
+|--- a/examples/render/contour-deployment.yaml
+|+++ b/examples/render/contour-deployment.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 216
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/render/contour-gateway-provisioner.yaml b/examples/render/contour-gateway-provisioner.yaml
+|index b812326a..c49b7176 100644
+|--- a/examples/render/contour-gateway-provisioner.yaml
+|+++ b/examples/render/contour-gateway-provisioner.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 248
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/render/contour-gateway.yaml b/examples/render/contour-gateway.yaml
+|index fde77fce..fe9a5922 100644
+|--- a/examples/render/contour-gateway.yaml
+|+++ b/examples/render/contour-gateway.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 280
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/render/contour.yaml b/examples/render/contour.yaml
+|index 37ce84b1..e3eee51b 100644
+|--- a/examples/render/contour.yaml
+|+++ b/examples/render/contour.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 312
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/envoy/cluster.go b/internal/envoy/cluster.go
+|index 8048b371..7d5218df 100644
+|--- a/internal/envoy/cluster.go
+|+++ b/internal/envoy/cluster.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 330
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/xdscache/v3/listener.go b/internal/xdscache/v3/listener.go
+|index 3cba5ee2..85070cd2 100644
+|--- a/internal/xdscache/v3/listener.go
+|+++ b/internal/xdscache/v3/listener.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 355
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/xdscache/v3/runtime.go b/internal/xdscache/v3/runtime.go
+|index bab794e1..dd35009f 100644
+|--- a/internal/xdscache/v3/runtime.go
+|+++ b/internal/xdscache/v3/runtime.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 461
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/config/parameters.go b/pkg/config/parameters.go
+|index 87574eac..7d1eca4f 100644
+|--- a/pkg/config/parameters.go
+|+++ b/pkg/config/parameters.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 489
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/site/content/docs/main/config/api-reference.html b/site/content/docs/main/config/api-reference.html
+|index 76babb39..0f55c8b0 100644
+|--- a/site/content/docs/main/config/api-reference.html
+|+++ b/site/content/docs/main/config/api-reference.html
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 514
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/site/content/resources/adopters.md b/site/content/resources/adopters.md
+|index 9c25cc47..73d51a23 100644
+|--- a/site/content/resources/adopters.md
+|+++ b/site/content/resources/adopters.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file b/site/themes/contour/static/img/adopters/snappcloud.png,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+patching file CONTRIBUTING.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file CONTRIBUTING.md.rej
+patching file apis/projectcontour/v1alpha1/contourconfig.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file apis/projectcontour/v1alpha1/contourconfig.go.rej
+patching file apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+Hunk #1 succeeded at 617 (offset 10 lines).
+The next patch would create the file changelogs/unreleased/6058-flawedmatrix-minor.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file cmd/contour/serve.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/contour/serve.go.rej
+patching file cmd/contour/servecontext.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/contour/servecontext.go.rej
+patching file examples/contour/01-crds.yaml
+Hunk #1 succeeded at 294 (offset 14 lines).
+Hunk #2 succeeded at 3960 (offset 28 lines).
+patching file examples/render/contour-deployment.yaml
+Hunk #1 succeeded at 513 (offset 14 lines).
+Hunk #2 succeeded at 4179 (offset 28 lines).
+patching file examples/render/contour-gateway-provisioner.yaml
+Hunk #1 succeeded at 305 (offset 14 lines).
+Hunk #2 succeeded at 3971 (offset 28 lines).
+patching file examples/render/contour-gateway.yaml
+Hunk #1 succeeded at 516 (offset 14 lines).
+Hunk #2 succeeded at 4182 (offset 28 lines).
+patching file examples/render/contour.yaml
+Hunk #1 succeeded at 513 (offset 14 lines).
+Hunk #2 succeeded at 4179 (offset 28 lines).
+patching file internal/envoy/cluster.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/envoy/cluster.go.rej
+patching file internal/xdscache/v3/listener.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/xdscache/v3/listener.go.rej
+patching file internal/xdscache/v3/runtime.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file internal/xdscache/v3/runtime.go.rej
+patching file pkg/config/parameters.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/config/parameters.go.rej
+patching file site/content/docs/main/config/api-reference.html
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file site/content/docs/main/config/api-reference.html.rej
+patching file site/content/resources/adopters.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file site/content/resources/adopters.md.rej
+patching file site/themes/contour/static/img/adopters/snappcloud.png
+Not deleting file site/themes/contour/static/img/adopters/snappcloud.png as content differs from patch
+ERROR: golden patch failed to apply by all strategies

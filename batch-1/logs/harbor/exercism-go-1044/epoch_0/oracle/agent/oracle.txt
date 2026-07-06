@@ -1,0 +1,4 @@
+patching file config.json
+patching file exercises/rectangles/.meta/gen.go
+patching file exercises/rectangles/README.md
+patching file exercises/rectangles/example.go

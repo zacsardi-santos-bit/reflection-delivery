@@ -1,9 +1,0 @@
-patching file config/crd/bases/k8s.nginx.org_policies.yaml
-patching file deploy/crds.yaml
-patching file internal/configs/version2/__snapshots__/templates_test.snap
-patching file internal/configs/version2/http.go
-patching file internal/configs/version2/nginx-plus.virtualserver.tmpl
-patching file internal/configs/virtualserver.go
-patching file pkg/apis/configuration/v1/types.go
-patching file pkg/apis/configuration/v1/zz_generated.deepcopy.go
-patching file pkg/apis/configuration/validation/policy.go

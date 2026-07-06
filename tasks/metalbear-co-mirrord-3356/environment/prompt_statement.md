@@ -1,5 +1,0 @@
-I'm working on the mirrord agent's IPTables integration and need to add support for excluding the agent's communication port from a service mesh sidecar proxy. Right now, when the agent runs as an ephemeral container in a pod that has a mesh proxy sidecar, the proxy intercepts all traffic including the agent's own port — which breaks the agent's communication with clients.
-
-I need to introduce a new IPTables chain that can be used to hold port exclusion rules, and wire it into the existing redirect chain setup so that the mesh proxy skips certain ports. The chain should be created during agent startup when this feature is enabled, and cleaned up when the agent exits. The new chain name needs to be recognized as a mirrord-managed chain so it gets included in dirty-check and cleanup operations alongside the existing managed chains.
-
-The feature should be optional and only activated when the agent is deployed as an ephemeral container in a service mesh environment. When active, the agent's own listening port should be added to the exclusion chain so it is not intercepted by the sidecar.

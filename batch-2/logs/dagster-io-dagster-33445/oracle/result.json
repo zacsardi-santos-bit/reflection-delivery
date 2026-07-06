@@ -1,0 +1,29 @@
+{
+    "id": "7a202f43-b4af-4f5b-9196-ef2f4738d768",
+    "started_at": "2026-07-06T12:18:10.394584",
+    "finished_at": "2026-07-06T12:18:40.624713",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__dagster-io-dagster-33445": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "dagster-io-dagster-33445__zxvbWrs"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

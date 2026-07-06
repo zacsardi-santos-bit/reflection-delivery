@@ -1,0 +1,31 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/sandbox/windows/WindowsSandboxManager.test.ts --coverage.enabled=false",
+  "test_files": [
+    "packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should prepare a GeminiSandbox.exe command",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should NOT whitelist drive roots in YOLO mode",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should handle persistent permissions from policyManager",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should include the workspace and allowed paths in the allowed manifest",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should exclude git worktree paths from the allowed manifest (enforce read-only)",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should include additional write paths in the allowed manifest",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager includes non-existent forbidden paths in the forbidden manifest",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should include forbidden paths in the forbidden manifest",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should exclude forbidden paths from the allowed manifest if a conflict exists",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should pass __write directly to native helper",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should safely handle special characters in internal command paths",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should pass __read directly to native helper",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should return a cleanup function that deletes the temporary manifest directory"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should handle networkAccess from config",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should handle network access from additionalPermissions",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should reject network access in Plan mode",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should sanitize environment variables",
+    "/workspace/repo/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts::WindowsSandboxManager should ensure governance files exist"
+  ]
+}

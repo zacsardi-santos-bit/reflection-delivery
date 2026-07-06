@@ -1,0 +1,557 @@
+diff --git a/front/src/config/i18n/de.json b/front/src/config/i18n/de.json
+index b9963df0..765bdf92 100644
+--- a/front/src/config/i18n/de.json
++++ b/front/src/config/i18n/de.json
+@@ -978,7 +978,16 @@
+         "gladys": "Gladys",
+         "mqtt": "MQTT",
+         "status": "Status",
+-        "connectionUrl": "URL der Zigbee2mqtt-Schnittstelle: <a href=\"{{url}}\" target=\"_blank\">{{url}}</a>"
++        "connectionUrl": "URL der Zigbee2mqtt-Schnittstelle: <a href=\"{{url}}\" target=\"_blank\">{{url}}</a>",
++        "reset": {
++          "title": "Integration zurücksetzen",
++          "description": "Verwenden Sie diese Option, wenn Sie mit Zigbee2mqtt von vorne beginnen möchten. Dies kann nützlich sein, wenn Ihre Konfiguration beschädigt ist oder wenn Sie Ihren Zigbee-Koordinator wechseln möchten.",
++          "button": "Zurücksetzen",
++          "confirmMessage": "Achtung, das Zurücksetzen der Integration löscht alle Zigbee2mqtt-Dateien auf der Festplatte und alle gespeicherten Einstellungen. Alle derzeit mit Zigbee2mqtt gekoppelten Zigbee-Geräte müssen erneut gekoppelt werden.",
++          "confirmButton": "Ja, alles zurücksetzen",
++          "cancelButton": "Abbrechen",
++          "error": "Beim Zurücksetzen der Integration ist ein Fehler aufgetreten."
++        }
+       },
+       "device": {
+         "title": "Meine Geräte",
+diff --git a/front/src/config/i18n/en.json b/front/src/config/i18n/en.json
+index aaf78b67..293bea96 100644
+--- a/front/src/config/i18n/en.json
++++ b/front/src/config/i18n/en.json
+@@ -873,7 +873,16 @@
+         "gladys": "Gladys",
+         "mqtt": "MQTT",
+         "status": "Status",
+-        "connectionUrl": "Zigbee2mqtt Interface URL: <a href=\"{{url}}\" target=\"_blank\">{{url}}</a>"
++        "connectionUrl": "Zigbee2mqtt Interface URL: <a href=\"{{url}}\" target=\"_blank\">{{url}}</a>",
++        "reset": {
++          "title": "Reset Integration",
++          "description": "Use this option if you want to start from scratch with Zigbee2mqtt. This can be useful if your configuration is corrupted or if you want to change your Zigbee coordinator.",
++          "button": "Reset",
++          "confirmMessage": "Warning, resetting the integration will delete all Zigbee2mqtt files on disk and all saved settings. All Zigbee devices currently paired to Zigbee2mqtt will need to be re-paired.",
++          "confirmButton": "Yes, reset everything",
++          "cancelButton": "Cancel",
++          "error": "An error occurred while resetting the integration."
++        }
+       },
+       "device": {
+         "title": "Zigbee2mqtt devices",
+diff --git a/front/src/config/i18n/fr.json b/front/src/config/i18n/fr.json
+index 83f8999a..12bd2c04 100644
+--- a/front/src/config/i18n/fr.json
++++ b/front/src/config/i18n/fr.json
+@@ -1108,7 +1108,16 @@
+         "gladys": "Gladys",
+         "mqtt": "MQTT",
+         "status": "Statut",
+-        "connectionUrl": "URL de l'interface Zigbee2mqtt : <a href=\"{{url}}\" target=\"_blank\">{{url}}</a>"
++        "connectionUrl": "URL de l'interface Zigbee2mqtt : <a href=\"{{url}}\" target=\"_blank\">{{url}}</a>",
++        "reset": {
++          "title": "Réinitialiser l'intégration",
++          "description": "Utilisez cette option si vous souhaitez repartir de zéro avec Zigbee2mqtt. Cela peut être utile si votre configuration est corrompue ou si vous souhaitez changer de coordinateur Zigbee.",
++          "button": "Réinitialiser",
++          "confirmMessage": "Attention, réinitialiser l'intégration supprimera tous les fichiers liés à Zigbee2mqtt sur le disque et tous les paramètres enregistrés. Tous les appareils Zigbee actuellement appairés à Zigbee2mqtt devront être ré-appairés.",
++          "confirmButton": "Oui, tout réinitialiser",
++          "cancelButton": "Annuler",
++          "error": "Une erreur est survenue lors de la réinitialisation de l'intégration."
++        }
+       },
+       "device": {
+         "title": "Appareils Zigbee",
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx
+index 3c5c4bdd..1a2a33de 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupPanel.jsx
+@@ -50,6 +50,16 @@ class SetupPanel extends Component {
+     if (setupZigee2mqttStatus === RequestStatus.Success && setupZigee2mqttStatus !== this.props.setupZigee2mqttStatus) {
+       this.setState({ configuration });
+     }
++
++    if (configuration.mqttMode !== this.props.configuration.mqttMode) {
++      let setupMode = null;
++      if (configuration.mqttMode === MQTT_MODE.LOCAL) {
++        setupMode = SETUP_MODES.LOCAL;
++      } else if (configuration.mqttMode === MQTT_MODE.EXTERNAL) {
++        setupMode = SETUP_MODES.REMOTE;
++      }
++      this.setState({ setupMode, configuration });
++    }
+   }
+ 
+   render({ zigbee2mqttStatus = {}, httpClient, disabled, setupZigee2mqttStatus }, { setupMode, configuration }) {
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx
+index 8e857eb1..2b12859e 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/SetupTab.jsx
+@@ -1,91 +1,179 @@
++import { Component } from 'preact';
+ import { Text, MarkupText } from 'preact-i18n';
+ import cx from 'classnames';
+ 
+ import { RequestStatus } from '../../../../../utils/consts';
++import { MQTT_MODE } from './constants';
+ 
+ import SetupPanel from './SetupPanel';
+ import EnableStatus from './status/EnableStatus';
+ import RunningStatus from './status/RunningStatus';
+ 
+-const SetupTab = props => {
+-  const { loadZigbee2mqttStatus, loadZigbee2mqttConfig, setupZigee2mqttStatus, toggleZigee2mqttStatus } = props;
+-  const { z2mContainerError } = props.zigbee2mqttStatus || {};
+-  const loading = loadZigbee2mqttStatus === RequestStatus.Getting || loadZigbee2mqttConfig === RequestStatus.Getting;
+-  const error = loadZigbee2mqttStatus === RequestStatus.Error || loadZigbee2mqttConfig === RequestStatus.Error;
+-  const success = loadZigbee2mqttStatus === RequestStatus.Success && loadZigbee2mqttConfig === RequestStatus.Success;
+-  const saving = setupZigee2mqttStatus === RequestStatus.Getting || toggleZigee2mqttStatus === RequestStatus.Getting;
+-  const disabled = loading || saving;
++class SetupTab extends Component {
++  showConfirmReset = () => {
++    this.setState({ showConfirmReset: true });
++  };
+ 
+-  return (
+-    <div class="card" data-cy="z2m-setup-wizard">
+-      <div class="card-header">
+-        <h2 class="card-title">
+-          <Text id="integration.zigbee2mqtt.setup.title" />
+-        </h2>
+-      </div>
+-      <div
+-        class={cx('dimmer', {
+-          active: loading,
+-          'py-5': loading
+-        })}
+-      >
+-        <div class="loader" />
+-        <div class="dimmer-content">
+-          <div class="card-body">
+-            {error && (
+-              <div class="alert alert-danger">
+-                <Text id="integration.zigbee2mqtt.setup.errorLoadingStatesLabel" />
+-              </div>
+-            )}
+-            <ul class="list-group list-group-flush list-unstyled">
+-              {success && <SetupPanel {...props} disabled={disabled} />}
+-              {setupZigee2mqttStatus === RequestStatus.Error && (
+-                <li class="list-group-item">
+-                  <div class="alert alert-danger my-3" data-cy="z2m-setup-save-error">
+-                    <Text id="integration.zigbee2mqtt.setup.saveError" />
+-                  </div>
+-                </li>
++  cancelReset = () => {
++    this.setState({ showConfirmReset: false });
++  };
++
++  confirmReset = async () => {
++    this.setState({ showConfirmReset: false });
++    await this.props.resetZ2M();
++  };
++
++  constructor(props) {
++    super(props);
++    this.state = {
++      showConfirmReset: false
++    };
++  }
++
++  render(props, { showConfirmReset }) {
++    const {
++      loadZigbee2mqttStatus,
++      loadZigbee2mqttConfig,
++      setupZigee2mqttStatus,
++      toggleZigee2mqttStatus,
++      resetZigbee2mqttStatus,
++      configuration = {}
++    } = props;
++    const { z2mContainerError } = props.zigbee2mqttStatus || {};
++    const loading = loadZigbee2mqttStatus === RequestStatus.Getting || loadZigbee2mqttConfig === RequestStatus.Getting;
++    const error = loadZigbee2mqttStatus === RequestStatus.Error || loadZigbee2mqttConfig === RequestStatus.Error;
++    const success = loadZigbee2mqttStatus === RequestStatus.Success && loadZigbee2mqttConfig === RequestStatus.Success;
++    const saving =
++      setupZigee2mqttStatus === RequestStatus.Getting ||
++      toggleZigee2mqttStatus === RequestStatus.Getting ||
++      resetZigbee2mqttStatus === RequestStatus.Getting;
++    const disabled = loading || saving;
++    const isLocalMode = configuration.mqttMode === MQTT_MODE.LOCAL;
++
++    return (
++      <div class="card" data-cy="z2m-setup-wizard">
++        <div class="card-header">
++          <h2 class="card-title">
++            <Text id="integration.zigbee2mqtt.setup.title" />
++          </h2>
++        </div>
++        <div
++          class={cx('dimmer', {
++            active: loading,
++            'py-5': loading
++          })}
++        >
++          <div class="loader" />
++          <div class="dimmer-content">
++            <div class="card-body">
++              {error && (
++                <div class="alert alert-danger">
++                  <Text id="integration.zigbee2mqtt.setup.errorLoadingStatesLabel" />
++                </div>
+               )}
++              <ul class="list-group list-group-flush list-unstyled">
++                {success && <SetupPanel {...props} disabled={disabled} />}
++                {setupZigee2mqttStatus === RequestStatus.Error && (
++                  <li class="list-group-item">
++                    <div class="alert alert-danger my-3" data-cy="z2m-setup-save-error">
++                      <Text id="integration.zigbee2mqtt.setup.saveError" />
++                    </div>
++                  </li>
++                )}
+ 
+-              <li class={cx('list-group-item', { 'loading-border': saving })} data-cy="z2m-toggle-status">
+-                <EnableStatus {...props} disabled={disabled} />
+-              </li>
++                <li class={cx('list-group-item', { 'loading-border': saving })} data-cy="z2m-toggle-status">
++                  <EnableStatus {...props} disabled={disabled} />
++                </li>
+ 
+-              {props.z2mUrl && (
+-                <li class="list-group-item">
+-                  <MarkupText
+-                    id="integration.zigbee2mqtt.setup.connectionUrl"
+-                    fields={{
+-                      url: props.z2mUrl
+-                    }}
+-                  />
++                {props.z2mUrl && (
++                  <li class="list-group-item">
++                    <MarkupText
++                      id="integration.zigbee2mqtt.setup.connectionUrl"
++                      fields={{
++                        url: props.z2mUrl
++                      }}
++                    />
++                  </li>
++                )}
++                {z2mContainerError && (
++                  <li class="list-group-item">
++                    <div class="alert alert-warning my-3">
++                      {z2mContainerError.code ? (
++                        <MarkupText
++                          id={`integration.zigbee2mqtt.setup.modes.local.containerErrors.${z2mContainerError.code}`}
++                        />
++                      ) : (
++                        <span>
++                          <Text id="integration.zigbee2mqtt.setup.modes.local.containerErrors.unknownErrorPrefix" />
++                          <code>{z2mContainerError.message}</code>
++                        </span>
++                      )}
++                    </div>
++                  </li>
++                )}
++                <li class="list-group-item" data-cy="z2m-running-status">
++                  <RunningStatus {...props} disabled={disabled} />
+                 </li>
+-              )}
+-              {z2mContainerError && (
+-                <li class="list-group-item">
+-                  <div class="alert alert-warning my-3">
+-                    {z2mContainerError.code ? (
+-                      <MarkupText
+-                        id={`integration.zigbee2mqtt.setup.modes.local.containerErrors.${z2mContainerError.code}`}
+-                      />
+-                    ) : (
+-                      <span>
+-                        <Text id="integration.zigbee2mqtt.setup.modes.local.containerErrors.unknownErrorPrefix" />
+-                        <code>{z2mContainerError.message}</code>
+-                      </span>
++
++                {isLocalMode && (
++                  <li class="list-group-item" data-cy="z2m-reset-section">
++                    <div class="form-group mt-3">
++                      <label class="form-label">
++                        <Text id="integration.zigbee2mqtt.setup.reset.title" />
++                      </label>
++                      <small class="form-text text-muted">
++                        <Text id="integration.zigbee2mqtt.setup.reset.description" />
++                      </small>
++                    </div>
++                    {resetZigbee2mqttStatus === RequestStatus.Error && (
++                      <div class="alert alert-danger my-3" data-cy="z2m-reset-error">
++                        <Text id="integration.zigbee2mqtt.setup.reset.error" />
++                      </div>
+                     )}
+-                  </div>
+-                </li>
+-              )}
+-              <li class="list-group-item" data-cy="z2m-running-status">
+-                <RunningStatus {...props} disabled={disabled} />
+-              </li>
+-            </ul>
++                    {!showConfirmReset && (
++                      <button
++                        class="btn btn-outline-danger"
++                        onClick={this.showConfirmReset}
++                        disabled={disabled}
++                        data-cy="z2m-reset-button"
++                      >
++                        <Text id="integration.zigbee2mqtt.setup.reset.button" />
++                      </button>
++                    )}
++                    {showConfirmReset && (
++                      <div class="d-flex flex-column align-items-start" style="row-gap: 1em">
++                        <div class="alert alert-danger mb-0">
++                          <Text id="integration.zigbee2mqtt.setup.reset.confirmMessage" />
++                        </div>
++                        <div>
++                          <button
++                            class="btn btn-danger"
++                            onClick={this.confirmReset}
++                            disabled={disabled}
++                            data-cy="z2m-reset-confirm-button"
++                          >
++                            <Text id="integration.zigbee2mqtt.setup.reset.confirmButton" />
++                          </button>
++                          <button
++                            class="btn ml-2"
++                            onClick={this.cancelReset}
++                            disabled={disabled}
++                            data-cy="z2m-reset-cancel-button"
++                          >
++                            <Text id="integration.zigbee2mqtt.setup.reset.cancelButton" />
++                          </button>
++                        </div>
++                      </div>
++                    )}
++                  </li>
++                )}
++              </ul>
++            </div>
+           </div>
+         </div>
+       </div>
+-    </div>
+-  );
+-};
++    );
++  }
++}
+ 
+ export default SetupTab;
+diff --git a/front/src/routes/integration/all/zigbee2mqtt/setup-page/index.js b/front/src/routes/integration/all/zigbee2mqtt/setup-page/index.js
+index c796165c..98d6a74c 100644
+--- a/front/src/routes/integration/all/zigbee2mqtt/setup-page/index.js
++++ b/front/src/routes/integration/all/zigbee2mqtt/setup-page/index.js
+@@ -100,6 +100,27 @@ class Zigbee2mqttSetupPage extends Component {
+     }
+   };
+ 
++  resetZ2M = async () => {
++    this.setState({
++      resetZigbee2mqttStatus: RequestStatus.Getting
++    });
++    try {
++      await this.props.httpClient.post('/api/v1/service/zigbee2mqtt/reset');
++      this.setState({
++        resetZigbee2mqttStatus: RequestStatus.Success,
++        configuration: {},
++        z2mUrl: null
++      });
++      await this.loadZ2MStatus();
++      await this.loadZ2MConfig();
++    } catch (e) {
++      console.error(e);
++      this.setState({
++        resetZigbee2mqttStatus: RequestStatus.Error
++      });
++    }
++  };
++
+   constructor(props) {
+     super(props);
+ 
+@@ -126,7 +147,13 @@ class Zigbee2mqttSetupPage extends Component {
+   render(props, state) {
+     return (
+       <Zigbee2mqttPage user={props.user}>
+-        <SetupTab {...props} {...state} saveConfiguration={this.saveConfiguration} toggleZ2M={this.toggleZ2M} />
++        <SetupTab
++          {...props}
++          {...state}
++          saveConfiguration={this.saveConfiguration}
++          toggleZ2M={this.toggleZ2M}
++          resetZ2M={this.resetZ2M}
++        />
+       </Zigbee2mqttPage>
+     );
+   }
+diff --git a/server/lib/system/system.removeContainer.js b/server/lib/system/system.removeContainer.js
+index c1afa405..1d973c51 100644
+--- a/server/lib/system/system.removeContainer.js
++++ b/server/lib/system/system.removeContainer.js
+@@ -14,7 +14,15 @@ async function removeContainer(containerId, options = {}) {
+   }
+ 
+   const container = await this.dockerode.getContainer(containerId);
+-  return container.remove(options);
++  try {
++    await container.remove(options);
++  } catch (e) {
++    // Docker returns HTTP 404 when the container no longer exists
++    if (e.statusCode === 404) {
++      return;
++    }
++    throw e;
++  }
+ }
+ 
+ module.exports = {
+diff --git a/server/lib/system/system.stopContainer.js b/server/lib/system/system.stopContainer.js
+index ed1998bd..e90fac22 100644
+--- a/server/lib/system/system.stopContainer.js
++++ b/server/lib/system/system.stopContainer.js
+@@ -13,7 +13,15 @@ async function stopContainer(containerId) {
+   }
+ 
+   const container = await this.dockerode.getContainer(containerId);
+-  return container.stop();
++  try {
++    await container.stop();
++  } catch (e) {
++    // Docker returns HTTP 304 when the container is already stopped
++    if (e.statusCode === 304) {
++      return;
++    }
++    throw e;
++  }
+ }
+ 
+ module.exports = {
+diff --git a/server/services/zigbee2mqtt/api/zigbee2mqtt.controller.js b/server/services/zigbee2mqtt/api/zigbee2mqtt.controller.js
+index 40588ed4..e3b4bbb8 100644
+--- a/server/services/zigbee2mqtt/api/zigbee2mqtt.controller.js
++++ b/server/services/zigbee2mqtt/api/zigbee2mqtt.controller.js
+@@ -125,6 +125,19 @@ module.exports = function Zigbee2mqttController(gladys, zigbee2mqttManager) {
+     });
+   }
+ 
++  /**
++   * @api {post} /api/v1/service/zigbee2mqtt/reset Reset Zigbee2mqtt integration
++   * @apiName reset
++   * @apiGroup Zigbee2mqtt
++   */
++  async function reset(req, res) {
++    logger.debug('Entering reset step');
++    await zigbee2mqttManager.reset();
++    res.json({
++      success: true,
++    });
++  }
++
+   /**
+    * @api {get} /api/v1/service/zigbee2mqtt/permit_join Get permit_join status
+    * @apiName getPermitJoin
+@@ -181,5 +194,10 @@ module.exports = function Zigbee2mqttController(gladys, zigbee2mqttManager) {
+       authenticated: true,
+       controller: asyncMiddleware(getPermitJoin),
+     },
++    'post /api/v1/service/zigbee2mqtt/reset': {
++      authenticated: true,
++      admin: true,
++      controller: asyncMiddleware(reset),
++    },
+   };
+ };
+diff --git a/server/services/zigbee2mqtt/lib/index.js b/server/services/zigbee2mqtt/lib/index.js
+index 89bc0d46..ab8d56d5 100644
+--- a/server/services/zigbee2mqtt/lib/index.js
++++ b/server/services/zigbee2mqtt/lib/index.js
+@@ -26,6 +26,7 @@ const { restoreZ2mBackup } = require('./restoreZ2mBackup');
+ const { backup } = require('./backup');
+ const { getManagedAdapters } = require('./getManagedAdapters');
+ const { readZ2mContainerLogs } = require('./readZ2mContainerLogs');
++const { reset } = require('./reset');
+ const { JOB_TYPES } = require('../../../utils/constants');
+ 
+ // EVENTS
+@@ -96,6 +97,7 @@ Zigbee2mqttManager.prototype.restoreZ2mBackup = restoreZ2mBackup;
+ Zigbee2mqttManager.prototype.backup = backup;
+ Zigbee2mqttManager.prototype.getManagedAdapters = getManagedAdapters;
+ Zigbee2mqttManager.prototype.readZ2mContainerLogs = readZ2mContainerLogs;
++Zigbee2mqttManager.prototype.reset = reset;
+ 
+ // EVENTS
+ Zigbee2mqttManager.prototype.emitStatusEvent = emitStatusEvent;
+diff --git a/server/services/zigbee2mqtt/lib/reset.js b/server/services/zigbee2mqtt/lib/reset.js
+new file mode 100644
+index 00000000..c559f74a
+--- /dev/null
++++ b/server/services/zigbee2mqtt/lib/reset.js
+@@ -0,0 +1,65 @@
++const fs = require('fs/promises');
++const path = require('path');
++
++const logger = require('../../../utils/logger');
++const { CONFIGURATION } = require('./constants');
++
++const ALL_CONFIGURATION_KEYS = [
++  CONFIGURATION.Z2M_DRIVER_PATH,
++  CONFIGURATION.Z2M_BACKUP,
++  CONFIGURATION.ZIGBEE_DONGLE_NAME,
++  CONFIGURATION.Z2M_MQTT_MODE,
++  CONFIGURATION.Z2M_TCP_PORT,
++  CONFIGURATION.MQTT_URL_KEY,
++  CONFIGURATION.Z2M_MQTT_USERNAME_KEY,
++  CONFIGURATION.Z2M_MQTT_PASSWORD_KEY,
++  CONFIGURATION.GLADYS_MQTT_USERNAME_KEY,
++  CONFIGURATION.GLADYS_MQTT_PASSWORD_KEY,
++  CONFIGURATION.DOCKER_MQTT_VERSION,
++  CONFIGURATION.DOCKER_Z2M_VERSION,
++];
++
++/**
++ * @description Reset Zigbee2mqtt integration to factory defaults.
++ * @example
++ * await this.reset();
++ */
++async function reset() {
++  logger.info('Zigbee2mqtt: resetting integration...');
++
++  // 1. Disconnect (stop containers + disconnect MQTT)
++  await this.disconnect();
++
++  // 2. Destroy all configuration variables in database
++  await Promise.all(ALL_CONFIGURATION_KEYS.map((key) => this.gladys.variable.destroy(key, this.serviceId)));
++
++  // 3. Delete zigbee2mqtt folder on disk
++  const { basePathOnContainer } = await this.gladys.system.getGladysBasePath();
++  const zigbee2mqttFolderPath = path.join(basePathOnContainer, 'zigbee2mqtt');
++  await fs.rm(zigbee2mqttFolderPath, { recursive: true, force: true });
++  logger.info('Zigbee2mqtt: folder deleted successfully');
++
++  // 4. Reset in-memory state
++  this.discoveredDevices = {};
++  this.topicBinds = {};
++  this.usbConfigured = false;
++  this.mqttExist = false;
++  this.mqttRunning = false;
++  this.mqttContainerRunning = false;
++  this.zigbee2mqttExist = false;
++  this.zigbee2mqttRunning = false;
++  this.gladysConnected = false;
++  this.zigbee2mqttConnected = false;
++  this.z2mPermitJoin = false;
++  this.coordinatorFirmware = null;
++  this.z2mContainerError = null;
++
++  // 5. Emit status event
++  this.emitStatusEvent();
++
++  logger.info('Zigbee2mqtt: integration reset complete');
++}
++
++module.exports = {
++  reset,
++};

@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/mlflow/mlflow/pull/22256"
+source_type = "pr"
+
+[task]
+name = "mlflow/mlflow"
+description = "I'm adding a binary archival format for MLflow trace data. Right now trace data only lives as JSON text, but I want a compact binary option based on the OpenTelemetry protocol's standard wire repre..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["python", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:mlflow-mlflow-22256"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Data Processing and ETL"
+subcategory = "File format parsing and serialization"
+objective_labels = ["Implement", "Validate"]
+artifact_type_labels = ["Codebase", "Binary executable or library"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600

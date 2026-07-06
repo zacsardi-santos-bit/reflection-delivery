@@ -1,0 +1,16 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn verify -pl test -am -Dtest=noTest -Dit.test=MetricsIT,IdleProcessMetricsIT -Dspotbugs.skip -Dcheckstyle.skip -DskipFormat -DverifyFormat -B",
+  "test_files": [
+    "test/src/main/java/org/apache/accumulo/test/functional/IdleProcessMetricsIT.java",
+    "test/src/main/java/org/apache/accumulo/test/metrics/MetricsIT.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

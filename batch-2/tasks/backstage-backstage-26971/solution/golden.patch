@@ -1,0 +1,711 @@
+diff --git a/.changeset/eight-cougars-collect-due.md b/.changeset/eight-cougars-collect-due.md
+new file mode 100644
+index 000000000000..ff997f876aaf
+--- /dev/null
++++ b/.changeset/eight-cougars-collect-due.md
+@@ -0,0 +1,6 @@
++---
++'@backstage/plugin-kubernetes-cluster': patch
++'@backstage/plugin-kubernetes-react': patch
++---
++
++Improved rendering of Kubernetes resources' metadata.
+diff --git a/.changeset/eight-cougars-collect.md b/.changeset/eight-cougars-collect.md
+new file mode 100644
+index 000000000000..edaa18d82628
+--- /dev/null
++++ b/.changeset/eight-cougars-collect.md
+@@ -0,0 +1,5 @@
++---
++'@backstage/core-components': patch
++---
++
++Added `nestedValuesAsYaml` option to `StructuredMetadataTable` to render data as yaml.
+diff --git a/packages/core-components/package.json b/packages/core-components/package.json
+index 13d3785c4d89..add79c01f596 100644
+--- a/packages/core-components/package.json
++++ b/packages/core-components/package.json
+@@ -73,6 +73,7 @@
+     "d3-shape": "^3.0.0",
+     "d3-zoom": "^3.0.0",
+     "dagre": "^0.8.5",
++    "js-yaml": "^4.1.0",
+     "linkify-react": "4.1.3",
+     "linkifyjs": "4.1.3",
+     "lodash": "^4.17.21",
+diff --git a/packages/core-components/report.api.md b/packages/core-components/report.api.md
+index c3f7cf9a6af7..c706eef2bb0c 100644
+--- a/packages/core-components/report.api.md
++++ b/packages/core-components/report.api.md
+@@ -1307,6 +1307,7 @@ export interface StructuredMetadataTableProps {
+   // (undocumented)
+   options?: {
+     titleFormat?: (key: string) => string;
++    nestedValuesAsYaml?: boolean;
+   };
+ }
+ 
+diff --git a/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.tsx b/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.tsx
+index 3099edf9d82f..b839280cdd1f 100644
+--- a/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.tsx
++++ b/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.tsx
+@@ -15,21 +15,23 @@
+  */
+ 
+ import React, { Fragment, ReactElement } from 'react';
+-import {
+-  withStyles,
+-  createStyles,
+-  WithStyles,
+-  Theme,
+-} from '@material-ui/core/styles';
+ import startCase from 'lodash/startCase';
+ import Typography from '@material-ui/core/Typography';
+ 
+ import {
+-  MetadataTable,
+-  MetadataTableItem,
+   MetadataList,
+   MetadataListItem,
++  MetadataTable,
++  MetadataTableItem,
+ } from './MetadataTable';
++import { CodeSnippet } from '../CodeSnippet';
++import jsyaml from 'js-yaml';
++import {
++  Theme,
++  createStyles,
++  WithStyles,
++  withStyles,
++} from '@material-ui/core/styles';
+ 
+ export type StructuredMetadataTableListClassKey = 'root';
+ 
+@@ -41,7 +43,6 @@ const listStyle = createStyles({
+ });
+ 
+ export type StructuredMetadataTableNestedListClassKey = 'root';
+-
+ const nestedListStyle = (theme: Theme) =>
+   createStyles({
+     root: {
+@@ -110,9 +111,24 @@ function toValue(
+   if (React.isValidElement(value)) {
+     return <Fragment>{value}</Fragment>;
+   }
+-
+-  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+-    return renderMap(value, options, nested);
++  if (value !== null && typeof value === 'object') {
++    if (options.nestedValuesAsYaml) {
++      return (
++        <CodeSnippet
++          language="yaml"
++          text={jsyaml.dump(value)}
++          customStyle={{
++            background: 'transparent',
++            lineHeight: '1.4',
++            padding: '0',
++            margin: 0,
++          }}
++        />
++      );
++    }
++    if (!Array.isArray(value)) {
++      return renderMap(value, options, nested);
++    }
+   }
+ 
+   if (Array.isArray(value)) {
+@@ -122,7 +138,6 @@ function toValue(
+   if (typeof value === 'boolean') {
+     return <Fragment>{value ? '✅' : '❌'}</Fragment>;
+   }
+-
+   return (
+     <Typography variant="body2" component="span">
+       {value}
+@@ -167,6 +182,7 @@ export interface StructuredMetadataTableProps {
+      * @returns Formatted key
+      */
+     titleFormat?: (key: string) => string;
++    nestedValuesAsYaml?: boolean;
+   };
+ }
+ 
+@@ -174,9 +190,10 @@ type Options = Required<NonNullable<StructuredMetadataTableProps['options']>>;
+ 
+ /** @public */
+ export function StructuredMetadataTable(props: StructuredMetadataTableProps) {
+-  const { metadata, dense = true, options = {} } = props;
++  const { metadata, dense = true, options } = props;
+   const metadataItems = mapToItems(metadata, {
+     titleFormat: startCase,
++    nestedValuesAsYaml: options?.nestedValuesAsYaml ?? false,
+     ...options,
+   });
+   return <MetadataTable dense={dense}>{metadataItems}</MetadataTable>;
+diff --git a/plugins/kubernetes-cluster/src/components/ClusterOverview/ClusterOverview.tsx b/plugins/kubernetes-cluster/src/components/ClusterOverview/ClusterOverview.tsx
+index b77b2dff8885..af741239e57d 100644
+--- a/plugins/kubernetes-cluster/src/components/ClusterOverview/ClusterOverview.tsx
++++ b/plugins/kubernetes-cluster/src/components/ClusterOverview/ClusterOverview.tsx
+@@ -58,6 +58,7 @@ export const ClusterOverview = () => {
+             'OIDC Token Provider': value.oidcTokenProvider ?? 'N/A',
+             'Dashboard Link': value.dashboardUrl ?? 'N/A',
+           }}
++          options={{ nestedValuesAsYaml: true }}
+         />
+       )}
+     </InfoCard>
+diff --git a/plugins/kubernetes-cluster/src/components/Nodes/Nodes.tsx b/plugins/kubernetes-cluster/src/components/Nodes/Nodes.tsx
+index 0b3f7ddb6051..9307b11a6e70 100644
+--- a/plugins/kubernetes-cluster/src/components/Nodes/Nodes.tsx
++++ b/plugins/kubernetes-cluster/src/components/Nodes/Nodes.tsx
+@@ -50,7 +50,10 @@ const defaultColumns: TableColumn<INode>[] = [
+           <Grid container>
+             <Grid item xs={12}>
+               <Typography variant="h5">Node Info</Typography>
+-              <StructuredMetadataTable metadata={node.status?.nodeInfo ?? {}} />
++              <StructuredMetadataTable
++                metadata={node.status?.nodeInfo ?? {}}
++                options={{ nestedValuesAsYaml: true }}
++              />
+             </Grid>
+             <Grid item xs={12}>
+               <Typography variant="h5">Addresses</Typography>
+@@ -61,6 +64,7 @@ const defaultColumns: TableColumn<INode>[] = [
+                     return accum;
+                   }, {} as any) ?? {}
+                 }
++                options={{ nestedValuesAsYaml: true }}
+               />
+             </Grid>
+             <Grid item xs={12}>
+@@ -72,6 +76,7 @@ const defaultColumns: TableColumn<INode>[] = [
+                     return accum;
+                   }, {} as any) ?? {}
+                 }
++                options={{ nestedValuesAsYaml: true }}
+               />
+             </Grid>
+           </Grid>
+diff --git a/plugins/kubernetes-react/src/components/CustomResources/DefaultCustomResource.tsx b/plugins/kubernetes-react/src/components/CustomResources/DefaultCustomResource.tsx
+index ee484ecda8f0..d34ba23f7b8c 100644
+--- a/plugins/kubernetes-react/src/components/CustomResources/DefaultCustomResource.tsx
++++ b/plugins/kubernetes-react/src/components/CustomResources/DefaultCustomResource.tsx
+@@ -84,7 +84,10 @@ const DefaultCustomResourceAccordion = ({
+       </AccordionSummary>
+       <AccordionDetails>
+         {Object.prototype.hasOwnProperty.call(customResource, 'status') && (
+-          <StructuredMetadataTable metadata={customResource.status} />
++          <StructuredMetadataTable
++            metadata={customResource.status}
++            options={{ nestedValuesAsYaml: true }}
++          />
+         )}
+       </AccordionDetails>
+     </Accordion>
+diff --git a/plugins/kubernetes-react/src/components/IngressesAccordions/IngressesAccordions.tsx b/plugins/kubernetes-react/src/components/IngressesAccordions/IngressesAccordions.tsx
+index 5962e78f59a4..d2d674042b6f 100644
+--- a/plugins/kubernetes-react/src/components/IngressesAccordions/IngressesAccordions.tsx
++++ b/plugins/kubernetes-react/src/components/IngressesAccordions/IngressesAccordions.tsx
+@@ -65,6 +65,9 @@ const IngressCard = ({ ingress }: IngressCardProps) => {
+       metadata={{
+         ...ingress.spec,
+       }}
++      options={{
++        nestedValuesAsYaml: true,
++      }}
+     />
+   );
+ };
+diff --git a/plugins/kubernetes-react/src/components/KubernetesDrawer/KubernetesStructuredMetadataTableDrawer.tsx b/plugins/kubernetes-react/src/components/KubernetesDrawer/KubernetesStructuredMetadataTableDrawer.tsx
+index b31d3f9aa700..0a5802ddc8ac 100644
+--- a/plugins/kubernetes-react/src/components/KubernetesDrawer/KubernetesStructuredMetadataTableDrawer.tsx
++++ b/plugins/kubernetes-react/src/components/KubernetesDrawer/KubernetesStructuredMetadataTableDrawer.tsx
+@@ -237,6 +237,7 @@ const KubernetesStructuredMetadataTableDrawerContent = <
+         {!isYaml && (
+           <StructuredMetadataTable
+             metadata={renderObject(replaceNullsWithUndefined(object))}
++            options={{ nestedValuesAsYaml: true }}
+           />
+         )}
+       </div>
+diff --git a/plugins/kubernetes-react/src/components/Pods/PodDrawer/ContainerCard.tsx b/plugins/kubernetes-react/src/components/Pods/PodDrawer/ContainerCard.tsx
+index 1919bc112d53..6aed2c75d759 100644
+--- a/plugins/kubernetes-react/src/components/Pods/PodDrawer/ContainerCard.tsx
++++ b/plugins/kubernetes-react/src/components/Pods/PodDrawer/ContainerCard.tsx
+@@ -176,6 +176,7 @@ export const ContainerCard: React.FC<ContainerCardProps> = ({
+                 containerSpec,
+                 containerStatus,
+               )}
++              options={{ nestedValuesAsYaml: true }}
+             />
+           </Grid>
+           {containerMetrics && (
+diff --git a/plugins/kubernetes-react/src/components/ServicesAccordions/ServicesAccordions.tsx b/plugins/kubernetes-react/src/components/ServicesAccordions/ServicesAccordions.tsx
+index 71832fd35c29..c44a1d158ca2 100644
+--- a/plugins/kubernetes-react/src/components/ServicesAccordions/ServicesAccordions.tsx
++++ b/plugins/kubernetes-react/src/components/ServicesAccordions/ServicesAccordions.tsx
+@@ -77,6 +77,7 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
+         ports: service.spec?.ports,
+         ...metadata,
+       }}
++      options={{ nestedValuesAsYaml: true }}
+     />
+   );
+ };
+diff --git a/plugins/kubernetes/dev/index.tsx b/plugins/kubernetes/dev/index.tsx
+index 2de5a17f25a3..91b97cbfc53b 100644
+--- a/plugins/kubernetes/dev/index.tsx
++++ b/plugins/kubernetes/dev/index.tsx
+@@ -34,7 +34,10 @@ import fixture2 from '../src/__fixtures__/2-deployments.json';
+ import fixture3 from '../src/__fixtures__/1-cronjobs.json';
+ import fixture4 from '../src/__fixtures__/2-cronjobs.json';
+ import fixture5 from '../src/__fixtures__/1-rollouts.json';
++import fixture6 from '../src/__fixtures__/3-ingresses.json';
++import fixture7 from '../src/__fixtures__/2-statefulsets.json';
+ import { TestApiProvider } from '@backstage/test-utils';
++import { StructuredMetadataTable } from '@backstage/core-components';
+ 
+ const mockEntity: Entity = {
+   apiVersion: 'backstage.io/v1alpha1',
+@@ -134,6 +137,12 @@ class MockKubernetesClient implements KubernetesApi {
+   }
+ }
+ 
++const metadata = {
++  testA: 'stuff',
++  testB: { testC: 'stuff' },
++  testD: [{ testE: 'stuff' }],
++};
++
+ createDevApp()
+   .addPage({
+     path: '/fixture-1',
+@@ -200,5 +209,35 @@ createDevApp()
+       </TestApiProvider>
+     ),
+   })
++  .addPage({
++    path: '/fixture-6',
++    title: 'Fixture 6',
++    element: (
++      <TestApiProvider
++        apis={[[kubernetesApiRef, new MockKubernetesClient(fixture6)]]}
++      >
++        <EntityProvider entity={mockEntity}>
++          <EntityKubernetesContent />
++        </EntityProvider>
++      </TestApiProvider>
++    ),
++  })
++  .addPage({
++    path: '/fixture-7',
++    title: 'Fixture 7',
++    element: (
++      <TestApiProvider
++        apis={[[kubernetesApiRef, new MockKubernetesClient(fixture7)]]}
++      >
++        <EntityProvider entity={mockEntity}>
++          <StructuredMetadataTable
++            metadata={metadata}
++            options={{ nestedValuesAsYaml: true }}
++          />
++          <EntityKubernetesContent />
++        </EntityProvider>
++      </TestApiProvider>
++    ),
++  })
+   .registerPlugin(kubernetesPlugin)
+   .render();
+diff --git a/plugins/kubernetes/src/__fixtures__/3-ingresses.json b/plugins/kubernetes/src/__fixtures__/3-ingresses.json
+new file mode 100644
+index 000000000000..94359c823965
+--- /dev/null
++++ b/plugins/kubernetes/src/__fixtures__/3-ingresses.json
+@@ -0,0 +1,372 @@
++{
++  "ingresses": [
++    {
++      "metadata": {
++        "name": "app-service-endpoint.dice-roller.backstage.io",
++        "namespace": "dice-roller",
++        "uid": "00000000-0000-0000-0000-000000000000",
++        "resourceVersion": "4749260703",
++        "generation": 1,
++        "creationTimestamp": "2023-08-16T14:52:16Z",
++        "labels": {
++          "backstage.io/kubernetes-id": "dice-roller",
++          "ingress-class": "istio-internal"
++        },
++        "annotations": {
++          "kubectl.kubernetes.io/last-applied-configuration": "spec",
++          "metacontroller.k8s.io/last-applied-configuration": "spec",
++          "nginx.ingress.kubernetes.io/auth-signin": "https://backstage.io/authenticate",
++          "nginx.ingress.kubernetes.io/configuration-snippet": "config",
++          "nginx.ingress.kubernetes.io/service-upstream": "true",
++          "nginx.ingress.kubernetes.io/upstream-vhost": "app-service-endpoint.dice-roller.backstage.services"
++        },
++        "ownerReferences": [
++          {
++            "apiVersion": "networking.backstage.com/v1beta1",
++            "kind": "MeshIntegration",
++            "name": "app-service-endpoint",
++            "uid": "00000000-0000-0000-0000-000000000000",
++            "controller": true,
++            "blockOwnerDeletion": true
++          }
++        ],
++        "managedFields": [
++          {
++            "manager": "nginx-ingress-controller",
++            "operation": "Update",
++            "apiVersion": "networking.k8s.io/v1",
++            "time": "2023-08-16T14:52:56Z",
++            "fieldsType": "FieldsV1",
++            "fieldsV1": {
++              "f:status": {
++                "f:loadBalancer": {
++                  "f:ingress": {}
++                }
++              }
++            },
++            "subresource": "status"
++          },
++          {
++            "manager": "kubectl-client-side-apply",
++            "operation": "Update",
++            "apiVersion": "networking.k8s.io/v1",
++            "time": "2023-12-15T16:33:17Z",
++            "fieldsType": "FieldsV1",
++            "fieldsV1": {
++              "f:metadata": {
++                "f:annotations": {
++                  ".": {},
++                  "f:kubectl.kubernetes.io/last-applied-configuration": {},
++                  "f:nginx.ingress.kubernetes.io/auth-signin": {},
++                  "f:nginx.ingress.kubernetes.io/configuration-snippet": {},
++                  "f:nginx.ingress.kubernetes.io/service-upstream": {},
++                  "f:nginx.ingress.kubernetes.io/upstream-vhost": {}
++                },
++                "f:labels": {
++                  ".": {},
++                  "f:backstage.io/kubernetes-id": {},
++                  "f:ingress-class": {}
++                }
++              },
++              "f:spec": {
++                "f:ingressClassName": {},
++                "f:rules": {},
++                "f:tls": {}
++              }
++            }
++          },
++          {
++            "manager": "kubectl-label",
++            "operation": "Update",
++            "apiVersion": "networking.k8s.io/v1",
++            "time": "2024-02-21T15:00:44Z",
++            "fieldsType": "FieldsV1",
++            "fieldsV1": {
++              "f:metadata": {
++                "f:labels": {
++                  "f:controller-uid": {}
++                }
++              }
++            }
++          },
++          {
++            "manager": "metacontroller",
++            "operation": "Update",
++            "apiVersion": "networking.k8s.io/v1",
++            "time": "2024-02-21T15:01:01Z",
++            "fieldsType": "FieldsV1",
++            "fieldsV1": {
++              "f:metadata": {
++                "f:annotations": {
++                  "f:metacontroller.k8s.io/last-applied-configuration": {}
++                },
++                "f:ownerReferences": {
++                  ".": {},
++                  "k:{\"uid\":\"00000000-0000-0000-0000-000000000000\"}": {}
++                }
++              }
++            }
++          }
++        ]
++      },
++      "spec": {
++        "ingressClassName": "istio-internal",
++        "tls": {
++          "hosts": ["app-service-endpoint.dice-roller.backstage.io"],
++          "secretName": "dice-roller-wildcard-certificate"
++        },
++        "rules": [
++          {
++            "host": "app-service-endpoint.dice-roller.backstage.io",
++            "http": {
++              "paths": [
++                {
++                  "pathType": "ImplementationSpecific",
++                  "backend": {
++                    "service": {
++                      "name": "app-service-endpoint",
++                      "port": {
++                        "number": 8080
++                      }
++                    }
++                  }
++                },
++                {
++                  "pathType": "Second item in the list",
++                  "backend": {
++                    "service": {
++                      "name": "app-service-endpoint",
++                      "port": {
++                        "number": 8080
++                      }
++                    }
++                  }
++                }
++              ]
++            }
++          }
++        ]
++      },
++      "status": {
++        "loadBalancer": {
++          "ingress": [
++            {
++              "ip": "1.2.3.4"
++            }
++          ]
++        }
++      }
++    }
++  ],
++  "deployments": [
++    {
++      "metadata": {
++        "annotations": {
++          "deployment.kubernetes.io/revision": "2",
++          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"backstage.io/kubernetes-id\":\"dice-roller\"},\"name\":\"dice-roller\",\"namespace\":\"default\"},\"spec\":{\"replicas\":10,\"selector\":{\"matchLabels\":{\"app\":\"dice-roller\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"dice-roller\",\"backstage.io/kubernetes-id\":\"dice-roller\"}},\"spec\":{\"containers\":[{\"image\":\"nginx:1.14.2\",\"name\":\"nginx\",\"ports\":[{\"containerPort\":80}]}]}}}}\n"
++        },
++        "creationTimestamp": "2020-09-23T12:00:55.000Z",
++        "generation": 3,
++        "labels": {
++          "backstage.io/kubernetes-id": "dice-roller"
++        },
++        "managedFields": [
++          {
++            "apiVersion": "apps/v1",
++            "fieldsType": "FieldsV1",
++            "fieldsV1": {
++              "f:metadata": {
++                "f:annotations": {
++                  ".": {},
++                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
++                },
++                "f:labels": {
++                  ".": {},
++                  "f:backstage.io/kubernetes-id": {}
++                }
++              },
++              "f:spec": {
++                "f:progressDeadlineSeconds": {},
++                "f:replicas": {},
++                "f:revisionHistoryLimit": {},
++                "f:selector": {
++                  "f:matchLabels": {
++                    ".": {},
++                    "f:app": {}
++                  }
++                },
++                "f:strategy": {
++                  "f:rollingUpdate": {
++                    ".": {},
++                    "f:maxSurge": {},
++                    "f:maxUnavailable": {}
++                  },
++                  "f:type": {}
++                },
++                "f:template": {
++                  "f:metadata": {
++                    "f:labels": {
++                      ".": {},
++                      "f:app": {},
++                      "f:backstage.io/kubernetes-id": {}
++                    }
++                  },
++                  "f:spec": {
++                    "f:containers": {
++                      "k:{\"name\":\"nginx\"}": {
++                        ".": {},
++                        "f:image": {},
++                        "f:imagePullPolicy": {},
++                        "f:name": {},
++                        "f:ports": {
++                          ".": {},
++                          "k:{\"containerPort\":80,\"protocol\":\"TCP\"}": {
++                            ".": {},
++                            "f:containerPort": {},
++                            "f:protocol": {}
++                          }
++                        },
++                        "f:resources": {},
++                        "f:terminationMessagePath": {},
++                        "f:terminationMessagePolicy": {}
++                      }
++                    },
++                    "f:dnsPolicy": {},
++                    "f:restartPolicy": {},
++                    "f:schedulerName": {},
++                    "f:securityContext": {},
++                    "f:terminationGracePeriodSeconds": {}
++                  }
++                }
++              }
++            },
++            "manager": "kubectl",
++            "operation": "Update",
++            "time": "2020-09-25T09:58:50.000Z"
++          },
++          {
++            "apiVersion": "apps/v1",
++            "fieldsType": "FieldsV1",
++            "fieldsV1": {
++              "f:metadata": {
++                "f:annotations": {
++                  "f:deployment.kubernetes.io/revision": {}
++                }
++              },
++              "f:status": {
++                "f:availableReplicas": {},
++                "f:conditions": {
++                  ".": {},
++                  "k:{\"type\":\"Available\"}": {
++                    ".": {},
++                    "f:lastTransitionTime": {},
++                    "f:lastUpdateTime": {},
++                    "f:message": {},
++                    "f:reason": {},
++                    "f:status": {},
++                    "f:type": {}
++                  },
++                  "k:{\"type\":\"Progressing\"}": {
++                    ".": {},
++                    "f:lastTransitionTime": {},
++                    "f:lastUpdateTime": {},
++                    "f:message": {},
++                    "f:reason": {},
++                    "f:status": {},
++                    "f:type": {}
++                  }
++                },
++                "f:observedGeneration": {},
++                "f:readyReplicas": {},
++                "f:replicas": {},
++                "f:updatedReplicas": {}
++              }
++            },
++            "manager": "kube-controller-manager",
++            "operation": "Update",
++            "time": "2020-09-25T09:58:55.000Z"
++          }
++        ],
++        "name": "dice-roller",
++        "namespace": "default",
++        "resourceVersion": "593230",
++        "selfLink": "/apis/apps/v1/namespaces/default/deployments/dice-roller",
++        "uid": "7551e949-42d1-4061-83c5-9da107186e47"
++      },
++      "spec": {
++        "progressDeadlineSeconds": 600,
++        "replicas": 10,
++        "revisionHistoryLimit": 10,
++        "selector": {
++          "matchLabels": {
++            "app": "dice-roller"
++          }
++        },
++        "strategy": {
++          "rollingUpdate": {
++            "maxSurge": "25%",
++            "maxUnavailable": "25%"
++          },
++          "type": "RollingUpdate"
++        },
++        "template": {
++          "metadata": {
++            "creationTimestamp": null,
++            "labels": {
++              "app": "dice-roller",
++              "backstage.io/kubernetes-id": "dice-roller"
++            }
++          },
++          "spec": {
++            "containers": [
++              {
++                "image": "nginx:1.14.2",
++                "imagePullPolicy": "IfNotPresent",
++                "name": "nginx",
++                "ports": [
++                  {
++                    "containerPort": 80,
++                    "protocol": "TCP"
++                  }
++                ],
++                "resources": {},
++                "terminationMessagePath": "/dev/termination-log",
++                "terminationMessagePolicy": "File"
++              }
++            ],
++            "dnsPolicy": "ClusterFirst",
++            "restartPolicy": "Always",
++            "schedulerName": "default-scheduler",
++            "securityContext": {},
++            "terminationGracePeriodSeconds": 30
++          }
++        }
++      },
++      "status": {
++        "availableReplicas": 10,
++        "conditions": [
++          {
++            "lastTransitionTime": "2020-09-23T12:00:55.000Z",
++            "lastUpdateTime": "2020-09-24T11:39:28.000Z",
++            "message": "ReplicaSet \"dice-roller-6c8646bfd\" has successfully progressed.",
++            "reason": "NewReplicaSetAvailable",
++            "status": "True",
++            "type": "Progressing"
++          },
++          {
++            "lastTransitionTime": "2020-09-25T09:58:55.000Z",
++            "lastUpdateTime": "2020-09-25T09:58:55.000Z",
++            "message": "Deployment has minimum availability.",
++            "reason": "MinimumReplicasAvailable",
++            "status": "True",
++            "type": "Available"
++          }
++        ],
++        "observedGeneration": 3,
++        "readyReplicas": 10,
++        "replicas": 10,
++        "updatedReplicas": 10
++      }
++    }
++  ]
++}
+diff --git a/yarn.lock b/yarn.lock
+index 7cd8bb3cdc85..e212f245b149 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -4291,6 +4291,7 @@ __metadata:
+     d3-zoom: ^3.0.0
+     dagre: ^0.8.5
+     history: ^5.0.0
++    js-yaml: ^4.1.0
+     linkify-react: 4.1.3
+     linkifyjs: 4.1.3
+     lodash: ^4.17.21

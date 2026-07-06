@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_html_analyze --test spec_tests -E 'test(use_valid_anchor)'",
+  "test_files": [
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.astro",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.astro.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.html",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.html.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.svelte",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.svelte.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.vue",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/invalid.vue.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.astro",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.astro.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.html",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.html.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.svelte",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.svelte.snap",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.vue",
+    "crates/biome_html_analyze/tests/specs/a11y/useValidAnchor/valid.vue.snap"
+  ],
+  "num_test_files": 16,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(5/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::invalid_svelte",
+    "(7/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::invalid_html",
+    "(1/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::invalid_vue",
+    "(2/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::valid_vue",
+    "(3/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::valid_html",
+    "(4/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::valid_astro",
+    "(6/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::invalid_astro",
+    "(8/8) biome_html_analyze::spec_tests specs::a11y::use_valid_anchor::valid_svelte"
+  ],
+  "PASS_TO_PASS": []
+}

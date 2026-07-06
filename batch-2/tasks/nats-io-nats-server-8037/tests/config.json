@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./server -run 'TestFileStoreSetWriteErrIgnoresReadErrors|TestFileStoreMsgBlockWErrNotSetOnReadErrors|TestFileStoreGeneratePerSubjectInfoFssNilOnError' -count=1 -timeout 120s",
+  "test_files": [
+    "server/filestore_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/nats-io/nats-server/v2/server::TestFileStoreSetWriteErrIgnoresReadErrors",
+    "github.com/nats-io/nats-server/v2/server::TestFileStoreMsgBlockWErrNotSetOnReadErrors",
+    "github.com/nats-io/nats-server/v2/server::TestFileStoreGeneratePerSubjectInfoFssNilOnError"
+  ],
+  "PASS_TO_PASS": []
+}

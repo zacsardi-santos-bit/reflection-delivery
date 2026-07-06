@@ -1,0 +1,57 @@
+patching file pkg/controller/nodetune/tune_test.go
+{"Time":"2026-06-29T15:19:41.982570135Z","Action":"start","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune"}
+{"Time":"2026-06-29T15:19:42.006672172Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID"}
+{"Time":"2026-06-29T15:19:42.006732002Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID","Output":"=== RUN   TestStripContainerID\n"}
+{"Time":"2026-06-29T15:19:42.006762962Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container"}
+{"Time":"2026-06-29T15:19:42.006786212Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container","Output":"=== RUN   TestStripContainerID/Docker_container\n"}
+{"Time":"2026-06-29T15:19:42.006819072Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container","Output":"=== PAUSE TestStripContainerID/Docker_container\n"}
+{"Time":"2026-06-29T15:19:42.006841522Z","Action":"pause","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container"}
+{"Time":"2026-06-29T15:19:42.006867392Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid"}
+{"Time":"2026-06-29T15:19:42.006889791Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid","Output":"=== RUN   TestStripContainerID/invalid\n"}
+{"Time":"2026-06-29T15:19:42.006915041Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid","Output":"=== PAUSE TestStripContainerID/invalid\n"}
+{"Time":"2026-06-29T15:19:42.006937771Z","Action":"pause","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid"}
+{"Time":"2026-06-29T15:19:42.006961021Z","Action":"cont","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container"}
+{"Time":"2026-06-29T15:19:42.006985651Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container","Output":"=== CONT  TestStripContainerID/Docker_container\n"}
+{"Time":"2026-06-29T15:19:42.007009481Z","Action":"cont","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid"}
+{"Time":"2026-06-29T15:19:42.007032001Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid","Output":"=== CONT  TestStripContainerID/invalid\n"}
+{"Time":"2026-06-29T15:19:42.007075221Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container","Output":"--- PASS: TestStripContainerID/Docker_container (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.007108681Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/Docker_container","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.007142571Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid","Output":"--- PASS: TestStripContainerID/invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.007167411Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID/invalid","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.007190311Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID","Output":"--- PASS: TestStripContainerID (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.007214771Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestStripContainerID","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.007245941Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs"}
+{"Time":"2026-06-29T15:19:42.007267981Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs","Output":"=== RUN   TestGetIRQCPUs\n"}
+{"Time":"2026-06-29T15:19:42.007291091Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla"}
+{"Time":"2026-06-29T15:19:42.007313781Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Output":"=== RUN   TestGetIRQCPUs/single_guaranteed_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00733749Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Output":"=== PAUSE TestGetIRQCPUs/single_guaranteed_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00736014Z","Action":"pause","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla"}
+{"Time":"2026-06-29T15:19:42.00738391Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla"}
+{"Time":"2026-06-29T15:19:42.00740719Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla","Output":"=== RUN   TestGetIRQCPUs/multiple_guaranteed_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00743111Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla","Output":"=== PAUSE TestGetIRQCPUs/multiple_guaranteed_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00745356Z","Action":"pause","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla"}
+{"Time":"2026-06-29T15:19:42.00747851Z","Action":"run","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla"}
+{"Time":"2026-06-29T15:19:42.00750097Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla","Output":"=== RUN   TestGetIRQCPUs/burstable_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00752581Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla","Output":"=== PAUSE TestGetIRQCPUs/burstable_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00754845Z","Action":"pause","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla"}
+{"Time":"2026-06-29T15:19:42.00757347Z","Action":"cont","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla"}
+{"Time":"2026-06-29T15:19:42.00759538Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Output":"=== CONT  TestGetIRQCPUs/single_guaranteed_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00761944Z","Action":"cont","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla"}
+{"Time":"2026-06-29T15:19:42.0076425Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla","Output":"=== CONT  TestGetIRQCPUs/burstable_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00767132Z","Action":"cont","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla"}
+{"Time":"2026-06-29T15:19:42.00769368Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla","Output":"=== CONT  TestGetIRQCPUs/multiple_guaranteed_Scylla\n"}
+{"Time":"2026-06-29T15:19:42.00772362Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla","Output":"--- PASS: TestGetIRQCPUs/burstable_Scylla (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.00774594Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla","Output":"I0629 15:19:42.007107   15082 tune.go:30] Getting cpuset from kubelet PodResources API\n"}
+{"Time":"2026-06-29T15:19:42.00777028Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/burstable_Scylla","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.007792609Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Output":"--- PASS: TestGetIRQCPUs/single_guaranteed_Scylla (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.007814999Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Output":"I0629 15:19:42.007129   15082 tune.go:30] Getting cpuset from kubelet PodResources API\n"}
+{"Time":"2026-06-29T15:19:42.007837339Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Output":"I0629 15:19:42.007543   15082 tune.go:30] Getting cpuset from kubelet PodResources API\n"}
+{"Time":"2026-06-29T15:19:42.007860759Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/single_guaranteed_Scylla","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.007882919Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla","Output":"--- PASS: TestGetIRQCPUs/multiple_guaranteed_Scylla (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.007906109Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs/multiple_guaranteed_Scylla","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.007930589Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs","Output":"--- PASS: TestGetIRQCPUs (0.00s)\n"}
+{"Time":"2026-06-29T15:19:42.007972789Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Test":"TestGetIRQCPUs","Elapsed":0}
+{"Time":"2026-06-29T15:19:42.008029789Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Output":"PASS\n"}
+{"Time":"2026-06-29T15:19:42.008383788Z","Action":"output","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Output":"ok  \tgithub.com/scylladb/scylla-operator/pkg/controller/nodetune\t0.025s\n"}
+{"Time":"2026-06-29T15:19:42.008435298Z","Action":"pass","Package":"github.com/scylladb/scylla-operator/pkg/controller/nodetune","Elapsed":0.026}
+reward=1 graded=7 found=7 failed=0 parsed=7 framework=go exit_code=0

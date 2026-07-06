@@ -1,0 +1,42 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/ui-v2 && npx vitest run src/components/deployments/data-table/data-table.test.tsx src/components/ui/data-table.test.tsx",
+  "test_files": [
+    "ui-v2/src/components/deployments/data-table/data-table.test.tsx",
+    "ui-v2/src/components/ui/data-table.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable column resizing renders a resize handle for resizable columns and omits it for non-resizable columns",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable column resizing resizes the column when the handle is dragged",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable column resizing resets the column width when the handle is double-clicked",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable column resizing renders a draggable resize handle for the Deployment column",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable column resizing persists resized column widths to localStorage",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable column resizing restores resized column widths from localStorage on mount"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable renders rows without cursor-pointer class when onRowClick is not provided",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable renders rows with cursor-pointer and hover:bg-muted class when onRowClick is provided",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable calls onRowClick with row data when a row is clicked",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable does not call onRowClick when a row action is clicked",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable does not call onRowClick when onRowClick is not provided and row is clicked",
+    "/workspace/repo/ui-v2/src/components/ui/data-table.test.tsx::DataTable column resizing does not render resize handles when resizing is not enabled on the table",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable renders deployment name and flow name",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable renders status badge",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable renders tags",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable renders with empty deployments array",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable renders multiple deployments",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable calls onQuickRun when quick run action is clicked",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable has an action menu item that links to create a custom run",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable has an action menu item that links to edit deployment",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable handles deletion",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable has an action menu item that links to duplicate deployment",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable calls onPaginationChange when pagination buttons are clicked",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable calls onSortChange when sort is changed",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable calls onColumnFiltersChange on deployment name search",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable renders rows with cursor-pointer class for onRowClick",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable column resizing does not render a resize handle for the actions column",
+    "/workspace/repo/ui-v2/src/components/deployments/data-table/data-table.test.tsx::DeploymentsDataTable calls onColumnFiltersChange on tags search"
+  ]
+}

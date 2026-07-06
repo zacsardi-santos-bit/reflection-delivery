@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_cli --no-fail-fast -E 'test(override_globals)'",
+  "test_files": [
+    "crates/biome_cli/tests/main.rs",
+    "crates/biome_cli/tests/snapshots/main_configuration/override_globals.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_cli::main configuration::override_globals"
+  ],
+  "PASS_TO_PASS": []
+}

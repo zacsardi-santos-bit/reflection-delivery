@@ -1,0 +1,2411 @@
+patching file instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/string/StringGeneratorTest.java
+patching file instancio-tests/feature-tests/src/test/java/org/instancio/test/features/settings/StringSettingsTest.java
+patching file instancio-tests/feature-tests/src/test/java/org/instancio/test/features/values/StringSpecTest.java
+patching file instancio-tests/instancio-core-tests/src/test/java/org/instancio/internal/settings/SettingsSupportTest.java
+patching file instancio-tests/instancio-core-tests/src/test/java/org/instancio/internal/util/UnicodeBlocksTest.java
+patching file instancio-tests/instancio-core-tests/src/test/resources/instancio.properties
+patching file instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/asserts/StringAssertExtras.java
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Instancio Parent                                                   [pom]
+[INFO] Build tools                                                        [jar]
+[INFO] Instancio Core                                                  [bundle]
+[INFO] Instancio JUnit 5 Support                                       [bundle]
+[INFO] Instancio Quickcheck for JUnit 5                                [bundle]
+[INFO] Instancio Guava Support                                            [jar]
+[INFO] Instancio Tests: Tests Parent                                      [pom]
+[INFO] Instancio Tests: Test Support                                      [jar]
+[INFO] Instancio tests: Feature Tests                                     [jar]
+[INFO] Instancio tests: instancio-guava Tests                             [jar]
+[INFO] Instancio tests: instancio-quickcheck Tests                        [jar]
+[INFO] Instancio tests: Default Package Tests                             [jar]
+[INFO] Instancio tests: Global Seed Tests                                 [jar]
+[INFO] Instancio tests: Kotlin Tests                                      [jar]
+[INFO] Instancio tests: JPA javax Tests                                   [jar]
+[INFO] Instancio tests: JPA jakarta Tests                                 [jar]
+[INFO] Instancio tests: Javax Bean Validation Tests                       [jar]
+[INFO] Instancio tests: Jakarta Bean Validation Tests                     [jar]
+[INFO] Instancio tests: Hibernate 5 Bean Validation Tests                 [jar]
+[INFO] Instancio tests: Packaging Tests                                   [jar]
+[INFO] Instancio tests: Java 16 Tests                                     [jar]
+[INFO] Instancio tests: instancio-core Tests                              [jar]
+[INFO] Instancio tests: instancio-junit Tests                             [jar]
+[INFO] Instancio tests: Java 17 Tests                                     [jar]
+[INFO] Instancio tests: Instancio SPI Tests                               [jar]
+[INFO] Instancio tests: Hibernate Bean Validation Tests                   [jar]
+[INFO] Instancio tests: jOOQ Tests                                        [jar]
+[INFO] Instancio tests: Java 21 Tests                                     [jar]
+[INFO] Instancio tests: Arch Tests                                        [jar]
+[INFO] Instancio Tests: JPMS Tests Parent                                 [pom]
+[INFO] Instancio tests: JPMS Standalone Tests                             [jar]
+[INFO] Instancio tests: JPMS Sample SPI implementation                    [jar]
+[INFO] Instancio tests: JPMS SPI Tests                                    [jar]
+[INFO] Instancio tests: JPMS instancio-quickcheck Tests                   [jar]
+[INFO] Instancio tests: JPMS Bean Validation Jakarta Tests                [jar]
+[INFO] Instancio tests: JPMS Bean Validation Hibernate Tests              [jar]
+[INFO] Instancio tests: JPMS instancio-guava Tests                        [jar]
+[INFO] Instancio tests: Aggregate Report                                  [pom]
+[INFO] 
+[INFO] -------------------< org.instancio:instancio-parent >-------------------
+[INFO] Building Instancio Parent 4.6.1-SNAPSHOT                          [1/38]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-parent ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/target/jacoco.exec,excludes=META-INF/**
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-parent ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-parent ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-parent ---
+[INFO] Installing /workspace/repo/pom.xml to /root/.m2/repository/org/instancio/instancio-parent/4.6.1-SNAPSHOT/instancio-parent-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------------------< org.instancio:build-tools >----------------------
+[INFO] Building Build tools 4.6.1-SNAPSHOT                               [2/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ build-tools ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ build-tools ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/build-tools/target/jacoco.exec,excludes=META-INF/**
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ build-tools ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ build-tools ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ build-tools ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ build-tools ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ build-tools ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ build-tools ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ build-tools ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ build-tools ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ build-tools ---
+[INFO] Installing /workspace/repo/build-tools/target/build-tools-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/build-tools/4.6.1-SNAPSHOT/build-tools-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/build-tools/pom.xml to /root/.m2/repository/org/instancio/build-tools/4.6.1-SNAPSHOT/build-tools-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] --------------------< org.instancio:instancio-core >--------------------
+[INFO] Building Instancio Core 4.6.1-SNAPSHOT                            [3/38]
+[INFO] -------------------------------[ bundle ]-------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-core ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-core ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-core/target/jacoco.exec,excludes=META-INF/**
+[INFO] 
+[INFO] --- maven-resources-plugin:3.5.0:resources (default-resources) @ instancio-core ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-core ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 601 source files with javac [debug release 9 module-path] to target/classes
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[30,52] module not found: org.instancio.guava
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[31,62] module not found: org.instancio.guava
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[32,78] module not found: org.instancio.guava
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[33,67] module not found: org.instancio.guava
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[34,56] module not found: org.instancio.guava
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[35,51] module not found: org.instancio.junit
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[36,57] module not found: org.instancio.guava
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[36,78] module not found: org.instancio.junit
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[36,99] module not found: org.instancio.quickcheck
+[WARNING] /workspace/repo/instancio-core/src/main/java/module-info.java:[36,130] module not found: org.instancio.test.contract
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/ReflectionFactoryHelper.java:[47,44] sun.reflect.ReflectionFactory is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[31,27] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[53,21] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[55,44] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[59,44] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[60,37] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/util/ReflectionUtils.java: Some input files use or override a deprecated API.
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/util/ReflectionUtils.java: Recompile with -Xlint:deprecation for details.
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/GivenOrigin.java: Some input files use unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/GivenOrigin.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (base-compile) @ instancio-core ---
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 600 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/ReflectionFactoryHelper.java:[47,44] sun.reflect.ReflectionFactory is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[31,27] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[53,21] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[55,44] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[59,44] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/instantiation/UnsafeHelper.java:[60,37] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/util/ReflectionUtils.java: Some input files use or override a deprecated API.
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/internal/util/ReflectionUtils.java: Recompile with -Xlint:deprecation for details.
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/GivenOrigin.java: Some input files use unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-core/src/main/java/org/instancio/GivenOrigin.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-16) @ instancio-core ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 2 source files with javac [debug release 16] to target/classes/META-INF/versions/16
+[INFO] /workspace/repo/instancio-core/src/main/java16/org/instancio/internal/util/RecordUtils.java: /workspace/repo/instancio-core/src/main/java16/org/instancio/internal/util/RecordUtils.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-core/src/main/java16/org/instancio/internal/util/RecordUtils.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-21) @ instancio-core ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug release 21] to target/classes/META-INF/versions/21
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:manifest (bundle-manifest) @ instancio-core ---
+[WARNING] Manifest org.instancio:instancio-core:bundle:4.6.1-SNAPSHOT : Export org.instancio.exception,  has 1,  private references [org.instancio.internal]
+[WARNING] Manifest org.instancio:instancio-core:bundle:4.6.1-SNAPSHOT : Classes found in the wrong directory: {META-INF/versions/16/org/instancio/internal/nodes/resolvers/NodeKindRecordResolver.class=org.instancio.internal.nodes.resolvers.NodeKindRecordResolver, META-INF/versions/9/module-info.class=module-info, META-INF/versions/21/org/instancio/internal/generator/Java21GeneratorResolvers.class=org.instancio.internal.generator.Java21GeneratorResolvers, META-INF/versions/16/org/instancio/internal/util/RecordUtils.class=org.instancio.internal.util.RecordUtils}
+[INFO] Writing manifest: /workspace/repo/instancio-core/target/classes/META-INF/MANIFEST.MF
+[INFO] 
+[INFO] --- maven-resources-plugin:3.5.0:testResources (default-testResources) @ instancio-core ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-core ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-core ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.6.0-M1:test (default-test) @ instancio-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-core ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-antrun-plugin:3.1.0:run (move-module-info) @ instancio-core ---
+[INFO] Executing tasks
+[INFO]      [move] Moving 1 file to /workspace/repo/instancio-core/target/classes/META-INF/versions/9
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:bundle (default-bundle) @ instancio-core ---
+[WARNING] Bundle org.instancio:instancio-core:bundle:4.6.1-SNAPSHOT : Split package, multiple jars provide the same package:META-INF/versions/9
+Use Import/Export Package directive -split-package:=(merge-first|merge-last|error|first) to get rid of this warning
+Package found in   [Jar:., Jar:slf4j-api, Jar:annotations]
+Class path         [Jar:., Jar:slf4j-api, Jar:annotations, Jar:jakarta.persistence-api, Jar:jakarta.validation-api, Jar:javax.persistence-api, Jar:validation-api, Jar:hibernate-validator, Jar:jboss-logging, Jar:classmate]
+[WARNING] Bundle org.instancio:instancio-core:bundle:4.6.1-SNAPSHOT : Export org.instancio.exception,  has 1,  private references [org.instancio.internal]
+[WARNING] Bundle org.instancio:instancio-core:bundle:4.6.1-SNAPSHOT : Classes found in the wrong directory: {META-INF/versions/16/org/instancio/internal/nodes/resolvers/NodeKindRecordResolver.class=org.instancio.internal.nodes.resolvers.NodeKindRecordResolver, META-INF/versions/9/module-info.class=module-info, META-INF/versions/21/org/instancio/internal/generator/Java21GeneratorResolvers.class=org.instancio.internal.generator.Java21GeneratorResolvers, META-INF/versions/16/org/instancio/internal/util/RecordUtils.class=org.instancio.internal.util.RecordUtils}
+[INFO] Building bundle: /workspace/repo/instancio-core/target/instancio-core-4.6.1-SNAPSHOT.jar
+[INFO] Writing manifest: /workspace/repo/instancio-core/target/classes/META-INF/MANIFEST.MF
+[INFO] 
+[INFO] --- maven-javadoc-plugin:3.6.3:jar (attach-javadocs) @ instancio-core ---
+[INFO] Configuration changed, re-generating javadoc.
+[WARNING] Javadoc Warnings
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/EmitGeneratorSpec.java:29: warning: no @param for <T>
+[WARNING] public interface EmitGeneratorSpec<T> extends GeneratorSpec<T> {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/EnumSetGeneratorSpec.java:27: warning: no @param for <E>
+[WARNING] public interface EnumSetGeneratorSpec<E extends Enum<E>> extends GeneratorSpec<EnumSet<E>> {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/FilePathSpec.java:30: warning: no @param for <T>
+[WARNING] public interface FilePathSpec<T> extends ValueSpec<T>, PathGeneratorSpec<T> {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/NumberSpec.java:25: warning: no @param for <T>
+[WARNING] public interface NumberSpec<T extends Number> extends ValueSpec<T>, NumberGeneratorSpec<T> {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/PathAsGeneratorSpec.java:28: warning: no @param for <T>
+[WARNING] public interface PathAsGeneratorSpec<T>
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/PathGeneratorSpec.java:32: warning: no @param for <T>
+[WARNING] public interface PathGeneratorSpec<T> extends GeneratorSpec<T> {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/AtomicGenerators.java:34: warning: no comment
+[WARNING] AtomicGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/can/CanIdGenerators.java:32: warning: no comment
+[WARNING] public CanIdGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/can/CanIdSpecs.java:26: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class CanIdSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/ChecksumGenerators.java:36: warning: no comment
+[WARNING] public ChecksumGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/ChecksumSpecs.java:30: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class ChecksumSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/FinanceGenerators.java:32: warning: no comment
+[WARNING] public FinanceGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/FinanceSpecs.java:26: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class FinanceSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/GeneratorContext.java:33: warning: no comment
+[WARNING] public GeneratorContext(final Settings settings, final Random random) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/Generators.java:71: warning: no comment
+[WARNING] public Generators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/Hints.java:58: warning: no comment
+[WARNING] public static Builder builder(final Hints copy) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/IdGenerators.java:37: warning: no comment
+[WARNING] public IdGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/IdSpecs.java:31: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class IdSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/InstancioApiException.java:28: warning: no comment
+[WARNING] public InstancioApiException(String message) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/InstancioApiException.java:32: warning: no comment
+[WARNING] public InstancioApiException(String message, Throwable cause) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/InstancioException.java:25: warning: no comment
+[WARNING] public InstancioException(String message) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/InstancioException.java:29: warning: no comment
+[WARNING] public InstancioException(String message, Throwable cause) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/settings/Settings.java:125: warning: no @param for <T>
+[WARNING] <T> Settings set(SettingKey<T> key, T value);
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/spi/InstancioSpiException.java:27: warning: no comment
+[WARNING] public InstancioSpiException(String message) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/InstancioTerminatingException.java:26: warning: no comment
+[WARNING] public InstancioTerminatingException(String message) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/InstancioTerminatingException.java:30: warning: no comment
+[WARNING] public InstancioTerminatingException(String message, Throwable cause) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/IoGenerators.java:35: warning: no comment
+[WARNING] public IoGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/IoSpecs.java:28: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class IoSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/settings/Keys.java:670: warning: no @param for <T>
+[WARNING] public static <T> SettingKey<T> get(@NotNull final String key) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/LoremIpsumGeneratorSpec.java:43: warning: no @param for words
+[WARNING] LoremIpsumGeneratorSpec words(int words);
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generator/specs/LoremIpsumGeneratorSpec.java:51: warning: no @param for paragraphs
+[WARNING] LoremIpsumGeneratorSpec paragraphs(int paragraphs);
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/MathGenerators.java:36: warning: no comment
+[WARNING] MathGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/MathSpecs.java:32: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class MathSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/NetGenerators.java:40: warning: no comment
+[WARNING] public NetGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/NetSpecs.java:35: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class NetSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/NioGenerators.java:35: warning: no comment
+[WARNING] public NioGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/NioSpecs.java:28: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class NioSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/pol/PolIdGenerators.java:36: warning: no comment
+[WARNING] public PolIdGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/pol/PolIdSpecs.java:30: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class PolIdSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/SpatialGenerators.java:31: warning: no comment
+[WARNING] public SpatialGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/SpatialSpecs.java:26: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class SpatialSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/TemporalGenerators.java:73: warning: no comment
+[WARNING] public TemporalGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/TemporalSpecs.java:59: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class TemporalSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/TextGenerators.java:39: warning: no comment
+[WARNING] public TextGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/TextSpecs.java:65: warning: no @param for pattern
+[WARNING] public TextPatternSpec pattern(final String pattern) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/TextSpecs.java:33: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class TextSpecs {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/UnresolvedAssignmentException.java:29: warning: no comment
+[WARNING] public UnresolvedAssignmentException(final String message, final Throwable cause) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/UnusedSelectorException.java:36: warning: no comment
+[WARNING] public UnusedSelectorException(
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/exception/UnusedSelectorException.java:44: warning: no comment
+[WARNING] public Map<ApiMethodSelector, Set<TargetSelector>> getUnusedSelectorMap() {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/usa/UsaIdGenerators.java:32: warning: no comment
+[WARNING] public UsaIdGenerators(final GeneratorContext context) {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-core/src/main/java/org/instancio/generators/usa/UsaIdSpecs.java:26: warning: use of default constructor, which does not provide a comment
+[WARNING] public final class UsaIdSpecs {
+[WARNING] ^
+[WARNING] Copying file /workspace/repo/build-tools/src/main/javadoc/instancio-theme.css to file instancio-theme.css...
+[WARNING] Copying file /workspace/repo/build-tools/src/main/javadoc/hljs-theme.css to file hljs-theme.css...
+[WARNING] 51 warnings
+[INFO] Building jar: /workspace/repo/instancio-core/target/instancio-core-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:check (default) > :pmd @ instancio-core >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:pmd (pmd) @ instancio-core ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:check (default) < :pmd @ instancio-core <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:check (default) @ instancio-core ---
+[INFO] PMD version: 6.55.0
+[INFO] You have 3936 warnings. For more details see: /workspace/repo/instancio-core/target/pmd.xml
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:cpd-check (default) > :cpd @ instancio-core >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd (cpd) @ instancio-core ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:cpd-check (default) < :cpd @ instancio-core <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd-check (default) @ instancio-core ---
+[INFO] PMD version: 6.55.0
+[INFO] 
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.3.1:check (default) @ instancio-core ---
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- maven-install-plugin:3.1.4:install (default-install) @ instancio-core ---
+[INFO] Installing /workspace/repo/instancio-core/pom.xml to /root/.m2/repository/org/instancio/instancio-core/4.6.1-SNAPSHOT/instancio-core-4.6.1-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/instancio-core/target/instancio-core-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-core/4.6.1-SNAPSHOT/instancio-core-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-core/target/instancio-core-4.6.1-SNAPSHOT-javadoc.jar to /root/.m2/repository/org/instancio/instancio-core/4.6.1-SNAPSHOT/instancio-core-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:install (default-install) @ instancio-core ---
+[INFO] Installing org/instancio/instancio-core/4.6.1-SNAPSHOT/instancio-core-4.6.1-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO] 
+[INFO] -------------------< org.instancio:instancio-junit >--------------------
+[INFO] Building Instancio JUnit 5 Support 4.6.1-SNAPSHOT                 [4/38]
+[INFO] -------------------------------[ bundle ]-------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-junit ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-junit ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-junit/target/jacoco.exec,excludes=META-INF/**
+[INFO] 
+[INFO] --- maven-resources-plugin:3.5.0:resources (default-resources) @ instancio-junit ---
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-junit/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-junit ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug release 9 module-path] to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (base-compile) @ instancio-junit ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 10 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-16) @ instancio-junit ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-21) @ instancio-junit ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:manifest (bundle-manifest) @ instancio-junit ---
+[WARNING] Manifest org.instancio:instancio-junit:bundle:4.6.1-SNAPSHOT : Export org.instancio.junit,  has 1,  private references [org.instancio.junit.internal]
+[WARNING] Manifest org.instancio:instancio-junit:bundle:4.6.1-SNAPSHOT : Classes found in the wrong directory: {META-INF/versions/9/module-info.class=module-info}
+[INFO] Writing manifest: /workspace/repo/instancio-junit/target/classes/META-INF/MANIFEST.MF
+[INFO] 
+[INFO] --- maven-resources-plugin:3.5.0:testResources (default-testResources) @ instancio-junit ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-junit ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-junit ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.6.0-M1:test (default-test) @ instancio-junit ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-junit ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-antrun-plugin:3.1.0:run (move-module-info) @ instancio-junit ---
+[INFO] Executing tasks
+[INFO]      [move] Moving 1 file to /workspace/repo/instancio-junit/target/classes/META-INF/versions/9
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:bundle (default-bundle) @ instancio-junit ---
+[WARNING] Bundle org.instancio:instancio-junit:bundle:4.6.1-SNAPSHOT : Split package, multiple jars provide the same package:META-INF/versions/9
+Use Import/Export Package directive -split-package:=(merge-first|merge-last|error|first) to get rid of this warning
+Package found in   [Jar:., Jar:instancio-core, Jar:slf4j-api]
+Class path         [Jar:., Jar:instancio-core, Jar:slf4j-api, Jar:junit-jupiter-api, Jar:opentest4j, Jar:junit-platform-commons, Jar:apiguardian-api, Jar:junit-jupiter-params]
+[WARNING] Bundle org.instancio:instancio-junit:bundle:4.6.1-SNAPSHOT : Export org.instancio.junit,  has 1,  private references [org.instancio.junit.internal]
+[WARNING] Bundle org.instancio:instancio-junit:bundle:4.6.1-SNAPSHOT : Classes found in the wrong directory: {META-INF/versions/9/module-info.class=module-info}
+[INFO] Building bundle: /workspace/repo/instancio-junit/target/instancio-junit-4.6.1-SNAPSHOT.jar
+[INFO] Writing manifest: /workspace/repo/instancio-junit/target/classes/META-INF/MANIFEST.MF
+[INFO] 
+[INFO] --- maven-javadoc-plugin:3.6.3:jar (attach-javadocs) @ instancio-junit ---
+[INFO] Configuration changed, re-generating javadoc.
+[WARNING] Javadoc Warnings
+[WARNING] /workspace/repo/instancio-junit/src/main/java/org/instancio/junit/InstancioExtension.java:104: warning: no comment
+[WARNING] InstancioExtension(final ThreadLocalRandom threadLocalRandom,
+[WARNING] ^
+[WARNING] Copying file /workspace/repo/build-tools/src/main/javadoc/instancio-theme.css to file instancio-theme.css...
+[WARNING] Copying file /workspace/repo/build-tools/src/main/javadoc/hljs-theme.css to file hljs-theme.css...
+[WARNING] 1 warning
+[INFO] Building jar: /workspace/repo/instancio-junit/target/instancio-junit-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:check (default) > :pmd @ instancio-junit >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:pmd (pmd) @ instancio-junit ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:check (default) < :pmd @ instancio-junit <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:check (default) @ instancio-junit ---
+[INFO] PMD version: 6.55.0
+[INFO] You have 59 warnings. For more details see: /workspace/repo/instancio-junit/target/pmd.xml
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:cpd-check (default) > :cpd @ instancio-junit >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd (cpd) @ instancio-junit ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:cpd-check (default) < :cpd @ instancio-junit <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd-check (default) @ instancio-junit ---
+[INFO] PMD version: 6.55.0
+[INFO] 
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.3.1:check (default) @ instancio-junit ---
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- maven-install-plugin:3.1.4:install (default-install) @ instancio-junit ---
+[INFO] Installing /workspace/repo/instancio-junit/pom.xml to /root/.m2/repository/org/instancio/instancio-junit/4.6.1-SNAPSHOT/instancio-junit-4.6.1-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/instancio-junit/target/instancio-junit-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-junit/4.6.1-SNAPSHOT/instancio-junit-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-junit/target/instancio-junit-4.6.1-SNAPSHOT-javadoc.jar to /root/.m2/repository/org/instancio/instancio-junit/4.6.1-SNAPSHOT/instancio-junit-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:install (default-install) @ instancio-junit ---
+[INFO] Installing org/instancio/instancio-junit/4.6.1-SNAPSHOT/instancio-junit-4.6.1-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO] 
+[INFO] -----------------< org.instancio:instancio-quickcheck >-----------------
+[INFO] Building Instancio Quickcheck for JUnit 5 4.6.1-SNAPSHOT          [5/38]
+[INFO] -------------------------------[ bundle ]-------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-quickcheck ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-quickcheck ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-quickcheck/target/jacoco.exec,excludes=META-INF/**
+[INFO] 
+[INFO] --- maven-resources-plugin:3.5.0:resources (default-resources) @ instancio-quickcheck ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-quickcheck ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 40 source files with javac [debug release 9 module-path] to target/classes
+[INFO] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/internal/util/ReflectionUtils.java: /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/internal/util/ReflectionUtils.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/internal/util/ReflectionUtils.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (base-compile) @ instancio-quickcheck ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 39 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/internal/util/ReflectionUtils.java: /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/internal/util/ReflectionUtils.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/internal/util/ReflectionUtils.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-16) @ instancio-quickcheck ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-21) @ instancio-quickcheck ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:manifest (bundle-manifest) @ instancio-quickcheck ---
+[WARNING] Manifest org.instancio:instancio-quickcheck:bundle:4.6.1-SNAPSHOT : Classes found in the wrong directory: {META-INF/versions/9/module-info.class=module-info}
+[INFO] Writing manifest: /workspace/repo/instancio-quickcheck/target/classes/META-INF/MANIFEST.MF
+[INFO] 
+[INFO] --- maven-resources-plugin:3.5.0:testResources (default-testResources) @ instancio-quickcheck ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-quickcheck ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-quickcheck ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.6.0-M1:test (default-test) @ instancio-quickcheck ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-quickcheck ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-antrun-plugin:3.1.0:run (move-module-info) @ instancio-quickcheck ---
+[INFO] Executing tasks
+[INFO]      [move] Moving 1 file to /workspace/repo/instancio-quickcheck/target/classes/META-INF/versions/9
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:bundle (default-bundle) @ instancio-quickcheck ---
+[WARNING] Bundle org.instancio:instancio-quickcheck:bundle:4.6.1-SNAPSHOT : Split package, multiple jars provide the same package:META-INF/versions/9
+Use Import/Export Package directive -split-package:=(merge-first|merge-last|error|first) to get rid of this warning
+Package found in   [Jar:., Jar:instancio-core, Jar:slf4j-api]
+Class path         [Jar:., Jar:instancio-core, Jar:slf4j-api, Jar:junit-jupiter-api, Jar:opentest4j, Jar:junit-platform-commons, Jar:apiguardian-api, Jar:junit-jupiter-engine, Jar:junit-platform-engine]
+[WARNING] Bundle org.instancio:instancio-quickcheck:bundle:4.6.1-SNAPSHOT : Classes found in the wrong directory: {META-INF/versions/9/module-info.class=module-info}
+[INFO] Building bundle: /workspace/repo/instancio-quickcheck/target/instancio-quickcheck-4.6.1-SNAPSHOT.jar
+[INFO] Writing manifest: /workspace/repo/instancio-quickcheck/target/classes/META-INF/MANIFEST.MF
+[INFO] 
+[INFO] --- maven-javadoc-plugin:3.6.3:jar (attach-javadocs) @ instancio-quickcheck ---
+[INFO] Configuration changed, re-generating javadoc.
+[WARNING] Javadoc Warnings
+[WARNING] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/api/artbitrary/ArbitraryGenerator.java:29: warning: no @param for <T>
+[WARNING] public interface ArbitraryGenerator<T> {
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/api/ForAll.java:45: warning: no @return
+[WARNING] String value() default "";
+[WARNING] ^
+[WARNING] /workspace/repo/instancio-quickcheck/src/main/java/org/instancio/quickcheck/api/Property.java:43: warning: no @return
+[WARNING] int samples() default 1000;
+[WARNING] ^
+[WARNING] Copying file /workspace/repo/build-tools/src/main/javadoc/instancio-theme.css to file instancio-theme.css...
+[WARNING] Copying file /workspace/repo/build-tools/src/main/javadoc/hljs-theme.css to file hljs-theme.css...
+[WARNING] 3 warnings
+[INFO] Building jar: /workspace/repo/instancio-quickcheck/target/instancio-quickcheck-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:check (default) > :pmd @ instancio-quickcheck >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:pmd (pmd) @ instancio-quickcheck ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:check (default) < :pmd @ instancio-quickcheck <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:check (default) @ instancio-quickcheck ---
+[INFO] PMD version: 6.55.0
+[INFO] You have 286 warnings. For more details see: /workspace/repo/instancio-quickcheck/target/pmd.xml
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:cpd-check (default) > :cpd @ instancio-quickcheck >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd (cpd) @ instancio-quickcheck ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:cpd-check (default) < :cpd @ instancio-quickcheck <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd-check (default) @ instancio-quickcheck ---
+[INFO] PMD version: 6.55.0
+[INFO] 
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.3.1:check (default) @ instancio-quickcheck ---
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- maven-install-plugin:3.1.4:install (default-install) @ instancio-quickcheck ---
+[INFO] Installing /workspace/repo/instancio-quickcheck/pom.xml to /root/.m2/repository/org/instancio/instancio-quickcheck/4.6.1-SNAPSHOT/instancio-quickcheck-4.6.1-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/instancio-quickcheck/target/instancio-quickcheck-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-quickcheck/4.6.1-SNAPSHOT/instancio-quickcheck-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-quickcheck/target/instancio-quickcheck-4.6.1-SNAPSHOT-javadoc.jar to /root/.m2/repository/org/instancio/instancio-quickcheck/4.6.1-SNAPSHOT/instancio-quickcheck-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] --- maven-bundle-plugin:5.1.9:install (default-install) @ instancio-quickcheck ---
+[INFO] Installing org/instancio/instancio-quickcheck/4.6.1-SNAPSHOT/instancio-quickcheck-4.6.1-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO] 
+[INFO] -------------------< org.instancio:instancio-guava >--------------------
+[INFO] Building Instancio Guava Support 4.6.1-SNAPSHOT                   [6/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-guava ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-guava ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-guava/target/jacoco.exec,excludes=META-INF/**
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-guava ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-guava ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 18 source files with javac [debug release 9 module-path] to target/classes
+[INFO] /workspace/repo/instancio-guava/src/main/java/org/instancio/guava/internal/spi/GuavaInternalServiceProvider.java: /workspace/repo/instancio-guava/src/main/java/org/instancio/guava/internal/spi/GuavaInternalServiceProvider.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-guava/src/main/java/org/instancio/guava/internal/spi/GuavaInternalServiceProvider.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (base-compile) @ instancio-guava ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 17 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] /workspace/repo/instancio-guava/src/main/java/org/instancio/guava/internal/spi/GuavaInternalServiceProvider.java: /workspace/repo/instancio-guava/src/main/java/org/instancio/guava/internal/spi/GuavaInternalServiceProvider.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-guava/src/main/java/org/instancio/guava/internal/spi/GuavaInternalServiceProvider.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-16) @ instancio-guava ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-21) @ instancio-guava ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-guava ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-guava ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-guava ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ instancio-guava ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-guava ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-antrun-plugin:3.1.0:run (move-module-info) @ instancio-guava ---
+[INFO] Executing tasks
+[INFO]      [move] Moving 1 file to /workspace/repo/instancio-guava/target/classes/META-INF/versions/9
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-guava ---
+[INFO] Building jar: /workspace/repo/instancio-guava/target/instancio-guava-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-javadoc-plugin:3.6.3:jar (attach-javadocs) @ instancio-guava ---
+[INFO] Configuration changed, re-generating javadoc.
+[INFO] Building jar: /workspace/repo/instancio-guava/target/instancio-guava-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:check (default) > :pmd @ instancio-guava >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:pmd (pmd) @ instancio-guava ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:check (default) < :pmd @ instancio-guava <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:check (default) @ instancio-guava ---
+[INFO] PMD version: 6.55.0
+[INFO] You have 60 warnings. For more details see: /workspace/repo/instancio-guava/target/pmd.xml
+[INFO] 
+[INFO] >>> maven-pmd-plugin:3.21.2:cpd-check (default) > :cpd @ instancio-guava >>>
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd (cpd) @ instancio-guava ---
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] 
+[INFO] <<< maven-pmd-plugin:3.21.2:cpd-check (default) < :cpd @ instancio-guava <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:cpd-check (default) @ instancio-guava ---
+[INFO] PMD version: 6.55.0
+[INFO] 
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.3.1:check (default) @ instancio-guava ---
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-guava ---
+[INFO] Installing /workspace/repo/instancio-guava/target/instancio-guava-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-guava/4.6.1-SNAPSHOT/instancio-guava-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-guava/pom.xml to /root/.m2/repository/org/instancio/instancio-guava/4.6.1-SNAPSHOT/instancio-guava-4.6.1-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/instancio-guava/target/instancio-guava-4.6.1-SNAPSHOT-javadoc.jar to /root/.m2/repository/org/instancio/instancio-guava/4.6.1-SNAPSHOT/instancio-guava-4.6.1-SNAPSHOT-javadoc.jar
+[INFO] 
+[INFO] -------------------< org.instancio:instancio-tests >--------------------
+[INFO] Building Instancio Tests: Tests Parent 4.6.1-SNAPSHOT             [7/38]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/pom.xml to /root/.m2/repository/org/instancio/instancio-tests/4.6.1-SNAPSHOT/instancio-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------< org.instancio:instancio-test-support >----------------
+[INFO] Building Instancio Tests: Test Support 4.6.1-SNAPSHOT             [8/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-test-support ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-test-support ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-test-support ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/instancio-test-support/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-test-support ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 241 source files with javac [debug release 9 module-path] to target/classes
+[WARNING] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/pojo/person/AddressExtension.java:[20,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[WARNING] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/pojo/person/PhoneWithType.java:[25,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[WARNING] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/pojo/performance/LargeCyclicSubclass.java:[22,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[INFO] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/util/ArrayUtils.java: /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/util/ArrayUtils.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/util/ArrayUtils.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (base-compile) @ instancio-test-support ---
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 240 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[WARNING] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/pojo/person/AddressExtension.java:[20,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[WARNING] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/pojo/person/PhoneWithType.java:[25,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[WARNING] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/pojo/performance/LargeCyclicSubclass.java:[22,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[INFO] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/util/ArrayUtils.java: /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/util/ArrayUtils.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/util/ArrayUtils.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-16) @ instancio-test-support ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (java-21) @ instancio-test-support ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-test-support ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-test-support ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-test-support ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-test-support ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-test-support ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] 
+[INFO] --- maven-antrun-plugin:3.1.0:run (move-module-info) @ instancio-test-support ---
+[INFO] Executing tasks
+[INFO]      [move] Moving 1 file to /workspace/repo/instancio-tests/instancio-test-support/target/classes/META-INF/versions/9
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-test-support ---
+[INFO] Building jar: /workspace/repo/instancio-tests/instancio-test-support/target/instancio-test-support-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-test-support ---
+[INFO] Installing /workspace/repo/instancio-tests/instancio-test-support/target/instancio-test-support-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-test-support/4.6.1-SNAPSHOT/instancio-test-support-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/instancio-test-support/pom.xml to /root/.m2/repository/org/instancio/instancio-test-support/4.6.1-SNAPSHOT/instancio-test-support-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] --------------------< org.instancio:feature-tests >---------------------
+[INFO] Building Instancio tests: Feature Tests 4.6.1-SNAPSHOT            [9/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ feature-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ feature-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/feature-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ feature-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/feature-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ feature-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ feature-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ feature-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ feature-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ feature-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ feature-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ feature-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-failsafe-plugin:3.2.5:integration-test (field-assignment) @ feature-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-failsafe-plugin:3.2.5:integration-test (method-assignment) @ feature-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-failsafe-plugin:3.2.5:verify (verify) @ feature-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ feature-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/feature-tests/target/feature-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/feature-tests/4.6.1-SNAPSHOT/feature-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/feature-tests/pom.xml to /root/.m2/repository/org/instancio/feature-tests/4.6.1-SNAPSHOT/feature-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------< org.instancio:instancio-guava-tests >-----------------
+[INFO] Building Instancio tests: instancio-guava Tests 4.6.1-SNAPSHOT   [10/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-guava-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-guava-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/instancio-guava-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-guava-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/instancio-guava-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-guava-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-guava-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-guava-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-guava-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-guava-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-guava-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-guava-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/instancio-guava-tests/target/instancio-guava-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-guava-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/instancio-guava-tests/target/instancio-guava-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-guava-tests/4.6.1-SNAPSHOT/instancio-guava-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/instancio-guava-tests/pom.xml to /root/.m2/repository/org/instancio/instancio-guava-tests/4.6.1-SNAPSHOT/instancio-guava-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] --------------< org.instancio:instancio-quickcheck-tests >--------------
+[INFO] Building Instancio tests: instancio-quickcheck Tests 4.6.1-SNAPSHOT [11/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-quickcheck-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-quickcheck-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/instancio-quickcheck-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-quickcheck-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/instancio-quickcheck-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-quickcheck-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-quickcheck-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-quickcheck-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-quickcheck-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-quickcheck-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-quickcheck-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-quickcheck-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-quickcheck-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/instancio-quickcheck-tests/target/instancio-quickcheck-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-quickcheck-tests/4.6.1-SNAPSHOT/instancio-quickcheck-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/instancio-quickcheck-tests/pom.xml to /root/.m2/repository/org/instancio/instancio-quickcheck-tests/4.6.1-SNAPSHOT/instancio-quickcheck-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------< org.instancio:default-package-tests >-----------------
+[INFO] Building Instancio tests: Default Package Tests 4.6.1-SNAPSHOT   [12/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ default-package-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ default-package-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/default-package-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ default-package-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/default-package-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ default-package-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ default-package-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ default-package-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ default-package-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ default-package-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ default-package-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ default-package-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ default-package-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/default-package-tests/target/default-package-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/default-package-tests/4.6.1-SNAPSHOT/default-package-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/default-package-tests/pom.xml to /root/.m2/repository/org/instancio/default-package-tests/4.6.1-SNAPSHOT/default-package-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ------------------< org.instancio:global-seed-tests >-------------------
+[INFO] Building Instancio tests: Global Seed Tests 4.6.1-SNAPSHOT       [13/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ global-seed-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ global-seed-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/global-seed-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ global-seed-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/global-seed-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ global-seed-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ global-seed-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ global-seed-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ global-seed-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ global-seed-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ global-seed-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ global-seed-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ global-seed-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/global-seed-tests/target/global-seed-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/global-seed-tests/4.6.1-SNAPSHOT/global-seed-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/global-seed-tests/pom.xml to /root/.m2/repository/org/instancio/global-seed-tests/4.6.1-SNAPSHOT/global-seed-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------------------< org.instancio:kotlin-tests >---------------------
+[INFO] Building Instancio tests: Kotlin Tests 4.6.1-SNAPSHOT            [14/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ kotlin-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ kotlin-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/kotlin-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ kotlin-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/kotlin-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ kotlin-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] 
+[INFO] --- kotlin-maven-plugin:1.9.24:compile (compile) @ kotlin-tests ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ kotlin-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ kotlin-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- kotlin-maven-plugin:1.9.24:test-compile (test-compile) @ kotlin-tests ---
+[INFO] Test compilation is skipped
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ kotlin-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ kotlin-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ kotlin-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ kotlin-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/kotlin-tests/target/kotlin-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ kotlin-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/kotlin-tests/target/kotlin-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/kotlin-tests/4.6.1-SNAPSHOT/kotlin-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/kotlin-tests/pom.xml to /root/.m2/repository/org/instancio/kotlin-tests/4.6.1-SNAPSHOT/kotlin-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------------< org.instancio:jpa-javax-tests >--------------------
+[INFO] Building Instancio tests: JPA javax Tests 4.6.1-SNAPSHOT         [15/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpa-javax-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpa-javax-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpa-javax-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpa-javax-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpa-javax-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpa-javax-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpa-javax-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpa-javax-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpa-javax-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpa-javax-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpa-javax-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpa-javax-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/jpa-javax-tests/target/jpa-javax-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpa-javax-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpa-javax-tests/target/jpa-javax-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpa-javax-tests/4.6.1-SNAPSHOT/jpa-javax-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpa-javax-tests/pom.xml to /root/.m2/repository/org/instancio/jpa-javax-tests/4.6.1-SNAPSHOT/jpa-javax-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ------------------< org.instancio:jpa-jakarta-tests >-------------------
+[INFO] Building Instancio tests: JPA jakarta Tests 4.6.1-SNAPSHOT       [16/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpa-jakarta-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpa-jakarta-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpa-jakarta-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpa-jakarta-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpa-jakarta-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpa-jakarta-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpa-jakarta-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpa-jakarta-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpa-jakarta-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpa-jakarta-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpa-jakarta-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpa-jakarta-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/jpa-jakarta-tests/target/jpa-jakarta-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpa-jakarta-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpa-jakarta-tests/target/jpa-jakarta-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpa-jakarta-tests/4.6.1-SNAPSHOT/jpa-jakarta-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpa-jakarta-tests/pom.xml to /root/.m2/repository/org/instancio/jpa-jakarta-tests/4.6.1-SNAPSHOT/jpa-jakarta-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------< org.instancio:bean-validation-javax-tests >--------------
+[INFO] Building Instancio tests: Javax Bean Validation Tests 4.6.1-SNAPSHOT [17/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ bean-validation-javax-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ bean-validation-javax-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/bean-validation-javax-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ bean-validation-javax-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/bean-validation-javax-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ bean-validation-javax-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 20 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ bean-validation-javax-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ bean-validation-javax-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ bean-validation-javax-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ bean-validation-javax-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ bean-validation-javax-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ bean-validation-javax-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/bean-validation-javax-tests/target/bean-validation-javax-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ bean-validation-javax-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-javax-tests/target/bean-validation-javax-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/bean-validation-javax-tests/4.6.1-SNAPSHOT/bean-validation-javax-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-javax-tests/pom.xml to /root/.m2/repository/org/instancio/bean-validation-javax-tests/4.6.1-SNAPSHOT/bean-validation-javax-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ------------< org.instancio:bean-validation-jakarta-tests >-------------
+[INFO] Building Instancio tests: Jakarta Bean Validation Tests 4.6.1-SNAPSHOT [18/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ bean-validation-jakarta-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ bean-validation-jakarta-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/bean-validation-jakarta-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ bean-validation-jakarta-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/bean-validation-jakarta-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ bean-validation-jakarta-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 22 source files with javac [debug target 1.8] to target/classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ bean-validation-jakarta-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ bean-validation-jakarta-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ bean-validation-jakarta-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ bean-validation-jakarta-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ bean-validation-jakarta-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ bean-validation-jakarta-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/bean-validation-jakarta-tests/target/bean-validation-jakarta-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ bean-validation-jakarta-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-jakarta-tests/target/bean-validation-jakarta-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/bean-validation-jakarta-tests/4.6.1-SNAPSHOT/bean-validation-jakarta-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-jakarta-tests/pom.xml to /root/.m2/repository/org/instancio/bean-validation-jakarta-tests/4.6.1-SNAPSHOT/bean-validation-jakarta-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -----------< org.instancio:bean-validation-hibernate5-tests >-----------
+[INFO] Building Instancio tests: Hibernate 5 Bean Validation Tests 4.6.1-SNAPSHOT [19/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ bean-validation-hibernate5-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ bean-validation-hibernate5-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/bean-validation-hibernate5-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ bean-validation-hibernate5-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/bean-validation-hibernate5-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ bean-validation-hibernate5-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ bean-validation-hibernate5-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ bean-validation-hibernate5-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ bean-validation-hibernate5-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ bean-validation-hibernate5-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ bean-validation-hibernate5-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ bean-validation-hibernate5-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ bean-validation-hibernate5-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-hibernate5-tests/target/bean-validation-hibernate5-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/bean-validation-hibernate5-tests/4.6.1-SNAPSHOT/bean-validation-hibernate5-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-hibernate5-tests/pom.xml to /root/.m2/repository/org/instancio/bean-validation-hibernate5-tests/4.6.1-SNAPSHOT/bean-validation-hibernate5-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------------< org.instancio:packaging-tests >--------------------
+[INFO] Building Instancio tests: Packaging Tests 4.6.1-SNAPSHOT         [20/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ packaging-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ packaging-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/packaging-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ packaging-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/packaging-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ packaging-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ packaging-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ packaging-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ packaging-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ packaging-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ packaging-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ packaging-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ packaging-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/packaging-tests/target/packaging-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/packaging-tests/4.6.1-SNAPSHOT/packaging-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/packaging-tests/pom.xml to /root/.m2/repository/org/instancio/packaging-tests/4.6.1-SNAPSHOT/packaging-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------------------< org.instancio:java16-tests >---------------------
+[INFO] Building Instancio tests: Java 16 Tests 4.6.1-SNAPSHOT           [21/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ java16-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ java16-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/java16-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ java16-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/java16-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ java16-tests ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ java16-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ java16-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ java16-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ java16-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ java16-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ java16-tests ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ java16-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/java16-tests/target/java16-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/java16-tests/4.6.1-SNAPSHOT/java16-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/java16-tests/pom.xml to /root/.m2/repository/org/instancio/java16-tests/4.6.1-SNAPSHOT/java16-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -----------------< org.instancio:instancio-core-tests >-----------------
+[INFO] Building Instancio tests: instancio-core Tests 4.6.1-SNAPSHOT    [22/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-core-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-core-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/instancio-core-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-core-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/instancio-core-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-core-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-core-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-core-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-core-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-core-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-core-tests ---
+[INFO] Skipping JaCoCo execution due to missing classes directory.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-core-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-core-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/instancio-core-tests/target/instancio-core-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-core-tests/4.6.1-SNAPSHOT/instancio-core-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/instancio-core-tests/pom.xml to /root/.m2/repository/org/instancio/instancio-core-tests/4.6.1-SNAPSHOT/instancio-core-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------< org.instancio:instancio-junit-tests >-----------------
+[INFO] Building Instancio tests: instancio-junit Tests 4.6.1-SNAPSHOT   [23/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-junit-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-junit-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/instancio-junit-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-junit-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/instancio-junit-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-junit-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-junit-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-junit-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-junit-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-junit-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-junit-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-junit-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-junit-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/instancio-junit-tests/target/instancio-junit-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-junit-tests/4.6.1-SNAPSHOT/instancio-junit-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/instancio-junit-tests/pom.xml to /root/.m2/repository/org/instancio/instancio-junit-tests/4.6.1-SNAPSHOT/instancio-junit-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------------------< org.instancio:java17-tests >---------------------
+[INFO] Building Instancio tests: Java 17 Tests 4.6.1-SNAPSHOT           [24/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ java17-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ java17-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/java17-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ java17-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/java17-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ java17-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ java17-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ java17-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ java17-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ java17-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ java17-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ java17-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ java17-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/java17-tests/target/java17-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/java17-tests/4.6.1-SNAPSHOT/java17-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/java17-tests/pom.xml to /root/.m2/repository/org/instancio/java17-tests/4.6.1-SNAPSHOT/java17-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------------< org.instancio:spi-tests >-----------------------
+[INFO] Building Instancio tests: Instancio SPI Tests 4.6.1-SNAPSHOT     [25/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ spi-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ spi-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/spi-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ spi-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/spi-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ spi-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ spi-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ spi-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ spi-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ spi-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ spi-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ spi-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ spi-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/spi-tests/target/spi-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/spi-tests/4.6.1-SNAPSHOT/spi-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/spi-tests/pom.xml to /root/.m2/repository/org/instancio/spi-tests/4.6.1-SNAPSHOT/spi-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -----------< org.instancio:bean-validation-hibernate-tests >------------
+[INFO] Building Instancio tests: Hibernate Bean Validation Tests 4.6.1-SNAPSHOT [26/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ bean-validation-hibernate-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ bean-validation-hibernate-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/bean-validation-hibernate-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ bean-validation-hibernate-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/bean-validation-hibernate-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ bean-validation-hibernate-tests ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 28 source files with javac [debug release 17] to target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ bean-validation-hibernate-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ bean-validation-hibernate-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ bean-validation-hibernate-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ bean-validation-hibernate-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ bean-validation-hibernate-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ bean-validation-hibernate-tests ---
+[INFO] Building jar: /workspace/repo/instancio-tests/bean-validation-hibernate-tests/target/bean-validation-hibernate-tests-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ bean-validation-hibernate-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-hibernate-tests/target/bean-validation-hibernate-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/bean-validation-hibernate-tests/4.6.1-SNAPSHOT/bean-validation-hibernate-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/bean-validation-hibernate-tests/pom.xml to /root/.m2/repository/org/instancio/bean-validation-hibernate-tests/4.6.1-SNAPSHOT/bean-validation-hibernate-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -----------------< org.instancio:instancio-jooq-tests >-----------------
+[INFO] Building Instancio tests: jOOQ Tests 4.6.1-SNAPSHOT              [27/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-jooq-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-jooq-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/instancio-jooq-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- jooq-codegen-maven:3.19.8:generate (default) @ instancio-jooq-tests ---
+[INFO] 
+                                      
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@        @@  @  @  @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.19.8 (Build date: 2024-05-02T06:58:03Z)
+                                      
+[INFO] 
+
+jOOQ tip of the day: You can extend jOOQ with alternative syntax using plain SQL templating: https://www.jooq.org/doc/latest/manual/sql-building/plain-sql-templating/
+
+[INFO] No <inputCatalog/> was provided. Generating ALL available catalogs instead.
+[INFO] No <inputSchema/> was provided. Generating ALL available schemata instead.
+[INFO] Reading from: /workspace/repo/instancio-tests/instancio-jooq-tests/src/main/resources/schema.sql [*]
+[INFO] create table JOOQ_PERSON (
+  ID bigint not null,
+  FIRST_NAME varchar(50) not null,
+  LAST_NAME varchar(50) not null,
+  PREFERRED_NAME varchar(50) not null,
+  DOB date not null,
+  GENDER varchar(1),
+  LAST_MODIFIED timestamp not null,
+  primary key (ID)
+)
+[INFO] Version                  : Database version is supported by dialect H2: 2.2.224 (2023-09-17)
+[INFO] Update count: 0          
+[INFO] License parameters       
+[INFO] ----------------------------------------------------------
+[INFO]   Thank you for using jOOQ and jOOQ's code generator
+[INFO]                          
+[INFO] Database parameters      
+[INFO] ----------------------------------------------------------
+[INFO]   dialect                : H2
+[INFO]   URL                    : 
+[INFO]   target dir             : /workspace/repo/instancio-tests/instancio-jooq-tests/target/generated-sources/jooq
+[INFO]   target package         : org.instancio.test.jooq
+[INFO]   includes               : []
+[INFO]   excludes               : []
+[INFO]   includeExcludeColumns  : false
+[INFO] ----------------------------------------------------------
+[INFO]                          
+[INFO] JavaGenerator parameters 
+[INFO] ----------------------------------------------------------
+[INFO] annotations              
+[INFO]   generated              : false
+[INFO]   JPA                    : false
+[INFO]   JPA version            : 
+[INFO]   validation             : false
+[INFO]   spring                 : false
+[INFO] comments                 
+[INFO]   comments               : true
+[INFO]   on attributes          : true
+[INFO]   on catalogs            : true
+[INFO]   on columns             : true
+[INFO]   on embeddables         : true
+[INFO]   on keys                : true
+[INFO]   on links               : true
+[INFO]   on packages            : true
+[INFO]   on parameters          : true
+[INFO]   on queues              : true
+[INFO]   on routines            : true
+[INFO]   on schemas             : true
+[INFO]   on sequences           : true
+[INFO]   on tables              : true
+[INFO]   on udts                : true
+[INFO] sources                  
+[INFO]   sources                : true
+[INFO]   sources on views       : true
+[INFO] global references        
+[INFO]   global references      : true
+[INFO]   catalogs               : true
+[INFO]   domains                : true
+[INFO]   indexes                : true
+[INFO]   keys                   : true
+[INFO]   links                  : true
+[INFO]   queues                 : true
+[INFO]   routines               : true
+[INFO]   schemas                : true
+[INFO]   sequences              : true
+[INFO]   tables                 : true
+[INFO]   udts                   : true
+[INFO] object types             
+[INFO]   daos                   : false
+[INFO]   indexes                : true
+[INFO]   instance fields        : true
+[INFO]   interfaces             : false
+[INFO]   interfaces (immutable) : false
+[INFO]   javadoc                : true
+[INFO]   keys                   : true
+[INFO]   links                  : true
+[INFO]   pojos                  : false
+[INFO]   pojos (immutable)      : false
+[INFO]   queues                 : true
+[INFO]   records                : true
+[INFO]   routines               : true
+[INFO]   sequences              : true
+[INFO]   sequenceFlags          : true
+[INFO]   table-valued functions : true
+[INFO]   tables                 : true
+[INFO]   udts                   : true
+[INFO]   relations              : true
+[INFO] other                    
+[INFO]   deprecated code        : true
+[INFO] ----------------------------------------------------------
+[INFO]                          
+[INFO] Generation remarks       
+[INFO] ----------------------------------------------------------
+[INFO]                          
+[INFO] ----------------------------------------------------------
+[INFO] Generating catalogs      : Total: 1
+[INFO] ARRAYs fetched           : 0 (0 included, 0 excluded)
+[INFO] Domains fetched          : 0 (0 included, 0 excluded)
+[INFO] Tables fetched           : 1 (1 included, 0 excluded)
+[INFO] Embeddables fetched      : 0 (0 included, 0 excluded)
+[INFO] Enums fetched            : 0 (0 included, 0 excluded)
+[INFO] Packages fetched         : 0 (0 included, 0 excluded)
+[INFO] Routines fetched         : 0 (0 included, 0 excluded)
+[INFO] Sequences fetched        : 0 (0 included, 0 excluded)
+[INFO] No schema version is applied for catalog . Regenerating.
+[INFO]                          
+[INFO] Generating catalog       : DefaultCatalog.java
+[INFO] ==========================================================
+[INFO] Comments fetched         : 0 (0 included, 0 excluded)
+[INFO] Generating schemata      : Total: 1
+[INFO] No schema version is applied for schema PUBLIC. Regenerating.
+[INFO] Generating schema        : DefaultSchema.java
+[INFO] ----------------------------------------------------------
+[INFO] UDTs fetched             : 0 (0 included, 0 excluded)
+[INFO] Generating tables        
+[INFO] Generating table         : JooqPerson.java [input=JOOQ_PERSON, pk=CONSTRAINT_3]
+[INFO] Indexes fetched          : 0 (0 included, 0 excluded)
+[INFO] Tables generated         : Total: 865.923ms
+[INFO] Generating table records 
+[INFO] Generating record        : JooqPersonRecord.java
+[INFO] Table records generated  : Total: 950.432ms, +84.508ms
+[INFO] Generating table references
+[INFO] Table refs generated     : Total: 951.406ms, +0.974ms
+[INFO] Generating Keys          
+[INFO] Keys generated           : Total: 952.409ms, +1.003ms
+[INFO] Generating Indexes       
+[INFO] Skipping empty indexes   
+[INFO] Generation finished: PUBLIC: Total: 952.548ms, +0.138ms
+[INFO]                          
+[INFO] Affected files: 6        
+[INFO] Modified files: 0        
+[INFO] No modified files        : This code generation run has not produced any file modifications.
+This means, the schema has not changed, and no other parameters (jOOQ version, driver version, database version,
+and any configuration elements) have changed either.
+
+In automated builds, it is recommended to prevent unnecessary code generation runs. This run took: 645.129ms
+Possible means to prevent this:
+- Use manual code generation and check in generated sources: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/
+- Use schema version providers: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-version-providers/
+- Use gradle tasks and inputs: https://docs.gradle.org/current/userguide/incremental_build.html
+[INFO] Removing excess files    
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-jooq-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-jooq-tests ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-jooq-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-jooq-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-jooq-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-jooq-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-jooq-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ instancio-jooq-tests ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ instancio-jooq-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/instancio-jooq-tests/target/instancio-jooq-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/instancio-jooq-tests/4.6.1-SNAPSHOT/instancio-jooq-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/instancio-jooq-tests/pom.xml to /root/.m2/repository/org/instancio/instancio-jooq-tests/4.6.1-SNAPSHOT/instancio-jooq-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------------------< org.instancio:java21-tests >---------------------
+[INFO] Building Instancio tests: Java 21 Tests 4.6.1-SNAPSHOT           [28/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ java21-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ java21-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/java21-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ java21-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/java21-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ java21-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ java21-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ java21-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ java21-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ java21-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ java21-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ java21-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ java21-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/java21-tests/target/java21-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/java21-tests/4.6.1-SNAPSHOT/java21-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/java21-tests/pom.xml to /root/.m2/repository/org/instancio/java21-tests/4.6.1-SNAPSHOT/java21-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------------< org.instancio:arch-tests >----------------------
+[INFO] Building Instancio tests: Arch Tests 4.6.1-SNAPSHOT              [29/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ arch-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ arch-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/arch-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ arch-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/arch-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ arch-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ arch-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ arch-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ arch-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ arch-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ arch-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ arch-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ arch-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/arch-tests/target/arch-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/arch-tests/4.6.1-SNAPSHOT/arch-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/arch-tests/pom.xml to /root/.m2/repository/org/instancio/arch-tests/4.6.1-SNAPSHOT/arch-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------------< org.instancio:jpms-tests >----------------------
+[INFO] Building Instancio Tests: JPMS Tests Parent 4.6.1-SNAPSHOT       [30/38]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-tests/4.6.1-SNAPSHOT/jpms-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------< org.instancio:jpms-standalone-tests >-----------------
+[INFO] Building Instancio tests: JPMS Standalone Tests 4.6.1-SNAPSHOT   [31/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-standalone-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-standalone-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/jpms-standalone-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-standalone-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpms-tests/jpms-standalone-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-standalone-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-standalone-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-standalone-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-standalone-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-standalone-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-standalone-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-standalone-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-standalone-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-standalone-tests/target/jpms-standalone-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-standalone-tests/4.6.1-SNAPSHOT/jpms-standalone-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-standalone-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-standalone-tests/4.6.1-SNAPSHOT/jpms-standalone-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] --------------------< org.instancio:jpms-spi-impl >---------------------
+[INFO] Building Instancio tests: JPMS Sample SPI implementation 4.6.1-SNAPSHOT [32/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-spi-impl ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-spi-impl ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-spi-impl ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-spi-impl ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 2 source files with javac [debug release 21 module-path] to target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-spi-impl ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-spi-impl ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-spi-impl ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-spi-impl ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-spi-impl ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-spi-impl ---
+[INFO] Building jar: /workspace/repo/instancio-tests/jpms-tests/jpms-spi-impl/target/jpms-spi-impl-4.6.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-spi-impl ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-spi-impl/target/jpms-spi-impl-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-spi-impl/4.6.1-SNAPSHOT/jpms-spi-impl-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-spi-impl/pom.xml to /root/.m2/repository/org/instancio/jpms-spi-impl/4.6.1-SNAPSHOT/jpms-spi-impl-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] --------------------< org.instancio:jpms-spi-tests >--------------------
+[INFO] Building Instancio tests: JPMS SPI Tests 4.6.1-SNAPSHOT          [33/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-spi-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-spi-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/jpms-spi-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-spi-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpms-tests/jpms-spi-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-spi-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-spi-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-spi-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-spi-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-spi-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-spi-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-spi-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-spi-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-spi-tests/target/jpms-spi-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-spi-tests/4.6.1-SNAPSHOT/jpms-spi-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-spi-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-spi-tests/4.6.1-SNAPSHOT/jpms-spi-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------------< org.instancio:jpms-quickcheck-tests >-----------------
+[INFO] Building Instancio tests: JPMS instancio-quickcheck Tests 4.6.1-SNAPSHOT [34/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-quickcheck-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-quickcheck-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/jpms-quickcheck-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-quickcheck-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpms-tests/jpms-quickcheck-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-quickcheck-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-quickcheck-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-quickcheck-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-quickcheck-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-quickcheck-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-quickcheck-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-quickcheck-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-quickcheck-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-quickcheck-tests/target/jpms-quickcheck-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-quickcheck-tests/4.6.1-SNAPSHOT/jpms-quickcheck-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-quickcheck-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-quickcheck-tests/4.6.1-SNAPSHOT/jpms-quickcheck-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ----------< org.instancio:jpms-bean-validation-jakarta-tests >----------
+[INFO] Building Instancio tests: JPMS Bean Validation Jakarta Tests 4.6.1-SNAPSHOT [35/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-bean-validation-jakarta-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-jakarta-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-jakarta-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-bean-validation-jakarta-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-bean-validation-jakarta-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-bean-validation-jakarta-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-jakarta-tests/target/jpms-bean-validation-jakarta-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-bean-validation-jakarta-tests/4.6.1-SNAPSHOT/jpms-bean-validation-jakarta-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-jakarta-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-bean-validation-jakarta-tests/4.6.1-SNAPSHOT/jpms-bean-validation-jakarta-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------< org.instancio:jpms-bean-validation-hibernate-tests >---------
+[INFO] Building Instancio tests: JPMS Bean Validation Hibernate Tests 4.6.1-SNAPSHOT [36/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-bean-validation-hibernate-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-hibernate-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-hibernate-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-bean-validation-hibernate-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-bean-validation-hibernate-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-bean-validation-hibernate-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-hibernate-tests/target/jpms-bean-validation-hibernate-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-bean-validation-hibernate-tests/4.6.1-SNAPSHOT/jpms-bean-validation-hibernate-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-bean-validation-hibernate-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-bean-validation-hibernate-tests/4.6.1-SNAPSHOT/jpms-bean-validation-hibernate-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------------< org.instancio:jpms-guava-tests >-------------------
+[INFO] Building Instancio tests: JPMS instancio-guava Tests 4.6.1-SNAPSHOT [37/38]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ jpms-guava-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ jpms-guava-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/jpms-tests/jpms-guava-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ jpms-guava-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/jpms-tests/jpms-guava-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ jpms-guava-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ jpms-guava-tests ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ jpms-guava-tests ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ jpms-guava-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ jpms-guava-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ jpms-guava-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ jpms-guava-tests ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ jpms-guava-tests ---
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-guava-tests/target/jpms-guava-tests-4.6.1-SNAPSHOT.jar to /root/.m2/repository/org/instancio/jpms-guava-tests/4.6.1-SNAPSHOT/jpms-guava-tests-4.6.1-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/instancio-tests/jpms-tests/jpms-guava-tests/pom.xml to /root/.m2/repository/org/instancio/jpms-guava-tests/4.6.1-SNAPSHOT/jpms-guava-tests-4.6.1-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------------< org.instancio:report-aggregate >-------------------
+[INFO] Building Instancio tests: Aggregate Report 4.6.1-SNAPSHOT        [38/38]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ report-aggregate ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ report-aggregate ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/report-aggregate/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ report-aggregate ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ report-aggregate ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report-aggregate (report-aggregate) @ report-aggregate ---
+[INFO] Loading execution data file /workspace/repo/instancio-tests/instancio-core-tests/target/jacoco.exec
+[INFO] Analyzed bundle 'instancio-core' with 445 classes
+[WARNING] Classes in bundle 'instancio-core' do not match with execution data. For report generation the same class files must be used as at runtime.
+[WARNING] Execution data for class org/instancio/settings/Keys does not match.
+[WARNING] Execution data for class org/instancio/internal/util/ReflectionUtils does not match.
+[WARNING] Execution data for class org/instancio/internal/settings/SettingsSupport does not match.
+[INFO] Analyzed bundle 'instancio-junit' with 5 classes
+[INFO] Analyzed bundle 'instancio-guava' with 10 classes
+[INFO] Analyzed bundle 'instancio-quickcheck' with 26 classes
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ report-aggregate ---
+[INFO] Installing /workspace/repo/instancio-tests/report-aggregate/pom.xml to /root/.m2/repository/org/instancio/report-aggregate/4.6.1-SNAPSHOT/report-aggregate-4.6.1-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Instancio Parent 4.6.1-SNAPSHOT:
+[INFO] 
+[INFO] Instancio Parent ................................... SUCCESS [  1.890 s]
+[INFO] Build tools ........................................ SUCCESS [  1.093 s]
+[INFO] Instancio Core ..................................... SUCCESS [01:00 min]
+[INFO] Instancio JUnit 5 Support .......................... SUCCESS [  6.393 s]
+[INFO] Instancio Quickcheck for JUnit 5 ................... SUCCESS [  7.092 s]
+[INFO] Instancio Guava Support ............................ SUCCESS [  9.190 s]
+[INFO] Instancio Tests: Tests Parent ...................... SUCCESS [  0.010 s]
+[INFO] Instancio Tests: Test Support ...................... SUCCESS [ 16.194 s]
+[INFO] Instancio tests: Feature Tests ..................... SUCCESS [  0.895 s]
+[INFO] Instancio tests: instancio-guava Tests ............. SUCCESS [  1.286 s]
+[INFO] Instancio tests: instancio-quickcheck Tests ........ SUCCESS [  0.437 s]
+[INFO] Instancio tests: Default Package Tests ............. SUCCESS [  0.379 s]
+[INFO] Instancio tests: Global Seed Tests ................. SUCCESS [  0.301 s]
+[INFO] Instancio tests: Kotlin Tests ...................... SUCCESS [  7.091 s]
+[INFO] Instancio tests: JPA javax Tests ................... SUCCESS [  1.198 s]
+[INFO] Instancio tests: JPA jakarta Tests ................. SUCCESS [  1.200 s]
+[INFO] Instancio tests: Javax Bean Validation Tests ....... SUCCESS [  2.328 s]
+[INFO] Instancio tests: Jakarta Bean Validation Tests ..... SUCCESS [  2.892 s]
+[INFO] Instancio tests: Hibernate 5 Bean Validation Tests . SUCCESS [  0.578 s]
+[INFO] Instancio tests: Packaging Tests ................... SUCCESS [  0.316 s]
+[INFO] Instancio tests: Java 16 Tests ..................... SUCCESS [  0.024 s]
+[INFO] Instancio tests: instancio-core Tests .............. SUCCESS [  0.067 s]
+[INFO] Instancio tests: instancio-junit Tests ............. SUCCESS [  0.019 s]
+[INFO] Instancio tests: Java 17 Tests ..................... SUCCESS [  0.019 s]
+[INFO] Instancio tests: Instancio SPI Tests ............... SUCCESS [  0.060 s]
+[INFO] Instancio tests: Hibernate Bean Validation Tests ... SUCCESS [  1.724 s]
+[INFO] Instancio tests: jOOQ Tests ........................ SUCCESS [  2.202 s]
+[INFO] Instancio tests: Java 21 Tests ..................... SUCCESS [  0.077 s]
+[INFO] Instancio tests: Arch Tests ........................ SUCCESS [  0.017 s]
+[INFO] Instancio Tests: JPMS Tests Parent ................. SUCCESS [  0.009 s]
+[INFO] Instancio tests: JPMS Standalone Tests ............. SUCCESS [  0.064 s]
+[INFO] Instancio tests: JPMS Sample SPI implementation .... SUCCESS [  0.200 s]
+[INFO] Instancio tests: JPMS SPI Tests .................... SUCCESS [  0.015 s]
+[INFO] Instancio tests: JPMS instancio-quickcheck Tests ... SUCCESS [  0.014 s]
+[INFO] Instancio tests: JPMS Bean Validation Jakarta Tests  SUCCESS [  0.013 s]
+[INFO] Instancio tests: JPMS Bean Validation Hibernate Tests SUCCESS [  0.062 s]
+[INFO] Instancio tests: JPMS instancio-guava Tests ........ SUCCESS [  0.013 s]
+[INFO] Instancio tests: Aggregate Report .................. SUCCESS [  3.285 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:10 min
+[INFO] Finished at: 2026-07-01T14:52:02Z
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< org.instancio:feature-tests >---------------------
+[INFO] Building Instancio tests: Feature Tests 4.6.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ feature-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ feature-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/feature-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ feature-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/feature-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ feature-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ feature-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ feature-tests ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 428 source files with javac [debug target 1.8] to target/test-classes
+[WARNING] bootstrap class path not set in conjunction with -source 8
+[WARNING] source value 8 is obsolete and will be removed in a future release
+[WARNING] target value 8 is obsolete and will be removed in a future release
+[WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/BuiltInArrayGeneratorTest.java:[72,72] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/BuiltInCollectionGeneratorTest.java:[173,75] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/UserSuppliedFieldGeneratorsTest.java:[62,42] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/array/ArrayGeneratorWithElementTest.java:[66,107] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/collection/CollectionGeneratorWithElementOrderTest.java:[41,84] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/map/MapGeneratorWithKeysTest.java:[57,73] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/map/MapGeneratorWithKeysTest.java:[72,73] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/map/MapGeneratorWithKeysTest.java:[81,73] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/map/MapGeneratorWithKeysTest.java:[92,73] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/map/MapGeneratorWithKeysTest.java:[108,39] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/map/MapGeneratorWithKeysTest.java:[126,39] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/misc/EmitGeneratorCyclicPojoTest.java:[75,61] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/misc/EmitStreamTest.java:[49,70] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/misc/EmitStreamTest.java:[65,70] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/misc/EmitStreamTest.java:[82,70] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/setmodel/SetModelStatefulGeneratorTest.java:[42,73] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[INFO] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/BuiltInArrayGeneratorTest.java: Some input files use or override a deprecated API.
+[INFO] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/BuiltInArrayGeneratorTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/custom/CustomGeneratorWithDataStructuresTest.java: Some input files use unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/custom/CustomGeneratorWithDataStructuresTest.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ feature-tests ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ feature-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ feature-tests ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  30.798 s
+[INFO] Finished at: 2026-07-01T14:52:35Z
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< org.instancio:instancio-core-tests >-----------------
+[INFO] Building Instancio tests: instancio-core Tests 4.6.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.4.1:enforce (default-cli) @ instancio-core-tests ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:prepare-agent (default) @ instancio-core-tests ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/instancio-tests/instancio-core-tests/target/jacoco.exec,excludes=META-INF/** -Dnet.bytebuddy.experimental=true
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ instancio-core-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/instancio-tests/instancio-core-tests/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ instancio-core-tests ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ instancio-core-tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 4 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ instancio-core-tests ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 427 source files with javac [debug release 17] to target/test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[WARNING] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/WhenTest.java:[31,43] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/WhenTest.java:[40,46] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/WhenTest.java:[46,26] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/WhenTest.java:[53,26] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/internal/generator/lang/StringGeneratorTest.java:[73,47] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[WARNING] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/internal/util/CollectionUtilsTest.java:[70,42] non-varargs call of varargs method with inexact argument type for last parameter;
+  cast to java.lang.Object for a varargs call
+  cast to java.lang.Object[] for a non-varargs call and to suppress this warning
+[INFO] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/api/InstancioApiTest.java: Some input files use unchecked or unsafe operations.
+[INFO] /workspace/repo/instancio-tests/instancio-core-tests/src/test/java/org/instancio/api/InstancioApiTest.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.23:check (animal-sniffer) @ instancio-core-tests ---
+[INFO] Signature checking is skipped.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ instancio-core-tests ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.instancio.internal.settings.SettingsSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.115 s -- in org.instancio.internal.settings.SettingsSupportTest
+[INFO] Running org.instancio.internal.util.UnicodeBlocksTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.069 s -- in org.instancio.internal.util.UnicodeBlocksTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ instancio-core-tests ---
+[INFO] Skipping JaCoCo execution due to missing classes directory.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  22.983 s
+[INFO] Finished at: 2026-07-01T14:53:00Z
+[INFO] ------------------------------------------------------------------------
+reward=1 graded=5 found=5 failed=0 parsed=5 framework=maven exit_code=0

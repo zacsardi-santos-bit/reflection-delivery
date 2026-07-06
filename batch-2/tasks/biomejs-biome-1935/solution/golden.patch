@@ -1,0 +1,1041 @@
+diff --git a/crates/biome_css_formatter/src/css/statements/starting_style_at_rule.rs b/crates/biome_css_formatter/src/css/statements/starting_style_at_rule.rs
+index 505c117fc3..d955b2afc2 100644
+--- a/crates/biome_css_formatter/src/css/statements/starting_style_at_rule.rs
++++ b/crates/biome_css_formatter/src/css/statements/starting_style_at_rule.rs
+@@ -1,15 +1,10 @@
+ use crate::prelude::*;
+-use biome_css_syntax::{CssStartingStyleAtRule, CssStartingStyleAtRuleFields};
+-use biome_formatter::write;
+-
++use biome_css_syntax::CssStartingStyleAtRule;
++use biome_rowan::AstNode;
+ #[derive(Debug, Clone, Default)]
+ pub(crate) struct FormatCssStartingStyleAtRule;
+ impl FormatNodeRule<CssStartingStyleAtRule> for FormatCssStartingStyleAtRule {
+     fn fmt_fields(&self, node: &CssStartingStyleAtRule, f: &mut CssFormatter) -> FormatResult<()> {
+-        let CssStartingStyleAtRuleFields {
+-            starting_style_token,
+-            block,
+-        } = node.as_fields();
+-        write!(f, [starting_style_token.format(), space(), block.format()])
++        format_verbatim_node(node.syntax()).fmt(f)
+     }
+ }
+diff --git a/crates/biome_css_formatter/tests/specs/css/atrule/starting_style.css b/crates/biome_css_formatter/tests/specs/css/atrule/starting_style.css
+deleted file mode 100644
+index b6af2f7f9b..0000000000
+--- a/crates/biome_css_formatter/tests/specs/css/atrule/starting_style.css
++++ /dev/null
+@@ -1,18 +0,0 @@
+-@starting-style {
+-    h1 {
+-        background-color: transparent;
+-    }
+-
+-
+-    @layer          foo {
+-        @starting-style {
+-            background-color: transparent;
+-        }
+-
+-        div {
+-
+-
+-            height: 100px;
+-        }
+-    }
+-}
+diff --git a/crates/biome_css_formatter/tests/specs/css/atrule/starting_style.css.snap b/crates/biome_css_formatter/tests/specs/css/atrule/starting_style.css.snap
+deleted file mode 100644
+index 1c1f77a5e1..0000000000
+--- a/crates/biome_css_formatter/tests/specs/css/atrule/starting_style.css.snap
++++ /dev/null
+@@ -1,60 +0,0 @@
+----
+-source: crates/biome_formatter_test/src/snapshot_builder.rs
+-info: css/atrule/starting_style.css
+----
+-# Input
+-
+-```css
+-@starting-style {
+-    h1 {
+-        background-color: transparent;
+-    }
+-
+-
+-    @layer          foo {
+-        @starting-style {
+-            background-color: transparent;
+-        }
+-
+-        div {
+-
+-
+-            height: 100px;
+-        }
+-    }
+-}
+-
+-```
+-
+-
+-=============================
+-
+-# Outputs
+-
+-## Output 1
+-
+------
+-Indent style: Tab
+-Indent width: 2
+-Line ending: LF
+-Line width: 80
+-Quote style: Double Quotes
+------
+-
+-```css
+-@starting-style {
+-	h1 {
+-		background-color: transparent;
+-	}
+-
+-	@layer foo {
+-		@starting-style {
+-			background-color: transparent;
+-		}
+-
+-		div {
+-			height: 100px;
+-		}
+-	}
+-}
+-```
+diff --git a/crates/biome_diagnostics_categories/src/categories.rs b/crates/biome_diagnostics_categories/src/categories.rs
+index ce5dd4f0a7..fbe9353ca4 100644
+--- a/crates/biome_diagnostics_categories/src/categories.rs
++++ b/crates/biome_diagnostics_categories/src/categories.rs
+@@ -119,6 +119,7 @@ define_categories! {
+     "lint/nursery/noExcessiveNestedTestSuites": "https://biomejs.dev/linter/rules/no-excessive-nested-test-suites",
+     "lint/nursery/noExportsInTest": "https://biomejs.dev/linter/rules/no-exports-in-test",
+     "lint/nursery/noFocusedTests": "https://biomejs.dev/linter/rules/no-focused-tests",
++    "lint/nursery/noMisplacedAssertion": "https://biomejs.dev/linter/rules/no-misplaced-assertion",
+     "lint/nursery/noNamespaceImport": "https://biomejs.dev/linter/rules/no-namespace-import",
+     "lint/nursery/noNodejsModules": "https://biomejs.dev/linter/rules/no-nodejs-modules",
+     "lint/nursery/noReExportAll": "https://biomejs.dev/linter/rules/no-re-export-all",
+diff --git a/crates/biome_js_analyze/src/lib.rs b/crates/biome_js_analyze/src/lib.rs
+index 1efd41be3b..b2bdfe360f 100644
+--- a/crates/biome_js_analyze/src/lib.rs
++++ b/crates/biome_js_analyze/src/lib.rs
+@@ -252,7 +252,12 @@ mod tests {
+             String::from_utf8(buffer).unwrap()
+         }
+ 
+-        const SOURCE: &str = r#"<>{provider}</>
++        const SOURCE: &str = r#"import assert from "node:assert";
++import { describe } from "node:test";
++
++describe(() => {
++	assert.equal("something", "something")
++})
+         "#;
+ 
+         let parsed = parse(SOURCE, JsFileSource::tsx(), JsParserOptions::default());
+@@ -265,7 +270,7 @@ mod tests {
+             dependencies_index: Some(1),
+             stable_result: StableHookResult::None,
+         };
+-        let rule_filter = RuleFilter::Rule("complexity", "noUselessFragments");
++        let rule_filter = RuleFilter::Rule("nursery", "noMisplacedAssertion");
+ 
+         options.configuration.rules.push_rule(
+             RuleKey::new("nursery", "useHookAtTopLevel"),
+diff --git a/crates/biome_js_analyze/src/lint/a11y/use_valid_aria_role.rs b/crates/biome_js_analyze/src/lint/a11y/use_valid_aria_role.rs
+index 866a6fba75..025c7612fb 100644
+--- a/crates/biome_js_analyze/src/lint/a11y/use_valid_aria_role.rs
++++ b/crates/biome_js_analyze/src/lint/a11y/use_valid_aria_role.rs
+@@ -42,7 +42,7 @@ declare_rule! {
+     /// </>
+     /// ```
+     ///
+-    /// ### Options
++    /// ## Options
+     ///
+     /// ```json
+     /// {
+diff --git a/crates/biome_js_analyze/src/lint/nursery.rs b/crates/biome_js_analyze/src/lint/nursery.rs
+index e7e2094c18..08232c450a 100644
+--- a/crates/biome_js_analyze/src/lint/nursery.rs
++++ b/crates/biome_js_analyze/src/lint/nursery.rs
+@@ -11,6 +11,7 @@ pub mod no_evolving_any;
+ pub mod no_excessive_nested_test_suites;
+ pub mod no_exports_in_test;
+ pub mod no_focused_tests;
++pub mod no_misplaced_assertion;
+ pub mod no_namespace_import;
+ pub mod no_nodejs_modules;
+ pub mod no_re_export_all;
+@@ -37,6 +38,7 @@ declare_group! {
+             self :: no_excessive_nested_test_suites :: NoExcessiveNestedTestSuites ,
+             self :: no_exports_in_test :: NoExportsInTest ,
+             self :: no_focused_tests :: NoFocusedTests ,
++            self :: no_misplaced_assertion :: NoMisplacedAssertion ,
+             self :: no_namespace_import :: NoNamespaceImport ,
+             self :: no_nodejs_modules :: NoNodejsModules ,
+             self :: no_re_export_all :: NoReExportAll ,
+diff --git a/crates/biome_js_analyze/src/lint/nursery/no_excessive_nested_test_suites.rs b/crates/biome_js_analyze/src/lint/nursery/no_excessive_nested_test_suites.rs
+index b10649e8df..e7ea0cf1af 100644
+--- a/crates/biome_js_analyze/src/lint/nursery/no_excessive_nested_test_suites.rs
++++ b/crates/biome_js_analyze/src/lint/nursery/no_excessive_nested_test_suites.rs
+@@ -80,10 +80,10 @@ impl Rule for NoExcessiveNestedTestSuites {
+                     "Excessive `describe()` nesting detected."
+                 },
+             )
+-            .note(markup! {
++                .note(markup! {
+                 "Excessive nesting of "<Emphasis>"describe()"</Emphasis>" calls can hinder test readability."
+             })
+-            .note(markup! {
++                .note(markup! {
+                 "Consider refactoring and "<Emphasis>"reduce the level of nested describe"</Emphasis>" to improve code clarity."
+             }),
+         )
+@@ -116,14 +116,10 @@ impl Visitor for NestedTestVisitor {
+             WalkEvent::Enter(node) => {
+                 if let Some(node) = JsCallExpression::cast_ref(node) {
+                     if let Ok(callee) = node.callee() {
+-                        if callee.contains_a_test_pattern() == Ok(true) {
+-                            if let Some(function_name) = callee.get_callee_object_name() {
+-                                if function_name.text_trimmed() == "describe" {
+-                                    self.curr_count += 1;
+-                                    if self.curr_count == self.max_count + 1 {
+-                                        ctx.match_query(NestedTest(node.clone()));
+-                                    }
+-                                }
++                        if callee.contains_describe_call() {
++                            self.curr_count += 1;
++                            if self.curr_count == self.max_count + 1 {
++                                ctx.match_query(NestedTest(node.clone()));
+                             }
+                         }
+                     }
+@@ -132,12 +128,8 @@ impl Visitor for NestedTestVisitor {
+             WalkEvent::Leave(node) => {
+                 if let Some(node) = JsCallExpression::cast_ref(node) {
+                     if let Ok(callee) = node.callee() {
+-                        if callee.contains_a_test_pattern() == Ok(true) {
+-                            if let Some(function_name) = callee.get_callee_object_name() {
+-                                if function_name.text_trimmed() == "describe" {
+-                                    self.curr_count -= 1;
+-                                }
+-                            }
++                        if callee.contains_describe_call() {
++                            self.curr_count -= 1;
+                         }
+                     }
+                 }
+diff --git a/crates/biome_js_analyze/src/lint/nursery/no_misplaced_assertion.rs b/crates/biome_js_analyze/src/lint/nursery/no_misplaced_assertion.rs
+new file mode 100644
+index 0000000000..dce4ed2fdd
+--- /dev/null
++++ b/crates/biome_js_analyze/src/lint/nursery/no_misplaced_assertion.rs
+@@ -0,0 +1,183 @@
++use crate::services::semantic::Semantic;
++use biome_analyze::{
++    context::RuleContext, declare_rule, Rule, RuleDiagnostic, RuleSource, RuleSourceKind,
++};
++use biome_console::markup;
++use biome_deserialize::TextRange;
++use biome_js_syntax::{AnyJsExpression, JsCallExpression, JsIdentifierBinding, JsImport};
++use biome_rowan::AstNode;
++
++declare_rule! {
++    /// Checks that the assertion function, for example `expect`, is placed inside an `it()` function call.
++    ///
++    /// Placing (and using) the `expect` assertion function can result in unexpected behaviors when executing your testing suite.
++    ///
++    /// The rule will check for the following assertion calls:
++    /// - `expect`
++    /// - `assert`
++    /// - `assertEquals`
++    ///
++    /// If the assertion function is imported, the rule will check if they are imported from:
++    /// - `"chai"`
++    /// - `"node:assert"`
++    /// - `"node:assert/strict"`
++    /// - `"bun:test"`
++    /// - `"vitest"`
++    /// - Deno assertion module URL
++    ///
++    /// Check the [options](#options) if you need to change the defaults.
++    ///
++    /// ## Examples
++    ///
++    /// ### Invalid
++    ///
++    /// ```js,expect_diagnostic
++    /// describe("describe", () => {
++    ///     expect()
++    /// })
++    /// ```
++    ///
++    /// ```js,expect_diagnostic
++    /// import assert from "node:assert";
++    /// describe("describe", () => {
++    ///     assert.equal()
++    /// })
++    /// ```
++    ///
++    /// ```js,expect_diagnostic
++    /// import {test, expect} from "bun:test";
++    /// expect(1, 2)
++    /// ```
++    ///
++    /// ```js,expect_diagnostic
++    /// import {assertEquals} from "https://deno.land/std@0.220.0/assert/mod.ts";
++    ///
++    /// assertEquals(url.href, "https://deno.land/foo.js");
++    /// Deno.test("url test", () => {
++    ///     const url = new URL("./foo.js", "https://deno.land/");
++    /// });
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```js
++    /// import assert from "node:assert";
++    /// describe("describe", () => {
++    ///     it("it", () => {
++    ///         assert.equal()
++    ///     })
++    /// })
++    /// ```
++    ///
++    /// ```js
++    /// describe("describe", () => {
++    ///     it("it", () => {
++    ///         expect()
++    ///     })
++    /// })
++    /// ```
++    ///
++    pub NoMisplacedAssertion {
++        version: "next",
++        name: "noMisplacedAssertion",
++        recommended: false,
++        source: RuleSource::EslintJest("no-standalone-expect"),
++        source_kind: RuleSourceKind::Inspired,
++    }
++}
++
++const ASSERTION_FUNCTION_NAMES: [&str; 3] = ["assert", "assertEquals", "expect"];
++const SPECIFIERS: [&str; 6] = [
++    "chai",
++    "node:assert",
++    "node:assert/strict",
++    "bun:test",
++    "vitest",
++    "/assert/mod.ts",
++];
++
++impl Rule for NoMisplacedAssertion {
++    type Query = Semantic<AnyJsExpression>;
++    type State = TextRange;
++    type Signals = Option<Self::State>;
++    type Options = ();
++
++    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
++        let node = ctx.query();
++        let model = ctx.model();
++
++        if let Some(call_text) = node.to_assertion_call() {
++            let ancestor_is_test_call = {
++                node.syntax()
++                    .ancestors()
++                    .filter_map(JsCallExpression::cast)
++                    .find_map(|call_expression| {
++                        let callee = call_expression.callee().ok()?;
++                        callee.contains_it_call().then_some(true)
++                    })
++                    .unwrap_or_default()
++            };
++
++            let ancestor_is_describe_call = {
++                node.syntax()
++                    .ancestors()
++                    .filter_map(JsCallExpression::cast)
++                    .find_map(|call_expression| {
++                        let callee = call_expression.callee().ok()?;
++                        callee.contains_describe_call().then_some(true)
++                    })
++            };
++            let assertion_call = node.get_callee_object_identifier()?;
++
++            if let Some(ancestor_is_describe_call) = ancestor_is_describe_call {
++                if ancestor_is_describe_call && ancestor_is_test_call {
++                    return None;
++                }
++            } else if ancestor_is_test_call {
++                return None;
++            }
++
++            let binding = model.binding(&assertion_call);
++            if let Some(binding) = binding {
++                let ident = JsIdentifierBinding::cast_ref(binding.syntax())?;
++                let import = ident.syntax().ancestors().find_map(JsImport::cast)?;
++                let source_text = import.source_text().ok()?;
++                if (ASSERTION_FUNCTION_NAMES.contains(&call_text.text()))
++                    && (SPECIFIERS.iter().any(|specifier| {
++                        // Deno is a particular case
++                        if *specifier == "/assert/mod.ts" {
++                            source_text.text().ends_with("/assert/mod.ts")
++                                && source_text.text().starts_with("https://deno.land/std")
++                        } else {
++                            *specifier == source_text.text()
++                        }
++                    }))
++                {
++                    return Some(assertion_call.range());
++                }
++            } else if ASSERTION_FUNCTION_NAMES.contains(&call_text.text()) {
++                return Some(assertion_call.range());
++            }
++        }
++
++        None
++    }
++
++    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
++        Some(
++            RuleDiagnostic::new(
++                rule_category!(),
++                state,
++                markup! {
++                    "The assertion isn't inside a "<Emphasis>"it()"</Emphasis>", "<Emphasis>"test()"</Emphasis>" or "<Emphasis>"Deno.test()"</Emphasis>" function call."
++                },
++            )
++            .note(markup! {
++                "This will result in unexpected behaviours from your test suite."
++            })
++            .note(markup! {
++                "Move the assertion inside a "<Emphasis>"it()"</Emphasis>", "<Emphasis>"test()"</Emphasis>" or "<Emphasis>"Deno.test()"</Emphasis>" function call."
++            }),
++        )
++    }
++}
+diff --git a/crates/biome_js_analyze/src/options.rs b/crates/biome_js_analyze/src/options.rs
+index 64a5d6225f..f347846b2a 100644
+--- a/crates/biome_js_analyze/src/options.rs
++++ b/crates/biome_js_analyze/src/options.rs
+@@ -122,6 +122,8 @@ pub type NoInvalidUseBeforeDeclaration = < lint :: correctness :: no_invalid_use
+ pub type NoLabelVar = <lint::suspicious::no_label_var::NoLabelVar as biome_analyze::Rule>::Options;
+ pub type NoMisleadingCharacterClass = < lint :: suspicious :: no_misleading_character_class :: NoMisleadingCharacterClass as biome_analyze :: Rule > :: Options ;
+ pub type NoMisleadingInstantiator = < lint :: suspicious :: no_misleading_instantiator :: NoMisleadingInstantiator as biome_analyze :: Rule > :: Options ;
++pub type NoMisplacedAssertion =
++    <lint::nursery::no_misplaced_assertion::NoMisplacedAssertion as biome_analyze::Rule>::Options;
+ pub type NoMisrefactoredShorthandAssign = < lint :: suspicious :: no_misrefactored_shorthand_assign :: NoMisrefactoredShorthandAssign as biome_analyze :: Rule > :: Options ;
+ pub type NoMultipleSpacesInRegularExpressionLiterals = < lint :: complexity :: no_multiple_spaces_in_regular_expression_literals :: NoMultipleSpacesInRegularExpressionLiterals as biome_analyze :: Rule > :: Options ;
+ pub type NoNamespace = <lint::style::no_namespace::NoNamespace as biome_analyze::Rule>::Options;
+diff --git a/crates/biome_js_syntax/src/expr_ext.rs b/crates/biome_js_syntax/src/expr_ext.rs
+index a0eebac256..26806606c4 100644
+--- a/crates/biome_js_syntax/src/expr_ext.rs
++++ b/crates/biome_js_syntax/src/expr_ext.rs
+@@ -960,20 +960,23 @@ impl AnyJsExpression {
+     }
+ 
+     pub fn get_callee_object_name(&self) -> Option<JsSyntaxToken> {
++        let identifier = self.get_callee_object_identifier()?;
++        identifier.value_token().ok()
++    }
++
++    pub fn get_callee_object_identifier(&self) -> Option<JsReferenceIdentifier> {
+         match self {
+             AnyJsExpression::JsStaticMemberExpression(node) => {
+                 let member = node.object().ok()?;
+-                let member = member.as_js_identifier_expression()?.name().ok()?;
+-                member.value_token().ok()
++                member.as_js_identifier_expression()?.name().ok()
+             }
+             AnyJsExpression::JsTemplateExpression(node) => {
+                 let tag = node.tag()?;
+                 let tag = tag.as_js_static_member_expression()?;
+                 let member = tag.object().ok()?;
+-                let member = member.as_js_identifier_expression()?.name().ok()?;
+-                member.value_token().ok()
++                member.as_js_identifier_expression()?.name().ok()
+             }
+-            AnyJsExpression::JsIdentifierExpression(node) => node.name().ok()?.value_token().ok(),
++            AnyJsExpression::JsIdentifierExpression(node) => node.name().ok(),
+             _ => None,
+         }
+     }
+@@ -1021,6 +1024,7 @@ impl AnyJsExpression {
+     /// - `fit`
+     /// - `fdescribe`
+     /// - `ftest`
++    /// - `Deno.test`
+     ///
+     /// Based on this [article]
+     ///
+@@ -1045,9 +1049,9 @@ impl AnyJsExpression {
+         let fifth = rev.next().map(|t| t.text());
+ 
+         Ok(match first {
+-            Some("it" | "describe") => match second {
++            Some("it" | "describe" | "Deno") => match second {
+                 None => true,
+-                Some("only" | "skip") => third.is_none(),
++                Some("only" | "skip" | "test") => third.is_none(),
+                 _ => false,
+             },
+             Some("test") => match second {
+@@ -1069,6 +1073,70 @@ impl AnyJsExpression {
+             _ => false,
+         })
+     }
++
++    /// Checks whether the current function call is:
++    /// - `describe`
++    pub fn contains_describe_call(&self) -> bool {
++        let mut members = CalleeNamesIterator::new(self.clone());
++
++        if let Some(member) = members.next() {
++            return member.text() == "describe";
++        }
++        false
++    }
++
++    /// Checks whether the current function call is:
++    /// - `it`
++    /// - `test`
++    /// - `Deno.test`
++    pub fn contains_it_call(&self) -> bool {
++        let mut members = CalleeNamesIterator::new(self.clone());
++
++        let texts: [Option<TokenText>; 2] = [members.next(), members.next()];
++
++        let mut rev = texts.iter().rev().flatten();
++
++        let first = rev.next().map(|t| t.text());
++        let second = rev.next().map(|t| t.text());
++
++        match first {
++            Some("test" | "it") => true,
++            Some("Deno") => matches!(second, Some("test")),
++            _ => false,
++        }
++    }
++
++    /// Checks whether the current called is named:
++    /// - `expect`
++    /// - `assert`
++    /// - `assertEquals`
++    pub fn to_assertion_call(&self) -> Option<TokenText> {
++        let mut members = CalleeNamesIterator::new(self.clone());
++
++        let texts: [Option<TokenText>; 2] = [members.next(), members.next()];
++
++        let mut rev = texts.iter().rev().flatten();
++
++        let first = rev.next();
++        let second = rev.next();
++
++        match first {
++            Some(first) => {
++                if first.text() == "assert" {
++                    if second.is_some() {
++                        Some(first.clone())
++                    } else {
++                        None
++                    }
++                } else if matches!(first.text(), "expect" | "assertEquals") {
++                    Some(first.clone())
++                } else {
++                    None
++                }
++            }
++            None => None,
++        }
++    }
+ }
+ 
+ /// Iterator that returns the callee names in "top down order".
+diff --git a/crates/biome_service/src/configuration/linter/rules.rs b/crates/biome_service/src/configuration/linter/rules.rs
+index 87053f2073..2e0342cb17 100644
+--- a/crates/biome_service/src/configuration/linter/rules.rs
++++ b/crates/biome_service/src/configuration/linter/rules.rs
+@@ -2589,6 +2589,9 @@ pub struct Nursery {
+     #[doc = "Disallow focused tests."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub no_focused_tests: Option<RuleConfiguration<NoFocusedTests>>,
++    #[doc = "Checks that the assertion function, for example expect, is placed inside an it() function call."]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub no_misplaced_assertion: Option<RuleConfiguration<NoMisplacedAssertion>>,
+     #[doc = "Disallow the use of namespace imports."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub no_namespace_import: Option<RuleConfiguration<NoNamespaceImport>>,
+@@ -2642,7 +2645,7 @@ impl DeserializableValidator for Nursery {
+ }
+ impl Nursery {
+     const GROUP_NAME: &'static str = "nursery";
+-    pub(crate) const GROUP_RULES: [&'static str; 23] = [
++    pub(crate) const GROUP_RULES: [&'static str; 24] = [
+         "noBarrelFile",
+         "noColorInvalidHex",
+         "noConsole",
+@@ -2654,6 +2657,7 @@ impl Nursery {
+         "noExcessiveNestedTestSuites",
+         "noExportsInTest",
+         "noFocusedTests",
++        "noMisplacedAssertion",
+         "noNamespaceImport",
+         "noNodejsModules",
+         "noReExportAll",
+@@ -2688,10 +2692,10 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[8]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
+     ];
+-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 23] = [
++    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 24] = [
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
+@@ -2715,6 +2719,7 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]),
+     ];
+     #[doc = r" Retrieves the recommended rules"]
+     pub(crate) fn is_recommended(&self) -> bool {
+@@ -2786,66 +2791,71 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]));
+             }
+         }
+-        if let Some(rule) = self.no_namespace_import.as_ref() {
++        if let Some(rule) = self.no_misplaced_assertion.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]));
+             }
+         }
+-        if let Some(rule) = self.no_nodejs_modules.as_ref() {
++        if let Some(rule) = self.no_namespace_import.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]));
+             }
+         }
+-        if let Some(rule) = self.no_re_export_all.as_ref() {
++        if let Some(rule) = self.no_nodejs_modules.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]));
+             }
+         }
+-        if let Some(rule) = self.no_restricted_imports.as_ref() {
++        if let Some(rule) = self.no_re_export_all.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
+             }
+         }
+-        if let Some(rule) = self.no_semicolon_in_jsx.as_ref() {
++        if let Some(rule) = self.no_restricted_imports.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
+             }
+         }
+-        if let Some(rule) = self.no_skipped_tests.as_ref() {
++        if let Some(rule) = self.no_semicolon_in_jsx.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
+             }
+         }
+-        if let Some(rule) = self.no_undeclared_dependencies.as_ref() {
++        if let Some(rule) = self.no_skipped_tests.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
+             }
+         }
+-        if let Some(rule) = self.no_useless_ternary.as_ref() {
++        if let Some(rule) = self.no_undeclared_dependencies.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.no_useless_ternary.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
+             }
+         }
+-        if let Some(rule) = self.use_jsx_key_in_iterable.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
+             }
+         }
+-        if let Some(rule) = self.use_node_assert_strict.as_ref() {
++        if let Some(rule) = self.use_jsx_key_in_iterable.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_node_assert_strict.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
+             }
+         }
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
++            if rule.is_enabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
++            }
++        }
+         index_set
+     }
+     pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
+@@ -2905,66 +2915,71 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]));
+             }
+         }
+-        if let Some(rule) = self.no_namespace_import.as_ref() {
++        if let Some(rule) = self.no_misplaced_assertion.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]));
+             }
+         }
+-        if let Some(rule) = self.no_nodejs_modules.as_ref() {
++        if let Some(rule) = self.no_namespace_import.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]));
+             }
+         }
+-        if let Some(rule) = self.no_re_export_all.as_ref() {
++        if let Some(rule) = self.no_nodejs_modules.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]));
+             }
+         }
+-        if let Some(rule) = self.no_restricted_imports.as_ref() {
++        if let Some(rule) = self.no_re_export_all.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
+             }
+         }
+-        if let Some(rule) = self.no_semicolon_in_jsx.as_ref() {
++        if let Some(rule) = self.no_restricted_imports.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
+             }
+         }
+-        if let Some(rule) = self.no_skipped_tests.as_ref() {
++        if let Some(rule) = self.no_semicolon_in_jsx.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
+             }
+         }
+-        if let Some(rule) = self.no_undeclared_dependencies.as_ref() {
++        if let Some(rule) = self.no_skipped_tests.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
+             }
+         }
+-        if let Some(rule) = self.no_useless_ternary.as_ref() {
++        if let Some(rule) = self.no_undeclared_dependencies.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.no_useless_ternary.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
+             }
+         }
+-        if let Some(rule) = self.use_jsx_key_in_iterable.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
+             }
+         }
+-        if let Some(rule) = self.use_node_assert_strict.as_ref() {
++        if let Some(rule) = self.use_jsx_key_in_iterable.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_node_assert_strict.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
+             }
+         }
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
++            if rule.is_disabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
++            }
++        }
+         index_set
+     }
+     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
+@@ -2978,7 +2993,7 @@ impl Nursery {
+     pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 10] {
+         Self::RECOMMENDED_RULES_AS_FILTERS
+     }
+-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 23] {
++    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 24] {
+         Self::ALL_RULES_AS_FILTERS
+     }
+     #[doc = r" Select preset rules"]
+@@ -3045,6 +3060,10 @@ impl Nursery {
+                 .no_focused_tests
+                 .as_ref()
+                 .map(|conf| (conf.level(), conf.get_options())),
++            "noMisplacedAssertion" => self
++                .no_misplaced_assertion
++                .as_ref()
++                .map(|conf| (conf.level(), conf.get_options())),
+             "noNamespaceImport" => self
+                 .no_namespace_import
+                 .as_ref()
+diff --git a/packages/@biomejs/backend-jsonrpc/src/workspace.ts b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+index d6460645c8..cceb2e8a02 100644
+--- a/packages/@biomejs/backend-jsonrpc/src/workspace.ts
++++ b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+@@ -932,6 +932,10 @@ export interface Nursery {
+ 	 * Disallow focused tests.
+ 	 */
+ 	noFocusedTests?: RuleConfiguration_for_Null;
++	/**
++	 * Checks that the assertion function, for example expect, is placed inside an it() function call.
++	 */
++	noMisplacedAssertion?: RuleConfiguration_for_Null;
+ 	/**
+ 	 * Disallow the use of namespace imports.
+ 	 */
+@@ -1907,6 +1911,7 @@ export type Category =
+ 	| "lint/nursery/noExcessiveNestedTestSuites"
+ 	| "lint/nursery/noExportsInTest"
+ 	| "lint/nursery/noFocusedTests"
++	| "lint/nursery/noMisplacedAssertion"
+ 	| "lint/nursery/noNamespaceImport"
+ 	| "lint/nursery/noNodejsModules"
+ 	| "lint/nursery/noReExportAll"
+diff --git a/packages/@biomejs/biome/configuration_schema.json b/packages/@biomejs/biome/configuration_schema.json
+index 24f3d2b0d2..d5962b8c1b 100644
+--- a/packages/@biomejs/biome/configuration_schema.json
++++ b/packages/@biomejs/biome/configuration_schema.json
+@@ -1458,6 +1458,13 @@
+ 						{ "type": "null" }
+ 					]
+ 				},
++				"noMisplacedAssertion": {
++					"description": "Checks that the assertion function, for example expect, is placed inside an it() function call.",
++					"anyOf": [
++						{ "$ref": "#/definitions/RuleConfiguration" },
++						{ "type": "null" }
++					]
++				},
+ 				"noNamespaceImport": {
+ 					"description": "Disallow the use of namespace imports.",
+ 					"anyOf": [
+diff --git a/website/src/components/generated/NumberOfRules.astro b/website/src/components/generated/NumberOfRules.astro
+index b2aa6502e5..b35462648b 100644
+--- a/website/src/components/generated/NumberOfRules.astro
++++ b/website/src/components/generated/NumberOfRules.astro
+@@ -1,2 +1,2 @@
+ <!-- this file is auto generated, use `cargo lintdoc` to update it -->
+- <p>Biome's linter has a total of <strong><a href='/linter/rules'>211 rules</a></strong><p>
+\ No newline at end of file
++ <p>Biome's linter has a total of <strong><a href='/linter/rules'>212 rules</a></strong><p>
+\ No newline at end of file
+diff --git a/website/src/content/docs/linter/rules/index.mdx b/website/src/content/docs/linter/rules/index.mdx
+index 2254670420..f8514cd4b3 100644
+--- a/website/src/content/docs/linter/rules/index.mdx
++++ b/website/src/content/docs/linter/rules/index.mdx
+@@ -261,6 +261,7 @@ Rules that belong to this group <strong>are not subject to semantic version</str
+ | [noExcessiveNestedTestSuites](/linter/rules/no-excessive-nested-test-suites) | This rule enforces a maximum depth to nested <code>describe()</code> in test files. |  |
+ | [noExportsInTest](/linter/rules/no-exports-in-test) | Disallow using <code>export</code> or <code>module.exports</code> in files containing tests |  |
+ | [noFocusedTests](/linter/rules/no-focused-tests) | Disallow focused tests. | <span aria-label="The rule has an unsafe fix" role="img" title="The rule has an unsafe fix">⚠️ </span> |
++| [noMisplacedAssertion](/linter/rules/no-misplaced-assertion) | Checks that the assertion function, for example <code>expect</code>, is placed inside an <code>it()</code> function call. |  |
+ | [noNamespaceImport](/linter/rules/no-namespace-import) | Disallow the use of namespace imports. |  |
+ | [noNodejsModules](/linter/rules/no-nodejs-modules) | Forbid the use of Node.js builtin modules. |  |
+ | [noReExportAll](/linter/rules/no-re-export-all) | Avoid re-export all. |  |
+diff --git a/website/src/content/docs/linter/rules/no-misplaced-assertion.md b/website/src/content/docs/linter/rules/no-misplaced-assertion.md
+new file mode 100644
+index 0000000000..1784d716e7
+--- /dev/null
++++ b/website/src/content/docs/linter/rules/no-misplaced-assertion.md
+@@ -0,0 +1,156 @@
++---
++title: noMisplacedAssertion (not released)
++---
++
++**Diagnostic Category: `lint/nursery/noMisplacedAssertion`**
++
++:::danger
++This rule hasn't been released yet.
++:::
++
++:::caution
++This rule is part of the [nursery](/linter/rules/#nursery) group.
++:::
++
++Inspired from: <a href="https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/no-standalone-expect.md" target="_blank"><code>no-standalone-expect</code></a>
++
++Checks that the assertion function, for example `expect`, is placed inside an `it()` function call.
++
++Placing (and using) the `expect` assertion function can result in unexpected behaviors when executing your testing suite.
++
++The rule will check for the following assertion calls:
++
++- `expect`
++- `assert`
++- `assertEquals`
++
++If the assertion function is imported, the rule will check if they are imported from:
++
++- `"chai"`
++- `"node:assert"`
++- `"node:assert/strict"`
++- `"bun:test"`
++- `"vitest"`
++- Deno assertion module URL
++
++Check the [options](#options) if you need to change the defaults.
++
++## Examples
++
++### Invalid
++
++```jsx
++describe("describe", () => {
++    expect()
++})
++```
++
++<pre class="language-text"><code class="language-text">nursery/noMisplacedAssertion.js:2:5 <a href="https://biomejs.dev/linter/rules/no-misplaced-assertion">lint/nursery/noMisplacedAssertion</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The assertion isn't inside a </span><span style="color: Orange;"><strong>it()</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>test()</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>Deno.test()</strong></span><span style="color: Orange;"> function call.</span>
++  
++    <strong>1 │ </strong>describe(&quot;describe&quot;, () =&gt; {
++<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    expect()
++   <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
++    <strong>3 │ </strong>})
++    <strong>4 │ </strong>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">This will result in unexpected behaviours from your test suite.</span>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">Move the assertion inside a </span><span style="color: lightgreen;"><strong>it()</strong></span><span style="color: lightgreen;">, </span><span style="color: lightgreen;"><strong>test()</strong></span><span style="color: lightgreen;"> or </span><span style="color: lightgreen;"><strong>Deno.test()</strong></span><span style="color: lightgreen;"> function call.</span>
++  
++</code></pre>
++
++```jsx
++import assert from "node:assert";
++describe("describe", () => {
++    assert.equal()
++})
++```
++
++<pre class="language-text"><code class="language-text">nursery/noMisplacedAssertion.js:3:5 <a href="https://biomejs.dev/linter/rules/no-misplaced-assertion">lint/nursery/noMisplacedAssertion</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The assertion isn't inside a </span><span style="color: Orange;"><strong>it()</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>test()</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>Deno.test()</strong></span><span style="color: Orange;"> function call.</span>
++  
++    <strong>1 │ </strong>import assert from &quot;node:assert&quot;;
++    <strong>2 │ </strong>describe(&quot;describe&quot;, () =&gt; {
++<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>    assert.equal()
++   <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
++    <strong>4 │ </strong>})
++    <strong>5 │ </strong>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">This will result in unexpected behaviours from your test suite.</span>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">Move the assertion inside a </span><span style="color: lightgreen;"><strong>it()</strong></span><span style="color: lightgreen;">, </span><span style="color: lightgreen;"><strong>test()</strong></span><span style="color: lightgreen;"> or </span><span style="color: lightgreen;"><strong>Deno.test()</strong></span><span style="color: lightgreen;"> function call.</span>
++  
++</code></pre>
++
++```jsx
++import {test, expect} from "bun:test";
++expect(1, 2)
++```
++
++<pre class="language-text"><code class="language-text">nursery/noMisplacedAssertion.js:2:1 <a href="https://biomejs.dev/linter/rules/no-misplaced-assertion">lint/nursery/noMisplacedAssertion</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The assertion isn't inside a </span><span style="color: Orange;"><strong>it()</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>test()</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>Deno.test()</strong></span><span style="color: Orange;"> function call.</span>
++  
++    <strong>1 │ </strong>import {test, expect} from &quot;bun:test&quot;;
++<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>expect(1, 2)
++   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
++    <strong>3 │ </strong>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">This will result in unexpected behaviours from your test suite.</span>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">Move the assertion inside a </span><span style="color: lightgreen;"><strong>it()</strong></span><span style="color: lightgreen;">, </span><span style="color: lightgreen;"><strong>test()</strong></span><span style="color: lightgreen;"> or </span><span style="color: lightgreen;"><strong>Deno.test()</strong></span><span style="color: lightgreen;"> function call.</span>
++  
++</code></pre>
++
++```jsx
++import {assertEquals} from "https://deno.land/std@0.220.0/assert/mod.ts";
++
++assertEquals(url.href, "https://deno.land/foo.js");
++Deno.test("url test", () => {
++    const url = new URL("./foo.js", "https://deno.land/");
++});
++```
++
++<pre class="language-text"><code class="language-text">nursery/noMisplacedAssertion.js:3:1 <a href="https://biomejs.dev/linter/rules/no-misplaced-assertion">lint/nursery/noMisplacedAssertion</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The assertion isn't inside a </span><span style="color: Orange;"><strong>it()</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>test()</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>Deno.test()</strong></span><span style="color: Orange;"> function call.</span>
++  
++    <strong>1 │ </strong>import {assertEquals} from &quot;https://deno.land/std@0.220.0/assert/mod.ts&quot;;
++    <strong>2 │ </strong>
++<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>assertEquals(url.href, &quot;https://deno.land/foo.js&quot;);
++   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
++    <strong>4 │ </strong>Deno.test(&quot;url test&quot;, () =&gt; {
++    <strong>5 │ </strong>    const url = new URL(&quot;./foo.js&quot;, &quot;https://deno.land/&quot;);
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">This will result in unexpected behaviours from your test suite.</span>
++  
++<strong><span style="color: lightgreen;">  </span></strong><strong><span style="color: lightgreen;">ℹ</span></strong> <span style="color: lightgreen;">Move the assertion inside a </span><span style="color: lightgreen;"><strong>it()</strong></span><span style="color: lightgreen;">, </span><span style="color: lightgreen;"><strong>test()</strong></span><span style="color: lightgreen;"> or </span><span style="color: lightgreen;"><strong>Deno.test()</strong></span><span style="color: lightgreen;"> function call.</span>
++  
++</code></pre>
++
++### Valid
++
++```jsx
++import assert from "node:assert";
++describe("describe", () => {
++    it("it", () => {
++        assert.equal()
++    })
++})
++```
++
++```jsx
++describe("describe", () => {
++    it("it", () => {
++        expect()
++    })
++})
++```
++
++## Related links
++
++- [Disable a rule](/linter/#disable-a-lint-rule)
++- [Rule options](/linter/#rule-options)
+diff --git a/website/src/content/docs/linter/rules/use-valid-aria-role.md b/website/src/content/docs/linter/rules/use-valid-aria-role.md
+index 314cfe0970..83447fc2da 100644
+--- a/website/src/content/docs/linter/rules/use-valid-aria-role.md
++++ b/website/src/content/docs/linter/rules/use-valid-aria-role.md
+@@ -110,7 +110,7 @@ Elements with ARIA roles must use a valid, non-abstract ARIA role.
+ </>
+ ```
+ 
+-### Options
++## Options
+ 
+ ```json
+ {

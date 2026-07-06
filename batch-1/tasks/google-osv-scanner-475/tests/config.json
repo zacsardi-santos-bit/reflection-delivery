@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/ci -count=1",
+  "test_files": [
+    "internal/ci/vulnerability_result_diff_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityByUniqueVulnCountResults/#00",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityByUniqueVulnCountResults/#01",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityByUniqueVulnCountResults/#02",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityByUniqueVulnCountResults/#03",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityByUniqueVulnCountResults",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults/#00",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults/#05",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults/#01",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults/#02",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults/#04",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults/#03",
+    "github.com/google/osv-scanner/internal/ci::TestDiffVulnerabilityResults"
+  ],
+  "PASS_TO_PASS": []
+}

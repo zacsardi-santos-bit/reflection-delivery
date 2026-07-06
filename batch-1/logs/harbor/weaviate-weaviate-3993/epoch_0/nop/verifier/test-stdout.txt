@@ -1,0 +1,20 @@
+patching file cloud/store/store_test.go
+patching file usecases/schema/helpers_test.go
+# github.com/weaviate/weaviate/cloud/store [github.com/weaviate/weaviate/cloud/store.test]
+cloud/store/store_test.go:85:30: undefined: errBadRequest
+cloud/store/store_test.go:94:26: undefined: errBadRequest
+cloud/store/store_test.go:105:26: undefined: errBadRequest
+cloud/store/store_test.go:133:26: undefined: errSchema
+cloud/store/store_test.go:144:30: undefined: errBadRequest
+cloud/store/store_test.go:153:26: undefined: errBadRequest
+cloud/store/store_test.go:165:26: undefined: errSchema
+cloud/store/store_test.go:205:30: undefined: errBadRequest
+cloud/store/store_test.go:212:30: undefined: errSchema
+cloud/store/store_test.go:242:30: undefined: errBadRequest
+cloud/store/store_test.go:242:30: too many errors
+# github.com/weaviate/weaviate/usecases/schema [github.com/weaviate/weaviate/usecases/schema.test]
+usecases/schema/helpers_test.go:33:44: undefined: store.Indexer
+usecases/schema/helpers_test.go:50:64: undefined: store.Indexer
+FAIL	github.com/weaviate/weaviate/cloud/store [build failed]
+FAIL	github.com/weaviate/weaviate/usecases/schema [build failed]
+reward=0 graded=1444 found=1444 failed=1444 parsed=2 framework=go exit_code=1

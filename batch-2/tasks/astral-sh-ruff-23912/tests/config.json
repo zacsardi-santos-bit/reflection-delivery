@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p ruff_linter -E \"test(=rules::flake8_annotations::tests::defaults)\"",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/flake8_annotations/annotation_presence.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) ruff_linter rules::flake8_annotations::tests::defaults"
+  ],
+  "PASS_TO_PASS": []
+}

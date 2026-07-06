@@ -1,0 +1,29 @@
+{
+    "id": "893342e8-813b-4126-ab55-de2204c35eea",
+    "started_at": "2026-07-06T12:16:45.060905",
+    "finished_at": "2026-07-06T12:18:18.496957",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__cosmos-cosmos-sdk-26033": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "cosmos-cosmos-sdk-26033__CWFWSW6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

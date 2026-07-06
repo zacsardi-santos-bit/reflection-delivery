@@ -1,9 +1,0 @@
-I'm working on the AWS Load Balancer Controller and have several issues I need help fixing.
-
-First, we have customers reporting that OIDC authentication breaks intermittently for no obvious reason. After investigation, it turns out that some secret management tools append a trailing newline to secret values when they write them to Kubernetes secrets. The controller is using the secret value verbatim, including that trailing newline, which causes authentication failures. The fix should be to strip trailing control characters from the client secret value when building the OIDC authentication configuration.
-
-Second, when multiple ingresses are part of the same group and they each try to set a listener attribute via annotation, if any two of them specify a different value for the same attribute key, the controller currently returns an error. But we also support setting listener attributes via IngressClass parameters. When an IngressClass parameter defines the value for an attribute, conflicting annotation values from individual ingresses should simply be ignored rather than causing a failure — the IngressClass configuration should be the authoritative source.
-
-Third, the error message shown when multiple ingresses define conflicting values for the same load balancer attribute key is too generic. The message does not identify which type of resource is involved in the conflict, making it harder for users to diagnose the problem. The error message should be updated to clearly indicate that the conflict involves load balancer attributes.
-
-Finally, we want to add a metrics capability to track pod readiness gate transition latency. When a pod's target health condition flips from unhealthy to healthy, we want to record how long that transition took. This requires introducing a metrics collection interface that the resource manager can use, emitting the metric on each such transition, and providing a mock implementation for use in tests.

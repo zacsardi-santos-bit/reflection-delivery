@@ -1,0 +1,29 @@
+{
+    "id": "db1b78e0-f22c-4bf7-b337-a3fe6f10e750",
+    "started_at": "2026-07-06T12:21:36.657872",
+    "finished_at": "2026-07-06T12:25:49.807438",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__netbox-community-netbox-22262": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "netbox-community-netbox-22262__MfzWrTH"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

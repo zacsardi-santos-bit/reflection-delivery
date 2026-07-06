@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/hyperledger/fabric && go test -json ./gossip/comm -count=1",
+  "test_files": [
+    "gossip/comm/comm_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/hyperledger/fabric/gossip/comm::TestInterceptAcks",
+    "github.com/hyperledger/fabric/gossip/comm::TestReadFromStream",
+    "github.com/hyperledger/fabric/gossip/comm::TestSendBadEnvelope",
+    "github.com/hyperledger/fabric/gossip/comm::TestCertificateExtraction",
+    "github.com/hyperledger/fabric/gossip/comm::TestChannelDeMultiplexer_EvenOddChannels",
+    "github.com/hyperledger/fabric/gossip/comm::TestChannelDeMultiplexer_OperationsAfterClose",
+    "github.com/hyperledger/fabric/gossip/comm::TestChannelDeMultiplexer_ShouldCloseWithFullChannel",
+    "github.com/hyperledger/fabric/gossip/comm::TestChannelDeMultiplexer_InterleaveOperations",
+    "github.com/hyperledger/fabric/gossip/comm::TestConcurrentCloseSend",
+    "github.com/hyperledger/fabric/gossip/comm::TestResponses",
+    "github.com/hyperledger/fabric/gossip/comm::TestGetConnectionInfo",
+    "github.com/hyperledger/fabric/gossip/comm::TestMetrics",
+    "github.com/hyperledger/fabric/gossip/comm::TestReConnections",
+    "github.com/hyperledger/fabric/gossip/comm::TestConnectUnexpectedPeer/Same_organization",
+    "github.com/hyperledger/fabric/gossip/comm::TestAccept",
+    "github.com/hyperledger/fabric/gossip/comm::TestMutualParallelSendWithAck",
+    "github.com/hyperledger/fabric/gossip/comm::TestCommSend",
+    "github.com/hyperledger/fabric/gossip/comm::TestPresumedDead",
+    "github.com/hyperledger/fabric/gossip/comm::TestNonResponsivePing",
+    "github.com/hyperledger/fabric/gossip/comm::TestProbe",
+    "github.com/hyperledger/fabric/gossip/comm::TestConnectUnexpectedPeer/Unexpected_organization",
+    "github.com/hyperledger/fabric/gossip/comm::TestConnectUnexpectedPeer",
+    "github.com/hyperledger/fabric/gossip/comm::TestCloseConn",
+    "github.com/hyperledger/fabric/gossip/comm::TestHandshake",
+    "github.com/hyperledger/fabric/gossip/comm::TestAck"
+  ],
+  "PASS_TO_PASS": []
+}

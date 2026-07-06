@@ -1,0 +1,5 @@
+I'm upgrading the Kubernetes controller framework dependency in our operator and running into several breaking changes that need to be addressed. The newer version requires that all event handler methods (for create, update, delete, and generic events) accept a context object as their first argument — our existing handler types don't have this and won't compile against the updated library.
+
+On top of that, we've been constructing namespace-scoped and label-filtered cache builders inline in both the main binary and the end-to-end test helper. I'd like to extract those into two shared utility functions in the controller package so the logic isn't duplicated, and then replace the inline usages with calls to those new functions.
+
+Finally, we have a handful of unit tests that use the fake Kubernetes client. The newer framework version requires us to explicitly declare which resource types have status subresources — otherwise status updates are silently dropped and tests fail unexpectedly. A few tests also set deletion timestamps before creating objects in the fake client, which causes the timestamp to be reset; they need to set the timestamp after creation instead.

@@ -1,0 +1,734 @@
+patching file tests/poll.rs
+patching file tests/registering.rs
+patching file tests/tcp.rs
+   Compiling mio v0.7.0 (/workspace/repo)
+warning: unused import: `ports::localhost`
+  --> tests/util/mod.rs:11:9
+   |
+11 | pub use ports::localhost;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tests/util/mod.rs:110:23
+    |
+110 |             NEXT_PORT.compare_and_swap(0, FIRST_PORT, SeqCst);
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: panic message is not a string literal
+  --> tests/poll.rs:48:28
+   |
+48 |                     panic!(e);
+   |                            ^
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: `#[warn(non_fmt_panics)]` on by default
+help: add a "{}" format string to `Display` the message
+   |
+48 |                     panic!("{}", e);
+   |                            +++++
+help: or use std::panic::panic_any instead
+   |
+48 |                     std::panic::panic_any(e);
+   |                     ~~~~~~~~~~~~~~~~~~~~~
+
+warning: a method with this name may be added to the standard library in the future
+   --> tests/tcp.rs:479:12
+    |
+479 |     client.set_linger(Some(Duration::from_millis(0))).unwrap();
+    |            ^^^^^^^^^^
+    |
+    = warning: once this associated item is added to the standard library, the ambiguity may cause an error or change in behavior!
+    = note: for more information, see issue #48919 <https://github.com/rust-lang/rust/issues/48919>
+    = help: call with fully qualified syntax `net2::TcpStreamExt::set_linger(...)` to keep using the current method
+    = note: `#[warn(unstable_name_collisions)]` on by default
+
+warning: `mio` (test "double_register") generated 2 warnings (1 duplicate)
+warning: `mio` (test "smoke") generated 2 warnings (2 duplicates)
+warning: `mio` (test "waker") generated 2 warnings (1 duplicate) (run `cargo fix --test "waker"` to apply 1 suggestion)
+warning: `mio` (test "registering") generated 1 warning (1 duplicate)
+warning: `mio` (test "close_on_drop") generated 1 warning (1 duplicate)
+warning: `mio` (test "udp_socket") generated 1 warning (1 duplicate)
+warning: `mio` (test "poll") generated 2 warnings (1 duplicate) (run `cargo fix --test "poll"` to apply 1 suggestion)
+warning: `mio` (test "tcp") generated 2 warnings (1 duplicate)
+    Finished test [unoptimized + debuginfo] target(s) in 2.01s
+------------
+ Nextest run ID 8599ea05-c726-4777-850f-06082b1b8b10 with nextest profile: default
+    Starting 45 tests across 11 binaries
+        PASS [   0.100s] mio poll::as_raw_fd
+        PASS [   0.100s] mio sys::unix::epoll::assert_close_on_exec_flag
+        FAIL [   0.097s] mio::double_register test_double_register
+
+--- STDOUT:              mio::double_register test_double_register ---
+
+running 1 test
+test test_double_register ... FAILED
+
+failures:
+
+failures:
+    test_double_register
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::double_register test_double_register ---
+thread 'test_double_register' panicked at tests/double_register.rs:19:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.099s] mio::close_on_drop test_close_on_drop
+
+--- STDOUT:              mio::close_on_drop test_close_on_drop ---
+
+running 1 test
+test test_close_on_drop ... FAILED
+
+failures:
+
+failures:
+    test_close_on_drop
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::close_on_drop test_close_on_drop ---
+thread 'test_close_on_drop' panicked at tests/close_on_drop.rs:98:39:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.094s] mio::event_source assert_event_source_implemented_for
+        PASS [   0.092s] mio::interests bit_or
+        PASS [   0.089s] mio::interests fmt_debug
+        PASS [   0.083s] mio::interests is_tests
+        PASS [   0.079s] mio::poll assertions
+        FAIL [   0.074s] mio::poll test_drop_cancels_interest_and_shuts_down
+
+--- STDOUT:              mio::poll test_drop_cancels_interest_and_shuts_down ---
+
+running 1 test
+test test_drop_cancels_interest_and_shuts_down ... FAILED
+
+failures:
+
+failures:
+    test_drop_cancels_interest_and_shuts_down
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::poll test_drop_cancels_interest_and_shuts_down ---
+thread 'test_drop_cancels_interest_and_shuts_down' panicked at tests/poll.rs:55:42:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.122s] mio::registering test_register_deregister
+
+--- STDOUT:              mio::registering test_register_deregister ---
+
+running 1 test
+test test_register_deregister ... FAILED
+
+failures:
+
+failures:
+    test_register_deregister
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::registering test_register_deregister ---
+thread 'test_register_deregister' panicked at tests/registering.rs:79:42:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.115s] mio::registering test_registering_after_deregistering
+
+--- STDOUT:              mio::registering test_registering_after_deregistering ---
+
+running 1 test
+test test_registering_after_deregistering ... FAILED
+
+failures:
+
+failures:
+    test_registering_after_deregistering
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::registering test_registering_after_deregistering ---
+thread 'test_registering_after_deregistering' panicked at tests/registering.rs:254:42:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.106s] mio::registering test_reregister_different_without_poll
+
+--- STDOUT:              mio::registering test_reregister_different_without_poll ---
+
+running 1 test
+test test_reregister_different_without_poll ... FAILED
+
+failures:
+
+failures:
+    test_reregister_different_without_poll
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::registering test_reregister_different_without_poll ---
+thread 'test_reregister_different_without_poll' panicked at tests/registering.rs:123:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.099s] mio::registering test_tcp_register_multiple_event_loops
+
+--- STDOUT:              mio::registering test_tcp_register_multiple_event_loops ---
+
+running 1 test
+test test_tcp_register_multiple_event_loops ... FAILED
+
+failures:
+
+failures:
+    test_tcp_register_multiple_event_loops
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::registering test_tcp_register_multiple_event_loops ---
+thread 'test_tcp_register_multiple_event_loops' panicked at tests/registering.rs:152:44:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.091s] mio::registering test_udp_register_multiple_event_loops
+
+--- STDOUT:              mio::registering test_udp_register_multiple_event_loops ---
+
+running 1 test
+test test_udp_register_multiple_event_loops ... FAILED
+
+failures:
+
+failures:
+    test_udp_register_multiple_event_loops
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::registering test_udp_register_multiple_event_loops ---
+thread 'test_udp_register_multiple_event_loops' panicked at tests/registering.rs:217:40:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.085s] mio::smoke add_then_drop
+
+--- STDOUT:              mio::smoke add_then_drop ---
+
+running 1 test
+test add_then_drop ... FAILED
+
+failures:
+
+failures:
+    add_then_drop
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::smoke add_then_drop ---
+thread 'add_then_drop' panicked at tests/smoke.rs:26:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.066s] mio::tcp accept
+
+--- STDOUT:              mio::tcp accept ---
+
+running 1 test
+test accept ... FAILED
+
+failures:
+
+failures:
+    accept
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp accept ---
+thread 'accept' panicked at tests/tcp.rs:36:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.086s] mio::tcp connect
+
+--- STDOUT:              mio::tcp connect ---
+
+running 1 test
+test connect ... FAILED
+
+failures:
+
+failures:
+    connect
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp connect ---
+thread 'connect' panicked at tests/tcp.rs:94:38:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.093s] mio::tcp bind_twice_bad
+
+--- STDOUT:              mio::tcp bind_twice_bad ---
+
+running 1 test
+test bind_twice_bad ... FAILED
+
+failures:
+
+failures:
+    bind_twice_bad
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp bind_twice_bad ---
+thread 'bind_twice_bad' panicked at tests/tcp.rs:410:64:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.080s] mio::tcp connect_error
+
+--- STDOUT:              mio::tcp connect_error ---
+
+running 1 test
+test connect_error ... FAILED
+
+failures:
+
+failures:
+    connect_error
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp connect_error ---
+thread 'connect_error' panicked at tests/tcp.rs:559:19:
+TcpStream::connect unexpected error Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.073s] mio::tcp connect_then_close
+
+--- STDOUT:              mio::tcp connect_then_close ---
+
+running 1 test
+test connect_then_close ... FAILED
+
+failures:
+
+failures:
+    connect_then_close
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp connect_then_close ---
+thread 'connect_then_close' panicked at tests/tcp.rs:335:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.086s] mio::tcp connection_reset_by_peer
+
+--- STDOUT:              mio::tcp connection_reset_by_peer ---
+
+running 1 test
+test connection_reset_by_peer ... FAILED
+
+failures:
+
+failures:
+    connection_reset_by_peer
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp connection_reset_by_peer ---
+thread 'connection_reset_by_peer' panicked at tests/tcp.rs:473:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.080s] mio::tcp listen_then_close
+
+--- STDOUT:              mio::tcp listen_then_close ---
+
+running 1 test
+test listen_then_close ... FAILED
+
+failures:
+
+failures:
+    listen_then_close
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp listen_then_close ---
+thread 'listen_then_close' panicked at tests/tcp.rs:373:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.074s] mio::tcp local_addr_ready
+
+--- STDOUT:              mio::tcp local_addr_ready ---
+
+running 1 test
+test local_addr_ready ... FAILED
+
+failures:
+
+failures:
+    local_addr_ready
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp local_addr_ready ---
+thread 'local_addr_ready' panicked at tests/tcp.rs:724:42:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.186s] mio::poll test_registry_behind_arc
+
+--- STDOUT:              mio::poll test_registry_behind_arc ---
+
+running 1 test
+test test_registry_behind_arc ... FAILED
+
+failures:
+
+failures:
+    test_registry_behind_arc
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.11s
+
+
+--- STDERR:              mio::poll test_registry_behind_arc ---
+thread 'thread '<unnamed><unnamed>' panicked at ' panicked at tests/poll.rstests/poll.rs::101:10848:
+:called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+47:
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+thread 'test_registry_behind_arc' panicked at tests/poll.rs:117:5:
+assertion failed: events.iter().count() >= 1
+
+        FAIL [   0.067s] mio::tcp multiple_writes_immediate_success
+
+--- STDOUT:              mio::tcp multiple_writes_immediate_success ---
+
+running 1 test
+test multiple_writes_immediate_success ... FAILED
+
+failures:
+
+failures:
+    multiple_writes_immediate_success
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp multiple_writes_immediate_success ---
+thread 'multiple_writes_immediate_success' panicked at tests/tcp.rs:440:42:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.079s] mio::tcp peek
+
+--- STDOUT:              mio::tcp peek ---
+
+running 1 test
+test peek ... FAILED
+
+failures:
+
+failures:
+    peek
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp peek ---
+thread 'peek' panicked at tests/tcp.rs:225:38:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.069s] mio::tcp test_echo_server
+
+--- STDOUT:              mio::tcp test_echo_server ---
+
+running 1 test
+test test_echo_server ... FAILED
+
+failures:
+
+failures:
+    test_echo_server
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp test_echo_server ---
+thread 'test_echo_server' panicked at tests/tcp.rs:1052:39:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.064s] mio::tcp test_tcp_sockets_are_send
+        FAIL [   0.074s] mio::tcp read
+
+--- STDOUT:              mio::tcp read ---
+
+running 1 test
+test read ... FAILED
+
+failures:
+
+failures:
+    read
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp read ---
+thread 'read' panicked at tests/tcp.rs:166:38:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.217s] mio::poll test_poll_closes_fd
+        FAIL [   0.059s] mio::tcp test_write_shutdown
+
+--- STDOUT:              mio::tcp test_write_shutdown ---
+
+running 1 test
+test test_write_shutdown ... FAILED
+
+failures:
+
+failures:
+    test_write_shutdown
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp test_write_shutdown ---
+thread 'test_write_shutdown' panicked at tests/tcp.rs:687:43:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.057s] mio::tcp write
+
+--- STDOUT:              mio::tcp write ---
+
+running 1 test
+test write ... FAILED
+
+failures:
+
+failures:
+    write
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp write ---
+thread 'write' panicked at tests/tcp.rs:290:38:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.054s] mio::tcp write_error
+
+--- STDOUT:              mio::tcp write_error ---
+
+running 1 test
+test write_error ... FAILED
+
+failures:
+
+failures:
+    write_error
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp write_error ---
+thread 'write_error' panicked at tests/tcp.rs:596:42:
+called `Result::unwrap()` on an `Err` value: Os { code: 97, kind: Uncategorized, message: "Address family not supported by protocol" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.159s] mio::smoke run_once_with_nothing
+        FAIL [   0.052s] mio::tcp write_then_drop
+
+--- STDOUT:              mio::tcp write_then_drop ---
+
+running 1 test
+test write_then_drop ... FAILED
+
+failures:
+
+failures:
+    write_then_drop
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.00s
+
+
+--- STDERR:              mio::tcp write_then_drop ---
+thread 'write_then_drop' panicked at tests/tcp.rs:1100:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.057s] mio::tcp write_then_deregister
+
+--- STDOUT:              mio::tcp write_then_deregister ---
+
+running 1 test
+test write_then_deregister ... FAILED
+
+failures:
+
+failures:
+    write_then_deregister
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::tcp write_then_deregister ---
+thread 'write_then_deregister' panicked at tests/tcp.rs:1157:63:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.052s] mio::udp_socket test_multicast
+
+--- STDOUT:              mio::udp_socket test_multicast ---
+
+running 1 test
+test test_multicast ... FAILED
+
+failures:
+
+failures:
+    test_multicast
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::udp_socket test_multicast ---
+thread 'test_multicast' panicked at tests/udp_socket.rs:266:35:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.052s] mio::udp_socket test_udp_socket
+
+--- STDOUT:              mio::udp_socket test_udp_socket ---
+
+running 1 test
+test test_udp_socket ... FAILED
+
+failures:
+
+failures:
+    test_udp_socket
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::udp_socket test_udp_socket ---
+thread 'test_udp_socket' panicked at tests/udp_socket.rs:140:35:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.055s] mio::udp_socket test_udp_socket_send_recv
+
+--- STDOUT:              mio::udp_socket test_udp_socket_send_recv ---
+
+running 1 test
+test test_udp_socket_send_recv ... FAILED
+
+failures:
+
+failures:
+    test_udp_socket_send_recv
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.01s
+
+
+--- STDERR:              mio::udp_socket test_udp_socket_send_recv ---
+thread 'test_udp_socket_send_recv' panicked at tests/udp_socket.rs:121:35:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.069s] mio::udp_socket test_udp_socket_discard
+
+--- STDOUT:              mio::udp_socket test_udp_socket_discard ---
+
+running 1 test
+test test_udp_socket_discard ... FAILED
+
+failures:
+
+failures:
+    test_udp_socket_discard
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.02s
+
+
+--- STDERR:              mio::udp_socket test_udp_socket_discard ---
+thread 'test_udp_socket_discard' panicked at tests/udp_socket.rs:163:35:
+called `Result::unwrap()` on an `Err` value: Os { code: 22, kind: InvalidInput, message: "Invalid argument" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.062s] mio::waker waker
+        PASS [   0.055s] mio::waker waker_multiple_wakeups_same_thread
+        PASS [   0.112s] mio::waker waker_multiple_wakeups_different_thread
+        PASS [   0.100s] mio::waker waker_wakeup_different_thread
+------------
+     Summary [   0.356s] 45 tests run: 14 passed, 31 failed, 0 skipped
+        FAIL [   0.099s] mio::close_on_drop test_close_on_drop
+        FAIL [   0.097s] mio::double_register test_double_register
+        FAIL [   0.074s] mio::poll test_drop_cancels_interest_and_shuts_down
+        FAIL [   0.186s] mio::poll test_registry_behind_arc
+        FAIL [   0.122s] mio::registering test_register_deregister
+        FAIL [   0.115s] mio::registering test_registering_after_deregistering
+        FAIL [   0.106s] mio::registering test_reregister_different_without_poll
+        FAIL [   0.099s] mio::registering test_tcp_register_multiple_event_loops
+        FAIL [   0.091s] mio::registering test_udp_register_multiple_event_loops
+        FAIL [   0.085s] mio::smoke add_then_drop
+        FAIL [   0.066s] mio::tcp accept
+        FAIL [   0.093s] mio::tcp bind_twice_bad
+        FAIL [   0.086s] mio::tcp connect
+        FAIL [   0.080s] mio::tcp connect_error
+        FAIL [   0.073s] mio::tcp connect_then_close
+        FAIL [   0.086s] mio::tcp connection_reset_by_peer
+        FAIL [   0.080s] mio::tcp listen_then_close
+        FAIL [   0.074s] mio::tcp local_addr_ready
+        FAIL [   0.067s] mio::tcp multiple_writes_immediate_success
+        FAIL [   0.079s] mio::tcp peek
+        FAIL [   0.074s] mio::tcp read
+        FAIL [   0.069s] mio::tcp test_echo_server
+        FAIL [   0.059s] mio::tcp test_write_shutdown
+        FAIL [   0.057s] mio::tcp write
+        FAIL [   0.054s] mio::tcp write_error
+        FAIL [   0.057s] mio::tcp write_then_deregister
+        FAIL [   0.052s] mio::tcp write_then_drop
+        FAIL [   0.052s] mio::udp_socket test_multicast
+        FAIL [   0.052s] mio::udp_socket test_udp_socket
+        FAIL [   0.069s] mio::udp_socket test_udp_socket_discard
+        FAIL [   0.055s] mio::udp_socket test_udp_socket_send_recv
+error: test run failed
+reward=1 graded=14 found=14 failed=0 parsed=45 framework=cargo exit_code=100

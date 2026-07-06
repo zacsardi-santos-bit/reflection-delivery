@@ -1,5 +1,0 @@
-I'm working on improving the bookmark management experience in our Android app. Right now, when a user saves or edits a bookmark, the commands that trigger confirmation and edit dialogs only carry the saved site itself — there's no information about which folder the bookmark belongs to. I need to update those commands to also carry the parent folder context alongside the saved site, so that downstream UI components can display and work with folder information correctly.
-
-I also need to add a method to the bookmark folder picker's view model that handles the case when a new folder is created while the user is in the folder selection screen. When called, this method should refresh the folder structure list by fetching the updated flat folder hierarchy from the repository, and the UI should immediately reflect the newly created folder in the list.
-
-Finally, the bookmarks repository is missing an operation to look up a bookmark folder by its own identifier. I need to add this lookup to both the repository interface and its concrete implementation, so that the view model can retrieve folder details when needed.

@@ -1,0 +1,29 @@
+{
+    "id": "5f5fc217-88d1-42b3-825f-6632e58b03cc",
+    "started_at": "2026-07-06T12:18:45.276105",
+    "finished_at": "2026-07-06T12:19:21.309675",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__schemathesis-schemathesis-3921": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "schemathesis-schemathesis-3921__WmXaD5L"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "1cc114da-28f5-4d36-9977-edc9e936b291",
+    "started_at": "2026-07-04T15:37:16.611876",
+    "finished_at": "2026-07-04T15:40:13.153458",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__grafbase-grafbase-2592": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "grafbase-grafbase-2592__mpVGRqB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

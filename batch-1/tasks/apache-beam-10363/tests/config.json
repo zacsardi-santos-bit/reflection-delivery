@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "cp /workspace/go.mod.bak go.mod && cp /workspace/go.sum.bak go.sum && go test -json ./sdks/go/pkg/beam/core/runtime/harness -count=1",
+  "test_files": [
+    "sdks/go/pkg/beam/core/runtime/harness/datamgr_test.go",
+    "sdks/go/pkg/beam/core/runtime/harness/statemgr_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_dataReader/onClose",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_dataReader/onSentinel",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_dataReader/onRecvError",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_dataReader",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_Writes/onClose_Flush",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_Writes/onClose_Sentinel",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_Writes/onWrite",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestDataChannelTerminate_Writes",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestLogger",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel/HappyPath",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel/readEOF",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel/readOtherErr",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel/readResponseChannelDeleted",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel/writeEOF",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel/writeOtherError",
+    "github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness::TestStateChannel"
+  ],
+  "PASS_TO_PASS": []
+}

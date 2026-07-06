@@ -1,0 +1,29 @@
+{
+    "id": "29717531-af85-4801-9741-0d0aad28f457",
+    "started_at": "2026-07-04T15:36:13.237627",
+    "finished_at": "2026-07-04T15:42:21.023171",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__datadog-dd-trace-java-7185": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "datadog-dd-trace-java-7185__ieW3Lgy"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

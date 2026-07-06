@@ -1,0 +1,17 @@
+patching file infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 1 item
+
+infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py::CompilerWrapperTest::test_filter_z_defs PASSED [100%]
+
+=============================== warnings summary ===============================
+infra/base-images/base-sanitizer-libs-builder/msan_build.py:20
+  /workspace/repo/infra/base-images/base-sanitizer-libs-builder/msan_build.py:20: DeprecationWarning: the imp module is deprecated in favour of importlib and slated for removal in Python 3.12; see the module's documentation for alternative uses
+    import imp
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 1 passed, 1 warning in 0.07s =========================
+reward=1 (grader error: Extra data: line 14 column 1 (char 459); fell back to exit_code=0)

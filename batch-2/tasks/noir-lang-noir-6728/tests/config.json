@@ -1,0 +1,26 @@
+{
+  "test_framework": "cargo",
+  "test_command": "RUST_MIN_STACK=8388608 cargo nextest run --no-fail-fast -p nargo_cli --test stdlib-tests --test stdlib-props",
+  "test_files": [
+    "tooling/nargo_cli/tests/stdlib-props.rs",
+    "tooling/nargo_cli/tests/stdlib-tests.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "nargo_cli::stdlib-props fuzz_basic",
+    "nargo_cli::stdlib-tests run_stdlib_tests::true_i64_max_expects",
+    "nargo_cli::stdlib-tests run_stdlib_tests::true_0_expects",
+    "nargo_cli::stdlib-tests run_stdlib_tests::true_i64_min_expects",
+    "nargo_cli::stdlib-props fuzz_keccak256_equivalence_over_135",
+    "nargo_cli::stdlib-props fuzz_keccak256_equivalence",
+    "nargo_cli::stdlib-tests run_stdlib_tests::false_0_expects",
+    "nargo_cli::stdlib-tests run_stdlib_tests::false_i64_min_expects",
+    "nargo_cli::stdlib-tests run_stdlib_tests::false_i64_max_expects",
+    "nargo_cli::stdlib-props fuzz_poseidon2_equivalence",
+    "nargo_cli::stdlib-props fuzz_sha256_equivalence",
+    "nargo_cli::stdlib-props fuzz_poseidon_equivalence",
+    "nargo_cli::stdlib-props fuzz_sha512_equivalence"
+  ],
+  "PASS_TO_PASS": []
+}

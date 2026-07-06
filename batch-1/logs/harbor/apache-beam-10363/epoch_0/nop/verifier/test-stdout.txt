@@ -1,0 +1,6 @@
+patching file sdks/go/pkg/beam/core/runtime/harness/datamgr_test.go
+patching file sdks/go/pkg/beam/core/runtime/harness/statemgr_test.go
+# github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness [github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness.test]
+sdks/go/pkg/beam/core/runtime/harness/statemgr_test.go:195:9: undefined: makeStateChannel
+FAIL	github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=1 framework=go exit_code=1

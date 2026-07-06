@@ -1,3 +1,0 @@
-patching file haystack/components/evaluators/__init__.py
-patching file haystack/components/evaluators/llm_evaluator.py
-patching file releasenotes/notes/llmevaluator-0ae63b2b9715fb9b.yaml

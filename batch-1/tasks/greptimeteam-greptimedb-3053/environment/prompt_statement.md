@@ -1,0 +1,5 @@
+I'm working on the region engine abstraction in our database system and I need to add the ability to downcast a generic engine reference to its concrete type at runtime. Right now, the engine trait doesn't expose any way to access the underlying concrete implementation — you can only call the methods defined in the common interface. I need a standard escape hatch so that code holding a generic engine reference can optionally retrieve the actual engine type and call its specific methods.
+
+This is needed because in some workflows (like when a physical region is opened and we need to also register its associated logical regions), we need to call methods that are only available on one specific engine type. Without the ability to downcast, those operations aren't possible through the generic reference.
+
+Could you add a downcasting method to the region engine trait so that any holder of a generic engine reference can obtain the concrete type? All existing implementations of the trait should also provide this method.

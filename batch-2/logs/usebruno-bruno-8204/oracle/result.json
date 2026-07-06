@@ -1,0 +1,29 @@
+{
+    "id": "05ad1bb9-b080-4b36-9816-4008c056c57c",
+    "started_at": "2026-07-06T12:21:42.067508",
+    "finished_at": "2026-07-06T12:22:10.646891",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__usebruno-bruno-8204": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "usebruno-bruno-8204__j9nvPGf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

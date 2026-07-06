@@ -1,0 +1,38 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python3 -m script.translations develop --all > /dev/null 2>&1 && pytest tests/components/vacuum/test_init.py -v",
+  "test_files": [
+    "tests/components/vacuum/test_init.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.vacuum.test_init::test_clean_area_no_segments[area_mapping0-targeted_areas0-None]",
+    "tests.components.vacuum.test_init::test_clean_area_no_segments[area_mapping1-targeted_areas1-None]",
+    "tests.components.vacuum.test_init::test_clean_area_no_segments[area_mapping2-targeted_areas2-cleaned_segments2]",
+    "tests.components.vacuum.test_init::test_clean_area_no_registry_entry"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.vacuum.test_init::test_state_services[clean_spot-cleaning]",
+    "tests.components.vacuum.test_init::test_state_services[pause-paused]",
+    "tests.components.vacuum.test_init::test_state_services[return_to_base-returning]",
+    "tests.components.vacuum.test_init::test_state_services[start-cleaning]",
+    "tests.components.vacuum.test_init::test_state_services[stop-idle]",
+    "tests.components.vacuum.test_init::test_fan_speed",
+    "tests.components.vacuum.test_init::test_locate",
+    "tests.components.vacuum.test_init::test_send_command",
+    "tests.components.vacuum.test_init::test_clean_area_service[area_mapping0-targeted_areas0-targeted_segments0]",
+    "tests.components.vacuum.test_init::test_clean_area_service[area_mapping1-targeted_areas1-targeted_segments1]",
+    "tests.components.vacuum.test_init::test_clean_area_not_configured",
+    "tests.components.vacuum.test_init::test_clean_area_methods_not_implemented",
+    "tests.components.vacuum.test_init::test_last_seen_segments",
+    "tests.components.vacuum.test_init::test_segments_changed_issue",
+    "tests.components.vacuum.test_init::test_vacuum_log_deprecated_battery_using_properties[True-0]",
+    "tests.components.vacuum.test_init::test_vacuum_log_deprecated_battery_using_properties[False-3]",
+    "tests.components.vacuum.test_init::test_vacuum_log_deprecated_battery_using_attr[True-0]",
+    "tests.components.vacuum.test_init::test_vacuum_log_deprecated_battery_using_attr[False-3]",
+    "tests.components.vacuum.test_init::test_vacuum_log_deprecated_battery_supported_feature[True-0]",
+    "tests.components.vacuum.test_init::test_vacuum_log_deprecated_battery_supported_feature[False-1]",
+    "tests.components.vacuum.test_init::test_vacuum_not_log_deprecated_battery_properties_during_init"
+  ]
+}

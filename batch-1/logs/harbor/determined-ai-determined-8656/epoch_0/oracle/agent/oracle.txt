@@ -1,0 +1,7 @@
+patching file agent/cmd/determined-agent/env.go
+patching file agent/cmd/determined-agent/init.go
+patching file agent/cmd/determined-agent/main.go
+patching file agent/cmd/determined-agent/root.go
+patching file agent/cmd/determined-agent/run.go
+patching file agent/internal/api.go
+patching file agent/internal/options/options.go

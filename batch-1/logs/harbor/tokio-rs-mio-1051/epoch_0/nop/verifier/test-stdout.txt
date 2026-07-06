@@ -1,0 +1,79 @@
+patching file tests/poll.rs
+patching file tests/registering.rs
+patching file tests/tcp.rs
+warning: unused import: `ports::localhost`
+  --> tests/util/mod.rs:11:9
+   |
+11 | pub use ports::localhost;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tests/util/mod.rs:110:23
+    |
+110 |             NEXT_PORT.compare_and_swap(0, FIRST_PORT, SeqCst);
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+   Compiling mio v0.7.0 (/workspace/repo)
+warning: `mio` (test "waker") generated 2 warnings (run `cargo fix --test "waker"` to apply 1 suggestion)
+warning: `mio` (test "smoke") generated 2 warnings (2 duplicates)
+warning: `mio` (test "close_on_drop") generated 1 warning (1 duplicate)
+warning: `mio` (test "double_register") generated 2 warnings (2 duplicates)
+warning: `mio` (test "udp_socket") generated 1 warning (1 duplicate)
+warning: a method with this name may be added to the standard library in the future
+   --> tests/tcp.rs:479:12
+    |
+479 |     client.set_linger(Some(Duration::from_millis(0))).unwrap();
+    |            ^^^^^^^^^^
+    |
+    = warning: once this associated item is added to the standard library, the ambiguity may cause an error or change in behavior!
+    = note: for more information, see issue #48919 <https://github.com/rust-lang/rust/issues/48919>
+    = help: call with fully qualified syntax `net2::TcpStreamExt::set_linger(...)` to keep using the current method
+    = note: `#[warn(unstable_name_collisions)]` on by default
+
+error[E0599]: no method named `try_clone` found for reference `&mio::Registry` in the current scope
+  --> tests/poll.rs:89:45
+   |
+89 |     let registry = Arc::new(poll.registry().try_clone().unwrap());
+   |                                             ^^^^^^^^^ method not found in `&Registry`
+
+error[E0282]: type annotations needed for `Arc<T, A>`
+   --> tests/poll.rs:95:9
+    |
+95  |     let registry2 = Arc::clone(&registry);
+    |         ^^^^^^^^^
+...
+103 |             .register(&listener, Token(0), Interests::READABLE)
+    |              -------- type must be known at this point
+    |
+help: consider giving `registry2` an explicit type, where the type for type parameter `T` is specified
+    |
+95  |     let registry2: Arc<T, A> = Arc::clone(&registry);
+    |                  +++++++++++
+
+error[E0282]: type annotations needed for `Arc<T, A>`
+   --> tests/poll.rs:96:9
+    |
+96  |     let registry3 = Arc::clone(&registry);
+    |         ^^^^^^^^^
+...
+110 |             .register(&stream, Token(1), Interests::READABLE | Interests::WRITABLE)
+    |              -------- type must be known at this point
+    |
+help: consider giving `registry3` an explicit type, where the type for type parameter `T` is specified
+    |
+96  |     let registry3: Arc<T, A> = Arc::clone(&registry);
+    |                  +++++++++++
+
+Some errors have detailed explanations: E0282, E0599.
+For more information about an error, try `rustc --explain E0282`.
+warning: `mio` (test "poll") generated 1 warning (1 duplicate)
+error: could not compile `mio` (test "poll") due to 3 previous errors; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...
+warning: `mio` (test "registering") generated 1 warning (1 duplicate)
+warning: `mio` (test "tcp") generated 2 warnings (1 duplicate)
+error: command `/usr/local/rustup/toolchains/1.77.2-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=14 found=0 failed=0 parsed=0 framework=cargo exit_code=101

@@ -1,0 +1,156 @@
+diff --git a/docling/backend/asciidoc_backend.py b/docling/backend/asciidoc_backend.py
+index 0c05a8b8..4b2641d3 100644
+--- a/docling/backend/asciidoc_backend.py
++++ b/docling/backend/asciidoc_backend.py
+@@ -368,8 +368,10 @@ class AsciiDocBackend(DeclarativeDocumentBackend):
+         # Drop cell specifiers glued to a "|" (e.g. "^.^h"); anchored to
+         # whitespace so content ending in a style letter (e.g. "Eth") survives.
+         line = re.sub(rf"(^|\s){_CELL_SPEC}(?=\|)", r"\1", line)
+-        # Split table cells and trim extra spaces
+-        return [cell.strip() for cell in line.split("|") if cell.strip()]
++        # Split by "|" and remove the leading empty string from the first "|"
++        cells = line.split("|")[1:]
++        # Strip whitespace from each cell (empty cells become empty strings)
++        return [cell.strip() for cell in cells]
+ 
+     @staticmethod
+     def _populate_table_as_grid(table_data):
+diff --git a/docling/datamodel/base_models.py b/docling/datamodel/base_models.py
+index f5f7d8b0..d6fa5c5d 100644
+--- a/docling/datamodel/base_models.py
++++ b/docling/datamodel/base_models.py
+@@ -27,11 +27,9 @@ from pydantic import (
+     ConfigDict,
+     Field,
+     FieldSerializationInfo,
+-    PrivateAttr,
+     computed_field,
+     field_serializer,
+     field_validator,
+-    model_validator,
+ )
+ 
+ if TYPE_CHECKING:
+@@ -507,50 +505,10 @@ class ConfidenceReport(PageConfidenceScores):
+     pages: dict[int, PageConfidenceScores] = Field(
+         default_factory=lambda: defaultdict(PageConfidenceScores)
+     )
+-    _mean_score_override: ScoreValue = PrivateAttr(default=np.nan)
+-    _low_score_override: ScoreValue = PrivateAttr(default=np.nan)
+-
+-    @staticmethod
+-    def _coerce_override_score(value: Any) -> ScoreValue:
+-        if value is None:
+-            return ScoreValue(np.nan)
+-        if isinstance(value, str) and value.strip().lower() in {
+-            "nan",
+-            "null",
+-            "none",
+-            "",
+-        }:
+-            return ScoreValue(np.nan)
+-        return ScoreValue(value)
+-
+-    @model_validator(mode="wrap")
+-    @classmethod
+-    def _accept_flat_confidence_scores(cls, value, handler):
+-        mean_override = ScoreValue(np.nan)
+-        low_override = ScoreValue(np.nan)
+-
+-        if isinstance(value, dict):
+-            mean_override = cls._coerce_override_score(value.get("mean_score"))
+-            low_override = cls._coerce_override_score(value.get("low_score"))
+-            value = dict(value)
+-            value.pop("mean_score", None)
+-            value.pop("low_score", None)
+-            value.pop("mean_grade", None)
+-            value.pop("low_grade", None)
+-
+-        model = handler(value)
+-        if not model.pages:
+-            model._mean_score_override = mean_override
+-            model._low_score_override = low_override
+-        return model
+ 
+     @computed_field  # type: ignore
+     @property
+     def mean_score(self) -> ScoreValue:
+-        if not np.isnan(self._mean_score_override):
+-            return self._mean_score_override
+-        if not self.pages:
+-            return super().mean_score
+         return ScoreValue(
+             np.nanmean(
+                 [c.mean_score for c in self.pages.values()],
+@@ -560,10 +518,6 @@ class ConfidenceReport(PageConfidenceScores):
+     @computed_field  # type: ignore
+     @property
+     def low_score(self) -> ScoreValue:
+-        if not np.isnan(self._low_score_override):
+-            return self._low_score_override
+-        if not self.pages:
+-            return super().low_score
+         return ScoreValue(
+             np.nanmean(
+                 [c.low_score for c in self.pages.values()],
+diff --git a/docling/service_client/client.py b/docling/service_client/client.py
+index 57f8288b..4c7710cc 100644
+--- a/docling/service_client/client.py
++++ b/docling/service_client/client.py
+@@ -31,7 +31,6 @@ from pydantic import AnyHttpUrl, TypeAdapter, ValidationError
+ 
+ from docling.backend.noop_backend import NoOpBackend
+ from docling.datamodel.base_models import (
+-    ConfidenceReport,
+     ConversionStatus,
+     DoclingComponentType,
+     ErrorItem,
+@@ -368,11 +367,6 @@ class _BaseDoclingServiceClient:
+             status=payload.status,
+             errors=payload.errors,
+             timings=payload.timings,
+-            confidence=ConfidenceReport.model_validate(
+-                {}
+-                if payload.confidence is None
+-                else payload.confidence.model_dump(mode="json")
+-            ),
+             document=document,
+         )
+ 
+@@ -1762,11 +1756,6 @@ class DoclingServiceClient(_BaseDoclingServiceClient):
+             status=item.status,
+             errors=item.errors,
+             timings=item.timings,
+-            confidence=ConfidenceReport.model_validate(
+-                {}
+-                if item.confidence is None
+-                else item.confidence.model_dump(mode="json")
+-            ),
+             document=document,
+         )
+ 
+diff --git a/docs/examples/run_with_formats.py b/docs/examples/run_with_formats.py
+index d7f7b49a..fc9eeecc 100644
+--- a/docs/examples/run_with_formats.py
++++ b/docs/examples/run_with_formats.py
+@@ -60,7 +60,7 @@ def main():
+         Path("tests/data/pptx/powerpoint_sample.pptx"),
+         Path("tests/data/2305.03393v1-pg9-img.png"),
+         Path("tests/data/pdf/2206.01062.pdf"),
+-        Path("tests/data/asciidoc/test_01.asciidoc"),
++        Path("tests/data/asciidoc/asciidoc_01.asciidoc"),
+     ]
+ 
+     ## for defaults use:
+diff --git a/tests/test_service_client_sdk_unit.py b/tests/test_service_client_sdk_unit.py
+index b7d4bb44..c7a6c14f 100644
+--- a/tests/test_service_client_sdk_unit.py
++++ b/tests/test_service_client_sdk_unit.py
+@@ -105,7 +105,6 @@ def _convert_payload(source_name: str) -> SimpleNamespace:
+         status=ConversionStatus.SUCCESS,
+         errors=[],
+         timings={},
+-        confidence=None,
+         document=SimpleNamespace(
+             filename=None,
+             json_content=DoclingDocument(name=PurePath(source_name).stem),

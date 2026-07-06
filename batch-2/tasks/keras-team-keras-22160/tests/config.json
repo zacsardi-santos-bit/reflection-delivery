@@ -1,0 +1,35 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/models/functional_test.py -v",
+  "test_files": [
+    "keras/src/models/functional_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.models.functional_test.FunctionalTest::test_optional_and_required_mixed_structures",
+    "keras.src.models.functional_test.FunctionalTest::test_required_input_none_raises"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.models.functional_test.FunctionalTest::test_add_loss",
+    "keras.src.models.functional_test.FunctionalTest::test_basic_flow_as_a_submodel",
+    "keras.src.models.functional_test.FunctionalTest::test_deeply_nested_model",
+    "keras.src.models.functional_test.FunctionalTest::test_disconnected_output",
+    "keras.src.models.functional_test.FunctionalTest::test_for_functional_in_sequential",
+    "keras.src.models.functional_test.FunctionalTest::test_functional_input_shape_and_type",
+    "keras.src.models.functional_test.FunctionalTest::test_functional_slicing",
+    "keras.src.models.functional_test.FunctionalTest::test_functional_with_dtype_policy",
+    "keras.src.models.functional_test.FunctionalTest::test_layers_setter",
+    "keras.src.models.functional_test.FunctionalTest::test_list_input_with_dict_build",
+    "keras.src.models.functional_test.FunctionalTest::test_mask_arg",
+    "keras.src.models.functional_test.FunctionalTest::test_optional_dict_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_optional_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_multi_output_type_dict",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_multi_output_type_list",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_multi_output_type_tuple",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_nested_input",
+    "keras.src.models.functional_test.FunctionalTest::test_unmodified_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_unused_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_warning_for_mismatched_inputs_structure"
+  ]
+}

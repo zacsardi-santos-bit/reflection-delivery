@@ -1,0 +1,10 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1340 with fuzz 1 (offset 464 lines).
+Hunk #2 succeeded at 2892 with fuzz 3 (offset 464 lines).
+patching file internal/component/prometheus/remote/queue/README.md (renamed from internal/component/prometheus/queue/README.md)
+patching file internal/component/prometheus/remote/queue/filequeue/filequeue.go
+patching file internal/component/prometheus/remote/queue/filequeue/record.go
+patching file internal/component/prometheus/remote/queue/filequeue/record_gen.go
+patching file internal/component/prometheus/remote/queue/types/messages.go
+patching file internal/component/prometheus/remote/queue/types/storage.go

@@ -1,0 +1,1028 @@
+patching file flink-runtime-web/src/test/java/org/apache/flink/runtime/webmonitor/handlers/JarSubmissionITCase.java
+patching file flink-tests/pom.xml
+patching file flink-tests/src/test/assembly/test-classloading_policy-assembly.xml
+patching file flink-tests/src/test/java/org/apache/flink/test/classloading/ClassLoaderITCase.java
+patching file flink-tests/src/test/java/org/apache/flink/test/classloading/jar/ClassLoadingPolicyProgram.java
+patching file flink-tests/src/test/resources/test-resource
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-shaded-hadoop2:jar:2.4.1-1.8-SNAPSHOT
+[[1;33mWARNING[m] 'version' contains an expression but should be a constant. @ org.apache.flink:flink-shaded-hadoop2:${hadoop.version}-1.8-SNAPSHOT, /workspace/repo/flink-shaded-hadoop/flink-shaded-hadoop2/pom.xml, line 36, column 11
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-shaded-hadoop2-uber:jar:2.4.1-1.8-SNAPSHOT
+[[1;33mWARNING[m] 'version' contains an expression but should be a constant. @ org.apache.flink:flink-shaded-hadoop2-uber:${hadoop.version}-1.8-SNAPSHOT, /workspace/repo/flink-shaded-hadoop/flink-shaded-hadoop2-uber/pom.xml, line 37, column 11
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-scala_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-scala_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-scala/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-runtime_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-runtime_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-runtime/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-runtime-web_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-runtime-web_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-runtime-web/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-optimizer_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-optimizer_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-optimizer/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-java_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-java_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-streaming-java/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-scala_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-scala_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-streaming-scala/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-orc_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-orc_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-orc/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-jdbc_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-jdbc_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-jdbc/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-hadoop-compatibility_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-hadoop-compatibility_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-hadoop-compatibility/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-hbase_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-hbase_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-hbase/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-hcatalog_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-hcatalog_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-hcatalog/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-kafka-base_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-kafka-base_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-kafka-base/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-kafka-0.9_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-kafka-0.9_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-kafka-0.9/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-kafka-0.10_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-kafka-0.10_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-kafka-0.10/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-kafka-0.11_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-kafka-0.11_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-kafka-0.11/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-elasticsearch-base_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-elasticsearch-base_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-elasticsearch-base/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-elasticsearch_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-elasticsearch_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-elasticsearch/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-elasticsearch2_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-elasticsearch2_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-elasticsearch2/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-elasticsearch5_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-elasticsearch5_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-elasticsearch5/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-elasticsearch6_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-elasticsearch6_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-elasticsearch6/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-rabbitmq_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-rabbitmq_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-rabbitmq/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-twitter_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-twitter_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-twitter/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-nifi_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-nifi_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-nifi/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-cassandra_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-cassandra_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-cassandra/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-filesystem_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-filesystem_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-filesystem/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-kafka_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-kafka_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-kafka/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-elasticsearch6_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-elasticsearch6_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-elasticsearch6/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-kafka-0.9_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-kafka-0.9_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-kafka-0.9/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-kafka-0.10_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-kafka-0.10_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-kafka-0.10/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-kafka-0.11_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-kafka-0.11_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-kafka-0.11/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-kafka_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-kafka_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-kafka/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-kafka-0.8_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-kafka-0.8_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-kafka-0.8/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-batch_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-batch_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-batch/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-streaming_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-streaming_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-streaming/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-table_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-table_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-table/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-streaming-twitter_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-streaming-twitter_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-build-helper/flink-examples-streaming-twitter/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-streaming-state-machine_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-streaming-state-machine_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-build-helper/flink-examples-streaming-state-machine/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-clients_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-clients_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-clients/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-container_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-container_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-container/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-queryable-state-runtime_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-queryable-state-runtime_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-queryable-state/flink-queryable-state-runtime/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-queryable-state-client-java_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-queryable-state-client-java_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-tests_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-tests_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-tests/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-cli-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-cli-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-cli-test/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-parent-child-classloading-test-program_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-parent-child-classloading-test-program_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-parent-child-classloading-test-program/pom.xml, line 38, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-parent-child-classloading-test-lib-package_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-parent-child-classloading-test-lib-package_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-parent-child-classloading-test-lib-package/pom.xml, line 38, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-stream-sql-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-stream-sql-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-stream-sql-test/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-distributed-cache-via-blob-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-distributed-cache-via-blob-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-distributed-cache-via-blob-test/pom.xml, line 33, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-queryable-state-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-queryable-state-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-queryable-state-test/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-kafka-test-base_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-kafka-test-base_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-streaming-kafka-test-base/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-kafka-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-kafka-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-streaming-kafka-test/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-kafka011-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-kafka011-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-streaming-kafka011-test/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-kafka010-test_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-kafka010-test_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-end-to-end-tests/flink-streaming-kafka010-test/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-test-utils_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-test-utils_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-test-utils-parent/flink-test-utils/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-statebackend-rocksdb_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-statebackend-rocksdb_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-state-backends/flink-statebackend-rocksdb/pom.xml, line 34, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-gelly_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-gelly_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-gelly/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-gelly-scala_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-gelly-scala_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-gelly-scala/pom.xml, line 31, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-gelly-examples_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-gelly-examples_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-gelly-examples/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-python_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-python_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-python/pom.xml, line 30, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-ml_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-ml_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-ml/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-ml-uber_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-ml-uber_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-ml-uber/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-cep_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-cep_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-cep/pom.xml, line 33, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-cep-scala_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-cep-scala_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-cep-scala/pom.xml, line 33, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-python_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-python_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-libraries/flink-streaming-python/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-scala_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-scala_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-scala/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-java-bridge_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-java-bridge_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-java-bridge/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-scala-bridge_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-scala-bridge_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-scala-bridge/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-planner_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-planner_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-table/flink-table-planner/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-uber_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-uber_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-table/flink-table-uber/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-client_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-client_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-table/flink-sql-client/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-wikiedits_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-wikiedits_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-contrib/flink-connector-wikiedits/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-dist_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-dist_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-dist/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-mesos_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-mesos_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-mesos/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-metrics-influxdb_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-metrics-influxdb_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-metrics/flink-metrics-influxdb/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-metrics-jmx_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-metrics-jmx_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-metrics/flink-metrics-jmx/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-metrics-prometheus_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-metrics-prometheus_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-metrics/flink-metrics-prometheus/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-yarn_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-yarn_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-yarn/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-yarn-tests_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-yarn-tests_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-yarn-tests/pom.xml, line 36, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-fs-tests_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-fs-tests_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-fs-tests/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-scala-shell_2.11:jar:1.8-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-scala-shell_${scala.binary.version}:1.8-SNAPSHOT, /workspace/repo/flink-scala-shell/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] force-shading                                                      [jar]
+[[1;34mINFO[m] flink                                                              [pom]
+[[1;34mINFO[m] flink-annotations                                                  [jar]
+[[1;34mINFO[m] flink-shaded-hadoop                                                [pom]
+[[1;34mINFO[m] flink-shaded-hadoop2                                               [jar]
+[[1;34mINFO[m] flink-shaded-curator                                               [jar]
+[[1;34mINFO[m] flink-metrics                                                      [pom]
+[[1;34mINFO[m] flink-metrics-core                                                 [jar]
+[[1;34mINFO[m] flink-test-utils-parent                                            [pom]
+[[1;34mINFO[m] flink-test-utils-junit                                             [jar]
+[[1;34mINFO[m] flink-core                                                         [jar]
+[[1;34mINFO[m] flink-java                                                         [jar]
+[[1;34mINFO[m] flink-queryable-state                                              [pom]
+[[1;34mINFO[m] flink-queryable-state-client-java                                  [jar]
+[[1;34mINFO[m] flink-filesystems                                                  [pom]
+[[1;34mINFO[m] flink-hadoop-fs                                                    [jar]
+[[1;34mINFO[m] flink-runtime                                                      [jar]
+[[1;34mINFO[m] flink-optimizer                                                    [jar]
+[[1;34mINFO[m] flink-clients                                                      [jar]
+[[1;34mINFO[m] flink-streaming-java                                               [jar]
+[[1;34mINFO[m] flink-test-utils                                                   [jar]
+[[1;34mINFO[m] flink-runtime-web                                                  [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------< [0;36morg.apache.flink:force-shading[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding force-shading 1.8-SNAPSHOT                               [1/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mforce-shading[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.7:resources[m [1m(default-resources)[m @ [36mforce-shading[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/tools/force-shading/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.5.1:compile[m [1m(default-compile)[m @ [36mforce-shading[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.7:testResources[m [1m(default-testResources)[m @ [36mforce-shading[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/tools/force-shading/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.5.1:testCompile[m [1m(default-testCompile)[m @ [36mforce-shading[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.19.1:test[m [1m(default-test)[m @ [36mforce-shading[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------< [0;36morg.apache.flink:flink-parent[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding flink 1.8-SNAPSHOT                                       [2/22][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------< [0;36morg.apache.flink:flink-annotations[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding flink-annotations 1.8-SNAPSHOT                           [3/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-annotations/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-annotations/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.flink:flink-shaded-hadoop[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding flink-shaded-hadoop 1.8-SNAPSHOT                         [4/22][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-shaded-hadoop[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.flink:flink-shaded-hadoop2[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding flink-shaded-hadoop2 2.4.1-1.8-SNAPSHOT                  [5/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-shaded-hadoop/flink-shaded-hadoop2/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-shaded-hadoop2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.flink:flink-shaded-curator[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding flink-shaded-curator 1.8-SNAPSHOT                        [6/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 0 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-shaded-curator/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-shaded-curator[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------< [0;36morg.apache.flink:flink-metrics[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding flink-metrics 1.8-SNAPSHOT                               [7/22][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.flink:flink-metrics-core[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding flink-metrics-core 1.8-SNAPSHOT                          [8/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-metrics/flink-metrics-core/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-metrics/flink-metrics-core/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.flink:flink-test-utils-parent[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding flink-test-utils-parent 1.8-SNAPSHOT                     [9/22][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.flink:flink-test-utils-junit[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding flink-test-utils-junit 1.8-SNAPSHOT                     [10/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36morg.apache.flink:flink-core[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding flink-core 1.8-SNAPSHOT                                 [11/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-core/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 218 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36morg.apache.flink:flink-java[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding flink-java 1.8-SNAPSHOT                                 [12/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.flink:flink-queryable-state[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding flink-queryable-state 1.8-SNAPSHOT                      [13/22][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-queryable-state[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------< [0;36morg.apache.flink:flink-queryable-state-client-java_2.11[0;1m >-------[m
+[[1;34mINFO[m] [1mBuilding flink-queryable-state-client-java 1.8-SNAPSHOT          [14/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-queryable-state-client-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------< [0;36morg.apache.flink:flink-filesystems[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding flink-filesystems 1.8-SNAPSHOT                          [15/22][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-filesystems[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.flink:flink-hadoop-fs[0;1m >------------------[m
+[[1;34mINFO[m] [1mBuilding flink-hadoop-fs 1.8-SNAPSHOT                            [16/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-filesystems/flink-hadoop-fs/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-hadoop-fs[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.flink:flink-runtime_2.11[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding flink-runtime 1.8-SNAPSHOT                              [17/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:2.1.10:revision[m [1m(default)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:1.7:add-source[m [1m(add-source)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Source directory: /workspace/repo/flink-runtime/src/main/scala added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 7 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mscala-maven-plugin:3.2.2:compile[m [1m(scala-compile-first)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:1.7:add-test-source[m [1m(add-test-source)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Test Source directory: /workspace/repo/flink-runtime/src/test/scala added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 23 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mscala-maven-plugin:3.2.2:testCompile[m [1m(scala-test-compile)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-runtime_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.flink:flink-optimizer_2.11[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding flink-optimizer 1.8-SNAPSHOT                            [18/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-optimizer/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-optimizer_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.flink:flink-clients_2.11[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding flink-clients 1.8-SNAPSHOT                              [19/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-clients/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/flink-clients/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 7 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/flink-clients/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-assembly-plugin:2.4:single[m [1m(create-test-dependency)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Reading assembly descriptor: src/test/assembly/test-assembly.xml
+[[1;34mINFO[m] Building jar: /workspace/repo/flink-clients/target/maven-test-jar.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(remove-externaltestclasses)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] Deleting /workspace/repo/flink-clients/target/test-classes (includes = [**/testjar/*.class], excludes = [])
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-clients_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.flink:flink-streaming-java_2.11[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding flink-streaming-java 1.8-SNAPSHOT                       [20/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-streaming-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Compiling 1 source file to /workspace/repo/flink-streaming-java/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 75 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-streaming-java_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.flink:flink-test-utils_2.11[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding flink-test-utils 1.8-SNAPSHOT                           [21/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 4 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-test-utils-parent/flink-test-utils/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.1:test[m [1m(default-test)[m @ [36mflink-test-utils_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.flink:flink-runtime-web_2.11[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding flink-runtime-web 1.8-SNAPSHOT                          [22/22][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-versions)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:highest-basedir[m [1m(directories)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] Highest basedir set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 71 resources
+[[1;34mINFO[m] Copying 18 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/flink-runtime-web/target/classes
+[[1;34mINFO[m] /workspace/repo/flink-runtime-web/src/main/java/org/apache/flink/runtime/webmonitor/handlers/utils/JarHandlerUtils.java: /workspace/repo/flink-runtime-web/src/main/java/org/apache/flink/runtime/webmonitor/handlers/utils/JarHandlerUtils.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/flink-runtime-web/src/main/java/org/apache/flink/runtime/webmonitor/handlers/utils/JarHandlerUtils.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-runtime-web_2.11[0;1m ---[m
+[[1;34mINFO[m] Compiling 1 source file to /workspace/repo/flink-runtime-web/target/test-classes
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] COMPILATION ERROR : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] /workspace/repo/flink-runtime-web/src/test/java/org/apache/flink/runtime/webmonitor/handlers/JarSubmissionITCase.java:[185,39] constructor JarListHandler in class org.apache.flink.runtime.webmonitor.handlers.JarListHandler cannot be applied to given types;
+  required: org.apache.flink.runtime.webmonitor.retriever.GatewayRetriever<? extends org.apache.flink.runtime.webmonitor.RestfulGateway>,org.apache.flink.api.common.time.Time,java.util.Map<java.lang.String,java.lang.String>,org.apache.flink.runtime.rest.messages.MessageHeaders<org.apache.flink.runtime.rest.messages.EmptyRequestBody,org.apache.flink.runtime.webmonitor.handlers.JarListInfo,org.apache.flink.runtime.rest.messages.EmptyMessageParameters>,java.util.concurrent.CompletableFuture<java.lang.String>,java.io.File,java.util.concurrent.Executor
+  found: org.apache.flink.runtime.webmonitor.retriever.GatewayRetriever<org.apache.flink.runtime.webmonitor.TestingDispatcherGateway>,org.apache.flink.api.common.time.Time,java.util.Map<java.lang.String,java.lang.String>,org.apache.flink.runtime.webmonitor.handlers.JarListHeaders,java.util.concurrent.CompletableFuture<java.lang.String>,java.io.File,org.apache.flink.configuration.Configuration,java.util.concurrent.Executor
+  reason: actual and formal argument lists differ in length
+[[1;34mINFO[m] 1 error
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] force-shading 1.8-SNAPSHOT ......................... [1;32mSUCCESS[m [  1.617 s]
+[[1;34mINFO[m] flink 1.8-SNAPSHOT ................................. [1;32mSUCCESS[m [  1.478 s]
+[[1;34mINFO[m] flink-annotations 1.8-SNAPSHOT ..................... [1;32mSUCCESS[m [  0.319 s]
+[[1;34mINFO[m] flink-shaded-hadoop 1.8-SNAPSHOT ................... [1;32mSUCCESS[m [  0.094 s]
+[[1;34mINFO[m] flink-shaded-hadoop2 2.4.1-1.8-SNAPSHOT ............ [1;32mSUCCESS[m [  1.414 s]
+[[1;34mINFO[m] flink-shaded-curator 1.8-SNAPSHOT .................. [1;32mSUCCESS[m [  0.199 s]
+[[1;34mINFO[m] flink-metrics 1.8-SNAPSHOT ......................... [1;32mSUCCESS[m [  0.087 s]
+[[1;34mINFO[m] flink-metrics-core 1.8-SNAPSHOT .................... [1;32mSUCCESS[m [  0.176 s]
+[[1;34mINFO[m] flink-test-utils-parent 1.8-SNAPSHOT ............... [1;32mSUCCESS[m [  0.030 s]
+[[1;34mINFO[m] flink-test-utils-junit 1.8-SNAPSHOT ................ [1;32mSUCCESS[m [  0.100 s]
+[[1;34mINFO[m] flink-core 1.8-SNAPSHOT ............................ [1;32mSUCCESS[m [  0.591 s]
+[[1;34mINFO[m] flink-java 1.8-SNAPSHOT ............................ [1;32mSUCCESS[m [  0.301 s]
+[[1;34mINFO[m] flink-queryable-state 1.8-SNAPSHOT ................. [1;32mSUCCESS[m [  0.083 s]
+[[1;34mINFO[m] flink-queryable-state-client-java 1.8-SNAPSHOT ..... [1;32mSUCCESS[m [  0.210 s]
+[[1;34mINFO[m] flink-filesystems 1.8-SNAPSHOT ..................... [1;32mSUCCESS[m [  0.025 s]
+[[1;34mINFO[m] flink-hadoop-fs 1.8-SNAPSHOT ....................... [1;32mSUCCESS[m [  1.069 s]
+[[1;34mINFO[m] flink-runtime 1.8-SNAPSHOT ......................... [1;32mSUCCESS[m [  2.100 s]
+[[1;34mINFO[m] flink-optimizer 1.8-SNAPSHOT ....................... [1;32mSUCCESS[m [  0.301 s]
+[[1;34mINFO[m] flink-clients 1.8-SNAPSHOT ......................... [1;32mSUCCESS[m [  2.934 s]
+[[1;34mINFO[m] flink-streaming-java 1.8-SNAPSHOT .................. [1;32mSUCCESS[m [  0.666 s]
+[[1;34mINFO[m] flink-test-utils 1.8-SNAPSHOT ...................... [1;32mSUCCESS[m [  2.131 s]
+[[1;34mINFO[m] flink-runtime-web 1.8-SNAPSHOT ..................... [1;31mFAILURE[m [  0.868 s]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  19.590 s
+[[1;34mINFO[m] Finished at: 2026-07-01T14:35:27Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m on project [36mflink-runtime-web_2.11[m: [1;31mCompilation failure[m
+[[1;31mERROR[m] [1;31m/workspace/repo/flink-runtime-web/src/test/java/org/apache/flink/runtime/webmonitor/handlers/JarSubmissionITCase.java:[185,39] constructor JarListHandler in class org.apache.flink.runtime.webmonitor.handlers.JarListHandler cannot be applied to given types;[m
+[[1;31mERROR[m] [1;31m  required: org.apache.flink.runtime.webmonitor.retriever.GatewayRetriever<? extends org.apache.flink.runtime.webmonitor.RestfulGateway>,org.apache.flink.api.common.time.Time,java.util.Map<java.lang.String,java.lang.String>,org.apache.flink.runtime.rest.messages.MessageHeaders<org.apache.flink.runtime.rest.messages.EmptyRequestBody,org.apache.flink.runtime.webmonitor.handlers.JarListInfo,org.apache.flink.runtime.rest.messages.EmptyMessageParameters>,java.util.concurrent.CompletableFuture<java.lang.String>,java.io.File,java.util.concurrent.Executor[m
+[[1;31mERROR[m] [1;31m  found: org.apache.flink.runtime.webmonitor.retriever.GatewayRetriever<org.apache.flink.runtime.webmonitor.TestingDispatcherGateway>,org.apache.flink.api.common.time.Time,java.util.Map<java.lang.String,java.lang.String>,org.apache.flink.runtime.webmonitor.handlers.JarListHeaders,java.util.concurrent.CompletableFuture<java.lang.String>,java.io.File,org.apache.flink.configuration.Configuration,java.util.concurrent.Executor[m
+[[1;31mERROR[m] [1;31m  reason: actual and formal argument lists differ in length[m
+[[1;31mERROR[m] [1;31m[m
+[[1;31mERROR[m] -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[[1;31mERROR[m] 
+[[1;31mERROR[m] After correcting the problems, you can resume the build with the command
+[[1;31mERROR[m]   [1mmvn <args> -rf :flink-runtime-web_2.11[m
+reward=0 graded=1 found=0 failed=0 parsed=1 framework=maven exit_code=1

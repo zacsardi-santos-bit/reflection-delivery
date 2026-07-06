@@ -1,0 +1,98 @@
+patching file .github/workflows/ci.yml
+patching file Cargo.lock
+patching file Cargo.toml
+patching file README.md
+patching file codecov.yml
+patching file crates/nu-cli/src/completions/command_completions.rs
+patching file crates/nu-cli/src/completions/completer.rs
+patching file crates/nu-cli/src/eval_file.rs
+patching file crates/nu-cmd-lang/Cargo.toml
+patching file crates/nu-cmd-lang/LICENSE
+patching file crates/nu-cmd-lang/build.rs
+patching file crates/nu-cmd-lang/src/default_context.rs
+patching file crates/nu-cmd-lang/src/example_test.rs
+patching file crates/nu-cmd-lang/src/lib.rs
+patching file crates/nu-command/Cargo.toml
+patching file crates/nu-command/src/bytes/starts_with.rs
+patching file crates/nu-command/src/core_commands/alias.rs (renamed from crates/nu-cmd-lang/src/core_commands/alias.rs)
+patching file crates/nu-command/src/core_commands/break_.rs (renamed from crates/nu-cmd-lang/src/core_commands/break_.rs)
+patching file crates/nu-command/src/core_commands/commandline.rs (renamed from crates/nu-cmd-lang/src/core_commands/commandline.rs)
+patching file crates/nu-command/src/core_commands/const_.rs (renamed from crates/nu-cmd-lang/src/core_commands/const_.rs)
+patching file crates/nu-command/src/core_commands/continue_.rs (renamed from crates/nu-cmd-lang/src/core_commands/continue_.rs)
+patching file crates/nu-command/src/core_commands/def.rs (renamed from crates/nu-cmd-lang/src/core_commands/def.rs)
+patching file crates/nu-command/src/core_commands/def_env.rs (renamed from crates/nu-cmd-lang/src/core_commands/def_env.rs)
+patching file crates/nu-command/src/core_commands/describe.rs (renamed from crates/nu-cmd-lang/src/core_commands/describe.rs)
+patching file crates/nu-command/src/core_commands/do_.rs (renamed from crates/nu-cmd-lang/src/core_commands/do_.rs)
+patching file crates/nu-command/src/core_commands/echo.rs (renamed from crates/nu-cmd-lang/src/core_commands/echo.rs)
+patching file crates/nu-command/src/core_commands/error_make.rs (renamed from crates/nu-cmd-lang/src/core_commands/error_make.rs)
+patching file crates/nu-command/src/core_commands/export.rs (renamed from crates/nu-cmd-lang/src/core_commands/export.rs)
+patching file crates/nu-command/src/core_commands/export_alias.rs (renamed from crates/nu-cmd-lang/src/core_commands/export_alias.rs)
+patching file crates/nu-command/src/core_commands/export_def.rs (renamed from crates/nu-cmd-lang/src/core_commands/export_def.rs)
+patching file crates/nu-command/src/core_commands/export_def_env.rs (renamed from crates/nu-cmd-lang/src/core_commands/export_def_env.rs)
+patching file crates/nu-command/src/core_commands/export_extern.rs (renamed from crates/nu-cmd-lang/src/core_commands/export_extern.rs)
+patching file crates/nu-command/src/core_commands/export_use.rs (renamed from crates/nu-cmd-lang/src/core_commands/export_use.rs)
+patching file crates/nu-command/src/core_commands/extern_.rs (renamed from crates/nu-cmd-lang/src/core_commands/extern_.rs)
+patching file crates/nu-command/src/core_commands/for_.rs (renamed from crates/nu-cmd-lang/src/core_commands/for_.rs)
+patching file crates/nu-command/src/core_commands/help.rs (renamed from crates/nu-cmd-lang/src/core_commands/help.rs)
+patching file crates/nu-command/src/core_commands/help_aliases.rs (renamed from crates/nu-cmd-lang/src/core_commands/help_aliases.rs)
+patching file crates/nu-command/src/core_commands/help_commands.rs (renamed from crates/nu-cmd-lang/src/core_commands/help_commands.rs)
+patching file crates/nu-command/src/core_commands/help_modules.rs (renamed from crates/nu-cmd-lang/src/core_commands/help_modules.rs)
+patching file crates/nu-command/src/core_commands/help_operators.rs (renamed from crates/nu-cmd-lang/src/core_commands/help_operators.rs)
+patching file crates/nu-command/src/core_commands/hide.rs (renamed from crates/nu-cmd-lang/src/core_commands/hide.rs)
+patching file crates/nu-command/src/core_commands/hide_env.rs (renamed from crates/nu-cmd-lang/src/core_commands/hide_env.rs)
+patching file crates/nu-command/src/core_commands/if_.rs (renamed from crates/nu-cmd-lang/src/core_commands/if_.rs)
+patching file crates/nu-command/src/core_commands/ignore.rs (renamed from crates/nu-cmd-lang/src/core_commands/ignore.rs)
+patching file crates/nu-command/src/core_commands/let_.rs (renamed from crates/nu-cmd-lang/src/core_commands/let_.rs)
+patching file crates/nu-command/src/core_commands/loop_.rs (renamed from crates/nu-cmd-lang/src/core_commands/loop_.rs)
+patching file crates/nu-command/src/core_commands/mod.rs (renamed from crates/nu-cmd-lang/src/core_commands/mod.rs)
+patching file crates/nu-command/src/core_commands/module.rs (renamed from crates/nu-cmd-lang/src/core_commands/module.rs)
+patching file crates/nu-command/src/core_commands/mut_.rs (renamed from crates/nu-cmd-lang/src/core_commands/mut_.rs)
+patching file crates/nu-command/src/core_commands/overlay/command.rs (renamed from crates/nu-cmd-lang/src/core_commands/overlay/command.rs)
+patching file crates/nu-command/src/core_commands/overlay/hide.rs (renamed from crates/nu-cmd-lang/src/core_commands/overlay/hide.rs)
+patching file crates/nu-command/src/core_commands/overlay/list.rs (renamed from crates/nu-cmd-lang/src/core_commands/overlay/list.rs)
+patching file crates/nu-command/src/core_commands/overlay/mod.rs (renamed from crates/nu-cmd-lang/src/core_commands/overlay/mod.rs)
+patching file crates/nu-command/src/core_commands/overlay/new.rs (renamed from crates/nu-cmd-lang/src/core_commands/overlay/new.rs)
+patching file crates/nu-command/src/core_commands/overlay/use_.rs (renamed from crates/nu-cmd-lang/src/core_commands/overlay/use_.rs)
+patching file crates/nu-command/src/core_commands/register.rs (renamed from crates/nu-cmd-lang/src/core_commands/register.rs)
+patching file crates/nu-command/src/core_commands/return_.rs (renamed from crates/nu-cmd-lang/src/core_commands/return_.rs)
+patching file crates/nu-command/src/core_commands/try_.rs (renamed from crates/nu-cmd-lang/src/core_commands/try_.rs)
+patching file crates/nu-command/src/core_commands/use_.rs (renamed from crates/nu-cmd-lang/src/core_commands/use_.rs)
+patching file crates/nu-command/src/core_commands/version.rs (renamed from crates/nu-cmd-lang/src/core_commands/version.rs)
+patching file crates/nu-command/src/core_commands/while_.rs (renamed from crates/nu-cmd-lang/src/core_commands/while_.rs)
+patching file crates/nu-command/src/dataframe/test_dataframe.rs
+patching file crates/nu-command/src/default_context.rs
+patching file crates/nu-command/src/example_test.rs
+patching file crates/nu-command/src/filters/find.rs
+patching file crates/nu-command/src/formats/to/json.rs
+patching file crates/nu-command/src/formats/to/text.rs
+patching file crates/nu-command/src/formats/to/xml.rs
+patching file crates/nu-command/src/formats/to/yaml.rs
+patching file crates/nu-command/src/hash/generic_digest.rs
+patching file crates/nu-command/src/lib.rs
+patching file crates/nu-command/src/network/http/client.rs
+patching file crates/nu-command/src/network/http/delete.rs
+patching file crates/nu-command/src/network/http/get.rs
+patching file crates/nu-command/src/network/http/head.rs
+patching file crates/nu-command/src/network/http/mod.rs
+patching file crates/nu-command/src/network/http/patch.rs
+patching file crates/nu-command/src/network/http/post.rs
+patching file crates/nu-command/src/network/http/put.rs
+patching file crates/nu-command/src/platform/ansi/ansi_.rs
+patching file crates/nu-command/src/strings/str_/trim/trim_.rs
+patching file crates/nu-command/src/viewers/table.rs
+patching file crates/nu-command/tests/commands/all.rs
+patching file crates/nu-command/tests/commands/any.rs
+patching file crates/nu-command/tests/commands/run_external.rs
+patching file crates/nu-command/tests/commands/save.rs
+patching file crates/nu-command/tests/format_conversions/json.rs
+patching file crates/nu-command/tests/format_conversions/nuon.rs
+patching file crates/nu-engine/src/eval.rs
+patching file crates/nu-parser/src/errors.rs
+patching file crates/nu-protocol/src/engine/engine_state.rs
+patching file crates/nu-protocol/src/pipeline_data.rs
+patching file crates/nu-protocol/src/shell_error.rs
+patching file install-all.ps1
+patching file install-all.sh
+patching file src/main.rs
+patching file src/test_bins.rs
+patching file tests/hooks/mod.rs

@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "RUN_E2E=1 E2E_GCP_TARGET=mock E2E_KUBE_TARGET=mock GOLDEN_REQUEST_CHECKS=1 ONLY_TEST_APIGROUPS=bigquery.cnrm.cloud.google.com go test -json ./tests/e2e -count=1 -run TestAllInSeries/samples -timeout 600s",
+  "test_files": [
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/basicbigquerydataset-direct/_generated_object_basicbigquerydataset-direct.golden.yaml",
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/basicbigquerydataset-direct/_http.log",
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/bigquerydatasetaccessblock-direct/_generated_object_bigquerydatasetaccessblock-direct.golden.yaml",
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/bigquerydatasetaccessblock-direct/_http.log",
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/fullybigquerydataset-direct/_generated_export_fullybigquerydataset-direct.golden",
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/fullybigquerydataset-direct/_generated_object_fullybigquerydataset-direct.golden.yaml",
+    "pkg/test/resourcefixture/testdata/basic/bigquery/v1beta1/bigquerydataset/fullybigquerydataset-direct/_http.log",
+    "tests/e2e/normalize.go",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/_http05.log",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/_http06.log",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/_http07.log",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/_object05.yaml",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/_object06.yaml",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/_object07.yaml",
+    "tests/e2e/testdata/scenarios/fields/management/bigquery/dataset/set_unset/script.yaml",
+    "tests/e2e/unified_test.go"
+  ],
+  "num_test_files": 16,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/GoogleCloudPlatform/k8s-config-connector/tests/e2e::TestAllInSeries/samples",
+    "github.com/GoogleCloudPlatform/k8s-config-connector/tests/e2e::TestAllInSeries"
+  ],
+  "PASS_TO_PASS": []
+}

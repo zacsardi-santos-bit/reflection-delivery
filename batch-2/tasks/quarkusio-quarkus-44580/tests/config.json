@@ -1,0 +1,33 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl extensions/resteasy-reactive/rest-jackson/deployment test -Dtest=FieldNameSetGetPrefixResourceTest -Dformat.skip -Denforcer.skip -DskipDocs -Dforbiddenapis.skip -DskipExtensionValidation -DskipCodestartValidation",
+  "test_files": [
+    "extensions/resteasy-reactive/rest-jackson/deployment/src/test/java/io/quarkus/resteasy/reactive/jackson/deployment/test/FieldNameSetGetPrefixResourceTest.java",
+    "integration-tests/gradle/src/main/resources/basic-java-application-with-fork-options/build.gradle.kts",
+    "integration-tests/gradle/src/main/resources/basic-java-application-with-fork-options/gradle.properties",
+    "integration-tests/gradle/src/main/resources/basic-java-application-with-fork-options/settings.gradle",
+    "integration-tests/gradle/src/main/resources/basic-java-application-with-fork-options/src/main/java/org/acme/EntryPoint.java",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/build.gradle.kts",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/gradle.properties",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modA/build.gradle.kts",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/.dockerignore",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/build.gradle.kts",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/src/main/java/org/acme/GreetingResource.java",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/src/main/resources/META-INF/resources/index.html",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/src/main/resources/application.properties",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/src/native-test/java/org/acme/NativeGreetingResourceIT.java",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/modB/src/test/java/org/acme/GreetingResourceTest.java",
+    "integration-tests/gradle/src/main/resources/quarkus-plugin-in-multiple-modules/settings.gradle.kts",
+    "integration-tests/gradle/src/test/java/io/quarkus/gradle/BuildForkOptionsAreIncludedInQuarkusBuildTaskTest.java",
+    "integration-tests/gradle/src/test/java/io/quarkus/gradle/QuarkusAppliedToMultipleModulesTest.java",
+    "integration-tests/kotlin-serialization/src/main/kotlin/io/quarkus/it/kotser/GreetingResource.kt",
+    "integration-tests/kotlin-serialization/src/test/kotlin/io/quarkus/it/kotser/ResourceTest.kt",
+    "integration-tests/kubernetes/quarkus-standard-way/src/test/java/io/quarkus/it/kubernetes/KubernetesWithFlywayInitBase.java"
+  ],
+  "num_test_files": 21,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Quarkus::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

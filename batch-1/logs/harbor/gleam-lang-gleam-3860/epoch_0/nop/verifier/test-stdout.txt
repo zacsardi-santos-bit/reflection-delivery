@@ -1,0 +1,63 @@
+patching file compiler-core/src/ast/tests.rs
+patching file compiler-core/src/language_server/tests/action.rs
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__add_missing_patterns_bool.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__add_missing_patterns_inline.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__add_missing_patterns_multi.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__add_missing_patterns_tuple.snap
+patching file compiler-core/src/type_/tests.rs
+patching file compiler-core/src/type_/tests/exhaustiveness.rs
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_unqualified.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_when_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__empty_case_of_bool.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__empty_case_of_multi_pattern.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__inexhaustive_multi_pattern2.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__inexhaustive_multi_pattern4.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__inexhaustive_multi_pattern5.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__warnings_for_matches_on_literal_values_that_are_not_like_an_if_2.snap
+patching file compiler-core/src/type_/tests/warnings.rs
+   Compiling gleam-core v1.6.1 (/workspace/repo/compiler-core)
+warning: elided lifetime has a name
+   --> compiler-core/src/language_server/completer.rs:311:57
+    |
+94  | impl<'a, IO> Completer<'a, IO>
+    |      -- lifetime `'a` declared here
+...
+311 |     fn completable_modules_for_import(&'a self) -> Vec<(&EcoString, &ModuleInterface)> {
+    |                                                         ^ this elided lifetime gets resolved as `'a`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+   --> compiler-core/src/language_server/completer.rs:311:69
+    |
+94  | impl<'a, IO> Completer<'a, IO>
+    |      -- lifetime `'a` declared here
+...
+311 |     fn completable_modules_for_import(&'a self) -> Vec<(&EcoString, &ModuleInterface)> {
+    |                                                                     ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> compiler-core/src/language_server/completer.rs:726:17
+    |
+94  | impl<'a, IO> Completer<'a, IO>
+    |      -- lifetime `'a` declared here
+...
+726 |     ) -> Option<&HashMap<EcoString, RecordAccessor>> {
+    |                 ^ this elided lifetime gets resolved as `'a`
+
+error[E0425]: cannot find function `bool_with_variant` in module `type_`
+   --> compiler-core/src/ast/tests.rs:550:27
+    |
+550 |             type_: type_::bool_with_variant(Some(true)),
+    |                           ^^^^^^^^^^^^^^^^^ not found in `type_`
+
+For more information about this error, try `rustc --explain E0425`.
+warning: `gleam-core` (lib test) generated 3 warnings (3 duplicates)
+error: could not compile `gleam-core` (lib test) due to 1 previous error; 3 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+warning: `gleam-core` (lib) generated 3 warnings
+error: command `/usr/local/rustup/toolchains/1.83.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package gleam-core` exited with code 101
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

@@ -1,0 +1,6 @@
+patching file services/wallet/activity/activity.go
+patching file services/wallet/activity/service.go
+patching file services/wallet/activity/session.go
+patching file services/wallet/api.go
+patching file services/wallet/transfer/testutils.go
+patching file transactions/testhelpers.go

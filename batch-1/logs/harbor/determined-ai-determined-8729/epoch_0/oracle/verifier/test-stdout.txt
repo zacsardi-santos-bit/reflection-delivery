@@ -1,0 +1,163 @@
+patching file master/internal/user/postgres_users_intg_test.go
+patching file master/pkg/model/user_test.go
+{"Time":"2026-06-29T15:14:36.789774444Z","Action":"start","Package":"github.com/determined-ai/determined/master/internal/user"}
+{"Time":"2026-06-29T15:14:36.790021743Z","Action":"start","Package":"github.com/determined-ai/determined/master/pkg/model"}
+{"Time":"2026-06-29T15:14:36.82367221Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate"}
+{"Time":"2026-06-29T15:14:36.823751662Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate","Output":"=== RUN   TestConfigValidate\n"}
+{"Time":"2026-06-29T15:14:36.824007243Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/valid"}
+{"Time":"2026-06-29T15:14:36.824048556Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/valid","Output":"=== RUN   TestConfigValidate/valid\n"}
+{"Time":"2026-06-29T15:14:36.824260761Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/valid","Output":"--- PASS: TestConfigValidate/valid (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.824324438Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/valid","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.824396609Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid"}
+{"Time":"2026-06-29T15:14:36.824411942Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid","Output":"=== RUN   TestConfigValidate/invalid\n"}
+{"Time":"2026-06-29T15:14:36.824450762Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid","Output":"--- PASS: TestConfigValidate/invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.824469751Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.824535852Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid-notebook-idle-type"}
+{"Time":"2026-06-29T15:14:36.82456703Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid-notebook-idle-type","Output":"=== RUN   TestConfigValidate/invalid-notebook-idle-type\n"}
+{"Time":"2026-06-29T15:14:36.824610025Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid-notebook-idle-type","Output":"--- PASS: TestConfigValidate/invalid-notebook-idle-type (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.824627592Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate/invalid-notebook-idle-type","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.824654123Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate","Output":"--- PASS: TestConfigValidate (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.824686943Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestConfigValidate","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.824752183Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigImage"}
+{"Time":"2026-06-29T15:14:36.824767937Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigImage","Output":"=== RUN   TestMasterConfigImage\n"}
+{"Time":"2026-06-29T15:14:36.824967012Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigImage","Output":"--- PASS: TestMasterConfigImage (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.825023799Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigImage","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.825054916Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigImage"}
+{"Time":"2026-06-29T15:14:36.825103451Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigImage","Output":"=== RUN   TestOverrideMasterConfigImage\n"}
+{"Time":"2026-06-29T15:14:36.826252689Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigImage","Output":"--- PASS: TestOverrideMasterConfigImage (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826275795Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigImage","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.826311279Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigPullPolicy"}
+{"Time":"2026-06-29T15:14:36.826328766Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigPullPolicy","Output":"=== RUN   TestMasterConfigPullPolicy\n"}
+{"Time":"2026-06-29T15:14:36.826342587Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigPullPolicy","Output":"--- PASS: TestMasterConfigPullPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826351681Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigPullPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.826371231Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigPullPolicy"}
+{"Time":"2026-06-29T15:14:36.826379664Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigPullPolicy","Output":"=== RUN   TestOverrideMasterConfigPullPolicy\n"}
+{"Time":"2026-06-29T15:14:36.826440407Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigPullPolicy","Output":"--- PASS: TestOverrideMasterConfigPullPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826483603Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigPullPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.82650127Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigRegistryAuth"}
+{"Time":"2026-06-29T15:14:36.82652791Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigRegistryAuth","Output":"=== RUN   TestMasterConfigRegistryAuth\n"}
+{"Time":"2026-06-29T15:14:36.826549504Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigRegistryAuth","Output":"--- PASS: TestMasterConfigRegistryAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826582905Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMasterConfigRegistryAuth","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.826601042Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigRegistryAuth"}
+{"Time":"2026-06-29T15:14:36.826619661Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigRegistryAuth","Output":"=== RUN   TestOverrideMasterConfigRegistryAuth\n"}
+{"Time":"2026-06-29T15:14:36.826729439Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigRegistryAuth","Output":"--- PASS: TestOverrideMasterConfigRegistryAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826768639Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterConfigRegistryAuth","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.826785875Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterEnvironmentVariables"}
+{"Time":"2026-06-29T15:14:36.8267952Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterEnvironmentVariables","Output":"=== RUN   TestOverrideMasterEnvironmentVariables\n"}
+{"Time":"2026-06-29T15:14:36.826845507Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterEnvironmentVariables","Output":"--- PASS: TestOverrideMasterEnvironmentVariables (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826858366Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestOverrideMasterEnvironmentVariables","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.826871606Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestDeviceConfig"}
+{"Time":"2026-06-29T15:14:36.826878757Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestDeviceConfig","Output":"=== RUN   TestDeviceConfig\n"}
+{"Time":"2026-06-29T15:14:36.826895523Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestDeviceConfig","Output":"--- PASS: TestDeviceConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.826906069Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestDeviceConfig","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.826995075Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestToRun"}
+{"Time":"2026-06-29T15:14:36.8270111Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestToRun","Output":"=== RUN   TestToRun\n"}
+{"Time":"2026-06-29T15:14:36.827142511Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestToRun","Output":"--- PASS: TestToRun (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.827188251Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestToRun","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.827208562Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize"}
+{"Time":"2026-06-29T15:14:36.827218197Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize","Output":"=== RUN   TestMetricIdentifierDeserialize\n"}
+{"Time":"2026-06-29T15:14:36.827247502Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/0"}
+{"Time":"2026-06-29T15:14:36.827279631Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/0","Output":"=== RUN   TestMetricIdentifierDeserialize/0\n"}
+{"Time":"2026-06-29T15:14:36.827299381Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/0","Output":"--- PASS: TestMetricIdentifierDeserialize/0 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.827367065Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/0","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.82739678Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/1"}
+{"Time":"2026-06-29T15:14:36.82740994Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/1","Output":"=== RUN   TestMetricIdentifierDeserialize/1\n"}
+{"Time":"2026-06-29T15:14:36.827489752Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/1","Output":"--- PASS: TestMetricIdentifierDeserialize/1 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.827526719Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/1","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.827565528Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/2"}
+{"Time":"2026-06-29T15:14:36.827587582Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/2","Output":"=== RUN   TestMetricIdentifierDeserialize/2\n"}
+{"Time":"2026-06-29T15:14:36.827744232Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/2","Output":"--- PASS: TestMetricIdentifierDeserialize/2 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.827778064Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/2","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.827795841Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/3"}
+{"Time":"2026-06-29T15:14:36.827809181Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/3","Output":"=== RUN   TestMetricIdentifierDeserialize/3\n"}
+{"Time":"2026-06-29T15:14:36.827830744Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/3","Output":"--- PASS: TestMetricIdentifierDeserialize/3 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.82788042Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/3","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.827899309Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/4"}
+{"Time":"2026-06-29T15:14:36.827924498Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/4","Output":"=== RUN   TestMetricIdentifierDeserialize/4\n"}
+{"Time":"2026-06-29T15:14:36.827933532Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/4","Output":"--- PASS: TestMetricIdentifierDeserialize/4 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.827998992Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/4","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.828012412Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/5"}
+{"Time":"2026-06-29T15:14:36.828020905Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/5","Output":"=== RUN   TestMetricIdentifierDeserialize/5\n"}
+{"Time":"2026-06-29T15:14:36.828115861Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/5","Output":"--- PASS: TestMetricIdentifierDeserialize/5 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.828129982Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/5","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.828147529Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/6"}
+{"Time":"2026-06-29T15:14:36.828161781Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/6","Output":"=== RUN   TestMetricIdentifierDeserialize/6\n"}
+{"Time":"2026-06-29T15:14:36.828230206Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/6","Output":"--- PASS: TestMetricIdentifierDeserialize/6 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.828303938Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/6","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.828320494Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/7"}
+{"Time":"2026-06-29T15:14:36.828336278Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/7","Output":"=== RUN   TestMetricIdentifierDeserialize/7\n"}
+{"Time":"2026-06-29T15:14:36.828358071Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/7","Output":"--- PASS: TestMetricIdentifierDeserialize/7 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.82837056Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/7","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.828385383Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/8"}
+{"Time":"2026-06-29T15:14:36.828398623Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/8","Output":"=== RUN   TestMetricIdentifierDeserialize/8\n"}
+{"Time":"2026-06-29T15:14:36.828528662Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/8","Output":"--- PASS: TestMetricIdentifierDeserialize/8 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.828544306Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize/8","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.828554302Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize","Output":"--- PASS: TestMetricIdentifierDeserialize (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.82856633Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestMetricIdentifierDeserialize","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.828575634Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestEnvironmentVarsDefaultMerging"}
+{"Time":"2026-06-29T15:14:36.828629166Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestEnvironmentVarsDefaultMerging","Output":"=== RUN   TestEnvironmentVarsDefaultMerging\n"}
+{"Time":"2026-06-29T15:14:36.829470814Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestEnvironmentVarsDefaultMerging","Output":"--- PASS: TestEnvironmentVarsDefaultMerging (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.82948775Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestEnvironmentVarsDefaultMerging","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.829502623Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging"}
+{"Time":"2026-06-29T15:14:36.829515753Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging","Output":"=== RUN   TestTaskContainerDefaultsConfigMerging\n"}
+{"Time":"2026-06-29T15:14:36.829540321Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_differ_settings"}
+{"Time":"2026-06-29T15:14:36.82955285Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_differ_settings","Output":"=== RUN   TestTaskContainerDefaultsConfigMerging/merge_other_has_differ_settings\n"}
+{"Time":"2026-06-29T15:14:36.829949507Z","Action":"run","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth"}
+{"Time":"2026-06-29T15:14:36.829968125Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth","Output":"=== RUN   TestStandardAuth\n"}
+{"Time":"2026-06-29T15:14:36.830534973Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth","Output":"--- PASS: TestStandardAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.830548804Z","Action":"pass","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.830584859Z","Action":"run","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth"}
+{"Time":"2026-06-29T15:14:36.830597709Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth","Output":"=== RUN   TestNoAuth\n"}
+{"Time":"2026-06-29T15:14:36.830625882Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_differ_settings","Output":"--- PASS: TestTaskContainerDefaultsConfigMerging/merge_other_has_differ_settings (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.830638892Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_differ_settings","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.830651421Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_same_settings"}
+{"Time":"2026-06-29T15:14:36.830662678Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_same_settings","Output":"=== RUN   TestTaskContainerDefaultsConfigMerging/merge_other_has_same_settings\n"}
+{"Time":"2026-06-29T15:14:36.830686144Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth","Output":"--- PASS: TestNoAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.83070333Z","Action":"pass","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.83080082Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:36.832339554Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_same_settings","Output":"--- PASS: TestTaskContainerDefaultsConfigMerging/merge_other_has_same_settings (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.832366716Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Output":"ok  \tgithub.com/determined-ai/determined/master/internal/user\t0.042s\n"}
+{"Time":"2026-06-29T15:14:36.832390663Z","Action":"pass","Package":"github.com/determined-ai/determined/master/internal/user","Elapsed":0.043}
+{"Time":"2026-06-29T15:14:36.832370712Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_same_settings","Elapsed":0}
+{"Time":"2026-06-29T15:14:36.832511948Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_no_settings"}
+{"Time":"2026-06-29T15:14:36.832564769Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_no_settings","Output":"=== RUN   TestTaskContainerDefaultsConfigMerging/merge_other_has_no_settings\n"}
+{"Time":"2026-06-29T15:14:36.833351403Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_no_settings","Output":"--- PASS: TestTaskContainerDefaultsConfigMerging/merge_other_has_no_settings (0.00s)\n"}
+{"Time":"2026-06-29T15:14:36.985656345Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging/merge_other_has_no_settings","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.044861511Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging","Output":"--- PASS: TestTaskContainerDefaultsConfigMerging (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.051444215Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskContainerDefaultsConfigMerging","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.051660746Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternUnmarshal"}
+{"Time":"2026-06-29T15:14:37.051714829Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternUnmarshal","Output":"=== RUN   TestLogPatternUnmarshal\n"}
+{"Time":"2026-06-29T15:14:37.051770304Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternUnmarshal","Output":"--- PASS: TestLogPatternUnmarshal (0.21s)\n"}
+{"Time":"2026-06-29T15:14:37.051797055Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternUnmarshal","Elapsed":0.21}
+{"Time":"2026-06-29T15:14:37.051817055Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternPoliciesMerging"}
+{"Time":"2026-06-29T15:14:37.051837607Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternPoliciesMerging","Output":"=== RUN   TestLogPatternPoliciesMerging\n"}
+{"Time":"2026-06-29T15:14:37.051847432Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternPoliciesMerging","Output":"--- PASS: TestLogPatternPoliciesMerging (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.051855304Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestLogPatternPoliciesMerging","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.051863096Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestPodSpecsDefaultMerging"}
+{"Time":"2026-06-29T15:14:37.051870227Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestPodSpecsDefaultMerging","Output":"=== RUN   TestPodSpecsDefaultMerging\n"}
+{"Time":"2026-06-29T15:14:37.051882275Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestPodSpecsDefaultMerging","Output":"--- PASS: TestPodSpecsDefaultMerging (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.051891119Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestPodSpecsDefaultMerging","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.051966294Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskLogLevelFromLogrus"}
+{"Time":"2026-06-29T15:14:37.052026826Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskLogLevelFromLogrus","Output":"=== RUN   TestTaskLogLevelFromLogrus\n"}
+{"Time":"2026-06-29T15:14:37.052045425Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskLogLevelFromLogrus","Output":"--- PASS: TestTaskLogLevelFromLogrus (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.052054248Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestTaskLogLevelFromLogrus","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.052066036Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestAllocationProto"}
+{"Time":"2026-06-29T15:14:37.052085015Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestAllocationProto","Output":"=== RUN   TestAllocationProto\n"}
+{"Time":"2026-06-29T15:14:37.052108812Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestAllocationProto","Output":"--- PASS: TestAllocationProto (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.052116473Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestAllocationProto","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.05212723Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNilLastAuthAtProto"}
+{"Time":"2026-06-29T15:14:37.052134411Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNilLastAuthAtProto","Output":"=== RUN   TestUserNilLastAuthAtProto\n"}
+{"Time":"2026-06-29T15:14:37.052158678Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNilLastAuthAtProto","Output":"--- PASS: TestUserNilLastAuthAtProto (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.052165549Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNilLastAuthAtProto","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.0521728Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNonNilLastAuthAtProto"}
+{"Time":"2026-06-29T15:14:37.05217963Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNonNilLastAuthAtProto","Output":"=== RUN   TestUserNonNilLastAuthAtProto\n"}
+{"Time":"2026-06-29T15:14:37.052187112Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNonNilLastAuthAtProto","Output":"--- PASS: TestUserNonNilLastAuthAtProto (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.052196236Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserNonNilLastAuthAtProto","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.052203016Z","Action":"run","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserWebSetting_Proto"}
+{"Time":"2026-06-29T15:14:37.052209185Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserWebSetting_Proto","Output":"=== RUN   TestUserWebSetting_Proto\n"}
+{"Time":"2026-06-29T15:14:37.052216467Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserWebSetting_Proto","Output":"--- PASS: TestUserWebSetting_Proto (0.00s)\n"}
+{"Time":"2026-06-29T15:14:37.052227914Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Test":"TestUserWebSetting_Proto","Elapsed":0}
+{"Time":"2026-06-29T15:14:37.052234865Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:37.052332033Z","Action":"output","Package":"github.com/determined-ai/determined/master/pkg/model","Output":"ok  \tgithub.com/determined-ai/determined/master/pkg/model\t0.262s\n"}
+{"Time":"2026-06-29T15:14:37.052348859Z","Action":"pass","Package":"github.com/determined-ai/determined/master/pkg/model","Elapsed":0.262}
+reward=1 graded=38 found=38 failed=0 parsed=38 framework=go exit_code=0

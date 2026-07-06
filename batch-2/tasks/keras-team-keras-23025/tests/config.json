@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/distribution/distribution_lib_test.py -v",
+  "test_files": [
+    "keras/src/distribution/distribution_lib_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.distribution.distribution_lib_test.DistributionTest::test_data_shard_id"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.distribution.distribution_lib_test.DeviceMeshTest::test_input_validation",
+    "keras.src.distribution.distribution_lib_test.DeviceMeshTest::test_mesh_creation",
+    "keras.src.distribution.distribution_lib_test.TensorLayoutTest::test_lazy_device_mesh_injection",
+    "keras.src.distribution.distribution_lib_test.TensorLayoutTest::test_lazy_device_mesh_validation",
+    "keras.src.distribution.distribution_lib_test.TensorLayoutTest::test_tensor_layout_creation",
+    "keras.src.distribution.distribution_lib_test.TensorLayoutTest::test_tensor_layout_validation",
+    "keras.src.distribution.distribution_lib_test.DistributionTest::test_init_with_device_mesh",
+    "keras.src.distribution.distribution_lib_test.DistributionTest::test_scope",
+    "keras.src.distribution.distribution_lib_test.LayoutMapTest::test_add",
+    "keras.src.distribution.distribution_lib_test.LayoutMapTest::test_delete",
+    "keras.src.distribution.distribution_lib_test.LayoutMapTest::test_get",
+    "keras.src.distribution.distribution_lib_test.LayoutMapTest::test_iter",
+    "keras.src.distribution.distribution_lib_test.LayoutMapTest::test_len"
+  ]
+}

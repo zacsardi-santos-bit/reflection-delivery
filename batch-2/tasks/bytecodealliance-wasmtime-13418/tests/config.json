@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p component-async-tests --no-fail-fast -E 'test(async_cross_instance_source)'",
+  "test_files": [
+    "crates/misc/component-async-tests/tests/scenario/streams.rs",
+    "crates/misc/component-async-tests/tests/test_all.rs",
+    "crates/misc/component-async-tests/wit/test.wit"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) component-async-tests::test_all scenario::streams::async_cross_instance_source"
+  ],
+  "PASS_TO_PASS": []
+}

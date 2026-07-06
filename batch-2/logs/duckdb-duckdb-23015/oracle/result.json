@@ -1,0 +1,29 @@
+{
+    "id": "8ac26913-8ea2-4f35-96f3-7ced62191406",
+    "started_at": "2026-07-06T12:17:51.146657",
+    "finished_at": "2026-07-06T12:18:13.066256",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__duckdb-duckdb-23015": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "duckdb-duckdb-23015__9NoNn29"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

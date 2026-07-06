@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/nrwl/nx/pull/35567"
+source_type = "pr"
+
+[task]
+name = "nrwl/nx"
+description = "We're breaking up the old all-in-one NgRx generator for Angular into two focused ones, a root store setup generator and a feature state generator, and I need a migration that runs during the versio..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["typescript", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:nrwl-nx-35567"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Software Engineering"
+subcategory = "Porting and migration"
+objective_labels = ["Implement", "Migrate", "Configure"]
+artifact_type_labels = ["Codebase", "Configuration file", "Build system or package metadata"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600

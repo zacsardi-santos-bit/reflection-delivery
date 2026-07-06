@@ -1,0 +1,98 @@
+{
+    "id": "66023e67-30d5-4fe7-ab7c-78df8cd5198d",
+    "task_name": "langchain-ai-langgraph-7203",
+    "trial_name": "langchain-ai-langgraph-7203__wRtuZ5A",
+    "trial_uri": "file:///tmp/nop/2026-07-02__18-56-32/langchain-ai-langgraph-7203__wRtuZ5A",
+    "task_id": {
+        "path": "langchain-ai-langgraph-7203"
+    },
+    "source": "src",
+    "task_checksum": "5e43588caf7f762a5489b72ba90d0509b2a48b5f3d7107c40505af5ad425beb5",
+    "config": {
+        "task": {
+            "path": "langchain-ai-langgraph-7203",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "langchain-ai-langgraph-7203__wRtuZ5A",
+        "trials_dir": "/tmp/nop/2026-07-02__18-56-32",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "6a369192-0502-4ab9-a654-7a441ab585fd"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-02T18:56:36.073572Z",
+    "finished_at": "2026-07-02T18:57:00.094714Z",
+    "environment_setup": {
+        "started_at": "2026-07-02T18:56:36.074488Z",
+        "finished_at": "2026-07-02T18:56:37.961476Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-02T18:56:37.961511Z",
+        "finished_at": "2026-07-02T18:56:37.961555Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-02T18:56:37.961606Z",
+        "finished_at": "2026-07-02T18:56:37.961632Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-02T18:56:37.961727Z",
+        "finished_at": "2026-07-02T18:56:49.720720Z"
+    }
+}

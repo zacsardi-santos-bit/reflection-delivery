@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test install_tests --no-default-features --features rustls-tls --status-level skip 2>&1",
+  "test_files": [
+    "tests/install_tests.rs",
+    "tests/run_all_examples.py"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) pixi::install_tests test_incremental_lock_file",
+    "(2/2) pixi::install_tests test_channels_changed"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,5 @@
+patching file checkov/terraform/checks/graph_checks/aws/APIGatewayEndpointsUsesCertificateForAuthentication.yaml
+patching file checkov/terraform/checks/graph_checks/aws/APIGatewayRequestParameterValidationEnabled.yaml
+patching file checkov/terraform/checks/graph_checks/aws/CloudFrontUsesSecureProtocolsForHTTPS.yaml
+patching file checkov/terraform/checks/graph_checks/aws/EMRClusterHasSecurityConfiguration.yaml
+patching file checkov/terraform/checks/graph_checks/aws/OpenSearchDomainHasFineGrainedControl.yaml

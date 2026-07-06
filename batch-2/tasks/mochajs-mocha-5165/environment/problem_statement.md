@@ -1,0 +1,7 @@
+I'm bumping the arg parsing library that mocha's CLI leans on to a new major version and it's breaking everything. The old code pulls the library in through a subpath import and calls a state-reset method to get a clean parser, and neither of those exist anymore in the new major, so every one of the CLI builder option tests blows up because the test setup can't spin up a fresh parser the way the new version wants.
+
+What I need is to switch the import in the CLI entry over in `@bin/options.js` (and wherever else it's referenced) from the old subpath-based import to the plain top-level import that the new major supports. Then drop the deprecated reset-state call so the tests can init the parser using the library's modern factory call instead of the old subpath-plus-reset dance.
+
+The important thing is nothing about mocha's actual options changes, all the existing CLI flags need to keep getting registered and recognized after the swap, and that's the full set, the number-typed ones, the string ones, the boolean flags, and the array-typed flags too, all of them should still resolve correctly through the upgraded parser.
+
+Why it matters: anyone running mocha with command-line flags depends on those parsing right, and if this dep is stale or incompatible the CLI just breaks or worse silently misbehaves, plus staying current keeps us getting upstream support and security fixes. So keep the behavior identical, just modernize how we import and initialize.

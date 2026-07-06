@@ -1,0 +1,1461 @@
+patching file packages/experimental/Overflow/src/__tests__/Overflow.test.tsx
+patching file packages/experimental/Overflow/src/__tests__/__snapshots__/Overflow.test.tsx.snap
+PASS src/__tests__/Overflow.test.tsx (9.669 s)
+  ● Console
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:54:15)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:55:21)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:56:15)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:57:26)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:58:14)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:59:16)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:60:17)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:61:20)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:62:15)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:63:11)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:64:22)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:65:22)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:66:17)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:67:15)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:14:12)
+      at getFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:73:15)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:34:12)
+      at getLazyFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:74:11)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:34:12)
+      at getLazyFiber (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/detectFiberTags.js:75:25)
+      at ReactSeventeenAdapter.createMountRenderer (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:413:19)
+      at ReactSeventeenAdapter.createMountRenderer [as createRenderer] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:764:21)
+      at new createRenderer (../../../node_modules/enzyme/src/ReactWrapper.js:113:32)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `ellipsizeMode` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `ellipsizemode` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at Text
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onAccessibilityTap`. It will be ignored.
+          at Text
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Received `false` for a non-boolean attribute `accessible`.
+      
+      If you want to write it to the DOM, pass a string instead: accessible="false" or accessible={value.toString()}.
+      
+      If you used to conditionally omit it with accessible={condition && value}, pass accessible={condition ? value : undefined} instead.
+          at Text
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3767:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `numberOfLines` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `numberoflines` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at Text
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `keyUpEvents` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `keyupevents` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `accessibilityRole` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilityrole` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `enableFocusRing` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `enablefocusring` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onLayout`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `accessibilityLabel` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilitylabel` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `accessibilityState` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilitystate` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `accessibilityValue` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilityvalue` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onStartShouldSetResponder`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onResponderGrant`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onResponderMove`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onResponderRelease`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onResponderTerminate`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onResponderTerminationRequest`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: React does not recognize the `accessibilityActions` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `accessibilityactions` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/components/Menu/src/MenuTrigger/MenuTrigger.tsx:10:36)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at OverflowMenu (/workspace/repo/packages/experimental/Overflow/src/__tests__/Overflow.test.tsx:13:32)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: Unknown event handler property `onAccessibilityAction`. It will be ignored.
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at accessible (/workspace/repo/node_modules/@office-iss/react-native-win32/Libraries/Components/Pressable/Pressable.win32.js:252:5)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at children (/workspace/repo/packages/components/Menu/src/MenuTrigger/MenuTrigger.tsx:10:36)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at OverflowMenu (/workspace/repo/packages/experimental/Overflow/src/__tests__/Overflow.test.tsx:13:32)
+          at View
+          at Component (/workspace/repo/node_modules/@office-iss/react-native-win32/jest/mockComponent.js:30:18)
+          at children (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3692:9)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+      at finalizeInitialChildren (../../../node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+      at completeWork (../../../node_modules/react-dom/cjs/react-dom.development.js:22193:17)
+      at completeUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26593:16)
+      at performUnitOfWork (../../../node_modules/react-dom/cjs/react-dom.development.js:26568:5)
+      at workLoopSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (../../../node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (../../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushSync (../../../node_modules/react-dom/cjs/react-dom.development.js:26201:7)
+      at legacyCreateRootFromDOMContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29575:5)
+      at legacyRenderSubtreeIntoContainer (../../../node_modules/react-dom/cjs/react-dom.development.js:29601:12)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29685:10)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:77:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkRenderConsistency (../../utils/test-tools/src/enzymeTests.tsx:78:36)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:50:27)
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.apply (../../../scripts/lib/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at render (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:435:26)
+      at fn (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:351:17)
+      at Object.act (../../../node_modules/react/cjs/react.development.js:2512:16)
+      at act (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:350:13)
+      at Object.wrapAct [as render] (../../../node_modules/@wojtekmaj/enzyme-adapter-react-17/src/ReactSeventeenAdapter.js:421:16)
+      at new render (../../../node_modules/enzyme/src/ReactWrapper.js:115:16)
+      at mount (../../../node_modules/enzyme/src/mount.js:10:10)
+      at checkReRender (../../utils/test-tools/src/enzymeTests.tsx:84:19)
+      at Object.<anonymous> (src/__tests__/Overflow.test.tsx:66:18)
+
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   1 passed, 1 total
+Time:        10.605 s
+Ran all test suites matching /src\/__tests__\/Overflow.test.tsx/i.
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=0

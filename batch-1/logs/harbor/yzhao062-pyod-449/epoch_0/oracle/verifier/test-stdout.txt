@@ -1,0 +1,41 @@
+patching file pyod/test/test_kpca.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: cov-7.1.0
+collecting ... collected 17 items
+
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict PASSED                [  5%]
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict_score PASSED          [ 11%]
+pyod/test/test_kpca.py::TestKPCA::test_model_clone PASSED                [ 17%]
+pyod/test/test_kpca.py::TestKPCA::test_parameters PASSED                 [ 23%]
+pyod/test/test_kpca.py::TestKPCA::test_predict_rank PASSED               [ 29%]
+pyod/test/test_kpca.py::TestKPCA::test_predict_rank_normalized PASSED    [ 35%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_labels PASSED          [ 41%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_labels_confidence PASSED [ 47%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_proba PASSED           [ 52%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_proba_linear PASSED    [ 58%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_proba_linear_confidence PASSED [ 64%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_proba_parameter PASSED [ 70%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_proba_unify PASSED     [ 76%]
+pyod/test/test_kpca.py::TestKPCA::test_prediction_scores PASSED          [ 82%]
+pyod/test/test_kpca.py::TestKPCA::test_train_scores PASSED               [ 88%]
+pyod/test/test_kpca.py::TestKPCASubsetBound::test_bound PASSED           [ 94%]
+pyod/test/test_kpca.py::TestKPCAComponentsBound::test_bound PASSED       [100%]
+
+=============================== warnings summary ===============================
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict
+  /usr/local/lib/python3.11/site-packages/sklearn/utils/deprecation.py:87: FutureWarning: Function fit_predict is deprecated
+    warnings.warn(msg, category=FutureWarning)
+
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict_score
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict_score
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict_score
+pyod/test/test_kpca.py::TestKPCA::test_fit_predict_score
+  /usr/local/lib/python3.11/site-packages/sklearn/utils/deprecation.py:87: FutureWarning: Function fit_predict_score is deprecated
+    warnings.warn(msg, category=FutureWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 17 passed, 5 warnings in 4.66s ========================
+reward=1 graded=17 found=0 failed=0 parsed=17 framework=pytest exit_code=0

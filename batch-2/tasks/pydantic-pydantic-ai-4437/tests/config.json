@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/models/test_google.py::test_google_stream_api_errors_are_wrapped /workspace/repo/tests/models/test_google.py::test_google_stream_api_non_http_error_is_wrapped -v",
+  "test_files": [
+    "tests/models/test_google.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.models.test_google::test_google_stream_api_errors_are_wrapped[ServerError-error_response0-503]",
+    "tests.models.test_google::test_google_stream_api_errors_are_wrapped[ClientError-error_response1-429]",
+    "tests.models.test_google::test_google_stream_api_non_http_error_is_wrapped"
+  ],
+  "PASS_TO_PASS": []
+}

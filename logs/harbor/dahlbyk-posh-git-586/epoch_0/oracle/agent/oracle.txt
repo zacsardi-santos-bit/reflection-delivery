@@ -1,3 +1,0 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
-patching file src/GitUtils.ps1
-patching file src/posh-git.psm1

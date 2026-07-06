@@ -1,0 +1,29 @@
+{
+    "id": "23c14b7e-dcd9-4c32-9ecf-c9eb30193a94",
+    "started_at": "2026-07-04T15:41:04.361554",
+    "finished_at": "2026-07-04T15:41:42.746268",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pennylaneai-pennylane-5114": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pennylaneai-pennylane-5114__4xDiDnL"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

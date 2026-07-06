@@ -1,0 +1,29 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/opik-frontend && npx vitest run src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts",
+  "test_files": [
+    "apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems no items returns SKIPPED with 'no experiment item' reason when experiment_items is empty",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems items without assertions returns SKIPPED with 'no assertions' reason when items have no status",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment no item returns SKIPPED with 'no experiment item' reason when item is undefined",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment item without assertions returns SKIPPED with 'no assertions' reason when item has no status"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems totalCount uses items.length when no execution_policy is set",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems totalCount uses runs_per_item from execution_policy when set",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems status from run_summaries_by_experiment returns PASSED when all summaries are PASSED",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems status from run_summaries_by_experiment returns FAILED when any summary is not PASSED",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusFromExperimentItems status from run_summaries_by_experiment falls back to first item status when no summaries",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment totalCount without summary returns 0 when no summary and no execution_policy",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment totalCount without summary uses runs_per_item when no summary but execution_policy is set",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment with run summary uses summary.passed_runs for passedCount",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment with run summary uses summary.total_runs for totalCount",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment with run summary summary.total_runs takes precedence over execution_policy.runs_per_item",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment with run summary uses local passedCount when no summary for that experimentId",
+    "/workspace/repo/apps/opik-frontend/src/v2/pages-shared/experiments/EvaluationSuiteExperiment/PassedCell.test.ts::getStatusInfoForExperiment aggregated item expands trialItems for passedCount and assertionsByRun"
+  ]
+}

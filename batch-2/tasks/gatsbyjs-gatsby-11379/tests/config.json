@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js --coverage=false --watchAll=false --forceExit",
+  "test_files": [
+    "packages/gatsby-plugin-google-tagmanager/src/__tests__/__snapshots__/gatsby-ssr.js.snap",
+    "packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js::gatsby-plugin-google-tagmanager should load gtm",
+    "/workspace/repo/packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js::gatsby-plugin-google-tagmanager defaultDatalayer should add a static object as defaultDatalayer",
+    "/workspace/repo/packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js::gatsby-plugin-google-tagmanager defaultDatalayer should add a function as defaultDatalayer",
+    "/workspace/repo/packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js::gatsby-plugin-google-tagmanager defaultDatalayer should report an error when data is not valid"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/gatsby-plugin-google-tagmanager/src/__tests__/gatsby-ssr.js::gatsby-plugin-google-tagmanager defaultDatalayer should add no dataLayer by default"
+  ]
+}

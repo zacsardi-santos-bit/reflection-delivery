@@ -1,0 +1,29 @@
+{
+    "id": "8ca390ab-18be-41d6-82a5-b51a9aab3680",
+    "started_at": "2026-07-06T12:18:31.427282",
+    "finished_at": "2026-07-06T12:19:01.595156",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__traceloop-openllmetry-4010": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "traceloop-openllmetry-4010__joxVstB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

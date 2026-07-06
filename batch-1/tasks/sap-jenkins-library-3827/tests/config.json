@@ -1,0 +1,47 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/kubernetes -count=1",
+  "test_files": [
+    "pkg/kubernetes/helm_test.go",
+    "pkg/kubernetes/utils_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUpgrade/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUpgrade/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUpgrade",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmInstall/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmInstall/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmInstall/test_case:_2",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmInstall",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUninstall/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUninstall/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUninstall/test_case:_2",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmUninstall"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmInit/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmInit",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmAdd/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmAdd/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmAdd",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmLint/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmLint",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmPackage/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmPackage/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmPackage",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmTest/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmTest/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmTest",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmDependency/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmDependency/test_case:_1",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmDependency",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmPublish/success",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmPublish",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmCommand/test_case:_0",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunHelmCommand",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunUtils/Get_container_info",
+    "github.com/SAP/jenkins-library/pkg/kubernetes::TestRunUtils"
+  ]
+}

@@ -1,7 +1,0 @@
-I'm working on the devtools package in the WebdriverIO monorepo and I'd like to clean up how browser launch options are configured. Right now, devtools-specific settings like headless mode, ignoring default browser arguments, and viewport size have to go in different places depending on which browser you're testing with — sometimes inside the browser vendor's capability namespace, sometimes at the top level of the capabilities object. This is inconsistent and makes it harder to understand which settings are standard WebDriver capabilities versus devtools-specific launch options.
-
-I'd like to introduce a dedicated capability namespace for these devtools-specific options so users can group them all in one place regardless of browser. The new namespace should support at minimum: enabling headless mode, overriding or ignoring default browser arguments (either as a flag for all defaults or as a list of specific arguments to ignore), and setting a default viewport size. Settings placed in this namespace should take priority over the same settings in vendor-specific namespaces.
-
-At the same time, the existing behavior should be preserved — users who currently place these settings in vendor namespaces or at the top level of capabilities should see no breaking change.
-
-There's also a minor naming inconsistency I want to fix: a field in the command descriptor type that holds a single specification reference URL is currently named with a plural form, and it should use the singular form to correctly reflect that it holds one URL.

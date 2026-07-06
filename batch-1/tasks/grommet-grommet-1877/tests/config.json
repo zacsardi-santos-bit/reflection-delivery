@@ -1,0 +1,45 @@
+{
+  "test_framework": "jest",
+  "test_command": "node_modules/.bin/jest src/js/components/Box/__tests__/Box-test.js src/js/components/Diagram/__tests__/Diagram-test.js src/js/components/__tests__/README-test.js --watchAll=false --coverage=false",
+  "test_files": [
+    "src/js/components/Box/__tests__/Box-test.js",
+    "src/js/components/Box/__tests__/__snapshots__/Box-test.js.snap",
+    "src/js/components/Diagram/__tests__/__snapshots__/Diagram-test.js.snap",
+    "src/js/components/Select/__tests__/__snapshots__/Select-test.js.snap",
+    "src/js/components/__tests__/__snapshots__/README-test.js.snap"
+  ],
+  "num_test_files": 5,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/js/components/__tests__/README-test.js::README is updated",
+    "/workspace/repo/src/js/components/Diagram/__tests__/Diagram-test.js::Diagram renders",
+    "/workspace/repo/src/js/components/Diagram/__tests__/Diagram-test.js::Diagram type renders",
+    "/workspace/repo/src/js/components/Diagram/__tests__/Diagram-test.js::Diagram color renders",
+    "/workspace/repo/src/js/components/Diagram/__tests__/Diagram-test.js::Diagram offset renders",
+    "/workspace/repo/src/js/components/Diagram/__tests__/Diagram-test.js::Diagram thickness renders"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box direction renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box reverse renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box wrap renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box justify renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box align renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box alignContent renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box alignSelf renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box justifySelf renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box textAlign renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box background renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box basis renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box flex renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box full renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box gap renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box margin renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box pad renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box gridArea renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box round renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box border renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box tag renders",
+    "/workspace/repo/src/js/components/Box/__tests__/Box-test.js::Box animation renders"
+  ]
+}

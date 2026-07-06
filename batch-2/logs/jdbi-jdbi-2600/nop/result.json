@@ -1,0 +1,29 @@
+{
+    "id": "9d1d4c0c-d71a-44b4-b4c5-c3dac05e49bf",
+    "started_at": "2026-07-04T15:37:31.784445",
+    "finished_at": "2026-07-04T15:42:09.677272",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__jdbi-jdbi-2600": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "jdbi-jdbi-2600__JJwxVxQ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

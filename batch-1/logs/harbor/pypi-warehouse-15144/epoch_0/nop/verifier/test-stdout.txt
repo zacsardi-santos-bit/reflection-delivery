@@ -1,0 +1,2113 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8): No such file or directory
+patching file tests/unit/accounts/test_views.py
+patching file tests/unit/manage/test_views.py
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = "",
+	LC_ALL = "en_US.UTF-8",
+	LC_CTYPE = "",
+	LC_NUMERIC = "",
+	LC_COLLATE = "",
+	LC_TIME = "",
+	LC_MESSAGES = "",
+	LC_MONETARY = "",
+	LC_ADDRESS = "",
+	LC_IDENTIFICATION = "",
+	LC_MEASUREMENT = "",
+	LC_PAPER = "",
+	LC_TELEPHONE = "",
+	LC_NAME = "",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+Starting PostgreSQL 17 database server: main.
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.3.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: socket-0.6.0, postgresql-5.0.0, icdiff-0.9, Faker-22.0.0
+collecting ... collected 339 items
+
+tests/unit/accounts/test_views.py::TestFailedLoginView::test_too_many_failed_logins PASSED [  0%]
+tests/unit/accounts/test_views.py::TestFailedLoginView::test_too_many_emails_added PASSED [  0%]
+tests/unit/accounts/test_views.py::TestFailedLoginView::test_too_many_password_reset_requests PASSED [  0%]
+tests/unit/accounts/test_views.py::TestUserProfile::test_user_redirects_username PASSED [  1%]
+tests/unit/accounts/test_views.py::TestUserProfile::test_returns_user PASSED [  1%]
+tests/unit/accounts/test_views.py::TestAccountsSearch::test_unauthenticated_raises_401 PASSED [  1%]
+tests/unit/accounts/test_views.py::TestAccountsSearch::test_no_query_string_raises_400 PASSED [  2%]
+tests/unit/accounts/test_views.py::TestAccountsSearch::test_returns_users_with_prefix PASSED [  2%]
+tests/unit/accounts/test_views.py::TestAccountsSearch::test_when_rate_limited PASSED [  2%]
+tests/unit/accounts/test_views.py::TestLogin::test_get_returns_form[None] PASSED [  2%]
+tests/unit/accounts/test_views.py::TestLogin::test_get_returns_form[/foo/bar/] PASSED [  3%]
+tests/unit/accounts/test_views.py::TestLogin::test_get_returns_form[/wat/] PASSED [  3%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_invalid_returns_form[None] PASSED [  3%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_invalid_returns_form[/foo/bar/] PASSED [  4%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_invalid_returns_form[/wat/] PASSED [  4%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_validate_redirects[True] PASSED [  4%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_validate_redirects[False] PASSED [  5%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_validate_no_redirects[/security/-/security/] PASSED [  5%]
+tests/unit/accounts/test_views.py::TestLogin::test_post_validate_no_redirects[http://example.com-/the-redirect] PASSED [  5%]
+tests/unit/accounts/test_views.py::TestLogin::test_redirect_authenticated_user PASSED [  5%]
+tests/unit/accounts/test_views.py::TestLogin::test_two_factor_auth[test_redirect_url] PASSED [  6%]
+tests/unit/accounts/test_views.py::TestLogin::test_two_factor_auth[None] PASSED [  6%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_two_factor_data_invalid_after_login PASSED [  6%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_two_factor_and_totp_validate_redirect_to_account_login PASSED [  7%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_totp_form[None] PASSED [  7%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_totp_form[/foo/bar/] PASSED [  7%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_totp_form[/wat/] PASSED [  7%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_webauthn[None] PASSED [  8%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_webauthn[/foo/bar/] PASSED [  8%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_webauthn[/wat/] PASSED [  8%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_recovery_code_status[None] PASSED [  9%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_recovery_code_status[/foo/bar/] PASSED [  9%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_get_returns_recovery_code_status[/wat/] PASSED [  9%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[True-True-test_redirect_url] PASSED [ 10%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[True-True-None] PASSED [ 10%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[True-False-test_redirect_url] PASSED [ 10%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[True-False-None] PASSED [ 10%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[False-True-test_redirect_url] PASSED [ 11%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[False-True-None] PASSED [ 11%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[False-False-test_redirect_url] PASSED [ 11%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth[False-False-None] PASSED [ 12%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_auth_already_authed PASSED [ 12%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_totp_form_invalid PASSED [ 12%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_two_factor_token_missing_userid PASSED [ 12%]
+tests/unit/accounts/test_views.py::TestTwoFactor::test_two_factor_token_invalid PASSED [ 13%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_get_options_already_authenticated PASSED [ 13%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_get_options_invalid_token PASSED [ 13%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_get_options PASSED [ 14%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate_already_authenticated PASSED [ 14%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate_invalid_token PASSED [ 14%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate_invalid_form PASSED [ 15%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate[True-True] PASSED [ 15%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate[True-False] PASSED [ 15%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate[False-True] PASSED [ 15%]
+tests/unit/accounts/test_views.py::TestWebAuthn::test_webauthn_validate[False-False] PASSED [ 16%]
+tests/unit/accounts/test_views.py::TestRememberDevice::test_check_remember_device_token_valid PASSED [ 16%]
+tests/unit/accounts/test_views.py::TestRememberDevice::test_check_remember_device_token_invalid_no_cookie PASSED [ 16%]
+tests/unit/accounts/test_views.py::TestRememberDevice::test_check_remember_device_token_invalid_bad_token PASSED [ 17%]
+tests/unit/accounts/test_views.py::TestRememberDevice::test_check_remember_device_token_invalid_wrong_user PASSED [ 17%]
+tests/unit/accounts/test_views.py::TestRememberDevice::test_remember_device PASSED [ 17%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_already_authenticated PASSED [ 17%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_two_factor_token_invalid PASSED [ 18%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_get_returns_form PASSED [ 18%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_recovery_code_auth[test_redirect_url] PASSED [ 18%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_recovery_code_auth[None] PASSED [ 19%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_recovery_code_form_invalid PASSED [ 19%]
+tests/unit/accounts/test_views.py::TestRecoveryCode::test_recovery_code_auth_invalid_token PASSED [ 19%]
+tests/unit/accounts/test_views.py::TestLogout::test_get_returns_empty[None] PASSED [ 20%]
+tests/unit/accounts/test_views.py::TestLogout::test_get_returns_empty[/foo/bar/] PASSED [ 20%]
+tests/unit/accounts/test_views.py::TestLogout::test_get_returns_empty[/wat/] PASSED [ 20%]
+tests/unit/accounts/test_views.py::TestLogout::test_post_forgets_user PASSED [ 20%]
+tests/unit/accounts/test_views.py::TestLogout::test_post_redirects_user[/security/-/security/] PASSED [ 21%]
+tests/unit/accounts/test_views.py::TestLogout::test_post_redirects_user[http://example.com-/] PASSED [ 21%]
+tests/unit/accounts/test_views.py::TestLogout::test_get_redirects_anonymous_user[/security/-/security/] PASSED [ 21%]
+tests/unit/accounts/test_views.py::TestLogout::test_get_redirects_anonymous_user[http://example.com-/] PASSED [ 22%]
+tests/unit/accounts/test_views.py::TestRegister::test_get PASSED         [ 22%]
+tests/unit/accounts/test_views.py::TestRegister::test_redirect_authenticated_user PASSED [ 22%]
+tests/unit/accounts/test_views.py::TestRegister::test_register_honeypot PASSED [ 23%]
+tests/unit/accounts/test_views.py::TestRegister::test_register_redirect PASSED [ 23%]
+tests/unit/accounts/test_views.py::TestRegister::test_register_fails_with_admin_flag_set PASSED [ 23%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_get PASSED [ 23%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_request_password_reset PASSED [ 24%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_request_password_reset_with_email PASSED [ 24%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_request_password_reset_with_non_primary_email PASSED [ 24%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_too_many_password_reset_requests PASSED [ 25%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_password_reset_prohibited PASSED [ 25%]
+tests/unit/accounts/test_views.py::TestRequestPasswordReset::test_redirect_authenticated_user PASSED [ 25%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_get[True] PASSED [ 25%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_get[False] PASSED [ 26%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password PASSED [ 26%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_with_no_last_login_succeeds PASSED [ 26%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_loads_failure[TokenInvalid-Invalid token: request a new password reset link] PASSED [ 27%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_loads_failure[TokenExpired-Expired token: request a new password reset link] PASSED [ 27%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_loads_failure[TokenMissing-Invalid token: no token supplied] PASSED [ 27%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_invalid_action PASSED [ 28%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_invalid_user PASSED [ 28%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_last_login_changed PASSED [ 28%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_password_date_changed PASSED [ 28%]
+tests/unit/accounts/test_views.py::TestResetPassword::test_redirect_authenticated_user PASSED [ 29%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email[True-This is your primary address.] PASSED [ 29%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email[False-You can now set this email as your primary address.] PASSED [ 29%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_loads_failure[TokenInvalid-Invalid token: request a new email verification link] PASSED [ 30%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_loads_failure[TokenExpired-Expired token: request a new email verification link] PASSED [ 30%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_loads_failure[TokenMissing-Invalid token: no token supplied] PASSED [ 30%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_invalid_action PASSED [ 30%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_not_found PASSED [ 31%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_already_verified PASSED [ 31%]
+tests/unit/accounts/test_views.py::TestVerifyEmail::test_verify_email_with_existing_2fa PASSED [ 31%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role[Member] PASSED [ 32%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role[Manager] PASSED [ 32%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role[Owner] PASSED [ 32%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role[Billing Manager] PASSED [ 33%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role_loads_failure[TokenInvalid-Invalid token: request a new organization invitation] PASSED [ 33%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role_loads_failure[TokenExpired-Expired token: request a new organization invitation] PASSED [ 33%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role_loads_failure[TokenMissing-Invalid token: no token supplied] PASSED [ 33%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_email_invalid_action PASSED [ 34%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role_revoked PASSED [ 34%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role_declined PASSED [ 34%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_fails_with_different_user PASSED [ 35%]
+tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_role_get_confirmation PASSED [ 35%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role[Maintainer] PASSED [ 35%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role[Owner] PASSED [ 35%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role_loads_failure[TokenInvalid-Invalid token: request a new project role invitation] PASSED [ 36%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role_loads_failure[TokenExpired-Expired token: request a new project role invitation] PASSED [ 36%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role_loads_failure[TokenMissing-Invalid token: no token supplied] PASSED [ 36%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_email_invalid_action PASSED [ 37%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role_revoked PASSED [ 37%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role_declined PASSED [ 37%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_fails_with_different_user PASSED [ 38%]
+tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_role_get_confirmation PASSED [ 38%]
+tests/unit/accounts/test_views.py::TestProfileCallout::test_profile_callout_returns_user PASSED [ 38%]
+tests/unit/accounts/test_views.py::TestEditProfileButton::test_edit_profile_button PASSED [ 38%]
+tests/unit/accounts/test_views.py::TestProfilePublicEmail::test_profile_public_email_returns_user PASSED [ 39%]
+tests/unit/accounts/test_views.py::TestReAuthentication::test_reauth[None] PASSED [ 39%]
+tests/unit/accounts/test_views.py::TestReAuthentication::test_reauth[/manage/accounts] PASSED [ 39%]
+tests/unit/accounts/test_views.py::TestReAuthentication::test_reauth[/projects/] PASSED [ 40%]
+tests/unit/accounts/test_views.py::TestReAuthentication::test_reauth_no_user PASSED [ 40%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_initializes PASSED [ 40%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_ratelimiting[False-False] PASSED [ 41%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_ratelimiting[False-True] PASSED [ 41%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_ratelimiting[True-False] PASSED [ 41%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_manage_publishing FAILED [ 41%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_manage_publishing_admin_disabled FAILED [ 42%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_admin_disabled[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub] FAILED [ 42%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_admin_disabled[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google] FAILED [ 42%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_user_cannot_register[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub] FAILED [ 43%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_user_cannot_register[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google] FAILED [ 43%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_github_oidc_publisher_too_many_already[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub-<lambda>-PendingGitHubPublisher] FAILED [ 43%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_github_oidc_publisher_too_many_already[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google-<lambda>-PendingGooglePublisher] FAILED [ 43%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_ratelimited[add_pending_github_oidc_publisher-GitHub] PASSED [ 44%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_ratelimited[add_pending_google_oidc_publisher-Google] FAILED [ 44%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_invalid_form[add_pending_github_oidc_publisher-GitHub] PASSED [ 44%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_invalid_form[add_pending_google_oidc_publisher-Google] FAILED [ 45%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_already_exists[add_pending_github_oidc_publisher-GitHub-<lambda>-post_body0] PASSED [ 45%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_already_exists[add_pending_google_oidc_publisher-Google-<lambda>-post_body1] FAILED [ 45%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher[add_pending_github_oidc_publisher-GitHub-post_body0-PendingGitHubPublisher] PASSED [ 46%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher[add_pending_google_oidc_publisher-Google-post_body1-PendingGooglePublisher] FAILED [ 46%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_admin_disabled FAILED [ 46%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_invalid_form PASSED [ 46%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_not_found[<lambda>-PendingGitHubPublisher] PASSED [ 47%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_not_found[<lambda>-PendingGooglePublisher] PASSED [ 47%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_no_access[<lambda>-PendingGitHubPublisher] PASSED [ 47%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_no_access[<lambda>-PendingGooglePublisher] PASSED [ 48%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher[GitHub-<lambda>-PendingGitHubPublisher] PASSED [ 48%]
+tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher[Google-<lambda>-PendingGooglePublisher] PASSED [ 48%]
+tests/unit/manage/test_views.py::TestManageAccount::test_default_response[None-] PASSED [ 48%]
+tests/unit/manage/test_views.py::TestManageAccount::test_default_response[public_email1-some@email.com] PASSED [ 49%]
+tests/unit/manage/test_views.py::TestManageAccount::test_active_projects PASSED [ 49%]
+tests/unit/manage/test_views.py::TestManageAccount::test_manage_account PASSED [ 49%]
+tests/unit/manage/test_views.py::TestManageAccount::test_save_account PASSED [ 50%]
+tests/unit/manage/test_views.py::TestManageAccount::test_save_account_validation_fails PASSED [ 50%]
+tests/unit/manage/test_views.py::TestManageAccount::test_add_email PASSED [ 50%]
+tests/unit/manage/test_views.py::TestManageAccount::test_add_email_validation_fails PASSED [ 51%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_email PASSED [ 51%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_email_not_found PASSED [ 51%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_email_is_primary PASSED [ 51%]
+tests/unit/manage/test_views.py::TestManageAccount::test_change_primary_email PASSED [ 52%]
+tests/unit/manage/test_views.py::TestManageAccount::test_change_primary_email_without_current PASSED [ 52%]
+tests/unit/manage/test_views.py::TestManageAccount::test_change_primary_email_not_found PASSED [ 52%]
+tests/unit/manage/test_views.py::TestManageAccount::test_reverify_email PASSED [ 53%]
+tests/unit/manage/test_views.py::TestManageAccount::test_reverify_email_ratelimit_exceeded PASSED [ 53%]
+tests/unit/manage/test_views.py::TestManageAccount::test_reverify_email_not_found PASSED [ 53%]
+tests/unit/manage/test_views.py::TestManageAccount::test_reverify_email_already_verified PASSED [ 53%]
+tests/unit/manage/test_views.py::TestManageAccount::test_change_password PASSED [ 54%]
+tests/unit/manage/test_views.py::TestManageAccount::test_change_password_validation_fails PASSED [ 54%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_account PASSED [ 54%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_account_no_confirm PASSED [ 55%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_account_wrong_confirm PASSED [ 55%]
+tests/unit/manage/test_views.py::TestManageAccount::test_delete_account_has_active_projects PASSED [ 55%]
+tests/unit/manage/test_views.py::Test2FA::test_manage_two_factor PASSED  [ 56%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_generate_totp_qr PASSED [ 56%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_generate_totp_qr_two_factor_not_allowed PASSED [ 56%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_totp_provision[foobar] PASSED [ 56%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_totp_provision[None] PASSED [ 57%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_totp_provision_two_factor_not_allowed[user0-expected_flash_calls0] PASSED [ 57%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_totp_provision_two_factor_not_allowed[user1-expected_flash_calls1] PASSED [ 57%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_validate_totp_provision[foobar] PASSED [ 58%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_validate_totp_provision[None] PASSED [ 58%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_validate_totp_provision_invalid_form PASSED [ 58%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_validate_totp_provision_two_factor_not_allowed PASSED [ 58%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_delete_totp PASSED [ 59%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_delete_totp_bad_password PASSED [ 59%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_delete_totp_not_provisioned PASSED [ 59%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_delete_totp_two_factor_not_allowed PASSED [ 60%]
+tests/unit/manage/test_views.py::TestProvisionTOTP::test_delete_totp_last_2fa PASSED [ 60%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_get_webauthn_view PASSED [ 60%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_get_webauthn_view_redirect PASSED [ 61%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_get_webauthn_options PASSED [ 61%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_validate_webauthn_provision PASSED [ 61%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_validate_webauthn_provision_invalid_form PASSED [ 61%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_delete_webauthn PASSED [ 62%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_delete_webauthn_not_provisioned PASSED [ 62%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_delete_webauthn_invalid_form PASSED [ 62%]
+tests/unit/manage/test_views.py::TestProvisionWebAuthn::test_delete_webauthn_last_2fa PASSED [ 63%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_generate PASSED [ 63%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_generate_already_exist PASSED [ 63%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_regenerate PASSED [ 64%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_burn_get PASSED [ 64%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_burn_post PASSED [ 64%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_burn_redirect[user0-manage.account] PASSED [ 64%]
+tests/unit/manage/test_views.py::TestProvisionRecoveryCodes::test_recovery_codes_burn_redirect[user1-manage.account.two-factor] PASSED [ 65%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_default_response PASSED [ 65%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_project_names PASSED [ 65%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_manage_macaroons PASSED [ 66%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_create_macaroon_not_allowed PASSED [ 66%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_create_macaroon_invalid_form PASSED [ 66%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_create_macaroon[True] PASSED [ 66%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_create_macaroon[False] PASSED [ 67%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_create_macaroon_records_events_for_each_project PASSED [ 67%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_delete_macaroon_invalid_form PASSED [ 67%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_delete_macaroon_dangerous_redirect PASSED [ 68%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_delete_macaroon PASSED [ 68%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_delete_macaroon_when_non_existent PASSED [ 68%]
+tests/unit/manage/test_views.py::TestProvisionMacaroonViews::test_delete_macaroon_records_events_for_each_project PASSED [ 69%]
+tests/unit/manage/test_views.py::TestManageProjects::test_manage_projects PASSED [ 69%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_manage_project_settings[False] PASSED [ 69%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_manage_project_settings[True] PASSED [ 69%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_manage_project_settings_in_organization_managed PASSED [ 70%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_manage_project_settings_in_organization_owned PASSED [ 70%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project_no_confirm PASSED [ 70%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project_wrong_confirm PASSED [ 71%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project_disable_organizations PASSED [ 71%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project_no_current_organization PASSED [ 71%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project_not_organization_owner PASSED [ 71%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project_no_individual_owner PASSED [ 72%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_remove_organization_project PASSED [ 72%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_no_confirm PASSED [ 72%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_wrong_confirm PASSED [ 73%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_disable_organizations PASSED [ 73%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_no_current_organization PASSED [ 73%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_not_organization_owner PASSED [ 74%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_no_individual_owner PASSED [ 74%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_invalid PASSED [ 74%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_from_organization_managed PASSED [ 74%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_from_organization_owned PASSED [ 75%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_delete_project_no_confirm PASSED [ 75%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_delete_project_wrong_confirm PASSED [ 75%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_delete_project_disallow_deletion PASSED [ 76%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_get_user_role_in_project_single_role_owner PASSED [ 76%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_get_user_role_in_project_single_role_maintainer PASSED [ 76%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_get_user_role_in_project_org_owner PASSED [ 76%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_get_user_role_in_project_team_project_owner PASSED [ 77%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_delete_project PASSED [ 77%]
+tests/unit/manage/test_views.py::TestManageProjectSettings::test_delete_project_sends_emails_to_owners PASSED [ 77%]
+tests/unit/manage/test_views.py::TestManageProjectDocumentation::test_manage_project_documentation PASSED [ 78%]
+tests/unit/manage/test_views.py::TestManageProjectDocumentation::test_destroy_project_docs_no_confirm PASSED [ 78%]
+tests/unit/manage/test_views.py::TestManageProjectDocumentation::test_destroy_project_docs_wrong_confirm PASSED [ 78%]
+tests/unit/manage/test_views.py::TestManageProjectDocumentation::test_destroy_project_docs PASSED [ 79%]
+tests/unit/manage/test_views.py::TestManageProjectReleases::test_manage_project_releases PASSED [ 79%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_manage_project_release PASSED [ 79%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_disallow_deletion PASSED [ 79%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_yank_project_release PASSED [ 80%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_yank_project_release_no_confirm PASSED [ 80%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_yank_project_release_bad_confirm PASSED [ 80%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_unyank_project_release PASSED [ 81%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_unyank_project_release_no_confirm PASSED [ 81%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_unyank_project_release_bad_confirm PASSED [ 81%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release PASSED [ 82%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_no_confirm PASSED [ 82%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_bad_confirm PASSED [ 82%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_file_disallow_deletion PASSED [ 82%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_file PASSED [ 83%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_file_no_confirm PASSED [ 83%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_file_not_found PASSED [ 83%]
+tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_file_bad_confirm PASSED [ 84%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_get_manage_project_roles PASSED [ 84%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_new_internal_team_role PASSED [ 84%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_duplicate_internal_team_role PASSED [ 84%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_new_internal_role PASSED [ 85%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_new_role_validation_fails PASSED [ 85%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_new_role PASSED [ 85%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_duplicate_role PASSED [ 86%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_reinvite_role_after_expiration PASSED [ 86%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_unverified_email[True] PASSED [ 86%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_unverified_email[False] PASSED [ 87%]
+tests/unit/manage/test_views.py::TestManageProjectRoles::test_cannot_reinvite_role PASSED [ 87%]
+tests/unit/manage/test_views.py::TestRevokeRoleInvitation::test_revoke_invitation PASSED [ 87%]
+tests/unit/manage/test_views.py::TestRevokeRoleInvitation::test_invitation_does_not_exist PASSED [ 87%]
+tests/unit/manage/test_views.py::TestRevokeRoleInvitation::test_token_expired PASSED [ 88%]
+tests/unit/manage/test_views.py::TestChangeProjectRole::test_change_role PASSED [ 88%]
+tests/unit/manage/test_views.py::TestChangeProjectRole::test_change_role_invalid_role_name PASSED [ 88%]
+tests/unit/manage/test_views.py::TestChangeProjectRole::test_change_missing_role PASSED [ 89%]
+tests/unit/manage/test_views.py::TestChangeProjectRole::test_change_own_owner_role PASSED [ 89%]
+tests/unit/manage/test_views.py::TestDeleteProjectRole::test_delete_role PASSED [ 89%]
+tests/unit/manage/test_views.py::TestDeleteProjectRole::test_delete_missing_role PASSED [ 89%]
+tests/unit/manage/test_views.py::TestDeleteProjectRole::test_delete_own_owner_role PASSED [ 90%]
+tests/unit/manage/test_views.py::TestDeleteProjectRole::test_delete_not_sole_owner_role PASSED [ 90%]
+tests/unit/manage/test_views.py::TestDeleteProjectRole::test_delete_non_owner_role PASSED [ 90%]
+tests/unit/manage/test_views.py::TestManageProjectHistory::test_get PASSED [ 91%]
+tests/unit/manage/test_views.py::TestManageProjectHistory::test_raises_400_with_pagenum_type_str PASSED [ 91%]
+tests/unit/manage/test_views.py::TestManageProjectHistory::test_first_page PASSED [ 91%]
+tests/unit/manage/test_views.py::TestManageProjectHistory::test_last_page PASSED [ 92%]
+tests/unit/manage/test_views.py::TestManageProjectHistory::test_raises_404_with_out_of_range_page PASSED [ 92%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_initializes PASSED [ 92%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_ratelimiting[False-False] PASSED [ 92%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_ratelimiting[False-True] PASSED [ 93%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_ratelimiting[True-False] PASSED [ 93%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_manage_project_oidc_publishers FAILED [ 93%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_manage_project_oidc_publishers_admin_disabled FAILED [ 94%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_preexisting[add_github_oidc_publisher-publisher0-<lambda>] FAILED [ 94%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_preexisting[add_google_oidc_publisher-publisher1-<lambda>] FAILED [ 94%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_created[add_github_oidc_publisher-publisher_form_obj0-expected_publisher0] FAILED [ 94%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_created[add_google_oidc_publisher-publisher_form_obj1-Google] FAILED [ 95%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_already_registered_with_project[add_github_oidc_publisher-GitHub-publisher0-post_body0] FAILED [ 95%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_already_registered_with_project[add_google_oidc_publisher-Google-publisher1-post_body1] FAILED [ 95%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_ratelimited[add_github_oidc_publisher-GitHub] PASSED [ 96%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_ratelimited[add_google_oidc_publisher-Google] FAILED [ 96%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_admin_disabled[add_github_oidc_publisher-GitHub] PASSED [ 96%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_admin_disabled[add_google_oidc_publisher-Google] FAILED [ 97%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_invalid_form[add_github_oidc_publisher-GitHub] FAILED [ 97%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_invalid_form[add_google_oidc_publisher-Google] FAILED [ 97%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_registered_to_multiple_projects[publisher0] PASSED [ 97%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_registered_to_multiple_projects[publisher1] PASSED [ 98%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_entirely[publisher0] PASSED [ 98%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_entirely[publisher1] PASSED [ 98%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_invalid_form PASSED [ 99%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_not_found[None] PASSED [ 99%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_not_found[other_publisher1] PASSED [ 99%]
+tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_admin_disabled PASSED [100%]
+
+=================================== FAILURES ===================================
+___________ TestManageAccountPublishingViews.test_manage_publishing ____________
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f403545e7d0>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f4034dd40e0>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f4034d2b420>, timed=<function metrics.<locals>.<lambda> at 0x7f4034d28220>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402ba14710>
+
+    def test_manage_publishing(self, metrics, monkeypatch):
+        request = pretend.stub(
+            user=pretend.stub(),
+            registry=pretend.stub(
+                settings={
+                    "github.token": "fake-api-token",
+                }
+            ),
+            find_service=pretend.call_recorder(lambda *a, **kw: metrics),
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            POST=pretend.stub(),
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:3347: AttributeError
+____ TestManageAccountPublishingViews.test_manage_publishing_admin_disabled ____
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f403545f550>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402ba2ef90>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f402ba48d50>
+
+    def test_manage_publishing_admin_disabled(self, monkeypatch, pyramid_request):
+        pyramid_request.user = pretend.stub()
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: True)
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:3405: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_admin_disabled[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035472890>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402bf17210>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f402ba2e150>
+view_name = 'add_pending_github_oidc_publisher'
+flag = <AdminFlagValue.DISALLOW_GITHUB_OIDC: 'disallow-github-oidc'>
+publisher_name = 'GitHub'
+
+    @pytest.mark.parametrize(
+        "view_name, flag, publisher_name",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                AdminFlagValue.DISALLOW_GITHUB_OIDC,
+                "GitHub",
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                AdminFlagValue.DISALLOW_GOOGLE_OIDC,
+                "Google",
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_admin_disabled(
+        self, monkeypatch, pyramid_request, view_name, flag, publisher_name
+    ):
+        pyramid_request.user = pretend.stub()
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: True),
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:3488: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_admin_disabled[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035473b10>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402ba4a010>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f403015da50>
+view_name = 'add_pending_google_oidc_publisher'
+flag = <AdminFlagValue.DISALLOW_GOOGLE_OIDC: 'disallow-google-oidc'>
+publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, flag, publisher_name",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                AdminFlagValue.DISALLOW_GITHUB_OIDC,
+                "GitHub",
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                AdminFlagValue.DISALLOW_GOOGLE_OIDC,
+                "Google",
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_admin_disabled(
+        self, monkeypatch, pyramid_request, view_name, flag, publisher_name
+    ):
+        pyramid_request.user = pretend.stub()
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: True),
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:3488: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_user_cannot_register[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035473710>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f40301558d0>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f402bb00590>
+view_name = 'add_pending_github_oidc_publisher'
+flag = <AdminFlagValue.DISALLOW_GITHUB_OIDC: 'disallow-github-oidc'>
+publisher_name = 'GitHub'
+
+    @pytest.mark.parametrize(
+        "view_name, flag, publisher_name",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                AdminFlagValue.DISALLOW_GITHUB_OIDC,
+                "GitHub",
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                AdminFlagValue.DISALLOW_GOOGLE_OIDC,
+                "Google",
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_user_cannot_register(
+        self,
+        monkeypatch,
+        pyramid_request,
+        view_name,
+        flag,
+        publisher_name,
+    ):
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.user = pretend.stub(
+            has_primary_verified_email=False,
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False),
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:3581: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_user_cannot_register[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035473c10>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4036026190>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f4035d2dfd0>
+view_name = 'add_pending_google_oidc_publisher'
+flag = <AdminFlagValue.DISALLOW_GOOGLE_OIDC: 'disallow-google-oidc'>
+publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, flag, publisher_name",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                AdminFlagValue.DISALLOW_GITHUB_OIDC,
+                "GitHub",
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                AdminFlagValue.DISALLOW_GOOGLE_OIDC,
+                "Google",
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_user_cannot_register(
+        self,
+        monkeypatch,
+        pyramid_request,
+        view_name,
+        flag,
+        publisher_name,
+    ):
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.user = pretend.stub(
+            has_primary_verified_email=False,
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False),
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:3581: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_github_oidc_publisher_too_many_already[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub-<lambda>-PendingGitHubPublisher] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035471810>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4034d6a110>
+db_request = <pyramid.testing.DummyRequest object at 0x7f4030187310>
+view_name = 'add_pending_github_oidc_publisher'
+flag = <AdminFlagValue.DISALLOW_GITHUB_OIDC: 'disallow-github-oidc'>
+publisher_name = 'GitHub'
+make_publisher = <function TestManageAccountPublishingViews.<lambda> at 0x7f403627dd00>
+publisher_class = <class 'warehouse.oidc.models.github.PendingGitHubPublisher'>
+
+    @pytest.mark.parametrize(
+        "view_name, flag, publisher_name, make_publisher, publisher_class",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                AdminFlagValue.DISALLOW_GITHUB_OIDC,
+                "GitHub",
+                lambda i, user_id: PendingGitHubPublisher(
+                    project_name="some-project-name-" + str(i),
+                    repository_name="some-repository" + str(i),
+                    repository_owner="some-owner",
+                    repository_owner_id="some-id",
+                    workflow_filename="some-filename",
+                    environment="",
+                    added_by_id=user_id,
+                ),
+                PendingGitHubPublisher,
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                AdminFlagValue.DISALLOW_GOOGLE_OIDC,
+                "Google",
+                lambda i, user_id: PendingGooglePublisher(
+                    project_name="some-project-name-" + str(i),
+                    email="some-email-" + str(i) + "@example.com",
+                    sub="some-sub",
+                    added_by_id=user_id,
+                ),
+                PendingGooglePublisher,
+            ),
+        ],
+    )
+    def test_add_pending_github_oidc_publisher_too_many_already(
+        self,
+        monkeypatch,
+        db_request,
+        view_name,
+        flag,
+        publisher_name,
+        make_publisher,
+        publisher_class,
+    ):
+        db_request.user = UserFactory.create()
+        EmailFactory(user=db_request.user, verified=True, primary=True)
+        for i in range(3):
+            pending_publisher = make_publisher(i, db_request.user.id)
+            db_request.db.add(pending_publisher)
+    
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = MultiDict(
+            {
+                "owner": "some-owner",
+                "repository": "some-repository",
+                "workflow_filename": "some-workflow-filename.yml",
+                "environment": "some-environment",
+                "project_name": "some-other-project-name",
+            }
+        )
+    
+        view = views.ManageAccountPublishingViews(db_request)
+    
+        assert getattr(view, view_name)() == view.default_response
+>       assert db_request.flags.disallow_oidc.calls == [
+            pretend.call(AdminFlagValue.DISALLOW_GITHUB_OIDC),
+            pretend.call(AdminFlagValue.DISALLOW_GOOGLE_OIDC),
+            pretend.call(flag),
+            pretend.call(AdminFlagValue.DISALLOW_GITHUB_OIDC),
+            pretend.call(AdminFlagValue.DISALLOW_GOOGLE_OIDC),
+            pretend.call(AdminFlagValue.DISALLOW_GITHUB_OIDC),
+            pretend.call(AdminFlagValue.DISALLOW_GOOGLE_OIDC),
+        ]
+E       AssertionError: assert equals failed
+E         [                                [                               
+E           <call(<AdminFlagValue.DISALLO    <call(<AdminFlagValue.DISALLO 
+E         W_GITHUB_OIDC: 'disallow-github  W_GITHUB_OIDC: 'disallow-github 
+E         -oidc'>)>,                       -oidc'>)>,                      
+E                                           +  <call(<AdminFlagValue.DISALLO 
+E                                           +W_GOOGLE_OIDC: 'disallow-google 
+E                                           +-oidc'>)>,                      ...
+E         
+E         ...Full output truncated (16 lines hidden), use '-vv' to show
+
+tests/unit/accounts/test_views.py:3699: AssertionError
+_ TestManageAccountPublishingViews.test_add_pending_github_oidc_publisher_too_many_already[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google-<lambda>-PendingGooglePublisher] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035471910>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402bf41290>
+db_request = <pyramid.testing.DummyRequest object at 0x7f4030184fd0>
+view_name = 'add_pending_google_oidc_publisher'
+flag = <AdminFlagValue.DISALLOW_GOOGLE_OIDC: 'disallow-google-oidc'>
+publisher_name = 'Google'
+make_publisher = <function TestManageAccountPublishingViews.<lambda> at 0x7f403627dda0>
+publisher_class = <class 'warehouse.oidc.models.google.PendingGooglePublisher'>
+
+    @pytest.mark.parametrize(
+        "view_name, flag, publisher_name, make_publisher, publisher_class",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                AdminFlagValue.DISALLOW_GITHUB_OIDC,
+                "GitHub",
+                lambda i, user_id: PendingGitHubPublisher(
+                    project_name="some-project-name-" + str(i),
+                    repository_name="some-repository" + str(i),
+                    repository_owner="some-owner",
+                    repository_owner_id="some-id",
+                    workflow_filename="some-filename",
+                    environment="",
+                    added_by_id=user_id,
+                ),
+                PendingGitHubPublisher,
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                AdminFlagValue.DISALLOW_GOOGLE_OIDC,
+                "Google",
+                lambda i, user_id: PendingGooglePublisher(
+                    project_name="some-project-name-" + str(i),
+                    email="some-email-" + str(i) + "@example.com",
+                    sub="some-sub",
+                    added_by_id=user_id,
+                ),
+                PendingGooglePublisher,
+            ),
+        ],
+    )
+    def test_add_pending_github_oidc_publisher_too_many_already(
+        self,
+        monkeypatch,
+        db_request,
+        view_name,
+        flag,
+        publisher_name,
+        make_publisher,
+        publisher_class,
+    ):
+        db_request.user = UserFactory.create()
+        EmailFactory(user=db_request.user, verified=True, primary=True)
+        for i in range(3):
+            pending_publisher = make_publisher(i, db_request.user.id)
+            db_request.db.add(pending_publisher)
+    
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = MultiDict(
+            {
+                "owner": "some-owner",
+                "repository": "some-repository",
+                "workflow_filename": "some-workflow-filename.yml",
+                "environment": "some-environment",
+                "project_name": "some-other-project-name",
+            }
+        )
+    
+        view = views.ManageAccountPublishingViews(db_request)
+    
+>       assert getattr(view, view_name)() == view.default_response
+E       AttributeError: 'ManageAccountPublishingViews' object has no attribute 'add_pending_google_oidc_publisher'
+
+tests/unit/accounts/test_views.py:3698: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_ratelimited[add_pending_google_oidc_publisher-Google] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f40354702d0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4030184290>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f402bebc7d0>
+view_name = 'add_pending_google_oidc_publisher', publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                "GitHub",
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                "Google",
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_ratelimited(
+        self, monkeypatch, pyramid_request, view_name, publisher_name
+    ):
+        pyramid_request.user = pretend.stub(
+            has_primary_verified_email=True,
+            pending_oidc_publishers=[],
+        )
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        pyramid_request.POST = MultiDict(
+            {
+                "owner": "some-owner",
+                "repository": "some-repository",
+                "workflow_filename": "some-workflow-filename.yml",
+                "environment": "some-environment",
+                "project_name": "some-other-project-name",
+            }
+        )
+    
+        view = views.ManageAccountPublishingViews(pyramid_request)
+        monkeypatch.setattr(
+            view,
+            "_check_ratelimits",
+            pretend.call_recorder(
+                pretend.raiser(
+                    TooManyOIDCRegistrations(
+                        resets_in=pretend.stub(total_seconds=lambda: 60)
+                    )
+                )
+            ),
+        )
+    
+>       assert isinstance(getattr(view, view_name)(), HTTPTooManyRequests)
+E       AttributeError: 'ManageAccountPublishingViews' object has no attribute 'add_pending_google_oidc_publisher'
+
+tests/unit/accounts/test_views.py:3779: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_invalid_form[add_pending_google_oidc_publisher-Google] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035451f50>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402beca290>
+db_request = <pyramid.testing.DummyRequest object at 0x7f402bf10a10>
+view_name = 'add_pending_google_oidc_publisher', publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                "GitHub",
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                "Google",
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_invalid_form(
+        self, monkeypatch, db_request, view_name, publisher_name
+    ):
+        db_request.user = pretend.stub(
+            has_primary_verified_email=True,
+            pending_oidc_publishers=[],
+        )
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = MultiDict(
+            {
+                "owner": "some-owner",
+                "repository": "some-repository",
+                "workflow_filename": "some-workflow-filename-without-extension",  # Fail
+                "environment": "some-environment",
+                "project_name": "some-other-project-name",
+            }
+        )
+    
+        view = views.ManageAccountPublishingViews(db_request)
+    
+        monkeypatch.setattr(
+            views.ManageAccountPublishingViews,
+            "default_response",
+            view.default_response,
+        )
+        monkeypatch.setattr(
+            views.PendingGitHubPublisherForm,
+            "_lookup_owner",
+            lambda *a: {"login": "some-owner", "id": "some-owner-id"},
+        )
+        monkeypatch.setattr(
+            views.PendingGitHubPublisherForm,
+            "validate_project_name",
+            lambda *a: True,
+        )
+        monkeypatch.setattr(
+            view, "_check_ratelimits", pretend.call_recorder(lambda: None)
+        )
+        monkeypatch.setattr(
+            view, "_hit_ratelimits", pretend.call_recorder(lambda: None)
+        )
+    
+>       assert getattr(view, view_name)() == view.default_response
+E       AttributeError: 'ManageAccountPublishingViews' object has no attribute 'add_pending_google_oidc_publisher'
+
+tests/unit/accounts/test_views.py:3856: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher_already_exists[add_pending_google_oidc_publisher-Google-<lambda>-post_body1] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035452410>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b84d1d0>
+db_request = <pyramid.testing.DummyRequest object at 0x7f402bbcfbd0>
+view_name = 'add_pending_google_oidc_publisher', publisher_name = 'Google'
+make_publisher = <function TestManageAccountPublishingViews.<lambda> at 0x7f403627e0c0>
+post_body = MultiDict([('email', 'some-email@example.com'), ('sub', 'some-sub'), ('project_name', 'some-project-name')])
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name, make_publisher, post_body",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                "GitHub",
+                lambda user_id: PendingGitHubPublisher(
+                    project_name="some-project-name",
+                    repository_name="some-repository",
+                    repository_owner="some-owner",
+                    repository_owner_id="some-owner-id",
+                    workflow_filename="some-workflow-filename.yml",
+                    environment="some-environment",
+                    added_by_id=user_id,
+                ),
+                MultiDict(
+                    {
+                        "owner": "some-owner",
+                        "repository": "some-repository",
+                        "workflow_filename": "some-workflow-filename.yml",
+                        "environment": "some-environment",
+                        "project_name": "some-project-name",
+                    }
+                ),
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                "Google",
+                lambda user_id: PendingGooglePublisher(
+                    project_name="some-project-name",
+                    email="some-email@example.com",
+                    sub="some-sub",
+                    added_by_id=user_id,
+                ),
+                MultiDict(
+                    {
+                        "email": "some-email@example.com",
+                        "sub": "some-sub",
+                        "project_name": "some-project-name",
+                    }
+                ),
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher_already_exists(
+        self,
+        monkeypatch,
+        db_request,
+        view_name,
+        publisher_name,
+        make_publisher,
+        post_body,
+    ):
+        db_request.user = UserFactory.create()
+        EmailFactory(user=db_request.user, verified=True, primary=True)
+        pending_publisher = make_publisher(db_request.user.id)
+        db_request.db.add(pending_publisher)
+        db_request.db.flush()  # To get it into the DB
+    
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = post_body
+    
+        view = views.ManageAccountPublishingViews(db_request)
+    
+        monkeypatch.setattr(
+            views.ManageAccountPublishingViews,
+            "default_response",
+            view.default_response,
+        )
+        monkeypatch.setattr(
+            views.PendingGitHubPublisherForm,
+            "_lookup_owner",
+            lambda *a: {"login": "some-owner", "id": "some-owner-id"},
+        )
+        monkeypatch.setattr(
+            view, "_check_ratelimits", pretend.call_recorder(lambda: None)
+        )
+        monkeypatch.setattr(
+            view, "_hit_ratelimits", pretend.call_recorder(lambda: None)
+        )
+    
+>       assert getattr(view, view_name)() == view.default_response
+E       AttributeError: 'ManageAccountPublishingViews' object has no attribute 'add_pending_google_oidc_publisher'
+
+tests/unit/accounts/test_views.py:3957: AttributeError
+_ TestManageAccountPublishingViews.test_add_pending_oidc_publisher[add_pending_google_oidc_publisher-Google-post_body1-PendingGooglePublisher] _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035452e10>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4034ce2fd0>
+db_request = <pyramid.testing.DummyRequest object at 0x7f40302787d0>
+view_name = 'add_pending_google_oidc_publisher', publisher_name = 'Google'
+publisher_class = <class 'warehouse.oidc.models.google.PendingGooglePublisher'>
+post_body = MultiDict([('email', 'some-email@example.com'), ('sub', 'some-sub'), ('project_name', 'some-project-name')])
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name, post_body, publisher_class",
+        [
+            (
+                "add_pending_github_oidc_publisher",
+                "GitHub",
+                MultiDict(
+                    {
+                        "owner": "some-owner",
+                        "repository": "some-repository",
+                        "workflow_filename": "some-workflow-filename.yml",
+                        "environment": "some-environment",
+                        "project_name": "some-project-name",
+                    }
+                ),
+                PendingGitHubPublisher,
+            ),
+            (
+                "add_pending_google_oidc_publisher",
+                "Google",
+                MultiDict(
+                    {
+                        "email": "some-email@example.com",
+                        "sub": "some-sub",
+                        "project_name": "some-project-name",
+                    }
+                ),
+                PendingGooglePublisher,
+            ),
+        ],
+    )
+    def test_add_pending_oidc_publisher(
+        self,
+        monkeypatch,
+        db_request,
+        view_name,
+        publisher_name,
+        publisher_class,
+        post_body,
+    ):
+        db_request.user = UserFactory()
+        db_request.user.record_event = pretend.call_recorder(lambda **kw: None)
+        EmailFactory(user=db_request.user, verified=True, primary=True)
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = post_body
+        monkeypatch.setattr(
+            views.PendingGitHubPublisherForm,
+            "_lookup_owner",
+            lambda *a: {"login": "some-owner", "id": "some-owner-id"},
+        )
+    
+        view = views.ManageAccountPublishingViews(db_request)
+    
+        monkeypatch.setattr(
+            view, "_check_ratelimits", pretend.call_recorder(lambda: None)
+        )
+        monkeypatch.setattr(
+            view, "_hit_ratelimits", pretend.call_recorder(lambda: None)
+        )
+    
+>       resp = getattr(view, view_name)()
+E       AttributeError: 'ManageAccountPublishingViews' object has no attribute 'add_pending_google_oidc_publisher'
+
+tests/unit/accounts/test_views.py:4047: AttributeError
+_ TestManageAccountPublishingViews.test_delete_pending_oidc_publisher_admin_disabled _
+
+self = <tests.unit.accounts.test_views.TestManageAccountPublishingViews object at 0x7f4035453150>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402bbdb0d0>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f402ba4a350>
+
+    def test_delete_pending_oidc_publisher_admin_disabled(
+        self, monkeypatch, pyramid_request
+    ):
+        pyramid_request.user = pretend.stub()
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: True)
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+    
+        project_factory = pretend.stub()
+        project_factory_cls = pretend.call_recorder(lambda r: project_factory)
+        monkeypatch.setattr(views, "ProjectFactory", project_factory_cls)
+    
+        pending_github_publisher_form_obj = pretend.stub()
+        pending_github_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_github_publisher_form_obj
+        )
+        monkeypatch.setattr(
+            views, "PendingGitHubPublisherForm", pending_github_publisher_form_cls
+        )
+        pending_google_publisher_form_obj = pretend.stub()
+        pending_google_publisher_form_cls = pretend.call_recorder(
+            lambda *a, **kw: pending_google_publisher_form_obj
+        )
+>       monkeypatch.setattr(
+            views, "PendingGooglePublisherForm", pending_google_publisher_form_cls
+        )
+E       AttributeError: <module 'warehouse.accounts.views' from '/workspace/repo/warehouse/accounts/views.py'> has no attribute 'PendingGooglePublisherForm'
+
+tests/unit/accounts/test_views.py:4123: AttributeError
+_______ TestManageOIDCPublisherViews.test_manage_project_oidc_publishers _______
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346bd790>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b546590>
+
+    def test_manage_project_oidc_publishers(self, monkeypatch):
+        project = pretend.stub(oidc_publishers=[])
+        request = pretend.stub(
+            user=pretend.stub(),
+            registry=pretend.stub(
+                settings={
+                    "github.token": "fake-api-token",
+                },
+            ),
+            find_service=lambda *a, **kw: None,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            POST=MultiDict(),
+        )
+    
+        view = views.ManageOIDCPublisherViews(project, request)
+        assert view.manage_project_oidc_publishers() == {
+            "disabled": {"GitHub": False, "Google": False},
+            "project": project,
+            "github_publisher_form": view.github_publisher_form,
+            "google_publisher_form": view.google_publisher_form,
+>       }
+E       AttributeError: 'ManageOIDCPublisherViews' object has no attribute 'google_publisher_form'
+
+tests/unit/manage/test_views.py:5842: AttributeError
+_ TestManageOIDCPublisherViews.test_manage_project_oidc_publishers_admin_disabled _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346bded0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b7185d0>
+pyramid_request = <pyramid.testing.DummyRequest object at 0x7f402b74e490>
+
+    def test_manage_project_oidc_publishers_admin_disabled(
+        self, monkeypatch, pyramid_request
+    ):
+        project = pretend.stub(oidc_publishers=[])
+        pyramid_request.user = pretend.stub()
+        pyramid_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            },
+        )
+        pyramid_request.find_service = lambda *a, **kw: None
+        pyramid_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: True)
+        )
+        pyramid_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        pyramid_request.POST = MultiDict()
+    
+        view = views.ManageOIDCPublisherViews(project, pyramid_request)
+    
+        assert view.manage_project_oidc_publishers() == {
+            "disabled": {"GitHub": True, "Google": True},
+            "project": project,
+            "github_publisher_form": view.github_publisher_form,
+            "google_publisher_form": view.google_publisher_form,
+>       }
+E       AttributeError: 'ManageOIDCPublisherViews' object has no attribute 'google_publisher_form'
+
+tests/unit/manage/test_views.py:5876: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_preexisting[add_github_oidc_publisher-publisher0-<lambda>] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346be550>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f403480de40>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f402b81dc60>, timed=<function metrics.<locals>.<lambda> at 0x7f402b81cc20>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b58a2d0>
+view_name = 'add_github_oidc_publisher'
+publisher = <stub(id='fakeid', publisher_name='GitHub', repository_name='fakerepo', publisher_url=<function TestManageOIDCPublishe...403425a480>, owner='fakeowner', owner_id='1234', workflow_filename='fakeworkflow.yml', environment='some-environment')>
+make_form = <function TestManageOIDCPublisherViews.<lambda> at 0x7f403425a520>
+
+    @pytest.mark.parametrize(
+        "view_name, publisher, make_form",
+        [
+            (
+                "add_github_oidc_publisher",
+                pretend.stub(
+                    id="fakeid",
+                    publisher_name="GitHub",
+                    repository_name="fakerepo",
+                    publisher_url=(
+                        lambda x=None: "https://github.com/fakeowner/fakerepo"
+                    ),
+                    owner="fakeowner",
+                    owner_id="1234",
+                    workflow_filename="fakeworkflow.yml",
+                    environment="some-environment",
+                ),
+                lambda publisher: pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    repository=pretend.stub(data=publisher.repository_name),
+                    normalized_owner=publisher.owner,
+                    workflow_filename=pretend.stub(data=publisher.workflow_filename),
+                    normalized_environment=publisher.environment,
+                ),
+            ),
+            (
+                "add_google_oidc_publisher",
+                pretend.stub(
+                    id="fakeid",
+                    publisher_name="Google",
+                    publisher_url=lambda x=None: None,
+                    email="some-environment@example.com",
+                    sub="some-sub",
+                ),
+                lambda publisher: pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    email=pretend.stub(data=publisher.email),
+                    sub=pretend.stub(data=publisher.sub),
+                ),
+            ),
+        ],
+    )
+    def test_add_oidc_publisher_preexisting(
+        self, metrics, monkeypatch, view_name, publisher, make_form
+    ):
+        # NOTE: Can't set __str__ using pretend.stub()
+        monkeypatch.setattr(publisher.__class__, "__str__", lambda s: "fakespecifier")
+    
+        project = pretend.stub(
+            name="fakeproject",
+            oidc_publishers=[],
+            record_event=pretend.call_recorder(lambda *a, **kw: None),
+            users=[],
+        )
+    
+        request = pretend.stub(
+            user=pretend.stub(
+                username="some-user",
+            ),
+            registry=pretend.stub(
+                settings={
+                    "github.token": "fake-api-token",
+                }
+            ),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            POST=pretend.stub(),
+            db=pretend.stub(
+                query=lambda *a: pretend.stub(
+                    filter=lambda *a: pretend.stub(one_or_none=lambda: publisher)
+                ),
+                add=pretend.call_recorder(lambda o: None),
+            ),
+            path="request-path",
+        )
+    
+        publisher_form_obj = make_form(publisher)
+        publisher_form_cls = pretend.call_recorder(lambda *a, **kw: publisher_form_obj)
+        monkeypatch.setattr(views, "GitHubPublisherForm", publisher_form_cls)
+>       monkeypatch.setattr(views, "GooglePublisherForm", publisher_form_cls)
+E       AttributeError: <module 'warehouse.manage.views' from '/workspace/repo/warehouse/manage/views/__init__.py'> has no attribute 'GooglePublisherForm'
+
+tests/unit/manage/test_views.py:5975: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_preexisting[add_google_oidc_publisher-publisher1-<lambda>] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346bf210>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f402b81d080>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f4034e82480>, timed=<function metrics.<locals>.<lambda> at 0x7f4034e81c60>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b440150>
+view_name = 'add_google_oidc_publisher'
+publisher = <stub(id='fakeid', publisher_name='Google', publisher_url=<function TestManageOIDCPublisherViews.<lambda> at 0x7f403425a5c0>, email='some-environment@example.com', sub='some-sub')>
+make_form = <function TestManageOIDCPublisherViews.<lambda> at 0x7f403425a660>
+
+    @pytest.mark.parametrize(
+        "view_name, publisher, make_form",
+        [
+            (
+                "add_github_oidc_publisher",
+                pretend.stub(
+                    id="fakeid",
+                    publisher_name="GitHub",
+                    repository_name="fakerepo",
+                    publisher_url=(
+                        lambda x=None: "https://github.com/fakeowner/fakerepo"
+                    ),
+                    owner="fakeowner",
+                    owner_id="1234",
+                    workflow_filename="fakeworkflow.yml",
+                    environment="some-environment",
+                ),
+                lambda publisher: pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    repository=pretend.stub(data=publisher.repository_name),
+                    normalized_owner=publisher.owner,
+                    workflow_filename=pretend.stub(data=publisher.workflow_filename),
+                    normalized_environment=publisher.environment,
+                ),
+            ),
+            (
+                "add_google_oidc_publisher",
+                pretend.stub(
+                    id="fakeid",
+                    publisher_name="Google",
+                    publisher_url=lambda x=None: None,
+                    email="some-environment@example.com",
+                    sub="some-sub",
+                ),
+                lambda publisher: pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    email=pretend.stub(data=publisher.email),
+                    sub=pretend.stub(data=publisher.sub),
+                ),
+            ),
+        ],
+    )
+    def test_add_oidc_publisher_preexisting(
+        self, metrics, monkeypatch, view_name, publisher, make_form
+    ):
+        # NOTE: Can't set __str__ using pretend.stub()
+        monkeypatch.setattr(publisher.__class__, "__str__", lambda s: "fakespecifier")
+    
+        project = pretend.stub(
+            name="fakeproject",
+            oidc_publishers=[],
+            record_event=pretend.call_recorder(lambda *a, **kw: None),
+            users=[],
+        )
+    
+        request = pretend.stub(
+            user=pretend.stub(
+                username="some-user",
+            ),
+            registry=pretend.stub(
+                settings={
+                    "github.token": "fake-api-token",
+                }
+            ),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            POST=pretend.stub(),
+            db=pretend.stub(
+                query=lambda *a: pretend.stub(
+                    filter=lambda *a: pretend.stub(one_or_none=lambda: publisher)
+                ),
+                add=pretend.call_recorder(lambda o: None),
+            ),
+            path="request-path",
+        )
+    
+        publisher_form_obj = make_form(publisher)
+        publisher_form_cls = pretend.call_recorder(lambda *a, **kw: publisher_form_obj)
+        monkeypatch.setattr(views, "GitHubPublisherForm", publisher_form_cls)
+>       monkeypatch.setattr(views, "GooglePublisherForm", publisher_form_cls)
+E       AttributeError: <module 'warehouse.manage.views' from '/workspace/repo/warehouse/manage/views/__init__.py'> has no attribute 'GooglePublisherForm'
+
+tests/unit/manage/test_views.py:5975: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_created[add_github_oidc_publisher-publisher_form_obj0-expected_publisher0] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346bf910>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f4034e83b00>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f402b6db6a0>, timed=<function metrics.<locals>.<lambda> at 0x7f402b6d91c0>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b6bbbd0>
+view_name = 'add_github_oidc_publisher'
+publisher_form_obj = <stub(validate=<function TestManageOIDCPublisherViews.<lambda> at 0x7f403425a840>, repository=<stub(data='fakerepo')>,...owner', workflow_filename=<stub(data='fakeworkflow.yml')>, normalized_environment='some-environment', owner_id='1234')>
+expected_publisher = <stub(publisher_name='GitHub')>
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_form_obj, expected_publisher",
+        [
+            (
+                "add_github_oidc_publisher",
+                pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    repository=pretend.stub(data="fakerepo"),
+                    normalized_owner="fakeowner",
+                    workflow_filename=pretend.stub(data="fakeworkflow.yml"),
+                    normalized_environment="some-environment",
+                    owner_id="1234",
+                ),
+                pretend.stub(publisher_name="GitHub"),
+            ),
+            (
+                "add_google_oidc_publisher",
+                pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    email=pretend.stub(data="some-environment@example.com"),
+                    sub=pretend.stub(data="some-sub"),
+                ),
+                "Google",
+            ),
+        ],
+    )
+    def test_add_oidc_publisher_created(
+        self, metrics, monkeypatch, view_name, publisher_form_obj, expected_publisher
+    ):
+        fakeuser = pretend.stub()
+        project = pretend.stub(
+            name="fakeproject",
+            oidc_publishers=[],
+            record_event=pretend.call_recorder(lambda *a, **kw: None),
+            users=[fakeuser],
+        )
+    
+        request = pretend.stub(
+            user=pretend.stub(
+                username="some-user",
+            ),
+            registry=pretend.stub(
+                settings={
+                    "github.token": "fake-api-token",
+                }
+            ),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            POST=pretend.stub(),
+            db=pretend.stub(
+                query=lambda *a: pretend.stub(
+                    filter=lambda *a: pretend.stub(one_or_none=lambda: None)
+                ),
+                add=pretend.call_recorder(lambda o: setattr(o, "id", "fakeid")),
+            ),
+            path="request-path",
+        )
+    
+        publisher_form_cls = pretend.call_recorder(lambda *a, **kw: publisher_form_obj)
+        monkeypatch.setattr(views, "GitHubPublisherForm", publisher_form_cls)
+>       monkeypatch.setattr(views, "GooglePublisherForm", publisher_form_cls)
+E       AttributeError: <module 'warehouse.manage.views' from '/workspace/repo/warehouse/manage/views/__init__.py'> has no attribute 'GooglePublisherForm'
+
+tests/unit/manage/test_views.py:6090: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_created[add_google_oidc_publisher-publisher_form_obj1-Google] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346bfb10>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f4034d2ad40>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f402bf78900>, timed=<function metrics.<locals>.<lambda> at 0x7f402bf782c0>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b990d10>
+view_name = 'add_google_oidc_publisher'
+publisher_form_obj = <stub(validate=<function TestManageOIDCPublisherViews.<lambda> at 0x7f403425a980>, email=<stub(data='some-environment@example.com')>, sub=<stub(data='some-sub')>)>
+expected_publisher = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_form_obj, expected_publisher",
+        [
+            (
+                "add_github_oidc_publisher",
+                pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    repository=pretend.stub(data="fakerepo"),
+                    normalized_owner="fakeowner",
+                    workflow_filename=pretend.stub(data="fakeworkflow.yml"),
+                    normalized_environment="some-environment",
+                    owner_id="1234",
+                ),
+                pretend.stub(publisher_name="GitHub"),
+            ),
+            (
+                "add_google_oidc_publisher",
+                pretend.stub(
+                    validate=pretend.call_recorder(lambda: True),
+                    email=pretend.stub(data="some-environment@example.com"),
+                    sub=pretend.stub(data="some-sub"),
+                ),
+                "Google",
+            ),
+        ],
+    )
+    def test_add_oidc_publisher_created(
+        self, metrics, monkeypatch, view_name, publisher_form_obj, expected_publisher
+    ):
+        fakeuser = pretend.stub()
+        project = pretend.stub(
+            name="fakeproject",
+            oidc_publishers=[],
+            record_event=pretend.call_recorder(lambda *a, **kw: None),
+            users=[fakeuser],
+        )
+    
+        request = pretend.stub(
+            user=pretend.stub(
+                username="some-user",
+            ),
+            registry=pretend.stub(
+                settings={
+                    "github.token": "fake-api-token",
+                }
+            ),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            POST=pretend.stub(),
+            db=pretend.stub(
+                query=lambda *a: pretend.stub(
+                    filter=lambda *a: pretend.stub(one_or_none=lambda: None)
+                ),
+                add=pretend.call_recorder(lambda o: setattr(o, "id", "fakeid")),
+            ),
+            path="request-path",
+        )
+    
+        publisher_form_cls = pretend.call_recorder(lambda *a, **kw: publisher_form_obj)
+        monkeypatch.setattr(views, "GitHubPublisherForm", publisher_form_cls)
+>       monkeypatch.setattr(views, "GooglePublisherForm", publisher_form_cls)
+E       AttributeError: <module 'warehouse.manage.views' from '/workspace/repo/warehouse/manage/views/__init__.py'> has no attribute 'GooglePublisherForm'
+
+tests/unit/manage/test_views.py:6090: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_already_registered_with_project[add_github_oidc_publisher-GitHub-publisher0-post_body0] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346cb950>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b478510>
+db_request = <pyramid.testing.DummyRequest object at 0x7f402b53ab50>
+view_name = 'add_github_oidc_publisher', publisher_name = 'GitHub'
+publisher = GitHubPublisher(discriminator='github_oidc_publishers', id=UUID('00ab7d8e-40ee-47f2-b135-0ab32c8794e5'), repository_na...some-owner', repository_owner_id='666', workflow_filename='some-workflow-filename.yml', environment='some-environment')
+post_body = MultiDict([('owner', 'some-owner'), ('repository', 'some-repository'), ('workflow_filename', 'some-workflow-filename.yml'), ('environment', 'some-environment')])
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name, publisher, post_body",
+        [
+            (
+                "add_github_oidc_publisher",
+                "GitHub",
+                GitHubPublisher(
+                    repository_name="some-repository",
+                    repository_owner="some-owner",
+                    repository_owner_id="666",
+                    workflow_filename="some-workflow-filename.yml",
+                    environment="some-environment",
+                ),
+                MultiDict(
+                    {
+                        "owner": "some-owner",
+                        "repository": "some-repository",
+                        "workflow_filename": "some-workflow-filename.yml",
+                        "environment": "some-environment",
+                    }
+                ),
+            ),
+            (
+                "add_google_oidc_publisher",
+                "Google",
+                GooglePublisher(
+                    email="some-email@example.com",
+                    sub="some-sub",
+                ),
+                MultiDict(
+                    {
+                        "email": "some-email@example.com",
+                        "sub": "some-sub",
+                    }
+                ),
+            ),
+        ],
+    )
+    def test_add_oidc_publisher_already_registered_with_project(
+        self, monkeypatch, db_request, view_name, publisher_name, publisher, post_body
+    ):
+        db_request.user = UserFactory.create()
+        EmailFactory(user=db_request.user, verified=True, primary=True)
+        db_request.db.add(publisher)
+        db_request.db.flush()  # To get it in the DB
+    
+        project = pretend.stub(
+            name="fakeproject",
+            oidc_publishers=[publisher],
+            record_event=pretend.call_recorder(lambda *a, **kw: None),
+        )
+    
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = post_body
+    
+        view = views.ManageOIDCPublisherViews(project, db_request)
+        monkeypatch.setattr(
+            views.GitHubPublisherForm,
+            "_lookup_owner",
+            lambda *a: {"login": "some-owner", "id": "some-owner-id"},
+        )
+    
+        monkeypatch.setattr(
+            view, "_hit_ratelimits", pretend.call_recorder(lambda: None)
+        )
+        monkeypatch.setattr(
+            view, "_check_ratelimits", pretend.call_recorder(lambda: None)
+        )
+    
+        assert getattr(view, view_name)() == {
+            "disabled": {"GitHub": False, "Google": False},
+            "project": project,
+            "github_publisher_form": view.github_publisher_form,
+            "google_publisher_form": view.google_publisher_form,
+>       }
+E       AttributeError: 'ManageOIDCPublisherViews' object has no attribute 'google_publisher_form'
+
+tests/unit/manage/test_views.py:6242: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_already_registered_with_project[add_google_oidc_publisher-Google-publisher1-post_body1] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346cbf10>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b388210>
+db_request = <pyramid.testing.DummyRequest object at 0x7f40300ecf50>
+view_name = 'add_google_oidc_publisher', publisher_name = 'Google'
+publisher = GooglePublisher(discriminator='google_oidc_publishers', id=UUID('c82d1c46-3fe4-42e6-a0ef-75c29dfe9365'), email='some-email@example.com', sub='some-sub')
+post_body = MultiDict([('email', 'some-email@example.com'), ('sub', 'some-sub')])
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name, publisher, post_body",
+        [
+            (
+                "add_github_oidc_publisher",
+                "GitHub",
+                GitHubPublisher(
+                    repository_name="some-repository",
+                    repository_owner="some-owner",
+                    repository_owner_id="666",
+                    workflow_filename="some-workflow-filename.yml",
+                    environment="some-environment",
+                ),
+                MultiDict(
+                    {
+                        "owner": "some-owner",
+                        "repository": "some-repository",
+                        "workflow_filename": "some-workflow-filename.yml",
+                        "environment": "some-environment",
+                    }
+                ),
+            ),
+            (
+                "add_google_oidc_publisher",
+                "Google",
+                GooglePublisher(
+                    email="some-email@example.com",
+                    sub="some-sub",
+                ),
+                MultiDict(
+                    {
+                        "email": "some-email@example.com",
+                        "sub": "some-sub",
+                    }
+                ),
+            ),
+        ],
+    )
+    def test_add_oidc_publisher_already_registered_with_project(
+        self, monkeypatch, db_request, view_name, publisher_name, publisher, post_body
+    ):
+        db_request.user = UserFactory.create()
+        EmailFactory(user=db_request.user, verified=True, primary=True)
+        db_request.db.add(publisher)
+        db_request.db.flush()  # To get it in the DB
+    
+        project = pretend.stub(
+            name="fakeproject",
+            oidc_publishers=[publisher],
+            record_event=pretend.call_recorder(lambda *a, **kw: None),
+        )
+    
+        db_request.registry = pretend.stub(
+            settings={
+                "github.token": "fake-api-token",
+            }
+        )
+        db_request.flags = pretend.stub(
+            disallow_oidc=pretend.call_recorder(lambda f=None: False)
+        )
+        db_request.session = pretend.stub(
+            flash=pretend.call_recorder(lambda *a, **kw: None)
+        )
+        db_request.POST = post_body
+    
+        view = views.ManageOIDCPublisherViews(project, db_request)
+        monkeypatch.setattr(
+            views.GitHubPublisherForm,
+            "_lookup_owner",
+            lambda *a: {"login": "some-owner", "id": "some-owner-id"},
+        )
+    
+        monkeypatch.setattr(
+            view, "_hit_ratelimits", pretend.call_recorder(lambda: None)
+        )
+        monkeypatch.setattr(
+            view, "_check_ratelimits", pretend.call_recorder(lambda: None)
+        )
+    
+>       assert getattr(view, view_name)() == {
+            "disabled": {"GitHub": False, "Google": False},
+            "project": project,
+            "github_publisher_form": view.github_publisher_form,
+            "google_publisher_form": view.google_publisher_form,
+        }
+E       AttributeError: 'ManageOIDCPublisherViews' object has no attribute 'add_google_oidc_publisher'
+
+tests/unit/manage/test_views.py:6237: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_ratelimited[add_google_oidc_publisher-Google] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346c8f10>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f402b7627a0>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f4035799f80>, timed=<function metrics.<locals>.<lambda> at 0x7f40357984a0>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402bbded50>
+view_name = 'add_google_oidc_publisher', publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name",
+        [
+            ("add_github_oidc_publisher", "GitHub"),
+            ("add_google_oidc_publisher", "Google"),
+        ],
+    )
+    def test_add_oidc_publisher_ratelimited(
+        self, metrics, monkeypatch, view_name, publisher_name
+    ):
+        project = pretend.stub()
+    
+        request = pretend.stub(
+            user=pretend.stub(),
+            registry=pretend.stub(settings={}),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            _=lambda s: s,
+            POST=MultiDict(),
+        )
+    
+        view = views.ManageOIDCPublisherViews(project, request)
+        monkeypatch.setattr(
+            view,
+            "_check_ratelimits",
+            pretend.call_recorder(
+                pretend.raiser(
+                    TooManyOIDCRegistrations(
+                        resets_in=pretend.stub(total_seconds=lambda: 60)
+                    )
+                )
+            ),
+        )
+    
+>       assert getattr(view, view_name)().__class__ == HTTPTooManyRequests
+E       AttributeError: 'ManageOIDCPublisherViews' object has no attribute 'add_google_oidc_publisher'
+
+tests/unit/manage/test_views.py:6293: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_admin_disabled[add_google_oidc_publisher-Google] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346c97d0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f40300cbd10>
+view_name = 'add_google_oidc_publisher', publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name",
+        [
+            ("add_github_oidc_publisher", "GitHub"),
+            ("add_google_oidc_publisher", "Google"),
+        ],
+    )
+    def test_add_oidc_publisher_admin_disabled(
+        self, monkeypatch, view_name, publisher_name
+    ):
+        project = pretend.stub()
+        request = pretend.stub(
+            user=pretend.stub(),
+            find_service=lambda *a, **kw: None,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: True)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            _=lambda s: s,
+            POST=MultiDict(),
+            registry=pretend.stub(settings={}),
+        )
+    
+        view = views.ManageOIDCPublisherViews(project, request)
+        default_response = {"_": pretend.stub()}
+        monkeypatch.setattr(
+            views.ManageOIDCPublisherViews, "default_response", default_response
+        )
+    
+>       assert getattr(view, view_name)() == default_response
+E       AttributeError: 'ManageOIDCPublisherViews' object has no attribute 'add_google_oidc_publisher'
+
+tests/unit/manage/test_views.py:6334: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_invalid_form[add_github_oidc_publisher-GitHub] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346cb090>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f4035fd31a0>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f403579b6a0>, timed=<function metrics.<locals>.<lambda> at 0x7f4035798ea0>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b31ea90>
+view_name = 'add_github_oidc_publisher', publisher_name = 'GitHub'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name",
+        [
+            ("add_github_oidc_publisher", "GitHub"),
+            ("add_google_oidc_publisher", "Google"),
+        ],
+    )
+    def test_add_oidc_publisher_invalid_form(
+        self, metrics, monkeypatch, view_name, publisher_name
+    ):
+        project = pretend.stub()
+        request = pretend.stub(
+            user=pretend.stub(),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            _=lambda s: s,
+            POST=MultiDict(),
+            registry=pretend.stub(settings={}),
+        )
+    
+        publisher_form_obj = pretend.stub(
+            validate=pretend.call_recorder(lambda: False),
+        )
+        publisher_form_cls = pretend.call_recorder(lambda *a, **kw: publisher_form_obj)
+        monkeypatch.setattr(views, "GitHubPublisherForm", publisher_form_cls)
+>       monkeypatch.setattr(views, "GooglePublisherForm", publisher_form_cls)
+E       AttributeError: <module 'warehouse.manage.views' from '/workspace/repo/warehouse/manage/views/__init__.py'> has no attribute 'GooglePublisherForm'
+
+tests/unit/manage/test_views.py:6374: AttributeError
+_ TestManageOIDCPublisherViews.test_add_oidc_publisher_invalid_form[add_google_oidc_publisher-Google] _
+
+self = <tests.unit.manage.test_views.TestManageOIDCPublisherViews object at 0x7f40346cb010>
+metrics = <stub(event=<function metrics.<locals>.<lambda> at 0x7f402b763d80>, gauge=<function metrics.<locals>.<lambda> at 0x7f4...=<function metrics.<locals>.<lambda> at 0x7f402b761d00>, timed=<function metrics.<locals>.<lambda> at 0x7f402b7607c0>)>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f402b215fd0>
+view_name = 'add_google_oidc_publisher', publisher_name = 'Google'
+
+    @pytest.mark.parametrize(
+        "view_name, publisher_name",
+        [
+            ("add_github_oidc_publisher", "GitHub"),
+            ("add_google_oidc_publisher", "Google"),
+        ],
+    )
+    def test_add_oidc_publisher_invalid_form(
+        self, metrics, monkeypatch, view_name, publisher_name
+    ):
+        project = pretend.stub()
+        request = pretend.stub(
+            user=pretend.stub(),
+            find_service=lambda *a, **kw: metrics,
+            flags=pretend.stub(
+                disallow_oidc=pretend.call_recorder(lambda f=None: False)
+            ),
+            session=pretend.stub(flash=pretend.call_recorder(lambda *a, **kw: None)),
+            _=lambda s: s,
+            POST=MultiDict(),
+            registry=pretend.stub(settings={}),
+        )
+    
+        publisher_form_obj = pretend.stub(
+            validate=pretend.call_recorder(lambda: False),
+        )
+        publisher_form_cls = pretend.call_recorder(lambda *a, **kw: publisher_form_obj)
+        monkeypatch.setattr(views, "GitHubPublisherForm", publisher_form_cls)
+>       monkeypatch.setattr(views, "GooglePublisherForm", publisher_form_cls)
+E       AttributeError: <module 'warehouse.manage.views' from '/workspace/repo/warehouse/manage/views/__init__.py'> has no attribute 'GooglePublisherForm'
+
+tests/unit/manage/test_views.py:6374: AttributeError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/webob/compat.py:5
+  /usr/local/lib/python3.11/site-packages/webob/compat.py:5: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    from cgi import parse_header
+
+../../usr/local/lib/python3.11/site-packages/passlib/utils/__init__.py:854
+  /usr/local/lib/python3.11/site-packages/passlib/utils/__init__.py:854: DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
+    from crypt import crypt as _crypt
+
+../../usr/local/lib/python3.11/site-packages/pydantic_core/core_schema.py:3928
+../../usr/local/lib/python3.11/site-packages/pydantic_core/core_schema.py:3928
+  /usr/local/lib/python3.11/site-packages/pydantic_core/core_schema.py:3928: DeprecationWarning: `FieldValidationInfo` is deprecated, use `ValidationInfo` instead.
+    warnings.warn(msg, DeprecationWarning, stacklevel=1)
+
+tests/unit/manage/test_views.py::TestManageProjects::test_manage_projects
+  /workspace/repo/tests/common/db/base.py:31: SAWarning: Identity map already had an identity for (<class 'warehouse.packaging.models.Project'>, (UUID('2249c0f6-25bb-4676-a2b4-62f023d2ada9'),), None), replacing it with newly flushed object.   Are there load operations occurring inside of an event handler within the flush?
+    session.flush()
+
+tests/unit/manage/test_views.py::TestManageProjects::test_manage_projects
+  /workspace/repo/tests/common/db/base.py:31: SAWarning: Identity map already had an identity for (<class 'warehouse.packaging.models.Project'>, (UUID('aa8aa9b5-093f-4665-a56e-240fddb04f16'),), None), replacing it with newly flushed object.   Are there load operations occurring inside of an event handler within the flush?
+    session.flush()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 20 durations =============================
+2.76s setup    tests/unit/accounts/test_views.py::TestFailedLoginView::test_too_many_failed_logins
+0.25s call     tests/unit/manage/test_views.py::TestManageProjectRoles::test_post_new_internal_role
+0.19s setup    tests/unit/accounts/test_views.py::TestLogin::test_post_validate_redirects[False]
+0.17s call     tests/unit/manage/test_views.py::TestManageProjects::test_manage_projects
+0.12s call     tests/unit/accounts/test_views.py::TestResetPassword::test_reset_password_last_login_changed
+0.11s teardown tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_delete_oidc_publisher_admin_disabled
+0.11s call     tests/unit/manage/test_views.py::TestManageProjectHistory::test_last_page
+0.11s call     tests/unit/manage/test_views.py::TestManageProjectHistory::test_first_page
+0.11s call     tests/unit/manage/test_views.py::TestManageProjectHistory::test_raises_404_with_out_of_range_page
+0.09s call     tests/unit/accounts/test_views.py::TestLogin::test_post_validate_redirects[True]
+0.07s call     tests/unit/accounts/test_views.py::TestVerifyOrganizationRole::test_verify_organization_role[Member]
+0.07s call     tests/unit/manage/test_views.py::TestManageProjectHistory::test_get
+0.07s call     tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_no_individual_owner
+0.07s call     tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_from_organization_owned
+0.07s call     tests/unit/manage/test_views.py::TestManageProjectSettings::test_transfer_organization_project_from_organization_managed
+0.07s call     tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release_file
+0.06s call     tests/unit/manage/test_views.py::TestProvisionTOTP::test_generate_totp_qr
+0.06s call     tests/unit/accounts/test_views.py::TestVerifyProjectRole::test_verify_project_role[Maintainer]
+0.06s call     tests/unit/manage/test_views.py::TestManageProjectRelease::test_delete_project_release
+0.06s call     tests/unit/manage/test_views.py::TestManageAccount::test_active_projects
+=========================== short test summary info ============================
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_manage_publishing
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_manage_publishing_admin_disabled
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_admin_disabled[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_admin_disabled[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_user_cannot_register[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_user_cannot_register[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_github_oidc_publisher_too_many_already[add_pending_github_oidc_publisher-AdminFlagValue.DISALLOW_GITHUB_OIDC-GitHub-<lambda>-PendingGitHubPublisher]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_github_oidc_publisher_too_many_already[add_pending_google_oidc_publisher-AdminFlagValue.DISALLOW_GOOGLE_OIDC-Google-<lambda>-PendingGooglePublisher]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_ratelimited[add_pending_google_oidc_publisher-Google]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_invalid_form[add_pending_google_oidc_publisher-Google]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher_already_exists[add_pending_google_oidc_publisher-Google-<lambda>-post_body1]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_add_pending_oidc_publisher[add_pending_google_oidc_publisher-Google-post_body1-PendingGooglePublisher]
+FAILED tests/unit/accounts/test_views.py::TestManageAccountPublishingViews::test_delete_pending_oidc_publisher_admin_disabled
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_manage_project_oidc_publishers
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_manage_project_oidc_publishers_admin_disabled
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_preexisting[add_github_oidc_publisher-publisher0-<lambda>]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_preexisting[add_google_oidc_publisher-publisher1-<lambda>]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_created[add_github_oidc_publisher-publisher_form_obj0-expected_publisher0]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_created[add_google_oidc_publisher-publisher_form_obj1-Google]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_already_registered_with_project[add_github_oidc_publisher-GitHub-publisher0-post_body0]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_already_registered_with_project[add_google_oidc_publisher-Google-publisher1-post_body1]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_ratelimited[add_google_oidc_publisher-Google]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_admin_disabled[add_google_oidc_publisher-Google]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_invalid_form[add_github_oidc_publisher-GitHub]
+FAILED tests/unit/manage/test_views.py::TestManageOIDCPublisherViews::test_add_oidc_publisher_invalid_form[add_google_oidc_publisher-Google]
+================= 25 failed, 314 passed, 6 warnings in 15.79s ==================
+reward=0 graded=339 found=0 failed=0 parsed=212 framework=pytest exit_code=1

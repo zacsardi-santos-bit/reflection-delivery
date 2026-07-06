@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cp /usr/local/lib/sambanova_conftest.py /workspace/repo/libs/community/tests/integration_tests/llms/conftest.py && pytest /workspace/repo/libs/community/tests/integration_tests/llms/test_sambanova.py -v",
+  "test_files": [
+    "libs/community/tests/integration_tests/llms/test_sambanova.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.integration_tests.llms.test_sambanova::test_sambaverse_call",
+    "tests.integration_tests.llms.test_sambanova::test_sambastudio_call"
+  ],
+  "PASS_TO_PASS": []
+}

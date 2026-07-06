@@ -1,0 +1,8 @@
+patching file xinference/api/restful_api.py
+patching file xinference/model/llm/__init__.py
+patching file xinference/model/llm/ggml/llamacpp.py
+patching file xinference/model/llm/ggml/qwen.py
+patching file xinference/model/llm/llm_family.json
+patching file xinference/model/llm/llm_family.py
+patching file xinference/model/llm/llm_family_modelscope.json
+patching file xinference/types.py

@@ -1,0 +1,13 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && node --expose-gc --experimental-import-meta-resolve --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --config config/jest.config.ts src/react/ssr/__tests__/useQueryEndToEnd.test.tsx --coverage=false --watchAll=false",
+  "test_files": [
+    "src/react/ssr/__tests__/useQueryEndToEnd.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/react/ssr/__tests__/useQueryEndToEnd.test.tsx::should not cause a hydration mismatch when both ssr: false and skip: true are set"
+  ],
+  "PASS_TO_PASS": []
+}

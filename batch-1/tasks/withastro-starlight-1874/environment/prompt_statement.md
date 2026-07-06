@@ -1,0 +1,5 @@
+I'm building a multilingual documentation site with Starlight and I find the sidebar configuration really repetitive. Every time I add a page link to the sidebar, I have to manually write out the label — even though the page already has a title in its frontmatter. For a multilingual site it's even worse: I have to copy in locale-specific labels for each language, which I've already defined in my translated content files.
+
+I'd like a way to just reference a page by its slug in the sidebar config, and have Starlight automatically pull in the page's frontmatter title as the navigation label. For multilingual content, it should pick the right translated title for the current locale automatically, and fall back to the default locale's title if a translation doesn't exist. I should also be able to use a plain string as a shorthand (instead of an object) for these simple internal page references.
+
+If I make a mistake — like accidentally putting a leading or trailing slash on a slug, or referencing a page that doesn't exist — I'd like to see a clear error message that tells me exactly what's wrong and how to fix it.

@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p shard --profile ci --no-fail-fast -E 'test(test_points_deduplication_with_deferred)'",
+  "test_files": [
+    "lib/shard/src/segment_holder/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) shard segment_holder::tests::test_points_deduplication_with_deferred",
+    "(2/2) shard segment_holder::tests::test_points_deduplication_with_deferred_randomized"
+  ],
+  "PASS_TO_PASS": []
+}

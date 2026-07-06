@@ -1,5 +1,0 @@
-patching file pkg/target/kusttarget.go
-patching file pkg/target/kusttarget_configplugin.go
-patching file pkg/transformers/namespace.go
-patching file plugin/builtin/NamespaceTransformer.go
-patching file plugin/builtin/namespacetransformer/NamespaceTransformer.go

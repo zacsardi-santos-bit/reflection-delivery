@@ -1,0 +1,1 @@
+node .yarn/releases/yarn-3.6.4.cjs install --immutable 2>&1 | tail -20 && CI=true node .yarn/releases/yarn-3.6.4.cjs build:shared 2>&1 | tail -20 && CI=true node_modules/.bin/env-cmd -e cra node_modules/.bin/craco test --env=jsdom --watchAll=false --runInBand --testPathPattern='user\.store\.test' --reporters=default

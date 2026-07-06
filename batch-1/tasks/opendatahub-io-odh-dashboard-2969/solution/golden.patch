@@ -1,0 +1,1755 @@
+diff --git a/frontend/src/__mocks__/mockRoleBindingK8sResource.ts b/frontend/src/__mocks__/mockRoleBindingK8sResource.ts
+index b67c63a4a..4fec42177 100644
+--- a/frontend/src/__mocks__/mockRoleBindingK8sResource.ts
++++ b/frontend/src/__mocks__/mockRoleBindingK8sResource.ts
+@@ -1,6 +1,5 @@
+ import { genUID } from '~/__mocks__/mockUtils';
+-import { KnownLabels, RoleBindingKind } from '~/k8sTypes';
+-import { RoleBindingSubject } from '~/types';
++import { KnownLabels, RoleBindingKind, RoleBindingSubject } from '~/k8sTypes';
+ 
+ type MockResourceConfigType = {
+   name?: string;
+@@ -8,6 +7,7 @@ type MockResourceConfigType = {
+   subjects?: RoleBindingSubject[];
+   roleRefName?: string;
+   uid?: string;
++  modelRegistryName?: string;
+ };
+ 
+ export const mockRoleBindingK8sResource = ({
+@@ -22,22 +22,38 @@ export const mockRoleBindingK8sResource = ({
+   ],
+   roleRefName = 'view',
+   uid = genUID('rolebinding'),
+-}: MockResourceConfigType): RoleBindingKind => ({
+-  kind: 'RoleBinding',
+-  apiVersion: 'rbac.authorization.k8s.io/v1',
+-  metadata: {
+-    name,
+-    namespace,
+-    uid,
+-    creationTimestamp: '2023-02-14T21:43:59Z',
+-    labels: {
++  modelRegistryName = '',
++}: MockResourceConfigType): RoleBindingKind => {
++  let labels;
++  if (modelRegistryName) {
++    labels = {
++      'app.kubernetes.io/name': modelRegistryName,
++      app: modelRegistryName,
++      'app.kubernetes.io/component': 'model-registry',
++      'app.kubernetes.io/part-of': 'model-registry',
+       [KnownLabels.DASHBOARD_RESOURCE]: 'true',
++      component: 'model-registry',
++    };
++  } else {
++    labels = {
++      [KnownLabels.DASHBOARD_RESOURCE]: 'true',
++    };
++  }
++  return {
++    kind: 'RoleBinding',
++    apiVersion: 'rbac.authorization.k8s.io/v1',
++    metadata: {
++      name,
++      namespace,
++      uid,
++      creationTimestamp: '2023-02-14T21:43:59Z',
++      labels,
++    },
++    subjects,
++    roleRef: {
++      apiGroup: 'rbac.authorization.k8s.io',
++      kind: modelRegistryName ? 'Role' : 'ClusterRole',
++      name: roleRefName,
+     },
+-  },
+-  subjects,
+-  roleRef: {
+-    apiGroup: 'rbac.authorization.k8s.io',
+-    kind: 'ClusterRole',
+-    name: roleRefName,
+-  },
+-});
++  };
++};
+diff --git a/frontend/src/api/k8s/roleBindings.ts b/frontend/src/api/k8s/roleBindings.ts
+index d1ff629b0..7805523b5 100644
+--- a/frontend/src/api/k8s/roleBindings.ts
++++ b/frontend/src/api/k8s/roleBindings.ts
+@@ -6,15 +6,20 @@ import {
+   k8sListResource,
+   k8sPatchResource,
+   K8sStatus,
++  K8sResourceCommon,
+ } from '@openshift/dynamic-plugin-sdk-utils';
+-import { K8sAPIOptions, KnownLabels, RoleBindingKind } from '~/k8sTypes';
+-import { RoleBindingModel } from '~/api/models';
+ import {
+-  ProjectSharingRBType,
+-  ProjectSharingRoleType,
+-} from '~/pages/projects/projectSharing/types';
++  K8sAPIOptions,
++  KnownLabels,
++  RoleBindingKind,
++  RoleBindingRoleRef,
++  RoleBindingSubject,
++} from '~/k8sTypes';
++import { RoleBindingModel } from '~/api/models';
+ import { genRandomChars } from '~/utilities/string';
+ import { applyK8sAPIOptions } from '~/api/apiMergeUtils';
++import { RoleBindingPermissionsRoleType } from '~/concepts/roleBinding/types';
++import { addOwnerReference } from '~/api/k8sUtils';
+ 
+ export const generateRoleBindingServingRuntime = (
+   name: string,
+@@ -46,11 +51,17 @@ export const generateRoleBindingServingRuntime = (
+   return roleBindingObject;
+ };
+ 
+-export const generateRoleBindingProjectSharing = (
++export const generateRoleBindingPermissions = (
+   namespace: string,
+-  rbSubjectType: ProjectSharingRBType,
+-  rbSubjectName: string,
+-  rbRoleRefType: ProjectSharingRoleType,
++  rbSubjectKind: RoleBindingSubject['kind'],
++  rbSubjectName: RoleBindingSubject['name'],
++  rbRoleRefName: RoleBindingPermissionsRoleType | string, //string because with MR this can include MR name
++  rbRoleRefKind: RoleBindingRoleRef['kind'],
++  rbLabels: { [key: string]: string } = {
++    [KnownLabels.DASHBOARD_RESOURCE]: 'true',
++    [KnownLabels.PROJECT_SHARING]: 'true',
++  },
++  ownerReference?: K8sResourceCommon,
+ ): RoleBindingKind => {
+   const roleBindingObject: RoleBindingKind = {
+     apiVersion: 'rbac.authorization.k8s.io/v1',
+@@ -58,25 +69,22 @@ export const generateRoleBindingProjectSharing = (
+     metadata: {
+       name: `dashboard-permissions-${genRandomChars()}`,
+       namespace,
+-      labels: {
+-        [KnownLabels.DASHBOARD_RESOURCE]: 'true',
+-        [KnownLabels.PROJECT_SHARING]: 'true',
+-      },
++      labels: rbLabels,
+     },
+     roleRef: {
+       apiGroup: 'rbac.authorization.k8s.io',
+-      kind: 'ClusterRole',
+-      name: rbRoleRefType,
++      kind: rbRoleRefKind,
++      name: rbRoleRefName,
+     },
+     subjects: [
+       {
+         apiGroup: 'rbac.authorization.k8s.io',
+-        kind: rbSubjectType,
++        kind: rbSubjectKind,
+         name: rbSubjectName,
+       },
+     ],
+   };
+-  return roleBindingObject;
++  return addOwnerReference(roleBindingObject, ownerReference);
+ };
+ 
+ export const listRoleBindings = (
+diff --git a/frontend/src/app/AppRoutes.tsx b/frontend/src/app/AppRoutes.tsx
+index 468b0fb35..cc6ee4516 100644
+--- a/frontend/src/app/AppRoutes.tsx
++++ b/frontend/src/app/AppRoutes.tsx
+@@ -13,6 +13,7 @@ import {
+ import { useCheckJupyterEnabled } from '~/utilities/notebookControllerUtils';
+ import { SupportedArea } from '~/concepts/areas';
+ import useIsAreaAvailable from '~/concepts/areas/useIsAreaAvailable';
++import ModelRegistrySettingsRoutes from '~/pages/modelRegistrySettings/ModelRegistrySettingsRoutes';
+ 
+ const HomePage = React.lazy(() => import('../pages/home/Home'));
+ 
+@@ -49,9 +50,6 @@ const ClusterSettingsPage = React.lazy(() => import('../pages/clusterSettings/Cl
+ const CustomServingRuntimeRoutes = React.lazy(
+   () => import('../pages/modelServing/customServingRuntimes/CustomServingRuntimeRoutes'),
+ );
+-const ModelRegistrySettingsPage = React.lazy(
+-  () => import('../pages/modelRegistrySettings/ModelRegistrySettings'),
+-);
+ const GroupSettingsPage = React.lazy(() => import('../pages/groupSettings/GroupSettings'));
+ const LearningCenterPage = React.lazy(() => import('../pages/learningCenter/LearningCenter'));
+ const BYONImagesPage = React.lazy(() => import('../pages/BYONImages/BYONImages'));
+@@ -125,7 +123,7 @@ const AppRoutes: React.FC = () => {
+             <Route path="/clusterSettings" element={<ClusterSettingsPage />} />
+             <Route path="/acceleratorProfiles/*" element={<AcceleratorProfileRoutes />} />
+             <Route path="/servingRuntimes/*" element={<CustomServingRuntimeRoutes />} />
+-            <Route path="/modelRegistrySettings" element={<ModelRegistrySettingsPage />} />
++            <Route path="/modelRegistrySettings/*" element={<ModelRegistrySettingsRoutes />} />
+             <Route path="/groupSettings" element={<GroupSettingsPage />} />
+           </>
+         )}
+diff --git a/frontend/src/concepts/roleBinding/RoleBindingPermissions.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissions.tsx
+new file mode 100644
+index 000000000..105f7d98d
+--- /dev/null
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissions.tsx
+@@ -0,0 +1,139 @@
++import * as React from 'react';
++import {
++  EmptyState,
++  EmptyStateBody,
++  EmptyStateIcon,
++  EmptyStateVariant,
++  PageSection,
++  Spinner,
++  Stack,
++  StackItem,
++  EmptyStateHeader,
++} from '@patternfly/react-core';
++import { ExclamationCircleIcon } from '@patternfly/react-icons';
++import { K8sResourceCommon } from '@openshift/dynamic-plugin-sdk-utils';
++import { GroupKind, RoleBindingKind, RoleBindingRoleRef } from '~/k8sTypes';
++import { ProjectSectionID } from '~/pages/projects/screens/detail/types';
++import { ContextResourceData } from '~/types';
++import RoleBindingPermissionsTableSection from './RoleBindingPermissionsTableSection';
++import { RoleBindingPermissionsRBType, RoleBindingPermissionsRoleType } from './types';
++import { filterRoleBindingSubjects } from './utils';
++
++type RoleBindingPermissionsProps = {
++  ownerReference?: K8sResourceCommon;
++  roleBindingPermissionsRB: ContextResourceData<RoleBindingKind>;
++  defaultRoleBindingName?: string;
++  permissionOptions: {
++    type: RoleBindingPermissionsRoleType;
++    description: string;
++  }[];
++  projectName: string;
++  roleRefKind: RoleBindingRoleRef['kind'];
++  roleRefName?: RoleBindingRoleRef['name'];
++  labels?: { [key: string]: string };
++  description: React.ReactElement | string;
++  groups: GroupKind[];
++  isGroupFirst?: boolean;
++};
++
++const RoleBindingPermissions: React.FC<RoleBindingPermissionsProps> = ({
++  ownerReference,
++  roleBindingPermissionsRB,
++  defaultRoleBindingName,
++  permissionOptions,
++  projectName,
++  roleRefKind,
++  roleRefName,
++  labels,
++  description,
++  groups,
++  isGroupFirst = false,
++}) => {
++  const {
++    data: roleBindings,
++    loaded,
++    error: loadError,
++    refresh: refreshRB,
++  } = roleBindingPermissionsRB;
++  if (loadError) {
++    return (
++      <EmptyState
++        variant={EmptyStateVariant.lg}
++        data-id="error-empty-state"
++        id={ProjectSectionID.PERMISSIONS}
++      >
++        <EmptyStateHeader
++          titleText="There was an issue loading permissions."
++          icon={<EmptyStateIcon icon={ExclamationCircleIcon} />}
++          headingLevel="h2"
++        />
++        <EmptyStateBody>{loadError.message}</EmptyStateBody>
++      </EmptyState>
++    );
++  }
++
++  if (!loaded) {
++    return (
++      <EmptyState
++        variant={EmptyStateVariant.lg}
++        data-id="loading-empty-state"
++        id={ProjectSectionID.PERMISSIONS}
++      >
++        <Spinner size="xl" />
++        <EmptyStateHeader titleText="Loading" headingLevel="h2" />
++      </EmptyState>
++    );
++  }
++
++  const userTable = (
++    <RoleBindingPermissionsTableSection
++      ownerReference={ownerReference}
++      defaultRoleBindingName={defaultRoleBindingName}
++      projectName={projectName}
++      roleRefKind={roleRefKind}
++      roleRefName={roleRefName}
++      labels={labels}
++      permissionOptions={permissionOptions}
++      roleBindings={filterRoleBindingSubjects(roleBindings, RoleBindingPermissionsRBType.USER)}
++      subjectKind={RoleBindingPermissionsRBType.USER}
++      refresh={refreshRB}
++      typeModifier="user"
++    />
++  );
++
++  const groupTable = (
++    <RoleBindingPermissionsTableSection
++      ownerReference={ownerReference}
++      defaultRoleBindingName={defaultRoleBindingName}
++      projectName={projectName}
++      roleRefKind={roleRefKind}
++      roleRefName={roleRefName}
++      permissionOptions={permissionOptions}
++      labels={labels}
++      roleBindings={filterRoleBindingSubjects(roleBindings, RoleBindingPermissionsRBType.GROUP)}
++      subjectKind={RoleBindingPermissionsRBType.GROUP}
++      refresh={refreshRB}
++      typeAhead={
++        groups.length > 0 ? groups.map((group: GroupKind) => group.metadata.name) : undefined
++      }
++      typeModifier="group"
++    />
++  );
++
++  return (
++    <PageSection
++      isFilled
++      aria-label="project-sharing-page-section"
++      variant="light"
++      id={ProjectSectionID.PERMISSIONS}
++    >
++      <Stack hasGutter>
++        <StackItem>{description}</StackItem>
++        <StackItem>{isGroupFirst ? groupTable : userTable}</StackItem>
++        <StackItem>{isGroupFirst ? userTable : groupTable}</StackItem>
++      </Stack>
++    </PageSection>
++  );
++};
++
++export default RoleBindingPermissions;
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharingNameInput.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissionsNameInput.tsx
+similarity index 68%
+rename from frontend/src/pages/projects/projectSharing/ProjectSharingNameInput.tsx
+rename to frontend/src/concepts/roleBinding/RoleBindingPermissionsNameInput.tsx
+index 0c6c6d1fe..3be122a65 100644
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharingNameInput.tsx
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissionsNameInput.tsx
+@@ -1,10 +1,11 @@
+ import React from 'react';
+ import { TextInput } from '@patternfly/react-core';
+ import { Select, SelectOption, SelectVariant } from '@patternfly/react-core/deprecated';
+-import { ProjectSharingRBType } from '~/pages/projects/projectSharing/types';
++import { RoleBindingSubject } from '~/k8sTypes';
++import { RoleBindingPermissionsRBType } from './types';
+ 
+-type ProjectSharingNameInputProps = {
+-  type: ProjectSharingRBType;
++type RoleBindingPermissionsNameInputProps = {
++  subjectKind: RoleBindingSubject['kind'];
+   value: string;
+   onChange: (selection: string) => void;
+   onClear: () => void;
+@@ -12,8 +13,8 @@ type ProjectSharingNameInputProps = {
+   typeAhead?: string[];
+ };
+ 
+-const ProjectSharingNameInput: React.FC<ProjectSharingNameInputProps> = ({
+-  type,
++const RoleBindingPermissionsNameInput: React.FC<RoleBindingPermissionsNameInputProps> = ({
++  subjectKind,
+   value,
+   onChange,
+   onClear,
+@@ -25,12 +26,14 @@ const ProjectSharingNameInput: React.FC<ProjectSharingNameInputProps> = ({
+   if (!typeAhead) {
+     return (
+       <TextInput
+-        data-testid={`project-sharing-name-input ${value}`}
++        data-testid={`role-binding-name-input ${value}`}
+         isRequired
+-        aria-label="project-sharing-name-input"
++        aria-label="role-binding-name-input"
+         type="text"
+         value={value}
+-        placeholder={`Type ${type === ProjectSharingRBType.GROUP ? 'group name' : 'username'}`}
++        placeholder={`Type ${
++          subjectKind === RoleBindingPermissionsRBType.GROUP ? 'group name' : 'username'
++        }`}
+         onChange={(e, newValue) => onChange(newValue)}
+       />
+     );
+@@ -63,4 +66,4 @@ const ProjectSharingNameInput: React.FC<ProjectSharingNameInputProps> = ({
+   );
+ };
+ 
+-export default ProjectSharingNameInput;
++export default RoleBindingPermissionsNameInput;
+diff --git a/frontend/src/concepts/roleBinding/RoleBindingPermissionsPermissionSelection.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissionsPermissionSelection.tsx
+new file mode 100644
+index 000000000..e6941e6a0
+--- /dev/null
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissionsPermissionSelection.tsx
+@@ -0,0 +1,43 @@
++import { Select, SelectOption } from '@patternfly/react-core/deprecated';
++import React from 'react';
++import { RoleBindingPermissionsRoleType } from './types';
++import { castRoleBindingPermissionsRoleType, roleLabel } from './utils';
++
++type RoleBindingPermissionsPermissionSelectionProps = {
++  selection: string;
++  permissionOptions: {
++    type: RoleBindingPermissionsRoleType;
++    description: string;
++  }[];
++  onSelect: (roleType: RoleBindingPermissionsRoleType) => void;
++};
++
++const RoleBindingPermissionsPermissionSelection: React.FC<
++  RoleBindingPermissionsPermissionSelectionProps
++> = ({ selection, onSelect, permissionOptions }) => {
++  const [isOpen, setIsOpen] = React.useState(false);
++
++  return (
++    <Select
++      selections={selection}
++      isOpen={isOpen}
++      onSelect={(e, newSelection) => {
++        if (typeof newSelection === 'string') {
++          onSelect(castRoleBindingPermissionsRoleType(newSelection));
++          setIsOpen(false);
++        }
++      }}
++      onToggle={(e, val) => setIsOpen(val)}
++      placeholderText={selection}
++      direction="down"
++    >
++      {permissionOptions.map((option) => (
++        <SelectOption key={option.type} value={option.type} description={option.description}>
++          {roleLabel(option.type)}
++        </SelectOption>
++      ))}
++    </Select>
++  );
++};
++
++export default RoleBindingPermissionsPermissionSelection;
+diff --git a/frontend/src/concepts/roleBinding/RoleBindingPermissionsTable.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTable.tsx
+new file mode 100644
+index 000000000..a40c8d06a
+--- /dev/null
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTable.tsx
+@@ -0,0 +1,134 @@
++import * as React from 'react';
++import { K8sResourceCommon } from '@openshift/dynamic-plugin-sdk-utils';
++import { Table } from '~/components/table';
++import { RoleBindingKind, RoleBindingRoleRef, RoleBindingSubject } from '~/k8sTypes';
++import { deleteRoleBinding, generateRoleBindingPermissions, createRoleBinding } from '~/api';
++import RoleBindingPermissionsTableRow from './RoleBindingPermissionsTableRow';
++import { columnsRoleBindingPermissions } from './data';
++import { RoleBindingPermissionsRoleType } from './types';
++import { firstSubject } from './utils';
++import RoleBindingPermissionsTableRowAdd from './RoleBindingPermissionsTableRowAdd';
++
++type RoleBindingPermissionsTableProps = {
++  ownerReference?: K8sResourceCommon;
++  subjectKind: RoleBindingSubject['kind'];
++  namespace: string;
++  roleRefKind: RoleBindingRoleRef['kind'];
++  roleRefName?: RoleBindingRoleRef['name'];
++  labels?: { [key: string]: string };
++  defaultRoleBindingName?: string;
++  permissions: RoleBindingKind[];
++  permissionOptions: {
++    type: RoleBindingPermissionsRoleType;
++    description: string;
++  }[];
++  isAdding: boolean;
++  typeAhead?: string[];
++  onDismissNewRow: () => void;
++  onError: (error: Error) => void;
++  refresh: () => void;
++};
++
++const RoleBindingPermissionsTable: React.FC<RoleBindingPermissionsTableProps> = ({
++  ownerReference,
++  subjectKind,
++  namespace,
++  roleRefKind,
++  roleRefName,
++  labels,
++  defaultRoleBindingName,
++  permissions,
++  permissionOptions,
++  typeAhead,
++  isAdding,
++  onDismissNewRow,
++  onError,
++  refresh,
++}) => {
++  const [editCell, setEditCell] = React.useState<string[]>([]);
++  return (
++    <Table
++      variant="compact"
++      data={permissions}
++      data-testid={`role-binding-table ${subjectKind}`}
++      columns={columnsRoleBindingPermissions}
++      disableRowRenderSupport
++      footerRow={() =>
++        isAdding ? (
++          <RoleBindingPermissionsTableRowAdd
++            key="add-permission-row"
++            subjectKind={subjectKind}
++            permissionOptions={permissionOptions}
++            typeAhead={typeAhead}
++            onChange={(subjectName, rbRoleRefName) => {
++              const newRBObject = generateRoleBindingPermissions(
++                namespace,
++                subjectKind,
++                subjectName,
++                roleRefName || rbRoleRefName,
++                roleRefKind,
++                labels,
++                ownerReference,
++              );
++              createRoleBinding(newRBObject)
++                .then(() => {
++                  onDismissNewRow();
++                  refresh();
++                })
++                .catch((e) => {
++                  onError(e);
++                });
++            }}
++            onCancel={onDismissNewRow}
++          />
++        ) : null
++      }
++      rowRenderer={(rb) => (
++        <RoleBindingPermissionsTableRow
++          defaultRoleBindingName={defaultRoleBindingName}
++          key={rb.metadata.name || ''}
++          permissionOptions={permissionOptions}
++          roleBindingObject={rb}
++          subjectKind={subjectKind}
++          isEditing={firstSubject(rb) === '' || editCell.includes(rb.metadata.name)}
++          typeAhead={typeAhead}
++          onChange={(subjectName, rbRoleRefName) => {
++            const newRBObject = generateRoleBindingPermissions(
++              namespace,
++              subjectKind,
++              subjectName,
++              roleRefName || rbRoleRefName,
++              roleRefKind,
++              labels,
++              ownerReference,
++            );
++            createRoleBinding(newRBObject)
++              .then(() =>
++                deleteRoleBinding(rb.metadata.name, rb.metadata.namespace)
++                  .then(() => refresh())
++                  .catch((e) => {
++                    onError(e);
++                    setEditCell((prev) => prev.filter((cell) => cell !== rb.metadata.name));
++                  }),
++              )
++              .catch((e) => {
++                onError(e);
++                setEditCell((prev) => prev.filter((cell) => cell !== rb.metadata.name));
++              });
++            refresh();
++          }}
++          onDelete={() => {
++            deleteRoleBinding(rb.metadata.name, rb.metadata.namespace).then(() => refresh());
++          }}
++          onEdit={() => {
++            setEditCell((prev) => [...prev, rb.metadata.name]);
++          }}
++          onCancel={() => {
++            setEditCell((prev) => prev.filter((cell) => cell !== rb.metadata.name));
++          }}
++        />
++      )}
++    />
++  );
++};
++export default RoleBindingPermissionsTable;
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharingTableRow.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRow.tsx
+similarity index 62%
+rename from frontend/src/pages/projects/projectSharing/ProjectSharingTableRow.tsx
+rename to frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRow.tsx
+index e000cba1a..94f1515c0 100644
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharingTableRow.tsx
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRow.tsx
+@@ -2,38 +2,48 @@ import * as React from 'react';
+ import { ActionsColumn, Tbody, Td, Tr } from '@patternfly/react-table';
+ import {
+   Button,
++  Icon,
+   Split,
+   SplitItem,
+   Text,
+   Timestamp,
+   TimestampTooltipVariant,
++  Tooltip,
+ } from '@patternfly/react-core';
+-import { CheckIcon, TimesIcon } from '@patternfly/react-icons';
+-import { RoleBindingKind } from '~/k8sTypes';
++import { CheckIcon, OutlinedQuestionCircleIcon, TimesIcon } from '@patternfly/react-icons';
++import { RoleBindingKind, RoleBindingSubject } from '~/k8sTypes';
+ import { relativeTime } from '~/utilities/time';
+-import { castProjectSharingRoleType, firstSubject, roleLabel } from './utils';
+-import { ProjectSharingRBType, ProjectSharingRoleType } from './types';
+-import ProjectSharingNameInput from './ProjectSharingNameInput';
+-import ProjectSharingPermissionSelection from './ProjectSharingPermissionSelection';
++import { castRoleBindingPermissionsRoleType, firstSubject, roleLabel } from './utils';
++import { RoleBindingPermissionsRoleType } from './types';
++import RoleBindingPermissionsNameInput from './RoleBindingPermissionsNameInput';
++import RoleBindingPermissionsPermissionSelection from './RoleBindingPermissionsPermissionSelection';
+ 
+-type ProjectSharingTableRowProps = {
+-  obj: RoleBindingKind;
+-  type: ProjectSharingRBType;
++type RoleBindingPermissionsTableRowProps = {
++  roleBindingObject: RoleBindingKind;
++  subjectKind: RoleBindingSubject['kind'];
+   isEditing: boolean;
++  defaultRoleBindingName?: string;
++  permissionOptions: {
++    type: RoleBindingPermissionsRoleType;
++    description: string;
++  }[];
+   typeAhead?: string[];
+-  onChange: (name: string, roleType: ProjectSharingRoleType) => void;
++  onChange: (name: string, roleType: RoleBindingPermissionsRoleType) => void;
+   onCancel: () => void;
+   onEdit: () => void;
+   onDelete: () => void;
+ };
+ 
+ const defaultValueName = (obj: RoleBindingKind) => firstSubject(obj);
+-const defaultValueRole = (obj: RoleBindingKind) => castProjectSharingRoleType(obj.roleRef.name);
++const defaultValueRole = (obj: RoleBindingKind) =>
++  castRoleBindingPermissionsRoleType(obj.roleRef.name);
+ 
+-const ProjectSharingTableRow: React.FC<ProjectSharingTableRowProps> = ({
+-  obj,
+-  type,
++const RoleBindingPermissionsTableRow: React.FC<RoleBindingPermissionsTableRowProps> = ({
++  roleBindingObject: obj,
++  subjectKind,
+   isEditing,
++  defaultRoleBindingName,
++  permissionOptions,
+   typeAhead,
+   onChange,
+   onCancel,
+@@ -41,19 +51,19 @@ const ProjectSharingTableRow: React.FC<ProjectSharingTableRowProps> = ({
+   onDelete,
+ }) => {
+   const [roleBindingName, setRoleBindingName] = React.useState(defaultValueName(obj));
+-  const [roleBindingRoleRef, setRoleBindingRoleRef] = React.useState<ProjectSharingRoleType>(
+-    defaultValueRole(obj),
+-  );
++  const [roleBindingRoleRef, setRoleBindingRoleRef] =
++    React.useState<RoleBindingPermissionsRoleType>(defaultValueRole(obj));
+   const [isLoading, setIsLoading] = React.useState(false);
+   const createdDate = new Date(obj.metadata.creationTimestamp || '');
++  const isDefaultGroup = obj.metadata.name === defaultRoleBindingName;
+ 
+   return (
+     <Tbody>
+       <Tr>
+         <Td dataLabel="Username">
+           {isEditing ? (
+-            <ProjectSharingNameInput
+-              type={type}
++            <RoleBindingPermissionsNameInput
++              subjectKind={subjectKind}
+               value={roleBindingName}
+               onChange={(selection) => {
+                 setRoleBindingName(selection);
+@@ -63,12 +73,29 @@ const ProjectSharingTableRow: React.FC<ProjectSharingTableRowProps> = ({
+               typeAhead={typeAhead}
+             />
+           ) : (
+-            <Text>{roleBindingName}</Text>
++            <Text>
++              {roleBindingName}
++              {` `}
++              {isDefaultGroup && (
++                <Tooltip
++                  content={
++                    <div>
++                      This group is created by default. You can add users to this group via the API.
++                    </div>
++                  }
++                >
++                  <Icon>
++                    <OutlinedQuestionCircleIcon />
++                  </Icon>
++                </Tooltip>
++              )}
++            </Text>
+           )}
+         </Td>
+         <Td dataLabel="Permission">
+-          {isEditing ? (
+-            <ProjectSharingPermissionSelection
++          {isEditing && permissionOptions.length > 1 ? (
++            <RoleBindingPermissionsPermissionSelection
++              permissionOptions={permissionOptions}
+               selection={roleBindingRoleRef}
+               onSelect={(selection) => {
+                 setRoleBindingRoleRef(selection);
+@@ -123,6 +150,7 @@ const ProjectSharingTableRow: React.FC<ProjectSharingTableRowProps> = ({
+             </Split>
+           ) : (
+             <ActionsColumn
++              isDisabled={isDefaultGroup}
+               items={[
+                 {
+                   title: 'Edit',
+@@ -145,4 +173,4 @@ const ProjectSharingTableRow: React.FC<ProjectSharingTableRowProps> = ({
+   );
+ };
+ 
+-export default ProjectSharingTableRow;
++export default RoleBindingPermissionsTableRow;
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharingTableRowAdd.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRowAdd.tsx
+similarity index 55%
+rename from frontend/src/pages/projects/projectSharing/ProjectSharingTableRowAdd.tsx
+rename to frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRowAdd.tsx
+index 88a6d16be..2268022dc 100644
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharingTableRowAdd.tsx
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRowAdd.tsx
+@@ -1,37 +1,43 @@
+ import * as React from 'react';
+ import { Tbody, Td, Tr } from '@patternfly/react-table';
+-import { Button, Split, SplitItem } from '@patternfly/react-core';
++import { Button, Split, SplitItem, Text } from '@patternfly/react-core';
+ import { CheckIcon, TimesIcon } from '@patternfly/react-icons';
+-import { ProjectSharingRBType, ProjectSharingRoleType } from './types';
+-import ProjectSharingNameInput from './ProjectSharingNameInput';
+-import ProjectSharingPermissionSelection from './ProjectSharingPermissionSelection';
++import { RoleBindingSubject } from '~/k8sTypes';
++import { RoleBindingPermissionsRoleType } from './types';
++import RoleBindingPermissionsNameInput from './RoleBindingPermissionsNameInput';
++import RoleBindingPermissionsPermissionSelection from './RoleBindingPermissionsPermissionSelection';
++import { roleLabel } from './utils';
+ 
+-type ProjectSharingTableRowPropsAdd = {
++type RoleBindingPermissionsTableRowPropsAdd = {
+   typeAhead?: string[];
+-  type: ProjectSharingRBType;
+-  onChange: (name: string, roleType: ProjectSharingRoleType) => void;
++  subjectKind: RoleBindingSubject['kind'];
++  permissionOptions: {
++    type: RoleBindingPermissionsRoleType;
++    description: string;
++  }[];
++  onChange: (name: string, roleType: RoleBindingPermissionsRoleType) => void;
+   onCancel: () => void;
+ };
+ 
+-/** @deprecated - this should use ProjectSharingTableRow */
+-const ProjectSharingTableRowAdd: React.FC<ProjectSharingTableRowPropsAdd> = ({
++/** @deprecated - this should use RoleBindingPermissionsTableRow */
++const RoleBindingPermissionsTableRowAdd: React.FC<RoleBindingPermissionsTableRowPropsAdd> = ({
+   typeAhead,
+-  type,
++  subjectKind,
++  permissionOptions,
+   onChange,
+   onCancel,
+ }) => {
+   const [roleBindingName, setRoleBindingName] = React.useState('');
+-  const [roleBindingRoleRef, setRoleBindingRoleRef] = React.useState<ProjectSharingRoleType>(
+-    ProjectSharingRoleType.EDIT,
+-  );
++  const [roleBindingRoleRef, setRoleBindingRoleRef] =
++    React.useState<RoleBindingPermissionsRoleType>(permissionOptions[0]?.type);
+   const [isLoading, setIsLoading] = React.useState(false);
+ 
+   return (
+     <Tbody>
+       <Tr>
+         <Td dataLabel="Username">
+-          <ProjectSharingNameInput
+-            type={type}
++          <RoleBindingPermissionsNameInput
++            subjectKind={subjectKind}
+             value={roleBindingName}
+             onChange={(selection: React.SetStateAction<string>) => {
+               setRoleBindingName(selection);
+@@ -42,12 +48,17 @@ const ProjectSharingTableRowAdd: React.FC<ProjectSharingTableRowPropsAdd> = ({
+           />
+         </Td>
+         <Td dataLabel="Permission">
+-          <ProjectSharingPermissionSelection
+-            selection={roleBindingRoleRef}
+-            onSelect={(selection) => {
+-              setRoleBindingRoleRef(selection);
+-            }}
+-          />
++          {permissionOptions.length > 1 ? (
++            <RoleBindingPermissionsPermissionSelection
++              permissionOptions={permissionOptions}
++              selection={roleBindingRoleRef}
++              onSelect={(selection) => {
++                setRoleBindingRoleRef(selection);
++              }}
++            />
++          ) : (
++            <Text>{roleLabel(roleBindingRoleRef)}</Text>
++          )}
+         </Td>
+         <Td dataLabel="Date added" />
+         <Td isActionCell modifier="nowrap">
+@@ -85,4 +96,4 @@ const ProjectSharingTableRowAdd: React.FC<ProjectSharingTableRowPropsAdd> = ({
+   );
+ };
+ 
+-export default ProjectSharingTableRowAdd;
++export default RoleBindingPermissionsTableRowAdd;
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharingTableSection.tsx b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTableSection.tsx
+similarity index 54%
+rename from frontend/src/pages/projects/projectSharing/ProjectSharingTableSection.tsx
+rename to frontend/src/concepts/roleBinding/RoleBindingPermissionsTableSection.tsx
+index d0a0f0162..a79143ba5 100644
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharingTableSection.tsx
++++ b/frontend/src/concepts/roleBinding/RoleBindingPermissionsTableSection.tsx
+@@ -10,26 +10,44 @@ import {
+   StackItem,
+   Title,
+ } from '@patternfly/react-core';
+-import { RoleBindingKind } from '~/k8sTypes';
++import { K8sResourceCommon } from '@openshift/dynamic-plugin-sdk-utils';
++import { RoleBindingKind, RoleBindingRoleRef, RoleBindingSubject } from '~/k8sTypes';
+ import HeaderIcon from '~/concepts/design/HeaderIcon';
+ import { ProjectObjectType } from '~/concepts/design/utils';
+-import ProjectSharingTable from './ProjectSharingTable';
+-import { ProjectSharingRBType } from './types';
++import RoleBindingPermissionsTable from './RoleBindingPermissionsTable';
++import { RoleBindingPermissionsRBType, RoleBindingPermissionsRoleType } from './types';
+ 
+-export type ProjectSharingTableSectionAltProps = {
++export type RoleBindingPermissionsTableSectionAltProps = {
++  ownerReference?: K8sResourceCommon;
+   roleBindings: RoleBindingKind[];
+-  projectSharingTableType: ProjectSharingRBType;
++  projectName: string;
++  roleRefKind: RoleBindingRoleRef['kind'];
++  roleRefName?: RoleBindingRoleRef['name'];
++  subjectKind: RoleBindingSubject['kind'];
++  permissionOptions: {
++    type: RoleBindingPermissionsRoleType;
++    description: string;
++  }[];
+   typeAhead?: string[];
+   refresh: () => void;
+   typeModifier?: string;
++  defaultRoleBindingName?: string;
++  labels?: { [key: string]: string };
+ };
+ 
+-const ProjectSharingTableSection: React.FC<ProjectSharingTableSectionAltProps> = ({
++const RoleBindingPermissionsTableSection: React.FC<RoleBindingPermissionsTableSectionAltProps> = ({
++  ownerReference,
+   roleBindings,
+-  projectSharingTableType,
++  projectName,
++  roleRefKind,
++  roleRefName,
++  subjectKind,
++  permissionOptions,
+   typeAhead,
+   refresh,
+   typeModifier,
++  defaultRoleBindingName,
++  labels,
+ }) => {
+   const [addField, setAddField] = React.useState(false);
+   const [error, setError] = React.useState<Error | undefined>(undefined);
+@@ -45,22 +63,29 @@ const ProjectSharingTableSection: React.FC<ProjectSharingTableSectionAltProps> =
+         >
+           <HeaderIcon
+             type={
+-              projectSharingTableType === ProjectSharingRBType.USER
++              subjectKind === RoleBindingPermissionsRBType.USER
+                 ? ProjectObjectType.user
+                 : ProjectObjectType.group
+             }
+           />
+           <FlexItem>
+-            <Title id={`user-permission-${projectSharingTableType}`} headingLevel="h2" size="xl">
+-              {projectSharingTableType === ProjectSharingRBType.USER ? 'Users' : 'Groups'}
++            <Title id={`user-permission-${subjectKind}`} headingLevel="h2" size="xl">
++              {subjectKind === RoleBindingPermissionsRBType.USER ? 'Users' : 'Groups'}
+             </Title>
+           </FlexItem>
+         </Flex>
+       </StackItem>
+       <StackItem>
+-        <ProjectSharingTable
++        <RoleBindingPermissionsTable
++          ownerReference={ownerReference}
++          defaultRoleBindingName={defaultRoleBindingName}
+           permissions={roleBindings}
+-          type={projectSharingTableType}
++          permissionOptions={permissionOptions}
++          namespace={projectName}
++          roleRefKind={roleRefKind}
++          roleRefName={roleRefName}
++          labels={labels}
++          subjectKind={subjectKind}
+           typeAhead={typeAhead}
+           isAdding={addField}
+           onDismissNewRow={() => {
+@@ -88,7 +113,7 @@ const ProjectSharingTableSection: React.FC<ProjectSharingTableSectionAltProps> =
+       )}
+       <StackItem>
+         <Button
+-          data-testid={`add-button ${projectSharingTableType}`}
++          data-testid={`add-button ${subjectKind}`}
+           variant="link"
+           isInline
+           icon={<PlusCircleIcon />}
+@@ -96,11 +121,11 @@ const ProjectSharingTableSection: React.FC<ProjectSharingTableSectionAltProps> =
+           onClick={() => setAddField(true)}
+           style={{ paddingLeft: 'var(--pf-v5-global--spacer--lg)' }}
+         >
+-          {projectSharingTableType === ProjectSharingRBType.USER ? 'Add user' : 'Add group'}
++          {subjectKind === RoleBindingPermissionsRBType.USER ? 'Add user' : 'Add group'}
+         </Button>
+       </StackItem>
+     </Stack>
+   );
+ };
+ 
+-export default ProjectSharingTableSection;
++export default RoleBindingPermissionsTableSection;
+diff --git a/frontend/src/pages/projects/projectSharing/data.ts b/frontend/src/concepts/roleBinding/data.ts
+similarity index 88%
+rename from frontend/src/pages/projects/projectSharing/data.ts
+rename to frontend/src/concepts/roleBinding/data.ts
+index a09532f7c..4cf5a8305 100644
+--- a/frontend/src/pages/projects/projectSharing/data.ts
++++ b/frontend/src/concepts/roleBinding/data.ts
+@@ -2,7 +2,7 @@ import { RoleBindingKind } from '~/k8sTypes';
+ import { SortableData } from '~/components/table';
+ import { firstSubject } from './utils';
+ 
+-export const columnsProjectSharing: SortableData<RoleBindingKind>[] = [
++export const columnsRoleBindingPermissions: SortableData<RoleBindingKind>[] = [
+   {
+     field: 'username',
+     label: 'Name',
+diff --git a/frontend/src/pages/projects/projectSharing/types.ts b/frontend/src/concepts/roleBinding/types.ts
+similarity index 62%
+rename from frontend/src/pages/projects/projectSharing/types.ts
+rename to frontend/src/concepts/roleBinding/types.ts
+index ad009193f..db9015875 100644
+--- a/frontend/src/pages/projects/projectSharing/types.ts
++++ b/frontend/src/concepts/roleBinding/types.ts
+@@ -1,17 +1,18 @@
+ import { RoleBindingSubject } from '~/k8sTypes';
+ 
+-export enum ProjectSharingRBType {
++export enum RoleBindingPermissionsRBType {
+   USER = 'User',
+   GROUP = 'Group',
+ }
+ 
+-export enum ProjectSharingRoleType {
++export enum RoleBindingPermissionsRoleType {
+   EDIT = 'edit',
+   ADMIN = 'admin',
++  DEFAULT = 'default',
+ }
+ 
+ export type RoleBindingSubjectWithRole = RoleBindingSubject & {
+-  role: ProjectSharingRoleType;
++  role: RoleBindingPermissionsRoleType;
+   roleBindingName: string;
+   roleBindingNamespace: string;
+ };
+diff --git a/frontend/src/concepts/roleBinding/utils.ts b/frontend/src/concepts/roleBinding/utils.ts
+new file mode 100644
+index 000000000..8b3b949d1
+--- /dev/null
++++ b/frontend/src/concepts/roleBinding/utils.ts
+@@ -0,0 +1,30 @@
++import { capitalize } from '@patternfly/react-core';
++import { RoleBindingKind } from '~/k8sTypes';
++import { RoleBindingPermissionsRBType, RoleBindingPermissionsRoleType } from './types';
++
++export const filterRoleBindingSubjects = (
++  roleBindings: RoleBindingKind[],
++  type: RoleBindingPermissionsRBType,
++): RoleBindingKind[] => roleBindings.filter((roles) => roles.subjects[0]?.kind === type);
++
++export const castRoleBindingPermissionsRoleType = (
++  role: string,
++): RoleBindingPermissionsRoleType => {
++  if (role === RoleBindingPermissionsRoleType.ADMIN) {
++    return RoleBindingPermissionsRoleType.ADMIN;
++  }
++  if (role === RoleBindingPermissionsRoleType.EDIT) {
++    return RoleBindingPermissionsRoleType.EDIT;
++  }
++  return RoleBindingPermissionsRoleType.DEFAULT;
++};
++
++export const firstSubject = (roleBinding: RoleBindingKind): string =>
++  roleBinding.subjects[0]?.name || '';
++
++export const roleLabel = (value: RoleBindingPermissionsRoleType): string => {
++  if (value === RoleBindingPermissionsRoleType.EDIT) {
++    return 'Contributor';
++  }
++  return capitalize(value);
++};
+diff --git a/frontend/src/k8sTypes.ts b/frontend/src/k8sTypes.ts
+index 3702550df..58714030f 100644
+--- a/frontend/src/k8sTypes.ts
++++ b/frontend/src/k8sTypes.ts
+@@ -22,6 +22,7 @@ export enum KnownLabels {
+   PROJECT_SHARING = 'opendatahub.io/project-sharing',
+   MODEL_SERVING_PROJECT = 'modelmesh-enabled',
+   DATA_CONNECTION_AWS = 'opendatahub.io/managed',
++  LABEL_SELECTOR_MODEL_REGISTRY = 'component=model-registry',
+ }
+ 
+ export type K8sVerb =
+@@ -503,13 +504,19 @@ export type RoleBindingSubject = {
+   name: string;
+ };
+ 
++export type RoleBindingRoleRef = {
++  kind: 'Role' | 'ClusterRole';
++  apiGroup?: string;
++  name: string;
++};
++
+ export type RoleBindingKind = K8sResourceCommon & {
+   metadata: {
+     name: string;
+     namespace: string;
+   };
+   subjects: RoleBindingSubject[];
+-  roleRef: RoleBindingSubject;
++  roleRef: RoleBindingRoleRef;
+ };
+ 
+ export type RouteKind = K8sResourceCommon & {
+diff --git a/frontend/src/pages/modelRegistrySettings/DeleteModelRegistryModal.tsx b/frontend/src/pages/modelRegistrySettings/DeleteModelRegistryModal.tsx
+index 480c230c0..0929e6ae7 100644
+--- a/frontend/src/pages/modelRegistrySettings/DeleteModelRegistryModal.tsx
++++ b/frontend/src/pages/modelRegistrySettings/DeleteModelRegistryModal.tsx
+@@ -17,7 +17,6 @@ const DeleteModelRegistryModal: React.FC<DeleteModelRegistryModalProps> = ({
+   onClose,
+   refresh,
+ }) => {
+-  const defaultPermissionsGroup = 'TODO: group here'; // TODO should be implemented as part of https://issues.redhat.com/browse/RHOAIENG-6636
+   const [isSubmitting, setIsSubmitting] = React.useState(false);
+   const [error, setError] = React.useState<Error>();
+   const [confirmInputValue, setConfirmInputValue] = React.useState('');
+@@ -72,7 +71,7 @@ const DeleteModelRegistryModal: React.FC<DeleteModelRegistryModalProps> = ({
+             <Text component="p">
+               Only the <strong>{mr.metadata.name}</strong> itself will be removed. You&apos;ll need
+               to manually delete all data in the connected database. Additionally, the default group{' '}
+-              <strong>{defaultPermissionsGroup}</strong> and any permissions associated with{' '}
++              <strong>{`${mr.metadata.name}-users`}</strong> and any permissions associated with{' '}
+               <strong>{mr.metadata.name}</strong> will be deleted. Any other groups and roles
+               created by you will need to be manually deleted.
+             </Text>
+diff --git a/frontend/src/pages/modelRegistrySettings/ManagePermissionsModal.tsx b/frontend/src/pages/modelRegistrySettings/ManagePermissionsModal.tsx
+deleted file mode 100644
+index 1e81f77ed..000000000
+--- a/frontend/src/pages/modelRegistrySettings/ManagePermissionsModal.tsx
++++ /dev/null
+@@ -1,43 +0,0 @@
+-import React from 'react';
+-import { Modal } from '@patternfly/react-core';
+-import { ModelRegistryKind } from '~/k8sTypes';
+-import DashboardModalFooter from '~/concepts/dashboard/DashboardModalFooter';
+-
+-type ManagePermissionsModalProps = {
+-  modelRegistry: ModelRegistryKind;
+-  isOpen: boolean;
+-  onClose: () => void;
+-  refresh: () => Promise<unknown>;
+-};
+-
+-const ManagePermissionsModal: React.FC<ManagePermissionsModalProps> = ({
+-  modelRegistry: mr,
+-  isOpen,
+-  onClose,
+-  refresh,
+-}) => (
+-  <Modal
+-    title={`Manage permissions of ${mr.metadata.name}`}
+-    description="Manage users and projects that can access this model registry."
+-    isOpen={isOpen}
+-    onClose={onClose}
+-    variant="medium"
+-    footer={
+-      <DashboardModalFooter
+-        submitLabel="Save"
+-        onSubmit={() => {
+-          // TODO submit changes, then...
+-          refresh();
+-        }}
+-        onCancel={onClose}
+-        isSubmitDisabled // TODO
+-        error={undefined} // TODO
+-        alertTitle="Error saving permissions"
+-      />
+-    }
+-  >
+-    TODO: This feature is not yet implemented
+-  </Modal>
+-);
+-
+-export default ManagePermissionsModal;
+diff --git a/frontend/src/pages/modelRegistrySettings/ModelRegistriesPermissions.tsx b/frontend/src/pages/modelRegistrySettings/ModelRegistriesPermissions.tsx
+new file mode 100644
+index 000000000..590f4cee6
+--- /dev/null
++++ b/frontend/src/pages/modelRegistrySettings/ModelRegistriesPermissions.tsx
+@@ -0,0 +1,130 @@
++import React from 'react';
++import {
++  Breadcrumb,
++  BreadcrumbItem,
++  ClipboardCopy,
++  Tab,
++  TabContent,
++  TabContentBody,
++  Tabs,
++} from '@patternfly/react-core';
++import { Link } from 'react-router-dom';
++import { Navigate, useParams } from 'react-router';
++import { KnownLabels, ModelRegistryKind, RoleBindingKind } from '~/k8sTypes';
++import { useGroups } from '~/api';
++import RoleBindingPermissions from '~/concepts/roleBinding/RoleBindingPermissions';
++import { useContextResourceData } from '~/utilities/useContextResourceData';
++import ApplicationsPage from '~/pages/ApplicationsPage';
++import { MODEL_REGISTRY_DEFAULT_NAMESPACE } from '~/concepts/modelRegistry/const';
++import { SupportedArea } from '~/concepts/areas';
++import { RoleBindingPermissionsRoleType } from '~/concepts/roleBinding/types';
++import { useModelRegistryNamespaceCR } from '~/concepts/modelRegistry/context/useModelRegistryNamespaceCR';
++import useModelRegistryRoleBindings from './useModelRegistryRoleBindings';
++
++const ModelRegistriesManagePermissions: React.FC = () => {
++  const [activeTabKey, setActiveTabKey] = React.useState('users');
++  const [ownerReference, setOwnerReference] = React.useState<ModelRegistryKind>();
++  const [groups] = useGroups();
++  const roleBindings = useContextResourceData<RoleBindingKind>(useModelRegistryRoleBindings());
++  const { mrName } = useParams();
++  const state = useModelRegistryNamespaceCR(MODEL_REGISTRY_DEFAULT_NAMESPACE, mrName || '');
++  const [modelRegistryCR, crLoaded] = state;
++  const filteredRoleBindings = roleBindings.data.filter(
++    (rb) => rb.metadata.labels?.['app.kubernetes.io/name'] === mrName,
++  );
++
++  React.useEffect(() => {
++    if (modelRegistryCR) {
++      setOwnerReference(modelRegistryCR);
++    } else {
++      setOwnerReference(undefined);
++    }
++  }, [modelRegistryCR]);
++
++  if (
++    (roleBindings.loaded && filteredRoleBindings.length === 0) ||
++    (crLoaded && !modelRegistryCR)
++  ) {
++    return <Navigate to="/modelRegistrySettings" replace />;
++  }
++
++  return (
++    <ApplicationsPage
++      title={`Manage permissions of ${mrName}`}
++      description="Manage users and projects that can access this model registry."
++      breadcrumb={
++        <Breadcrumb>
++          <BreadcrumbItem>Settings</BreadcrumbItem>
++          <BreadcrumbItem
++            render={() => <Link to="/modelRegistrySettings">Model registry settings</Link>}
++          />
++          <BreadcrumbItem isActive>Manage Permissions</BreadcrumbItem>
++        </Breadcrumb>
++      }
++      loaded
++      empty={false}
++      provideChildrenPadding
++    >
++      <Tabs
++        activeKey={activeTabKey}
++        onSelect={(e, tabKey) => {
++          setActiveTabKey(tabKey.toString());
++        }}
++      >
++        <Tab eventKey="users" title="Users" id="users-tab" tabContentId="users-tab-content" />
++        <Tab
++          eventKey="projects"
++          title="Projects"
++          id="projects-tab"
++          tabContentId="projects-tab-content"
++        />
++      </Tabs>
++      <div>
++        <TabContent id="users-tab-content" eventKey="users" hidden={activeTabKey !== 'users'}>
++          <TabContentBody>
++            <RoleBindingPermissions
++              ownerReference={ownerReference}
++              defaultRoleBindingName={`${mrName}-users`}
++              isGroupFirst
++              permissionOptions={[
++                {
++                  type: RoleBindingPermissionsRoleType.DEFAULT,
++                  description: 'Default role for all users',
++                },
++              ]}
++              roleRefKind="Role"
++              roleRefName={`registry-user-${mrName}`}
++              labels={{
++                [KnownLabels.DASHBOARD_RESOURCE]: 'true',
++                app: mrName || '',
++                'app.kubernetes.io/component': SupportedArea.MODEL_REGISTRY,
++                'app.kubernetes.io/part-of': SupportedArea.MODEL_REGISTRY,
++                'app.kubernetes.io/name': mrName || '',
++                component: SupportedArea.MODEL_REGISTRY,
++              }}
++              projectName={MODEL_REGISTRY_DEFAULT_NAMESPACE}
++              description={
++                <>
++                  To enable access for all cluster users, add{' '}
++                  <ClipboardCopy variant="inline-compact">system:authenticated</ClipboardCopy> to
++                  the group list.
++                </>
++              }
++              roleBindingPermissionsRB={{ ...roleBindings, data: filteredRoleBindings }}
++              groups={groups}
++            />
++          </TabContentBody>
++        </TabContent>
++        <TabContent
++          id="projects-tab-content"
++          eventKey="projects"
++          hidden={activeTabKey !== 'projects'}
++        >
++          TODO: This feature is not yet implemented
++        </TabContent>
++      </div>
++    </ApplicationsPage>
++  );
++};
++
++export default ModelRegistriesManagePermissions;
+diff --git a/frontend/src/pages/modelRegistrySettings/ModelRegistriesTableRow.tsx b/frontend/src/pages/modelRegistrySettings/ModelRegistriesTableRow.tsx
+index efcf80da8..d4b33c8f8 100644
+--- a/frontend/src/pages/modelRegistrySettings/ModelRegistriesTableRow.tsx
++++ b/frontend/src/pages/modelRegistrySettings/ModelRegistriesTableRow.tsx
+@@ -1,8 +1,7 @@
+ import React from 'react';
+ import { ActionsColumn, Td, Tr } from '@patternfly/react-table';
+-import { Button } from '@patternfly/react-core';
++import { Link } from 'react-router-dom';
+ import { ModelRegistryKind } from '~/k8sTypes';
+-import ManagePermissionsModal from './ManagePermissionsModal';
+ import ViewDatabaseConfigModal from './ViewDatabaseConfigModal';
+ import DeleteModelRegistryModal from './DeleteModelRegistryModal';
+ 
+@@ -15,7 +14,6 @@ const ModelRegistriesTableRow: React.FC<ModelRegistriesTableRowProps> = ({
+   modelRegistry: mr,
+   refresh,
+ }) => {
+-  const [isPermissionsModalOpen, setIsPermissionsModalOpen] = React.useState(false);
+   const [isDatabaseConfigModalOpen, setIsDatabaseConfigModalOpen] = React.useState(false);
+   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+   return (
+@@ -23,13 +21,12 @@ const ModelRegistriesTableRow: React.FC<ModelRegistriesTableRowProps> = ({
+       <Tr>
+         <Td dataLabel="Model registry name">{mr.metadata.name}</Td>
+         <Td modifier="fitContent">
+-          <Button
+-            variant="link"
+-            onClick={() => setIsPermissionsModalOpen(true)}
++          <Link
+             aria-label={`Manage permissions for model registry ${mr.metadata.name}`}
++            to={`/modelRegistrySettings/permissions/${mr.metadata.name}`}
+           >
+             Manage permissions
+-          </Button>
++          </Link>
+         </Td>
+         <Td isActionCell>
+           <ActionsColumn
+@@ -46,12 +43,6 @@ const ModelRegistriesTableRow: React.FC<ModelRegistriesTableRowProps> = ({
+           />
+         </Td>
+       </Tr>
+-      <ManagePermissionsModal
+-        modelRegistry={mr}
+-        isOpen={isPermissionsModalOpen}
+-        onClose={() => setIsPermissionsModalOpen(false)}
+-        refresh={refresh}
+-      />
+       <ViewDatabaseConfigModal
+         modelRegistry={mr}
+         isOpen={isDatabaseConfigModalOpen}
+diff --git a/frontend/src/pages/modelRegistrySettings/ModelRegistrySettingsRoutes.tsx b/frontend/src/pages/modelRegistrySettings/ModelRegistrySettingsRoutes.tsx
+new file mode 100644
+index 000000000..5677d6b09
+--- /dev/null
++++ b/frontend/src/pages/modelRegistrySettings/ModelRegistrySettingsRoutes.tsx
+@@ -0,0 +1,14 @@
++import * as React from 'react';
++import { Navigate, Routes, Route } from 'react-router-dom';
++import ModelRegistrySettings from './ModelRegistrySettings';
++import ModelRegistriesManagePermissions from './ModelRegistriesPermissions';
++
++const ModelRegistrySettingsRoutes: React.FC = () => (
++  <Routes>
++    <Route path="/" element={<ModelRegistrySettings />} />
++    <Route path="permissions/:mrName" element={<ModelRegistriesManagePermissions />} />
++    <Route path="*" element={<Navigate to="/" />} />
++  </Routes>
++);
++
++export default ModelRegistrySettingsRoutes;
+diff --git a/frontend/src/pages/modelRegistrySettings/useModelRegistryRoleBindings.ts b/frontend/src/pages/modelRegistrySettings/useModelRegistryRoleBindings.ts
+new file mode 100644
+index 000000000..38d1a06fc
+--- /dev/null
++++ b/frontend/src/pages/modelRegistrySettings/useModelRegistryRoleBindings.ts
+@@ -0,0 +1,25 @@
++import * as React from 'react';
++import { listRoleBindings } from '~/api';
++import { MODEL_REGISTRY_DEFAULT_NAMESPACE } from '~/concepts/modelRegistry/const';
++import { KnownLabels, RoleBindingKind } from '~/k8sTypes';
++import useFetchState, { FetchState } from '~/utilities/useFetchState';
++
++const useModelRegistryRoleBindings = (): FetchState<RoleBindingKind[]> => {
++  const getRoleBindings = React.useCallback(
++    () =>
++      listRoleBindings(
++        MODEL_REGISTRY_DEFAULT_NAMESPACE,
++        KnownLabels.LABEL_SELECTOR_MODEL_REGISTRY,
++      ).catch((e) => {
++        if (e.statusObject?.code === 404) {
++          throw new Error('No rolebindings found.');
++        }
++        throw e;
++      }),
++    [],
++  );
++
++  return useFetchState<RoleBindingKind[]>(getRoleBindings, []);
++};
++
++export default useModelRegistryRoleBindings;
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharing.tsx b/frontend/src/pages/projects/projectSharing/ProjectSharing.tsx
+index 9163c11ca..9c0e50003 100644
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharing.tsx
++++ b/frontend/src/pages/projects/projectSharing/ProjectSharing.tsx
+@@ -1,89 +1,33 @@
+ import * as React from 'react';
+-import {
+-  EmptyState,
+-  EmptyStateBody,
+-  EmptyStateIcon,
+-  EmptyStateVariant,
+-  PageSection,
+-  Spinner,
+-  Stack,
+-  StackItem,
+-  EmptyStateHeader,
+-} from '@patternfly/react-core';
+-import { ExclamationCircleIcon } from '@patternfly/react-icons';
+ import { ProjectDetailsContext } from '~/pages/projects/ProjectDetailsContext';
+-import { GroupKind } from '~/k8sTypes';
+-import { ProjectSectionID } from '~/pages/projects/screens/detail/types';
+-import ProjectSharingTableSection from './ProjectSharingTableSection';
+-import { ProjectSharingRBType } from './types';
+-import { filterRoleBindingSubjects } from './utils';
++import RoleBindingPermissions from '~/concepts/roleBinding/RoleBindingPermissions';
++import { RoleBindingPermissionsRoleType } from '~/concepts/roleBinding/types';
+ 
+ const ProjectSharing: React.FC = () => {
+   const {
+-    projectSharingRB: { data: roleBindings, loaded, error: loadError, refresh: refreshRB },
++    currentProject,
++    projectSharingRB,
+     groups: [groups],
+   } = React.useContext(ProjectDetailsContext);
+ 
+-  if (loadError) {
+-    return (
+-      <EmptyState
+-        variant={EmptyStateVariant.lg}
+-        data-id="error-empty-state"
+-        id={ProjectSectionID.PERMISSIONS}
+-      >
+-        <EmptyStateHeader
+-          titleText="There was an issue loading permissions."
+-          icon={<EmptyStateIcon icon={ExclamationCircleIcon} />}
+-          headingLevel="h2"
+-        />
+-        <EmptyStateBody>{loadError.message}</EmptyStateBody>
+-      </EmptyState>
+-    );
+-  }
+-
+-  if (!loaded) {
+-    return (
+-      <EmptyState
+-        variant={EmptyStateVariant.lg}
+-        data-id="loading-empty-state"
+-        id={ProjectSectionID.PERMISSIONS}
+-      >
+-        <Spinner size="xl" />
+-        <EmptyStateHeader titleText="Loading" headingLevel="h2" />
+-      </EmptyState>
+-    );
+-  }
+-
+   return (
+-    <PageSection
+-      isFilled
+-      aria-label="project-sharing-page-section"
+-      variant="light"
+-      id={ProjectSectionID.PERMISSIONS}
+-    >
+-      <Stack hasGutter>
+-        <StackItem>Add users and groups that can access the project.</StackItem>
+-        <StackItem>
+-          <ProjectSharingTableSection
+-            roleBindings={filterRoleBindingSubjects(roleBindings, ProjectSharingRBType.USER)}
+-            projectSharingTableType={ProjectSharingRBType.USER}
+-            refresh={refreshRB}
+-            typeModifier="user"
+-          />
+-        </StackItem>
+-        <StackItem>
+-          <ProjectSharingTableSection
+-            roleBindings={filterRoleBindingSubjects(roleBindings, ProjectSharingRBType.GROUP)}
+-            projectSharingTableType={ProjectSharingRBType.GROUP}
+-            refresh={refreshRB}
+-            typeAhead={
+-              groups.length > 0 ? groups.map((group: GroupKind) => group.metadata.name) : undefined
+-            }
+-            typeModifier="group"
+-          />
+-        </StackItem>
+-      </Stack>
+-    </PageSection>
++    <RoleBindingPermissions
++      permissionOptions={[
++        {
++          type: RoleBindingPermissionsRoleType.EDIT,
++          description: 'View and edit the project components',
++        },
++        {
++          type: RoleBindingPermissionsRoleType.ADMIN,
++          description: 'Edit the project and manage user access',
++        },
++      ]}
++      roleRefKind="ClusterRole"
++      projectName={currentProject.metadata.name}
++      description="Add users and groups that can access the project."
++      roleBindingPermissionsRB={projectSharingRB}
++      groups={groups}
++    />
+   );
+ };
+ 
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharingPermissionSelection.tsx b/frontend/src/pages/projects/projectSharing/ProjectSharingPermissionSelection.tsx
+deleted file mode 100644
+index 893409681..000000000
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharingPermissionSelection.tsx
++++ /dev/null
+@@ -1,51 +0,0 @@
+-import { Select, SelectOption } from '@patternfly/react-core/deprecated';
+-import React from 'react';
+-import { ProjectSharingRoleType } from './types';
+-import { castProjectSharingRoleType, roleLabel } from './utils';
+-
+-type ProjectSharingPermissionSelectionProps = {
+-  selection: string;
+-  onSelect: (roleType: ProjectSharingRoleType) => void;
+-};
+-
+-const ProjectSharingPermissions = [
+-  {
+-    type: ProjectSharingRoleType.EDIT,
+-    description: 'View and edit the project components',
+-  },
+-  {
+-    type: ProjectSharingRoleType.ADMIN,
+-    description: 'Edit the project and manage user access',
+-  },
+-];
+-
+-const ProjectSharingPermissionSelection: React.FC<ProjectSharingPermissionSelectionProps> = ({
+-  selection,
+-  onSelect,
+-}) => {
+-  const [isOpen, setIsOpen] = React.useState(false);
+-
+-  return (
+-    <Select
+-      selections={selection}
+-      isOpen={isOpen}
+-      onSelect={(e, newSelection) => {
+-        if (typeof newSelection === 'string') {
+-          onSelect(castProjectSharingRoleType(newSelection));
+-          setIsOpen(false);
+-        }
+-      }}
+-      onToggle={(e, val) => setIsOpen(val)}
+-      placeholderText={selection}
+-      direction="down"
+-    >
+-      {ProjectSharingPermissions.map((option) => (
+-        <SelectOption key={option.type} value={option.type} description={option.description}>
+-          {roleLabel(option.type)}
+-        </SelectOption>
+-      ))}
+-    </Select>
+-  );
+-};
+-
+-export default ProjectSharingPermissionSelection;
+diff --git a/frontend/src/pages/projects/projectSharing/ProjectSharingTable.tsx b/frontend/src/pages/projects/projectSharing/ProjectSharingTable.tsx
+deleted file mode 100644
+index e68f33dcd..000000000
+--- a/frontend/src/pages/projects/projectSharing/ProjectSharingTable.tsx
++++ /dev/null
+@@ -1,111 +0,0 @@
+-import * as React from 'react';
+-import { Table } from '~/components/table';
+-import { RoleBindingKind } from '~/k8sTypes';
+-import { ProjectDetailsContext } from '~/pages/projects/ProjectDetailsContext';
+-import { deleteRoleBinding, generateRoleBindingProjectSharing, createRoleBinding } from '~/api';
+-import ProjectSharingTableRow from './ProjectSharingTableRow';
+-import { columnsProjectSharing } from './data';
+-import { ProjectSharingRBType } from './types';
+-import { firstSubject } from './utils';
+-import ProjectSharingTableRowAdd from './ProjectSharingTableRowAdd';
+-
+-type ProjectSharingTableProps = {
+-  type: ProjectSharingRBType;
+-  permissions: RoleBindingKind[];
+-  isAdding: boolean;
+-  typeAhead?: string[];
+-  onDismissNewRow: () => void;
+-  onError: (error: Error) => void;
+-  refresh: () => void;
+-};
+-
+-const ProjectSharingTable: React.FC<ProjectSharingTableProps> = ({
+-  type,
+-  permissions,
+-  typeAhead,
+-  isAdding,
+-  onDismissNewRow,
+-  onError,
+-  refresh,
+-}) => {
+-  const { currentProject } = React.useContext(ProjectDetailsContext);
+-
+-  const [editCell, setEditCell] = React.useState<string[]>([]);
+-
+-  return (
+-    <Table
+-      variant="compact"
+-      data={permissions}
+-      data-testid={`project-sharing-table ${type}`}
+-      columns={columnsProjectSharing}
+-      disableRowRenderSupport
+-      footerRow={() =>
+-        isAdding ? (
+-          <ProjectSharingTableRowAdd
+-            key="add-permission-row"
+-            type={type}
+-            typeAhead={typeAhead}
+-            onChange={(name, roleType) => {
+-              const newRBObject = generateRoleBindingProjectSharing(
+-                currentProject.metadata.name,
+-                type,
+-                name,
+-                roleType,
+-              );
+-              createRoleBinding(newRBObject)
+-                .then(() => {
+-                  onDismissNewRow();
+-                  refresh();
+-                })
+-                .catch((e) => {
+-                  onError(e);
+-                });
+-            }}
+-            onCancel={onDismissNewRow}
+-          />
+-        ) : null
+-      }
+-      rowRenderer={(rb) => (
+-        <ProjectSharingTableRow
+-          key={rb.metadata.name || ''}
+-          obj={rb}
+-          type={type}
+-          isEditing={firstSubject(rb) === '' || editCell.includes(rb.metadata.name)}
+-          typeAhead={typeAhead}
+-          onChange={(name, roleType) => {
+-            const newRBObject = generateRoleBindingProjectSharing(
+-              currentProject.metadata.name,
+-              type,
+-              name,
+-              roleType,
+-            );
+-            createRoleBinding(newRBObject)
+-              .then(() =>
+-                deleteRoleBinding(rb.metadata.name, rb.metadata.namespace)
+-                  .then(() => refresh())
+-                  .catch((e) => {
+-                    onError(e);
+-                    setEditCell((prev) => prev.filter((cell) => cell !== rb.metadata.name));
+-                  }),
+-              )
+-              .catch((e) => {
+-                onError(e);
+-                setEditCell((prev) => prev.filter((cell) => cell !== rb.metadata.name));
+-              });
+-            refresh();
+-          }}
+-          onDelete={() => {
+-            deleteRoleBinding(rb.metadata.name, rb.metadata.namespace).then(() => refresh());
+-          }}
+-          onEdit={() => {
+-            setEditCell((prev) => [...prev, rb.metadata.name]);
+-          }}
+-          onCancel={() => {
+-            setEditCell((prev) => prev.filter((cell) => cell !== rb.metadata.name));
+-          }}
+-        />
+-      )}
+-    />
+-  );
+-};
+-export default ProjectSharingTable;
+diff --git a/frontend/src/pages/projects/projectSharing/utils.ts b/frontend/src/pages/projects/projectSharing/utils.ts
+deleted file mode 100644
+index 72effd066..000000000
+--- a/frontend/src/pages/projects/projectSharing/utils.ts
++++ /dev/null
+@@ -1,18 +0,0 @@
+-import { RoleBindingKind } from '~/k8sTypes';
+-import { ProjectSharingRBType, ProjectSharingRoleType } from './types';
+-
+-export const filterRoleBindingSubjects = (
+-  roleBindings: RoleBindingKind[],
+-  type: ProjectSharingRBType,
+-): RoleBindingKind[] => roleBindings.filter((roles) => roles.subjects[0]?.kind === type);
+-
+-export const castProjectSharingRoleType = (role: string): ProjectSharingRoleType =>
+-  role === ProjectSharingRoleType.ADMIN
+-    ? ProjectSharingRoleType.ADMIN
+-    : ProjectSharingRoleType.EDIT;
+-
+-export const firstSubject = (roleBinding: RoleBindingKind): string =>
+-  roleBinding.subjects[0]?.name || '';
+-
+-export const roleLabel = (value: ProjectSharingRoleType): string =>
+-  value === ProjectSharingRoleType.ADMIN ? 'Admin' : 'Contributor';
+diff --git a/frontend/src/services/roleBindingService.ts b/frontend/src/services/roleBindingService.ts
+index b11713936..b7e4ac826 100644
+--- a/frontend/src/services/roleBindingService.ts
++++ b/frontend/src/services/roleBindingService.ts
+@@ -1,12 +1,12 @@
+ import axios from '~/utilities/axios';
+-import { RoleBinding } from '~/types';
++import { RoleBindingKind } from '~/k8sTypes';
+ 
+-export const getRoleBinding = (projectName: string, rbName: string): Promise<RoleBinding> => {
++export const getRoleBinding = (projectName: string, rbName: string): Promise<RoleBindingKind> => {
+   const url = `/api/rolebindings/${projectName}/${rbName}`;
+   return axios.get(url).then((response) => response.data);
+ };
+ 
+-export const createRoleBinding = (data: RoleBinding): Promise<RoleBinding> => {
++export const createRoleBinding = (data: RoleBindingKind): Promise<RoleBindingKind> => {
+   const url = `/api/rolebindings`;
+   return axios.post(url, data).then((response) => response.data);
+ };
+diff --git a/frontend/src/types.ts b/frontend/src/types.ts
+index 836e51204..3dc0e9caf 100644
+--- a/frontend/src/types.ts
++++ b/frontend/src/types.ts
+@@ -543,17 +543,6 @@ export type Volume = {
+ 
+ export type VolumeMount = { mountPath: string; name: string };
+ 
+-export type RoleBindingSubject = {
+-  kind: string;
+-  apiGroup: string;
+-  name: string;
+-};
+-
+-export type RoleBinding = {
+-  subjects: RoleBindingSubject[];
+-  roleRef: RoleBindingSubject;
+-} & K8sResourceCommon;
+-
+ export type ResourceGetter<T extends K8sResourceCommon> = (
+   projectName: string,
+   resourceName: string,
+diff --git a/frontend/src/utilities/notebookControllerUtils.ts b/frontend/src/utilities/notebookControllerUtils.ts
+index 7c7b8b848..0eed6f601 100644
+--- a/frontend/src/utilities/notebookControllerUtils.ts
++++ b/frontend/src/utilities/notebookControllerUtils.ts
+@@ -11,7 +11,6 @@ import {
+   NotebookStatus,
+   ResourceCreator,
+   ResourceGetter,
+-  RoleBinding,
+   VariableRow,
+ } from '~/types';
+ import { NotebookControllerContext } from '~/pages/notebookController/NotebookControllerContext';
+@@ -20,6 +19,7 @@ import { EMPTY_USER_STATE } from '~/pages/notebookController/const';
+ import useNamespaces from '~/pages/notebookController/useNamespaces';
+ import { useAppContext } from '~/app/AppContext';
+ import { getRoute } from '~/services/routeService';
++import { RoleBindingKind } from '~/k8sTypes';
+ import { useWatchNotebookEvents } from './useWatchNotebookEvents';
+ import { useDeepCompareMemoize } from './useDeepCompareMemoize';
+ 
+@@ -155,9 +155,9 @@ export const useNotebookUserState = (): NotebookControllerUserState => {
+ export const validateNotebookNamespaceRoleBinding = async (
+   notebookNamespace: string,
+   dashboardNamespace: string,
+-): Promise<RoleBinding | undefined> => {
++): Promise<RoleBindingKind | undefined> => {
+   const roleBindingName = `${notebookNamespace}-image-pullers`;
+-  const roleBindingObject: RoleBinding = {
++  const roleBindingObject: RoleBindingKind = {
+     apiVersion: 'rbac.authorization.k8s.io/v1',
+     kind: 'RoleBinding',
+     metadata: {
+@@ -177,7 +177,7 @@ export const validateNotebookNamespaceRoleBinding = async (
+       },
+     ],
+   };
+-  return verifyResource<RoleBinding>(
++  return verifyResource<RoleBindingKind>(
+     roleBindingName,
+     dashboardNamespace,
+     getRoleBinding,

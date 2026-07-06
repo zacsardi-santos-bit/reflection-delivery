@@ -1,0 +1,35 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/sdk/cosmosdb/cosmos && TS_NODE_PROJECT=test/tsconfig.json ./node_modules/.bin/mocha --require ts-node/register --timeout 30000 test/internal/unit/utils/nonStreamingOrderByMap.spec.ts test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts test/internal/unit/utils/supportedQueryFeaturesBuilder.spec.ts test/public/functional/endpointComponent/NonStreamingOrderByDistinctEndpointComponent.spec.ts test/public/functional/endpointComponent/NonStreamingOrderByEndpointComponent.spec.ts",
+  "test_files": [
+    "sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByMap.spec.ts",
+    "sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts",
+    "sdk/cosmosdb/cosmos/test/internal/unit/utils/supportedQueryFeaturesBuilder.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/functional/endpointComponent/NonStreamingOrderByDistinctEndpointComponent.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/functional/endpointComponent/NonStreamingOrderByEndpointComponent.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/functional/vectorEmbeddingPolicy.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/integration/aggregateQuery.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/integration/nonStreamingOrderBy/nonStreamingDistinctOrderBy.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/integration/nonStreamingOrderBy/nonStreamingOrderBy.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/integration/query.spec.ts",
+    "sdk/cosmosdb/cosmos/test/public/integration/split.spec.ts"
+  ],
+  "num_test_files": 11,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByMap.spec.ts::NonStreamingOrderByMap should insert items",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByMap.spec.ts::NonStreamingOrderByMap should update entry according to order",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByMap.spec.ts::NonStreamingOrderByMap should return all the values",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts::FixedSizePriorityQueue should enqueue items",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts::FixedSizePriorityQueue should dequeue items in correct order",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts::FixedSizePriorityQueue should return correct size and emptiness",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts::FixedSizePriorityQueue should peek at the top element",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts::FixedSizePriorityQueue should retrieve top elements in correct order",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/internal/unit/utils/supportedQueryFeaturesBuilder.spec.ts::validate supportedQueryFeaturesBuilder should contain nonStreamingOrderBy feature",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/public/functional/endpointComponent/NonStreamingOrderByDistinctEndpointComponent.spec.ts::NonStreamingOrderByDistinctEndpointComponent should initialize correctly with sort orders and priority queue buffer size",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/public/functional/endpointComponent/NonStreamingOrderByDistinctEndpointComponent.spec.ts::NonStreamingOrderByDistinctEndpointComponent should handle nextItem method correctly",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/public/functional/endpointComponent/NonStreamingOrderByEndpointComponent.spec.ts::NonStreamingOrderByEndpointComponent should initialize correctly with sort orders and priority queue buffer size",
+    "/workspace/repo/sdk/cosmosdb/cosmos/test/public/functional/endpointComponent/NonStreamingOrderByEndpointComponent.spec.ts::NonStreamingOrderByEndpointComponent should handle nextItem method correctly"
+  ],
+  "PASS_TO_PASS": []
+}

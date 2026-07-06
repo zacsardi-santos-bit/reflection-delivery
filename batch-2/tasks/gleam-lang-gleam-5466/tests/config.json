@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(/byte_order_mark/)'",
+  "test_files": [
+    "compiler-core/src/parse/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) gleam-core parse::tests::byte_order_mark_module",
+    "(2/2) gleam-core parse::tests::byte_order_mark"
+  ],
+  "PASS_TO_PASS": []
+}

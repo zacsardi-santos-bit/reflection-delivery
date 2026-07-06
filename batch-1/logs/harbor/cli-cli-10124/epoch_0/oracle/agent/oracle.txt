@@ -1,0 +1,4 @@
+patching file pkg/cmd/repo/autolink/autolink.go
+patching file pkg/cmd/repo/autolink/list/http.go
+patching file pkg/cmd/repo/autolink/list/list.go
+patching file pkg/cmd/repo/repo.go

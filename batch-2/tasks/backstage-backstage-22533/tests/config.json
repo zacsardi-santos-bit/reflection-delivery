@@ -1,0 +1,14 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/frontend-app-api && yarn test -- --watchAll=false DefaultComponentsApi.test.tsx",
+  "test_files": [
+    "packages/frontend-app-api/src/apis/implementations/ComponentsApi/DefaultComponentsApi.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/frontend-app-api/src/apis/implementations/ComponentsApi/DefaultComponentsApi.test.tsx::DefaultComponentsApi should provide components",
+    "/workspace/repo/packages/frontend-app-api/src/apis/implementations/ComponentsApi/DefaultComponentsApi.test.tsx::DefaultComponentsApi should key extension refs by ID"
+  ],
+  "PASS_TO_PASS": []
+}

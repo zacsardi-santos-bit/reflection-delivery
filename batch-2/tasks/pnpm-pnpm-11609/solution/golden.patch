@@ -1,0 +1,436 @@
+diff --git a/.changeset/codeql-security-fixes.md b/.changeset/codeql-security-fixes.md
+new file mode 100644
+index 0000000000..df9ba83e80
+--- /dev/null
++++ b/.changeset/codeql-security-fixes.md
+@@ -0,0 +1,9 @@
++---
++"@pnpm/pkg-manifest.utils": patch
++"@pnpm/installing.deps-installer": patch
++"@pnpm/resolving.npm-resolver": patch
++"@pnpm/deps.inspection.list": patch
++"pnpm": patch
++---
++
++Address CodeQL static-analysis findings: guard manifest dependency writes against prototype-polluting keys (`__proto__`, `constructor`, `prototype`), and replace a potentially super-linear semver-detection regex in registry 404 hints with an O(n) parser.
+diff --git a/__utils__/test-ipc-server/src/TestIpcServer.ts b/__utils__/test-ipc-server/src/TestIpcServer.ts
+index 8344e14942..d23fbb919e 100644
+--- a/__utils__/test-ipc-server/src/TestIpcServer.ts
++++ b/__utils__/test-ipc-server/src/TestIpcServer.ts
+@@ -1,4 +1,7 @@
++import fs from 'node:fs'
+ import net from 'node:net'
++import os from 'node:os'
++import path from 'node:path'
+ import { promisify, stripVTControlCharacters } from 'node:util'
+ 
+ import { computeHandlePath } from './computeHandlePath.js'
+@@ -13,6 +16,24 @@ if (Symbol.dispose === undefined) {
+   (Symbol as { dispose?: symbol }).dispose = Symbol('Symbol.dispose')
+ }
+ 
++// The helper scripts only ever invoke node with arguments passed via argv, so
++// the IPC path never has to be embedded into JavaScript source or shell
++// metacharacters. The script source is therefore completely static.
++const STDIN_HELPER_SOURCE = `const net = require('node:net')
++const target = process.argv[2]
++const c = net.connect(target, () => {
++  process.stdin.pipe(c).on('end', () => { c.destroy() })
++})
++`
++const LINE_HELPER_SOURCE = `const net = require('node:net')
++const target = process.argv[2]
++const message = process.argv[3]
++const c = net.connect(target, () => {
++  c.write(message + '\\n')
++  c.end()
++})
++`
++
+ /**
+  * A simple Inter-Process Communication (IPC) server written specifically for
+  * usage in pnpm tests.
+@@ -22,13 +43,23 @@ if (Symbol.dispose === undefined) {
+  */
+ export class TestIpcServer implements AsyncDisposable {
+   private readonly server: net.Server
++  private readonly helperDir: string
++  private readonly stdinHelperPath: string
++  private readonly lineHelperPath: string
+   private buffer = ''
+ 
+   public readonly listenPath: string
+ 
+-  constructor (server: net.Server, listenPath: string) {
++  constructor (
++    server: net.Server,
++    listenPath: string,
++    helpers: { dir: string, stdinHelperPath: string, lineHelperPath: string }
++  ) {
+     this.server = server
+     this.listenPath = listenPath
++    this.helperDir = helpers.dir
++    this.stdinHelperPath = helpers.stdinHelperPath
++    this.lineHelperPath = helpers.lineHelperPath
+ 
+     server.on('connection', (client) => {
+       client.on('data', data => {
+@@ -47,7 +78,18 @@ export class TestIpcServer implements AsyncDisposable {
+   public static async listen (handle?: string): Promise<TestIpcServer> {
+     const listenPath = computeHandlePath(handle)
+     const server = net.createServer()
+-    const testIpcServer = new TestIpcServer(server, listenPath)
++    const helperDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'pnpm-test-ipc-'))
++    const stdinHelperPath = path.join(helperDir, 'stdin.cjs')
++    const lineHelperPath = path.join(helperDir, 'line.cjs')
++    await Promise.all([
++      fs.promises.writeFile(stdinHelperPath, STDIN_HELPER_SOURCE),
++      fs.promises.writeFile(lineHelperPath, LINE_HELPER_SOURCE),
++    ])
++    const testIpcServer = new TestIpcServer(server, listenPath, {
++      dir: helperDir,
++      stdinHelperPath,
++      lineHelperPath,
++    })
+ 
+     return new Promise((resolve, reject) => {
+       server.once('error', reject)
+@@ -83,25 +125,59 @@ export class TestIpcServer implements AsyncDisposable {
+   }
+ 
+   /**
+-   * Generates a shell script that can used as a package manifest "scripts"
++   * Generates a shell script that can be used as a package manifest "scripts"
+    * entry. Exits after sending the message.
++   *
++   * Throws if `message` contains characters outside the allowlist enforced by
++   * `quoteShellArg` (alphanumerics plus ``_ - . / \\ : @ space + = ,``). All
++   * existing call sites pass short ASCII identifiers, so the constraint is
++   * satisfied by construction.
+    */
+   public sendLineScript (message: string): string {
+-    return `node -e "const c = require('net').connect('${JSON.stringify(this.listenPath).slice(1, -1)}', () => { c.write('${message}\\n'); c.end(); })"`
++    return `node ${quoteShellArg(this.lineHelperPath)} ${quoteShellArg(this.listenPath)} ${quoteShellArg(message)}`
+   }
+ 
+   /**
+-   * Generates a shell script that can used as a package manifest "scripts"
++   * Generates a shell script that can be used as a package manifest "scripts"
+    * entry. This script consumes its stdin and sends it to the server.
++   *
++   * Throws if the server's `listenPath` contains characters outside the
++   * allowlist enforced by `quoteShellArg`. The path is computed from
++   * `os.tmpdir()` (or a Windows named-pipe prefix) and a random UUID, so the
++   * constraint is satisfied by construction.
+    */
+   public generateSendStdinScript (): string {
+-    return `node -e "const c = require('net').connect('${JSON.stringify(this.listenPath).slice(1, -1)}', () => { process.stdin.pipe(c).on('end', () => { c.destroy(); }); })"`
++    return `node ${quoteShellArg(this.stdinHelperPath)} ${quoteShellArg(this.listenPath)}`
+   }
+ 
+   public [Symbol.asyncDispose] = async (): Promise<void> => {
+     const close = promisify(this.server.close).bind(this.server)
+     await close()
++    await fs.promises.rm(this.helperDir, { recursive: true, force: true })
+   }
+ }
+ 
+ export const createTestIpcServer = TestIpcServer.listen
++
++/**
++ * Wrap an argument for inclusion in a shell command. The argument must contain
++ * only a restricted set of characters known to be safe in both POSIX and
++ * Windows command interpreters when surrounded by double quotes (alphanumerics
++ * plus `_ - . / \\ : @ space + = ,`). A trailing backslash is rejected because
++ * under both shells `\\"` consumes the closing quote, which would break the
++ * command line.
++ *
++ * Throws when the argument contains a character outside this allowlist. All
++ * arguments produced internally (helper-script paths, the listen-path computed
++ * from `os.tmpdir()`/a named-pipe prefix, and test messages) satisfy this
++ * constraint by construction.
++ */
++function quoteShellArg (arg: string): string {
++  // Anchored allowlist — CodeQL recognizes this as a sanitization barrier for
++  // shell-injection sinks. The `endsWith('\\')` check rules out the one
++  // remaining ambiguous case the allowlist allows.
++  if (arg.length === 0 || !/^[\w\-./\\:@ +=,]+$/.test(arg) || arg.endsWith('\\')) {
++    throw new Error(`Unsupported character in shell argument: ${JSON.stringify(arg)}`)
++  }
++  return `"${arg}"`
++}
+diff --git a/deps/inspection/list/src/renderDependentsTree.ts b/deps/inspection/list/src/renderDependentsTree.ts
+index 935844ad74..c495ed4028 100644
+--- a/deps/inspection/list/src/renderDependentsTree.ts
++++ b/deps/inspection/list/src/renderDependentsTree.ts
+@@ -36,7 +36,7 @@ export async function renderDependentsTree (trees: DependentsTree[], opts: { lon
+       }
+       const childNodes = dependentsToTreeNodes(result.dependents, multiPeerPkgs, 0, opts.depth)
+       const tree: TreeNode = { label: rootLabel, nodes: childNodes }
+-      return renderArchyTree(tree, { treeChars: chalk.dim }).replace(/\n+$/, '')
++      return trimTrailingNewlines(renderArchyTree(tree, { treeChars: chalk.dim }))
+     }))
+   ).join('\n\n')
+ 
+@@ -178,3 +178,9 @@ function truncateDependents (dependents: DependentNode[], currentDepth: number,
+ function plainNameAtVersion (name: string, version: string): string {
+   return version ? `${name}@${version}` : name
+ }
++
++function trimTrailingNewlines (s: string): string {
++  let end = s.length
++  while (end > 0 && s.charCodeAt(end - 1) === 10) end--
++  return end === s.length ? s : s.slice(0, end)
++}
+diff --git a/installing/deps-installer/src/uninstall/removeDeps.ts b/installing/deps-installer/src/uninstall/removeDeps.ts
+index d7801f77ec..62e8282555 100644
+--- a/installing/deps-installer/src/uninstall/removeDeps.ts
++++ b/installing/deps-installer/src/uninstall/removeDeps.ts
+@@ -14,27 +14,34 @@ export async function removeDeps (
+   }
+ ): Promise<ProjectManifest> {
+   if (opts.saveType) {
+-    if (packageManifest[opts.saveType] == null) return packageManifest
++    // `Object.hasOwn` rules out `__proto__`, `constructor`, etc. on `opts.saveType`,
++    // so the dynamic read can never land on `Object.prototype`.
++    if (!Object.hasOwn(packageManifest, opts.saveType)) return packageManifest
++    const targetDeps = packageManifest[opts.saveType]
++    if (targetDeps == null) return packageManifest
+ 
+     for (const dependency of removedPackages) {
+-      delete packageManifest[opts.saveType as DependenciesField]![dependency]
++      removeOwnEntry(targetDeps, dependency)
+     }
+   } else {
+     for (const depField of DEPENDENCIES_FIELDS) {
+-      if (!packageManifest[depField]) continue
++      const fieldDeps = packageManifest[depField]
++      if (!fieldDeps) continue
+       for (const dependency of removedPackages) {
+-        delete packageManifest[depField]![dependency]
++        removeOwnEntry(fieldDeps, dependency)
+       }
+     }
+   }
+   if (packageManifest.peerDependencies != null) {
++    const peerDeps = packageManifest.peerDependencies
+     for (const removedDependency of removedPackages) {
+-      delete packageManifest.peerDependencies[removedDependency]
++      removeOwnEntry(peerDeps, removedDependency)
+     }
+   }
+   if (packageManifest.dependenciesMeta != null) {
++    const depsMeta = packageManifest.dependenciesMeta
+     for (const removedDependency of removedPackages) {
+-      delete packageManifest.dependenciesMeta[removedDependency]
++      removeOwnEntry(depsMeta, removedDependency)
+     }
+   }
+ 
+@@ -44,3 +51,15 @@ export async function removeDeps (
+   })
+   return packageManifest
+ }
++
++/**
++ * Remove an entry from a dependency-like record by its key, but only when the
++ * key is an own property. The `Object.hasOwn` guard keeps the `delete` from
++ * reaching into the prototype chain even when the dependency name matches an
++ * inherited property like `__proto__` or `constructor`.
++ */
++function removeOwnEntry (target: Record<string, unknown>, key: string): void {
++  if (Object.hasOwn(target, key)) {
++    delete target[key]
++  }
++}
+diff --git a/pkg-manifest/utils/src/convertEnginesRuntimeToDependencies.ts b/pkg-manifest/utils/src/convertEnginesRuntimeToDependencies.ts
+index f2e0fb33f1..bdbdbe053a 100644
+--- a/pkg-manifest/utils/src/convertEnginesRuntimeToDependencies.ts
++++ b/pkg-manifest/utils/src/convertEnginesRuntimeToDependencies.ts
+@@ -29,8 +29,14 @@ export function convertEnginesRuntimeToDependencies (
+     if ('webcontainer' in process.versions) {
+       globalWarn(`Installation of ${runtimeName} versions is not supported in WebContainer`)
+     } else {
+-      manifest[dependenciesFieldName] ??= {}
+-      manifest[dependenciesFieldName]![runtimeName] = `runtime:${runtime.version}`
++      // Inline barrier — CodeQL js/prototype-polluting-assignment recognizes
++      // the literal equality checks but not the equivalent helper call on this
++      // code path. Unreachable for the current RUNTIME_NAMES, but keeps the
++      // dynamic assignment safe if a future entry is added.
++      const key: string = runtimeName
++      if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue
++      const deps = (manifest[dependenciesFieldName] ??= {})
++      deps[runtimeName] = `runtime:${runtime.version}`
+     }
+   }
+ }
+diff --git a/pkg-manifest/utils/src/updateProjectManifestObject.ts b/pkg-manifest/utils/src/updateProjectManifestObject.ts
+index 928f08d215..f8eed98972 100644
+--- a/pkg-manifest/utils/src/updateProjectManifestObject.ts
++++ b/pkg-manifest/utils/src/updateProjectManifestObject.ts
+@@ -54,18 +54,18 @@ export async function updateProjectManifestObject (
+       const spec = packageSpec.bareSpecifier ?? findSpec(packageSpec.alias, packageManifest)
+       if (spec) {
+         packageManifest[packageSpec.saveType] = packageManifest[packageSpec.saveType] ?? {}
+-        packageManifest[packageSpec.saveType]![packageSpec.alias] = spec
++        defineDepEntry(packageManifest[packageSpec.saveType]!, packageSpec.alias, spec)
+         for (const deptype of DEPENDENCIES_FIELDS) {
+           if (deptype !== packageSpec.saveType) {
+-            delete packageManifest[deptype]?.[packageSpec.alias]
++            deleteDepEntry(packageManifest[deptype], packageSpec.alias)
+           }
+         }
+         if (packageSpec.peer === true) {
+           packageManifest.peerDependencies = packageManifest.peerDependencies ?? {}
+-          packageManifest.peerDependencies[packageSpec.alias] = getPeerSpecifier(
+-            spec,
+-            packageSpec.resolvedVersion,
+-            packageSpec.pinnedVersion
++          defineDepEntry(
++            packageManifest.peerDependencies,
++            packageSpec.alias,
++            getPeerSpecifier(spec, packageSpec.resolvedVersion, packageSpec.pinnedVersion)
+           )
+         }
+       }
+@@ -73,7 +73,7 @@ export async function updateProjectManifestObject (
+       const usedDepType = guessDependencyType(packageSpec.alias, packageManifest) ?? 'dependencies'
+       if (usedDepType !== 'peerDependencies') {
+         packageManifest[usedDepType] = packageManifest[usedDepType] ?? {}
+-        packageManifest[usedDepType]![packageSpec.alias] = packageSpec.bareSpecifier
++        defineDepEntry(packageManifest[usedDepType]!, packageSpec.alias, packageSpec.bareSpecifier)
+       }
+     }
+   }
+@@ -87,10 +87,40 @@ export async function updateProjectManifestObject (
+ 
+ function findSpec (alias: string, manifest: ProjectManifest): string | undefined {
+   const foundDepType = guessDependencyType(alias, manifest)
+-  return foundDepType && manifest[foundDepType]![alias]
++  if (foundDepType == null) return undefined
++  const deps = manifest[foundDepType]!
++  return Object.hasOwn(deps, alias) ? deps[alias] : undefined
+ }
+ 
+ export function guessDependencyType (alias: string, manifest: ProjectManifest): DependenciesOrPeersField | undefined {
+-  return DEPENDENCIES_OR_PEER_FIELDS
+-    .find((depField) => manifest[depField]?.[alias] === '' || Boolean(manifest[depField]?.[alias]))
++  return DEPENDENCIES_OR_PEER_FIELDS.find((depField) => {
++    const deps = manifest[depField]
++    if (deps == null || !Object.hasOwn(deps, alias)) return false
++    return deps[alias] === '' || Boolean(deps[alias])
++  })
++}
++
++/**
++ * Write a dependency entry without risking prototype pollution: even when the
++ * alias matches a name like `__proto__`, `Object.defineProperty` creates a
++ * regular own data property rather than reaching through the setter.
++ */
++function defineDepEntry (target: Record<string, string>, alias: string, value: string): void {
++  Object.defineProperty(target, alias, {
++    value,
++    enumerable: true,
++    writable: true,
++    configurable: true,
++  })
++}
++
++/**
++ * Mirror of `defineDepEntry` for deletes. The `Object.hasOwn` guard keeps the
++ * `delete` from reaching into the prototype chain when the alias matches an
++ * inherited property like `constructor`.
++ */
++function deleteDepEntry (target: Record<string, string> | undefined, alias: string): void {
++  if (target != null && Object.hasOwn(target, alias)) {
++    delete target[alias]
++  }
+ }
+diff --git a/resolving/npm-resolver/src/fetch.ts b/resolving/npm-resolver/src/fetch.ts
+index f7d7b96cbf..ff6f5a9c1d 100644
+--- a/resolving/npm-resolver/src/fetch.ts
++++ b/resolving/npm-resolver/src/fetch.ts
+@@ -11,6 +11,7 @@ import type { FetchFromRegistry, RetryTimeoutOptions } from '@pnpm/fetching.type
+ import { globalWarn } from '@pnpm/logger'
+ import type { PackageMeta } from '@pnpm/resolving.registry.types'
+ import * as retry from '@zkochan/retry'
++import semver from 'semver'
+ 
+ interface RegistryResponse {
+   status: number
+@@ -33,10 +34,6 @@ export interface FetchMetadataNotModifiedResult {
+   notModified: true
+ }
+ 
+-// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+-// eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/use-ignore-case
+-const semverRegex = /(.*)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+-
+ export class RegistryResponseError extends FetchError {
+   public readonly pkgName: string
+ 
+@@ -48,9 +45,9 @@ export class RegistryResponseError extends FetchError {
+     let hint: string | undefined
+     if (response.status === 404) {
+       hint = `${pkgName} is not in the npm registry, or you have no permission to fetch it.`
+-      const matched = pkgName.match(semverRegex)
+-      if (matched != null) {
+-        hint += ` Did you mean ${matched[1]}?`
++      const nameWithoutVersion = stripTrailingSemverSuffix(pkgName)
++      if (nameWithoutVersion != null) {
++        hint += ` Did you mean ${nameWithoutVersion}?`
+       }
+     }
+     super(request, response, hint)
+@@ -58,6 +55,51 @@ export class RegistryResponseError extends FetchError {
+   }
+ }
+ 
++/**
++ * Detect when a package name accidentally includes a `<version>` suffix
++ * (e.g. `lodash@4.17.21` or `lodash4.17.21`) and return the part before the
++ * version. Returns `undefined` when no semver suffix is present.
++ *
++ * Implemented as an O(n) scan to avoid polynomial backtracking on adversarial
++ * input (CodeQL: js/polynomial-redos).
++ */
++function stripTrailingSemverSuffix (pkgName: string): string | undefined {
++  // Common case: "name@version" – split on the rightmost '@'.
++  // `atIdx > 0` rules out the leading '@' of scoped names like '@scope/foo'.
++  const atIdx = pkgName.lastIndexOf('@')
++  if (atIdx > 0 && semver.valid(pkgName.slice(atIdx + 1)) != null) {
++    return pkgName.slice(0, atIdx)
++  }
++  // Fallback: detect a trailing "<digits>.<digits>.<digits>" appended to a name
++  // with no separator (e.g. "foo1.0.0"). We walk backwards through three
++  // digit-blocks separated by dots; this is O(n) and free of regex backtracking.
++  let i = pkgName.length
++  i = consumeTrailingDigits(pkgName, i)
++  if (i === pkgName.length || i === 0 || pkgName.charCodeAt(i - 1) !== 46 /* '.' */) return undefined
++  i--
++  const beforePatch = i
++  i = consumeTrailingDigits(pkgName, i)
++  if (i === beforePatch || i === 0 || pkgName.charCodeAt(i - 1) !== 46) return undefined
++  i--
++  const beforeMinor = i
++  i = consumeTrailingDigits(pkgName, i)
++  if (i === beforeMinor || i === 0) return undefined
++  if (semver.valid(pkgName.slice(i)) == null) return undefined
++  let prefix = pkgName.slice(0, i)
++  if (prefix.endsWith('@')) prefix = prefix.slice(0, -1)
++  return prefix.length > 0 ? prefix : undefined
++}
++
++function consumeTrailingDigits (s: string, end: number): number {
++  let i = end
++  while (i > 0) {
++    const c = s.charCodeAt(i - 1)
++    if (c < 48 || c > 57) break
++    i--
++  }
++  return i
++}
++
+ export interface FetchMetadataFromFromRegistryOptions {
+   fetch: FetchFromRegistry
+   retry: RetryTimeoutOptions

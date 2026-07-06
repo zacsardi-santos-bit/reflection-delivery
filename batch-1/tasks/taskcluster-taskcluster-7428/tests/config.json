@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -tags multiuser -json ./workers/generic-worker -count=1 -run 'TestWritableDirectoryCacheNoSHA256|TestCacheMoved'",
+  "test_files": [
+    "workers/generic-worker/mounts_insecure_test.go",
+    "workers/generic-worker/mounts_multiuser_test.go",
+    "workers/generic-worker/mounts_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/taskcluster/taskcluster/v77/workers/generic-worker::TestWritableDirectoryCacheNoSHA256",
+    "github.com/taskcluster/taskcluster/v77/workers/generic-worker::TestCacheMoved"
+  ],
+  "PASS_TO_PASS": []
+}

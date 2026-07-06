@@ -1,0 +1,15 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run packages/element/tests/sortElements.test.ts",
+  "test_files": [
+    "packages/element/tests/sortElements.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/element/tests/sortElements.test.ts::normalizeElementsOrder normalize group order"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/element/tests/sortElements.test.ts::normalizeElementsOrder sort bound-text elements"
+  ]
+}

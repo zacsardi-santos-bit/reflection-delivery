@@ -1,5 +1,0 @@
-I'm working on adding support for reporting unused inline directive comments in the linter. Right now, when someone writes a comment to suppress a lint warning on a specific line, but that rule wouldn't have fired there anyway, the linter has no way to flag that as unnecessary. Similarly, a re-enable comment with no corresponding disable comment is silently ignored.
-
-I want to add a new group of command-line options under an "inline configuration comments" section that lets users opt into this behavior. There should be a simple flag to enable the reporting with a default severity, and a separate flag that takes an explicit severity value (warn or error). Only one of these two forms should be used at a time.
-
-The lint command's parsed options struct needs to expose a dedicated field that holds these settings. The underlying directive-tracking logic also needs to be updated to record which disable directives actually matched a violation (so the unused ones can be identified), and to track enable directives that have no matching disable.

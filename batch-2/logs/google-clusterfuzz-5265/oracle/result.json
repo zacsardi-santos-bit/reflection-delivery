@@ -1,0 +1,29 @@
+{
+    "id": "1b4aba0d-6c83-45a6-bb91-6981054a34d1",
+    "started_at": "2026-07-06T12:18:00.770634",
+    "finished_at": "2026-07-06T12:18:26.976816",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__google-clusterfuzz-5265": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "google-clusterfuzz-5265__yUu5aXh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

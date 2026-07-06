@@ -1,0 +1,29 @@
+{
+    "id": "d1115c68-5a66-43c9-8144-25dd7b588bbc",
+    "started_at": "2026-07-04T15:37:46.198046",
+    "finished_at": "2026-07-04T15:38:06.399542",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__withastro-starlight-2582": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "withastro-starlight-2582__mCNFj2B"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

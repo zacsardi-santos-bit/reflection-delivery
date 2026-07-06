@@ -1,9 +1,0 @@
-patching file cmd/contrastExecuteScan.go
-patching file cmd/contrastExecuteScan_generated.go
-patching file cmd/metadata_generated.go
-patching file cmd/piper.go
-patching file pkg/contrast/contrast.go
-patching file pkg/contrast/reporting.go
-patching file pkg/contrast/request.go
-patching file resources/metadata/contrastExecuteScan.yaml
-patching file vars/contrastExecuteScan.groovy

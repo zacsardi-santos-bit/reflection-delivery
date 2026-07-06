@@ -1,0 +1,20 @@
+patching file hack/scripts/releaser/releaser_test.go
+{"Time":"2026-06-29T15:22:37.889444812Z","Action":"start","Package":"github.com/nuclio/nuclio/hack/scripts/releaser"}
+{"Time":"2026-06-29T15:22:37.906778816Z","Action":"run","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite"}
+{"Time":"2026-06-29T15:22:37.906843116Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite","Output":"=== RUN   TestReleaserTestSuite\n"}
+{"Time":"2026-06-29T15:22:37.907471015Z","Action":"run","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestResolveDesiredPatchVersions"}
+{"Time":"2026-06-29T15:22:37.907500095Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestResolveDesiredPatchVersions","Output":"=== RUN   TestReleaserTestSuite/TestResolveDesiredPatchVersions\n"}
+{"Time":"2026-06-29T15:22:37.907836234Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestResolveDesiredPatchVersions","Output":"26.06.29 15:22:37.907 \u001b[34m(I)\u001b[0m \u001b[37m                     test\u001b[0m Bumping patch version\n"}
+{"Time":"2026-06-29T15:22:37.907863344Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestResolveDesiredPatchVersions","Output":"26.06.29 15:22:37.907 \u001b[34m(I)\u001b[0m \u001b[37m                     test\u001b[0m Bumping patch version\n"}
+{"Time":"2026-06-29T15:22:37.907897274Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestResolveDesiredPatchVersions","Output":"--- PASS: TestReleaserTestSuite/TestResolveDesiredPatchVersions (0.00s)\n"}
+{"Time":"2026-06-29T15:22:37.907920334Z","Action":"pass","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestResolveDesiredPatchVersions","Elapsed":0}
+{"Time":"2026-06-29T15:22:37.907954533Z","Action":"run","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestSaveReleaseInfo"}
+{"Time":"2026-06-29T15:22:37.907977223Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestSaveReleaseInfo","Output":"=== RUN   TestReleaserTestSuite/TestSaveReleaseInfo\n"}
+{"Time":"2026-06-29T15:22:37.908155233Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestSaveReleaseInfo","Output":"--- PASS: TestReleaserTestSuite/TestSaveReleaseInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:22:37.908181043Z","Action":"pass","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite/TestSaveReleaseInfo","Elapsed":0}
+{"Time":"2026-06-29T15:22:37.908206123Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite","Output":"--- PASS: TestReleaserTestSuite (0.00s)\n"}
+{"Time":"2026-06-29T15:22:37.908229993Z","Action":"pass","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Test":"TestReleaserTestSuite","Elapsed":0}
+{"Time":"2026-06-29T15:22:37.908256773Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Output":"PASS\n"}
+{"Time":"2026-06-29T15:22:37.908761301Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Output":"ok  \tgithub.com/nuclio/nuclio/hack/scripts/releaser\t0.019s\n"}
+{"Time":"2026-06-29T15:22:37.909009451Z","Action":"pass","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Elapsed":0.02}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

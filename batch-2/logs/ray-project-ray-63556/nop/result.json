@@ -1,0 +1,29 @@
+{
+    "id": "fc458bfa-6b55-4b27-b3c9-032c985f8cd9",
+    "started_at": "2026-07-06T12:17:25.061520",
+    "finished_at": "2026-07-06T12:17:59.834555",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__ray-project-ray-63556": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "ray-project-ray-63556__KUk8uvY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

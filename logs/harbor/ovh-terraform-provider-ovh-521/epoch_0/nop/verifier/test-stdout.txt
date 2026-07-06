@@ -1,6 +1,0 @@
-patching file ovh/data_iam_permissions_group_test.go
-patching file ovh/resource_iam_permissions_group_test.go
-# github.com/ovh/terraform-provider-ovh/ovh [github.com/ovh/terraform-provider-ovh/ovh.test]
-ovh/resource_iam_permissions_group_test.go:28:25: undefined: IamPermissionsGroup
-FAIL	github.com/ovh/terraform-provider-ovh/ovh [build failed]
-reward=0 graded=14 found=14 failed=14 parsed=1 framework=go exit_code=1

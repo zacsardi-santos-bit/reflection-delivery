@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p jsonrpc-derive --no-fail-fast -E 'test(client_server_roundtrip)'",
+  "test_files": [
+    "derive/tests/client.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) jsonrpc-derive::client client_server_roundtrip"
+  ],
+  "PASS_TO_PASS": []
+}

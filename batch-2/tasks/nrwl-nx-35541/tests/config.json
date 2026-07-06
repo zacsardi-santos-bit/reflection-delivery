@@ -1,0 +1,41 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts --config=packages/devkit/jest.config.cts --no-coverage",
+  "test_files": [
+    "packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports routes a single internal symbol to @nx/devkit/internal",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports routes a single public symbol to @nx/devkit",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports splits mixed public and internal symbols across two declarations",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports preserves `as` aliases",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports handles `import type` declarations",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports preserves inline `type` modifiers on individual specifiers",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports drops redundant inline `type` when the whole import is already type-only",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports handles multi-line named imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports rewrites multiple deep imports in one file",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports falls back to /internal for side-effect imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports falls back to /internal for default imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports falls back to /internal for namespace imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports falls back to /internal for require()",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports falls back to /internal for dynamic import()",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports preserves quote style on fallback paths",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports does not touch unrelated @nx/devkit imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration rewriteDevkitDeepImports does not touch unrelated @nx/devkit/internal imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration migration runner rewrites deep imports across .ts/.tsx/.cts/.mts files",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration migration runner does not rewrite deep-import strings inside non-TS files",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration migration runner does not touch files that do not contain the deep prefix",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse merges a rewritten import into a pre-existing @nx/devkit import",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse merges a rewritten import into a pre-existing @nx/devkit/internal import",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse merges multiple rewritten imports that target the same specifier",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse keeps public and internal collapses independent",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse does not merge value imports with type-only imports",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse merges duplicate specifiers without repeating them",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse does not touch a file that already has a single canonical import",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration collapse leaves unrelated imports between merged declarations alone",
+    "/workspace/repo/packages/devkit/src/migrations/update-23-0-0/update-deep-imports.spec.ts::update-deep-imports migration symbol set sanity treats every name in DEVKIT_INTERNAL_SYMBOLS as internal"
+  ],
+  "PASS_TO_PASS": []
+}

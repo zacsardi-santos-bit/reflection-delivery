@@ -1,0 +1,111 @@
+patching file test/__snapshots__/app-client-custom-path.spec.js.snap
+patching file test/__snapshots__/app.spec.js.snap
+patching file test/__snapshots__/server.spec.js.snap
+patching file test/blueprint/__snapshots__/app-blueprint.spec.js.snap
+patching file test/blueprint/__snapshots__/scoped-blueprint.spec.js.snap
+
+
+  JHipster server generator
+    generate server with ehcache
+/bin/sh: 1: keytool: not found
+      1) creates expected files for default configuration for server generator
+    generate server with caffeine
+/bin/sh: 1: keytool: not found
+      2) creates expected files for caffeine cache configuration for server generator
+    microfrontend
+/bin/sh: 1: keytool: not found
+      3) should match generated files snapshot
+    gateway application type
+      with non reactive option
+yeoman-test: question languages was asked but answer was not provided
+/bin/sh: 1: keytool: not found
+        ✔ should convert to reactive
+
+
+  1 passing (9s)
+  3 failing
+
+  1) JHipster server generator
+       generate server with ehcache
+         creates expected files for default configuration for server generator:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster server generator generate server with ehcache creates expected files for default configuration for server generator 1`
+
+- Snapshot  - 3
++ Received  + 0
+
+@@ -114,13 +114,10 @@
+      "stateCleared": "modified",
+    },
+    "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": Object {
+      "stateCleared": "modified",
+    },
+-   "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": Object {
+-     "stateCleared": "modified",
+-   },
+    "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": Object {
+      "stateCleared": "modified",
+    },
+    "src/main/java/com/mycompany/myapp/config/Constants.java": Object {
+      "stateCleared": "modified",
+      at Context.<anonymous> (test/server.spec.js:39:44)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  2) JHipster server generator
+       generate server with caffeine
+         creates expected files for caffeine cache configuration for server generator:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster server generator generate server with caffeine creates expected files for caffeine cache configuration for server generator 1`
+
+- Snapshot  - 3
++ Received  + 0
+
+@@ -114,13 +114,10 @@
+      "stateCleared": "modified",
+    },
+    "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": Object {
+      "stateCleared": "modified",
+    },
+-   "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": Object {
+-     "stateCleared": "modified",
+-   },
+    "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": Object {
+      "stateCleared": "modified",
+    },
+    "src/main/java/com/mycompany/myapp/config/Constants.java": Object {
+      "stateCleared": "modified",
+      at Context.<anonymous> (test/server.spec.js:70:44)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  3) JHipster server generator
+       microfrontend
+         should match generated files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster server generator microfrontend should match generated files snapshot 1`
+
+- Snapshot  - 3
++ Received  + 0
+
+@@ -132,13 +132,10 @@
+      "stateCleared": "modified",
+    },
+    "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": Object {
+      "stateCleared": "modified",
+    },
+-   "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": Object {
+-     "stateCleared": "modified",
+-   },
+    "src/main/java/com/mycompany/myapp/config/Constants.java": Object {
+      "stateCleared": "modified",
+    },
+    "src/main/java/com/mycompany/myapp/config/DatabaseConfiguration.java": Object {
+      "stateCleared": "modified",
+      at Context.<anonymous> (test/server.spec.js:92:44)
+      at process.processImmediate (node:internal/timers:483:21)
+
+
+
+reward=0 graded=4 found=4 failed=3 parsed=9 framework=mocha exit_code=3

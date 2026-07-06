@@ -1,0 +1,34 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run test/assertions/trajectory.test.ts test/assertions/trajectoryGoalSuccess.test.ts test/matchers/trajectory-goal-success.test.ts",
+  "test_files": [
+    "test/assertions/trajectory.test.ts",
+    "test/assertions/trajectoryGoalSuccess.test.ts",
+    "test/matchers/trajectory-goal-success.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/matchers/trajectory-goal-success.test.ts::matchesTrajectoryGoalSuccess renders the goal, trajectory, and output into the grading prompt",
+    "/workspace/repo/test/matchers/trajectory-goal-success.test.ts::matchesTrajectoryGoalSuccess throws when grading config is not provided",
+    "/workspace/repo/test/matchers/trajectory-goal-success.test.ts::matchesTrajectoryGoalSuccess applies assertion thresholds to the returned score",
+    "/workspace/repo/test/matchers/trajectory-goal-success.test.ts::matchesTrajectoryGoalSuccess does not allow caller vars to override goal, trajectory, or output",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory utilities extracts normalized trajectory steps from trace spans",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory utilities only treats a generic query attribute as search when the span looks search-like",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory utilities compacts repeated steps and truncates long judge summaries",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-used passes when a required tool is present",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-used supports count-based matching with patterns",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-used supports inverse assertions",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-used fails inverse list assertions when any forbidden tool is present",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-sequence passes when tools are observed in order",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-sequence fails exact mode when there are additional tools",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:tool-sequence rejects object steps without a name or pattern",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:step-count counts steps by type",
+    "/workspace/repo/test/assertions/trajectory.test.ts::trajectory assertions trajectory:step-count counts steps by pattern",
+    "/workspace/repo/test/assertions/trajectoryGoalSuccess.test.ts::handleTrajectoryGoalSuccess passes the goal, summarized trajectory, and provider context to the matcher",
+    "/workspace/repo/test/assertions/trajectoryGoalSuccess.test.ts::handleTrajectoryGoalSuccess accepts an object value with a goal property",
+    "/workspace/repo/test/assertions/trajectoryGoalSuccess.test.ts::handleTrajectoryGoalSuccess inverts the result for not-trajectory:goal-success assertions",
+    "/workspace/repo/test/assertions/trajectoryGoalSuccess.test.ts::handleTrajectoryGoalSuccess throws when the assertion value does not include a goal"
+  ],
+  "PASS_TO_PASS": []
+}

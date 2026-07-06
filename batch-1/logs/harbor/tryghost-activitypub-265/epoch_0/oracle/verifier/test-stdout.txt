@@ -1,0 +1,15 @@
+patching file src/helpers/activitypub/activity.unit.test.ts
+patching file src/publishing/content.unit.test.ts
+patching file src/publishing/service.unit.test.ts
+
+ RUN  v2.1.7 /workspace/repo
+
+ ✓ src/publishing/content.unit.test.ts (9 tests) 6ms
+ ✓ src/publishing/service.unit.test.ts (13 tests) 90ms
+
+ Test Files  2 passed (2)
+      Tests  22 passed (22)
+   Start at  15:22:37
+   Duration  1.83s (transform 329ms, setup 0ms, collect 1.36s, tests 96ms, environment 0ms, prepare 490ms)
+
+reward=1 graded=22 found=0 failed=0 parsed=0 framework=vitest exit_code=0

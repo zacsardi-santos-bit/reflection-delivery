@@ -1,0 +1,98 @@
+{
+    "id": "dc3c33d8-2850-4ff2-beba-b5cc3f27781c",
+    "task_name": "offline/go-acme-lego-2126",
+    "trial_name": "go-acme-lego-2126__QWoABVY",
+    "trial_uri": "file:///tmp/nop/2026-07-01__14-44-53/go-acme-lego-2126__QWoABVY",
+    "task_id": {
+        "path": "go-acme-lego-2126"
+    },
+    "source": "src",
+    "task_checksum": "61f4f64356ecb4f723a8987a5a9d99ffce702ed4a7308a8fcfd82041f2266aef",
+    "config": {
+        "task": {
+            "path": "go-acme-lego-2126",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "go-acme-lego-2126__QWoABVY",
+        "trials_dir": "/tmp/nop/2026-07-01__14-44-53",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "ea30b10c-eb80-428b-b0f1-02ce859e5ae3"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T14:44:57.812484Z",
+    "finished_at": "2026-07-01T14:45:13.864476Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T14:44:57.814407Z",
+        "finished_at": "2026-07-01T14:44:59.819884Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T14:44:59.819920Z",
+        "finished_at": "2026-07-01T14:44:59.819967Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T14:44:59.820019Z",
+        "finished_at": "2026-07-01T14:44:59.820047Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T14:44:59.820143Z",
+        "finished_at": "2026-07-01T14:45:03.532402Z"
+    }
+}

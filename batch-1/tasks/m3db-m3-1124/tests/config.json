@@ -1,0 +1,45 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./src/cmd/services/m3query/config ./src/query/api/v1/handler/prometheus/native ./src/query/config -count=1",
+  "test_files": [
+    "src/cmd/services/m3query/config/config_test.go",
+    "src/query/api/v1/handler/prometheus/native/read_test.go",
+    "src/query/config/config_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "_/workspace/repo/src/cmd/services/m3query/config::TestTagOptionsFromEmptyConfig",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestTagOptionsFromConfig",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestParamParsing",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestInvalidStart",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestInvalidTarget",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestParseDuration",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestConfigLoading",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestConfigValidation/empty_LimitsConfiguration_is_valid_(implies_disabled)",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestParseDurationParsesIntAsSeconds",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestConfigValidation/LimitsConfiguration_with_positive_limit_is_valid",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestParseDurationError",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestRenderResultsJSON",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestConfigValidation/#00",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_Read",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestConfigValidation/LimitsConfiguration_with_negative_limit_is_valid_(implies_disabled)",
+    "_/workspace/repo/src/cmd/services/m3query/config::TestConfigValidation",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_ServeHTTP_maxComputedDatapoints",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/under_limit",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/at_limit",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/over_limit",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/large_query,_limit_disabled_(0)",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/large_query,_limit_disabled_(negative)",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/uneven_step_over_limit",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest/uneven_step_under_limit",
+    "_/workspace/repo/src/query/api/v1/handler/prometheus/native::TestPromReadHandler_validateRequest"
+  ],
+  "PASS_TO_PASS": [
+    "_/workspace/repo/src/query/config::TestProvidedConfigFiles/load_m3coordinator-cluster-template.yml",
+    "_/workspace/repo/src/query/config::TestProvidedConfigFiles/load_m3coordinator-local-etcd.yml",
+    "_/workspace/repo/src/query/config::TestProvidedConfigFiles/load_m3query-dev-etcd.yml",
+    "_/workspace/repo/src/query/config::TestProvidedConfigFiles/load_m3query-local-etcd.yml",
+    "_/workspace/repo/src/query/config::TestProvidedConfigFiles"
+  ]
+}

@@ -1,9 +1,0 @@
-I'm working on improving the batching layer for a language model inference serving system. Right now, sequences are managed somewhat individually and it's hard to group them efficiently for prefill and decode operations.
-
-What I need is a new container class that can hold a batch of sequences, track their KV cache block assignments (starting as unallocated), and support operations like adding sequences, appending new tokens to the whole batch, removing individual sequences, merging two batches together, and clearing the batch entirely. The batch should always know how many sequences it contains, their current lengths, and whether the internal layout is compact (no gaps).
-
-On the memory management side, I need the KV cache manager to expose separate allocation methods for the prefill phase (where we're processing the full initial context) and for the decode phase (where we add one token at a time). It should also support freeing memory for one sequence at a time or for a whole batch of sequences at once. After memory is freed, the individual cache blocks should report their full available space restored. The cache manager should also expose its per-head size and the maximum number of blocks per sequence, since those are needed when constructing the batch container.
-
-The running list that tracks active sequences also needs two new operations: one that marks all sequences currently in the prefill phase as actively running, and another that moves a given set of sequences (by their IDs) from the prefill phase into the decode phase. This lets the inference loop explicitly control the transition between stages.
-
-Finally, the sequence constructor should be simplified to remove the block table parameter, since block tables are now managed externally by the batch container rather than being part of the sequence itself.

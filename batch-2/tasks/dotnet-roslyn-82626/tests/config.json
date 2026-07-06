@@ -1,0 +1,17 @@
+{
+  "test_framework": "cppunit",
+  "test_command": "sed -i 's|\"rollForward\": \"patch\"|\"rollForward\": \"latestMajor\"|' /workspace/repo/global.json && dotnet test /workspace/repo/src/Compilers/CSharp/Test/CSharp15/Microsoft.CodeAnalysis.CSharp.CSharp15.UnitTests.csproj --framework net10.0 --filter \"FullyQualifiedName~UnionDeclaration_28|FullyQualifiedName~UnionDeclaration_29|FullyQualifiedName~UnionDeclaration_30|FullyQualifiedName~UnionDeclaration_31|FullyQualifiedName~UnionDeclaration_32\" -v normal > /tmp/o.txt 2>&1 && echo 0 > /tmp/rc.txt || echo $? > /tmp/rc.txt; cat /tmp/o.txt; awk '$1==\"Passed\"&&NF>=3{n=split($2,a,\".\");print a[n-1]\"::\"a[n]\" : OK\"} $1==\"Failed\"&&NF>=3{n=split($2,a,\".\");print a[n-1]\"::\"a[n]\" : FAIL\"}' /tmp/o.txt; exit $(cat /tmp/rc.txt)",
+  "test_files": [
+    "src/Compilers/CSharp/Test/CSharp15/UnionsTests.cs"
+  ],
+  "num_test_files": 1,
+  "language": "csharp",
+  "FAIL_TO_PASS": [
+    "UnionsTests::UnionDeclaration_28",
+    "UnionsTests::UnionDeclaration_29",
+    "UnionsTests::UnionDeclaration_31",
+    "UnionsTests::UnionDeclaration_30",
+    "UnionsTests::UnionDeclaration_32"
+  ],
+  "PASS_TO_PASS": []
+}

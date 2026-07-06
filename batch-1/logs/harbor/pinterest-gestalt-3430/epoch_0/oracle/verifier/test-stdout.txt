@@ -1,0 +1,189 @@
+patching file packages/gestalt/src/ComboBox.jsdom.test.js
+patching file packages/gestalt/src/Dropdown.jsdom.test.js
+patching file packages/gestalt/src/HelpButton.jsdom.test.js
+patching file packages/gestalt/src/HelpButton.test.js
+patching file packages/gestalt/src/OverlayPanel.jsdom.test.js
+patching file packages/gestalt/src/Popover.jsdom.test.js
+patching file packages/gestalt/src/PopoverEducational.jsdom.test.js
+patching file packages/gestalt/src/SideNavigation.jsdom.test.js
+patching file packages/gestalt/src/Tooltip.jsdom.test.js
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+PASS jsdom packages/gestalt/src/HelpButton.test.js (6.298 s)
+  HelpButton
+    ✓ renders correctly (12 ms)
+    ✓ renders with default link and no accessibility label (3 ms)
+    ✓ renders with default link and accessibility link label (2 ms)
+    ✓ renders with changing direction to show the popover (1 ms)
+    ✓ renders with link and no default link label (2 ms)
+    ✓ accessibilityControls (2 ms)
+    ✓ accessibilityExpanded (1 ms)
+    ✓ accessibilityLabel="Click to learn more about Pinterest" accessibilityPopoverLabel (1 ms)
+
+PASS jsdom packages/gestalt/src/PopoverEducational.jsdom.test.js (6.304 s)
+  ✓ PopoverEducational renders (111 ms)
+
+PASS jsdom packages/gestalt/src/Popover.jsdom.test.js (6.32 s)
+  PopoverEducational
+    ✓ renders correctly (113 ms)
+    ✓ renders correctly with custom children (32 ms)
+    ✓ does not render when the anchor is null (2 ms)
+
+PASS jsdom packages/gestalt/src/Tooltip.jsdom.test.js (6.461 s)
+  ✓ Tooltip renders (10 ms)
+  ✓ Tooltip renders the link when hovered (108 ms)
+  ✓ Tooltip should render as expected when hovered (34 ms)
+  ✓ Tooltip renders with idealDirection (30 ms)
+  ✓ Tooltip renders with zIndex (29 ms)
+
+PASS jsdom packages/gestalt/src/HelpButton.jsdom.test.js (6.667 s)
+  HelpButton
+    ✓ renders a icon (29 ms)
+    ✓ renders a button with sequential keyboard navigation and forwards a ref to the innermost <button> element (37 ms)
+    ✓ renders default accessibility label on button (11 ms)
+    ✓ renders content based on text prop (63 ms)
+    ✓ renders popover with provided accessibility label (39 ms)
+    ✓ renders popover with new zIndex (34 ms)
+    ✓ popover opens (36 ms)
+    ✓ renders a link (49 ms)
+    ✓ renders a link without default label (39 ms)
+    ✓ renders a link spying the link trigger (42 ms)
+
+PASS node packages/gestalt/src/HelpButton.test.js (7.685 s)
+  HelpButton
+    ✓ renders correctly (12 ms)
+    ✓ renders with default link and no accessibility label (3 ms)
+    ✓ renders with default link and accessibility link label (1 ms)
+    ✓ renders with changing direction to show the popover (1 ms)
+    ✓ renders with link and no default link label (1 ms)
+    ✓ accessibilityControls (2 ms)
+    ✓ accessibilityExpanded (1 ms)
+    ✓ accessibilityLabel="Click to learn more about Pinterest" accessibilityPopoverLabel (1 ms)
+
+PASS jsdom packages/gestalt/src/OverlayPanel.jsdom.test.js (6.841 s)
+  OverlayPanel
+    ✓ should render all props with nodes (49 ms)
+    ✓ should render all props with render props (10 ms)
+    ✓ should render animation in (10 ms)
+    ✓ should render animation out (7 ms)
+    ✓ should focus the dismiss button upon render (48 ms)
+    ✓ should dismiss from the dismiss button (15 ms)
+    ✓ should dismiss from the ESC key (11 ms)
+    ✓ should dismiss from clicking outside when closeOnOutsideClick is true (15 ms)
+    ✓ should dismiss from clicking on the children content (17 ms)
+    ✓ should dismiss from clicking on the footer content (12 ms)
+    ✓ should dismiss from clicking on the subHeading content (10 ms)
+    ✓ should not dismiss from the backdrop click when closeOnOutsideClick is false (13 ms)
+    ✓ should not dismiss from the backdrop click when closeOnOutsideClick and dismissConfirmation are true (27 ms)
+    ✓ should not dismiss from the dismiss button key when closeOnOutsideClick and dismissConfirmation are true (33 ms)
+    ✓ should not dismiss from the ESC keys when closeOnOutsideClick and dismissConfirmation are true (27 ms)
+    ✓ renders OverlayPanel with confirmation modal (21 ms)
+    ✓ should show confirmation when closeOnOutsideClick and dismissConfirmation are true (88 ms)
+    ✓ should show custom confirmation when closeOnOutsideClick and dismissConfirmation are true (82 ms)
+    ○ skipped should trigger onAnimationEnd
+
+PASS jsdom packages/gestalt/src/Dropdown.jsdom.test.js (6.997 s)
+  Dropdown
+    ✓ renders a menu of 6 items (131 ms)
+    ✓ renders a menu of 3 items conditionally (51 ms)
+    ✓ renders dropdown sections (46 ms)
+    ✓ renders a custom header (47 ms)
+    ✓ closes when esc key is pressed (40 ms)
+    ✓ closes when tab key is pressed (39 ms)
+    ✓ changes active descendant when arrow keys are pressed (91 ms)
+    ✓ should call item onSelect when enter key is pressed (78 ms)
+    ✓ should call link onClick when enter key is pressed (80 ms)
+
+PASS jsdom packages/gestalt/src/SideNavigation.jsdom.test.js (7.801 s)
+  SideNavigation desktop
+    ✓ renders correctly on hover (216 ms)
+    ✓ renders correctly on focus (147 ms)
+    ✓ renders display static correctly (23 ms)
+    ✓ renders display expandable correctly (7 ms)
+    ✓ renders display expandableExpanded correctly (22 ms)
+    ✓ renders primaryAction dropdown correctly on click (31 ms)
+    ✓ renders primaryAction dropdown correctly on enter (68 ms)
+  SideNavigation mobile
+    ✓ renders correctly on hover (110 ms)
+    ✓ renders correctly on focus (139 ms)
+    ✓ renders primaryAction dropdown correctly on click (80 ms)
+    ✓ renders primaryAction dropdown correctly on enter (120 ms)
+
+PASS jsdom packages/gestalt/src/ComboBox.jsdom.test.js (8.104 s)
+  ComboBox
+    Uncontrolled ComboBox
+      ✓ renders default (62 ms)
+      ✓ renders disabled state (10 ms)
+      ✓ renders dropdown with options on click (97 ms)
+      ✓ selects an option on click (142 ms)
+      ✓ filters options on valid input resets options after selecting (123 ms)
+      ✓ resets options after selecting (73 ms)
+      ✓ returns no results message if no options match input (81 ms)
+      ✓ shows correct icons (55 ms)
+      ✓ clears selected options with clear button (316 ms)
+      ✓ manages focus (145 ms)
+      ✓ doesn't clear input on blur when no option is selected (84 ms)
+    Controlled ComboBox
+      ✓ renders basic controlled components (6 ms)
+      ✓ shows dropdown with options on click (40 ms)
+      ✓ shows controlled input value (40 ms)
+      ✓ shows selected option in textfield (17 ms)
+      ✓ shows selected option in dropdown (70 ms)
+    Controlled ComboBox with Tags
+      ✓ renders with tags (182 ms)
+      ✓ shows controlled input value with tags (73 ms)
+
+Test Suites: 10 passed, 10 total
+Tests:       1 skipped, 91 passed, 92 total
+Snapshots:   26 passed, 26 total
+Time:        9.579 s
+Ran all test suites matching /packages\/gestalt\/src\/ComboBox.jsdom.test.js|packages\/gestalt\/src\/Dropdown.jsdom.test.js|packages\/gestalt\/src\/HelpButton.jsdom.test.js|packages\/gestalt\/src\/HelpButton.test.js|packages\/gestalt\/src\/OverlayPanel.jsdom.test.js|packages\/gestalt\/src\/Popover.jsdom.test.js|packages\/gestalt\/src\/PopoverEducational.jsdom.test.js|packages\/gestalt\/src\/SideNavigation.jsdom.test.js|packages\/gestalt\/src\/Tooltip.jsdom.test.js/i in 2 projects.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":10,"numPassedTests":91,"numPendingTestSuites":0,"numPendingTests":1,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":10,"numTotalTests":92,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":26,"total":26,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782747346336,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["HelpButton"],"duration":12,"failureMessages":[],"fullName":"HelpButton renders correctly","location":null,"status":"passed","title":"renders correctly"},{"ancestorTitles":["HelpButton"],"duration":3,"failureMessages":[],"fullName":"HelpButton renders with default link and no accessibility label","location":null,"status":"passed","title":"renders with default link and no accessibility label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton renders with default link and accessibility link label","location":null,"status":"passed","title":"renders with default link and accessibility link label"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton renders with changing direction to show the popover","location":null,"status":"passed","title":"renders with changing direction to show the popover"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton renders with link and no default link label","location":null,"status":"passed","title":"renders with link and no default link label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityControls","location":null,"status":"passed","title":"accessibilityControls"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton accessibilityExpanded","location":null,"status":"passed","title":"accessibilityExpanded"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel","location":null,"status":"passed","title":"accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel"}],"endTime":1782747354069,"message":"","name":"/workspace/repo/packages/gestalt/src/HelpButton.test.js","startTime":1782747347771,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"duration":111,"failureMessages":[],"fullName":"PopoverEducational renders","location":null,"status":"passed","title":"PopoverEducational renders"}],"endTime":1782747354113,"message":"","name":"/workspace/repo/packages/gestalt/src/PopoverEducational.jsdom.test.js","startTime":1782747347809,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["PopoverEducational"],"duration":113,"failureMessages":[],"fullName":"PopoverEducational renders correctly","location":null,"status":"passed","title":"renders correctly"},{"ancestorTitles":["PopoverEducational"],"duration":32,"failureMessages":[],"fullName":"PopoverEducational renders correctly with custom children","location":null,"status":"passed","title":"renders correctly with custom children"},{"ancestorTitles":["PopoverEducational"],"duration":2,"failureMessages":[],"fullName":"PopoverEducational does not render when the anchor is null","location":null,"status":"passed","title":"does not render when the anchor is null"}],"endTime":1782747354146,"message":"","name":"/workspace/repo/packages/gestalt/src/Popover.jsdom.test.js","startTime":1782747347826,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"duration":10,"failureMessages":[],"fullName":"Tooltip renders","location":null,"status":"passed","title":"Tooltip renders"},{"ancestorTitles":[],"duration":108,"failureMessages":[],"fullName":"Tooltip renders the link when hovered","location":null,"status":"passed","title":"Tooltip renders the link when hovered"},{"ancestorTitles":[],"duration":34,"failureMessages":[],"fullName":"Tooltip should render as expected when hovered","location":null,"status":"passed","title":"Tooltip should render as expected when hovered"},{"ancestorTitles":[],"duration":30,"failureMessages":[],"fullName":"Tooltip renders with idealDirection","location":null,"status":"passed","title":"Tooltip renders with idealDirection"},{"ancestorTitles":[],"duration":29,"failureMessages":[],"fullName":"Tooltip renders with zIndex","location":null,"status":"passed","title":"Tooltip renders with zIndex"}],"endTime":1782747354224,"message":"","name":"/workspace/repo/packages/gestalt/src/Tooltip.jsdom.test.js","startTime":1782747347763,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["HelpButton"],"duration":29,"failureMessages":[],"fullName":"HelpButton renders a icon","location":null,"status":"passed","title":"renders a icon"},{"ancestorTitles":["HelpButton"],"duration":37,"failureMessages":[],"fullName":"HelpButton renders a button with sequential keyboard navigation and forwards a ref to the innermost <button> element","location":null,"status":"passed","title":"renders a button with sequential keyboard navigation and forwards a ref to the innermost <button> element"},{"ancestorTitles":["HelpButton"],"duration":11,"failureMessages":[],"fullName":"HelpButton renders default accessibility label on button","location":null,"status":"passed","title":"renders default accessibility label on button"},{"ancestorTitles":["HelpButton"],"duration":63,"failureMessages":[],"fullName":"HelpButton renders content based on text prop","location":null,"status":"passed","title":"renders content based on text prop"},{"ancestorTitles":["HelpButton"],"duration":39,"failureMessages":[],"fullName":"HelpButton renders popover with provided accessibility label","location":null,"status":"passed","title":"renders popover with provided accessibility label"},{"ancestorTitles":["HelpButton"],"duration":34,"failureMessages":[],"fullName":"HelpButton renders popover with new zIndex","location":null,"status":"passed","title":"renders popover with new zIndex"},{"ancestorTitles":["HelpButton"],"duration":36,"failureMessages":[],"fullName":"HelpButton popover opens","location":null,"status":"passed","title":"popover opens"},{"ancestorTitles":["HelpButton"],"duration":49,"failureMessages":[],"fullName":"HelpButton renders a link","location":null,"status":"passed","title":"renders a link"},{"ancestorTitles":["HelpButton"],"duration":39,"failureMessages":[],"fullName":"HelpButton renders a link without default label","location":null,"status":"passed","title":"renders a link without default label"},{"ancestorTitles":["HelpButton"],"duration":42,"failureMessages":[],"fullName":"HelpButton renders a link spying the link trigger","location":null,"status":"passed","title":"renders a link spying the link trigger"}],"endTime":1782747354424,"message":"","name":"/workspace/repo/packages/gestalt/src/HelpButton.jsdom.test.js","startTime":1782747347757,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["HelpButton"],"duration":12,"failureMessages":[],"fullName":"HelpButton renders correctly","location":null,"status":"passed","title":"renders correctly"},{"ancestorTitles":["HelpButton"],"duration":3,"failureMessages":[],"fullName":"HelpButton renders with default link and no accessibility label","location":null,"status":"passed","title":"renders with default link and no accessibility label"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton renders with default link and accessibility link label","location":null,"status":"passed","title":"renders with default link and accessibility link label"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton renders with changing direction to show the popover","location":null,"status":"passed","title":"renders with changing direction to show the popover"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton renders with link and no default link label","location":null,"status":"passed","title":"renders with link and no default link label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityControls","location":null,"status":"passed","title":"accessibilityControls"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton accessibilityExpanded","location":null,"status":"passed","title":"accessibilityExpanded"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel","location":null,"status":"passed","title":"accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel"}],"endTime":1782747354472,"message":"","name":"/workspace/repo/packages/gestalt/src/HelpButton.test.js","startTime":1782747346787,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["OverlayPanel"],"duration":49,"failureMessages":[],"fullName":"OverlayPanel should render all props with nodes","location":null,"status":"passed","title":"should render all props with nodes"},{"ancestorTitles":["OverlayPanel"],"duration":10,"failureMessages":[],"fullName":"OverlayPanel should render all props with render props","location":null,"status":"passed","title":"should render all props with render props"},{"ancestorTitles":["OverlayPanel"],"duration":10,"failureMessages":[],"fullName":"OverlayPanel should render animation in","location":null,"status":"passed","title":"should render animation in"},{"ancestorTitles":["OverlayPanel"],"duration":7,"failureMessages":[],"fullName":"OverlayPanel should render animation out","location":null,"status":"passed","title":"should render animation out"},{"ancestorTitles":["OverlayPanel"],"duration":48,"failureMessages":[],"fullName":"OverlayPanel should focus the dismiss button upon render","location":null,"status":"passed","title":"should focus the dismiss button upon render"},{"ancestorTitles":["OverlayPanel"],"duration":null,"failureMessages":[],"fullName":"OverlayPanel should trigger onAnimationEnd","location":null,"status":"pending","title":"should trigger onAnimationEnd"},{"ancestorTitles":["OverlayPanel"],"duration":15,"failureMessages":[],"fullName":"OverlayPanel should dismiss from the dismiss button","location":null,"status":"passed","title":"should dismiss from the dismiss button"},{"ancestorTitles":["OverlayPanel"],"duration":11,"failureMessages":[],"fullName":"OverlayPanel should dismiss from the ESC key","location":null,"status":"passed","title":"should dismiss from the ESC key"},{"ancestorTitles":["OverlayPanel"],"duration":15,"failureMessages":[],"fullName":"OverlayPanel should dismiss from clicking outside when closeOnOutsideClick is true","location":null,"status":"passed","title":"should dismiss from clicking outside when closeOnOutsideClick is true"},{"ancestorTitles":["OverlayPanel"],"duration":17,"failureMessages":[],"fullName":"OverlayPanel should dismiss from clicking on the children content","location":null,"status":"passed","title":"should dismiss from clicking on the children content"},{"ancestorTitles":["OverlayPanel"],"duration":12,"failureMessages":[],"fullName":"OverlayPanel should dismiss from clicking on the footer content","location":null,"status":"passed","title":"should dismiss from clicking on the footer content"},{"ancestorTitles":["OverlayPanel"],"duration":10,"failureMessages":[],"fullName":"OverlayPanel should dismiss from clicking on the subHeading content","location":null,"status":"passed","title":"should dismiss from clicking on the subHeading content"},{"ancestorTitles":["OverlayPanel"],"duration":13,"failureMessages":[],"fullName":"OverlayPanel should not dismiss from the backdrop click when closeOnOutsideClick is false","location":null,"status":"passed","title":"should not dismiss from the backdrop click when closeOnOutsideClick is false"},{"ancestorTitles":["OverlayPanel"],"duration":27,"failureMessages":[],"fullName":"OverlayPanel should not dismiss from the backdrop click when closeOnOutsideClick and dismissConfirmation are true","location":null,"status":"passed","title":"should not dismiss from the backdrop click when closeOnOutsideClick and dismissConfirmation are true"},{"ancestorTitles":["OverlayPanel"],"duration":33,"failureMessages":[],"fullName":"OverlayPanel should not dismiss from the dismiss button key when closeOnOutsideClick and dismissConfirmation are true","location":null,"status":"passed","title":"should not dismiss from the dismiss button key when closeOnOutsideClick and dismissConfirmation are true"},{"ancestorTitles":["OverlayPanel"],"duration":27,"failureMessages":[],"fullName":"OverlayPanel should not dismiss from the ESC keys when closeOnOutsideClick and dismissConfirmation are true","location":null,"status":"passed","title":"should not dismiss from the ESC keys when closeOnOutsideClick and dismissConfirmation are true"},{"ancestorTitles":["OverlayPanel"],"duration":21,"failureMessages":[],"fullName":"OverlayPanel renders OverlayPanel with confirmation modal","location":null,"status":"passed","title":"renders OverlayPanel with confirmation modal"},{"ancestorTitles":["OverlayPanel"],"duration":88,"failureMessages":[],"fullName":"OverlayPanel should show confirmation when closeOnOutsideClick and dismissConfirmation are true","location":null,"status":"passed","title":"should show confirmation when closeOnOutsideClick and dismissConfirmation are true"},{"ancestorTitles":["OverlayPanel"],"duration":82,"failureMessages":[],"fullName":"OverlayPanel should show custom confirmation when closeOnOutsideClick and dismissConfirmation are true","location":null,"status":"passed","title":"should show custom confirmation when closeOnOutsideClick and dismissConfirmation are true"}],"endTime":1782747354616,"message":"","name":"/workspace/repo/packages/gestalt/src/OverlayPanel.jsdom.test.js","startTime":1782747347775,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Dropdown"],"duration":131,"failureMessages":[],"fullName":"Dropdown renders a menu of 6 items","location":null,"status":"passed","title":"renders a menu of 6 items"},{"ancestorTitles":["Dropdown"],"duration":51,"failureMessages":[],"fullName":"Dropdown renders a menu of 3 items conditionally","location":null,"status":"passed","title":"renders a menu of 3 items conditionally"},{"ancestorTitles":["Dropdown"],"duration":46,"failureMessages":[],"fullName":"Dropdown renders dropdown sections","location":null,"status":"passed","title":"renders dropdown sections"},{"ancestorTitles":["Dropdown"],"duration":47,"failureMessages":[],"fullName":"Dropdown renders a custom header","location":null,"status":"passed","title":"renders a custom header"},{"ancestorTitles":["Dropdown"],"duration":40,"failureMessages":[],"fullName":"Dropdown closes when esc key is pressed","location":null,"status":"passed","title":"closes when esc key is pressed"},{"ancestorTitles":["Dropdown"],"duration":39,"failureMessages":[],"fullName":"Dropdown closes when tab key is pressed","location":null,"status":"passed","title":"closes when tab key is pressed"},{"ancestorTitles":["Dropdown"],"duration":91,"failureMessages":[],"fullName":"Dropdown changes active descendant when arrow keys are pressed","location":null,"status":"passed","title":"changes active descendant when arrow keys are pressed"},{"ancestorTitles":["Dropdown"],"duration":78,"failureMessages":[],"fullName":"Dropdown should call item onSelect when enter key is pressed","location":null,"status":"passed","title":"should call item onSelect when enter key is pressed"},{"ancestorTitles":["Dropdown"],"duration":80,"failureMessages":[],"fullName":"Dropdown should call link onClick when enter key is pressed","location":null,"status":"passed","title":"should call link onClick when enter key is pressed"}],"endTime":1782747354876,"message":"","name":"/workspace/repo/packages/gestalt/src/Dropdown.jsdom.test.js","startTime":1782747347879,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["SideNavigation desktop"],"duration":216,"failureMessages":[],"fullName":"SideNavigation desktop renders correctly on hover","location":null,"status":"passed","title":"renders correctly on hover"},{"ancestorTitles":["SideNavigation desktop"],"duration":147,"failureMessages":[],"fullName":"SideNavigation desktop renders correctly on focus","location":null,"status":"passed","title":"renders correctly on focus"},{"ancestorTitles":["SideNavigation desktop"],"duration":23,"failureMessages":[],"fullName":"SideNavigation desktop renders display static correctly","location":null,"status":"passed","title":"renders display static correctly"},{"ancestorTitles":["SideNavigation desktop"],"duration":7,"failureMessages":[],"fullName":"SideNavigation desktop renders display expandable correctly","location":null,"status":"passed","title":"renders display expandable correctly"},{"ancestorTitles":["SideNavigation desktop"],"duration":22,"failureMessages":[],"fullName":"SideNavigation desktop renders display expandableExpanded correctly","location":null,"status":"passed","title":"renders display expandableExpanded correctly"},{"ancestorTitles":["SideNavigation desktop"],"duration":31,"failureMessages":[],"fullName":"SideNavigation desktop renders primaryAction dropdown correctly on click","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on click"},{"ancestorTitles":["SideNavigation desktop"],"duration":68,"failureMessages":[],"fullName":"SideNavigation desktop renders primaryAction dropdown correctly on enter","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on enter"},{"ancestorTitles":["SideNavigation mobile"],"duration":110,"failureMessages":[],"fullName":"SideNavigation mobile renders correctly on hover","location":null,"status":"passed","title":"renders correctly on hover"},{"ancestorTitles":["SideNavigation mobile"],"duration":139,"failureMessages":[],"fullName":"SideNavigation mobile renders correctly on focus","location":null,"status":"passed","title":"renders correctly on focus"},{"ancestorTitles":["SideNavigation mobile"],"duration":80,"failureMessages":[],"fullName":"SideNavigation mobile renders primaryAction dropdown correctly on click","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on click"},{"ancestorTitles":["SideNavigation mobile"],"duration":120,"failureMessages":[],"fullName":"SideNavigation mobile renders primaryAction dropdown correctly on enter","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on enter"}],"endTime":1782747355568,"message":"","name":"/workspace/repo/packages/gestalt/src/SideNavigation.jsdom.test.js","startTime":1782747347767,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":62,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox renders default","location":null,"status":"passed","title":"renders default"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":10,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox renders disabled state","location":null,"status":"passed","title":"renders disabled state"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":97,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox renders dropdown with options on click","location":null,"status":"passed","title":"renders dropdown with options on click"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":142,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox selects an option on click","location":null,"status":"passed","title":"selects an option on click"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":123,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox filters options on valid input resets options after selecting","location":null,"status":"passed","title":"filters options on valid input resets options after selecting"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":73,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox resets options after selecting","location":null,"status":"passed","title":"resets options after selecting"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":81,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox returns no results message if no options match input","location":null,"status":"passed","title":"returns no results message if no options match input"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":55,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox shows correct icons","location":null,"status":"passed","title":"shows correct icons"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":316,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox clears selected options with clear button","location":null,"status":"passed","title":"clears selected options with clear button"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":145,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox manages focus","location":null,"status":"passed","title":"manages focus"},{"ancestorTitles":["ComboBox","Uncontrolled ComboBox"],"duration":84,"failureMessages":[],"fullName":"ComboBox Uncontrolled ComboBox doesn't clear input on blur when no option is selected","location":null,"status":"passed","title":"doesn't clear input on blur when no option is selected"},{"ancestorTitles":["ComboBox","Controlled ComboBox"],"duration":6,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox renders basic controlled components","location":null,"status":"passed","title":"renders basic controlled components"},{"ancestorTitles":["ComboBox","Controlled ComboBox"],"duration":40,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox shows dropdown with options on click","location":null,"status":"passed","title":"shows dropdown with options on click"},{"ancestorTitles":["ComboBox","Controlled ComboBox"],"duration":40,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox shows controlled input value","location":null,"status":"passed","title":"shows controlled input value"},{"ancestorTitles":["ComboBox","Controlled ComboBox"],"duration":17,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox shows selected option in textfield","location":null,"status":"passed","title":"shows selected option in textfield"},{"ancestorTitles":["ComboBox","Controlled ComboBox"],"duration":70,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox shows selected option in dropdown","location":null,"status":"passed","title":"shows selected option in dropdown"},{"ancestorTitles":["ComboBox","Controlled ComboBox with Tags"],"duration":182,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox with Tags renders with tags","location":null,"status":"passed","title":"renders with tags"},{"ancestorTitles":["ComboBox","Controlled ComboBox with Tags"],"duration":73,"failureMessages":[],"fullName":"ComboBox Controlled ComboBox with Tags shows controlled input value with tags","location":null,"status":"passed","title":"shows controlled input value with tags"}],"endTime":1782747355861,"message":"","name":"/workspace/repo/packages/gestalt/src/ComboBox.jsdom.test.js","startTime":1782747347757,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=83 found=83 failed=0 parsed=84 framework=jest exit_code=0

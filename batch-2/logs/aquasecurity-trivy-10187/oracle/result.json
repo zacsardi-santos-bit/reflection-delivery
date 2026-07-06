@@ -1,0 +1,29 @@
+{
+    "id": "2fbbf00b-a2f6-4f09-b0b6-24728426e053",
+    "started_at": "2026-07-06T12:17:57.044190",
+    "finished_at": "2026-07-06T12:18:34.477837",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__aquasecurity-trivy-10187": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "aquasecurity-trivy-10187__5Kv4z7B"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,509 @@
+diff --git a/xinference/api/restful_api.py b/xinference/api/restful_api.py
+index 621c0252..817a885f 100644
+--- a/xinference/api/restful_api.py
++++ b/xinference/api/restful_api.py
+@@ -754,7 +754,11 @@ class RESTfulAPI:
+             "model_format"
+         ) == "ggmlv3" and "chatglm" in desc.get("model_name", "")
+ 
+-        if is_chatglm_ggml and system_prompt is not None:
++        is_qwen = desc.get("model_format") == "ggmlv3" and "qwen" in desc.get(
++            "model_name", ""
++        )
++
++        if (is_chatglm_ggml or is_qwen) and system_prompt is not None:
+             raise HTTPException(
+                 status_code=400, detail="ChatGLM ggml does not have system prompt"
+             )
+@@ -765,7 +769,7 @@ class RESTfulAPI:
+                 iterator = None
+                 try:
+                     try:
+-                        if is_chatglm_ggml:
++                        if is_chatglm_ggml or is_qwen:
+                             iterator = await model.chat(prompt, chat_history, kwargs)
+                         else:
+                             iterator = await model.chat(
+@@ -785,7 +789,7 @@ class RESTfulAPI:
+             return EventSourceResponse(stream_results())
+         else:
+             try:
+-                if is_chatglm_ggml:
++                if is_chatglm_ggml or is_qwen:
+                     data = await model.chat(prompt, chat_history, kwargs)
+                 else:
+                     data = await model.chat(prompt, system_prompt, chat_history, kwargs)
+diff --git a/xinference/model/llm/__init__.py b/xinference/model/llm/__init__.py
+index 6271c9be..77d713ba 100644
+--- a/xinference/model/llm/__init__.py
++++ b/xinference/model/llm/__init__.py
+@@ -39,6 +39,7 @@ def _install():
+     from .ggml.chatglm import ChatglmCppChatModel
+     from .ggml.ctransformers import CtransformersModel
+     from .ggml.llamacpp import LlamaCppChatModel, LlamaCppModel
++    from .ggml.qwen import QWenModel
+     from .pytorch.baichuan import BaichuanPytorchChatModel
+     from .pytorch.chatglm import ChatglmPytorchChatModel
+     from .pytorch.core import PytorchChatModel, PytorchModel
+@@ -59,6 +60,11 @@ def _install():
+             ChatglmCppChatModel,
+         ]
+     )
++    LLM_CLASSES.extend(
++        [
++            QWenModel,
++        ]
++    )
+     LLM_CLASSES.extend(
+         [
+             CtransformersModel,
+diff --git a/xinference/model/llm/ggml/llamacpp.py b/xinference/model/llm/ggml/llamacpp.py
+index 9fc8f4c7..53b0dd65 100644
+--- a/xinference/model/llm/ggml/llamacpp.py
++++ b/xinference/model/llm/ggml/llamacpp.py
+@@ -203,6 +203,7 @@ class LlamaCppModel(LLM):
+             return False
+         if (
+             "chatglm" in llm_family.model_name
++            or "qwen" in llm_family.model_name
+             or llm_family.model_name in CTRANSFORMERS_SUPPORTED_MODEL
+         ):
+             return False
+@@ -270,6 +271,7 @@ class LlamaCppChatModel(LlamaCppModel, ChatModelMixin):
+             return False
+         if (
+             "chatglm" in llm_family.model_name
++            or "qwen" in llm_family.model_name
+             or llm_family.model_name in CTRANSFORMERS_SUPPORTED_MODEL
+         ):
+             return False
+diff --git a/xinference/model/llm/ggml/qwen.py b/xinference/model/llm/ggml/qwen.py
+new file mode 100644
+index 00000000..8ae4d280
+--- /dev/null
++++ b/xinference/model/llm/ggml/qwen.py
+@@ -0,0 +1,291 @@
++# Copyright 2022-2023 XProbe Inc.
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import logging
++import os
++import time
++import uuid
++from typing import TYPE_CHECKING, Iterator, List, Optional, Union
++
++from ....types import (
++    ChatCompletion,
++    ChatCompletionChunk,
++    ChatCompletionMessage,
++    Completion,
++    CompletionChunk,
++    QWenCppGenerateConfig,
++    QWenCppModelConfig,
++)
++from .. import LLMFamilyV1, LLMSpecV1
++from ..core import LLM
++
++if TYPE_CHECKING:
++    from qwen_cpp import Pipeline
++
++
++logger = logging.getLogger(__name__)
++
++
++class QWenModel(LLM):
++    def __init__(
++        self,
++        model_uid: str,
++        model_family: "LLMFamilyV1",
++        model_spec: "LLMSpecV1",
++        quantization: str,
++        model_path: str,
++        model_config: Optional[QWenCppModelConfig] = None,
++    ):
++        super().__init__(model_uid, model_family, model_spec, quantization, model_path)
++        self._llm: Optional["Pipeline"] = None
++
++        # just a placeholder for now as the qwen_cpp repo doesn't support model config.
++        self._model_config = model_config
++
++    def _get_input_ids_by_prompt(
++        self, prompt: str, max_context_length: int
++    ) -> List[int]:
++        assert self._llm is not None
++        return self._llm.tokenizer.encode_history([prompt], max_context_length)  # type: ignore
++
++    @classmethod
++    def _sanitize_generate_config(
++        cls,
++        qwen_cpp_generate_config: Optional[QWenCppGenerateConfig],
++    ) -> QWenCppGenerateConfig:
++        if qwen_cpp_generate_config is None:
++            qwen_cpp_generate_config = QWenCppGenerateConfig()
++        qwen_cpp_generate_config.setdefault("stream", False)
++        return qwen_cpp_generate_config
++
++    def load(self):
++        try:
++            import qwen_cpp
++        except ImportError:
++            error_message = "Failed to import module 'qwen_cpp'"
++            installation_guide = [
++                "Please make sure 'qwen_cpp' is installed. ",
++                "You can install it by running the following command in the terminal:\n",
++                "pip install -U qwen_cpp\n\n",
++                "Or visit the original git repo if the above command fails:\n",
++                "https://github.com/QwenLM/qwen.cpp",
++            ]
++
++            raise ImportError(f"{error_message}\n\n{''.join(installation_guide)}")
++
++        model_file_path = os.path.join(
++            self.model_path,
++            self.model_spec.model_file_name_template.format(
++                quantization=self.quantization
++            ),
++        )
++
++        tiktoken_path = os.path.join(os.path.dirname(model_file_path), "qwen.tiktoken")
++        assert os.path.exists(tiktoken_path)
++
++        self._llm = qwen_cpp.Pipeline(model_file_path, tiktoken_path)
++
++    @classmethod
++    def match(
++        cls, llm_family: "LLMFamilyV1", llm_spec: "LLMSpecV1", quantization: str
++    ) -> bool:
++        if llm_spec.model_format != "ggmlv3":
++            return False
++        if "qwen" not in llm_family.model_name:
++            return False
++        if "chat" not in llm_family.model_ability:
++            return False
++        return True
++
++    @staticmethod
++    def _convert_raw_text_chunks_to_chat(
++        tokens: Iterator[str], model_name: str
++    ) -> Iterator[ChatCompletionChunk]:
++        yield {
++            "id": "chat" + f"cmpl-{str(uuid.uuid4())}",
++            "model": model_name,
++            "object": "chat.completion.chunk",
++            "created": int(time.time()),
++            "choices": [
++                {
++                    "index": 0,
++                    "delta": {
++                        "role": "assistant",
++                    },
++                    "finish_reason": None,
++                }
++            ],
++        }
++        for token in enumerate(tokens):
++            yield {
++                "id": "chat" + f"cmpl-{str(uuid.uuid4())}",
++                "model": model_name,
++                "object": "chat.completion.chunk",
++                "created": int(time.time()),
++                "choices": [
++                    {
++                        "index": 0,
++                        "delta": {
++                            "content": token[1],
++                        },
++                        "finish_reason": None,
++                    }
++                ],
++            }
++
++    @staticmethod
++    def _convert_raw_text_completion_to_chat(
++        text: str, model_name: str
++    ) -> ChatCompletion:
++        return {
++            "id": "chat" + f"cmpl-{str(uuid.uuid4())}",
++            "model": model_name,
++            "object": "chat.completion",
++            "created": int(time.time()),
++            "choices": [
++                {
++                    "index": 0,
++                    "message": {
++                        "role": "assistant",
++                        "content": text,
++                    },
++                    "finish_reason": None,
++                }
++            ],
++            "usage": {
++                "prompt_tokens": -1,
++                "completion_tokens": -1,
++                "total_tokens": -1,
++            },
++        }
++
++    def chat(
++        self,
++        prompt: str,
++        chat_history: Optional[List[ChatCompletionMessage]] = None,
++        generate_config: Optional[QWenCppGenerateConfig] = None,
++    ) -> Union[ChatCompletion, Iterator[ChatCompletionChunk]]:
++        if chat_history is not None:
++            chat_history_list = [message["content"] for message in chat_history]
++        else:
++            chat_history_list = []
++
++        chat_history_list.append(prompt)
++        logger.debug("Full conversation history:\n%s", str(chat_history_list))
++
++        generate_config = self._sanitize_generate_config(generate_config)
++
++        params = {
++            "max_length": generate_config.get("max_tokens"),
++            "max_context_length": generate_config.get("max_tokens"),
++            "top_k": generate_config.get("top_k"),
++            "top_p": generate_config.get("top_p"),
++            "temperature": generate_config.get("temperature"),
++            "stream": generate_config.get("stream", False),
++        }
++
++        # Remove None values to exclude missing keys from params
++        params = {k: v for k, v in params.items() if v is not None}
++
++        assert self._llm is not None
++
++        if generate_config["stream"]:
++            it = self._llm.chat(
++                chat_history_list,
++                **params,
++            )
++            assert not isinstance(it, str)
++            return self._convert_raw_text_chunks_to_chat(it, self.model_uid)
++        else:
++            c = self._llm.chat(
++                chat_history_list,
++                **params,
++            )
++            assert not isinstance(c, Iterator)
++            return self._convert_raw_text_completion_to_chat(c, self.model_uid)
++
++    @staticmethod
++    def _convert_str_to_completion(data: str, model_name: str) -> Completion:
++        return {
++            "id": "generate" + f"-{str(uuid.uuid4())}",
++            "model": model_name,
++            "object": "text_completion",
++            "created": int(time.time()),
++            "choices": [
++                {"index": 0, "text": data, "finish_reason": None, "logprobs": None}
++            ],
++            "usage": {
++                "prompt_tokens": -1,
++                "completion_tokens": -1,
++                "total_tokens": -1,
++            },
++        }
++
++    @staticmethod
++    def _convert_str_to_completion_chunk(
++        tokens: Iterator[str], model_name: str
++    ) -> Iterator[CompletionChunk]:
++        for token in tokens:
++            yield {
++                "id": "generate" + f"-{str(uuid.uuid4())}",
++                "model": model_name,
++                "object": "text_completion",
++                "created": int(time.time()),
++                "choices": [
++                    {"index": 0, "text": token, "finish_reason": None, "logprobs": None}
++                ],
++            }
++
++    def generate(
++        self,
++        prompt: str,
++        generate_config: Optional[QWenCppGenerateConfig] = None,
++    ) -> Union[Completion, Iterator[CompletionChunk]]:
++        logger.debug(f"Prompt for generate:\n{prompt}")
++
++        generate_config = self._sanitize_generate_config(generate_config)
++
++        params = {
++            "max_length": generate_config.get("max_tokens"),
++            "max_context_length": generate_config.get("max_tokens"),
++            "top_k": generate_config.get("top_k"),
++            "top_p": generate_config.get("top_p"),
++            "temperature": generate_config.get("temperature"),
++            "stream": generate_config.get("stream", False),
++        }
++
++        # Remove None values to exclude missing keys from params
++        params = {k: v for k, v in params.items() if v is not None}
++
++        assert self._llm is not None
++
++        # See source code in qwen.cpp
++        input_ids = self._get_input_ids_by_prompt(
++            prompt, params.get("max_context_length", 512)  # type: ignore
++        )
++
++        if generate_config["stream"]:
++            it = self._llm._generate(
++                input_ids,
++                **params,
++            )
++            assert not isinstance(it, str)
++            return self._convert_str_to_completion_chunk(it, self.model_uid)
++        else:
++            c = self._llm._generate(
++                input_ids,
++                **params,
++            )
++            assert not isinstance(c, Iterator)
++            return self._convert_str_to_completion(c, self.model_uid)
+diff --git a/xinference/model/llm/llm_family.json b/xinference/model/llm/llm_family.json
+index ada10416..0024bf6a 100644
+--- a/xinference/model/llm/llm_family.json
++++ b/xinference/model/llm/llm_family.json
+@@ -1001,6 +1001,26 @@
+     ],
+     "model_description": "Qwen-chat is a fine-tuned version of the Qwen LLM trained with alignment techniques, specializing in chatting.",
+     "model_specs": [
++      {
++        "model_format": "ggmlv3",
++        "model_size_in_billions": 7,
++        "quantizations": [
++          "q4_0"
++        ],
++        "model_id": "Xorbits/qwen-chat-7B-ggml",
++        "model_file_name_template": "qwen7b-ggml-{quantization}.bin",
++        "model_revision": "19f87d09e5ad58333aeeb7daf4b83b055c7a309e"
++      },
++      {
++        "model_format": "ggmlv3",
++        "model_size_in_billions": 14,
++        "quantizations": [
++          "q4_0"
++        ],
++        "model_id": "Xorbits/qwen-chat-14B-ggml",
++        "model_file_name_template": "qwen14b-ggml-{quantization}.bin",
++        "model_revision": "11efca556af372b6f3c730322a4962e9900a2990"
++      },
+       {
+         "model_format": "pytorch",
+         "model_size_in_billions": 7,
+diff --git a/xinference/model/llm/llm_family.py b/xinference/model/llm/llm_family.py
+index 4ce51dba..367e622a 100644
+--- a/xinference/model/llm/llm_family.py
++++ b/xinference/model/llm/llm_family.py
+@@ -509,6 +509,20 @@ def cache_from_modelscope(
+             revision=llm_spec.model_revision,
+         )
+         symlink_local_file(download_path, cache_dir, filename)
++        # need to download another file named "qwen.tiktoken" for qwen model
++        if "qwen" in llm_family.model_name:
++            tiktoken_path = retry_download(
++                model_file_download,
++                llm_family.model_name,
++                {
++                    "model_size": llm_spec.model_size_in_billions,
++                    "model_format": llm_spec.model_format,
++                },
++                llm_spec.model_id,
++                "qwen.tiktoken",
++                revision=llm_spec.model_revision,
++            )
++            symlink_local_file(tiktoken_path, cache_dir, "qwen.tiktoken")
+     else:
+         raise ValueError(f"Unsupported format: {llm_spec.model_format}")
+ 
+@@ -571,6 +585,21 @@ def cache_from_huggingface(
+             local_dir=cache_dir,
+             local_dir_use_symlinks=True,
+         )
++        # need to download another file named "qwen.tiktoken" for qwen model
++        if "qwen" in llm_family.model_name:
++            retry_download(
++                huggingface_hub.hf_hub_download,
++                llm_family.model_name,
++                {
++                    "model_size": llm_spec.model_size_in_billions,
++                    "model_format": llm_spec.model_format,
++                },
++                llm_spec.model_id,
++                revision=llm_spec.model_revision,
++                filename="qwen.tiktoken",
++                local_dir=cache_dir,
++                local_dir_use_symlinks=True,
++            )
+     else:
+         raise ValueError(f"Unsupported model format: {llm_spec.model_format}")
+ 
+diff --git a/xinference/model/llm/llm_family_modelscope.json b/xinference/model/llm/llm_family_modelscope.json
+index d526bf7d..b54f47c6 100644
+--- a/xinference/model/llm/llm_family_modelscope.json
++++ b/xinference/model/llm/llm_family_modelscope.json
+@@ -1196,6 +1196,28 @@
+     ],
+     "model_description": "Qwen-chat is a fine-tuned version of the Qwen LLM trained with alignment techniques, specializing in chatting.",
+     "model_specs": [
++      {
++        "model_format": "ggmlv3",
++        "model_size_in_billions": 7,
++        "quantizations": [
++          "q4_0"
++        ],
++        "model_hub": "modelscope",
++        "model_id": "Xorbits/qwen-chat-7B-ggml",
++        "model_file_name_template": "qwen7b-ggml-{quantization}.bin",
++        "model_revision": "v0.0.4"
++      },
++      {
++        "model_format": "ggmlv3",
++        "model_size_in_billions": 14,
++        "quantizations": [
++          "q4_0"
++        ],
++        "model_hub": "modelscope",
++        "model_id": "Xorbits/qwen-chat-14B-ggml",
++        "model_file_name_template": "qwen14b-ggml-{quantization}.bin",
++        "model_revision": "v0.0.2"
++      },
+       {
+         "model_format": "pytorch",
+         "model_size_in_billions": 7,
+diff --git a/xinference/types.py b/xinference/types.py
+index d6cdc691..b6639ddd 100644
+--- a/xinference/types.py
++++ b/xinference/types.py
+@@ -155,6 +155,17 @@ class ChatglmCppGenerateConfig(TypedDict, total=False):
+     stream: bool
+ 
+ 
++class QWenCppModelConfig(TypedDict, total=False):
++    pass
++
++
++class QWenCppGenerateConfig(TypedDict, total=False):
++    max_tokens: int
++    top_p: float
++    temperature: float
++    stream: bool
++
++
+ StoppingCriteria = Callable[[List[int], List[float]], bool]
+ 
+ 

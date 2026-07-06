@@ -1,0 +1,53 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/tests/unit/connectors/azure_ai_inference/conftest.py /workspace/repo/python/tests/unit/connectors/azure_ai_inference/services/test_azure_ai_inference_chat_completion.py /workspace/repo/python/tests/unit/connectors/azure_ai_inference/services/test_azure_ai_inference_text_embedding.py /workspace/repo/python/tests/unit/connectors/azure_ai_inference/services/test_azure_ai_inference_utils.py -v",
+  "test_files": [
+    "python/tests/unit/connectors/azure_ai_inference/conftest.py",
+    "python/tests/unit/connectors/azure_ai_inference/services/test_azure_ai_inference_chat_completion.py",
+    "python/tests/unit/connectors/azure_ai_inference/services/test_azure_ai_inference_text_embedding.py",
+    "python/tests/unit/connectors/azure_ai_inference/services/test_azure_ai_inference_utils.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_with_function_choice_behavior_fail_verification[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_streaming_chat_completion_with_function_choice_behavior_fail_verification[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding_with_standard_settings[AzureAIInferenceTextEmbedding]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding_with_extra_parameters[AzureAIInferenceTextEmbedding]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_assistant_message",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_assistant_message_with_tool_call",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_assistant_message_with_unsupported_items",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_tool_message_item_not_found_as_the_first_item"
+  ],
+  "PASS_TO_PASS": [
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_init",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_init_with_service_id",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_init_with_custom_client[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_init_with_empty_api_key[exclude_list0]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_init_with_empty_endpoint[exclude_list0]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_prompt_execution_settings_class",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_with_standard_parameters[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_with_extra_parameters[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_with_function_choice_behavior[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_completion_with_function_choice_behavior_no_tool_call[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_streaming_chat_completion[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_chat_streaming_completion_with_standard_parameters[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_streaming_chat_completion_with_extra_parameters[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_streaming_chat_completion_with_function_choice_behavior[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_chat_completion::test_azure_ai_inference_streaming_chat_completion_with_function_choice_behavior_no_tool_call[AzureAIInferenceChatCompletion]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding_init",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding_init_with_service_id",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_chat_completion_init_with_custom_client[AzureAIInferenceTextEmbedding]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding_init_with_empty_api_key[exclude_list0]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding_init_with_empty_endpoint[exclude_list0]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_text_embedding::test_azure_ai_inference_text_embedding[AzureAIInferenceTextEmbedding]",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_message_convertors_contain_all_author_roles",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_system_message",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_user_message_with_no_image",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_user_message_with_image",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_user_message_with_unsupported_items",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_tool_message",
+    "tests.unit.connectors.azure_ai_inference.services.test_azure_ai_inference_utils::test_format_tool_message_with_more_than_one_items"
+  ]
+}

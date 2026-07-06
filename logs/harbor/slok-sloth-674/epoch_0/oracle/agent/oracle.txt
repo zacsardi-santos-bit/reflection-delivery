@@ -1,6 +1,0 @@
-patching file .github/CODEOWNERS
-patching file CHANGELOG.md
-patching file examples/_gen/contrib-denominator-corrected.yaml
-patching file examples/contrib-denominator-corrected.yaml
-patching file internal/plugin/slo/contrib/denominator_corrected_rules_v1/README.md
-patching file internal/plugin/slo/contrib/denominator_corrected_rules_v1/plugin.go

@@ -1,0 +1,1447 @@
+diff --git a/apps/admin-x-settings/src/components/settings/membership/member-emails.tsx b/apps/admin-x-settings/src/components/settings/membership/member-emails.tsx
+index 884b771436..f752a8764b 100644
+--- a/apps/admin-x-settings/src/components/settings/membership/member-emails.tsx
++++ b/apps/admin-x-settings/src/components/settings/membership/member-emails.tsx
+@@ -1,8 +1,10 @@
+ import NiceModal from '@ebay/nice-modal-react';
+ import React from 'react';
+ import TopLevelGroup from '../../top-level-group';
++import WelcomeEmailCustomizeModal from './member-emails/welcome-email-customize-modal';
+ import WelcomeEmailModal from './member-emails/welcome-email-modal';
+-import {Icon, Table, TableRow, Toggle, showToast, withErrorBoundary} from '@tryghost/admin-x-design-system';
++import useFeatureFlag from '../../../hooks/use-feature-flag';
++import {Button, Icon, Table, TableRow, Toggle, showToast, withErrorBoundary} from '@tryghost/admin-x-design-system';
+ import {checkStripeEnabled, getSettingValues} from '@tryghost/admin-x-framework/api/settings';
+ import {useAddAutomatedEmail, useBrowseAutomatedEmails, useEditAutomatedEmail} from '@tryghost/admin-x-framework/api/automated-emails';
+ import {useGlobalData} from '../../providers/global-data-provider';
+@@ -134,6 +136,7 @@ const MemberEmailsTable: React.FC<{
+ };
+ 
+ const MemberEmails: React.FC<{ keywords: string[] }> = ({keywords}) => {
++    const hasDesignCustomization = useFeatureFlag('welcomeEmailsDesignCustomization');
+     const {settings, config} = useGlobalData();
+     const [siteTitle] = getSettingValues<string>(settings, ['title']);
+ 
+@@ -232,8 +235,19 @@ const MemberEmails: React.FC<{ keywords: string[] }> = ({keywords}) => {
+     // Get email to display (existing or default for preview)
+     const freeEmailForDisplay = freeWelcomeEmail || getDefaultEmail('free');
+     const paidEmailForDisplay = paidWelcomeEmail || getDefaultEmail('paid');
++    const customizeButton = hasDesignCustomization ? (
++        <Button
++            className='mt-[-5px]'
++            color='clear'
++            label='Customize'
++            size='sm'
++            onClick={() => NiceModal.show(WelcomeEmailCustomizeModal)}
++        />
++    ) : null;
++
+     return (
+         <TopLevelGroup
++            customButtons={customizeButton}
+             description="Create and manage automated emails for your members"
+             keywords={keywords}
+             navid='memberemails'
+diff --git a/apps/admin-x-settings/src/components/settings/membership/member-emails/welcome-email-customize-modal.tsx b/apps/admin-x-settings/src/components/settings/membership/member-emails/welcome-email-customize-modal.tsx
+new file mode 100644
+index 0000000000..dfa35f8085
+--- /dev/null
++++ b/apps/admin-x-settings/src/components/settings/membership/member-emails/welcome-email-customize-modal.tsx
+@@ -0,0 +1,23 @@
++import NiceModal, {useModal} from '@ebay/nice-modal-react';
++import {Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@tryghost/shade';
++
++const WelcomeEmailCustomizeModal = NiceModal.create(() => {
++    const modal = useModal();
++
++    return (
++        <Dialog open onOpenChange={() => modal.remove()}>
++            <DialogContent data-testid='welcome-email-customize-modal'>
++                <DialogHeader>
++                    <DialogTitle>Customize welcome emails</DialogTitle>
++                </DialogHeader>
++                <p className='text-muted-foreground text-sm'>Design customization options coming soon.</p>
++                <DialogFooter>
++                    <Button variant='outline' onClick={() => modal.remove()}>Close</Button>
++                    <Button onClick={() => modal.remove()}>Save</Button>
++                </DialogFooter>
++            </DialogContent>
++        </Dialog>
++    );
++});
++
++export default WelcomeEmailCustomizeModal;
+diff --git a/apps/portal/package.json b/apps/portal/package.json
+index ed460a5488..5dcf256527 100644
+--- a/apps/portal/package.json
++++ b/apps/portal/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@tryghost/portal",
+-  "version": "2.66.2",
++  "version": "2.66.1",
+   "license": "MIT",
+   "repository": "https://github.com/TryGhost/Ghost",
+   "author": "Ghost Foundation",
+diff --git a/apps/portal/src/components/pages/AccountHomePage/components/transistor-podcasts-action.js b/apps/portal/src/components/pages/AccountHomePage/components/transistor-podcasts-action.js
+index 542ab2f918..540b6cf2b9 100644
+--- a/apps/portal/src/components/pages/AccountHomePage/components/transistor-podcasts-action.js
++++ b/apps/portal/src/components/pages/AccountHomePage/components/transistor-podcasts-action.js
+@@ -21,8 +21,8 @@ export const TransistorPodcastsActionStyles = `
+ 
+ export const TRANSISTOR_DEFAULTS = {
+     heading: 'Podcasts',
+-    description: 'Access your RSS feeds',
+-    button_text: 'Manage',
++    description: 'Access private podcast feed',
++    button_text: 'View',
+     url_template: 'https://partner.transistor.fm/ghost/{memberUuid}'
+ };
+ 
+@@ -33,11 +33,14 @@ const TransistorPodcastsAction = ({hasPodcasts, memberUuid, settings = {}}) => {
+         return null;
+     }
+ 
+-    // Translate default strings for i18n; custom admin-configured strings are displayed as-is
+-    const isDefault = (value, key) => !value || value === TRANSISTOR_DEFAULTS[key];
+-    const heading = isDefault(settings.heading, 'heading') ? t('Podcasts') : settings.heading;
+-    const description = isDefault(settings.description, 'description') ? t('Access your RSS feeds') : settings.description;
+-    const buttonText = isDefault(settings.button_text, 'button_text') ? t('Manage') : settings.button_text;
++    // Translate if using a known default, otherwise display custom text as-is
++    const maybeTranslate = (value, key) => {
++        return value === TRANSISTOR_DEFAULTS[key] ? t(value) : value;
++    };
++
++    const heading = maybeTranslate(settings.heading, 'heading') || t(TRANSISTOR_DEFAULTS.heading);
++    const description = maybeTranslate(settings.description, 'description') || t(TRANSISTOR_DEFAULTS.description);
++    const buttonText = maybeTranslate(settings.button_text, 'button_text') || t(TRANSISTOR_DEFAULTS.button_text);
+     const urlTemplate = settings.url_template || TRANSISTOR_DEFAULTS.url_template;
+     const transistorUrl = urlTemplate.replace('{memberUuid}', memberUuid);
+ 
+diff --git a/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js b/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js
+index d9e594de52..d40c4e8abe 100644
+--- a/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js
++++ b/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js
+@@ -17,7 +17,7 @@ describe('TransistorPodcastsAction', () => {
+     test('renders nothing when hasPodcasts is false', () => {
+         const {queryByText} = setup({hasPodcasts: false, memberUuid: 'test-uuid'});
+         expect(queryByText('Podcasts')).not.toBeInTheDocument();
+-        expect(queryByText('Manage')).not.toBeInTheDocument();
++        expect(queryByText('View')).not.toBeInTheDocument();
+     });
+ 
+     test('renders nothing when memberUuid is missing', () => {
+@@ -25,21 +25,21 @@ describe('TransistorPodcastsAction', () => {
+         expect(queryByText('Podcasts')).not.toBeInTheDocument();
+     });
+ 
+-    test('renders Podcasts section with Manage link when hasPodcasts is true', () => {
++    test('renders Podcasts section with View link when hasPodcasts is true', () => {
+         const {queryByText} = setup({hasPodcasts: true, memberUuid: TEST_UUID});
+         expect(queryByText('Podcasts')).toBeInTheDocument();
+-        expect(queryByText('Manage')).toBeInTheDocument();
++        expect(queryByText('View')).toBeInTheDocument();
+     });
+ 
+-    test('Manage link points to correct Transistor URL', () => {
++    test('View link points to correct Transistor URL', () => {
+         const {getByText} = setup({hasPodcasts: true, memberUuid: TEST_UUID});
+-        const link = getByText('Manage');
++        const link = getByText('View');
+         expect(link.getAttribute('href')).toBe(`https://partner.transistor.fm/ghost/${TEST_UUID}`);
+     });
+ 
+-    test('Manage link opens in new tab', () => {
++    test('View link opens in new tab', () => {
+         const {getByText} = setup({hasPodcasts: true, memberUuid: TEST_UUID});
+-        const link = getByText('Manage');
++        const link = getByText('View');
+         expect(link.getAttribute('target')).toBe('_blank');
+         expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+     });
+diff --git a/e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts b/e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
+index e57f59aa47..02d8bd1487 100644
+--- a/e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
++++ b/e2e/helpers/pages/admin/settings/sections/member-welcome-emails-section.ts
+@@ -8,6 +8,10 @@ export class MemberWelcomeEmailsSection extends BasePage {
+     readonly freeWelcomeEmailEditButton: Locator;
+     readonly paidWelcomeEmailEditButton: Locator;
+ 
++    // Customize button and modal
++    readonly customizeButton: Locator;
++    readonly customizeModal: Locator;
++
+     // Modal locators
+     readonly welcomeEmailModal: Locator;
+     readonly modalEditor: Locator;
+@@ -24,6 +28,10 @@ export class MemberWelcomeEmailsSection extends BasePage {
+         this.freeWelcomeEmailEditButton = this.section.getByTestId('free-welcome-email-row').getByRole('button', {name: 'Edit'});
+         this.paidWelcomeEmailEditButton = this.section.getByTestId('paid-welcome-email-row').getByRole('button', {name: 'Edit'});
+ 
++        // Customize button and modal
++        this.customizeButton = this.section.getByRole('button', {name: 'Customize'});
++        this.customizeModal = page.getByTestId('welcome-email-customize-modal');
++
+         // Modal locators
+         this.welcomeEmailModal = page.getByTestId('welcome-email-modal');
+         this.modalEditor = this.welcomeEmailModal.getByTestId('welcome-email-editor');
+diff --git a/ghost/i18n/locales/af/portal.json b/ghost/i18n/locales/af/portal.json
+index 025ad3fcf1..dda9501123 100644
+--- a/ghost/i18n/locales/af/portal.json
++++ b/ghost/i18n/locales/af/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Rekening",
+     "Account details updated successfully": "",
+     "Account settings": "Rekening instellings",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Kontak {supportAddress} om jou komplimentêre intekening aan te pas.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Vul asseblief die verpligte velde in",
+-    "Podcasts": "",
+     "Price": "Prys",
+     "Re-enable emails": "Her-aktiveer eposse",
+     "Recommendations": "Aanbevelings",
+diff --git a/ghost/i18n/locales/ar/portal.json b/ghost/i18n/locales/ar/portal.json
+index 78a1312b83..515825299f 100644
+--- a/ghost/i18n/locales/ar/portal.json
++++ b/ghost/i18n/locales/ar/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "الحساب",
+     "Account details updated successfully": ".تم تحديث تفاصيل الحساب بنجاح",
+     "Account settings": "إعدادات الحساب",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": ".لتعديل اشتراكك المجاني {supportAddress} يرجى الاتصال ب ",
+     "Please enter {fieldName}": "{fieldName} يرجى إدخال ",
+     "Please fill in required fields": "يرجى ملء الحقول المطلوبة",
+-    "Podcasts": "",
+     "Price": "السعر",
+     "Re-enable emails": "إعادة تفعيل رسائل البريد الالكتروني",
+     "Recommendations": "التوصيات",
+diff --git a/ghost/i18n/locales/bg/portal.json b/ghost/i18n/locales/bg/portal.json
+index 81416cd1cb..98dfd6f969 100644
+--- a/ghost/i18n/locales/bg/portal.json
++++ b/ghost/i18n/locales/bg/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+359 88 123-4567",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Профил",
+     "Account details updated successfully": "Настройките бяха успешно обновени",
+     "Account settings": "Настройки на профила",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Моля, свържете се с {supportAddress}, за корекции относно безплатния ви абонамент.",
+     "Please enter {fieldName}": "Моля, попълнете {fieldName}",
+     "Please fill in required fields": "Моля, попълнете задължителните полета",
+-    "Podcasts": "",
+     "Price": "Цена",
+     "Re-enable emails": "Възобновете изпращането на писма",
+     "Recommendations": "Препоръки",
+diff --git a/ghost/i18n/locales/bn/portal.json b/ghost/i18n/locales/bn/portal.json
+index e4cc823533..3716a53909 100644
+--- a/ghost/i18n/locales/bn/portal.json
++++ b/ghost/i18n/locales/bn/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "অ্যাকাউন্ট",
+     "Account details updated successfully": "",
+     "Account settings": "অ্যাকাউন্ট সেটিংস",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "আপনার বিনামূল্যের সাবস্ক্রিপশন সমন্বয় করতে অনুগ্রহ করে {supportAddress} এর সাথে যোগাযোগ করুন।",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "প্রয়োজনীয় ক্ষেত্রগুলি পূরণ করুন",
+-    "Podcasts": "",
+     "Price": "মূল্য",
+     "Re-enable emails": "ইমেলগুলি পুনরায় সক্রিয় করুন",
+     "Recommendations": "প্রস্তাবনা",
+diff --git a/ghost/i18n/locales/bs/portal.json b/ghost/i18n/locales/bs/portal.json
+index 9bc47f47ba..58d1cd0c62 100644
+--- a/ghost/i18n/locales/bs/portal.json
++++ b/ghost/i18n/locales/bs/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Račun",
+     "Account details updated successfully": "",
+     "Account settings": "Postavke računa",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Kontaktiraj {supportAddress} za prilagođavanje besplatne pretplate.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Popuni obavezna polja",
+-    "Podcasts": "",
+     "Price": "Cijena",
+     "Re-enable emails": "Ponovno omogući Email poruke",
+     "Recommendations": "Preporuke",
+diff --git a/ghost/i18n/locales/ca/portal.json b/ghost/i18n/locales/ca/portal.json
+index cb573bc8c6..e9bf522e4c 100644
+--- a/ghost/i18n/locales/ca/portal.json
++++ b/ghost/i18n/locales/ca/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+34 123 456 789",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Compte",
+     "Account details updated successfully": "Detalls del compte actualitzats correctament",
+     "Account settings": "Configuració del compte",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Posa't en contacte amb {supportAddress} per ajustar la teva subscripció gratuïta.",
+     "Please enter {fieldName}": "Si-us-plau, introdueix {fieldName}",
+     "Please fill in required fields": "Si-us-plau, omple els camps obligatoris",
+-    "Podcasts": "",
+     "Price": "Preu",
+     "Re-enable emails": "Torna a activar els correus electrònics",
+     "Recommendations": "Recomanacions",
+diff --git a/ghost/i18n/locales/context.json b/ghost/i18n/locales/context.json
+index 4ec2f436d6..73d8ae4ca5 100644
+--- a/ghost/i18n/locales/context.json
++++ b/ghost/i18n/locales/context.json
+@@ -4,7 +4,6 @@
+     "1 comment": "Comment count displayed above the comments section in case there is only one",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "Default description text for the Transistor podcast integration in Portal",
+     "Account": "A label in Portal for your account area",
+     "Account details updated successfully": "Popover message in Portal",
+     "Account settings": "A label in Portal for your account settings",
+@@ -210,7 +209,6 @@
+     "Please enter a valid email address": "Err message when an email address is invalid",
+     "Please enter {fieldName}": "error message when a required field is missing",
+     "Please fill in required fields": "Error message when a required field is missing",
+-    "Podcasts": "Default heading for the Transistor podcast integration section in Portal",
+     "Posts": "Search result header",
+     "Price": "A label to indicate price of a tier",
+     "Re-enable emails": "A button for members to turn-back-on emails, if they have been previously disabled as a result of delivery failures",
+diff --git a/ghost/i18n/locales/cs/portal.json b/ghost/i18n/locales/cs/portal.json
+index 6bf0488952..ea5fe44e56 100644
+--- a/ghost/i18n/locales/cs/portal.json
++++ b/ghost/i18n/locales/cs/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Účet",
+     "Account details updated successfully": "",
+     "Account settings": "Nastavení účtu",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Prosím kontaktujte {supportAddress} pro úpravu vašeho zadarmového předplatného.",
+     "Please enter {fieldName}": "Prosím zadejte {fieldName}",
+     "Please fill in required fields": "Prosím vyplňte povinná pole",
+-    "Podcasts": "",
+     "Price": "Cena",
+     "Re-enable emails": "Znovu povolit e-maily",
+     "Recommendations": "Doporučení",
+diff --git a/ghost/i18n/locales/da/portal.json b/ghost/i18n/locales/da/portal.json
+index 05d4a62180..7091464df6 100644
+--- a/ghost/i18n/locales/da/portal.json
++++ b/ghost/i18n/locales/da/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+45 12 34 56 78",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "Kontooplysningerne blev opdateret",
+     "Account settings": "Kontoindstillinger",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Kontakt venligst {supportAddress} for at ændre dit gratis abonnement.",
+     "Please enter {fieldName}": "Indtast venligst {fieldName}",
+     "Please fill in required fields": "Udfyld venligst påkrævede felter",
+-    "Podcasts": "",
+     "Price": "Pris",
+     "Re-enable emails": "Genaktiver e-mails",
+     "Recommendations": "Anbefalinger",
+diff --git a/ghost/i18n/locales/de-CH/portal.json b/ghost/i18n/locales/de-CH/portal.json
+index df99052209..e06680e0de 100644
+--- a/ghost/i18n/locales/de-CH/portal.json
++++ b/ghost/i18n/locales/de-CH/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+41 12 234 56 78",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "Kontodaten erfolgreich aktualisiert",
+     "Account settings": "Konto-Einstellungen",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Bitte kontaktieren Sie {supportAddress} um Ihr kostenloses Abo anzupassen.",
+     "Please enter {fieldName}": "Bitte geben Sie {fieldName} ein",
+     "Please fill in required fields": "Bitte alle Pflichtfelder ausfüllen.",
+-    "Podcasts": "",
+     "Price": "Preis",
+     "Re-enable emails": "E-Mails wieder aktivieren",
+     "Recommendations": "Empfehlungen",
+diff --git a/ghost/i18n/locales/de/portal.json b/ghost/i18n/locales/de/portal.json
+index 8dc3108929..003c3f312c 100644
+--- a/ghost/i18n/locales/de/portal.json
++++ b/ghost/i18n/locales/de/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+49 123 4567890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "Kontodaten erfolgreich aktualisiert",
+     "Account settings": "Konto-Einstellungen",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Bitte kontaktiere {supportAddress}, um dein kostenloses Abonnement zu bearbeiten.",
+     "Please enter {fieldName}": "Bitte gib eine/n {fieldName} ein",
+     "Please fill in required fields": "Bitte alle Pflichtfelder ausfüllen",
+-    "Podcasts": "",
+     "Price": "Preis",
+     "Re-enable emails": "E-Mails wieder aktivieren",
+     "Recommendations": "Empfehlungen",
+diff --git a/ghost/i18n/locales/el/portal.json b/ghost/i18n/locales/el/portal.json
+index f5f481ca7e..e52676c07c 100644
+--- a/ghost/i18n/locales/el/portal.json
++++ b/ghost/i18n/locales/el/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Λογαριασμός",
+     "Account details updated successfully": "",
+     "Account settings": "Ρυθμίσεις λογαριασμού",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Επικοινωνήστε με το {supportAddress} για να προσαρμόσετε τη δωρεάν συνδρομή σας.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Συμπληρώστε τα απαιτούμενα πεδία",
+-    "Podcasts": "",
+     "Price": "Τιμή",
+     "Re-enable emails": "Ενεργοποιήστε ξανά τα emails",
+     "Recommendations": "Συστάσεις",
+diff --git a/ghost/i18n/locales/en/portal.json b/ghost/i18n/locales/en/portal.json
+index 8a6d37f593..0721e07506 100644
+--- a/ghost/i18n/locales/en/portal.json
++++ b/ghost/i18n/locales/en/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "",
+     "Account details updated successfully": "",
+     "Account settings": "",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "",
+-    "Podcasts": "",
+     "Price": "",
+     "Re-enable emails": "",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/eo/portal.json b/ghost/i18n/locales/eo/portal.json
+index ecd402eb1e..c59a53d402 100644
+--- a/ghost/i18n/locales/eo/portal.json
++++ b/ghost/i18n/locales/eo/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "",
+     "Account settings": "Kontagordoj",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "",
+-    "Podcasts": "",
+     "Price": "Kosto",
+     "Re-enable emails": "Reŝalti retpoŝtojn",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/es/portal.json b/ghost/i18n/locales/es/portal.json
+index 70304dd565..6bb059cf5c 100644
+--- a/ghost/i18n/locales/es/portal.json
++++ b/ghost/i18n/locales/es/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Cuenta",
+     "Account details updated successfully": "Los detalles de la cuenta se actualizaron con éxito",
+     "Account settings": "Configuración de la cuenta",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Por favor, ponte en contacto con {supportAddress} para ajustar tu suscripción de cortesía.",
+     "Please enter {fieldName}": "Por favor ingresa {fieldName}",
+     "Please fill in required fields": "Por favor rellena los campos requeridos.",
+-    "Podcasts": "",
+     "Price": "Precio",
+     "Re-enable emails": "Reactivar correos electrónicos",
+     "Recommendations": "Recomendaciones",
+diff --git a/ghost/i18n/locales/et/portal.json b/ghost/i18n/locales/et/portal.json
+index 50cff21d67..54d76ce844 100644
+--- a/ghost/i18n/locales/et/portal.json
++++ b/ghost/i18n/locales/et/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "",
+     "Account settings": "Konto seaded",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Palun võtke ühendust {supportAddress}, et kohandada oma tasuta tellimust.",
+     "Please enter {fieldName}": "Palun sisestage {fieldName}",
+     "Please fill in required fields": "Palun täitke kohustuslikud väljad",
+-    "Podcasts": "",
+     "Price": "Hind",
+     "Re-enable emails": "Luba e-kirjad uuesti",
+     "Recommendations": "Soovitused",
+diff --git a/ghost/i18n/locales/eu/portal.json b/ghost/i18n/locales/eu/portal.json
+index 522b5ca821..e76f33aa15 100644
+--- a/ghost/i18n/locales/eu/portal.json
++++ b/ghost/i18n/locales/eu/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+3X 123 456 789",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Kontua",
+     "Account details updated successfully": "Kontuaren xehetasunak eguneratu dira",
+     "Account settings": "Kontuaren ezarpenak",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Jarri harremanetan {supportAddress} zure harpidetza osagarria moldatzeko.",
+     "Please enter {fieldName}": "Sartu {fieldName}",
+     "Please fill in required fields": "Bete derrigorrezko eremuak",
+-    "Podcasts": "",
+     "Price": "Prezioa",
+     "Re-enable emails": "Gaitu berriro ePostak",
+     "Recommendations": "Gomendioak",
+diff --git a/ghost/i18n/locales/fa/portal.json b/ghost/i18n/locales/fa/portal.json
+index 2530fb1126..2d42e82fda 100644
+--- a/ghost/i18n/locales/fa/portal.json
++++ b/ghost/i18n/locales/fa/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "حساب کاربری",
+     "Account details updated successfully": "",
+     "Account settings": "تنظیمات حساب کاربری",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "خواهشمند است که با آدرس {supportAddress} تماس بگیرید تا اشتراک رایگان شما را تنظیم کند.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "خواهشمند است که موارد الزامی را وارد کنید",
+-    "Podcasts": "",
+     "Price": "قیمت",
+     "Re-enable emails": "فعال\u200cسازی ایمیل\u200cها",
+     "Recommendations": "پیشنهادات",
+diff --git a/ghost/i18n/locales/fi/portal.json b/ghost/i18n/locales/fi/portal.json
+index fc7d0aaa11..a83bd49420 100644
+--- a/ghost/i18n/locales/fi/portal.json
++++ b/ghost/i18n/locales/fi/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Oma tili",
+     "Account details updated successfully": "Tilin lisätiedot on päivitetty",
+     "Account settings": "Tilin asetukset",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Voit tehdä muutoksia maksuttomaan tilaukseesi ottamalla yhteyttä osoitteeseen {supportAddress}.",
+     "Please enter {fieldName}": "Täytä kenttä {fieldName}",
+     "Please fill in required fields": "Täytä tarvittavat kentät",
+-    "Podcasts": "",
+     "Price": "Hinta",
+     "Re-enable emails": "Hyväksy sähköpostit uudelleen",
+     "Recommendations": "Suositukset",
+diff --git a/ghost/i18n/locales/fr/portal.json b/ghost/i18n/locales/fr/portal.json
+index a26e8fe016..aa3b8713e3 100644
+--- a/ghost/i18n/locales/fr/portal.json
++++ b/ghost/i18n/locales/fr/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+33 1 23 45 67 89",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Compte",
+     "Account details updated successfully": "Mise à jour réussie des données du compte",
+     "Account settings": "Paramètres du compte",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Veuillez écrire à {supportAddress} pour rectifier votre abonnement gratuit.",
+     "Please enter {fieldName}": "Veuillez saisir votre {fieldName}",
+     "Please fill in required fields": "Veuillez remplir les champs requis",
+-    "Podcasts": "",
+     "Price": "Tarification",
+     "Re-enable emails": "Réactiver les e-mails",
+     "Recommendations": "Suggestions",
+diff --git a/ghost/i18n/locales/gd/portal.json b/ghost/i18n/locales/gd/portal.json
+index e9e2e64309..a968bc4654 100644
+--- a/ghost/i18n/locales/gd/portal.json
++++ b/ghost/i18n/locales/gd/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+44 1234 567890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Cunntas",
+     "Account details updated successfully": "Chaidh roghainnean a' chunntais ùrachadh gu soirbheachail",
+     "Account settings": "Roghainnean",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Leig fios gu {supportAddress} gus am fo-sgrìobhadh an-asgaidh a atharrachadh.",
+     "Please enter {fieldName}": "Lìon a-steach an roinn seo: {fieldName}",
+     "Please fill in required fields": "Lìon a-steach na raointean riatanach",
+-    "Podcasts": "",
+     "Price": "Prìs",
+     "Re-enable emails": "Cuir an comas puist-d a-rithist",
+     "Recommendations": "Mòlaidhean",
+diff --git a/ghost/i18n/locales/he/portal.json b/ghost/i18n/locales/he/portal.json
+index fc4ada2fb3..871f21b09b 100644
+--- a/ghost/i18n/locales/he/portal.json
++++ b/ghost/i18n/locales/he/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "חשבון",
+     "Account details updated successfully": "פרטי החשבון עודכנו בהצלחה",
+     "Account settings": "הגדרות חשבון",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "צרו קשר עם {supportAddress} כדי להתאים את המנוי החינמי שלכם.",
+     "Please enter {fieldName}": "בבקשה הזינו {fieldName}",
+     "Please fill in required fields": "אנא מלאו את השדות הנדרשים",
+-    "Podcasts": "",
+     "Price": "מחיר",
+     "Re-enable emails": "אפשרו שוב מיילים",
+     "Recommendations": "המלצות",
+diff --git a/ghost/i18n/locales/hi/portal.json b/ghost/i18n/locales/hi/portal.json
+index 75de7f5209..7a37a9d4ec 100644
+--- a/ghost/i18n/locales/hi/portal.json
++++ b/ghost/i18n/locales/hi/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "खाता",
+     "Account details updated successfully": "खाते की जानकारी सफलतापूर्वक अपडेट की गई",
+     "Account settings": "खाता सेटिंग्स",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "अपनी नि:शुल्क सदस्यता को समायोजित करने के लिए कृपया {supportAddress} से संपर्क करें।",
+     "Please enter {fieldName}": "कृपया {fieldName} दर्ज करें",
+     "Please fill in required fields": "कृपया आवश्यक फ़ील्ड भरें",
+-    "Podcasts": "",
+     "Price": "कीमत",
+     "Re-enable emails": "ईमेल पुनः सक्षम करें",
+     "Recommendations": "सिफारिशें",
+diff --git a/ghost/i18n/locales/hr/portal.json b/ghost/i18n/locales/hr/portal.json
+index ad4f416e30..2f06b93e37 100644
+--- a/ghost/i18n/locales/hr/portal.json
++++ b/ghost/i18n/locales/hr/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "(+385 1) 234-5678",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Vaš račun",
+     "Account details updated successfully": "Podaci računa su uspješno ažurirani",
+     "Account settings": "Podešavanje vašeg računa",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Molimo vas kontaktirajte {supportAddress} za prilagodbu vaše besplatne pretplate.",
+     "Please enter {fieldName}": "Molimo unesite {fieldName}",
+     "Please fill in required fields": "Molimo vas da ispunite obvezna polja",
+-    "Podcasts": "",
+     "Price": "Cijena",
+     "Re-enable emails": "Ponovo omogući slanje e-pošte",
+     "Recommendations": "Preporuke",
+diff --git a/ghost/i18n/locales/hu/portal.json b/ghost/i18n/locales/hu/portal.json
+index 5e78e7cdac..8691d3f012 100644
+--- a/ghost/i18n/locales/hu/portal.json
++++ b/ghost/i18n/locales/hu/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Fiók",
+     "Account details updated successfully": "A fiók adatai sikeresen frissültek.",
+     "Account settings": "Fiók beállítások",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Az ingyenes (ajándék) csomagod módosításáért kérjük, lépj velünk kapcsolatba az alábbi e-mail-címen: {supportAddress}",
+     "Please enter {fieldName}": "Kérjük, add meg {fieldName}",
+     "Please fill in required fields": "Kérjük, töltsd ki az összes mezőt",
+-    "Podcasts": "",
+     "Price": "Ár",
+     "Re-enable emails": "E-mailek aktiválása",
+     "Recommendations": "Ajánlott oldalak",
+diff --git a/ghost/i18n/locales/id/portal.json b/ghost/i18n/locales/id/portal.json
+index b17b795930..af1aa0a7d8 100644
+--- a/ghost/i18n/locales/id/portal.json
++++ b/ghost/i18n/locales/id/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+62 123-4567-8900",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Akun",
+     "Account details updated successfully": "Detail akun berhasil diperbarui",
+     "Account settings": "Pengaturan akun",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Harap hubungi {supportAddress} untuk mengubah langganan gratis Anda.",
+     "Please enter {fieldName}": "Silakan masukkan {fieldName}",
+     "Please fill in required fields": "Harap isi kolom yang wajib diisi",
+-    "Podcasts": "",
+     "Price": "Harga",
+     "Re-enable emails": "Aktifkan kembali email",
+     "Recommendations": "Rekomendasi",
+diff --git a/ghost/i18n/locales/is/portal.json b/ghost/i18n/locales/is/portal.json
+index 267c7bcb77..27565b8dc0 100644
+--- a/ghost/i18n/locales/is/portal.json
++++ b/ghost/i18n/locales/is/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Aðgangur",
+     "Account details updated successfully": "",
+     "Account settings": "Aðgangsstillingar",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Vinsamlegast hafið samband við {supportAddress} til að breyta kaupbætisáskrift.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Vinsamlegast fyllið í nauðsynlega reiti",
+-    "Podcasts": "",
+     "Price": "Verð",
+     "Re-enable emails": "Fá tölvupósta að nýju",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/it/portal.json b/ghost/i18n/locales/it/portal.json
+index 039efed958..f9c8e61756 100644
+--- a/ghost/i18n/locales/it/portal.json
++++ b/ghost/i18n/locales/it/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Account",
+     "Account details updated successfully": "Dettagli dell'account aggiornati con successo",
+     "Account settings": "Impostazioni account",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Si prega di contattare {supportAddress} per modificare l'abbonamento gratuito.",
+     "Please enter {fieldName}": "Per favore inserisci {fieldName}",
+     "Please fill in required fields": "Si prega di compilare i campi obbligatori",
+-    "Podcasts": "",
+     "Price": "Prezzo",
+     "Re-enable emails": "Riattiva le email",
+     "Recommendations": "Consigliati",
+diff --git a/ghost/i18n/locales/ja/portal.json b/ghost/i18n/locales/ja/portal.json
+index 2b8a696654..96d6e74625 100644
+--- a/ghost/i18n/locales/ja/portal.json
++++ b/ghost/i18n/locales/ja/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "アカウント",
+     "Account details updated successfully": "アカウント詳細が更新されました",
+     "Account settings": "アカウント設定",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "無料購読を調整するためには、{supportAddress}に連絡してください。",
+     "Please enter {fieldName}": "{fieldName}を入力してください",
+     "Please fill in required fields": "必須項目に入力してください",
+-    "Podcasts": "",
+     "Price": "価格",
+     "Re-enable emails": "メールを再有効化する",
+     "Recommendations": "おすすめ",
+diff --git a/ghost/i18n/locales/ko/portal.json b/ghost/i18n/locales/ko/portal.json
+index dabca4d7d9..9902380cac 100644
+--- a/ghost/i18n/locales/ko/portal.json
++++ b/ghost/i18n/locales/ko/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "계정",
+     "Account details updated successfully": "계정 정보가 성공적으로 업데이트되었어요",
+     "Account settings": "계정 설정",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "무료 구독 조정을 위해 {supportAddress}로 문의해 주세요.",
+     "Please enter {fieldName}": "{fieldName}을(를) 입력해 주세요",
+     "Please fill in required fields": "필수 항목을 입력해 주세요",
+-    "Podcasts": "",
+     "Price": "가격",
+     "Re-enable emails": "이메일 재활성화",
+     "Recommendations": "추천",
+diff --git a/ghost/i18n/locales/kz/portal.json b/ghost/i18n/locales/kz/portal.json
+index 8e2e5a865c..9c6b933769 100644
+--- a/ghost/i18n/locales/kz/portal.json
++++ b/ghost/i18n/locales/kz/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Аккаунт",
+     "Account details updated successfully": "",
+     "Account settings": "Аккаунт баптаулары",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Ақысыз жазылымды реттеу үшін {supportAddress} мекенжайына хабарласыңыз.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Қажет жерлерді толтырыңыз",
+-    "Podcasts": "",
+     "Price": "Бағасы",
+     "Re-enable emails": "Электрондық хаттарды қайта қосу",
+     "Recommendations": "Ұсыныстар",
+diff --git a/ghost/i18n/locales/lt/portal.json b/ghost/i18n/locales/lt/portal.json
+index 74477a53c3..54e347d513 100644
+--- a/ghost/i18n/locales/lt/portal.json
++++ b/ghost/i18n/locales/lt/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Paskyra",
+     "Account details updated successfully": "",
+     "Account settings": "Paskyros nustatymai",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Prašome susisiekti {supportAddress}, norėdami koreguoti savo nemokamą prenumeratą.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Užpildykite visus privalomus laukus",
+-    "Podcasts": "",
+     "Price": "Kaina",
+     "Re-enable emails": "Iš naujo įjungti el. laiškus",
+     "Recommendations": "Rekomendacijos",
+diff --git a/ghost/i18n/locales/lv/portal.json b/ghost/i18n/locales/lv/portal.json
+index f94c32a923..3349f7f3d8 100644
+--- a/ghost/i18n/locales/lv/portal.json
++++ b/ghost/i18n/locales/lv/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konts",
+     "Account details updated successfully": "Konta informācija ir veiksmīgi atjaunināta",
+     "Account settings": "Konta iestatījumi",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Lūdzu, sazinieties ar {supportAddress}, lai pielāgotu savu bezmaksas abonementu.",
+     "Please enter {fieldName}": "Lūdzu, ievadiet {fieldName}",
+     "Please fill in required fields": "Lūdzu, aizpildiet obligātos laukus",
+-    "Podcasts": "",
+     "Price": "Cena",
+     "Re-enable emails": "Atkārtoti iespējot e-pastus",
+     "Recommendations": "Ieteikumi",
+diff --git a/ghost/i18n/locales/mk/portal.json b/ghost/i18n/locales/mk/portal.json
+index 9e60fc4fd8..0dabd23173 100644
+--- a/ghost/i18n/locales/mk/portal.json
++++ b/ghost/i18n/locales/mk/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Сметка",
+     "Account details updated successfully": "",
+     "Account settings": "Поставки",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Ве молиме контактирајте на {supportAddress} за прилагодување на вашата додатна претплата.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Ве молиме пополнете ги задолжителните полиња",
+-    "Podcasts": "",
+     "Price": "Цена",
+     "Re-enable emails": "Овозможете пораки",
+     "Recommendations": "Препораки",
+diff --git a/ghost/i18n/locales/mn/portal.json b/ghost/i18n/locales/mn/portal.json
+index 41647f9830..377bb93a36 100644
+--- a/ghost/i18n/locales/mn/portal.json
++++ b/ghost/i18n/locales/mn/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+976 1234-5678",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Бүртгэл",
+     "Account details updated successfully": "Бүртгэлийн мэдээлэл амжилттай шинэчлэгдлээ",
+     "Account settings": "Бүртгэлийн тохиргоо",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Үнэгүй захиалгаа тохируулахын тулд {supportAddress}-д хандана уу.",
+     "Please enter {fieldName}": "{fieldName} оруулна уу",
+     "Please fill in required fields": "Шаардлагатай талбаруудыг бөглөнө үү",
+-    "Podcasts": "",
+     "Price": "Үнэ",
+     "Re-enable emails": "Имэйлийг дахин идэвхжүүлэх",
+     "Recommendations": "Санал болгох",
+diff --git a/ghost/i18n/locales/ms/portal.json b/ghost/i18n/locales/ms/portal.json
+index a76e138c6b..57154b1b50 100644
+--- a/ghost/i18n/locales/ms/portal.json
++++ b/ghost/i18n/locales/ms/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Akaun",
+     "Account details updated successfully": "",
+     "Account settings": "Tetapan akaun",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Sila isikan medan yang diperlukan",
+-    "Podcasts": "",
+     "Price": "Harga",
+     "Re-enable emails": "Membolehkan semula e-mel",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/nb/portal.json b/ghost/i18n/locales/nb/portal.json
+index 8451477407..73395f46ba 100644
+--- a/ghost/i18n/locales/nb/portal.json
++++ b/ghost/i18n/locales/nb/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+47 123 45 678",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "Kontodetaljer oppdatert",
+     "Account settings": "Kontoinnstillinger",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Vennligst kontakt {supportAddress} for å justere ditt gratis abonnement.",
+     "Please enter {fieldName}": "Vennligst oppgi {fieldName}",
+     "Please fill in required fields": "Vennligst fyll inn påkrevde felt",
+-    "Podcasts": "",
+     "Price": "Pris",
+     "Re-enable emails": "Re-aktiver e-poster",
+     "Recommendations": "Anbefalinger",
+diff --git a/ghost/i18n/locales/ne/portal.json b/ghost/i18n/locales/ne/portal.json
+index 8a6d37f593..0721e07506 100644
+--- a/ghost/i18n/locales/ne/portal.json
++++ b/ghost/i18n/locales/ne/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "",
+     "Account details updated successfully": "",
+     "Account settings": "",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "",
+-    "Podcasts": "",
+     "Price": "",
+     "Re-enable emails": "",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/nl/portal.json b/ghost/i18n/locales/nl/portal.json
+index 9165b2ae90..d00df9ac17 100644
+--- a/ghost/i18n/locales/nl/portal.json
++++ b/ghost/i18n/locales/nl/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Account",
+     "Account details updated successfully": "Accountgegevens succesvol bijgewerkt",
+     "Account settings": "Gegevens",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Neem contact op met {supportAddress} om je gratis abonnement aan te passen.",
+     "Please enter {fieldName}": "Voer {fieldName} in",
+     "Please fill in required fields": "Vul de vereiste velden in",
+-    "Podcasts": "",
+     "Price": "Prijs",
+     "Re-enable emails": "E-mails weer inschakelen",
+     "Recommendations": "Aanbevelingen",
+diff --git a/ghost/i18n/locales/nn/portal.json b/ghost/i18n/locales/nn/portal.json
+index 96d240da1b..f1fb1d620f 100644
+--- a/ghost/i18n/locales/nn/portal.json
++++ b/ghost/i18n/locales/nn/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Brukar",
+     "Account details updated successfully": "",
+     "Account settings": "Brukarinnstillingar",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Ver gilde og fyll inn dei obligatoriske felta",
+-    "Podcasts": "",
+     "Price": "Pris",
+     "Re-enable emails": "Aktiver e-postar på ny",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/pa/portal.json b/ghost/i18n/locales/pa/portal.json
+index b7662ca78d..6d9aeaf701 100644
+--- a/ghost/i18n/locales/pa/portal.json
++++ b/ghost/i18n/locales/pa/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "ਖਾਤਾ",
+     "Account details updated successfully": "ਖਾਤੇ ਦੇ ਵੇਰਵੇ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤੇ ਗਏ",
+     "Account settings": "ਖਾਤਾ ਸੈਟਿੰਗਾਂ",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "ਆਪਣੀ ਮੁਫ਼ਤ ਸਦੱਸਤਾ ਨੂੰ ਵਿਵਸਥਿਤ ਕਰਨ ਲਈ ਕਿਰਪਾ ਕਰਕੇ {supportAddress} 'ਤੇ ਸੰਪਰਕ ਕਰੋ।",
+     "Please enter {fieldName}": "ਕਿਰਪਾ ਕਰਕੇ {fieldName} ਦਾਖਲ ਕਰੋ",
+     "Please fill in required fields": "ਕਿਰਪਾ ਕਰਕੇ ਲੋੜੀਂਦੇ ਖੇਤਰ ਭਰੋ",
+-    "Podcasts": "",
+     "Price": "ਕੀਮਤ",
+     "Re-enable emails": "ਈਮੇਲਾਂ ਨੂੰ ਮੁੜ-ਸਮਰੱਥ ਕਰੋ",
+     "Recommendations": "ਸਿਫ਼ਾਰਸ਼ਾਂ",
+diff --git a/ghost/i18n/locales/pl/portal.json b/ghost/i18n/locales/pl/portal.json
+index bb0645addf..15922840d7 100644
+--- a/ghost/i18n/locales/pl/portal.json
++++ b/ghost/i18n/locales/pl/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+48 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "Szczegóły konta zostały pomyślnie zaktualizowane",
+     "Account settings": "Ustawienia konta",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Wyślij maila pod adres {supportAddress}, aby dostosować bezpłatną subskrypcję.",
+     "Please enter {fieldName}": "Proszę wypełnić {fieldName}",
+     "Please fill in required fields": "Wypełnij wymagane pola",
+-    "Podcasts": "",
+     "Price": "Cena",
+     "Re-enable emails": "Włącz ponownie emaile",
+     "Recommendations": "Rekomendacje",
+diff --git a/ghost/i18n/locales/pt-BR/portal.json b/ghost/i18n/locales/pt-BR/portal.json
+index 71bf322795..5a48d03486 100644
+--- a/ghost/i18n/locales/pt-BR/portal.json
++++ b/ghost/i18n/locales/pt-BR/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+55 (00) 0 0000-0000",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Conta",
+     "Account details updated successfully": "Detalhes da conta atualizados com sucesso",
+     "Account settings": "Configurações de conta",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Entre em contato com {supportAddress} para ajustar sua assinatura de cortesia.",
+     "Please enter {fieldName}": "Por favor, insira {fieldName}",
+     "Please fill in required fields": "Por favor, preencha os campos obrigatórios",
+-    "Podcasts": "",
+     "Price": "Preço",
+     "Re-enable emails": "Reativar e-mails",
+     "Recommendations": "Recomendações",
+diff --git a/ghost/i18n/locales/pt/portal.json b/ghost/i18n/locales/pt/portal.json
+index 3f7edde383..b42b6fc4fc 100644
+--- a/ghost/i18n/locales/pt/portal.json
++++ b/ghost/i18n/locales/pt/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Conta",
+     "Account details updated successfully": "Detalhes da conta atualizados com sucesso",
+     "Account settings": "Definições de conta",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Entre for favor em contacto com {supportAddress} de modo a ajustar a sua subscrição complementar.",
+     "Please enter {fieldName}": "Insira por favor {fieldName} ",
+     "Please fill in required fields": "Preencha os campos obrigatórios",
+-    "Podcasts": "",
+     "Price": "Preço",
+     "Re-enable emails": "Reativar emails",
+     "Recommendations": "Recomendações",
+diff --git a/ghost/i18n/locales/ro/portal.json b/ghost/i18n/locales/ro/portal.json
+index 3387d77893..ed269f6d1b 100644
+--- a/ghost/i18n/locales/ro/portal.json
++++ b/ghost/i18n/locales/ro/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Cont",
+     "Account details updated successfully": "",
+     "Account settings": "Setări cont",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Vă rugăm să contactați {supportAddress} pentru a ajusta abonamentul dvs. gratuit.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Vă rugăm să completați câmpurile necesare",
+-    "Podcasts": "",
+     "Price": "Preț",
+     "Re-enable emails": "Activează din nou emailurile",
+     "Recommendations": "Recomandări",
+diff --git a/ghost/i18n/locales/ru/portal.json b/ghost/i18n/locales/ru/portal.json
+index 05a7ab7900..35c04c21be 100644
+--- a/ghost/i18n/locales/ru/portal.json
++++ b/ghost/i18n/locales/ru/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+7 (987) 654-3210",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Аккаунт",
+     "Account details updated successfully": "Данные учётной записи успешно обновлены",
+     "Account settings": "Настройки аккаунта",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Пожалуйста, свяжитесь с {supportAddress}, чтобы получить/настроить бесплатную подписку.",
+     "Please enter {fieldName}": "Пожалуйста, введите {fieldName}",
+     "Please fill in required fields": "Пожалуйста, заполните обязательные поля",
+-    "Podcasts": "",
+     "Price": "Цена",
+     "Re-enable emails": "Подписаться повторно",
+     "Recommendations": "Рекомендации",
+diff --git a/ghost/i18n/locales/si/portal.json b/ghost/i18n/locales/si/portal.json
+index 8cb57ce94f..5db69108ef 100644
+--- a/ghost/i18n/locales/si/portal.json
++++ b/ghost/i18n/locales/si/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "ගිණුම",
+     "Account details updated successfully": "",
+     "Account settings": "ගිණුම් සැකසුම්",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "කරුණාකර required files පිරවීමට කටයුතු කරන්න",
+-    "Podcasts": "",
+     "Price": "මිල",
+     "Re-enable emails": "ඉමේල් නැවත සක්\u200dරීය කරන්න",
+     "Recommendations": "නිර්දේශි\u200bත",
+diff --git a/ghost/i18n/locales/sk/portal.json b/ghost/i18n/locales/sk/portal.json
+index e1822be62b..289edcd604 100644
+--- a/ghost/i18n/locales/sk/portal.json
++++ b/ghost/i18n/locales/sk/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Účet",
+     "Account details updated successfully": "Podrobnosti o účte boli úspešne aktualizované",
+     "Account settings": "Nastavenia účtu",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Prosím kontaktujte {supportAddress} pre upravenie vášho bezplatného predplatného.",
+     "Please enter {fieldName}": "Prosím zadajte {fieldName}",
+     "Please fill in required fields": "Prosím vyplňte požadované polia.",
+-    "Podcasts": "",
+     "Price": "Cena",
+     "Re-enable emails": "Obnoviť emaily",
+     "Recommendations": "Odporúčania",
+diff --git a/ghost/i18n/locales/sl/portal.json b/ghost/i18n/locales/sl/portal.json
+index 3bea252ba3..af17119a3e 100644
+--- a/ghost/i18n/locales/sl/portal.json
++++ b/ghost/i18n/locales/sl/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+386 1 234 56 78",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Račun",
+     "Account details updated successfully": "Podatki o računu so bili uspešno posodobljeni",
+     "Account settings": "Nastavitve računa",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Obrnite se na {supportAddress}, da prilagodite svojo promocijsko naročnino.",
+     "Please enter {fieldName}": "Vnesite {fieldName}",
+     "Please fill in required fields": "Izpolnite potrebna polja",
+-    "Podcasts": "",
+     "Price": "Cena",
+     "Re-enable emails": "Ponovno omogočite e-pošto",
+     "Recommendations": "Priporočila",
+diff --git a/ghost/i18n/locales/sq/portal.json b/ghost/i18n/locales/sq/portal.json
+index 37ec48d5da..360920f22a 100644
+--- a/ghost/i18n/locales/sq/portal.json
++++ b/ghost/i18n/locales/sq/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Llogaria",
+     "Account details updated successfully": "",
+     "Account settings": "Cilësimet e llogarisë",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Ju lutem plotesoni fushat e kerkuara",
+-    "Podcasts": "",
+     "Price": "Çmimi",
+     "Re-enable emails": "Ri-aktivizo emailet",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/sr-Cyrl/portal.json b/ghost/i18n/locales/sr-Cyrl/portal.json
+index 72722c6a31..d8db9b07f7 100644
+--- a/ghost/i18n/locales/sr-Cyrl/portal.json
++++ b/ghost/i18n/locales/sr-Cyrl/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+381 60 123-456",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Налог",
+     "Account details updated successfully": "Детаљи налога су успешно ажурирани",
+     "Account settings": "Подешавања налога",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Контактирајте {supportAddress} да подесите Вашу бесплатну претплату.",
+     "Please enter {fieldName}": "Молимо Вас унесите {fieldName}",
+     "Please fill in required fields": "Молимо Вас попуните обавезна поља",
+-    "Podcasts": "",
+     "Price": "Цена",
+     "Re-enable emails": "Поново омогућите email-ове",
+     "Recommendations": "Препоруке",
+diff --git a/ghost/i18n/locales/sr/portal.json b/ghost/i18n/locales/sr/portal.json
+index 0105625e22..1da52f54fa 100644
+--- a/ghost/i18n/locales/sr/portal.json
++++ b/ghost/i18n/locales/sr/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+381 60 123-456",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Nalog",
+     "Account details updated successfully": "Detalji naloga su uspešno ažurirani",
+     "Account settings": "Podešavanja naloga",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Kontaktirajte {supportAddress} da podesite Vašu besplatnu pretplatu.",
+     "Please enter {fieldName}": "Molimo Vas unesite {fieldName}",
+     "Please fill in required fields": "Molimo Vas popunite obavezna polja",
+-    "Podcasts": "",
+     "Price": "Cena",
+     "Re-enable emails": "Ponovo omogućite email-ove",
+     "Recommendations": "Preporuke",
+diff --git a/ghost/i18n/locales/sv/portal.json b/ghost/i18n/locales/sv/portal.json
+index 620d2ca670..e657fd0241 100644
+--- a/ghost/i18n/locales/sv/portal.json
++++ b/ghost/i18n/locales/sv/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+46 (0)78 901 23 45",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Konto",
+     "Account details updated successfully": "Kontodetaljer uppdaterade framgångsrikt",
+     "Account settings": "Kontoinställningar",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Kontakta {supportAddress} för att ändra din gratisprenumeration ",
+     "Please enter {fieldName}": "Vänligen ange {fieldName}",
+     "Please fill in required fields": "Vänligen fyll i alla obligatoriska fält",
+-    "Podcasts": "",
+     "Price": "Pris",
+     "Re-enable emails": "Återaktivera e-post",
+     "Recommendations": "Rekommendationer",
+diff --git a/ghost/i18n/locales/sw/portal.json b/ghost/i18n/locales/sw/portal.json
+index 714e948aaa..4afca314af 100644
+--- a/ghost/i18n/locales/sw/portal.json
++++ b/ghost/i18n/locales/sw/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Akaunti",
+     "Account details updated successfully": "",
+     "Account settings": "Mipangilio ya akaunti",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Tafadhali wasiliana na {supportAddress} kurekebisha usajili wako wa bure.",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "Tafadhali jaza sehemu zinazohitajika",
+-    "Podcasts": "",
+     "Price": "Bei",
+     "Re-enable emails": "Washa tena barua pepe",
+     "Recommendations": "Mapendekezo",
+diff --git a/ghost/i18n/locales/ta/portal.json b/ghost/i18n/locales/ta/portal.json
+index 6078d9bff5..a7c030f49b 100644
+--- a/ghost/i18n/locales/ta/portal.json
++++ b/ghost/i18n/locales/ta/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "கணக்கு",
+     "Account details updated successfully": "கணக்கு விவரங்கள் வெற்றிகரமாக புதுப்பிக்கப்பட்டன",
+     "Account settings": "கணக்கு அமைப்புகள்",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "உங்கள் இலவச சந்தாவை சரிசெய்ய {supportAddress} ஐத் தொடர்பு கொள்ளவும்.",
+     "Please enter {fieldName}": "{fieldName} ஐ உள்ளிடவும்",
+     "Please fill in required fields": "தேவையான புலங்களை நிரப்பவும்",
+-    "Podcasts": "",
+     "Price": "விலை",
+     "Re-enable emails": "மின்னஞ்சல்களை மீண்டும் இயக்கு",
+     "Recommendations": "பரிந்துரைகள்",
+diff --git a/ghost/i18n/locales/th/portal.json b/ghost/i18n/locales/th/portal.json
+index 896b2f4e82..5aa5d96ab8 100644
+--- a/ghost/i18n/locales/th/portal.json
++++ b/ghost/i18n/locales/th/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "บัญชี",
+     "Account details updated successfully": "",
+     "Account settings": "ตั้งค่าบัญชี",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "โปรดติดต่อ {supportAddress} เพื่อปรับเปลี่ยนการรับสมัครข้อมูลฟรีของคุณ",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "กรุณากรอกข้อมูลในช่องให้ครบถ้วน",
+-    "Podcasts": "",
+     "Price": "ราคา",
+     "Re-enable emails": "เปิดใช้งานอีเมลนี้อีกครั้ง",
+     "Recommendations": "รายการแนะนำ",
+diff --git a/ghost/i18n/locales/tr/portal.json b/ghost/i18n/locales/tr/portal.json
+index 981ab8d26a..fbbfde9e8d 100644
+--- a/ghost/i18n/locales/tr/portal.json
++++ b/ghost/i18n/locales/tr/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+90 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Hesap",
+     "Account details updated successfully": "Hesap bilgileri başarıyla güncellendi",
+     "Account settings": "Hesap ayarları",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Ücretsiz aboneliğinizi ayarlamak için lütfen {supportAddress} ile iletişime geçin.",
+     "Please enter {fieldName}": "Lütfen {fieldName} girin",
+     "Please fill in required fields": "Lütfen gerekli alanları doldurunuz",
+-    "Podcasts": "",
+     "Price": "Fiyat",
+     "Re-enable emails": "E-postaları yeniden etkinleştir",
+     "Recommendations": "Tavsiyeler",
+diff --git a/ghost/i18n/locales/uk/portal.json b/ghost/i18n/locales/uk/portal.json
+index 9339e01ad4..efbeea8a29 100644
+--- a/ghost/i18n/locales/uk/portal.json
++++ b/ghost/i18n/locales/uk/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Oбліковий запис",
+     "Account details updated successfully": "Дані облікового запису успішно оновлено",
+     "Account settings": "Налаштування облікового запису",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Будь ласка, зв’яжіться з {supportAddress}, щоб налаштувати безкоштовну підписку.",
+     "Please enter {fieldName}": "Будь ласка, введіть {fieldName}",
+     "Please fill in required fields": "Будь ласка, заповніть обов'язкові поля",
+-    "Podcasts": "",
+     "Price": "Ціна",
+     "Re-enable emails": "Знову включити пошту",
+     "Recommendations": "Рекомендації",
+diff --git a/ghost/i18n/locales/ur/portal.json b/ghost/i18n/locales/ur/portal.json
+index 9b4b514b61..4de27d6f1a 100644
+--- a/ghost/i18n/locales/ur/portal.json
++++ b/ghost/i18n/locales/ur/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "اکاؤنٹ",
+     "Account details updated successfully": "",
+     "Account settings": "اکاؤنٹ کی ترتیبات",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "براہ کرم مطلوبہ شعبے بھریں",
+-    "Podcasts": "",
+     "Price": "قیمت",
+     "Re-enable emails": "ای میلز کو دوبارہ چالو کریں",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/uz/portal.json b/ghost/i18n/locales/uz/portal.json
+index 30620c1f84..490844bb69 100644
+--- a/ghost/i18n/locales/uz/portal.json
++++ b/ghost/i18n/locales/uz/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Hisob",
+     "Account details updated successfully": "",
+     "Account settings": "Hisob sozlamalari",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "",
+     "Please enter {fieldName}": "",
+     "Please fill in required fields": "",
+-    "Podcasts": "",
+     "Price": "Narx",
+     "Re-enable emails": "Elektron pochta xabarlarini qayta yoqing",
+     "Recommendations": "",
+diff --git a/ghost/i18n/locales/vi/portal.json b/ghost/i18n/locales/vi/portal.json
+index 275266d855..8a63d6f614 100644
+--- a/ghost/i18n/locales/vi/portal.json
++++ b/ghost/i18n/locales/vi/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+84 (987) 654-321",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "Tài khoản",
+     "Account details updated successfully": "Đã cập nhật chi tiết tài khoản thành công",
+     "Account settings": "Cài đặt",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "Vui lòng liên hệ {supportAddress} để điều chỉnh gói thành viên của bạn.",
+     "Please enter {fieldName}": "Hãy nhập {fieldName}",
+     "Please fill in required fields": "Vui lòng điền các mục bắt buộc",
+-    "Podcasts": "",
+     "Price": "Giá gói",
+     "Re-enable emails": "Kích hoạt lại email",
+     "Recommendations": "Đề xuất",
+diff --git a/ghost/i18n/locales/zh-Hant/portal.json b/ghost/i18n/locales/zh-Hant/portal.json
+index fd3304aae4..46cb78c145 100644
+--- a/ghost/i18n/locales/zh-Hant/portal.json
++++ b/ghost/i18n/locales/zh-Hant/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "0912-123-123",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "帳號",
+     "Account details updated successfully": "帳號資訊已更新成功",
+     "Account settings": "帳號設定",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "請聯絡 {supportAddress} 來調整你的免費的訂閱。",
+     "Please enter {fieldName}": "請輸入{fieldName}",
+     "Please fill in required fields": "請填寫必填項目",
+-    "Podcasts": "",
+     "Price": "價格",
+     "Re-enable emails": "重新啟用電子郵件",
+     "Recommendations": "所有推薦",
+diff --git a/ghost/i18n/locales/zh/portal.json b/ghost/i18n/locales/zh/portal.json
+index 15bdb8da03..8f0b763988 100644
+--- a/ghost/i18n/locales/zh/portal.json
++++ b/ghost/i18n/locales/zh/portal.json
+@@ -16,7 +16,6 @@
+     "+1 (123) 456-7890": "+1 (123) 456-7890",
+     "1 month": "",
+     "1 month free": "",
+-    "Access your RSS feeds": "",
+     "Account": "账户",
+     "Account details updated successfully": "账户信息更新成功",
+     "Account settings": "账户设置",
+@@ -155,7 +154,6 @@
+     "Please contact {supportAddress} to adjust your complimentary subscription.": "请联系 {supportAddress} 调整您的免费订阅。",
+     "Please enter {fieldName}": "请输入{fieldName}",
+     "Please fill in required fields": "请填写必须项目",
+-    "Podcasts": "",
+     "Price": "价格",
+     "Re-enable emails": "重新启用电子邮件",
+     "Recommendations": "推荐",

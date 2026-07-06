@@ -1,0 +1,5 @@
+I'm working on the spatial view visualization system for 3D point clouds. Right now the rendering logic is tightly coupled to a specific query abstraction — the rendering pipeline takes a high-level query result object and processes it directly. This makes it really hard to support alternative query strategies (like a cached query path) or to benchmark the rendering pipeline independently of the query overhead.
+
+I'd like to introduce a new intermediate data container for the 3D point visualization components. This struct would hold borrowed slices of all the relevant component data needed to render a batch of 3D points (positions, colors, radii, labels, keypoint ids, class ids, and instance keys). The existing rendering methods should then be updated to accept this container instead of the raw query result.
+
+The container needs to be publicly accessible from the visualizers module so benchmarks can construct it directly and measure the cost of the rendering pipeline without going through the query machinery.

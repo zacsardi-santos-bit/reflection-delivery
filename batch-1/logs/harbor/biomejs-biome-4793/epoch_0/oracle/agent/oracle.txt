@@ -1,0 +1,17 @@
+patching file crates/biome_css_factory/src/generated/node_factory.rs
+patching file crates/biome_css_factory/src/generated/syntax_factory.rs
+patching file crates/biome_css_formatter/src/css/any/at_rule.rs
+patching file crates/biome_css_formatter/src/css/statements/mod.rs
+patching file crates/biome_css_formatter/src/css/statements/position_try_at_rule.rs
+patching file crates/biome_css_formatter/src/css/statements/view_transition_at_rule.rs
+patching file crates/biome_css_formatter/src/generated.rs
+patching file crates/biome_css_parser/src/lexer/mod.rs
+patching file crates/biome_css_parser/src/syntax/at_rule/mod.rs
+patching file crates/biome_css_parser/src/syntax/at_rule/position_try.rs
+patching file crates/biome_css_parser/src/syntax/at_rule/view_transition.rs
+patching file crates/biome_css_syntax/src/generated/kind.rs
+patching file crates/biome_css_syntax/src/generated/macros.rs
+patching file crates/biome_css_syntax/src/generated/nodes.rs
+patching file crates/biome_css_syntax/src/generated/nodes_mut.rs
+patching file xtask/codegen/css.ungram
+patching file xtask/codegen/src/css_kinds_src.rs

@@ -1,0 +1,43 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./plugins/processors/ifname ./plugins/processors/snmp_lookup -count=1",
+  "test_files": [
+    "plugins/processors/ifname/ifname_test.go",
+    "plugins/processors/snmp_lookup/lookup_test.go",
+    "plugins/processors/snmp_lookup/store_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/influxdata/telegraf/plugins/processors/ifname::TestCache",
+    "github.com/influxdata/telegraf/plugins/processors/ifname::TestGetMap",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestRegistry",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestSampleConfig",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestInit/empty",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestInit/defaults",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestInit/wrong_SNMP_client_config",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestInit/table_init",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestInit",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestStart",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestGetConnection/agent_error",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestGetConnection/v2_trap",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestGetConnection",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestUpdateAgent/success",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestUpdateAgent/table_build_fail",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestUpdateAgent/connection_fail",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestUpdateAgent",
+    "github.com/influxdata/telegraf/plugins/processors/ifname::TestTracking",
+    "github.com/influxdata/telegraf/plugins/processors/ifname::TestTTLCacheExpire",
+    "github.com/influxdata/telegraf/plugins/processors/ifname::TestTTLCache",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestAdd/no_source_tag",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestAdd/no_index_tag",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestAdd/cached",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestAdd/non-existing_index",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestAdd",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestExpiry",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestOrdered",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestAddBacklog",
+    "github.com/influxdata/telegraf/plugins/processors/snmp_lookup::TestLookup"
+  ],
+  "PASS_TO_PASS": []
+}

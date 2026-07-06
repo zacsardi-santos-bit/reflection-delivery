@@ -1,0 +1,5 @@
+I'm working on an MLS group messaging library and running into a problem with Welcome messages that include the ratchet tree inline. When a group is configured to bundle the ratchet tree inside the Welcome message (so new joiners don't need to receive the tree separately), trying to actually join the group from that Welcome message fails. The joining operation should succeed by extracting the tree from inside the Welcome message, but it doesn't — it seems like the embedded ratchet tree isn't being parsed and used correctly.
+
+I'd like the library to support the full flow: a group member adds someone, the resulting Welcome message (with the ratchet tree embedded) gets encoded and decoded, and then the new member can successfully use it to join the group without supplying the ratchet tree through any other channel. The Welcome message should be completely self-contained for the joining process.
+
+As part of fixing this, there's also a helper needed to look up a key package bundle by matching it against a specific key package, since that operation comes up when setting up the join.

@@ -1,0 +1,294 @@
+patching file src/internal/log/benchmark_test.go
+patching file src/internal/log/log_test.go
+patching file src/internal/log/span_test.go
+{"Time":"2026-06-29T15:32:21.691828038Z","Action":"start","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log"}
+{"Time":"2026-06-29T15:32:21.712396481Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestAmazon"}
+{"Time":"2026-06-29T15:32:21.712448311Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestAmazon","Output":"=== RUN   TestAmazon\n"}
+{"Time":"2026-06-29T15:32:21.712781392Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestAmazon","Output":"--- PASS: TestAmazon (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.712813592Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestAmazon","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.712861882Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCombineLogger"}
+{"Time":"2026-06-29T15:32:21.712884022Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCombineLogger","Output":"=== RUN   TestCombineLogger\n"}
+{"Time":"2026-06-29T15:32:21.712913742Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCombineLogger","Output":"--- PASS: TestCombineLogger (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.712938032Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCombineLogger","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.712961622Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWithoutRatelimit"}
+{"Time":"2026-06-29T15:32:21.712985072Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWithoutRatelimit","Output":"=== RUN   TestWithoutRatelimit\n"}
+{"Time":"2026-06-29T15:32:21.810337154Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWithoutRatelimit","Output":"--- PASS: TestWithoutRatelimit (0.10s)\n"}
+{"Time":"2026-06-29T15:32:21.810406844Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWithoutRatelimit","Elapsed":0.1}
+{"Time":"2026-06-29T15:32:21.810434184Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCloneOfWeirdCore"}
+{"Time":"2026-06-29T15:32:21.810456694Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCloneOfWeirdCore","Output":"=== RUN   TestCloneOfWeirdCore\n"}
+{"Time":"2026-06-29T15:32:21.810876044Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCloneOfWeirdCore","Output":"--- PASS: TestCloneOfWeirdCore (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.810931744Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestCloneOfWeirdCore","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.810961034Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto"}
+{"Time":"2026-06-29T15:32:21.810983294Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"=== RUN   TestProto\n"}
+{"Time":"2026-06-29T15:32:21.811010134Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.810Z\tINFO\tlog/field_test.go:24\tsome proto\t{\"version\": {\"major\": 42, \"minor\": 0, \"micro\": 0, \"additional\": \"\", \"git_commit\": \"\", \"git_tree_modified\": \"\", \"build_date\": \"\", \"go_version\": \"\", \"platform\": \"\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811040324Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.810Z\tINFO\tlog/field_test.go:25\tsome proto\t{\"version\": {}}\n"}
+{"Time":"2026-06-29T15:32:21.811084524Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:26\tsome proto without MarshalLogObject\t{\"int\": \"value:42\"}\n"}
+{"Time":"2026-06-29T15:32:21.811122754Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:27\tsome proto without MarshalLogObject\t{\"int\": \"\u003cnil\u003e\"}\n"}
+{"Time":"2026-06-29T15:32:21.811146674Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:29\tint64\t{\"int\": 42}\n"}
+{"Time":"2026-06-29T15:32:21.811169954Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:30\tint64\t{\"int\": 0}\n"}
+{"Time":"2026-06-29T15:32:21.811201594Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:33\tlots of bytes\t{\"bytes\": {\"len\": 4096, \"firstBytes\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811224884Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:34\tempty bytes\t{\"bytes\": {\"bytes\": \"\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811247464Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:35\tnil bytes\t{\"bytes\": {\"bytes\": \"\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811269994Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:36\tsome bytes\t{\"bytes\": {\"bytes\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811292654Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:37\tsome bytes\t{\"bytes\": {\"bytes\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811315414Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:38\tsome bytes\t{\"bytes\": {\"len\": 33, \"firstBytes\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811358764Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:44\tbad any\t{\"any\": \"type_url:\\\"totally invalid\\\" value:\\\"many bytes are here\\\"\"}\n"}
+{"Time":"2026-06-29T15:32:21.811381374Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:50\tgood any\t{\"any\": {\"major\": 42, \"minor\": 0, \"micro\": 0, \"additional\": \"\", \"git_commit\": \"\", \"git_tree_modified\": \"\", \"build_date\": \"\", \"go_version\": \"\", \"platform\": \"\"}}\n"}
+{"Time":"2026-06-29T15:32:21.811404334Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:51\tnil any\t{\"any\": \"\u003cnil\u003e\"}\n"}
+{"Time":"2026-06-29T15:32:21.811426574Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:53\tempty\n"}
+{"Time":"2026-06-29T15:32:21.811452424Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:54\tnil empty\n"}
+{"Time":"2026-06-29T15:32:21.811481864Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:56\tduration\t{\"duration\": \"24h0m0s\"}\n"}
+{"Time":"2026-06-29T15:32:21.811511484Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:57\tnil duration\t{\"duration\": \"0s\"}\n"}
+{"Time":"2026-06-29T15:32:21.811533664Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:59\ttime\t{\"time\": \"2026-06-29T15:32:21.811Z\"}\n"}
+{"Time":"2026-06-29T15:32:21.811556634Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:60\tnil time\t{\"time\": \"1970-01-01T00:00:00.000Z\"}\n"}
+{"Time":"2026-06-29T15:32:21.811579764Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:72\tdynamic message\t{\"dynamic\": {\"major\":3}}\n"}
+{"Time":"2026-06-29T15:32:21.811602434Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"    logger.go:130: 2026-06-29T15:32:21.811Z\tINFO\tlog/field_test.go:73\tnil dynamic message\t{\"dynamic\": \"\u003cnil\u003e\"}\n"}
+{"Time":"2026-06-29T15:32:21.811628004Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Output":"--- PASS: TestProto (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.811651774Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestProto","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.811676194Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServer"}
+{"Time":"2026-06-29T15:32:21.811698194Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServer","Output":"=== RUN   TestHTTPServer\n"}
+{"Time":"2026-06-29T15:32:21.811961865Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServer","Output":"    http_test.go:30: listening on [::]:45228\n"}
+{"Time":"2026-06-29T15:32:21.814026076Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServer","Output":"--- PASS: TestHTTPServer (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.814061996Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServer","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.814086106Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse"}
+{"Time":"2026-06-29T15:32:21.814108916Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse","Output":"=== RUN   TestHTTPServerResponse\n"}
+{"Time":"2026-06-29T15:32:21.814135626Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse","Output":"    http_test.go:69: listening on [::]:53796\n"}
+{"Time":"2026-06-29T15:32:21.814165006Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/HealthyResponse"}
+{"Time":"2026-06-29T15:32:21.814188016Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/HealthyResponse","Output":"=== RUN   TestHTTPServerResponse/HealthyResponse\n"}
+{"Time":"2026-06-29T15:32:21.815189617Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/HealthyResponse","Output":"--- PASS: TestHTTPServerResponse/HealthyResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.815234967Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/HealthyResponse","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.815259027Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/ErrorResponsesLogged"}
+{"Time":"2026-06-29T15:32:21.815281037Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/ErrorResponsesLogged","Output":"=== RUN   TestHTTPServerResponse/ErrorResponsesLogged\n"}
+{"Time":"2026-06-29T15:32:21.816058007Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/ErrorResponsesLogged","Output":"--- PASS: TestHTTPServerResponse/ErrorResponsesLogged (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.816121427Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse/ErrorResponsesLogged","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.816153887Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse","Output":"--- PASS: TestHTTPServerResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.816182547Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestHTTPServerResponse","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.816206567Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind"}
+{"Time":"2026-06-29T15:32:21.816229027Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"=== RUN   TestKind\n"}
+{"Time":"2026-06-29T15:32:21.816256317Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tERROR\twarn\n"}
+{"Time":"2026-06-29T15:32:21.816279127Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tERROR\twarnf\n"}
+{"Time":"2026-06-29T15:32:21.816302027Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tERROR\terror\n"}
+{"Time":"2026-06-29T15:32:21.816333307Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tERROR\terrorf\n"}
+{"Time":"2026-06-29T15:32:21.816359197Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tINFO\tinfo\n"}
+{"Time":"2026-06-29T15:32:21.816382007Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tINFO\tinfof\n"}
+{"Time":"2026-06-29T15:32:21.816404957Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tDEBUG\tdebug\n"}
+{"Time":"2026-06-29T15:32:21.816428087Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"    logger.go:130: 2026-06-29T15:32:21.816Z\tDEBUG\tdebugf\n"}
+{"Time":"2026-06-29T15:32:21.816451797Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Output":"--- PASS: TestKind (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.816484157Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestKind","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.816507757Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Basics"}
+{"Time":"2026-06-29T15:32:21.816529637Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Basics","Output":"=== RUN   TestResettableLevel_Basics\n"}
+{"Time":"2026-06-29T15:32:21.816562537Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Basics","Output":"--- PASS: TestResettableLevel_Basics (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.816585318Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Basics","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.816608148Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Notify"}
+{"Time":"2026-06-29T15:32:21.816629768Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Notify","Output":"=== RUN   TestResettableLevel_Notify\n"}
+{"Time":"2026-06-29T15:32:21.917278881Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Notify","Output":"--- PASS: TestResettableLevel_Notify (0.10s)\n"}
+{"Time":"2026-06-29T15:32:21.917338051Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Notify","Elapsed":0.1}
+{"Time":"2026-06-29T15:32:21.917373111Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Override"}
+{"Time":"2026-06-29T15:32:21.917398232Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Override","Output":"=== RUN   TestResettableLevel_Override\n"}
+{"Time":"2026-06-29T15:32:22.217998842Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Override","Output":"--- PASS: TestResettableLevel_Override (0.30s)\n"}
+{"Time":"2026-06-29T15:32:22.218061422Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Override","Elapsed":0.3}
+{"Time":"2026-06-29T15:32:22.218087762Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_QuickRevert"}
+{"Time":"2026-06-29T15:32:22.218110862Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_QuickRevert","Output":"=== RUN   TestResettableLevel_QuickRevert\n"}
+{"Time":"2026-06-29T15:32:22.218139452Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_QuickRevert","Output":"--- PASS: TestResettableLevel_QuickRevert (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.218162422Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_QuickRevert","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.218185473Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_ManyChanges"}
+{"Time":"2026-06-29T15:32:22.218207093Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_ManyChanges","Output":"=== RUN   TestResettableLevel_ManyChanges\n"}
+{"Time":"2026-06-29T15:32:22.33947907Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_ManyChanges","Output":"--- PASS: TestResettableLevel_ManyChanges (0.12s)\n"}
+{"Time":"2026-06-29T15:32:22.33954655Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_ManyChanges","Elapsed":0.12}
+{"Time":"2026-06-29T15:32:22.33957872Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Copy"}
+{"Time":"2026-06-29T15:32:22.33960053Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Copy","Output":"=== RUN   TestResettableLevel_Copy\n"}
+{"Time":"2026-06-29T15:32:22.33962471Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Copy","Output":"--- PASS: TestResettableLevel_Copy (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.33965824Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestResettableLevel_Copy","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.33968113Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestBasics"}
+{"Time":"2026-06-29T15:32:22.33970349Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestBasics","Output":"=== RUN   TestBasics\n"}
+{"Time":"2026-06-29T15:32:22.33985088Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestBasics","Output":"--- PASS: TestBasics (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.3399098Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestBasics","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.33993448Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics"}
+{"Time":"2026-06-29T15:32:22.33995658Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics","Output":"=== RUN   TestPanics\n"}
+{"Time":"2026-06-29T15:32:22.33998002Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_context"}
+{"Time":"2026-06-29T15:32:22.3400017Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_context","Output":"=== RUN   TestPanics/nil_context\n"}
+{"Time":"2026-06-29T15:32:22.34077234Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_context","Output":"    log_test.go:74: captured log \u003cdpanic: log: internal error: nil context provided to ExtractLogger\u003e\n"}
+{"Time":"2026-06-29T15:32:22.34080724Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_context","Output":"    log_test.go:74: captured log \u003cdebug: this should panic\u003e\n"}
+{"Time":"2026-06-29T15:32:22.34083531Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_context","Output":"--- PASS: TestPanics/nil_context (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.34085868Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_context","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.34088596Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/empty_context"}
+{"Time":"2026-06-29T15:32:22.34090733Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/empty_context","Output":"=== RUN   TestPanics/empty_context\n"}
+{"Time":"2026-06-29T15:32:22.341340081Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/empty_context","Output":"    log_test.go:74: captured log \u003cdpanic: log: internal error: no logger in provided context\u003e\n"}
+{"Time":"2026-06-29T15:32:22.341368731Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/empty_context","Output":"    log_test.go:74: captured log \u003cdebug: this should also panic\u003e\n"}
+{"Time":"2026-06-29T15:32:22.341393511Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/empty_context","Output":"--- PASS: TestPanics/empty_context (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.341417031Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/empty_context","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.341439891Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_logger"}
+{"Time":"2026-06-29T15:32:22.341461701Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_logger","Output":"=== RUN   TestPanics/nil_logger\n"}
+{"Time":"2026-06-29T15:32:22.341489121Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_logger","Output":"    log_test.go:74: captured log \u003cdpanic: log: internal error: nil logger provided to WithLogger\u003e\n"}
+{"Time":"2026-06-29T15:32:22.341523541Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_logger","Output":"--- PASS: TestPanics/nil_logger (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.341546411Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics/nil_logger","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.341569931Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics","Output":"--- PASS: TestPanics (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.341593011Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestPanics","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.341616371Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestNoPanicsInProduction"}
+{"Time":"2026-06-29T15:32:22.341638801Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestNoPanicsInProduction","Output":"=== RUN   TestNoPanicsInProduction\n"}
+{"Time":"2026-06-29T15:32:22.341666271Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestNoPanicsInProduction","Output":"--- PASS: TestNoPanicsInProduction (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.341690541Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestNoPanicsInProduction","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.341713611Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWrappedContext"}
+{"Time":"2026-06-29T15:32:22.341735511Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWrappedContext","Output":"=== RUN   TestWrappedContext\n"}
+{"Time":"2026-06-29T15:32:22.341902471Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWrappedContext","Output":"--- PASS: TestWrappedContext (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.341937291Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWrappedContext","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.341962591Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestEmptyContext"}
+{"Time":"2026-06-29T15:32:22.341985381Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestEmptyContext","Output":"=== RUN   TestEmptyContext\n"}
+{"Time":"2026-06-29T15:32:22.342013461Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestEmptyContext","Output":"--- PASS: TestEmptyContext (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.342035981Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestEmptyContext","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.342058861Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit"}
+{"Time":"2026-06-29T15:32:22.342081691Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit","Output":"=== RUN   TestInit\n"}
+{"Time":"2026-06-29T15:32:22.342263921Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global"}
+{"Time":"2026-06-29T15:32:22.342289131Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global","Output":"=== RUN   TestInit/global\n"}
+{"Time":"2026-06-29T15:32:22.343252382Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global","Output":"--- PASS: TestInit/global (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.343282122Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.343308962Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/non-rate_limited_child"}
+{"Time":"2026-06-29T15:32:22.343347982Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/non-rate_limited_child","Output":"=== RUN   TestInit/non-rate_limited_child\n"}
+{"Time":"2026-06-29T15:32:22.345821324Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/non-rate_limited_child","Output":"--- PASS: TestInit/non-rate_limited_child (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.345882114Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/non-rate_limited_child","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.345907244Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global_after_child"}
+{"Time":"2026-06-29T15:32:22.345929694Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global_after_child","Output":"=== RUN   TestInit/global_after_child\n"}
+{"Time":"2026-06-29T15:32:22.346765354Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global_after_child","Output":"--- PASS: TestInit/global_after_child (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.346796014Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit/global_after_child","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.347819885Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit","Output":"--- PASS: TestInit (0.01s)\n"}
+{"Time":"2026-06-29T15:32:22.347848605Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestInit","Elapsed":0.01}
+{"Time":"2026-06-29T15:32:22.347873095Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWarnings"}
+{"Time":"2026-06-29T15:32:22.347896135Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWarnings","Output":"=== RUN   TestWarnings\n"}
+{"Time":"2026-06-29T15:32:22.349328696Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWarnings","Output":"--- PASS: TestWarnings (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.349362116Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestWarnings","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.349385406Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestReportDroppedLogs"}
+{"Time":"2026-06-29T15:32:22.349406936Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestReportDroppedLogs","Output":"=== RUN   TestReportDroppedLogs\n"}
+{"Time":"2026-06-29T15:32:22.349575666Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestReportDroppedLogs","Output":"--- PASS: TestReportDroppedLogs (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.349601646Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestReportDroppedLogs","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.349624876Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestLogrus"}
+{"Time":"2026-06-29T15:32:22.349646576Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestLogrus","Output":"=== RUN   TestLogrus\n"}
+{"Time":"2026-06-29T15:32:22.350095706Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestLogrus","Output":"--- PASS: TestLogrus (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.350121646Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestLogrus","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.350149256Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan"}
+{"Time":"2026-06-29T15:32:22.350170886Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan","Output":"=== RUN   TestSpan\n"}
+{"Time":"2026-06-29T15:32:22.350204266Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_success"}
+{"Time":"2026-06-29T15:32:22.350225996Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_success","Output":"=== RUN   TestSpan/simple_success\n"}
+{"Time":"2026-06-29T15:32:22.350472417Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_success","Output":"--- PASS: TestSpan/simple_success (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.350531297Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_success","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.350557967Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_success"}
+{"Time":"2026-06-29T15:32:22.350580887Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_success","Output":"=== RUN   TestSpan/leveled_success\n"}
+{"Time":"2026-06-29T15:32:22.350743877Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_success","Output":"--- PASS: TestSpan/leveled_success (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.350769977Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_success","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.350793667Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/span_nesting"}
+{"Time":"2026-06-29T15:32:22.350815517Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/span_nesting","Output":"=== RUN   TestSpan/span_nesting\n"}
+{"Time":"2026-06-29T15:32:22.351087137Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/span_nesting","Output":"--- PASS: TestSpan/span_nesting (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.351111497Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/span_nesting","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.351134387Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_error"}
+{"Time":"2026-06-29T15:32:22.351156647Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_error","Output":"=== RUN   TestSpan/simple_error\n"}
+{"Time":"2026-06-29T15:32:22.351325587Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_error","Output":"--- PASS: TestSpan/simple_error (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.351363087Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_error","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.351387277Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_nil_error"}
+{"Time":"2026-06-29T15:32:22.351409387Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_nil_error","Output":"=== RUN   TestSpan/simple_nil_error\n"}
+{"Time":"2026-06-29T15:32:22.351544797Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_nil_error","Output":"--- PASS: TestSpan/simple_nil_error (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.351571317Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_nil_error","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.351594867Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_namederror"}
+{"Time":"2026-06-29T15:32:22.351616697Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_namederror","Output":"=== RUN   TestSpan/simple_namederror\n"}
+{"Time":"2026-06-29T15:32:22.351759467Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_namederror","Output":"--- PASS: TestSpan/simple_namederror (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.351788887Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_namederror","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.351812387Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_error"}
+{"Time":"2026-06-29T15:32:22.351835387Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_error","Output":"=== RUN   TestSpan/leveled_error\n"}
+{"Time":"2026-06-29T15:32:22.351966027Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_error","Output":"--- PASS: TestSpan/leveled_error (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.351999617Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_error","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.352026397Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_nil_error"}
+{"Time":"2026-06-29T15:32:22.352047738Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_nil_error","Output":"=== RUN   TestSpan/leveled_nil_error\n"}
+{"Time":"2026-06-29T15:32:22.352185598Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_nil_error","Output":"--- PASS: TestSpan/leveled_nil_error (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.352213278Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_nil_error","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.352238108Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_success"}
+{"Time":"2026-06-29T15:32:22.352261088Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_success","Output":"=== RUN   TestSpan/simple_errorp;_success\n"}
+{"Time":"2026-06-29T15:32:22.352426198Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_success","Output":"--- PASS: TestSpan/simple_errorp;_success (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.352457088Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_success","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.352480548Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_failure"}
+{"Time":"2026-06-29T15:32:22.352504078Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_failure","Output":"=== RUN   TestSpan/simple_errorp;_failure\n"}
+{"Time":"2026-06-29T15:32:22.352597598Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_failure","Output":"--- PASS: TestSpan/simple_errorp;_failure (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.352631048Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/simple_errorp;_failure","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.352655738Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_errorp;_failure"}
+{"Time":"2026-06-29T15:32:22.352677638Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_errorp;_failure","Output":"=== RUN   TestSpan/leveled_errorp;_failure\n"}
+{"Time":"2026-06-29T15:32:22.353265078Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_errorp;_failure","Output":"--- PASS: TestSpan/leveled_errorp;_failure (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.353297048Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/leveled_errorp;_failure","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.353339748Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/ensure_nothing_gets_filtered"}
+{"Time":"2026-06-29T15:32:22.353363098Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/ensure_nothing_gets_filtered","Output":"=== RUN   TestSpan/ensure_nothing_gets_filtered\n"}
+{"Time":"2026-06-29T15:32:22.355175139Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/ensure_nothing_gets_filtered","Output":"--- PASS: TestSpan/ensure_nothing_gets_filtered (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.35524264Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan/ensure_nothing_gets_filtered","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.35526993Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan","Output":"--- PASS: TestSpan (0.01s)\n"}
+{"Time":"2026-06-29T15:32:22.35529437Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSpan","Elapsed":0.01}
+{"Time":"2026-06-29T15:32:22.35532405Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan"}
+{"Time":"2026-06-29T15:32:22.35534916Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Output":"=== RUN   TestDeadlineSpan\n"}
+{"Time":"2026-06-29T15:32:22.35537746Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Output":"    logger.go:130: 2026-06-29T15:32:22.355Z\tDEBUG\tTest\tlog/span_test.go:362\tTest: span start\t{\"contextExpiresIn\": \"4.96866ms\"}\n"}
+{"Time":"2026-06-29T15:32:22.35540016Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Output":"    logger.go:130: 2026-06-29T15:32:22.355Z\tINFO\tTest\tlog/span_test.go:363\tbefore\t{\"contextExpiresIn\": \"4.9355ms\"}\n"}
+{"Time":"2026-06-29T15:32:22.360982063Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Output":"    logger.go:130: 2026-06-29T15:32:22.360Z\tINFO\tTest\tlog/span_test.go:365\tafter\t{\"contextExpiresIn\": \"-468.734µs\", \"contextDone\": true, \"contextError\": \"context deadline exceeded\"}\n"}
+{"Time":"2026-06-29T15:32:22.361018413Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Output":"    logger.go:130: 2026-06-29T15:32:22.360Z\tDEBUG\tTest\tlog/span_test.go:366\tTest: span finished ok\t{\"spanDuration\": \"5.466684ms\", \"contextExpiresIn\": \"-535.774µs\", \"contextDone\": true, \"contextError\": \"context deadline exceeded\"}\n"}
+{"Time":"2026-06-29T15:32:22.361044853Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Output":"--- PASS: TestDeadlineSpan (0.01s)\n"}
+{"Time":"2026-06-29T15:32:22.361068893Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestDeadlineSpan","Elapsed":0.01}
+{"Time":"2026-06-29T15:32:22.361093713Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSkip"}
+{"Time":"2026-06-29T15:32:22.361116183Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSkip","Output":"=== RUN   TestSkip\n"}
+{"Time":"2026-06-29T15:32:22.361156603Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSkip","Output":"--- PASS: TestSkip (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.361180003Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestSkip","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.361204013Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTest"}
+{"Time":"2026-06-29T15:32:22.361236673Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTest","Output":"=== RUN   TestTest\n"}
+{"Time":"2026-06-29T15:32:22.361269603Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTest","Output":"    logger.go:130: 2026-06-29T15:32:22.361Z\tDPANIC\tlog: internal error: no logger in provided context\t{\"stack\": \"github.com/pachyderm/pachyderm/v2/src/internal/log.extractLogger\\n\\t/workspace/repo/src/internal/log/context.go:56\\ngithub.com/pachyderm/pachyderm/v2/src/internal/log.Debug\\n\\t/workspace/repo/src/internal/log/log.go:21\\ngithub.com/pachyderm/pachyderm/v2/src/internal/log.TestTest\\n\\t/workspace/repo/src/internal/log/testing_test.go:16\\ntesting.tRunner\\n\\t/usr/local/go/src/testing/testing.go:1689\"}\n"}
+{"Time":"2026-06-29T15:32:22.361375423Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTest","Output":"    logger.go:130: 2026-06-29T15:32:22.361Z\tDEBUG\thello\n"}
+{"Time":"2026-06-29T15:32:22.361415683Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTest","Output":"--- PASS: TestTest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.361458173Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTest","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.361481913Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel"}
+{"Time":"2026-06-29T15:32:22.361506664Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel","Output":"=== RUN   TestTestParallel\n"}
+{"Time":"2026-06-29T15:32:22.361556344Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a"}
+{"Time":"2026-06-29T15:32:22.361588584Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a","Output":"=== RUN   TestTestParallel/a\n"}
+{"Time":"2026-06-29T15:32:22.361613544Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a","Output":"=== PAUSE TestTestParallel/a\n"}
+{"Time":"2026-06-29T15:32:22.361635654Z","Action":"pause","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a"}
+{"Time":"2026-06-29T15:32:22.361670154Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b"}
+{"Time":"2026-06-29T15:32:22.361692084Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b","Output":"=== RUN   TestTestParallel/b\n"}
+{"Time":"2026-06-29T15:32:22.361715804Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b","Output":"=== PAUSE TestTestParallel/b\n"}
+{"Time":"2026-06-29T15:32:22.361737774Z","Action":"pause","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b"}
+{"Time":"2026-06-29T15:32:22.361762004Z","Action":"cont","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a"}
+{"Time":"2026-06-29T15:32:22.361783854Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a","Output":"=== CONT  TestTestParallel/a\n"}
+{"Time":"2026-06-29T15:32:22.361806454Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a","Output":"    logger.go:130: 2026-06-29T15:32:22.361Z\tDEBUG\tlog/testing_test.go:25\ta\n"}
+{"Time":"2026-06-29T15:32:22.361830894Z","Action":"cont","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b"}
+{"Time":"2026-06-29T15:32:22.361852584Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b","Output":"=== CONT  TestTestParallel/b\n"}
+{"Time":"2026-06-29T15:32:22.361877094Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a","Output":"--- PASS: TestTestParallel/a (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.361914464Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/a","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.361937294Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b","Output":"    logger.go:130: 2026-06-29T15:32:22.361Z\tDEBUG\tlog/testing_test.go:33\tb\n"}
+{"Time":"2026-06-29T15:32:22.361961404Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b","Output":"--- PASS: TestTestParallel/b (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.361985644Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel/b","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.362007844Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel","Output":"--- PASS: TestTestParallel (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.362030604Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestTestParallel","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.362053384Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging"}
+{"Time":"2026-06-29T15:32:22.362075024Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging","Output":"=== RUN   TestParallelTestLogging\n"}
+{"Time":"2026-06-29T15:32:22.362098134Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a"}
+{"Time":"2026-06-29T15:32:22.362120834Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a","Output":"=== RUN   TestParallelTestLogging/a\n"}
+{"Time":"2026-06-29T15:32:22.362160624Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a","Output":"=== PAUSE TestParallelTestLogging/a\n"}
+{"Time":"2026-06-29T15:32:22.362182754Z","Action":"pause","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a"}
+{"Time":"2026-06-29T15:32:22.362205594Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b"}
+{"Time":"2026-06-29T15:32:22.362227214Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b","Output":"=== RUN   TestParallelTestLogging/b\n"}
+{"Time":"2026-06-29T15:32:22.362250014Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b","Output":"=== PAUSE TestParallelTestLogging/b\n"}
+{"Time":"2026-06-29T15:32:22.362271664Z","Action":"pause","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b"}
+{"Time":"2026-06-29T15:32:22.362294294Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize"}
+{"Time":"2026-06-29T15:32:22.362323754Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize","Output":"=== RUN   TestParallelTestLogging/finalize\n"}
+{"Time":"2026-06-29T15:32:22.362355554Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize","Output":"=== PAUSE TestParallelTestLogging/finalize\n"}
+{"Time":"2026-06-29T15:32:22.362377184Z","Action":"pause","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize"}
+{"Time":"2026-06-29T15:32:22.362400424Z","Action":"cont","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a"}
+{"Time":"2026-06-29T15:32:22.362422154Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a","Output":"=== CONT  TestParallelTestLogging/a\n"}
+{"Time":"2026-06-29T15:32:22.362451264Z","Action":"cont","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize"}
+{"Time":"2026-06-29T15:32:22.362472854Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize","Output":"=== CONT  TestParallelTestLogging/finalize\n"}
+{"Time":"2026-06-29T15:32:22.362495854Z","Action":"cont","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b"}
+{"Time":"2026-06-29T15:32:22.362517724Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b","Output":"=== CONT  TestParallelTestLogging/b\n"}
+{"Time":"2026-06-29T15:32:22.362541164Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b","Output":"--- PASS: TestParallelTestLogging/b (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.362564344Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/b","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.362586534Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a","Output":"--- PASS: TestParallelTestLogging/a (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.362609644Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/a","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.362631544Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize","Output":"--- PASS: TestParallelTestLogging/finalize (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.362654884Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging/finalize","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.362677034Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging","Output":"--- PASS: TestParallelTestLogging (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.362700024Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParallelTestLogging","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.362722744Z","Action":"run","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParseWorkerLines"}
+{"Time":"2026-06-29T15:32:22.362744254Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParseWorkerLines","Output":"=== RUN   TestParseWorkerLines\n"}
+{"Time":"2026-06-29T15:32:22.363548695Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParseWorkerLines","Output":"--- PASS: TestParseWorkerLines (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.363614315Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Test":"TestParseWorkerLines","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.363639605Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:22.364580955Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Output":"ok  \tgithub.com/pachyderm/pachyderm/v2/src/internal/log\t0.672s\n"}
+{"Time":"2026-06-29T15:32:22.364659916Z","Action":"pass","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Elapsed":0.673}
+reward=1 graded=55 found=55 failed=0 parsed=55 framework=go exit_code=0

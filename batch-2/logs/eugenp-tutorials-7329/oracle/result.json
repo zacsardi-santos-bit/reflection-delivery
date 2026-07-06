@@ -1,0 +1,29 @@
+{
+    "id": "be92b50d-c41e-4b0c-914d-aa09a7c6857e",
+    "started_at": "2026-07-04T15:40:31.708208",
+    "finished_at": "2026-07-04T15:41:04.630629",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__eugenp-tutorials-7329": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "eugenp-tutorials-7329__axqxbuT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

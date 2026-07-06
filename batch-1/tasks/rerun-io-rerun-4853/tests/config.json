@@ -1,0 +1,39 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p re_query_cache --no-fail-fast",
+  "test_files": [
+    "crates/re_query_cache/tests/latest_at.rs",
+    "crates/re_query_cache/tests/range.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(20/25) re_query_cache::range invalidation",
+    "( 1/25) re_query_cache flat_vec_deque::range",
+    "( 2/25) re_query_cache flat_vec_deque::truncate",
+    "( 3/25) re_query_cache flat_vec_deque::insert_many",
+    "( 4/25) re_query_cache flat_vec_deque::remove",
+    "( 5/25) re_query_cache flat_vec_deque::insert_empty",
+    "( 7/25) re_query_cache flat_vec_deque::split_off",
+    "( 8/25) re_query_cache flat_vec_deque::insert",
+    "( 9/25) re_query_cache flat_vec_deque::remove_oob",
+    "(10/25) re_query_cache flat_vec_deque::remove_empty",
+    "(11/25) re_query_cache::latest_at simple_query",
+    "(12/25) re_query_cache::latest_at splatted_query",
+    "(13/25) re_query_cache::latest_at no_instance_join_query",
+    "(14/25) re_query_cache::latest_at timeless_query",
+    "(15/25) re_query_cache flat_vec_deque::insert_deque",
+    "(16/25) re_query_cache::latest_at missing_column_join_query",
+    "(17/25) re_query_cache::latest_at invalidation_timeless",
+    "(18/25) re_query_cache::latest_at invalidation",
+    "(19/25) re_query_cache::latest_at invalidation_of_future_optionals",
+    "(21/25) re_query_cache::range simple_range",
+    "(22/25) re_query_cache::range simple_splatted_range",
+    "(23/25) re_query_cache::range invalidation_timeless",
+    "(24/25) re_query_cache::range invalidation_of_future_optionals",
+    "(25/25) re_query_cache::range timeless_range"
+  ],
+  "PASS_TO_PASS": [
+    "( 6/25) re_query_cache flat_vec_deque::remove_range"
+  ]
+}

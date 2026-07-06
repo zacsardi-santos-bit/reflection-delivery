@@ -1,3 +1,0 @@
-I need to register a new protocol version (55) in the Sui blockchain codebase to make enum types available to smart contract developers on mainnet. Right now the maximum supported protocol version is 54, and I need to bump it to 55 with the proper feature configuration that enables the newer bytecode format supporting enums.
-
-This involves updating the protocol configuration so version 55 is recognized and properly set up, updating the public API specification to advertise the new maximum version, and refreshing all the genesis configuration and swarm snapshot files that record the current maximum protocol version — since those snapshots include derived on-chain object addresses that change deterministically when the protocol version changes.

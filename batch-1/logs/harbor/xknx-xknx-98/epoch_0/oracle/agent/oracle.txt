@@ -1,0 +1,11 @@
+patching file examples/example_scene.py
+patching file home-assistant-plugin/custom_components/scene/xknx.py
+patching file home-assistant-plugin/custom_components/xknx.py
+patching file xknx.yaml
+patching file xknx/core/config.py
+patching file xknx/devices/__init__.py
+patching file xknx/devices/remote_value.py
+patching file xknx/devices/scene.py
+patching file xknx/io/knxip_interface.py
+patching file xknx/knx/__init__.py
+patching file xknx/knx/dpt_scene_number.py

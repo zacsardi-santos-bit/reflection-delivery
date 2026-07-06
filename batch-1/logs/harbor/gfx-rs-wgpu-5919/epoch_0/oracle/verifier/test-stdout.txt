@@ -1,0 +1,21 @@
+patching file naga/tests/snapshots.rs
+patching file naga/tests/spirv_capabilities.rs
+   Compiling cfg_aliases v0.1.1
+   Compiling naga v0.20.0 (/workspace/repo/naga)
+    Finished test [unoptimized + debuginfo] target(s) in 38.74s
+────────────
+ Nextest run ID 7ca94582-feb4-4001-a809-db9b37fbd3f2 with nextest profile: default
+    Starting 10 tests across 2 binaries (153 tests skipped)
+        PASS [   0.007s] ( 1/10) naga::naga-test spirv_capabilities::cube_array
+        PASS [   0.012s] ( 2/10) naga::naga-test snapshots::unconsumed_vertex_outputs_hlsl_out
+        PASS [   0.007s] ( 3/10) naga::naga-test spirv_capabilities::float64
+        PASS [   0.007s] ( 4/10) naga::naga-test spirv_capabilities::geometry
+        PASS [   0.008s] ( 5/10) naga::naga-test spirv_capabilities::image_queries
+        PASS [   0.006s] ( 6/10) naga::naga-test spirv_capabilities::int64
+        PASS [   0.005s] ( 7/10) naga::naga-test spirv_capabilities::sample_rate_shading
+        PASS [   0.006s] ( 8/10) naga::naga-test spirv_capabilities::sampler1d
+        PASS [   0.005s] ( 9/10) naga::naga-test spirv_capabilities::storage1d
+        PASS [   0.005s] (10/10) naga::naga-test spirv_capabilities::storage_image_formats
+────────────
+     Summary [   0.037s] 10 tests run: 10 passed, 153 skipped
+reward=1 graded=10 found=1 failed=0 parsed=10 framework=cargo exit_code=0

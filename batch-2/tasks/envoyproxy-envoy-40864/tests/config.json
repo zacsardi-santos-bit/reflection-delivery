@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/source/extensions/dynamic_modules/sdk/rust && cargo nextest run --no-fail-fast",
+  "test_files": [
+    "source/extensions/dynamic_modules/sdk/rust/src/lib_test.rs",
+    "test/extensions/dynamic_modules/test_data/rust/http.rs",
+    "test/extensions/dynamic_modules/test_data/rust/http_integration_test.rs",
+    "test/extensions/dynamic_modules/test_data/rust/no_op.rs"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) envoy-proxy-dynamic-modules-rust-sdk mod_test::test_envoy_dynamic_module_on_http_filter_new_destroy",
+    "(2/5) envoy-proxy-dynamic-modules-rust-sdk mod_test::test_loggers",
+    "(3/5) envoy-proxy-dynamic-modules-rust-sdk mod_test::test_envoy_dynamic_module_on_http_filter_config_new_impl",
+    "(4/5) envoy-proxy-dynamic-modules-rust-sdk mod_test::test_envoy_dynamic_module_on_http_filter_config_destroy",
+    "(5/5) envoy-proxy-dynamic-modules-rust-sdk mod_test::test_envoy_dynamic_module_on_http_filter_callbacks"
+  ],
+  "PASS_TO_PASS": []
+}

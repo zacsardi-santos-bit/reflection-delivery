@@ -1,0 +1,29 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm install --frozen-lockfile 2>&1 | tail -5 && cd /workspace/repo/__utils__/scripts && NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning --disable-warning=DEP0169\" /workspace/repo/node_modules/.bin/jest test/bump.ts --coverage=false --verbose --json",
+  "test_files": [
+    "__utils__/scripts/test/bump.ts",
+    "__utils__/scripts/test/tsconfig.json"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/__utils__/scripts/test/bump.ts::branchToFilename plain branch name",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::branchToFilename branch name with slash gets sanitized",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::branchToFilename branch name with multiple slashes",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::readReleased returns empty set when directory is missing",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::readReleased reads ids from .txt files and merges across files",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::readReleased skips comments and empty lines",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::appendReleased writes ids to <branch>.txt sorted",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::appendReleased dedupes against existing entries on disk",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::appendReleased uses sanitized filename for branches with /",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::appendReleased no-op for empty list",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::appendReleased creates the released directory if missing",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::hideReleased / restoreHidden / deleteHidden hides files matching released ids; leaves others alone",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::hideReleased / restoreHidden / deleteHidden restoreHidden brings them back to .md",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::hideReleased / restoreHidden / deleteHidden deleteHidden removes the .md.released files",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::hideReleased / restoreHidden / deleteHidden rolls back already-renamed files when a later rename fails",
+    "/workspace/repo/__utils__/scripts/test/bump.ts::listChangesetIds lists *.md ids excluding README and non-md files"
+  ],
+  "PASS_TO_PASS": []
+}

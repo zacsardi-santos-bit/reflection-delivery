@@ -1,0 +1,217 @@
+patching file introspection-engine/introspection-engine-tests/tests/multi_schema/cockroach.rs
+patching file introspection-engine/introspection-engine-tests/tests/multi_schema/mod.rs
+*
+* WARNING: ALL SECURITY CONTROLS HAVE BEEN DISABLED!
+* 
+* This mode is intended for non-production testing only.
+* 
+* In this mode:
+* - Your cluster is open to any client that can access localhost.
+* - Intruders with access to your machine or network can observe client-server traffic.
+* - Intruders can log in without password and read or write any data in the cluster.
+* - Intruders can consume all your server's resources and cause unavailability.
+*
+*
+* INFO: To start a secure server without mandating TLS for clients,
+* consider --accept-sql-without-tls instead. For other options, see:
+* 
+* - https://go.crdb.dev/issue-v/53404/v22.1
+* - https://www.cockroachlabs.com/docs/v22.1/secure-a-cluster.html
+*
+NOTICE: grant options were automatically applied but this behavior is deprecated
+HINT: please use WITH GRANT OPTION
+GRANT
+warning: `#[track_caller]` on async functions is a no-op
+   --> migration-engine/connectors/sql-migration-connector/src/flavour.rs:81:5
+    |
+81  |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+82  | /     async fn try_connect(
+83  | |         &mut self,
+84  | |         f: impl for<'b> FnOnce(&'b P) -> BoxFuture<'b, ConnectorResult<C>>,
+85  | |     ) -> ConnectorResult<()> {
+...   |
+99  | |         }
+100 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+    = note: `#[warn(ungated_async_fn_track_caller)]` on by default
+
+warning: `sql-migration-connector` (lib) generated 1 warning
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:147:5
+    |
+147 |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+148 | /     async fn test_introspect_internal(
+149 | |         &self,
+150 | |         previous_schema: psl::ValidatedSchema,
+151 | |         render_config: bool,
+...   |
+159 | |             .await
+160 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+    = note: `#[warn(ungated_async_fn_track_caller)]` on by default
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:163:5
+    |
+162 |     #[tracing::instrument(skip(self, data_model_string))]
+    |     ----------------------------------------------------- this function will not propagate the caller location
+163 |     #[track_caller]
+    |     ^^^^^^^^^^^^^^^
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:173:5
+    |
+172 |     #[tracing::instrument(skip(self, data_model_string))]
+    |     ----------------------------------------------------- this function will not propagate the caller location
+173 |     #[track_caller]
+    |     ^^^^^^^^^^^^^^^
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:182:5
+    |
+181 |     #[tracing::instrument(skip(self, data_model_string))]
+    |     ----------------------------------------------------- this function will not propagate the caller location
+182 |     #[track_caller]
+    |     ^^^^^^^^^^^^^^^
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:302:5
+    |
+302 |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+303 | /     pub async fn expect_datamodel(&self, expectation: &expect_test::Expect) {
+304 | |         let found = self.introspect().await.unwrap();
+305 | |         expectation.assert_eq(&found);
+306 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:308:5
+    |
+308 |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+309 | /     pub async fn expect_warnings(&self, expectation: &expect_test::Expect) {
+310 | |         let previous_schema = psl::validate(self.pure_config().into());
+311 | |         let introspection_result = self.test_introspect_internal(previous_schema, true).await.unwrap();
+312 | |
+313 | |         expectation.assert_eq(&serde_json::to_string_pretty(&introspection_result.warnings).unwrap());
+314 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:316:5
+    |
+316 |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+317 | /     pub async fn expect_re_introspected_datamodel(&self, schema: &str, expectation: expect_test::Expect) {
+318 | |         let data_model = parse_datamodel(&format!("{}{}", self.pure_config(), schema));
+319 | |         let reintrospected = self.test_introspect_internal(data_model, false).await.unwrap();
+320 | |
+321 | |         expectation.assert_eq(&reintrospected.data_model);
+322 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:324:5
+    |
+324 |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+325 | /     pub async fn expect_re_introspect_warnings(&self, schema: &str, expectation: expect_test::Expect) {
+326 | |         let data_model = parse_datamodel(&format!("{}{}", self.pure_config(), schema));
+327 | |         let introspection_result = self.test_introspect_internal(data_model, false).await.unwrap();
+328 | |
+329 | |         expectation.assert_eq(&serde_json::to_string_pretty(&introspection_result.warnings).unwrap());
+330 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+warning: `#[track_caller]` on async functions is a no-op
+   --> introspection-engine/introspection-engine-tests/src/test_api.rs:379:5
+    |
+379 |       #[track_caller]
+    |       ^^^^^^^^^^^^^^^
+380 | /     pub async fn raw_cmd(&self, query: &str) {
+381 | |         self.database.raw_cmd(query).await.unwrap()
+382 | |     }
+    | |_____- this function will not propagate the caller location
+    |
+    = note: see issue #110011 <https://github.com/rust-lang/rust/issues/110011> for more information
+
+   Compiling introspection-engine-tests v0.1.0 (/workspace/repo/introspection-engine/introspection-engine-tests)
+warning: `introspection-engine-tests` (lib) generated 9 warnings
+warning: `introspection-engine-tests` (lib test) generated 9 warnings (9 duplicates)
+    Finished test [unoptimized + debuginfo] target(s) in 34.87s
+warning: the following packages contain code that will be rejected by a future version of Rust: connection-string v0.1.13
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+────────────
+ Nextest run ID c8063ceb-de88-4833-ae52-0bc64fc33568 with nextest profile: default
+    Starting 6 tests across 3 binaries (543 tests skipped)
+        FAIL [   0.502s] (1/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_cross_schema_are_reintrospected
+  stdout ───
+
+    running 1 test
+    test multi_schema::cockroach::multiple_schemas_w_cross_schema_are_reintrospected ... FAILED
+
+    failures:
+
+    failures:
+        multi_schema::cockroach::multiple_schemas_w_cross_schema_are_reintrospected
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 528 filtered out; finished in 0.42s
+
+  stderr ───
+    version: "CockroachDB CCL v22.1.0 (x86_64-pc-linux-gnu, built 2022/05/23 16:27:47, go1.17.6)"
+    Inferred tags: BitFlags<Tags>(0b10000000001000, Postgres | CockroachDb)
+    thread 'multi_schema::cockroach::multiple_schemas_w_cross_schema_are_reintrospected' panicked at /workspace/repo/introspection-engine/introspection-engine-tests/src/test_api.rs:318:26:
+    called `Result::unwrap()` on an `Err` value: "error: The `schemas` property is not supported on the current connector.\n  -->  schema.prisma:4\n   | \n 3 |                  url = \"env(TEST_DATABASE_URL)\"\n 4 | schemas = [\"first\", \"second\"]\n   | \nerror: @@schema is not supported on the current datasource provider\n  -->  schema.prisma:13\n   | \n12 | \n13 |   @@schema(\"first\")\n   | \nerror: @@schema is not supported on the current datasource provider\n  -->  schema.prisma:21\n   | \n20 | \n21 |   @@schema(\"first\")\n   | \n"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.594s] (2/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_enums_are_introspected
+        PASS [   0.645s] (3/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_duplicate_table_names_are_introspected
+        PASS [   0.650s] (4/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::same_table_name_with_relation_in_two_schemas
+        PASS [   0.699s] (5/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_duplicate_enums_are_introspected
+        FAIL [   1.084s] (6/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_tables_are_reintrospected
+  stdout ───
+
+    running 1 test
+    test multi_schema::cockroach::multiple_schemas_w_tables_are_reintrospected ... FAILED
+
+    failures:
+
+    failures:
+        multi_schema::cockroach::multiple_schemas_w_tables_are_reintrospected
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 528 filtered out; finished in 0.99s
+
+  stderr ───
+    version: "CockroachDB CCL v22.1.0 (x86_64-pc-linux-gnu, built 2022/05/23 16:27:47, go1.17.6)"
+    Inferred tags: BitFlags<Tags>(0b10000000001000, Postgres | CockroachDb)
+    thread 'multi_schema::cockroach::multiple_schemas_w_tables_are_reintrospected' panicked at /workspace/repo/introspection-engine/introspection-engine-tests/src/test_api.rs:318:26:
+    called `Result::unwrap()` on an `Err` value: "error: The `schemas` property is not supported on the current connector.\n  -->  schema.prisma:4\n   | \n 3 |                  url = \"env(TEST_DATABASE_URL)\"\n 4 | schemas = [\"first\", \"second\"]\n   | \nerror: @@schema is not supported on the current datasource provider\n  -->  schema.prisma:14\n   | \n13 |   @@index([data], map: \"A_idx\")\n14 |   @@schema(\"first\")\n   | \nerror: @@schema is not supported on the current datasource provider\n  -->  schema.prisma:22\n   | \n21 |   @@index([data], map: \"B_idx\")\n22 |   @@schema(\"first\")\n   | \n"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   1.086s] 6 tests run: 4 passed, 2 failed, 543 skipped
+        FAIL [   0.502s] (1/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_cross_schema_are_reintrospected
+        FAIL [   1.084s] (6/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_tables_are_reintrospected
+error: test run failed
+reward=0 graded=6 found=2 failed=1 parsed=6 framework=cargo exit_code=100

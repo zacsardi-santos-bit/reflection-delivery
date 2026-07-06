@@ -1,0 +1,7 @@
+I'm working in the catalog backend plugin and want to stop recomputing the same thing over and over. Right now every location row (those entries pointing at catalog descriptor files) has a corresponding catalog entity reference, but we don't store it, so every read recomputes a hash from the location's type and target URL. I'd rather compute it once at write time and read it straight from the db, gives us a single source of truth that's queryable too.
+
+So first I need a new utility that takes a location's type and target and returns the full entity ref string in the standard format, where the unique part is a deterministic hash derived from those type and target values. Export it from the existing conversion utilities module so both the location store (on insert) and tests can pull it in.
+
+Then a database migration that adds a new column to the locations table to hold this pre-computed entity ref, and backfills all existing rows. Non-bootstrap rows should get the correct hash-based entity ref, but the internal bootstrap row (the special placeholder that doesn't map to a real catalog entity and gets removed later anyway) should get an empty string instead. Oh and the migration needs to be reversible, rolling back should drop the column cleanly.
+
+Last thing, update the location store itself so it populates this column whenever a new location gets created, so all new rows always land with their entity reference already computed.

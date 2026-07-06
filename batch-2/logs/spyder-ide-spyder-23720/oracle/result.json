@@ -1,0 +1,29 @@
+{
+    "id": "f7b4cf78-4687-4bc4-8b19-40e059df4c0f",
+    "started_at": "2026-07-04T15:39:03.886049",
+    "finished_at": "2026-07-04T15:39:49.881886",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__spyder-ide-spyder-23720": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "spyder-ide-spyder-23720__JnsqyNy"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

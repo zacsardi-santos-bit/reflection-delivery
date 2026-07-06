@@ -1,0 +1,21 @@
+patching file go.mod
+patching file go.sum
+patching file vendor/github.com/petermattis/goid/README.md
+patching file vendor/github.com/petermattis/goid/goid_gccgo.go
+patching file vendor/github.com/petermattis/goid/goid_go1.3.go
+patching file vendor/github.com/petermattis/goid/goid_go1.4.go
+patching file vendor/github.com/petermattis/goid/goid_go1.5.go (renamed from vendor/github.com/petermattis/goid/goid_go1.5_arm.go)
+patching file vendor/github.com/petermattis/goid/goid_go1.5.s (renamed from vendor/github.com/petermattis/goid/goid_go1.5_arm.s)
+patching file vendor/github.com/petermattis/goid/goid_go1.5_amd64.go
+patching file vendor/github.com/petermattis/goid/goid_go1.5_amd64.s
+patching file vendor/github.com/petermattis/goid/goid_slow.go
+patching file vendor/github.com/petermattis/goid/runtime_gccgo_go1.8.go
+patching file vendor/github.com/petermattis/goid/runtime_go1.23.go
+patching file vendor/github.com/petermattis/goid/runtime_go1.5.go
+patching file vendor/github.com/petermattis/goid/runtime_go1.6.go
+patching file vendor/github.com/petermattis/goid/runtime_go1.9.go
+patching file vendor/github.com/sasha-s/go-deadlock/Readme.md
+patching file vendor/github.com/sasha-s/go-deadlock/deadlock.go
+patching file vendor/github.com/sasha-s/go-deadlock/test.sh
+patching file vendor/github.com/sasha-s/go-deadlock/trylock.go
+patching file vendor/modules.txt

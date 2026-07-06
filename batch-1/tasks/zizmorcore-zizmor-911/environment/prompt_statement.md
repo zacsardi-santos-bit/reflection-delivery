@@ -1,0 +1,7 @@
+I'm working on a GitHub Actions security scanner and I've noticed that findings related to template injection are being miscounted. The issue is with how the scanner handles workflow expressions that read values through the environment variable context — when a step accesses an environment variable by name using the expression syntax rather than directly as a shell variable.
+
+The scanner should know whether a given environment variable accessed this way is "static" (platform-controlled, always the same regardless of user input) or "dynamic" (potentially influenced by workflow logic or user-supplied data). Right now, it gets this wrong in both directions: it sometimes treats unknown environment variables as safe when they might not be, and it sometimes doesn't suppress findings for well-known runner-provided variables that are definitely static.
+
+The practical result is that auditing workflows that use the environment variable expression syntax produces the wrong finding and suppression counts. A workflow that explicitly uses the environment variable context to reference static platform variables should have those references suppressed (or reported only at a very low severity level), while references to unknown or user-defined variables should still be flagged.
+
+I'd like the scanner to correctly identify which environment variables accessed through the expression context are known platform defaults (and therefore static), suppress findings for those, and correctly report findings for variables that aren't in that known-static set.

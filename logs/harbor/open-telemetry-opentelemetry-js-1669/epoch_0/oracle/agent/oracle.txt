@@ -1,2 +1,0 @@
-patching file packages/opentelemetry-resource-detector-aws/src/detectors/AwsEksDetector.ts
-patching file packages/opentelemetry-resource-detector-aws/src/detectors/index.ts

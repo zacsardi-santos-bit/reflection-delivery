@@ -1,6 +1,0 @@
-patching file CONTRIBUTING.md
-patching file go.mod
-patching file pkg/ai/amazonbedrock.go
-patching file pkg/ai/bedrock_support/completions.go
-patching file pkg/ai/bedrock_support/model.go
-patching file pkg/ai/bedrock_support/responses.go

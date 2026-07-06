@@ -1,0 +1,10 @@
+patching file client/client_test.go
+patching file session/sshforward/sshprovider/agentprovider_test.go
+patching file session/sshforward/sshprovider/pipe_test.go
+patching file session/sshforward/sshprovider/raw_provider_test.go
+# github.com/moby/buildkit/session/sshforward/sshprovider [github.com/moby/buildkit/session/sshforward/sshprovider.test]
+session/sshforward/sshprovider/raw_provider_test.go:82:17: undefined: dialerFn
+{"Time":"2026-06-29T15:16:24.752059833Z","Action":"start","Package":"github.com/moby/buildkit/session/sshforward/sshprovider"}
+{"Time":"2026-06-29T15:16:24.752184875Z","Action":"output","Package":"github.com/moby/buildkit/session/sshforward/sshprovider","Output":"FAIL\tgithub.com/moby/buildkit/session/sshforward/sshprovider [build failed]\n"}
+{"Time":"2026-06-29T15:16:24.752204783Z","Action":"fail","Package":"github.com/moby/buildkit/session/sshforward/sshprovider","Elapsed":0}
+reward=0 graded=2 found=0 failed=0 parsed=1 framework=go exit_code=1

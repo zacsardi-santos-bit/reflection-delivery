@@ -1,0 +1,2 @@
+patching file .changeset/conditional-clauses-check.md
+patching file crates/biome_js_type_info/src/local_inference.rs

@@ -1,0 +1,43 @@
+patching file code/core/src/shared/universal-store/index.test.ts
+patching file code/core/src/shared/universal-store/use-universal-store-manager.test.ts
+[?25l
+ RUN  v3.0.2 /workspace/repo/code
+
+ ❯ core/src/shared/universal-store/index.test.ts (0 test)
+ ❯ core/src/shared/universal-store/use-universal-store-manager.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  core/src/shared/universal-store/index.test.ts [ core/src/shared/universal-store/index.test.ts ]
+Error: EISDIR: illegal operation on a directory, read .
+ ❯ loadAndTransform node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:41140:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  core/src/shared/universal-store/use-universal-store-manager.test.ts [ core/src/shared/universal-store/use-universal-store-manager.test.ts ]
+Error: Failed to resolve import "." from "core/src/shared/universal-store/use-universal-store-manager.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/repo/code/core/src/shared/universal-store/use-universal-store-manager.test.ts:7:0
+  1  |  vi.mock("./instances");
+  2  |  const __vi_import_0__ = await import("@testing-library/react");
+  3  |  const __vi_import_1__ = await import(".");
+     |                                       ^
+  4  |  const __vi_import_2__ = await import("./__mocks__/instances");
+  5  |  const __vi_import_3__ = await import("./use-universal-store-manager");
+ ❯ TransformPluginContext._formatError node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:47574:41
+ ❯ TransformPluginContext.error node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:47569:16
+ ❯ normalizeUrl node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:45818:23
+ ❯ node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:45937:39
+ ❯ TransformPluginContext.transform node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:45864:7
+ ❯ EnvironmentPluginContainer.transform node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:47400:18
+ ❯ loadAndTransform node_modules/vitest/node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:41198:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  no tests
+   Start at  15:22:07
+   Duration  3.66s (transform 174ms, setup 834ms, collect 0ms, tests 0ms, environment 653ms, prepare 412ms)
+
+[?25hreward=0 graded=31 found=0 failed=0 parsed=0 framework=vitest exit_code=1

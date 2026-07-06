@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/ops/numpy_test.py -k test_unique -v",
+  "test_files": [
+    "keras/src/ops/numpy_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.ops.numpy_test.NumpyOneInputOpsDynamicShapeTest::test_unique_symbolic_dynamic",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsStaticShapeTest::test_unique_symbolic_static",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsStaticShapeTest::test_unique_symbolic_with_size",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsCorrectnessTest::test_unique"
+  ],
+  "PASS_TO_PASS": []
+}

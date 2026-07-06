@@ -1,0 +1,103 @@
+patching file internal/cli/cmd/apply/apply_test.go
+patching file internal/cli/cmd/dac/build/build_test.go
+patching file internal/cli/cmd/lint/lint_test.go
+{"Time":"2026-06-29T15:26:43.447366658Z","Action":"start","Package":"github.com/perses/perses/internal/cli/cmd/apply"}
+{"Time":"2026-06-29T15:26:43.447531044Z","Action":"start","Package":"github.com/perses/perses/internal/cli/cmd/dac/build"}
+{"Time":"2026-06-29T15:26:43.464175039Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD"}
+{"Time":"2026-06-29T15:26:43.464218962Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD","Output":"=== RUN   TestApplyCMD\n"}
+{"Time":"2026-06-29T15:26:43.464298582Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/empty_args"}
+{"Time":"2026-06-29T15:26:43.464333578Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/empty_args","Output":"=== RUN   TestApplyCMD/empty_args\n"}
+{"Time":"2026-06-29T15:26:43.46443844Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD"}
+{"Time":"2026-06-29T15:26:43.46446494Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD","Output":"=== RUN   TestDacBuildCMD\n"}
+{"Time":"2026-06-29T15:26:43.46448616Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_single_file"}
+{"Time":"2026-06-29T15:26:43.464502327Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_single_file","Output":"=== RUN   TestDacBuildCMD/nominal_case_with_a_single_file\n"}
+{"Time":"2026-06-29T15:26:43.465312684Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/empty_args","Output":"--- PASS: TestApplyCMD/empty_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.465354118Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/empty_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.465405226Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/not_connected_to_any_API"}
+{"Time":"2026-06-29T15:26:43.465420195Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/not_connected_to_any_API","Output":"=== RUN   TestApplyCMD/not_connected_to_any_API\n"}
+{"Time":"2026-06-29T15:26:43.465614127Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/not_connected_to_any_API","Output":"--- PASS: TestApplyCMD/not_connected_to_any_API (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.465642817Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/not_connected_to_any_API","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.465656655Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_unknown_document"}
+{"Time":"2026-06-29T15:26:43.465677638Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_unknown_document","Output":"=== RUN   TestApplyCMD/apply_unknown_document\n"}
+{"Time":"2026-06-29T15:26:43.466220762Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_unknown_document","Output":"--- PASS: TestApplyCMD/apply_unknown_document (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.466247214Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_unknown_document","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.466354639Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_a_single_resource"}
+{"Time":"2026-06-29T15:26:43.466389234Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_a_single_resource","Output":"=== RUN   TestApplyCMD/apply_a_single_resource\n"}
+{"Time":"2026-06-29T15:26:43.466829996Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_a_single_resource","Output":"--- PASS: TestApplyCMD/apply_a_single_resource (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.466852262Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_a_single_resource","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.466893058Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_multiples_different_resources"}
+{"Time":"2026-06-29T15:26:43.466900177Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_multiples_different_resources","Output":"=== RUN   TestApplyCMD/apply_multiples_different_resources\n"}
+{"Time":"2026-06-29T15:26:43.467311674Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_multiples_different_resources","Output":"--- PASS: TestApplyCMD/apply_multiples_different_resources (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.467340966Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_multiples_different_resources","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.467359807Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_resources_from_a_folder"}
+{"Time":"2026-06-29T15:26:43.467401941Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_resources_from_a_folder","Output":"=== RUN   TestApplyCMD/apply_resources_from_a_folder\n"}
+{"Time":"2026-06-29T15:26:43.468469038Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_resources_from_a_folder","Output":"--- PASS: TestApplyCMD/apply_resources_from_a_folder (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.468524587Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD/apply_resources_from_a_folder","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.468585729Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD","Output":"--- PASS: TestApplyCMD (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.468602405Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Test":"TestApplyCMD","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.468663699Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Output":"PASS\n"}
+{"Time":"2026-06-29T15:26:43.469184787Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/apply","Output":"ok  \tgithub.com/perses/perses/internal/cli/cmd/apply\t0.022s\n"}
+{"Time":"2026-06-29T15:26:43.46923198Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/apply","Elapsed":0.022}
+{"Time":"2026-06-29T15:26:43.881295295Z","Action":"start","Package":"github.com/perses/perses/internal/cli/cmd/lint"}
+{"Time":"2026-06-29T15:26:43.906210133Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD"}
+{"Time":"2026-06-29T15:26:43.906263355Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD","Output":"=== RUN   TestLintCMD\n"}
+{"Time":"2026-06-29T15:26:43.906295142Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/empty_args"}
+{"Time":"2026-06-29T15:26:43.906304993Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/empty_args","Output":"=== RUN   TestLintCMD/empty_args\n"}
+{"Time":"2026-06-29T15:26:43.906973467Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/empty_args","Output":"--- PASS: TestLintCMD/empty_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.906998003Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/empty_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.907013953Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/use_args"}
+{"Time":"2026-06-29T15:26:43.907041196Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/use_args","Output":"=== RUN   TestLintCMD/use_args\n"}
+{"Time":"2026-06-29T15:26:43.907390601Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/use_args","Output":"--- PASS: TestLintCMD/use_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.907412655Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/use_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.907449815Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_unknown_document"}
+{"Time":"2026-06-29T15:26:43.907462563Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_unknown_document","Output":"=== RUN   TestLintCMD/lint_unknown_document\n"}
+{"Time":"2026-06-29T15:26:43.907802535Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_unknown_document","Output":"--- PASS: TestLintCMD/lint_unknown_document (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.907824098Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_unknown_document","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.907849271Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_a_single_resource"}
+{"Time":"2026-06-29T15:26:43.907857677Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_a_single_resource","Output":"=== RUN   TestLintCMD/lint_a_single_resource\n"}
+{"Time":"2026-06-29T15:26:43.908239872Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_a_single_resource","Output":"--- PASS: TestLintCMD/lint_a_single_resource (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.908277476Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_a_single_resource","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.90830577Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_multiples_different_resources"}
+{"Time":"2026-06-29T15:26:43.908314674Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_multiples_different_resources","Output":"=== RUN   TestLintCMD/lint_multiples_different_resources\n"}
+{"Time":"2026-06-29T15:26:43.90855247Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_multiples_different_resources","Output":"--- PASS: TestLintCMD/lint_multiples_different_resources (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.908564403Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD/lint_multiples_different_resources","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.908577643Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD","Output":"--- PASS: TestLintCMD (0.00s)\n"}
+{"Time":"2026-06-29T15:26:43.90861198Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Test":"TestLintCMD","Elapsed":0}
+{"Time":"2026-06-29T15:26:43.908622007Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Output":"PASS\n"}
+{"Time":"2026-06-29T15:26:43.909437732Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/lint","Output":"ok  \tgithub.com/perses/perses/internal/cli/cmd/lint\t0.028s\n"}
+{"Time":"2026-06-29T15:26:43.909472679Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/lint","Elapsed":0.028}
+{"Time":"2026-06-29T15:26:45.056224176Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_single_file","Output":"--- PASS: TestDacBuildCMD/nominal_case_with_a_single_file (1.59s)\n"}
+{"Time":"2026-06-29T15:26:45.056275312Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_single_file","Elapsed":1.59}
+{"Time":"2026-06-29T15:26:45.056327081Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory"}
+{"Time":"2026-06-29T15:26:45.05633749Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory","Output":"=== RUN   TestDacBuildCMD/nominal_case_with_a_directory\n"}
+{"Time":"2026-06-29T15:26:46.494274336Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory","Output":"error processing file testdata/invalid_dac.cue: failed to build testdata/invalid_dac.cue: spec.layouts: reference \"panelGroupBuilder\" not found:\n"}
+{"Time":"2026-06-29T15:26:46.494357286Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory","Output":"    ./testdata/invalid_dac.cue:48:4\n"}
+{"Time":"2026-06-29T15:26:46.494389089Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory","Output":"\n"}
+{"Time":"2026-06-29T15:26:47.947185848Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory","Output":"--- PASS: TestDacBuildCMD/nominal_case_with_a_directory (2.89s)\n"}
+{"Time":"2026-06-29T15:26:47.947227355Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/nominal_case_with_a_directory","Elapsed":2.89}
+{"Time":"2026-06-29T15:26:47.947248448Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/print_on_stdout_as_json"}
+{"Time":"2026-06-29T15:26:47.947268339Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/print_on_stdout_as_json","Output":"=== RUN   TestDacBuildCMD/print_on_stdout_as_json\n"}
+{"Time":"2026-06-29T15:26:47.968986858Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/print_on_stdout_as_json","Output":"--- PASS: TestDacBuildCMD/print_on_stdout_as_json (0.02s)\n"}
+{"Time":"2026-06-29T15:26:47.969043842Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/print_on_stdout_as_json","Elapsed":0.02}
+{"Time":"2026-06-29T15:26:47.969079074Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/invalid_CUE_definition"}
+{"Time":"2026-06-29T15:26:47.969088863Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/invalid_CUE_definition","Output":"=== RUN   TestDacBuildCMD/invalid_CUE_definition\n"}
+{"Time":"2026-06-29T15:26:49.350151648Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/invalid_CUE_definition","Output":"--- PASS: TestDacBuildCMD/invalid_CUE_definition (1.38s)\n"}
+{"Time":"2026-06-29T15:26:49.350203647Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/invalid_CUE_definition","Elapsed":1.38}
+{"Time":"2026-06-29T15:26:49.35022899Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_not_found"}
+{"Time":"2026-06-29T15:26:49.350260836Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_not_found","Output":"=== RUN   TestDacBuildCMD/file_not_found\n"}
+{"Time":"2026-06-29T15:26:49.350469946Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_not_found","Output":"--- PASS: TestDacBuildCMD/file_not_found (0.00s)\n"}
+{"Time":"2026-06-29T15:26:49.35050423Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_not_found","Elapsed":0}
+{"Time":"2026-06-29T15:26:49.35052808Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/directory_not_found"}
+{"Time":"2026-06-29T15:26:49.350540335Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/directory_not_found","Output":"=== RUN   TestDacBuildCMD/directory_not_found\n"}
+{"Time":"2026-06-29T15:26:49.350690674Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/directory_not_found","Output":"--- PASS: TestDacBuildCMD/directory_not_found (0.00s)\n"}
+{"Time":"2026-06-29T15:26:49.350712442Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/directory_not_found","Elapsed":0}
+{"Time":"2026-06-29T15:26:49.350803297Z","Action":"run","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_\u0026_directory_options_should_not_be_both_provided"}
+{"Time":"2026-06-29T15:26:49.35082816Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_\u0026_directory_options_should_not_be_both_provided","Output":"=== RUN   TestDacBuildCMD/file_\u0026_directory_options_should_not_be_both_provided\n"}
+{"Time":"2026-06-29T15:26:49.351080081Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_\u0026_directory_options_should_not_be_both_provided","Output":"--- PASS: TestDacBuildCMD/file_\u0026_directory_options_should_not_be_both_provided (0.00s)\n"}
+{"Time":"2026-06-29T15:26:49.351107404Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD/file_\u0026_directory_options_should_not_be_both_provided","Elapsed":0}
+{"Time":"2026-06-29T15:26:49.351472022Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD","Output":"--- PASS: TestDacBuildCMD (5.89s)\n"}
+{"Time":"2026-06-29T15:26:49.351512512Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Test":"TestDacBuildCMD","Elapsed":5.89}
+{"Time":"2026-06-29T15:26:49.35152224Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Output":"PASS\n"}
+{"Time":"2026-06-29T15:26:49.352273966Z","Action":"output","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Output":"ok  \tgithub.com/perses/perses/internal/cli/cmd/dac/build\t5.905s\n"}
+{"Time":"2026-06-29T15:26:49.352311149Z","Action":"pass","Package":"github.com/perses/perses/internal/cli/cmd/dac/build","Elapsed":5.905}
+reward=1 graded=21 found=21 failed=0 parsed=21 framework=go exit_code=0

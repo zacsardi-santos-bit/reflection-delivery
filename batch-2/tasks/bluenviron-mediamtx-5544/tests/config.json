@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/staticsources/rtsp -count=1 -timeout 30s",
+  "test_files": [
+    "internal/staticsources/rtsp/source_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/rtsps",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/rtsp+http",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/rtsps+http",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/rtsp+ws",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/rtsps+ws",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestNoPassword",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestRange/clock",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestRange/npt",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestRange/smpte",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestRange",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSkipBackChannel",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestOnlyBackChannelsError"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/udp",
+    "github.com/bluenviron/mediamtx/internal/staticsources/rtsp::TestSource/tcp"
+  ]
+}

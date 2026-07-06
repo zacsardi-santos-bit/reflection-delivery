@@ -1,0 +1,714 @@
+diff --git a/packages/cli/src/nonInteractiveCli.ts b/packages/cli/src/nonInteractiveCli.ts
+index 73e8ae237..ff33bd86e 100644
+--- a/packages/cli/src/nonInteractiveCli.ts
++++ b/packages/cli/src/nonInteractiveCli.ts
+@@ -13,6 +13,7 @@ import {
+   parseAndFormatApiError,
+   FatalInputError,
+   FatalTurnLimitedError,
++  promptIdContext,
+ } from '@google/gemini-cli-core';
+ import type { Content, Part } from '@google/genai';
+ 
+@@ -24,115 +25,117 @@ export async function runNonInteractive(
+   input: string,
+   prompt_id: string,
+ ): Promise<void> {
+-  const consolePatcher = new ConsolePatcher({
+-    stderr: true,
+-    debugMode: config.getDebugMode(),
+-  });
+-
+-  try {
+-    consolePatcher.patch();
+-    // Handle EPIPE errors when the output is piped to a command that closes early.
+-    process.stdout.on('error', (err: NodeJS.ErrnoException) => {
+-      if (err.code === 'EPIPE') {
+-        // Exit gracefully if the pipe is closed.
+-        process.exit(0);
+-      }
+-    });
+-
+-    const geminiClient = config.getGeminiClient();
+-
+-    const abortController = new AbortController();
+-
+-    const { processedQuery, shouldProceed } = await handleAtCommand({
+-      query: input,
+-      config,
+-      addItem: (_item, _timestamp) => 0,
+-      onDebugMessage: () => {},
+-      messageId: Date.now(),
+-      signal: abortController.signal,
++  return promptIdContext.run(prompt_id, async () => {
++    const consolePatcher = new ConsolePatcher({
++      stderr: true,
++      debugMode: config.getDebugMode(),
+     });
+ 
+-    if (!shouldProceed || !processedQuery) {
+-      // An error occurred during @include processing (e.g., file not found).
+-      // The error message is already logged by handleAtCommand.
+-      throw new FatalInputError(
+-        'Exiting due to an error processing the @ command.',
+-      );
+-    }
+-
+-    let currentMessages: Content[] = [
+-      { role: 'user', parts: processedQuery as Part[] },
+-    ];
+-
+-    let turnCount = 0;
+-    while (true) {
+-      turnCount++;
+-      if (
+-        config.getMaxSessionTurns() >= 0 &&
+-        turnCount > config.getMaxSessionTurns()
+-      ) {
+-        throw new FatalTurnLimitedError(
+-          'Reached max session turns for this session. Increase the number of turns by specifying maxSessionTurns in settings.json.',
++    try {
++      consolePatcher.patch();
++      // Handle EPIPE errors when the output is piped to a command that closes early.
++      process.stdout.on('error', (err: NodeJS.ErrnoException) => {
++        if (err.code === 'EPIPE') {
++          // Exit gracefully if the pipe is closed.
++          process.exit(0);
++        }
++      });
++
++      const geminiClient = config.getGeminiClient();
++
++      const abortController = new AbortController();
++
++      const { processedQuery, shouldProceed } = await handleAtCommand({
++        query: input,
++        config,
++        addItem: (_item, _timestamp) => 0,
++        onDebugMessage: () => {},
++        messageId: Date.now(),
++        signal: abortController.signal,
++      });
++
++      if (!shouldProceed || !processedQuery) {
++        // An error occurred during @include processing (e.g., file not found).
++        // The error message is already logged by handleAtCommand.
++        throw new FatalInputError(
++          'Exiting due to an error processing the @ command.',
+         );
+       }
+-      const toolCallRequests: ToolCallRequestInfo[] = [];
+ 
+-      const responseStream = geminiClient.sendMessageStream(
+-        currentMessages[0]?.parts || [],
+-        abortController.signal,
+-        prompt_id,
+-      );
+-
+-      for await (const event of responseStream) {
+-        if (abortController.signal.aborted) {
+-          console.error('Operation cancelled.');
+-          return;
++      let currentMessages: Content[] = [
++        { role: 'user', parts: processedQuery as Part[] },
++      ];
++
++      let turnCount = 0;
++      while (true) {
++        turnCount++;
++        if (
++          config.getMaxSessionTurns() >= 0 &&
++          turnCount > config.getMaxSessionTurns()
++        ) {
++          throw new FatalTurnLimitedError(
++            'Reached max session turns for this session. Increase the number of turns by specifying maxSessionTurns in settings.json.',
++          );
+         }
++        const toolCallRequests: ToolCallRequestInfo[] = [];
+ 
+-        if (event.type === GeminiEventType.Content) {
+-          process.stdout.write(event.value);
+-        } else if (event.type === GeminiEventType.ToolCallRequest) {
+-          toolCallRequests.push(event.value);
+-        }
+-      }
++        const responseStream = geminiClient.sendMessageStream(
++          currentMessages[0]?.parts || [],
++          abortController.signal,
++          prompt_id,
++        );
+ 
+-      if (toolCallRequests.length > 0) {
+-        const toolResponseParts: Part[] = [];
+-        for (const requestInfo of toolCallRequests) {
+-          const toolResponse = await executeToolCall(
+-            config,
+-            requestInfo,
+-            abortController.signal,
+-          );
++        for await (const event of responseStream) {
++          if (abortController.signal.aborted) {
++            console.error('Operation cancelled.');
++            return;
++          }
+ 
+-          if (toolResponse.error) {
+-            console.error(
+-              `Error executing tool ${requestInfo.name}: ${toolResponse.resultDisplay || toolResponse.error.message}`,
+-            );
++          if (event.type === GeminiEventType.Content) {
++            process.stdout.write(event.value);
++          } else if (event.type === GeminiEventType.ToolCallRequest) {
++            toolCallRequests.push(event.value);
+           }
++        }
+ 
+-          if (toolResponse.responseParts) {
+-            toolResponseParts.push(...toolResponse.responseParts);
++        if (toolCallRequests.length > 0) {
++          const toolResponseParts: Part[] = [];
++          for (const requestInfo of toolCallRequests) {
++            const toolResponse = await executeToolCall(
++              config,
++              requestInfo,
++              abortController.signal,
++            );
++
++            if (toolResponse.error) {
++              console.error(
++                `Error executing tool ${requestInfo.name}: ${toolResponse.resultDisplay || toolResponse.error.message}`,
++              );
++            }
++
++            if (toolResponse.responseParts) {
++              toolResponseParts.push(...toolResponse.responseParts);
++            }
+           }
++          currentMessages = [{ role: 'user', parts: toolResponseParts }];
++        } else {
++          process.stdout.write('\n'); // Ensure a final newline
++          return;
+         }
+-        currentMessages = [{ role: 'user', parts: toolResponseParts }];
+-      } else {
+-        process.stdout.write('\n'); // Ensure a final newline
+-        return;
++      }
++    } catch (error) {
++      console.error(
++        parseAndFormatApiError(
++          error,
++          config.getContentGeneratorConfig()?.authType,
++        ),
++      );
++      throw error;
++    } finally {
++      consolePatcher.cleanup();
++      if (isTelemetrySdkInitialized()) {
++        await shutdownTelemetry(config);
+       }
+     }
+-  } catch (error) {
+-    console.error(
+-      parseAndFormatApiError(
+-        error,
+-        config.getContentGeneratorConfig()?.authType,
+-      ),
+-    );
+-    throw error;
+-  } finally {
+-    consolePatcher.cleanup();
+-    if (isTelemetrySdkInitialized()) {
+-      await shutdownTelemetry(config);
+-    }
+-  }
++  });
+ }
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.ts b/packages/cli/src/ui/hooks/useGeminiStream.ts
+index edaf33d54..ac92068ed 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.ts
++++ b/packages/cli/src/ui/hooks/useGeminiStream.ts
+@@ -33,6 +33,7 @@ import {
+   parseAndFormatApiError,
+   getCodeAssistServer,
+   UserTierId,
++  promptIdContext,
+ } from '@google/gemini-cli-core';
+ import { type Part, type PartListUnion, FinishReason } from '@google/genai';
+ import type {
+@@ -705,71 +706,72 @@ export const useGeminiStream = (
+       if (!prompt_id) {
+         prompt_id = config.getSessionId() + '########' + getPromptCount();
+       }
+-
+-      const { queryToSend, shouldProceed } = await prepareQueryForGemini(
+-        query,
+-        userMessageTimestamp,
+-        abortSignal,
+-        prompt_id!,
+-      );
+-
+-      if (!shouldProceed || queryToSend === null) {
+-        return;
+-      }
+-
+-      if (!options?.isContinuation) {
+-        startNewPrompt();
+-        setThought(null); // Reset thought when starting a new prompt
+-      }
+-
+-      setIsResponding(true);
+-      setInitError(null);
+-
+-      try {
+-        const stream = geminiClient.sendMessageStream(
+-          queryToSend,
+-          abortSignal,
+-          prompt_id!,
+-        );
+-        const processingStatus = await processGeminiStreamEvents(
+-          stream,
++      return promptIdContext.run(prompt_id, async () => {
++        const { queryToSend, shouldProceed } = await prepareQueryForGemini(
++          query,
+           userMessageTimestamp,
+           abortSignal,
++          prompt_id,
+         );
+ 
+-        if (processingStatus === StreamProcessingStatus.UserCancelled) {
++        if (!shouldProceed || queryToSend === null) {
+           return;
+         }
+ 
+-        if (pendingHistoryItemRef.current) {
+-          addItem(pendingHistoryItemRef.current, userMessageTimestamp);
+-          setPendingHistoryItem(null);
++        if (!options?.isContinuation) {
++          startNewPrompt();
++          setThought(null); // Reset thought when starting a new prompt
+         }
+-        if (loopDetectedRef.current) {
+-          loopDetectedRef.current = false;
+-          handleLoopDetectedEvent();
+-        }
+-      } catch (error: unknown) {
+-        if (error instanceof UnauthorizedError) {
+-          onAuthError('Session expired or is unauthorized.');
+-        } else if (!isNodeError(error) || error.name !== 'AbortError') {
+-          addItem(
+-            {
+-              type: MessageType.ERROR,
+-              text: parseAndFormatApiError(
+-                getErrorMessage(error) || 'Unknown error',
+-                config.getContentGeneratorConfig()?.authType,
+-                undefined,
+-                config.getModel(),
+-                DEFAULT_GEMINI_FLASH_MODEL,
+-              ),
+-            },
++
++        setIsResponding(true);
++        setInitError(null);
++
++        try {
++          const stream = geminiClient.sendMessageStream(
++            queryToSend,
++            abortSignal,
++            prompt_id,
++          );
++          const processingStatus = await processGeminiStreamEvents(
++            stream,
+             userMessageTimestamp,
++            abortSignal,
+           );
++
++          if (processingStatus === StreamProcessingStatus.UserCancelled) {
++            return;
++          }
++
++          if (pendingHistoryItemRef.current) {
++            addItem(pendingHistoryItemRef.current, userMessageTimestamp);
++            setPendingHistoryItem(null);
++          }
++          if (loopDetectedRef.current) {
++            loopDetectedRef.current = false;
++            handleLoopDetectedEvent();
++          }
++        } catch (error: unknown) {
++          if (error instanceof UnauthorizedError) {
++            onAuthError('Session expired or is unauthorized.');
++          } else if (!isNodeError(error) || error.name !== 'AbortError') {
++            addItem(
++              {
++                type: MessageType.ERROR,
++                text: parseAndFormatApiError(
++                  getErrorMessage(error) || 'Unknown error',
++                  config.getContentGeneratorConfig()?.authType,
++                  undefined,
++                  config.getModel(),
++                  DEFAULT_GEMINI_FLASH_MODEL,
++                ),
++              },
++              userMessageTimestamp,
++            );
++          }
++        } finally {
++          setIsResponding(false);
+         }
+-      } finally {
+-        setIsResponding(false);
+-      }
++      });
+     },
+     [
+       streamingState,
+diff --git a/packages/core/src/config/config.ts b/packages/core/src/config/config.ts
+index 746f1051b..c4dfc3a56 100644
+--- a/packages/core/src/config/config.ts
++++ b/packages/core/src/config/config.ts
+@@ -31,6 +31,7 @@ import { ReadManyFilesTool } from '../tools/read-many-files.js';
+ import { MemoryTool, setGeminiMdFilename } from '../tools/memoryTool.js';
+ import { WebSearchTool } from '../tools/web-search.js';
+ import { GeminiClient } from '../core/client.js';
++import { BaseLlmClient } from '../core/baseLlmClient.js';
+ import { FileDiscoveryService } from '../services/fileDiscoveryService.js';
+ import { GitService } from '../services/gitService.js';
+ import type { TelemetryTarget } from '../telemetry/index.js';
+@@ -257,6 +258,7 @@ export class Config {
+   private readonly telemetrySettings: TelemetrySettings;
+   private readonly usageStatisticsEnabled: boolean;
+   private geminiClient!: GeminiClient;
++  private baseLlmClient!: BaseLlmClient;
+   private readonly fileFiltering: {
+     respectGitIgnore: boolean;
+     respectGeminiIgnore: boolean;
+@@ -455,6 +457,9 @@ export class Config {
+     // Only assign to instance properties after successful initialization
+     this.contentGeneratorConfig = newContentGeneratorConfig;
+ 
++    // Initialize BaseLlmClient now that the ContentGenerator is available
++    this.baseLlmClient = new BaseLlmClient(this.contentGenerator, this);
++
+     // Reset the session flag since we're explicitly changing auth and using default model
+     this.inFallbackMode = false;
+   }
+@@ -463,6 +468,26 @@ export class Config {
+     return this.contentGenerator?.userTier;
+   }
+ 
++  /**
++   * Provides access to the BaseLlmClient for stateless LLM operations.
++   */
++  getBaseLlmClient(): BaseLlmClient {
++    if (!this.baseLlmClient) {
++      // Handle cases where initialization might be deferred or authentication failed
++      if (this.contentGenerator) {
++        this.baseLlmClient = new BaseLlmClient(
++          this.getContentGenerator(),
++          this,
++        );
++      } else {
++        throw new Error(
++          'BaseLlmClient not initialized. Ensure authentication has occurred and ContentGenerator is ready.',
++        );
++      }
++    }
++    return this.baseLlmClient;
++  }
++
+   getSessionId(): string {
+     return this.sessionId;
+   }
+diff --git a/packages/core/src/core/baseLlmClient.ts b/packages/core/src/core/baseLlmClient.ts
+new file mode 100644
+index 000000000..25a92dabd
+--- /dev/null
++++ b/packages/core/src/core/baseLlmClient.ts
+@@ -0,0 +1,171 @@
++/**
++ * @license
++ * Copyright 2025 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import type { Content, GenerateContentConfig, Part } from '@google/genai';
++import type { Config } from '../config/config.js';
++import type { ContentGenerator } from './contentGenerator.js';
++import { getResponseText } from '../utils/partUtils.js';
++import { reportError } from '../utils/errorReporting.js';
++import { getErrorMessage } from '../utils/errors.js';
++import { logMalformedJsonResponse } from '../telemetry/loggers.js';
++import { MalformedJsonResponseEvent } from '../telemetry/types.js';
++import { retryWithBackoff } from '../utils/retry.js';
++
++/**
++ * Options for the generateJson utility function.
++ */
++export interface GenerateJsonOptions {
++  /** The input prompt or history. */
++  contents: Content[];
++  /** The required JSON schema for the output. */
++  schema: Record<string, unknown>;
++  /** The specific model to use for this task. */
++  model: string;
++  /**
++   * Task-specific system instructions.
++   * If omitted, no system instruction is sent.
++   */
++  systemInstruction?: string | Part | Part[] | Content;
++  /**
++   * Overrides for generation configuration (e.g., temperature).
++   */
++  config?: Omit<
++    GenerateContentConfig,
++    | 'systemInstruction'
++    | 'responseJsonSchema'
++    | 'responseMimeType'
++    | 'tools'
++    | 'abortSignal'
++  >;
++  /** Signal for cancellation. */
++  abortSignal: AbortSignal;
++  /**
++   * A unique ID for the prompt, used for logging/telemetry correlation.
++   */
++  promptId: string;
++}
++
++/**
++ * A client dedicated to stateless, utility-focused LLM calls.
++ */
++export class BaseLlmClient {
++  // Default configuration for utility tasks
++  private readonly defaultUtilityConfig: GenerateContentConfig = {
++    temperature: 0,
++    topP: 1,
++  };
++
++  constructor(
++    private readonly contentGenerator: ContentGenerator,
++    private readonly config: Config,
++  ) {}
++
++  async generateJson(
++    options: GenerateJsonOptions,
++  ): Promise<Record<string, unknown>> {
++    const {
++      contents,
++      schema,
++      model,
++      abortSignal,
++      systemInstruction,
++      promptId,
++    } = options;
++
++    const requestConfig: GenerateContentConfig = {
++      abortSignal,
++      ...this.defaultUtilityConfig,
++      ...options.config,
++      ...(systemInstruction && { systemInstruction }),
++      responseJsonSchema: schema,
++      responseMimeType: 'application/json',
++    };
++
++    try {
++      const apiCall = () =>
++        this.contentGenerator.generateContent(
++          {
++            model,
++            config: requestConfig,
++            contents,
++          },
++          promptId,
++        );
++
++      const result = await retryWithBackoff(apiCall);
++
++      let text = getResponseText(result)?.trim();
++      if (!text) {
++        const error = new Error(
++          'API returned an empty response for generateJson.',
++        );
++        await reportError(
++          error,
++          'Error in generateJson: API returned an empty response.',
++          contents,
++          'generateJson-empty-response',
++        );
++        throw error;
++      }
++
++      text = this.cleanJsonResponse(text, model);
++
++      try {
++        return JSON.parse(text);
++      } catch (parseError) {
++        const error = new Error(
++          `Failed to parse API response as JSON: ${getErrorMessage(parseError)}`,
++        );
++        await reportError(
++          parseError,
++          'Failed to parse JSON response from generateJson.',
++          {
++            responseTextFailedToParse: text,
++            originalRequestContents: contents,
++          },
++          'generateJson-parse',
++        );
++        throw error;
++      }
++    } catch (error) {
++      if (abortSignal.aborted) {
++        throw error;
++      }
++
++      if (
++        error instanceof Error &&
++        (error.message === 'API returned an empty response for generateJson.' ||
++          error.message.startsWith('Failed to parse API response as JSON:'))
++      ) {
++        // We perform this check so that we don't report these again.
++      } else {
++        await reportError(
++          error,
++          'Error generating JSON content via API.',
++          contents,
++          'generateJson-api',
++        );
++      }
++
++      throw new Error(
++        `Failed to generate JSON content: ${getErrorMessage(error)}`,
++      );
++    }
++  }
++
++  private cleanJsonResponse(text: string, model: string): string {
++    const prefix = '```json';
++    const suffix = '```';
++    if (text.startsWith(prefix) && text.endsWith(suffix)) {
++      logMalformedJsonResponse(
++        this.config,
++        new MalformedJsonResponseEvent(model),
++      );
++      return text.substring(prefix.length, text.length - suffix.length).trim();
++    }
++    return text;
++  }
++}
+diff --git a/packages/core/src/index.ts b/packages/core/src/index.ts
+index 047e43a52..aa49b0df3 100644
+--- a/packages/core/src/index.ts
++++ b/packages/core/src/index.ts
+@@ -50,6 +50,7 @@ export * from './utils/workspaceContext.js';
+ export * from './utils/ignorePatterns.js';
+ export * from './utils/partUtils.js';
+ export * from './utils/ide-trust.js';
++export * from './utils/promptIdContext.js';
+ 
+ // Export services
+ export * from './services/fileDiscoveryService.js';
+diff --git a/packages/core/src/tools/smart-edit.ts b/packages/core/src/tools/smart-edit.ts
+index 3647b7324..6291296f1 100644
+--- a/packages/core/src/tools/smart-edit.ts
++++ b/packages/core/src/tools/smart-edit.ts
+@@ -310,7 +310,7 @@ class EditToolInvocation implements ToolInvocation<EditToolParams, ToolResult> {
+       params.new_string,
+       initialError.raw,
+       currentContent,
+-      this.config.getGeminiClient(),
++      this.config.getBaseLlmClient(),
+       abortSignal,
+     );
+ 
+diff --git a/packages/core/src/utils/llm-edit-fixer.ts b/packages/core/src/utils/llm-edit-fixer.ts
+index 95496d477..a4b4b131c 100644
+--- a/packages/core/src/utils/llm-edit-fixer.ts
++++ b/packages/core/src/utils/llm-edit-fixer.ts
+@@ -5,9 +5,10 @@
+  */
+ 
+ import { type Content, Type } from '@google/genai';
+-import { type GeminiClient } from '../core/client.js';
++import { type BaseLlmClient } from '../core/baseLlmClient.js';
+ import { LruCache } from './LruCache.js';
+ import { DEFAULT_GEMINI_FLASH_MODEL } from '../config/models.js';
++import { promptIdContext } from './promptIdContext.js';
+ 
+ const MAX_CACHE_SIZE = 50;
+ 
+@@ -93,8 +94,9 @@ const editCorrectionWithInstructionCache = new LruCache<
+  * @param new_string The original replacement string.
+  * @param error The error that occurred during the initial edit.
+  * @param current_content The current content of the file.
+- * @param geminiClient The Gemini client to use for the LLM call.
++ * @param baseLlmClient The BaseLlmClient to use for the LLM call.
+  * @param abortSignal An abort signal to cancel the operation.
++ * @param promptId A unique ID for the prompt.
+  * @returns A new search and replace pair.
+  */
+ export async function FixLLMEditWithInstruction(
+@@ -103,9 +105,17 @@ export async function FixLLMEditWithInstruction(
+   new_string: string,
+   error: string,
+   current_content: string,
+-  geminiClient: GeminiClient,
++  baseLlmClient: BaseLlmClient,
+   abortSignal: AbortSignal,
+ ): Promise<SearchReplaceEdit> {
++  let promptId = promptIdContext.getStore();
++  if (!promptId) {
++    promptId = `llm-fixer-fallback-${Date.now()}-${Math.random().toString(16).slice(2)}`;
++    console.warn(
++      `Could not find promptId in context. This is unexpected. Using a fallback ID: ${promptId}`,
++    );
++  }
++
+   const cacheKey = `${instruction}---${old_string}---${new_string}--${current_content}--${error}`;
+   const cachedResult = editCorrectionWithInstructionCache.get(cacheKey);
+   if (cachedResult) {
+@@ -120,21 +130,18 @@ export async function FixLLMEditWithInstruction(
+   const contents: Content[] = [
+     {
+       role: 'user',
+-      parts: [
+-        {
+-          text: `${EDIT_SYS_PROMPT}
+-${userPrompt}`,
+-        },
+-      ],
++      parts: [{ text: userPrompt }],
+     },
+   ];
+ 
+-  const result = (await geminiClient.generateJson(
++  const result = (await baseLlmClient.generateJson({
+     contents,
+-    SearchReplaceEditSchema,
++    schema: SearchReplaceEditSchema,
+     abortSignal,
+-    DEFAULT_GEMINI_FLASH_MODEL,
+-  )) as unknown as SearchReplaceEdit;
++    model: DEFAULT_GEMINI_FLASH_MODEL,
++    systemInstruction: EDIT_SYS_PROMPT,
++    promptId,
++  })) as unknown as SearchReplaceEdit;
+ 
+   editCorrectionWithInstructionCache.set(cacheKey, result);
+   return result;
+diff --git a/packages/core/src/utils/promptIdContext.ts b/packages/core/src/utils/promptIdContext.ts
+new file mode 100644
+index 000000000..6344bd0b8
+--- /dev/null
++++ b/packages/core/src/utils/promptIdContext.ts
+@@ -0,0 +1,9 @@
++/**
++ * @license
++ * Copyright 2025 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { AsyncLocalStorage } from 'node:async_hooks';
++
++export const promptIdContext = new AsyncLocalStorage<string>();

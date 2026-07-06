@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./api/v1 ./internal/controller ./pkg/promotiontoken ./pkg/utils -count=1",
+  "test_files": [
+    "api/v1/cluster_types_test.go",
+    "api/v1/cluster_webhook_test.go",
+    "internal/controller/cluster_delete_test.go",
+    "internal/controller/cluster_status_test.go",
+    "internal/controller/suite_test.go",
+    "pkg/promotiontoken/promotion_token_test.go",
+    "pkg/promotiontoken/suite_test.go",
+    "pkg/utils/parser_test.go",
+    "tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-restart-1.yaml.template",
+    "tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-restart-2.yaml.template",
+    "tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-switchover-1.yaml.template",
+    "tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-switchover-2.yaml.template",
+    "tests/e2e/replica_mode_cluster_test.go"
+  ],
+  "num_test_files": 13,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cloudnative-pg/cloudnative-pg/api/v1::TestApi",
+    "github.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken::TestPromotionToken",
+    "github.com/cloudnative-pg/cloudnative-pg/pkg/utils::TestUtils",
+    "github.com/cloudnative-pg/cloudnative-pg/internal/controller::TestAPIs"
+  ],
+  "PASS_TO_PASS": []
+}

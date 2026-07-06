@@ -1,0 +1,13 @@
+patching file docs/content/en/functions/math/Acos.md
+patching file docs/content/en/functions/math/Asin.md
+patching file docs/content/en/functions/math/Atan.md
+patching file docs/content/en/functions/math/Atan2.md
+patching file docs/content/en/functions/math/Cos.md
+patching file docs/content/en/functions/math/Pi.md
+patching file docs/content/en/functions/math/Sin.md
+patching file docs/content/en/functions/math/Tan.md
+patching file docs/content/en/functions/math/ToDegrees.md
+patching file docs/content/en/functions/math/ToRadians.md
+patching file docs/data/docs.yaml
+patching file tpl/math/init.go
+patching file tpl/math/math.go

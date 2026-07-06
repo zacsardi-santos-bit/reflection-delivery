@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && dart test test/general.shard/macos/cocoapods_validator_test.dart --reporter=json 2>&1 | python3 -c \"import json,sys; t={}; f=[]; [t.__setitem__(j['test']['id'],j['test']['name'].replace(' ','_')) if j.get('type')=='testStart' else (f.append(t.get(j['testID'],'?')) or print(json.dumps({'Action':'fail','Package':'flutter_tools','Test':t.get(j['testID'],'?')}))) if j.get('type')=='testDone' and not j.get('hidden') and j.get('result')!='success' else print(json.dumps({'Action':'pass','Package':'flutter_tools','Test':t.get(j['testID'],'?')})) if j.get('type')=='testDone' and not j.get('hidden') and j.get('result')=='success' else None for line in sys.stdin if line.strip() for j in ([json.loads(line)] if line.strip().startswith('{') else [])]; sys.exit(1 if f else 0)\"",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/macos/cocoapods_validator_test.dart"
+  ],
+  "num_test_files": 1,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "flutter_tools::CocoaPods_validation_Emits_partial_status_when_CocoaPods_is_not_installed"
+  ],
+  "PASS_TO_PASS": [
+    "flutter_tools::CocoaPods_validation_Emits_installed_status_when_CocoaPods_is_installed",
+    "flutter_tools::CocoaPods_validation_Emits_partial_status_when_CocoaPods_is_installed_with_unknown_version",
+    "flutter_tools::CocoaPods_validation_Emits_partial_status_when_CocoaPods_version_is_too_low"
+  ]
+}

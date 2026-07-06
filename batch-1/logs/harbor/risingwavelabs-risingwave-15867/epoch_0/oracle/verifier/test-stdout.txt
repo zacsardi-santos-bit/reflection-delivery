@@ -1,0 +1,234 @@
+patching file src/sqlparser/tests/sqlparser_common.rs
+patching file src/sqlparser/tests/testdata/lambda.yaml
+patching file src/sqlparser/tests/testdata/select.yaml
+patching file src/tests/regress/data/sql/strings.sql
+patching file src/tests/sqlsmith/src/sql_gen/functions.rs
+warning: in config file .config/nextest.toml, ignoring unknown configuration key: profile.ci.junit.overrides
+   Compiling lazy_static v1.4.0
+   Compiling overload v0.1.1
+   Compiling cfg-if v1.0.0
+   Compiling log v0.4.20
+   Compiling smallvec v1.13.1
+   Compiling tracing-core v0.1.32
+   Compiling thread_local v1.1.7
+   Compiling nu-ansi-term v0.46.0
+   Compiling sharded-slab v0.1.4
+   Compiling tracing-log v0.1.3
+   Compiling tracing v0.1.40
+   Compiling tracing-subscriber v0.3.17
+   Compiling risingwave_sqlparser v1.7.0-alpha (/workspace/repo/src/sqlparser)
+    Finished test [unoptimized + debuginfo] target(s) in 8.44s
+────────────
+ Nextest run ID 808b338d-90df-4494-b03c-2192e6406769 with nextest profile: ci
+    Starting 208 tests across 4 binaries
+        PASS [   0.074s] (  1/208) risingwave_sqlparser ast::tests::test_grouping_sets_display
+        PASS [   0.075s] (  2/208) risingwave_sqlparser tokenizer::tests::tokenize_invalid_string
+        PASS [   0.075s] (  3/208) risingwave_sqlparser ast::tests::test_array_index_display
+        PASS [   0.077s] (  4/208) risingwave_sqlparser tokenizer::tests::tokenize_explain_select
+        PASS [   0.075s] (  5/208) risingwave_sqlparser tokenizer::tests::tokenize_bitwise_op
+        PASS [   0.080s] (  6/208) risingwave_sqlparser tokenizer::tests::tokenize_logical_xor
+        PASS [   0.080s] (  7/208) risingwave_sqlparser parser::tests::test_prev_index
+        PASS [   0.081s] (  8/208) risingwave_sqlparser tokenizer::tests::tokenize_comment
+        PASS [   0.088s] (  9/208) risingwave_sqlparser tokenizer::tests::tokenize_comment_at_eof
+        PASS [   0.088s] ( 10/208) risingwave_sqlparser ast::tests::test_rollup_display
+        PASS [   0.088s] ( 11/208) risingwave_sqlparser tokenizer::tests::tokenize_invalid_string_cols
+        PASS [   0.090s] ( 12/208) risingwave_sqlparser tokenizer::tests::tokenize_explain_analyze_select
+        PASS [   0.090s] ( 13/208) risingwave_sqlparser tokenizer::tests::tokenize_is_null
+        PASS [   0.090s] ( 14/208) risingwave_sqlparser tokenizer::tests::tokenize_mismatched_quotes
+        PASS [   0.090s] ( 15/208) risingwave_sqlparser ast::tests::test_nested_op_display
+        PASS [   0.090s] ( 16/208) risingwave_sqlparser ast::tests::test_cube_display
+        PASS [   0.092s] ( 17/208) risingwave_sqlparser parser::tests::test_parse_integer_min
+        PASS [   0.093s] ( 18/208) risingwave_sqlparser ast::tests::test_create_function_display
+        PASS [   0.081s] ( 19/208) risingwave_sqlparser tokenizer::tests::tokenize_multiline_comment
+        PASS [   0.081s] ( 20/208) risingwave_sqlparser tokenizer::tests::tokenize_multiline_comment_with_even_asterisks
+        PASS [   0.081s] ( 21/208) risingwave_sqlparser tokenizer::tests::tokenize_nested_multiline_comment
+        PASS [   0.079s] ( 22/208) risingwave_sqlparser tokenizer::tests::tokenize_newlines
+        PASS [   0.077s] ( 23/208) risingwave_sqlparser tokenizer::tests::tokenize_right_arrow
+        PASS [   0.080s] ( 24/208) risingwave_sqlparser tokenizer::tests::tokenize_newline_in_string_literal
+        PASS [   0.079s] ( 25/208) risingwave_sqlparser tokenizer::tests::tokenize_scalar_function
+        PASS [   0.082s] ( 26/208) risingwave_sqlparser tokenizer::tests::tokenize_pg_regex_match
+        PASS [   0.079s] ( 27/208) risingwave_sqlparser tokenizer::tests::tokenize_select_1
+        PASS [   0.079s] ( 28/208) risingwave_sqlparser tokenizer::tests::tokenizer_error_impl
+        PASS [   0.080s] ( 29/208) risingwave_sqlparser tokenizer::tests::tokenize_simple_select
+        PASS [   0.082s] ( 30/208) risingwave_sqlparser tokenizer::tests::tokenize_select_array
+        PASS [   0.082s] ( 31/208) risingwave_sqlparser tokenizer::tests::tokenize_string_predicate
+        PASS [   0.082s] ( 32/208) risingwave_sqlparser tokenizer::tests::tokenize_string_string_concat
+        PASS [   0.083s] ( 33/208) risingwave_sqlparser tokenizer::tests::tokenize_select_float
+        PASS [   0.084s] ( 34/208) risingwave_sqlparser tokenizer::tests::tokenize_unterminated_string_literal
+        PASS [   0.083s] ( 35/208) risingwave_sqlparser::sqlparser_common all_keywords_sorted
+        PASS [   0.102s] ( 36/208) risingwave_sqlparser::sqlparser_common lateral_derived
+        PASS [   0.097s] ( 37/208) risingwave_sqlparser::sqlparser_common parse_aggregate_with_group_by
+        PASS [   0.096s] ( 38/208) risingwave_sqlparser::sqlparser_common parse_alter_table_alter_column_type
+        PASS [   0.097s] ( 39/208) risingwave_sqlparser::sqlparser_common parse_alter_table_alter_column
+        PASS [   0.100s] ( 40/208) risingwave_sqlparser::sqlparser_common parse_alter_table
+        PASS [   0.101s] ( 41/208) risingwave_sqlparser::sqlparser_common parse_aggregate_with_filter
+        PASS [   0.096s] ( 42/208) risingwave_sqlparser::sqlparser_common parse_alter_table_drop_column
+        PASS [   0.102s] ( 43/208) risingwave_sqlparser::sqlparser_common parse_aggregate_with_order_by
+        PASS [   0.099s] ( 44/208) risingwave_sqlparser::sqlparser_common parse_alter_table_constraints
+        PASS [   0.094s] ( 45/208) risingwave_sqlparser::sqlparser_common parse_bad_constraint
+        PASS [   0.099s] ( 46/208) risingwave_sqlparser::sqlparser_common parse_begin
+        PASS [   0.100s] ( 47/208) risingwave_sqlparser::sqlparser_common parse_between
+        PASS [   0.099s] ( 48/208) risingwave_sqlparser::sqlparser_common parse_between_with_expr
+        PASS [   0.098s] ( 49/208) risingwave_sqlparser::sqlparser_common parse_binary_all
+        PASS [   0.099s] ( 50/208) risingwave_sqlparser::sqlparser_common parse_binary_some
+        PASS [   0.099s] ( 51/208) risingwave_sqlparser::sqlparser_common parse_bitwise_ops
+        PASS [   0.100s] ( 52/208) risingwave_sqlparser::sqlparser_common parse_collate
+        PASS [   0.103s] ( 53/208) risingwave_sqlparser::sqlparser_common parse_cast
+        PASS [   0.102s] ( 54/208) risingwave_sqlparser::sqlparser_common parse_column_aliases
+        PASS [   0.093s] ( 55/208) risingwave_sqlparser::sqlparser_common parse_compound_expr_1
+        PASS [   0.095s] ( 56/208) risingwave_sqlparser::sqlparser_common parse_complex_join
+        PASS [   0.097s] ( 57/208) risingwave_sqlparser::sqlparser_common parse_commit
+        PASS [   0.097s] ( 58/208) risingwave_sqlparser::sqlparser_common parse_compound_expr_2
+        PASS [   0.097s] ( 59/208) risingwave_sqlparser::sqlparser_common parse_create_materialized_view_emit_immediately
+        PASS [   0.099s] ( 60/208) risingwave_sqlparser::sqlparser_common parse_count_wildcard
+        PASS [   0.099s] ( 61/208) risingwave_sqlparser::sqlparser_common parse_create_materialized_view
+        PASS [   0.096s] ( 62/208) risingwave_sqlparser::sqlparser_common parse_create_materialized_view_emit_on_window_close
+        PASS [   0.091s] ( 63/208) risingwave_sqlparser::sqlparser_common parse_create_schema
+        PASS [   0.104s] ( 64/208) risingwave_sqlparser::sqlparser_common parse_create_index
+        PASS [   0.096s] ( 65/208) risingwave_sqlparser::sqlparser_common parse_create_or_replace_view
+        PASS [   0.098s] ( 66/208) risingwave_sqlparser::sqlparser_common parse_create_or_replace_materialized_view
+        PASS [   0.098s] ( 67/208) risingwave_sqlparser::sqlparser_common parse_create_table_on_conflict
+        PASS [   0.101s] ( 68/208) risingwave_sqlparser::sqlparser_common parse_create_table
+        PASS [   0.096s] ( 69/208) risingwave_sqlparser::sqlparser_common parse_create_table_with_multiple_on_delete_fails
+        PASS [   0.101s] ( 70/208) risingwave_sqlparser::sqlparser_common parse_create_table_as
+        PASS [   0.098s] ( 71/208) risingwave_sqlparser::sqlparser_common parse_create_table_trailing_comma
+        PASS [   0.097s] ( 72/208) risingwave_sqlparser::sqlparser_common parse_create_table_with_multiple_on_delete_in_constraint_fails
+        PASS [   0.099s] ( 73/208) risingwave_sqlparser::sqlparser_common parse_create_table_with_on_delete_on_update_2in_any_order
+        PASS [   0.098s] ( 74/208) risingwave_sqlparser::sqlparser_common parse_create_view
+        PASS [   0.101s] ( 75/208) risingwave_sqlparser::sqlparser_common parse_create_user
+        PASS [   0.103s] ( 76/208) risingwave_sqlparser::sqlparser_common parse_create_table_with_options
+        PASS [   0.097s] ( 77/208) risingwave_sqlparser::sqlparser_common parse_cte_renamed_columns
+        PASS [   0.098s] ( 78/208) risingwave_sqlparser::sqlparser_common parse_cross_join
+        PASS [   0.095s] ( 79/208) risingwave_sqlparser::sqlparser_common parse_delete_statement
+        PASS [   0.101s] ( 80/208) risingwave_sqlparser::sqlparser_common parse_create_view_with_options
+        PASS [   0.101s] ( 81/208) risingwave_sqlparser::sqlparser_common parse_create_view_with_columns
+        PASS [   0.098s] ( 82/208) risingwave_sqlparser::sqlparser_common parse_ctes
+        PASS [   0.095s] ( 83/208) risingwave_sqlparser::sqlparser_common parse_drop_schema
+        PASS [   0.099s] ( 84/208) risingwave_sqlparser::sqlparser_common parse_derived_tables
+        PASS [   0.102s] ( 85/208) risingwave_sqlparser::sqlparser_common parse_delimited_identifiers
+        PASS [   0.098s] ( 86/208) risingwave_sqlparser::sqlparser_common parse_drop_table
+        PASS [   0.097s] ( 87/208) risingwave_sqlparser::sqlparser_common parse_drop_view
+        PASS [   0.099s] ( 88/208) risingwave_sqlparser::sqlparser_common parse_exists_subquery
+        PASS [   0.101s] ( 89/208) risingwave_sqlparser::sqlparser_common parse_escaped_single_quote_string_predicate
+        PASS [   0.101s] ( 90/208) risingwave_sqlparser::sqlparser_common parse_explain_analyze_with_simple_select
+        PASS [   0.099s] ( 91/208) risingwave_sqlparser::sqlparser_common parse_explain_with_invalid_options
+        PASS [   0.096s] ( 92/208) risingwave_sqlparser::sqlparser_common parse_extract
+        PASS [   0.098s] ( 93/208) risingwave_sqlparser::sqlparser_common parse_fetch
+        PASS [   0.095s] ( 94/208) risingwave_sqlparser::sqlparser_common parse_implicit_join
+        PASS [   0.101s] ( 95/208) risingwave_sqlparser::sqlparser_common parse_fetch_variations
+        PASS [   0.097s] ( 96/208) risingwave_sqlparser::sqlparser_common parse_in_subquery
+        PASS [   0.099s] ( 97/208) risingwave_sqlparser::sqlparser_common parse_ilike
+        PASS [   0.096s] ( 98/208) risingwave_sqlparser::sqlparser_common parse_insert_values
+        PASS [   0.102s] ( 99/208) risingwave_sqlparser::sqlparser_common parse_grant
+        PASS [   0.094s] (100/208) risingwave_sqlparser::sqlparser_common parse_invalid_infix_not
+        PASS [   0.091s] (101/208) risingwave_sqlparser::sqlparser_common parse_invalid_table_name
+        PASS [   0.102s] (102/208) risingwave_sqlparser::sqlparser_common parse_in_list
+        PASS [   0.090s] (103/208) risingwave_sqlparser::sqlparser_common parse_is_distinct_from
+        PASS [   0.092s] (104/208) risingwave_sqlparser::sqlparser_common parse_is_not_distinct_from
+        PASS [   0.099s] (105/208) risingwave_sqlparser::sqlparser_common parse_invalid_subquery_without_parens
+        PASS [   0.097s] (106/208) risingwave_sqlparser::sqlparser_common parse_is_not_null
+        PASS [   0.096s] (107/208) risingwave_sqlparser::sqlparser_common parse_is_null
+        PASS [   0.098s] (108/208) risingwave_sqlparser::sqlparser_common parse_join_nesting
+        PASS [   0.097s] (109/208) risingwave_sqlparser::sqlparser_common parse_join_syntax_variants
+        PASS [   0.099s] (110/208) risingwave_sqlparser::sqlparser_common parse_joins_on
+        PASS [   0.098s] (111/208) risingwave_sqlparser::sqlparser_common parse_joins_using
+        PASS [   0.094s] (112/208) risingwave_sqlparser::sqlparser_common parse_literal_decimal
+        PASS [   0.098s] (113/208) risingwave_sqlparser::sqlparser_common parse_like
+        PASS [   0.097s] (114/208) risingwave_sqlparser::sqlparser_common parse_limit_accepts_all
+        PASS [   0.097s] (115/208) risingwave_sqlparser::sqlparser_common parse_limit_is_not_an_alias
+        PASS [   0.097s] (116/208) risingwave_sqlparser::sqlparser_common parse_literal_date
+        PASS [   0.094s] (117/208) risingwave_sqlparser::sqlparser_common parse_literal_timestamp
+        PASS [   0.096s] (118/208) risingwave_sqlparser::sqlparser_common parse_literal_interval
+        PASS [   0.097s] (119/208) risingwave_sqlparser::sqlparser_common parse_literal_string
+        PASS [   0.095s] (120/208) risingwave_sqlparser::sqlparser_common parse_materialized_drop_view
+        PASS [   0.099s] (121/208) risingwave_sqlparser::sqlparser_common parse_logical_xor
+        PASS [   0.100s] (122/208) risingwave_sqlparser::sqlparser_common parse_literal_time
+        PASS [   0.098s] (123/208) risingwave_sqlparser::sqlparser_common parse_natural_join
+        PASS [   0.104s] (124/208) risingwave_sqlparser::sqlparser_common parse_multiple_statements
+        PASS [   0.100s] (125/208) risingwave_sqlparser::sqlparser_common parse_named_argument_function
+        PASS [   0.087s] (126/208) risingwave_sqlparser::sqlparser_common parse_no_table_name
+        PASS [   0.092s] (127/208) risingwave_sqlparser::sqlparser_common parse_null_in_select
+        PASS [   0.096s] (128/208) risingwave_sqlparser::sqlparser_common parse_not_precedence
+        PASS [   0.092s] (129/208) risingwave_sqlparser::sqlparser_common parse_number
+        PASS [   0.093s] (130/208) risingwave_sqlparser::sqlparser_common parse_parens
+        PASS [   0.093s] (131/208) risingwave_sqlparser::sqlparser_common parse_rollback
+        PASS [   0.097s] (132/208) risingwave_sqlparser::sqlparser_common parse_overlay
+        PASS [   0.098s] (133/208) risingwave_sqlparser::sqlparser_common parse_offset
+        PASS [   0.095s] (134/208) risingwave_sqlparser::sqlparser_common parse_scalar_subqueries
+        PASS [   0.097s] (135/208) risingwave_sqlparser::sqlparser_common parse_projection_nested_type
+        PASS [   0.100s] (136/208) risingwave_sqlparser::sqlparser_common parse_recursive_cte
+        PASS [   0.098s] (137/208) risingwave_sqlparser::sqlparser_common parse_select_all
+        PASS [   0.097s] (138/208) risingwave_sqlparser::sqlparser_common parse_select_all_distinct
+        PASS [   0.100s] (139/208) risingwave_sqlparser::sqlparser_common parse_searched_case_expr
+        PASS [   0.101s] (140/208) risingwave_sqlparser::sqlparser_common parse_select_count_distinct
+        PASS [   0.096s] (141/208) risingwave_sqlparser::sqlparser_common parse_select_distinct_on
+        PASS [   0.100s] (142/208) risingwave_sqlparser::sqlparser_common parse_select_count_wildcard
+        PASS [   0.101s] (143/208) risingwave_sqlparser::sqlparser_common parse_select_distinct
+        PASS [   0.097s] (144/208) risingwave_sqlparser::sqlparser_common parse_select_except
+        PASS [   0.099s] (145/208) risingwave_sqlparser::sqlparser_common parse_select_group_by
+        PASS [   0.099s] (146/208) risingwave_sqlparser::sqlparser_common parse_select_group_by_grouping_sets
+        PASS [   0.097s] (147/208) risingwave_sqlparser::sqlparser_common parse_select_group_by_rollup
+        PASS [   0.102s] (148/208) risingwave_sqlparser::sqlparser_common parse_select_group_by_cube
+        PASS [   0.094s] (149/208) risingwave_sqlparser::sqlparser_common parse_select_wildcard
+        PASS [   0.093s] (150/208) risingwave_sqlparser::sqlparser_common parse_select_with_date_column_name
+        PASS [   0.099s] (151/208) risingwave_sqlparser::sqlparser_common parse_select_order_by
+        PASS [   0.092s] (152/208) risingwave_sqlparser::sqlparser_common parse_set_transaction
+        PASS [   0.101s] (153/208) risingwave_sqlparser::sqlparser_common parse_select_having
+        PASS [   0.100s] (154/208) risingwave_sqlparser::sqlparser_common parse_select_order_by_nulls_order
+        PASS [   0.101s] (155/208) risingwave_sqlparser::sqlparser_common parse_select_order_by_limit
+        PASS [   0.097s] (156/208) risingwave_sqlparser::sqlparser_common parse_similar_to
+        PASS [   0.097s] (157/208) risingwave_sqlparser::sqlparser_common parse_simple_case_expr
+        PASS [   0.096s] (158/208) risingwave_sqlparser::sqlparser_common parse_simple_math_expr_minus
+        PASS [   0.098s] (159/208) risingwave_sqlparser::sqlparser_common parse_simple_math_expr_plus
+        PASS [   0.098s] (160/208) risingwave_sqlparser::sqlparser_common parse_simple_select
+        PASS [   0.100s] (161/208) risingwave_sqlparser::sqlparser_common parse_start_transaction
+        PASS [   0.095s] (162/208) risingwave_sqlparser::sqlparser_common parse_string_concat
+        PASS [   0.096s] (163/208) risingwave_sqlparser::sqlparser_common parse_temporal_join
+        PASS [   0.099s] (164/208) risingwave_sqlparser::sqlparser_common parse_substring
+        PASS [   0.098s] (165/208) risingwave_sqlparser::sqlparser_common parse_top_level
+        PASS [   0.094s] (166/208) risingwave_sqlparser::sqlparser_common parse_union
+        PASS [   0.098s] (167/208) risingwave_sqlparser::sqlparser_common parse_try_cast
+        PASS [   0.099s] (168/208) risingwave_sqlparser::sqlparser_common parse_trim
+        PASS [   0.096s] (169/208) risingwave_sqlparser::sqlparser_common parse_unary_math
+        PASS [   0.097s] (170/208) risingwave_sqlparser::sqlparser_common parse_values
+        PASS [   0.098s] (171/208) risingwave_sqlparser::sqlparser_common parse_update
+        PASS [   0.096s] (172/208) risingwave_sqlparser::sqlparser_common parse_where_delete_statement
+        PASS [   0.090s] (173/208) risingwave_sqlparser::sqlparser_postgres parse_alter_table_alter_column
+        PASS [   0.096s] (174/208) risingwave_sqlparser::sqlparser_common test_eof_after_as
+        PASS [   0.102s] (175/208) risingwave_sqlparser::sqlparser_common parse_window_functions
+        PASS [   0.100s] (176/208) risingwave_sqlparser::sqlparser_common test_revoke
+        PASS [   0.090s] (177/208) risingwave_sqlparser::sqlparser_postgres parse_alter_table_constraints_rename
+        PASS [   0.088s] (178/208) risingwave_sqlparser::sqlparser_postgres parse_bad_if_not_exists
+        PASS [   0.093s] (179/208) risingwave_sqlparser::sqlparser_postgres parse_array
+        PASS [   0.092s] (180/208) risingwave_sqlparser::sqlparser_postgres parse_comments
+        PASS [   0.083s] (181/208) risingwave_sqlparser::sqlparser_postgres parse_create_schema_if_not_exists
+        PASS [   0.087s] (182/208) risingwave_sqlparser::sqlparser_postgres parse_create_table_empty
+        PASS [   0.092s] (183/208) risingwave_sqlparser::sqlparser_postgres parse_create_aggregate
+        PASS [   0.091s] (184/208) risingwave_sqlparser::sqlparser_postgres parse_create_table_constraints_only
+        PASS [   0.088s] (185/208) risingwave_sqlparser::sqlparser_postgres parse_create_table_if_not_exists
+        PASS [   0.087s] (186/208) risingwave_sqlparser::sqlparser_postgres parse_create_table_with_inherit
+        PASS [   0.093s] (187/208) risingwave_sqlparser::sqlparser_postgres parse_create_function
+        PASS [   0.093s] (188/208) risingwave_sqlparser::sqlparser_postgres parse_create_table_from_pg_dump
+        PASS [   0.089s] (189/208) risingwave_sqlparser::sqlparser_postgres parse_dollar_quoted_string
+        PASS [   0.089s] (190/208) risingwave_sqlparser::sqlparser_postgres parse_deallocate
+        PASS [   0.095s] (191/208) risingwave_sqlparser::sqlparser_postgres parse_create_table_with_defaults
+        PASS [   0.105s] (192/208) risingwave_sqlparser::sqlparser_postgres parse_copy_example
+        PASS [   0.089s] (193/208) risingwave_sqlparser::sqlparser_postgres parse_drop_function
+        PASS [   0.092s] (194/208) risingwave_sqlparser::sqlparser_postgres parse_double_quoted_string_as_alias
+        PASS [   0.091s] (195/208) risingwave_sqlparser::sqlparser_postgres parse_drop_schema_if_exists
+        PASS [   0.088s] (196/208) risingwave_sqlparser::sqlparser_postgres parse_incorrect_dollar_quoted_string
+        PASS [   0.092s] (197/208) risingwave_sqlparser::sqlparser_postgres parse_execute
+        PASS [   0.090s] (198/208) risingwave_sqlparser::sqlparser_postgres parse_incorrect_single_quoted_string_as_alias
+        PASS [   0.083s] (199/208) risingwave_sqlparser::sqlparser_postgres parse_pg_bitwise_binary_ops
+        PASS [   0.089s] (200/208) risingwave_sqlparser::sqlparser_postgres parse_param_symbol
+        PASS [   0.083s] (201/208) risingwave_sqlparser::sqlparser_postgres parse_pg_regex_match_ops
+        PASS [   0.086s] (202/208) risingwave_sqlparser::sqlparser_postgres parse_pg_postfix_factorial
+        PASS [   0.084s] (203/208) risingwave_sqlparser::sqlparser_postgres parse_set
+        PASS [   0.085s] (204/208) risingwave_sqlparser::sqlparser_postgres parse_pg_unary_ops
+        PASS [   0.082s] (205/208) risingwave_sqlparser::sqlparser_postgres parse_show
+        PASS [   0.081s] (206/208) risingwave_sqlparser::sqlparser_postgres parse_variadic_argument
+        PASS [   0.087s] (207/208) risingwave_sqlparser::sqlparser_postgres parse_prepare
+        PASS [   0.082s] (208/208) risingwave_sqlparser::sqlparser_postgres test_transaction_statement
+────────────
+     Summary [   1.127s] 208 tests run: 208 passed, 0 skipped
+reward=1 graded=208 found=25 failed=0 parsed=208 framework=cargo exit_code=0

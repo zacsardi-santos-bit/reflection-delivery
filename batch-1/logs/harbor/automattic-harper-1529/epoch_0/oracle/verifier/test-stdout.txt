@@ -1,0 +1,467 @@
+patching file harper-core/src/linting/phrase_corrections/tests.rs
+patching file harper-core/src/linting/phrase_set_corrections/tests.rs
+   Compiling serde v1.0.219
+   Compiling cfg-if v1.0.1
+   Compiling zerofrom v0.1.6
+   Compiling stable_deref_trait v1.2.0
+   Compiling yoke v0.8.0
+   Compiling libc v0.2.174
+   Compiling siphasher v1.0.1
+   Compiling phf_shared v0.11.3
+   Compiling zerovec v0.11.2
+   Compiling phf_generator v0.11.3
+   Compiling memchr v2.7.5
+   Compiling smallvec v1.15.1
+   Compiling zerocopy v0.8.26
+   Compiling tinystr v0.8.1
+   Compiling litemap v0.8.0
+   Compiling utf8parse v0.2.2
+   Compiling writeable v0.6.1
+   Compiling icu_locale_core v2.0.0
+   Compiling anstyle-parse v0.2.7
+   Compiling parking_lot_core v0.9.11
+   Compiling lock_api v0.4.13
+   Compiling zerotrie v0.2.2
+   Compiling potential_utf v0.1.2
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling anstyle-query v1.1.3
+   Compiling scopeguard v1.2.0
+   Compiling colorchoice v1.0.4
+   Compiling new_debug_unreachable v1.0.6
+   Compiling anstyle v1.0.11
+   Compiling anstream v0.6.19
+   Compiling icu_properties_data v2.0.1
+   Compiling icu_normalizer_data v2.0.0
+   Compiling icu_collections v2.0.0
+   Compiling icu_provider v2.0.0
+   Compiling phf_macros v0.11.3
+   Compiling phf_codegen v0.11.3
+   Compiling string_cache_codegen v0.5.4
+   Compiling itoa v1.0.15
+   Compiling strsim v0.11.1
+   Compiling allocator-api2 v0.2.21
+   Compiling clap_lex v0.7.5
+   Compiling either v1.15.0
+   Compiling clap_builder v4.5.40
+   Compiling web_atoms v0.1.3
+   Compiling phf v0.11.3
+   Compiling parking_lot v0.12.4
+   Compiling mac v0.1.1
+   Compiling precomputed-hash v0.1.1
+   Compiling same-file v1.0.6
+   Compiling log v0.4.27
+   Compiling darling_core v0.20.11
+   Compiling crossbeam-utils v0.8.21
+   Compiling serde_json v1.0.140
+   Compiling walkdir v2.5.0
+   Compiling string_cache v0.8.9
+   Compiling futf v0.1.5
+   Compiling thiserror v1.0.69
+   Compiling clap v4.5.40
+   Compiling icu_properties v2.0.1
+   Compiling icu_normalizer v2.0.0
+   Compiling aho-corasick v1.1.3
+   Compiling equivalent v1.0.2
+   Compiling regex-syntax v0.8.5
+   Compiling foldhash v0.1.5
+   Compiling utf-8 v0.7.6
+   Compiling ryu v1.0.20
+   Compiling tendril v0.4.3
+   Compiling hashbrown v0.15.4
+   Compiling regex-automata v0.4.9
+   Compiling num-traits v0.2.19
+   Compiling idna_adapter v1.2.1
+   Compiling ahash v0.8.12
+   Compiling derive_more v1.0.0
+   Compiling darling_macro v0.20.11
+   Compiling getrandom v0.2.16
+   Compiling utf8_iter v1.0.4
+   Compiling once_cell v1.21.3
+   Compiling percent-encoding v2.3.1
+   Compiling dtoa v1.0.10
+   Compiling dtoa-short v0.3.5
+   Compiling form_urlencoded v1.2.1
+   Compiling thiserror v2.0.12
+   Compiling idna v1.0.3
+   Compiling fst v0.4.7
+   Compiling rand_core v0.6.4
+   Compiling darling v0.20.11
+   Compiling regex v1.11.1
+   Compiling crossbeam-epoch v0.9.18
+   Compiling rs-conllu v0.3.0
+   Compiling markup5ever v0.16.2
+   Compiling ppv-lite86 v0.2.21
+   Compiling half v2.6.0
+   Compiling unicode-width v0.2.1
+   Compiling ciborium-io v0.2.2
+   Compiling strum v0.27.1
+   Compiling harper-pos-utils v0.50.0 (/workspace/repo/harper-pos-utils)
+   Compiling ciborium-ll v0.2.2
+   Compiling getopts v0.2.23
+   Compiling pulldown-cmark v0.13.0
+   Compiling rayon-core v1.12.1
+   Compiling html5ever v0.31.0
+   Compiling cssparser v0.35.0
+   Compiling rand_chacha v0.3.1
+   Compiling crossbeam-deque v0.8.6
+   Compiling cached_proc_macro v0.24.0
+   Compiling url v2.5.4
+   Compiling hashbrown v0.14.5
+   Compiling itertools v0.10.5
+   Compiling bitflags v2.9.1
+   Compiling cached_proc_macro_types v0.1.1
+   Compiling maplit v1.0.2
+   Compiling web-time v1.1.0
+   Compiling lazy_static v1.5.0
+   Compiling unicase v2.8.1
+   Compiling pulldown-cmark-escape v0.11.0
+   Compiling cast v0.3.0
+   Compiling criterion-plot v0.5.0
+   Compiling harper-brill v0.50.0 (/workspace/repo/harper-brill)
+   Compiling cached v0.55.1
+   Compiling ammonia v4.1.0
+   Compiling levenshtein_automata v0.2.1
+   Compiling rand v0.8.5
+   Compiling ciborium v0.2.2
+   Compiling ordered-float v5.0.0
+   Compiling env_logger v0.8.4
+   Compiling lru v0.16.0
+   Compiling tinytemplate v1.2.1
+   Compiling itertools v0.13.0
+   Compiling itertools v0.14.0
+   Compiling oorandom v11.1.5
+   Compiling anes v0.1.6
+   Compiling unicode-script v0.5.7
+   Compiling unicode-blocks v0.1.9
+   Compiling criterion v0.6.0
+   Compiling quickcheck v1.0.3
+   Compiling rayon v1.10.0
+   Compiling harper-core v0.50.0 (/workspace/repo/harper-core)
+warning: unnecessary parentheses around type
+   --> harper-core/src/expr/mod.rs:128:14
+    |
+128 |     ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+    |              ^                              ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+128 -     ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+128 +     ) -> Box<dyn Iterator<Item = Span> + 'a> {
+    |
+
+warning: unnecessary parentheses around type
+   --> harper-core/src/expr/mod.rs:145:14
+    |
+145 |     ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+    |              ^                              ^
+    |
+help: remove these parentheses
+    |
+145 -     ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+145 +     ) -> Box<dyn Iterator<Item = Span> + 'a> {
+    |
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/char_string.rs:12:17
+   |
+12 |     fn to_lower(&self) -> Cow<[char]>;
+   |                 ^^^^^     ^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+12 |     fn to_lower(&self) -> Cow<'_, [char]>;
+   |                               +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/char_string.rs:15:19
+   |
+15 |     fn normalized(&self) -> Cow<[char]>;
+   |                   ^^^^^     ^^^^^^^^^^^ the same lifetime is hidden here
+   |                   |
+   |                   the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+15 |     fn normalized(&self) -> Cow<'_, [char]>;
+   |                                 +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/char_string.rs:38:17
+   |
+38 |     fn to_lower(&self) -> Cow<[char]> {
+   |                 ^^^^^     ^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+38 |     fn to_lower(&self) -> Cow<'_, [char]> {
+   |                               +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/char_string.rs:56:19
+   |
+56 |     fn normalized(&self) -> Cow<[char]> {
+   |                   ^^^^^     ^^^^^^^^^^^ the same lifetime is hidden here
+   |                   |
+   |                   the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+56 |     fn normalized(&self) -> Cow<'_, [char]> {
+   |                                 +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/dictionary.rs:22:9
+   |
+22 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+26 |     ) -> Vec<FuzzyMatchResult>;
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+26 |     ) -> Vec<FuzzyMatchResult<'_>>;
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/dictionary.rs:29:9
+   |
+29 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+33 |     ) -> Vec<FuzzyMatchResult>;
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+33 |     ) -> Vec<FuzzyMatchResult<'_>>;
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/fst_dictionary.rs:132:9
+    |
+132 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+136 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+136 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/fst_dictionary.rs:180:9
+    |
+180 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+184 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+184 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/merged_dictionary.rs:126:9
+    |
+126 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+130 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+130 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/merged_dictionary.rs:140:9
+    |
+140 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+144 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+144 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/mutable_dictionary.rs:140:9
+    |
+140 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+144 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+144 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/mutable_dictionary.rs:195:9
+    |
+195 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+199 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+199 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: variable does not need to be mutable
+   --> harper-core/src/linting/mod.rs:257:40
+    |
+257 |     pub fn assert_no_lints(text: &str, mut linter: impl Linter) {
+    |                                        ----^^^^^^
+    |                                        |
+    |                                        help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: `harper-core` (lib) generated 16 warnings (2 duplicates) (run `cargo fix --lib -p harper-core` to apply 14 suggestions)
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/tests/linters.rs:32:20
+   |
+32 |     fn new(source: &str) -> Lines {
+   |                    ^^^^     ^^^^^ the same lifetime is hidden here
+   |                    |
+   |                    the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+32 |     fn new(source: &str) -> Lines<'_> {
+   |                                  ++++
+
+warning: `harper-core` (test "linters") generated 1 warning (run `cargo fix --test "linters" -p harper-core` to apply 1 suggestion)
+warning: `harper-core` (lib test) generated 17 warnings (16 duplicates) (run `cargo fix --lib -p harper-core --tests` to apply 1 suggestion)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 15s
+────────────
+ Nextest run ID 69a7246f-e246-434f-985b-026c27a727cb with nextest profile: default
+    Starting 91 tests across 5 binaries (1894 tests skipped)
+        PASS [   0.447s] ( 1/91) harper-core linting::phrase_set_corrections::tests::change_of_tact_real_world
+        PASS [   0.447s] ( 2/91) harper-core linting::phrase_set_corrections::tests::change_of_tacks_atomic
+        PASS [   0.449s] ( 3/91) harper-core linting::phrase_set_corrections::tests::change_tact_atomic
+        PASS [   0.456s] ( 4/91) harper-core linting::phrase_set_corrections::tests::change_of_tacts_real_world
+        PASS [   0.484s] ( 5/91) harper-core linting::phrase_set_corrections::tests::changed_tacks_atomic
+        PASS [   0.478s] ( 6/91) harper-core linting::phrase_set_corrections::tests::changes_of_tact_real_world
+        PASS [   0.501s] ( 7/91) harper-core linting::phrase_set_corrections::tests::changes_tacts_atomic
+        PASS [   0.508s] ( 8/91) harper-core linting::phrase_set_corrections::tests::changing_of_tacks_real_world
+        PASS [   0.442s] ( 9/91) harper-core linting::phrase_set_corrections::tests::changing_tact_atomic
+        PASS [   0.439s] (10/91) harper-core linting::phrase_set_corrections::tests::correct_atomic_a_whole_entire_to_a_whole
+        PASS [   0.447s] (11/91) harper-core linting::phrase_set_corrections::tests::correct_atomic_a_whole_entire_to_an_entire
+        PASS [   0.441s] (12/91) harper-core linting::phrase_set_corrections::tests::correct_clients_side
+        PASS [   0.487s] (13/91) harper-core linting::phrase_set_corrections::tests::correct_had_went
+        PASS [   0.488s] (14/91) harper-core linting::phrase_set_corrections::tests::correct_had_past
+        PASS [   0.476s] (15/91) harper-core linting::phrase_set_corrections::tests::correct_has_past
+        PASS [   0.479s] (16/91) harper-core linting::phrase_set_corrections::tests::correct_has_went
+        PASS [   0.438s] (17/91) harper-core linting::phrase_set_corrections::tests::correct_have_went
+        PASS [   0.445s] (18/91) harper-core linting::phrase_set_corrections::tests::correct_have_past
+        PASS [   0.441s] (19/91) harper-core linting::phrase_set_corrections::tests::correct_having_went
+        PASS [   0.455s] (20/91) harper-core linting::phrase_set_corrections::tests::correct_having_past
+        PASS [   0.444s] (21/91) harper-core linting::phrase_set_corrections::tests::correct_hone_in_on
+        PASS [   0.442s] (22/91) harper-core linting::phrase_set_corrections::tests::correct_honed_in_on
+        PASS [   0.447s] (23/91) harper-core linting::phrase_set_corrections::tests::correct_hones_in_on
+        PASS [   0.444s] (24/91) harper-core linting::phrase_set_corrections::tests::correct_honing_in_on
+        PASS [   0.439s] (25/91) harper-core linting::phrase_set_corrections::tests::correct_how_it_look_like_1
+        PASS [   0.446s] (26/91) harper-core linting::phrase_set_corrections::tests::correct_how_he_looks_like_2
+        PASS [   0.465s] (27/91) harper-core linting::phrase_set_corrections::tests::correct_how_it_looks_like_1
+        PASS [   0.467s] (28/91) harper-core linting::phrase_set_corrections::tests::correct_how_it_look_like_2
+        PASS [   0.443s] (29/91) harper-core linting::phrase_set_corrections::tests::correct_how_it_looks_like_2
+        PASS [   0.451s] (30/91) harper-core linting::phrase_set_corrections::tests::correct_how_it_looks_like_with_apostrophe
+        PASS [   0.446s] (31/91) harper-core linting::phrase_set_corrections::tests::correct_how_she_looks_like_1
+        PASS [   0.442s] (32/91) harper-core linting::phrase_set_corrections::tests::correct_how_they_look_like_1
+        PASS [   0.441s] (33/91) harper-core linting::phrase_set_corrections::tests::correct_how_they_looks_like_1
+        PASS [   0.451s] (34/91) harper-core linting::phrase_set_corrections::tests::correct_how_they_look_like_2
+        PASS [   0.444s] (35/91) harper-core linting::phrase_set_corrections::tests::correct_how_they_looks_like_2
+        PASS [   0.443s] (36/91) harper-core linting::phrase_set_corrections::tests::correct_real_world_a_whole_entire_to_a_whole
+        PASS [   0.450s] (37/91) harper-core linting::phrase_set_corrections::tests::correct_real_world_a_whole_entire_to_an_entire
+        PASS [   0.453s] (38/91) harper-core linting::phrase_set_corrections::tests::correct_real_world_whole_entire
+        PASS [   0.447s] (39/91) harper-core linting::phrase_set_corrections::tests::correct_servers_side
+        PASS [   0.449s] (40/91) harper-core linting::phrase_set_corrections::tests::correct_worse_case_hyphen
+        PASS [   0.442s] (41/91) harper-core linting::phrase_set_corrections::tests::correct_worse_case_space
+        PASS [   0.440s] (42/91) harper-core linting::phrase_set_corrections::tests::correct_worse_case_two_hyphens
+        PASS [   0.446s] (43/91) harper-core linting::phrase_set_corrections::tests::corrects_definite_article
+        PASS [   0.445s] (44/91) harper-core linting::phrase_set_corrections::tests::corrects_definite_articles_lowercase
+        PASS [   0.441s] (45/91) harper-core linting::phrase_set_corrections::tests::corrects_further_ado
+        PASS [   0.444s] (46/91) harper-core linting::phrase_set_corrections::tests::corrects_invest_into
+        PASS [   0.441s] (47/91) harper-core linting::phrase_set_corrections::tests::corrects_invested_into
+        PASS [   0.440s] (48/91) harper-core linting::phrase_set_corrections::tests::corrects_investing_into
+        PASS [   0.444s] (49/91) harper-core linting::phrase_set_corrections::tests::corrects_invests_into
+        PASS [   0.441s] (50/91) harper-core linting::phrase_set_corrections::tests::corrects_much_ado
+        PASS [   0.455s] (51/91) harper-core linting::phrase_set_corrections::tests::detect_a_lot_worse_atomic
+        PASS [   0.457s] (52/91) harper-core linting::phrase_set_corrections::tests::detect_a_lot_worse_real_world
+        PASS [   0.440s] (53/91) harper-core linting::phrase_set_corrections::tests::detect_atomic_whole_entire
+        PASS [   0.436s] (54/91) harper-core linting::phrase_set_corrections::tests::detect_explanation_mark_atomic
+        PASS [   0.448s] (55/91) harper-core linting::phrase_set_corrections::tests::detect_explanation_mark_real_world
+        PASS [   0.453s] (56/91) harper-core linting::phrase_set_corrections::tests::detect_explanation_marks_atomic
+        PASS [   0.495s] (57/91) harper-core linting::phrase_set_corrections::tests::detect_explanation_marks_real_world
+        PASS [   0.497s] (58/91) harper-core linting::phrase_set_corrections::tests::detect_explanation_point_atomic
+        PASS [   0.444s] (59/91) harper-core linting::phrase_set_corrections::tests::detect_explanation_point_real_world
+        PASS [   0.440s] (60/91) harper-core linting::phrase_set_corrections::tests::detect_far_worse_atomic
+        PASS [   0.439s] (61/91) harper-core linting::phrase_set_corrections::tests::detect_much_worse_atomic
+        PASS [   0.446s] (62/91) harper-core linting::phrase_set_corrections::tests::detect_far_worse_real_world
+        PASS [   0.442s] (63/91) harper-core linting::phrase_set_corrections::tests::detect_raise_the_question
+        PASS [   0.442s] (64/91) harper-core linting::phrase_set_corrections::tests::detect_much_worse_real_world
+        PASS [   0.446s] (65/91) harper-core linting::phrase_set_corrections::tests::detect_raises_the_question
+        PASS [   0.449s] (66/91) harper-core linting::phrase_set_corrections::tests::detect_turn_for_the_worse_atomic
+        PASS [   0.454s] (67/91) harper-core linting::phrase_set_corrections::tests::detect_turn_for_the_worse_real_world
+        PASS [   0.456s] (68/91) harper-core linting::phrase_set_corrections::tests::detect_worse_and_worst_real_world
+        PASS [   0.492s] (69/91) harper-core linting::phrase_set_corrections::tests::detect_worse_than_atomic
+        PASS [   0.497s] (70/91) harper-core linting::phrase_set_corrections::tests::detect_worse_than_real_world
+        PASS [   0.450s] (71/91) harper-core linting::phrase_set_corrections::tests::detect_worst_and_worst_atomic
+        PASS [   0.445s] (72/91) harper-core linting::phrase_set_corrections::tests::detect_worst_and_worst_real_world
+        PASS [   0.503s] (73/91) harper-core linting::phrase_set_corrections::tests::detect_worst_ever_atomic
+        PASS [   0.501s] (74/91) harper-core linting::phrase_set_corrections::tests::detect_worst_ever_real_world
+        PASS [   0.453s] (75/91) harper-core linting::phrase_set_corrections::tests::get_rid_off
+        PASS [   0.456s] (76/91) harper-core linting::phrase_set_corrections::tests::get_ride_of
+        PASS [   0.464s] (77/91) harper-core linting::phrase_set_corrections::tests::get_ride_off
+        PASS [   0.475s] (78/91) harper-core linting::phrase_set_corrections::tests::gets_rid_off
+        PASS [   0.447s] (79/91) harper-core linting::phrase_set_corrections::tests::gets_ride_of
+        PASS [   0.440s] (80/91) harper-core linting::phrase_set_corrections::tests::getting_rid_off
+        PASS [   0.442s] (81/91) harper-core linting::phrase_set_corrections::tests::getting_ride_of
+        PASS [   0.438s] (82/91) harper-core linting::phrase_set_corrections::tests::got_rid_off
+        PASS [   0.443s] (83/91) harper-core linting::phrase_set_corrections::tests::gotten_rid_off
+        PASS [   0.446s] (84/91) harper-core linting::phrase_set_corrections::tests::got_ride_of
+        PASS [   0.440s] (85/91) harper-core linting::phrase_set_corrections::tests::gotten_ride_of
+        PASS [   0.443s] (86/91) harper-core linting::phrase_set_corrections::tests::in_detail_real_world
+        PASS [   0.447s] (87/91) harper-core linting::phrase_set_corrections::tests::in_more_detail_real_world
+        PASS [   0.454s] (88/91) harper-core linting::phrase_set_corrections::tests::in_more_detail_atomic
+        PASS [   0.445s] (89/91) harper-core linting::phrase_set_corrections::tests::operative_system
+        PASS [   0.451s] (90/91) harper-core linting::phrase_set_corrections::tests::operative_systems
+        PASS [   0.429s] (91/91) harper-core linting::phrase_set_corrections::tests::point_is_moot
+────────────
+     Summary [  20.847s] 91 tests run: 91 passed, 1894 skipped
+reward=1 graded=91 found=13 failed=0 parsed=91 framework=cargo exit_code=0

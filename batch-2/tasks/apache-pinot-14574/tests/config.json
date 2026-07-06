@@ -1,0 +1,25 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -pl pinot-spi,pinot-common -DskipTests -DskipShade=true -Dcheckstyle.skip=true -Dlicense.skip=true -Denforcer.skip=true && mvn test -pl pinot-broker -Dtest=MultiStageQueryThrottlerTest -DfailIfNoTests=false -DskipShade=true",
+  "test_files": [
+    "pinot-broker/src/test/java/org/apache/pinot/broker/requesthandler/MultiStageQueryThrottlerTest.java",
+    "pinot-integration-tests/src/test/java/org/apache/pinot/integration/tests/MultiStageEngineIntegrationTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7",
+    "Pinot::test_8",
+    "Pinot::test_9",
+    "Pinot::test_10",
+    "Pinot::test_11",
+    "Pinot::test_12"
+  ],
+  "PASS_TO_PASS": []
+}

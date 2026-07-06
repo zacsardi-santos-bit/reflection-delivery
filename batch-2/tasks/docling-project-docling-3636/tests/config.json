@@ -1,0 +1,34 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_backend_jats.py -v",
+  "test_files": [
+    "tests/data/groundtruth/docling_v2/elife-56337.nxml.itxt",
+    "tests/data/groundtruth/docling_v2/elife-56337.nxml.json",
+    "tests/data/groundtruth/docling_v2/elife-56337.nxml.md",
+    "tests/data/groundtruth/docling_v2/pntd.0008301.nxml.json",
+    "tests/data/groundtruth/docling_v2/pone.0234687.nxml.json",
+    "tests/test_backend_jats.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_backend_jats::test_jats_footnotes_are_preserved",
+    "tests.test_backend_jats::test_e2e_jats_conversions",
+    "tests.test_backend_jats::test_e2e_jats_conversions_stream",
+    "tests.test_backend_jats::test_e2e_jats_conversions_no_stream"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_backend_jats::test_jats_structured_abstract_sections_are_preserved",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><name><given-names>Jane</given-names><surname>Doe</surname></name></contrib>-Jane Doe]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><string-name>Jane Q. Doe</string-name></contrib>-Jane Q. Doe]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><name-alternatives><name><given-names>Jane</given-names><surname>Doe</surname></name><string-name>J. Doe</string-name></name-alternatives></contrib>-Jane Doe]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><collab-name>Example Working Group</collab-name></contrib>-Example Working Group]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><collab>Deprecated Working Group</collab></contrib>-Deprecated Working Group]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><collab-name-alternatives><collab-name>Primary Group</collab-name><collab>Legacy Group</collab></collab-name-alternatives></contrib>-Primary Group]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><collab-alternatives><collab>Alternative Group</collab></collab-alternatives></contrib>-Alternative Group]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><anonymous/></contrib>-Anonymous]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><name><surname>Doe</surname></name></contrib>-Doe]",
+    "tests.test_backend_jats::test_jats_author_name_variants[<contrib contrib-type=\"author\"><name><given-names>Jane</given-names></name></contrib>-Jane]",
+    "tests.test_backend_jats::test_jats_author_affiliations_still_map_from_xref"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+    "id": "95dba03b-ca60-49de-ab1a-ac139cdd9d77",
+    "started_at": "2026-07-06T12:17:20.619440",
+    "finished_at": "2026-07-06T12:18:02.243253",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__lancedb-lancedb-1458": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "lancedb-lancedb-1458__3pbvZgY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

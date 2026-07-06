@@ -1,0 +1,31 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/components/Forms/FormControl/FormControl.test.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "src/components/Forms/FormControl/FormControl.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The FormLabel component should have the correct style it depends on left label position",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The FormLabel component should have the correct style with own typo props"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Snapshot > With single field",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Snapshot > With single field and left label position",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Snapshot > With multiple field",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Snapshot > With multiple field and left label position",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Accessibility > With single field",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Accessibility > With multiple field",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The FormLabel component should have the correct attribute",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The FormLabel component should have the correct style it depends on top label position",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The Field(Input) component should have the correct attribute",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The Field(Input) component should have the correct attribute when the \"hasError\" prop is true",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The FormHelperText component is only visible when the \"hasError\" prop is false",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Single field form > The FormErrorMessage component is only visible when the \"hasError\" prop is true",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Multiple(Group) field form > The FormLabel for group element should not have \"for\" attribute",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Multiple(Group) field form > The FormGroup component should have the correct attribute",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Multiple(Group) field form > The FormGroup component should have the correct attribute when the \"hasError\" prop is true",
+    "/workspace/repo/src/components/Forms/FormControl/FormControl.test.tsx::FormControl > Multiple(Group) field form > The Field(Input) component inside FormGroup should have a unique ID that is not FormGroup ID"
+  ]
+}

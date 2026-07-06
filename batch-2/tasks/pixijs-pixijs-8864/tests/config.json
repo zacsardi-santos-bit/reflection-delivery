@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npm install 2>&1 | tail -5 && GITHUB_ACTIONS=true npx jest packages/constants/test/constants.tests.ts --testEnvironment=node --runner=jest-runner --coverage=false",
+  "test_files": [
+    "test/jest-global-setup.ts",
+    "test/jest-global-teardown.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have ENV",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have RENDERER_TYPE",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have BLEND_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have DRAW_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have FORMATS",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have TARGETS",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have TYPES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have SCALE_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have WRAP_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have MIPMAP_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have ALPHA_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have GC_MODES",
+    "/workspace/repo/packages/constants/test/constants.tests.ts::Constants should have PRECISION"
+  ],
+  "PASS_TO_PASS": []
+}

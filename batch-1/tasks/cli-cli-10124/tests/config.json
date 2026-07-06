@@ -1,0 +1,30 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/cmd/repo/autolink/list -count=1",
+  "test_files": [
+    "pkg/cmd/repo/autolink/list/http_test.go",
+    "pkg/cmd/repo/autolink/list/list_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestAutoLinkLister_List/no_autolinks",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestAutoLinkLister_List/two_autolinks",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestAutoLinkLister_List/http_error",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestAutoLinkLister_List",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestJSONFields",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestNewCmdList/no_argument",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestNewCmdList/web_flag",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestNewCmdList/json_flag",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestNewCmdList/invalid_json_flag",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestNewCmdList",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun/list_tty",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun/list_json",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun/list_non-tty",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun/no_results",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun/client_error",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun/web_mode",
+    "github.com/cli/cli/v2/pkg/cmd/repo/autolink/list::TestListRun"
+  ],
+  "PASS_TO_PASS": []
+}

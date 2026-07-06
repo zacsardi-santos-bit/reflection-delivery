@@ -1,0 +1,16 @@
+{
+  "test_framework": "gtest",
+  "test_command": "cd /workspace/repo && mkdir -p cmake/build && cd cmake/build && cmake -DgRPC_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release ../.. > /tmp/cmake_build.log 2>&1 && make grpc_tls_credentials_options_test -j$(nproc) >> /tmp/cmake_build.log 2>&1 && GTEST_OUTPUT=json:/workspace/test-results/output.json ./grpc_tls_credentials_options_test > /dev/null 2>&1 && python3 -c \"import json; d=json.load(open('/workspace/test-results/output.json')); print(json.dumps({'testsuites': d['testsuites']}))\"",
+  "test_files": [
+    "test/core/security/BUILD",
+    "test/core/security/grpc_tls_credentials_options_test.cc",
+    "test/core/security/tls_security_connector_test.cc",
+    "tools/run_tests/generated/tests.json"
+  ],
+  "num_test_files": 4,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "GrpcTlsCredentialsOptionsTest::SetKeyMaterials"
+  ],
+  "PASS_TO_PASS": []
+}

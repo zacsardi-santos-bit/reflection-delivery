@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && BABEL_ENV=development node .yarn/releases/yarn-4.10.3.cjs gulp build-no-bundle 2>&1 | tail -3 && BABEL_ENV=test node ./node_modules/.bin/jest packages/babel-core/test/merge-map.skip-bundled.js --coverage=false --json",
+  "test_files": [
+    "packages/babel-core/test/async.js",
+    "packages/babel-core/test/config-chain.js",
+    "packages/babel-core/test/fixtures/babel-compile-async-parallel.mjs",
+    "packages/babel-core/test/fixtures/babel-compile-async.mjs",
+    "packages/babel-core/test/fixtures/babel-compile-sync.mjs",
+    "packages/babel-core/test/fixtures/babel-load-options-async.mjs",
+    "packages/babel-core/test/helpers/esm.js"
+  ],
+  "num_test_files": 7,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/babel-core/test/merge-map.skip-bundled.js::returns a plain js object"
+  ],
+  "PASS_TO_PASS": []
+}

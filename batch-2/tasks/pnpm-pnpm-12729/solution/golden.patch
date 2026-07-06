@@ -1,0 +1,779 @@
+diff --git a/.github/workflows/pacquet-integrated-benchmark.yml b/.github/workflows/pacquet-integrated-benchmark.yml
+index f68974035c..4af1f25bc3 100644
+--- a/.github/workflows/pacquet-integrated-benchmark.yml
++++ b/.github/workflows/pacquet-integrated-benchmark.yml
+@@ -323,6 +323,22 @@ jobs:
+           cp bench-work-env/BENCHMARK_REPORT.md bench-work-env/BENCHMARK_REPORT_ISOLATED_FRESH_INSTALL_COLD_CACHE_HOT_STORE.md
+           cp bench-work-env/BENCHMARK_REPORT.json bench-work-env/BENCHMARK_REPORT_ISOLATED_FRESH_INSTALL_COLD_CACHE_HOT_STORE.json
+ 
++      - name: 'Benchmark: Isolated linker: fresh restore, cold cache + cold store + cold pnpr'
++        shell: bash
++        # The only scenario with a cold pnpr-side cache: the per-revision mock
++        # starts empty each iteration and refetches every tarball from the warm
++        # origin, exercising the proxy's cold download/serve path (which streams
++        # rather than buffering the full tarball before serving). Frozen so it's
++        # just tarball serving — no resolution noise — and both arms measure it.
++        # Most expensive scenario (every iteration re-downloads ~1300 tarballs
++        # through the mock), so it gets the same generous timeout as a fresh
++        # install.
++        timeout-minutes: 35
++        run: |
++          just integrated-benchmark --reuse-prebuilt-binaries --scenario=isolated-linker.fresh-restore.cold-cache.cold-store.cold-pnpr --registry=verdaccio --pnpr-latency-ms=${PNPR_LATENCY_MS} --registry-latency-ms=${REGISTRY_LATENCY_MS} --registry-bandwidth-mbps=${REGISTRY_BANDWIDTH_MBPS} $BENCHMARK_TARGETS
++          cp bench-work-env/BENCHMARK_REPORT.md bench-work-env/BENCHMARK_REPORT_ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE_COLD_PNPR.md
++          cp bench-work-env/BENCHMARK_REPORT.json bench-work-env/BENCHMARK_REPORT_ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE_COLD_PNPR.json
++
+       - name: Generate summary
+         shell: bash
+         env:
+@@ -398,6 +414,18 @@ jobs:
+             echo '```'
+             echo
+             echo '</details>'
++            echo
++            echo '### Scenario: Isolated linker: fresh restore, cold cache + cold store + cold pnpr'
++            echo
++            cat bench-work-env/BENCHMARK_REPORT_ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE_COLD_PNPR.md
++            echo
++            echo '<details><summary>BENCHMARK_REPORT.json</summary>'
++            echo
++            echo '```json'
++            jq 'del(.results[].exit_codes)' bench-work-env/BENCHMARK_REPORT_ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE_COLD_PNPR.json
++            echo '```'
++            echo
++            echo '</details>'
+           ) > bench-work-env/SUMMARY.md
+ 
+       - name: Build Bencher-shaped report
+@@ -436,14 +464,16 @@ jobs:
+             'ISOLATED_FRESH_RESTORE_HOT_CACHE_HOT_STORE:isolated-linker.fresh-restore.hot-cache.hot-store' \
+             'ISOLATED_FRESH_INSTALL_COLD_CACHE_COLD_STORE:isolated-linker.fresh-install.cold-cache.cold-store' \
+             'ISOLATED_FRESH_INSTALL_HOT_CACHE_HOT_STORE:isolated-linker.fresh-install.hot-cache.hot-store' \
+-            'ISOLATED_FRESH_INSTALL_COLD_CACHE_HOT_STORE:isolated-linker.fresh-install.cold-cache.hot-store'
++            'ISOLATED_FRESH_INSTALL_COLD_CACHE_HOT_STORE:isolated-linker.fresh-install.cold-cache.hot-store' \
++            'ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE_COLD_PNPR:isolated-linker.fresh-restore.cold-cache.cold-store.cold-pnpr'
+ 
+           build_bencher_file bench-work-env/bencher-results-pnpr.json pnpr@HEAD \
+             'ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE:isolated-linker.fresh-restore.cold-cache.cold-store' \
+             'ISOLATED_FRESH_RESTORE_HOT_CACHE_HOT_STORE:isolated-linker.fresh-restore.hot-cache.hot-store' \
+             'ISOLATED_FRESH_INSTALL_COLD_CACHE_COLD_STORE:isolated-linker.fresh-install.cold-cache.cold-store' \
+             'ISOLATED_FRESH_INSTALL_HOT_CACHE_HOT_STORE:isolated-linker.fresh-install.hot-cache.hot-store' \
+-            'ISOLATED_FRESH_INSTALL_COLD_CACHE_HOT_STORE:isolated-linker.fresh-install.cold-cache.hot-store'
++            'ISOLATED_FRESH_INSTALL_COLD_CACHE_HOT_STORE:isolated-linker.fresh-install.cold-cache.hot-store' \
++            'ISOLATED_FRESH_RESTORE_COLD_CACHE_COLD_STORE_COLD_PNPR:isolated-linker.fresh-restore.cold-cache.cold-store.cold-pnpr'
+ 
+       - name: Stage artifact contents
+         # The artifact carries the rendered report plus the
+diff --git a/pacquet/tasks/integrated-benchmark/src/cli_args.rs b/pacquet/tasks/integrated-benchmark/src/cli_args.rs
+index 1bcc44db7e..124b175407 100644
+--- a/pacquet/tasks/integrated-benchmark/src/cli_args.rs
++++ b/pacquet/tasks/integrated-benchmark/src/cli_args.rs
+@@ -187,6 +187,15 @@ pub enum BenchmarkScenario {
+     /// No lockfile, cold cache + cold store. Mirrors `pnpm install` with nothing on disk.
+     #[value(name = "isolated-linker.fresh-install.cold-cache.cold-store")]
+     IsolatedFreshInstallColdCacheColdStore,
++    /// Frozen lockfile, cold cache + cold store, **and a cold pnpr cache**: the
++    /// tarball-serving mock starts empty each iteration and re-fetches every
++    /// tarball from a warm local origin, so the install exercises the proxy's
++    /// cold download/serve path — the one streaming overlaps, and the only
++    /// scenario that hits it (every other warms the mock). Frozen on purpose:
++    /// no resolution, so the cold path is *just* tarball serving with no
++    /// packument-fetch noise, and both the direct and pnpr arms measure it.
++    #[value(name = "isolated-linker.fresh-restore.cold-cache.cold-store.cold-pnpr")]
++    IsolatedFreshRestoreColdCacheColdStoreColdPnpr,
+     /// No lockfile, hot cache + hot store. Resolves everything against an already-populated store.
+     #[value(name = "isolated-linker.fresh-install.hot-cache.hot-store")]
+     IsolatedFreshInstallHotCacheHotStore,
+@@ -232,6 +241,7 @@ impl BenchmarkScenario {
+             | BenchmarkScenario::IsolatedFreshInstallHotCacheHotStore
+             | BenchmarkScenario::IsolatedFreshInstallColdCacheHotStore => &["install"],
+             BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStore
++            | BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStoreColdPnpr
+             | BenchmarkScenario::IsolatedFreshRestoreHotCacheHotStore
+             | BenchmarkScenario::GvsFreshRestoreHotCacheHotStore => {
+                 &["install", "--frozen-lockfile"]
+@@ -254,6 +264,7 @@ impl BenchmarkScenario {
+             | BenchmarkScenario::IsolatedFreshInstallHotCacheHotStore
+             | BenchmarkScenario::IsolatedFreshInstallColdCacheHotStore => false,
+             BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStore
++            | BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStoreColdPnpr
+             | BenchmarkScenario::IsolatedFreshRestoreHotCacheHotStore
+             | BenchmarkScenario::IsolatedFreshAddDepHotCacheHotStore
+             | BenchmarkScenario::GvsFreshRestoreHotCacheHotStore => true,
+@@ -287,6 +298,15 @@ impl BenchmarkScenario {
+                 remove: &["node_modules", "pnpm-lock.yaml", "store-dir", "cache-dir"],
+                 restore: &[SAVED_PACKAGE_JSON],
+             },
++            // Same as the frozen cold-cache + cold-store restore, but also wipe
++            // the per-revision mock's `cold-mock-storage` so the serving pnpr
++            // refetches (and streams) every tarball from the warm origin each
++            // iteration. (`cold-mock-storage` only exists under a `pnpr@<rev>`
++            // bench dir; it's a harmless no-op for the other ids.)
++            BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStoreColdPnpr => Cleanup {
++                remove: &["node_modules", "store-dir", "cache-dir", "cold-mock-storage"],
++                restore: &[SAVED_LOCKFILE],
++            },
+             BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStore => Cleanup {
+                 remove: &["node_modules", "store-dir", "cache-dir"],
+                 restore: &[SAVED_LOCKFILE],
+@@ -333,6 +353,12 @@ impl BenchmarkScenario {
+                 | BenchmarkScenario::IsolatedFreshInstallColdCacheHotStore,
+         )
+     }
++
++    /// Whether this scenario gives the serving mock a cold cache (see the
++    /// `…cold-store.cold-pnpr` variant); selects the cold-mock spawn.
++    pub fn cold_pnpr_cache(self) -> bool {
++        matches!(self, BenchmarkScenario::IsolatedFreshRestoreColdCacheColdStoreColdPnpr)
++    }
+ }
+ 
+ #[derive(Debug, Args)]
+diff --git a/pacquet/tasks/integrated-benchmark/src/work_env.rs b/pacquet/tasks/integrated-benchmark/src/work_env.rs
+index b36343becf..7970f31b13 100644
+--- a/pacquet/tasks/integrated-benchmark/src/work_env.rs
++++ b/pacquet/tasks/integrated-benchmark/src/work_env.rs
+@@ -423,9 +423,13 @@ impl WorkEnv {
+         // store + cache (only present for `pnpr@<rev>` targets) — wiping it
+         // upfront (but never per-iteration) makes the hyperfine warmup the
+         // run that primes the server, so timed runs measure a warm
+-        // long-running server even while the client is cold.
++        // long-running server even while the client is cold. `cold-mock-storage`
++        // (only the cold-pnpr scenario) is wiped here too so the warmup run
++        // starts cold even on a reused work-env, not just the timed iterations.
+         for dir in self.benchmarked_ids().map(|id| self.bench_dir(id)) {
+-            for name in ["node_modules", "store-dir", "cache-dir", "pnpr-storage"] {
++            for name in
++                ["node_modules", "store-dir", "cache-dir", "pnpr-storage", "cold-mock-storage"]
++            {
+                 let path = dir.join(name);
+                 if path.exists() {
+                     remove_dir_all_with_retry(&path).expect("pre-benchmark wipe");
+@@ -527,22 +531,48 @@ impl WorkEnv {
+         let stderr = File::create(bench_dir.join("revision-mock.stderr.log"))
+             .expect("create revision mock stderr log");
+ 
+-        eprintln!(
+-            "Serving {revision}'s tarballs from a mock built from pnpr@{revision} on 127.0.0.1:{mock_port}...",
+-        );
+         // The mock advertises its tarball URLs at the client-facing proxy
+         // URL (`registry.url`), not its own loopback port, so downloads cross
+         // the emulated registry link instead of bypassing it.
+-        let process = pacquet_registry_mock::pnpr_command_with_binary(
+-            &binary,
+-            mock_port,
+-            Some(&registry.url),
+-        )
+-        .stdin(Stdio::null())
+-        .stdout(stdout)
+-        .stderr(stderr)
+-        .spawn()
+-        .expect("spawn revision mock");
++        let cold = self.scenario.is_some_and(BenchmarkScenario::cold_pnpr_cache);
++        let process = if cold {
++            // Empty, isolated storage (wiped between iterations) proxying the
++            // warm shared mock as origin, so every request is a cache miss.
++            let cold_storage = bench_dir.join("cold-mock-storage");
++            let config_path = bench_dir.join("cold-mock-config.yaml");
++            fs::write(&config_path, cold_mock_config_yaml(&cold_storage, &self.registry))
++                .expect("write cold mock config");
++            eprintln!(
++                "Serving {revision}'s tarballs from a COLD mock built from pnpr@{revision} on 127.0.0.1:{mock_port} (origin {})...",
++                self.registry,
++            );
++            Command::new(&binary)
++                .arg("--config")
++                .arg(&config_path)
++                .arg("--storage")
++                .arg(&cold_storage)
++                .arg("--listen")
++                .arg(format!("127.0.0.1:{mock_port}"))
++                .arg("--public-url")
++                .arg(&registry.url)
++                .arg("--packument-ttl-secs")
++                .arg("31536000")
++                .stdin(Stdio::null())
++                .stdout(stdout)
++                .stderr(stderr)
++                .spawn()
++                .expect("spawn cold revision mock")
++        } else {
++            eprintln!(
++                "Serving {revision}'s tarballs from a mock built from pnpr@{revision} on 127.0.0.1:{mock_port}...",
++            );
++            pacquet_registry_mock::pnpr_command_with_binary(&binary, mock_port, Some(&registry.url))
++                .stdin(Stdio::null())
++                .stdout(stdout)
++                .stderr(stderr)
++                .spawn()
++                .expect("spawn revision mock")
++        };
+ 
+         let mut server = PnprServer { process, latency_proxy: None };
+         wait_for_pnpr_ready(mock_port);
+@@ -804,7 +834,11 @@ impl WorkEnv {
+     ///
+     /// When a revision has its own tarball-serving mock (see
+     /// [`Self::plan_revision_mocks`]), its `pacquet@<rev>` and `pnpr@<rev>`
+-    /// targets fetch from that mock instead of the shared one.
++    /// targets fetch from that mock instead of the shared one. In the cold-pnpr
++    /// scenario both arms therefore exercise the cold mock's serve path — the
++    /// direct arm hitting it as a cold pnpr *registry*, the pnpr arm through its
++    /// accelerator — and the frozen lockfile keeps that about tarball serving
++    /// rather than (noisy) cold resolution.
+     fn registry_for<'a>(
+         &'a self,
+         id: BenchId,
+@@ -1580,6 +1614,69 @@ fn write_pnpr_benchmark_config(
+     path
+ }
+ 
++/// A minimal verdaccio-shaped config for the cold mock: isolated `storage` and
++/// a single `**` proxy uplink at the warm origin, with public reads needing no
++/// auth (matching the bundled mock config).
++fn cold_mock_config_yaml(storage: &Path, origin: &str) -> String {
++    let config = ColdMockConfig {
++        storage: storage.display().to_string(),
++        uplinks: ColdMockUplinks { npmjs: ColdMockUplink { url: origin.to_string() } },
++        packages: ColdMockPackages {
++            all: ColdMockPackage {
++                access: "$all",
++                publish: "$authenticated",
++                unpublish: "$authenticated",
++                proxy: "npmjs",
++            },
++        },
++        log: ColdMockLog { kind: "stdout", format: "pretty", level: "error" },
++    };
++    serde_saphyr::to_string(&config).expect("serialize cold mock config")
++}
++
++/// A minimal verdaccio-shaped config for the cold mock, serialized rather than
++/// string-formatted so the `storage` path and `origin` URL are escaped and the
++/// structure can't drift.
++#[derive(Serialize)]
++struct ColdMockConfig {
++    storage: String,
++    uplinks: ColdMockUplinks,
++    packages: ColdMockPackages,
++    log: ColdMockLog,
++}
++
++#[derive(Serialize)]
++struct ColdMockUplinks {
++    npmjs: ColdMockUplink,
++}
++
++#[derive(Serialize)]
++struct ColdMockUplink {
++    url: String,
++}
++
++#[derive(Serialize)]
++struct ColdMockPackages {
++    #[serde(rename = "**")]
++    all: ColdMockPackage,
++}
++
++#[derive(Serialize)]
++struct ColdMockPackage {
++    access: &'static str,
++    publish: &'static str,
++    unpublish: &'static str,
++    proxy: &'static str,
++}
++
++#[derive(Serialize)]
++struct ColdMockLog {
++    #[serde(rename = "type")]
++    kind: &'static str,
++    format: &'static str,
++    level: &'static str,
++}
++
+ fn pnpr_benchmark_config_yaml(pnpr_storage: &Path, public_route_registries: &[&str]) -> String {
+     let config = PnprBenchmarkConfig {
+         storage: pnpr_storage.display().to_string(),
+diff --git a/pnpr/crates/pnpr/src/server.rs b/pnpr/crates/pnpr/src/server.rs
+index 4508959a59..59e1f1c7f9 100644
+--- a/pnpr/crates/pnpr/src/server.rs
++++ b/pnpr/crates/pnpr/src/server.rs
+@@ -9,7 +9,7 @@ use crate::{
+         PendingAttachment, extract_attachments, iso_from_unix_millis, merge_manifest, now_iso,
+         stream_decode_verify_and_write,
+     },
+-    storage::{CachedPackument, CachedTarballIntegrity, Storage},
++    storage::{CachedPackument, Storage},
+     streaming,
+     upstream::{
+         CacheValidators, FetchOutcome, FetchedPackument, PackumentFetch, Upstream,
+@@ -1049,40 +1049,14 @@ async fn serve_tarball_via_uplink(
+         return error_response(&err);
+     }
+ 
+-    // Serve a verified private-cache hit without touching the upstream. An
+-    // uplink with `cache: false` skips the cache entirely and streams through.
++    // Serve a cached private-mirror hit directly: the bytes were verified
++    // against `dist.integrity` when written and the client re-verifies what it
++    // receives, so no re-hash is needed — the same trust model the public proxy
++    // path uses. A `cache: false` uplink skips the cache and streams through.
+     if upstream.caches() {
+         match state.inner.storage.open_uplink_tarball(&namespace, &name, &filename).await {
+             Ok(Some((file, len))) => {
+-                let expected = cached_tarball_integrity(&integrity, len);
+-                if state
+-                    .inner
+-                    .storage
+-                    .read_uplink_tarball_integrity(&namespace, &name, &filename)
+-                    .await
+-                    .is_some_and(|cached| cached == expected)
+-                {
+-                    return tarball_response(streaming::stream_file(file), Some(len));
+-                }
+-                match streaming::verify_file(file, &integrity).await {
+-                    Ok(file) => {
+-                        let _ = state
+-                            .inner
+-                            .storage
+-                            .write_uplink_tarball_integrity(&namespace, &name, &filename, &expected)
+-                            .await;
+-                        return tarball_response(streaming::stream_file(file), Some(len));
+-                    }
+-                    Err(err) => {
+-                        let err = tarball_stream_error(err, &name, &filename);
+-                        tracing::warn!(?err, package = %name.as_str(), %filename, "cached uplink tarball failed verification");
+-                        let _ = state
+-                            .inner
+-                            .storage
+-                            .remove_uplink_tarball(&namespace, &name, &filename)
+-                            .await;
+-                    }
+-                }
++                return tarball_response(streaming::stream_file(file), Some(len));
+             }
+             Ok(None) => {}
+             Err(err) => {
+@@ -1118,31 +1092,14 @@ async fn serve_tarball_via_uplink(
+             Err(err) => error_response(&tarball_stream_error(err, &name, &filename)),
+         };
+     }
+-    let len =
+-        match streaming::download_verified_to_cache(response, write, &integrity, MAX_TARBALL_BYTES)
+-            .await
+-        {
+-            Ok(len) => len,
+-            Err(err) => return error_response(&tarball_stream_error(err, &name, &filename)),
+-        };
+-    let _ = state
+-        .inner
+-        .storage
+-        .write_uplink_tarball_integrity(
+-            &namespace,
+-            &name,
+-            &filename,
+-            &cached_tarball_integrity(&integrity, len),
+-        )
+-        .await;
+-    match state.inner.storage.open_uplink_tarball(&namespace, &name, &filename).await {
+-        Ok(Some((file, len))) => tarball_response(streaming::stream_file(file), Some(len)),
+-        Ok(None) => error_response(&tarball_integrity_error(
+-            &name,
+-            &filename,
+-            "verified uplink cache entry disappeared before it could be served".to_string(),
+-        )),
+-        Err(err) => error_response(&err),
++    // Stream the download to the client while teeing it into the namespaced
++    // cache; the entry is promoted only on an SRI match (see
++    // `stream_verified_to_cache`). No `Content-Length` is set: the upstream's
++    // is attacker-controlled and unverifiable before streaming, so the body is
++    // chunked and the client reads to EOF (then re-verifies the integrity).
++    match streaming::stream_verified_to_cache(response, write, &integrity, MAX_TARBALL_BYTES) {
++        Ok(body) => tarball_response(body, None),
++        Err(err) => error_response(&tarball_stream_error(err, &name, &filename)),
+     }
+ }
+ 
+@@ -1188,7 +1145,7 @@ async fn serve_tarball(
+     let upstreams = resolve_upstreams(state, &name);
+ 
+     // A cached tarball is verified against `dist.integrity` on the way in
+-    // (`download_verified_to_cache`) and re-verified by the client on receipt,
++    // (`stream_verified_to_cache`) and re-verified by the client on receipt,
+     // so a hit can be served without re-hashing.
+     let resolved_dist =
+         match screen_cached_tarball_osv(state, &name, &filename, &name_version).await {
+@@ -1244,25 +1201,15 @@ async fn serve_tarball(
+     };
+ 
+     if upstream.caches() {
+-        // Verify the freshly-downloaded bytes against `dist.integrity` as they
+-        // are written to the cache. That write-time check (plus the install
+-        // client's own verification) is why serving cached bytes later needs no
+-        // re-hash.
+-        if let Err(err) =
+-            streaming::download_verified_to_cache(response, write, &integrity, MAX_TARBALL_BYTES)
+-                .await
+-        {
+-            return error_response(&tarball_stream_error(err, &name, &filename));
+-        }
+-
+-        match state.inner.storage.open_cached_tarball(&name, &filename).await {
+-            Ok(Some((file, len))) => tarball_response(streaming::stream_file(file), Some(len)),
+-            Ok(None) => error_response(&tarball_integrity_error(
+-                &name,
+-                &filename,
+-                "verified cache entry disappeared before it could be served".to_string(),
+-            )),
+-            Err(err) => error_response(&err),
++        // Stream the download to the client (see `stream_verified_to_cache`)
++        // rather than buffering the whole tarball at the server to verify it
++        // first, so the upstream fetch and the client transfer overlap. No
++        // `Content-Length` is set: the upstream's is attacker-controlled and
++        // unverifiable before streaming, so the body is chunked and the client
++        // reads to EOF (then re-verifies the integrity).
++        match streaming::stream_verified_to_cache(response, write, &integrity, MAX_TARBALL_BYTES) {
++            Ok(body) => tarball_response(body, None),
++            Err(err) => error_response(&tarball_stream_error(err, &name, &filename)),
+         }
+     } else {
+         match streaming::download_verified_to_temp(response, write, &integrity, MAX_TARBALL_BYTES)
+@@ -1411,10 +1358,6 @@ fn tarball_integrity_error(name: &PackageName, filename: &str, reason: String) -
+     }
+ }
+ 
+-fn cached_tarball_integrity(integrity: &Integrity, len: u64) -> CachedTarballIntegrity {
+-    CachedTarballIntegrity { integrity: integrity.to_string(), len }
+-}
+-
+ /// Add a new user or log in an existing one. Mirrors verdaccio's
+ /// `/-/user/org.couchdb.user/:name` behavior:
+ ///
+diff --git a/pnpr/crates/pnpr/src/storage.rs b/pnpr/crates/pnpr/src/storage.rs
+index 8ee48e5958..f3b13fda39 100644
+--- a/pnpr/crates/pnpr/src/storage.rs
++++ b/pnpr/crates/pnpr/src/storage.rs
+@@ -7,7 +7,6 @@ use crate::{
+     upstream::{CacheValidators, ValidatorsByUplink},
+ };
+ use axum::body::Body;
+-use serde::{Deserialize, Serialize};
+ use std::{
+     io::{ErrorKind, SeekFrom},
+     path::{Path, PathBuf},
+@@ -30,7 +29,6 @@ const PACKUMENT_FILE: &str = "package.json";
+ /// revalidate against. The leading dot keeps it out of the
+ /// package-listing walk and any static-serve view.
+ const PACKUMENT_META_FILE: &str = ".package.json.meta";
+-const TARBALL_INTEGRITY_SUFFIX: &str = ".integrity";
+ 
+ /// Per-process counter feeding [`unique_tmp_path`] so two concurrent
+ /// writes to the same path don't collide on the same temp filename.
+@@ -162,12 +160,6 @@ pub enum CachedPackument {
+     Stale(ValidatorsByUplink),
+ }
+ 
+-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+-pub struct CachedTarballIntegrity {
+-    pub integrity: String,
+-    pub len: u64,
+-}
+-
+ /// Verdaccio-shaped storage split into two stores with different
+ /// durability guarantees:
+ ///
+@@ -502,34 +494,6 @@ impl Storage {
+         self.cached.namespaced(namespace).open_tarball(name, filename).await
+     }
+ 
+-    pub async fn read_uplink_tarball_integrity(
+-        &self,
+-        namespace: &str,
+-        name: &PackageName,
+-        filename: &str,
+-    ) -> Option<CachedTarballIntegrity> {
+-        self.cached.namespaced(namespace).read_tarball_integrity(name, filename).await
+-    }
+-
+-    pub async fn write_uplink_tarball_integrity(
+-        &self,
+-        namespace: &str,
+-        name: &PackageName,
+-        filename: &str,
+-        integrity: &CachedTarballIntegrity,
+-    ) -> Result<()> {
+-        self.cached.namespaced(namespace).write_tarball_integrity(name, filename, integrity).await
+-    }
+-
+-    pub async fn remove_uplink_tarball(
+-        &self,
+-        namespace: &str,
+-        name: &PackageName,
+-        filename: &str,
+-    ) -> Result<bool> {
+-        self.cached.namespaced(namespace).remove_tarball(name, filename).await
+-    }
+-
+     /// Promote a tmp tarball written by the publish flow to its final
+     /// home: a rename on the fs backend, an upload on the S3 backend.
+     pub async fn finalize_tarball_slot(&self, slot: TarballSlot) -> Result<()> {
+@@ -672,27 +636,6 @@ impl Store {
+         Ok(Some((file, len)))
+     }
+ 
+-    async fn read_tarball_integrity(
+-        &self,
+-        name: &PackageName,
+-        filename: &str,
+-    ) -> Option<CachedTarballIntegrity> {
+-        match fs::read(self.tarball_integrity_path(name, filename)).await {
+-            Ok(bytes) => serde_json::from_slice(&bytes).ok(),
+-            Err(_) => None,
+-        }
+-    }
+-
+-    async fn write_tarball_integrity(
+-        &self,
+-        name: &PackageName,
+-        filename: &str,
+-        integrity: &CachedTarballIntegrity,
+-    ) -> Result<()> {
+-        write_atomic(&self.tarball_integrity_path(name, filename), &serde_json::to_vec(integrity)?)
+-            .await
+-    }
+-
+     async fn open_tarball_tmp(&self, name: &PackageName, filename: &str) -> Result<TarballWrite> {
+         let final_path = self.tarball_path(name, filename);
+         if let Some(parent) = final_path.parent() {
+@@ -744,14 +687,7 @@ impl Store {
+     /// after the packument-update PUT, and a benign 404 here would
+     /// surface as a real error to the caller.
+     async fn remove_tarball(&self, name: &PackageName, filename: &str) -> Result<bool> {
+-        let path = self.tarball_path(name, filename);
+-        let integrity_path = self.tarball_integrity_path(name, filename);
+-        match fs::remove_file(&integrity_path).await {
+-            Ok(()) => {}
+-            Err(err) if err.kind() == ErrorKind::NotFound => {}
+-            Err(err) => return Err(err.into()),
+-        }
+-        match fs::remove_file(&path).await {
++        match fs::remove_file(self.tarball_path(name, filename)).await {
+             Ok(()) => Ok(true),
+             Err(err) if err.kind() == ErrorKind::NotFound => Ok(false),
+             Err(err) => Err(err.into()),
+@@ -817,10 +753,6 @@ impl Store {
+     fn tarball_path(&self, name: &PackageName, filename: &str) -> PathBuf {
+         self.package_dir(name).join(filename)
+     }
+-
+-    fn tarball_integrity_path(&self, name: &PackageName, filename: &str) -> PathBuf {
+-        self.package_dir(name).join(format!("{filename}{TARBALL_INTEGRITY_SUFFIX}"))
+-    }
+ }
+ 
+ async fn write_atomic(path: &Path, bytes: &[u8]) -> Result<()> {
+diff --git a/pnpr/crates/pnpr/src/streaming.rs b/pnpr/crates/pnpr/src/streaming.rs
+index 5302fd0901..a1df7ebb97 100644
+--- a/pnpr/crates/pnpr/src/streaming.rs
++++ b/pnpr/crates/pnpr/src/streaming.rs
+@@ -1,26 +1,20 @@
+ //! Streaming helpers for the tarball path.
+ //!
+-//! Four flows live here:
++//! Three flows live here:
+ //!
+-//! * [`verify_file`] hashes a cache hit before it can be served.
+-//! * [`download_verified_to_cache`] hashes an upstream response into a
+-//!   temp file and promotes it only after the declared SRI matches.
++//! * [`stream_verified_to_cache`] streams an upstream response to the client
++//!   while teeing it into the cache, promoting the entry only if the SRI
++//!   matches the full body.
+ //! * [`download_verified_to_temp`] hashes an upstream response into a
+ //!   temp file for mirror-less pass-through.
+ //! * [`stream_file`] yields an already verified file to the response.
+ 
+ use crate::storage::TarballWrite;
+ use axum::body::{Body, Bytes};
+-use futures_util::{StreamExt, stream};
++use futures_util::{Stream, StreamExt, stream};
+ use ssri::{Integrity, IntegrityChecker};
+-use std::{
+-    io::{self, SeekFrom},
+-    path::PathBuf,
+-};
+-use tokio::{
+-    fs::File,
+-    io::{AsyncReadExt, AsyncSeekExt},
+-};
++use std::{io, path::PathBuf, pin::Pin};
++use tokio::{fs::File, io::AsyncReadExt};
+ 
+ /// Chunk size for reading from a cached file. 64 KiB keeps syscall
+ /// overhead low without buffering a meaningful fraction of a
+@@ -55,44 +49,136 @@ pub enum TarballStreamError {
+     TooLarge { limit: u64, received: u64 },
+ }
+ 
+-/// Hash a cached file against `integrity`, then rewind the same open
+-/// file so the caller can stream the exact bytes that were checked.
+-pub async fn verify_file(
+-    mut file: File,
++/// Stream an upstream response to the client while teeing it into `write`
++/// and hashing it. The client receives bytes as they arrive — it does not
++/// wait for the whole download to land and verify first — and the cache entry
++/// is promoted only once the declared SRI matches the full body.
++///
++/// SRI can only be checked after the last byte, by which point the body has
++/// already been streamed, so a mismatch can't be turned into an error
++/// response. The guarantees that remain are the ones that matter: a
++/// mismatched (or truncated, or oversize) body is never promoted to the cache,
++/// so it can't poison a future client, and every install client re-verifies
++/// what it received against its own expected integrity and rejects bad bytes.
++/// On any such failure — or a dropped client connection — the temp file is
++/// abandoned (and [`TarballWrite`]'s `Drop` removes it as a backstop).
++pub fn stream_verified_to_cache(
++    response: reqwest::Response,
++    write: TarballWrite,
+     integrity: &Integrity,
+-) -> Result<File, TarballStreamError> {
+-    let mut checker = integrity_checker(integrity).map_err(TarballStreamError::Integrity)?;
+-    let mut buf = vec![0u8; READ_CHUNK];
+-    loop {
+-        let bytes_read = file.read(&mut buf).await.map_err(TarballStreamError::Io)?;
+-        if bytes_read == 0 {
+-            break;
++    max_bytes: u64,
++) -> Result<Body, TarballStreamError> {
++    // Reject an upstream that already declares an oversize body up front, so it
++    // surfaces as an error response instead of a failure mid-stream.
++    if let Some(received) = response.content_length()
++        && received > max_bytes
++    {
++        return Err(TarballStreamError::TooLarge { limit: max_bytes, received });
++    }
++    let checker = integrity_checker(integrity).map_err(TarballStreamError::Integrity)?;
++    let state = TeeState {
++        url: redact_url(response.url()),
++        upstream: Box::pin(response.bytes_stream()),
++        write: Some(write),
++        checker,
++        written: 0,
++        max_bytes,
++    };
++    let body = stream::unfold(Some(state), |state| async move {
++        let mut state = state?;
++        match state.upstream.next().await {
++            Some(Ok(chunk)) => {
++                let received = state.written.saturating_add(chunk.len() as u64);
++                if received > state.max_bytes {
++                    let limit = state.max_bytes;
++                    tracing::warn!(
++                        url = %state.url,
++                        received,
++                        limit,
++                        "proxied tarball exceeded the size limit mid-stream",
++                    );
++                    abandon(state.write.take()).await;
++                    return Some((
++                        Err(io::Error::other(format!("tarball exceeds {limit} bytes"))),
++                        None,
++                    ));
++                }
++                if let Some(mut write) = state.write.take() {
++                    // The cache is best-effort: if the temp write fails, stop
++                    // caching but keep streaming to the client.
++                    match write.write_all(&chunk).await {
++                        Ok(()) => state.write = Some(write),
++                        Err(err) => {
++                            tracing::warn!(
++                                ?err,
++                                "tarball cache write failed; serving without caching",
++                            );
++                            write.abandon().await;
++                        }
++                    }
++                }
++                state.checker.input(&chunk);
++                state.written = received;
++                Some((Ok(chunk), Some(state)))
++            }
++            Some(Err(source)) => {
++                tracing::warn!(url = %state.url, ?source, "upstream tarball stream failed mid-download");
++                abandon(state.write.take()).await;
++                Some((Err(io::Error::other(source)), None))
++            }
++            None => {
++                match state.checker.result() {
++                    Ok(_) => finalize(state.write.take()).await,
++                    Err(err) => {
++                        tracing::warn!(url = %state.url, ?err, "proxied tarball failed integrity; not caching it");
++                        abandon(state.write.take()).await;
++                    }
++                }
++                None
++            }
+         }
+-        checker.input(&buf[..bytes_read]);
++    });
++    Ok(Body::from_stream(body))
++}
++
++/// Promote a fully-streamed, SRI-matched tarball to the cache, logging (not
++/// failing — the client already has the bytes) if the rename can't complete.
++async fn finalize(write: Option<TarballWrite>) {
++    if let Some(write) = write
++        && let Err(err) = write.finalize().await
++    {
++        tracing::warn!(?err, "promoting verified tarball to cache failed");
+     }
+-    checker.result().map_err(TarballStreamError::Integrity)?;
+-    file.seek(SeekFrom::Start(0)).await.map_err(TarballStreamError::Io)?;
+-    Ok(file)
+ }
+ 
+-/// Download an upstream response into `write`, verify the complete body,
+-/// and atomically promote it to the cache. No bytes become cache-visible
+-/// until the declared SRI matches.
+-pub async fn download_verified_to_cache(
+-    response: reqwest::Response,
+-    mut write: TarballWrite,
+-    integrity: &Integrity,
++async fn abandon(write: Option<TarballWrite>) {
++    if let Some(write) = write {
++        write.abandon().await;
++    }
++}
++
++/// A log-safe form of the upstream URL: basic-auth userinfo and the query
++/// string (which can carry presigned-redirect tokens) are stripped, since this
++/// URL is only kept to tag failure logs.
++fn redact_url(url: &reqwest::Url) -> String {
++    let mut url = url.clone();
++    let _ = url.set_username("");
++    let _ = url.set_password(None);
++    url.set_query(None);
++    url.to_string()
++}
++
++/// Carries the in-flight tee through [`stream::unfold`]: the upstream byte
++/// stream, the cache writer (dropped once caching is abandoned), the running
++/// SRI checker, and the size budget.
++struct TeeState {
++    /// The upstream tarball URL, kept only to tag failure logs.
++    url: String,
++    upstream: Pin<Box<dyn Stream<Item = reqwest::Result<Bytes>> + Send>>,
++    write: Option<TarballWrite>,
++    checker: IntegrityChecker,
++    written: u64,
+     max_bytes: u64,
+-) -> Result<u64, TarballStreamError> {
+-    let len = match download_verified(response, &mut write, integrity, max_bytes).await {
+-        Ok(len) => len,
+-        Err(err) => {
+-            write.abandon().await;
+-            return Err(err);
+-        }
+-    };
+-    write.finalize().await.map_err(TarballStreamError::Io)?;
+-    Ok(len)
+ }
+ 
+ pub async fn download_verified_to_temp(

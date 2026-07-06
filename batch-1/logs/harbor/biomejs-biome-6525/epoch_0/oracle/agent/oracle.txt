@@ -1,0 +1,7 @@
+patching file .changeset/funky-functions-follow.md
+patching file crates/biome_js_analyze/src/lint/nursery/use_exhaustive_switch_cases.rs
+patching file crates/biome_js_type_info/src/flattening/expressions.rs
+patching file crates/biome_js_type_info/src/flattening/intersections.rs
+patching file crates/biome_js_type_info/src/format_type_info.rs
+patching file crates/biome_js_type_info/src/local_inference.rs
+patching file crates/biome_js_type_info/src/type_info.rs

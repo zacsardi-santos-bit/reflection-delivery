@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/providers/redis/tests/unit/redis/hooks/test_redis.py -v -m 'not db_test'",
+  "test_files": [
+    "providers/redis/tests/unit/redis/hooks/test_redis.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "providers.redis.tests.unit.redis.hooks.test_redis.TestRedisHook::test_client_identification_with_driver_info",
+    "providers.redis.tests.unit.redis.hooks.test_redis.TestRedisHook::test_client_identification_with_lib_name",
+    "providers.redis.tests.unit.redis.hooks.test_redis.TestRedisHook::test_client_identification_unsupported"
+  ],
+  "PASS_TO_PASS": [
+    "providers.redis.tests.unit.redis.hooks.test_redis.TestRedisHook::test_get_conn_with_extra_config"
+  ]
+}

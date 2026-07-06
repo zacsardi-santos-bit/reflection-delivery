@@ -1,0 +1,22 @@
+patching file python/ray/rllib/test/__init__.py
+patching file python/ray/rllib/test/mock_evaluator.py
+patching file python/ray/rllib/test/test_evaluators.py
+patching file python/ray/rllib/test/test_filters.py
+patching file python/ray/rllib/test/test_optimizers.py
+============================= test session starts ==============================
+platform linux -- Python 3.6.15, pytest-7.0.1, pluggy-1.0.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo/python
+collecting ... collected 5 items
+
+python/ray/rllib/test/test_filters.py::RunningStatTest::testCombiningStat PASSED [ 20%]
+python/ray/rllib/test/test_filters.py::RunningStatTest::testRunningStat PASSED [ 40%]
+python/ray/rllib/test/test_filters.py::MSFTest::testBasic PASSED         [ 60%]
+python/ray/rllib/test/test_filters.py::FilterManagerTest::testSynchronize PASSED [ 80%]
+python/ray/rllib/test/test_optimizers.py::AsyncOptimizerTest::testBasic PASSED [100%]
+
+============================== 5 passed in 0.28s ===============================
+  File "/tests/grade.py", line 1
+    from __future__ import annotations
+    ^
+SyntaxError: future feature annotations is not defined

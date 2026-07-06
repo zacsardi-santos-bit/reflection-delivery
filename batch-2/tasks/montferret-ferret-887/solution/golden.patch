@@ -1,0 +1,583 @@
+diff --git a/pkg/formatter/internal/engine.go b/pkg/formatter/internal/engine.go
+index 6e286bdd..a5a0279a 100644
+--- a/pkg/formatter/internal/engine.go
++++ b/pkg/formatter/internal/engine.go
+@@ -7,24 +7,26 @@ import (
+ 	"github.com/MontFerret/ferret/v2/pkg/file"
+ )
+ 
+-type engine struct {
+-	*context
+-	trivia     *triviaEmitter
+-	list       *listFormatter
+-	program    *programFormatter
+-	statement  *statementFormatter
+-	expression *expressionFormatter
+-	literal    *literalFormatter
+-	member     *memberFormatter
+-	clause     *clauseFormatter
+-	values     *valueFormatter
+-}
++type (
++	context struct {
++		opts *Options
++		p    *printer
++		src  *file.Source
++	}
+ 
+-type context struct {
+-	opts *Options
+-	p    *printer
+-	src  *file.Source
+-}
++	engine struct {
++		*context
++		trivia     *triviaEmitter
++		list       *listFormatter
++		program    *programFormatter
++		statement  *statementFormatter
++		expression *expressionFormatter
++		literal    *literalFormatter
++		member     *memberFormatter
++		clause     *clauseFormatter
++		values     *valueFormatter
++	}
++)
+ 
+ func newEngine(src *file.Source, out io.Writer, opts *Options) *engine {
+ 	ctx := &context{
+@@ -55,6 +57,24 @@ func (e *engine) writeKeyword(val string) {
+ 	e.p.write(applyCase(e.opts.caseMode, val))
+ }
+ 
++func (e *engine) inlineFits(inline string) bool {
++	return e.inlineFitsWith(e.p, inline)
++}
++
++func (e *engine) inlineFitsWith(p *printer, inline string) bool {
++	if p == nil {
++		return len(inline) <= int(e.opts.printWidth)
++	}
++
++	column := p.currentColumn()
++
++	if p.atLineStart {
++		column += int(p.opts.tabWidth) * p.indent
++	}
++
++	return column+len(inline) <= int(e.opts.printWidth)
++}
++
+ func (e *engine) renderInline(fn func(p *printer)) (string, bool) {
+ 	var b strings.Builder
+ 
+diff --git a/pkg/formatter/internal/expression.go b/pkg/formatter/internal/expression.go
+index 6a977079..278bc5e2 100644
+--- a/pkg/formatter/internal/expression.go
++++ b/pkg/formatter/internal/expression.go
+@@ -162,7 +162,7 @@ func (f *expressionFormatter) formatMatchExpression(ctx *fql.MatchExpressionCont
+ 			f.formatMatchExpressionWith(p, ctx, true)
+ 		})
+ 
+-		if ok && len(inline) <= int(f.opts.printWidth) {
++		if ok && f.inlineFits(inline) {
+ 			f.p.write(inline)
+ 			return
+ 		}
+@@ -473,7 +473,7 @@ func (f *expressionFormatter) formatMatchObjectPatternWith(p *printer, ctx *fql.
+ 	inline, ok := f.renderInline(func(out *printer) {
+ 		f.formatMatchObjectPatternWithMode(out, ctx, true)
+ 	})
+-	if ok && len(inline) <= int(f.opts.printWidth) {
++	if ok && f.inlineFitsWith(p, inline) {
+ 		p.write(inline)
+ 		return
+ 	}
+@@ -578,7 +578,7 @@ func (f *expressionFormatter) formatQueryExpression(ctx *fql.QueryExpressionCont
+ 		f.formatQueryExpressionWith(p, ctx, true)
+ 	})
+ 
+-	if ok && len(inline) <= int(f.opts.printWidth) {
++	if ok && f.inlineFits(inline) {
+ 		f.p.write(inline)
+ 		return
+ 	}
+diff --git a/pkg/formatter/internal/list.go b/pkg/formatter/internal/list.go
+index eaa47da7..bfceb433 100644
+--- a/pkg/formatter/internal/list.go
++++ b/pkg/formatter/internal/list.go
+@@ -1,6 +1,8 @@
+ package internal
+ 
+ import (
++	"strings"
++
+ 	"github.com/antlr4-go/antlr/v4"
+ 
+ 	"github.com/MontFerret/ferret/v2/pkg/parser/fql"
+@@ -10,6 +12,18 @@ type listFormatter struct {
+ 	*engine
+ }
+ 
++func (l *listFormatter) tokenStop(node antlr.TerminalNode) int {
++	if node == nil {
++		return 0
++	}
++
++	if sym := node.GetSymbol(); sym != nil {
++		return sym.GetStop()
++	}
++
++	return 0
++}
++
+ func (l *listFormatter) arrayHasComments(ctx *fql.ArrayLiteralContext) bool {
+ 	if ctx == nil || ctx.ArgumentList() == nil {
+ 		return false
+@@ -21,6 +35,12 @@ func (l *listFormatter) arrayHasComments(ctx *fql.ArrayLiteralContext) bool {
+ 	}
+ 
+ 	closeStart := l.trivia.tokenStart(ctx.CloseBracket())
++	firstArgStart := l.trivia.startIndex(args[0].(antlr.ParserRuleContext))
++	openStop := l.tokenStop(ctx.OpenBracket())
++
++	if l.trivia.containsComment(l.trivia.sliceBetween(openStop+1, firstArgStart)) {
++		return true
++	}
+ 
+ 	for i, arg := range args {
+ 		start := l.trivia.stopIndex(arg.(antlr.ParserRuleContext)) + 1
+@@ -49,6 +69,12 @@ func (l *listFormatter) objectHasComments(ctx *fql.ObjectLiteralContext) bool {
+ 	}
+ 
+ 	closeStart := l.trivia.tokenStart(ctx.CloseBrace())
++	firstPropStart := l.trivia.startIndex(props[0].(antlr.ParserRuleContext))
++	openStop := l.tokenStop(ctx.OpenBrace())
++
++	if l.trivia.containsComment(l.trivia.sliceBetween(openStop+1, firstPropStart)) {
++		return true
++	}
+ 
+ 	for i, prop := range props {
+ 		start := l.trivia.stopIndex(prop.(antlr.ParserRuleContext)) + 1
+@@ -78,6 +104,18 @@ func (l *listFormatter) argumentListClose(ctx *fql.ArgumentListContext) antlr.Te
+ 	return nil
+ }
+ 
++func (l *listFormatter) argumentListOpen(ctx *fql.ArgumentListContext) antlr.TerminalNode {
++	if ctx == nil {
++		return nil
++	}
++
++	if parent, ok := ctx.GetParent().(*fql.FunctionCallContext); ok {
++		return parent.OpenParen()
++	}
++
++	return nil
++}
++
+ func (l *listFormatter) argumentListHasComments(ctx *fql.ArgumentListContext) bool {
+ 	if ctx == nil {
+ 		return false
+@@ -90,6 +128,12 @@ func (l *listFormatter) argumentListHasComments(ctx *fql.ArgumentListContext) bo
+ 	}
+ 
+ 	closeStart := l.trivia.tokenStart(l.argumentListClose(ctx))
++	firstArgStart := l.trivia.startIndex(args[0].(antlr.ParserRuleContext))
++	openStop := l.tokenStop(l.argumentListOpen(ctx))
++
++	if l.trivia.containsComment(l.trivia.sliceBetween(openStop+1, firstArgStart)) {
++		return true
++	}
+ 
+ 	for i, arg := range args {
+ 		start := l.trivia.stopIndex(arg.(antlr.ParserRuleContext)) + 1
+@@ -107,6 +151,121 @@ func (l *listFormatter) argumentListHasComments(ctx *fql.ArgumentListContext) bo
+ 	return false
+ }
+ 
++func (l *listFormatter) arrayHasStructuredElements(ctx *fql.ArrayLiteralContext) bool {
++	if ctx == nil || ctx.ArgumentList() == nil {
++		return false
++	}
++
++	for _, arg := range ctx.ArgumentList().AllExpression() {
++		if l.expressionIsStructuredLiteral(arg.(*fql.ExpressionContext)) {
++			return true
++		}
++	}
++
++	return false
++}
++
++func (l *listFormatter) expressionIsStructuredLiteral(ctx *fql.ExpressionContext) bool {
++	if ctx == nil {
++		return false
++	}
++
++	predicate := ctx.Predicate()
++	if predicate == nil {
++		return false
++	}
++
++	atom := predicate.ExpressionAtom()
++	if atom == nil {
++		return false
++	}
++
++	lit := atom.Literal()
++	if lit == nil {
++		return false
++	}
++
++	return lit.ArrayLiteral() != nil || lit.ObjectLiteral() != nil
++}
++
++func (l *listFormatter) objectShouldMultiline(ctx *fql.ObjectLiteralContext) bool {
++	if ctx == nil {
++		return false
++	}
++
++	return len(ctx.AllPropertyAssignment()) > 4
++}
++
++func (l *listFormatter) objectWithLineBreaks(ctx *fql.ExpressionContext) *fql.ObjectLiteralContext {
++	if ctx == nil {
++		return nil
++	}
++
++	predicate := ctx.Predicate()
++	if predicate == nil {
++		return nil
++	}
++
++	atom := predicate.ExpressionAtom()
++	if atom == nil {
++		return nil
++	}
++
++	lit := atom.Literal()
++	if lit == nil || lit.ObjectLiteral() == nil {
++		return nil
++	}
++
++	obj := lit.ObjectLiteral().(*fql.ObjectLiteralContext)
++	start := l.tokenStop(obj.OpenBrace()) + 1
++	end := l.trivia.tokenStart(obj.CloseBrace())
++
++	if strings.Contains(l.trivia.sliceBetween(start, end), "\n") {
++		return obj
++	}
++
++	return nil
++}
++
++func (l *listFormatter) formatMultilinePropertyAssignmentWith(p *printer, ctx *fql.PropertyAssignmentContext) {
++	if ctx == nil {
++		return
++	}
++
++	switch {
++	case ctx.PropertyName() != nil:
++		l.literal.formatPropertyNameWith(p, ctx.PropertyName().(*fql.PropertyNameContext))
++		p.write(":")
++		p.space()
++
++		if expr := ctx.Expression(); expr != nil {
++			exprCtx := expr.(*fql.ExpressionContext)
++
++			if obj := l.objectWithLineBreaks(exprCtx); obj != nil {
++				l.formatObjectLiteralWith(p, obj, false)
++			} else {
++				l.expression.formatExpressionWith(p, exprCtx)
++			}
++		}
++	case ctx.ComputedPropertyName() != nil:
++		l.literal.formatComputedPropertyNameWith(p, ctx.ComputedPropertyName().(*fql.ComputedPropertyNameContext))
++		p.write(":")
++		p.space()
++
++		if expr := ctx.Expression(); expr != nil {
++			exprCtx := expr.(*fql.ExpressionContext)
++
++			if obj := l.objectWithLineBreaks(exprCtx); obj != nil {
++				l.formatObjectLiteralWith(p, obj, false)
++			} else {
++				l.expression.formatExpressionWith(p, exprCtx)
++			}
++		}
++	case ctx.Variable() != nil:
++		l.expression.formatVariableWith(p, ctx.Variable().(*fql.VariableContext))
++	}
++}
++
+ func (l *listFormatter) formatArrayLiteral(ctx *fql.ArrayLiteralContext) {
+ 	if ctx == nil {
+ 		return
+@@ -119,9 +278,10 @@ func (l *listFormatter) formatArrayLiteral(ctx *fql.ArrayLiteralContext) {
+ 	}
+ 
+ 	hasComments := l.arrayHasComments(ctx)
++	hasStructuredElements := l.arrayHasStructuredElements(ctx)
+ 
+ 	if l.p.forceSingleLine {
+-		if hasComments {
++		if hasComments || hasStructuredElements {
+ 			l.formatArrayLiteralWith(l.p, ctx, false)
+ 
+ 			return
+@@ -132,12 +292,12 @@ func (l *listFormatter) formatArrayLiteral(ctx *fql.ArrayLiteralContext) {
+ 		return
+ 	}
+ 
+-	if !hasComments {
++	if !hasComments && !hasStructuredElements {
+ 		inline, ok := l.renderInline(func(p *printer) {
+ 			l.formatArrayLiteralWith(p, ctx, true)
+ 		})
+ 
+-		if ok && len(inline) <= int(l.opts.printWidth) {
++		if ok && l.inlineFits(inline) {
+ 			l.p.write(inline)
+ 
+ 			return
+@@ -155,9 +315,22 @@ func (l *listFormatter) formatArrayLiteralWith(p *printer, ctx *fql.ArrayLiteral
+ 	args := ctx.ArgumentList().AllExpression()
+ 	p.write("[")
+ 
++	if len(args) == 0 {
++		p.write("]")
++
++		return
++	}
++
+ 	if !inline {
+-		p.newline()
+ 		p.withIndent(func() {
++			firstArg := args[0].(antlr.ParserRuleContext)
++			leadingTrivia := l.trivia.sliceBetween(l.tokenStop(ctx.OpenBracket())+1, l.trivia.startIndex(firstArg))
++			if l.trivia.containsComment(leadingTrivia) {
++				l.trivia.emitListTriviaWith(p, leadingTrivia)
++			} else {
++				p.newline()
++			}
++
+ 			closeStart := l.trivia.tokenStart(ctx.CloseBracket())
+ 
+ 			for i, expr := range args {
+@@ -208,9 +381,10 @@ func (l *listFormatter) formatObjectLiteral(ctx *fql.ObjectLiteralContext) {
+ 	}
+ 
+ 	hasComments := l.objectHasComments(ctx)
++	shouldMultiline := l.objectShouldMultiline(ctx)
+ 
+ 	if l.p.forceSingleLine {
+-		if hasComments {
++		if hasComments || shouldMultiline {
+ 			l.formatObjectLiteralWith(l.p, ctx, false)
+ 			return
+ 		}
+@@ -220,12 +394,12 @@ func (l *listFormatter) formatObjectLiteral(ctx *fql.ObjectLiteralContext) {
+ 		return
+ 	}
+ 
+-	if !hasComments {
++	if !hasComments && !shouldMultiline {
+ 		inline, ok := l.renderInline(func(p *printer) {
+ 			l.formatObjectLiteralWith(p, ctx, true)
+ 		})
+ 
+-		if ok && len(inline) <= int(l.opts.printWidth) {
++		if ok && l.inlineFits(inline) {
+ 			l.p.write(inline)
+ 
+ 			return
+@@ -266,13 +440,20 @@ func (l *listFormatter) formatObjectLiteralWith(p *printer, ctx *fql.ObjectLiter
+ 		return
+ 	}
+ 
+-	p.newline()
+ 	p.withIndent(func() {
++		firstProp := props[0].(antlr.ParserRuleContext)
++		leadingTrivia := l.trivia.sliceBetween(l.tokenStop(ctx.OpenBrace())+1, l.trivia.startIndex(firstProp))
++		if l.trivia.containsComment(leadingTrivia) {
++			l.trivia.emitListTriviaWith(p, leadingTrivia)
++		} else {
++			p.newline()
++		}
++
+ 		closeStart := l.trivia.tokenStart(ctx.CloseBrace())
+ 
+ 		for i, prop := range props {
+ 			propCtx := prop.(*fql.PropertyAssignmentContext)
+-			l.literal.formatPropertyAssignmentWith(p, propCtx)
++			l.formatMultilinePropertyAssignmentWith(p, propCtx)
+ 
+ 			if i < len(props)-1 {
+ 				p.write(",")
+@@ -320,7 +501,7 @@ func (l *listFormatter) formatArgumentList(ctx *fql.ArgumentListContext) {
+ 			l.formatArgumentListWith(p, ctx, true)
+ 		})
+ 
+-		if ok && len(inline) <= int(l.opts.printWidth) {
++		if ok && l.inlineFits(inline) {
+ 			l.p.write(inline)
+ 
+ 			return
+@@ -350,8 +531,15 @@ func (l *listFormatter) formatArgumentListWith(p *printer, ctx *fql.ArgumentList
+ 		return
+ 	}
+ 
+-	p.newline()
+ 	p.withIndent(func() {
++		firstArg := args[0].(antlr.ParserRuleContext)
++		leadingTrivia := l.trivia.sliceBetween(l.tokenStop(l.argumentListOpen(ctx))+1, l.trivia.startIndex(firstArg))
++		if l.trivia.containsComment(leadingTrivia) {
++			l.trivia.emitListTriviaWith(p, leadingTrivia)
++		} else {
++			p.newline()
++		}
++
+ 		closeStart := l.trivia.tokenStart(l.argumentListClose(ctx))
+ 
+ 		for i, arg := range args {
+diff --git a/pkg/formatter/internal/printer.go b/pkg/formatter/internal/printer.go
+index 838a330c..f7486420 100644
+--- a/pkg/formatter/internal/printer.go
++++ b/pkg/formatter/internal/printer.go
+@@ -9,6 +9,7 @@ type printer struct {
+ 	out             io.Writer
+ 	opts            *Options
+ 	indent          int
++	lineColumn      int
+ 	atLineStart     bool
+ 	lastWasSpace    bool
+ 	forceSingleLine bool
+@@ -28,6 +29,10 @@ func (p *printer) Err() error {
+ 	return p.err
+ }
+ 
++func (p *printer) currentColumn() int {
++	return p.lineColumn
++}
++
+ func (p *printer) writeIndent() {
+ 	if p.err != nil || !p.atLineStart {
+ 		return
+@@ -43,6 +48,8 @@ func (p *printer) writeIndent() {
+ 		p.err = err
+ 		return
+ 	}
++
++	p.lineColumn += len(indent)
+ }
+ 
+ func (p *printer) write(s string) {
+@@ -62,6 +69,7 @@ func (p *printer) write(s string) {
+ 
+ 	p.atLineStart = false
+ 	p.lastWasSpace = false
++	p.lineColumn += len(s)
+ }
+ 
+ func (p *printer) writeRaw(s string) {
+@@ -69,41 +77,52 @@ func (p *printer) writeRaw(s string) {
+ 		return
+ 	}
+ 
+-	for _, r := range s {
+-		if r == '\n' {
+-			p.sawHardNewline = true
++	for len(s) > 0 {
++		newline := strings.IndexByte(s, '\n')
++		segment := s
+ 
+-			if p.forceSingleLine {
+-				p.space()
++		if newline >= 0 {
++			segment = s[:newline]
++		}
+ 
+-				continue
++		if segment != "" {
++			if p.atLineStart {
++				p.atLineStart = false
+ 			}
+ 
+-			_, err := io.WriteString(p.out, "\n")
++			_, err := io.WriteString(p.out, segment)
+ 			if err != nil {
+ 				p.err = err
+ 
+ 				return
+ 			}
+ 
+-			p.atLineStart = true
+-			p.lastWasSpace = false
+-
+-			continue
++			p.lastWasSpace = segment[len(segment)-1] == ' '
++			p.lineColumn += len(segment)
+ 		}
+ 
+-		if p.atLineStart {
+-			p.atLineStart = false
++		if newline < 0 {
++			return
+ 		}
+ 
+-		_, err := io.WriteString(p.out, string(r))
+-		if err != nil {
+-			p.err = err
++		p.sawHardNewline = true
+ 
+-			return
++		if p.forceSingleLine {
++			p.space()
++		} else {
++			_, err := io.WriteString(p.out, "\n")
++			if err != nil {
++				p.err = err
++
++				return
++			}
++
++			p.atLineStart = true
++			p.lastWasSpace = false
++			p.lineColumn = 0
+ 		}
+ 
+-		p.lastWasSpace = r == ' '
++		s = s[newline+1:]
+ 	}
+ }
+ 
+@@ -120,6 +139,7 @@ func (p *printer) space() {
+ 	}
+ 
+ 	p.lastWasSpace = true
++	p.lineColumn++
+ }
+ 
+ func (p *printer) newline() {
+@@ -142,6 +162,7 @@ func (p *printer) newline() {
+ 
+ 	p.atLineStart = true
+ 	p.lastWasSpace = false
++	p.lineColumn = 0
+ }
+ 
+ func (p *printer) withIndent(fn func()) {
+diff --git a/pkg/formatter/internal/trivia.go b/pkg/formatter/internal/trivia.go
+index a2877957..54a27471 100644
+--- a/pkg/formatter/internal/trivia.go
++++ b/pkg/formatter/internal/trivia.go
+@@ -285,7 +285,7 @@ func (t *triviaEmitter) emitListCommentLinesWith(p *printer, text string) {
+ 		return
+ 	}
+ 
+-	if !wroteLine && emptyCount > 0 {
++	if !wroteLine && emptyCount > 1 {
+ 		p.newline()
+ 	}
+ }

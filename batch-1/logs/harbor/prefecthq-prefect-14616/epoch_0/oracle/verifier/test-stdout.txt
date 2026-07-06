@@ -1,0 +1,78 @@
+patching file tests/events/server/test_ordering.py
+patching file tests/events/server/triggers/test_basics.py
+patching file tests/events/server/triggers/test_regressions.py
+patching file tests/events/server/triggers/test_service.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: timeout-2.4.0, asyncio-0.21.2, respx-0.23.1, env-1.1.3, anyio-4.14.1, xdist-3.8.0
+timeout: 90.0s
+timeout method: signal
+timeout func_only: False
+asyncio: mode=Mode.AUTO
+collecting ... collected 59 items
+
+tests/events/server/test_ordering.py::test_ordering_is_correct[in_proper_order] PASSED [  1%]
+tests/events/server/test_ordering.py::test_ordering_is_correct[in_jumbled_order] PASSED [  3%]
+tests/events/server/test_ordering.py::test_ordering_is_correct[backwards] PASSED [  5%]
+tests/events/server/test_ordering.py::test_recursion_is_contained PASSED [  6%]
+tests/events/server/test_ordering.py::test_only_looks_to_a_certain_horizon PASSED [  8%]
+tests/events/server/test_ordering.py::test_returns_lost_followers_in_occurred_order PASSED [ 10%]
+tests/events/server/test_ordering.py::test_two_instances_do_not_interfere PASSED [ 11%]
+tests/events/server/triggers/test_basics.py::test_triggers_have_identifiers PASSED [ 13%]
+tests/events/server/triggers/test_basics.py::test_trigger_covers PASSED  [ 15%]
+tests/events/server/triggers/test_basics.py::test_trigger_does_not_cover PASSED [ 16%]
+tests/events/server/triggers/test_basics.py::test_trigger_covers_related_resource PASSED [ 18%]
+tests/events/server/triggers/test_basics.py::test_trigger_does_not_cover_related PASSED [ 20%]
+tests/events/server/triggers/test_basics.py::test_triggers_are_wired_to_their_root_automations_and_parents PASSED [ 22%]
+tests/events/server/triggers/test_basics.py::test_no_expects_means_all_events PASSED [ 23%]
+tests/events/server/triggers/test_basics.py::test_matches[*-any.old.thing] PASSED [ 25%]
+tests/events/server/triggers/test_basics.py::test_matches[any.old.*-any.old.thing] PASSED [ 27%]
+tests/events/server/triggers/test_basics.py::test_matches[any.old.*-any.old.stuff] PASSED [ 28%]
+tests/events/server/triggers/test_basics.py::test_matches[exactamundo-exactamundo] PASSED [ 30%]
+tests/events/server/triggers/test_basics.py::test_does_not_match[*-None] PASSED [ 32%]
+tests/events/server/triggers/test_basics.py::test_does_not_match[any.old.*-any.other.stuff] PASSED [ 33%]
+tests/events/server/triggers/test_basics.py::test_does_not_match[any.old.*-any.old] PASSED [ 35%]
+tests/events/server/triggers/test_basics.py::test_does_not_match[exactamundo-positively not] PASSED [ 37%]
+tests/events/server/triggers/test_basics.py::test_reactive_automation_triggers_can_trigger_immediately PASSED [ 38%]
+tests/events/server/triggers/test_basics.py::test_reactive_automation_triggers_only_on_expected_events PASSED [ 40%]
+tests/events/server/triggers/test_basics.py::test_reactive_automation_triggers_as_soon_as_it_can PASSED [ 42%]
+tests/events/server/triggers/test_basics.py::test_reactive_automation_does_not_trigger_if_threshold_not_met PASSED [ 44%]
+tests/events/server/triggers/test_basics.py::test_reactive_automation_triggers_immediately_even_if_event_matches_after PASSED [ 45%]
+tests/events/server/triggers/test_basics.py::test_reactive_automation_triggers_for_each_related_label PASSED [ 47%]
+tests/events/server/triggers/test_basics.py::test_proactive_trigger_fires_after_time_expires PASSED [ 49%]
+tests/events/server/triggers/test_basics.py::test_reactive_triggers_clean_up_after_themselves_if_they_do_fire PASSED [ 50%]
+tests/events/server/triggers/test_basics.py::test_follower_messages_are_processed_when_leaders_arrive PASSED [ 52%]
+tests/events/server/triggers/test_basics.py::test_old_follower_messages_are_processed_immediately PASSED [ 54%]
+tests/events/server/triggers/test_basics.py::test_lost_followers_are_processed_during_proactive_evaluation PASSED [ 55%]
+tests/events/server/triggers/test_regressions.py::test_alerts_work_queue_unhealthy PASSED [ 57%]
+tests/events/server/triggers/test_regressions.py::test_does_not_alert_work_queue_went_healthy PASSED [ 59%]
+tests/events/server/triggers/test_regressions.py::test_same_event_in_expect_and_after_never_reacts_immediately PASSED [ 61%]
+tests/events/server/triggers/test_regressions.py::test_same_event_in_expect_and_after_reacts_after_threshold_is_met PASSED [ 62%]
+tests/events/server/triggers/test_regressions.py::test_same_event_in_expect_and_after_proactively_does_not_fire PASSED [ 64%]
+tests/events/server/triggers/test_regressions.py::test_same_event_in_expect_and_after_proactively_fires PASSED [ 66%]
+tests/events/server/triggers/test_regressions.py::test_rapid_fire_events PASSED [ 67%]
+tests/events/server/triggers/test_regressions.py::test_rapid_fire_events_with_a_threshold PASSED [ 69%]
+tests/events/server/triggers/test_service.py::test_acting_publishes_an_action_message_from_a_reactive_event PASSED [ 71%]
+tests/events/server/triggers/test_service.py::test_acting_publishes_an_action_message_from_a_proactive_trigger PASSED [ 72%]
+tests/events/server/triggers/test_service.py::test_loading_none_automation_is_a_noop PASSED [ 74%]
+tests/events/server/triggers/test_service.py::test_skips_empty_messages PASSED [ 76%]
+tests/events/server/triggers/test_service.py::test_runs_periodic_tasks PASSED [ 77%]
+tests/events/server/triggers/test_service.py::test_loads_automations_at_startup PASSED [ 79%]
+tests/events/server/triggers/test_service.py::test_only_considers_messages_with_attributes PASSED [ 81%]
+tests/events/server/triggers/test_service.py::test_only_considers_messages_that_are_not_log_writes PASSED [ 83%]
+tests/events/server/triggers/test_service.py::test_only_considers_messages_with_event_ids PASSED [ 84%]
+tests/events/server/triggers/test_service.py::test_only_considers_messages_with_valid_event_ids PASSED [ 86%]
+tests/events/server/triggers/test_service.py::test_acks_early_arrivals PASSED [ 88%]
+tests/events/server/triggers/test_service.py::test_only_processes_event_once PASSED [ 89%]
+tests/events/server/triggers/test_service.py::test_periodic_evaluation_continues_event_if_it_raises PASSED [ 91%]
+tests/events/server/triggers/test_service.py::test_event_clock_produces_none_when_never_updated PASSED [ 93%]
+tests/events/server/triggers/test_service.py::test_event_clock_produces_accurate_offsets PASSED [ 94%]
+tests/events/server/triggers/test_service.py::test_event_clock_only_moves_forward PASSED [ 96%]
+tests/events/server/triggers/test_service.py::test_event_clock_avoids_the_future PASSED [ 98%]
+tests/events/server/triggers/test_service.py::test_offset_is_resilient_to_low_volume PASSED [100%]
+
+============================= 59 passed in 28.23s ==============================
+reward=1 graded=59 found=0 failed=0 parsed=48 framework=pytest exit_code=0

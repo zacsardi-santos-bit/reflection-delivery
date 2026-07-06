@@ -1,0 +1,19 @@
+patching file config/runtime_flags.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1716 (offset 786 lines).
+patching file internal/telemetry/metrics/const.go
+patching file internal/telemetry/metrics/envoy.go
+patching file internal/zero/healthcheck/check_routes.go
+patching file internal/zero/healthcheck/checks.go
+patching file internal/zero/healthcheck/scheduler.go
+patching file internal/zero/healthcheck/syncer.go
+patching file pkg/envoy/envoy.go
+patching file pkg/envoy/resource_monitor.go
+patching file pkg/envoy/resource_monitor_linux.go
+patching file pkg/envoy/resource_monitor_other.go
+patching file pkg/health/provider.go
+patching file pkg/metrics/constants.go
+patching file ui/src/App.tsx
+patching file ui/src/components/UpstreamErrorPage.tsx
+patching file ui/src/types/index.ts

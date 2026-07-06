@@ -1,0 +1,29 @@
+{
+    "id": "8f29348d-9d0b-40ab-ab18-ea52409705c8",
+    "started_at": "2026-07-06T12:19:48.694703",
+    "finished_at": "2026-07-06T12:22:26.491236",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__fluent-fluent-bit-9724": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "fluent-fluent-bit-9724__3u8VGZ6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

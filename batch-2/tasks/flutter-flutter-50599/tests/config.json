@@ -1,0 +1,39 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && bash -c 'pub run test test/general.shard/plugins_test.dart -rjson 2>&1 | python3 /workspace/dart_to_junit.py; RC=${PIPESTATUS[0]}; exit $RC'",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/plugins_test.dart"
+  ],
+  "num_test_files": 1,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "loading test/general.shard/plugins_test.dart",
+    "plugins refreshPlugins Refreshing the plugin list is a no-op when the plugins list stays empty",
+    "plugins refreshPlugins Refreshing the plugin list deletes the plugin file when there were plugins but no longer are",
+    "plugins refreshPlugins Refreshing the plugin list creates a plugin directory when there are plugins",
+    "plugins refreshPlugins Refreshing the plugin list modifies .flutter-plugins and .flutter-plugins-dependencies when there are plugins",
+    "plugins refreshPlugins Changes to the plugin list invalidates the Cocoapod lockfiles",
+    "plugins refreshPlugins No changes to the plugin list does not invalidate the Cocoapod lockfiles",
+    "plugins injectPlugins Registrant uses old embedding in app project",
+    "plugins injectPlugins Registrant uses new embedding if app uses new embedding",
+    "plugins injectPlugins Registrant uses shim for plugins using old embedding if app uses new embedding",
+    "plugins injectPlugins exits the tool if an app uses the v1 embedding and a plugin only supports the v2 embedding",
+    "plugins injectPlugins exits the tool if a plugin sets an invalid android package in pubspec.yaml",
+    "plugins injectPlugins old embedding app uses a plugin that supports v1 and v2 embedding",
+    "plugins injectPlugins new embedding app uses a plugin that supports v1 and v2 embedding",
+    "plugins injectPlugins Modules use new embedding",
+    "plugins injectPlugins Module using old plugin shows warning",
+    "plugins injectPlugins Module using new plugin shows no warnings",
+    "plugins injectPlugins Module using plugin with v1 and v2 support shows no warning",
+    "plugins injectPlugins Module using multiple old plugins all show warnings",
+    "plugins injectPlugins Does not throw when AndroidManifest.xml is not found",
+    "plugins injectPlugins Registrant for web doesn't escape slashes in imports",
+    "plugins createPluginSymlinks Symlinks are created for Linux plugins",
+    "plugins createPluginSymlinks Symlinks are created for Windows plugins",
+    "plugins createPluginSymlinks Existing symlinks are removed when no longer in use with force",
+    "plugins createPluginSymlinks Existing symlinks are removed automatically on refresh when no longer in use",
+    "plugins createPluginSymlinks createPluginSymlinks is a no-op without force when up to date",
+    "plugins createPluginSymlinks createPluginSymlinks repairs missing links"
+  ],
+  "PASS_TO_PASS": []
+}

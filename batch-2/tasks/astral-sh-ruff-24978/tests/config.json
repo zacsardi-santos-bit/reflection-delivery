@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci --no-fail-fast -E 'test(folding_range_multiline_block_headers)'",
+  "test_files": [
+    "crates/ty_server/tests/e2e/folding_range.rs",
+    "crates/ty_server/tests/e2e/snapshots/e2e__folding_range__folding_range_multiline_block_headers.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) ty_ide folding_range::tests::test_folding_range_multiline_block_headers",
+    "(2/2) ty_server::e2e folding_range::folding_range_multiline_block_headers"
+  ],
+  "PASS_TO_PASS": []
+}

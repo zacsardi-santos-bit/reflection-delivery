@@ -1,0 +1,7 @@
+patching file tokio-trace/README.md
+patching file tokio-trace/benches/subscriber.rs
+patching file tokio-trace/examples/counters.rs
+patching file tokio-trace/examples/sloggish/main.rs
+patching file tokio-trace/src/lib.rs
+patching file tokio-trace/src/macros.rs
+patching file tokio-trace/src/span.rs

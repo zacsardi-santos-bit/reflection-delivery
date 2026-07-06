@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/libs/partners/openai && python -m pytest tests/unit_tests/chat_models/test_base.py::test__construct_responses_api_input_store_false_replays_stateless_history tests/unit_tests/chat_models/test_base.py::test__construct_responses_api_input_store_enabled_keeps_item_ids tests/unit_tests/chat_models/test_base.py::test__construct_responses_api_input_store_false_keeps_full_tool_call_items tests/unit_tests/chat_models/test_codex.py::test_request_payload_with_store_false_drops_reasoning_item_references tests/unit_tests/chat_models/test_codex.py::test_request_payload_with_store_false_drops_image_call_references -v -p no:cov --override-ini=addopts=",
+  "test_files": [
+    "libs/partners/openai/tests/cassettes/TestChatOpenAICodexStandard.test_anthropic_inputs.yaml.gz",
+    "libs/partners/openai/tests/cassettes/TestChatOpenAICodexStandard.test_tool_message_histories_list_content.yaml.gz",
+    "libs/partners/openai/tests/cassettes/test_codex_multi_turn_no_tools.yaml.gz",
+    "libs/partners/openai/tests/cassettes/test_mcp_builtin_zdr.yaml.gz",
+    "libs/partners/openai/tests/unit_tests/chat_models/test_base.py",
+    "libs/partners/openai/tests/unit_tests/chat_models/test_codex.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.chat_models.test_base::test__construct_responses_api_input_store_false_replays_stateless_history",
+    "tests.unit_tests.chat_models.test_base::test__construct_responses_api_input_store_enabled_keeps_item_ids[None]",
+    "tests.unit_tests.chat_models.test_base::test__construct_responses_api_input_store_enabled_keeps_item_ids[True]",
+    "tests.unit_tests.chat_models.test_base::test__construct_responses_api_input_store_false_keeps_full_tool_call_items",
+    "tests.unit_tests.chat_models.test_codex::test_request_payload_with_store_false_drops_reasoning_item_references",
+    "tests.unit_tests.chat_models.test_codex::test_request_payload_with_store_false_drops_image_call_references"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,116 @@
+patching file ui.frontend/src/main/components/CartPage/ProductListing/__tests__/__snapshots__/product.spec.js.snap
+patching file ui.frontend/src/main/components/MiniCart/ProductList/__tests__/__snapshots__/item.spec.js.snap
+patching file ui.frontend/src/main/components/MiniCart/ProductList/__tests__/__snapshots__/productList.spec.js.snap
+patching file ui.frontend/src/main/components/MiniCart/ProductList/__tests__/item.spec.js
+patching file ui.frontend/src/main/components/MiniCart/ProductList/__tests__/productList.spec.js
+patching file ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/__tests__/__snapshots__/item.spec.js.snap
+patching file ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/__tests__/__snapshots__/items.spec.js.snap
+patching file ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/__tests__/__snapshots__/orderDetails.spec.js.snap
+patching file ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/__tests__/item.spec.js
+patching file ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/__tests__/items.spec.js
+patching file ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/__tests__/orderDetails.spec.js
+patching file ui.frontend/src/main/components/OrderHistoryPage/__tests__/__snapshots__/orderRow.spec.js.snap
+patching file ui.frontend/src/main/components/OrderHistoryPage/__tests__/orderHistoryPage.spec.js
+patching file ui.frontend/src/main/components/OrderHistoryPage/__tests__/orderRow.spec.js
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+PASS src/main/components/OrderHistoryPage/__tests__/orderRow.spec.js
+  ● Console
+
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `order.billing_address.street` of type `string` supplied to `OrderRow`, expected an array.
+          at OrderRow (/workspace/repo/ui.frontend/src/main/components/OrderHistoryPage/orderRow.js:29:13)
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `src` of type `object` supplied to `Icon`, expected `function`.
+          at Icon (/workspace/repo/ui.frontend/node_modules/@magento/venia-ui/lib/components/Icon/icon.js:10:9)
+          at OrderRow (/workspace/repo/ui.frontend/src/main/components/OrderHistoryPage/orderRow.js:29:13)
+          at IntlProvider (/workspace/repo/ui.frontend/node_modules/react-intl/src/components/provider.js:80:47)
+
+PASS src/main/components/OrderHistoryPage/OrderDetails/__tests__/orderDetails.spec.js
+  ● Console
+
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `orderData.billing_address.street` of type `string` supplied to `OrderDetails`, expected an array.
+          at OrderDetails (/workspace/repo/ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/orderDetails.js:33:22)
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `src` of type `object` supplied to `Icon`, expected `function`.
+          at Icon (/workspace/repo/ui.frontend/node_modules/@magento/venia-ui/lib/components/Icon/icon.js:10:9)
+          at OrderDetails (/workspace/repo/ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/orderDetails.js:33:22)
+          at IntlProvider (/workspace/repo/ui.frontend/node_modules/react-intl/src/components/provider.js:80:47)
+
+PASS src/main/components/OrderHistoryPage/__tests__/orderHistoryPage.spec.js
+  ● Console
+
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `src` of type `object` supplied to `Icon`, expected `function`.
+          at Icon (/workspace/repo/ui.frontend/node_modules/@magento/venia-ui/lib/components/Icon/icon.js:10:9)
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+    console.warn node_modules/informed/dist/index.js:1
+      Attempting to get field search but it does not exist
+
+PASS src/main/components/OrderHistoryPage/OrderDetails/__tests__/items.spec.js
+  ● Console
+
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `data.items[0].product_sale_price` of type `string` supplied to `Items`, expected `object`.
+          at Items (/workspace/repo/ui.frontend/src/main/components/OrderHistoryPage/OrderDetails/items.js:25:41)
+
+PASS src/main/components/MiniCart/ProductList/__tests__/item.spec.js
+  ● Console
+
+    console.warn node_modules/@magento/peregrine/lib/util/makeUrl.js:23
+      A media backend URL should be defined in your config.
+    console.error node_modules/react/cjs/react.development.js:220
+      Warning: Failed prop type: Invalid prop `src` of type `object` supplied to `Icon`, expected `function`.
+          at Icon (/workspace/repo/ui.frontend/node_modules/@magento/venia-ui/lib/components/Icon/icon.js:10:9)
+          at Item (/workspace/repo/ui.frontend/src/main/components/MiniCart/ProductList/item.js:32:18)
+          at IntlProvider (/workspace/repo/ui.frontend/node_modules/react-intl/src/components/provider.js:80:47)
+
+PASS src/main/components/OrderHistoryPage/OrderDetails/__tests__/item.spec.js
+  ● Console
+
+    console.warn node_modules/@magento/peregrine/lib/util/makeUrl.js:23
+      A media backend URL should be defined in your config.
+
+PASS src/main/components/MiniCart/ProductList/__tests__/productList.spec.js
+
+Test Suites: 7 passed, 7 total
+Tests:       20 passed, 20 total
+Snapshots:   17 passed, 17 total
+Time:        2.848s
+Ran all test suites matching /MiniCart\/ProductList\/__tests__\/item|MiniCart\/ProductList\/__tests__\/productList|OrderHistoryPage\/OrderDetails\/__tests__\/item|OrderHistoryPage\/OrderDetails\/__tests__\/items|OrderHistoryPage\/OrderDetails\/__tests__\/orderDetails|OrderHistoryPage\/__tests__\/orderHistoryPage|OrderHistoryPage\/__tests__\/orderRow/i.
+reward=1 graded=20 found=0 failed=0 parsed=0 framework=jest exit_code=0

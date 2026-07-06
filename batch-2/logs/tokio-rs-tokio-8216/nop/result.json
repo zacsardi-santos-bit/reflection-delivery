@@ -1,0 +1,29 @@
+{
+    "id": "e47f8f27-aa77-478f-b33b-a1a40a721939",
+    "started_at": "2026-07-06T12:17:21.611219",
+    "finished_at": "2026-07-06T12:19:54.859757",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tokio-rs-tokio-8216": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tokio-rs-tokio-8216__v4BTSdV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

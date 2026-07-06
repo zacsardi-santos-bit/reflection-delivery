@@ -1,0 +1,29 @@
+{
+    "id": "67564cd5-800a-411f-ab68-cdafd92ff675",
+    "started_at": "2026-07-06T12:17:20.701031",
+    "finished_at": "2026-07-06T12:18:43.435819",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rancher-rancher-55092": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rancher-rancher-55092__CWLEbaa"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

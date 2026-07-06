@@ -1,8 +1,0 @@
-patching file web/src/compose.js
-patching file web/src/drafts.js
-patching file web/src/echo.js
-patching file web/src/info_overlay.js
-patching file web/src/markdown.ts (renamed from web/src/markdown.js)
-patching file web/src/markdown_config.ts
-patching file web/src/message_edit.js
-patching file web/third/marked/lib/marked.d.ts

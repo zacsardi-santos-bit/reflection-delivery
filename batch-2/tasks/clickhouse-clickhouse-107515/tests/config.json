@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/test_ch.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04339_in_subquery_partition_pruning_not_ready_set.reference",
+    "tests/queries/0_stateless/04339_in_subquery_partition_pruning_not_ready_set.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_ch::test_04339_in_subquery_partition_pruning_not_ready_set"
+  ],
+  "PASS_TO_PASS": []
+}

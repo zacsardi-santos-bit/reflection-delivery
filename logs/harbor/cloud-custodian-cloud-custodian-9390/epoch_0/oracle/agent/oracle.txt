@@ -1,2 +1,0 @@
-patching file c7n/resources/resource_map.py
-patching file c7n/resources/sagemaker.py

@@ -1,0 +1,6 @@
+patching file changelog/pending/20240104--auto-go--add-new-api-to-install-the-pulumi-cli-from-the-automation-api.yaml
+patching file sdk/go/auto/cmd.go
+patching file sdk/go/auto/local_workspace.go
+patching file sdk/go/auto/stack.go
+patching file sdk/go/auto/workspace.go
+patching file sdk/go/common/env/env.go

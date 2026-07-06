@@ -1,0 +1,7 @@
+I'm working on a storefront project and need to add locally-owned versions of several UI components for the order history and mini-cart sections, instead of relying solely on the upstream library. Right now, there's no local implementation of the order row component or the detailed order view components, and the order history page imports the order row directly from an external library. I'd like to move to a locally-defined order row that can be customized within this project.
+
+The order row should show the order number, date, formatted total, a thumbnail gallery of ordered items, a status badge, and a progress bar indicating order progress. It should be expandable — clicking a toggle should show or hide detailed order information. The detailed view should include shipping address, shipping method, billing address, payment method info, the list of ordered items, and a totals summary with a print receipt action. When the order status is "Complete" or when the order has shipments, the progress bar should show a "Delivered" state.
+
+I also need a locally-defined mini-cart item component. It should display the product thumbnail, name, selected options, quantity, price, and stock status. Out-of-stock products should show an "Out-of-stock" label. It should support showing a variant-specific thumbnail when configured. The delete button should be disabled while a deletion is in progress.
+
+Additionally, the order history page needs to be updated to use the local order row component instead of the external library version.

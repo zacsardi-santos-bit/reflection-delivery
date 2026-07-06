@@ -1,8 +1,0 @@
-patching file openmeter/billing/errors.go
-patching file openmeter/billing/invoice.go
-patching file openmeter/billing/invoiceline.go
-patching file openmeter/billing/service.go
-patching file openmeter/billing/service/invoice.go
-patching file openmeter/billing/service/invoiceline.go
-patching file openmeter/billing/worker/subscription/patch.go
-patching file openmeter/billing/worker/subscription/sync.go

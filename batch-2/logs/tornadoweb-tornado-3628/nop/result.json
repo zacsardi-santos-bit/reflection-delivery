@@ -1,0 +1,29 @@
+{
+    "id": "fe07814f-bd20-46b0-a326-40c064c0fe3d",
+    "started_at": "2026-07-06T12:17:26.536247",
+    "finished_at": "2026-07-06T12:17:55.318191",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tornadoweb-tornado-3628": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tornadoweb-tornado-3628__8tRCfTY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

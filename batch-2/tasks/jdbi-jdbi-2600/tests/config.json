@@ -1,0 +1,42 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl e2e test -Dsurefire.excludes='**/TestIssue2564.java,**/testcontainer/**'",
+  "test_files": [
+    "e2e/src/test/java/org/jdbi/v3/e2e/TestIssue2497.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/TestIssue2508.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/TestIssue2562.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/TestIssue2564.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/java17/TestRecord.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/java17/TestTextBlock.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/lombok/LombokMappingTest.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/lombok/LombokReflectionTest.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/lombok/lombok.config",
+    "e2e/src/test/java/org/jdbi/v3/e2e/lombok/package-info.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/testcontainer/TestMSSQLStoredProcedure.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/testcontainer/mysql/TestMySQL.java",
+    "e2e/src/test/java/org/jdbi/v3/e2e/testcontainer/mysql/TestScript.java",
+    "e2e/src/test/resources/org/jdbi/v3/e2e/TestIssue2562$UserSearchDao/findAll.sql.ftl",
+    "e2e/src/test/resources/scripts/test-issue-2554.sql"
+  ],
+  "num_test_files": 15,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jdbi3::test_1",
+    "jdbi3::test_2",
+    "jdbi3::test_3",
+    "jdbi3::test_4",
+    "jdbi3::test_5",
+    "jdbi3::test_6",
+    "jdbi3::test_7",
+    "jdbi3::test_8",
+    "jdbi3::test_9",
+    "jdbi3::test_10",
+    "jdbi3::test_11",
+    "jdbi3::test_12",
+    "jdbi3::test_13",
+    "jdbi3::test_14",
+    "jdbi3::test_15",
+    "jdbi3::test_16"
+  ],
+  "PASS_TO_PASS": []
+}

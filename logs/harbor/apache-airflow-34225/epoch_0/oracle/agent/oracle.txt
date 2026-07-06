@@ -1,4 +1,0 @@
-patching file airflow/providers/amazon/aws/links/emr.py
-patching file airflow/providers/amazon/aws/operators/emr.py
-patching file airflow/providers/amazon/provider.yaml
-patching file docs/apache-airflow-providers-amazon/operators/emr/emr_serverless.rst

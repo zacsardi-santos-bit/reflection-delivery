@@ -1,0 +1,7 @@
+patching file charts/connectors/chart_test.go
+# github.com/redpanda-data/helm-charts/charts/connectors [github.com/redpanda-data/helm-charts/charts/connectors.test]
+charts/connectors/chart_test.go:148:8: undefined: ServiceConfig
+{"Time":"2026-06-29T15:21:48.605059906Z","Action":"start","Package":"github.com/redpanda-data/helm-charts/charts/connectors"}
+{"Time":"2026-06-29T15:21:48.605175569Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Output":"FAIL\tgithub.com/redpanda-data/helm-charts/charts/connectors [build failed]\n"}
+{"Time":"2026-06-29T15:21:48.605192058Z","Action":"fail","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Elapsed":0}
+reward=0 graded=1 found=0 failed=0 parsed=1 framework=go exit_code=1

@@ -1,0 +1,360 @@
+diff --git a/devtools/ci/check-relaxed.sh b/devtools/ci/check-relaxed.sh
+index 8f5cab29c..16eb087fb 100755
+--- a/devtools/ci/check-relaxed.sh
++++ b/devtools/ci/check-relaxed.sh
+@@ -5,7 +5,7 @@ set -euo pipefail
+ case "$OSTYPE" in
+   darwin*)
+     if ! type gsed &>/dev/null || ! type ggrep &>/dev/null; then
+-      echo "GNU sed and grep not found! You can install via Homebrew" >&2
++      echo "GNU sed and grep not found! You can install them via Homebrew" >&2
+       echo >&2
+       echo "    brew install grep gnu-sed" >&2
+       exit 1
+diff --git a/network/fuzz/Cargo.toml b/network/fuzz/Cargo.toml
+index f4eb181c0..c04cc3776 100644
+--- a/network/fuzz/Cargo.toml
++++ b/network/fuzz/Cargo.toml
+@@ -13,7 +13,7 @@ cargo-fuzz = true
+ 
+ [dependencies]
+ libfuzzer-sys = "0.4"
+-ipnetwork = "0.20.0"
++ipnetwork = "0.18"
+ 
+ [dependencies.ckb-network]
+ path = ".."
+diff --git a/network/fuzz/fuzz_targets/fuzz_addr_manager.rs b/network/fuzz/fuzz_targets/fuzz_addr_manager.rs
+index d788ae9bf..f4665c051 100644
+--- a/network/fuzz/fuzz_targets/fuzz_addr_manager.rs
++++ b/network/fuzz/fuzz_targets/fuzz_addr_manager.rs
+@@ -20,7 +20,7 @@ fn new_addr(data: &[u8], index: usize) -> AddrInfo {
+     // let ip = Ipv4Addr::from(((225 << 24) + index) as u32);
+     // let port = u16::from_le_bytes(data[4..6].try_into().unwrap());
+     let peer_id =
+-        PeerId::from_bytes([vec![0x12], vec![0x20], data[4..].to_vec()].concat()).unwrap();
++        PeerId::from_bytes(vec![vec![0x12], vec![0x20], data[4..].to_vec()].concat()).unwrap();
+ 
+     AddrInfo::new(
+         format!("/ip4/{}/tcp/43/p2p/{}", ip, peer_id.to_base58())
+diff --git a/network/fuzz/fuzz_targets/fuzz_peer_store.rs b/network/fuzz/fuzz_targets/fuzz_peer_store.rs
+index 468634908..255974f71 100644
+--- a/network/fuzz/fuzz_targets/fuzz_peer_store.rs
++++ b/network/fuzz/fuzz_targets/fuzz_peer_store.rs
+@@ -15,10 +15,10 @@ fn new_multi_addr(data: &mut BufManager) -> (MultiAddr, Flags) {
+         let buf = data.get_buf(16);
+         format!(
+             "/ip6/{}",
+-            std::net::Ipv6Addr::from(u128::from_le_bytes(buf.try_into().unwrap()))
++            std::net::Ipv6Addr::from(u128::from_le_bytes(buf.try_into().unwrap())).to_string()
+         )
+     } else {
+-        format!("/ip4/{}", data.get::<std::net::Ipv4Addr>())
++        format!("/ip4/{}", data.get::<std::net::Ipv4Addr>().to_string())
+     };
+ 
+     addr_str += &format!("/tcp/{}", data.get::<u16>());
+@@ -66,7 +66,7 @@ fn add_basic_addr(data: &mut BufManager, peer_store: &mut PeerStore) {
+     for i in 0..num {
+         let addr = format!(
+             "/ip4/{}/tcp/43/p2p/{}",
+-            std::net::Ipv4Addr::from(i),
++            std::net::Ipv4Addr::from(i as u32).to_string(),
+             PeerId::random().to_base58()
+         )
+         .parse()
+diff --git a/network/fuzz/src/lib.rs b/network/fuzz/src/lib.rs
+index 32e680c54..94138a6b2 100644
+--- a/network/fuzz/src/lib.rs
++++ b/network/fuzz/src/lib.rs
+@@ -14,10 +14,6 @@ impl<'a> BufManager<'a> {
+         }
+     }
+ 
+-    pub fn is_empty(&self) -> bool {
+-        self.buf.is_empty()
+-    }
+-
+     pub fn len(&self) -> usize {
+         self.buf.len()
+     }
+@@ -29,7 +25,8 @@ impl<'a> BufManager<'a> {
+             self.offset += len;
+             r
+         } else {
+-            let mut r = vec![0; len];
++            let mut r = Vec::<u8>::with_capacity(len);
++            r.resize(len, 0);
+             r[0..(buf_len - self.offset)].copy_from_slice(&self.buf[self.offset..]);
+             self.offset = buf_len;
+             r
+@@ -141,6 +138,6 @@ impl FromBytes<PeerId> for PeerId {
+         32
+     }
+     fn from_bytes(d: &[u8]) -> PeerId {
+-        PeerId::from_bytes([vec![0x12], vec![0x20], d.to_vec()].concat()).unwrap()
++        PeerId::from_bytes(vec![vec![0x12], vec![0x20], d.to_vec()].concat()).unwrap()
+     }
+ }
+diff --git a/script/src/error.rs b/script/src/error.rs
+index f3185cdec..c4778562d 100644
+--- a/script/src/error.rs
++++ b/script/src/error.rs
+@@ -197,7 +197,6 @@ impl From<TransactionScriptError> for Error {
+ #[cfg(test)]
+ mod tests {
+     use super::*;
+-    use ckb_types::core::error::ARGV_TOO_LONG_TEXT;
+ 
+     #[test]
+     fn test_downcast_error_to_vm_error() {
+@@ -226,13 +225,4 @@ mod tests {
+             );
+         }
+     }
+-
+-    #[test]
+-    fn test_vm_internal_error_preserves_text() {
+-        let vm_error = VMInternalError::Unexpected(ARGV_TOO_LONG_TEXT.to_string());
+-        let script_error = ScriptError::VMInternalError(vm_error.clone());
+-        let error: Error = script_error.output_type_script(177).into();
+-
+-        assert!(format!("{}", error).contains(ARGV_TOO_LONG_TEXT));
+-    }
+ }
+diff --git a/script/src/syscalls/exec.rs b/script/src/syscalls/exec.rs
+index 9d42c8b8e..6eb1d159c 100644
+--- a/script/src/syscalls/exec.rs
++++ b/script/src/syscalls/exec.rs
+@@ -1,13 +1,11 @@
+ use crate::cost_model::transferred_byte_cycles;
+ use crate::syscalls::utils::load_c_string;
+ use crate::syscalls::{
+-    Place, Source, SourceEntry, EXEC, INDEX_OUT_OF_BOUND, MAX_ARGV_LENGTH, SLICE_OUT_OF_BOUND,
+-    WRONG_FORMAT,
++    Place, Source, SourceEntry, EXEC, INDEX_OUT_OF_BOUND, SLICE_OUT_OF_BOUND, WRONG_FORMAT,
+ };
+ use crate::types::Indices;
+ use ckb_traits::CellDataProvider;
+ use ckb_types::core::cell::{CellMeta, ResolvedTransaction};
+-use ckb_types::core::error::ARGV_TOO_LONG_TEXT;
+ use ckb_types::packed::{Bytes as PackedBytes, BytesVec};
+ use ckb_vm::Memory;
+ use ckb_vm::{
+@@ -164,7 +162,6 @@ impl<Mac: SupportMachine, DL: CellDataProvider + Send + Sync> Syscalls<Mac> for
+         let argc = machine.registers()[A4].to_u64();
+         let mut addr = machine.registers()[A5].to_u64();
+         let mut argv = Vec::new();
+-        let mut argv_length: u64 = 0;
+         for _ in 0..argc {
+             let target_addr = machine
+                 .memory_mut()
+@@ -172,17 +169,7 @@ impl<Mac: SupportMachine, DL: CellDataProvider + Send + Sync> Syscalls<Mac> for
+                 .to_u64();
+ 
+             let cstr = load_c_string(machine, target_addr)?;
+-            let cstr_len = cstr.len();
+             argv.push(cstr);
+-
+-            // Number of argv entries should also be considered
+-            argv_length = argv_length
+-                .saturating_add(8)
+-                .saturating_add(cstr_len as u64);
+-            if argv_length > MAX_ARGV_LENGTH {
+-                return Err(VMError::Unexpected(ARGV_TOO_LONG_TEXT.to_string()));
+-            }
+-
+             addr += 8;
+         }
+ 
+diff --git a/script/src/syscalls/mod.rs b/script/src/syscalls/mod.rs
+index a7a3fd045..4e09f8968 100644
+--- a/script/src/syscalls/mod.rs
++++ b/script/src/syscalls/mod.rs
+@@ -102,8 +102,6 @@ pub const EXEC_LOAD_ELF_V2_CYCLES_BASE: u64 = 75_000;
+ pub const SPAWN_EXTRA_CYCLES_BASE: u64 = 100_000;
+ pub const SPAWN_YIELD_CYCLES_BASE: u64 = 800;
+ 
+-pub const MAX_ARGV_LENGTH: u64 = 1024 * 1024;
+-
+ #[derive(Debug, PartialEq, Clone, Copy, Eq)]
+ enum CellField {
+     Capacity = 0,
+diff --git a/script/src/syscalls/spawn.rs b/script/src/syscalls/spawn.rs
+index 838fc1de7..ad929718f 100644
+--- a/script/src/syscalls/spawn.rs
++++ b/script/src/syscalls/spawn.rs
+@@ -1,11 +1,10 @@
+ use crate::syscalls::utils::load_c_string;
+ use crate::syscalls::{
+-    Source, INDEX_OUT_OF_BOUND, MAX_ARGV_LENGTH, SLICE_OUT_OF_BOUND, SOURCE_ENTRY_MASK,
+-    SOURCE_GROUP_FLAG, SPAWN, SPAWN_EXTRA_CYCLES_BASE, SPAWN_YIELD_CYCLES_BASE,
++    Source, INDEX_OUT_OF_BOUND, SLICE_OUT_OF_BOUND, SOURCE_ENTRY_MASK, SOURCE_GROUP_FLAG, SPAWN,
++    SPAWN_EXTRA_CYCLES_BASE, SPAWN_YIELD_CYCLES_BASE,
+ };
+ use crate::types::{DataPieceId, Fd, Message, SpawnArgs, TxData, VmId};
+ use ckb_traits::{CellDataProvider, ExtensionProvider, HeaderProvider};
+-use ckb_types::core::error::ARGV_TOO_LONG_TEXT;
+ use ckb_vm::{
+     machine::SupportMachine,
+     memory::Memory,
+@@ -88,24 +87,13 @@ where
+             .to_u64();
+         let mut addr = argv_addr;
+         let mut argv = Vec::new();
+-        let mut argv_length: u64 = 0;
+         for _ in 0..argc {
+             let target_addr = machine
+                 .memory_mut()
+                 .load64(&Mac::REG::from_u64(addr))?
+                 .to_u64();
+             let cstr = load_c_string(machine, target_addr)?;
+-            let cstr_len = cstr.len();
+             argv.push(cstr);
+-
+-            // Number of argv entries should also be considered
+-            argv_length = argv_length
+-                .saturating_add(8)
+-                .saturating_add(cstr_len as u64);
+-            if argv_length > MAX_ARGV_LENGTH {
+-                return Err(VMError::Unexpected(ARGV_TOO_LONG_TEXT.to_string()));
+-            }
+-
+             addr = addr.wrapping_add(8);
+         }
+ 
+diff --git a/script/src/syscalls/tests/mod.rs b/script/src/syscalls/tests/mod.rs
+index 61008ccbf..a4f3c57d8 100644
+--- a/script/src/syscalls/tests/mod.rs
++++ b/script/src/syscalls/tests/mod.rs
+@@ -7,8 +7,3 @@ pub(crate) mod utils;
+ mod vm_version_0;
+ #[path = "vm_latest/mod.rs"]
+ mod vm_version_1;
+-
+-#[test]
+-fn test_max_argv_length() {
+-    assert!(crate::syscalls::MAX_ARGV_LENGTH < u64::MAX);
+-}
+diff --git a/script/src/verify.rs b/script/src/verify.rs
+index 1c6b98ddc..141910fc2 100644
+--- a/script/src/verify.rs
++++ b/script/src/verify.rs
+@@ -255,11 +255,7 @@ where
+         &self,
+         snapshot2_context: Arc<Mutex<Snapshot2Context<DataPieceId, TxData<DL>>>>,
+     ) -> Spawn<DL> {
+-        Spawn::new(
+-            self.vm_id,
+-            Arc::clone(&self.message_box),
+-            snapshot2_context,
+-        )
++        Spawn::new(self.vm_id, Arc::clone(&self.message_box), snapshot2_context)
+     }
+ 
+     /// Build syscall: wait
+diff --git a/script/src/verify_env.rs b/script/src/verify_env.rs
+index 16a44e995..600eaa7db 100644
+--- a/script/src/verify_env.rs
++++ b/script/src/verify_env.rs
+@@ -127,16 +127,4 @@ impl TxVerifyEnv {
+         };
+         self.epoch.minimum_epoch_number_after_n_blocks(n_blocks)
+     }
+-
+-    /// Returns true if TxVerifyEnv is created to verify a submitted or
+-    /// proposed tx
+-    pub fn verifying_inflight_tx(&self) -> bool {
+-        !self.verifying_committed_tx()
+-    }
+-
+-    /// Returns true if TxVerifyEnv is created to verify a committed tx
+-    /// in a block
+-    pub fn verifying_committed_tx(&self) -> bool {
+-        matches!(self.phase, TxVerifyPhase::Committed)
+-    }
+ }
+diff --git a/sync/src/status.rs b/sync/src/status.rs
+index a76281aef..86b1dfe49 100644
+--- a/sync/src/status.rs
++++ b/sync/src/status.rs
+@@ -1,5 +1,4 @@
+ use ckb_constant::sync::{BAD_MESSAGE_BAN_TIME, SYNC_USELESS_BAN_TIME};
+-use ckb_types::core::error::ARGV_TOO_LONG_TEXT;
+ use std::fmt::{self, Display, Formatter};
+ use std::time::Duration;
+ 
+@@ -166,13 +165,6 @@ impl Status {
+         if !(400..500).contains(&(self.code as u16)) {
+             return None;
+         }
+-        if let Some(context) = &self.context {
+-            // TODO: it might be worthwhile to formalize all error texts
+-            // that won't be banned.
+-            if context.contains(ARGV_TOO_LONG_TEXT) {
+-                return None;
+-            }
+-        }
+         match self.code {
+             StatusCode::GetHeadersMissCommonAncestors => Some(SYNC_USELESS_BAN_TIME),
+             _ => Some(BAD_MESSAGE_BAN_TIME),
+diff --git a/util/types/src/core/error.rs b/util/types/src/core/error.rs
+index 3909b906a..28a8c1420 100644
+--- a/util/types/src/core/error.rs
++++ b/util/types/src/core/error.rs
+@@ -223,5 +223,3 @@ impl OutPointError {
+         matches!(self, OutPointError::Unknown(_))
+     }
+ }
+-
+-pub const ARGV_TOO_LONG_TEXT: &str = "@@@VM@@@UNEXPECTED@@@ARGV@@@TOOLONG@@@";
+diff --git a/util/types/src/core/tests/tx_pool.rs b/util/types/src/core/tests/tx_pool.rs
+index 2b607001d..99d64ebb7 100644
+--- a/util/types/src/core/tests/tx_pool.rs
++++ b/util/types/src/core/tests/tx_pool.rs
+@@ -1,7 +1,7 @@
+-use ckb_error::{ErrorKind, InternalErrorKind, OtherError, SilentError as DefaultError};
++use ckb_error::{ErrorKind, InternalErrorKind, SilentError as DefaultError};
+ 
+ use crate::core::{
+-    error::{OutPointError, TransactionError, TransactionErrorSource, ARGV_TOO_LONG_TEXT},
++    error::{OutPointError, TransactionError, TransactionErrorSource},
+     tx_pool::Reject,
+ };
+ 
+@@ -99,13 +99,6 @@ fn test_if_is_malformed_tx() {
+         assert!(reject.is_malformed_tx());
+     }
+ 
+-    {
+-        let error_kind = ErrorKind::Script;
+-        let error = error_kind.because(OtherError::new(ARGV_TOO_LONG_TEXT.to_string()));
+-        let reject = Reject::Verification(error);
+-        assert!(!reject.is_malformed_tx());
+-    }
+-
+     for error_kind in &[
+         InternalErrorKind::CapacityOverflow,
+         InternalErrorKind::DataCorrupted,
+diff --git a/util/types/src/core/tx_pool.rs b/util/types/src/core/tx_pool.rs
+index 9df8e3a8a..bed1fb1a6 100644
+--- a/util/types/src/core/tx_pool.rs
++++ b/util/types/src/core/tx_pool.rs
+@@ -2,7 +2,7 @@
+ use crate::{
+     core::{
+         self,
+-        error::{OutPointError, TransactionError, ARGV_TOO_LONG_TEXT},
++        error::{OutPointError, TransactionError},
+         BlockNumber, Capacity, Cycle, FeeRate,
+     },
+     packed::Byte32,
+@@ -71,7 +71,7 @@ fn is_malformed_from_verification(error: &Error) -> bool {
+             .downcast_ref::<TransactionError>()
+             .expect("error kind checked")
+             .is_malformed_tx(),
+-        ErrorKind::Script => !format!("{}", error).contains(ARGV_TOO_LONG_TEXT),
++        ErrorKind::Script => true,
+         ErrorKind::Internal => {
+             error
+                 .downcast_ref::<InternalError>()

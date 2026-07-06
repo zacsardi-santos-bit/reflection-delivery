@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/airflow-core/tests/unit/serialization/test_helpers.py -v --noconftest",
+  "test_files": [
+    "airflow-core/tests/unit/serialization/test_helpers.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "airflow-core.tests.unit.serialization.test_helpers::test_serialize_template_field_with_notset",
+    "airflow-core.tests.unit.serialization.test_helpers::test_argnotset_repr_and_str"
+  ],
+  "PASS_TO_PASS": [
+    "airflow-core.tests.unit.serialization.test_helpers::test_serialize_template_field_with_very_small_max_length",
+    "airflow-core.tests.unit.serialization.test_helpers::test_serialize_template_field_with_set_during_execution"
+  ]
+}

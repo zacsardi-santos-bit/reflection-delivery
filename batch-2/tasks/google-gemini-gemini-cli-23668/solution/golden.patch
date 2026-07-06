@@ -1,0 +1,1045 @@
+diff --git a/docs/core/remote-agents.md b/docs/core/remote-agents.md
+index 05975421f..2e34a9dbc 100644
+--- a/docs/core/remote-agents.md
++++ b/docs/core/remote-agents.md
+@@ -104,7 +104,7 @@ Gemini CLI supports the following authentication types:
+ | `apiKey`             | Send a static API key as an HTTP header.                                                       |
+ | `http`               | HTTP authentication (Bearer token, Basic credentials, or any IANA-registered scheme).          |
+ | `google-credentials` | Google Application Default Credentials (ADC). Automatically selects access or identity tokens. |
+-| `oauth`              | OAuth 2.0 Authorization Code flow with PKCE. Opens a browser for interactive sign-in.          |
++| `oauth2`             | OAuth 2.0 Authorization Code flow with PKCE. Opens a browser for interactive sign-in.          |
+ 
+ ### Dynamic values
+ 
+@@ -263,7 +263,7 @@ hosts:
+ 
+ Requests to any other host will be rejected with an error. If your agent is
+ hosted on a different domain, use one of the other auth types (`apiKey`, `http`,
+-or `oauth`).
++or `oauth2`).
+ 
+ #### Examples
+ 
+@@ -297,7 +297,7 @@ auth:
+ ---
+ ```
+ 
+-### OAuth 2.0 (`oauth`)
++### OAuth 2.0 (`oauth2`)
+ 
+ Performs an interactive OAuth 2.0 Authorization Code flow with PKCE. On first
+ use, Gemini CLI opens your browser for sign-in and persists the resulting tokens
+@@ -305,7 +305,7 @@ for subsequent requests.
+ 
+ | Field               | Type     | Required | Description                                                                                                                                        |
+ | :------------------ | :------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+-| `type`              | string   | Yes      | Must be `oauth`.                                                                                                                                   |
++| `type`              | string   | Yes      | Must be `oauth2`.                                                                                                                                  |
+ | `client_id`         | string   | Yes\*    | OAuth client ID. Required for interactive auth.                                                                                                    |
+ | `client_secret`     | string   | No\*     | OAuth client secret. Required by most authorization servers (confidential clients). Can be omitted for public clients that don't require a secret. |
+ | `scopes`            | string[] | No       | Requested scopes. Can also be discovered from the agent card.                                                                                      |
+@@ -318,7 +318,7 @@ kind: remote
+ name: oauth-agent
+ agent_card_url: https://example.com/.well-known/agent.json
+ auth:
+-  type: oauth
++  type: oauth2
+   client_id: my-client-id.apps.example.com
+ ---
+ ```
+diff --git a/evals/app-test-helper.ts b/evals/app-test-helper.ts
+index 8ea842aa3..2bcff4192 100644
+--- a/evals/app-test-helper.ts
++++ b/evals/app-test-helper.ts
+@@ -79,7 +79,7 @@ export function appEvalTest(policy: EvalPolicy, evalCase: AppEvalCase) {
+       }
+ 
+       // Render the app!
+-      await rig.render();
++      rig.render();
+ 
+       // Wait for initial ready state
+       await rig.waitForIdle();
+diff --git a/evals/subagents.eval.ts b/evals/subagents.eval.ts
+index 140925964..3a7d8fa44 100644
+--- a/evals/subagents.eval.ts
++++ b/evals/subagents.eval.ts
+@@ -9,7 +9,27 @@ import path from 'node:path';
+ 
+ import { describe, expect } from 'vitest';
+ 
+-import { evalTest, TEST_AGENTS } from './test-helper.js';
++import { evalTest } from './test-helper.js';
++
++const DOCS_AGENT_DEFINITION = `---
++name: docs-agent
++description: An agent with expertise in updating documentation.
++tools:
++  - read_file
++  - write_file
++---
++You are the docs agent. Update documentation clearly and accurately.
++`;
++
++const TEST_AGENT_DEFINITION = `---
++name: test-agent
++description: An agent with expertise in writing and updating tests.
++tools:
++  - read_file
++  - write_file
++---
++You are the test agent. Add or update tests.
++`;
+ 
+ const INDEX_TS = 'export const add = (a: number, b: number) => a + b;\n';
+ 
+@@ -42,12 +62,12 @@ describe('subagent eval test cases', () => {
+     },
+     prompt: 'Please update README.md with a description of this library.',
+     files: {
+-      ...TEST_AGENTS.DOCS_AGENT.asFile(),
++      '.gemini/agents/docs-agent.md': DOCS_AGENT_DEFINITION,
+       'index.ts': INDEX_TS,
+       'README.md': 'TODO: update the README.\n',
+     },
+     assert: async (rig, _result) => {
+-      await rig.expectToolCallSuccess([TEST_AGENTS.DOCS_AGENT.name]);
++      await rig.expectToolCallSuccess(['docs-agent']);
+     },
+   });
+ 
+@@ -72,7 +92,7 @@ describe('subagent eval test cases', () => {
+     prompt:
+       'Rename the exported function in index.ts from add to sum and update the file directly.',
+     files: {
+-      ...TEST_AGENTS.DOCS_AGENT.asFile(),
++      '.gemini/agents/docs-agent.md': DOCS_AGENT_DEFINITION,
+       'index.ts': INDEX_TS,
+     },
+     assert: async (rig, _result) => {
+@@ -82,11 +102,9 @@ describe('subagent eval test cases', () => {
+       }>;
+ 
+       expect(updatedIndex).toContain('export const sum =');
+-      expect(
+-        toolLogs.some(
+-          (l) => l.toolRequest.name === TEST_AGENTS.DOCS_AGENT.name,
+-        ),
+-      ).toBe(false);
++      expect(toolLogs.some((l) => l.toolRequest.name === 'docs-agent')).toBe(
++        false,
++      );
+       expect(toolLogs.some((l) => l.toolRequest.name === 'generalist')).toBe(
+         false,
+       );
+@@ -115,7 +133,7 @@ describe('subagent eval test cases', () => {
+     },
+     prompt: 'Please add a small test file that verifies add(1, 2) returns 3.',
+     files: {
+-      ...TEST_AGENTS.TESTING_AGENT.asFile(),
++      '.gemini/agents/test-agent.md': TEST_AGENT_DEFINITION,
+       'index.ts': INDEX_TS,
+       'package.json': JSON.stringify(
+         {
+@@ -132,7 +150,7 @@ describe('subagent eval test cases', () => {
+         toolRequest: { name: string };
+       }>;
+ 
+-      await rig.expectToolCallSuccess([TEST_AGENTS.TESTING_AGENT.name]);
++      await rig.expectToolCallSuccess(['test-agent']);
+       expect(toolLogs.some((l) => l.toolRequest.name === 'generalist')).toBe(
+         false,
+       );
+@@ -160,8 +178,8 @@ describe('subagent eval test cases', () => {
+     prompt:
+       'Add a short README description for this library and also add a test file that verifies add(1, 2) returns 3.',
+     files: {
+-      ...TEST_AGENTS.DOCS_AGENT.asFile(),
+-      ...TEST_AGENTS.TESTING_AGENT.asFile(),
++      '.gemini/agents/docs-agent.md': DOCS_AGENT_DEFINITION,
++      '.gemini/agents/test-agent.md': TEST_AGENT_DEFINITION,
+       'index.ts': INDEX_TS,
+       'README.md': 'TODO: update the README.\n',
+       'package.json': JSON.stringify(
+@@ -180,10 +198,7 @@ describe('subagent eval test cases', () => {
+       }>;
+       const readme = readProjectFile(rig, 'README.md');
+ 
+-      await rig.expectToolCallSuccess([
+-        TEST_AGENTS.DOCS_AGENT.name,
+-        TEST_AGENTS.TESTING_AGENT.name,
+-      ]);
++      await rig.expectToolCallSuccess(['docs-agent', 'test-agent']);
+       expect(readme).not.toContain('TODO: update the README.');
+       expect(toolLogs.some((l) => l.toolRequest.name === 'generalist')).toBe(
+         false,
+diff --git a/package-lock.json b/package-lock.json
+index b4fdfdb43..ff6b8fee2 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -486,7 +486,8 @@
+       "version": "2.11.0",
+       "resolved": "https://registry.npmjs.org/@bufbuild/protobuf/-/protobuf-2.11.0.tgz",
+       "integrity": "sha512-sBXGT13cpmPR5BMgHE6UEEfEaShh5Ror6rfN3yEK5si7QVrtZg8LEPQb0VVhiLRUslD2yLnXtnRzG035J/mZXQ==",
+-      "license": "(Apache-2.0 AND BSD-3-Clause)"
++      "license": "(Apache-2.0 AND BSD-3-Clause)",
++      "peer": true
+     },
+     "node_modules/@bundled-es-modules/cookie": {
+       "version": "2.0.1",
+@@ -1489,6 +1490,7 @@
+       "resolved": "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.13.4.tgz",
+       "integrity": "sha512-GsFaMXCkMqkKIvwCQjCrwH+GHbPKBjhwo/8ZuUkWHqbI73Kky9I+pQltrlT0+MWpedCoosda53lgjYfyEPgxBg==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "dependencies": {
+         "@grpc/proto-loader": "^0.7.13",
+         "@js-sdsl/ordered-map": "^4.4.2"
+@@ -2195,6 +2197,7 @@
+       "integrity": "sha512-t54CUOsFMappY1Jbzb7fetWeO0n6K0k/4+/ZpkS+3Joz8I4VcvY9OiEBFRYISqaI2fq5sCiPtAjRDOzVYG8m+Q==",
+       "dev": true,
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "@octokit/auth-token": "^6.0.0",
+         "@octokit/graphql": "^9.0.2",
+@@ -2375,6 +2378,7 @@
+       "resolved": "https://registry.npmjs.org/@opentelemetry/api/-/api-1.9.0.tgz",
+       "integrity": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "engines": {
+         "node": ">=8.0.0"
+       }
+@@ -2424,6 +2428,7 @@
+       "resolved": "https://registry.npmjs.org/@opentelemetry/core/-/core-2.5.0.tgz",
+       "integrity": "sha512-ka4H8OM6+DlUhSAZpONu0cPBtPPTQKxbxVzC4CzVx5+K4JnroJVBtDzLAMx4/3CDTJXRvVFhpFjtl4SaiTNoyQ==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "dependencies": {
+         "@opentelemetry/semantic-conventions": "^1.29.0"
+       },
+@@ -2798,6 +2803,7 @@
+       "resolved": "https://registry.npmjs.org/@opentelemetry/resources/-/resources-2.5.0.tgz",
+       "integrity": "sha512-F8W52ApePshpoSrfsSk1H2yJn9aKjCrbpQF1M9Qii0GHzbfVeFUB+rc3X4aggyZD8x9Gu3Slua+s6krmq6Dt8g==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "dependencies": {
+         "@opentelemetry/core": "2.5.0",
+         "@opentelemetry/semantic-conventions": "^1.29.0"
+@@ -2831,6 +2837,7 @@
+       "resolved": "https://registry.npmjs.org/@opentelemetry/sdk-metrics/-/sdk-metrics-2.5.0.tgz",
+       "integrity": "sha512-BeJLtU+f5Gf905cJX9vXFQorAr6TAfK3SPvTFqP+scfIpDQEJfRaGJWta7sJgP+m4dNtBf9y3yvBKVAZZtJQVA==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "dependencies": {
+         "@opentelemetry/core": "2.5.0",
+         "@opentelemetry/resources": "2.5.0"
+@@ -2885,6 +2892,7 @@
+       "resolved": "https://registry.npmjs.org/@opentelemetry/sdk-trace-base/-/sdk-trace-base-2.5.0.tgz",
+       "integrity": "sha512-VzRf8LzotASEyNDUxTdaJ9IRJ1/h692WyArDBInf5puLCjxbICD6XkHgpuudis56EndyS7LYFmtTMny6UABNdQ==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "dependencies": {
+         "@opentelemetry/core": "2.5.0",
+         "@opentelemetry/resources": "2.5.0",
+@@ -4121,6 +4129,7 @@
+       "integrity": "sha512-6mDvHUFSjyT2B2yeNx2nUgMxh9LtOWvkhIU3uePn2I2oyNymUAX1NIsdgviM4CH+JSrp2D2hsMvJOkxY+0wNRA==",
+       "devOptional": true,
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "csstype": "^3.0.2"
+       }
+@@ -4395,6 +4404,7 @@
+       "integrity": "sha512-6sMvZePQrnZH2/cJkwRpkT7DxoAWh+g6+GFRK6bV3YQo7ogi3SX5rgF6099r5Q53Ma5qeT7LGmOmuIutF4t3lA==",
+       "dev": true,
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "@typescript-eslint/scope-manager": "8.35.0",
+         "@typescript-eslint/types": "8.35.0",
+@@ -5268,6 +5278,7 @@
+       "resolved": "https://registry.npmjs.org/acorn/-/acorn-8.15.0.tgz",
+       "integrity": "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==",
+       "license": "MIT",
++      "peer": true,
+       "bin": {
+         "acorn": "bin/acorn"
+       },
+@@ -7402,7 +7413,8 @@
+       "version": "0.0.1581282",
+       "resolved": "https://registry.npmjs.org/devtools-protocol/-/devtools-protocol-0.0.1581282.tgz",
+       "integrity": "sha512-nv7iKtNZQshSW2hKzYNr46nM/Cfh5SEvE2oV0/SEGgc9XupIY5ggf84Cz8eJIkBce7S3bmTAauFD6aysMpnqsQ==",
+-      "license": "BSD-3-Clause"
++      "license": "BSD-3-Clause",
++      "peer": true
+     },
+     "node_modules/dezalgo": {
+       "version": "1.0.4",
+@@ -7986,6 +7998,7 @@
+       "integrity": "sha512-GsGizj2Y1rCWDu6XoEekL3RLilp0voSePurjZIkxL3wlm5o5EC9VpgaP7lrCvjnkuLvzFBQWB3vWB3K5KQTveQ==",
+       "dev": true,
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "@eslint-community/eslint-utils": "^4.2.0",
+         "@eslint-community/regexpp": "^4.12.1",
+@@ -8503,6 +8516,7 @@
+       "resolved": "https://registry.npmjs.org/express/-/express-5.2.1.tgz",
+       "integrity": "sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==",
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "accepts": "^2.0.0",
+         "body-parser": "^2.2.1",
+@@ -8696,9 +8710,9 @@
+       "license": "BSD-3-Clause"
+     },
+     "node_modules/fast-xml-builder": {
+-      "version": "1.1.4",
+-      "resolved": "https://registry.npmjs.org/fast-xml-builder/-/fast-xml-builder-1.1.4.tgz",
+-      "integrity": "sha512-f2jhpN4Eccy0/Uz9csxh3Nu6q4ErKxf0XIsasomfOihuSUa3/xw6w8dnOtCDgEItQFJG8KyXPzQXzcODDrrbOg==",
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/fast-xml-builder/-/fast-xml-builder-1.1.2.tgz",
++      "integrity": "sha512-NJAmiuVaJEjVa7TjLZKlYd7RqmzOC91EtPFXHvlTcqBVo50Qh7XV5IwvXi1c7NRz2Q/majGX9YLcwJtWgHjtkA==",
+       "funding": [
+         {
+           "type": "github",
+@@ -8711,9 +8725,9 @@
+       }
+     },
+     "node_modules/fast-xml-parser": {
+-      "version": "5.5.9",
+-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-5.5.9.tgz",
+-      "integrity": "sha512-jldvxr1MC6rtiZKgrFnDSvT8xuH+eJqxqOBThUVjYrxssYTo1avZLGql5l0a0BAERR01CadYzZ83kVEkbyDg+g==",
++      "version": "5.5.3",
++      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-5.5.3.tgz",
++      "integrity": "sha512-Ymnuefk6VzAhT3SxLzVUw+nMio/wB1NGypHkgetwtXcK1JfryaHk4DWQFGVwQ9XgzyS5iRZ7C2ZGI4AMsdMZ6A==",
+       "funding": [
+         {
+           "type": "github",
+@@ -8722,9 +8736,9 @@
+       ],
+       "license": "MIT",
+       "dependencies": {
+-        "fast-xml-builder": "^1.1.4",
+-        "path-expression-matcher": "^1.2.0",
+-        "strnum": "^2.2.2"
++        "fast-xml-builder": "^1.1.2",
++        "path-expression-matcher": "^1.1.3",
++        "strnum": "^2.1.2"
+       },
+       "bin": {
+         "fxparser": "src/cli/cli.js"
+@@ -8900,9 +8914,9 @@
+       }
+     },
+     "node_modules/flatted": {
+-      "version": "3.4.2",
+-      "resolved": "https://registry.npmjs.org/flatted/-/flatted-3.4.2.tgz",
+-      "integrity": "sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==",
++      "version": "3.3.3",
++      "resolved": "https://registry.npmjs.org/flatted/-/flatted-3.3.3.tgz",
++      "integrity": "sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==",
+       "dev": true,
+       "license": "ISC"
+     },
+@@ -9815,6 +9829,7 @@
+       "resolved": "https://registry.npmjs.org/hono/-/hono-4.12.7.tgz",
+       "integrity": "sha512-jq9l1DM0zVIvsm3lv9Nw9nlJnMNPOcAtsbsgiUhWcFzPE99Gvo6yRTlszSLLYacMeQ6quHD6hMfId8crVHvexw==",
+       "license": "MIT",
++      "peer": true,
+       "engines": {
+         "node": ">=16.9.0"
+       }
+@@ -10093,6 +10108,7 @@
+       "resolved": "https://registry.npmjs.org/@jrichman/ink/-/ink-6.4.11.tgz",
+       "integrity": "sha512-93LQlzT7vvZ1XJcmOMwN4s+6W334QegendeHOMnEJBlhnpIzr8bws6/aOEHG8ZCuVD/vNeeea5m1msHIdAY6ig==",
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "@alcalzone/ansi-tokenize": "^0.2.1",
+         "ansi-escapes": "^7.0.0",
+@@ -13200,9 +13216,9 @@
+       }
+     },
+     "node_modules/path-expression-matcher": {
+-      "version": "1.2.0",
+-      "resolved": "https://registry.npmjs.org/path-expression-matcher/-/path-expression-matcher-1.2.0.tgz",
+-      "integrity": "sha512-DwmPWeFn+tq7TiyJ2CxezCAirXjFxvaiD03npak3cRjlP9+OjTmSy1EpIrEbh+l6JgUundniloMLDQ/6VTdhLQ==",
++      "version": "1.1.3",
++      "resolved": "https://registry.npmjs.org/path-expression-matcher/-/path-expression-matcher-1.1.3.tgz",
++      "integrity": "sha512-qdVgY8KXmVdJZRSS1JdEPOKPdTiEK/pi0RkcT2sw1RhXxohdujUlJFPuS1TSkevZ9vzd3ZlL7ULl1MHGTApKzQ==",
+       "funding": [
+         {
+           "type": "github",
+@@ -13850,6 +13866,7 @@
+       "resolved": "https://registry.npmjs.org/react/-/react-19.2.4.tgz",
+       "integrity": "sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==",
+       "license": "MIT",
++      "peer": true,
+       "engines": {
+         "node": ">=0.10.0"
+       }
+@@ -13860,6 +13877,7 @@
+       "integrity": "sha512-ePrwPfxAnB+7hgnEr8vpKxL9cmnp7F322t8oqcPshbIQQhDKgFDW4tjhF2wjVbdXF9O/nyuy3sQWd9JGpiLPvA==",
+       "devOptional": true,
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "shell-quote": "^1.6.1",
+         "ws": "^7"
+@@ -15465,9 +15483,9 @@
+       }
+     },
+     "node_modules/strnum": {
+-      "version": "2.2.2",
+-      "resolved": "https://registry.npmjs.org/strnum/-/strnum-2.2.2.tgz",
+-      "integrity": "sha512-DnR90I+jtXNSTXWdwrEy9FakW7UX+qUZg28gj5fk2vxxl7uS/3bpI4fjFYVmdK9etptYBPNkpahuQnEwhwECqA==",
++      "version": "2.2.0",
++      "resolved": "https://registry.npmjs.org/strnum/-/strnum-2.2.0.tgz",
++      "integrity": "sha512-Y7Bj8XyJxnPAORMZj/xltsfo55uOiyHcU2tnAVzHUnSJR/KsEX+9RoDeXEnsXtl/CX4fAcrt64gZ13aGaWPeBg==",
+       "funding": [
+         {
+           "type": "github",
+@@ -16009,6 +16027,7 @@
+       "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz",
+       "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==",
+       "license": "MIT",
++      "peer": true,
+       "engines": {
+         "node": ">=12"
+       },
+@@ -16231,7 +16250,8 @@
+       "version": "2.8.1",
+       "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz",
+       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==",
+-      "license": "0BSD"
++      "license": "0BSD",
++      "peer": true
+     },
+     "node_modules/tsx": {
+       "version": "4.20.3",
+@@ -16239,6 +16259,7 @@
+       "integrity": "sha512-qjbnuR9Tr+FJOMBqJCW5ehvIo/buZq7vH7qD7JziU98h6l3qGy0a/yPFjwO+y0/T7GFpNgNAvEcPPVfyT8rrPQ==",
+       "devOptional": true,
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "esbuild": "~0.25.0",
+         "get-tsconfig": "^4.7.5"
+@@ -16404,6 +16425,7 @@
+       "integrity": "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==",
+       "devOptional": true,
+       "license": "Apache-2.0",
++      "peer": true,
+       "bin": {
+         "tsc": "bin/tsc",
+         "tsserver": "bin/tsserver"
+@@ -16469,9 +16491,9 @@
+       "license": "MIT"
+     },
+     "node_modules/undici": {
+-      "version": "7.24.5",
+-      "resolved": "https://registry.npmjs.org/undici/-/undici-7.24.5.tgz",
+-      "integrity": "sha512-3IWdCpjgxp15CbJnsi/Y9TCDE7HWVN19j1hmzVhoAkY/+CJx449tVxT5wZc1Gwg8J+P0LWvzlBzxYRnHJ+1i7Q==",
++      "version": "7.19.0",
++      "resolved": "https://registry.npmjs.org/undici/-/undici-7.19.0.tgz",
++      "integrity": "sha512-Heho1hJD81YChi+uS2RkSjcVO+EQLmLSyUlHyp7Y/wFbxQaGb4WXVKD073JytrjXJVkSZVzoE2MCSOKugFGtOQ==",
+       "license": "MIT",
+       "engines": {
+         "node": ">=20.18.1"
+@@ -16626,6 +16648,7 @@
+       "resolved": "https://registry.npmjs.org/vite/-/vite-7.2.2.tgz",
+       "integrity": "sha512-BxAKBWmIbrDgrokdGZH1IgkIk/5mMHDreLDmCJ0qpyJaAteP8NvMhkwr/ZCQNqNH97bw/dANTE9PDzqwJghfMQ==",
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "esbuild": "^0.25.0",
+         "fdir": "^6.5.0",
+@@ -16739,6 +16762,7 @@
+       "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz",
+       "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==",
+       "license": "MIT",
++      "peer": true,
+       "engines": {
+         "node": ">=12"
+       },
+@@ -16751,6 +16775,7 @@
+       "resolved": "https://registry.npmjs.org/vitest/-/vitest-3.2.4.tgz",
+       "integrity": "sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==",
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "@types/chai": "^5.2.2",
+         "@vitest/expect": "3.2.4",
+@@ -17398,6 +17423,7 @@
+       "resolved": "https://registry.npmjs.org/zod/-/zod-3.25.76.tgz",
+       "integrity": "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==",
+       "license": "MIT",
++      "peer": true,
+       "funding": {
+         "url": "https://github.com/sponsors/colinhacks"
+       }
+@@ -17841,6 +17867,7 @@
+       "resolved": "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.14.3.tgz",
+       "integrity": "sha512-Iq8QQQ/7X3Sac15oB6p0FmUg/klxQvXLeileoqrTRGJYLV+/9tubbr9ipz0GKHjmXVsgFPo/+W+2cA8eNcR+XA==",
+       "license": "Apache-2.0",
++      "peer": true,
+       "dependencies": {
+         "@grpc/proto-loader": "^0.8.0",
+         "@js-sdsl/ordered-map": "^4.4.2"
+@@ -17944,6 +17971,7 @@
+       "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz",
+       "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==",
+       "license": "MIT",
++      "peer": true,
+       "engines": {
+         "node": ">=12"
+       },
+diff --git a/packages/cli/src/config/config.ts b/packages/cli/src/config/config.ts
+index fa6d16fc7..af8c1ae0a 100755
+--- a/packages/cli/src/config/config.ts
++++ b/packages/cli/src/config/config.ts
+@@ -792,8 +792,8 @@ export async function loadCliConfig(
+     effectiveSettings,
+     approvalMode,
+     workspacePoliciesDir,
++    interactive,
+   );
+-  policyEngineConfig.nonInteractive = !interactive;
+ 
+   const defaultModel = PREVIEW_GEMINI_MODEL_AUTO;
+   const specifiedModel =
+diff --git a/packages/cli/src/config/policy.ts b/packages/cli/src/config/policy.ts
+index 9837c2c35..317d2e848 100644
+--- a/packages/cli/src/config/policy.ts
++++ b/packages/cli/src/config/policy.ts
+@@ -53,6 +53,7 @@ export async function createPolicyEngineConfig(
+   settings: Settings,
+   approvalMode: ApprovalMode,
+   workspacePoliciesDir?: string,
++  interactive: boolean = true,
+ ): Promise<PolicyEngineConfig> {
+   // Explicitly construct PolicySettings from Settings to ensure type safety
+   // and avoid accidental leakage of other settings properties.
+@@ -68,7 +69,12 @@ export async function createPolicyEngineConfig(
+       settings.admin?.secureModeEnabled,
+   };
+ 
+-  return createCorePolicyEngineConfig(policySettings, approvalMode);
++  return createCorePolicyEngineConfig(
++    policySettings,
++    approvalMode,
++    undefined,
++    interactive,
++  );
+ }
+ 
+ export function createPolicyUpdater(
+diff --git a/packages/cli/test-setup.ts b/packages/cli/test-setup.ts
+index f2e1bd458..452493559 100644
+--- a/packages/cli/test-setup.ts
++++ b/packages/cli/test-setup.ts
+@@ -66,10 +66,7 @@ beforeEach(() => {
+           ? stackLines.slice(lastReactFrameIndex + 1).join('\n')
+           : stackLines.slice(1).join('\n');
+ 
+-      if (
+-        relevantStack.includes('OverflowContext.tsx') ||
+-        relevantStack.includes('useTimedMessage.ts')
+-      ) {
++      if (relevantStack.includes('OverflowContext.tsx')) {
+         return;
+       }
+ 
+diff --git a/packages/core/src/agents/agentLoader.test.ts b/packages/core/src/agents/agentLoader.test.ts
+index 917628f7e..ea7ef0b2c 100644
+--- a/packages/core/src/agents/agentLoader.test.ts
++++ b/packages/core/src/agents/agentLoader.test.ts
+@@ -617,7 +617,7 @@ kind: remote
+ name: oauth2-agent
+ agent_card_url: https://example.com/card
+ auth:
+-  type: oauth
++  type: oauth2
+   client_id: $MY_OAUTH_CLIENT_ID
+   scopes:
+     - read
+@@ -630,7 +630,7 @@ auth:
+         kind: 'remote',
+         name: 'oauth2-agent',
+         auth: {
+-          type: 'oauth',
++          type: 'oauth2',
+           client_id: '$MY_OAUTH_CLIENT_ID',
+           scopes: ['read', 'write'],
+         },
+@@ -643,7 +643,7 @@ kind: remote
+ name: oauth2-full-agent
+ agent_card_url: https://example.com/card
+ auth:
+-  type: oauth
++  type: oauth2
+   client_id: my-client-id
+   client_secret: my-client-secret
+   scopes:
+@@ -659,7 +659,7 @@ auth:
+         kind: 'remote',
+         name: 'oauth2-full-agent',
+         auth: {
+-          type: 'oauth',
++          type: 'oauth2',
+           client_id: 'my-client-id',
+           client_secret: 'my-client-secret',
+           scopes: ['openid', 'profile'],
+@@ -675,7 +675,7 @@ kind: remote
+ name: oauth2-minimal-agent
+ agent_card_url: https://example.com/card
+ auth:
+-  type: oauth
++  type: oauth2
+ ---
+ `);
+       const result = await parseAgentMarkdown(filePath);
+@@ -684,7 +684,7 @@ auth:
+         kind: 'remote',
+         name: 'oauth2-minimal-agent',
+         auth: {
+-          type: 'oauth',
++          type: 'oauth2',
+         },
+       });
+     });
+@@ -695,7 +695,7 @@ kind: remote
+ name: invalid-oauth2-agent
+ agent_card_url: https://example.com/card
+ auth:
+-  type: oauth
++  type: oauth2
+   client_id: my-client
+   authorization_url: not-a-valid-url
+ ---
+@@ -709,7 +709,7 @@ kind: remote
+ name: invalid-oauth2-agent
+ agent_card_url: https://example.com/card
+ auth:
+-  type: oauth
++  type: oauth2
+   client_id: my-client
+   token_url: not-a-valid-url
+ ---
+@@ -723,7 +723,7 @@ auth:
+         name: 'oauth2-convert-agent',
+         agent_card_url: 'https://example.com/card',
+         auth: {
+-          type: 'oauth' as const,
++          type: 'oauth2' as const,
+           client_id: '$MY_CLIENT_ID',
+           scopes: ['read'],
+           authorization_url: 'https://auth.example.com/authorize',
+diff --git a/packages/core/src/agents/agentLoader.ts b/packages/core/src/agents/agentLoader.ts
+index 1b9eb1ea4..2cb7b3c43 100644
+--- a/packages/core/src/agents/agentLoader.ts
++++ b/packages/core/src/agents/agentLoader.ts
+@@ -63,7 +63,7 @@ interface FrontmatterLocalAgentDefinition
+  * Authentication configuration for remote agents in frontmatter format.
+  */
+ interface FrontmatterAuthConfig {
+-  type: 'apiKey' | 'http' | 'google-credentials' | 'oauth';
++  type: 'apiKey' | 'http' | 'google-credentials' | 'oauth2';
+   // API Key
+   key?: string;
+   name?: string;
+@@ -205,7 +205,7 @@ const googleCredentialsAuthSchema = z.object({
+  */
+ const oauth2AuthSchema = z.object({
+   ...baseAuthFields,
+-  type: z.literal('oauth'),
++  type: z.literal('oauth2'),
+   client_id: z.string().optional(),
+   client_secret: z.string().optional(),
+   scopes: z.array(z.string()).optional(),
+@@ -471,7 +471,7 @@ function convertFrontmatterAuthToConfig(
+       }
+     }
+ 
+-    case 'oauth':
++    case 'oauth2':
+       return {
+         ...base,
+         type: 'oauth2',
+diff --git a/packages/core/src/policy/config.ts b/packages/core/src/policy/config.ts
+index f6107bf46..38106e726 100644
+--- a/packages/core/src/policy/config.ts
++++ b/packages/core/src/policy/config.ts
+@@ -285,6 +285,7 @@ export async function createPolicyEngineConfig(
+   settings: PolicySettings,
+   approvalMode: ApprovalMode,
+   defaultPoliciesDir?: string,
++  interactive: boolean = true,
+ ): Promise<PolicyEngineConfig> {
+   const systemPoliciesDir = path.resolve(Storage.getSystemPoliciesDir());
+   const userPoliciesDir = path.resolve(Storage.getUserPoliciesDir());
+@@ -524,7 +525,10 @@ export async function createPolicyEngineConfig(
+   return {
+     rules,
+     checkers,
+-    defaultDecision: PolicyDecision.ASK_USER,
++    defaultDecision: interactive
++      ? PolicyDecision.ASK_USER
++      : PolicyDecision.DENY,
++    nonInteractive: !interactive,
+     approvalMode,
+     disableAlwaysAllow: settings.disableAlwaysAllow,
+   };
+diff --git a/packages/core/src/policy/policies/discovered.toml b/packages/core/src/policy/policies/discovered.toml
+index b343a1807..41ebe8124 100644
+--- a/packages/core/src/policy/policies/discovered.toml
++++ b/packages/core/src/policy/policies/discovered.toml
+@@ -6,3 +6,10 @@
+ toolName = "discovered_tool_*"
+ decision = "ask_user"
+ priority = 10
++interactive = true
++
++[[rule]]
++toolName = "discovered_tool_*"
++decision = "deny"
++priority = 10
++interactive = false
+diff --git a/packages/core/src/policy/policies/non-interactive.toml b/packages/core/src/policy/policies/non-interactive.toml
+new file mode 100644
+index 000000000..04c41f6eb
+--- /dev/null
++++ b/packages/core/src/policy/policies/non-interactive.toml
+@@ -0,0 +1,7 @@
++# Policy for non-interactive mode.
++# ASK_USER is strictly forbidden here.
++[[rule]]
++toolName = "ask_user"
++decision = "deny"
++priority = 999
++interactive = false
+diff --git a/packages/core/src/policy/policies/plan.toml b/packages/core/src/policy/policies/plan.toml
+index b6ddef72e..628b0522a 100644
+--- a/packages/core/src/policy/policies/plan.toml
++++ b/packages/core/src/policy/policies/plan.toml
+@@ -86,6 +86,16 @@ toolAnnotations = { readOnlyHint = true }
+ decision = "ask_user"
+ priority = 70
+ modes = ["plan"]
++interactive = true
++
++[[rule]]
++toolName = "*"
++mcpName = "*"
++toolAnnotations = { readOnlyHint = true }
++decision = "deny"
++priority = 70
++modes = ["plan"]
++interactive = false
+ 
+ [[rule]]
+ toolName = [
+@@ -108,6 +118,14 @@ toolName = ["ask_user", "save_memory"]
+ decision = "ask_user"
+ priority = 70
+ modes = ["plan"]
++interactive = true
++
++[[rule]]
++toolName = ["ask_user", "save_memory"]
++decision = "deny"
++priority = 70
++modes = ["plan"]
++interactive = false
+ 
+ # Allow write_file and replace for .md files in the plans directory (cross-platform)
+ [[rule]]
+diff --git a/packages/core/src/policy/policies/write.toml b/packages/core/src/policy/policies/write.toml
+index 527ac6f05..55ffd8c54 100644
+--- a/packages/core/src/policy/policies/write.toml
++++ b/packages/core/src/policy/policies/write.toml
+@@ -31,6 +31,7 @@
+ toolName = "replace"
+ decision = "ask_user"
+ priority = 10
++interactive = true
+ 
+ [[rule]]
+ toolName = "replace"
+@@ -47,21 +48,25 @@ required_context = ["environment"]
+ toolName = "save_memory"
+ decision = "ask_user"
+ priority = 10
++interactive = true
+ 
+ [[rule]]
+ toolName = "run_shell_command"
+ decision = "ask_user"
+ priority = 10
++interactive = true
+ 
+ [[rule]]
+ toolName = "write_file"
+ decision = "ask_user"
+ priority = 10
++interactive = true
+ 
+ [[rule]]
+ toolName = "activate_skill"
+ decision = "ask_user"
+ priority = 10
++interactive = true
+ 
+ [[rule]]
+ toolName = "write_file"
+@@ -84,3 +89,19 @@ modes = ["autoEdit"]
+ toolName = "web_fetch"
+ decision = "ask_user"
+ priority = 10
++interactive = true
++
++# Headless Denial Rule (Priority 10)
++# Ensures that tools that normally default to ASK_USER are denied in non-interactive mode.
++[[rule]]
++toolName = [
++  "replace",
++  "save_memory",
++  "run_shell_command",
++  "write_file",
++  "activate_skill",
++  "web_fetch"
++]
++decision = "deny"
++priority = 10
++interactive = false
+diff --git a/packages/core/src/policy/policies/yolo.toml b/packages/core/src/policy/policies/yolo.toml
+index 5e2a194d2..b6a8fdea9 100644
+--- a/packages/core/src/policy/policies/yolo.toml
++++ b/packages/core/src/policy/policies/yolo.toml
+@@ -30,12 +30,12 @@
+ 
+ # Ask-user tool always requires user interaction, even in YOLO mode.
+ # This ensures the model can gather user preferences/decisions when needed.
+-# Note: In non-interactive mode, this decision is converted to DENY by the policy engine.
+ [[rule]]
+ toolName = "ask_user"
+ decision = "ask_user"
+ priority = 999
+ modes = ["yolo"]
++interactive = true
+ 
+ # Plan mode transitions are blocked in YOLO mode to maintain state consistency
+ # and because planning currently requires human interaction (plan approval),
+diff --git a/packages/core/src/policy/policy-engine.ts b/packages/core/src/policy/policy-engine.ts
+index c1709248f..f566a22a6 100644
+--- a/packages/core/src/policy/policy-engine.ts
++++ b/packages/core/src/policy/policy-engine.ts
+@@ -244,8 +244,10 @@ export class PolicyEngine {
+       }
+     }
+ 
+-    this.defaultDecision = config.defaultDecision ?? PolicyDecision.ASK_USER;
+     this.nonInteractive = config.nonInteractive ?? false;
++    this.defaultDecision =
++      config.defaultDecision ??
++      (this.nonInteractive ? PolicyDecision.DENY : PolicyDecision.ASK_USER);
+     this.disableAlwaysAllow = config.disableAlwaysAllow ?? false;
+     this.checkerRunner = checkerRunner;
+     this.approvalMode = config.approvalMode ?? ApprovalMode.DEFAULT;
+@@ -346,7 +348,7 @@ export class PolicyEngine {
+   ): Promise<CheckResult> {
+     if (!command) {
+       return {
+-        decision: this.applyNonInteractiveMode(ruleDecision),
++        decision: ruleDecision,
+         rule,
+       };
+     }
+@@ -369,13 +371,13 @@ export class PolicyEngine {
+       }
+ 
+       debugLogger.debug(
+-        `[PolicyEngine.check] Command parsing failed for: ${command}. Falling back to ASK_USER.`,
++        `[PolicyEngine.check] Command parsing failed for: ${command}. Falling back to ${this.defaultDecision}.`,
+       );
+ 
+-      // Parsing logic failed, we can't trust it. Force ASK_USER (or DENY).
++      // Parsing logic failed, we can't trust it. Use default decision ASK_USER (or DENY in non-interactive).
+       // We return the rule that matched so the evaluation loop terminates.
+       return {
+-        decision: this.applyNonInteractiveMode(PolicyDecision.ASK_USER),
++        decision: this.defaultDecision,
+         rule,
+       };
+     }
+@@ -472,7 +474,7 @@ export class PolicyEngine {
+       }
+ 
+       return {
+-        decision: this.applyNonInteractiveMode(aggregateDecision),
++        decision: aggregateDecision,
+         // If we stayed at ALLOW, we return the original rule (if any).
+         // If we downgraded, we return the responsible rule (or undefined if implicit).
+         rule: aggregateDecision === ruleDecision ? rule : responsibleRule,
+@@ -480,7 +482,7 @@ export class PolicyEngine {
+     }
+ 
+     return {
+-      decision: this.applyNonInteractiveMode(ruleDecision),
++      decision: ruleDecision,
+       rule,
+     };
+   }
+@@ -603,7 +605,7 @@ export class PolicyEngine {
+             break;
+           }
+         } else {
+-          decision = this.applyNonInteractiveMode(rule.decision);
++          decision = rule.decision;
+           matchedRule = rule;
+           break;
+         }
+@@ -647,7 +649,7 @@ export class PolicyEngine {
+         decision = shellResult.decision;
+         matchedRule = shellResult.rule;
+       } else {
+-        decision = this.applyNonInteractiveMode(this.defaultDecision);
++        decision = this.defaultDecision;
+       }
+     }
+ 
+@@ -712,7 +714,7 @@ export class PolicyEngine {
+     }
+ 
+     return {
+-      decision: this.applyNonInteractiveMode(decision),
++      decision,
+       rule: matchedRule,
+     };
+   }
+@@ -881,7 +883,7 @@ export class PolicyEngine {
+             continue;
+           } else {
+             // Unconditional rule for this tool
+-            const decision = this.applyNonInteractiveMode(rule.decision);
++            const decision = rule.decision;
+             staticallyExcluded = decision === PolicyDecision.DENY;
+             matchFound = true;
+             break;
+@@ -891,7 +893,7 @@ export class PolicyEngine {
+ 
+       if (!matchFound) {
+         // Fallback to default decision if no rule matches
+-        const defaultDec = this.applyNonInteractiveMode(this.defaultDecision);
++        const defaultDec = this.defaultDecision;
+         if (defaultDec === PolicyDecision.DENY) {
+           staticallyExcluded = true;
+         }
+@@ -904,12 +906,4 @@ export class PolicyEngine {
+ 
+     return excludedTools;
+   }
+-
+-  private applyNonInteractiveMode(decision: PolicyDecision): PolicyDecision {
+-    // In non-interactive mode, ASK_USER becomes DENY
+-    if (this.nonInteractive && decision === PolicyDecision.ASK_USER) {
+-      return PolicyDecision.DENY;
+-    }
+-    return decision;
+-  }
+ }
+diff --git a/packages/test-utils/src/fixtures/agents.ts b/packages/test-utils/src/fixtures/agents.ts
+deleted file mode 100644
+index 946945722..000000000
+--- a/packages/test-utils/src/fixtures/agents.ts
++++ /dev/null
+@@ -1,72 +0,0 @@
+-/**
+- * @license
+- * Copyright 2026 Google LLC
+- * SPDX-License-Identifier: Apache-2.0
+- */
+-
+-/**
+- * Represents a test agent used in evaluations and tests.
+- */
+-export interface TestAgent {
+-  /** The unique name of the agent. */
+-  readonly name: string;
+-  /** The full YAML/Markdown definition of the agent. */
+-  readonly definition: string;
+-  /** The standard path where this agent should be saved in a test project. */
+-  readonly path: string;
+-  /** A helper to spread this agent directly into a 'files' object for evalTest. */
+-  readonly asFile: () => Record<string, string>;
+-}
+-
+-/**
+- * Helper to create a TestAgent with consistent formatting and pathing.
+- */
+-function createAgent(options: {
+-  name: string;
+-  description: string;
+-  tools: string[];
+-  body: string;
+-}): TestAgent {
+-  const definition = `---
+-name: ${options.name}
+-description: ${options.description}
+-tools:
+-${options.tools.map((t) => `  - ${t}`).join('\n')}
+----
+-${options.body}
+-`;
+-
+-  const path = `.gemini/agents/${options.name}.md`;
+-
+-  return {
+-    name: options.name,
+-    definition,
+-    path,
+-    asFile: () => ({ [path]: definition }),
+-  };
+-}
+-
+-/**
+- * A collection of predefined test agents for use in evaluations and tests.
+- */
+-export const TEST_AGENTS = {
+-  /**
+-   * An agent with expertise in updating documentation.
+-   */
+-  DOCS_AGENT: createAgent({
+-    name: 'docs-agent',
+-    description: 'An agent with expertise in updating documentation.',
+-    tools: ['read_file', 'write_file'],
+-    body: 'You are the docs agent. Update documentation clearly and accurately.',
+-  }),
+-
+-  /**
+-   * An agent with expertise in writing and updating tests.
+-   */
+-  TESTING_AGENT: createAgent({
+-    name: 'testing-agent',
+-    description: 'An agent with expertise in writing and updating tests.',
+-    tools: ['read_file', 'write_file'],
+-    body: 'You are the test agent. Add or update tests.',
+-  }),
+-} as const;
+diff --git a/packages/test-utils/src/index.ts b/packages/test-utils/src/index.ts
+index 7bae81804..42dd12bb4 100644
+--- a/packages/test-utils/src/index.ts
++++ b/packages/test-utils/src/index.ts
+@@ -5,7 +5,6 @@
+  */
+ 
+ export * from './file-system-test-helpers.js';
+-export * from './fixtures/agents.js';
++export * from './test-rig.js';
+ export * from './mock-utils.js';
+ export * from './test-mcp-server.js';
+-export * from './test-rig.js';

@@ -1,0 +1,29 @@
+{
+    "id": "d62ccd30-224c-4b5a-b57c-ba0cdf02a5a6",
+    "started_at": "2026-07-04T15:37:41.598016",
+    "finished_at": "2026-07-04T15:38:45.149289",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__marmelab-react-admin-10412": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "marmelab-react-admin-10412__22dUqUo"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

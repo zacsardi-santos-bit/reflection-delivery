@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p datanode",
+  "test_files": [
+    "src/datanode/src/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "datanode alive_keeper::test::countdown_task",
+    "datanode config::tests::test_secstr",
+    "datanode heartbeat::handler::tests::test_close_region",
+    "datanode config::tests::test_toml",
+    "datanode heartbeat::handler::tests::test_downgrade_region",
+    "datanode datanode::tests::test_initialize_region_server",
+    "datanode heartbeat::handler::tests::test_open_not_exists_region",
+    "datanode heartbeat::handler::tests::test_is_acceptable",
+    "datanode heartbeat::handler::upgrade_region::tests::test_region_error",
+    "datanode heartbeat::handler::upgrade_region::tests::test_region_not_exist",
+    "datanode heartbeat::handler::tests::test_open_region_ok",
+    "datanode heartbeat::handler::upgrade_region::tests::test_region_writable",
+    "datanode heartbeat::tests::test_resolve_addr",
+    "datanode heartbeat::task_tracker::tests::test_async_task_tracker_register",
+    "datanode heartbeat::handler::upgrade_region::tests::test_region_not_ready",
+    "datanode heartbeat::task_tracker::tests::test_async_task_tracker_wait_timeout",
+    "datanode region_server::tests::test_current_engine",
+    "datanode region_server::tests::test_region_deregistering",
+    "datanode heartbeat::handler::upgrade_region::tests::test_region_not_ready_with_retry",
+    "datanode region_server::tests::test_region_not_ready",
+    "datanode region_server::tests::test_region_registering",
+    "datanode region_server::tests::test_region_request_failed",
+    "datanode alive_keeper::test::region_alive_keeper"
+  ],
+  "PASS_TO_PASS": []
+}

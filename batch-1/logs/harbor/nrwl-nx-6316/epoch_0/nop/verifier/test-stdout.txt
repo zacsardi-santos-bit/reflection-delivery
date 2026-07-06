@@ -1,0 +1,499 @@
+patching file packages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts
+patching file packages/angular/src/executors/package/package.impl.spec.ts
+patching file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.spec.ts
+patching file packages/node/src/executors/build/build.impl.spec.ts
+patching file packages/node/src/executors/package/package.impl.spec.ts
+patching file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.spec.ts
+patching file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.spec.ts
+patching file packages/workspace/src/core/affected-project-graph/affected-project-graph.spec.ts
+patching file packages/workspace/src/core/project-graph/project-graph.spec.ts
+patching file packages/workspace/src/generators/remove/lib/check-dependencies.spec.ts
+FAIL angular packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.spec.ts (14.093 s)
+  ● add-template-support-and-presets-to-eslint › tslint-only workspace › should do nothing
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at updateProjectESLintConfigsAndBuilders (src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts:43:17)
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● add-template-support-and-presets-to-eslint › workspace with at least one eslint project › should do nothing if the root eslint config has not been updated to use overrides by the latest migrations
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at updateProjectESLintConfigsAndBuilders (src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts:43:17)
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● add-template-support-and-presets-to-eslint › workspace with at least one eslint project › should update the workspace package.json if they are using the latest eslint config from Nx
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at updateProjectESLintConfigsAndBuilders (src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts:43:17)
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● add-template-support-and-presets-to-eslint › workspace with at least one eslint project › should update any relevant project .eslintrc.json files
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at updateProjectESLintConfigsAndBuilders (src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts:43:17)
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● add-template-support-and-presets-to-eslint › workspace with at least one eslint project › should update any relevant project builder configuration to include HTML templates
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at updateProjectESLintConfigsAndBuilders (src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts:43:17)
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+FAIL node packages/node/src/executors/package/package.impl.spec.ts
+  ● Test suite failed to run
+
+    [96mpackages/node/src/executors/package/package.impl.spec.ts[0m:[93m92[0m:[93m30[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+      Overload 1 of 4, '(object: typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index"), method: FunctionPropertyNames<Required<typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index")>>): SpyInstance<...>', gave the following error.
+        Argument of type '"createProjectGraphAsync"' is not assignable to parameter of type 'FunctionPropertyNames<Required<typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index")>>'.
+      Overload 2 of 4, '(object: typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index"), method: "ProjectGraphBuilder"): SpyInstance<ProjectGraphBuilder, [g?: ProjectGraph<any>]>', gave the following error.
+        Argument of type '"createProjectGraphAsync"' is not assignable to parameter of type '"ProjectGraphBuilder"'.
+
+    [7m92[0m         .spyOn(projectGraph, 'createProjectGraphAsync')
+    [7m  [0m [91m                             ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+    [96mpackages/node/src/executors/package/package.impl.spec.ts[0m:[93m93[0m:[93m29[0m - [91merror[0m[90m TS2345: [0mArgument of type '() => Promise<projectGraph.ProjectGraph<any>>' is not assignable to parameter of type '() => typeof ProjectGraphBuilder | typeof DependencyType | typeof ProjectType'.
+      Type 'Promise<ProjectGraph<any>>' is not assignable to type 'typeof ProjectGraphBuilder | typeof DependencyType | typeof ProjectType'.
+        Type 'Promise<ProjectGraph<any>>' is missing the following properties from type 'typeof ProjectType': app, e2e, lib
+
+    [7m93[0m         .mockImplementation(async () => {
+    [7m  [0m [91m                            ~~~~~~~~~~~~~[0m
+    [96mpackages/node/src/executors/package/package.impl.spec.ts[0m:[93m266[0m:[93m30[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+      Overload 1 of 4, '(object: typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index"), method: FunctionPropertyNames<Required<typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index")>>): SpyInstance<...>', gave the following error.
+        Argument of type '"createProjectGraphAsync"' is not assignable to parameter of type 'FunctionPropertyNames<Required<typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index")>>'.
+      Overload 2 of 4, '(object: typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index"), method: "ProjectGraphBuilder"): SpyInstance<ProjectGraphBuilder, [g?: ProjectGraph<any>]>', gave the following error.
+        Argument of type '"createProjectGraphAsync"' is not assignable to parameter of type '"ProjectGraphBuilder"'.
+
+    [7m266[0m         .spyOn(projectGraph, 'createProjectGraphAsync')
+    [7m   [0m [91m                             ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+    [96mpackages/node/src/executors/package/package.impl.spec.ts[0m:[93m267[0m:[93m29[0m - [91merror[0m[90m TS2345: [0mArgument of type '() => Promise<projectGraph.ProjectGraph<any>>' is not assignable to parameter of type '() => typeof ProjectGraphBuilder | typeof DependencyType | typeof ProjectType'.
+      Type 'Promise<ProjectGraph<any>>' is not assignable to type 'typeof ProjectGraphBuilder | typeof DependencyType | typeof ProjectType'.
+        Type 'Promise<ProjectGraph<any>>' is not assignable to type 'typeof ProjectType'.
+
+    [7m267[0m         .mockImplementation(async () => {
+    [7m   [0m [91m                            ~~~~~~~~~~~~~[0m
+
+FAIL workspace packages/workspace/src/core/affected-project-graph/affected-project-graph.spec.ts
+  ● Test suite failed to run
+
+    [96mpackages/workspace/src/core/affected-project-graph/affected-project-graph.spec.ts[0m:[93m5[0m:[93m10[0m - [91merror[0m[90m TS2305: [0mModule '"../project-graph"' has no exported member 'createProjectGraphAsync'.
+
+    [7m5[0m import { createProjectGraphAsync } from '../project-graph';
+    [7m [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL workspace packages/workspace/src/core/project-graph/project-graph.spec.ts
+  ● Test suite failed to run
+
+    [96mpackages/workspace/src/core/project-graph/project-graph.spec.ts[0m:[93m6[0m:[93m10[0m - [91merror[0m[90m TS2305: [0mModule '"./project-graph"' has no exported member 'createProjectGraphAsync'.
+
+    [7m6[0m import { createProjectGraphAsync } from './project-graph';
+    [7m [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL web packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.spec.ts
+  ● Create missing .babelrc files › should create .babelrc files for libs that are used in '@nrwl/web:build'
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at Object.<anonymous> (src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts:10:25)
+      at ../../node_modules/tslib/tslib.js:117:75
+
+  ● Create missing .babelrc files › should not error if there are circular dependencies
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at Object.<anonymous> (src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts:10:25)
+      at ../../node_modules/tslib/tslib.js:117:75
+
+FAIL angular packages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts
+  ● Test suite failed to run
+
+    [96mpackages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts[0m:[93m71[0m:[93m66[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m71[0m     const result = await ngPackagrLiteExecutor(options, context).next();
+    [7m  [0m [91m                                                                 ~~~~[0m
+    [96mpackages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts[0m:[93m82[0m:[93m66[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m82[0m     const result = await ngPackagrLiteExecutor(options, context).next();
+    [7m  [0m [91m                                                                 ~~~~[0m
+    [96mpackages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts[0m:[93m94[0m:[93m66[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m94[0m     const result = await ngPackagrLiteExecutor(options, context).next();
+    [7m  [0m [91m                                                                 ~~~~[0m
+    [96mpackages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts[0m:[93m116[0m:[93m7[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m116[0m     ).next();
+    [7m   [0m [91m      ~~~~[0m
+    [96mpackages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts[0m:[93m141[0m:[93m34[0m - [91merror[0m[90m TS2504: [0mType 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>' must have a '[Symbol.asyncIterator]()' method that returns an async iterator.
+
+    [7m141[0m       for await (const result of results) {
+    [7m   [0m [91m                                 ~~~~~~~[0m
+
+FAIL angular packages/angular/src/executors/package/package.impl.spec.ts
+  ● Test suite failed to run
+
+    [96mpackages/angular/src/executors/package/package.impl.spec.ts[0m:[93m63[0m:[93m60[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m63[0m     const result = await packageExecutor(options, context).next();
+    [7m  [0m [91m                                                           ~~~~[0m
+    [96mpackages/angular/src/executors/package/package.impl.spec.ts[0m:[93m74[0m:[93m60[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m74[0m     const result = await packageExecutor(options, context).next();
+    [7m  [0m [91m                                                           ~~~~[0m
+    [96mpackages/angular/src/executors/package/package.impl.spec.ts[0m:[93m90[0m:[93m7[0m - [91merror[0m[90m TS2339: [0mProperty 'next' does not exist on type 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>'.
+      Property 'next' does not exist on type 'Promise<{ success: boolean; }>'.
+
+    [7m90[0m     ).next();
+    [7m  [0m [91m      ~~~~[0m
+    [96mpackages/angular/src/executors/package/package.impl.spec.ts[0m:[93m112[0m:[93m34[0m - [91merror[0m[90m TS2504: [0mType 'Promise<{ success: boolean; }> | AsyncIterableIterator<{ success: boolean; }>' must have a '[Symbol.asyncIterator]()' method that returns an async iterator.
+
+    [7m112[0m       for await (const result of results) {
+    [7m   [0m [91m                                 ~~~~~~~[0m
+
+PASS web packages/web/src/executors/package/package.impl.spec.ts
+FAIL react packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.spec.ts (7.506 s)
+  ● Migrate babel setup › should create .babelrc for projects without them
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at src/migrations/update-9-4-0/babelrc-9-4-0.ts:28:26
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● Migrate babel setup › should not overwrite existing .babelrc files
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at src/migrations/update-9-4-0/babelrc-9-4-0.ts:28:26
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● Migrate babel setup › should not migrate non-React projects
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at src/migrations/update-9-4-0/babelrc-9-4-0.ts:28:26
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+  ● Migrate babel setup › should not overwrite babel.config.js file
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (../workspace/src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (../workspace/src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at ../workspace/src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (../workspace/src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (../workspace/src/core/project-graph/project-graph.ts:85:26)
+      at src/migrations/update-9-4-0/babelrc-9-4-0.ts:28:26
+      at MergeMapSubscriber.project (../../node_modules/@angular-devkit/schematics/src/rules/call.js:75:24)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._tryNext (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:131:21)
+      at MergeMapSubscriber.Object.<anonymous>.MergeMapSubscriber._next (../../node_modules/rxjs/src/internal/operators/mergeMap.ts:121:12)
+
+FAIL workspace packages/workspace/src/generators/remove/lib/check-dependencies.spec.ts
+  ● checkDependencies › static dependencies › should fatally error if any dependent exists
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (src/core/project-graph/project-graph.ts:85:26)
+      at Object.checkDependencies (src/generators/remove/lib/check-dependencies.ts:19:31)
+      at src/generators/remove/lib/check-dependencies.spec.ts:92:20
+      at ../../node_modules/tslib/tslib.js:117:75
+
+  ● checkDependencies › static dependencies › should not error if forceRemove is true
+
+    expect(received).resolves.not.toThrow()
+
+    Matcher error: received value must be a promise
+
+    Received has value: undefined
+
+       95 |     it('should not error if forceRemove is true', async () => {
+       96 |       schema.forceRemove = true;
+    >  97 |       await expect(checkDependencies(tree, schema)).resolves.not.toThrow();
+          |                                                                  ^
+       98 |     });
+       99 |   });
+      100 |
+
+      at Object.toThrow (../../node_modules/expect/build/index.js:185:11)
+      at src/generators/remove/lib/check-dependencies.spec.ts:97:66
+      at ../../node_modules/tslib/tslib.js:117:75
+      at Object.__awaiter (../../node_modules/tslib/tslib.js:113:16)
+      at Object.<anonymous> (src/generators/remove/lib/check-dependencies.spec.ts:95:62)
+
+  ● checkDependencies › implicit dependencies › should fatally error if any dependent exists
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (src/core/project-graph/project-graph.ts:85:26)
+      at Object.checkDependencies (src/generators/remove/lib/check-dependencies.ts:19:31)
+      at src/generators/remove/lib/check-dependencies.spec.ts:111:20
+      at ../../node_modules/tslib/tslib.js:117:75
+
+  ● checkDependencies › implicit dependencies › should not error if forceRemove is true
+
+    expect(received).resolves.not.toThrow()
+
+    Matcher error: received value must be a promise
+
+    Received has value: undefined
+
+      116 |     it('should not error if forceRemove is true', async () => {
+      117 |       schema.forceRemove = true;
+    > 118 |       await expect(checkDependencies(tree, schema)).resolves.not.toThrow();
+          |                                                                  ^
+      119 |     });
+      120 |   });
+      121 |
+
+      at Object.toThrow (../../node_modules/expect/build/index.js:185:11)
+      at src/generators/remove/lib/check-dependencies.spec.ts:118:66
+      at ../../node_modules/tslib/tslib.js:117:75
+      at Object.__awaiter (../../node_modules/tslib/tslib.js:113:16)
+      at Object.<anonymous> (src/generators/remove/lib/check-dependencies.spec.ts:116:62)
+
+  ● checkDependencies › should not error if there are no dependents
+
+    TypeError: project_graph_1.getSortedProjectNodes is not a function
+
+      13 |
+      14 | export class TargetProjectLocator {
+    > 15 |   private sortedProjects = getSortedProjectNodes(this.nodes);
+         |                            ^
+      16 |
+      17 |   private sortedWorkspaceProjects = this.sortedProjects
+      18 |     .filter(isWorkspaceProject)
+
+      at new TargetProjectLocator (src/core/target-project-locator.ts:15:28)
+      at buildExplicitTypeScriptDependencies (src/core/project-graph/build-dependencies/explicit-project-dependencies.ts:16:32)
+      at src/core/project-graph/project-graph.ts:126:5
+          at Array.forEach (<anonymous>)
+      at buildProjectGraph (src/core/project-graph/project-graph.ts:125:24)
+      at Object.createProjectGraph (src/core/project-graph/project-graph.ts:85:26)
+      at Object.checkDependencies (src/generators/remove/lib/check-dependencies.ts:19:31)
+      at src/generators/remove/lib/check-dependencies.spec.ts:127:18
+      at ../../node_modules/tslib/tslib.js:117:75
+
+FAIL node packages/node/src/executors/build/build.impl.spec.ts
+  ● Test suite failed to run
+
+    [96mpackages/node/src/executors/build/build.impl.spec.ts[0m:[93m20[0m:[93m28[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+      Overload 1 of 4, '(object: typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index"), method: FunctionPropertyNames<Required<typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index")>>): SpyInstance<...>', gave the following error.
+        Argument of type '"createProjectGraphAsync"' is not assignable to parameter of type 'FunctionPropertyNames<Required<typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index")>>'.
+      Overload 2 of 4, '(object: typeof import("/workspace/repo/packages/workspace/src/core/project-graph/index"), method: "ProjectGraphBuilder"): SpyInstance<ProjectGraphBuilder, [g?: ProjectGraph<any>]>', gave the following error.
+        Argument of type '"createProjectGraphAsync"' is not assignable to parameter of type '"ProjectGraphBuilder"'.
+
+    [7m20[0m       .spyOn(projectGraph, 'createProjectGraphAsync')
+    [7m  [0m [91m                           ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+    [96mpackages/node/src/executors/build/build.impl.spec.ts[0m:[93m21[0m:[93m24[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Promise<ProjectGraph<any>>' is not assignable to parameter of type 'typeof ProjectGraphBuilder | typeof DependencyType | typeof ProjectType'.
+      Type 'Promise<ProjectGraph<any>>' is missing the following properties from type 'typeof ProjectType': app, e2e, lib
+
+    [7m21[0m       .mockReturnValue(Promise.resolve({} as ProjectGraph));
+    [7m  [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Test Suites: 10 failed, 1 passed, 11 total
+Tests:       16 failed, 4 passed, 20 total
+Snapshots:   0 total
+Time:        38.34 s
+Ran all test suites matching /ng-packagr-lite\.impl\.spec|executors\/package\/package\.impl\.spec|add-template-support-and-presets-to-eslint\.spec|executors\/build\/build\.impl\.spec|babelrc-9-4-0\.spec|create-babelrc-for-workspace-libs\.spec|affected-project-graph\.spec|project-graph\/project-graph\.spec|check-dependencies\.spec/i in 5 projects.
+reward=0 graded=48 found=0 failed=0 parsed=0 framework=jest exit_code=1

@@ -1,8 +1,0 @@
-patching file .gitignore
-patching file cli/commands/stack/action.go
-patching file cli/commands/stack/generate.go
-patching file cli/commands/stack/output.go
-patching file config/stack.go
-patching file config/stack_validation.go
-patching file docs/_docs/04_reference/04-config-blocks-and-attributes.md
-patching file docs/_docs/04_reference/06-experiments.md

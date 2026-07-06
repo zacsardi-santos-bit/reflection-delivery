@@ -1,3 +1,0 @@
-patching file remoteconfig/condition_evaluator.go
-patching file remoteconfig/server_template.go
-patching file remoteconfig/server_template_types.go

@@ -1,0 +1,658 @@
+diff --git a/src/prefect/client/schemas/filters.py b/src/prefect/client/schemas/filters.py
+index b91896278d..c75f8568cf 100644
+--- a/src/prefect/client/schemas/filters.py
++++ b/src/prefect/client/schemas/filters.py
+@@ -612,6 +612,21 @@ class LogFilterTaskRunId(PrefectBaseModel):
+     )
+ 
+ 
++class LogFilterTextSearch(PrefectBaseModel):
++    """Filter by text search across log content."""
++
++    query: str = Field(
++        description="Text search query string",
++        examples=[
++            "error",
++            "error -debug",
++            '"connection timeout"',
++            "+required -excluded",
++        ],
++        max_length=200,
++    )
++
++
+ class LogFilter(PrefectBaseModel, OperatorMixin):
+     """Filter logs. Only logs matching all criteria will be returned"""
+ 
+@@ -627,6 +642,9 @@ class LogFilter(PrefectBaseModel, OperatorMixin):
+     task_run_id: Optional[LogFilterTaskRunId] = Field(
+         default=None, description="Filter criteria for `Log.task_run_id`"
+     )
++    text: Optional[LogFilterTextSearch] = Field(
++        default=None, description="Filter criteria for text search across log content"
++    )
+ 
+ 
+ class FilterSet(PrefectBaseModel):
+diff --git a/src/prefect/events/filters.py b/src/prefect/events/filters.py
+index 49d426229f..36f7587b65 100644
+--- a/src/prefect/events/filters.py
++++ b/src/prefect/events/filters.py
+@@ -231,6 +231,21 @@ class EventIDFilter(EventDataFilter):
+         return True
+ 
+ 
++class EventTextFilter(EventDataFilter):
++    """Filter by text search across event content."""
++
++    query: str = Field(
++        description="Text search query string",
++        examples=[
++            "error",
++            "error -debug",
++            '"connection timeout"',
++            "+required -excluded",
++        ],
++        max_length=200,
++    )
++
++
+ class EventOrder(AutoEnum):
+     ASC = "ASC"
+     DESC = "DESC"
+@@ -263,6 +278,10 @@ class EventFilter(EventDataFilter):
+         default_factory=lambda: EventIDFilter(id=[]),
+         description="Filter criteria for the events' ID",
+     )
++    text: Optional[EventTextFilter] = Field(
++        default=None,
++        description="Filter criteria for text search across event content",
++    )
+ 
+     order: EventOrder = Field(
+         default=EventOrder.DESC,
+diff --git a/src/prefect/server/events/filters.py b/src/prefect/server/events/filters.py
+index 6c7ff0b295..b0a77c43b0 100644
+--- a/src/prefect/server/events/filters.py
++++ b/src/prefect/server/events/filters.py
+@@ -19,6 +19,9 @@ from prefect.server.schemas.filters import (
+     PrefectOperatorFilterBaseModel,
+ )
+ from prefect.server.utilities.schemas.bases import PrefectBaseModel
++from prefect.server.utilities.text_search_parser import (
++    parse_text_search_query,
++)
+ from prefect.types import DateTime
+ from prefect.utilities.collections import AutoEnum
+ 
+@@ -627,6 +630,136 @@ class EventIDFilter(EventDataFilter):
+         return filters
+ 
+ 
++class EventTextFilter(EventDataFilter):
++    """Filter by text search across event content."""
++
++    query: str = Field(
++        description="Text search query string",
++        examples=[
++            "error",
++            "error -debug",
++            '"connection timeout"',
++            "+required -excluded",
++        ],
++        max_length=200,
++    )
++
++    def includes(self, event: Event) -> bool:
++        """Check if this text filter includes the given event."""
++        # Parse query into components
++        parsed = parse_text_search_query(self.query)
++
++        # Build searchable text from all event string fields
++        searchable_text = self._build_searchable_text(event).lower()
++
++        # Check include terms (OR logic)
++        if parsed.include:
++            include_match = any(
++                term.lower() in searchable_text for term in parsed.include
++            )
++            if not include_match:
++                return False
++
++        # Check exclude terms (NOT logic)
++        if parsed.exclude:
++            exclude_match = any(
++                term.lower() in searchable_text for term in parsed.exclude
++            )
++            if exclude_match:
++                return False
++
++        # Check required terms (AND logic - future feature)
++        if parsed.required:
++            required_match = all(
++                term.lower() in searchable_text for term in parsed.required
++            )
++            if not required_match:
++                return False
++
++        return True
++
++    def _build_searchable_text(self, event: Event) -> str:
++        """Build searchable text from all relevant event fields"""
++        text_parts = [
++            event.event,  # Event type/name
++        ]
++
++        # Add resource VALUES only (not keys)
++        text_parts.extend(event.resource.root.values())
++
++        # Add related resource VALUES only (not keys)
++        for related in event.related:
++            text_parts.extend(related.root.values())
++
++        # Add full payload as string (can include keys and values)
++        text_parts.append(str(event.payload))
++
++        return " ".join(text_parts)
++
++    @db_injector
++    def build_where_clauses(
++        self, db: PrefectDBInterface
++    ) -> Sequence["ColumnExpressionArgument[bool]"]:
++        """Build SQLAlchemy WHERE clauses for text search"""
++        filters: list["ColumnExpressionArgument[bool]"] = []
++
++        if not self.query.strip():
++            return filters
++
++        parsed = parse_text_search_query(self.query)
++
++        # Build combined searchable text field
++        # This concatenates event, resource VALUES only, related resource VALUES only, and full payload
++        event_field = db.Event.event
++
++        payload_field = sa.cast(db.Event.payload, sa.Text)
++
++        # For now, include resource and related as JSON strings - this will find the data
++        # even though it also includes keys. We can optimize later to extract only values.
++        resource_field = sa.cast(db.Event.resource, sa.Text)
++        related_field = sa.cast(db.Event.related, sa.Text)
++
++        # Combine all searchable fields
++        searchable_field = sa.func.concat(
++            event_field, " ", resource_field, " ", related_field, " ", payload_field
++        )
++
++        # Handle include terms (OR logic)
++        if parsed.include:
++            include_conditions = []
++            for term in parsed.include:
++                include_conditions.append(
++                    sa.func.lower(searchable_field).contains(term.lower())
++                )
++
++            if include_conditions:
++                filters.append(sa.or_(*include_conditions))
++
++        # Handle exclude terms (NOT logic)
++        if parsed.exclude:
++            exclude_conditions = []
++            for term in parsed.exclude:
++                exclude_conditions.append(
++                    ~sa.func.lower(searchable_field).contains(term.lower())
++                )
++
++            if exclude_conditions:
++                filters.append(sa.and_(*exclude_conditions))
++
++        # Handle required terms (AND logic - future feature)
++        if parsed.required:
++            required_conditions = []
++            for term in parsed.required:
++                required_conditions.append(
++                    sa.func.lower(searchable_field).contains(term.lower())
++                )
++
++            if required_conditions:
++                filters.append(sa.and_(*required_conditions))
++
++        return filters
++
++
+ class EventOrder(AutoEnum):
+     ASC = "ASC"
+     DESC = "DESC"
+@@ -658,6 +791,10 @@ class EventFilter(EventDataFilter):
+         default_factory=lambda: EventIDFilter(),
+         description="Filter criteria for the events' ID",
+     )
++    text: Optional[EventTextFilter] = Field(
++        default=None,
++        description="Filter criteria for text search across event content",
++    )
+ 
+     order: EventOrder = Field(
+         default=EventOrder.DESC,
+diff --git a/src/prefect/server/schemas/filters.py b/src/prefect/server/schemas/filters.py
+index 70d6f08a8c..aaa5ac1570 100644
+--- a/src/prefect/server/schemas/filters.py
++++ b/src/prefect/server/schemas/filters.py
+@@ -14,6 +14,9 @@ from sqlalchemy.sql.functions import coalesce
+ import prefect.server.schemas as schemas
+ from prefect.server.utilities.database import db_injector
+ from prefect.server.utilities.schemas.bases import PrefectBaseModel
++from prefect.server.utilities.text_search_parser import (
++    parse_text_search_query,
++)
+ from prefect.types import DateTime
+ from prefect.utilities.collections import AutoEnum
+ from prefect.utilities.importtools import lazy_import
+@@ -23,6 +26,7 @@ if TYPE_CHECKING:
+     from sqlalchemy.dialects import postgresql
+ 
+     from prefect.server.database import PrefectDBInterface
++    from prefect.server.schemas.core import Log
+ else:
+     sa = lazy_import("sqlalchemy")
+     postgresql = lazy_import("sqlalchemy.dialects.postgresql")
+@@ -1393,6 +1397,109 @@ class LogFilterTaskRunId(PrefectFilterBaseModel):
+         return filters
+ 
+ 
++class LogFilterTextSearch(PrefectFilterBaseModel):
++    """Filter by text search across log content."""
++
++    query: str = Field(
++        description="Text search query string",
++        examples=[
++            "error",
++            "error -debug",
++            '"connection timeout"',
++            "+required -excluded",
++        ],
++        max_length=200,
++    )
++
++    def includes(self, log: "Log") -> bool:
++        """Check if this text filter includes the given log."""
++        from prefect.server.schemas.core import Log
++
++        if not isinstance(log, Log):
++            raise TypeError(f"Expected Log object, got {type(log)}")
++
++        # Parse query into components
++        parsed = parse_text_search_query(self.query)
++
++        # Build searchable text from message and logger name
++        searchable_text = f"{log.message} {log.name}".lower()
++
++        # Check include terms (OR logic)
++        if parsed.include:
++            include_match = any(
++                term.lower() in searchable_text for term in parsed.include
++            )
++            if not include_match:
++                return False
++
++        # Check exclude terms (NOT logic)
++        if parsed.exclude:
++            exclude_match = any(
++                term.lower() in searchable_text for term in parsed.exclude
++            )
++            if exclude_match:
++                return False
++
++        # Check required terms (AND logic - future feature)
++        if parsed.required:
++            required_match = all(
++                term.lower() in searchable_text for term in parsed.required
++            )
++            if not required_match:
++                return False
++
++        return True
++
++    def _get_filter_list(
++        self, db: "PrefectDBInterface"
++    ) -> Iterable[sa.ColumnExpressionArgument[bool]]:
++        """Build SQLAlchemy WHERE clauses for text search"""
++        filters: list[sa.ColumnExpressionArgument[bool]] = []
++
++        if not self.query.strip():
++            return filters
++
++        parsed = parse_text_search_query(self.query)
++
++        # Build combined searchable text field (message + name)
++        searchable_field = sa.func.concat(db.Log.message, " ", db.Log.name)
++
++        # Handle include terms (OR logic)
++        if parsed.include:
++            include_conditions = []
++            for term in parsed.include:
++                include_conditions.append(
++                    sa.func.lower(searchable_field).contains(term.lower())
++                )
++
++            if include_conditions:
++                filters.append(sa.or_(*include_conditions))
++
++        # Handle exclude terms (NOT logic)
++        if parsed.exclude:
++            exclude_conditions = []
++            for term in parsed.exclude:
++                exclude_conditions.append(
++                    ~sa.func.lower(searchable_field).contains(term.lower())
++                )
++
++            if exclude_conditions:
++                filters.append(sa.and_(*exclude_conditions))
++
++        # Handle required terms (AND logic - future feature)
++        if parsed.required:
++            required_conditions = []
++            for term in parsed.required:
++                required_conditions.append(
++                    sa.func.lower(searchable_field).contains(term.lower())
++                )
++
++            if required_conditions:
++                filters.append(sa.and_(*required_conditions))
++
++        return filters
++
++
+ class LogFilter(PrefectOperatorFilterBaseModel):
+     """Filter logs. Only logs matching all criteria will be returned"""
+ 
+@@ -1408,6 +1515,9 @@ class LogFilter(PrefectOperatorFilterBaseModel):
+     task_run_id: Optional[LogFilterTaskRunId] = Field(
+         default=None, description="Filter criteria for `Log.task_run_id`"
+     )
++    text: Optional[LogFilterTextSearch] = Field(
++        default=None, description="Filter criteria for text search across log content"
++    )
+ 
+     def _get_filter_list(
+         self, db: "PrefectDBInterface"
+@@ -1422,6 +1532,8 @@ class LogFilter(PrefectOperatorFilterBaseModel):
+             filters.append(self.flow_run_id.as_sql_filter())
+         if self.task_run_id is not None:
+             filters.append(self.task_run_id.as_sql_filter())
++        if self.text is not None:
++            filters.extend(self.text._get_filter_list(db))
+ 
+         return filters
+ 
+diff --git a/src/prefect/server/utilities/text_search_parser.py b/src/prefect/server/utilities/text_search_parser.py
+new file mode 100644
+index 0000000000..659357a261
+--- /dev/null
++++ b/src/prefect/server/utilities/text_search_parser.py
+@@ -0,0 +1,144 @@
++"""Text search query parser
++
++Parses text search queries according to the following syntax:
++
++- Space-separated terms → OR logic (include)
++- Prefix with `-` or `!` → Exclude term
++- Prefix with `+` → Required term (AND logic, future)
++- Quote phrases → Match exact phrase
++- Backslash escapes → Allow quotes within phrases (\")
++- Case-insensitive, substring matching
++- 200 character limit
++"""
++
++from dataclasses import dataclass, field
++
++
++@dataclass
++class TextSearchQuery:
++    """Parsed text search query structure"""
++
++    include: list[str] = field(default_factory=list)  # OR terms
++    exclude: list[str] = field(default_factory=list)  # NOT terms (-/!)
++    required: list[str] = field(default_factory=list)  # AND terms (+)
++
++
++def parse_text_search_query(query: str) -> TextSearchQuery:
++    """Parse a text search query string into structured components
++
++    Args:
++        query: The query string to parse
++
++    Returns:
++        TextSearchQuery with parsed include/exclude/required terms
++    """
++
++    # Handle empty/whitespace-only queries
++    if not query.strip():
++        return TextSearchQuery()
++
++    result = TextSearchQuery()
++    i = 0
++
++    while i < len(query):
++        # Skip whitespace
++        if query[i].isspace():
++            i += 1
++            continue
++
++        # Check for prefix
++        prefix = None
++        if query[i] in "-!+":
++            prefix_char = query[i]
++            prefix_pos = i
++            i += 1
++
++            # Check if this is immediately followed by a non-whitespace character
++            if i < len(query) and not query[i].isspace():
++                # Valid prefix (no space between prefix and term)
++                prefix = prefix_char
++            else:
++                # Prefix followed by space - ignore the prefix completely
++                i = prefix_pos + 1  # Skip the prefix character
++                prefix = None
++                continue
++
++        # Handle quoted phrases
++        if i < len(query) and query[i] == '"':
++            i += 1  # Skip opening quote
++            phrase_start = i
++
++            # Find closing quote, handling escaped quotes
++            while i < len(query):
++                if query[i] == "\\" and i + 1 < len(query):
++                    # Skip escaped character
++                    i += 2
++                elif query[i] == '"':
++                    # Found unescaped closing quote
++                    break
++                else:
++                    i += 1
++
++            # Extract phrase (even if quote is unclosed)
++            phrase = query[phrase_start:i]
++
++            if i < len(query):  # Found closing quote
++                i += 1  # Skip closing quote
++
++            # Unescape quotes and backslashes in the phrase
++            phrase = _unescape_phrase(phrase)
++
++            # Add to appropriate list based on prefix
++            if phrase.strip():
++                if prefix == "-" or prefix == "!":
++                    result.exclude.append(phrase)
++                elif prefix == "+":
++                    result.required.append(phrase)
++                else:
++                    result.include.append(phrase)
++            continue
++
++        # Handle regular terms
++        if i < len(query):
++            term_start = i
++
++            # Find end of term (next whitespace or quote)
++            while i < len(query) and not query[i].isspace() and query[i] != '"':
++                i += 1
++
++            term = query[term_start:i]
++
++            # Add to appropriate list based on prefix
++            if term:
++                if prefix == "-" or prefix == "!":
++                    result.exclude.append(term)
++                elif prefix == "+":
++                    result.required.append(term)
++                else:
++                    result.include.append(term)
++
++    return result
++
++
++def _unescape_phrase(phrase: str) -> str:
++    """Unescape quotes and backslashes in a quoted phrase"""
++    # Process escapes in order: first backslashes, then quotes
++    result = []
++    i = 0
++    while i < len(phrase):
++        if phrase[i] == "\\" and i + 1 < len(phrase):
++            next_char = phrase[i + 1]
++            if next_char == '"':
++                result.append('"')
++                i += 2
++            elif next_char == "\\":
++                result.append("\\")
++                i += 2
++            else:
++                # Not an escape sequence, keep the backslash
++                result.append("\\")
++                i += 1
++        else:
++            result.append(phrase[i])
++            i += 1
++    return "".join(result)
+diff --git a/ui-v2/src/api/prefect.ts b/ui-v2/src/api/prefect.ts
+index 16030d7e32..7bdae46d15 100644
+--- a/ui-v2/src/api/prefect.ts
++++ b/ui-v2/src/api/prefect.ts
+@@ -6238,6 +6238,8 @@ export interface components {
+             any_resource?: components["schemas"]["EventAnyResourceFilter"] | components["schemas"]["EventAnyResourceFilter"][] | null;
+             /** @description Filter criteria for the events' ID */
+             id?: components["schemas"]["EventIDFilter"];
++            /** @description Filter criteria for text search across event content */
++            text?: components["schemas"]["EventTextFilter"] | null;
+             /**
+              * @description The order to return filtered events
+              * @default DESC
+@@ -6361,6 +6363,17 @@ export interface components {
+              */
+             distinct: boolean;
+         };
++        /**
++         * EventTextFilter
++         * @description Filter by text search across event content.
++         */
++        EventTextFilter: {
++            /**
++             * Query
++             * @description Text search query string
++             */
++            query: string;
++        };
+         /**
+          * EventTrigger
+          * @description A trigger that fires based on the presence or absence of events within a given
+@@ -7764,6 +7777,8 @@ export interface components {
+             flow_run_id?: components["schemas"]["LogFilterFlowRunId"] | null;
+             /** @description Filter criteria for `Log.task_run_id` */
+             task_run_id?: components["schemas"]["LogFilterTaskRunId"] | null;
++            /** @description Filter criteria for text search across log content */
++            text?: components["schemas"]["LogFilterTextSearch"] | null;
+         };
+         /**
+          * LogFilterFlowRunId
+@@ -7808,6 +7823,17 @@ export interface components {
+              */
+             is_null_?: boolean | null;
+         };
++        /**
++         * LogFilterTextSearch
++         * @description Filter by text search across log content.
++         */
++        LogFilterTextSearch: {
++            /**
++             * Query
++             * @description Text search query string
++             */
++            query: string;
++        };
+         /**
+          * LogFilterTimestamp
+          * @description Filter by `Log.timestamp`.
+diff --git a/ui-v2/src/api/zod/events/events.ts b/ui-v2/src/api/zod/events/events.ts
+index bb1a30f31f..1b78fe1576 100644
+--- a/ui-v2/src/api/zod/events/events.ts
++++ b/ui-v2/src/api/zod/events/events.ts
+@@ -65,6 +65,7 @@ export const readEventsEventsFilterPostHeader = zod.object({
+ });
+ 
+ export const readEventsEventsFilterPostBodyFilterResourceDistinctDefault = false;
++export const readEventsEventsFilterPostBodyFilterTextQueryMax = 200;
+ export const readEventsEventsFilterPostBodyLimitDefault = 50;
+ export const readEventsEventsFilterPostBodyLimitMin = 0;
+ 
+@@ -290,6 +291,20 @@ export const readEventsEventsFilterPostBody = zod.object({
+ 							.describe("Only include events with one of these IDs"),
+ 					})
+ 					.optional(),
++				text: zod
++					.union([
++						zod
++							.object({
++								query: zod
++									.string()
++									.max(readEventsEventsFilterPostBodyFilterTextQueryMax)
++									.describe("Text search query string"),
++							})
++							.describe("Filter by text search across event content."),
++						zod.null(),
++					])
++					.optional()
++					.describe("Filter criteria for text search across event content"),
+ 				order: zod.enum(["ASC", "DESC"]).optional(),
+ 			}),
+ 			zod.null(),
+@@ -458,6 +473,7 @@ export const countAccountEventsEventsCountByCountablePostHeader = zod.object({
+ });
+ 
+ export const countAccountEventsEventsCountByCountablePostBodyFilterResourceDistinctDefault = false;
++export const countAccountEventsEventsCountByCountablePostBodyFilterTextQueryMax = 200;
+ export const countAccountEventsEventsCountByCountablePostBodyTimeIntervalDefault = 1;
+ export const countAccountEventsEventsCountByCountablePostBodyTimeIntervalMin = 0.01;
+ 
+@@ -677,6 +693,22 @@ export const countAccountEventsEventsCountByCountablePostBody = zod.object({
+ 					.describe("Only include events with one of these IDs"),
+ 			})
+ 			.optional(),
++		text: zod
++			.union([
++				zod
++					.object({
++						query: zod
++							.string()
++							.max(
++								countAccountEventsEventsCountByCountablePostBodyFilterTextQueryMax,
++							)
++							.describe("Text search query string"),
++					})
++					.describe("Filter by text search across event content."),
++				zod.null(),
++			])
++			.optional()
++			.describe("Filter criteria for text search across event content"),
+ 		order: zod.enum(["ASC", "DESC"]).optional(),
+ 	}),
+ 	time_unit: zod.enum(["week", "day", "hour", "minute", "second"]).optional(),

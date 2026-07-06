@@ -1,6 +1,0 @@
-patching file packages/vite/src/node/build.ts
-patching file packages/vite/src/node/plugin.ts
-patching file packages/vite/src/node/plugins/index.ts
-patching file packages/vite/src/node/plugins/pluginFilter.ts
-patching file packages/vite/src/node/plugins/worker.ts
-patching file packages/vite/src/node/server/pluginContainer.ts

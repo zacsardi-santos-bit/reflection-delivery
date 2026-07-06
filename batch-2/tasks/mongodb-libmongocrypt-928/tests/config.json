@@ -1,0 +1,22 @@
+{
+  "test_framework": "ctest",
+  "test_command": "cd /workspace/repo && mkdir -p build && cd build && cmake .. -DBUILD_TESTING=ON -DBUILD_VERSION=1.0.0 -DENABLE_ONLINE_TESTS=OFF -DMONGOCRYPT_MONGOC_DIR=/opt/mongoc && make -j$(nproc) && ctest --output-on-failure",
+  "test_files": [
+    "test/test-mc-text-search-str-encode.c",
+    "test/test-mongocrypt.c",
+    "test/test-mongocrypt.h"
+  ],
+  "num_test_files": 3,
+  "language": "c",
+  "FAIL_TO_PASS": [
+    "mongocrypt::mongocrypt",
+    "mlib.path::mlib.path",
+    "mlib.str::mlib.str",
+    "mc-dec128::mc-dec128",
+    "mlib.int128::mlib.int128",
+    "example-state-machine::example-state-machine",
+    "example-state-machine-static::example-state-machine-static",
+    "test_kms_request::test_kms_request"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "d247eb7b-f50b-432d-9077-b8a779b42e58",
+    "started_at": "2026-07-04T15:39:12.029276",
+    "finished_at": "2026-07-04T15:40:09.948265",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__onearmy-community-platform-3183": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "onearmy-community-platform-3183__WFUd9Tq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

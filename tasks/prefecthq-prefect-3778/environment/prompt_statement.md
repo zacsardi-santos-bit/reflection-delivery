@@ -1,5 +1,0 @@
-I'm working with Prefect's Kubernetes agent and I need to be able to specify a service account and image pull secrets for the jobs it creates. Right now there's no way to set these directly — I'd have to edit the job template files manually or use environment variable hacks, which is messy.
-
-What I'd like is for the Kubernetes agent to support a service account name and a list of image pull secrets both at the agent level (as defaults for every job it starts) and at the individual flow level (so a specific flow can override the agent defaults). The per-flow settings should win when both are provided. When a flow supplies its own job template that already has these fields set, the template values should be respected and not overridden by the agent defaults — even if the template explicitly sets those fields to an absent or empty value.
-
-These options should also be available as CLI flags when starting the agent, and any per-flow settings configured in the run configuration should survive serialization and deserialization correctly.

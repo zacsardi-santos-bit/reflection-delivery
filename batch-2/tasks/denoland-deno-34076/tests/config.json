@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p deno_cache_dir --test file_fetcher_test",
+  "test_files": [
+    "libs/cache_dir/tests/file_fetcher_test.rs",
+    "tests/specs/node/esm_dir_import/local_relative/__test__.jsonc",
+    "tests/specs/node/esm_dir_import/local_relative/dir/data.txt",
+    "tests/specs/node/esm_dir_import/local_relative/main.mjs",
+    "tests/specs/node/esm_dir_import/local_relative/main.out"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) deno_cache_dir::file_fetcher_test test_file_fetcher_redirects",
+    "(2/2) deno_cache_dir::file_fetcher_test test_file_fetcher_ensure_cached"
+  ],
+  "PASS_TO_PASS": []
+}

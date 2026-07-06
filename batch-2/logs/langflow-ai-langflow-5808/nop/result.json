@@ -1,0 +1,29 @@
+{
+    "id": "ca3870b0-ab86-4516-a0d2-ee3947bd2e28",
+    "started_at": "2026-07-04T15:37:36.325265",
+    "finished_at": "2026-07-04T15:38:29.206318",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__langflow-ai-langflow-5808": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "langflow-ai-langflow-5808__wzcVEMR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

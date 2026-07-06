@@ -1,0 +1,2 @@
+patching file crates/oxc_sourcemap/src/sourcemap_visualizer.rs
+patching file tasks/coverage/codegen_sourcemap.snap

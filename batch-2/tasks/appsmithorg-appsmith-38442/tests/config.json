@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/app/client && npx jest --colors --no-cache --watchAll=false --forceExit src/IDE/Components/EditableName/EditableName.test.tsx src/pages/Editor/IDE/LeftPane/DataSidePane.test.tsx && cd /workspace/repo/app/client/packages/design-system/ads && npx jest --colors --no-cache --watchAll=false --forceExit src/Templates/EntityExplorer/Editable/useEditableText.test.tsx",
+  "test_files": [
+    "app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx",
+    "app/client/src/IDE/Components/EditableName/EditableName.test.tsx",
+    "app/client/src/pages/Editor/IDE/LeftPane/DataSidePane.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText initial state",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText handle name change",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText handle valid name save on Enter key",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText handle invalid name save on Enter key",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText handle exit without saving on Escape key",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText handle exit without saving on no change",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx::useEditableText handle focus out event"
+  ],
+  "PASS_TO_PASS": []
+}

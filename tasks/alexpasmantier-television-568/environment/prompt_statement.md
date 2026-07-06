@@ -1,1 +1,0 @@
-The help output for this CLI tool currently starts its description with "A cross-platform..." — that leading "A" feels unnecessary and a bit informal. I'd like to clean that up so the description just starts with "Cross-platform..." directly, which is more consistent with how other tools present themselves. Could you update the tool description to drop that leading article?

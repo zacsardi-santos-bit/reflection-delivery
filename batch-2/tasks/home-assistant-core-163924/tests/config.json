@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python3 -m script.translations develop --all 2>&1 | tail -5 && pytest tests/components/hue_ble/test_config_flow.py -v",
+  "test_files": [
+    "tests/components/hue_ble/__init__.py",
+    "tests/components/hue_ble/test_config_flow.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.hue_ble.test_config_flow::test_user_form",
+    "tests.components.hue_ble.test_config_flow::test_user_form_no_device[discovery_info0]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_no_device[discovery_info1]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[no_scanners]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[not_found]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[invalid_auth]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[cannot_connect]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[not_supported]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[cannot_poll]",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception[unknown]",
+    "tests.components.hue_ble.test_config_flow::test_bluetooth_discovery_aborts",
+    "tests.components.hue_ble.test_config_flow::test_bluetooth_form_exception_already_set_up",
+    "tests.components.hue_ble.test_config_flow::test_user_form_exception_already_set_up"
+  ],
+  "PASS_TO_PASS": []
+}

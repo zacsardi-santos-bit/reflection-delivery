@@ -1,0 +1,286 @@
+patching file driver-scala/src/test/scala/org/mongodb/scala/ObservableImplicitsToGridFSUploadPublisherUnitSpec.scala
+patching file driver-scala/src/test/scala/org/mongodb/scala/gridfs/GridFSUploadPublisherSpec.scala
+patching file driver-scala/src/test/scala/org/mongodb/scala/internal/UnitObservableSpec.scala
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.3/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+> Task :bson:compileJava UP-TO-DATE
+> Task :bson:compileGroovy NO-SOURCE
+> Task :bson:processResources UP-TO-DATE
+> Task :bson:classes UP-TO-DATE
+> Task :bson:jar
+> Task :util:spock:compileJava UP-TO-DATE
+> Task :util:spock:processResources NO-SOURCE
+> Task :util:spock:classes UP-TO-DATE
+> Task :util:spock:jar UP-TO-DATE
+> Task :bson:compileTestJava NO-SOURCE
+> Task :bson:compileTestGroovy UP-TO-DATE
+> Task :bson:processTestResources UP-TO-DATE
+> Task :bson:testClasses UP-TO-DATE
+> Task :bson-kotlin:processResources NO-SOURCE
+> Task :bson-kotlinx:processResources NO-SOURCE
+> Task :bson-record-codec:compileJava UP-TO-DATE
+> Task :bson-record-codec:compileGroovy NO-SOURCE
+> Task :bson-record-codec:processResources NO-SOURCE
+> Task :bson-record-codec:classes UP-TO-DATE
+> Task :bson-record-codec:jar
+> Task :bson-scala:compileJava NO-SOURCE
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :bson-scala:spotlessScala UP-TO-DATE
+> Task :bson-scala:spotlessScalaApply UP-TO-DATE
+> Task :bson-scala:spotlessApply UP-TO-DATE
+> Task :bson-kotlin:compileKotlin
+> Task :bson-kotlinx:compileKotlin
+
+> Task :bson-scala:compileScala
+[Warn] : 17 deprecations (since 2.13.0); re-run with -deprecation for details
+one warning found
+
+> Task :bson-kotlin:compileJava NO-SOURCE
+> Task :bson-kotlin:compileGroovy NO-SOURCE
+> Task :bson-kotlin:classes UP-TO-DATE
+> Task :bson-kotlin:jar
+> Task :bson-kotlin:inspectClassesForKotlinIC UP-TO-DATE
+> Task :bson-kotlinx:compileJava NO-SOURCE
+> Task :bson-kotlinx:compileGroovy NO-SOURCE
+> Task :bson-kotlinx:classes UP-TO-DATE
+> Task :bson-kotlinx:jar
+> Task :bson-kotlinx:inspectClassesForKotlinIC UP-TO-DATE
+> Task :bson-scala:processResources NO-SOURCE
+> Task :bson-scala:classes
+> Task :bson-scala:jar
+> Task :driver-core:generateBuildConfig
+> Task :driver-core:compileJava
+> Task :driver-core:compileGroovy NO-SOURCE
+> Task :driver-core:processResources UP-TO-DATE
+> Task :driver-core:classes
+> Task :driver-core:jar
+> Task :driver-core:generateTestBuildConfig SKIPPED
+> Task :driver-core:compileTestJava NO-SOURCE
+> Task :driver-core:compileTestGroovy
+15:43:48.050 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.u.i.l.InternalLoggerFactory - Using SLF4J as the default logging framework
+15:43:48.062 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+15:43:48.063 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.targetRecords: 4
+15:43:48.100 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - -Dio.netty.noUnsafe: false
+15:43:48.101 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - Java version: 17
+15:43:48.103 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+15:43:48.103 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+15:43:48.105 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - sun.misc.Unsafe.storeFence: available
+15:43:48.105 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+15:43:48.106 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - direct buffer constructor: unavailable: Reflective setAccessible(true) disabled
+15:43:48.108 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+15:43:48.109 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable: class io.netty.util.internal.PlatformDependent0$7 cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to unnamed module @7bdca7a2
+15:43:48.111 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): unavailable
+15:43:48.112 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - sun.misc.Unsafe: available
+15:43:48.124 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - maxDirectMemory: 536870912 bytes (maybe)
+15:43:48.124 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - -Dio.netty.tmpdir: /tmp (java.io.tmpdir)
+15:43:48.125 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+15:43:48.126 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - -Dio.netty.maxDirectMemory: -1 bytes
+15:43:48.127 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+15:43:48.129 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG io.netty.util.internal.CleanerJava9 - java.nio.ByteBuffer.cleaner(): available
+15:43:48.129 [/127.0.0.1:54218 to /127.0.0.1:38770 workers] DEBUG i.n.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+
+> Task :driver-core:processTestResources UP-TO-DATE
+> Task :driver-core:testClasses
+> Task :driver-reactive-streams:compileJava
+> Task :driver-reactive-streams:compileGroovy NO-SOURCE
+> Task :driver-reactive-streams:processResources NO-SOURCE
+> Task :driver-reactive-streams:classes
+> Task :driver-reactive-streams:jar
+> Task :driver-sync:compileJava
+> Task :driver-sync:compileGroovy NO-SOURCE
+> Task :driver-sync:processResources NO-SOURCE
+> Task :driver-sync:classes
+> Task :driver-sync:jar
+> Task :driver-sync:compileTestJava NO-SOURCE
+> Task :driver-sync:compileTestGroovy
+> Task :driver-sync:processTestResources UP-TO-DATE
+> Task :driver-sync:testClasses
+> Task :driver-reactive-streams:compileTestJava UP-TO-DATE
+> Task :driver-reactive-streams:compileTestGroovy
+> Task :driver-reactive-streams:processTestResources UP-TO-DATE
+> Task :driver-reactive-streams:testClasses
+> Task :driver-scala:compileJava NO-SOURCE
+> Task :driver-scala:spotlessScala
+> Task :driver-scala:spotlessScalaApply
+> Task :driver-scala:spotlessApply
+
+> Task :driver-scala:compileScala
+[Warn] : 3 deprecations
+[Warn] : 134 deprecations (since 2.13.0)
+[Warn] : 137 deprecations in total; re-run with -deprecation for details
+three warnings found
+
+> Task :driver-scala:processResources NO-SOURCE
+> Task :driver-scala:classes
+> Task :driver-scala:compileTestJava NO-SOURCE
+
+> Task :driver-scala:compileTestScala
+[Warn] : 5 deprecations
+[Warn] : 1 deprecation (since 2.11.0)
+[Warn] : 111 deprecations (since 2.13.0)
+[Warn] : 5 deprecations (since 2.13.3)
+[Warn] : 13 deprecations (since 4.4.0)
+[Warn] : 5 deprecations (since 5.0)
+[Warn] : 140 deprecations in total; re-run with -deprecation for details
+7 warnings found
+
+> Task :driver-scala:processTestResources UP-TO-DATE
+> Task :driver-scala:testClasses
+
+> Task :driver-scala:test
+Running Test task using scala version: 2.13.6
+
+BUILD SUCCESSFUL in 2m 11s
+41 actionable tasks: 23 executed, 18 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-07-01T15:44:29" hostname="modal" time="0.508">
+  <properties/>
+  <testcase name="should emit exactly one element" classname="org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec" time="0.5"/>
+  <testcase name="should signal the underlying error" classname="org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec" time="0.003"/>
+  <testcase name="should work with explicit request" classname="org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec" time="0.001"/>
+  <system-out><![CDATA[15:44:29,376 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+15:44:29,377 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback-test.xml] at [file:/workspace/repo/driver-scala/build/resources/test/logback-test.xml]
+15:44:29,381 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback-test.xml] occurs multiple times on the classpath.
+15:44:29,381 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback-test.xml] occurs at [file:/workspace/repo/driver-scala/build/resources/test/logback-test.xml]
+15:44:29,381 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback-test.xml] occurs at [file:/workspace/repo/driver-core/build/resources/test/logback-test.xml]
+15:44:29,381 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback-test.xml] occurs at [file:/workspace/repo/driver-sync/build/resources/test/logback-test.xml]
+15:44:29,381 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback-test.xml] occurs at [file:/workspace/repo/driver-reactive-streams/build/resources/test/logback-test.xml]
+15:44:29,510 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+15:44:29,515 |-ERROR in ch.qos.logback.core.util.ContextUtil@5f172d4a - Failed to get local hostname java.net.UnknownHostException
+	at java.net.UnknownHostException
+	at 	at ch.qos.logback.core.util.ContextUtil.getLocalAddressAsString(ContextUtil.java:59)
+	at 	at ch.qos.logback.core.util.ContextUtil.getLocalHostName(ContextUtil.java:41)
+	at 	at ch.qos.logback.core.util.ContextUtil.addHostNameAsProperty(ContextUtil.java:74)
+	at 	at ch.qos.logback.classic.joran.action.ConfigurationAction.begin(ConfigurationAction.java:57)
+	at 	at ch.qos.logback.core.joran.spi.Interpreter.callBeginAction(Interpreter.java:275)
+	at 	at ch.qos.logback.core.joran.spi.Interpreter.startElement(Interpreter.java:147)
+	at 	at ch.qos.logback.core.joran.spi.Interpreter.startElement(Interpreter.java:129)
+	at 	at ch.qos.logback.core.joran.spi.EventPlayer.play(EventPlayer.java:50)
+	at 	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:149)
+	at 	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:135)
+	at 	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:99)
+	at 	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:49)
+	at 	at ch.qos.logback.classic.util.ContextInitializer.configureByResource(ContextInitializer.java:77)
+	at 	at ch.qos.logback.classic.util.ContextInitializer.autoConfig(ContextInitializer.java:152)
+	at 	at org.slf4j.impl.StaticLoggerBinder.init(StaticLoggerBinder.java:85)
+	at 	at org.slf4j.impl.StaticLoggerBinder.<clinit>(StaticLoggerBinder.java:55)
+	at 	at org.slf4j.LoggerFactory.bind(LoggerFactory.java:150)
+	at 	at org.slf4j.LoggerFactory.performInitialization(LoggerFactory.java:124)
+	at 	at org.slf4j.LoggerFactory.getILoggerFactory(LoggerFactory.java:417)
+	at 	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:362)
+	at 	at reactor.util.Loggers$Slf4JLoggerFactory.apply(Loggers.java:210)
+	at 	at reactor.util.Loggers$Slf4JLoggerFactory.apply(Loggers.java:206)
+	at 	at reactor.util.Loggers.useSl4jLoggers(Loggers.java:176)
+	at 	at reactor.util.Loggers.resetLoggerFactory(Loggers.java:72)
+	at 	at reactor.util.Loggers.<clinit>(Loggers.java:56)
+	at 	at reactor.core.publisher.Hooks.<clinit>(Hooks.java:580)
+	at 	at reactor.core.publisher.Flux.onAssembly(Flux.java:10717)
+	at 	at reactor.core.publisher.Flux.from(Flux.java:1070)
+	at 	at org.mongodb.scala.ObservableImplicits$BoxedPublisher.subscribe(ObservableImplicits.scala:43)
+	at 	at org.mongodb.scala.Observable.subscribe(Observable.scala:133)
+	at 	at org.mongodb.scala.Observable.subscribe$(Observable.scala:132)
+	at 	at org.mongodb.scala.ObservableImplicits$BoxedPublisher.subscribe(ObservableImplicits.scala:35)
+	at 	at org.mongodb.scala.Observable.subscribe(Observable.scala:113)
+	at 	at org.mongodb.scala.Observable.subscribe$(Observable.scala:113)
+	at 	at org.mongodb.scala.ObservableImplicits$BoxedPublisher.subscribe(ObservableImplicits.scala:35)
+	at 	at org.mongodb.scala.Observable.subscribe(Observable.scala:105)
+	at 	at org.mongodb.scala.Observable.subscribe$(Observable.scala:105)
+	at 	at org.mongodb.scala.ObservableImplicits$BoxedPublisher.subscribe(ObservableImplicits.scala:35)
+	at 	at org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec.$anonfun$new$1(ObservableImplicitsToGridFSUploadPublisherUnitSpec.scala:26)
+	at 	at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)
+	at 	at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)
+	at 	at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)
+	at 	at org.scalatest.Transformer.apply(Transformer.scala:22)
+	at 	at org.scalatest.Transformer.apply(Transformer.scala:20)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike$$anon$5.apply(AnyFlatSpecLike.scala:1812)
+	at 	at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)
+	at 	at org.scalatest.TestSuite.withFixture$(TestSuite.scala:195)
+	at 	at org.scalatest.flatspec.AnyFlatSpec.withFixture(AnyFlatSpec.scala:1685)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.invokeWithFixture$1(AnyFlatSpecLike.scala:1810)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$runTest$1(AnyFlatSpecLike.scala:1822)
+	at 	at org.scalatest.SuperEngine.runTestImpl(Engine.scala:306)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.runTest(AnyFlatSpecLike.scala:1822)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.runTest$(AnyFlatSpecLike.scala:1804)
+	at 	at org.scalatest.flatspec.AnyFlatSpec.runTest(AnyFlatSpec.scala:1685)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$runTests$1(AnyFlatSpecLike.scala:1880)
+	at 	at org.scalatest.SuperEngine.$anonfun$runTestsInBranch$1(Engine.scala:413)
+	at 	at scala.collection.immutable.List.foreach(List.scala:333)
+	at 	at org.scalatest.SuperEngine.traverseSubNodes$1(Engine.scala:401)
+	at 	at org.scalatest.SuperEngine.runTestsInBranch(Engine.scala:396)
+	at 	at org.scalatest.SuperEngine.runTestsImpl(Engine.scala:475)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.runTests(AnyFlatSpecLike.scala:1880)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.runTests$(AnyFlatSpecLike.scala:1879)
+	at 	at org.scalatest.flatspec.AnyFlatSpec.runTests(AnyFlatSpec.scala:1685)
+	at 	at org.scalatest.Suite.run(Suite.scala:1112)
+	at 	at org.scalatest.Suite.run$(Suite.scala:1094)
+	at 	at org.scalatest.flatspec.AnyFlatSpec.org$scalatest$flatspec$AnyFlatSpecLike$$super$run(AnyFlatSpec.scala:1685)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$run$1(AnyFlatSpecLike.scala:1925)
+	at 	at org.scalatest.SuperEngine.runImpl(Engine.scala:535)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.run(AnyFlatSpecLike.scala:1925)
+	at 	at org.scalatest.flatspec.AnyFlatSpecLike.run$(AnyFlatSpecLike.scala:1923)
+	at 	at org.scalatest.flatspec.AnyFlatSpec.run(AnyFlatSpec.scala:1685)
+	at 	at org.scalatestplus.junit.JUnitRunner.run(JUnitRunner.scala:99)
+	at 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at 	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at 	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at 	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at 	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:99)
+	at 	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:79)
+	at 	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:75)
+	at 	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
+	at 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at 	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at 	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at 	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at 	at jdk.proxy1/jdk.proxy1.$Proxy2.stop(Unknown Source)
+	at 	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at 	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:133)
+	at 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+15:44:29,516 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+15:44:29,524 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+15:44:29,553 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+15:44:29,600 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to WARN
+15:44:29,600 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+15:44:29,601 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+15:44:29,602 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@36bf84e - Registering current configuration as safe fallback point
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mongodb.scala.internal.UnitObservableSpec" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-07-01T15:44:29" hostname="modal" time="0.045">
+  <properties/>
+  <testcase name="should emit exactly one element" classname="org.mongodb.scala.internal.UnitObservableSpec" time="0.022"/>
+  <testcase name="should signal the underlying error" classname="org.mongodb.scala.internal.UnitObservableSpec" time="0.001"/>
+  <testcase name="should work with explicit request" classname="org.mongodb.scala.internal.UnitObservableSpec" time="0.001"/>
+  <testcase name="should work with for comprehensions" classname="org.mongodb.scala.internal.UnitObservableSpec" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mongodb.scala.gridfs.GridFSUploadPublisherSpec" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-07-01T15:44:29" hostname="modal" time="0.053">
+  <properties/>
+  <testcase name="GridFSBucket should have the same methods as the wrapped GridFSUploadStream" classname="org.mongodb.scala.gridfs.GridFSUploadPublisherSpec" time="0.022"/>
+  <testcase name="GridFSBucket should call the underlying methods" classname="org.mongodb.scala.gridfs.GridFSUploadPublisherSpec" time="0.03"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=9 found=9 failed=0 parsed=9 framework=junit exit_code=0

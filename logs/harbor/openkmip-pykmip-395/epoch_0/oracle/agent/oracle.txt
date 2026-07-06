@@ -1,3 +1,0 @@
-patching file kmip/core/messages/contents.py
-patching file kmip/services/kmip_client.py
-patching file kmip/services/server/engine.py

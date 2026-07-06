@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py /workspace/repo/tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py -v",
+  "test_files": [
+    "tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py",
+    "tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_list_state_machine_tags",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_session_type",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_client_type",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_list_state_machines",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_service_name",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_error_handling",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_error_handling_generic",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_service_test.TestStepFunctionsService::test_describe_state_machine",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_statemachine_logging_enabled.stepfunctions_statemachine_logging_enabled_test::test_stepfunctions_statemachine_logging[state_machines1-1]",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_statemachine_logging_enabled.stepfunctions_statemachine_logging_enabled_test::test_stepfunctions_statemachine_logging[state_machines0-0]",
+    "tests.providers.aws.services.stepfunctions.stepfunctions_statemachine_logging_enabled.stepfunctions_statemachine_logging_enabled_test::test_stepfunctions_statemachine_logging[state_machines2-1]"
+  ],
+  "PASS_TO_PASS": []
+}

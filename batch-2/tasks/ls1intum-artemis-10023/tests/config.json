@@ -1,0 +1,52 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/test/javascript/spec/component/lecture/close-edit-lecture-modal.component.spec.ts src/test/javascript/spec/component/lecture/hasLectureUnsavedChanges.guard.spec.ts src/test/javascript/spec/component/lecture/lecture-period.component.spec.ts src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard-title.component.spec.ts src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts --coverage=false --testEnvironment=jsdom --setupFilesAfterEnv jest-preset-angular/setup-jest /workspace/repo/src/test/javascript/spec/jest-test-setup.ts jest-extended/all",
+  "test_files": [
+    "src/test/javascript/spec/component/lecture/close-edit-lecture-modal.component.spec.ts",
+    "src/test/javascript/spec/component/lecture/hasLectureUnsavedChanges.guard.spec.ts",
+    "src/test/javascript/spec/component/lecture/lecture-period.component.spec.ts",
+    "src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts",
+    "src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard-title.component.spec.ts",
+    "src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts"
+  ],
+  "num_test_files": 6,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-period.component.spec.ts::LectureWizardPeriodComponent should initialize",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/close-edit-lecture-modal.component.spec.ts::CloseEditLectureModalComponent should create",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/hasLectureUnsavedChanges.guard.spec.ts::hasLectureUnsavedChanges should return true if warning is not bypassed by shouldDisplayDismissWarning variable but no changes were made",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/hasLectureUnsavedChanges.guard.spec.ts::hasLectureUnsavedChanges should return true if dismiss warning shall not be displayed",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/hasLectureUnsavedChanges.guard.spec.ts::hasLectureUnsavedChanges should return result from modal (true, dismiss changes)",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/hasLectureUnsavedChanges.guard.spec.ts::hasLectureUnsavedChanges should return result from modal (false, keep editing)",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should create lecture",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should create lecture in wizard mode",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should edit a lecture",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should switch to wizard mode",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should be in wizard mode",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should select process units checkbox",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should navigate to previous state",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should create a lecture and then redirect to unit split",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should call onFileChange on changed file",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent should set lecture visible date, start date and end date correctly",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent isChangeMadeToTitleSection should detect changes made to the title section",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent isChangeMadeToTitleSection should handle undefined from description properly",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent isChangeMadeToPeriodSection should detect changes made to the period section",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/lecture-update.component.spec.ts::LectureUpdateComponent isChangeMadeToPeriodSection should not consider resetting an undefined date as a change",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should initialize and set step with given lecture",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should initialize and set step without given lecture",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should initialize and set step without given lecture but preset date",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should initialize and set given step",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should increase the step when clicked",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should save the lecture when finishing the last step",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should increase the step after lecture created",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should return correct icon for last step",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should return correct icon for not last step",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should return correct text for last step",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should return correct text for not last step",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should toggle wizard when lecture not created",
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard.component.spec.ts::LectureWizardComponent should navigate when toggling wizard after lecture was created"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/test/javascript/spec/component/lecture/wizard-mode/lecture-wizard-title.component.spec.ts::LectureWizardTitleComponent should initialize"
+  ]
+}

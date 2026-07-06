@@ -1,0 +1,245 @@
+patching file storage/dataflux/example_test.go
+patching file storage/dataflux/fast_list_test.go
+patching file storage/dataflux/integration_test.go
+patching file storage/dataflux/range_splitter_test.go
+patching file storage/dataflux/sequential_test.go
+patching file storage/dataflux/worksteal_test.go
+{"Time":"2026-06-29T15:31:39.720476987Z","Action":"start","Package":"cloud.google.com/go/storage/dataflux"}
+{"Time":"2026-06-29T15:31:39.736844772Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets"}
+{"Time":"2026-06-29T15:31:39.736901742Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets","Output":"=== RUN   TestPrefixAdjustedOffsets\n"}
+{"Time":"2026-06-29T15:31:39.737541461Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_and_end_are_empty"}
+{"Time":"2026-06-29T15:31:39.737594821Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_and_end_are_empty","Output":"=== RUN   TestPrefixAdjustedOffsets/start_and_end_are_empty\n"}
+{"Time":"2026-06-29T15:31:39.737656641Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_and_end_are_empty","Output":"--- PASS: TestPrefixAdjustedOffsets/start_and_end_are_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.737681801Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_and_end_are_empty","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.737719481Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_longer_and_lexicographically_before_prefix"}
+{"Time":"2026-06-29T15:31:39.737743531Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_longer_and_lexicographically_before_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/start_is_longer_and_lexicographically_before_prefix\n"}
+{"Time":"2026-06-29T15:31:39.737771081Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_longer_and_lexicographically_before_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/start_is_longer_and_lexicographically_before_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.737795421Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_longer_and_lexicographically_before_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.737822041Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_same_as_prefix"}
+{"Time":"2026-06-29T15:31:39.737844261Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_same_as_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/start_value_same_as_prefix\n"}
+{"Time":"2026-06-29T15:31:39.737868871Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_same_as_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/start_value_same_as_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.737892821Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_same_as_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.737915771Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/lexicographically_start_comes_before_prefix_and_end_after_prefix"}
+{"Time":"2026-06-29T15:31:39.737937721Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/lexicographically_start_comes_before_prefix_and_end_after_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/lexicographically_start_comes_before_prefix_and_end_after_prefix\n"}
+{"Time":"2026-06-29T15:31:39.737964521Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/lexicographically_start_comes_before_prefix_and_end_after_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/lexicographically_start_comes_before_prefix_and_end_after_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.737988571Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/lexicographically_start_comes_before_prefix_and_end_after_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.738021601Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_contains_prefix"}
+{"Time":"2026-06-29T15:31:39.738045411Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_contains_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/start_value_contains_prefix\n"}
+{"Time":"2026-06-29T15:31:39.738069311Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_contains_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/start_value_contains_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.738098501Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_value_contains_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73812139Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_value_contains_prefix"}
+{"Time":"2026-06-29T15:31:39.73814427Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_value_contains_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/end_value_contains_prefix\n"}
+{"Time":"2026-06-29T15:31:39.73816801Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_value_contains_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/end_value_contains_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.73819094Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_value_contains_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73821374Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/prefix_is_empty"}
+{"Time":"2026-06-29T15:31:39.73823848Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/prefix_is_empty","Output":"=== RUN   TestPrefixAdjustedOffsets/prefix_is_empty\n"}
+{"Time":"2026-06-29T15:31:39.73826235Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/prefix_is_empty","Output":"--- PASS: TestPrefixAdjustedOffsets/prefix_is_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.7382872Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/prefix_is_empty","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.7383112Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end"}
+{"Time":"2026-06-29T15:31:39.73833348Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end","Output":"=== RUN   TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end\n"}
+{"Time":"2026-06-29T15:31:39.73835863Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end","Output":"--- PASS: TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.7383818Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73840556Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_is_same_as_prefix"}
+{"Time":"2026-06-29T15:31:39.7384284Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_is_same_as_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/end_is_same_as_prefix\n"}
+{"Time":"2026-06-29T15:31:39.73845242Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_is_same_as_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/end_is_same_as_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.73848116Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/end_is_same_as_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73850465Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end_with_prefix"}
+{"Time":"2026-06-29T15:31:39.73852673Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end_with_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end_with_prefix\n"}
+{"Time":"2026-06-29T15:31:39.73855224Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end_with_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end_with_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.7385766Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_end_with_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73861302Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_prefix"}
+{"Time":"2026-06-29T15:31:39.73863647Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_prefix","Output":"=== RUN   TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_prefix\n"}
+{"Time":"2026-06-29T15:31:39.73866598Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_prefix","Output":"--- PASS: TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.73869006Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets/start_is_lexicographically_higher_than_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73871394Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets","Output":"--- PASS: TestPrefixAdjustedOffsets (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.73873946Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestPrefixAdjustedOffsets","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.73876337Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister"}
+{"Time":"2026-06-29T15:31:39.738786599Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister","Output":"=== RUN   TestNewLister\n"}
+{"Time":"2026-06-29T15:31:39.738811529Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty"}
+{"Time":"2026-06-29T15:31:39.738833499Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty","Output":"=== RUN   TestNewLister/start_and_end_are_empty\n"}
+{"Time":"2026-06-29T15:31:39.738857469Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty","Output":"--- PASS: TestNewLister/start_and_end_are_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.738883829Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.738908099Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_is_longer_than_prefix"}
+{"Time":"2026-06-29T15:31:39.738931239Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_is_longer_than_prefix","Output":"=== RUN   TestNewLister/start_is_longer_than_prefix\n"}
+{"Time":"2026-06-29T15:31:39.738955799Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_is_longer_than_prefix","Output":"--- PASS: TestNewLister/start_is_longer_than_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.738985549Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_is_longer_than_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739009339Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty#01"}
+{"Time":"2026-06-29T15:31:39.739031229Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty#01","Output":"=== RUN   TestNewLister/start_and_end_are_empty#01\n"}
+{"Time":"2026-06-29T15:31:39.739056439Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty#01","Output":"--- PASS: TestNewLister/start_and_end_are_empty#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739079879Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister/start_and_end_are_empty#01","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739104829Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister","Output":"--- PASS: TestNewLister (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739129139Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewLister","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739152999Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNextBatchEmulated"}
+{"Time":"2026-06-29T15:31:39.739176379Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNextBatchEmulated","Output":"=== RUN   TestNextBatchEmulated\n"}
+{"Time":"2026-06-29T15:31:39.739199299Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNextBatchEmulated","Output":"    fast_list_test.go:294: Emulator tests skipped without emulator environment variables set\n"}
+{"Time":"2026-06-29T15:31:39.739224259Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNextBatchEmulated","Output":"--- SKIP: TestNextBatchEmulated (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739248469Z","Action":"skip","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNextBatchEmulated","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739272599Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch_All"}
+{"Time":"2026-06-29T15:31:39.739295489Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch_All","Output":"=== RUN   TestIntegration_NextBatch_All\n"}
+{"Time":"2026-06-29T15:31:39.739318049Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch_All","Output":"    integration_test.go:74: Integration tests skipped in short mode\n"}
+{"Time":"2026-06-29T15:31:39.739350799Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch_All","Output":"--- SKIP: TestIntegration_NextBatch_All (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739376019Z","Action":"skip","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch_All","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739399929Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch"}
+{"Time":"2026-06-29T15:31:39.739421788Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch","Output":"=== RUN   TestIntegration_NextBatch\n"}
+{"Time":"2026-06-29T15:31:39.739444278Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch","Output":"    integration_test.go:102: Integration tests skipped in short mode\n"}
+{"Time":"2026-06-29T15:31:39.739468008Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch","Output":"--- SKIP: TestIntegration_NextBatch (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739497858Z","Action":"skip","Package":"cloud.google.com/go/storage/dataflux","Test":"TestIntegration_NextBatch","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739526068Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter"}
+{"Time":"2026-06-29T15:31:39.739547938Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter","Output":"=== RUN   TestNewRangeSplitter\n"}
+{"Time":"2026-06-29T15:31:39.739571698Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/valid_alphabet"}
+{"Time":"2026-06-29T15:31:39.739603208Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/valid_alphabet","Output":"=== RUN   TestNewRangeSplitter/valid_alphabet\n"}
+{"Time":"2026-06-29T15:31:39.739627578Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/valid_alphabet","Output":"--- PASS: TestNewRangeSplitter/valid_alphabet (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739657318Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/valid_alphabet","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739680478Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/empty_alphabet"}
+{"Time":"2026-06-29T15:31:39.739702278Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/empty_alphabet","Output":"=== RUN   TestNewRangeSplitter/empty_alphabet\n"}
+{"Time":"2026-06-29T15:31:39.739726738Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/empty_alphabet","Output":"--- PASS: TestNewRangeSplitter/empty_alphabet (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739750088Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter/empty_alphabet","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739779158Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter","Output":"--- PASS: TestNewRangeSplitter (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739803608Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestNewRangeSplitter","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739826328Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange"}
+{"Time":"2026-06-29T15:31:39.739848188Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange","Output":"=== RUN   TestSplitRange\n"}
+{"Time":"2026-06-29T15:31:39.739871288Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_start"}
+{"Time":"2026-06-29T15:31:39.739893328Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_start","Output":"=== RUN   TestSplitRange/empty_start\n"}
+{"Time":"2026-06-29T15:31:39.739917488Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_start","Output":"--- PASS: TestSplitRange/empty_start (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.739940428Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_start","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.739974918Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_end"}
+{"Time":"2026-06-29T15:31:39.739999508Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_end","Output":"=== RUN   TestSplitRange/empty_end\n"}
+{"Time":"2026-06-29T15:31:39.740025318Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_end","Output":"--- PASS: TestSplitRange/empty_end (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740048718Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/empty_end","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740071968Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/splits_less_than_one"}
+{"Time":"2026-06-29T15:31:39.740094007Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/splits_less_than_one","Output":"=== RUN   TestSplitRange/splits_less_than_one\n"}
+{"Time":"2026-06-29T15:31:39.740127217Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/splits_less_than_one","Output":"--- PASS: TestSplitRange/splits_less_than_one (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740152717Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/splits_less_than_one","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740176727Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_lexicographically_smaller_than_start_range"}
+{"Time":"2026-06-29T15:31:39.740200067Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_lexicographically_smaller_than_start_range","Output":"=== RUN   TestSplitRange/end_range_lexicographically_smaller_than_start_range\n"}
+{"Time":"2026-06-29T15:31:39.740224517Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_lexicographically_smaller_than_start_range","Output":"--- PASS: TestSplitRange/end_range_lexicographically_smaller_than_start_range (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740300627Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_lexicographically_smaller_than_start_range","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740335547Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_empty_start_range"}
+{"Time":"2026-06-29T15:31:39.740361917Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_empty_start_range","Output":"=== RUN   TestSplitRange/unsplittable_with_empty_start_range\n"}
+{"Time":"2026-06-29T15:31:39.740399797Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_empty_start_range","Output":"--- PASS: TestSplitRange/unsplittable_with_empty_start_range (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740423327Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_empty_start_range","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740448467Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_non_empty_ranges"}
+{"Time":"2026-06-29T15:31:39.740470567Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_non_empty_ranges","Output":"=== RUN   TestSplitRange/unsplittable_with_non_empty_ranges\n"}
+{"Time":"2026-06-29T15:31:39.740498617Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_non_empty_ranges","Output":"--- PASS: TestSplitRange/unsplittable_with_non_empty_ranges (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740522257Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/unsplittable_with_non_empty_ranges","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740545487Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/Split_Entire_Bucket_Namespace"}
+{"Time":"2026-06-29T15:31:39.740568697Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/Split_Entire_Bucket_Namespace","Output":"=== RUN   TestSplitRange/Split_Entire_Bucket_Namespace\n"}
+{"Time":"2026-06-29T15:31:39.740616867Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/Split_Entire_Bucket_Namespace","Output":"--- PASS: TestSplitRange/Split_Entire_Bucket_Namespace (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740641927Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/Split_Entire_Bucket_Namespace","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740669367Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_only_start_range"}
+{"Time":"2026-06-29T15:31:39.740700957Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_only_start_range","Output":"=== RUN   TestSplitRange/split_with_only_start_range\n"}
+{"Time":"2026-06-29T15:31:39.740730007Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_only_start_range","Output":"--- PASS: TestSplitRange/split_with_only_start_range (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740753856Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_only_start_range","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740780896Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_large_distance_with_few_split_points"}
+{"Time":"2026-06-29T15:31:39.740805256Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_large_distance_with_few_split_points","Output":"=== RUN   TestSplitRange/split_large_distance_with_few_split_points\n"}
+{"Time":"2026-06-29T15:31:39.740832906Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_large_distance_with_few_split_points","Output":"--- PASS: TestSplitRange/split_large_distance_with_few_split_points (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740870116Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_large_distance_with_few_split_points","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740898406Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_5_\u003e_1"}
+{"Time":"2026-06-29T15:31:39.740921976Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_5_\u003e_1","Output":"=== RUN   TestSplitRange/split_with_prefix,_distance_at_index_5_\u003e_1\n"}
+{"Time":"2026-06-29T15:31:39.740946496Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_5_\u003e_1","Output":"--- PASS: TestSplitRange/split_with_prefix,_distance_at_index_5_\u003e_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.740969756Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_5_\u003e_1","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.740992786Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_6_\u003e_1"}
+{"Time":"2026-06-29T15:31:39.741014836Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_6_\u003e_1","Output":"=== RUN   TestSplitRange/split_with_prefix,_distance_at_index_6_\u003e_1\n"}
+{"Time":"2026-06-29T15:31:39.741038826Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_6_\u003e_1","Output":"--- PASS: TestSplitRange/split_with_prefix,_distance_at_index_6_\u003e_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741063086Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_prefix,_distance_at_index_6_\u003e_1","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741086386Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_half_with_small_range"}
+{"Time":"2026-06-29T15:31:39.741108196Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_half_with_small_range","Output":"=== RUN   TestSplitRange/split_into_half_with_small_range\n"}
+{"Time":"2026-06-29T15:31:39.741132326Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_half_with_small_range","Output":"--- PASS: TestSplitRange/split_into_half_with_small_range (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741155546Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_half_with_small_range","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741184926Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_multuple_pieces_with_small_range"}
+{"Time":"2026-06-29T15:31:39.741207526Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_multuple_pieces_with_small_range","Output":"=== RUN   TestSplitRange/split_into_multuple_pieces_with_small_range\n"}
+{"Time":"2026-06-29T15:31:39.741231606Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_multuple_pieces_with_small_range","Output":"--- PASS: TestSplitRange/split_into_multuple_pieces_with_small_range (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741255036Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_multuple_pieces_with_small_range","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741279266Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_towards_end_range"}
+{"Time":"2026-06-29T15:31:39.741302736Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_towards_end_range","Output":"=== RUN   TestSplitRange/split_towards_end_range\n"}
+{"Time":"2026-06-29T15:31:39.741336676Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_towards_end_range","Output":"--- PASS: TestSplitRange/split_towards_end_range (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741361016Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_towards_end_range","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741386216Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_sequence_of_adjacent_characters"}
+{"Time":"2026-06-29T15:31:39.741409595Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_sequence_of_adjacent_characters","Output":"=== RUN   TestSplitRange/split_with_sequence_of_adjacent_characters\n"}
+{"Time":"2026-06-29T15:31:39.741436045Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_sequence_of_adjacent_characters","Output":"--- PASS: TestSplitRange/split_with_sequence_of_adjacent_characters (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741459585Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_with_sequence_of_adjacent_characters","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741482805Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_adjenct_split_points"}
+{"Time":"2026-06-29T15:31:39.741505015Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_adjenct_split_points","Output":"=== RUN   TestSplitRange/split_into_adjenct_split_points\n"}
+{"Time":"2026-06-29T15:31:39.741529105Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_adjenct_split_points","Output":"--- PASS: TestSplitRange/split_into_adjenct_split_points (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741552385Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/split_into_adjenct_split_points","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741575295Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_contains_new_character"}
+{"Time":"2026-06-29T15:31:39.741607275Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_contains_new_character","Output":"=== RUN   TestSplitRange/end_range_contains_new_character\n"}
+{"Time":"2026-06-29T15:31:39.741631845Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_contains_new_character","Output":"--- PASS: TestSplitRange/end_range_contains_new_character (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741662085Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/end_range_contains_new_character","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741685165Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_contains_new_character"}
+{"Time":"2026-06-29T15:31:39.741707665Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_contains_new_character","Output":"=== RUN   TestSplitRange/start_range_contains_new_character\n"}
+{"Time":"2026-06-29T15:31:39.741731815Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_contains_new_character","Output":"--- PASS: TestSplitRange/start_range_contains_new_character (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741755115Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_contains_new_character","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741779315Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_is_sequence_of_highest_characters"}
+{"Time":"2026-06-29T15:31:39.741801755Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_is_sequence_of_highest_characters","Output":"=== RUN   TestSplitRange/start_range_is_sequence_of_highest_characters\n"}
+{"Time":"2026-06-29T15:31:39.741825895Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_is_sequence_of_highest_characters","Output":"--- PASS: TestSplitRange/start_range_is_sequence_of_highest_characters (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741849175Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange/start_range_is_sequence_of_highest_characters","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741874125Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange","Output":"--- PASS: TestSplitRange (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.741897235Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSplitRange","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.741921835Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet"}
+{"Time":"2026-06-29T15:31:39.741943735Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet","Output":"=== RUN   TestSortAlphabet\n"}
+{"Time":"2026-06-29T15:31:39.741967805Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/unsorted_array"}
+{"Time":"2026-06-29T15:31:39.741990025Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/unsorted_array","Output":"=== RUN   TestSortAlphabet/unsorted_array\n"}
+{"Time":"2026-06-29T15:31:39.742019375Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/unsorted_array","Output":"--- PASS: TestSortAlphabet/unsorted_array (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742045205Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/unsorted_array","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742068974Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/one_alphabet"}
+{"Time":"2026-06-29T15:31:39.742091364Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/one_alphabet","Output":"=== RUN   TestSortAlphabet/one_alphabet\n"}
+{"Time":"2026-06-29T15:31:39.742115234Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/one_alphabet","Output":"--- PASS: TestSortAlphabet/one_alphabet (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742140774Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/one_alphabet","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742163824Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/empty_array"}
+{"Time":"2026-06-29T15:31:39.742191004Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/empty_array","Output":"=== RUN   TestSortAlphabet/empty_array\n"}
+{"Time":"2026-06-29T15:31:39.742216324Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/empty_array","Output":"--- PASS: TestSortAlphabet/empty_array (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742239564Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet/empty_array","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742263194Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet","Output":"--- PASS: TestSortAlphabet (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742287184Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSortAlphabet","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742310674Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap"}
+{"Time":"2026-06-29T15:31:39.742332514Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap","Output":"=== RUN   TestConstructAlphabetMap\n"}
+{"Time":"2026-06-29T15:31:39.742356034Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/sorted_array"}
+{"Time":"2026-06-29T15:31:39.742378224Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/sorted_array","Output":"=== RUN   TestConstructAlphabetMap/sorted_array\n"}
+{"Time":"2026-06-29T15:31:39.742402024Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/sorted_array","Output":"--- PASS: TestConstructAlphabetMap/sorted_array (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742427324Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/sorted_array","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742450604Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/unsorted_array"}
+{"Time":"2026-06-29T15:31:39.742472524Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/unsorted_array","Output":"=== RUN   TestConstructAlphabetMap/unsorted_array\n"}
+{"Time":"2026-06-29T15:31:39.742496284Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/unsorted_array","Output":"--- PASS: TestConstructAlphabetMap/unsorted_array (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742519624Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/unsorted_array","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742543134Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/one_alphabet"}
+{"Time":"2026-06-29T15:31:39.742565114Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/one_alphabet","Output":"=== RUN   TestConstructAlphabetMap/one_alphabet\n"}
+{"Time":"2026-06-29T15:31:39.742612434Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/one_alphabet","Output":"--- PASS: TestConstructAlphabetMap/one_alphabet (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742640004Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/one_alphabet","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742663244Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/empty_array"}
+{"Time":"2026-06-29T15:31:39.742685154Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/empty_array","Output":"=== RUN   TestConstructAlphabetMap/empty_array\n"}
+{"Time":"2026-06-29T15:31:39.742709153Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/empty_array","Output":"--- PASS: TestConstructAlphabetMap/empty_array (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742742543Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap/empty_array","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742767063Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap","Output":"--- PASS: TestConstructAlphabetMap (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742790133Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestConstructAlphabetMap","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742812953Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition"}
+{"Time":"2026-06-29T15:31:39.742835063Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition","Output":"=== RUN   TestCharPosition\n"}
+{"Time":"2026-06-29T15:31:39.742858123Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/no_error"}
+{"Time":"2026-06-29T15:31:39.742879993Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/no_error","Output":"=== RUN   TestCharPosition/no_error\n"}
+{"Time":"2026-06-29T15:31:39.742905273Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/no_error","Output":"--- PASS: TestCharPosition/no_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.742929143Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/no_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.742952053Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/character_not_present"}
+{"Time":"2026-06-29T15:31:39.742973853Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/character_not_present","Output":"=== RUN   TestCharPosition/character_not_present\n"}
+{"Time":"2026-06-29T15:31:39.743021423Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/character_not_present","Output":"--- PASS: TestCharPosition/character_not_present (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.743047163Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition/character_not_present","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.743071563Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition","Output":"--- PASS: TestCharPosition (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.743095033Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Test":"TestCharPosition","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.743117993Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestListNextPageSequentiallyEmulated"}
+{"Time":"2026-06-29T15:31:39.743139973Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestListNextPageSequentiallyEmulated","Output":"=== RUN   TestListNextPageSequentiallyEmulated\n"}
+{"Time":"2026-06-29T15:31:39.743162823Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestListNextPageSequentiallyEmulated","Output":"    fast_list_test.go:294: Emulator tests skipped without emulator environment variables set\n"}
+{"Time":"2026-06-29T15:31:39.743186653Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestListNextPageSequentiallyEmulated","Output":"--- SKIP: TestListNextPageSequentiallyEmulated (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.743209503Z","Action":"skip","Package":"cloud.google.com/go/storage/dataflux","Test":"TestListNextPageSequentiallyEmulated","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.743232463Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSequentialListingEmulated"}
+{"Time":"2026-06-29T15:31:39.743254473Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSequentialListingEmulated","Output":"=== RUN   TestSequentialListingEmulated\n"}
+{"Time":"2026-06-29T15:31:39.743277103Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSequentialListingEmulated","Output":"    fast_list_test.go:294: Emulator tests skipped without emulator environment variables set\n"}
+{"Time":"2026-06-29T15:31:39.743328733Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSequentialListingEmulated","Output":"--- SKIP: TestSequentialListingEmulated (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.743352603Z","Action":"skip","Package":"cloud.google.com/go/storage/dataflux","Test":"TestSequentialListingEmulated","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.743380652Z","Action":"run","Package":"cloud.google.com/go/storage/dataflux","Test":"TestWorkstealListingEmulated"}
+{"Time":"2026-06-29T15:31:39.743402572Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestWorkstealListingEmulated","Output":"=== RUN   TestWorkstealListingEmulated\n"}
+{"Time":"2026-06-29T15:31:39.743425352Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestWorkstealListingEmulated","Output":"    fast_list_test.go:294: Emulator tests skipped without emulator environment variables set\n"}
+{"Time":"2026-06-29T15:31:39.743449372Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Test":"TestWorkstealListingEmulated","Output":"--- SKIP: TestWorkstealListingEmulated (0.00s)\n"}
+{"Time":"2026-06-29T15:31:39.743472432Z","Action":"skip","Package":"cloud.google.com/go/storage/dataflux","Test":"TestWorkstealListingEmulated","Elapsed":0}
+{"Time":"2026-06-29T15:31:39.743494762Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:39.743588622Z","Action":"output","Package":"cloud.google.com/go/storage/dataflux","Output":"ok  \tcloud.google.com/go/storage/dataflux\t0.023s\n"}
+{"Time":"2026-06-29T15:31:39.743620682Z","Action":"pass","Package":"cloud.google.com/go/storage/dataflux","Elapsed":0.023}
+reward=1 graded=51 found=51 failed=0 parsed=57 framework=go exit_code=0

@@ -1,0 +1,51 @@
+{
+  "test_framework": "cargo",
+  "test_command": "touch /workspace/repo/crates/biome_js_formatter/tests/spec_tests.rs && cd /workspace/repo && cargo nextest run -p biome_js_formatter -E 'test(nested)'",
+  "test_files": [
+    "crates/biome_js_formatter/tests/specs/js/module/expression/nested_conditional_expression/nested_conditional_expression.js",
+    "crates/biome_js_formatter/tests/specs/js/module/expression/nested_conditional_expression/nested_conditional_expression.js.snap",
+    "crates/biome_js_formatter/tests/specs/js/module/expression/nested_conditional_expression/options.json",
+    "crates/biome_js_formatter/tests/specs/ts/union/nested_union/nested_union.ts",
+    "crates/biome_js_formatter/tests/specs/ts/union/nested_union/nested_union.ts.snap",
+    "crates/biome_js_formatter/tests/specs/ts/union/nested_union/options.json"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(31/33) biome_js_formatter::spec_tests formatter::js_module::specs::js::module::expression::nested_conditional_expression::nested_conditional_expression_js",
+    "( 1/33) biome_js_formatter syntax_rewriter::tests::nested_parentheses",
+    "( 2/33) biome_js_formatter syntax_rewriter::tests::nested_parentheses_with_whitespace",
+    "( 3/33) biome_js_formatter::prettier_tests specs::prettier::js::range::nested2_js",
+    "( 4/33) biome_js_formatter::prettier_tests specs::prettier::js::range::nested_js",
+    "( 5/33) biome_js_formatter::prettier_tests specs::prettier::js::range::nested_print_width_js",
+    "( 6/33) biome_js_formatter::prettier_tests specs::prettier::typescript::conditional_types::nested_in_condition_ts",
+    "( 7/33) biome_js_formatter::prettier_tests specs::prettier::js::arrays::nested_js",
+    "( 8/33) biome_js_formatter::prettier_tests specs::prettier::js::tab_width::nested_functions_spec_js",
+    "( 9/33) biome_js_formatter::prettier_tests specs::prettier::typescript::conformance::classes::nested_class_declaration_ts",
+    "(10/33) biome_js_formatter::prettier_tests specs::prettier::js::async_::simple_nested_await_js",
+    "(11/33) biome_js_formatter::prettier_tests specs::prettier::js::async_::nested_js",
+    "(12/33) biome_js_formatter::prettier_tests specs::prettier::typescript::as_::nested_await_and_as_ts",
+    "(13/33) biome_js_formatter::prettier_tests specs::prettier::js::performance::nested_js",
+    "(14/33) biome_js_formatter::prettier_tests specs::prettier::js::async_::nested2_js",
+    "(15/33) biome_js_formatter::prettier_tests specs::prettier::js::comments_closure_typecast::nested_js",
+    "(16/33) biome_js_formatter::prettier_tests specs::prettier::js::ternaries::nested_in_condition_js",
+    "(17/33) biome_js_formatter::prettier_tests specs::prettier::js::performance::nested_real_js",
+    "(20/33) biome_js_formatter::prettier_tests specs::prettier::typescript::conformance::types::type_parameters::type_parameter_lists::type_parameters_available_in_nested_scope2_ts",
+    "(21/33) biome_js_formatter::prettier_tests specs::prettier::typescript::module::module_nested_ts",
+    "(22/33) biome_js_formatter::prettier_tests specs::prettier::typescript::module::namespace_nested_ts",
+    "(23/33) biome_js_formatter::prettier_tests specs::prettier::typescript::static_blocks::nested_ts",
+    "(28/33) biome_js_formatter::spec_tests formatter::ts_module::specs::ts::union::nested_union::nested_union_ts",
+    "(29/33) biome_js_formatter::spec_tests formatter::js_module::specs::js::module::comments::nested_comments::nested_comments_js",
+    "(30/33) biome_js_formatter::spec_tests formatter::js_module::specs::js::module::array::array_nested_js"
+  ],
+  "PASS_TO_PASS": [
+    "(18/33) biome_js_formatter::prettier_tests specs::prettier::js::ternaries::nested_js",
+    "(19/33) biome_js_formatter::prettier_tests specs::prettier::typescript::custom::module::nested_namespace_ts",
+    "(24/33) biome_js_formatter::prettier_tests specs::prettier::typescript::satisfies_operators::nested_await_and_satisfies_ts",
+    "(25/33) biome_js_formatter::prettier_tests specs::prettier::js::range::nested3_js",
+    "(26/33) biome_js_formatter::prettier_tests specs::prettier::js::destructuring_private_fields::nested_bindings_js",
+    "(27/33) biome_js_formatter::prettier_tests specs::prettier::typescript::prettier_ignore::prettier_ignore_nested_unions_ts",
+    "(32/33) biome_js_formatter::spec_tests formatter::js_module::specs::js::module::binding::nested_bindings_js",
+    "(33/33) biome_js_formatter::spec_tests formatter::js_module::specs::js::module::arrow::arrow_nested_js"
+  ]
+}

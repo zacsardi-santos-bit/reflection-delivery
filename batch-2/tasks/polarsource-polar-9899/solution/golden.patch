@@ -1,0 +1,708 @@
+diff --git a/.github/workflows/deploy_image_resizer.yml b/.github/workflows/deploy_image_resizer.yml
+index 9b960fa4c..863414ccc 100644
+--- a/.github/workflows/deploy_image_resizer.yml
++++ b/.github/workflows/deploy_image_resizer.yml
+@@ -43,7 +43,7 @@ jobs:
+           zip -r ../package.zip .
+ 
+       - name: Configure AWS credentials
+-        uses: aws-actions/configure-aws-credentials@v6
++        uses: aws-actions/configure-aws-credentials@v4
+         with:
+           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+           aws-region: us-east-1
+diff --git a/.github/workflows/terraform.yaml b/.github/workflows/terraform.yaml
+index 1380e6b17..b0a56bafd 100644
+--- a/.github/workflows/terraform.yaml
++++ b/.github/workflows/terraform.yaml
+@@ -24,7 +24,7 @@ jobs:
+       - uses: actions/checkout@v6
+ 
+       - name: Setup Terraform
+-        uses: hashicorp/setup-terraform@v4
++        uses: hashicorp/setup-terraform@v3
+ 
+       - name: Terraform Format Check
+         working-directory: ./terraform
+diff --git a/server/polar/backoffice/organizations/analytics.py b/server/polar/backoffice/organizations/analytics.py
+index 93df2efa5..0a15cfdd5 100644
+--- a/server/polar/backoffice/organizations/analytics.py
++++ b/server/polar/backoffice/organizations/analytics.py
+@@ -15,12 +15,10 @@ from polar.models import (
+     Product,
+     ProductBenefit,
+     Refund,
+-    Transaction,
+     WebhookEndpoint,
+ )
+ from polar.models.dispute import DisputeStatus
+ from polar.models.payment import PaymentStatus
+-from polar.models.transaction import TransactionType
+ from polar.payment.repository import PaymentRepository
+ from polar.postgres import AsyncSession
+ 
+@@ -43,7 +41,7 @@ class PaymentAnalyticsService:
+     async def get_succeeded_payments_stats(
+         self, organization_id: UUID4
+     ) -> tuple[int, int, list[float]]:
+-        """Get succeeded payments count, total amount in USD cents, and risk scores."""
++        """Get succeeded payments count, total amount, and risk scores."""
+         statement = self.payment_repo.get_base_statement().where(
+             Payment.organization_id == organization_id,
+             Payment.status == PaymentStatus.succeeded,
+@@ -57,14 +55,10 @@ class PaymentAnalyticsService:
+         )
+         risk_scores = [row[0] for row in risk_scores_result if row[0] is not None]
+ 
+-        # Get count and total amount in USD via Transaction (avoids mixing currencies)
++        # Get count and total amount
+         stats_result = await self.session.execute(
+-            statement.outerjoin(
+-                Transaction,
+-                onclause=(Transaction.charge_id == Payment.processor_id)
+-                & (Transaction.type == TransactionType.payment),
+-            ).with_only_columns(
+-                func.count(Payment.id), func.coalesce(func.sum(Transaction.amount), 0)
++            statement.with_only_columns(
++                func.count(Payment.id), func.coalesce(func.sum(Payment.amount), 0)
+             )
+         )
+         count, total_amount = stats_result.first() or (0, 0)
+@@ -72,19 +66,11 @@ class PaymentAnalyticsService:
+         return count, total_amount, risk_scores
+ 
+     async def get_refund_stats(self, organization_id: UUID4) -> tuple[int, int]:
+-        """Get refund count and total amount in USD cents for organization."""
++        """Get refund count and total amount for organization."""
+         result = await self.session.execute(
+-            select(
+-                func.count(Refund.id),
+-                func.coalesce(-func.sum(Transaction.amount), 0),
+-            )
++            select(func.count(Refund.id), func.coalesce(func.sum(Refund.amount), 0))
+             .join(Order, Refund.order_id == Order.id)
+             .join(Customer, Order.customer_id == Customer.id)
+-            .outerjoin(
+-                Transaction,
+-                onclause=(Transaction.refund_id == Refund.id)
+-                & (Transaction.type == TransactionType.refund),
+-            )
+             .where(Customer.organization_id == organization_id)
+         )
+         result_row = result.first()
+@@ -110,7 +96,6 @@ class PaymentAnalyticsService:
+         """Get dispute and chargeback stats for organization.
+ 
+         Returns (dispute_count, dispute_amount, chargeback_count, chargeback_amount).
+-        Amounts are in USD cents via related Transaction records.
+         Disputes = all non-prevented/non-early_warning disputes.
+         Chargebacks = disputes with status 'lost'.
+         """
+@@ -124,14 +109,9 @@ class PaymentAnalyticsService:
+         result = await self.session.execute(
+             select(
+                 func.count(Dispute.id),
+-                func.coalesce(-func.sum(Transaction.amount), 0),
++                func.coalesce(func.sum(Dispute.amount), 0),
+             )
+             .join(Payment, Dispute.payment_id == Payment.id)
+-            .outerjoin(
+-                Transaction,
+-                onclause=(Transaction.dispute_id == Dispute.id)
+-                & (Transaction.type == TransactionType.dispute),
+-            )
+             .where(
+                 Payment.organization_id == organization_id,
+                 Dispute.status.in_(actual_dispute_statuses),
+@@ -145,14 +125,9 @@ class PaymentAnalyticsService:
+         cb_result = await self.session.execute(
+             select(
+                 func.count(Dispute.id),
+-                func.coalesce(-func.sum(Transaction.amount), 0),
++                func.coalesce(func.sum(Dispute.amount), 0),
+             )
+             .join(Payment, Dispute.payment_id == Payment.id)
+-            .outerjoin(
+-                Transaction,
+-                onclause=(Transaction.dispute_id == Dispute.id)
+-                & (Transaction.type == TransactionType.dispute),
+-            )
+             .where(
+                 Payment.organization_id == organization_id,
+                 Dispute.status == DisputeStatus.lost,
+diff --git a/server/polar/organization_review/agent.py b/server/polar/organization_review/agent.py
+index 62d0bb81f..64ce03548 100644
+--- a/server/polar/organization_review/agent.py
++++ b/server/polar/organization_review/agent.py
+@@ -1,6 +1,7 @@
+ import asyncio
+ import time
+ from datetime import UTC, datetime
++from typing import cast
+ from uuid import UUID
+ 
+ import structlog
+@@ -13,6 +14,7 @@ from polar.worker import AsyncReadSessionMaker
+ from .analyzer import review_analyzer
+ from .collectors import (
+     collect_account_data,
++    collect_feedback_data,
+     collect_history_data,
+     collect_identity_data,
+     collect_metrics_data,
+@@ -29,6 +31,7 @@ from .schemas import (
+     HistoryData,
+     IdentityData,
+     PaymentMetrics,
++    PriorFeedbackData,
+     ProductsData,
+     ReviewContext,
+     SetupData,
+@@ -218,6 +221,13 @@ async def _collect_website(organization: Organization) -> WebsiteData | None:
+         return None
+ 
+ 
++async def _collect_prior_feedback(organization_id: UUID) -> PriorFeedbackData:
++    async with AsyncReadSessionMaker() as session:
++        repo = OrganizationReviewRepository.from_session(session)
++        records = await repo.get_feedback_history(organization_id)
++        return collect_feedback_data(records)
++
++
+ async def _collect_data(
+     organization: Organization,
+     context: ReviewContext,
+@@ -228,6 +238,26 @@ async def _collect_data(
+     # Run all collectors in parallel.
+     # Each DB-bound collector creates its own session so queries
+     # can execute concurrently across separate connections.
++    results = cast(
++        tuple[
++            ProductsData,
++            SetupData,
++            PaymentMetrics,
++            HistoryData,
++            tuple[AccountData, IdentityData],
++            WebsiteData | None,
++            PriorFeedbackData,
++        ],
++        await asyncio.gather(
++            _collect_products(organization.id, context),
++            _collect_setup(organization.id, context),
++            _collect_metrics(organization.id, context),
++            _collect_history(organization),
++            _collect_account_identity(organization, context),
++            _collect_website(organization),
++            _collect_prior_feedback(organization.id),
++        ),
++    )
+     (
+         products_data,
+         setup_data,
+@@ -235,14 +265,8 @@ async def _collect_data(
+         history_data,
+         (account_data, identity_data),
+         website_data,
+-    ) = await asyncio.gather(
+-        _collect_products(organization.id, context),
+-        _collect_setup(organization.id, context),
+-        _collect_metrics(organization.id, context),
+-        _collect_history(organization),
+-        _collect_account_identity(organization, context),
+-        _collect_website(organization),
+-    )
++        prior_feedback_data,
++    ) = results
+ 
+     return DataSnapshot(
+         context=context,
+@@ -254,5 +278,6 @@ async def _collect_data(
+         history=history_data,
+         setup=setup_data,
+         website=website_data,
++        prior_feedback=prior_feedback_data,
+         collected_at=datetime.now(UTC),
+     )
+diff --git a/server/polar/organization_review/analyzer.py b/server/polar/organization_review/analyzer.py
+index e9ae9b4c6..2ed1675ff 100644
+--- a/server/polar/organization_review/analyzer.py
++++ b/server/polar/organization_review/analyzer.py
+@@ -590,6 +590,50 @@ class ReviewAnalyzer:
+         else:
+             parts.append("No other organizations for this user.")
+ 
++        # Prior Review Decisions
++        prior_feedback = snapshot.prior_feedback
++        if prior_feedback.entries:
++            parts.append("\n## Prior Review Decisions")
++            parts.append(
++                "The following previous review decisions exist for this organization. "
++                "If a human reviewer has already evaluated and approved the organization, "
++                "do NOT re-raise the same concerns unless you have new, concrete evidence "
++                "that was not available during the prior review. Focus your analysis on "
++                "what has CHANGED since the last review."
++            )
++            for entry in prior_feedback.entries:
++                date_str = (
++                    entry.created_at.strftime("%Y-%m-%d")
++                    if entry.created_at
++                    else "unknown date"
++                )
++                parts.append(
++                    f"\n### {entry.review_context.upper()} review ({date_str})"
++                )
++                parts.append(f"- Actor: {entry.actor_type}")
++                parts.append(f"- Decision: {entry.decision}")
++                if entry.agent_verdict:
++                    parts.append(f"- Agent Verdict: {entry.agent_verdict}")
++                if entry.agent_risk_level is not None:
++                    parts.append(f"- Agent Risk Level: {entry.agent_risk_level}")
++                if entry.agent_report_summary:
++                    parts.append(f"- Agent Summary: {entry.agent_report_summary}")
++                if entry.violated_sections:
++                    parts.append(
++                        f"- Violated Sections: {', '.join(entry.violated_sections)}"
++                    )
++                if entry.dimensions:
++                    parts.append("- Dimension Assessments:")
++                    for dim in entry.dimensions:
++                        findings_str = (
++                            f" — {'; '.join(dim.findings)}" if dim.findings else ""
++                        )
++                        parts.append(
++                            f"  - {dim.dimension}: {dim.risk_level}{findings_str}"
++                        )
++                if entry.reason:
++                    parts.append(f"- Reviewer Reason: {entry.reason}")
++
+         # Policy
+         parts.append("\n## Acceptable Use Policy")
+         parts.append(policy_content)
+diff --git a/server/polar/organization_review/collectors/__init__.py b/server/polar/organization_review/collectors/__init__.py
+index e750f15e6..6a2b96f43 100644
+--- a/server/polar/organization_review/collectors/__init__.py
++++ b/server/polar/organization_review/collectors/__init__.py
+@@ -1,4 +1,5 @@
+ from .account import collect_account_data
++from .feedback import collect_feedback_data
+ from .history import collect_history_data
+ from .identity import collect_identity_data
+ from .metrics import collect_metrics_data
+@@ -9,6 +10,7 @@ from .website import collect_website_data
+ 
+ __all__ = [
+     "collect_account_data",
++    "collect_feedback_data",
+     "collect_history_data",
+     "collect_identity_data",
+     "collect_metrics_data",
+diff --git a/server/polar/organization_review/collectors/feedback.py b/server/polar/organization_review/collectors/feedback.py
+new file mode 100644
+index 000000000..da466d010
+--- /dev/null
++++ b/server/polar/organization_review/collectors/feedback.py
+@@ -0,0 +1,53 @@
++from polar.models.organization_review_feedback import OrganizationReviewFeedback
++
++from ..schemas import (
++    PriorDimensionAssessment,
++    PriorFeedbackData,
++    PriorFeedbackEntry,
++)
++
++
++def collect_feedback_data(
++    records: list[OrganizationReviewFeedback],
++) -> PriorFeedbackData:
++    entries: list[PriorFeedbackEntry] = []
++    for fb in records:
++        agent_report_summary: str | None = None
++        agent_risk_level: str | None = None
++        violated_sections: list[str] = []
++        dimensions: list[PriorDimensionAssessment] = []
++
++        if fb.agent_review_id is not None:
++            try:
++                parsed = fb.agent_review.parsed_report
++                report = parsed.report
++                agent_report_summary = report.summary
++                agent_risk_level = report.overall_risk_level.value
++                violated_sections = list(report.violated_sections)
++                dimensions = [
++                    PriorDimensionAssessment(
++                        dimension=dim.dimension.value,
++                        risk_level=dim.risk_level.value,
++                        findings=list(dim.findings),
++                    )
++                    for dim in report.dimensions
++                ]
++            except Exception:
++                pass
++
++        entries.append(
++            PriorFeedbackEntry(
++                actor_type=fb.actor_type or "unknown",
++                decision=fb.decision or "unknown",
++                review_context=fb.review_context or "unknown",
++                reason=fb.reason,
++                agent_verdict=fb.verdict,
++                agent_risk_level=agent_risk_level,
++                agent_report_summary=agent_report_summary,
++                violated_sections=violated_sections,
++                dimensions=dimensions,
++                created_at=fb.created_at,
++            )
++        )
++
++    return PriorFeedbackData(entries=entries)
+diff --git a/server/polar/organization_review/repository.py b/server/polar/organization_review/repository.py
+index 65384d756..402f9f700 100644
+--- a/server/polar/organization_review/repository.py
++++ b/server/polar/organization_review/repository.py
+@@ -324,6 +324,26 @@ class OrganizationReviewRepository(
+         )
+         await self.session.execute(statement)
+ 
++    async def get_feedback_history(
++        self, organization_id: UUID
++    ) -> list[OrganizationReviewFeedback]:
++        """Get all feedback records for an organization, with linked agent reviews.
++
++        Returns entries ordered by creation time (oldest first) so the prompt
++        shows the chronological review trail.
++        """
++        statement = (
++            select(OrganizationReviewFeedback)
++            .where(
++                OrganizationReviewFeedback.organization_id == organization_id,
++                OrganizationReviewFeedback.deleted_at.is_(None),
++            )
++            .options(joinedload(OrganizationReviewFeedback.agent_review))
++            .order_by(OrganizationReviewFeedback.created_at.asc())
++        )
++        result = await self.session.execute(statement)
++        return list(result.scalars().unique().all())
++
+     async def get_checkout_return_urls(
+         self, organization_id: UUID, *, months: int = 3
+     ) -> list[str]:
+diff --git a/server/polar/organization_review/schemas.py b/server/polar/organization_review/schemas.py
+index c11d0b326..8af2951a4 100644
+--- a/server/polar/organization_review/schemas.py
++++ b/server/polar/organization_review/schemas.py
+@@ -212,6 +212,59 @@ class WebsiteData(Schema):
+     usage: UsageInfo = Field(default_factory=UsageInfo)
+ 
+ 
++class PriorDimensionAssessment(Schema):
++    """Summary of a single dimension from a prior agent review."""
++
++    dimension: str = Field(description="e.g. policy_compliance, product_legitimacy")
++    risk_level: str = Field(description="LOW, MEDIUM, or HIGH")
++    findings: list[str] = Field(default_factory=list)
++
++
++class PriorFeedbackEntry(Schema):
++    """A single prior review decision for the organization."""
++
++    actor_type: str = Field(
++        description="Who made this decision: 'agent' (automated) or 'human' (backoffice reviewer)"
++    )
++    decision: str = Field(
++        description="Action taken by the actor: 'APPROVE', 'DENY', or 'ESCALATE'"
++    )
++    review_context: str = Field(
++        description="Review trigger: submission, setup_complete, threshold, manual, appeal"
++    )
++    reason: str | None = Field(
++        default=None,
++        description="Human-provided reason (always None for agent entries)",
++    )
++    agent_verdict: str | None = Field(
++        default=None,
++        description="The AI agent's raw verdict: 'APPROVE' or 'DENY'. "
++        "Present on both agent and human entries when an agent review exists.",
++    )
++    agent_risk_level: str | None = Field(
++        default=None,
++        description="Agent's overall risk level: 'LOW', 'MEDIUM', or 'HIGH'",
++    )
++    agent_report_summary: str | None = Field(
++        default=None, description="Summary from the linked agent review report"
++    )
++    violated_sections: list[str] = Field(
++        default_factory=list,
++        description="Policy sections the agent flagged as violated",
++    )
++    dimensions: list[PriorDimensionAssessment] = Field(
++        default_factory=list,
++        description="Per-dimension risk assessments from the agent review",
++    )
++    created_at: datetime | None = None
++
++
++class PriorFeedbackData(Schema):
++    """All prior review decisions for the organization."""
++
++    entries: list[PriorFeedbackEntry] = Field(default_factory=list)
++
++
+ class DataSnapshot(Schema):
+     """All collected data for the AI analyzer."""
+ 
+@@ -224,6 +277,7 @@ class DataSnapshot(Schema):
+     history: HistoryData
+     setup: SetupData = Field(default_factory=SetupData)
+     website: WebsiteData | None = None
++    prior_feedback: PriorFeedbackData = Field(default_factory=PriorFeedbackData)
+     collected_at: datetime
+ 
+ 
+diff --git a/server/tests/backoffice/test_analytics.py b/server/tests/backoffice/test_analytics.py
+deleted file mode 100644
+index 9587f354b..000000000
+--- a/server/tests/backoffice/test_analytics.py
++++ /dev/null
+@@ -1,242 +0,0 @@
+-"""
+-Tests for PaymentAnalyticsService to ensure monetary amounts are returned
+-in USD cents via Transaction records rather than summing presentment currency
+-amounts directly from Payment, Refund, or Dispute records.
+-"""
+-
+-import pytest
+-
+-from polar.backoffice.organizations.analytics import PaymentAnalyticsService
+-from polar.models.dispute import DisputeStatus
+-from polar.models.payment import PaymentStatus
+-from polar.postgres import AsyncSession
+-from tests.fixtures.database import SaveFixture
+-from tests.fixtures.random_objects import (
+-    create_customer,
+-    create_dispute,
+-    create_dispute_transaction,
+-    create_order,
+-    create_organization,
+-    create_payment,
+-    create_payment_transaction,
+-    create_refund,
+-    create_refund_transaction,
+-)
+-
+-
+-@pytest.mark.asyncio
+-class TestGetSucceededPaymentsStats:
+-    async def test_uses_transaction_amount_in_usd(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        """
+-        When a payment is made in a non-USD currency, the total amount returned
+-        should be the USD amount from the Transaction, not the presentment currency
+-        amount from Payment.
+-        """
+-        org = await create_organization(save_fixture)
+-        # Payment in EUR: 900 EUR cents
+-        payment = await create_payment(
+-            save_fixture,
+-            org,
+-            amount=900,
+-            currency="eur",
+-            status=PaymentStatus.succeeded,
+-        )
+-        # Transaction in USD: 1000 USD cents (after currency conversion)
+-        await create_payment_transaction(
+-            save_fixture,
+-            amount=1000,
+-            currency="usd",
+-            charge_id=payment.processor_id,
+-        )
+-
+-        service = PaymentAnalyticsService(session)
+-        count, total_amount, _ = await service.get_succeeded_payments_stats(org.id)
+-
+-        assert count == 1
+-        assert total_amount == 1000  # USD, not 900 EUR
+-
+-    async def test_no_payments(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        org = await create_organization(save_fixture)
+-        service = PaymentAnalyticsService(session)
+-        count, total_amount, risk_scores = await service.get_succeeded_payments_stats(
+-            org.id
+-        )
+-        assert count == 0
+-        assert total_amount == 0
+-        assert risk_scores == []
+-
+-    async def test_only_counts_succeeded_payments(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        org = await create_organization(save_fixture)
+-        failed_payment = await create_payment(
+-            save_fixture, org, amount=1000, currency="usd", status=PaymentStatus.failed
+-        )
+-        await create_payment_transaction(
+-            save_fixture, amount=1000, charge_id=failed_payment.processor_id
+-        )
+-        service = PaymentAnalyticsService(session)
+-        count, total_amount, _ = await service.get_succeeded_payments_stats(org.id)
+-        assert count == 0
+-        assert total_amount == 0
+-
+-
+-@pytest.mark.asyncio
+-class TestGetRefundStats:
+-    async def test_uses_transaction_amount_in_usd(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        """
+-        When a refund is in a non-USD currency, the total refund amount returned
+-        should be the USD amount from the Transaction (negated), not the
+-        presentment currency amount from Refund.
+-        """
+-        org = await create_organization(save_fixture)
+-        customer = await create_customer(
+-            save_fixture, organization=org, stripe_customer_id="STRIPE_CUST_REFUND"
+-        )
+-        order = await create_order(save_fixture, customer=customer)
+-        payment = await create_payment(
+-            save_fixture,
+-            org,
+-            amount=900,
+-            currency="eur",
+-            status=PaymentStatus.succeeded,
+-        )
+-        # Refund in EUR: 900 EUR cents
+-        refund = await create_refund(
+-            save_fixture, order, payment, amount=900, currency="eur"
+-        )
+-        # Refund transaction in USD: -1000 USD cents (negative because money goes out)
+-        await create_refund_transaction(save_fixture, amount=-1000, refund=refund)
+-
+-        service = PaymentAnalyticsService(session)
+-        count, refund_amount = await service.get_refund_stats(org.id)
+-
+-        assert count == 1
+-        assert refund_amount == 1000  # USD, not 900 EUR
+-
+-    async def test_no_refunds(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        org = await create_organization(save_fixture)
+-        service = PaymentAnalyticsService(session)
+-        count, refund_amount = await service.get_refund_stats(org.id)
+-        assert count == 0
+-        assert refund_amount == 0
+-
+-
+-@pytest.mark.asyncio
+-class TestGetDisputeStats:
+-    async def test_uses_transaction_amount_in_usd(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        """
+-        When a dispute is in a non-USD currency, the total dispute amount returned
+-        should be the USD amount from the Transaction (negated), not the
+-        presentment currency amount from Dispute.
+-        """
+-        org = await create_organization(save_fixture)
+-        customer = await create_customer(
+-            save_fixture, organization=org, stripe_customer_id="STRIPE_CUST_DISPUTE"
+-        )
+-        order = await create_order(save_fixture, customer=customer)
+-        payment = await create_payment(
+-            save_fixture,
+-            org,
+-            amount=900,
+-            currency="eur",
+-            status=PaymentStatus.succeeded,
+-        )
+-        # Dispute in EUR: 900 EUR cents
+-        dispute = await create_dispute(
+-            save_fixture,
+-            order,
+-            payment,
+-            amount=900,
+-            currency="eur",
+-            status=DisputeStatus.needs_response,
+-        )
+-        # Dispute transaction in USD: -1000 USD cents (negative because money is held back)
+-        await create_dispute_transaction(
+-            save_fixture, dispute, amount=-1000, currency="usd"
+-        )
+-
+-        service = PaymentAnalyticsService(session)
+-        dispute_count, dispute_amount, _, _ = await service.get_dispute_stats(org.id)
+-
+-        assert dispute_count == 1
+-        assert dispute_amount == 1000  # USD, not 900 EUR
+-
+-    async def test_chargeback_uses_transaction_amount_in_usd(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        org = await create_organization(save_fixture)
+-        customer = await create_customer(
+-            save_fixture,
+-            organization=org,
+-            stripe_customer_id="STRIPE_CUST_CHARGEBACK",
+-        )
+-        order = await create_order(save_fixture, customer=customer)
+-        payment = await create_payment(
+-            save_fixture,
+-            org,
+-            amount=900,
+-            currency="eur",
+-            status=PaymentStatus.succeeded,
+-        )
+-        dispute = await create_dispute(
+-            save_fixture,
+-            order,
+-            payment,
+-            amount=900,
+-            currency="eur",
+-            status=DisputeStatus.lost,
+-        )
+-        await create_dispute_transaction(
+-            save_fixture, dispute, amount=-1000, currency="usd"
+-        )
+-
+-        service = PaymentAnalyticsService(session)
+-        _, _, chargeback_count, chargeback_amount = await service.get_dispute_stats(
+-            org.id
+-        )
+-
+-        assert chargeback_count == 1
+-        assert chargeback_amount == 1000  # USD, not 900 EUR
+-
+-    async def test_no_disputes(
+-        self,
+-        session: AsyncSession,
+-        save_fixture: SaveFixture,
+-    ) -> None:
+-        org = await create_organization(save_fixture)
+-        service = PaymentAnalyticsService(session)
+-        (
+-            dispute_count,
+-            dispute_amount,
+-            chargeback_count,
+-            chargeback_amount,
+-        ) = await service.get_dispute_stats(org.id)
+-        assert dispute_count == 0
+-        assert dispute_amount == 0
+-        assert chargeback_count == 0
+-        assert chargeback_amount == 0

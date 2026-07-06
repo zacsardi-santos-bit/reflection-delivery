@@ -1,0 +1,218 @@
+diff --git a/src/server/routes/blobs.ts b/src/server/routes/blobs.ts
+index bff993bf8..0ae7856ac 100644
+--- a/src/server/routes/blobs.ts
++++ b/src/server/routes/blobs.ts
+@@ -465,29 +465,36 @@ blobsRouter.get('/:hash', async (req: Request, res: Response): Promise<void> =>
+     return;
+   }
+ 
++  let blob: Awaited<ReturnType<typeof getBlobByHash>>;
+   try {
+     const presigned = await getBlobUrl(hash);
+     if (presigned) {
+       res.redirect(302, presigned);
+       return;
+     }
+-
+-    const blob = await getBlobByHash(hash);
+-
+-    // Validate MIME type before setting header to prevent injection attacks
+-    const mimeType = blob.metadata.mimeType || asset.mimeType;
+-    if (SAFE_MIME_TYPE_REGEX.test(mimeType)) {
+-      res.setHeader('Content-Type', mimeType);
+-    } else {
+-      logger.warn('[BlobRoute] Invalid MIME type, using fallback', { mimeType, hash });
+-      res.setHeader('Content-Type', 'application/octet-stream');
+-    }
+-    res.setHeader('Content-Length', (blob.metadata.sizeBytes ?? asset.sizeBytes).toString());
+-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+-    res.setHeader('Accept-Ranges', 'none');
+-    res.send(blob.data);
++    blob = await getBlobByHash(hash);
+   } catch (error) {
+-    logger.error('[BlobRoute] Failed to serve blob', { error, hash });
++    logger.error('[BlobRoute] Failed to load blob', { error, hash });
+     res.status(404).json({ error: 'Blob not found' });
++    return;
++  }
++
++  const dataResult = BlobsSchemas.Get.BinaryResponse.safeParse(blob.data);
++  if (!dataResult.success) {
++    sendError(res, 500, 'Failed to serve blob', dataResult.error);
++    return;
++  }
++
++  // Validate MIME type before setting header to prevent injection attacks
++  const mimeType = blob.metadata.mimeType || asset.mimeType;
++  if (SAFE_MIME_TYPE_REGEX.test(mimeType)) {
++    res.setHeader('Content-Type', mimeType);
++  } else {
++    logger.warn('[BlobRoute] Invalid MIME type, using fallback', { mimeType, hash });
++    res.setHeader('Content-Type', 'application/octet-stream');
+   }
++  res.setHeader('Content-Length', (blob.metadata.sizeBytes ?? asset.sizeBytes).toString());
++  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
++  res.setHeader('Accept-Ranges', 'none');
++  res.send(dataResult.data);
+ });
+diff --git a/src/server/routes/eval.ts b/src/server/routes/eval.ts
+index 927dc2f60..dd95b3137 100644
+--- a/src/server/routes/eval.ts
++++ b/src/server/routes/eval.ts
+@@ -41,8 +41,16 @@ export const evalRouter = Router();
+ export const evalJobs = new Map<string, Job>();
+ 
+ function sendEvalTableResponse(res: Response, evalId: string, responsePayload: EvalTableDTO): void {
++  let parsedPayload: EvalTableDTO;
+   try {
+-    res.json(responsePayload);
++    parsedPayload = EvalSchemas.Table.Response.parse(responsePayload) as unknown as EvalTableDTO;
++  } catch (error) {
++    sendError(res, 500, 'Failed to render eval table', error);
++    return;
++  }
++
++  try {
++    res.json(parsedPayload);
+   } catch (error) {
+     if (!(error instanceof RangeError)) {
+       throw error;
+@@ -52,7 +60,7 @@ function sendEvalTableResponse(res: Response, evalId: string, responsePayload: E
+       evalId,
+     });
+ 
+-    const promptLocations = getEvalTableOutputPromptLocationsBySize(responsePayload);
++    const promptLocations = getEvalTableOutputPromptLocationsBySize(parsedPayload);
+     if (promptLocations.length === 0) {
+       logger.error('[GET /:id/table] Response too large and has no prompts to strip', {
+         evalId,
+@@ -63,7 +71,7 @@ function sendEvalTableResponse(res: Response, evalId: string, responsePayload: E
+ 
+     const tryStringifyWithStrippedPrompts = (promptCountToStrip: number): string | null => {
+       const responseWithoutPrompts = getEvalTablePromptStrippedPayload(
+-        responsePayload,
++        parsedPayload,
+         promptLocations,
+         promptCountToStrip,
+       );
+@@ -773,7 +781,7 @@ evalRouter.post(
+       await eval_.save();
+       await result.save();
+ 
+-      res.json(result);
++      res.json(EvalSchemas.SubmitRating.Response.parse({ message: 'Rating submitted' }));
+     } catch (error) {
+       sendError(res, 500, 'Failed to submit rating', error);
+     }
+diff --git a/src/types/api/blobs.ts b/src/types/api/blobs.ts
+index 15f99bbe5..f2621c867 100644
+--- a/src/types/api/blobs.ts
++++ b/src/types/api/blobs.ts
+@@ -9,7 +9,10 @@ export const GetBlobParamsSchema = z.object({
+   hash: z.string().regex(BLOB_HASH_REGEX, 'Invalid blob hash'),
+ });
+ 
++export const BlobBinaryResponseSchema = z.instanceof(Uint8Array);
++
+ export type GetBlobParams = z.infer<typeof GetBlobParamsSchema>;
++export type BlobBinaryResponse = z.infer<typeof BlobBinaryResponseSchema>;
+ 
+ // GET /api/blobs/library
+ 
+@@ -96,6 +99,7 @@ export type MediaLibraryEvalsResponse = z.infer<typeof MediaLibraryEvalsResponse
+ export const BlobsSchemas = {
+   Get: {
+     Params: GetBlobParamsSchema,
++    BinaryResponse: BlobBinaryResponseSchema,
+   },
+   Library: {
+     Query: MediaLibraryQuerySchema,
+diff --git a/src/types/api/eval.ts b/src/types/api/eval.ts
+index 141c7f819..5b7ac54d3 100644
+--- a/src/types/api/eval.ts
++++ b/src/types/api/eval.ts
+@@ -33,7 +33,10 @@ export type UpdateEvalAuthorResponse = z.infer<typeof UpdateEvalAuthorResponseSc
+ export const GetMetadataKeysParamsSchema = EvalIdStrictParamSchema;
+ 
+ export const GetMetadataKeysQuerySchema = z.object({
+-  comparisonEvalIds: z.array(z.string()).optional(),
++  comparisonEvalIds: z
++    .union([z.string(), z.array(z.string())])
++    .transform((v) => (Array.isArray(v) ? v : v ? [v] : []))
++    .prefault([]),
+ });
+ 
+ export const GetMetadataKeysResponseSchema = z.object({
+@@ -81,9 +84,9 @@ export type CopyEvalResponse = z.infer<typeof CopyEvalResponseSchema>;
+ 
+ /** Query parameters for eval table endpoint. */
+ export const EvalTableQuerySchema = z.object({
+-  format: z.string().optional(),
+-  limit: z.coerce.number().positive().prefault(50),
+-  offset: z.coerce.number().nonnegative().prefault(0),
++  format: z.enum(['csv', 'json']).optional(),
++  limit: z.coerce.number().int().positive().prefault(50),
++  offset: z.coerce.number().int().nonnegative().prefault(0),
+   filterMode: EvalResultsFilterMode.prefault('all'),
+   search: z.string().prefault(''),
+   filter: z
+@@ -98,6 +101,31 @@ export const EvalTableQuerySchema = z.object({
+ 
+ export type EvalTableQuery = z.infer<typeof EvalTableQuerySchema>;
+ 
++const ShallowEvaluateTableSchema = z
++  .object({
++    head: z
++      .unknown()
++      .refine((value) => value !== null && typeof value === 'object', 'Expected table head object'),
++    body: z.unknown().refine(Array.isArray, 'Expected table body array'),
++  })
++  .passthrough();
++
++export const EvalTableResponseSchema = z
++  .object({
++    table: ShallowEvaluateTableSchema,
++    totalCount: z.number(),
++    filteredCount: z.number(),
++    filteredMetrics: z.array(z.unknown()).nullable(),
++    config: z.record(z.string(), z.unknown()),
++    author: z.string().nullable(),
++    version: z.number(),
++    id: z.string(),
++    stats: z.unknown(),
++  })
++  .passthrough();
++
++export type EvalTableResponse = z.infer<typeof EvalTableResponseSchema>;
++
+ // POST /api/eval/job
+ 
+ /**
+@@ -230,8 +258,11 @@ export const SubmitRatingRequestSchema = z
+   })
+   .passthrough();
+ 
++export const SubmitRatingResponseSchema = MessageResponseSchema;
++
+ export type SubmitRatingParams = z.infer<typeof SubmitRatingParamsSchema>;
+ export type SubmitRatingRequest = z.infer<typeof SubmitRatingRequestSchema>;
++export type SubmitRatingResponse = z.infer<typeof SubmitRatingResponseSchema>;
+ 
+ // POST /api/eval (save eval to database)
+ 
+@@ -316,6 +347,7 @@ export const EvalSchemas = {
+   Table: {
+     Params: EvalIdParamSchema,
+     Query: EvalTableQuerySchema,
++    Response: EvalTableResponseSchema,
+   },
+   AddResults: {
+     Params: AddResultsParamsSchema,
+@@ -328,6 +360,7 @@ export const EvalSchemas = {
+   SubmitRating: {
+     Params: SubmitRatingParamsSchema,
+     Request: SubmitRatingRequestSchema,
++    Response: SubmitRatingResponseSchema,
+   },
+   Save: {
+     Request: SaveEvalRequestSchema,

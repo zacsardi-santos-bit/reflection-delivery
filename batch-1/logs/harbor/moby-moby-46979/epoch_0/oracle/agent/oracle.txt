@@ -1,0 +1,33 @@
+patching file daemon/config/config.go
+patching file vendor.mod
+patching file vendor.sum
+patching file vendor/dario.cat/mergo/.deepsource.toml (renamed from vendor/github.com/imdario/mergo/.deepsource.toml)
+patching file vendor/dario.cat/mergo/.gitignore (renamed from vendor/github.com/imdario/mergo/.gitignore)
+patching file vendor/dario.cat/mergo/.travis.yml (renamed from vendor/github.com/imdario/mergo/.travis.yml)
+patching file vendor/dario.cat/mergo/CODE_OF_CONDUCT.md (renamed from vendor/github.com/imdario/mergo/CODE_OF_CONDUCT.md)
+patching file vendor/dario.cat/mergo/CONTRIBUTING.md
+patching file vendor/dario.cat/mergo/LICENSE (renamed from vendor/github.com/imdario/mergo/LICENSE)
+patching file vendor/dario.cat/mergo/README.md (renamed from vendor/github.com/imdario/mergo/README.md)
+patching file vendor/dario.cat/mergo/SECURITY.md
+patching file vendor/dario.cat/mergo/doc.go (renamed from vendor/github.com/imdario/mergo/doc.go)
+patching file vendor/dario.cat/mergo/map.go (renamed from vendor/github.com/imdario/mergo/map.go)
+patching file vendor/dario.cat/mergo/merge.go (renamed from vendor/github.com/imdario/mergo/merge.go)
+patching file vendor/dario.cat/mergo/mergo.go (renamed from vendor/github.com/imdario/mergo/mergo.go)
+patching file vendor/github.com/containerd/containerd/Vagrantfile
+patching file vendor/github.com/containerd/containerd/archive/compression/compression.go
+patching file vendor/github.com/containerd/containerd/content/helpers.go
+patching file vendor/github.com/containerd/containerd/contrib/nvidia/nvidia.go
+patching file vendor/github.com/containerd/containerd/diff/stream_unix.go
+patching file vendor/github.com/containerd/containerd/diff/stream_windows.go
+patching file vendor/github.com/containerd/containerd/images/archive/exporter.go
+patching file vendor/github.com/containerd/containerd/import.go
+patching file vendor/github.com/containerd/containerd/mount/mount_freebsd.go
+patching file vendor/github.com/containerd/containerd/mount/mount_linux.go
+patching file vendor/github.com/containerd/containerd/oci/spec_opts.go
+patching file vendor/github.com/containerd/containerd/pkg/deprecation/deprecation.go
+patching file vendor/github.com/containerd/containerd/pkg/dialer/dialer_windows.go
+patching file vendor/github.com/containerd/containerd/runtime/v2/shim/util.go
+patching file vendor/github.com/containerd/containerd/services/server/config/config.go
+patching file vendor/github.com/containerd/containerd/sys/reaper/reaper_unix.go
+patching file vendor/github.com/containerd/containerd/version/version.go
+patching file vendor/modules.txt

@@ -1,0 +1,29 @@
+{
+    "id": "79a0fd3a-353d-41ad-89e7-6657315deab8",
+    "started_at": "2026-07-04T15:36:33.847746",
+    "finished_at": "2026-07-04T15:41:09.141004",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__trinodb-trino-22687": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "trinodb-trino-22687__cWQyT37"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,4 +1,0 @@
-patching file pkg/auth/providers/common/ldap/ldap_util.go
-patching file pkg/auth/providers/ldap/ldap_actions.go
-patching file pkg/auth/providers/ldap/ldap_client.go
-patching file pkg/auth/providers/ldap/ldap_provider.go

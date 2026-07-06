@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p biome_js_analyze -E 'test(/nursery::no_substr/)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noSubstr/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noSubstr/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noSubstr/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noSubstr/valid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useTrimStartEnd/valid.js.snap"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::no_substr::valid_js",
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::no_substr::invalid_js"
+  ],
+  "PASS_TO_PASS": []
+}

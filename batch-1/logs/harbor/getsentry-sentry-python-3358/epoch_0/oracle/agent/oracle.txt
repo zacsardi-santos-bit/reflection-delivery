@@ -1,0 +1,6 @@
+patching file .github/workflows/test-integrations-web-frameworks-2.yml
+patching file scripts/split-tox-gh-actions/split-tox-gh-actions.py
+patching file sentry_sdk/consts.py
+patching file sentry_sdk/integrations/litestar.py
+patching file setup.py
+patching file tox.ini

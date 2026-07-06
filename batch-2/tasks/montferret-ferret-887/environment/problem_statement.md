@@ -1,0 +1,9 @@
+I'm hitting a bug in the formatter for our query language where it's not respecting the configured max line width once things get nested. The way it's supposed to work is that a candidate expression stays inline if it fits within the print width and breaks apart if it doesn't, but right now it only measures the length of the candidate expression itself and ignores how far into the line we already are from indentation. So an object nested inside an array gets rendered inline even though the full line, leading spaces included, blows past the limit. When the formatter checks whether something fits on one line it needs to account for the current column offset the printer's already at, including any leading indentation, at every level of nesting.
+
+Related thing: arrays that hold object literals or other structured elements (nested arrays too) are being collapsed onto one line when they technically fit, but I want those to always expand to multiline with each element on its own indented line so the output stays readable. Same deal for object literals that have more than four properties, those should always go multiline.
+
+Also there's a comment edge case, if someone drops a comment right after the opening bracket or brace before the first element, it's getting dropped or ignored, when actually it should force multiline and keep that comment preserved on its own indented line.
+
+Oh and on the lower-level side, the output-writing component doesn't currently track the current column position as a byte count as it writes, and that tracking is exactly what's missing to make correct inline-fit decisions at each nesting level, so that needs to get added too.
+
+Last thing, formatted output should consistently end with exactly two trailing newlines. Basically I want the formatter to genuinely respect the line width everywhere, always expand arrays of structured elements, and handle leading comments in arrays and objects right.

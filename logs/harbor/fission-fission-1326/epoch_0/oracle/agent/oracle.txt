@@ -1,5 +1,0 @@
-patching file pkg/apis/fission.io/v1/types.go
-patching file pkg/fission-cli/cmd/httptrigger/parse.go
-patching file pkg/fission-cli/httptrigger.go
-patching file pkg/fission-cli/main.go
-patching file pkg/router/util/util.go

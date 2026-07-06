@@ -1,0 +1,29 @@
+{
+    "id": "75ce4bd4-c772-4f30-942b-83ca02bb2f82",
+    "started_at": "2026-07-06T12:18:40.472240",
+    "finished_at": "2026-07-06T12:19:07.706941",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microsoft-agent-framework-5611": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microsoft-agent-framework-5611__UZA9ADS"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

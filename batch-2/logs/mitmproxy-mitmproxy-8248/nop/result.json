@@ -1,0 +1,29 @@
+{
+    "id": "b9920818-d508-4c56-9874-0a27f73d1c83",
+    "started_at": "2026-07-06T12:17:27.437193",
+    "finished_at": "2026-07-06T12:18:53.394196",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__mitmproxy-mitmproxy-8248": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "mitmproxy-mitmproxy-8248__fWRESwU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

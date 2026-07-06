@@ -1,0 +1,64 @@
+patching file internal/commands/services_test.go
+patching file internal/logging/logger_test.go
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-output","Output":"# github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]\n"}
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-output","Output":"internal/commands/services_test.go:101:15: undefined: NewSignalService\n"}
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-output","Output":"internal/commands/services_test.go:166:15: undefined: svcSignalLogReOpenFunc\n"}
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-output","Output":"internal/commands/services_test.go:171:21: undefined: serviceTypeSignal\n"}
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-output","Output":"internal/commands/services_test.go:204:13: undefined: svcSignalLogReOpenFunc\n"}
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-output","Output":"internal/commands/services_test.go:240:13: undefined: NewSignalService\n"}
+{"ImportPath":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]","Action":"build-fail"}
+{"Time":"2026-06-29T15:16:59.159660875Z","Action":"start","Package":"github.com/authelia/authelia/v4/internal/commands"}
+{"Time":"2026-06-29T15:16:59.159721969Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/commands","Output":"FAIL\tgithub.com/authelia/authelia/v4/internal/commands [build failed]\n"}
+{"Time":"2026-06-29T15:16:59.159763094Z","Action":"fail","Package":"github.com/authelia/authelia/v4/internal/commands","Elapsed":0,"FailedBuild":"github.com/authelia/authelia/v4/internal/commands [github.com/authelia/authelia/v4/internal/commands.test]"}
+{"Time":"2026-06-29T15:16:59.159751103Z","Action":"start","Package":"github.com/authelia/authelia/v4/internal/logging"}
+{"Time":"2026-06-29T15:16:59.171048854Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFile"}
+{"Time":"2026-06-29T15:16:59.171106218Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFile","Output":"=== RUN   TestShouldWriteLogsToFile\n"}
+{"Time":"2026-06-29T15:16:59.171747629Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFile","Output":"--- PASS: TestShouldWriteLogsToFile (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.171796459Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFile","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.171813228Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFileAndStdout"}
+{"Time":"2026-06-29T15:16:59.171824487Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFileAndStdout","Output":"=== RUN   TestShouldWriteLogsToFileAndStdout\n"}
+{"Time":"2026-06-29T15:16:59.171965971Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFileAndStdout","Output":"time=\"2026-06-29T15:16:59Z\" level=info msg=\"This is a test\"\n"}
+{"Time":"2026-06-29T15:16:59.172193809Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFileAndStdout","Output":"--- PASS: TestShouldWriteLogsToFileAndStdout (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.172247799Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldWriteLogsToFileAndStdout","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.172266852Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldFormatLogsAsJSON"}
+{"Time":"2026-06-29T15:16:59.172288372Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldFormatLogsAsJSON","Output":"=== RUN   TestShouldFormatLogsAsJSON\n"}
+{"Time":"2026-06-29T15:16:59.172934853Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldFormatLogsAsJSON","Output":"--- PASS: TestShouldFormatLogsAsJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.172960365Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldFormatLogsAsJSON","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.17299135Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile"}
+{"Time":"2026-06-29T15:16:59.172998883Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"=== RUN   TestShouldRaiseErrorOnInvalidFile\n"}
+{"Time":"2026-06-29T15:16:59.173140548Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"    logger_test.go:78: \n"}
+{"Time":"2026-06-29T15:16:59.173163367Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"        \tError Trace:\t/workspace/repo/internal/logging/logger_test.go:78\n"}
+{"Time":"2026-06-29T15:16:59.173172747Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"        \tError:      \tError message not equal:\n"}
+{"Time":"2026-06-29T15:16:59.173209289Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"        \t            \texpected: \"error opening log file: open /not/a/valid/path/to.log: no such file or directory\"\n"}
+{"Time":"2026-06-29T15:16:59.173219477Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"        \t            \tactual  : \"open /not/a/valid/path/to.log: no such file or directory\"\n"}
+{"Time":"2026-06-29T15:16:59.173238898Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"        \tTest:       \tTestShouldRaiseErrorOnInvalidFile\n"}
+{"Time":"2026-06-29T15:16:59.173251321Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Output":"--- FAIL: TestShouldRaiseErrorOnInvalidFile (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.173270592Z","Action":"fail","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestShouldRaiseErrorOnInvalidFile","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.173278767Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestSetLevels"}
+{"Time":"2026-06-29T15:16:59.173287828Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestSetLevels","Output":"=== RUN   TestSetLevels\n"}
+{"Time":"2026-06-29T15:16:59.173297797Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestSetLevels","Output":"--- PASS: TestSetLevels (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.173307812Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestSetLevels","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.17331988Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath"}
+{"Time":"2026-06-29T15:16:59.173327036Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath","Output":"=== RUN   TestFormatFilePath\n"}
+{"Time":"2026-06-29T15:16:59.173341881Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnInput"}
+{"Time":"2026-06-29T15:16:59.173355344Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnInput","Output":"=== RUN   TestFormatFilePath/ShouldReturnInput\n"}
+{"Time":"2026-06-29T15:16:59.173365331Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnInput","Output":"--- PASS: TestFormatFilePath/ShouldReturnInput (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.173377818Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnInput","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.173388549Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTime"}
+{"Time":"2026-06-29T15:16:59.173397215Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTime","Output":"=== RUN   TestFormatFilePath/ShouldReturnStandardWithDateTime\n"}
+{"Time":"2026-06-29T15:16:59.173408241Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTime","Output":"--- PASS: TestFormatFilePath/ShouldReturnStandardWithDateTime (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.173422356Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTime","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.173443906Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter"}
+{"Time":"2026-06-29T15:16:59.173463309Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter","Output":"=== RUN   TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter\n"}
+{"Time":"2026-06-29T15:16:59.1734728Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter","Output":"--- PASS: TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.173480143Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.173487557Z","Action":"run","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout"}
+{"Time":"2026-06-29T15:16:59.173497615Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout","Output":"=== RUN   TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout\n"}
+{"Time":"2026-06-29T15:16:59.173505513Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout","Output":"--- PASS: TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.173525413Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.173540981Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath","Output":"--- PASS: TestFormatFilePath (0.00s)\n"}
+{"Time":"2026-06-29T15:16:59.17354954Z","Action":"pass","Package":"github.com/authelia/authelia/v4/internal/logging","Test":"TestFormatFilePath","Elapsed":0}
+{"Time":"2026-06-29T15:16:59.173557019Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:16:59.174057832Z","Action":"output","Package":"github.com/authelia/authelia/v4/internal/logging","Output":"FAIL\tgithub.com/authelia/authelia/v4/internal/logging\t0.014s\n"}
+{"Time":"2026-06-29T15:16:59.174214013Z","Action":"fail","Package":"github.com/authelia/authelia/v4/internal/logging","Elapsed":0.014}
+reward=0 graded=31 found=10 failed=1 parsed=12 framework=go exit_code=1

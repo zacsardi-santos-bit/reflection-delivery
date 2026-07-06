@@ -1,0 +1,22 @@
+patching file graph/graph_test.go
+{"Time":"2026-07-01T14:43:14.347814468Z","Action":"start","Package":"gonum.org/v1/gonum/graph"}
+{"Time":"2026-07-01T14:43:14.349301868Z","Action":"run","Package":"gonum.org/v1/gonum/graph","Test":"TestCopy"}
+{"Time":"2026-07-01T14:43:14.349339938Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestCopy","Output":"=== RUN   TestCopy\n"}
+{"Time":"2026-07-01T14:43:14.349368957Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestCopy","Output":"--- PASS: TestCopy (0.00s)\n"}
+{"Time":"2026-07-01T14:43:14.349377269Z","Action":"pass","Package":"gonum.org/v1/gonum/graph","Test":"TestCopy","Elapsed":0}
+{"Time":"2026-07-01T14:43:14.349387566Z","Action":"run","Package":"gonum.org/v1/gonum/graph","Test":"TestCopyWeighted"}
+{"Time":"2026-07-01T14:43:14.349391997Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestCopyWeighted","Output":"=== RUN   TestCopyWeighted\n"}
+{"Time":"2026-07-01T14:43:14.349455749Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestCopyWeighted","Output":"--- PASS: TestCopyWeighted (0.00s)\n"}
+{"Time":"2026-07-01T14:43:14.349463982Z","Action":"pass","Package":"gonum.org/v1/gonum/graph","Test":"TestCopyWeighted","Elapsed":0}
+{"Time":"2026-07-01T14:43:14.349471894Z","Action":"run","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirect"}
+{"Time":"2026-07-01T14:43:14.349476335Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirect","Output":"=== RUN   TestUndirect\n"}
+{"Time":"2026-07-01T14:43:14.349530551Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirect","Output":"--- PASS: TestUndirect (0.00s)\n"}
+{"Time":"2026-07-01T14:43:14.349538891Z","Action":"pass","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirect","Elapsed":0}
+{"Time":"2026-07-01T14:43:14.349545861Z","Action":"run","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirectWeighted"}
+{"Time":"2026-07-01T14:43:14.349550025Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirectWeighted","Output":"=== RUN   TestUndirectWeighted\n"}
+{"Time":"2026-07-01T14:43:14.349605238Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirectWeighted","Output":"--- PASS: TestUndirectWeighted (0.00s)\n"}
+{"Time":"2026-07-01T14:43:14.349616137Z","Action":"pass","Package":"gonum.org/v1/gonum/graph","Test":"TestUndirectWeighted","Elapsed":0}
+{"Time":"2026-07-01T14:43:14.349620739Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:14.349843047Z","Action":"output","Package":"gonum.org/v1/gonum/graph","Output":"ok  \tgonum.org/v1/gonum/graph\t0.002s\n"}
+{"Time":"2026-07-01T14:43:14.349865817Z","Action":"pass","Package":"gonum.org/v1/gonum/graph","Elapsed":0.002}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

@@ -1,5 +1,0 @@
-I need to add a way to look up a resource's human-readable name by its type and ID through the key-value service. Right now, if I want to display a name for a bucket, a dashboard, an organization, a source, a telegraf configuration, or a user, I have to call a different service for each one — there's no single lookup point. I'd like the key-value service to handle this uniformly.
-
-The lookup should return the name for whichever resource type is requested. For resource types that don't have meaningful names (like authorizations and tasks), it should just return an empty string rather than an error. For anything invalid — an unrecognized resource type or an invalid ID — it should return an error. And if the ID simply doesn't exist in the store for a type that does support names, that should also be an error.
-
-As part of this, the test helper functions that create store instances should be updated to return the store interface rather than the concrete implementation types, so they can be used flexibly across different test scenarios for this new lookup functionality.

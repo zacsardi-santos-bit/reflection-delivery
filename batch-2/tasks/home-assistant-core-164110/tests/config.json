@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/aladdin_connect/test_diagnostics.py -v",
+  "test_files": [
+    "tests/components/aladdin_connect/snapshots/test_diagnostics.ambr",
+    "tests/components/aladdin_connect/test_diagnostics.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.aladdin_connect.test_diagnostics::test_diagnostics"
+  ],
+  "PASS_TO_PASS": []
+}

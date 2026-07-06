@@ -1,8 +1,0 @@
-patching file CHANGELOG.rst
-patching file pants-plugins/README.md
-patching file pants-plugins/release/BUILD
-patching file pants-plugins/release/__init__.py
-patching file pants-plugins/release/register.py
-patching file pants-plugins/release/rules.py
-patching file pants.toml
-patching file st2client/setup.py

@@ -1,0 +1,64 @@
+patching file integration/okteto/generate_schema_test.go
+patching file integration/validate/validate_test.go
+patching file pkg/schema/schema_test.go
+# github.com/okteto/okteto/integration/validate [github.com/okteto/okteto/integration/validate.test]
+integration/validate/validate_test.go:52:33: undefined: commands.ValidateOptions
+integration/validate/validate_test.go:58:19: undefined: commands.RunOktetoValidate
+integration/validate/validate_test.go:77:31: undefined: commands.ValidateOptions
+integration/validate/validate_test.go:83:17: undefined: commands.RunOktetoValidate
+{"Time":"2026-07-01T15:02:22.369585485Z","Action":"start","Package":"github.com/okteto/okteto/integration/validate"}
+{"Time":"2026-07-01T15:02:22.369651249Z","Action":"output","Package":"github.com/okteto/okteto/integration/validate","Output":"FAIL\tgithub.com/okteto/okteto/integration/validate [build failed]\n"}
+{"Time":"2026-07-01T15:02:22.369665618Z","Action":"fail","Package":"github.com/okteto/okteto/integration/validate","Elapsed":0}
+{"Time":"2026-07-01T15:02:22.949772992Z","Action":"start","Package":"github.com/okteto/okteto/pkg/schema"}
+{"Time":"2026-07-01T15:02:22.965764411Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema"}
+{"Time":"2026-07-01T15:02:22.965790101Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema","Output":"=== RUN   Test_Schema\n"}
+{"Time":"2026-07-01T15:02:22.965825806Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/go-getting-started"}
+{"Time":"2026-07-01T15:02:22.965830906Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/go-getting-started","Output":"=== RUN   Test_Schema/okteto/go-getting-started\n"}
+{"Time":"2026-07-01T15:02:22.979272122Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/go-getting-started","Output":"--- PASS: Test_Schema/okteto/go-getting-started (0.01s)\n"}
+{"Time":"2026-07-01T15:02:22.979296846Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/go-getting-started","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:22.97931348Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies"}
+{"Time":"2026-07-01T15:02:22.97931666Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies","Output":"=== RUN   Test_Schema/okteto/movies\n"}
+{"Time":"2026-07-01T15:02:22.989823883Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies","Output":"--- PASS: Test_Schema/okteto/movies (0.01s)\n"}
+{"Time":"2026-07-01T15:02:22.989849492Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:22.989860115Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-multi-repo"}
+{"Time":"2026-07-01T15:02:22.989862981Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-multi-repo","Output":"=== RUN   Test_Schema/okteto/movies-multi-repo\n"}
+{"Time":"2026-07-01T15:02:23.000064065Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-multi-repo","Output":"--- PASS: Test_Schema/okteto/movies-multi-repo (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.000083882Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-multi-repo","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.000113067Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-rentals"}
+{"Time":"2026-07-01T15:02:23.000118898Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-rentals","Output":"=== RUN   Test_Schema/okteto/movies-rentals\n"}
+{"Time":"2026-07-01T15:02:23.011037654Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-rentals","Output":"--- PASS: Test_Schema/okteto/movies-rentals (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.011055191Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-rentals","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.011074252Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-frontend"}
+{"Time":"2026-07-01T15:02:23.011078042Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-frontend","Output":"=== RUN   Test_Schema/okteto/movies-frontend\n"}
+{"Time":"2026-07-01T15:02:23.021542573Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-frontend","Output":"--- PASS: Test_Schema/okteto/movies-frontend (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.021557472Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto/movies-frontend","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.021566768Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/aws-lambda-with-terraform"}
+{"Time":"2026-07-01T15:02:23.02156973Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/aws-lambda-with-terraform","Output":"=== RUN   Test_Schema/okteto-community/aws-lambda-with-terraform\n"}
+{"Time":"2026-07-01T15:02:23.032184437Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/aws-lambda-with-terraform","Output":"--- PASS: Test_Schema/okteto-community/aws-lambda-with-terraform (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.032205072Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/aws-lambda-with-terraform","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.032215136Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/gcp-cloud-credentials"}
+{"Time":"2026-07-01T15:02:23.032219403Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/gcp-cloud-credentials","Output":"=== RUN   Test_Schema/okteto-community/gcp-cloud-credentials\n"}
+{"Time":"2026-07-01T15:02:23.042947878Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/gcp-cloud-credentials","Output":"--- PASS: Test_Schema/okteto-community/gcp-cloud-credentials (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.042965755Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/gcp-cloud-credentials","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.042977894Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/tacopshop-with-cloudflare"}
+{"Time":"2026-07-01T15:02:23.04300049Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/tacopshop-with-cloudflare","Output":"=== RUN   Test_Schema/okteto-community/tacopshop-with-cloudflare\n"}
+{"Time":"2026-07-01T15:02:23.054908058Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/tacopshop-with-cloudflare","Output":"--- PASS: Test_Schema/okteto-community/tacopshop-with-cloudflare (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.054928154Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/tacopshop-with-cloudflare","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.05494413Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/okteto-load-testing-with-artillery"}
+{"Time":"2026-07-01T15:02:23.054949806Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/okteto-load-testing-with-artillery","Output":"=== RUN   Test_Schema/okteto-community/okteto-load-testing-with-artillery\n"}
+{"Time":"2026-07-01T15:02:23.065913646Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/okteto-load-testing-with-artillery","Output":"--- PASS: Test_Schema/okteto-community/okteto-load-testing-with-artillery (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.065937063Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/okteto-load-testing-with-artillery","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.065944863Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/go-getting-started-chart"}
+{"Time":"2026-07-01T15:02:23.065948449Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/go-getting-started-chart","Output":"=== RUN   Test_Schema/okteto-community/go-getting-started-chart\n"}
+{"Time":"2026-07-01T15:02:23.07677895Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/go-getting-started-chart","Output":"--- PASS: Test_Schema/okteto-community/go-getting-started-chart (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.076797781Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/okteto-community/go-getting-started-chart","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.076805513Z","Action":"run","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/broken_example"}
+{"Time":"2026-07-01T15:02:23.076808623Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/broken_example","Output":"=== RUN   Test_Schema/broken_example\n"}
+{"Time":"2026-07-01T15:02:23.086922791Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/broken_example","Output":"--- PASS: Test_Schema/broken_example (0.01s)\n"}
+{"Time":"2026-07-01T15:02:23.086939858Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema/broken_example","Elapsed":0.01}
+{"Time":"2026-07-01T15:02:23.086946101Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema","Output":"--- PASS: Test_Schema (0.12s)\n"}
+{"Time":"2026-07-01T15:02:23.086954694Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Test":"Test_Schema","Elapsed":0.12}
+{"Time":"2026-07-01T15:02:23.087017143Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Output":"PASS\n"}
+{"Time":"2026-07-01T15:02:23.088177801Z","Action":"output","Package":"github.com/okteto/okteto/pkg/schema","Output":"ok  \tgithub.com/okteto/okteto/pkg/schema\t0.138s\n"}
+{"Time":"2026-07-01T15:02:23.088195071Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/schema","Elapsed":0.138}
+reward=0 graded=28 found=12 failed=0 parsed=13 framework=go exit_code=1

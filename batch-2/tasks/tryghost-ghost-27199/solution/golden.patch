@@ -1,0 +1,174 @@
+diff --git a/ghost/admin/app/helpers/parse-member-event.js b/ghost/admin/app/helpers/parse-member-event.js
+index ef3c89c054..6852ff1a19 100644
+--- a/ghost/admin/app/helpers/parse-member-event.js
++++ b/ghost/admin/app/helpers/parse-member-event.js
+@@ -140,6 +140,10 @@ export default class ParseMemberEventHelper extends Helper {
+             icon = 'subscriptions';
+         }
+ 
++        if (event.type === 'gift_purchase_event') {
++            icon = 'subscriptions';
++        }
++
+         if (event.type === 'email_change_event') {
+             icon = 'email-changed';
+         }
+@@ -254,6 +258,16 @@ export default class ParseMemberEventHelper extends Helper {
+         if (event.type === 'donation_event') {
+             return 'Made a one-time payment';
+         }
++
++        if (event.type === 'gift_purchase_event') {
++            const symbol = getSymbol(event.data.currency);
++            const formattedAmount = symbol + getNonDecimal(event.data.amount, event.data.currency);
++            const tierName = event.data.tier_name;
++            const duration = event.data.duration;
++            const cadenceLabel = duration === 1 ? event.data.cadence : event.data.cadence + 's';
++
++            return `Purchased a gift subscription for ${formattedAmount} (${tierName}, ${duration} ${cadenceLabel})`;
++        }
+     }
+ 
+     /**
+diff --git a/ghost/admin/app/utils/member-event-types.js b/ghost/admin/app/utils/member-event-types.js
+index c402a4c418..0a8512bf3e 100644
+--- a/ghost/admin/app/utils/member-event-types.js
++++ b/ghost/admin/app/utils/member-event-types.js
+@@ -33,9 +33,11 @@ export function toggleEventType(eventType, eventTypes) {
+         if (excludedEvents.has('payment_event')) {
+             excludedEvents.delete('payment_event');
+             excludedEvents.delete('donation_event');
++            excludedEvents.delete('gift_purchase_event');
+         } else {
+             excludedEvents.add('payment_event');
+             excludedEvents.add('donation_event');
++            excludedEvents.add('gift_purchase_event');
+         }
+     } else {
+         if (excludedEvents.has(eventType)) {
+diff --git a/ghost/core/core/server/services/members/api.js b/ghost/core/core/server/services/members/api.js
+index 1824b777d3..ae22a763c6 100644
+--- a/ghost/core/core/server/services/members/api.js
++++ b/ghost/core/core/server/services/members/api.js
+@@ -242,7 +242,8 @@ function createApiInstance(config) {
+             EmailSpamComplaintEvent: models.EmailSpamComplaintEvent,
+             Outbox: models.Outbox,
+             WelcomeEmailAutomation: models.WelcomeEmailAutomation,
+-            AutomatedEmailRecipient: models.AutomatedEmailRecipient
++            AutomatedEmailRecipient: models.AutomatedEmailRecipient,
++            Gift: models.Gift
+         },
+         stripeAPIService: stripeService.api,
+         tiersService: tiersService,
+diff --git a/ghost/core/core/server/services/members/members-api/members-api.js b/ghost/core/core/server/services/members/members-api/members-api.js
+index 542a68f53b..ef879184da 100644
+--- a/ghost/core/core/server/services/members/members-api/members-api.js
++++ b/ghost/core/core/server/services/members/members-api/members-api.js
+@@ -66,7 +66,8 @@ module.exports = function MembersAPI({
+         MemberFeedback,
+         Outbox,
+         WelcomeEmailAutomation,
+-        AutomatedEmailRecipient
++        AutomatedEmailRecipient,
++        Gift
+     },
+     tiersService,
+     stripeAPIService,
+@@ -134,7 +135,8 @@ module.exports = function MembersAPI({
+         labsService,
+         memberAttributionService,
+         MemberEmailChangeEvent,
+-        AutomatedEmailRecipient
++        AutomatedEmailRecipient,
++        Gift
+     });
+ 
+     const nextPaymentCalculator = new NextPaymentCalculator();
+diff --git a/ghost/core/core/server/services/members/members-api/repositories/event-repository.js b/ghost/core/core/server/services/members/members-api/repositories/event-repository.js
+index 9fbf8e058a..e0f19eaa43 100644
+--- a/ghost/core/core/server/services/members/members-api/repositories/event-repository.js
++++ b/ghost/core/core/server/services/members/members-api/repositories/event-repository.js
+@@ -34,7 +34,8 @@ module.exports = class EventRepository {
+         labsService,
+         memberAttributionService,
+         MemberEmailChangeEvent,
+-        AutomatedEmailRecipient
++        AutomatedEmailRecipient,
++        Gift
+     }) {
+         this._DonationPaymentEvent = DonationPaymentEvent;
+         this._MemberSubscribeEvent = MemberSubscribeEvent;
+@@ -53,6 +54,7 @@ module.exports = class EventRepository {
+         this._memberAttributionService = memberAttributionService;
+         this._MemberEmailChangeEvent = MemberEmailChangeEvent;
+         this._AutomatedEmailRecipient = AutomatedEmailRecipient;
++        this._Gift = Gift;
+     }
+ 
+     async getEventTimeline(options = {}) {
+@@ -82,7 +84,8 @@ module.exports = class EventRepository {
+                 {type: 'newsletter_event', action: 'getNewsletterSubscriptionEvents'},
+                 {type: 'login_event', action: 'getLoginEvents'},
+                 {type: 'payment_event', action: 'getPaymentEvents'},
+-                {type: 'email_change_event', action: 'getEmailChangeEvent'}
++                {type: 'email_change_event', action: 'getEmailChangeEvent'},
++                {type: 'gift_purchase_event', action: 'getGiftPurchaseEvents'}
+             );
+ 
+             if (this._AutomatedEmailRecipient) {
+@@ -422,6 +425,55 @@ module.exports = class EventRepository {
+         };
+     }
+ 
++    async getGiftPurchaseEvents(options = {}, filter) {
++        options = {
++            ...options,
++            withRelated: ['buyer', 'tier'],
++            filter: 'buyer_member_id:-null+custom:true',
++            useBasicCount: true,
++            mongoTransformer: chainTransformers(
++                // First set the filter manually
++                replaceCustomFilterTransformer(filter),
++
++                // Map the used keys in that filter
++                ...mapKeys({
++                    'data.created_at': 'purchased_at',
++                    'data.member_id': 'buyer_member_id'
++                })
++            )
++        };
++
++        if (options.order) {
++            options.order = options.order.replace(/created_at/g, 'purchased_at');
++        }
++
++        const {data: models, meta} = await this._Gift.findPage(options);
++
++        const data = models.map((model) => {
++            const json = model.toJSON(options);
++
++            return {
++                type: 'gift_purchase_event',
++                data: {
++                    id: json.id,
++                    member: json.buyer || null,
++                    member_id: json.buyer_member_id,
++                    tier_name: json.tier?.name,
++                    cadence: json.cadence,
++                    duration: json.duration,
++                    amount: json.amount,
++                    currency: json.currency,
++                    created_at: json.purchased_at
++                }
++            };
++        });
++
++        return {
++            data,
++            meta
++        };
++    }
++
+     async getCommentEvents(options = {}, filter) {
+         options = {
+             ...options,

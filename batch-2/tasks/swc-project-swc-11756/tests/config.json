@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p swc_html_codegen -E 'test(~11748)' && cargo nextest run -p swc_html_minifier -E 'test(~11748)'",
+  "test_files": [
+    "crates/swc_html_codegen/tests/fixture/issue-11748/input.html",
+    "crates/swc_html_codegen/tests/fixture/issue-11748/output.html",
+    "crates/swc_html_codegen/tests/fixture/issue-11748/output.min.html",
+    "crates/swc_html_minifier/tests/recovery/element/issue-11748/input.html",
+    "crates/swc_html_minifier/tests/recovery/element/issue-11748/output.min.html"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) swc_html_codegen::fixture test_document_tests__fixture__issue_11748__input_html",
+    "(1/1) swc_html_minifier::fixture test_minify_recovery_tests__recovery__element__issue_11748__input_html"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,633 @@
+diff --git a/aws/resources/access_analyzer.go b/aws/resources/access_analyzer.go
+index 06d52ac..ce1ad36 100644
+--- a/aws/resources/access_analyzer.go
++++ b/aws/resources/access_analyzer.go
+@@ -47,6 +47,7 @@ func listAccessAnalyzers(ctx context.Context, client AccessAnalyzerAPI, scope re
+ 			if cfg.ShouldInclude(config.ResourceValue{
+ 				Time: analyzer.CreatedAt,
+ 				Name: analyzer.Name,
++				Tags: analyzer.Tags,
+ 			}) {
+ 				allAnalyzers = append(allAnalyzers, analyzer.Name)
+ 			}
+diff --git a/aws/resources/acm.go b/aws/resources/acm.go
+index a003be4..0329c0f 100644
+--- a/aws/resources/acm.go
++++ b/aws/resources/acm.go
+@@ -10,11 +10,13 @@ import (
+ 	"github.com/gruntwork-io/cloud-nuke/config"
+ 	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ // ACMAPI defines the interface for ACM operations.
+ type ACMAPI interface {
+ 	ListCertificates(ctx context.Context, params *acm.ListCertificatesInput, optFns ...func(*acm.Options)) (*acm.ListCertificatesOutput, error)
++	ListTagsForCertificate(ctx context.Context, params *acm.ListTagsForCertificateInput, optFns ...func(*acm.Options)) (*acm.ListTagsForCertificateOutput, error)
+ 	DeleteCertificate(ctx context.Context, params *acm.DeleteCertificateInput, optFns ...func(*acm.Options)) (*acm.DeleteCertificateOutput, error)
+ }
+ 
+@@ -63,7 +65,28 @@ func listACMCertificates(ctx context.Context, client ACMAPI, scope resource.Scop
+ 		}
+ 
+ 		for _, cert := range page.CertificateSummaryList {
+-			if shouldIncludeACMCertificate(cert, cfg) {
++			if aws.ToBool(cert.InUse) {
++				logging.Debugf("ACM %s is in use, skipping", aws.ToString(cert.CertificateArn))
++				continue
++			}
++
++			var tags map[string]string
++			tagsOutput, err := client.ListTagsForCertificate(ctx, &acm.ListTagsForCertificateInput{
++				CertificateArn: cert.CertificateArn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for ACM certificate %s: %v", aws.ToString(cert.CertificateArn), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertACMTagsToMap(tagsOutput.Tags)
++			}
++
++			if cfg.ShouldInclude(config.ResourceValue{
++				Name: cert.DomainName,
++				Time: cert.CreatedAt,
++				Tags: tags,
++			}) {
+ 				acmArns = append(acmArns, cert.CertificateArn)
+ 			}
+ 		}
+diff --git a/aws/resources/acmpca.go b/aws/resources/acmpca.go
+index 9768e50..9329732 100644
+--- a/aws/resources/acmpca.go
++++ b/aws/resources/acmpca.go
+@@ -10,6 +10,7 @@ import (
+ 	"github.com/gruntwork-io/cloud-nuke/config"
+ 	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ const (
+@@ -23,6 +24,7 @@ type ACMPCAAPI interface {
+ 	DeleteCertificateAuthority(ctx context.Context, params *acmpca.DeleteCertificateAuthorityInput, optFns ...func(*acmpca.Options)) (*acmpca.DeleteCertificateAuthorityOutput, error)
+ 	DescribeCertificateAuthority(ctx context.Context, params *acmpca.DescribeCertificateAuthorityInput, optFns ...func(*acmpca.Options)) (*acmpca.DescribeCertificateAuthorityOutput, error)
+ 	ListCertificateAuthorities(ctx context.Context, params *acmpca.ListCertificateAuthoritiesInput, optFns ...func(*acmpca.Options)) (*acmpca.ListCertificateAuthoritiesOutput, error)
++	ListTags(ctx context.Context, params *acmpca.ListTagsInput, optFns ...func(*acmpca.Options)) (*acmpca.ListTagsOutput, error)
+ 	UpdateCertificateAuthority(ctx context.Context, params *acmpca.UpdateCertificateAuthorityInput, optFns ...func(*acmpca.Options)) (*acmpca.UpdateCertificateAuthorityOutput, error)
+ }
+ 
+@@ -55,29 +57,37 @@ func listACMPCA(ctx context.Context, client ACMPCAAPI, scope resource.Scope, cfg
+ 		}
+ 
+ 		for _, ca := range page.CertificateAuthorities {
+-			if shouldIncludeACMPCA(ca, cfg) {
+-				arns = append(arns, ca.Arn)
++			if ca.Status == types.CertificateAuthorityStatusDeleted {
++				continue
+ 			}
+-		}
+-	}
+ 
+-	return arns, nil
+-}
++			referenceTime := aws.ToTime(ca.LastStateChangeAt)
++			if ca.LastStateChangeAt == nil {
++				referenceTime = aws.ToTime(ca.CreatedAt)
++			}
+ 
+-// shouldIncludeACMPCA determines if an ACM PCA should be included based on config filters.
+-func shouldIncludeACMPCA(ca types.CertificateAuthority, cfg config.ResourceType) bool {
+-	if ca.Status == types.CertificateAuthorityStatusDeleted {
+-		return false
+-	}
++			var tags map[string]string
++			tagsOutput, err := client.ListTags(ctx, &acmpca.ListTagsInput{
++				CertificateAuthorityArn: ca.Arn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for ACMPCA %s: %v", aws.ToString(ca.Arn), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertACMPCATagsToMap(tagsOutput.Tags)
++			}
+ 
+-	// Use LastStateChangeAt as the reference time for time-based filters.
+-	// Fall back to CreatedAt if the CA state was never changed.
+-	referenceTime := aws.ToTime(ca.LastStateChangeAt)
+-	if ca.LastStateChangeAt == nil {
+-		referenceTime = aws.ToTime(ca.CreatedAt)
++			if cfg.ShouldInclude(config.ResourceValue{
++				Time: &referenceTime,
++				Tags: tags,
++			}) {
++				arns = append(arns, ca.Arn)
++			}
++		}
+ 	}
+ 
+-	return cfg.ShouldInclude(config.ResourceValue{Time: &referenceTime})
++	return arns, nil
+ }
+ 
+ // deleteACMPCA deletes a single ACM PCA certificate authority.
+diff --git a/aws/resources/apprunner_service.go b/aws/resources/apprunner_service.go
+index a76b3ca..12ece48 100644
+--- a/aws/resources/apprunner_service.go
++++ b/aws/resources/apprunner_service.go
+@@ -9,6 +9,7 @@ import (
+ 	"github.com/gruntwork-io/cloud-nuke/config"
+ 	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ // AppRunnerAllowedRegions lists AWS regions where App Runner is supported.
+@@ -22,6 +23,7 @@ var AppRunnerAllowedRegions = []string{
+ type AppRunnerServiceAPI interface {
+ 	DeleteService(ctx context.Context, params *apprunner.DeleteServiceInput, optFns ...func(*apprunner.Options)) (*apprunner.DeleteServiceOutput, error)
+ 	ListServices(ctx context.Context, params *apprunner.ListServicesInput, optFns ...func(*apprunner.Options)) (*apprunner.ListServicesOutput, error)
++	ListTagsForResource(ctx context.Context, params *apprunner.ListTagsForResourceInput, optFns ...func(*apprunner.Options)) (*apprunner.ListTagsForResourceOutput, error)
+ }
+ 
+ // NewAppRunnerService creates a new App Runner service resource.
+@@ -61,9 +63,22 @@ func listAppRunnerServices(ctx context.Context, client AppRunnerServiceAPI, scop
+ 		}
+ 
+ 		for _, service := range page.ServiceSummaryList {
++			var tags map[string]string
++			tagsOutput, err := client.ListTagsForResource(ctx, &apprunner.ListTagsForResourceInput{
++				ResourceArn: service.ServiceArn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for App Runner service %s: %v", aws.ToString(service.ServiceName), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertAppRunnerTagsToMap(tagsOutput.Tags)
++			}
++
+ 			if cfg.ShouldInclude(config.ResourceValue{
+ 				Name: service.ServiceName,
+ 				Time: service.CreatedAt,
++				Tags: tags,
+ 			}) {
+ 				identifiers = append(identifiers, service.ServiceArn)
+ 			}
+diff --git a/aws/resources/cloudfront_distribution.go b/aws/resources/cloudfront_distribution.go
+index 047f512..f43c4f9 100644
+--- a/aws/resources/cloudfront_distribution.go
++++ b/aws/resources/cloudfront_distribution.go
+@@ -9,6 +9,7 @@ import (
+ 	"github.com/gruntwork-io/cloud-nuke/config"
+ 	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ 	"github.com/gruntwork-io/go-commons/errors"
+ )
+ 
+@@ -25,6 +26,7 @@ type CloudfrontDistributionAPI interface {
+ 	GetDistributionConfig(ctx context.Context, params *cloudfront.GetDistributionConfigInput, optFns ...func(*cloudfront.Options)) (*cloudfront.GetDistributionConfigOutput, error)
+ 	UpdateDistribution(ctx context.Context, params *cloudfront.UpdateDistributionInput, optFns ...func(*cloudfront.Options)) (*cloudfront.UpdateDistributionOutput, error)
+ 	DeleteDistribution(ctx context.Context, params *cloudfront.DeleteDistributionInput, optFns ...func(*cloudfront.Options)) (*cloudfront.DeleteDistributionOutput, error)
++	ListTagsForResource(ctx context.Context, params *cloudfront.ListTagsForResourceInput, optFns ...func(*cloudfront.Options)) (*cloudfront.ListTagsForResourceOutput, error)
+ }
+ 
+ // NewCloudfrontDistributions creates a new CloudFront distribution resource.
+@@ -60,7 +62,22 @@ func listCloudfrontDistributions(ctx context.Context, client CloudfrontDistribut
+ 		}
+ 
+ 		for _, item := range page.DistributionList.Items {
+-			if cfg.ShouldInclude(config.ResourceValue{Name: item.Id}) {
++			var tags map[string]string
++			tagsOutput, err := client.ListTagsForResource(ctx, &cloudfront.ListTagsForResourceInput{
++				Resource: item.ARN,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for CloudFront distribution %s: %v", aws.ToString(item.Id), err)
++				continue
++			}
++			if tagsOutput != nil && tagsOutput.Tags != nil {
++				tags = util.ConvertCloudFrontTagsToMap(tagsOutput.Tags.Items)
++			}
++
++			if cfg.ShouldInclude(config.ResourceValue{
++				Name: item.Id,
++				Tags: tags,
++			}) {
+ 				ids = append(ids, item.Id)
+ 			}
+ 		}
+diff --git a/aws/resources/config_service.go b/aws/resources/config_service.go
+index 996172e..b7817e5 100644
+--- a/aws/resources/config_service.go
++++ b/aws/resources/config_service.go
+@@ -9,6 +9,7 @@ import (
+ 	"github.com/gruntwork-io/cloud-nuke/config"
+ 	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ // ConfigServiceRuleAPI defines the interface for AWS Config Service rule operations.
+@@ -17,6 +18,7 @@ type ConfigServiceRuleAPI interface {
+ 	DescribeRemediationConfigurations(ctx context.Context, params *configservice.DescribeRemediationConfigurationsInput, optFns ...func(*configservice.Options)) (*configservice.DescribeRemediationConfigurationsOutput, error)
+ 	DeleteRemediationConfiguration(ctx context.Context, params *configservice.DeleteRemediationConfigurationInput, optFns ...func(*configservice.Options)) (*configservice.DeleteRemediationConfigurationOutput, error)
+ 	DeleteConfigRule(ctx context.Context, params *configservice.DeleteConfigRuleInput, optFns ...func(*configservice.Options)) (*configservice.DeleteConfigRuleOutput, error)
++	ListTagsForResource(ctx context.Context, params *configservice.ListTagsForResourceInput, optFns ...func(*configservice.Options)) (*configservice.ListTagsForResourceOutput, error)
+ }
+ 
+ // NewConfigServiceRules creates a new Config Service Rules resource using the generic resource pattern.
+@@ -49,9 +51,26 @@ func listConfigServiceRules(ctx context.Context, client ConfigServiceRuleAPI, sc
+ 		}
+ 
+ 		for _, configRule := range page.ConfigRules {
++			if configRule.ConfigRuleState != types.ConfigRuleStateActive {
++				continue
++			}
++
++			var tags map[string]string
++			tagsOutput, err := client.ListTagsForResource(ctx, &configservice.ListTagsForResourceInput{
++				ResourceArn: configRule.ConfigRuleArn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for Config rule %s: %v", aws.ToString(configRule.ConfigRuleName), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertConfigServiceTagsToMap(tagsOutput.Tags)
++			}
++
+ 			if cfg.ShouldInclude(config.ResourceValue{
+ 				Name: configRule.ConfigRuleName,
+-			}) && configRule.ConfigRuleState == types.ConfigRuleStateActive {
++				Tags: tags,
++			}) {
+ 				configRuleNames = append(configRuleNames, configRule.ConfigRuleName)
+ 			}
+ 		}
+diff --git a/aws/resources/data_pipeline.go b/aws/resources/data_pipeline.go
+index b6b402a..321e246 100644
+--- a/aws/resources/data_pipeline.go
++++ b/aws/resources/data_pipeline.go
+@@ -76,7 +76,10 @@ func listDataPipelines(ctx context.Context, client DataPipelineAPI, scope resour
+ 				pipelineID := aws.ToString(desc.PipelineId)
+ 				name := aws.ToString(desc.Name)
+ 
+-				rv := config.ResourceValue{Name: &name}
++				rv := config.ResourceValue{
++					Name: &name,
++					Tags: util.ConvertDataPipelineTagsToMap(desc.Tags),
++				}
+ 				for _, field := range desc.Fields {
+ 					if aws.ToString(field.Key) == "@creationTime" {
+ 						rv.Time, _ = util.ParseTimestamp(field.StringValue)
+diff --git a/aws/resources/datasync_location.go b/aws/resources/datasync_location.go
+index 4694073..0247996 100644
+--- a/aws/resources/datasync_location.go
++++ b/aws/resources/datasync_location.go
+@@ -6,7 +6,9 @@ import (
+ 	"github.com/aws/aws-sdk-go-v2/aws"
+ 	"github.com/aws/aws-sdk-go-v2/service/datasync"
+ 	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ 	"github.com/gruntwork-io/go-commons/errors"
+ )
+ 
+@@ -14,6 +16,7 @@ import (
+ type DataSyncLocationAPI interface {
+ 	DeleteLocation(ctx context.Context, params *datasync.DeleteLocationInput, optFns ...func(*datasync.Options)) (*datasync.DeleteLocationOutput, error)
+ 	ListLocations(ctx context.Context, params *datasync.ListLocationsInput, optFns ...func(*datasync.Options)) (*datasync.ListLocationsOutput, error)
++	ListTagsForResource(ctx context.Context, params *datasync.ListTagsForResourceInput, optFns ...func(*datasync.Options)) (*datasync.ListTagsForResourceOutput, error)
+ }
+ 
+ // NewDataSyncLocation creates a new DataSync Location resource using the generic resource pattern.
+@@ -52,10 +55,23 @@ func listDataSyncLocations(ctx context.Context, client DataSyncLocationAPI, scop
+ 		}
+ 
+ 		for _, location := range page.Locations {
++			var tags map[string]string
++			tagsOutput, err := client.ListTagsForResource(ctx, &datasync.ListTagsForResourceInput{
++				ResourceArn: location.LocationArn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for DataSync location %s: %v", aws.ToString(location.LocationArn), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertDataSyncTagsToMap(tagsOutput.Tags)
++			}
++
+ 			// Use LocationUri as the name for filtering since LocationListEntry
+ 			// does not include a Name field or CreationTime.
+ 			if cfg.ShouldInclude(config.ResourceValue{
+ 				Name: location.LocationUri,
++				Tags: tags,
+ 			}) {
+ 				identifiers = append(identifiers, location.LocationArn)
+ 			}
+diff --git a/aws/resources/datasync_task.go b/aws/resources/datasync_task.go
+index 82e6056..e75d842 100644
+--- a/aws/resources/datasync_task.go
++++ b/aws/resources/datasync_task.go
+@@ -6,13 +6,16 @@ import (
+ 	"github.com/aws/aws-sdk-go-v2/aws"
+ 	"github.com/aws/aws-sdk-go-v2/service/datasync"
+ 	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ // DataSyncTaskAPI defines the interface for DataSync Task operations.
+ type DataSyncTaskAPI interface {
+ 	DeleteTask(ctx context.Context, params *datasync.DeleteTaskInput, optFns ...func(*datasync.Options)) (*datasync.DeleteTaskOutput, error)
+ 	ListTasks(ctx context.Context, params *datasync.ListTasksInput, optFns ...func(*datasync.Options)) (*datasync.ListTasksOutput, error)
++	ListTagsForResource(ctx context.Context, params *datasync.ListTagsForResourceInput, optFns ...func(*datasync.Options)) (*datasync.ListTagsForResourceOutput, error)
+ }
+ 
+ // NewDataSyncTask creates a new DataSync Task resource using the generic resource pattern.
+@@ -48,8 +51,21 @@ func listDataSyncTasks(ctx context.Context, client DataSyncTaskAPI, scope resour
+ 		}
+ 
+ 		for _, task := range page.Tasks {
++			var tags map[string]string
++			tagsOutput, err := client.ListTagsForResource(ctx, &datasync.ListTagsForResourceInput{
++				ResourceArn: task.TaskArn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for DataSync task %s: %v", aws.ToString(task.TaskArn), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertDataSyncTagsToMap(tagsOutput.Tags)
++			}
++
+ 			if cfg.ShouldInclude(config.ResourceValue{
+ 				Name: task.Name,
++				Tags: tags,
+ 			}) {
+ 				identifiers = append(identifiers, task.TaskArn)
+ 			}
+diff --git a/aws/resources/elastic_beanstalk.go b/aws/resources/elastic_beanstalk.go
+index a0bb45a..6e1e948 100644
+--- a/aws/resources/elastic_beanstalk.go
++++ b/aws/resources/elastic_beanstalk.go
+@@ -6,13 +6,16 @@ import (
+ 	"github.com/aws/aws-sdk-go-v2/aws"
+ 	"github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk"
+ 	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ // EBApplicationsAPI defines the interface for Elastic Beanstalk operations.
+ type EBApplicationsAPI interface {
+ 	DescribeApplications(ctx context.Context, params *elasticbeanstalk.DescribeApplicationsInput, optFns ...func(*elasticbeanstalk.Options)) (*elasticbeanstalk.DescribeApplicationsOutput, error)
+ 	DeleteApplication(ctx context.Context, params *elasticbeanstalk.DeleteApplicationInput, optFns ...func(*elasticbeanstalk.Options)) (*elasticbeanstalk.DeleteApplicationOutput, error)
++	ListTagsForResource(ctx context.Context, params *elasticbeanstalk.ListTagsForResourceInput, optFns ...func(*elasticbeanstalk.Options)) (*elasticbeanstalk.ListTagsForResourceOutput, error)
+ }
+ 
+ // NewEBApplications creates a new Elastic Beanstalk Applications resource using the generic resource pattern.
+@@ -41,9 +44,22 @@ func listEBApplications(ctx context.Context, client EBApplicationsAPI, scope res
+ 
+ 	var appNames []*string
+ 	for _, app := range output.Applications {
++		var tags map[string]string
++		tagsOutput, err := client.ListTagsForResource(ctx, &elasticbeanstalk.ListTagsForResourceInput{
++			ResourceArn: app.ApplicationArn,
++		})
++		if err != nil {
++			logging.Debugf("Error getting tags for Elastic Beanstalk app %s: %v", aws.ToString(app.ApplicationName), err)
++			continue
++		}
++		if tagsOutput != nil {
++			tags = util.ConvertElasticBeanstalkTagsToMap(tagsOutput.ResourceTags)
++		}
++
+ 		if cfg.ShouldInclude(config.ResourceValue{
+ 			Name: app.ApplicationName,
+ 			Time: app.DateCreated,
++			Tags: tags,
+ 		}) {
+ 			appNames = append(appNames, app.ApplicationName)
+ 		}
+diff --git a/aws/resources/guardduty.go b/aws/resources/guardduty.go
+index 74d62da..fc4507c 100644
+--- a/aws/resources/guardduty.go
++++ b/aws/resources/guardduty.go
+@@ -58,7 +58,7 @@ func listGuardDutyDetectors(ctx context.Context, client GuardDutyAPI, scope reso
+ 				continue
+ 			}
+ 
+-			if cfg.ShouldInclude(config.ResourceValue{Time: createdAt}) {
++			if cfg.ShouldInclude(config.ResourceValue{Time: createdAt, Tags: detector.Tags}) {
+ 				detectorIds = append(detectorIds, aws.String(detectorId))
+ 			}
+ 		}
+diff --git a/aws/resources/sagemaker_notebook_instance.go b/aws/resources/sagemaker_notebook_instance.go
+index 3b0d5f7..09cc12f 100644
+--- a/aws/resources/sagemaker_notebook_instance.go
++++ b/aws/resources/sagemaker_notebook_instance.go
+@@ -7,7 +7,9 @@ import (
+ 	"github.com/aws/aws-sdk-go-v2/aws"
+ 	"github.com/aws/aws-sdk-go-v2/service/sagemaker"
+ 	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ )
+ 
+ const (
+@@ -20,6 +22,7 @@ const (
+ // SageMakerNotebookInstancesAPI defines the interface for SageMaker Notebook Instance operations.
+ type SageMakerNotebookInstancesAPI interface {
+ 	ListNotebookInstances(ctx context.Context, params *sagemaker.ListNotebookInstancesInput, optFns ...func(*sagemaker.Options)) (*sagemaker.ListNotebookInstancesOutput, error)
++	ListTags(ctx context.Context, params *sagemaker.ListTagsInput, optFns ...func(*sagemaker.Options)) (*sagemaker.ListTagsOutput, error)
+ 	StopNotebookInstance(ctx context.Context, params *sagemaker.StopNotebookInstanceInput, optFns ...func(*sagemaker.Options)) (*sagemaker.StopNotebookInstanceOutput, error)
+ 	DeleteNotebookInstance(ctx context.Context, params *sagemaker.DeleteNotebookInstanceInput, optFns ...func(*sagemaker.Options)) (*sagemaker.DeleteNotebookInstanceOutput, error)
+ 	DescribeNotebookInstance(ctx context.Context, params *sagemaker.DescribeNotebookInstanceInput, optFns ...func(*sagemaker.Options)) (*sagemaker.DescribeNotebookInstanceOutput, error)
+@@ -60,9 +63,22 @@ func listSageMakerNotebookInstances(ctx context.Context, client SageMakerNoteboo
+ 		}
+ 
+ 		for _, notebook := range page.NotebookInstances {
++			var tags map[string]string
++			tagsOutput, err := client.ListTags(ctx, &sagemaker.ListTagsInput{
++				ResourceArn: notebook.NotebookInstanceArn,
++			})
++			if err != nil {
++				logging.Debugf("Error getting tags for SageMaker notebook %s: %v", aws.ToString(notebook.NotebookInstanceName), err)
++				continue
++			}
++			if tagsOutput != nil {
++				tags = util.ConvertSageMakerTagsToMap(tagsOutput.Tags)
++			}
++
+ 			if cfg.ShouldInclude(config.ResourceValue{
+ 				Name: notebook.NotebookInstanceName,
+ 				Time: notebook.CreationTime,
++				Tags: tags,
+ 			}) {
+ 				names = append(names, notebook.NotebookInstanceName)
+ 			}
+diff --git a/aws/resources/sagemaker_studio.go b/aws/resources/sagemaker_studio.go
+index 1e60dd3..c6585a0 100644
+--- a/aws/resources/sagemaker_studio.go
++++ b/aws/resources/sagemaker_studio.go
+@@ -12,6 +12,7 @@ import (
+ 	"github.com/gruntwork-io/cloud-nuke/config"
+ 	"github.com/gruntwork-io/cloud-nuke/logging"
+ 	"github.com/gruntwork-io/cloud-nuke/resource"
++	"github.com/gruntwork-io/cloud-nuke/util"
+ 	"github.com/gruntwork-io/go-commons/errors"
+ )
+ 
+@@ -44,6 +45,9 @@ type SageMakerStudioAPI interface {
+ 	// MLflow tracking server operations
+ 	ListMlflowTrackingServers(ctx context.Context, params *sagemaker.ListMlflowTrackingServersInput, optFns ...func(*sagemaker.Options)) (*sagemaker.ListMlflowTrackingServersOutput, error)
+ 	DeleteMlflowTrackingServer(ctx context.Context, params *sagemaker.DeleteMlflowTrackingServerInput, optFns ...func(*sagemaker.Options)) (*sagemaker.DeleteMlflowTrackingServerOutput, error)
++
++	// Tag operations
++	ListTags(ctx context.Context, params *sagemaker.ListTagsInput, optFns ...func(*sagemaker.Options)) (*sagemaker.ListTagsOutput, error)
+ }
+ 
+ // NewSageMakerStudio creates a new SageMaker Studio resource using the generic resource pattern.
+@@ -79,9 +83,22 @@ func listSageMakerDomains(ctx context.Context, client SageMakerStudioAPI, scope
+ 				continue
+ 			}
+ 
++			var tagMap map[string]string
++			if domain.DomainArn != nil {
++				tagsOutput, err := client.ListTags(ctx, &sagemaker.ListTagsInput{
++					ResourceArn: domain.DomainArn,
++				})
++				if err != nil {
++					logging.Debugf("Failed to get tags for SageMaker Studio domain %s: %s", *domain.DomainId, err)
++					continue
++				}
++				tagMap = util.ConvertSageMakerTagsToMap(tagsOutput.Tags)
++			}
++
+ 			if !cfg.ShouldInclude(config.ResourceValue{
+ 				Name: domain.DomainName,
+ 				Time: domain.CreationTime,
++				Tags: tagMap,
+ 			}) {
+ 				logging.Debugf("Skipping SageMaker Studio domain %s (filtered by config)", *domain.DomainId)
+ 				continue
+diff --git a/util/tag.go b/util/tag.go
+index 756f1ab..9d136c2 100644
+--- a/util/tag.go
++++ b/util/tag.go
+@@ -1,14 +1,22 @@
+ package util
+ 
+ import (
++	acmtypes "github.com/aws/aws-sdk-go-v2/service/acm/types"
++	acmpcatypes "github.com/aws/aws-sdk-go-v2/service/acmpca/types"
++	apprunnertypes "github.com/aws/aws-sdk-go-v2/service/apprunner/types"
+ 	autoscaling "github.com/aws/aws-sdk-go-v2/service/autoscaling/types"
+ 	cloudformationtypes "github.com/aws/aws-sdk-go-v2/service/cloudformation/types"
++	cloudfronttypes "github.com/aws/aws-sdk-go-v2/service/cloudfront/types"
+ 	cloudwatchtypes "github.com/aws/aws-sdk-go-v2/service/cloudwatch/types"
++	configservicetypes "github.com/aws/aws-sdk-go-v2/service/configservice/types"
++	datapipelinetypes "github.com/aws/aws-sdk-go-v2/service/datapipeline/types"
++	datasynctypes "github.com/aws/aws-sdk-go-v2/service/datasync/types"
+ 	dynamodbtypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+ 	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
+ 	ecrtypes "github.com/aws/aws-sdk-go-v2/service/ecr/types"
+ 	efstypes "github.com/aws/aws-sdk-go-v2/service/efs/types"
+ 	elasticachetypes "github.com/aws/aws-sdk-go-v2/service/elasticache/types"
++	ebtypes "github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk/types"
+ 	eventbridgetypes "github.com/aws/aws-sdk-go-v2/service/eventbridge/types"
+ 	firehosetypes "github.com/aws/aws-sdk-go-v2/service/firehose/types"
+ 	iam "github.com/aws/aws-sdk-go-v2/service/iam/types"
+@@ -259,3 +267,83 @@ func ConvertSNSTagsToMap(tags []snstypes.Tag) map[string]string {
+ 	}
+ 	return tagMap
+ }
++
++func ConvertACMTagsToMap(tags []acmtypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertACMPCATagsToMap(tags []acmpcatypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertAppRunnerTagsToMap(tags []apprunnertypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertDataSyncTagsToMap(tags []datasynctypes.TagListEntry) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertConfigServiceTagsToMap(tags []configservicetypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertCloudFrontTagsToMap(tags []cloudfronttypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertElasticBeanstalkTagsToMap(tags []ebtypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}
++
++func ConvertDataPipelineTagsToMap(tags []datapipelinetypes.Tag) map[string]string {
++	tagMap := make(map[string]string)
++	for _, tag := range tags {
++		if tag.Key != nil && tag.Value != nil {
++			tagMap[*tag.Key] = *tag.Value
++		}
++	}
++	return tagMap
++}

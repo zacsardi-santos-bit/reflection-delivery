@@ -1,0 +1,29 @@
+{
+    "id": "b63de7db-d6a6-41f3-be89-d3e0f927ed54",
+    "started_at": "2026-07-04T15:38:27.316121",
+    "finished_at": "2026-07-04T15:39:34.144590",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-shardingsphere-29702": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-shardingsphere-29702__w3Vsary"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

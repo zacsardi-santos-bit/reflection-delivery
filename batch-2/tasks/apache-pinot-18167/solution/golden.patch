@@ -1,0 +1,527 @@
+diff --git a/pinot-common/src/main/java/org/apache/pinot/common/utils/config/InstanceUtils.java b/pinot-common/src/main/java/org/apache/pinot/common/utils/config/InstanceUtils.java
+index 3d701b30d8..0b6a30652b 100644
+--- a/pinot-common/src/main/java/org/apache/pinot/common/utils/config/InstanceUtils.java
++++ b/pinot-common/src/main/java/org/apache/pinot/common/utils/config/InstanceUtils.java
+@@ -18,6 +18,7 @@
+  */
+ package org.apache.pinot.common.utils.config;
+ 
++import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.TreeMap;
+@@ -27,6 +28,7 @@ import org.apache.helix.model.InstanceConfig;
+ import org.apache.helix.zookeeper.datamodel.ZNRecord;
+ import org.apache.pinot.common.helix.ExtraInstanceConfig;
+ import org.apache.pinot.spi.config.instance.Instance;
++import org.apache.pinot.spi.config.instance.InstanceType;
+ import org.apache.pinot.spi.utils.CommonConstants;
+ import org.apache.pinot.spi.utils.CommonConstants.Helix;
+ 
+@@ -159,6 +161,64 @@ public class InstanceUtils {
+     }
+   }
+ 
++  /**
++   * Converts a Helix InstanceConfig to a pinot-spi Instance. This is the reverse of
++   * {@link #toHelixInstanceConfig(Instance)}. Extracts host, port, type, tags, pools,
++   * and optional port fields from the InstanceConfig's ZNRecord.
++   */
++  public static Instance toInstance(InstanceConfig instanceConfig) {
++    String instanceId = instanceConfig.getInstanceName();
++    ZNRecord znRecord = instanceConfig.getRecord();
++    Map<String, String> simpleFields = znRecord.getSimpleFields();
++
++    // Extract type from instance ID prefix (the only reliable source for type)
++    InstanceType type;
++    if (instanceId.startsWith(Helix.PREFIX_OF_SERVER_INSTANCE)) {
++      type = InstanceType.SERVER;
++    } else if (instanceId.startsWith(Helix.PREFIX_OF_BROKER_INSTANCE)) {
++      type = InstanceType.BROKER;
++    } else if (instanceId.startsWith(Helix.PREFIX_OF_CONTROLLER_INSTANCE)) {
++      type = InstanceType.CONTROLLER;
++    } else if (instanceId.startsWith(Helix.PREFIX_OF_MINION_INSTANCE)) {
++      type = InstanceType.MINION;
++    } else {
++      throw new IllegalArgumentException("Unknown instance type for: " + instanceId);
++    }
++
++    // Read host/port from ZNRecord simple fields (source of truth, updated by updateHelixInstanceConfig)
++    // Backward-compatible with legacy hostname of format 'Server_<hostname>'
++    String host = instanceConfig.getHostName();
++    if (type == InstanceType.SERVER && host.startsWith(Helix.PREFIX_OF_SERVER_INSTANCE)) {
++      host = host.substring(Helix.SERVER_INSTANCE_PREFIX_LENGTH);
++    }
++    int port = Integer.parseInt(instanceConfig.getPort());
++
++    // Extract tags
++    List<String> tags = instanceConfig.getTags();
++
++    // Extract pools
++    Map<String, Integer> pools = null;
++    Map<String, String> poolMap = znRecord.getMapField(POOL_KEY);
++    if (MapUtils.isNotEmpty(poolMap)) {
++      pools = new HashMap<>();
++      for (Map.Entry<String, String> entry : poolMap.entrySet()) {
++        pools.put(entry.getKey(), Integer.parseInt(entry.getValue()));
++      }
++    }
++
++    // Extract optional ports
++    int grpcPort = Integer.parseInt(simpleFields.getOrDefault(Helix.Instance.GRPC_PORT_KEY, "-1"));
++    int adminPort = Integer.parseInt(simpleFields.getOrDefault(Helix.Instance.ADMIN_PORT_KEY, "-1"));
++    int queryServicePort = Integer.parseInt(
++        simpleFields.getOrDefault(Helix.Instance.MULTI_STAGE_QUERY_ENGINE_SERVICE_PORT_KEY, "-1"));
++    int queryMailboxPort = Integer.parseInt(
++        simpleFields.getOrDefault(Helix.Instance.MULTI_STAGE_QUERY_ENGINE_MAILBOX_PORT_KEY, "-1"));
++    boolean queriesDisabled = Boolean.parseBoolean(simpleFields.getOrDefault(Helix.QUERIES_DISABLED, "false"));
++
++    return new Instance(host, port, type, tags, pools, grpcPort, adminPort, queryServicePort, queryMailboxPort,
++        queriesDisabled);
++  }
++
+   public static String getInstanceBaseUri(InstanceConfig instanceConfig) {
+     Map<String, String> fieldMap = instanceConfig.getRecord().getSimpleFields();
+     String hostName = instanceConfig.getHostName();
+diff --git a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotInstanceRestletResource.java b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotInstanceRestletResource.java
+index 80babcb368..1ce3069470 100644
+--- a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotInstanceRestletResource.java
++++ b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotInstanceRestletResource.java
+@@ -65,6 +65,7 @@ import org.apache.pinot.core.auth.Actions;
+ import org.apache.pinot.core.auth.Authorize;
+ import org.apache.pinot.core.auth.TargetType;
+ import org.apache.pinot.spi.config.instance.Instance;
++import org.apache.pinot.spi.exception.ConfigValidationException;
+ import org.apache.pinot.spi.utils.CommonConstants;
+ import org.apache.pinot.spi.utils.InstanceTypeUtils;
+ import org.apache.pinot.spi.utils.JsonUtils;
+@@ -246,6 +247,8 @@ public class PinotInstanceRestletResource {
+       return new SuccessResponse(response.getMessage());
+     } catch (ClientErrorException e) {
+       throw new ControllerApplicationException(LOGGER, e.getMessage(), e.getResponse().getStatus());
++    } catch (ConfigValidationException e) {
++      throw new ControllerApplicationException(LOGGER, e.getMessage(), Response.Status.BAD_REQUEST, e);
+     } catch (Exception e) {
+       throw new ControllerApplicationException(LOGGER, "Failed to create instance: " + instanceId,
+           Response.Status.INTERNAL_SERVER_ERROR, e);
+@@ -416,6 +419,8 @@ public class PinotInstanceRestletResource {
+       return new SuccessResponse(response.getMessage());
+     } catch (ClientErrorException e) {
+       throw new ControllerApplicationException(LOGGER, e.getMessage(), e.getResponse().getStatus());
++    } catch (ConfigValidationException e) {
++      throw new ControllerApplicationException(LOGGER, e.getMessage(), Response.Status.BAD_REQUEST, e);
+     } catch (Exception e) {
+       throw new ControllerApplicationException(LOGGER, "Failed to update instance: " + instanceName,
+           Response.Status.INTERNAL_SERVER_ERROR, e);
+@@ -453,6 +458,8 @@ public class PinotInstanceRestletResource {
+       return new SuccessResponse(response.getMessage());
+     } catch (ClientErrorException e) {
+       throw new ControllerApplicationException(LOGGER, e.getMessage(), e.getResponse().getStatus());
++    } catch (ConfigValidationException e) {
++      throw new ControllerApplicationException(LOGGER, e.getMessage(), Response.Status.BAD_REQUEST, e);
+     } catch (Exception e) {
+       throw new ControllerApplicationException(LOGGER,
+           String.format("Failed to update instance: %s with tags: %s", instanceName, tags),
+diff --git a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotTableRestletResource.java b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotTableRestletResource.java
+index 75e008fce6..77ef23b02e 100644
+--- a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotTableRestletResource.java
++++ b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/PinotTableRestletResource.java
+@@ -128,6 +128,7 @@ import org.apache.pinot.spi.config.table.TableType;
+ import org.apache.pinot.spi.controller.ControllerJobType;
+ import org.apache.pinot.spi.data.LogicalTableConfig;
+ import org.apache.pinot.spi.data.Schema;
++import org.apache.pinot.spi.exception.ConfigValidationException;
+ import org.apache.pinot.spi.stream.LongMsgOffset;
+ import org.apache.pinot.spi.stream.PartitionGroupMetadata;
+ import org.apache.pinot.spi.stream.StreamConfig;
+@@ -360,6 +361,8 @@ public class PinotTableRestletResource {
+ 
+       _pinotHelixResourceManager.addSchema(schema, true, false);
+       LOGGER.info("[copyTable] Successfully added schema for table: {}", tableName);
++      TableConfigValidationUtils.validateTableConfig(
++          realtimeTableConfig, schema, null, _pinotHelixResourceManager, _controllerConf, _pinotTaskManager);
+       // Add the table with designated starting kafka offset and segment sequence number to create consuming segments
+       _pinotHelixResourceManager.addTable(realtimeTableConfig, streamMetadataList);
+       LOGGER.info("[copyTable] Successfully added table config: {} with designated high watermark", tableName);
+@@ -374,6 +377,8 @@ public class PinotTableRestletResource {
+         response.setWatermarkInductionResult(watermarkInductionResult);
+       }
+       return response;
++    } catch (ConfigValidationException e) {
++      throw new ControllerApplicationException(LOGGER, e.getMessage(), Response.Status.BAD_REQUEST, e);
+     } catch (Exception e) {
+       LOGGER.error("[copyTable] Error copying table: {}", tableName, e);
+       throw new ControllerApplicationException(LOGGER, "Error copying table: " + e.getMessage(),
+diff --git a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigValidationUtils.java b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigValidationUtils.java
+index 72e93e6d04..fd1f027238 100644
+--- a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigValidationUtils.java
++++ b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigValidationUtils.java
+@@ -26,6 +26,7 @@ import org.apache.pinot.controller.helix.core.rebalance.TableRebalancer;
+ import org.apache.pinot.controller.util.TaskConfigUtils;
+ import org.apache.pinot.segment.local.utils.TableConfigUtils;
+ import org.apache.pinot.spi.config.table.TableConfig;
++import org.apache.pinot.spi.config.table.TableConfigValidatorRegistry;
+ import org.apache.pinot.spi.config.table.TableType;
+ import org.apache.pinot.spi.data.Schema;
+ import org.apache.pinot.spi.utils.builder.TableNameBuilder;
+@@ -65,6 +66,7 @@ public final class TableConfigValidationUtils {
+     validateInstanceAssignment(resourceManager, tableConfig);
+     resourceManager.validateTableTenantConfig(tableConfig);
+     resourceManager.validateTableTaskMinionInstanceTagConfig(tableConfig);
++    TableConfigValidatorRegistry.validate(tableConfig, schema);
+   }
+ 
+   private static void checkHybridTableConfig(PinotHelixResourceManager resourceManager, TableConfig tableConfig) {
+diff --git a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigsRestletResource.java b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigsRestletResource.java
+index 9acef500a6..87f27e0d38 100644
+--- a/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigsRestletResource.java
++++ b/pinot-controller/src/main/java/org/apache/pinot/controller/api/resources/TableConfigsRestletResource.java
+@@ -78,6 +78,7 @@ import org.apache.pinot.segment.local.utils.SchemaUtils;
+ import org.apache.pinot.segment.local.utils.TableConfigUtils;
+ import org.apache.pinot.spi.config.TableConfigs;
+ import org.apache.pinot.spi.config.table.TableConfig;
++import org.apache.pinot.spi.config.table.TableConfigValidatorRegistry;
+ import org.apache.pinot.spi.data.LogicalTableConfig;
+ import org.apache.pinot.spi.data.Schema;
+ import org.apache.pinot.spi.utils.JsonUtils;
+@@ -535,6 +536,7 @@ public class TableConfigsRestletResource {
+           }
+         }
+         TaskConfigUtils.validateTaskConfigs(tableConfigs.getOffline(), schema, _pinotTaskManager, typesToSkip);
++        TableConfigValidatorRegistry.validate(offlineTableConfig, schema);
+       }
+       if (realtimeTableConfig != null) {
+         String realtimeRawTableName = DatabaseUtils.translateTableName(
+@@ -555,6 +557,7 @@ public class TableConfigsRestletResource {
+           }
+         }
+         TaskConfigUtils.validateTaskConfigs(tableConfigs.getRealtime(), schema, _pinotTaskManager, typesToSkip);
++        TableConfigValidatorRegistry.validate(realtimeTableConfig, schema);
+       }
+       if (offlineTableConfig != null && realtimeTableConfig != null) {
+         TableConfigUtils.verifyHybridTableConfigs(rawTableName, offlineTableConfig, realtimeTableConfig);
+diff --git a/pinot-controller/src/main/java/org/apache/pinot/controller/helix/core/PinotHelixResourceManager.java b/pinot-controller/src/main/java/org/apache/pinot/controller/helix/core/PinotHelixResourceManager.java
+index 800dd43740..045c682f85 100644
+--- a/pinot-controller/src/main/java/org/apache/pinot/controller/helix/core/PinotHelixResourceManager.java
++++ b/pinot-controller/src/main/java/org/apache/pinot/controller/helix/core/PinotHelixResourceManager.java
+@@ -161,6 +161,7 @@ import org.apache.pinot.segment.local.utils.TableConfigUtils;
+ import org.apache.pinot.segment.spi.SegmentMetadata;
+ import org.apache.pinot.spi.config.DatabaseConfig;
+ import org.apache.pinot.spi.config.instance.Instance;
++import org.apache.pinot.spi.config.instance.InstanceConfigValidatorRegistry;
+ import org.apache.pinot.spi.config.table.TableConfig;
+ import org.apache.pinot.spi.config.table.TableStatsHumanReadable;
+ import org.apache.pinot.spi.config.table.TableType;
+@@ -555,6 +556,8 @@ public class PinotHelixResourceManager {
+       throw new ClientErrorException("Instance: " + instanceId + " already exists", Response.Status.CONFLICT);
+     }
+ 
++    InstanceConfigValidatorRegistry.validate(instance);
++
+     instanceConfig = InstanceUtils.toHelixInstanceConfig(instance);
+     _helixAdmin.addInstance(_helixClusterName, instanceConfig);
+ 
+@@ -591,6 +594,8 @@ public class PinotHelixResourceManager {
+       throw new NotFoundException("Failed to find instance config for instance: " + instanceId);
+     }
+ 
++    InstanceConfigValidatorRegistry.validate(newInstance);
++
+     List<String> newTags = newInstance.getTags();
+     List<String> oldTags = instanceConfig.getTags();
+     InstanceUtils.updateHelixInstanceConfig(instanceConfig, newInstance);
+@@ -635,7 +640,12 @@ public class PinotHelixResourceManager {
+ 
+     List<String> newTags = Arrays.asList(StringUtils.split(tagsString, ','));
+     List<String> oldTags = instanceConfig.getTags();
++
++    // Apply new tags in-memory, validate, then persist. Safe: instanceConfig is a fresh local fetch,
++    // oldTags is captured above, and if validation throws the mutated config is never persisted.
+     instanceConfig.getRecord().setListField(InstanceConfig.InstanceConfigProperty.TAG_LIST.name(), newTags);
++    InstanceConfigValidatorRegistry.validate(InstanceUtils.toInstance(instanceConfig));
++
+     if (!_helixDataAccessor.setProperty(_keyBuilder.instanceConfig(instanceId), instanceConfig)) {
+       throw new RuntimeException("Failed to set instance config for instance: " + instanceId);
+     }
+diff --git a/pinot-spi/src/main/java/org/apache/pinot/spi/config/instance/InstanceConfigValidator.java b/pinot-spi/src/main/java/org/apache/pinot/spi/config/instance/InstanceConfigValidator.java
+new file mode 100644
+index 0000000000..63cc85ff51
+--- /dev/null
++++ b/pinot-spi/src/main/java/org/apache/pinot/spi/config/instance/InstanceConfigValidator.java
+@@ -0,0 +1,42 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pinot.spi.config.instance;
++
++import org.apache.pinot.spi.exception.ConfigValidationException;
++
++
++/**
++ * SPI interface for validating instance config mutations (add, update, updateTags).
++ * Implementations are registered via {@link InstanceConfigValidatorRegistry}
++ * and invoked before instance config is persisted to Helix. Throw {@link ConfigValidationException} to reject.
++ *
++ * <p>Implementations must be thread-safe — they may be called concurrently from multiple request threads.</p>
++ */
++public interface InstanceConfigValidator {
++
++  /**
++   * Validates the given instance before persistence.
++   *
++   * @param instance The instance being added or updated (for updateTags, this is reconstructed
++   *                 from the existing InstanceConfig with the new tags applied)
++   * @throws ConfigValidationException if the instance config violates validation rules
++   */
++  void validate(Instance instance)
++      throws ConfigValidationException;
++}
+diff --git a/pinot-spi/src/main/java/org/apache/pinot/spi/config/instance/InstanceConfigValidatorRegistry.java b/pinot-spi/src/main/java/org/apache/pinot/spi/config/instance/InstanceConfigValidatorRegistry.java
+new file mode 100644
+index 0000000000..2f525eed64
+--- /dev/null
++++ b/pinot-spi/src/main/java/org/apache/pinot/spi/config/instance/InstanceConfigValidatorRegistry.java
+@@ -0,0 +1,64 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pinot.spi.config.instance;
++
++import com.google.common.annotations.VisibleForTesting;
++import java.util.concurrent.CopyOnWriteArrayList;
++import org.apache.pinot.spi.exception.ConfigValidationException;
++
++
++/**
++ * Registry for {@link InstanceConfigValidator} implementations.
++ * Supports multiple validators invoked in registration order; the first rejection short-circuits with an error.
++ * When no validators are registered, {@link #validate} is a no-op.
++ */
++public class InstanceConfigValidatorRegistry {
++  private InstanceConfigValidatorRegistry() {
++  }
++
++  private static final CopyOnWriteArrayList<InstanceConfigValidator> VALIDATORS = new CopyOnWriteArrayList<>();
++
++  /**
++   * Registers a validator. Called during startup.
++   *
++   * @param validator The validator to register
++   */
++  public static void register(InstanceConfigValidator validator) {
++    VALIDATORS.add(validator);
++  }
++
++  /**
++   * Invokes all registered validators in registration order.
++   * Short-circuits on the first rejection.
++   *
++   * @param instance The instance to validate
++   * @throws ConfigValidationException if any validator rejects the config
++   */
++  public static void validate(Instance instance)
++      throws ConfigValidationException {
++    for (InstanceConfigValidator validator : VALIDATORS) {
++      validator.validate(instance);
++    }
++  }
++
++  @VisibleForTesting
++  public static void reset() {
++    VALIDATORS.clear();
++  }
++}
+diff --git a/pinot-spi/src/main/java/org/apache/pinot/spi/config/table/TableConfigValidator.java b/pinot-spi/src/main/java/org/apache/pinot/spi/config/table/TableConfigValidator.java
+new file mode 100644
+index 0000000000..fa47a3b2a7
+--- /dev/null
++++ b/pinot-spi/src/main/java/org/apache/pinot/spi/config/table/TableConfigValidator.java
+@@ -0,0 +1,44 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pinot.spi.config.table;
++
++import javax.annotation.Nullable;
++import org.apache.pinot.spi.data.Schema;
++import org.apache.pinot.spi.exception.ConfigValidationException;
++
++
++/**
++ * SPI interface for validating table config mutations (create and update).
++ * Implementations are registered via {@link TableConfigValidatorRegistry}
++ * and invoked before table config is persisted. Throw {@link ConfigValidationException} to reject.
++ *
++ * <p>Implementations must be thread-safe — they may be called concurrently from multiple request threads.</p>
++ */
++public interface TableConfigValidator {
++
++  /**
++   * Validates the given table config before persistence.
++   *
++   * @param tableConfig The table config being created or updated
++   * @param schema The table's schema, or null if not available
++   * @throws ConfigValidationException if the table config violates validation rules
++   */
++  void validate(TableConfig tableConfig, @Nullable Schema schema)
++      throws ConfigValidationException;
++}
+diff --git a/pinot-spi/src/main/java/org/apache/pinot/spi/config/table/TableConfigValidatorRegistry.java b/pinot-spi/src/main/java/org/apache/pinot/spi/config/table/TableConfigValidatorRegistry.java
+new file mode 100644
+index 0000000000..c2573317cf
+--- /dev/null
++++ b/pinot-spi/src/main/java/org/apache/pinot/spi/config/table/TableConfigValidatorRegistry.java
+@@ -0,0 +1,67 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pinot.spi.config.table;
++
++import com.google.common.annotations.VisibleForTesting;
++import java.util.concurrent.CopyOnWriteArrayList;
++import javax.annotation.Nullable;
++import org.apache.pinot.spi.data.Schema;
++import org.apache.pinot.spi.exception.ConfigValidationException;
++
++
++/**
++ * Registry for {@link TableConfigValidator} implementations.
++ * Supports multiple validators invoked in registration order; the first rejection short-circuits with an error.
++ * When no validators are registered, {@link #validate} is a no-op.
++ */
++public class TableConfigValidatorRegistry {
++  private TableConfigValidatorRegistry() {
++  }
++
++  private static final CopyOnWriteArrayList<TableConfigValidator> VALIDATORS = new CopyOnWriteArrayList<>();
++
++  /**
++   * Registers a validator. Called during startup.
++   *
++   * @param validator The validator to register
++   */
++  public static void register(TableConfigValidator validator) {
++    VALIDATORS.add(validator);
++  }
++
++  /**
++   * Invokes all registered validators in registration order.
++   * Short-circuits on the first rejection.
++   *
++   * @param tableConfig The table config to validate
++   * @param schema The table's schema, or null if not available
++   * @throws ConfigValidationException if any validator rejects the config
++   */
++  public static void validate(TableConfig tableConfig, @Nullable Schema schema)
++      throws ConfigValidationException {
++    for (TableConfigValidator validator : VALIDATORS) {
++      validator.validate(tableConfig, schema);
++    }
++  }
++
++  @VisibleForTesting
++  public static void reset() {
++    VALIDATORS.clear();
++  }
++}
+diff --git a/pinot-spi/src/main/java/org/apache/pinot/spi/exception/ConfigValidationException.java b/pinot-spi/src/main/java/org/apache/pinot/spi/exception/ConfigValidationException.java
+new file mode 100644
+index 0000000000..a7ad09a578
+--- /dev/null
++++ b/pinot-spi/src/main/java/org/apache/pinot/spi/exception/ConfigValidationException.java
+@@ -0,0 +1,35 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pinot.spi.exception;
++
++
++/**
++ * Thrown by {@link org.apache.pinot.spi.config.table.TableConfigValidator} and
++ * {@link org.apache.pinot.spi.config.instance.InstanceConfigValidator} implementations
++ * to reject a config mutation. Should be mapped to HTTP 400 by the REST layer.
++ */
++public class ConfigValidationException extends RuntimeException {
++  public ConfigValidationException(String message) {
++    super(message);
++  }
++
++  public ConfigValidationException(String message, Throwable cause) {
++    super(message, cause);
++  }
++}

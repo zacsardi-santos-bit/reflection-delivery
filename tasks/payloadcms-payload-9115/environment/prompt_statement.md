@@ -1,5 +1,0 @@
-I'm working with the MongoDB adapter in Payload CMS and I've noticed a bug in the utility that converts string relationship IDs to native MongoDB ID objects. When I run this utility on documents that have some relationship fields missing or unset, those absent fields get filled in with empty values, which corrupts the document structure. The utility should only touch fields that actually have data and leave everything else alone.
-
-The conversion itself also needs to cover the full range of relationship field configurations: plain single-value relationships, hasMany relationships (arrays of IDs), polymorphic relationships (where each entry stores the target collection name alongside the ID), and all of these in their localized forms keyed by locale code. All of these can also appear nested inside arrays, blocks, groups, rows, and tabs — including localized containers — and the utility must correctly traverse and convert all of them.
-
-After the fix, every string hex ID present in the data should become a native ID object with the same underlying value, and no phantom fields should be added for relationships that weren't present in the original document.

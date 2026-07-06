@@ -1,0 +1,32 @@
+patching file pkg/configs/tidb/config_test.go
+patching file tests/e2e/cluster/cluster.go
+patching file tests/e2e/data/cluster.go
+patching file tests/e2e/data/data.go
+patching file tests/e2e/data/pd.go
+patching file tests/e2e/data/tidb.go
+patching file tests/e2e/data/tikv.go
+patching file tests/e2e/e2e_test.go
+patching file tests/e2e/framework/framework.go
+patching file tests/e2e/framework/pd.go
+patching file tests/e2e/framework/tidb.go
+patching file tests/e2e/framework/tikv.go
+patching file tests/e2e/framework/util.go
+patching file tests/e2e/framework/workload.go
+patching file tests/e2e/pd/pd.go
+patching file tests/e2e/tidb/tidb.go
+patching file tests/e2e/utils/waiter/job.go
+patching file tests/e2e/utils/waiter/tidb.go
+patching file tests/e2e/utils/waiter/tikv.go
+{"Time":"2026-06-29T15:25:38.151195294Z","Action":"start","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb"}
+{"Time":"2026-06-29T15:25:38.156866124Z","Action":"run","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestValidate"}
+{"Time":"2026-06-29T15:25:38.156924813Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestValidate","Output":"=== RUN   TestValidate\n"}
+{"Time":"2026-06-29T15:25:38.157006543Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestValidate","Output":"--- PASS: TestValidate (0.00s)\n"}
+{"Time":"2026-06-29T15:25:38.157031583Z","Action":"pass","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestValidate","Elapsed":0}
+{"Time":"2026-06-29T15:25:38.157066513Z","Action":"run","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestOverlay"}
+{"Time":"2026-06-29T15:25:38.157088903Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestOverlay","Output":"=== RUN   TestOverlay\n"}
+{"Time":"2026-06-29T15:25:38.157112783Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestOverlay","Output":"--- PASS: TestOverlay (0.00s)\n"}
+{"Time":"2026-06-29T15:25:38.157140833Z","Action":"pass","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Test":"TestOverlay","Elapsed":0}
+{"Time":"2026-06-29T15:25:38.157169023Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:38.157399042Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Output":"ok  \tgithub.com/pingcap/tidb-operator/pkg/configs/tidb\t0.006s\n"}
+{"Time":"2026-06-29T15:25:38.157443752Z","Action":"pass","Package":"github.com/pingcap/tidb-operator/pkg/configs/tidb","Elapsed":0.006}
+reward=1 (grader error: Extra data: line 33 column 1 (char 986); fell back to exit_code=0)

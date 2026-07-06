@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p mountpoint-s3-fs --test mock_s3_tests --no-fail-fast",
+  "test_files": [
+    "mountpoint-s3-fs/tests/mock_s3_tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) mountpoint-s3-fs::mock_s3_tests test_lookup_unhandled_error_mock",
+    "(2/5) mountpoint-s3-fs::mock_s3_tests test_read_unhandled_error_mock",
+    "(3/5) mountpoint-s3-fs::mock_s3_tests test_lookup_throttled_mock::both_list_and_head",
+    "(4/5) mountpoint-s3-fs::mock_s3_tests test_lookup_throttled_mock::head_object",
+    "(5/5) mountpoint-s3-fs::mock_s3_tests test_lookup_throttled_mock::list_object"
+  ],
+  "PASS_TO_PASS": []
+}

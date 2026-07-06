@@ -1,0 +1,58 @@
+patching file tests/partial_model_tests.rs
+   Compiling sea-orm v1.2.0-rc.1 (/workspace/repo)
+warning: use of deprecated associated constant `sea_orm::prelude::DateTime::UNIX_EPOCH`: use `DateTime::UNIX_EPOCH` instead
+  --> tests/common/bakery_chain/seed_data.rs:72:38
+   |
+72 |             placed_at: Set(DateTime::UNIX_EPOCH),
+   |                                      ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+error[E0277]: the trait bound `bakery_chain::bakery::Model: PartialModelTrait` is not satisfied
+   --> tests/partial_model_tests.rs:171:17
+    |
+171 |         bakery: Option<bakery::Model>,
+    |                 ^^^^^^^^^^^^^^^^^^^^^ the trait `PartialModelTrait` is not implemented for `bakery_chain::bakery::Model`
+    |
+    = help: the following other types implement trait `PartialModelTrait`:
+              Bakery
+              BakeryDetails
+              Cake
+              CakeFactory
+              EntityNameNotAIdent
+              Factory
+              FieldFromDiffNameColumnTest
+              FieldFromExpr
+            and 16 others
+    = note: required for `std::option::Option<bakery_chain::bakery::Model>` to implement `PartialModelTrait`
+
+error[E0277]: the trait bound `bakery_chain::bakery::Model: PartialModelTrait` is not satisfied
+   --> tests/partial_model_tests.rs:206:10
+    |
+206 |         .into_partial_model()
+    |          ^^^^^^^^^^^^^^^^^^ the trait `PartialModelTrait` is not implemented for `bakery_chain::bakery::Model`
+    |
+    = help: the following other types implement trait `PartialModelTrait`:
+              Bakery
+              BakeryDetails
+              Cake
+              CakeFactory
+              EntityNameNotAIdent
+              Factory
+              FieldFromDiffNameColumnTest
+              FieldFromExpr
+            and 16 others
+note: required by a bound in `sea_orm::executor::select::<impl sea_orm::Select<E>>::into_partial_model`
+   --> /workspace/repo/src/executor/select.rs:233:12
+    |
+231 |     pub fn into_partial_model<M>(self) -> Selector<SelectModel<M>>
+    |            ------------------ required by a bound in this associated function
+232 |     where
+233 |         M: PartialModelTrait,
+    |            ^^^^^^^^^^^^^^^^^ required by this bound in `sea_orm::executor::select::<impl Select<E>>::into_partial_model`
+
+For more information about this error, try `rustc --explain E0277`.
+warning: `sea-orm` (test "partial_model_tests") generated 1 warning
+error: could not compile `sea-orm` (test "partial_model_tests") due to 2 previous errors; 1 warning emitted
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --test partial_model_tests --features default,sqlx-sqlite,runtime-tokio-native-tls` exited with code 101
+reward=0 graded=10 found=0 failed=0 parsed=0 framework=cargo exit_code=101

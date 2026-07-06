@@ -1,0 +1,11 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl core/runtime -Dtest=ResettableSystemPropertiesAbsenceTest -DfailIfNoTests=false -B -Dno-format -Dformat.skip -Denforcer.skip -DskipExtensionValidation -DskipCodestartValidation",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Quarkus::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "3886e23e-8ed6-4411-86e5-7f20e9bbd078",
+    "started_at": "2026-07-06T12:17:00.683052",
+    "finished_at": "2026-07-06T12:17:26.081635",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__openlineage-openlineage-4403": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "openlineage-openlineage-4403__uL2zP9Z"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

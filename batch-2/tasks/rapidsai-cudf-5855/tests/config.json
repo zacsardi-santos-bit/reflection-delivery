@@ -1,0 +1,14 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo/java && mvn test -DCUDA_STATIC_RUNTIME=ON -DskipNativeCopy=true -Dtest=\"RmmTest#testPoolLimitLessThanInitialSize+testPoolLimitNonPoolMode\"",
+  "test_files": [
+    "java/src/test/java/ai/rapids/cudf/RmmTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "cudfjni::test_1",
+    "cudfjni::test_2"
+  ],
+  "PASS_TO_PASS": []
+}

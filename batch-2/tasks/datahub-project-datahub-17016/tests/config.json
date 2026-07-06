@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest --noconftest /workspace/repo/metadata-ingestion/tests/unit/secret/test_aws_secret_store.py /workspace/repo/metadata-ingestion/tests/unit/secret/test_gcp_secret_store.py -v",
+  "test_files": [
+    "metadata-ingestion/tests/unit/secret/test_aws_secret_store.py",
+    "metadata-ingestion/tests/unit/secret/test_gcp_secret_store.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.secret.test_aws_secret_store.TestAwsSecretsManagerStore::test_get_secret_values_with_prefix",
+    "tests.unit.secret.test_aws_secret_store.TestAwsSecretsManagerStore::test_get_secret_values_with_custom_prefix",
+    "tests.unit.secret.test_aws_secret_store.TestAwsSecretsManagerStore::test_missing_secret_returns_none",
+    "tests.unit.secret.test_aws_secret_store.TestAwsSecretsManagerStore::test_mixed_found_and_missing",
+    "tests.unit.secret.test_aws_secret_store.TestAwsSecretsManagerStore::test_get_secret_value_single",
+    "tests.unit.secret.test_aws_secret_store.TestAwsSecretsManagerStore::test_empty_list_returns_empty_dict",
+    "tests.unit.secret.test_gcp_secret_store.TestGcpSecretManagerStore::test_get_secret_values_with_prefix",
+    "tests.unit.secret.test_gcp_secret_store.TestGcpSecretManagerStore::test_get_secret_values_with_custom_prefix",
+    "tests.unit.secret.test_gcp_secret_store.TestGcpSecretManagerStore::test_missing_secret_returns_none",
+    "tests.unit.secret.test_gcp_secret_store.TestGcpSecretManagerStore::test_mixed_found_and_missing",
+    "tests.unit.secret.test_gcp_secret_store.TestGcpSecretManagerStore::test_get_secret_value_single",
+    "tests.unit.secret.test_gcp_secret_store.TestGcpSecretManagerStore::test_empty_list_returns_empty_dict"
+  ],
+  "PASS_TO_PASS": []
+}

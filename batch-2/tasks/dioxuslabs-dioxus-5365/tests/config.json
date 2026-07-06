@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p dioxus-stores --no-fail-fast",
+  "test_files": [
+    "packages/stores/tests/store.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) dioxus-stores::store parents_see_child_write",
+    "(2/9) dioxus-stores::store deep_parent_reader_sees_grandchild_write",
+    "(3/9) dioxus-stores::store deep_parent_reader_sees_nested_vec_push",
+    "(4/9) dioxus-stores subscriptions::tests::mark_dirty_marks_descendants_without_remarking_ancestors",
+    "(5/9) dioxus-stores::store boxed_child_subscribers_remove_visited_parent_deep_subscriber",
+    "(6/9) dioxus-stores::store deep_grandparent_reader_sees_descendant_write",
+    "(7/9) dioxus-stores::store deep_root_reader_sees_future_child_write",
+    "(8/9) dioxus-stores::store children_see_parent_write",
+    "(9/9) dioxus-stores::store len_is_shallow_but_push_marks_it_dirty"
+  ],
+  "PASS_TO_PASS": []
+}

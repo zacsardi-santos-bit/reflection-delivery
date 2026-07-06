@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cp /workspace/repo/src/flags.rs /workspace/test_runner/src/flags.rs && cd /workspace/test_runner && cargo nextest run",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) test_runner flags::test_parse_core_args_2",
+    "(2/5) test_runner flags::test_set_flags_1",
+    "(3/5) test_runner flags::test_parse_core_args_1",
+    "(4/5) test_runner flags::test_set_flags_2",
+    "(5/5) test_runner flags::test_set_flags_3"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,15 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :solr:core:test --tests \"org.apache.solr.servlet.TestRequestRateLimiter\" --no-daemon --no-watch-fs && (find /workspace/repo/solr/core/build/test-results -name \"TEST-*.xml\" -exec cat {} \\; 2>/dev/null || true)",
+  "test_files": [
+    "solr/core/src/test/org/apache/solr/servlet/TestRequestRateLimiter.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.apache.solr.servlet.TestRequestRateLimiter::testSlotBorrowingAcquisitionTimeout",
+    "org.apache.solr.servlet.TestRequestRateLimiter::testAdjustingConfig",
+    "org.apache.solr.servlet.TestRequestRateLimiter::testConcurrentQueries"
+  ],
+  "PASS_TO_PASS": []
+}

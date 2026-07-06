@@ -1,0 +1,52 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/waterfurnace/test_climate.py /workspace/repo/tests/components/waterfurnace/test_sensor.py -v",
+  "test_files": [
+    "tests/components/waterfurnace/conftest.py",
+    "tests/components/waterfurnace/fixtures/device_data.json",
+    "tests/components/waterfurnace/snapshots/test_climate.ambr",
+    "tests/components/waterfurnace/snapshots/test_sensor.ambr",
+    "tests/components/waterfurnace/test_climate.py",
+    "tests/components/waterfurnace/test_sensor.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.waterfurnace.test_climate::test_climate_snapshot",
+    "tests.components.waterfurnace.test_climate::test_hvac_mode_mapping[Off]",
+    "tests.components.waterfurnace.test_climate::test_hvac_mode_mapping[Auto]",
+    "tests.components.waterfurnace.test_climate::test_hvac_mode_mapping[Cool]",
+    "tests.components.waterfurnace.test_climate::test_hvac_mode_mapping[Heat]",
+    "tests.components.waterfurnace.test_climate::test_hvac_mode_mapping[E-Heat]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Standby]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Fan Only]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Cooling 1]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Cooling 2]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Reheat]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Heating 1]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Heating 2]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[E-Heat]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Aux Heat]",
+    "tests.components.waterfurnace.test_climate::test_hvac_action_mapping[Lockout]",
+    "tests.components.waterfurnace.test_climate::test_set_hvac_mode[Off]",
+    "tests.components.waterfurnace.test_climate::test_set_hvac_mode[Auto]",
+    "tests.components.waterfurnace.test_climate::test_set_hvac_mode[Cool]",
+    "tests.components.waterfurnace.test_climate::test_set_hvac_mode[Heat]",
+    "tests.components.waterfurnace.test_climate::test_set_temperature_single_heat",
+    "tests.components.waterfurnace.test_climate::test_set_temperature_single_cool",
+    "tests.components.waterfurnace.test_climate::test_set_temperature_range",
+    "tests.components.waterfurnace.test_climate::test_set_humidity",
+    "tests.components.waterfurnace.test_climate::test_target_temperature_cool_mode",
+    "tests.components.waterfurnace.test_climate::test_target_temperature_range_auto_mode",
+    "tests.components.waterfurnace.test_climate::test_set_hvac_mode_error",
+    "tests.components.waterfurnace.test_climate::test_set_temperature_error",
+    "tests.components.waterfurnace.test_climate::test_set_humidity_error",
+    "tests.components.waterfurnace.test_climate::test_set_temperature_with_hvac_mode"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.waterfurnace.test_sensor::test_sensors",
+    "tests.components.waterfurnace.test_sensor::test_sensor",
+    "tests.components.waterfurnace.test_sensor::test_availability[side_effect0]",
+    "tests.components.waterfurnace.test_sensor::test_availability[TimeoutError]"
+  ]
+}

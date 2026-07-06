@@ -1,0 +1,36 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl modules/openapi-generator test -Dtest=PostgresqlSchemaCodegenTest,PostgresqlSchemaOptionsTest -DfailIfNoTests=false -nsu",
+  "test_files": [
+    "modules/openapi-generator/src/test/java/org/openapitools/codegen/options/PostgresqlSchemaOptionsProvider.java",
+    "modules/openapi-generator/src/test/java/org/openapitools/codegen/postgresql/PostgresqlSchemaCodegenTest.java",
+    "modules/openapi-generator/src/test/java/org/openapitools/codegen/postgresql/PostgresqlSchemaOptionsTest.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "openapi-generator::test_1",
+    "openapi-generator::test_2",
+    "openapi-generator::test_3",
+    "openapi-generator::test_4",
+    "openapi-generator::test_5",
+    "openapi-generator::test_6",
+    "openapi-generator::test_7",
+    "openapi-generator::test_8",
+    "openapi-generator::test_9",
+    "openapi-generator::test_10",
+    "openapi-generator::test_11",
+    "openapi-generator::test_12",
+    "openapi-generator::test_13",
+    "openapi-generator::test_14",
+    "openapi-generator::test_15",
+    "openapi-generator::test_16",
+    "openapi-generator::test_17",
+    "openapi-generator::test_18",
+    "openapi-generator::test_19",
+    "openapi-generator::test_20",
+    "openapi-generator::test_21",
+    "openapi-generator::test_22"
+  ],
+  "PASS_TO_PASS": []
+}

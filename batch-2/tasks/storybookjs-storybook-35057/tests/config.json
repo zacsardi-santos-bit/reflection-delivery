@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=--max_old_space_size=4096 ./node_modules/.bin/vitest run --config ./code/core/vitest.config.ts code/core/src/shared/open-service/service-registration.test.ts",
+  "test_files": [
+    "code/core/src/shared/open-service/service-registration.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration allows server registration to provide handlers that are omitted from the definition",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration omits internal operations from describeService and listServices summaries",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration omits internal services from listServices while keeping runtime access",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration still builds static snapshots for internal queries"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration registers services globally and exposes summaries and descriptors by id",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration throws when registering the same service id twice",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration throws a Storybook error when resolving a missing registered service id",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration throws a Storybook error when a registered query is missing its handler",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration lets handlers resolve another registered service by id through ctx.getService",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration exposes staticPath presence on query descriptors",
+    "/workspace/repo/code/core/src/shared/open-service/service-registration.test.ts::service registration allows staticInputs to be supplied only at registration time"
+  ]
+}

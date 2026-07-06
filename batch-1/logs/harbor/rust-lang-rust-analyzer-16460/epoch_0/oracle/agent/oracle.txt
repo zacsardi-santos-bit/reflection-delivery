@@ -1,0 +1,6 @@
+patching file crates/hir-ty/src/diagnostics/expr.rs
+patching file crates/hir/src/diagnostics.rs
+patching file crates/ide-diagnostics/src/handlers/remove_trailing_return.rs
+patching file crates/ide-diagnostics/src/handlers/remove_unnecessary_else.rs
+patching file crates/ide-diagnostics/src/handlers/type_mismatch.rs
+patching file crates/ide-diagnostics/src/lib.rs

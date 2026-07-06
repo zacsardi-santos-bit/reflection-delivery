@@ -1,0 +1,33 @@
+patching file analysis/analysis_test.go
+patching file analysis/controller_test.go
+patching file metricproviders/datadog/datadogV1_test.go
+patching file metricproviders/datadog/datadogV2_test.go
+patching file metricproviders/datadog/datadog_test.go
+patching file metricproviders/datadog/finders_test.go
+# github.com/argoproj/argo-rollouts/metricproviders/datadog [github.com/argoproj/argo-rollouts/metricproviders/datadog.test]
+metricproviders/datadog/datadogV1_test.go:43:4: unknown field SecretRef in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".DatadogMetric
+metricproviders/datadog/datadogV1_test.go:43:24: undefined: v1alpha1.SecretRef
+metricproviders/datadog/datadogV1_test.go:353:69: too many arguments in call to NewDatadogProvider
+	have (logrus.Entry, *"k8s.io/client-go/kubernetes/fake".Clientset, string, "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric)
+	want (logrus.Entry, kubernetes.Interface, "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric)
+metricproviders/datadog/datadogV2_test.go:73:4: unknown field SecretRef in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".DatadogMetric
+metricproviders/datadog/datadogV2_test.go:73:24: undefined: v1alpha1.SecretRef
+metricproviders/datadog/datadogV2_test.go:435:69: too many arguments in call to NewDatadogProvider
+	have (logrus.Entry, *"k8s.io/client-go/kubernetes/fake".Clientset, string, "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric)
+	want (logrus.Entry, kubernetes.Interface, "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric)
+metricproviders/datadog/datadog_test.go:222:36: undefined: findCredentials
+metricproviders/datadog/datadog_test.go:242:5: unknown field SecretRef in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".DatadogMetric
+metricproviders/datadog/datadog_test.go:242:25: undefined: v1alpha1.SecretRef
+metricproviders/datadog/finders_test.go:65:19: undefined: NewSecretFinder
+metricproviders/datadog/finders_test.go:65:19: too many errors
+# github.com/argoproj/argo-rollouts/analysis [github.com/argoproj/argo-rollouts/analysis.test]
+analysis/analysis_test.go:1116:18: cannot use func(logCtx log.Entry, namespace string, metric v1alpha1.Metric) (metric.Provider, error) {…} (value of type func(logCtx logrus.Entry, namespace string, metric "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric) ("github.com/argoproj/argo-rollouts/metric".Provider, error)) as func(logCtx logrus.Entry, metric "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric) ("github.com/argoproj/argo-rollouts/metric".Provider, error) value in assignment
+analysis/controller_test.go:146:18: cannot use func(logCtx log.Entry, namespace string, metric v1alpha1.Metric) (metric.Provider, error) {…} (value of type func(logCtx logrus.Entry, namespace string, metric "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric) ("github.com/argoproj/argo-rollouts/metric".Provider, error)) as func(logCtx logrus.Entry, metric "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric) ("github.com/argoproj/argo-rollouts/metric".Provider, error) value in assignment
+analysis/controller_test.go:373:18: cannot use func(logCtx log.Entry, namespace string, metric v1alpha1.Metric) (metric.Provider, error) {…} (value of type func(logCtx logrus.Entry, namespace string, metric "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric) ("github.com/argoproj/argo-rollouts/metric".Provider, error)) as func(logCtx logrus.Entry, metric "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".Metric) ("github.com/argoproj/argo-rollouts/metric".Provider, error) value in assignment
+{"Time":"2026-06-29T15:16:23.6621861Z","Action":"start","Package":"github.com/argoproj/argo-rollouts/analysis"}
+{"Time":"2026-06-29T15:16:23.662296847Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/analysis","Output":"FAIL\tgithub.com/argoproj/argo-rollouts/analysis [build failed]\n"}
+{"Time":"2026-06-29T15:16:23.662312525Z","Action":"fail","Package":"github.com/argoproj/argo-rollouts/analysis","Elapsed":0}
+{"Time":"2026-06-29T15:16:23.662323584Z","Action":"start","Package":"github.com/argoproj/argo-rollouts/metricproviders/datadog"}
+{"Time":"2026-06-29T15:16:23.662380999Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/datadog","Output":"FAIL\tgithub.com/argoproj/argo-rollouts/metricproviders/datadog [build failed]\n"}
+{"Time":"2026-06-29T15:16:23.662433673Z","Action":"fail","Package":"github.com/argoproj/argo-rollouts/metricproviders/datadog","Elapsed":0}
+reward=0 graded=90 found=0 failed=0 parsed=2 framework=go exit_code=1

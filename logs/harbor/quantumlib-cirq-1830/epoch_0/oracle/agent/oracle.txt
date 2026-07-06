@@ -1,2 +1,0 @@
-patching file cirq/contrib/qasm_import/_parser.py
-patching file cirq/testing/consistent_qasm.py

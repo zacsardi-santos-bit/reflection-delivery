@@ -1,0 +1,16 @@
+patching file pkg/ans/ans_test.go
+patching file pkg/ans/event_test.go
+# github.com/SAP/jenkins-library/pkg/ans [github.com/SAP/jenkins-library/pkg/ans.test]
+pkg/ans/ans_test.go:18:13: undefined: ANS
+pkg/ans/ans_test.go:50:12: undefined: ANS
+pkg/ans/ans_test.go:63:18: undefined: Event
+pkg/ans/ans_test.go:70:51: undefined: authHeaderKey
+pkg/ans/ans_test.go:78:15: undefined: Event
+pkg/ans/ans_test.go:115:51: undefined: authHeaderKey
+pkg/ans/ans_test.go:146:23: undefined: ServiceKey
+pkg/ans/ans_test.go:150:23: undefined: UnmarshallServiceKeyJSON
+pkg/ans/ans_test.go:159:14: undefined: UnmarshallServiceKeyJSON
+pkg/ans/event_test.go:166:21: undefined: Event
+pkg/ans/ans_test.go:159:14: too many errors
+FAIL	github.com/SAP/jenkins-library/pkg/ans [build failed]
+reward=0 graded=41 found=41 failed=41 parsed=1 framework=go exit_code=1

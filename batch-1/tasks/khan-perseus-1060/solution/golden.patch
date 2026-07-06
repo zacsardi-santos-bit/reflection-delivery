@@ -1,0 +1,535 @@
+diff --git a/.changeset/cyan-dots-compete.md b/.changeset/cyan-dots-compete.md
+new file mode 100644
+index 0000000000..1e5c8c3406
+--- /dev/null
++++ b/.changeset/cyan-dots-compete.md
+@@ -0,0 +1,5 @@
++---
++"@khanacademy/perseus": minor
++---
++
++Accessibility and Usability Enhancements for Explanation Widget
+diff --git a/config/cypress/support.ts b/config/cypress/support.ts
+index 208ebd5b42..cf63c09403 100644
+--- a/config/cypress/support.ts
++++ b/config/cypress/support.ts
+@@ -2,6 +2,8 @@
+ import "cypress-jest-adapter";
+ // eslint-disable-next-line import/no-unassigned-import
+ import "cypress-wait-until";
++// eslint-disable-next-line import/no-unassigned-import
++import "cypress-real-events";
+ 
+ if (Cypress.env("CYPRESS_COVERAGE")) {
+     // @ts-expect-error - TS1378 - (trust me!) Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', or 'nodenext', and the 'target' option is set to 'es2017' or higher.
+diff --git a/config/cypress/tsconfig.json b/config/cypress/tsconfig.json
+index 5bd0784678..cf44157e20 100644
+--- a/config/cypress/tsconfig.json
++++ b/config/cypress/tsconfig.json
+@@ -5,7 +5,7 @@
+         "esModuleInterop": true,
+         // be explicit about types included
+         // to avoid clashing with Jest types
+-        "types": ["cypress", "node"]
++        "types": ["cypress", "node", "cypress-real-events"]
+     },
+     "include": ["**/*.ts", "**/*.tsx"]
+ }
+diff --git a/package.json b/package.json
+index 1b9bbf677c..d30a987ebb 100644
+--- a/package.json
++++ b/package.json
+@@ -70,6 +70,7 @@
+     "css-loader": "^6.8.1",
+     "cypress": "^13.6.5",
+     "cypress-jest-adapter": "^0.1.1",
++    "cypress-real-events": "^1.12.0",
+     "cypress-wait-until": "^3.0.1",
+     "eslint": "^8.40.0",
+     "eslint-config-prettier": "^8.8.0",
+diff --git a/packages/perseus/src/styles/perseus-renderer.less b/packages/perseus/src/styles/perseus-renderer.less
+index b24c62ba2b..ab57c20624 100644
+--- a/packages/perseus/src/styles/perseus-renderer.less
++++ b/packages/perseus/src/styles/perseus-renderer.less
+@@ -123,7 +123,7 @@
+ 
+     .perseus-renderer > .paragraph > ul:not(.perseus-widget-radio),
+     .perseus-renderer > .paragraph > ol {
+-        margin: -11px 0px 22px 0px; // first-level lists need padding
++        margin: 0px 0px 22px 0px; // first-level lists need padding
+     }
+ 
+     .paragraph ul:not(.perseus-widget-radio, .indicatorContainer) {
+diff --git a/packages/perseus/src/widgets/__stories__/explanation.stories.tsx b/packages/perseus/src/widgets/__stories__/explanation.stories.tsx
+index 4a40f740f6..1ec7b3e1c0 100644
+--- a/packages/perseus/src/widgets/__stories__/explanation.stories.tsx
++++ b/packages/perseus/src/widgets/__stories__/explanation.stories.tsx
+@@ -1,7 +1,11 @@
+ import * as React from "react";
+ 
+ import {RendererWithDebugUI} from "../../../../../testing/renderer-with-debug-ui";
+-import {question1, question2} from "../__testdata__/explanation.testdata";
++import {
++    ipsumExample,
++    question1,
++    question2,
++} from "../__testdata__/explanation.testdata";
+ 
+ export default {
+     title: "Perseus/Widgets/Explanation",
+@@ -16,3 +20,7 @@ export const Question1 = (args: StoryArgs): React.ReactElement => {
+ export const Question2 = (args: StoryArgs): React.ReactElement => {
+     return <RendererWithDebugUI question={question2} />;
+ };
++
++export const IpsumExample = (args: StoryArgs): React.ReactElement => {
++    return <RendererWithDebugUI question={ipsumExample} />;
++};
+diff --git a/packages/perseus/src/widgets/__testdata__/explanation.testdata.ts b/packages/perseus/src/widgets/__testdata__/explanation.testdata.ts
+index 863c60f925..22f9c318a2 100644
+--- a/packages/perseus/src/widgets/__testdata__/explanation.testdata.ts
++++ b/packages/perseus/src/widgets/__testdata__/explanation.testdata.ts
+@@ -83,3 +83,45 @@ export const randomExplanationGenerator = (): PerseusRenderer => {
+         },
+     };
+ };
++
++export const ipsumExample: PerseusRenderer = {
++    content: `Unidentified vessel travelling at sub warp speed, bearing 235.7. 
++                Fluctuations in energy readings from it, Captain. 
++                All transporters off. 
++                A strange set-up, but I'd say the graviton generator is depolarized. 
++                The dark colourings of the scrapes are the leavings of natural rubber, 
++                    a type of non-conductive sole used by researchers experimenting with electricity. 
++                The molecules must have been partly de-phased by the anyon beam.
++                \n[[\u2603 explanation 1]]\n\nSensors indicate no shuttle or other ships in this sector.
++                According to coordinates, we have travelled 7,000 light years and are located near [the system J-25](#).
++                Tractor beam released, sir. Force field maintaining our hull integrity.
++                Damage report? Sections 27, 28 and 29 on decks four, five and six destroyed.
++            `,
++    images: {},
++    widgets: {
++        "explanation 1": {
++            graded: true,
++            version: {
++                major: 0,
++                minor: 0,
++            },
++            static: false,
++            type: "explanation",
++            options: {
++                hidePrompt: "Hide",
++                widgets: {},
++                explanation: `It indicates a [synchronic distortion](#) in the areas emanating triolic waves. 
++                    The cerebellum, the cerebral cortex, the brain stem,
++                        the entire nervous system has been depleted of electrochemical energy. 
++                    Any device like that would produce high levels of triolic waves. 
++                    These walls have undergone some kind of [selective molecular polarization](#). 
++                    I haven't determined if our phaser energy can generate a stable field. 
++                    We could alter the photons with phase discriminators.
++                `,
++                static: false,
++                showPrompt: "Explanation",
++            },
++            alignment: "default",
++        },
++    },
++};
+diff --git a/packages/perseus/src/widgets/__testdata__/graded-group.testdata.ts b/packages/perseus/src/widgets/__testdata__/graded-group.testdata.ts
+index 500aa0d15e..8a1350ba23 100644
+--- a/packages/perseus/src/widgets/__testdata__/graded-group.testdata.ts
++++ b/packages/perseus/src/widgets/__testdata__/graded-group.testdata.ts
+@@ -12,7 +12,7 @@ export const question1: PerseusRenderer = {
+             options: {
+                 title: "Metabolic strategies of bacteria",
+                 content:
+-                    "1. **Which of the following statements about metabolic strategies of bacteria are true?**\n\n [[☃ categorizer 1]]\n\n [[☃ explanation 1]]",
++                    "1. **Which of the following statements about metabolic strategies of bacteria are true?**\n\n [[☃ categorizer 1]]",
+                 images: {},
+                 widgets: {
+                     "categorizer 1": {
+@@ -34,40 +34,31 @@ export const question1: PerseusRenderer = {
+                         },
+                         version: {major: 0, minor: 0},
+                     },
+-                    "explanation 1": {
+-                        type: "explanation",
+-                        alignment: "default",
+-                        static: false,
+-                        graded: true,
+-                        options: {
+-                            static: false,
+-                            showPrompt: "Hint",
+-                            hidePrompt: "Hide hint",
+-                            explanation:
+-                                "Some bacteria synthesize their own fuel molecules/fix their own carbon (autotrophic), while others take in fixed carbon from their environments (heterotrophic).\n\nSome autotrophs use light energy to synthesize their own fuel molecules, while others extract energy from chemical sources.\n\nBacteria that extract energy from chemical sources and use it to fix carbon are called chemosynthetic organisms.  These bacteria may be essential to communities where light is not available, like those around deep-sea vents. They can form the base of the food chain (act as primary producers) in these ecosystems.\n\nSome bacteria have symbiotic (mutually beneficial) relationships with other organisms, living inside these organisms and providing them with nutrients.\n\n**The following statements about the metabolic strategies of bacteria are true:**\n\n[[☃ categorizer 1]]",
+-                            widgets: {
+-                                "categorizer 1": {
+-                                    type: "categorizer",
+-                                    alignment: "default",
+-                                    static: true,
+-                                    graded: true,
+-                                    options: {
+-                                        static: false,
+-                                        items: [
+-                                            " Some bacteria conduct photosynthesis and produce oxygen, much like plants.",
+-                                            "Bacteria are always autotrophic but they may get energy from either light or chemical sources.",
+-                                            "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).",
+-                                            "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.",
+-                                        ],
+-                                        categories: ["True", "False"],
+-                                        values: [0, 1, 0, 0],
+-                                        randomizeItems: false,
+-                                    },
+-                                    version: {major: 0, minor: 0},
+-                                },
++                },
++                hint: {
++                    content:
++                        "Some bacteria synthesize their own fuel molecules/fix their own carbon (autotrophic), while others take in fixed carbon from their environments (heterotrophic).\n\nSome autotrophs use light energy to synthesize their own fuel molecules, while others extract energy from chemical sources.\n\nBacteria that extract energy from chemical sources and use it to fix carbon are called chemosynthetic organisms.  These bacteria may be essential to communities where light is not available, like those around deep-sea vents. They can form the base of the food chain (act as primary producers) in these ecosystems.\n\nSome bacteria have symbiotic (mutually beneficial) relationships with other organisms, living inside these organisms and providing them with nutrients.\n\n**The following statements about the metabolic strategies of bacteria are true:**\n\n[[☃ categorizer 1]]",
++                    images: {},
++                    widgets: {
++                        "categorizer 1": {
++                            type: "categorizer",
++                            alignment: "default",
++                            static: true,
++                            graded: true,
++                            options: {
++                                static: false,
++                                items: [
++                                    " Some bacteria conduct photosynthesis and produce oxygen, much like plants.",
++                                    "Bacteria are always autotrophic but they may get energy from either light or chemical sources.",
++                                    "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).",
++                                    "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.",
++                                ],
++                                categories: ["True", "False"],
++                                values: [0, 1, 0, 0],
++                                randomizeItems: false,
+                             },
++                            version: {major: 0, minor: 0},
+                         },
+-                        version: {major: 0, minor: 0},
+                     },
+                 },
+             },
+diff --git a/packages/perseus/src/widgets/explanation.tsx b/packages/perseus/src/widgets/explanation.tsx
+index b2d0f9032d..5c8518fe83 100644
+--- a/packages/perseus/src/widgets/explanation.tsx
++++ b/packages/perseus/src/widgets/explanation.tsx
+@@ -1,15 +1,15 @@
+ /* eslint-disable react/sort-comp */
+ import {linterContextDefault} from "@khanacademy/perseus-linter";
+-import Clickable from "@khanacademy/wonder-blocks-clickable";
+-import {View} from "@khanacademy/wonder-blocks-core";
+-import {StyleSheet, css} from "aphrodite";
++import Button from "@khanacademy/wonder-blocks-button";
++import {UniqueIDProvider, View} from "@khanacademy/wonder-blocks-core";
++import caretDown from "@phosphor-icons/core/assets/regular/caret-down.svg";
++import caretUp from "@phosphor-icons/core/assets/regular/caret-up.svg";
++import {StyleSheet} from "aphrodite";
+ import * as React from "react";
+ import _ from "underscore";
+ 
+ import * as Changeable from "../mixins/changeable";
+ import Renderer from "../renderer";
+-import * as styleConstants from "../styles/constants";
+-import mediaQueries from "../styles/media-queries";
+ 
+ import type {PerseusExplanationWidgetOptions} from "../perseus-types";
+ import type {PerseusScore, WidgetExports, WidgetProps} from "../types";
+@@ -71,85 +71,72 @@ class Explanation extends React.Component<Props, State> {
+     };
+ 
+     render(): React.ReactNode {
+-        const {isArticle, isMobile} = this.props.apiOptions;
+-
+         const promptText = this.state.expanded
+             ? this.props.hidePrompt
+             : this.props.showPrompt;
+ 
+-        let promptContainer: React.ReactNode;
+-
+-        // TODO(diedra): This isn't a valid href;
+-        // change this to a button that looks like a link.
+-        const href = "javascript:void(0)";
+-        const onClick = this._onClick;
+-
+-        if (isMobile) {
+-            promptContainer = (
+-                <div className={css(styles.linkContainer)}>
+-                    <a
+-                        className={css(styles.mobileExplanationLink)}
+-                        href={href}
+-                        onClick={onClick}
+-                        role="button"
+-                        aria-expanded={this.state.expanded}
+-                    >
+-                        {promptText}
+-                    </a>
+-                    {this.state.expanded && (
+-                        <svg className={css(styles.disclosureArrow)}>
+-                            <polygon
+-                                style={{fill: backgroundColor}}
+-                                points={
+-                                    `0,${arrowHeight} ` +
+-                                    `${arrowWidth},${arrowHeight} ` +
+-                                    `${arrowWidth / 2},0`
+-                                }
+-                            />
+-                        </svg>
+-                    )}
+-                </div>
+-            );
+-        } else {
+-            const viewStyling = isArticle
+-                ? [styles.explanationLink, styles.articleLink]
+-                : [styles.explanationLink, styles.exerciseLink];
+-            promptContainer = (
+-                <Clickable
+-                    onClick={onClick}
+-                    aria-expanded={this.state.expanded}
+-                >
+-                    {() => <View style={viewStyling}>{`[${promptText}]`}</View>}
+-                </Clickable>
+-            );
+-        }
+-
+-        const expandedStyle = isMobile
+-            ? styles.contentExpandedMobile
+-            : styles.contentExpanded;
++        const caretIcon = this.state.expanded ? caretUp : caretDown;
++
++        const allowTransition = window.matchMedia(
++            "(prefers-reduced-motion: no-preference)",
++        ).matches;
++
++        // Special styling is needed to fit the button in a block of text without throwing off the line spacing.
++        // While the button is not normally included in a block of text, it needs to be able to accommodate such a case.
++        const buttonStyleOverrides = {
++            height: "22px",
++            marginLeft: "-2px",
++            padding: "0 2px",
++        };
++
++        const contentStyling = [
++            styles.content,
++            this.state.expanded
++                ? styles.contentExpanded
++                : styles.contentCollapsed,
++            allowTransition &&
++                (this.state.expanded
++                    ? styles.transitionExpanded
++                    : styles.transitionCollapsed),
++        ];
+ 
+         return (
+-            <div className={css(styles.container)}>
+-                {promptContainer}
+-                {this.state.expanded && (
+-                    <div
+-                        className={css(
+-                            styles.content,
+-                            isMobile && styles.contentMobile,
+-                            this.state.expanded && expandedStyle,
+-                        )}
+-                        // eslint-disable-next-line react/no-string-refs
+-                        ref="content"
+-                    >
+-                        <Renderer
+-                            apiOptions={this.props.apiOptions}
+-                            content={this.props.explanation}
+-                            widgets={this.props.widgets}
+-                            linterContext={this.props.linterContext}
+-                        />
+-                    </div>
++            <UniqueIDProvider
++                mockOnFirstRender={false}
++                scope="explanation-widget"
++            >
++                {(ids) => (
++                    <>
++                        <Button
++                            aria-expanded={this.state.expanded}
++                            aria-controls={ids.get("content")}
++                            endIcon={caretIcon}
++                            kind="tertiary"
++                            onClick={this._onClick}
++                            size="large"
++                            style={buttonStyleOverrides}
++                        >
++                            {promptText}
++                        </Button>
++
++                        <View
++                            id={ids.get("content")}
++                            style={contentStyling}
++                            aria-hidden={!this.state.expanded}
++                            testId="content-container"
++                        >
++                            <View style={styles.contentWrapper}>
++                                <Renderer
++                                    apiOptions={this.props.apiOptions}
++                                    content={this.props.explanation}
++                                    widgets={this.props.widgets}
++                                    linterContext={this.props.linterContext}
++                                />
++                            </View>
++                        </View>
++                    </>
+                 )}
+-            </div>
++            </UniqueIDProvider>
+         );
+     }
+ 
+@@ -164,72 +151,34 @@ class Explanation extends React.Component<Props, State> {
+ 
+ const leftBorderSpacing = 23;
+ const verticalContentPadding = 10;
+-
+-const arrowWidth = 30;
+ const arrowHeight = 14;
+-const backgroundColor = styleConstants.gray95;
+ 
+ const styles = StyleSheet.create({
+-    container: {
+-        display: "inline",
++    content: {
++        borderLeft: "0px solid #ccc",
++        display: "inline-grid",
+         position: "relative",
+     },
+ 
+-    linkContainer: {
+-        display: "inline-block",
+-    },
+-
+-    explanationLink: {
+-        fontStyle: "italic",
+-        color: "#007d96",
+-    },
+-
+-    articleLink: {
+-        // Copied from .body-text in articles.less
+-        fontSize: 20,
+-        lineHeight: "30px",
+-    },
+-
+-    exerciseLink: {
+-        // Copied from .legacy-typography in util.less
+-        fontSize: 14,
+-        lineHeight: "19.6px",
+-    },
+-
+-    mobileExplanationLink: {
+-        color: styleConstants.kaGreen,
+-        borderBottom: `dashed 1px ${styleConstants.kaGreen}`,
+-        textDecoration: "none",
+-
+-        // TODO(benkomalo): these should be pulled in from common typography
+-        // shared files so we have a single place where the type hierarchy is
+-        // defined; one off font sizes for individual components should be
+-        // avoided.
+-        [mediaQueries.xl]: {
+-            fontSize: 22,
+-            lineHeight: 1.4,
+-        },
+-        [mediaQueries.lgOrSmaller]: {
+-            fontSize: 20,
+-            lineHeight: 1.5,
+-        },
+-        [mediaQueries.smOrSmaller]: {
+-            fontSize: 18,
+-            lineHeight: 1.2,
+-        },
+-    },
+-
+-    content: {
+-        position: "relative",
+-        transition: "margin-top 0.1s",
++    contentCollapsed: {
++        gridTemplateColumns: "0fr",
++        gridTemplateRows: "0fr",
++        marginBottom: 0,
++        marginTop: 0,
++        minWidth: "0",
++        paddingBottom: 0,
++        visibility: "hidden",
+     },
+ 
+     contentExpanded: {
+-        borderLeft: "5px solid #ccc",
++        borderLeftWidth: "5px",
++        gridTemplateColumns: "1fr",
++        gridTemplateRows: "1fr",
+         marginLeft: -leftBorderSpacing,
++        minWidth: "100%",
+         paddingLeft: leftBorderSpacing,
+-
+         paddingBottom: verticalContentPadding,
++        visibility: "visible",
+ 
+         // Note: we still use arrow height as the vertical margin, even on
+         // desktop when there is no arrow, but it's good enough.
+@@ -237,37 +186,18 @@ const styles = StyleSheet.create({
+         marginTop: arrowHeight,
+     },
+ 
+-    contentExpandedMobile: {
+-        boxSizing: "content-box",
+-        paddingTop: 32,
+-        paddingBottom: 32,
+-        marginTop: arrowHeight,
++    contentWrapper: {
++        overflow: "hidden",
+     },
+ 
+-    contentMobile: {
+-        background: backgroundColor,
+-
+-        // TODO(benkomalo): this is to "full bleed" the background.
+-        // The actual content padding differs depending on the host
+-        // container, so this needs to be fixed eventually.
+-        marginLeft: styleConstants.negativePhoneMargin,
+-        marginRight: styleConstants.negativePhoneMargin,
+-        paddingLeft: styleConstants.phoneMargin,
+-        paddingRight: styleConstants.phoneMargin,
++    transitionCollapsed: {
++        transition:
++            "all 0.25s step-end, grid-template-rows 0.25s, margin-top 0.25s, margin-bottom 0.25s, padding-bottom 0.25s",
+     },
+ 
+-    disclosureArrow: {
+-        // HACK - positioning at "bottom: 0", doesn't actually position it to
+-        // the real bottom, because the container is `inline-block`, and it
+-        // seems to position it to the baseline? We put in a generous
+-        // fudge factor to position it down to be flush with the content box
+-        // below it.
+-        bottom: -(arrowHeight + 5),
+-        height: arrowHeight,
+-        left: "50%",
+-        marginLeft: -(arrowWidth / 2),
+-        position: "absolute",
+-        width: arrowWidth,
++    transitionExpanded: {
++        transition:
++            "grid-template-rows 0.5s, margin-top 0.5s, margin-bottom 0.5s, padding-bottom 0.5s",
+     },
+ });
+ 
+diff --git a/yarn.lock b/yarn.lock
+index 3f25c30eee..15c0696828 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -6939,6 +6939,11 @@ cypress-jest-adapter@^0.1.1:
+     jest-jquery-matchers "^2.1.0"
+     jquery "^3.4.0"
+ 
++cypress-real-events@^1.12.0:
++  version "1.12.0"
++  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.12.0.tgz#ffeb2b23686ba5b16ac91dd9bc3b6785d36d38d3"
++  integrity sha512-oiy+4kGKkzc2PT36k3GGQqkGxNiVypheWjMtfyi89iIk6bYmTzeqxapaLHS3pnhZOX1IEbTDUVxh8T4Nhs1tyQ==
++
+ cypress-wait-until@^3.0.1:
+   version "3.0.1"
+   resolved "https://registry.yarnpkg.com/cypress-wait-until/-/cypress-wait-until-3.0.1.tgz#6a697a600f4fb8cd2897489a15fda77c9857abec"

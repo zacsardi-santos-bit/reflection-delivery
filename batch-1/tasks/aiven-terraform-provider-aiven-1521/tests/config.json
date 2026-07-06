@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/sdkprovider/service/kafkatopic -count=1",
+  "test_files": [
+    "internal/sdkprovider/service/kafkatopic/kafka_topic_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/aiven/terraform-provider-aiven/internal/sdkprovider/service/kafkatopic::TestPartitions/basic",
+    "github.com/aiven/terraform-provider-aiven/internal/sdkprovider/service/kafkatopic::TestPartitions",
+    "github.com/aiven/terraform-provider-aiven/internal/sdkprovider/service/kafkatopic::TestFlattenKafkaTopicConfig/all_fields",
+    "github.com/aiven/terraform-provider-aiven/internal/sdkprovider/service/kafkatopic::TestFlattenKafkaTopicConfig/few_fields",
+    "github.com/aiven/terraform-provider-aiven/internal/sdkprovider/service/kafkatopic::TestFlattenKafkaTopicConfig"
+  ],
+  "PASS_TO_PASS": []
+}

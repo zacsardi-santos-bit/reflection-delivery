@@ -1,0 +1,7 @@
+I'm working on adding Starlark config support to our CI/CD pipeline system. Right now we support JSON, YAML, and Jsonnet for pipeline configs, but I'd like to add Starlark as a fourth option so users can write their pipeline definitions in a Python-like scripting language.
+
+The Starlark config should work similarly to how Jsonnet configs work: a script file stored in the repository's config directory with a specific extension, and the system should detect files with that extension, execute the script, and pass in the current build context (branch name, tag, ref type, commit SHA, pull request ID, etc.). The script returns a data structure that gets converted to JSON for the pipeline configuration.
+
+A key part of this is implementing the conversion from Starlark data types to JSON. This conversion needs to handle all the common Starlark value types: dictionaries, lists, strings, integers, floats, booleans, and null. For dictionaries, only string keys should be allowed — if a non-string key is encountered, the conversion should return an error with a clear message saying the key cannot be converted. String values with special characters like newlines and tabs should be properly JSON-escaped without HTML encoding.
+
+The existing config parsing logic needs to be extended to recognize the new file extension and route Starlark configs through the new execution and conversion path before parsing them as normal pipeline configuration.

@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_analyze -E 'test(~no_identical_test_title)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noIdenticalTestTitle/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noIdenticalTestTitle/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noIdenticalTestTitle/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noIdenticalTestTitle/valid.js.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::no_identical_test_title::invalid_js",
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::no_identical_test_title::valid_js"
+  ],
+  "PASS_TO_PASS": []
+}

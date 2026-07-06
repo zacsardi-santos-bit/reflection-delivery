@@ -1,0 +1,20 @@
+{
+  "test_framework": "jest",
+  "test_command": "bash -c 'OF=\"\"; for a in \"$@\"; do case \"$a\" in --outputFile=*) OF=\"${a#*=}\";; esac; done; cd /workspace/repo; rm -rf junit/; npx ng test ng-zorro-antd-lib --watch=false --progress=false --browsers=ChromeHeadlessCI --include=components/input/input-wrapper.component.spec.ts 1>&2; EC=$?; python3 /workspace/karma2jest.py /dev/stdout \"$EC\"; [ -n \"$OF\" ] && python3 /workspace/karma2jest.py \"$OF\" \"$EC\"; exit 0' _",
+  "test_files": [
+    "components/input/input-wrapper.component.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with show count should be show/hidden count suffix",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with show count should be correct counting",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with count / max should be show/hidden count suffix",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with count / max should be correct counting",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with count / max / strategy / formatter should be show/hidden count suffix",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with count / max / strategy / formatter should be correct counting",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with count / max / strategy / formatter should be work count strategy",
+    "/workspace/repo/components/input/input-wrapper.component.spec.ts::input-wrapper with count config should be work with count / max / strategy / formatter should be work exceedFormatter"
+  ],
+  "PASS_TO_PASS": []
+}

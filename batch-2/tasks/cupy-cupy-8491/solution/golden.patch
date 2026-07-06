@@ -1,0 +1,1052 @@
+diff --git a/.pfnci/coverage.rst b/.pfnci/coverage.rst
+index bee3baff5..bbe3c03b2 100644
+--- a/.pfnci/coverage.rst
++++ b/.pfnci/coverage.rst
+@@ -1604,54 +1604,22 @@ CuPy CI Test Coverage
+      - ✅
+      - ✅
+    * - python
+-     - 3.9
+-     - 8
+-     - ✅
+-     - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - ✅
++     - 3.10
++     - 11
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - 
+      - 
+      - 
+-     - ✅
+      - 
+      - 
+      - 
+      - 
+-   * - 
+-     - 3.10
+-     - 6
+-     - 
+      - 
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+      - 
+@@ -1664,7 +1632,7 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
+-     - 
++     - ✅
+      - 
+      - 
+      - 
+@@ -1672,22 +1640,22 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+-     - 
+-     - 
+    * - 
+      - 3.11
+-     - 13
++     - 15
+      - 
+      - 
+      - 
+      - 
+      - ✅
+      - ✅
++     - ✅
++     - ✅
++     - ✅
++     - ✅
++     - ✅
++     - ✅
+      - 
+      - 
+      - 
+@@ -1696,8 +1664,6 @@ CuPy CI Test Coverage
+      - ✅
+      - ✅
+      - ✅
+-     - 
+-     - 
+      - ✅
+      - ✅
+      - 
+@@ -1705,21 +1671,21 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
++     - ✅
+      - 
+      - 
+      - 
+      - 
+      - 
+-     - ✅
+-     - ✅
+      - 
+-     - ✅
+      - 
+-     - ✅
+-     - ✅
+    * - 
+      - 3.12
+-     - 8
++     - 9
++     - 
++     - 
++     - 
++     - 
+      - 
+      - 
+      - 
+@@ -1742,17 +1708,13 @@ CuPy CI Test Coverage
+      - ✅
+      - ✅
+      - ✅
++     - 
++     - 
++     - ✅
+      - ✅
+      - ✅
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - 
+      - 
+    * - 
+@@ -1794,58 +1756,24 @@ CuPy CI Test Coverage
+      - 
+      - 
+    * - numpy
+-     - 1.22
+-     - 6
++     - 1.24
++     - 9
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+      - 
+      - 
+      - 
+      - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - 
+      - 
+-   * - 
+-     - 1.23
+-     - 11
+-     - 
+-     - 
+-     - ✅
+-     - ✅
+      - 
+      - 
+      - 
+      - 
+-     - ✅
+-     - ✅
+-     - ✅
+-     - ✅
+      - 
+      - 
+      - ✅
+@@ -1856,22 +1784,18 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
++     - ✅
+      - 
+      - 
+      - 
+      - 
+      - 
+-     - ✅
+-     - 
+-     - ✅
+-     - ✅
+-     - 
+      - 
+      - 
+      - 
+    * - 
+-     - 1.24
+-     - 7
++     - 1.25
++     - 9
+      - 
+      - 
+      - 
+@@ -1882,46 +1806,12 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+      - 
+      - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+-   * - 
+-     - 1.25
+-     - 2
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - 
+      - 
+      - 
+@@ -1933,11 +1823,7 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
++     - ✅
+      - 
+      - 
+      - 
+@@ -1947,21 +1833,25 @@ CuPy CI Test Coverage
+      - 
+    * - 
+      - 1.26
+-     - 8
+-     - 
+-     - 
++     - 16
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
++     - ✅
++     - ✅
+      - 
+      - 
+      - 
+      - 
++     - ✅
++     - ✅
+      - 
+      - 
++     - ✅
++     - ✅
+      - 
+      - 
+      - 
+@@ -1970,19 +1860,15 @@ CuPy CI Test Coverage
+      - ✅
+      - ✅
+      - ✅
++     - 
++     - 
+      - ✅
+      - ✅
+      - ✅
+-     - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - 
++     - ✅
++     - ✅
++     - ✅
+    * - 
+      - pre
+      - 1
+@@ -2060,8 +1946,8 @@ CuPy CI Test Coverage
+      - 
+      - 
+    * - 
+-     - 1.7
+-     - 4
++     - 1.10
++     - 3
+      - ✅
+      - ✅
+      - 
+@@ -2094,23 +1980,20 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
+-     - ✅
++     - 
+      - 
+      - 
+    * - 
+-     - 1.8
+-     - 5
++     - 1.11
++     - 7
+      - 
+      - 
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+-     - 
++     - ✅
++     - ✅
+      - 
+      - 
+      - 
+@@ -2135,12 +2018,12 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
+-   * - 
+-     - 1.9
+-     - 4
+      - 
+      - 
+      - 
++   * - 
++     - 1.12
++     - 24
+      - 
+      - 
+      - 
+@@ -2148,145 +2031,34 @@ CuPy CI Test Coverage
+      - 
+      - 
+      - 
+-     - ✅
+-     - ✅
+-     - 
+      - 
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-   * - 
+-     - 1.10
+-     - 10
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+-     - 
+      - ✅
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+-   * - 
+-     - 1.11
+-     - 2
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+      - ✅
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-   * - 
+-     - 1.12
+-     - 9
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - ✅
+      - ✅
+      - ✅
+      - ✅
+      - ✅
++     - 
++     - 
+      - ✅
+      - ✅
+      - ✅
+      - 
+-     - 
+      - ✅
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
+-     - 
++     - ✅
++     - ✅
+    * - 
+      - pre
+      - 1
+diff --git a/.pfnci/generate.py b/.pfnci/generate.py
+index 19ed8fecf..9d96f8474 100755
+--- a/.pfnci/generate.py
++++ b/.pfnci/generate.py
+@@ -145,6 +145,16 @@ class LinuxGenerator:
+                 'ENV PATH "/usr/lib64/ccache:${PATH}"',
+                 '',
+             ]
++
++            if os_version == '7':
++                lines += [
++                    'RUN yum -y install openssl11-devel',
++                    'ENV CFLAGS "-I/usr/include/openssl11"',
++                    'ENV CPPFLAGS "-I/usr/include/openssl11"',
++                    'ENV LDFLAGS "-L/usr/lib64/openssl11"',
++                    '',
++                ]
++
+             assert matrix.mpi4py is None, 'mpi4py test unsupported on CentOS'
+         else:
+             raise AssertionError
+diff --git a/.pfnci/matrix.yaml b/.pfnci/matrix.yaml
+index 7079a3b8c..913ade18a 100644
+--- a/.pfnci/matrix.yaml
++++ b/.pfnci/matrix.yaml
+@@ -15,9 +15,9 @@
+   cutensor: null
+   cusparselt: null
+   cudnn: "8.8"
+-  python: "3.9"
+-  numpy: "1.22"
+-  scipy: "1.7"
++  python: "3.10"
++  numpy: "1.24"
++  scipy: "1.10"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -46,8 +46,8 @@
+   cusparselt: null
+   cudnn: "8.8"
+   python: "3.10"
+-  numpy: "1.23"
+-  scipy: "1.8"
++  numpy: "1.24"
++  scipy: "1.11"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -76,8 +76,8 @@
+   cusparselt: null
+   cudnn: "8.8"
+   python: "3.11"
+-  numpy: "1.24"
+-  scipy: "1.10"
++  numpy: "1.25"
++  scipy: "1.11"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -105,9 +105,9 @@
+   cutensor: "2.0"
+   cusparselt: null
+   cudnn: "8.8"
+-  python: "3.9"
+-  numpy: "1.22"
+-  scipy: "1.10"
++  python: "3.11"
++  numpy: "1.26"
++  scipy: "1.11"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -135,9 +135,9 @@
+   cutensor: "2.0"
+   cusparselt: null
+   cudnn: "8.8"
+-  python: "3.10"
+-  numpy: "1.23"
+-  scipy: "1.8"
++  python: "3.11"
++  numpy: "1.24"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -166,8 +166,8 @@
+   cusparselt: null
+   cudnn: "8.8"
+   python: "3.11"
+-  numpy: "1.23"
+-  scipy: "1.9"
++  numpy: "1.25"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -195,9 +195,9 @@
+   cutensor: "2.0"
+   cusparselt: null
+   cudnn: "8.8"
+-  python: "3.11"
+-  numpy: "1.24"
+-  scipy: "1.10"
++  python: "3.10"
++  numpy: "1.26"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -225,9 +225,9 @@
+   cutensor: "2.0"
+   cusparselt: "0.6.1"
+   cudnn: "8.8"
+-  python: "3.9"
+-  numpy: "1.23"
+-  scipy: "1.9"
++  python: "3.10"
++  numpy: "1.25"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -256,8 +256,8 @@
+   cusparselt: "0.6.1"
+   cudnn: "8.8"
+   python: "3.11"
+-  numpy: "1.25"
+-  scipy: "1.11"
++  numpy: "1.26"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -285,8 +285,8 @@
+   cutensor: "2.0"
+   cusparselt: "0.6.1"
+   cudnn: "8.8"
+-  python: "3.12"
+-  numpy: "1.26"
++  python: "3.11"
++  numpy: "1.24"
+   scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+@@ -315,8 +315,8 @@
+   cutensor: "2.0"
+   cusparselt: "0.6.1"
+   cudnn: "8.8"
+-  python: "3.12"
+-  numpy: "1.26"
++  python: "3.11"
++  numpy: "1.25"
+   scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+@@ -418,9 +418,9 @@
+   cutensor: null
+   cusparselt: null
+   cudnn: null
+-  python: "3.9"
+-  numpy: "1.22"
+-  scipy: "1.7"
++  python: "3.10"
++  numpy: "1.24"
++  scipy: "1.10"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -441,9 +441,9 @@
+   cutensor: null
+   cusparselt: null
+   cudnn: null
+-  python: "3.10"
+-  numpy: "1.23"
+-  scipy: "1.10"
++  python: "3.11"
++  numpy: "1.25"
++  scipy: "1.11"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -465,8 +465,8 @@
+   cutensor: null
+   cusparselt: null
+   cudnn: null
+-  python: "3.11"
+-  numpy: "1.24"
++  python: "3.12"
++  numpy: "1.26"
+   scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+@@ -491,9 +491,9 @@
+   cutensor: "2.0"
+   cusparselt: null  # TODO use cuSPARSELt 0.6+ after bumping CUDA to 12.x
+   cudnn: "8.8"
+-  python: "3.11"
+-  numpy: "1.23"
+-  scipy: "1.10"
++  python: "3.12"
++  numpy: "1.26"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -521,9 +521,9 @@
+   cutensor: "2.0"
+   cusparselt: null  # TODO use cuSPARSELt 0.6+ after bumping CUDA to 12.x
+   cudnn: "8.8"
+-  python: "3.9"
+-  numpy: "1.23"
+-  scipy: "1.8"
++  python: "3.12"
++  numpy: "1.26"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+@@ -548,7 +548,7 @@
+   cutensor: "2.0"
+   cusparselt: null  # TODO use cuSPARSELt 0.6+ after bumping CUDA to 12.x
+   cudnn: "8.8"
+-  python: "3.11"
++  python: "3.12"
+   numpy: "pre"
+   scipy: "pre"
+   optuna: "pre"
+@@ -574,9 +574,9 @@
+   cutensor: "2.0"
+   cusparselt: null
+   cudnn: "8.8"
+-  python: "3.10"
+-  numpy: "1.22"
+-  scipy: "1.7"
++  python: "3.12"
++  numpy: "1.26"
++  scipy: "1.12"
+   optuna: "3"
+   mpi4py: null
+   cython: "0.29"
+diff --git a/.pfnci/schema.yaml b/.pfnci/schema.yaml
+index 7e428db25..c16510056 100644
+--- a/.pfnci/schema.yaml
++++ b/.pfnci/schema.yaml
+@@ -242,8 +242,6 @@ cudnn:
+ # When adding a new Python version, you may also need to add the version to the
+ # list of supported Python versions in the Python libraries.
+ python:
+-  "3.9":
+-    spec: "3.9.6"
+   "3.10":
+     spec: "3.10.0"
+   "3.11":
+@@ -261,36 +259,19 @@ python:
+ # When adding a new NumPy version, you may also need to add the version to the
+ # list of supported Python versions in SciPy.
+ numpy:
+-  "1.22":
+-    spec: "==1.22.*"
+-    python:
+-      # - "3.8"
+-      - "3.9"
+-      - "3.10"
+-  "1.23":
+-    spec: "==1.23.*"
+-    python:
+-      # - "3.8"
+-      - "3.9"
+-      - "3.10"
+-      - "3.11"
+   "1.24":
+     spec: "==1.24.*"
+     python:
+-      # - "3.8"
+-      - "3.9"
+       - "3.10"
+       - "3.11"
+   "1.25":
+     spec: "==1.25.*"
+     python:
+-      - "3.9"
+       - "3.10"
+       - "3.11"
+   "1.26":
+     spec: "==1.26.*"
+     python:
+-      - "3.9"
+       - "3.10"
+       - "3.11"
+       - "3.12"
+@@ -302,88 +283,30 @@ scipy:
+     # Note: Optuna depends on SciPy, so Optuna must also be set to null when
+     # setting SciPy to null to run tests without SciPy.
+     spec: null
+-  "1.7":
+-    spec: "==1.7.*"
+-    python:
+-      # - "3.7"
+-      # - "3.8"
+-      - "3.9"
+-      - "3.10"
+-    numpy:
+-      # - "1.16"
+-      # - "1.17"
+-      # - "1.18"
+-      # - "1.19"
+-      # - "1.20"
+-      # - "1.21"
+-      - "1.22"
+-  "1.8":
+-    spec: "==1.8.*"
+-    python:
+-      # - "3.8"
+-      - "3.9"
+-      - "3.10"
+-    numpy:
+-      # - "1.17"
+-      # - "1.18"
+-      # - "1.19"
+-      # - "1.20"
+-      # - "1.21"
+-      - "1.22"
+-      - "1.23"
+-      - "1.24"
+-  "1.9":
+-    spec: "==1.9.*"
+-    python:
+-      # - "3.8"
+-      - "3.9"
+-      - "3.10"
+-      - "3.11"
+-    numpy:
+-      # - "1.17"
+-      # - "1.18"
+-      # - "1.19"
+-      # - "1.20"
+-      # - "1.21"
+-      - "1.22"
+-      - "1.23"
+   "1.10":
+     spec: "==1.10.*"
+     python:
+-      # - "3.8"
+-      - "3.9"
+       - "3.10"
+       - "3.11"
+     numpy:
+-      # - "1.20"
+-      # - "1.21"
+-      - "1.22"
+-      - "1.23"
+       - "1.24"
+   "1.11":
+     spec: "==1.11.*"
+     python:
+-      - "3.9"
+       - "3.10"
+       - "3.11"
+       - "3.12"
+     numpy:
+-      # - "1.21"
+-      - "1.22"
+-      - "1.23"
+       - "1.24"
+       - "1.25"
+       - "1.26"
+   "1.12":
+     spec: "==1.12.*"
+     python:
+-      - "3.9"
+       - "3.10"
+       - "3.11"
+       - "3.12"
+     numpy:
+-      - "1.22"
+-      - "1.23"
+       - "1.24"
+       - "1.25"
+       - "1.26"
+diff --git a/cupyx/scipy/signal/_upfirdn.py b/cupyx/scipy/signal/_upfirdn.py
+index e3977f621..f5f9c99d3 100644
+--- a/cupyx/scipy/signal/_upfirdn.py
++++ b/cupyx/scipy/signal/_upfirdn.py
+@@ -441,7 +441,7 @@ def upfirdn(
+     up=1,
+     down=1,
+     axis=-1,
+-    mode="constant",
++    mode=None,
+     cval=0
+ ):
+     """
+@@ -462,9 +462,9 @@ def upfirdn(
+         linear filter. The filter is applied to each subarray along
+         this axis. Default is -1.
+     mode : str, optional
+-        This parameter is not implemented for values other than ``"constant"``.
++        This parameter is not implemented.
+     cval : float, optional
+-        This parameter is not implemented for values other than 0.
++        This parameter is not implemented.
+ 
+     Returns
+     -------
+@@ -492,9 +492,7 @@ def upfirdn(
+     .. [1] P. P. Vaidyanathan, Multirate Systems and Filter Banks,
+        Prentice Hall, 1993.
+     """
+-    if mode is None:
+-        mode = "constant"  # For backwards compatibility
+-    if mode != "constant" or cval != 0:
++    if mode is not None or cval != 0:
+         raise NotImplementedError(f"{mode = } and {cval =} not implemented.")
+ 
+     ufd = _UpFIRDn(h, x.dtype, int(up), int(down))
+diff --git a/docs/source/install.rst b/docs/source/install.rst
+index 590ab57ea..a8ad312d9 100644
+--- a/docs/source/install.rst
++++ b/docs/source/install.rst
+@@ -14,7 +14,7 @@ Requirements
+     * This requirement is optional if you install CuPy from ``conda-forge``. However, you still need to have a compatible
+       driver installed for your GPU. See :ref:`install_cupy_from_conda_forge` for details.
+ 
+-* `Python <https://python.org/>`_: v3.9 / v3.10 / v3.11 / v3.12
++* `Python <https://python.org/>`_: v3.10 / v3.11 / v3.12
+ 
+ .. note::
+ 
+@@ -25,9 +25,9 @@ Python Dependencies
+ 
+ NumPy/SciPy-compatible API in CuPy v14 is based on NumPy 2.0 and SciPy 1.13, and has been tested against the following versions:
+ 
+-* `NumPy <https://numpy.org/>`_: v1.22 / v1.23 / v1.24 / v1.25 / v1.26 / v2.0
++* `NumPy <https://numpy.org/>`_: v1.24 / v1.25 / v1.26 / v2.0
+ 
+-* `SciPy <https://scipy.org/>`_ (*optional*): v1.7 / v1.8 / v1.9 / v1.10 / v1.11
++* `SciPy <https://scipy.org/>`_ (*optional*): v1.10 / v1.11 / v1.12
+ 
+     * Required only when copying sparse matrices from GPU to CPU (see :doc:`../reference/scipy_sparse`.)
+ 
+diff --git a/tests/cupyx_tests/scipy_tests/signal_tests/test_upfirdn.py b/tests/cupyx_tests/scipy_tests/signal_tests/test_upfirdn.py
+index 0a3bbb113..204f51261 100644
+--- a/tests/cupyx_tests/scipy_tests/signal_tests/test_upfirdn.py
++++ b/tests/cupyx_tests/scipy_tests/signal_tests/test_upfirdn.py
+@@ -103,9 +103,6 @@ _upfirdn_modes = [
+     'constant', 'wrap', 'edge', 'smooth', 'symmetric', 'reflect',
+     'antisymmetric', 'antireflect', 'line',
+ ]
+-_upfirdn_unsupported_mode = pytest.mark.xfail(
+-    reason="upfirdn `mode=...` not implemented"
+-)
+ 
+ 
+ @testing.with_requires('scipy')
+@@ -169,22 +166,17 @@ class TestUpfirdn:
+         y = scp.signal.upfirdn(h, x, up=1, down=down)
+         return y
+ 
+-    @pytest.mark.parametrize('size', [8])
+-    # include cases with h_len > 2*size
+-    @pytest.mark.parametrize('h_len', [4, 5, 26])
++    @pytest.mark.xfail(reason="upfirdn `mode=...` not implemented")
+     @pytest.mark.parametrize(
+-        'mode',
+-        [
+-            pytest.param(mode, marks=_upfirdn_unsupported_mode)
+-            if mode != 'constant'
+-            else mode
+-            for mode in _upfirdn_modes
+-        ]
++        'size, h_len, mode, dtype',
++        product(
++            [8],
++            [4, 5, 26],  # include cases with h_len > 2*size
++            _upfirdn_modes,
++            [np.float32, np.float64, np.complex64, np.complex128],
++        )
+     )
+-    @pytest.mark.parametrize(
+-        'dtype', [np.float32, np.float64, np.complex64, np.complex128]
+-    )
+-    @testing.numpy_cupy_allclose(scipy_name='scp', rtol=1e-5)
++    @testing.numpy_cupy_allclose(scipy_name='scp')
+     def test_modes(self, xp, scp, size, h_len, mode, dtype):
+         random_state = np.random.RandomState(5)
+         x = random_state.randn(size).astype(dtype)

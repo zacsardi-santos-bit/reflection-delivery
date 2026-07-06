@@ -1,0 +1,30 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && /workspace/testtools/node_modules/.bin/jest --config /workspace/testtools/jest.config.json misc/api-doc.spec.ts --no-coverage",
+  "test_files": [
+    "misc/api-doc.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should return [] if there are no docs to extract",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract basic info from directives and components",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract basic type info from classes",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract inputs info",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract input default value",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract inferred types",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract inputs info from setters",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract outputs info",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract public methods info",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should not extract public methods info when annotated with @internal",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract documentation from services",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract documentation of properties from services",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract documentation from interfaces",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract method documentation from interfaces",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract documentation from documented classes",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract deprecation information",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract feature introduction information",
+    "/workspace/repo/misc/api-doc.spec.ts::APIDocVisitor should extract class and interface type parameters"
+  ],
+  "PASS_TO_PASS": []
+}

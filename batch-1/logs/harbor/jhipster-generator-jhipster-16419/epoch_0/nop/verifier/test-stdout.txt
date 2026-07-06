@@ -1,0 +1,1235 @@
+patching file test/__snapshots__/knative.spec.js.snap
+patching file test/__snapshots__/kubernetes.helm.spec.js.snap
+
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+
+  JHipster Kubernetes Helm Sub Generator
+    only gateway
+      1) should match files snapshot
+      ✔ creates expected registry files and content
+      ✔ creates expected gateway files and content (1ms)
+      ✔ create the apply script
+    gateway and mysql microservice
+      2) should match files snapshot
+      ✔ creates expected registry files (1ms)
+      ✔ creates expected gateway files (1ms)
+      ✔ creates expected mysql files
+      ✔ create the apply script
+    mysql microservice with custom namespace
+      3) should match files snapshot
+      ✔ creates expected registry files
+      ✔ creates expected mysql files
+      ✔ creates expected namespace file
+      ✔ create the apply script
+    gateway and ingress
+      4) should match files snapshot
+      ✔ creates expected registry files
+      ✔ creates expected gateway files
+      ✔ creates expected ingress files
+      ✔ create the apply script
+    MySQL and PostgreSQL microservices without gateway
+      5) should match files snapshot
+      ✔ creates expected registry files (1ms)
+      ✔ doesn't creates gateway files (1ms)
+      ✔ creates expected mysql files (1ms)
+      ✔ creates expected psql files
+      ✔ create the apply script (1ms)
+    gateway, mysql, psql, mongodb, mariadb microservices
+      6) should match files snapshot
+      ✔ creates expected registry files
+      ✔ creates expected gateway files (1ms)
+      ✔ creates expected mysql files
+      ✔ creates expected psql files
+      ✔ creates expected mongodb files
+      ✔ creates expected mariadb files (1ms)
+      ✔ create the apply script
+    monolith application
+      7) should match files snapshot
+      ✔ doesn't creates registry files
+      ✔ creates expected default files (1ms)
+      ✔ create the apply script
+    Kafka application
+      8) should match files snapshot
+      ✔ creates expected default files (2ms)
+      ✔ create the apply script
+    mysql microservice with custom namespace and jhipster prometheus monitoring
+      9) should match files snapshot
+      ✔ creates expected registry files
+      ✔ creates expected mysql files
+      ✔ creates expected prometheus files
+      ✔ creates expected namespace file
+      ✔ create the apply script
+    gateway with istio
+      10) should match files snapshot
+      ✔ creates expected registry files
+      ✔ creates expected service gateway files (1ms)
+      ✔ creates expected routing gateway and istio files
+      ✔ create the apply script
+
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+
+  JHipster Knative Sub Generator
+    Using K8s generator type
+      only gateway
+        ✔ should match files snapshot (3ms)
+        ✔ creates expected registry files and content
+        ✔ creates expected gateway files and content
+        ✔ create the apply script
+      gateway and mysql microservice
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ creates expected mysql files
+        ✔ create the apply script
+      mysql microservice with custom namespace
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected mysql files
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway and ingress
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ create the apply script
+      MySQL and PostgreSQL microservices without gateway
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ doesn't creates gateway files
+        ✔ creates expected mysql files
+        ✔ creates expected psql files
+        ✔ create the apply script
+      gateway, mysql, psql, mongodb, mariadb, mssql microservices
+        ✔ should match files snapshot (2ms)
+        ✔ creates expected registry files (1ms)
+        ✔ creates expected gateway files (1ms)
+        ✔ creates expected mysql files
+        ✔ creates expected psql files
+        ✔ creates expected mongodb files
+        ✔ creates expected mariadb files
+        ✔ creates expected mssql files (1ms)
+        ✔ create the apply script
+      mysql microservice with custom namespace and jhipster prometheus monitoring
+        ✔ should match files snapshot (3ms)
+        ✔ creates expected registry files
+        ✔ creates expected mysql files
+        ✔ creates expected prometheus files (1ms)
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway with istio routing files
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected service gateway files
+        ✔ creates expected routing gateway and istio files (1ms)
+        ✔ create the apply script
+    Using Helm generator type
+      only gateway
+        11) should match files snapshot
+        ✔ creates expected registry files and content
+        ✔ creates expected gateway files and content
+        ✔ create the apply script
+      gateway and mysql microservice
+        12) should match files snapshot
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ creates expected mysql files
+        ✔ create the apply script
+      mysql microservice with custom namespace
+        13) should match files snapshot
+        ✔ creates expected registry files
+        ✔ creates expected mysql files
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway and ingress
+        14) should match files snapshot
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ creates expected ingress files (1ms)
+        ✔ create the apply script
+      MySQL and PostgreSQL microservices without gateway
+        15) should match files snapshot
+        ✔ creates expected registry files (1ms)
+        ✔ doesn't creates gateway files
+        ✔ creates expected mysql files (1ms)
+        ✔ creates expected psql files
+        ✔ create the apply script
+      gateway, mysql, psql, mongodb, mariadb microservices
+        16) should match files snapshot
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ creates expected mysql files
+        ✔ creates expected psql files
+        ✔ creates expected mongodb files
+        ✔ creates expected mariadb files
+        ✔ create the apply script
+      mysql microservice with custom namespace and jhipster prometheus monitoring
+        17) should match files snapshot
+        ✔ creates expected registry files (1ms)
+        ✔ creates expected mysql files (1ms)
+        ✔ creates expected prometheus files (1ms)
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway with istio routing files
+        18) should match files snapshot
+        ✔ creates expected registry files (1ms)
+        ✔ creates expected service gateway files
+        ✔ creates expected routing gateway and istio files
+        ✔ create the apply script
+
+
+  121 passing (6s)
+  18 failing
+
+  1) JHipster Kubernetes Helm Sub Generator
+       only gateway
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator only gateway should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -89,11 +89,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -330,15 +329,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:100:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  2) JHipster Kubernetes Helm Sub Generator
+       gateway and mysql microservice
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator gateway and mysql microservice should match files snapshot 1`
+
+- Snapshot  - 11
++ Received  +  0
+
+@@ -91,11 +91,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -344,15 +343,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -520,15 +514,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:139:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  3) JHipster Kubernetes Helm Sub Generator
+       mysql microservice with custom namespace
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator mysql microservice with custom namespace should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -89,11 +89,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -330,15 +329,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:180:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  4) JHipster Kubernetes Helm Sub Generator
+       gateway and ingress
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator gateway and ingress should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -90,11 +90,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -330,15 +329,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:223:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  5) JHipster Kubernetes Helm Sub Generator
+       MySQL and PostgreSQL microservices without gateway
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator MySQL and PostgreSQL microservices without gateway should match files snapshot 1`
+
+- Snapshot  - 12
++ Received  +  1
+
+@@ -91,11 +91,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -344,15 +343,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -519,23 +513,18 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: postgresql
+-   version: ^6.5.3
+-   repository: https://charts.bitnami.com/bitnami
+-   condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+    - name: postgresql
+      version: ^6.5.3
+-     repository: https://charts.bitnami.com/bitnami
++     repository: https://charts.helm.sh/stable
+      condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-helm/templates/_helpers.tpl": Object {
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:268:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  6) JHipster Kubernetes Helm Sub Generator
+       gateway, mysql, psql, mongodb, mariadb microservices
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator gateway, mysql, psql, mongodb, mariadb microservices should match files snapshot 1`
+
+- Snapshot  - 28
++ Received  +  2
+
+@@ -103,11 +103,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -395,15 +394,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -571,23 +565,18 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mariadb
+-   version: ^6.12.2
+-   repository: https://charts.bitnami.com/bitnami
+-   condition: mariadb.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmariadb-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+    - name: mariadb
+      version: ^6.12.2
+-     repository: https://charts.bitnami.com/bitnami
++     repository: https://charts.helm.sh/stable
+      condition: mariadb.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmariadb-helm/templates/_helpers.tpl": Object {
+@@ -759,15 +748,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mongodb-replicaset
+-   version: ^3.10.1
+-   repository: https://charts.helm.sh/stable
+-   condition: mongodb.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmongodb-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -940,15 +924,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -1115,23 +1094,18 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: postgresql
+-   version: ^6.5.3
+-   repository: https://charts.bitnami.com/bitnami
+-   condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+    - name: postgresql
+      version: ^6.5.3
+-     repository: https://charts.bitnami.com/bitnami
++     repository: https://charts.helm.sh/stable
+      condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-helm/templates/_helpers.tpl": Object {
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:319:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  7) JHipster Kubernetes Helm Sub Generator
+       monolith application
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator monolith application should match files snapshot 1`
+
+- Snapshot  - 5
++ Received  + 0
+
+@@ -142,15 +142,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "samplemysql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:373:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  8) JHipster Kubernetes Helm Sub Generator
+       Kafka application
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator Kafka application should match files snapshot 1`
+
+- Snapshot  - 10
++ Received  +  0
+
+@@ -89,15 +89,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: kafka
+-   version: ^0.20.1
+-   repository: https://charts.helm.sh/incubator
+-   condition: kafka.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -215,15 +210,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "samplekafka-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:410:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  9) JHipster Kubernetes Helm Sub Generator
+       mysql microservice with custom namespace and jhipster prometheus monitoring
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator mysql microservice with custom namespace and jhipster prometheus monitoring should match files snapshot 1`
+
+- Snapshot  - 17
++ Received  +  3
+
+@@ -89,31 +89,22 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: prometheus-community
+-   version: ^9.2.0
+-   repository: https://prometheus-community.github.io/helm-charts
+-   condition: prometheus.enabled
+- - name: grafana
+-   version: ^4.0.0
+-   repository: https://grafana.github.io/helm-charts
+-   condition: prometheus.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+-   - name: prometheus-community
++   - name: prometheus
+      version: ^9.2.0
+-     repository: https://prometheus-community.github.io/helm-charts
++     repository: https://charts.helm.sh/stable
+      condition: prometheus.enabled
+    - name: grafana
+      version: ^4.0.0
+-     repository: https://grafana.github.io/helm-charts
++     repository: https://charts.helm.sh/stable
+      condition: prometheus.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/templates/_helpers.tpl": Object {
+@@ -2675,15 +2666,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:445:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  10) JHipster Kubernetes Helm Sub Generator
+       gateway with istio
+         should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Kubernetes Helm Sub Generator gateway with istio should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -89,11 +89,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+@@ -463,15 +462,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-helm/requirements.yaml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/kubernetes.helm.spec.js:490:39)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  11) JHipster Knative Sub Generator
+       Using Helm generator type
+         only gateway
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type only gateway should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -73,11 +73,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -444,15 +443,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-knative/requirements.yml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/knative.spec.js:471:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  12) JHipster Knative Sub Generator
+       Using Helm generator type
+         gateway and mysql microservice
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type gateway and mysql microservice should match files snapshot 1`
+
+- Snapshot  - 11
++ Received  +  0
+
+@@ -75,11 +75,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -458,15 +457,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -712,15 +706,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/knative.spec.js:511:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  13) JHipster Knative Sub Generator
+       Using Helm generator type
+         mysql microservice with custom namespace
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type mysql microservice with custom namespace should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -73,11 +73,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -444,15 +443,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/knative.spec.js:553:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  14) JHipster Knative Sub Generator
+       Using Helm generator type
+         gateway and ingress
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type gateway and ingress should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -73,11 +73,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -443,15 +442,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-knative/requirements.yml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/knative.spec.js:596:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  15) JHipster Knative Sub Generator
+       Using Helm generator type
+         MySQL and PostgreSQL microservices without gateway
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type MySQL and PostgreSQL microservices without gateway should match files snapshot 1`
+
+- Snapshot  - 12
++ Received  +  1
+
+@@ -75,11 +75,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -458,15 +457,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -659,23 +653,18 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: postgresql
+-   version: ^6.5.3
+-   repository: https://charts.bitnami.com/bitnami
+-   condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+    - name: postgresql
+      version: ^6.5.3
+-     repository: https://charts.bitnami.com/bitnami
++     repository: https://charts.helm.sh/stable
+      condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-knative/templates/_helpers.tpl": Object {
+      at Context.<anonymous> (test/knative.spec.js:641:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  16) JHipster Knative Sub Generator
+       Using Helm generator type
+         gateway, mysql, psql, mongodb, mariadb microservices
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type gateway, mysql, psql, mongodb, mariadb microservices should match files snapshot 1`
+
+- Snapshot  - 28
++ Received  +  2
+
+@@ -87,11 +87,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -509,15 +508,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -763,23 +757,18 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mariadb
+-   version: ^6.12.2
+-   repository: https://charts.bitnami.com/bitnami
+-   condition: mariadb.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmariadb-knative/requirements.yml": Object {
+      "contents": "dependencies:
+    - name: mariadb
+      version: ^6.12.2
+-     repository: https://charts.bitnami.com/bitnami
++     repository: https://charts.helm.sh/stable
+      condition: mariadb.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmariadb-knative/templates/_helpers.tpl": Object {
+@@ -976,15 +965,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mongodb-replicaset
+-   version: ^3.10.1
+-   repository: https://charts.helm.sh/stable
+-   condition: mongodb.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmongodb-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -1180,15 +1164,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -1381,23 +1360,18 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: postgresql
+-   version: ^6.5.3
+-   repository: https://charts.bitnami.com/bitnami
+-   condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+    - name: postgresql
+      version: ^6.5.3
+-     repository: https://charts.bitnami.com/bitnami
++     repository: https://charts.helm.sh/stable
+      condition: postgresql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "mspsql-knative/templates/_helpers.tpl": Object {
+      at Context.<anonymous> (test/knative.spec.js:693:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  17) JHipster Knative Sub Generator
+       Using Helm generator type
+         mysql microservice with custom namespace and jhipster prometheus monitoring
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type mysql microservice with custom namespace and jhipster prometheus monitoring should match files snapshot 1`
+
+- Snapshot  - 17
++ Received  +  3
+
+@@ -73,31 +73,22 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: prometheus-community
+-   version: ^9.2.0
+-   repository: https://prometheus-community.github.io/helm-charts
+-   condition: prometheus.enabled
+- - name: grafana
+-   version: ^4.0.0
+-   repository: https://grafana.github.io/helm-charts
+-   condition: prometheus.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+-   - name: prometheus-community
++   - name: prometheus
+      version: ^9.2.0
+-     repository: https://prometheus-community.github.io/helm-charts
++     repository: https://charts.helm.sh/stable
+      condition: prometheus.enabled
+    - name: grafana
+      version: ^4.0.0
+-     repository: https://grafana.github.io/helm-charts
++     repository: https://charts.helm.sh/stable
+      condition: prometheus.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/templates/_helpers.tpl": Object {
+@@ -2836,15 +2827,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "msmysql-knative/requirements.yml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/knative.spec.js:747:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  18) JHipster Knative Sub Generator
+       Using Helm generator type
+         gateway with istio routing files
+           should match files snapshot:
+     Error: expect(received).toMatchSnapshot()
+
+Snapshot name: `JHipster Knative Sub Generator Using Helm generator type gateway with istio routing files should match files snapshot 1`
+
+- Snapshot  - 6
++ Received  + 0
+
+@@ -73,11 +73,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+  ",
+      "stateCleared": "modified",
+    },
+    "csvc-knative/requirements.yml": Object {
+      "contents": "dependencies:
+@@ -443,15 +442,10 @@
+  sources:
+  - https://github.com/jhipster/generator-jhipster.git
+  maintainers:
+  - name: Team JHipster
+    email:
+- dependencies:
+- - name: mysql
+-   version: ^1.4.0
+-   repository: https://charts.helm.sh/stable
+-   condition: mysql.enabled
+  ",
+      "stateCleared": "modified",
+    },
+    "jhgate-knative/requirements.yml": Object {
+      "contents": "dependencies:
+      at Context.<anonymous> (test/knative.spec.js:793:41)
+      at process.processImmediate (node:internal/timers:483:21)
+
+
+
+reward=0 graded=139 found=139 failed=26 parsed=59 framework=mocha exit_code=18

@@ -1,0 +1,29 @@
+{
+    "id": "647ae251-136c-4d2e-b75b-1858cb97ecf7",
+    "started_at": "2026-07-04T15:37:47.109745",
+    "finished_at": "2026-07-04T15:38:27.843684",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tailcallhq-tailcall-987": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tailcallhq-tailcall-987__Gte4Q8E"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

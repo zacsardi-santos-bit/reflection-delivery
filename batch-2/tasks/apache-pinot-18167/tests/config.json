@@ -1,0 +1,25 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-spi,pinot-common test -Dtest=InstanceConfigValidatorRegistryTest,TableConfigValidatorRegistryTest,InstanceUtilsTest -DfailIfNoTests=false -Denforcer.skip=true",
+  "test_files": [
+    "pinot-common/src/test/java/org/apache/pinot/common/utils/config/InstanceUtilsTest.java",
+    "pinot-controller/src/test/java/org/apache/pinot/controller/helix/core/PinotHelixResourceManagerConfigValidationTest.java",
+    "pinot-spi/src/test/java/org/apache/pinot/spi/config/instance/InstanceConfigValidatorRegistryTest.java",
+    "pinot-spi/src/test/java/org/apache/pinot/spi/config/table/TableConfigValidatorRegistryTest.java"
+  ],
+  "num_test_files": 4,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7",
+    "Pinot::test_8",
+    "Pinot::test_9",
+    "Pinot::test_10"
+  ],
+  "PASS_TO_PASS": []
+}

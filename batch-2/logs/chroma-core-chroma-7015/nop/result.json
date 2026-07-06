@@ -1,0 +1,29 @@
+{
+    "id": "05dd8d9b-70d8-49be-9696-e57e45d3d6c3",
+    "started_at": "2026-07-06T12:16:51.282703",
+    "finished_at": "2026-07-06T12:18:20.480764",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__chroma-core-chroma-7015": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "chroma-core-chroma-7015__dnVDanf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

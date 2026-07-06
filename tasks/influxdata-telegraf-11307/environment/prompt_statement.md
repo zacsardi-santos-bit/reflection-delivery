@@ -1,7 +1,0 @@
-I'd like to add a CSV output serializer to Telegraf. Right now there's no built-in way to output metrics in comma-separated format, which makes it harder to feed data into systems that expect tabular input. I want to be able to serialize metrics where each row contains the timestamp, the measurement name, tag values, and field values — with fields sorted alphabetically so the output is consistent.
-
-A few configuration options are important to me: being able to choose the timestamp format (Unix epoch seconds by default, but also milliseconds, microseconds, nanoseconds, or a formatted date string), setting a custom single-character column delimiter (like a semicolon), optionally outputting a header row that names each column (written once at the start, not repeated for every metric), and optionally prefixing tag and field column names in the header so it's clear which columns are tags versus fields.
-
-The serializer should also do input validation — if someone passes a multi-character delimiter or an unrecognized timestamp format string, it should return a descriptive error right away rather than silently producing bad output. Similarly, if the underlying write fails due to an invalid delimiter character (like a newline), the error message should make it clear the write itself failed.
-
-The serializer should work both for single-metric serialization and for batch serialization of multiple metrics at once — in batch mode, the header row (if enabled) should appear only once at the beginning.

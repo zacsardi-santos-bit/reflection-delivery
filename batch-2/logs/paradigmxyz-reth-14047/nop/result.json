@@ -1,0 +1,29 @@
+{
+    "id": "3b49784e-70f9-4c4b-b6c1-47d29aa02219",
+    "started_at": "2026-07-04T15:36:43.680614",
+    "finished_at": "2026-07-04T15:39:05.002678",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__paradigmxyz-reth-14047": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "paradigmxyz-reth-14047__9Bxoi5K"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

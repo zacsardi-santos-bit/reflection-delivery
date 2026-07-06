@@ -1,0 +1,152 @@
+patching file packages/storybook-addon-markdown-docs/test-node/createStoriesCode.test.js
+patching file packages/storybook-addon-markdown-docs/test-node/mdToJsx.test.js
+patching file packages/storybook-addon-markdown-docs/test-node/mdjsToCsf.test.js
+
+
+  createStoriesCode
+    1) returns a single stories as js string
+    2) returns multiple stories as js string
+    3) sets the story name if it is different from the key
+    4) handles a multiline story
+    ✓ throws when given invalid input
+
+  compileMdToJsx
+    ✓ turns MD into JSX (98ms)
+    ✓ turns HTML into JSX
+    ✓ turns MD with HTML into JSX
+
+  createDocsPage()
+    5) creates a docs page default export
+    ✓ registers the story name to key mappings
+
+  mdjsToCsf
+    ✓ transforms a mdjs file to csf (54ms)
+    6) passes on filePath and options to mdjsToMd
+
+
+  6 passing (203ms)
+  6 failing
+
+  1) createStoriesCode
+       returns a single stories as js string:
+
+      AssertionError: expected 'export const StoryA = () => html`<div>Hello world</div>`\nStoryA.story = StoryA.story || {};\nStoryA.story.parameters = StoryA.story.parameters || {};\nStoryA.story.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";' to deeply equal 'export const StoryA = () => html`<div>Hello world</div>`\nStoryA.parameters = StoryA.parameters || {};\nStoryA.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";'
+      + expected - actual
+
+       export const StoryA = () => html`<div>Hello world</div>`
+      -StoryA.story = StoryA.story || {};
+      -StoryA.story.parameters = StoryA.story.parameters || {};
+      -StoryA.story.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";
+      +StoryA.parameters = StoryA.parameters || {};
+      +StoryA.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";
+      
+      at Context.<anonymous> (test-node/createStoriesCode.test.js:16:50)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  2) createStoriesCode
+       returns multiple stories as js string:
+
+      AssertionError: expected 'export const StoryA = () => html`<div>Hello world</div>`\nStoryA.story = StoryA.story || {};\nStoryA.story.parameters = StoryA.story.parameters || {};\nStoryA.story.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";\n\nexport const StoryB = () => html`<div>Hello world</div>`\nStoryB.story = StoryB.story || {};\nStoryB.story.parameters = StoryB.story.parameters || {};\nStoryB.story.parameters.mdxSource = "export const StoryB = () => html`<div>Hello world</div>`";' to deeply equal 'export const StoryA = () => html`<div>Hello world</div>`\nStoryA.parameters = StoryA.parameters || {};\nStoryA.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";\n\nexport const StoryB = () => html`<div>Hello world</div>`\nStoryB.parameters = StoryB.parameters || {};\nStoryB.parameters.mdxSource = "export const StoryB = () => html`<div>Hello world</div>`";'
+      + expected - actual
+
+       export const StoryA = () => html`<div>Hello world</div>`
+      -StoryA.story = StoryA.story || {};
+      -StoryA.story.parameters = StoryA.story.parameters || {};
+      -StoryA.story.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";
+      +StoryA.parameters = StoryA.parameters || {};
+      +StoryA.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";
+       
+       export const StoryB = () => html`<div>Hello world</div>`
+      -StoryB.story = StoryB.story || {};
+      -StoryB.story.parameters = StoryB.story.parameters || {};
+      -StoryB.story.parameters.mdxSource = "export const StoryB = () => html`<div>Hello world</div>`";
+      +StoryB.parameters = StoryB.parameters || {};
+      +StoryB.parameters.mdxSource = "export const StoryB = () => html`<div>Hello world</div>`";
+      
+      at Context.<anonymous> (test-node/createStoriesCode.test.js:37:50)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  3) createStoriesCode
+       sets the story name if it is different from the key:
+
+      AssertionError: expected 'export const StoryA = () => html`<div>Hello world</div>`\nStoryA.story = StoryA.story || {};\nStoryA.story.name = "Story A";\nStoryA.story.parameters = StoryA.story.parameters || {};\nStoryA.story.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";' to deeply equal 'export const StoryA = () => html`<div>Hello world</div>`\nStoryA.storyName = "Story A";\nStoryA.parameters = StoryA.parameters || {};\nStoryA.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";'
+      + expected - actual
+
+       export const StoryA = () => html`<div>Hello world</div>`
+      -StoryA.story = StoryA.story || {};
+      -StoryA.story.name = "Story A";
+      -StoryA.story.parameters = StoryA.story.parameters || {};
+      -StoryA.story.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";
+      +StoryA.storyName = "Story A";
+      +StoryA.parameters = StoryA.parameters || {};
+      +StoryA.parameters.mdxSource = "export const StoryA = () => html`<div>Hello world</div>`";
+      
+      at Context.<anonymous> (test-node/createStoriesCode.test.js:57:50)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  4) createStoriesCode
+       handles a multiline story:
+
+      AssertionError: expected 'export const StoryA = () => html`\n  <div>Hello world</div>\n`;\nStoryA.story = StoryA.story || {};\nStoryA.story.name = "Story A";\nStoryA.story.parameters = StoryA.story.parameters || {};\nStoryA.story.parameters.mdxSource = "export const StoryA = () => html`\\n  <div>Hello world</div>\\n`;";' to deeply equal 'export const StoryA = () => html`\n  <div>Hello world</div>\n`;\nStoryA.storyName = "Story A";\nStoryA.parameters = StoryA.parameters || {};\nStoryA.parameters.mdxSource = "export const StoryA = () => html`\\n  <div>Hello world</div>\\n`;";'
+      + expected - actual
+
+       export const StoryA = () => html`
+         <div>Hello world</div>
+       `;
+      -StoryA.story = StoryA.story || {};
+      -StoryA.story.name = "Story A";
+      -StoryA.story.parameters = StoryA.story.parameters || {};
+      -StoryA.story.parameters.mdxSource = "export const StoryA = () => html`\n  <div>Hello world</div>\n`;";
+      +StoryA.storyName = "Story A";
+      +StoryA.parameters = StoryA.parameters || {};
+      +StoryA.parameters.mdxSource = "export const StoryA = () => html`\n  <div>Hello world</div>\n`;";
+      
+      at Context.<anonymous> (test-node/createStoriesCode.test.js:76:50)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  5) createDocsPage()
+       creates a docs page default export:
+
+      AssertionError: expected 'import * as React from \'storybook-prebuilt/react.js\';\nimport { mdx, AddContext } from \'storybook-prebuilt/addon-docs/blocks.js\';\n\n// Setup docs page\nconst mdxStoryNameToKey = {};\n__export_default__.parameters = __export_default__.parameters || {};\n__export_default__.parameters.docs = __export_default__.parameters.docs || {};\n__export_default__.parameters.docs.page = () => <AddContext\n  mdxStoryNameToKey={mdxStoryNameToKey}\n  mdxComponentMeta={__export_default__}><MDXContent\n/></AddContext>;\n\nexport const __page = () => {\n  throw new Error("Docs-only story");\n};\n__page.story = {\n  parameters: {\n    docsOnly: true\n  }\n};\n\n\nexport default __export_default__;' to equal 'import { React, mdx } from \'@web/storybook-prebuilt/web-components.js\';\nimport { AddContext } from \'@web/storybook-prebuilt/addon-docs/blocks.js\';\n\n// Setup docs page\nconst mdxStoryNameToKey = {};\n__export_default__.parameters = __export_default__.parameters || {};\n__export_default__.parameters.docs = __export_default__.parameters.docs || {};\n__export_default__.parameters.docs.page = () => <AddContext\n  mdxStoryNameToKey={mdxStoryNameToKey}\n  mdxComponentMeta={__export_default__}><MDXContent\n/></AddContext>;\n\nexport const __page = () => {\n  throw new Error("Docs-only story");\n};\n__page.parameters = {\n    docsOnly: true\n};\n\n\nexport default __export_default__;'
+      + expected - actual
+
+      -import * as React from 'storybook-prebuilt/react.js';
+      -import { mdx, AddContext } from 'storybook-prebuilt/addon-docs/blocks.js';
+      +import { React, mdx } from '@web/storybook-prebuilt/web-components.js';
+      +import { AddContext } from '@web/storybook-prebuilt/addon-docs/blocks.js';
+       
+       // Setup docs page
+       const mdxStoryNameToKey = {};
+       __export_default__.parameters = __export_default__.parameters || {};
+--
+       
+       export const __page = () => {
+         throw new Error("Docs-only story");
+       };
+      -__page.story = {
+      -  parameters: {
+      +__page.parameters = {
+           docsOnly: true
+      -  }
+       };
+       
+       
+       export default __export_default__;
+      
+      at Context.<anonymous> (test-node/mdToJsx.test.js:62:60)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  6) mdjsToCsf
+       passes on filePath and options to mdjsToMd:
+
+      AssertionError: expected 0 to equal 6
+      + expected - actual
+
+      -0
+      +6
+      
+      at Context.<anonymous> (test-node/mdjsToCsf.test.js:69:37)
+
+
+
+reward=0 graded=12 found=12 failed=6 parsed=17 framework=mocha exit_code=6

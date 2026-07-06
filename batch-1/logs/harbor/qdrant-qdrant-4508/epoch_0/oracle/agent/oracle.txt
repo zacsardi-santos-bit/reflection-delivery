@@ -1,0 +1,6 @@
+patching file lib/collection/src/collection/query.rs
+patching file lib/collection/src/common/fetch_vectors.rs
+patching file lib/collection/src/common/retrieve_request_trait.rs
+patching file lib/collection/src/operations/universal_query/collection_query.rs
+patching file lib/storage/src/content_manager/toc/point_ops.rs
+patching file lib/storage/src/rbac/ops_checks.rs

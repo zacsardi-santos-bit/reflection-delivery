@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /test_bzl.py -v",
+  "test_files": [
+    "test/core/bad_connection/BUILD",
+    "test/core/client_channel/BUILD",
+    "test/core/end2end/generate_tests.bzl",
+    "test/core/iomgr/BUILD",
+    "test/cpp/common/BUILD",
+    "test/cpp/end2end/BUILD",
+    "test/cpp/interop/BUILD",
+    "test/cpp/microbenchmarks/BUILD",
+    "test/cpp/naming/generate_resolver_component_tests.bzl",
+    "test/cpp/performance/BUILD",
+    "test/cpp/qps/qps_benchmark_script.bzl",
+    "test/cpp/server/BUILD",
+    "test/cpp/server/load_reporter/BUILD"
+  ],
+  "num_test_files": 13,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_bzl::test_is_msvc_defined",
+    "test_bzl::test_grpc_cc_binary_supports_tags",
+    "test_bzl::test_grpc_cc_library_supports_tags",
+    "test_bzl::test_grpc_cc_test_passes_tags",
+    "test_bzl::test_grpc_cc_test_checks_msvc"
+  ],
+  "PASS_TO_PASS": []
+}

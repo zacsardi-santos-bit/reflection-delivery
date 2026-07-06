@@ -1,0 +1,61 @@
+patching file .github/workflows/deployment.yml
+patching file .github/workflows/go.yml
+patching file acceptance/testdata/pr/pr-create-without-upstream-config.txtar
+patching file cmd/gen-docs/main.go
+patching file docs/releasing.md
+patching file docs/triage.md
+patching file git/client.go
+patching file git/client_test.go
+patching file git/objects.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 155 (offset 60 lines).
+Hunk #2 succeeded at 182 with fuzz 1 (offset 70 lines).
+Hunk #3 succeeded at 805 (offset 307 lines).
+patching file internal/ghcmd/cmd.go
+patching file internal/update/update.go
+patching file pkg/cmd/attestation/download/download.go
+patching file pkg/cmd/attestation/download/download_test.go
+patching file pkg/cmd/attestation/download/metadata.go
+patching file pkg/cmd/attestation/download/metadata_test.go
+patching file pkg/cmd/attestation/test/data/gh_2.60.1_windows_arm64.zip
+Not deleting file pkg/cmd/attestation/test/data/gh_2.60.1_windows_arm64.zip as content differs from patch
+patching file pkg/cmd/attestation/verify/options.go
+patching file pkg/cmd/attestation/verify/options_test.go
+patching file pkg/cmd/attestation/verify/policy.go
+patching file pkg/cmd/attestation/verify/policy_test.go
+patching file pkg/cmd/attestation/verify/verify.go
+patching file pkg/cmd/attestation/verify/verify_integration_test.go
+patching file pkg/cmd/attestation/verify/verify_test.go
+patching file pkg/cmd/auth/login/login.go
+patching file pkg/cmd/extension/command.go
+patching file pkg/cmd/extension/ext_tmpls/goBinWorkflow.yml
+patching file pkg/cmd/extension/ext_tmpls/otherBinWorkflow.yml
+patching file pkg/cmd/extension/manager.go
+patching file pkg/cmd/factory/default.go
+patching file pkg/cmd/issue/create/create.go
+patching file pkg/cmd/pr/create/create.go
+patching file pkg/cmd/pr/create/create_test.go
+patching file pkg/cmd/repo/autolink/autolink.go
+patching file pkg/cmd/repo/autolink/list/http.go
+patching file pkg/cmd/repo/autolink/list/http_test.go
+patching file pkg/cmd/repo/autolink/list/list.go
+patching file pkg/cmd/repo/autolink/list/list_test.go
+patching file pkg/cmd/repo/create/create.go
+patching file pkg/cmd/repo/edit/edit.go
+patching file pkg/cmd/repo/edit/edit_test.go
+patching file pkg/cmd/repo/fork/fork.go
+patching file pkg/cmd/repo/fork/fork_test.go
+patching file pkg/cmd/repo/repo.go
+patching file pkg/cmd/root/extension.go
+patching file pkg/cmd/root/help_topic.go
+patching file pkg/cmd/root/root.go
+patching file pkg/cmd/run/shared/shared.go
+patching file pkg/extensions/extension.go
+patching file pkg/extensions/manager_mock.go
+patching file test/integration/attestation-cmd/download-and-verify-package-attestation.sh (renamed from test/integration/attestation-cmd/verify/download-and-verify-package-attestation.sh)
+patching file test/integration/attestation-cmd/download/download.sh
+patching file test/integration/attestation-cmd/run-all-tests.sh
+patching file test/integration/attestation-cmd/verify-oci-bundle.sh (renamed from test/integration/attestation-cmd/verify/verify-oci-bundle.sh)
+patching file test/integration/attestation-cmd/verify-sigstore-bundle-versions.sh (renamed from test/integration/attestation-cmd/verify/verify-sigstore-bundle-versions.sh)
+error: options '--reject' and '--3way' cannot be used together

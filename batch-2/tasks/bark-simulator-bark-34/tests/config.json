@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "bazel build //python:bark.so --override_repository=com_github_eigen_eigen=/tmp/eigen_repo && cp -f bazel-bin/python/bark.so python/bark.so && PYTHONPATH=/workspace/repo/python:/workspace/repo python3 -m pytest modules/world/tests/py_opendrive_tests.py modules/runtime/tests/py_importer_tests.py -v",
+  "test_files": [
+    "modules/runtime/tests/data/urban_road.xodr",
+    "modules/runtime/tests/py_importer_tests.py",
+    "modules/world/tests/map_interface_test.cc",
+    "modules/world/tests/opendrive_test.cc",
+    "modules/world/tests/py_opendrive_tests.py",
+    "modules/world/tests/world_test.cc"
+  ],
+  "num_test_files": 6,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "modules.world.tests.py_opendrive_tests.EnvironmentTests::test_line",
+    "modules.runtime.tests.py_importer_tests.ImporterTests::test_map"
+  ],
+  "PASS_TO_PASS": [
+    "modules.world.tests.py_opendrive_tests.EnvironmentTests::test_road",
+    "modules.world.tests.py_opendrive_tests.EnvironmentTests::test_spiral",
+    "modules.runtime.tests.py_importer_tests.ImporterTests::test_python_map"
+  ]
+}

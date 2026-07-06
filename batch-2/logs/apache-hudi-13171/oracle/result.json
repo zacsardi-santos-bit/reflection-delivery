@@ -1,0 +1,29 @@
+{
+    "id": "23992ff1-0925-4960-acca-3e7cba92c76d",
+    "started_at": "2026-07-06T12:18:12.535327",
+    "finished_at": "2026-07-06T12:19:17.644523",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-hudi-13171": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-hudi-13171__xE7z7xD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

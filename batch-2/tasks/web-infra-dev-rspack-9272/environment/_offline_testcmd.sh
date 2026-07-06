@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install --no-frozen-lockfile 2>&1 | tail -10 && cd /workspace/repo/packages/rspack-test-tools && NO_COLOR=1 node --expose-gc --max-old-space-size=8192 --experimental-vm-modules /workspace/repo/node_modules/jest-cli/bin/jest tests/Config.test.js --testNamePattern="html-webpack-plugin" --coverage=false --json

@@ -1,0 +1,29 @@
+{
+    "id": "02899d20-bf6c-4900-abc5-89214b8da71e",
+    "started_at": "2026-07-04T15:39:35.086806",
+    "finished_at": "2026-07-04T15:40:53.711735",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__ledgerhq-ledger-live-5749": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "ledgerhq-ledger-live-5749__mjzptWY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

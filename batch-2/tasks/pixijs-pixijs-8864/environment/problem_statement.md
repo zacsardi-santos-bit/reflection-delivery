@@ -1,0 +1,7 @@
+I'm trying to get the test suite up and it's totally dead, every single test errors out before anything even runs. Traced it to the global teardown script pulling in a package that isn't declared anywhere in our dependency manifest, so it never gets installed and Jest chokes at startup loading the teardown module. Because of that even the foundational stuff never executes, like the checks that verify our core library constants get exported right (the rendering types, blend modes, texture formats, scale modes groups, all of that).
+
+So first thing, I need that missing package added as a dev dependency in `package.json` so it's automatically installed when someone sets up deps. Once it's there the teardown module can actually load.
+
+There's also two Windows-specific gremlins in the test infra around how we manage the local HTTP server. When we spawn it we're not going through the system shell, and on Windows the server executable is a batch script so it just can't start without shell. So spawning needs to use the shell on Windows and plain direct execution everywhere else. And on teardown we're only killing the top-level server process, which leaves its child processes running as orphans, so it should kill the whole process tree instead, not just the root.
+
+Get all three fixed (missing dep, cross-platform spawn, full-tree kill) and the core constants tests should run clean. Without the dep nothing runs at all, and on Windows even with the dep the server can't start or clean up, so all of it matters for CI to be reliable across platforms.

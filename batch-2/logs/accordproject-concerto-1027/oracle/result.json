@@ -1,0 +1,29 @@
+{
+    "id": "c71d66f4-9c34-4658-af75-19cf40c6eeb1",
+    "started_at": "2026-07-06T12:17:50.343914",
+    "finished_at": "2026-07-06T12:18:22.497733",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__accordproject-concerto-1027": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "accordproject-concerto-1027__i4oDSV7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

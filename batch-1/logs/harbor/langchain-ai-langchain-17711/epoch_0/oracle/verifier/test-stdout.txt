@@ -1,0 +1,30 @@
+patching file libs/community/tests/unit_tests/retrievers/document_compressors/__init__.py
+patching file libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/libs/community
+configfile: pyproject.toml
+plugins: requests-mock-1.12.1, syrupy-4.9.1, mock-3.15.1, asyncio-0.23.8, anyio-4.14.1
+asyncio: mode=Mode.AUTO
+collecting ... collected 10 items
+
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_format_context PASSED [ 10%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_extract_ref_id_tuples_and_clean PASSED [ 20%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_extract_ref_with_no_contents PASSED [ 30%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_no_documents PASSED [ 40%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_with_documents PASSED [ 50%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_format_context PASSED [ 50%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_extract_ref_id_tuples_and_clean PASSED [ 50%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_extract_ref_with_no_contents PASSED [ 50%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_no_documents PASSED [ 50%]
+libs/community/tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_with_documents PASSED [ 50%]
+
+============================= slowest 5 durations ==============================
+0.00s setup    tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_extract_ref_id_tuples_and_clean
+0.00s setup    tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_with_documents
+0.00s setup    tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_no_documents
+0.00s setup    tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_compress_documents_with_documents
+0.00s setup    tests/unit_tests/retrievers/document_compressors/test_llmlingua_filter.py::test_extract_ref_with_no_contents
+============================== 10 passed in 0.29s ==============================
+reward=1 graded=5 found=0 failed=0 parsed=5 framework=pytest exit_code=0

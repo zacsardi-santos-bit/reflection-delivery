@@ -1,0 +1,7 @@
+I'm messing with a vision model that does patch embedding through a 3D conv layer for video / multi-frame inputs, and at inference time that conv is just a linear transform mathematically, so I want to be able to load the model with that layer auto-swapped for the lighter linear form without touching the original checkpoint or the model definition at all.
+
+What I'm after is an optional patch embedding fusion setting I can pass when loading a pretrained model, and the library handles replacing the conv patch embedding module with its linear equivalent and converting the checkpoint weights transparently as it loads. Also I want that fusion setting saved alongside the model config so the next time I load it it re-applies the same fusion automatically, no need for me to pass the arg again.
+
+Edge cases matter here. If the conv config isn't compatible with a straight linear substitution, like the stride doesn't match the kernel size, just skip the fusion silently instead of blowing up with an error. But the other direction, if there's already a conflicting weight transformation registered for the same source pattern on this model type, raise a clear descriptive error so the conflict is actually visible rather than silently clobbering the existing one.
+
+Oh and the weight conversion needs to go both ways, conv layout to linear and linear back to conv, so I can save the model back out in the original checkpoint format when I need to.

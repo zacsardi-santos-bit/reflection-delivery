@@ -1,0 +1,739 @@
+patching file app/src/androidTest/java/au/com/shiftyjelly/pocketcasts/models/db/AppDatabaseTest.kt
+patching file modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt
+patching file modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModelTest.kt
+patching file modules/features/podcasts/src/test/java/au/com/shiftyjelly/pocketcasts/podcasts/view/folders/SuggestedFoldersViewModelTest.kt
+patching file modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptCuesInfoBuilderTest.kt
+patching file modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt
+patching file modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.12.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Type-safe project accessors is an incubating feature.
+
+> Configure project :app
+WARNING: Sentry configuration file 'sentry.properties' not found. The ProGuard mapping files won't be uploaded.
+
+> Configure project :wear
+WARNING: Sentry configuration file 'sentry.properties' not found. The ProGuard mapping files won't be uploaded.
+Configuration 'debugCompileClasspath' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+Configuration 'debugRuntimeClasspath' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+
+> Task :modules:features:reimagine:preBuild UP-TO-DATE
+> Task :modules:features:player:preBuild UP-TO-DATE
+> Task :modules:services:localization:preBuild UP-TO-DATE
+> Task :modules:services:utils:preBuild UP-TO-DATE
+> Task :modules:services:preferences:preBuild UP-TO-DATE
+> Task :modules:services:deeplink:preBuild UP-TO-DATE
+> Task :modules:services:servers:preBuild UP-TO-DATE
+> Task :modules:services:views:preBuild UP-TO-DATE
+> Task :modules:services:protobuf:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:model:preBuild UP-TO-DATE
+> Task :modules:services:analytics:preBuild UP-TO-DATE
+> Task :modules:services:crashlogging:preBuild UP-TO-DATE
+> Task :modules:services:compose:preBuild UP-TO-DATE
+> Task :modules:services:ui:preBuild UP-TO-DATE
+> Task :modules:services:repositories:preBuild UP-TO-DATE
+> Task :modules:services:images:preBuild UP-TO-DATE
+> Task :modules:features:settings:preBuild UP-TO-DATE
+> Task :modules:services:servers:preDebugBuild UP-TO-DATE
+> Task :modules:services:deeplink:preDebugBuild UP-TO-DATE
+> Task :modules:services:preferences:preDebugBuild UP-TO-DATE
+> Task :modules:features:player:preDebugBuild UP-TO-DATE
+> Task :modules:services:localization:preDebugBuild UP-TO-DATE
+> Task :modules:services:utils:preDebugBuild UP-TO-DATE
+> Task :modules:services:repositories:preDebugBuild UP-TO-DATE
+> Task :modules:services:images:preDebugBuild UP-TO-DATE
+> Task :modules:services:ui:preDebugBuild UP-TO-DATE
+> Task :modules:services:crashlogging:preDebugBuild UP-TO-DATE
+> Task :modules:services:compose:preDebugBuild UP-TO-DATE
+> Task :modules:features:settings:preDebugBuild UP-TO-DATE
+> Task :modules:services:analytics:preDebugBuild UP-TO-DATE
+> Task :modules:features:reimagine:preDebugBuild UP-TO-DATE
+> Task :modules:features:player:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:model:preDebugBuild UP-TO-DATE
+> Task :modules:services:views:preDebugBuild UP-TO-DATE
+> Task :modules:services:utils:generateDebugResources UP-TO-DATE
+> Task :modules:services:deeplink:generateDebugResources UP-TO-DATE
+> Task :modules:services:compose:generateDebugResources UP-TO-DATE
+> Task :modules:services:localization:generateDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:generateDebugResources UP-TO-DATE
+> Task :modules:services:preferences:generateDebugResources UP-TO-DATE
+> Task :modules:features:reimagine:generateDebugResources UP-TO-DATE
+> Task :modules:services:analytics:generateDebugResources UP-TO-DATE
+> Task :modules:services:repositories:generateDebugResources UP-TO-DATE
+> Task :modules:services:ui:generateDebugResources UP-TO-DATE
+> Task :modules:services:servers:generateDebugResources UP-TO-DATE
+> Task :modules:services:model:generateDebugResources UP-TO-DATE
+> Task :modules:services:servers:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:features:reimagine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:preBuild UP-TO-DATE
+> Task :modules:services:utils:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:preDebugBuild UP-TO-DATE
+> Task :modules:services:sharing:generateDebugResources UP-TO-DATE
+> Task :modules:services:ui:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:utils:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:features:reimagine:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:sharing:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:servers:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:ui:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:sharing:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:deeplink:packageDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:packageDebugResources UP-TO-DATE
+> Task :modules:services:model:packageDebugResources UP-TO-DATE
+> Task :modules:services:compose:packageDebugResources UP-TO-DATE
+> Task :modules:services:analytics:packageDebugResources UP-TO-DATE
+> Task :modules:services:preferences:packageDebugResources UP-TO-DATE
+> Task :modules:services:repositories:packageDebugResources UP-TO-DATE
+> Task :modules:features:reimagine:packageDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:model:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:deeplink:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:deeplink:generateDebugRFile UP-TO-DATE
+> Task :modules:services:crashlogging:generateDebugRFile UP-TO-DATE
+> Task :modules:services:crashlogging:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:model:generateDebugRFile UP-TO-DATE
+> Task :modules:services:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:repositories:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:crashlogging:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:model:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:repositories:generateDebugRFile UP-TO-DATE
+> Task :modules:services:deeplink:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:localization:packageDebugResources UP-TO-DATE
+> Task :modules:services:deeplink:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:localization:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:localization:generateDebugRFile UP-TO-DATE
+> Task :modules:services:localization:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:localization:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:images:generateDebugResources UP-TO-DATE
+> Task :modules:services:analytics:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:analytics:generateDebugRFile UP-TO-DATE
+> Task :modules:services:analytics:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:analytics:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:images:packageDebugResources UP-TO-DATE
+> Task :modules:services:images:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:images:generateDebugRFile UP-TO-DATE
+> Task :modules:services:images:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:images:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:compose:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:compose:generateDebugRFile UP-TO-DATE
+> Task :modules:services:compose:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:compose:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:repositories:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:repositories:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:preferences:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:preferences:generateDebugRFile UP-TO-DATE
+> Task :modules:services:preferences:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:features:reimagine:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:protobuf:extractIncludeProto UP-TO-DATE
+> Task :modules:services:preferences:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:features:reimagine:generateDebugRFile UP-TO-DATE
+> Task :modules:services:protobuf:extractProto UP-TO-DATE
+> Task :modules:services:repositories:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:ui:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:crashlogging:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:analytics:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:repositories:preDebugUnitTestBuild UP-TO-DATE
+> Task :modules:services:sharedtest:preBuild UP-TO-DATE
+> Task :modules:services:sharedtest:preDebugBuild UP-TO-DATE
+> Task :modules:services:repositories:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :modules:services:preferences:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:sharedtest:generateDebugResources UP-TO-DATE
+> Task :modules:services:utils:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:sharedtest:packageDebugResources UP-TO-DATE
+> Task :modules:services:sharing:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:servers:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:sharedtest:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:ui:packageDebugResources UP-TO-DATE
+> Task :modules:features:reimagine:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:sharedtest:generateDebugRFile UP-TO-DATE
+> Task :modules:services:sharedtest:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:packageDebugResources UP-TO-DATE
+> Task :modules:services:ui:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:servers:packageDebugResources UP-TO-DATE
+> Task :modules:services:sharedtest:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:sharing:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:sharedtest:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:ui:generateDebugRFile UP-TO-DATE
+> Task :modules:services:servers:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:sharing:generateDebugRFile UP-TO-DATE
+> Task :modules:services:protobuf:generateProto UP-TO-DATE
+> Task :modules:services:utils:packageDebugResources UP-TO-DATE
+> Task :modules:services:servers:generateDebugRFile UP-TO-DATE
+> Task :modules:services:model:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:utils:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:utils:generateDebugRFile UP-TO-DATE
+> Task :modules:services:compose:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:player:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :modules:features:settings:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :modules:features:player:generateDebugResources UP-TO-DATE
+> Task :modules:features:settings:generateDebugResources UP-TO-DATE
+> Task :modules:features:settings:collectDependenciesDebug UP-TO-DATE
+> Task :modules:features:settings:prepareLibraryDefinitionsDebug UP-TO-DATE
+> Task :modules:services:views:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :modules:services:protobuf:compileKotlin UP-TO-DATE
+> Task :modules:services:localization:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:images:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:localization:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:images:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:settings:packageDebugResources UP-TO-DATE
+> Task :modules:services:views:generateDebugResources UP-TO-DATE
+> Task :modules:features:settings:parseDebugLocalResources UP-TO-DATE
+> Task :modules:features:settings:generateDebugRFile UP-TO-DATE
+> Task :modules:features:settings:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:features:settings:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:features:settings:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:localization:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:images:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:localization:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:images:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:localization:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:images:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:deeplink:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:deeplink:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:localization:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:protobuf:compileJava UP-TO-DATE
+> Task :modules:services:views:packageDebugResources UP-TO-DATE
+> Task :modules:services:images:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:views:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:protobuf:processResources UP-TO-DATE
+> Task :modules:services:protobuf:classes UP-TO-DATE
+> Task :modules:services:deeplink:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:deeplink:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:deeplink:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:protobuf:jar UP-TO-DATE
+> Task :modules:services:deeplink:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:repositories:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :modules:features:player:packageDebugResources UP-TO-DATE
+> Task :modules:features:player:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:views:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :modules:features:player:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:views:generateDebugRFile UP-TO-DATE
+> Task :modules:services:views:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:features:player:generateDebugRFile UP-TO-DATE
+> Task :modules:services:views:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:views:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:player:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:player:preDebugUnitTestBuild UP-TO-DATE
+> Task :modules:features:player:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :modules:features:player:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :modules:features:settings:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :modules:features:player:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :modules:services:utils:kspDebugKotlin
+> Task :modules:services:utils:compileDebugKotlin
+> Task :modules:services:utils:compileDebugJavaWithJavac
+> Task :modules:services:utils:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:utils:transformDebugClassesWithAsm
+> Task :modules:services:utils:bundleLibRuntimeToJarDebug
+> Task :modules:services:utils:bundleLibCompileToJarDebug
+> Task :modules:services:sharedtest:compileDebugKotlin
+> Task :modules:services:sharedtest:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:sharedtest:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:sharedtest:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:sharedtest:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:crashlogging:kspDebugKotlin
+> Task :modules:services:crashlogging:compileDebugKotlin
+> Task :modules:services:crashlogging:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:crashlogging:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:crashlogging:transformDebugClassesWithAsm
+> Task :modules:services:crashlogging:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:crashlogging:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:model:kspDebugKotlin
+> Task :modules:services:model:compileDebugKotlin
+> Task :modules:services:model:compileDebugJavaWithJavac
+> Task :modules:services:model:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:model:bundleLibCompileToJarDebug
+> Task :modules:services:model:bundleLibRuntimeToJarDebug
+> Task :modules:services:preferences:kspDebugKotlin
+> Task :modules:services:preferences:compileDebugKotlin
+> Task :modules:services:preferences:compileDebugJavaWithJavac
+> Task :modules:services:preferences:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:preferences:transformDebugClassesWithAsm
+> Task :modules:services:preferences:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:preferences:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:servers:kspDebugKotlin
+> Task :modules:services:servers:compileDebugKotlin
+> Task :modules:services:servers:compileDebugJavaWithJavac
+> Task :modules:services:servers:processDebugJavaRes
+> Task :modules:services:servers:transformDebugClassesWithAsm
+> Task :modules:services:servers:bundleLibCompileToJarDebug
+> Task :modules:services:servers:bundleLibRuntimeToJarDebug
+> Task :modules:services:analytics:kspDebugKotlin
+> Task :modules:services:analytics:compileDebugKotlin
+> Task :modules:services:analytics:compileDebugJavaWithJavac
+> Task :modules:services:analytics:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:analytics:transformDebugClassesWithAsm
+> Task :modules:services:analytics:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:analytics:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:repositories:kspDebugKotlin
+> Task :modules:services:repositories:compileDebugKotlin
+> Task :modules:services:repositories:compileDebugJavaWithJavac
+> Task :modules:services:repositories:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:repositories:transformDebugClassesWithAsm
+> Task :modules:services:repositories:bundleLibCompileToJarDebug
+> Task :modules:services:repositories:bundleLibRuntimeToJarDebug
+> Task :modules:services:repositories:kspDebugUnitTestKotlin
+> Task :modules:services:sharing:kspDebugKotlin
+> Task :modules:services:sharing:compileDebugKotlin
+> Task :modules:services:sharing:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:sharing:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:sharing:transformDebugClassesWithAsm
+> Task :modules:services:sharing:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:sharing:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:repositories:compileDebugUnitTestKotlin
+> Task :modules:services:repositories:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :modules:services:repositories:hiltAggregateDepsDebugUnitTest UP-TO-DATE
+> Task :modules:services:repositories:hiltJavaCompileDebugUnitTest NO-SOURCE
+> Task :modules:services:repositories:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :modules:services:ui:kspDebugKotlin
+> Task :modules:services:repositories:transformDebugUnitTestClassesWithAsm
+> Task :modules:services:ui:compileDebugKotlin
+> Task :modules:services:ui:compileDebugJavaWithJavac
+> Task :modules:services:ui:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:ui:transformDebugClassesWithAsm
+> Task :modules:services:ui:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:ui:bundleLibRuntimeToJarDebug UP-TO-DATE
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :modules:services:compose:kspDebugKotlin
+> Task :modules:services:compose:compileDebugKotlin
+> Task :modules:services:compose:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:compose:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:compose:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:compose:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:repositories:testDebugUnitTest
+> Task :modules:services:views:kspDebugKotlin
+> Task :modules:services:views:compileDebugKotlin
+> Task :modules:services:views:compileDebugJavaWithJavac
+> Task :modules:services:views:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:views:transformDebugClassesWithAsm
+> Task :modules:services:views:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:views:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:features:reimagine:kspDebugKotlin
+> Task :modules:features:settings:kspDebugKotlin
+> Task :modules:features:reimagine:compileDebugKotlin
+> Task :modules:features:reimagine:compileDebugJavaWithJavac
+> Task :modules:features:reimagine:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:reimagine:transformDebugClassesWithAsm
+> Task :modules:features:reimagine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:features:reimagine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:features:settings:compileDebugKotlin
+> Task :modules:features:settings:compileDebugJavaWithJavac
+> Task :modules:features:settings:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:settings:transformDebugClassesWithAsm
+> Task :modules:features:settings:bundleLibCompileToJarDebug
+> Task :modules:features:settings:bundleLibRuntimeToJarDebug
+> Task :modules:features:player:kspDebugKotlin
+> Task :modules:features:player:compileDebugKotlin
+> Task :modules:features:player:compileDebugJavaWithJavac
+> Task :modules:features:player:processDebugJavaRes
+> Task :modules:features:player:transformDebugClassesWithAsm
+> Task :modules:features:player:bundleLibRuntimeToJarDebug
+> Task :modules:features:player:bundleLibCompileToJarDebug
+> Task :modules:features:player:kspDebugUnitTestKotlin
+> Task :modules:features:player:compileDebugUnitTestKotlin
+> Task :modules:features:player:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :modules:features:player:hiltAggregateDepsDebugUnitTest UP-TO-DATE
+> Task :modules:features:player:hiltJavaCompileDebugUnitTest NO-SOURCE
+> Task :modules:features:player:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :modules:features:player:transformDebugUnitTestClassesWithAsm
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :modules:features:player:testDebugUnitTest
+
+[Incubating] Problems report is available at: file:///workspace/repo/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 46s
+255 actionable tasks: 74 executed, 181 up-to-date
+WARNING: The following functionality has been deprecated and will be removed in the next major release of the Develocity Gradle plugin. Run with '-Ddevelocity.deprecation.captureOrigin=true' to see where the deprecated functionality is being used. For assistance with migration, see https://gradle.com/help/gradle-plugin-develocity-migration.
+- The deprecated "gradleEnterprise.buildScan.buildScanPublished" API has been replaced by "develocity.buildScan.buildScanPublished"
+reward=1 graded=225 found=19 failed=0 parsed=19 framework=junit exit_code=0
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.viewmodel.BookmarksViewModelTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:40" hostname="modal" time="0.353">
+  <properties/>
+  <testcase name="given feature not available, when bookmarks loaded, then Upsell state shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.BookmarksViewModelTest" time="0.324"/>
+  <testcase name="given empty search text, when ui state is loaded, then all bookmarks are returned" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.BookmarksViewModelTest" time="0.011"/>
+  <testcase name="given non-empty search text, when ui state is loaded, then filtered bookmarks are returned" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.BookmarksViewModelTest" time="0.008"/>
+  <testcase name="given feature available, when bookmarks loaded, then Upsell state not shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.BookmarksViewModelTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:40" hostname="modal" time="0.349">
+  <properties/>
+  <testcase name="given html transcript without javascript, when transcript load invoked, then transcript is not shown in webview" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.256"/>
+  <testcase name="given transcript view is open, when transcript load invoked, then transcript is loaded" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.007"/>
+  <testcase name="given transcript is supported but blank, when transcript load invoked, then Empty error is returned" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.008"/>
+  <testcase name="given generated transcript, when user is not subscribed and there is no transcript content, then do not show paywall" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.006"/>
+  <testcase name="given no transcript available, then Empty state is returned" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.007"/>
+  <testcase name="given no force refresh, when transcript load invoked, then transcript is not refreshed" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.005"/>
+  <testcase name="given generated transcript, when user is not subscribed, then show paywall" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.006"/>
+  <testcase name="given generated transcript, when user is Patron, then do not show paywall" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.006"/>
+  <testcase name="given html transcript with javascript, when transcript load invoked, then transcript is shown in webview" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.007"/>
+  <testcase name="given force refresh, when transcript load invoked, then transcript is refreshed" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.004"/>
+  <testcase name="given html transcript without javascript, when transcript load invoked, then search is shown" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.005"/>
+  <testcase name="given generated transcript, when user is Plus, then do not show paywall" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.006"/>
+  <testcase name="given transcript type supported but content not valid, then FailedToLoad error is returned" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.008"/>
+  <testcase name="given html transcript with javascript, when transcript load invoked, then search is not shown" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.004"/>
+  <testcase name="given error due to no internet, then NoNetwork error is returned" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.004"/>
+  <testcase name="given transcript is not supported, when transcript load invoked, then NotSupported error is returned" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.004"/>
+  <testcase name="given transcript is available, then transcript found state is returned" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptViewModelTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:41" hostname="modal" time="0.076">
+  <properties/>
+  <testcase name="skip to and play chapter from current episode while not playing" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.027"/>
+  <testcase name="do not show header for user episode" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.007"/>
+  <testcase name="free user cant skip chapters" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.004"/>
+  <testcase name="deselect chapter" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.002"/>
+  <testcase name="play chapter from different episode" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.004"/>
+  <testcase name="scroll to chapter" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.005"/>
+  <testcase name="paid user can skip chapters" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.004"/>
+  <testcase name="chapters are mapped to their played statuses" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.003"/>
+  <testcase name="skip to chapter from current episode while playing" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.002"/>
+  <testcase name="navigate to chapter when tapped on while playing" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.002"/>
+  <testcase name="toggle chapter selection" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.004"/>
+  <testcase name="show header for podcast episode" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.002"/>
+  <testcase name="select chapter" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.002"/>
+  <testcase name="free user cant toggle chapters" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.003"/>
+  <testcase name="unknown user cant skip chapters" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ChaptersViewModelTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:41" hostname="modal" time="0.07">
+  <properties/>
+  <testcase name="given valid positions, when item moved from overflow to overflow section, then rearrange action is properly tracked" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.026"/>
+  <testcase name="given valid positions, when item moved from overflow to shelf section, then rearrange action is properly tracked" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.002"/>
+  <testcase name="given valid positions, when item moved from shelf to overflow section, then rearrange action is properly tracked" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.002"/>
+  <testcase name="given valid positions, when item moved from shelf to shelf section, then rearrange action is properly tracked" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.002"/>
+  <testcase name="given invalid positions, when onShelfItemMove is called, then invalid move position error is returned" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.001"/>
+  <testcase name="given editable state, when setData is called, then shelfRowItems are updated with titles" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.031"/>
+  <testcase name="given valid positions, when onShelfItemMove is called, then items are swapped correctly" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.002"/>
+  <testcase name="given editable state, when setData is called, then minimum 4 shelf items should be passed in argument" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.001"/>
+  <testcase name="given non-editable state, when setData is called, then shelfRowItems are updated without titles" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.001"/>
+  <testcase name="given valid positions, when onShelfItemMove is called, then titles remain in correct positions" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfViewModelTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:39" hostname="modal" time="0.009">
+  <properties/>
+  <testcase name="filter adds new line after end of line character at end of input" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.002"/>
+  <testcase name="filter replaces double or more spaces with single space" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter removes speaker names after newline" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter adds new lines after end of line character" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter replaces input with multiple html entities with correct chars" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.001"/>
+  <testcase name="filter replaces triple or more new lines with double new line" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter removes sound descriptors" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="extractFilter extracts speaker from input for srt format" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.005"/>
+  <testcase name="extractFilter extracts speaker from input for vtt format" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter removes empty spaces at end of lines" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter removes speaker names at start" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter removes speaker tags from input" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter replaces nbsp with space" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter adds space at end of input if no end of line character" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter replaces break line with new line" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <testcase name="filter removes vtt tags from input" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptFilterTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.viewmodel.UpNextViewModelTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:41" hostname="modal" time="0.03">
+  <properties/>
+  <testcase name="initial state isSignedInAsPaidUser should be false for free user" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.UpNextViewModelTest" time="0.029"/>
+  <testcase name="initial state isSignedInAsPaidUser should be true for paid user" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.UpNextViewModelTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:41" hostname="modal" time="0.536">
+  <properties/>
+  <testcase name="when skip back button clicked, then episode is skipped back" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.466"/>
+  <testcase name="given downloaded episode paused and should warn about playback, when play pause button clicked, then episode is played with battery warning if appropriate" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.012"/>
+  <testcase name="does not override global effects when all podcasts effects settings segmented tab selected" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.005"/>
+  <testcase name="when skip forward button clicked, then episode is skipped forwarded" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.006"/>
+  <testcase name="given episode playing, when play pause button clicked, then episode is paused" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.003"/>
+  <testcase name="override global effects when this podcasts effects settings segmented tab selected" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.003"/>
+  <testcase name="effects settings segmented tab bar shown for podcast episode" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.019"/>
+  <testcase name="given not downloaded episode paused and should warn about playback, when play pause button clicked, then streaming warning shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.006"/>
+  <testcase name="given episode paused and should not warn about playback, when play pause button clicked, then episode is played with battery warning if appropriate" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.005"/>
+  <testcase name="effects settings segmented tab bar hidden for user episode" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.004"/>
+  <testcase name="when skip forward button long clicked, then skip forward long press options dialog is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.PlayerViewModelTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:39" hostname="modal" time="0.462">
+  <properties/>
+  <testcase name="searchOccurrencesText returns correct format when searchResultIndices is not empty" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.403"/>
+  <testcase name="search state is reset when search is cleared" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.023"/>
+  <testcase name="current search index is reset to zero on new search" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.009"/>
+  <testcase name="search index is updated when searching next" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.005"/>
+  <testcase name="prev next buttons enabled when search results found" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.001"/>
+  <testcase name="search state is reset when search is done" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.004"/>
+  <testcase name="searchOccurrencesText returns zero when searchResultIndices is empty" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.001"/>
+  <testcase name="search is performed when search query changes" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.009"/>
+  <testcase name="prev next buttons disabled when search results not found" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.001"/>
+  <testcase name="search index is updated when searching previous" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.TranscriptSearchViewModelTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.view.bookmark.search.BookmarkSearchHandlerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:39" hostname="modal" time="0.119">
+  <properties/>
+  <testcase name="given empty search term, when search query updated, then search results flow emits no search result" classname="au.com.shiftyjelly.pocketcasts.player.view.bookmark.search.BookmarkSearchHandlerTest" time="0.105"/>
+  <testcase name="given non-empty search term, when search query updated, then search results flow emits correct value" classname="au.com.shiftyjelly.pocketcasts.player.view.bookmark.search.BookmarkSearchHandlerTest" time="0.009"/>
+  <testcase name="given search term causes error, when search query updated, then search results flow emits no search result" classname="au.com.shiftyjelly.pocketcasts.player.view.bookmark.search.BookmarkSearchHandlerTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.view.bookmark.components.UpsellViewModelTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:39" hostname="modal" time="0.343">
+  <properties/>
+  <testcase name="given a trial for subscription PLUS, early access message not shown" classname="au.com.shiftyjelly.pocketcasts.player.view.bookmark.components.UpsellViewModelTest" time="0.343"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:41" hostname="modal" time="0.079">
+  <properties/>
+  <testcase name="when more button clicked, then more actions are shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.026"/>
+  <testcase name="given with transition false, when close transcript called, then transcript is closed without transition" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.005"/>
+  <testcase name="given transcript not available, when transcript button clicked, then transcript not available snackbar message is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.004"/>
+  <testcase name="when share button clicked, then share dialog is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given with transition true, when close transcript called, then transcript is closed with transition" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.002"/>
+  <testcase name="when star button clicked, then episode star state is toggled" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.002"/>
+  <testcase name="given episode is user episode, when archive button clicked, then user episode delete confirmation is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.004"/>
+  <testcase name="when remove button clicked, then episode removed snackbar message is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="when effects button clicked, then effects options are shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.002"/>
+  <testcase name="when download button clicked, then episode download started snackbar message is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given podcast not available, when show podcast or cloud files button clicked, then cloud files are shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given transcript available, when transcript button clicked, then transcript is opened with transition" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given episode is podcast episode, when archive button clicked, then podcast episode archive confirmation is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given bookmark feature available, when add bookmark button clicked, then add bookmark is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given podcast available, when show podcast or cloud files button clicked, then podcast is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="when sleep button clicked, then sleep timer options are shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="given bookmark feature not available, when add bookmark button clicked, then upsell flow is started" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.003"/>
+  <testcase name="when played button clicked, then mark as played confirmation is shown" classname="au.com.shiftyjelly.pocketcasts.player.viewmodel.ShelfSharedViewModelTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.player.view.transcripts.KMPSearchTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:39" hostname="modal" time="0.011">
+  <properties/>
+  <testcase name="search returns correct indices when pattern is found" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.KMPSearchTest" time="0.005"/>
+  <testcase name="search handles diacritics" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.KMPSearchTest" time="0.005"/>
+  <testcase name="search returns empty list when pattern is not found" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.KMPSearchTest" time="0.0"/>
+  <testcase name="search returns empty list when pattern is empty" classname="au.com.shiftyjelly.pocketcasts.player.view.transcripts.KMPSearchTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.playback.PlaybackManagerNetworkWatcherTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:09" hostname="modal" time="0.807">
+  <properties/>
+  <testcase name="records multiple switches to metered connection" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.PlaybackManagerNetworkWatcherTest" time="0.797"/>
+  <testcase name="does not record switch if always on metered" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.PlaybackManagerNetworkWatcherTest" time="0.006"/>
+  <testcase name="handles switch to metered connection" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.PlaybackManagerNetworkWatcherTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:11" hostname="modal" time="0.138">
+  <properties/>
+  <testcase name="json podcast index transcript is parsed correctly" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" time="0.077"/>
+  <testcase name="empty html transcript throws EmptyDataException" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" time="0.005"/>
+  <testcase name="parsing exception is thrown for invalid subtitle data" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" time="0.048"/>
+  <testcase name="empty json podcast index transcript throws EmptyDataException" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" time="0.002"/>
+  <testcase name="unsupported mime type throws exception" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" time="0.003"/>
+  <testcase name="html transcript is parsed correctly" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptCuesInfoBuilderTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.sync.AccountManagerStatusInfoTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.03">
+  <properties/>
+  <testcase name="test getUuid returns UUID when account exists" classname="au.com.shiftyjelly.pocketcasts.repositories.sync.AccountManagerStatusInfoTest" time="0.03"/>
+  <testcase name="test getUuid returns null when no account exists" classname="au.com.shiftyjelly.pocketcasts.repositories.sync.AccountManagerStatusInfoTest" time="0.0"/>
+  <testcase name="test isLoggedIn returns true when account exists" classname="au.com.shiftyjelly.pocketcasts.repositories.sync.AccountManagerStatusInfoTest" time="0.0"/>
+  <testcase name="test isLoggedIn returns false when no account exists" classname="au.com.shiftyjelly.pocketcasts.repositories.sync.AccountManagerStatusInfoTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.121">
+  <properties/>
+  <testcase name="given valid code, when referral code is redeemed, then returns redemption success result" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.067"/>
+  <testcase name="given no network, when referral code is redeemed, then returns error result with NoNetworkException" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.003"/>
+  <testcase name="given unsuccessful response, when referral code is called, then returns error result" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.003"/>
+  <testcase name="given valid code, when referral code is validated, then returns validation success result" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.021"/>
+  <testcase name="given no network, when referral code is called, then returns error result with NoNetworkException" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.001"/>
+  <testcase name="given no network, when referral code is validated, then returns error result with NoNetworkException" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.003"/>
+  <testcase name="given invalid code, when referral code is validated, then error result" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.003"/>
+  <testcase name="given no error, when referral code is called, then returns success code result" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.018"/>
+  <testcase name="given invalid code, when referral code is redeemed, then error result" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralManagerImplTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:10" hostname="modal" time="0.274">
+  <properties/>
+  <testcase name="observe single chapter" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.237"/>
+  <testcase name="observe chapter without URL" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="observe chapter without image URL" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.003"/>
+  <testcase name="observe no chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.003"/>
+  <testcase name="observe chapters with negative duration" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.003"/>
+  <testcase name="observe chapters with invalid timestamps" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="observe chapters with unknown end timestamps" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="observe chapters with 0 duration" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="filter chapters with no duration" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="observe chapter with invalid URL" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.001"/>
+  <testcase name="observe chapter without title" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="observe chapter selection changes" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.007"/>
+  <testcase name="observe multiple chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <testcase name="observe deselected chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.ChapterManagerImplTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.091">
+  <properties/>
+  <testcase name="handle table of contents for direct chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.061"/>
+  <testcase name="use URL chapters when there is less direct chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.005"/>
+  <testcase name="update episodes with no chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="update episodes without transcripts" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.001"/>
+  <testcase name="update episode with chapters from URL when chapters are empty" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.003"/>
+  <testcase name="update episode with chapters from URL when chapters are null" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="update episodes with image URLs" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="update episodes with chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="update episodes without chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="handle table of contents for URL chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.001"/>
+  <testcase name="update episodes with transcripts without url or type" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="fetch chapters only for specified episode" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.003"/>
+  <testcase name="update episodes with transcripts having url and type" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.002"/>
+  <testcase name="use direct chapters when there is less URL chapters" classname="au.com.shiftyjelly.pocketcasts.repositories.shownotes.ShowNotesProcessTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:09" hostname="modal" time="0.145">
+  <properties/>
+  <testcase name="map single tap events to multi tap event in time window" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.125"/>
+  <testcase name="single tap event" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.001"/>
+  <testcase name="triple tap event" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.002"/>
+  <testcase name="map single tap events to triple tap event" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.002"/>
+  <testcase name="map single tap events to single tap events outside of time window" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.003"/>
+  <testcase name="double tap event" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.001"/>
+  <testcase name="do not reset single tap time window with each new event" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.003"/>
+  <testcase name="map single tap events to triple tap event when event count is higher" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.002"/>
+  <testcase name="ignore single tap events while double tap window is active" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.002"/>
+  <testcase name="map single tap events to double tap event" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.002"/>
+  <testcase name="ignore single tap events while triple tap window is active" classname="au.com.shiftyjelly.pocketcasts.repositories.playback.MediaEventQueueTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:09" hostname="modal" time="0.052">
+  <properties/>
+  <testcase name="unescape quot character" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.044"/>
+  <testcase name="mixed quote surrounding token" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.001"/>
+  <testcase name="entry split over multiple lines" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.002"/>
+  <testcase name="invalid url" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="no starting surrounding token" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="single quote surrounding token" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.001"/>
+  <testcase name="simple entries" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.001"/>
+  <testcase name="no xmlUrl attribute" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="unescape gt character" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="multiple entries in the same line" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="valid OPML file" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.001"/>
+  <testcase name="double quote surrounding token" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="duplicate entries" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="unescape lt character" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="unescape amp character" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="unescape apos character" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.001"/>
+  <testcase name="mixed valid and invalid entries" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <testcase name="empty content" classname="au.com.shiftyjelly.pocketcasts.repositories.opml.OpmlUrlReaderTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.podcast.EpisodeManagerImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:10" hostname="modal" time="0.851">
+  <properties/>
+  <testcase name="get all podcasts episodes" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.EpisodeManagerImplTest" time="0.851"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:11" hostname="modal" time="0.359">
+  <properties/>
+  <testcase name="findBestTranscript uses generated transcripts" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.23"/>
+  <testcase name="findBestTranscript returns first supported transcript for a format with multiple mimetypes" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.004"/>
+  <testcase name="findBestTranscript returns null when no transcripts available" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.006"/>
+  <testcase name="loadTranscriptCuesInfo tries alternative on EmptyDataException on download source" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.023"/>
+  <testcase name="updateTranscripts inserts best transcript when available" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.006"/>
+  <testcase name="if force refresh is true, and internet not available, loadTranscript loads transcript from cache " classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.006"/>
+  <testcase name="loadTranscriptCuesInfo tries alternative on ParsingException on default source" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.007"/>
+  <testcase name="if cache response not found, and internet not available, loadTranscript returns no network exception" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.006"/>
+  <testcase name="if cache response not found, and internet available, loadTranscript loads transcript from network" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.005"/>
+  <testcase name="findBestTranscript returns first un-supported transcript when no other transcript is supported" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.003"/>
+  <testcase name="updateTranscripts does not load transcript if the source is not download episode" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.004"/>
+  <testcase name="if force refresh is false, loadTranscript loads transcript from cache" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.006"/>
+  <testcase name="loadTranscriptCuesInfo tries alternative on ParsingException on download source" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.007"/>
+  <testcase name="if force refresh is true, and internet available, loadTranscript loads transcript from network " classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.004"/>
+  <testcase name="updateTranscripts loads transcript if the source is download episode" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.004"/>
+  <testcase name="findBestTranscript returns first supported transcript" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.004"/>
+  <testcase name="loadTranscriptCuesInfo returns cues info when successful" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.024"/>
+  <testcase name="findBestTranscript prioritizes non-generated transcripts" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.003"/>
+  <testcase name="loadTranscriptCuesInfo tries alternative on EmptyDataException on default source" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManagerImplTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.podcast.UserEpisodeManagerImplTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.202">
+  <properties/>
+  <testcase name="deselect chapter adds element" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.UserEpisodeManagerImplTest" time="0.192"/>
+  <testcase name="deselect chapter is not added twice" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.UserEpisodeManagerImplTest" time="0.005"/>
+  <testcase name="select chapter removes element" classname="au.com.shiftyjelly.pocketcasts.repositories.podcast.UserEpisodeManagerImplTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.support.DatabaseExportHelperTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.093">
+  <properties/>
+  <testcase name="prepareExportFolder copies logs, shared prefs, database files into export folder" classname="au.com.shiftyjelly.pocketcasts.repositories.support.DatabaseExportHelperTest" time="0.082"/>
+  <testcase name="export folder is deleted after it is zipped" classname="au.com.shiftyjelly.pocketcasts.repositories.support.DatabaseExportHelperTest" time="0.004"/>
+  <testcase name="file sent to cleanup is deleted" classname="au.com.shiftyjelly.pocketcasts.repositories.support.DatabaseExportHelperTest" time="0.002"/>
+  <testcase name="getExportFile zips export folder" classname="au.com.shiftyjelly.pocketcasts.repositories.support.DatabaseExportHelperTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralOfferInfoProviderTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.125">
+  <properties/>
+  <testcase name="referralOfferInfo returns null when subscription does not have referral product" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralOfferInfoProviderTest" time="0.117"/>
+  <testcase name="referralOfferInfo returns null subscription when no subscription product found" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralOfferInfoProviderTest" time="0.001"/>
+  <testcase name="referralOfferInfo returns null when subscription does not have referral offer" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralOfferInfoProviderTest" time="0.002"/>
+  <testcase name="referralOfferInfo returns offer info when subscription has referral product with offer" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralOfferInfoProviderTest" time="0.002"/>
+  <testcase name="referralOfferInfo returns null subscription when product details state is error" classname="au.com.shiftyjelly.pocketcasts.repositories.referrals.ReferralOfferInfoProviderTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.com.shiftyjelly.pocketcasts.repositories.user.ObserveTrackableUserTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:26:12" hostname="modal" time="0.034">
+  <properties/>
+  <testcase name="given user allowed linking crash reports to user but email is not available, when requesting user details then return null" classname="au.com.shiftyjelly.pocketcasts.repositories.user.ObserveTrackableUserTest" time="0.029"/>
+  <testcase name="given user allowed linking crash reports to user, when requesting user details then provide them" classname="au.com.shiftyjelly.pocketcasts.repositories.user.ObserveTrackableUserTest" time="0.004"/>
+  <testcase name="given user disallowed linking crash reports to user, when requesting user details then return null" classname="au.com.shiftyjelly.pocketcasts.repositories.user.ObserveTrackableUserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

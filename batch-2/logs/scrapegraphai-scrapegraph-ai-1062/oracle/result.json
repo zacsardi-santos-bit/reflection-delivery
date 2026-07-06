@@ -1,0 +1,29 @@
+{
+    "id": "e192240f-1dc2-4955-be4a-928ec0423fed",
+    "started_at": "2026-07-06T12:18:39.448985",
+    "finished_at": "2026-07-06T12:19:23.409395",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__scrapegraphai-scrapegraph-ai-1062": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "scrapegraphai-scrapegraph-ai-106__CEhQaXh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

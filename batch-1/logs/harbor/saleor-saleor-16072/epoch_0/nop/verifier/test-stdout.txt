@@ -1,0 +1,1378 @@
+patching file saleor/checkout/tests/test_checkout_complete.py
+patching file saleor/graphql/core/tests/test_graphql.py
+patching file saleor/graphql/order/tests/mutations/test_order_confirm.py
+patching file saleor/graphql/payment/tests/mutations/test_transaction_initialize.py
+patching file saleor/graphql/payment/tests/mutations/test_transaction_process.py
+patching file saleor/order/tests/test_order_actions.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.1.1, pluggy-1.4.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+django: version: 3.2.25, settings: saleor.tests.settings (from option)
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: recording-0.13.1, mock-3.12.0, asyncio-0.21.1, Faker-20.1.0, socket-0.7.0, django-queries-1.2.0, celery-0.0.0, django-4.7.0, memray-1.5.0, cov-4.1.0, xdist-3.5.0, anyio-4.3.0
+asyncio: mode=auto
+created: 17/17 workers
+17 workers [176 items]
+
+scheduling tests via LoadScheduling
+
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_captured_payment_creates_expected_events 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_gift_card_partial_use 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_order_not_captured_gift_cards_not_sent[True] 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_gift_card[True] 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_only_shippable_gift_card[True] 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought[True] 
+saleor/checkout/tests/test_checkout_complete.py::test_note_in_created_order 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_do_not_fulfill_gift_cards_automatically[True] 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_insufficient_stock 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_use_translations 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_0_total_captured_payment_creates_expected_events 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_action_required_voucher_single_use 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_preauth_payment_creates_expected_events 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_update_display_gross_prices 
+saleor/checkout/tests/test_checkout_complete.py::test_process_shipping_data_for_order_store_customer_shipping_address 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_checkout_limited_use_voucher_multiple_thread 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_when_checkout_doesnt_exists 
+[gw6] [  0%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_order_not_captured_gift_cards_not_sent[True] 
+[gw3] [  1%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_insufficient_stock 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_order_not_captured_gift_cards_not_sent[False] 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_doesnt_duplicate_order 
+[gw9] [  1%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_use_translations 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_0_total_with_transaction_for_mark_as_paid 
+[gw6] [  2%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_order_not_captured_gift_cards_not_sent[False] 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_store_shipping_prices_with_free_shipping_voucher 
+[gw3] [  2%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_doesnt_duplicate_order 
+saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_transaction_flow_when_checkout_total_zero 
+[gw15] [  3%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_process_shipping_data_for_order_store_customer_shipping_address 
+saleor/checkout/tests/test_checkout_complete.py::test_process_shipping_data_for_order_dont_store_customer_click_and_collect_address 
+[gw3] [  3%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_transaction_flow_when_checkout_total_zero 
+saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_transaction_flow_not_authorized_no_active_payment 
+[gw9] [  4%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_0_total_with_transaction_for_mark_as_paid 
+saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_payment_flow_not_authorized_active_payment 
+[gw15] [  5%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_process_shipping_data_for_order_dont_store_customer_click_and_collect_address 
+saleor/checkout/tests/test_checkout_complete.py::test_increase_checkout_voucher_usage_checkout_usage_already_increased 
+[gw12] [  5%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_action_required_voucher_single_use 
+[gw15] [  6%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_increase_checkout_voucher_usage_checkout_usage_already_increased 
+saleor/checkout/tests/test_checkout_complete.py::test_release_checkout_voucher_usage 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_order_not_created_when_the_refund_is_ongoing 
+[gw3] [  6%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_transaction_flow_not_authorized_no_active_payment 
+[gw6] [  7%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_store_shipping_prices_with_free_shipping_voucher 
+saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_payment_flow 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_invalid_shipping_method 
+[gw11] [  7%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_0_total_captured_payment_creates_expected_events 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_action_required_voucher_once_per_customer 
+[gw15] [  8%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_release_checkout_voucher_usage 
+saleor/checkout/tests/test_checkout_complete.py::test_release_checkout_voucher_usage_checkout_usage_not_increased 
+[gw12] [  9%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_order_not_created_when_the_refund_is_ongoing 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler 
+[gw3] [  9%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_payment_flow 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler_with_payment 
+[gw15] [ 10%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_release_checkout_voucher_usage_checkout_usage_not_increased 
+[gw8] [ 10%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_do_not_fulfill_gift_cards_automatically[True] 
+saleor/checkout/tests/test_checkout_complete.py::test_release_checkout_voucher_usage_no_voucher_code 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_do_not_fulfill_gift_cards_automatically[False] 
+[gw11] [ 11%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_action_required_voucher_once_per_customer 
+saleor/graphql/core/tests/test_graphql.py::test_middleware_dont_generate_sql_requests 
+[gw6] [ 11%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_invalid_shipping_method 
+[gw4] [ 12%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_gift_card_partial_use 
+[gw12] [ 13%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler 
+saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_transaction_flow 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler_with_voucher 
+[gw15] [ 13%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_release_checkout_voucher_usage_no_voucher_code 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_many_gift_cards 
+saleor/graphql/core/tests/test_graphql.py::test_real_query 
+[gw3] [ 14%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler_with_payment 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler_with_voucher_and_payment 
+[gw11] [ 14%] PASSED saleor/graphql/core/tests/test_graphql.py::test_middleware_dont_generate_sql_requests 
+saleor/graphql/core/tests/test_graphql.py::test_jwt_middleware 
+[gw8] [ 15%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_do_not_fulfill_gift_cards_automatically[False] 
+saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_int_id 
+[gw8] [ 15%] PASSED saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_int_id 
+saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_uuid_id 
+[gw12] [ 16%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler_with_voucher 
+saleor/graphql/core/tests/test_graphql.py::test_from_global_id_or_error 
+[gw8] [ 17%] PASSED saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_uuid_id 
+[gw6] [ 17%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_transaction_flow 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_wont_call_capture_for_non_active_payment 
+saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_int_id_and_use_old_id_set_to_false 
+[gw6] [ 18%] PASSED saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_int_id_and_use_old_id_set_to_false 
+saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_uuid_and_int_id 
+[gw11] [ 18%] PASSED saleor/graphql/core/tests/test_graphql.py::test_jwt_middleware 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_unfulfilled 
+[gw3] [ 19%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_fail_handler_with_voucher_and_payment 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm 
+[gw12] [ 19%] PASSED saleor/graphql/core/tests/test_graphql.py::test_from_global_id_or_error 
+[gw4] [ 20%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_many_gift_cards 
+[gw6] [ 21%] PASSED saleor/graphql/core/tests/test_graphql.py::test_get_nodes_for_order_with_uuid_and_int_id 
+saleor/graphql/core/tests/test_graphql.py::test_from_global_id_or_error_wth_invalid_type 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_by_user_no_channel_access 
+[gw14] [ 21%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_checkout_limited_use_voucher_multiple_thread 
+saleor/graphql/core/tests/test_graphql.py::test_from_global_id_or_error_wth_type 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_checkout_completed_in_the_meantime 
+[gw15] [ 22%] PASSED saleor/graphql/core/tests/test_graphql.py::test_real_query 
+saleor/graphql/core/tests/test_graphql.py::test_get_nodes 
+[gw11] [ 22%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_unfulfilled 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_no_products_in_order 
+[gw12] [ 23%] PASSED saleor/graphql/core/tests/test_graphql.py::test_from_global_id_or_error_wth_invalid_type 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_skip_address_validation 
+[gw4] [ 23%] PASSED saleor/graphql/core/tests/test_graphql.py::test_from_global_id_or_error_wth_type 
+saleor/graphql/core/tests/test_graphql.py::test_query_allow_replica 
+[gw15] [ 24%] PASSED saleor/graphql/core/tests/test_graphql.py::test_get_nodes 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_multiple_calls_and_idempotency_key 
+[gw7] [ 25%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_only_shippable_gift_card[True] 
+[gw8] [ 25%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_wont_call_capture_for_non_active_payment 
+[gw11] [ 26%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_no_products_in_order 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_only_shippable_gift_card[False] 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_order_with_multiple_calls_and_idempotency_key 
+[gw14] [ 26%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_checkout_completed_in_the_meantime 
+[gw10] [ 27%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_note_in_created_order 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_update_display_gross_prices 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_transactions_limit_on_transaction_initialize 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_variant_tracking_false 
+[gw6] [ 27%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_by_user_no_channel_access 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_by_app 
+[gw4] [ 28%] PASSED saleor/graphql/core/tests/test_graphql.py::test_query_allow_replica 
+[gw1] [ 28%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_preauth_payment_creates_expected_events 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_order_with_idempotency_key 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_preauth_payment_creates_expected_events_anonymous_user 
+[gw16] [ 29%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_update_display_gross_prices 
+[gw7] [ 30%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought_only_shippable_gift_card[False] 
+[gw10] [ 30%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_variant_tracking_false 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_store_shipping_prices 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_action_required_response 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_pending_amount 
+[gw12] [ 31%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_skip_address_validation 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_without_payment_gateway_data 
+[gw5] [ 31%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought[True] 
+[gw8] [ 32%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_update_display_gross_prices 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_action_required_response 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought[False] 
+[gw2] [ 32%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_gift_card[True] 
+[gw4] [ 33%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_order_with_idempotency_key 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_gift_card[False] 
+[gw11] [ 34%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_order_with_multiple_calls_and_idempotency_key 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_action_required_response_and_missing_psp_reference 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_pending_amount 
+[gw10] [ 34%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_action_required_response 
+[gw16] [ 35%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_store_shipping_prices 
+[gw15] [ 35%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_multiple_calls_and_idempotency_key 
+[gw1] [ 36%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_preauth_payment_creates_expected_events_anonymous_user 
+[gw5] [ 36%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_gift_card_bought[False] 
+[gw4] [ 37%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_action_required_response_and_missing_psp_reference 
+[gw14] [ 38%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_transactions_limit_on_transaction_initialize 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_transaction_when_amount_is_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_when_amount_is_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_empty_string_as_idempotency_key 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_order_without_payment_gateway_data 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_when_amount_is_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_idempotency_key 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_already_used_idempotency_key 
+[gw2] [ 38%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_create_order_with_gift_card[False] 
+[gw11] [ 39%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_pending_amount 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_already_used_idempotency_key_and_different_input 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_removed_app 
+[gw12] [ 39%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_without_payment_gateway_data 
+[gw8] [ 40%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_action_required_response 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_app_with_action_field_and_handle_payments 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_uses_default_channel_action 
+[gw7] [ 40%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_pending_amount 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_transaction_when_amount_is_not_provided 
+[gw10] [ 41%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_with_transaction_when_amount_is_not_provided 
+[gw15] [ 42%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_order_without_payment_gateway_data 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_disabled_app 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_incorrect_source_object_id 
+[gw16] [ 42%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_when_amount_is_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_app_with_action_field 
+[gw2] [ 43%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_already_used_idempotency_key_and_different_input 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_fully_paid[charge_success] 
+[gw4] [ 43%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_empty_string_as_idempotency_key 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_customer_with_action_field 
+[gw11] [ 44%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_removed_app 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_user_missing_permission_for_customer_ip_address 
+[gw5] [ 44%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_already_used_idempotency_key 
+[gw14] [ 45%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_idempotency_key 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_fully_paid[charge_request] 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_doesnt_exists 
+[gw12] [ 46%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_app_with_action_field_and_handle_payments 
+[gw1] [ 46%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_when_amount_is_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_app_missing_permission_for_customer_ip_address 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_doesnt_exist 
+[gw8] [ 47%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_uses_default_channel_action 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_with_customer_ip_address 
+[gw15] [ 47%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_incorrect_source_object_id 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_customer_ip_address_ipv6 
+[gw7] [ 48%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_transaction_when_amount_is_not_provided 
+[gw12] [ 48%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_app_missing_permission_for_customer_ip_address 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_sets_customer_ip_address_when_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_data 
+[gw10] [ 49%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_transaction_initialize_for_disabled_app 
+[gw16] [ 50%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_app_with_action_field 
+[gw11] [ 50%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_user_missing_permission_for_customer_ip_address 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_customer_ip_address_wrong_format 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_payments 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_updates_checkout_last_transaction_modified_at[None] 
+[gw4] [ 51%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_customer_with_action_field 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_locked_checkout 
+[gw14] [ 51%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_order_doesnt_exists 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_order_without_data 
+[gw8] [ 52%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_with_customer_ip_address 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_order_with_data 
+[gw15] [ 52%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_customer_ip_address_ipv6 
+[gw7] [ 53%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_sets_customer_ip_address_when_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_with_pending_amount 
+[gw10] [ 53%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_customer_ip_address_wrong_format 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_order_with_action_required_response 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_order_with_pending_amount 
+[gw2] [ 54%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_fully_paid[charge_success] 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_updates_checkout_last_transaction_modified_at[previous_last_transaction_modified_at1] 
+[gw1] [ 55%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_doesnt_exist 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_data_via_token 
+[gw5] [ 55%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_fully_paid[charge_request] 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_without_data 
+[gw14] [ 56%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_order_without_data 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_doesnt_have_app_identifier 
+[gw9] [ 56%] FAILED saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_payment_flow_not_authorized_active_payment 
+[gw8] [ 57%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_order_with_data 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_app_attached_to_transaction_doesnt_exist 
+[gw10] [ 57%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_order_with_action_required_response 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_ensure_prices_are_not_recalculated_in_post_payment_part 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_fully_paid[charge_success] 
+[gw7] [ 58%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_order_with_pending_amount 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_process_doesnt_accept_old_id 
+[gw12] [ 59%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_data 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_with_action_required_response 
+[gw14] [ 59%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_doesnt_have_app_identifier 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_with_customer_ip_address 
+[gw15] [ 60%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_with_pending_amount 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_fully_paid[charge_request] 
+[gw13] [ 60%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_when_checkout_doesnt_exists 
+saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_checkout_was_deleted_before_completing 
+[gw8] [ 61%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_app_attached_to_transaction_doesnt_exist 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_sets_customer_ip_address_when_not_provided 
+[gw7] [ 61%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_process_doesnt_accept_old_id 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_customer_ip_address_ipv6 
+[gw5] [ 62%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_without_data 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_app_missing_permission_for_customer_ip_address 
+[gw9] [ 63%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_ensure_prices_are_not_recalculated_in_post_payment_part 
+[gw1] [ 63%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_data_via_token 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_user_missing_permission_for_customer_ip_address 
+saleor/checkout/tests/test_checkout_complete.py::test_increase_checkout_voucher_usage 
+[gw2] [ 64%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_updates_checkout_last_transaction_modified_at[previous_last_transaction_modified_at1] 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_process_for_removed_app 
+[gw13] [ 64%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_complete_checkout_checkout_was_deleted_before_completing 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_locked_checkout 
+[gw16] [ 65%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_updates_checkout_last_transaction_modified_at[None] 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_request_event_is_missing 
+[gw10] [ 65%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_fully_paid[charge_success] 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_customer_ip_address_wrong_format 
+[gw9] [ 66%] PASSED saleor/checkout/tests/test_checkout_complete.py::test_increase_checkout_voucher_usage 
+saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_with_gateway 
+[gw9] [ 67%] FAILED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_with_gateway 
+saleor/order/tests/test_order_actions.py::test_mark_as_paid_no_billing_address 
+[gw0] [ 67%] FAILED saleor/checkout/tests/test_checkout_complete.py::test_create_order_captured_payment_creates_expected_events 
+[gw7] [ 68%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_customer_ip_address_ipv6 
+[gw3] [ 68%] FAILED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm 
+saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_digital_lines 
+saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_without_sku 
+saleor/checkout/tests/test_checkout_complete.py::test_create_order_captured_payment_creates_expected_events_anonymous_user 
+[gw8] [ 69%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_sets_customer_ip_address_when_not_provided 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_payments 
+[gw9] [ 69%] PASSED saleor/order/tests/test_order_actions.py::test_mark_as_paid_no_billing_address 
+saleor/order/tests/test_order_actions.py::test_clean_mark_order_as_paid 
+[gw16] [ 70%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_request_event_is_missing 
+saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_payment 
+[gw5] [ 71%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_app_missing_permission_for_customer_ip_address 
+saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order 
+[gw12] [ 71%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_with_action_required_response 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_process_for_disabled_app 
+[gw5] [ 72%] PASSED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order 
+saleor/order/tests/test_order_actions.py::test_order_refunded_by_app 
+[gw2] [ 72%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_process_for_removed_app 
+saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_gift_cards_created 
+[gw9] [ 73%] PASSED saleor/order/tests/test_order_actions.py::test_clean_mark_order_as_paid 
+[gw1] [ 73%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_user_missing_permission_for_customer_ip_address 
+[gw14] [ 74%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_with_customer_ip_address 
+saleor/order/tests/test_order_actions.py::test_cancel_order 
+saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_no_email 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_updates_checkout_last_transaction_modified_at[None] 
+[gw10] [ 75%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_customer_ip_address_wrong_format 
+saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_external_reference_with_payment 
+[gw16] [ 75%] PASSED saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_payment 
+saleor/order/tests/test_order_actions.py::test_order_refunded_by_user 
+[gw1] [ 76%] PASSED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_no_email 
+saleor/order/tests/test_order_actions.py::test_fulfill_digital_lines 
+[gw7] [ 76%] PASSED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_digital_lines 
+saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_transaction 
+[gw5] [ 77%] PASSED saleor/order/tests/test_order_actions.py::test_order_refunded_by_app 
+saleor/order/tests/test_order_actions.py::test_fulfill_order_lines_multiple_lines 
+[gw6] [ 77%] FAILED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_by_app 
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_action_required_response_and_missing_psp_reference 
+[gw3] [ 78%] PASSED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_without_sku 
+[gw15] [ 78%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_checkout_fully_paid[charge_request] 
+saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_external_reference_with_transaction 
+[gw10] [ 79%] PASSED saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_external_reference_with_payment 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_updates_checkout_last_transaction_modified_at[previous_last_transaction_modified_at1] 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_paid 
+[gw16] [ 80%] PASSED saleor/order/tests/test_order_actions.py::test_order_refunded_by_user 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_paid 
+[gw9] [ 80%] PASSED saleor/order/tests/test_order_actions.py::test_cancel_order 
+[gw0] [ 81%] FAILED saleor/checkout/tests/test_checkout_complete.py::test_create_order_captured_payment_creates_expected_events_anonymous_user 
+[gw7] [ 81%] PASSED saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_transaction 
+saleor/order/tests/test_order_actions.py::test_fulfill_order_lines_without_inventory_tracking 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_with_the_same_transaction_charged_amount 
+[gw1] [ 82%] PASSED saleor/order/tests/test_order_actions.py::test_fulfill_digital_lines 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_paid_and_multiple_transactions 
+saleor/order/tests/test_order_actions.py::test_cancel_fulfillment 
+[gw2] [ 82%] PASSED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_gift_cards_created 
+[gw5] [ 83%] PASSED saleor/order/tests/test_order_actions.py::test_fulfill_order_lines_multiple_lines 
+saleor/order/tests/test_order_actions.py::test_fulfill_order_lines_with_variant_deleted 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_authorized 
+[gw3] [ 84%] PASSED saleor/order/tests/test_order_actions.py::test_mark_as_paid_with_external_reference_with_transaction 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_with_the_same_transaction_authorized_amount 
+[gw16] [ 84%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_paid 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_refunded_and_multiple_transactions 
+[gw9] [ 85%] PASSED saleor/order/tests/test_order_actions.py::test_fulfill_order_lines_without_inventory_tracking 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_refunded_with_transaction_and_payment 
+[gw12] [ 85%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_process_for_disabled_app 
+[gw10] [ 86%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_paid 
+saleor/order/tests/test_order_actions.py::test_fulfill_order_lines 
+[gw7] [ 86%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_with_the_same_transaction_charged_amount 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_refunded 
+[gw1] [ 87%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_paid_and_multiple_transactions 
+[gw5] [ 88%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_authorized 
+[gw2] [ 88%] PASSED saleor/order/tests/test_order_actions.py::test_fulfill_order_lines_with_variant_deleted 
+[gw0] [ 89%] PASSED saleor/order/tests/test_order_actions.py::test_cancel_fulfillment 
+[gw3] [ 89%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_with_the_same_transaction_authorized_amount 
+[gw16] [ 90%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_refunded_and_multiple_transactions 
+[gw12] [ 90%] PASSED saleor/order/tests/test_order_actions.py::test_fulfill_order_lines 
+[gw10] [ 91%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_refunded 
+[gw9] [ 92%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_refunded_with_transaction_and_payment 
+[gw6] [ 92%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_checkout_with_action_required_response_and_missing_psp_reference 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_authorized_and_multiple_transactions 
+[gw14] [ 93%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_updates_checkout_last_transaction_modified_at[None] 
+saleor/order/tests/test_order_actions.py::test_fulfill_digital_lines_no_allocation 
+[gw6] [ 93%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_partially_authorized_and_multiple_transactions 
+[gw15] [ 94%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_updates_checkout_last_transaction_modified_at[previous_last_transaction_modified_at1] 
+saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_refunded 
+[gw14] [ 94%] PASSED saleor/order/tests/test_order_actions.py::test_fulfill_digital_lines_no_allocation 
+[gw15] [ 95%] PASSED saleor/order/tests/test_order_actions.py::test_order_transaction_updated_order_fully_refunded 
+[gw4] [ 96%] FAILED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_locked_checkout 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_doesnt_have_source_object 
+[gw11] [ 96%] FAILED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_payments 
+saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_already_processed 
+[gw4] [ 97%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_doesnt_have_source_object 
+[gw11] [ 97%] PASSED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_transaction_already_processed 
+[gw13] [ 98%] FAILED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_locked_checkout 
+saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_gift_cards_not_created 
+[gw8] [ 98%] FAILED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_payments 
+saleor/order/tests/test_order_actions.py::test_cancel_fulfillment_variant_witout_inventory_tracking 
+[gw13] [ 99%] PASSED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_gift_cards_not_created 
+[gw8] [100%] PASSED saleor/order/tests/test_order_actions.py::test_cancel_fulfillment_variant_witout_inventory_tracking 
+
+=================================== FAILURES ===================================
+____ test_checkout_complete_pick_payment_flow_not_authorized_active_payment ____
+[gw9] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mocked_flow = <MagicMock name='complete_checkout_with_payment' id='46926219701552'>
+order = <Order #UUID('ab4e0b53-be56-4e28-9a34-227bef38b71e')>
+checkout_ready_to_complete = <Checkout: Checkout object (65be7fe2-068b-4f57-a208-f789fcdd827e)>
+customer_user = <User: d9ea6f62-661b-4ca1-8d8c-29ed66766241>
+transaction_item_generator = <function transaction_item_generator.<locals>.create_transaction at 0x2aaddc4b89d0>
+payment = Payment(gateway=app:saleor.payment.test.app:credit-card, is_active=True, created=2026-06-29 15:19:29.338609+00:00, charge_status=not-charged)
+
+    @mock.patch("saleor.checkout.complete_checkout.complete_checkout_with_payment")
+    def test_checkout_complete_pick_payment_flow_not_authorized_active_payment(
+        mocked_flow,
+        order,
+        checkout_ready_to_complete,
+        customer_user,
+        transaction_item_generator,
+        payment,
+    ):
+        # given
+        checkout = checkout_ready_to_complete
+        checkout.user = customer_user
+        checkout.billing_address = customer_user.default_billing_address
+        checkout.shipping_address = customer_user.default_billing_address
+        checkout.tracking_code = ""
+        checkout.redirect_url = "https://www.example.com"
+    
+        # checkout is not fully authorized
+        checkout.authorize_status = CheckoutAuthorizeStatus.PARTIAL
+    
+        # transaction item exists
+        transaction_item_generator(checkout_id=checkout.pk)
+        assert checkout.payment_transactions.exists()
+    
+        # there is no active payments
+        payment.checkout = checkout
+        payment.save(update_fields=["checkout"])
+    
+        manager = get_plugins_manager(allow_replica=False)
+        lines, _ = fetch_checkout_lines(checkout)
+        checkout_info = fetch_checkout_info(checkout, lines, manager)
+        transaction_item_generator(checkout_id=checkout.pk)
+        mocked_flow.return_value = order, False, {}
+    
+        # when
+>       order, action_required, _ = complete_checkout(
+            checkout_info=checkout_info,
+            manager=manager,
+            lines=lines,
+            payment_data={},
+            store_source=False,
+            user=customer_user,
+            app=None,
+        )
+
+saleor/checkout/tests/test_checkout_complete.py:2293: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+saleor/checkout/complete_checkout.py:1482: in complete_checkout
+    order = complete_checkout_with_transaction(
+saleor/checkout/complete_checkout.py:1519: in complete_checkout_with_transaction
+    _prepare_checkout_with_transactions(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manager = <saleor.plugins.manager.PluginsManager object at 0x2aaddca9c130>
+checkout_info = CheckoutInfo(manager=<saleor.plugins.manager.PluginsManager object at 0x2aaddca9c130>, checkout=<Checkout: Checkout ob...sting object (5)>], shipping_method=ShippingMethod(type=price), collection_point=None, voucher=None, voucher_code=None)
+lines = [CheckoutLineInfo(line=CheckoutLine(variant=<ProductVariant: 123>, quantity=3), variant=<ProductVariant: 123>, channel...)>, collections=[], discounts=[], rules_info=[], channel=<Channel: main>, tax_class=<TaxClass: Default>, voucher=None)]
+redirect_url = None
+
+    def _prepare_checkout_with_transactions(
+        manager: "PluginsManager",
+        checkout_info: "CheckoutInfo",
+        lines: Iterable["CheckoutLineInfo"],
+        redirect_url: Optional[str],
+    ):
+        """Prepare checkout object with transactions to complete the checkout process."""
+        clean_billing_address(checkout_info, CheckoutErrorCode)
+        if (
+            checkout_info.checkout.authorize_status != CheckoutAuthorizeStatus.FULL
+            and not checkout_info.channel.allow_unpaid_orders
+        ):
+>           raise ValidationError(
+                {
+                    "id": ValidationError(
+                        "The authorized amount doesn't cover the checkout's total amount.",
+                        code=CheckoutErrorCode.CHECKOUT_NOT_FULLY_PAID.value,
+                    )
+                }
+            )
+E           django.core.exceptions.ValidationError: {'id': ["The authorized amount doesn't cover the checkout's total amount."]}
+
+saleor/checkout/complete_checkout.py:771: ValidationError
+__________________ test_handle_fully_paid_order_with_gateway ___________________
+[gw9] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mock_send_payment_confirmation = <MagicMock name='send_payment_confirmation' id='46926237155040'>
+order = <Order #UUID('98ba8152-b5b7-4dda-87a3-b43b5fda9bf9')>
+
+    @patch("saleor.order.actions.send_payment_confirmation")
+    def test_handle_fully_paid_order_with_gateway(mock_send_payment_confirmation, order):
+        # given
+        manager = get_plugins_manager(allow_replica=False)
+    
+        order.payments.add(Payment.objects.create())
+        order_info = fetch_order_info(order)
+    
+        # when
+>       handle_fully_paid_order(manager, order_info, gateway="mirumee.payments.dummy")
+E       TypeError: handle_fully_paid_order() got an unexpected keyword argument 'gateway'
+
+saleor/order/tests/test_order_actions.py:162: TypeError
+__________ test_create_order_captured_payment_creates_expected_events __________
+[gw0] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mock_notify = <MagicMock name='notify' id='47721547141328'>
+checkout_with_item = <Checkout: Checkout object (e53b64e6-b0d7-4528-8d6b-2ffdb9940d9c)>
+customer_user = <User: 811a8824-0b6f-4f21-816f-20a318e31454>
+shipping_method = ShippingMethod(type=price)
+payment_txn_captured = Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.514288+00:00, charge_status=fully-charged)
+channel_USD = <Channel: main>
+site_settings = <SiteSettings: SiteSettings object (2)>
+
+    @mock.patch("saleor.plugins.manager.PluginsManager.notify")
+    def test_create_order_captured_payment_creates_expected_events(
+        mock_notify,
+        checkout_with_item,
+        customer_user,
+        shipping_method,
+        payment_txn_captured,
+        channel_USD,
+        site_settings,
+    ):
+        checkout = checkout_with_item
+        checkout_user = customer_user
+    
+        # Ensure not events are existing prior
+        assert not OrderEvent.objects.exists()
+        assert not CustomerEvent.objects.exists()
+    
+        # Prepare valid checkout
+        checkout.user = checkout_user
+        checkout.billing_address = customer_user.default_billing_address
+        checkout.shipping_address = customer_user.default_shipping_address
+        checkout.shipping_method = shipping_method
+        checkout.payments.add(payment_txn_captured)
+        checkout.tracking_code = "tracking_code"
+        checkout.redirect_url = "https://www.example.com"
+        checkout.save()
+    
+        # Place checkout
+        manager = get_plugins_manager(allow_replica=False)
+        lines, _ = fetch_checkout_lines(checkout)
+        checkout_info = fetch_checkout_info(checkout, lines, manager)
+        order = _create_order(
+            checkout_info=checkout_info,
+            checkout_lines=lines,
+            order_data=_prepare_order_data(
+                manager=manager,
+                checkout_info=checkout_info,
+                lines=lines,
+                prices_entered_with_tax=True,
+            ),
+            user=customer_user,
+            app=None,
+            manager=manager,
+        )
+        flush_post_commit_hooks()
+    
+        (
+            order_placed_event,
+            payment_captured_event,
+            order_fully_paid_event,
+            order_confirmed_event,
+        ) = order.events.all()  # type: OrderEvent
+    
+        # Ensure the correct order event was created
+        # is the event the expected type
+        assert order_placed_event.type == OrderEvents.PLACED
+        # is the user anonymous/ the customer
+        assert order_placed_event.user == checkout_user
+        # is the associated backref order valid
+        assert order_placed_event.order is order
+        # ensure a date was set
+        assert order_placed_event.date
+        # should not have any additional parameters
+        assert not order_placed_event.parameters
+    
+        # Ensure the correct order event was created
+        # is the event the expected type
+        assert payment_captured_event.type == OrderEvents.PAYMENT_CAPTURED
+        # is the user anonymous/ the customer
+        assert payment_captured_event.user == checkout_user
+        # is the associated backref order valid
+        assert payment_captured_event.order is order
+        # ensure a date was set
+        assert payment_captured_event.date
+        # should have additional parameters
+        assert "amount" in payment_captured_event.parameters.keys()
+        assert "payment_id" in payment_captured_event.parameters.keys()
+        assert "payment_gateway" in payment_captured_event.parameters.keys()
+    
+        # Ensure the correct order event was created
+        # is the event the expected type
+        assert order_fully_paid_event.type == OrderEvents.ORDER_FULLY_PAID
+        # is the user anonymous/ the customer
+        assert order_fully_paid_event.user == checkout_user
+        # is the associated backref order valid
+        assert order_fully_paid_event.order is order
+        # ensure a date was set
+        assert order_fully_paid_event.date
+        # should have payment_gateway in additional parameters
+>       assert "payment_gateway" in order_fully_paid_event.parameters
+E       AssertionError: assert 'payment_gateway' in {}
+E        +  where {} = OrderEvent(type='order_fully_paid', user=<User: 811a8824-0b6f-4f21-816f-20a318e31454>).parameters
+
+saleor/checkout/tests/test_checkout_complete.py:137: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+Creating test database for alias 'default'...
+2026-06-29 10:19:29,219 WARNING kombu.connection No hostname was supplied. Reverting to default 'localhost' [PID:70:MainThread]
+2026-06-29 10:19:29,223 INFO saleor.core.search_tasks No users to update. [PID:70:MainThread]
+2026-06-29 10:19:29,292 INFO celery.app.trace Task saleor.core.search_tasks.set_user_search_document_values[9e56210d-441a-43ee-9347-f10c2a1b814b] succeeded in 0.07181438200001367s: None [PID:70:MainThread]
+2026-06-29 10:19:29,295 INFO celery.app.trace Task saleor.account.migrations.tasks.saleor3_19.confirm_active_users_task[c3ecfbbc-a7a5-49f0-8b96-5584513d0b05] succeeded in 0.001754672999993545s: None [PID:70:MainThread]
+2026-06-29 10:19:29,325 INFO celery.app.trace Task saleor.discount.migrations.tasks.saleor3_17.update_discounted_prices_task[8d0b663d-5df0-428f-a4d6-2f18f36342ee] succeeded in 0.00821932100001277s: None [PID:70:MainThread]
+2026-06-29 10:19:29,329 INFO celery.app.trace Task saleor.discount.migrations.tasks.saleor3_17.set_promotion_rule_variants[27d54cb1-d3c8-484f-82eb-4498b1aaaf2a] succeeded in 0.0033253590000015265s: None [PID:70:MainThread]
+2026-06-29 10:19:29,458 INFO celery.app.trace Task saleor.checkout.migrations.tasks.saleor3_14.update_checkout_addresses_task[853ab578-a211-4fe7-9054-61d65489de7e] succeeded in 0.003940389999996796s: None [PID:70:MainThread]
+2026-06-29 10:19:29,512 INFO saleor.core.search_tasks No orders to update. [PID:70:MainThread]
+2026-06-29 10:19:29,512 INFO celery.app.trace Task saleor.core.search_tasks.set_order_search_document_values[e79af647-8ab7-4113-80fb-a2092f308bc8] succeeded in 0.002688827000014271s: None [PID:70:MainThread]
+2026-06-29 10:19:29,514 INFO saleor.core.search_tasks No orders to update. [PID:70:MainThread]
+2026-06-29 10:19:29,515 INFO celery.app.trace Task saleor.core.search_tasks.set_order_search_document_values[ac1ad703-c2e2-4a20-b39d-8089c9ea1420] succeeded in 0.0020125190000044313s: None [PID:70:MainThread]
+2026-06-29 10:19:29,521 INFO celery.app.trace Task saleor.order.migrations.tasks.saleor3_19.update_order_addresses_task[6dad9c36-337b-481c-8d29-54f52dee6d58] succeeded in 0.0018557880000003024s: None [PID:70:MainThread]
+2026-06-29 10:19:29,596 INFO celery.app.trace Task saleor.payment.migrations.tasks.saleor3_19.fix_invalid_atobarai_payments_task[0009552b-795f-4304-b6bb-f06da1891e6b] succeeded in 0.0030214180000029955s: None [PID:70:MainThread]
+------------------------------ Captured log setup ------------------------------
+WARNING  kombu.connection:connection.py:669 No hostname was supplied. Reverting to default 'localhost'
+______________________________ test_order_confirm ______________________________
+[gw3] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+self = <MagicMock name='handle_fully_paid_order' id='47523635810944'>
+args = (<ANY>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', chan... <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>, 'mirumee.payments.dummy')
+kwargs = {}
+expected = call(<ANY>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', ... <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>, 'mirumee.payments.dummy')
+actual = call(<saleor.plugins.manager.PluginsManager object at 0x2b38f235b670>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f...e, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b38f54a7d30>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: handle_fully_paid_order(<ANY>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>, 'mirumee.payments.dummy')
+E           Actual: handle_fully_paid_order(<saleor.plugins.manager.PluginsManager object at 0x2b38f235b670>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>)
+
+/usr/local/lib/python3.9/unittest/mock.py:907: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+self = <MagicMock name='handle_fully_paid_order' id='47523635810944'>
+args = (<ANY>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', chan... <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>, 'mirumee.payments.dummy')
+kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+            raise AssertionError(msg)
+>       return self.assert_called_with(*args, **kwargs)
+E       AssertionError: expected call not found.
+E       Expected: handle_fully_paid_order(<ANY>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>, 'mirumee.payments.dummy')
+E       Actual: handle_fully_paid_order(<saleor.plugins.manager.PluginsManager object at 0x2b38f235b670>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>)
+E       
+E       pytest introspection follows:
+E       
+E       Args:
+E       assert (<saleor.plug...s object (9)>) == (<ANY>, Order...yments.dummy')
+E         
+E         Right contains one more item: 'mirumee.payments.dummy'
+E         
+E         Full diff:
+E           (
+E         -     <ANY>,
+E         +     <saleor.plugins.manager.PluginsManager object at 0x2b38f235b670>,...
+E         
+E         ...Full output truncated (33 lines hidden), use '-vv' to show
+
+/usr/local/lib/python3.9/unittest/mock.py:919: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+capture_mock = <MagicMock name='capture' id='47523640631744'>
+mocked_notify = <MagicMock name='notify' id='47523642426752'>
+handle_fully_paid_order_mock = <MagicMock name='handle_fully_paid_order' id='47523635810944'>
+staff_api_client = <saleor.graphql.tests.fixtures.ApiClient object at 0x2b38f4efaa90>
+order_unconfirmed = <Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>
+permission_group_manage_orders = <Group: Manage orders group.>
+payment_txn_preauth = Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged)
+site_settings = <SiteSettings: SiteSettings object (9)>
+
+    @patch("saleor.order.actions.handle_fully_paid_order")
+    @patch("saleor.plugins.manager.PluginsManager.notify")
+    @patch("saleor.payment.gateway.capture")
+    def test_order_confirm(
+        capture_mock,
+        mocked_notify,
+        handle_fully_paid_order_mock,
+        staff_api_client,
+        order_unconfirmed,
+        permission_group_manage_orders,
+        payment_txn_preauth,
+        site_settings,
+    ):
+        # given
+        payment_txn_preauth.order = order_unconfirmed
+        payment_txn_preauth.captured_amount = order_unconfirmed.total.gross.amount
+        payment_txn_preauth.total = order_unconfirmed.total.gross.amount
+        payment_txn_preauth.save(update_fields=["order", "captured_amount", "total"])
+    
+        order_unconfirmed.total_charged = order_unconfirmed.total.gross
+        order_unconfirmed.save(update_fields=["total_charged_amount"])
+        updates_amounts_for_order(order_unconfirmed)
+    
+        permission_group_manage_orders.user_set.add(staff_api_client.user)
+        assert not OrderEvent.objects.exists()
+    
+        # when
+        response = staff_api_client.post_graphql(
+            ORDER_CONFIRM_MUTATION,
+            {"id": graphene.Node.to_global_id("Order", order_unconfirmed.id)},
+        )
+    
+        # then
+        order_data = get_graphql_content(response)["data"]["orderConfirm"]["order"]
+    
+        assert order_data["status"] == OrderStatus.UNFULFILLED.upper()
+        order_unconfirmed.refresh_from_db()
+        assert order_unconfirmed.status == OrderStatus.UNFULFILLED
+        assert OrderEvent.objects.count() == 2
+        assert OrderEvent.objects.filter(
+            order=order_unconfirmed,
+            user=staff_api_client.user,
+            type=order_events.OrderEvents.CONFIRMED,
+        ).exists()
+    
+        assert OrderEvent.objects.filter(
+            order=order_unconfirmed,
+            user=staff_api_client.user,
+            type=order_events.OrderEvents.PAYMENT_CAPTURED,
+            parameters__amount=payment_txn_preauth.get_total().amount,
+        ).exists()
+    
+        capture_mock.assert_called_once_with(
+            payment_txn_preauth, ANY, channel_slug=order_unconfirmed.channel.slug
+        )
+        expected_payload = {
+            "order": get_default_order_payload(order_unconfirmed, ""),
+            "recipient_email": order_unconfirmed.user.email,
+            "requester_user_id": to_global_id_or_none(staff_api_client.user),
+            "requester_app_id": None,
+            **get_site_context_payload(site_settings.site),
+        }
+        mocked_notify.assert_called_once_with(
+            NotifyEventType.ORDER_CONFIRMED,
+            expected_payload,
+            channel_slug=order_unconfirmed.channel.slug,
+        )
+        order_info = fetch_order_info(order_unconfirmed)
+>       handle_fully_paid_order_mock.assert_called_once_with(
+            ANY,
+            order_info,
+            staff_api_client.user,
+            None,
+            site_settings,
+            payment_txn_preauth.gateway,
+        )
+E       AssertionError: expected call not found.
+E       Expected: handle_fully_paid_order(<ANY>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>, 'mirumee.payments.dummy')
+E       Actual: handle_fully_paid_order(<saleor.plugins.manager.PluginsManager object at 0x2b38f235b670>, OrderInfo(order=<Order #UUID('c3c0f5a8-28ea-47f0-ba38-29f0dd3272f6')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.417877+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), <User: bcecc112-ffdc-426e-91c6-fe25216ee787>, None, <SiteSettings: SiteSettings object (9)>)
+E       
+E       pytest introspection follows:
+E       
+E       Args:
+E       assert (<saleor.plug...s object (9)>) == (<ANY>, Order...yments.dummy')
+E         
+E         Right contains one more item: 'mirumee.payments.dummy'
+E         
+E         Full diff:
+E           (
+E         -     <ANY>,
+E         +     <saleor.plugins.manager.PluginsManager object at 0x2b38f235b670>,...
+E         
+E         ...Full output truncated (33 lines hidden), use '-vv' to show
+
+saleor/graphql/order/tests/mutations/test_order_confirm.py:101: AssertionError
+__________________________ test_order_confirm_by_app ___________________________
+[gw6] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+self = <MagicMock name='handle_fully_paid_order' id='47626927279648'>
+args = (<ANY>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', chan...discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>, 'mirumee.payments.dummy')
+kwargs = {}
+expected = call(<ANY>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', ...discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>, 'mirumee.payments.dummy')
+actual = call(<saleor.plugins.manager.PluginsManager object at 0x2b5101a6d2e0>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e..., warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b51020d2310>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: handle_fully_paid_order(<ANY>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>, 'mirumee.payments.dummy')
+E           Actual: handle_fully_paid_order(<saleor.plugins.manager.PluginsManager object at 0x2b5101a6d2e0>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>)
+
+/usr/local/lib/python3.9/unittest/mock.py:907: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+self = <MagicMock name='handle_fully_paid_order' id='47626927279648'>
+args = (<ANY>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', chan...discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>, 'mirumee.payments.dummy')
+kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+            raise AssertionError(msg)
+>       return self.assert_called_with(*args, **kwargs)
+E       AssertionError: expected call not found.
+E       Expected: handle_fully_paid_order(<ANY>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>, 'mirumee.payments.dummy')
+E       Actual: handle_fully_paid_order(<saleor.plugins.manager.PluginsManager object at 0x2b5101a6d2e0>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>)
+E       
+E       pytest introspection follows:
+E       
+E       Args:
+E       assert (<saleor.plug... object (10)>) == (<ANY>, Order...yments.dummy')
+E         
+E         Right contains one more item: 'mirumee.payments.dummy'
+E         
+E         Full diff:
+E           (
+E         -     <ANY>,
+E         +     <saleor.plugins.manager.PluginsManager object at 0x2b5101a6d2e0>,...
+E         
+E         ...Full output truncated (33 lines hidden), use '-vv' to show
+
+/usr/local/lib/python3.9/unittest/mock.py:919: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+capture_mock = <MagicMock name='capture' id='47626927037456'>
+mocked_notify = <MagicMock name='notify' id='47626927382288'>
+handle_fully_paid_order_mock = <MagicMock name='handle_fully_paid_order' id='47626927279648'>
+app_api_client = <saleor.graphql.tests.fixtures.ApiClient object at 0x2b5102125550>
+order_unconfirmed = <Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>
+permission_manage_orders = <Permission: order | order | Manage orders.>
+payment_txn_preauth = Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged)
+site_settings = <SiteSettings: SiteSettings object (10)>
+
+    @patch("saleor.order.actions.handle_fully_paid_order")
+    @patch("saleor.plugins.manager.PluginsManager.notify")
+    @patch("saleor.payment.gateway.capture")
+    def test_order_confirm_by_app(
+        capture_mock,
+        mocked_notify,
+        handle_fully_paid_order_mock,
+        app_api_client,
+        order_unconfirmed,
+        permission_manage_orders,
+        payment_txn_preauth,
+        site_settings,
+    ):
+        # given
+        payment_txn_preauth.order = order_unconfirmed
+        payment_txn_preauth.captured_amount = order_unconfirmed.total.gross.amount
+        payment_txn_preauth.total = order_unconfirmed.total.gross.amount
+        payment_txn_preauth.save(update_fields=["order", "captured_amount", "total"])
+    
+        order_unconfirmed.total_charged = order_unconfirmed.total.gross
+        order_unconfirmed.save(update_fields=["total_charged_amount"])
+        updates_amounts_for_order(order_unconfirmed)
+    
+        assert not OrderEvent.objects.exists()
+    
+        # when
+        response = app_api_client.post_graphql(
+            ORDER_CONFIRM_MUTATION,
+            {"id": graphene.Node.to_global_id("Order", order_unconfirmed.id)},
+            permissions=(permission_manage_orders,),
+        )
+    
+        # then
+        order_data = get_graphql_content(response)["data"]["orderConfirm"]["order"]
+    
+        assert order_data["status"] == OrderStatus.UNFULFILLED.upper()
+        order_unconfirmed.refresh_from_db()
+        assert order_unconfirmed.status == OrderStatus.UNFULFILLED
+        assert OrderEvent.objects.count() == 2
+        assert OrderEvent.objects.filter(
+            order=order_unconfirmed,
+            app=app_api_client.app,
+            type=order_events.OrderEvents.CONFIRMED,
+        ).exists()
+    
+        assert OrderEvent.objects.filter(
+            order=order_unconfirmed,
+            app=app_api_client.app,
+            type=order_events.OrderEvents.PAYMENT_CAPTURED,
+            parameters__amount=payment_txn_preauth.get_total().amount,
+        ).exists()
+    
+        capture_mock.assert_called_once_with(
+            payment_txn_preauth, ANY, channel_slug=order_unconfirmed.channel.slug
+        )
+        expected_payload = {
+            "order": get_default_order_payload(order_unconfirmed, ""),
+            "recipient_email": order_unconfirmed.user.email,
+            "requester_user_id": None,
+            "requester_app_id": to_global_id_or_none(app_api_client.app),
+            **get_site_context_payload(site_settings.site),
+        }
+        mocked_notify.assert_called_once_with(
+            NotifyEventType.ORDER_CONFIRMED,
+            expected_payload,
+            channel_slug=order_unconfirmed.channel.slug,
+        )
+        order_info = fetch_order_info(order_unconfirmed)
+>       handle_fully_paid_order_mock.assert_called_once_with(
+            ANY,
+            order_info,
+            None,
+            app_api_client.app,
+            site_settings,
+            payment_txn_preauth.gateway,
+        )
+E       AssertionError: expected call not found.
+E       Expected: handle_fully_paid_order(<ANY>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>, 'mirumee.payments.dummy')
+E       Actual: handle_fully_paid_order(<saleor.plugins.manager.PluginsManager object at 0x2b5101a6d2e0>, OrderInfo(order=<Order #UUID('55c09fc4-5a34-47e5-bba9-f1b7f10bdb10')>, customer_email='test@example.com', channel=<Channel: main>, payment=Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:30.654641+00:00, charge_status=not-charged), lines_data=[OrderLineInfo(line=<OrderLine: Test product (SKU_AA)>, quantity=3, variant=<ProductVariant: SKU_AA>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None), OrderLineInfo(line=<OrderLine: Test product 2 (SKU_B)>, quantity=2, variant=<ProductVariant: SKU_B>, is_digital=False, digital_content=None, replace=False, warehouse_pk=None, line_discounts=None)]), None, <App: Sample app objects>, <SiteSettings: SiteSettings object (10)>)
+E       
+E       pytest introspection follows:
+E       
+E       Args:
+E       assert (<saleor.plug... object (10)>) == (<ANY>, Order...yments.dummy')
+E         
+E         Right contains one more item: 'mirumee.payments.dummy'
+E         
+E         Full diff:
+E           (
+E         -     <ANY>,
+E         +     <saleor.plugins.manager.PluginsManager object at 0x2b5101a6d2e0>,...
+E         
+E         ...Full output truncated (33 lines hidden), use '-vv' to show
+
+saleor/graphql/order/tests/mutations/test_order_confirm.py:371: AssertionError
+__ test_create_order_captured_payment_creates_expected_events_anonymous_user ___
+[gw0] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mock_notify = <MagicMock name='notify' id='47721559093152'>
+checkout_with_item = <Checkout: Checkout object (0d3598a0-8c97-43ea-b2ed-4019ea98f44e)>
+customer_user = <User: 252683fb-bde9-447c-9f49-efd3e90423cf>
+shipping_method = ShippingMethod(type=price)
+payment_txn_captured = Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:33.762659+00:00, charge_status=fully-charged)
+channel_USD = <Channel: main>
+site_settings = <SiteSettings: SiteSettings object (3)>
+
+    @mock.patch("saleor.plugins.manager.PluginsManager.notify")
+    def test_create_order_captured_payment_creates_expected_events_anonymous_user(
+        mock_notify,
+        checkout_with_item,
+        customer_user,
+        shipping_method,
+        payment_txn_captured,
+        channel_USD,
+        site_settings,
+    ):
+        checkout = checkout_with_item
+        checkout_user = None
+    
+        # Ensure not events are existing prior
+        assert not OrderEvent.objects.exists()
+        assert not CustomerEvent.objects.exists()
+    
+        # Prepare valid checkout
+        checkout.user = checkout_user
+        checkout.email = "test@example.com"
+        checkout.billing_address = customer_user.default_billing_address
+        checkout.shipping_address = customer_user.default_shipping_address
+        checkout.shipping_method = shipping_method
+        checkout.payments.add(payment_txn_captured)
+        checkout.tracking_code = "tracking_code"
+        checkout.redirect_url = "https://www.example.com"
+        checkout.save()
+    
+        # Place checkout
+        manager = get_plugins_manager(allow_replica=False)
+        lines, _ = fetch_checkout_lines(checkout)
+        checkout_info = fetch_checkout_info(checkout, lines, manager)
+        order = _create_order(
+            checkout_info=checkout_info,
+            checkout_lines=lines,
+            order_data=_prepare_order_data(
+                manager=manager,
+                checkout_info=checkout_info,
+                lines=lines,
+                prices_entered_with_tax=True,
+            ),
+            user=None,
+            app=None,
+            manager=manager,
+        )
+        flush_post_commit_hooks()
+    
+        (
+            order_placed_event,
+            payment_captured_event,
+            order_fully_paid_event,
+            order_confirmed_event,
+        ) = order.events.all()  # type: OrderEvent
+    
+        # Ensure the correct order event was created
+        # is the event the expected type
+        assert order_placed_event.type == OrderEvents.PLACED
+        # is the user anonymous/ the customer
+        assert order_placed_event.user == checkout_user
+        # is the associated backref order valid
+        assert order_placed_event.order is order
+        # ensure a date was set
+        assert order_placed_event.date
+        # should not have any additional parameters
+        assert not order_placed_event.parameters
+    
+        # Ensure the correct order event was created
+        # is the event the expected type
+        assert payment_captured_event.type == OrderEvents.PAYMENT_CAPTURED
+        # is the user anonymous/ the customer
+        assert payment_captured_event.user == checkout_user
+        # is the associated backref order valid
+        assert payment_captured_event.order is order
+        # ensure a date was set
+        assert payment_captured_event.date
+        # should have additional parameters
+        assert "amount" in payment_captured_event.parameters.keys()
+        assert "payment_id" in payment_captured_event.parameters.keys()
+        assert "payment_gateway" in payment_captured_event.parameters.keys()
+    
+        # Ensure the correct order event was created
+        # is the event the expected type
+        assert order_fully_paid_event.type == OrderEvents.ORDER_FULLY_PAID
+        # is the user anonymous/ the customer
+        assert order_fully_paid_event.user == checkout_user
+        # is the associated backref order valid
+        assert order_fully_paid_event.order is order
+        # ensure a date was set
+        assert order_fully_paid_event.date
+        # should have payment_gateway in additional parameters
+>       assert "payment_gateway" in order_fully_paid_event.parameters
+E       AssertionError: assert 'payment_gateway' in {}
+E        +  where {} = OrderEvent(type='order_fully_paid', user=None).parameters
+
+saleor/checkout/tests/test_checkout_complete.py:285: AssertionError
+___________________________ test_for_locked_checkout ___________________________
+[gw4] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mocked_initialize = <MagicMock name='transaction_initialize_session' id='47000762390224'>
+user_api_client = <saleor.graphql.tests.fixtures.ApiClient object at 0x2abf37d4cb50>
+checkout_with_prices = <Checkout: Checkout object (ddf00e00-f47a-40d4-b4cc-809fdffa3263)>
+webhook_app = <App: Webhook app>
+transaction_session_response = {'amount': '10.00', 'data': {'some-json': 'data'}, 'externalUrl': 'http://127.0.0.1:9090/external-reference', 'message': 'Message related to the payment', ...}
+
+    @mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+    def test_for_locked_checkout(
+        mocked_initialize,
+        user_api_client,
+        checkout_with_prices,
+        webhook_app,
+        transaction_session_response,
+    ):
+        # given
+        checkout = checkout_with_prices
+        checkout.completing_started_at = timezone.now()
+        checkout.save(update_fields=["completing_started_at"])
+    
+        expected_app_identifier = "webhook.app.identifier"
+        webhook_app.identifier = expected_app_identifier
+        webhook_app.save()
+    
+        expected_amount = Decimal("10.00")
+        expected_psp_reference = "ppp-123"
+        expected_response = transaction_session_response.copy()
+        expected_response["result"] = "CHARGE_SUCCESS"
+        expected_response["pspReference"] = expected_psp_reference
+        mocked_initialize.return_value = TransactionSessionResult(
+            app_identifier=expected_app_identifier, response=expected_response
+        )
+        idempotency_key = "ABC"
+    
+        variables = {
+            "action": None,
+            "amount": expected_amount,
+            "id": to_global_id_or_none(checkout),
+            "paymentGateway": {"id": expected_app_identifier, "data": None},
+            "idempotencyKey": idempotency_key,
+        }
+    
+        # when
+        response = user_api_client.post_graphql(TRANSACTION_INITIALIZE, variables)
+    
+        # then
+        content = get_graphql_content(response)
+        data = content["data"]["transactionInitialize"]
+>       assert len(data["errors"]) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py:2043: AssertionError
+_______________________ test_for_checkout_with_payments ________________________
+[gw11] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mocked_initialize = <MagicMock name='transaction_initialize_session' id='47143633406848'>
+user_api_client = <saleor.graphql.tests.fixtures.ApiClient object at 0x2ae07e14c6d0>
+checkout_with_prices = <Checkout: Checkout object (0b0b52c4-b4af-44fb-afde-4f031b32590f)>
+webhook_app = <App: Webhook app>
+transaction_session_response = {'amount': '10.00', 'data': {'some-json': 'data'}, 'externalUrl': 'http://127.0.0.1:9090/external-reference', 'message': 'Message related to the payment', ...}
+
+    @mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+    def test_for_checkout_with_payments(
+        mocked_initialize,
+        user_api_client,
+        checkout_with_prices,
+        webhook_app,
+        transaction_session_response,
+    ):
+        # given
+        checkout = checkout_with_prices
+        expected_app_identifier = "webhook.app.identifier"
+        webhook_app.identifier = expected_app_identifier
+        webhook_app.save()
+    
+        # create payments
+        payments = Payment.objects.bulk_create(
+            [
+                Payment(
+                    gateway="mirumee.payments.dummy", is_active=True, checkout=checkout
+                ),
+                Payment(
+                    gateway="mirumee.payments.dummy", is_active=False, checkout=checkout
+                ),
+            ]
+        )
+    
+        expected_amount = Decimal("10.00")
+        expected_psp_reference = "ppp-123"
+        expected_response = transaction_session_response.copy()
+        expected_response["result"] = "CHARGE_SUCCESS"
+        expected_response["pspReference"] = expected_psp_reference
+        mocked_initialize.return_value = TransactionSessionResult(
+            app_identifier=expected_app_identifier, response=expected_response
+        )
+        idempotency_key = "ABC"
+    
+        variables = {
+            "action": None,
+            "amount": expected_amount,
+            "id": to_global_id_or_none(checkout),
+            "paymentGateway": {"id": expected_app_identifier, "data": None},
+            "idempotencyKey": idempotency_key,
+        }
+    
+        # when
+        response = user_api_client.post_graphql(TRANSACTION_INITIALIZE, variables)
+    
+        # then
+        content = get_graphql_content(response)
+        checkout.refresh_from_db()
+        _assert_fields(
+            content=content,
+            source_object=checkout,
+            expected_amount=expected_amount,
+            expected_psp_reference=expected_psp_reference,
+            response_event_type=TransactionEventType.CHARGE_SUCCESS,
+            app_identifier=webhook_app.identifier,
+            mocked_initialize=mocked_initialize,
+            charged_value=expected_amount,
+            returned_data=expected_response["data"],
+        )
+        transaction = checkout.payment_transactions.last()
+        assert transaction.idempotency_key == idempotency_key
+        assert transaction.events.first().idempotency_key == idempotency_key
+        for payment in payments:
+            payment.refresh_from_db()
+>           assert payment.is_active is False
+E           assert True is False
+E            +  where True = Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:32.671844+00:00, charge_status=not-charged).is_active
+
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py:2118: AssertionError
+___________________________ test_for_locked_checkout ___________________________
+[gw13] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mocked_process = <MagicMock name='transaction_process_session' id='46969905269296'>
+user_api_client = <saleor.graphql.tests.fixtures.ApiClient object at 0x2ab8077b7430>
+checkout_with_prices = <Checkout: Checkout object (ce0e32ab-942e-4149-a303-0edd92b9fca7)>
+webhook_app = <App: Webhook app>
+transaction_session_response = {'amount': '10.00', 'data': {'some-json': 'data'}, 'externalUrl': 'http://127.0.0.1:9090/external-reference', 'message': 'Message related to the payment', ...}
+transaction_item_generator = <function transaction_item_generator.<locals>.create_transaction at 0x2ab808e7bdc0>
+
+    @mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+    def test_for_locked_checkout(
+        mocked_process,
+        user_api_client,
+        checkout_with_prices,
+        webhook_app,
+        transaction_session_response,
+        transaction_item_generator,
+    ):
+        # given
+        expected_amount = Decimal("10.00")
+    
+        checkout = checkout_with_prices
+        checkout.completing_started_at = timezone.now()
+        checkout.save(update_fields=["completing_started_at"])
+    
+        expected_app_identifier = "webhook.app.identifier"
+        webhook_app.identifier = expected_app_identifier
+        webhook_app.save()
+    
+        transaction_item = transaction_item_generator(
+            checkout_id=checkout_with_prices.pk, app=webhook_app
+        )
+        TransactionEvent.objects.create(
+            transaction=transaction_item,
+            amount_value=expected_amount,
+            currency=transaction_item.currency,
+            type=TransactionEventType.CHARGE_REQUEST,
+        )
+    
+        expected_psp_reference = "ppp-123"
+        expected_response = transaction_session_response.copy()
+        expected_response["amount"] = expected_amount
+        expected_response["result"] = TransactionEventType.CHARGE_SUCCESS.upper()
+        expected_response["pspReference"] = expected_psp_reference
+        mocked_process.return_value = TransactionSessionResult(
+            app_identifier=expected_app_identifier, response=expected_response
+        )
+        expected_data = {"some": "json-data"}
+        variables = {
+            "id": graphene.Node.to_global_id("TransactionItem", transaction_item.token),
+            "data": expected_data,
+        }
+    
+        # when
+        response = user_api_client.post_graphql(TRANSACTION_PROCESS, variables)
+    
+        # then
+        content = get_graphql_content(response)
+        data = content["data"]["transactionProcess"]
+>       assert len(data["errors"]) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+saleor/graphql/payment/tests/mutations/test_transaction_process.py:1582: AssertionError
+_______________________ test_for_checkout_with_payments ________________________
+[gw8] linux -- Python 3.9.25 /usr/local/bin/python3.9
+
+mocked_process = <MagicMock name='transaction_process_session' id='47400142796880'>
+user_api_client = <saleor.graphql.tests.fixtures.ApiClient object at 0x2b1c34aea490>
+checkout_with_prices = <Checkout: Checkout object (f7eae0e0-d8aa-4bd4-ba65-eeaa70d16a30)>
+webhook_app = <App: Webhook app>
+transaction_session_response = {'amount': '10.00', 'data': {'some-json': 'data'}, 'externalUrl': 'http://127.0.0.1:9090/external-reference', 'message': 'Message related to the payment', ...}
+transaction_item_generator = <function transaction_item_generator.<locals>.create_transaction at 0x2b1c34999670>
+
+    @mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+    def test_for_checkout_with_payments(
+        mocked_process,
+        user_api_client,
+        checkout_with_prices,
+        webhook_app,
+        transaction_session_response,
+        transaction_item_generator,
+    ):
+        # given
+        expected_amount = Decimal("10.00")
+    
+        checkout = checkout_with_prices
+        expected_app_identifier = "webhook.app.identifier"
+        webhook_app.identifier = expected_app_identifier
+        webhook_app.save()
+    
+        # create payments
+        payments = Payment.objects.bulk_create(
+            [
+                Payment(
+                    gateway="mirumee.payments.dummy", is_active=True, checkout=checkout
+                ),
+                Payment(
+                    gateway="mirumee.payments.dummy", is_active=False, checkout=checkout
+                ),
+            ]
+        )
+    
+        transaction_item = transaction_item_generator(
+            checkout_id=checkout_with_prices.pk, app=webhook_app
+        )
+        TransactionEvent.objects.create(
+            transaction=transaction_item,
+            amount_value=expected_amount,
+            currency=transaction_item.currency,
+            type=TransactionEventType.CHARGE_REQUEST,
+        )
+    
+        expected_psp_reference = "ppp-123"
+        expected_response = transaction_session_response.copy()
+        expected_response["amount"] = expected_amount
+        expected_response["result"] = TransactionEventType.CHARGE_SUCCESS.upper()
+        expected_response["pspReference"] = expected_psp_reference
+        mocked_process.return_value = TransactionSessionResult(
+            app_identifier=expected_app_identifier, response=expected_response
+        )
+        expected_data = {"some": "json-data"}
+        variables = {
+            "id": graphene.Node.to_global_id("TransactionItem", transaction_item.token),
+            "data": expected_data,
+        }
+    
+        # when
+        response = user_api_client.post_graphql(TRANSACTION_PROCESS, variables)
+    
+        # then
+        content = get_graphql_content(response)
+        checkout.refresh_from_db()
+        _assert_fields(
+            content=content,
+            source_object=checkout,
+            expected_amount=expected_amount,
+            expected_psp_reference=expected_psp_reference,
+            response_event_type=TransactionEventType.CHARGE_SUCCESS,
+            app_identifier=webhook_app.identifier,
+            mocked_process=mocked_process,
+            charged_value=expected_amount,
+            data=expected_data,
+            returned_data=expected_response["data"],
+        )
+        assert checkout.charge_status == CheckoutChargeStatus.PARTIAL
+        assert checkout.authorize_status == CheckoutAuthorizeStatus.PARTIAL
+        for payment in payments:
+            payment.refresh_from_db()
+>           assert payment.is_active is False
+E           assert True is False
+E            +  where True = Payment(gateway=mirumee.payments.dummy, is_active=True, created=2026-06-29 15:19:34.383685+00:00, charge_status=not-charged).is_active
+
+saleor/graphql/payment/tests/mutations/test_transaction_process.py:1666: AssertionError
+=============================== warnings summary ===============================
+saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_updates_checkout_last_transaction_modified_at[previous_last_transaction_modified_at1]
+  /usr/local/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Checkout.last_transaction_modified_at received a naive datetime (2020-01-01 00:00:00) while time zone support is active.
+    warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED saleor/checkout/tests/test_checkout_complete.py::test_checkout_complete_pick_payment_flow_not_authorized_active_payment
+FAILED saleor/order/tests/test_order_actions.py::test_handle_fully_paid_order_with_gateway
+FAILED saleor/checkout/tests/test_checkout_complete.py::test_create_order_captured_payment_creates_expected_events
+FAILED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm
+FAILED saleor/graphql/order/tests/mutations/test_order_confirm.py::test_order_confirm_by_app
+FAILED saleor/checkout/tests/test_checkout_complete.py::test_create_order_captured_payment_creates_expected_events_anonymous_user
+FAILED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_locked_checkout
+FAILED saleor/graphql/payment/tests/mutations/test_transaction_initialize.py::test_for_checkout_with_payments
+FAILED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_locked_checkout
+FAILED saleor/graphql/payment/tests/mutations/test_transaction_process.py::test_for_checkout_with_payments
+============ 10 failed, 166 passed, 1 warning in 158.71s (0:02:38) =============
+reward=0 graded=176 found=0 failed=0 parsed=166 framework=pytest exit_code=1

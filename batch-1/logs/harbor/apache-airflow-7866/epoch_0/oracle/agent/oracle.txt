@@ -1,0 +1,5 @@
+patching file airflow/providers/google/suite/example_dags/example_sheets.py
+patching file airflow/providers/google/suite/hooks/sheets.py
+patching file airflow/providers/google/suite/operators/sheets.py
+patching file docs/howto/operator/gcp/sheets.rst
+patching file docs/operators-and-hooks-ref.rst

@@ -1,0 +1,21 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pulsar-common --also-make test -Dtest=MetricsUtilTest -Dsurefire.failIfNoSpecifiedTests=false",
+  "test_files": [
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/auth/MockedPulsarServiceBaseTest.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceThrottlingTest.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/AbstractTestPulsarService.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/NonStartableTestPulsarService.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/PulsarTestContext.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/StartableTestPulsarService.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java",
+    "pulsar-common/src/test/java/org/apache/pulsar/common/stats/MetricsUtilTest.java",
+    "pulsar-opentelemetry/src/test/java/org/apache/pulsar/opentelemetry/OpenTelemetryServiceTest.java"
+  ],
+  "num_test_files": 9,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pulsar::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

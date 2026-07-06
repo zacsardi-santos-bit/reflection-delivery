@@ -1,0 +1,396 @@
+diff --git a/go/cmd/dolt/cli/arg_parser_helpers.go b/go/cmd/dolt/cli/arg_parser_helpers.go
+index 362efad127..f34ca96633 100644
+--- a/go/cmd/dolt/cli/arg_parser_helpers.go
++++ b/go/cmd/dolt/cli/arg_parser_helpers.go
+@@ -187,6 +187,8 @@ func CreateCheckoutArgParser() *argparser.ArgParser {
+ 	ap.SupportsString(CreateResetBranch, "", "branch", "Similar to '-b'. Forcibly resets the branch to {{.LessThan}}start_point{{.GreaterThan}} if it exists.")
+ 	ap.SupportsFlag(ForceFlag, "f", "If there is any changes in working set, the force flag will wipe out the current changes and checkout the new branch.")
+ 	ap.SupportsString(TrackFlag, "t", "", "When creating a new branch, set up 'upstream' configuration.")
++	ap.SupportsFlag(OverwriteIgnoreFlag, "", "Silently overwrite ignored tables when switching branches (default behavior).")
++	ap.SupportsFlag(NoOverwriteIgnoreFlag, "", "Abort the operation when ignored tables in the working set would be overwritten by the checkout.")
+ 	return ap
+ }
+ 
+diff --git a/go/cmd/dolt/cli/flags.go b/go/cmd/dolt/cli/flags.go
+index c3e66ae0c2..8af0806cf7 100644
+--- a/go/cmd/dolt/cli/flags.go
++++ b/go/cmd/dolt/cli/flags.go
+@@ -54,6 +54,7 @@ const (
+ 	NoCommitFlag           = "no-commit"
+ 	NoEditFlag             = "no-edit"
+ 	NoFFParam              = "no-ff"
++	NoOverwriteIgnoreFlag  = "no-overwrite-ignore"
+ 	FFOnlyParam            = "ff-only"
+ 	NoPrettyFlag           = "no-pretty"
+ 	NoTLSFlag              = "no-tls"
+@@ -63,6 +64,7 @@ const (
+ 	OneLineFlag            = "oneline"
+ 	OursFlag               = "ours"
+ 	OutputOnlyFlag         = "output-only"
++	OverwriteIgnoreFlag    = "overwrite-ignore"
+ 	ParentsFlag            = "parents"
+ 	PatchFlag              = "patch"
+ 	PasswordFlag           = "password"
+diff --git a/go/cmd/dolt/commands/checkout.go b/go/cmd/dolt/commands/checkout.go
+index 64ede83785..90713b21dd 100644
+--- a/go/cmd/dolt/commands/checkout.go
++++ b/go/cmd/dolt/commands/checkout.go
+@@ -108,6 +108,13 @@ func (cmd CheckoutCmd) Exec(ctx context.Context, commandStr string, args []strin
+ 		return 1
+ 	}
+ 
++	if apr.ContainsAll(cli.OverwriteIgnoreFlag, cli.NoOverwriteIgnoreFlag) {
++		return HandleVErrAndExitCode(
++			errhand.BuildDError("error: --%s and --%s are mutually exclusive", cli.OverwriteIgnoreFlag, cli.NoOverwriteIgnoreFlag).Build(),
++			usage,
++		)
++	}
++
+ 	// Argument validation in the CLI is strictly nice to have. The stored procedure will do the same, but the errors
+ 	// won't be as nice.
+ 	branchOrTrack := apr.Contains(cli.CheckoutCreateBranch) || apr.Contains(cli.CreateResetBranch) || apr.Contains(cli.TrackFlag)
+@@ -225,6 +232,8 @@ func handleErrors(branchName string, err error) errhand.VerboseError {
+ 		return errhand.VerboseErrorFromError(err)
+ 	} else if actions.IsCheckoutWouldOverwrite(err) {
+ 		return errhand.VerboseErrorFromError(err)
++	} else if actions.ErrCheckoutWouldOverwriteIgnoredTables.Is(err) {
++		return errhand.VerboseErrorFromError(err)
+ 	} else if err.Error() == actions.ErrWorkingSetsOnBothBranches.Error() {
+ 		str := fmt.Sprintf("error: There are uncommitted changes already on branch '%s'.", branchName) +
+ 			"This can happen when someone modifies that branch in a SQL session." +
+diff --git a/go/libraries/doltcore/dtestutils/testcommands/multienv.go b/go/libraries/doltcore/dtestutils/testcommands/multienv.go
+index d4867037e1..76c7413302 100644
+--- a/go/libraries/doltcore/dtestutils/testcommands/multienv.go
++++ b/go/libraries/doltcore/dtestutils/testcommands/multienv.go
+@@ -177,7 +177,7 @@ func (mr *MultiRepoTestSetup) CheckoutBranch(dbName, branchName string) {
+ 	if err != nil {
+ 		mr.Errhand(err)
+ 	}
+-	err = dprocedures.MoveWorkingSetToBranch(queryist.Context, branchName, false, false)
++	err = dprocedures.MoveWorkingSetToBranch(queryist.Context, branchName, false, false, true)
+ 	if err != nil {
+ 		mr.Errhand(err)
+ 	}
+diff --git a/go/libraries/doltcore/env/actions/checkout.go b/go/libraries/doltcore/env/actions/checkout.go
+index cf5ad58f55..fa3992e7d6 100644
+--- a/go/libraries/doltcore/env/actions/checkout.go
++++ b/go/libraries/doltcore/env/actions/checkout.go
+@@ -16,6 +16,7 @@ package actions
+ 
+ import (
+ 	"context"
++	"strings"
+ 	"time"
+ 
+ 	"github.com/dolthub/go-mysql-server/sql"
+@@ -338,6 +339,55 @@ func moveModifiedTables(ctx context.Context, oldRoot, newRoot, changedRoot doltd
+ 	return resultMap, nil
+ }
+ 
++// CheckOverwrittenIgnoredTables returns an error if |overwriteIgnore| is false and any ignored
++// tables in |roots.Working| would be overwritten by checking out |branchRoot|.
++func CheckOverwrittenIgnoredTables(ctx context.Context, roots doltdb.Roots, branchRoot doltdb.RootValue, overwriteIgnore bool) error {
++	if overwriteIgnore {
++		return nil
++	}
++
++	workingTables, err := doltdb.UnionTableNames(ctx, roots.Working)
++	if err != nil {
++		return err
++	}
++
++	ignoredTables, err := doltdb.IdentifyIgnoredTables(ctx, roots, workingTables)
++	if err != nil {
++		return err
++	}
++
++	if len(ignoredTables) == 0 {
++		return nil
++	}
++
++	var overwritten []string
++	for _, tbl := range ignoredTables {
++		currentHash, _, err := roots.Working.GetTableHash(ctx, tbl)
++		if err != nil {
++			return err
++		}
++
++		newHash, _, err := branchRoot.GetTableHash(ctx, tbl)
++		if err != nil {
++			return err
++		}
++
++		// Only flag an overwrite when the target branch has the table
++		// with different content. Per Git's docs, --no-overwrite-ignore
++		// aborts "when the new branch contains ignored files," so if
++		// the target branch does not have the table (empty hash) there
++		// is nothing to overwrite the local copy.
++		if currentHash != newHash && !newHash.IsEmpty() {
++			overwritten = append(overwritten, tbl.String())
++		}
++	}
++
++	if len(overwritten) > 0 {
++		return ErrCheckoutWouldOverwriteIgnoredTables.New(strings.Join(overwritten, "\n\t"))
++	}
++	return nil
++}
++
+ // moveForeignKeys returns the foreign key collection that should be used for the new working set.
+ func moveForeignKeys(ctx context.Context, oldRoot, newRoot, changedRoot doltdb.RootValue, force bool) (*doltdb.ForeignKeyCollection, error) {
+ 	oldFks, err := oldRoot.GetForeignKeyCollection(ctx)
+diff --git a/go/libraries/doltcore/env/actions/errors.go b/go/libraries/doltcore/env/actions/errors.go
+index 460cb86ec0..2a5b1dd964 100644
+--- a/go/libraries/doltcore/env/actions/errors.go
++++ b/go/libraries/doltcore/env/actions/errors.go
+@@ -18,6 +18,8 @@ import (
+ 	"bytes"
+ 	"strings"
+ 
++	goerrors "gopkg.in/src-d/go-errors.v1"
++
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/diff"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/doltdb"
+ )
+@@ -144,6 +146,11 @@ func CheckoutWouldOverwriteTables(err error) []string {
+ 	return cwo.tables
+ }
+ 
++var ErrCheckoutWouldOverwriteIgnoredTables = goerrors.NewKind(
++	"The following ignored tables would be overwritten by checkout:\n\t%s\n" +
++		"Please move or remove them before you switch branches.\n" +
++		"Use --overwrite-ignore to force.\n")
++
+ type NothingStaged struct {
+ 	NotStagedTbls []diff.TableDelta
+ }
+diff --git a/go/libraries/doltcore/sqle/dprocedures/dolt_checkout.go b/go/libraries/doltcore/sqle/dprocedures/dolt_checkout.go
+index a98f930c04..fc8aa57548 100644
+--- a/go/libraries/doltcore/sqle/dprocedures/dolt_checkout.go
++++ b/go/libraries/doltcore/sqle/dprocedures/dolt_checkout.go
+@@ -104,13 +104,18 @@ func doDoltCheckout(ctx *sql.Context, args []string) (statusCode int, successMes
+ 
+ 	updateHead := apr.Contains(cli.MoveFlag)
+ 
++	if apr.ContainsAll(cli.OverwriteIgnoreFlag, cli.NoOverwriteIgnoreFlag) {
++		return 1, "", fmt.Errorf("error: --%s and --%s are mutually exclusive", cli.OverwriteIgnoreFlag, cli.NoOverwriteIgnoreFlag)
++	}
++	overwriteIgnore := !apr.Contains(cli.NoOverwriteIgnoreFlag)
++
+ 	var rsc doltdb.ReplicationStatusController
+ 	// If we're switching branches, then we need to clear any Doltgres session objects since they're temporary
+ 	dSess.DoltgresSessObj = nil
+ 
+ 	// Checking out new branch.
+ 	if branchOrTrack {
+-		newBranch, upstream, err := checkoutNewBranch(ctx, currentDbName, dbData, apr, &rsc, updateHead)
++		newBranch, upstream, err := checkoutNewBranch(ctx, currentDbName, dbData, apr, &rsc, updateHead, overwriteIgnore)
+ 		if err != nil {
+ 			return 1, "", err
+ 		} else {
+@@ -171,14 +176,14 @@ func doDoltCheckout(ctx *sql.Context, args []string) (statusCode int, successMes
+ 		// dolt checkout <ref> --: disambiguates a tracking branch when it shares a name with local table(s).
+ 		if apr.NArg() == 1 { // assume some <ref> specified because dashDashPos is 1
+ 			if localRefExists {
+-				err = checkoutExistingBranchWithWorkingSetFallback(ctx, currentDbName, firstArg, apr, dSess, &rsc)
++				err = checkoutExistingBranchWithWorkingSetFallback(ctx, currentDbName, firstArg, apr, dSess, &rsc, overwriteIgnore)
+ 				if err != nil {
+ 					return 1, "", err
+ 				}
+ 				return 0, generateSuccessMessage(firstArg, ""), nil
+ 			}
+ 
+-			upstream, err := checkoutRemoteBranch(ctx, dSess, currentDbName, dbData, firstArg, apr, &rsc)
++			upstream, err := checkoutRemoteBranch(ctx, dSess, currentDbName, dbData, firstArg, apr, &rsc, overwriteIgnore)
+ 			if err != nil {
+ 				return 1, "", err
+ 			}
+@@ -214,7 +219,7 @@ func doDoltCheckout(ctx *sql.Context, args []string) (statusCode int, successMes
+ 
+ 	// git prioritizes local and remote refs over tables
+ 	if localRefExists {
+-		err = checkoutExistingBranchWithWorkingSetFallback(ctx, currentDbName, firstArg, apr, dSess, &rsc)
++		err = checkoutExistingBranchWithWorkingSetFallback(ctx, currentDbName, firstArg, apr, dSess, &rsc, overwriteIgnore)
+ 		if err != nil {
+ 			return 1, "", err
+ 		}
+@@ -222,7 +227,7 @@ func doDoltCheckout(ctx *sql.Context, args []string) (statusCode int, successMes
+ 	}
+ 
+ 	if validRemoteRefExists {
+-		upstream, err := checkoutRemoteBranch(ctx, dSess, currentDbName, dbData, firstArg, apr, &rsc)
++		upstream, err := checkoutRemoteBranch(ctx, dSess, currentDbName, dbData, firstArg, apr, &rsc, overwriteIgnore)
+ 		if err != nil {
+ 			return 1, "", err
+ 		}
+@@ -329,6 +334,7 @@ func checkoutRemoteBranch(
+ 	branchName string,
+ 	apr *argparser.ArgParseResults,
+ 	rsc *doltdb.ReplicationStatusController,
++	overwriteIgnore bool,
+ ) (upstream string, err error) {
+ 	remoteRefs, err := actions.GetRemoteBranchRef(ctx, dbData.Ddb, branchName)
+ 	if err != nil {
+@@ -352,7 +358,7 @@ func checkoutRemoteBranch(
+ 			return "", err
+ 		}
+ 
+-		err = checkoutExistingBranch(ctx, dbName, branchName, apr)
++		err = checkoutExistingBranch(ctx, dbName, branchName, apr, overwriteIgnore)
+ 		if err != nil {
+ 			return "", err
+ 		}
+@@ -401,6 +407,7 @@ func checkoutNewBranch(
+ 	apr *argparser.ArgParseResults,
+ 	rsc *doltdb.ReplicationStatusController,
+ 	isMove bool,
++	overwriteIgnore bool,
+ ) (newBranchName string, remoteAndBranch string, err error) {
+ 	var remoteName, remoteBranchName string
+ 	var startPt = "head"
+@@ -472,18 +479,17 @@ func checkoutNewBranch(
+ 	}
+ 
+ 	if isMove {
+-		return newBranchName, remoteAndBranch, doGlobalCheckout(ctx, newBranchName, apr.Contains(cli.ForceFlag), true)
+-	} else {
++		return newBranchName, remoteAndBranch, doGlobalCheckout(ctx, newBranchName, apr.Contains(cli.ForceFlag), true, overwriteIgnore)
++	}
+ 
+-		wsRef, err := ref.WorkingSetRefForHead(ref.NewBranchRef(newBranchName))
+-		if err != nil {
+-			return "", "", err
+-		}
++	wsRef, err := ref.WorkingSetRefForHead(ref.NewBranchRef(newBranchName))
++	if err != nil {
++		return "", "", err
++	}
+ 
+-		err = sess.SwitchWorkingSet(ctx, dbName, wsRef)
+-		if err != nil {
+-			return "", "", err
+-		}
++	err = sess.SwitchWorkingSet(ctx, dbName, wsRef)
++	if err != nil {
++		return "", "", err
+ 	}
+ 
+ 	return newBranchName, remoteAndBranch, nil
+@@ -497,6 +503,7 @@ func checkoutExistingBranch(
+ 	dbName string,
+ 	branchName string,
+ 	apr *argparser.ArgParseResults,
++	overwriteIgnore bool,
+ ) error {
+ 	wsRef, err := ref.WorkingSetRefForHead(ref.NewBranchRef(branchName))
+ 	if err != nil {
+@@ -510,7 +517,7 @@ func checkoutExistingBranch(
+ 	dSess := dsess.DSessFromSess(ctx.Session)
+ 
+ 	if apr.Contains(cli.MoveFlag) {
+-		return doGlobalCheckout(ctx, branchName, apr.Contains(cli.ForceFlag), false)
++		return doGlobalCheckout(ctx, branchName, apr.Contains(cli.ForceFlag), false, overwriteIgnore)
+ 	} else {
+ 		// Ensure that the working set is available
+ 		ddb, ok := dSess.GetDoltDB(ctx, dbName)
+@@ -521,6 +528,18 @@ func checkoutExistingBranch(
+ 			return err
+ 		}
+ 
++		if !overwriteIgnore {
++			if currentRoots, hasRoots := dSess.GetRoots(ctx, dbName); hasRoots {
++				branchHead, err := actions.BranchHeadRoot(ctx, ddb, branchName)
++				if err != nil {
++					return err
++				}
++				if err := actions.CheckOverwrittenIgnoredTables(ctx, currentRoots, branchHead, overwriteIgnore); err != nil {
++					return err
++				}
++			}
++		}
++
+ 		err = dSess.SwitchWorkingSet(ctx, dbName, wsRef)
+ 		if err != nil {
+ 			return err
+@@ -540,13 +559,14 @@ func checkoutExistingBranchWithWorkingSetFallback(
+ 	apr *argparser.ArgParseResults,
+ 	dSess *dsess.DoltSession,
+ 	rsc *doltdb.ReplicationStatusController,
++	overwriteIgnore bool,
+ ) error {
+ 	dbData, ok := dSess.GetDbData(ctx, dbName)
+ 	if !ok {
+ 		return fmt.Errorf("could not load database %s", dbName)
+ 	}
+ 
+-	err := checkoutExistingBranch(ctx, dbName, branchName, apr)
++	err := checkoutExistingBranch(ctx, dbName, branchName, apr, overwriteIgnore)
+ 	if errors.Is(err, doltdb.ErrWorkingSetNotFound) {
+ 		// If there is a branch but there is no working set,
+ 		// somehow the local branch ref was created without a
+@@ -571,7 +591,7 @@ func checkoutExistingBranchWithWorkingSetFallback(
+ 			return err
+ 		}
+ 
+-		err = checkoutExistingBranch(ctx, dbName, branchName, apr)
++		err = checkoutExistingBranch(ctx, dbName, branchName, apr, overwriteIgnore)
+ 		if err != nil {
+ 			return err
+ 		}
+@@ -662,8 +682,8 @@ func checkoutTablesFromCommit(
+ 
+ // doGlobalCheckout implements the behavior of the `dolt checkout` command line, moving the working set into
+ // the new branch and persisting the checked-out branch into future sessions
+-func doGlobalCheckout(ctx *sql.Context, branchName string, isForce bool, isNewBranch bool) error {
+-	err := MoveWorkingSetToBranch(ctx, branchName, isForce, isNewBranch)
++func doGlobalCheckout(ctx *sql.Context, branchName string, isForce bool, isNewBranch bool, overwriteIgnore bool) error {
++	err := MoveWorkingSetToBranch(ctx, branchName, isForce, isNewBranch, overwriteIgnore)
+ 	if err != nil && err != doltdb.ErrAlreadyOnBranch {
+ 		return err
+ 	}
+diff --git a/go/libraries/doltcore/sqle/dprocedures/dolt_checkout_helpers.go b/go/libraries/doltcore/sqle/dprocedures/dolt_checkout_helpers.go
+index fd421e4411..9c700d050f 100644
+--- a/go/libraries/doltcore/sqle/dprocedures/dolt_checkout_helpers.go
++++ b/go/libraries/doltcore/sqle/dprocedures/dolt_checkout_helpers.go
+@@ -15,7 +15,6 @@
+ package dprocedures
+ 
+ import (
+-	"errors"
+ 	"fmt"
+ 
+ 	"github.com/dolthub/go-mysql-server/sql"
+@@ -29,7 +28,7 @@ import (
+ 
+ // MoveWorkingSetToBranch moves the working set from the currently checked out branch onto the branch specified
+ // by `brName`. This is a POTENTIALLY DESTRUCTIVE ACTION used during command line checkout
+-func MoveWorkingSetToBranch(ctx *sql.Context, brName string, force bool, isNewBranch bool) error {
++func MoveWorkingSetToBranch(ctx *sql.Context, brName string, force bool, isNewBranch bool, overwriteIgnore bool) error {
+ 	branchRef := ref.NewBranchRef(brName)
+ 	dSess := dsess.DSessFromSess(ctx.Session)
+ 	dbName := dSess.GetCurrentDatabase()
+@@ -94,13 +93,6 @@ func MoveWorkingSetToBranch(ctx *sql.Context, brName string, force bool, isNewBr
+ 		return fmt.Errorf("unable to get roots")
+ 	}
+ 
+-	// roots will be empty/nil if the working set is not set (working set is not set if the current branch was deleted)
+-	if errors.Is(err, doltdb.ErrBranchNotFound) || errors.Is(err, doltdb.ErrWorkingSetNotFound) {
+-		workingSetExists = false
+-	} else if err != nil {
+-		return err
+-	}
+-
+ 	hasChanges := false
+ 	if workingSetExists {
+ 		hasChanges, _, _, err = actions.RootHasUncommittedChanges(initialRoots)
+@@ -114,6 +106,10 @@ func MoveWorkingSetToBranch(ctx *sql.Context, brName string, force bool, isNewBr
+ 		return fmt.Errorf("Could not load database %s", dbName)
+ 	}
+ 
++	if err := actions.CheckOverwrittenIgnoredTables(ctx, initialRoots, branchHead, overwriteIgnore); err != nil {
++		return err
++	}
++
+ 	// Only if the current working set has uncommitted changes do we carry them forward to the branch being checked out.
+ 	// If this is the case, then the destination branch must *not* have any uncommitted changes, as checked by
+ 	// checkoutWouldStompWorkingSetChanges

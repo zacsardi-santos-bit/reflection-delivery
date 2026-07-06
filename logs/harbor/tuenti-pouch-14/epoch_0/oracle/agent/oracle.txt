@@ -1,9 +1,0 @@
-patching file .travis.yml
-patching file Makefile
-patching file cmd/pouch/README.md
-patching file pkg/vault/test/testutils.go
-patching file pkg/vault/testutils.go (renamed from pkg/vault/dummy.go)
-patching file pkg/vault/vault_test.go
-patching file pouch.go
-patching file pouchfile.go
-patching file state.go

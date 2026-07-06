@@ -1,0 +1,1 @@
+cd /workspace/repo && HUSKY=0 npm install > /dev/null 2>&1 && cd packages/ui && npx vitest run src/contexts/AppearanceContext.test.tsx --reporter=verbose

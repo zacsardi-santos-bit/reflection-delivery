@@ -1,0 +1,9 @@
+patching file test/lib/custom-assertions/match.js
+patching file test/unit/agent/agent.test.js
+patching file test/unit/collector/api-connect.test.js
+patching file test/unit/config/config-defaults.test.js
+patching file test/unit/config/config-env.test.js
+patching file test/unit/index.test.js
+patching file test/unit/lib/health-reporter.test.js
+patching file test/unit/mocks/agent.js
+reward=1 graded=51 found=51 failed=0 parsed=51 framework=mocha exit_code=0

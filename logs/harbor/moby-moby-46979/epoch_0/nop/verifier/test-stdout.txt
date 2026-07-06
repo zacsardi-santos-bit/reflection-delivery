@@ -1,9 +1,0 @@
-patching file daemon/config/config_test.go
-patching file daemon/runtime_unix_test.go
-# github.com/docker/docker/daemon
-daemon/runtime_unix_test.go:11:2: cannot find module providing package dario.cat/mergo: import lookup disabled by -mod=vendor
-FAIL	github.com/docker/docker/daemon [setup failed]
-# github.com/docker/docker/daemon/config
-daemon/runtime_unix_test.go:11:2: cannot find module providing package dario.cat/mergo: import lookup disabled by -mod=vendor
-FAIL	github.com/docker/docker/daemon/config [setup failed]
-reward=0 graded=276 found=0 failed=0 parsed=0 framework=go exit_code=1

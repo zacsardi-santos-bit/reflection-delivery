@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-core -E 'test(remote_compact_replaces_history_for_followups)' --no-fail-fast",
+  "test_files": [
+    "codex-rs/core/tests/suite/compact_remote.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) codex-core::all suite::compact_remote::remote_compact_replaces_history_for_followups"
+  ],
+  "PASS_TO_PASS": []
+}

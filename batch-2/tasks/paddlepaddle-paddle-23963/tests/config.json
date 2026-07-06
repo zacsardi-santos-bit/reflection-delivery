@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/python/paddle/fluid/tests/unittests/dygraph_to_static && python3 -m pytest test_program_translator.py test_save_inference_model.py test_full_name_usage.py -v",
+  "test_files": [
+    "python/paddle/fluid/tests/unittests/dygraph_to_static/test_full_name_usage.py",
+    "python/paddle/fluid/tests/unittests/dygraph_to_static/test_program_translator.py",
+    "python/paddle/fluid/tests/unittests/dygraph_to_static/test_save_inference_model.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_program_translator.TestEnableDeclarative::test_enable_disable_declarative",
+    "test_program_translator.TestEnableDeclarative::test_enable_disable_get_func",
+    "test_program_translator.TestEnableDeclarative::test_enable_disable_get_output",
+    "test_program_translator.TestEnableDeclarative::test_enable_disable_get_program",
+    "test_full_name_usage.TestFullNameDecorator::test_run_success",
+    "test_full_name_usage.TestImportProgramTranslator::test_diff_pkg_same_cls"
+  ],
+  "PASS_TO_PASS": [
+    "test_program_translator.TestDygraphToStaticCode::test_decorator",
+    "test_program_translator.TestDygraphToStaticCode::test_program_translator",
+    "test_save_inference_model.TestDyToStaticSaveInferenceModel::test_save_inference_model"
+  ]
+}

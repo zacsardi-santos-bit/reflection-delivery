@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p naga -E 'test(recursion_depth)' --no-fail-fast",
+  "test_files": [
+    "naga/tests/naga/deep-expression.wgsl",
+    "naga/tests/naga/deep-template.wgsl",
+    "naga/tests/naga/wgsl_errors.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) naga::naga wgsl_errors::recursion_depth_expression",
+    "(2/2) naga::naga wgsl_errors::recursion_depth_template"
+  ],
+  "PASS_TO_PASS": []
+}

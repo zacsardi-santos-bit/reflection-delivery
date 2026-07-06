@@ -1,0 +1,22 @@
+diff --git a/libs/langgraph/langgraph/pregel/main.py b/libs/langgraph/langgraph/pregel/main.py
+index 3ecefc1dc..c16354b74 100644
+--- a/libs/langgraph/langgraph/pregel/main.py
++++ b/libs/langgraph/langgraph/pregel/main.py
+@@ -2572,6 +2572,8 @@ class Pregel(
+ 
+         config = ensure_config(self.config, config)
+         callback_manager = get_callback_manager_for_config(config)
++        if "ls_integration" not in callback_manager.metadata:
++            callback_manager.add_metadata({"ls_integration": "langgraph"})
+         run_manager = callback_manager.on_chain_start(
+             None,
+             input,
+@@ -2908,6 +2910,8 @@ class Pregel(
+ 
+         config = ensure_config(self.config, config)
+         callback_manager = get_async_callback_manager_for_config(config)
++        if "ls_integration" not in callback_manager.metadata:
++            callback_manager.add_metadata({"ls_integration": "langgraph"})
+         run_manager = await callback_manager.on_chain_start(
+             None,
+             input,

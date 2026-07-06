@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/amd/test_sqttmap.py -v -k 'not test_rocprof_inst_traces_match'",
+  "test_files": [
+    "test/amd/test_sqttmap.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.amd.test_sqttmap.TestSQTTMapRDNA3::test_sqtt_cli",
+    "test.amd.test_sqttmap.TestSQTTMapRDNA4::test_sqtt_cli",
+    "test.amd.test_sqttmap.TestSQTTMapCDNA::test_sqtt_cli"
+  ],
+  "PASS_TO_PASS": [
+    "test.amd.test_sqttmap.TestSQTTMapRDNA3::test_sqtt_timeline",
+    "test.amd.test_sqttmap.TestSQTTMapRDNA3::test_wave_sync",
+    "test.amd.test_sqttmap.TestSQTTMapRDNA4::test_sqtt_timeline",
+    "test.amd.test_sqttmap.TestSQTTMapRDNA4::test_wave_sync",
+    "test.amd.test_sqttmap.TestSQTTMapCDNA::test_sqtt_timeline",
+    "test.amd.test_sqttmap.TestSQTTMapCDNA::test_wave_sync"
+  ]
+}

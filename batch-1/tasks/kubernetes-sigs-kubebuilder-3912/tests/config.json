@@ -1,0 +1,11 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -json ./pkg/plugins/golang/v4/scaffolds/... -count=1 -run TestControllerRuntimeVersion",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds::TestControllerRuntimeVersion"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,8 +1,0 @@
-patching file src/jetstream/apikeys_test.go
-patching file src/jetstream/auth_test.go
-patching file src/jetstream/middleware_test.go
-# github.com/cloudfoundry-incubator/stratos/src/jetstream
-apikeys_test.go:12:2: no required module provides package github.com/cloudfoundry-incubator/stratos/src/jetstream/repository/mock_interfaces; to add it:
-	go get github.com/cloudfoundry-incubator/stratos/src/jetstream/repository/mock_interfaces
-FAIL	github.com/cloudfoundry-incubator/stratos/src/jetstream [setup failed]
-reward=0 graded=63 found=0 failed=0 parsed=0 framework=go exit_code=1

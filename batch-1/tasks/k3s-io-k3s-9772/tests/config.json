@@ -1,0 +1,18 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/util/services -count=1",
+  "test_files": [
+    "pkg/util/services/services_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/k3s-io/k3s/pkg/util/services::Test_UnitFilesForServices/All_Services",
+    "github.com/k3s-io/k3s/pkg/util/services::Test_UnitFilesForServices/Server_Only",
+    "github.com/k3s-io/k3s/pkg/util/services::Test_UnitFilesForServices/Agent_Only",
+    "github.com/k3s-io/k3s/pkg/util/services::Test_UnitFilesForServices/Invalid",
+    "github.com/k3s-io/k3s/pkg/util/services::Test_UnitFilesForServices/Invalid#01",
+    "github.com/k3s-io/k3s/pkg/util/services::Test_UnitFilesForServices"
+  ],
+  "PASS_TO_PASS": []
+}

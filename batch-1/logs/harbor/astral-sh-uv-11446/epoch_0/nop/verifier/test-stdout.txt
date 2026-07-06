@@ -1,0 +1,61 @@
+patching file crates/uv/tests/it/init.rs
+   Compiling uv-dev v0.0.1 (/workspace/repo/crates/uv-dev)
+   Compiling uv v0.6.4 (/workspace/repo/crates/uv)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.83s
+────────────
+ Nextest run ID 76faa26d-d6e9-4271-9553-1dfd0bb00b57 with nextest profile: default
+    Starting 1 test across 57 binaries (2360 tests skipped)
+        FAIL [   0.778s] uv::it init::init_application_package_uv
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: init_application_package_uv-2
+    Source: crates/uv/tests/it/init.rs:3472
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: pyproject
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        8     8 │ [project.scripts]
+        9     9 │ foo = "foo:main"
+       10    10 │ 
+       11    11 │ [build-system]
+       12       │-requires = ["uv_build[SPECIFIERS]"]
+       13       │-build-backend = "uv_build"
+             12 │+requires = ["uv>=0.6.4,<0.7"]
+             13 │+build-backend = "uv"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test init::init_application_package_uv ... FAILED
+
+    failures:
+
+    failures:
+        init::init_application_package_uv
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1755 filtered out; finished in 0.76s
+
+  stderr ───
+
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Unfiltered output ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ----- stdout -----
+
+    ----- stderr -----
+    warning: The uv build backend is experimental and may change without warning
+    Initialized project `foo`
+
+    ────────────────────────────────────────────────────────────────────────────────
+
+
+    thread 'init::init_application_package_uv' panicked at /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.42.2/src/runtime.rs:679:13:
+    snapshot assertion for 'init_application_package_uv-2' failed in line 3472
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.783s] 1 test run: 0 passed, 1 failed, 2360 skipped
+        FAIL [   0.778s] uv::it init::init_application_package_uv
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

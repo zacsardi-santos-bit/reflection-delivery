@@ -1,0 +1,29 @@
+{
+    "id": "9c0a74f1-8e60-40df-b911-c05c30eafb07",
+    "started_at": "2026-07-04T15:39:25.389850",
+    "finished_at": "2026-07-04T15:40:11.094786",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__obytes-react-native-template-obytes-287": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "obytes-react-native-template-oby__fvnYYMv"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/lib/tests/streamlit/env_util_test.py /workspace/repo/lib/tests/streamlit/watcher/path_watcher_test.py -v",
+  "test_files": [
+    "lib/tests/streamlit/env_util_test.py",
+    "lib/tests/streamlit/watcher/path_watcher_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.streamlit.env_util_test::test_is_wsl_false_for_non_linux",
+    "tests.streamlit.env_util_test::test_is_wsl_true_for_wsl_distro_name_environment_variable",
+    "tests.streamlit.env_util_test::test_is_wsl_true_for_wsl_interop_environment_variable",
+    "tests.streamlit.env_util_test::test_is_wsl_true_for_proc_version",
+    "tests.streamlit.env_util_test::test_is_wsl_true_for_wsl2_kernel_without_microsoft",
+    "tests.streamlit.env_util_test::test_is_wsl_false_for_native_linux",
+    "tests.streamlit.env_util_test::test_is_wsl_false_for_unrelated_wsl_substring",
+    "tests.streamlit.env_util_test::test_is_wsl_false_when_proc_version_is_unavailable",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_no_watchdog_suggestion_for_none_type",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_no_watchdog_suggestion_for_poll_type",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_report_watchdog_availability_mac",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_report_watchdog_availability_nonmac",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_report_wsl_polling_for_auto",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_watch_dir_kwarg_plumbing",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_watch_file",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_watch_file_allow_nonexistent",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_watch_file_auto_uses_polling_in_wsl",
+    "tests.streamlit.watcher.path_watcher_test.FileWatcherTest::test_watchdog_config_still_uses_watchdog_in_wsl"
+  ],
+  "PASS_TO_PASS": []
+}

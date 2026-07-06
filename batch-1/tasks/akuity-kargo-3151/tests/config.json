@@ -1,0 +1,38 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/directives -count=1 -run 'Test_jsonUpdater'",
+  "test_files": [
+    "internal/directives/json_updater_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/path_is_not_specified",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/path_is_empty",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/updates_is_null",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/updates_is_empty",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/key_not_specified",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/key_is_empty",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/value_not_specified",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate/valid_config",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_validate",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_updateValuesFile/successful_update",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_updateValuesFile/file_does_not_exist",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_updateValuesFile/empty_changes",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_updateValuesFile/preserve_formatting_after_update",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_updateValuesFile",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_generateCommitMessage/no_changes",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_generateCommitMessage/single_change",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_generateCommitMessage/multiple_changes",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_generateCommitMessage",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/successful_run_with_updates",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/failed_to_update_file",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/no_updates_provided",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/handle_empty_JSON_file",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/add_new_key_to_JSON",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/update_numeric_value",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep/update_boolean_value_to_false",
+    "github.com/akuity/kargo/internal/directives::Test_jsonUpdater_runPromotionStep"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,7 @@
+patching file app/components/__snapshots__/formatted_time.test.js.snap
+patching file app/components/post_body/__snapshots__/system_message_helpers.test.js.snap
+patching file package-lock.json
+Hunk #1 succeeded at 33274 with fuzz 1 (offset 27558 lines).
+patching file package.json
+Hunk #1 succeeded at 98 (offset 1 line).
+Hunk #2 succeeded at 138 (offset 1 line).

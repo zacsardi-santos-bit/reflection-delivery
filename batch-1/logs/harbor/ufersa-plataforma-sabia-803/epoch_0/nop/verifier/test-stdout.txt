@@ -1,0 +1,152 @@
+patching file packages/web/__tests__/pages/user/my-account/__snapshots__/index.js.snap
+patching file packages/web/components/Authorization/__tests__/__snapshots__/Protected.js.snap
+patching file packages/web/components/Card/Share/__tests__/__snapshots__/index.js.snap
+patching file packages/web/components/Modal/__tests__/__snapshots__/BuyTechnologyModal.js.snap
+patching file packages/web/components/Modal/__tests__/__snapshots__/RegisterModal.js.snap
+patching file packages/web/components/Technology/Details/__tests__/Responsibles.test.js
+patching file packages/web/components/Technology/Details/__tests__/__snapshots__/Responsibles.test.js.snap
+patching file packages/web/components/TechnologyForm/Costs/__tests__/__snapshots__/index.js.snap
+patching file packages/web/components/TechnologyForm/Responsible/__tests__/__snapshots__/index.js.snap
+patching file packages/web/components/TechnologyForm/Review/__tests__/__snapshots__/index.js.snap
+  console.error
+    Warning: validateDOMNesting(...): Text nodes cannot appear as a child of <tbody>.
+        at tbody
+        at table
+        at I (/workspace/repo/packages/web/node_modules/styled-components/src/models/Keyframes.js:20:51)
+        at section
+        at div
+        at I (/workspace/repo/packages/web/node_modules/styled-components/src/models/Keyframes.js:20:51)
+        at Responsibles (/workspace/repo/packages/web/components/Technology/Details/Tables/Responsibles.js:8:25)
+        at ModalProvider (/workspace/repo/packages/web/components/Modal/ModalProvider.js:85:33)
+        at UserProvider (/workspace/repo/packages/web/components/User/UserProvider.js:94:32)
+        at Object.<anonymous>.exports.ThemeProvider (/workspace/repo/packages/web/node_modules/styled-components/src/models/ServerStyleSheet.js:66:13)
+        at ThemeProvider (/workspace/repo/packages/web/styles/ThemeProvider.js:6:26)
+        at AllProviders (/workspace/repo/packages/web/tests/test-utils.js:30:25)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateDOMNesting (node_modules/react-dom/cjs/react-dom.development.js:10081:7)
+      at createInstance (node_modules/react-dom/cjs/react-dom.development.js:10186:7)
+      at completeWork (node_modules/react-dom/cjs/react-dom.development.js:19464:28)
+      at completeUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22812:16)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22787:5)
+
+FAIL components/Technology/Details/__tests__/Responsibles.test.js (6.34 s)
+  <Responsibles />
+    ✕ should render without crashing (180 ms)
+    ✓ should render without crashing when the responsible are being passed throught (71 ms)
+    ✕ should not render the lattes information when hideLattesInfo is passed (57 ms)
+
+  ● <Responsibles /> › should render without crashing
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `<Responsibles /> should render without crashing 1`
+
+    - Snapshot  - 1
+    + Received  + 3
+
+    @@ -79,10 +79,12 @@
+                  <th>
+                    Cadastrado
+                  </th>
+                </tr>
+              </thead>
+    -         <tbody />
+    +         <tbody>
+    +           0
+    +         </tbody>
+            </table>
+          </section>
+        </div>
+      </div>
+
+       7 | 	it('should render without crashing', () => {
+       8 | 		const { container } = render(<Responsibles data={[]} />);
+    >  9 | 		expect(container).toMatchSnapshot();
+         | 		                  ^
+      10 | 	});
+      11 | 
+      12 | 	it('should render without crashing when the responsible are being passed throught', () => {
+
+      at Object.<anonymous> (components/Technology/Details/__tests__/Responsibles.test.js:9:21)
+
+  ● <Responsibles /> › should not render the lattes information when hideLattesInfo is passed
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `<Responsibles /> should not render the lattes information when hideLattesInfo is passed 1`
+
+    - Snapshot  -  0
+    + Received  + 21
+
+    @@ -1,5 +1,14 @@
+    + .c2 {
+    +   color: hsla(0,0%,7%);
+    + }
+    +
+    + .c2:hover {
+    +   -webkit-text-decoration: underline;
+    +   text-decoration: underline;
+    + }
+    +
+      .c0 {
+        width: 100%;
+        height: 100%;
+        background: hsla(0,0%,100%);
+        margin-top: 3rem;
+    @@ -72,10 +81,13 @@
+                  </th>
+                  <th>
+                    Telefone
+                  </th>
+                  <th>
+    +               ID Lattes
+    +             </th>
+    +             <th>
+                    Cadastrado
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+    @@ -83,10 +95,19 @@
+                  <td />
+                  <td>
+                    my-email-is-test@test.com
+                  </td>
+                  <td />
+    +             <td>
+    +               <a
+    +                 class="c2"
+    +                 rel="noreferrer"
+    +                 target="_blank"
+    +               >
+    +                 12345
+    +               </a>
+    +             </td>
+                  <td>
+                    <svg
+                      color="hsla(29, 73%, 56%)"
+                      fill="currentColor"
+                      height="3rem"
+
+      44 | 			/>,
+      45 | 		);
+    > 46 | 		expect(container).toMatchSnapshot();
+         | 		                  ^
+      47 | 	});
+      48 | });
+      49 | 
+
+      at Object.<anonymous> (components/Technology/Details/__tests__/Responsibles.test.js:46:21)
+
+ › 2 snapshots failed.
+Snapshot Summary
+ › 2 snapshots failed from 1 test suite. Inspect your code changes or run `npm run npx -- -u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 1 passed, 3 total
+Snapshots:   2 failed, 1 passed, 3 total
+Time:        6.957 s
+Ran all test suites matching /components\/Technology\/Details\/__tests__\/Responsibles.test.js/i.
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=1

@@ -1,0 +1,31 @@
+{
+  "test_framework": "junit",
+  "test_command": "mkdir -p /workspace/test-results; cd /workspace/repo/npm_and_yarn && (bundle exec rspec spec/dependabot/npm_and_yarn/dependency_grapher_spec.rb --format json --out /workspace/test-results/npm.json; true); cd /workspace/repo/python && (bundle exec rspec spec/dependabot/python/dependency_grapher_spec.rb -e \"attempts to generate an ephemeral lockfile\" -e \"when lockfile generation fails\" -e \"resolves exact versions from the generated lockfile\" --format json --out /workspace/test-results/python.json; true); ruby -e \"require 'json'; Q=34.chr; ex=[]; ['/workspace/test-results/npm.json','/workspace/test-results/python.json'].each{|f|next unless File.exist?(f); begin; ex.concat(JSON.parse(File.read(f)).fetch('examples',[])); rescue; end}; fails=ex.count{|e|e['status']=='failed'}; puts '<?xml version='+Q+'1.0'+Q+'?>'; puts '<testsuite name='+Q+'rspec'+Q+' tests='+Q+ex.size.to_s+Q+' failures='+Q+fails.to_s+Q+'>'; ex.each{|e|n=e['full_description'].gsub('&','&amp;').gsub(Q,'&quot;').gsub('<','&lt;').gsub('>','&gt;'); st=e['status']=='failed'?'<failure/>':''; puts '<testcase name='+Q+n+Q+'>'+st+'</testcase>'}; puts '</testsuite>'\"",
+  "test_files": [
+    "npm_and_yarn/spec/dependabot/npm_and_yarn/dependency_grapher_spec.rb",
+    "python/spec/dependabot/python/dependency_grapher/lockfile_generator_spec.rb",
+    "python/spec/dependabot/python/dependency_grapher_spec.rb"
+  ],
+  "num_test_files": 3,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "Dependabot::NpmAndYarn::DependencyGrapher#resolved_dependencies without a lockfile - range versions when lockfile generation fails does not emit a misleading warning about generating a temporary lockfile",
+    "Dependabot::Python::DependencyGrapher#resolved_dependencies when poetry.lock is not present attempts to generate an ephemeral lockfile",
+    "Dependabot::Python::DependencyGrapher#resolved_dependencies when poetry.lock is not present when lockfile generation fails returns dependencies without relationship data",
+    "Dependabot::Python::DependencyGrapher#resolved_dependencies when poetry.lock is not present when lockfile generation fails returns PURLs without resolved versions",
+    "Dependabot::Python::DependencyGrapher#resolved_dependencies when poetry.lock is not present when lockfile generation succeeds resolves exact versions from the generated lockfile"
+  ],
+  "PASS_TO_PASS": [
+    "Dependabot::NpmAndYarn::DependencyGrapher#relevant_dependency_file when a lockfile exists returns the lockfile",
+    "Dependabot::NpmAndYarn::DependencyGrapher#relevant_dependency_file when no lockfile exists returns the package.json",
+    "Dependabot::NpmAndYarn::DependencyGrapher registration is registered as the grapher for npm_and_yarn",
+    "Dependabot::NpmAndYarn::DependencyGrapher#resolved_dependencies without a lockfile - exact versions includes dependencies with exact versions from package.json",
+    "Dependabot::NpmAndYarn::DependencyGrapher#resolved_dependencies without a lockfile - range versions when lockfile generation succeeds emits a warning about missing lockfile",
+    "Dependabot::NpmAndYarn::DependencyGrapher#resolved_dependencies with a lockfile present correctly serializes the resolved dependencies",
+    "Dependabot::NpmAndYarn::DependencyGrapher package manager detection with npm project (packageManager field) detects npm as the package manager",
+    "Dependabot::NpmAndYarn::DependencyGrapher package manager detection with pnpm project (packageManager field) detects pnpm as the package manager",
+    "Dependabot::NpmAndYarn::DependencyGrapher package manager detection with yarn project (packageManager field) detects yarn as the package manager",
+    "Dependabot::NpmAndYarn::DependencyGrapher purl generation uses 'npm' as the purl type",
+    "Dependabot::NpmAndYarn::DependencyGrapher purl generation with scoped packages URL-encodes the @ symbol in scoped package names"
+  ]
+}

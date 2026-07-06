@@ -1,0 +1,37 @@
+{
+  "test_framework": "mocha",
+  "test_command": "RUSTFLAGS=\"--cap-lints warn\" yarn build-native && yarn workspace @parcel/integration-tests test -- test/macros.js",
+  "test_files": [
+    "packages/core/integration-tests/test/macros.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should throw a diagnostic when a macro cannot be resolved",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should only error once if a macro errors during loading",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should rebuild in watch mode after fixing an error"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support named imports",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support renamed imports",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support default imports",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support namespace imports",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support various JS value types",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support returning various JS value types",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support evaluating expressions",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should dead code eliminate falsy branches",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support async macros",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should ignore macros in node_modules",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should throw a diagnostic when an argument cannot be converted",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should throw a diagnostic when a macro errors",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support returning functions",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support macros written in typescript",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support macros written in typescript without extension",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should allow emitting additional assets",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should invalidate the cache when changing a macro",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should invalidate the cache on build",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should support evaluating constants",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should throw a diagnostic when a constant is mutated",
+    "/workspace/repo/packages/core/integration-tests/test/macros.js::macros should throw a diagnostic when a constant object is passed to a function"
+  ]
+}

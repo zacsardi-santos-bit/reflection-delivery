@@ -1,0 +1,7 @@
+I'm working on extending the AKS cluster update functionality to support attaching and detaching Azure Container Registries. Right now, ACR attach/detach only works at cluster creation time, but I need it to work when updating an existing cluster too.
+
+To do this correctly, I need a helper that can tell whether a cluster is using managed identity or a service principal, since the client ID needs to come from different places depending on which authentication mechanism is in use. For managed identity clusters, the client ID comes from the kubelet identity profile; for service principal clusters, it comes from the service principal profile. If neither can be found, the operation should fail with a clear error.
+
+I also need the update decorator to have a method that handles the attach/detach ACR logic during an update: it should look up the correct client ID for the cluster, get the subscription ID from the context, and invoke the underlying ACR permissions helper appropriately — once for attach (if requested) and once for detach (if requested), with the detach call including a flag to indicate removal. If no matching cluster object is provided, it should raise an internal error. When neither attach nor detach is requested, nothing should happen.
+
+Additionally, the context object needs a way to retrieve the "detach ACR" parameter in update mode, analogous to how the "attach ACR" parameter is already retrieved, and the "attach ACR" retrieval should also work correctly in update mode.

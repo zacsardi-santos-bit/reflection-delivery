@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_cli --no-fail-fast -E 'test(/with_ignore/)'",
+  "test_files": [
+    "crates/biome_cli/tests/commands/migrate.rs",
+    "crates/biome_cli/tests/snapshots/main_commands_migrate/prettier_migrate_with_ignore.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_migrate/prettier_migrate_write_with_ignore_file.snap"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "biome_cli::main commands::migrate::prettier_migrate_write_with_ignore_file",
+    "biome_cli::main commands::migrate::prettier_migrate_with_ignore"
+  ],
+  "PASS_TO_PASS": []
+}

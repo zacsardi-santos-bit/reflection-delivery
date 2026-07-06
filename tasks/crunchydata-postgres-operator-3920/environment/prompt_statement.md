@@ -1,7 +1,0 @@
-I'm working on adding automatic volume growth to the Postgres cluster operator. The idea is that when a PostgreSQL data volume is getting full — say more than 75% used — the pod running the database should detect this and signal that it needs more space. The operator should then pick up that signal and automatically expand the volume's storage claim, up to a configured maximum size.
-
-Right now there's no such automation; administrators have to manually resize volumes. I want the monitor process inside the pod to periodically check disk usage on the data directory, and when it's over the threshold, update a specific annotation on the pod with the suggested new size — about 1.5 times the current volume size, expressed in mebibytes. The operator's pod watcher should trigger a reconciliation whenever that specific annotation changes (but not for unrelated annotation changes).
-
-During reconciliation, the operator should read the suggested size from the cluster status, compare it against any configured storage limit, and set the PVC request accordingly. If the suggested size equals or exceeds the limit, it should be capped at the limit and an appropriate event should be emitted. If the spec's request already exceeds the limit, the limit should be used and a warning event fired. The whole auto-grow behavior should only activate when the corresponding feature gate is enabled.
-
-I also want this feature properly tracked in the cluster's status so that the desired size persists even when pods restart or the cluster is shut down temporarily.

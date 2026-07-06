@@ -1,7 +1,0 @@
-I'd like to add a new internal zstd compression module to the project so that various subsystems can use a shared, consistent compression API instead of each importing the third-party library directly.
-
-The module should provide two kinds of functionality. First, a standard streaming compress and decompress interface — you create a writer that compresses data as you write to it, and a reader that decompresses. Both should support functional options for things like compression level and low-memory decoding mode.
-
-Second, and more importantly, I need a seekable variant. The seekable writer should split data into fixed-size blocks as it compresses, building an internal index so that a reader can later jump directly to any byte offset in the uncompressed content without having to decompress everything from the beginning. The seekable reader should accept only data produced by the seekable writer and return an error if given ordinary compressed data. When seeking to a position, it should only read the relevant block or two rather than the whole file. It should also close the underlying source automatically when the reader is closed, if the source supports it.
-
-The data written in the seekable format should remain readable by the ordinary reader as well, for backward compatibility. The new module should live in the project's internal module tree so that existing packages (like the conda and debian package handlers) can switch their imports to it.

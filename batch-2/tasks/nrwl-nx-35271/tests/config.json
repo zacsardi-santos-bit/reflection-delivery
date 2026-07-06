@@ -1,0 +1,47 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --config packages/nx/jest.config.cts packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts --no-coverage",
+  "test_files": [
+    "packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pnpm 11 multi-document lockfiles should select the workspace lock document instead of package-manager metadata"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility next.js generated v5.4 should parse root lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility next.js generated v5.4 should prune lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility next.js generated v6.0 should parse root lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility next.js generated v6.0 should prune lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility auxiliary packages should parse root lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility auxiliary packages should prune lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility duplicate packages should parse root lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility optional packages should match parsed and pruned graph",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v5.4 should parse hoisted versions",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v5.4 should prune single package",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v5.4 should prune multi packages",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v6.0 should parse hoisted versions",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v6.0 should prune single package",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v6.0 should prune multi packages",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v9.0 should parse hoisted versions",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v9.0 should prune single package",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v9.0 should prune multi packages",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pruning v9.0 should strip catalogs from pruned lockfile",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility workspaces should parse lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility mixed keys should parse classic and prune packages with mixed keys (v6)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility mixed keys should parse classic and prune packages with mixed keys (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility regression check should correctly prune the lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility pnpm semver range specifier should correctly prune the lock file",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility missing workspace importer should throw clear error when workspace package importer is missing",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should include patch hash in external node hash (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should detect patch hash changes",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should handle patch with exact version (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should handle scoped packages with patches (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should prioritize exact version patch over name-only patch (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should handle version range patches with caret (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should prioritize exact version over range match (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility patched dependencies should not apply patch when version does not match range (v9)",
+    "/workspace/repo/packages/nx/src/plugins/js/lock-file/pnpm-parser.spec.ts::pnpm LockFile utility alias-first-party should handle first-party aliases (root package.json)"
+  ]
+}

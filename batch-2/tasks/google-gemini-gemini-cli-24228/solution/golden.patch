@@ -1,0 +1,107 @@
+diff --git a/packages/core/src/agents/browser/automationOverlay.ts b/packages/core/src/agents/browser/automationOverlay.ts
+index a1aa40d58..e87a70b6d 100644
+--- a/packages/core/src/agents/browser/automationOverlay.ts
++++ b/packages/core/src/agents/browser/automationOverlay.ts
+@@ -94,6 +94,7 @@ export async function injectAutomationOverlay(
+       'evaluate_script',
+       { function: buildInjectionScript() },
+       signal,
++      true,
+     );
+ 
+     if (result.isError) {
+@@ -120,6 +121,7 @@ export async function removeAutomationOverlay(
+       'evaluate_script',
+       { function: buildRemovalScript() },
+       signal,
++      true,
+     );
+ 
+     if (result.isError) {
+diff --git a/packages/core/src/agents/browser/browserManager.ts b/packages/core/src/agents/browser/browserManager.ts
+index 81f9db825..5aebc9382 100644
+--- a/packages/core/src/agents/browser/browserManager.ts
++++ b/packages/core/src/agents/browser/browserManager.ts
+@@ -215,26 +215,30 @@ export class BrowserManager {
+    * @param toolName The name of the tool to call
+    * @param args Arguments to pass to the tool
+    * @param signal Optional AbortSignal to cancel the call
++   * @param isInternal Determine if the tool is for internal execution
+    * @returns The result from the MCP server
+    */
+   async callTool(
+     toolName: string,
+     args: Record<string, unknown>,
+     signal?: AbortSignal,
++    isInternal: boolean = false,
+   ): Promise<McpToolCallResult> {
+     if (signal?.aborted) {
+       throw signal.reason ?? new Error('Operation cancelled');
+     }
+ 
+     // Hard enforcement of per-action rate limit
+-    if (this.actionCounter > this.maxActionsPerTask) {
+-      const error = new Error(
+-        `Browser agent reached maximum action limit (${this.maxActionsPerTask}). ` +
+-          `Task terminated to prevent runaway execution. To config the limit, use maxActionsPerTask in the settings.`,
+-      );
+-      throw error;
++    if (!isInternal) {
++      if (this.actionCounter >= this.maxActionsPerTask) {
++        const error = new Error(
++          `Browser agent reached maximum action limit (${this.maxActionsPerTask}). ` +
++            `Task terminated to prevent runaway execution. To config the limit, use maxActionsPerTask in the settings.`,
++        );
++        throw error;
++      }
++      this.actionCounter++;
+     }
+-    this.actionCounter++;
+ 
+     const errorMessage = this.checkNavigationRestrictions(toolName, args);
+     if (errorMessage) {
+@@ -588,6 +592,8 @@ export class BrowserManager {
+           debugLogger.log('MCP client connected to chrome-devtools-mcp');
+           await this.discoverTools();
+           this.registerInputBlockerHandler();
++          // clear the action counter for each connection
++          this.actionCounter = 0;
+         })(),
+         new Promise<never>((_, reject) => {
+           timeoutId = setTimeout(
+diff --git a/packages/core/src/agents/browser/inputBlocker.ts b/packages/core/src/agents/browser/inputBlocker.ts
+index 0d6b9610c..d7c6d8ce1 100644
+--- a/packages/core/src/agents/browser/inputBlocker.ts
++++ b/packages/core/src/agents/browser/inputBlocker.ts
+@@ -205,6 +205,7 @@ export async function injectInputBlocker(
+       'evaluate_script',
+       { function: INPUT_BLOCKER_FUNCTION },
+       signal,
++      true,
+     );
+     debugLogger.log('Input blocker injected successfully');
+   } catch (error) {
+@@ -232,6 +233,7 @@ export async function removeInputBlocker(
+       'evaluate_script',
+       { function: REMOVE_BLOCKER_FUNCTION },
+       signal,
++      true,
+     );
+     debugLogger.log('Input blocker removed successfully');
+   } catch (error) {
+@@ -257,6 +259,7 @@ export async function suspendInputBlocker(
+       'evaluate_script',
+       { function: SUSPEND_BLOCKER_FUNCTION },
+       signal,
++      true,
+     );
+   } catch {
+     // Non-critical — tool call will still attempt to proceed
+@@ -276,6 +279,7 @@ export async function resumeInputBlocker(
+       'evaluate_script',
+       { function: RESUME_BLOCKER_FUNCTION },
+       signal,
++      true,
+     );
+   } catch {
+     // Non-critical

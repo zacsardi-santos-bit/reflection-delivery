@@ -1,0 +1,140 @@
+The next patch would delete the file tests/permissions_test.rs,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+   Compiling version_check v0.9.5
+   Compiling typenum v1.20.1
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.186
+   Compiling memchr v2.8.2
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling crossbeam-utils v0.8.21
+   Compiling getrandom v0.3.4
+   Compiling zerocopy v0.8.52
+   Compiling autocfg v1.5.1
+   Compiling utf8parse v0.2.2
+   Compiling anstyle-query v1.1.5
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling crc32fast v1.5.0
+   Compiling regex-syntax v0.8.11
+   Compiling anstyle v1.0.14
+   Compiling colorchoice v1.0.5
+   Compiling anstyle-parse v1.0.0
+   Compiling rayon-core v1.13.0
+   Compiling tinyvec_macros v0.1.1
+   Compiling cpufeatures v0.2.17
+   Compiling tinyvec v1.11.0
+   Compiling simd-adler32 v0.3.9
+   Compiling bitflags v2.13.0
+   Compiling minimal-lexical v0.2.1
+   Compiling anstream v1.0.0
+   Compiling generic-array v0.14.7
+   Compiling num-traits v0.2.19
+   Compiling rustix v1.1.4
+   Compiling option-ext v0.2.0
+   Compiling aho-corasick v1.1.4
+   Compiling adler2 v2.0.1
+   Compiling thiserror v2.0.18
+   Compiling serde_core v1.0.228
+   Compiling log v0.4.33
+   Compiling zmij v1.0.21
+   Compiling getrandom v0.4.3
+   Compiling miniz_oxide v0.8.9
+   Compiling unicode-normalization v0.1.25
+   Compiling nom v7.1.3
+   Compiling linux-raw-sys v0.12.1
+   Compiling hashbrown v0.17.1
+   Compiling crossbeam-epoch v0.9.18
+   Compiling unicode-properties v0.1.4
+   Compiling iana-time-zone v0.1.65
+   Compiling itoa v1.0.18
+   Compiling deranged v0.5.8
+   Compiling clap_lex v1.1.0
+   Compiling crossbeam-deque v0.8.6
+   Compiling crypto-common v0.1.7
+   Compiling block-padding v0.3.3
+   Compiling block-buffer v0.10.4
+   Compiling regex-automata v0.4.14
+   Compiling strsim v0.11.1
+   Compiling inout v0.1.4
+   Compiling digest v0.10.7
+   Compiling equivalent v1.0.2
+   Compiling syn v2.0.118
+   Compiling serde_json v1.0.150
+   Compiling jiff v0.2.29
+   Compiling heck v0.5.0
+   Compiling unicode-bidi v0.3.18
+   Compiling powerfmt v0.2.0
+   Compiling cipher v0.4.4
+   Compiling either v1.16.0
+   Compiling num-conv v0.2.2
+   Compiling time-core v0.1.9
+   Compiling bytecount v0.6.9
+   Compiling dirs-sys v0.5.0
+   Compiling rayon v1.12.0
+   Compiling ecb v0.1.2
+   Compiling cbc v0.1.2
+   Compiling aes v0.8.4
+   Compiling stringprep v0.1.5
+   Compiling rand_core v0.9.5
+   Compiling dirs v6.0.0
+   Compiling chrono v0.4.45
+   Compiling sha2 v0.10.9
+   Compiling md-5 v0.10.6
+   Compiling clap_builder v4.6.0
+   Compiling indexmap v2.14.0
+   Compiling nom_locate v4.2.0
+   Compiling time v0.3.51
+   Compiling flate2 v1.1.9
+   Compiling encoding_rs v0.8.35
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.4.1
+   Compiling weezl v0.1.12
+   Compiling rangemap v1.7.1
+   Compiling shellexpand v3.1.2
+   Compiling regex v1.12.4
+   Compiling env_filter v2.0.0
+   Compiling tempfile v3.27.0
+   Compiling thiserror-impl v2.0.18
+   Compiling clap_derive v4.6.1
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_chacha v0.9.0
+   Compiling env_logger v0.11.11
+   Compiling rand v0.9.4
+   Compiling lopdf v0.35.0 (/workspace/repo)
+warning: use of deprecated tuple variant `time::format_description::BorrowedFormatItem::Literal`: use `StringLiteral` instead; raw bytes are not recommended
+   --> src/datetime.rs:105:46
+    |
+105 |                     date.format(&FormatItem::Literal("%Y%m%d%H%M%SZ".as_bytes())).unwrap()
+    |                                              ^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `time::format_description::parse`: use `parse_borrowed` with the appropriate version for clarity
+   --> src/datetime.rs:116:56
+    |
+116 |                 let format = time::format_description::parse(
+    |                                                        ^^^^^
+
+warning: use of deprecated function `time::format_description::parse`: use `parse_borrowed` with the appropriate version for clarity
+   --> src/datetime.rs:133:52
+    |
+133 |             let format = time::format_description::parse(
+    |                                                    ^^^^^
+
+   Compiling clap v4.6.1
+warning: `lopdf` (lib) generated 3 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.74s
+────────────
+ Nextest run ID 89e3e7d9-3b03-405d-a616-19dfd8aaf239 with nextest profile: default
+    Starting 4 tests across 1 binary
+        PASS [   0.011s] (1/4) lopdf::permissions_test test_modifiable_permission_bit
+        PASS [   0.012s] (2/4) lopdf::permissions_test test_printable_permission_bit
+        PASS [   0.012s] (3/4) lopdf::permissions_test test_copyable_permission_bit
+        PASS [   0.012s] (4/4) lopdf::permissions_test test_fillable_permission_bit
+────────────
+     Summary [   0.013s] 4 tests run: 4 passed, 0 skipped
+reward=1 graded=4 found=0 failed=0 parsed=4 framework=cargo exit_code=0

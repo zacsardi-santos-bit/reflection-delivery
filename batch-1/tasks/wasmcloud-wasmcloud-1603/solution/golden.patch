@@ -1,0 +1,944 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 525938296..568fdf95c 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -5326,6 +5326,7 @@ dependencies = [
+  "wasmcloud-tracing",
+  "wrpc-interface-http",
+  "wrpc-transport",
++ "wrpc-transport-derive",
+  "wrpc-transport-nats",
+  "wrpc-types",
+ ]
+@@ -6532,6 +6533,34 @@ dependencies = [
+  "wrpc-types",
+ ]
+ 
++[[package]]
++name = "wrpc-transport-derive"
++version = "0.1.0"
++dependencies = [
++ "anyhow",
++ "async-trait",
++ "bytes",
++ "futures",
++ "proc-macro2",
++ "quote",
++ "syn 2.0.50",
++ "tokio",
++ "wrpc-transport",
++ "wrpc-transport-derive-macro",
++]
++
++[[package]]
++name = "wrpc-transport-derive-macro"
++version = "0.1.0"
++dependencies = [
++ "anyhow",
++ "proc-macro2",
++ "quote",
++ "syn 2.0.50",
++ "tracing",
++ "tracing-subscriber",
++]
++
+ [[package]]
+ name = "wrpc-transport-nats"
+ version = "0.11.0"
+diff --git a/Cargo.toml b/Cargo.toml
+index a245f11fd..1af1523da 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -77,6 +77,7 @@ wasmcloud-test-util = { workspace = true }
+ wrpc-interface-http = { workspace = true }
+ wrpc-transport = { workspace = true }
+ wrpc-transport-nats = { workspace = true }
++wrpc-transport-derive = { workspace = true }
+ wrpc-types = { workspace = true }
+ 
+ [workspace]
+@@ -218,5 +219,7 @@ wit-parser = { version = "0.13", default-features = false }
+ wrpc-interface-http = { version = "0.11.2", default-features = false }
+ wrpc-runtime-wasmtime = { version = "0.5", default-features = false }
+ wrpc-transport = { version = "0.14", default-features = false }
++wrpc-transport-derive = { version = "0.1", path = "./crates/wrpc-transport-derive", default-features = false }
++wrpc-transport-derive-macro = { version = "0.1", path = "./crates/wrpc-transport-derive-macro", default-features = false }
+ wrpc-transport-nats = { version = "0.11", default-features = false }
+ wrpc-types = { version = "0.4", default-features = false }
+diff --git a/crates/provider-wit-bindgen-macro/src/lib.rs b/crates/provider-wit-bindgen-macro/src/lib.rs
+index 3528ce954..c39813e64 100644
+--- a/crates/provider-wit-bindgen-macro/src/lib.rs
++++ b/crates/provider-wit-bindgen-macro/src/lib.rs
+@@ -115,9 +115,9 @@ struct LatticeMethod {
+ /// This macro generates functionality necessary to use a WIT-enabled Rust providers (binaries that are managed by the host)
+ #[proc_macro]
+ pub fn generate(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+-    tracing_subscriber::fmt()
++    let _ = tracing_subscriber::fmt()
+         .with_env_filter(EnvFilter::from_default_env())
+-        .init();
++        .try_init();
+ 
+     // Parse the provider bindgen macro configuration
+     let cfg = parse_macro_input!(input as ProviderBindgenConfig);
+diff --git a/crates/wrpc-transport-derive-macro/Cargo.toml b/crates/wrpc-transport-derive-macro/Cargo.toml
+new file mode 100644
+index 000000000..c794de308
+--- /dev/null
++++ b/crates/wrpc-transport-derive-macro/Cargo.toml
+@@ -0,0 +1,26 @@
++[package]
++name = "wrpc-transport-derive-macro"
++version = "0.1.0"
++description = """
++Inner crate of wrpc-transport-derive that contains the macro for deriving wrpc_transport::{EncodeSync, Decode}.
++"""
++
++authors.workspace = true
++categories.workspace = true
++edition.workspace = true
++license.workspace = true
++repository.workspace = true
++
++[badges.maintenance]
++status = "actively-developed"
++
++[lib]
++proc-macro = true
++
++[dependencies]
++anyhow = { workspace = true }
++syn = { workspace = true, features = [ "full", "parsing", "extra-traits", "printing", "clone-impls" ] }
++proc-macro2 = { workspace = true, features = [ "proc-macro" ] }
++quote = { workspace = true }
++tracing = { workspace = true }
++tracing-subscriber = { workspace = true, features = [ "fmt", "env-filter" ] }
+diff --git a/crates/wrpc-transport-derive-macro/src/lib.rs b/crates/wrpc-transport-derive-macro/src/lib.rs
+new file mode 100644
+index 000000000..5aef053e6
+--- /dev/null
++++ b/crates/wrpc-transport-derive-macro/src/lib.rs
+@@ -0,0 +1,72 @@
++//! This crate contains derive macros that enable Rust types to derive [`wrpc_transport::EncodeSync`] and [`wrpc_transport::Receive`] traits.
++//!
++//! This crate is intended to be used via `wrpc-transport-derive`, the umbrella crate which hosts dependencies required by this (internal) macro crate.
++//!
++//! # Example
++//!
++//! ```rust,ignore
++//! use wrpc_transport_derive::{Encode, Receive};
++//!
++//! #[derive(Trace, PartialEq, Eq, EncodeSync, Receive, Default)]
++//! struct TestStruct {
++//!     one: u32,
++//! }
++//!
++//! let mut buffer: Vec<u8> = Vec::new();
++//! // Encode the TestStruct
++//! TestStruct { one: 1 }
++//!     .encode_sync(&mut buffer)
++//!     .context("failed to perform encode")?;
++//!
++//! // Attempt to receive the value
++//! let (received, leftover): (TestStruct, _) =
++//!     Receive::receive_sync(Bytes::from(buffer), &mut empty())
++//!         .await
++//!         .context("failed to receive")?;
++//!
++//! // At this point, we expect the received bytes to be exactly the same as what we started with
++//! assert_eq!(received, TestStruct { one: 1 }, "received matches");
++//! assert_eq!(leftover.remaining(), 0, "payload was completely consumed");
++//! ```
++//!
++//! NOTE: This macro crate uses `tracing`, so if you'd like to see the input & output tokens, prepend your command (ex. `cargo build`) with `RUST_LOG=trace`.
++//!
++use proc_macro2::TokenStream;
++use tracing::trace;
++use tracing_subscriber::EnvFilter;
++
++use crate::wrpc_transport::encode_sync::derive_encode_sync_inner;
++use crate::wrpc_transport::receive::derive_receive_inner;
++
++mod rust;
++mod wrpc_transport;
++
++#[proc_macro_derive(EncodeSync)]
++pub fn derive_encode_sync(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
++    let _ = tracing_subscriber::fmt()
++        .with_env_filter(EnvFilter::from_default_env())
++        .try_init();
++
++    let input = TokenStream::from(input);
++    trace!("derive(wrpc_transport::EncodeSync) input:\n---\n{input}\n---");
++
++    let derived = derive_encode_sync_inner(input).expect("failed to perform derive");
++    trace!("derive(wrpc_transport::EncodeSync) output:\n---\n{derived}\n---");
++
++    derived.into()
++}
++
++#[proc_macro_derive(Receive)]
++pub fn derive_receive(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
++    let _ = tracing_subscriber::fmt()
++        .with_env_filter(EnvFilter::from_default_env())
++        .try_init();
++
++    let input = TokenStream::from(input);
++    trace!("derive(wrpc_transport::Receive) input\n---\n{input}\n---");
++
++    let derived = derive_receive_inner(input).expect("failed to perform derive");
++    trace!("derive(wrpc_transport::Receive) output:\n---\n{derived}\n---");
++
++    derived.into()
++}
+diff --git a/crates/wrpc-transport-derive-macro/src/rust.rs b/crates/wrpc-transport-derive-macro/src/rust.rs
+new file mode 100644
+index 000000000..b6aaae6d9
+--- /dev/null
++++ b/crates/wrpc-transport-derive-macro/src/rust.rs
+@@ -0,0 +1,106 @@
++use anyhow::{anyhow, Context as _, Result};
++use proc_macro2::{TokenStream, TokenTree};
++use quote::ToTokens;
++
++/// Check if a given type has a wrapped type (ex. Option<T>, Vec<T>)
++pub(crate) fn has_wrapped_type(
++    ty: syn::Type,
++    expected: impl AsRef<str>,
++) -> Result<Option<syn::Type>> {
++    let mut tt = ty.to_token_stream().into_iter().collect::<Vec<TokenTree>>();
++    match &mut tt[..] {
++        // If we can see the Wrapper<T> pattern, we can extract the inner type
++        [
++            TokenTree::Ident(w),  // Wrapper (Option)
++            TokenTree::Punct(ref p),  // <
++            ..,  // T
++            TokenTree::Punct(_) // >
++        ] if *w == expected.as_ref() && p.as_char() == '<' => {
++            let inner_ty = syn::parse2::<syn::Type>(TokenStream::from_iter(tt.drain(2..tt.len()-1).collect::<Vec<TokenTree>>()))
++                .map_err(|e| anyhow!(e))
++                .context("failed to parse type out of wrapper")?;
++            Ok(Some(inner_ty))
++        },
++        // If we didn't match, then there's no inner type/this isn't a wrapper
++        _ => Ok(None),
++    }
++}
++
++/// Check if a given [`syn::Type`] is an optional (i.e. Option<T>), returning the inner type
++pub(crate) fn has_option_type(ty: syn::Type) -> Result<Option<syn::Type>> {
++    has_wrapped_type(ty, "Option")
++}
++
++/// Check if a given [`syn::Type`] is an list type (i.e. Vec<T>), returning the inner type
++pub(crate) fn has_vec_type(ty: syn::Type) -> Result<Option<syn::Type>> {
++    has_wrapped_type(ty, "Vec")
++}
++
++#[cfg(test)]
++mod tests {
++    use anyhow::{anyhow, Context as _, Result};
++    use quote::quote;
++    use syn::Type;
++
++    use super::{has_option_type, has_vec_type};
++
++    /// Detecting a Option should work for a appropriately wrapped type (ex. Option<String>)
++    #[test]
++    fn option_type_detection() -> Result<()> {
++        let ty: Type = syn::parse2(quote!(Option<String>)).map_err(|e| anyhow!(e))?;
++        let expected_ty: Type = syn::parse2(quote!(String)).map_err(|e| anyhow!(e))?;
++        assert_eq!(
++            has_option_type(ty)
++                .context("failed to check")?
++                .context("missing type")?,
++            expected_ty
++        );
++        Ok(())
++    }
++
++    /// Detecting a Vec should fail for a non-wrapped type (ex. String)
++    #[test]
++    fn option_type_detection_fail() -> Result<()> {
++        let ty: Type = syn::parse2(quote!(String)).map_err(|e| anyhow!(e))?;
++        assert!(matches!(has_option_type(ty), Ok(None)));
++        Ok(())
++    }
++
++    /// Detecting a Option should fail for a different wrapper type (ex. Vec<T>)
++    #[test]
++    fn option_type_detection_fail_vec() -> Result<()> {
++        let ty: Type = syn::parse2(quote!(Vec<String>)).map_err(|e| anyhow!(e))?;
++        assert!(matches!(has_option_type(ty), Ok(None)));
++        Ok(())
++    }
++
++    /// Detecting a Vec should work for a appropriately wrapped type (ex. Vec<String>)
++    #[test]
++    fn vec_type_detection() -> Result<()> {
++        let ty: Type = syn::parse2(quote!(Vec<String>)).map_err(|e| anyhow!(e))?;
++        let expected_ty: Type = syn::parse2(quote!(String)).map_err(|e| anyhow!(e))?;
++        assert_eq!(
++            has_vec_type(ty)
++                .context("failed to check")?
++                .context("missing type")?,
++            expected_ty
++        );
++        Ok(())
++    }
++
++    /// Detecting a Vec should fail for a non-wrapped type (ex. String)
++    #[test]
++    fn vec_type_detection_fail() -> Result<()> {
++        let ty: Type = syn::parse2(quote!(String)).map_err(|e| anyhow!(e))?;
++        assert!(matches!(has_vec_type(ty), Ok(None)));
++        Ok(())
++    }
++
++    /// Detecting a Vec should fail for a different wrapper type (ex. Option<T>)
++    #[test]
++    fn vec_type_detection_fail_option() -> Result<()> {
++        let ty: Type = syn::parse2(quote!(Option<String>)).map_err(|e| anyhow!(e))?;
++        assert!(matches!(has_vec_type(ty), Ok(None)));
++        Ok(())
++    }
++}
+diff --git a/crates/wrpc-transport-derive-macro/src/wrpc_transport/encode_sync.rs b/crates/wrpc-transport-derive-macro/src/wrpc_transport/encode_sync.rs
+new file mode 100644
+index 000000000..f114497c4
+--- /dev/null
++++ b/crates/wrpc-transport-derive-macro/src/wrpc_transport/encode_sync.rs
+@@ -0,0 +1,300 @@
++use anyhow::{anyhow, bail, Context as _, Result};
++use proc_macro2::{Span, TokenStream};
++use quote::format_ident;
++use syn::{Fields, FieldsNamed, FieldsUnnamed, Ident, LitInt};
++use tracing::warn;
++
++use crate::rust::{has_option_type, has_vec_type};
++
++/// Derive [`wrpc_transport::EncodeSync`] for a given input stream
++pub fn derive_encode_sync_inner(input: TokenStream) -> Result<TokenStream> {
++    let item = syn::parse2::<syn::Item>(input)
++        .map_err(|e| anyhow!(e))
++        .context("failed to parse input into item")?;
++
++    // Depending on the type of struct, generate the impl
++    match item {
++        // For enums we generate an impl of EncodeSync
++        syn::Item::Enum(_) => {
++            derive_encode_sync_inner_for_enum(item).context("failed to derive for enum")
++        }
++
++        // For structs we generate an impl for EncodeSync
++        syn::Item::Struct(_) => {
++            derive_encode_sync_inner_for_struct(item).context("failed to derive for struct")
++        }
++
++        // All other types of syntax tree are not allowed
++        _ => {
++            warn!("derive(EncodeSync) does not support this syntax item");
++            Ok(TokenStream::new())
++        }
++    }
++}
++
++/// Derive `EncodeSync` for a Rust struct
++fn derive_encode_sync_inner_for_struct(item: syn::Item) -> Result<TokenStream> {
++    let syn::Item::Struct(s) = item else {
++        bail!("provided syn::Item is not a struct");
++    };
++
++    let struct_name = s.ident;
++    let mut members = Vec::<Ident>::new();
++    let mut encode_lines = Vec::<TokenStream>::new();
++
++    // For each member of the struct, we must:
++    // - generate a line that attempts to encode the member
++    // - remember the type so we can require it to be EncodeSync
++    for member in s.fields.iter() {
++        let member_name = member
++            .ident
++            .clone()
++            .context("unexpectedly missing field name in struct")?;
++        members.push(member_name.clone());
++        if let Ok(Some(_)) = has_option_type(member.ty.clone()) {
++            encode_lines.push(quote::quote!(
++                EncodeSync::encode_sync_option(#member_name, &mut payload).context("failed to encode member (option) `#member_name`")?;
++            ));
++        } else if let Ok(Some(_)) = has_vec_type(member.ty.clone()) {
++            encode_lines.push(quote::quote!(
++                EncodeSync::encode_sync_list(#member_name, &mut payload).context("failed to encode member (list) `#member_name`")?;
++            ));
++        } else {
++            encode_lines.push(quote::quote!(
++                #member_name.encode_sync(&mut payload).context("failed to encode member `#member_name`")?;
++            ));
++        }
++    }
++
++    // Build the generated impl
++    Ok(quote::quote!(
++        impl ::wrpc_transport_derive::deps::wrpc_transport::EncodeSync for #struct_name
++        {
++            fn encode_sync(
++                self,
++                mut payload: impl ::wrpc_transport_derive::deps::bytes::buf::BufMut
++            ) -> ::wrpc_transport_derive::deps::anyhow::Result<()> {
++                use ::wrpc_transport_derive::deps::anyhow::Context as _;
++                let Self { #( #members ),* } = self;
++                #( #encode_lines );*
++                Ok(())
++            }
++        }
++    ))
++}
++
++/// Derive `EncodeSync` for a Rust struct
++fn derive_encode_sync_inner_for_enum(item: syn::Item) -> Result<TokenStream> {
++    let syn::Item::Enum(e) = item else {
++        bail!("provided syn::Item is not an enum");
++    };
++
++    let enum_name = e.ident;
++    let mut variant_encode_lines = Vec::<TokenStream>::new();
++
++    // For each variant, we must do two things:
++    // - ensure that the type we're about to use is EncodeSync
++    // - generate a line that encodes the variant
++    for (idx, v) in e.variants.iter().enumerate() {
++        let name = &v.ident;
++        let idx_ident = LitInt::new(&idx.to_string(), Span::call_site());
++        match &v.fields {
++            // For named fields, we have a variant that looks like:
++            //
++            // ```
++            // enum Example {
++            //     ...
++            //     Variant { some: u32, fields: u64 }
++            //     ...
++            // }
++            // ```
++            //
++            // We need to go through and generate lines for every inner field there
++            Fields::Named(FieldsNamed { named, .. }) => {
++                let mut args = Vec::<Ident>::new();
++                let mut named_field_encode_lines = Vec::<TokenStream>::new();
++                for named_field in named.iter() {
++                    // Every type that is used inside must be constrained to ensure EncodeSync
++                    // For every named field we must do two things:
++                    // - keep name of the arg (for listing later)
++                    // - build a line that does the encode sync
++                    let named_field_name = named_field
++                        .ident
++                        .clone()
++                        .context("unexpectedly missing named field")?;
++                    args.push(named_field_name.clone());
++                    named_field_encode_lines.push(quote::quote!(
++                        #named_field_name.encode_sync(&mut payload)?
++                    ));
++                }
++
++                variant_encode_lines.push(quote::quote!(
++                    Self::#name { #( #args ),* } => {
++                        ::wrpc_transport_derive::deps::wrpc_transport::encode_discriminant(&mut payload, #idx_ident)?;
++                        #( #named_field_encode_lines );*
++                    }
++                ))
++            }
++
++            // For variants with unnamed fields, we have a variant that looks like:
++            //
++            // ```
++            // enum Example {
++            //     ...
++            //     Variant(u32, u64)
++            //     ...
++            // }
++            // ```
++            //
++            // We need to go through and generate lines for every inner field there,
++            // giving them a name as we go
++            Fields::Unnamed(FieldsUnnamed { unnamed, .. }) => {
++                let mut args = Vec::<Ident>::new();
++                let mut unnamed_field_encode_lines = Vec::<TokenStream>::new();
++                for (unnamed_field_idx, _) in unnamed.iter().enumerate() {
++                    // Every type that is used inside must be constrained to ensure EncodeSync
++                    // For every unnamed field we must do two things:
++                    // - keep name of the arg (for listing later)
++                    // - build a line that does the encode sync
++                    let unnamed_field_arg_name = format_ident!("arg{}", unnamed_field_idx);
++                    args.push(unnamed_field_arg_name.clone());
++                    unnamed_field_encode_lines.push(quote::quote!(
++                        #unnamed_field_arg_name.encode_sync(&mut payload)?
++                    ));
++                }
++
++                variant_encode_lines.push(quote::quote!(
++                    Self::#name( #( #args ),* ) => {
++                        ::wrpc_transport_derive::deps::wrpc_transport::encode_discriminant(&mut payload, #idx_ident)?;
++                        #( #unnamed_field_encode_lines );*
++                    }
++                ))
++            }
++            // If there are no fields we can just encode the discriminant
++            Fields::Unit => variant_encode_lines.push(quote::quote!(
++                Self::#name => ::wrpc_transport_derive::deps::wrpc_transport::encode_discriminant(&mut payload, #idx_ident)?
++            )),
++        }
++    }
++
++    Ok(quote::quote!(
++        impl ::wrpc_transport_derive::deps::wrpc_transport::EncodeSync for #enum_name
++        {
++            fn encode_sync(
++                self,
++                mut payload: impl ::wrpc_transport_derive::deps::bytes::buf::BufMut
++            ) -> ::wrpc_transport_derive::deps::anyhow::Result<()> {
++                match self {
++                    #(
++                        #variant_encode_lines
++                    ),*
++                }
++                Ok(())
++            }
++        }
++    ))
++}
++
++#[cfg(test)]
++mod tests {
++    use anyhow::Result;
++
++    use crate::wrpc_transport::encode_sync::derive_encode_sync_inner;
++
++    #[test]
++    fn encode_struct_simple() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            struct Test {
++                byte: u8,
++                string: String,
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++
++    #[test]
++    fn encode_struct_with_option() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            struct Test {
++                byte: u8,
++                string: String,
++                maybe_string: Option<String>,
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++
++    #[test]
++    fn encode_struct_with_vec() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            struct Test {
++                byte: u8,
++                string: String,
++                strings: Vec<String>,
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++
++    #[test]
++    fn encode_enum_simple() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            enum Simple {
++                A,
++                B,
++                C,
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++
++    #[test]
++    fn encode_enum_unnamed_variant_args() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            enum UnnamedVariants {
++                A,
++                B(String, String),
++                C,
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++
++    #[test]
++    fn encode_enum_named_variant_args() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            enum NamedVariants {
++                A,
++                B { first: String, second: String },
++                C,
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++
++    #[test]
++    fn encode_enum_mixed_variant_args() -> Result<()> {
++        let derived = derive_encode_sync_inner(quote::quote!(
++            enum MixedVariants {
++                A,
++                B { first: String, second: String },
++                C(String, String),
++            }
++        ))?;
++        let parsed_item = syn::parse2::<syn::Item>(derived);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++}
+diff --git a/crates/wrpc-transport-derive-macro/src/wrpc_transport/mod.rs b/crates/wrpc-transport-derive-macro/src/wrpc_transport/mod.rs
+new file mode 100644
+index 000000000..918ef9430
+--- /dev/null
++++ b/crates/wrpc-transport-derive-macro/src/wrpc_transport/mod.rs
+@@ -0,0 +1,2 @@
++pub mod encode_sync;
++pub mod receive;
+diff --git a/crates/wrpc-transport-derive-macro/src/wrpc_transport/receive.rs b/crates/wrpc-transport-derive-macro/src/wrpc_transport/receive.rs
+new file mode 100644
+index 000000000..ec4a8f74e
+--- /dev/null
++++ b/crates/wrpc-transport-derive-macro/src/wrpc_transport/receive.rs
+@@ -0,0 +1,231 @@
++use anyhow::{anyhow, bail, Context as _, Result};
++use proc_macro2::{Span, TokenStream};
++use quote::format_ident;
++use syn::{Fields, FieldsNamed, FieldsUnnamed, Ident, LitInt, LitStr};
++use tracing::warn;
++
++/// Derive [`wrpc_transport::Receive`] for a given input stream
++pub fn derive_receive_inner(input: TokenStream) -> Result<TokenStream> {
++    let item = syn::parse2::<syn::Item>(input)
++        .map_err(|e| anyhow!(e))
++        .context("failed to parse input into item")?;
++
++    // Depending on the type of struct, generate the impl
++    match item {
++        // For enums we generate an impl of Receive
++        syn::Item::Enum(_) => {
++            derive_receive_inner_for_enum(item).context("failed to derive for enum")
++        }
++
++        // For structs we generate an impl for Receive
++        syn::Item::Struct(_) => {
++            derive_receive_inner_for_struct(item).context("failed to derive for struct")
++        }
++
++        // All other types of syntax tree are not allowed
++        _ => {
++            warn!("derive(Receive) does not support this syntax item");
++            Ok(TokenStream::new())
++        }
++    }
++}
++
++/// Derive `Receive` for a Rust struct
++fn derive_receive_inner_for_struct(item: syn::Item) -> Result<TokenStream> {
++    let syn::Item::Struct(s) = item else {
++        bail!("provided syn::Item is not a struct");
++    };
++
++    let struct_name = s.ident;
++    let mut members = Vec::<Ident>::new();
++    let mut receive_lines = Vec::<TokenStream>::new();
++
++    // For each member of the struct, we must:
++    // - generate a line that attempts to receive the member
++    // - remember the type so we can require it to be Receive
++    for member in s.fields.iter() {
++        let member_name = member
++            .ident
++            .clone()
++            .context("unexpectedly missing field name in struct")?;
++        members.push(member_name.clone());
++        // Add a line that receives this member
++        receive_lines.push(quote::quote!(
++            let (#member_name, payload) = Receive::receive_sync(payload, rx)
++                .await
++                .context("failed to receive member `#member_name`")?;
++        ));
++    }
++
++    // Build the generated impl
++    Ok(quote::quote!(
++        #[::wrpc_transport_derive::deps::async_trait::async_trait]
++        impl ::wrpc_transport_derive::deps::wrpc_transport::Receive for #struct_name
++        {
++            async fn receive<T>(
++                payload: impl ::wrpc_transport_derive::deps::bytes::buf::Buf + Send + 'static,
++                rx: &mut (impl ::wrpc_transport_derive::deps::futures::Stream<Item=::wrpc_transport_derive::deps::anyhow::Result<::wrpc_transport_derive::deps::bytes::Bytes>>  + Send + Sync + Unpin),
++                _sub: Option<::wrpc_transport_derive::deps::wrpc_transport::AsyncSubscription<T>>,
++            ) -> ::wrpc_transport_derive::deps::anyhow::Result<(Self, Box<dyn ::wrpc_transport_derive::deps::bytes::buf::Buf + Send>)>
++            where
++                T: ::wrpc_transport_derive::deps::futures::Stream<Item=::wrpc_transport_derive::deps::anyhow::Result<::wrpc_transport_derive::deps::bytes::Bytes>> + Send + Sync + Unpin + 'static
++            {
++                use ::wrpc_transport_derive::deps::anyhow::Context as _;
++                #( #receive_lines );*
++                Ok((Self { #( #members ),* }, Box::new(payload) ))
++            }
++        }
++    ))
++}
++
++/// Derive `Receive` for a Rust struct
++fn derive_receive_inner_for_enum(item: syn::Item) -> Result<TokenStream> {
++    let syn::Item::Enum(e) = item else {
++        bail!("provided syn::Item is not an enum");
++    };
++
++    let enum_name = e.ident;
++    let enum_name_str = LitStr::new(enum_name.to_string().as_ref(), Span::call_site());
++    let mut variant_receive_match_blocks = Vec::<TokenStream>::new();
++
++    // For each variant, we must do two things:
++    // - ensure that the type we're about to use is Receive
++    // - generate a line that receives the variant
++    for (idx, v) in e.variants.iter().enumerate() {
++        let name = &v.ident;
++        let idx_ident = LitInt::new(&idx.to_string(), Span::call_site());
++        match &v.fields {
++            // For named fields, we have a variant that looks like:
++            //
++            // ```
++            // enum Example {
++            //     ...
++            //     Variant { some: u32, fields: u64 }
++            //     ...
++            // }
++            // ```
++            //
++            // We need to go through and generate lines for every inner field there
++            Fields::Named(FieldsNamed { named, .. }) => {
++                let mut args = Vec::<Ident>::new();
++                let mut named_field_receive_lines = Vec::<TokenStream>::new();
++
++                // For each named field, generate a `receive_sync()` call that will fit
++                // in the block of an option in the large match statement for this enum
++                for named_field in named.iter() {
++                    // For every named field we must do two things:
++                    // - keep name of the arg (for listing later)
++                    // - build a line that does the receive sync
++                    let named_field_name = named_field
++                        .ident
++                        .clone()
++                        .context("unexpectedly missing named field")?;
++                    args.push(named_field_name.clone());
++                    named_field_receive_lines.push(quote::quote!(
++                        let (#named_field_name, payload) = Receive::receive_sync(payload, rx)
++                            .await
++                            .context("failed to receive enum discriminant inner value")?;
++                    ));
++                }
++
++                // Generate match statement block
++                variant_receive_match_blocks.push(quote::quote!(
++                    #idx_ident => {
++                        #( #named_field_receive_lines );*
++                        Ok((Self::#name { #( #args ),* }, Box::new(payload)))
++                    }
++                ))
++            }
++
++            // For variants with unnamed fields, we have a variant that looks like:
++            //
++            // ```
++            // enum Example {
++            //     ...
++            //     Variant(u32, u64)
++            //     ...
++            // }
++            // ```
++            //
++            // We need to go through and generate lines for every inner field there,
++            // giving them a name as we go
++            Fields::Unnamed(FieldsUnnamed { unnamed, .. }) => {
++                let mut args = Vec::<Ident>::new();
++                let mut unnamed_field_receive_lines = Vec::<TokenStream>::new();
++
++                // For each unnamed field, generate a `receive_sync()` call that will fit
++                // in the block of an option in the large match statement for this enum
++                for (unnamed_field_idx, _) in unnamed.iter().enumerate() {
++                    // For every unnamed field we must do two things:
++                    // - keep name of the arg (for listing later)
++                    // - build a line that does the receive sync
++                    let unnamed_field_arg_name = format_ident!("arg{}", unnamed_field_idx);
++                    args.push(unnamed_field_arg_name.clone());
++                    unnamed_field_receive_lines.push(quote::quote!(
++                        let (#unnamed_field_arg_name, payload) = Receive::receive_sync(payload, rx)
++                            .await
++                            .context("failed to receive enum discriminant inner value")?;
++                    ));
++                }
++
++                // Generate match statement block
++                variant_receive_match_blocks.push(quote::quote!(
++                    #idx_ident => {
++                        #( #unnamed_field_receive_lines );*
++                        Ok((Self::#name(#( #args ),*), Box::new(payload)))
++                    }
++                ))
++            }
++            // If there are no fields we can just receive the discriminant
++            Fields::Unit => variant_receive_match_blocks.push(quote::quote!(
++                #idx_ident => Ok((Self::#name, Box::new(payload)))
++            )),
++        }
++    }
++
++    Ok(quote::quote!(
++        #[::wrpc_transport_derive::deps::async_trait::async_trait]
++        impl ::wrpc_transport_derive::deps::wrpc_transport::Receive for #enum_name
++        {
++            async fn receive<T>(
++                payload: impl ::wrpc_transport_derive::deps::bytes::buf::Buf + Send + 'static,
++                rx: &mut (impl ::wrpc_transport_derive::deps::futures::Stream<Item=::wrpc_transport_derive::deps::anyhow::Result<::wrpc_transport_derive::deps::bytes::Bytes>> + Send + Sync + Unpin),
++                _sub: Option<::wrpc_transport_derive::deps::wrpc_transport::AsyncSubscription<T>>,
++            ) -> ::wrpc_transport_derive::deps::anyhow::Result<(Self, Box<dyn ::wrpc_transport_derive::deps::bytes::buf::Buf + Send>)>
++            where
++                T: ::wrpc_transport_derive::deps::futures::Stream<Item=::wrpc_transport_derive::deps::anyhow::Result<::wrpc_transport_derive::deps::bytes::Bytes>> + Send + Sync + Unpin + 'static
++            {
++                let (discriminant, payload) = wrpc_transport_derive::deps::wrpc_transport::receive_discriminant(payload, rx)
++                    .await
++                    .context("failed to receive enum discriminant")?;
++                match discriminant {
++                    #(
++                        #variant_receive_match_blocks
++                    ),*,
++                    v => ::wrpc_transport_derive::deps::anyhow::bail!(
++                        "unexpected discriminant value on type [{}]: [{v}]", #enum_name_str
++                    ),
++                }
++            }
++        }
++    ))
++}
++
++#[cfg(test)]
++mod tests {
++    use anyhow::Result;
++
++    use crate::wrpc_transport::receive::derive_receive_inner;
++
++    #[test]
++    fn derive_receive_inner_works() -> Result<()> {
++        let tokens = quote::quote!(
++            struct Test {
++                byte: u8,
++            }
++        );
++        let parsed_item = syn::parse2::<syn::Item>(derive_receive_inner(tokens)?);
++        assert!(matches!(parsed_item, Ok(syn::Item::Impl(_))));
++        Ok(())
++    }
++}
+diff --git a/crates/wrpc-transport-derive/Cargo.toml b/crates/wrpc-transport-derive/Cargo.toml
+new file mode 100644
+index 000000000..4a4b778b3
+--- /dev/null
++++ b/crates/wrpc-transport-derive/Cargo.toml
+@@ -0,0 +1,29 @@
++[package]
++name = "wrpc-transport-derive"
++version = "0.1.0"
++description = """
++Macros which enable deriving traits for wRPC, in particular wrpc_transport::{Encode, Decode}.
++"""
++
++authors.workspace = true
++categories.workspace = true
++edition.workspace = true
++license.workspace = true
++repository.workspace = true
++
++[badges.maintenance]
++status = "actively-developed"
++
++[dependencies]
++anyhow = { workspace = true }
++async-trait = { workspace = true }
++bytes = { workspace = true }
++futures = { workspace = true }
++proc-macro2 = { workspace = true }
++quote = { workspace = true }
++syn = { workspace = true }
++wrpc-transport = { workspace = true }
++wrpc-transport-derive-macro = { workspace = true }
++
++[dev-dependencies]
++tokio = { workspace = true, features = [ "macros", "rt-multi-thread" ] }
+\ No newline at end of file
+diff --git a/crates/wrpc-transport-derive/src/lib.rs b/crates/wrpc-transport-derive/src/lib.rs
+new file mode 100644
+index 000000000..31280c18f
+--- /dev/null
++++ b/crates/wrpc-transport-derive/src/lib.rs
+@@ -0,0 +1,46 @@
++//! This crate exposes derive macros that enable Rust types to derive [`wrpc_transport::EncodeSync`] and [`wrpc_transport::Receive`] traits.
++//!
++//! # Example
++//!
++//! ```rust,ignore
++//! use wrpc_transport_derive::{Encode, Receive};
++//!
++//! #[derive(Trace, PartialEq, Eq, EncodeSync, Receive, Default)]
++//! struct TestStruct {
++//!     one: u32,
++//! }
++//!
++//! let mut buffer: Vec<u8> = Vec::new();
++//! // Encode the TestStruct
++//! TestStruct { one: 1 }
++//!     .encode_sync(&mut buffer)
++//!     .context("failed to perform encode")?;
++//!
++//! // Attempt to receive the value
++//! let (received, leftover): (TestStruct, _) =
++//!     Receive::receive_sync(Bytes::from(buffer), &mut empty())
++//!         .await
++//!         .context("failed to receive")?;
++//!
++//! // At this point, we expect the received bytes to be exactly the same as what we started with
++//! assert_eq!(received, TestStruct { one: 1 }, "received matches");
++//! assert_eq!(leftover.remaining(), 0, "payload was completely consumed");
++//! ```
++//!
++//! NOTE: This macro crate uses `tracing`, so if you'd like to see the input & output tokens, prepend your command (ex. `cargo build`) with `RUST_LOG=trace`.
++//!
++
++/// Dependencies of the macros container in the "inner" macro crate (`wrpc_transport_derive_macro`),
++/// hoisted to this level so they can be referenced from the inner macro, and are sure to be included
++pub mod deps {
++    pub use anyhow;
++    pub use async_trait;
++    pub use bytes;
++    pub use futures;
++    pub use wrpc_transport;
++}
++
++pub use wrpc_transport_derive_macro::{EncodeSync, Receive};
++
++/// Re-export of [`wrpc_transport::Encode`] to make usage easier
++pub use wrpc_transport::{Encode, EncodeSync, Receive};

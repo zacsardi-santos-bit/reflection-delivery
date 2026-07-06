@@ -1,0 +1,98 @@
+{
+    "id": "f48330e7-d799-4ad8-8c17-b427ad3bd87a",
+    "task_name": "offline/xataio-pgroll-243",
+    "trial_name": "xataio-pgroll-243__DjaWUwo",
+    "trial_uri": "file:///tmp/nop/2026-07-01__15-20-58/xataio-pgroll-243__DjaWUwo",
+    "task_id": {
+        "path": "xataio-pgroll-243"
+    },
+    "source": "src",
+    "task_checksum": "b86bd3ac619afe3d2642eddd8ee18f315a4a1a5ea0307b7f26c545551e11fd52",
+    "config": {
+        "task": {
+            "path": "xataio-pgroll-243",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "xataio-pgroll-243__DjaWUwo",
+        "trials_dir": "/tmp/nop/2026-07-01__15-20-58",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "c5db87b0-5f72-496a-92af-84049014e5ab"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T15:21:02.958665Z",
+    "finished_at": "2026-07-01T15:21:24.939866Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T15:21:02.959611Z",
+        "finished_at": "2026-07-01T15:21:04.865734Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T15:21:04.865769Z",
+        "finished_at": "2026-07-01T15:21:04.865811Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T15:21:04.865860Z",
+        "finished_at": "2026-07-01T15:21:04.865886Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T15:21:04.865979Z",
+        "finished_at": "2026-07-01T15:21:14.607330Z"
+    }
+}

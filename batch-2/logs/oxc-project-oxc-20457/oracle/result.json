@@ -1,0 +1,29 @@
+{
+    "id": "460aeb4c-091e-4d8c-b60a-7c9efbee33c1",
+    "started_at": "2026-07-06T12:18:47.486111",
+    "finished_at": "2026-07-06T12:19:51.102458",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__oxc-project-oxc-20457": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "oxc-project-oxc-20457__NYp7nXj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

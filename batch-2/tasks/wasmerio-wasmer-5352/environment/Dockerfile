@@ -1,0 +1,95 @@
+FROM rust:1.81
+
+RUN apt-get update && apt-get install -y \
+    git curl ca-certificates patch build-essential pkg-config libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C /usr/local/bin
+
+WORKDIR /workspace
+
+RUN git init /workspace/repo && cd /workspace/repo && \
+    git remote add origin https://github.com/wasmerio/wasmer.git && \
+    git fetch --depth 1 origin 272909933a2c0bfb96dda46d091b7cd40d0ae49f && \
+    git checkout --detach FETCH_HEAD && \
+    git submodule update --init --recursive --depth 1 2>/dev/null || true && \
+    git remote remove origin && \
+    git tag -l | xargs -r git tag -d && \
+    git for-each-ref --format='%(refname)' refs/remotes refs/tags 2>/dev/null | xargs -r -n1 git update-ref -d && \
+    git reflog expire --expire=now --all && \
+    git gc --prune=now --aggressive && \
+    rm -rf .git/logs .git/modules
+
+WORKDIR /workspace/repo
+
+RUN cargo fetch
+
+WORKDIR /workspace
+
+# --- terminal-bench eval harness deps (tmux + asciinema), baked for offline eval ---
+RUN (command -v tmux >/dev/null 2>&1 && command -v asciinema >/dev/null 2>&1) \
+    || (apt-get update && apt-get install -y --no-install-recommends tmux asciinema) \
+    || (apt-get update && apt-get install -y --no-install-recommends tmux python3-pip && pip3 install --no-cache-dir asciinema) \
+    || (apk add --no-cache tmux asciinema) \
+    || (dnf install -y tmux asciinema) \
+    || (yum install -y tmux asciinema) \
+    || true
+
+# --- offline-harbor: ensure grading(python3) + patch(patch/git) deps (build-time) ---
+RUN (command -v python3 >/dev/null 2>&1 && command -v patch >/dev/null 2>&1 && command -v git >/dev/null 2>&1) \
+    || (apt-get update && apt-get install -y --no-install-recommends python3 patch git ca-certificates) \
+    || (apk add --no-cache python3 patch git ca-certificates) \
+    || (dnf install -y python3 patch git ca-certificates) \
+    || (yum install -y python3 patch git ca-certificates) \
+    || true
+
+# >>> offline-cargo-bake (new4261) >>>
+# Warm $CARGO_HOME for the EXACT post-golden+test dependency graph, then revert
+# the working tree so only the crate cache is baked (never the solution).
+RUN printf %s 'ZGlmZiAtLWdpdCBhL0NhcmdvLmxvY2sgYi9DYXJnby5sb2NrCmluZGV4IDVlNjFhNGVkNTYwLi4yM2JiNjhmYWI1ZSAxMDA2NDQKLS0tIGEvQ2FyZ28ubG9jaworKysgYi9DYXJnby5sb2NrCkBAIC0yMTMsNyArMjEzLDcgQEAgdmVyc2lvbiA9ICIwLjIuMSIKIHNvdXJjZSA9ICJyZWdpc3RyeStodHRwczovL2dpdGh1Yi5jb20vcnVzdC1sYW5nL2NyYXRlcy5pby1pbmRleCIKIGNoZWNrc3VtID0gImFjYjExNjFjNmI2NGQxYzNkODMxMDgyMTNjMmEyNTMzYTM0MmFjMjI1YWFiZDBiZGEyMTgyNzhjMmRkYjAwYzAiCiBkZXBlbmRlbmNpZXMgPSBbCi0gIm5vbSIsCisgIm5vbSA3LjEuMyIsCiBdCiAKIFtbcGFja2FnZV1dCkBAIC02MjgsNyArNjI4LDcgQEAgdmVyc2lvbiA9ICIwLjYuMCIKIHNvdXJjZSA9ICJyZWdpc3RyeStodHRwczovL2dpdGh1Yi5jb20vcnVzdC1sYW5nL2NyYXRlcy5pby1pbmRleCIKIGNoZWNrc3VtID0gIjZmYWMzODdhOThiYjdjMzcyOTIwNTdjZmZjNTZkNjJlY2I2Mjk5MDAwMjY0MDI2MzNhZTkxNjBkZjkzYTg3NjYiCiBkZXBlbmRlbmNpZXMgPSBbCi0gIm5vbSIsCisgIm5vbSA3LjEuMyIsCiBdCiAKIFtbcGFja2FnZV1dCkBAIC0xMDk2LDE4ICsxMDk2LDYgQEAgdmVyc2lvbiA9ICIxLjIuMCIKIHNvdXJjZSA9ICJyZWdpc3RyeStodHRwczovL2dpdGh1Yi5jb20vcnVzdC1sYW5nL2NyYXRlcy5pby1pbmRleCIKIGNoZWNrc3VtID0gIjc5MGVlYTQzNjE2MzFjNWU3ZDIyNTk4ZWNkNTcyM2ZmNjExOTA0ZTMzNDRjZTg3MjA3ODRjOTNlM2Q4M2Q0MGIiCiAKLVtbcGFja2FnZV1dCi1uYW1lID0gImNyb24iCi12ZXJzaW9uID0gIjAuMTQuMCIKLXNvdXJjZSA9ICJyZWdpc3RyeStodHRwczovL2dpdGh1Yi5jb20vcnVzdC1sYW5nL2NyYXRlcy5pby1pbmRleCIKLWNoZWNrc3VtID0gImRiZTU4OTA0YjY4ZDk1YWQyYzY5YTJlOTYwN2ZmYzcwY2UxOTZjMTkxMGY4M2EzNDAwMjljMTQ0OGUwNmVkNjUiCi1kZXBlbmRlbmNpZXMgPSBbCi0gImNocm9ubyIsCi0gIm9uY2VfY2VsbCIsCi0gInNlcmRlIiwKLSAid2lubm93IDAuNi4yMiIsCi1dCi0KIFtbcGFja2FnZV1dCiBuYW1lID0gImNyb3NzYmVhbS1jaGFubmVsIgogdmVyc2lvbiA9ICIwLjUuMTQiCkBAIC0zMzQ4LDYgKzMzMzYsMTYgQEAgZGVwZW5kZW5jaWVzID0gWwogICJtZW1vZmZzZXQgMC45LjEiLAogXQogCitbW3BhY2thZ2VdXQorbmFtZSA9ICJub20iCit2ZXJzaW9uID0gIjUuMS4zIgorc291cmNlID0gInJlZ2lzdHJ5K2h0dHBzOi8vZ2l0aHViLmNvbS9ydXN0LWxhbmcvY3JhdGVzLmlvLWluZGV4IgorY2hlY2tzdW0gPSAiMDg5NTlhMzg3YTY3NjMwMmVlYmY0ZGRiY2JjNjExZGEwNDI4NTU3OWY3NmY4OGVlMDUwNmM2M2IxYTYxZGQ0YiIKK2RlcGVuZGVuY2llcyA9IFsKKyAibWVtY2hyIiwKKyAidmVyc2lvbl9jaGVjayIsCitdCisKIFtbcGFja2FnZV1dCiBuYW1lID0gIm5vbSIKIHZlcnNpb24gPSAiNy4xLjMiCkBAIC00NTU4LDYgKzQ1NTYsMTYgQEAgdmVyc2lvbiA9ICIxLjAuMTgiCiBzb3VyY2UgPSAicmVnaXN0cnkraHR0cHM6Ly9naXRodWIuY29tL3J1c3QtbGFuZy9jcmF0ZXMuaW8taW5kZXgiCiBjaGVja3N1bSA9ICJmM2NiNWJhMGRjNDMyNDJjZTE3ZGU5OWMxODBlOTZkYjkwYjIzNWI4YTlmZGM5NTQzYzk2ZDIyMDkxMTZiZDlmIgogCitbW3BhY2thZ2VdXQorbmFtZSA9ICJzYWZmcm9uIgordmVyc2lvbiA9ICIwLjEuMCIKK3NvdXJjZSA9ICJyZWdpc3RyeStodHRwczovL2dpdGh1Yi5jb20vcnVzdC1sYW5nL2NyYXRlcy5pby1pbmRleCIKK2NoZWNrc3VtID0gIjAzZmI5YTYyODU5NmZjNzU5MGViN2VkYmY3YjA2MTMyODdiZTc4ZGYxMDdmNWY5N2IxMThhYWQ1OWZiMmVlYTkiCitkZXBlbmRlbmNpZXMgPSBbCisgImNocm9ubyIsCisgIm5vbSA1LjEuMyIsCitdCisKIFtbcGFja2FnZV1dCiBuYW1lID0gInNhbWUtZmlsZSIKIHZlcnNpb24gPSAiMS4wLjYiCkBAIC02OTMxLDExICs2OTM5LDExIEBAIGRlcGVuZGVuY2llcyA9IFsKICAiYW55aG93IiwKICAiYnl0ZXNpemUiLAogICJjaWJvcml1bSIsCi0gImNyb24iLAogICJkZXJpdmVfYnVpbGRlciIsCiAgImhleCIsCiAgImluZGV4bWFwIDIuNy4wIiwKICAicHJldHR5X2Fzc2VydGlvbnMiLAorICJzYWZmcm9uIiwKICAic2NoZW1hcnMiLAogICJzZW12ZXIgMS4wLjI0IiwKICAic2VyZGUiLApAQCAtNzU3Miw3ICs3NTgwLDcgQEAgdmVyc2lvbiA9ICI1LjAuMCIKIHNvdXJjZSA9ICJyZWdpc3RyeStodHRwczovL2dpdGh1Yi5jb20vcnVzdC1sYW5nL2NyYXRlcy5pby1pbmRleCIKIGNoZWNrc3VtID0gIjk5OGQyYzI0ZWMwOTlhODdkYWY5NDY3ODA4ODU5ZjlkODJiNjFmMWQ5Yzk3MDEyNTFhZWEwMzdmNTE0ZWFlMGUiCiBkZXBlbmRlbmNpZXMgPSBbCi0gIm5vbSIsCisgIm5vbSA3LjEuMyIsCiBdCiAKIFtbcGFja2FnZV1dCmRpZmYgLS1naXQgYS9saWIvY29uZmlnL0NhcmdvLnRvbWwgYi9saWIvY29uZmlnL0NhcmdvLnRvbWwKaW5kZXggMDE1NzRlNDNmN2EuLjdlYmNlYzFhY2ZiIDEwMDY0NAotLS0gYS9saWIvY29uZmlnL0NhcmdvLnRvbWwKKysrIGIvbGliL2NvbmZpZy9DYXJnby50b21sCkBAIC0yNyw3ICsyNyw3IEBAIHNjaGVtYXJzID0geyB2ZXJzaW9uID0gIjAuOC4xNiIsIGZlYXR1cmVzID0gWyJ1cmwiXSB9CiB1cmwgPSB7IHZlcnNpb24gPSAiMi41LjAiLCBmZWF0dXJlcyA9IFsic2VyZGUiXSB9CiBoZXggPSAiMC40LjMiCiBjaWJvcml1bSA9ICIwLjIuMiIKLWNyb24gPSB7IHZlcnNpb24gPSAiMC4xNC4wIiwgZmVhdHVyZXMgPSBbInNlcmRlIl0gfQorc2FmZnJvbiA9IHsgdmVyc2lvbiA9ICIwLjEuMCIsIGZlYXR1cmVzID0gWyJzdGQiXSB9CiAKIFtkZXYtZGVwZW5kZW5jaWVzXQogcHJldHR5X2Fzc2VydGlvbnMud29ya3NwYWNlID0gdHJ1ZQpkaWZmIC0tZ2l0IGEvbGliL2NvbmZpZy9zcmMvYXBwL2pvYi5ycyBiL2xpYi9jb25maWcvc3JjL2FwcC9qb2IucnMKaW5kZXggMjcyNTNhZmI5NGEuLmE2NmEwNmM3OGMyIDEwMDY0NAotLS0gYS9saWIvY29uZmlnL3NyYy9hcHAvam9iLnJzCisrKyBiL2xpYi9jb25maWcvc3JjL2FwcC9qb2IucnMKQEAgLTUwLDIxICs1MCwxOCBAQCBwdWIgZW51bSBKb2JBY3Rpb25DYXNlIHsKICAgICBFeGVjdXRlKEV4ZWN1dGFibGVKb2IpLAogfQogCi0jW2Rlcml2ZSgKLSAgICBzZXJkZTo6U2VyaWFsaXplLCBzZXJkZTo6RGVzZXJpYWxpemUsIHNjaGVtYXJzOjpKc29uU2NoZW1hLCBDbG9uZSwgRGVidWcsIFBhcnRpYWxFcSwgRXEsCi0pXQotcHViIGVudW0gQ3JvblNjaGVkdWxlIHsKLSAgICBIb3VybHksCi0gICAgRGFpbHksCi0gICAgV2Vla2x5LAotICAgIENyb25FeHByZXNzaW9uKFN0cmluZyksCisjW2Rlcml2ZShDbG9uZSwgRGVidWcsIFBhcnRpYWxFcSwgRXEpXQorcHViIHN0cnVjdCBDcm9uRXhwcmVzc2lvbiB7CisgICAgcHViIGNyb246IHNhZmZyb246OnBhcnNlOjpDcm9uRXhwciwKKyAgICAvLyBLZWVwIHRoZSBvcmlnaW5hbCBzdHJpbmcgZm9ybSBhcm91bmQgZm9yIHNlcmlhbGl6YXRpb24gcHVycG9zZXMuCisgICAgcHViIHBhcnNlZF9mcm9tOiBTdHJpbmcsCiB9CiAKICNbZGVyaXZlKENsb25lLCBEZWJ1ZywgUGFydGlhbEVxLCBFcSldCiBwdWIgZW51bSBKb2JUcmlnZ2VyIHsKICAgICBQcmVEZXBsb3ltZW50LAogICAgIFBvc3REZXBsb3ltZW50LAotICAgIENyb24oQ3JvblNjaGVkdWxlKSwKKyAgICBDcm9uKENyb25FeHByZXNzaW9uKSwKIH0KIAogI1tkZXJpdmUoCkBAIC0xMzUsMTAgKzEzMiw3IEBAIGltcGwgRGlzcGxheSBmb3IgSm9iVHJpZ2dlciB7CiAgICAgICAgIG1hdGNoIHNlbGYgewogICAgICAgICAgICAgU2VsZjo6UHJlRGVwbG95bWVudCA9PiB3cml0ZSEoZiwgInByZS1kZXBsb3ltZW50IiksCiAgICAgICAgICAgICBTZWxmOjpQb3N0RGVwbG95bWVudCA9PiB3cml0ZSEoZiwgInBvc3QtZGVwbG95bWVudCIpLAotICAgICAgICAgICAgU2VsZjo6Q3JvbihDcm9uU2NoZWR1bGU6OkhvdXJseSkgPT4gd3JpdGUhKGYsICJAaG91cmx5IiksCi0gICAgICAgICAgICBTZWxmOjpDcm9uKENyb25TY2hlZHVsZTo6RGFpbHkpID0+IHdyaXRlIShmLCAiQGRhaWx5IiksCi0gICAgICAgICAgICBTZWxmOjpDcm9uKENyb25TY2hlZHVsZTo6V2Vla2x5KSA9PiB3cml0ZSEoZiwgIkB3ZWVrbHkiKSwKLSAgICAgICAgICAgIFNlbGY6OkNyb24oQ3JvblNjaGVkdWxlOjpDcm9uRXhwcmVzc2lvbihzY2hlZCkpID0+IHdyaXRlIShmLCAie30iLCBzY2hlZCksCisgICAgICAgICAgICBTZWxmOjpDcm9uKGNyb24pID0+IHdyaXRlIShmLCAie30iLCBjcm9uLnBhcnNlZF9mcm9tKSwKICAgICAgICAgfQogICAgIH0KIH0KQEAgLTE1MSwxOSArMTQ1LDQ4IEBAIGltcGwgRnJvbVN0ciBmb3IgSm9iVHJpZ2dlciB7CiAgICAgICAgICAgICBPayhTZWxmOjpQcmVEZXBsb3ltZW50KQogICAgICAgICB9IGVsc2UgaWYgcyA9PSAicG9zdC1kZXBsb3ltZW50IiB7CiAgICAgICAgICAgICBPayhTZWxmOjpQb3N0RGVwbG95bWVudCkKLSAgICAgICAgfSBlbHNlIGlmIGxldCBTb21lKHByZWRlZmluZWRfc2NoZWQpID0gcy5zdHJpcF9wcmVmaXgoJ0AnKSB7CisgICAgICAgIH0gZWxzZSB7CisgICAgICAgICAgICBsZXQgZXhwciA9IHMucGFyc2U6OjxDcm9uRXhwcmVzc2lvbj4oKT87CisgICAgICAgICAgICBPayhTZWxmOjpDcm9uKGV4cHIpKQorICAgICAgICB9CisgICAgfQorfQorCitpbXBsIEZyb21TdHIgZm9yIENyb25FeHByZXNzaW9uIHsKKyAgICB0eXBlIEVyciA9IEJveDxkeW4gc3RkOjplcnJvcjo6RXJyb3IgKyBTZW5kICsgU3luYz47CisKKyAgICBmbiBmcm9tX3N0cihzOiAmc3RyKSAtPiBSZXN1bHQ8U2VsZiwgU2VsZjo6RXJyPiB7CisgICAgICAgIGlmIGxldCBTb21lKHByZWRlZmluZWRfc2NoZWQpID0gcy5zdHJpcF9wcmVmaXgoJ0AnKSB7CiAgICAgICAgICAgICBtYXRjaCBwcmVkZWZpbmVkX3NjaGVkIHsKLSAgICAgICAgICAgICAgICAiaG91cmx5IiA9PiBPayhTZWxmOjpDcm9uKENyb25TY2hlZHVsZTo6SG91cmx5KSksCi0gICAgICAgICAgICAgICAgImRhaWx5IiA9PiBPayhTZWxmOjpDcm9uKENyb25TY2hlZHVsZTo6RGFpbHkpKSwKLSAgICAgICAgICAgICAgICAid2Vla2x5IiA9PiBPayhTZWxmOjpDcm9uKENyb25TY2hlZHVsZTo6V2Vla2x5KSksCisgICAgICAgICAgICAgICAgImhvdXJseSIgPT4gT2soU2VsZiB7CisgICAgICAgICAgICAgICAgICAgIGNyb246ICIwICogKiAqICoiLnBhcnNlKCkudW53cmFwKCksCisgICAgICAgICAgICAgICAgICAgIHBhcnNlZF9mcm9tOiBzLnRvX293bmVkKCksCisgICAgICAgICAgICAgICAgfSksCisgICAgICAgICAgICAgICAgImRhaWx5IiA9PiBPayhTZWxmIHsKKyAgICAgICAgICAgICAgICAgICAgY3JvbjogIjAgMCAqICogKiIucGFyc2UoKS51bndyYXAoKSwKKyAgICAgICAgICAgICAgICAgICAgcGFyc2VkX2Zyb206IHMudG9fb3duZWQoKSwKKyAgICAgICAgICAgICAgICB9KSwKKyAgICAgICAgICAgICAgICAid2Vla2x5IiA9PiBPayhTZWxmIHsKKyAgICAgICAgICAgICAgICAgICAgY3JvbjogIjAgMCAqICogMSIucGFyc2UoKS51bndyYXAoKSwKKyAgICAgICAgICAgICAgICAgICAgcGFyc2VkX2Zyb206IHMudG9fb3duZWQoKSwKKyAgICAgICAgICAgICAgICB9KSwKKyAgICAgICAgICAgICAgICAibW9udGhseSIgPT4gT2soU2VsZiB7CisgICAgICAgICAgICAgICAgICAgIGNyb246ICIwIDAgMSAqICoiLnBhcnNlKCkudW53cmFwKCksCisgICAgICAgICAgICAgICAgICAgIHBhcnNlZF9mcm9tOiBzLnRvX293bmVkKCksCisgICAgICAgICAgICAgICAgfSksCisgICAgICAgICAgICAgICAgInllYXJseSIgPT4gT2soU2VsZiB7CisgICAgICAgICAgICAgICAgICAgIGNyb246ICIwIDAgMSAxICoiLnBhcnNlKCkudW53cmFwKCksCisgICAgICAgICAgICAgICAgICAgIHBhcnNlZF9mcm9tOiBzLnRvX293bmVkKCksCisgICAgICAgICAgICAgICAgfSksCiAgICAgICAgICAgICAgICAgXyA9PiBFcnIoZm9ybWF0ISgiSW52YWxpZCBjcm9uIGV4cHJlc3Npb24ge3N9IikuaW50bygpKSwKICAgICAgICAgICAgIH0KICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgIC8vIExldCdzIG1ha2Ugc3VyZSB0aGUgaW5wdXQgc3RyaW5nIGlzIHZhbGlkLi4uCi0gICAgICAgICAgICBtYXRjaCBjcm9uOjpTY2hlZHVsZTo6ZnJvbV9zdHIocykgewotICAgICAgICAgICAgICAgIE9rKHNjaGVkKSA9PiBPayhTZWxmOjpDcm9uKENyb25TY2hlZHVsZTo6Q3JvbkV4cHJlc3Npb24oCi0gICAgICAgICAgICAgICAgICAgIHNjaGVkLnNvdXJjZSgpLnRvX293bmVkKCksCi0gICAgICAgICAgICAgICAgKSkpLAorICAgICAgICAgICAgbWF0Y2ggcy5wYXJzZSgpIHsKKyAgICAgICAgICAgICAgICBPayhleHByKSA9PiBPayhTZWxmIHsKKyAgICAgICAgICAgICAgICAgICAgY3JvbjogZXhwciwKKyAgICAgICAgICAgICAgICAgICAgcGFyc2VkX2Zyb206IHMudG9fb3duZWQoKSwKKyAgICAgICAgICAgICAgICB9KSwKICAgICAgICAgICAgICAgICBFcnIoXykgPT4gRXJyKGZvcm1hdCEoIkludmFsaWQgY3JvbiBleHByZXNzaW9uIHtzfSIpLmludG8oKSksCiAgICAgICAgICAgICB9CiAgICAgICAgIH0KQEAgLTE4Niw0MSArMjA5LDUwIEBAIG1vZCB0ZXN0cyB7CiAKICAgICAjW3Rlc3RdCiAgICAgcHViIGZuIGpvYl90cmlnZ2VyX3NlcmlhbGl6YXRpb25fcm91bmR0cmlwKCkgewotICAgICAgICBmbiBhc3NlcnRfcm91bmR0cmlwKHNlcmlhbGl6ZWQ6ICZzdHIsIHZhbHVlOiBKb2JUcmlnZ2VyKSB7Ci0gICAgICAgICAgICBhc3NlcnRfZXEhKCZ2YWx1ZS50b19zdHJpbmcoKSwgc2VyaWFsaXplZCk7Ci0gICAgICAgICAgICBhc3NlcnRfZXEhKHNlcmlhbGl6ZWQucGFyc2U6OjxKb2JUcmlnZ2VyPigpLnVud3JhcCgpLCB2YWx1ZSk7CisgICAgICAgIGZuIGFzc2VydF9yb3VuZHRyaXAoc2VyaWFsaXplZDogJnN0ciwgZGVzY3JpcHRpb246IE9wdGlvbjwmc3RyPikgeworICAgICAgICAgICAgbGV0IHBhcnNlZCA9IHNlcmlhbGl6ZWQucGFyc2U6OjxKb2JUcmlnZ2VyPigpLnVud3JhcCgpOworICAgICAgICAgICAgYXNzZXJ0X2VxISgmcGFyc2VkLnRvX3N0cmluZygpLCBzZXJpYWxpemVkKTsKKworICAgICAgICAgICAgaWYgbGV0IEpvYlRyaWdnZXI6OkNyb24oZXhwcikgPSBwYXJzZWQgeworICAgICAgICAgICAgICAgIGFzc2VydF9lcSEoCisgICAgICAgICAgICAgICAgICAgICZleHByCisgICAgICAgICAgICAgICAgICAgICAgICAuY3JvbgorICAgICAgICAgICAgICAgICAgICAgICAgLmRlc2NyaWJlKHNhZmZyb246OnBhcnNlOjpFbmdsaXNoOjpkZWZhdWx0KCkpCisgICAgICAgICAgICAgICAgICAgICAgICAudG9fc3RyaW5nKCksCisgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uLnVud3JhcCgpCisgICAgICAgICAgICAgICAgKTsKKyAgICAgICAgICAgIH0gZWxzZSB7CisgICAgICAgICAgICAgICAgYXNzZXJ0IShkZXNjcmlwdGlvbi5pc19ub25lKCkpCisgICAgICAgICAgICB9CiAgICAgICAgIH0KIAotICAgICAgICBhc3NlcnRfcm91bmR0cmlwKCJwcmUtZGVwbG95bWVudCIsIEpvYlRyaWdnZXI6OlByZURlcGxveW1lbnQpOwotICAgICAgICBhc3NlcnRfcm91bmR0cmlwKCJwb3N0LWRlcGxveW1lbnQiLCBKb2JUcmlnZ2VyOjpQb3N0RGVwbG95bWVudCk7CisgICAgICAgIGFzc2VydF9yb3VuZHRyaXAoInByZS1kZXBsb3ltZW50IiwgTm9uZSk7CisgICAgICAgIGFzc2VydF9yb3VuZHRyaXAoInBvc3QtZGVwbG95bWVudCIsIE5vbmUpOwogCi0gICAgICAgIGFzc2VydF9yb3VuZHRyaXAoCi0gICAgICAgICAgICAiQGhvdXJseSIsCi0gICAgICAgICAgICBKb2JUcmlnZ2VyOjpDcm9uKGNyYXRlOjphcHA6OkNyb25TY2hlZHVsZTo6SG91cmx5KSwKLSAgICAgICAgKTsKLSAgICAgICAgYXNzZXJ0X3JvdW5kdHJpcCgiQGRhaWx5IiwgSm9iVHJpZ2dlcjo6Q3JvbihjcmF0ZTo6YXBwOjpDcm9uU2NoZWR1bGU6OkRhaWx5KSk7Ci0gICAgICAgIGFzc2VydF9yb3VuZHRyaXAoCi0gICAgICAgICAgICAiQHdlZWtseSIsCi0gICAgICAgICAgICBKb2JUcmlnZ2VyOjpDcm9uKGNyYXRlOjphcHA6OkNyb25TY2hlZHVsZTo6V2Vla2x5KSwKLSAgICAgICAgKTsKKyAgICAgICAgYXNzZXJ0X3JvdW5kdHJpcCgiQGhvdXJseSIsIFNvbWUoIkV2ZXJ5IGhvdXIiKSk7CisgICAgICAgIGFzc2VydF9yb3VuZHRyaXAoIkBkYWlseSIsIFNvbWUoIkF0IDEyOjAwIEFNIikpOworICAgICAgICBhc3NlcnRfcm91bmR0cmlwKCJAd2Vla2x5IiwgU29tZSgiQXQgMTI6MDAgQU0gb24gU3VuZGF5IikpOworICAgICAgICBhc3NlcnRfcm91bmR0cmlwKCJAbW9udGhseSIsIFNvbWUoIkF0IDEyOjAwIEFNIG9uIHRoZSAxc3Qgb2YgZXZlcnkgbW9udGgiKSk7CisgICAgICAgIGFzc2VydF9yb3VuZHRyaXAoIkB5ZWFybHkiLCBTb21lKCJBdCAxMjowMCBBTSBvbiB0aGUgMXN0IG9mIEphbnVhcnkiKSk7CiAKICAgICAgICAgLy8gTm90ZTogdGhlIHBhcnNpbmcgY29kZSBzaG91bGQga2VlcCB0aGUgZm9ybWF0dGluZyBvZiB0aGUgc291cmNlIHN0cmluZy4KICAgICAgICAgLy8gVGhpcyBpcyB0ZXN0ZWQgaW4gYXNzZXJ0X3JvdW5kdHJpcC4KLSAgICAgICAgYXNzZXJ0X3JvdW5kdHJpcCgKLSAgICAgICAgICAgICIwIDAvMiAxMiA/IEpBTi1BUFIgMiIsCi0gICAgICAgICAgICBKb2JUcmlnZ2VyOjpDcm9uKGNyYXRlOjphcHA6OkNyb25TY2hlZHVsZTo6Q3JvbkV4cHJlc3Npb24oCi0gICAgICAgICAgICAgICAgIjAgMC8yIDEyID8gSkFOLUFQUiAyIi50b19vd25lZCgpLAotICAgICAgICAgICAgKSksCi0gICAgICAgICk7CisgICAgICAgIGFzc2VydF9yb3VuZHRyaXAoIjAvMiAxMiAqIEpBTi1BUFIgMiIsIFNvbWUoIkF0IGV2ZXJ5IDJuZCBtaW51dGUgZnJvbSAwIHRocm91Z2ggNTkgbWludXRlcyBwYXN0IHRoZSBob3VyLCBcCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYmV0d2VlbiAxMjowMCBQTSBhbmQgMTI6NTkgUE0gb24gTW9uZGF5IG9mIEphbnVhcnkgdG8gQXByaWwiKSk7CiAgICAgfQogCiAgICAgI1t0ZXN0XQogICAgIHB1YiBmbiBqb2Jfc2VyaWFsaXphdGlvbl9yb3VuZHRyaXAoKSB7CisgICAgICAgIGZuIHBhcnNlX2Nyb24oZXhwcjogJnN0cikgLT4gQ3JvbkV4cHJlc3Npb24geworICAgICAgICAgICAgQ3JvbkV4cHJlc3Npb24geworICAgICAgICAgICAgICAgIGNyb246IGV4cHIucGFyc2UoKS51bndyYXAoKSwKKyAgICAgICAgICAgICAgICBwYXJzZWRfZnJvbTogZXhwci50b19vd25lZCgpLAorICAgICAgICAgICAgfQorICAgICAgICB9CisKICAgICAgICAgbGV0IGpvYiA9IEpvYiB7CiAgICAgICAgICAgICBuYW1lOiAibXktam9iIi50b19vd25lZCgpLAotICAgICAgICAgICAgdHJpZ2dlcjogSm9iVHJpZ2dlcjo6Q3JvbihzdXBlcjo6Q3JvblNjaGVkdWxlOjpDcm9uRXhwcmVzc2lvbigKLSAgICAgICAgICAgICAgICAiMCAwLzIgMTIgPyBKQU4tQVBSIDIiLnRvX293bmVkKCksCi0gICAgICAgICAgICApKSwKKyAgICAgICAgICAgIHRyaWdnZXI6IEpvYlRyaWdnZXI6OkNyb24ocGFyc2VfY3JvbigiMC8yIDEyICogSkFOLUFQUiAyIikpLAogICAgICAgICAgICAgdGltZW91dDogU29tZSgiMW0iLnBhcnNlKCkudW53cmFwKCkpLAogICAgICAgICAgICAgbWF4X3NjaGVkdWxlX2RyaWZ0OiBTb21lKCIyaCIucGFyc2UoKS51bndyYXAoKSksCiAgICAgICAgICAgICByZXRyaWVzOiBOb25lLApAQCAtMjUzLDcgKzI4NSw3IEBAIG1vZCB0ZXN0cyB7CiAKICAgICAgICAgbGV0IHNlcmlhbGl6ZWQgPSByIyIKIG5hbWU6IG15LWpvYgotdHJpZ2dlcjogJzAgMC8yIDEyID8gSkFOLUFQUiAyJwordHJpZ2dlcjogJzAvMiAxMiAqIEpBTi1BUFIgMicKIHRpbWVvdXQ6ICcxbScKIG1heF9zY2hlZHVsZV9kcmlmdDogJzJoJwogYWN0aW9uOgo=' | base64 -d > /tmp/__golden.patch
+RUN printf %s 'ZGlmZiAtLWdpdCBhL2xpYi9jb25maWcvc3JjL2FwcC9qb2IucnMgYi9saWIvY29uZmlnL3NyYy9hcHAvam9iLnJzCmluZGV4IDI3MjUzYWYuLjhlOWEwYmIgMTAwNjQ0Ci0tLSBhL2xpYi9jb25maWcvc3JjL2FwcC9qb2IucnMKKysrIGIvbGliL2NvbmZpZy9zcmMvYXBwL2pvYi5ycwpAQCAtMjc4LDQgKzI3OCwxMSBAQCBhY3Rpb246CiAgICAgICAgICk7CiAgICAgICAgIGFzc2VydF9lcSEoam9iLCBzZXJkZV95YW1sOjpmcm9tX3N0cihzZXJpYWxpemVkKS51bndyYXAoKSk7CiAgICAgfQorCisgICAgI1t0ZXN0XQorICAgIHB1YiBmbiB0ZXN0X2Nyb25fZXhwcmVzc2lvbl9kZXNjcmliZSgpIHsKKyAgICAgICAgbGV0IGV4cHIgPSAiQGhvdXJseSIucGFyc2U6OjxDcm9uRXhwcmVzc2lvbj4oKS51bndyYXAoKTsKKyAgICAgICAgbGV0IGRlc2MgPSBleHByLmNyb24uZGVzY3JpYmUoc2FmZnJvbjo6cGFyc2U6OkVuZ2xpc2g6OmRlZmF1bHQoKSkudG9fc3RyaW5nKCk7CisgICAgICAgIGFzc2VydF9lcSEoZGVzYywgIkV2ZXJ5IGhvdXIiKTsKKyAgICB9CiB9Cg==' | base64 -d > /tmp/__test.patch
+RUN set -u; cd /workspace/repo; \
+    apply_one() { pf="$1"; [ -s "$pf" ] || return 0; \
+      patch -p1 -i "$pf" 2>/dev/null && return 0; \
+      git apply --3way --ignore-whitespace "$pf" 2>/dev/null && return 0; \
+      git apply --ignore-whitespace --whitespace=nowarn "$pf" 2>/dev/null && return 0; \
+      patch -p1 --fuzz=5 -i "$pf" 2>/dev/null && return 0; \
+      git ls-files -z 2>/dev/null | xargs -0 -r sed -i 's/\r$//' 2>/dev/null; \
+      git apply --3way --ignore-whitespace "$pf" 2>/dev/null && return 0; \
+      patch -p1 --fuzz=5 -i "$pf" 2>/dev/null && return 0; \
+      return 0; }; \
+    apply_one /tmp/__golden.patch; \
+    apply_one /tmp/__test.patch; \
+    (cargo fetch 2>&1 | tail -3 || true); \
+    (cargo build --tests 2>&1 | tail -5 || true); \
+    (cargo test --no-run 2>&1 | tail -5 || true); \
+    (cargo nextest run --no-run 2>&1 | tail -5 || true); \
+    git checkout -- . 2>/dev/null || true; \
+    git clean -fdq 2>/dev/null || true; \
+    rm -f /tmp/__golden.patch /tmp/__test.patch
+ENV CARGO_NET_OFFLINE=true
+# <<< offline-cargo-bake (new4261) <<<
+
+# >>> git-slim (compliance): shrink .git<100MB by dropping blob objects, keep commit+tree >>>
+# Working-tree files stay on disk (untouched) so patches/tests still work; git metadata
+# is preserved (HEAD==base, shallow). Rebuild pack from non-blob objects only.
+RUN cd /workspace/repo && ( \
+    git remote remove origin 2>/dev/null || true; \
+    git tag -l 2>/dev/null | xargs -r git tag -d 2>/dev/null || true; \
+    git for-each-ref --format='%(refname)' refs/remotes refs/tags 2>/dev/null | xargs -r -n1 git update-ref -d 2>/dev/null || true; \
+    git reflog expire --expire=now --all 2>/dev/null || true; \
+    NB=$(mktemp); \
+    git cat-file --batch-all-objects --batch-check 2>/dev/null | awk '$2!="blob"{print $1}' > "$NB"; \
+    mkdir -p .git/objects/pack.new; \
+    if [ -s "$NB" ]; then git pack-objects --no-reuse-delta .git/objects/pack.new/pack < "$NB" >/dev/null 2>&1 || true; fi; \
+    rm -rf .git/objects/pack; mv .git/objects/pack.new .git/objects/pack; \
+    find .git/objects -type d -regextype posix-egrep -regex '.*/[0-9a-f]{2}$' -exec rm -rf {} + 2>/dev/null || true; \
+    rm -rf .git/logs; \
+    rm -f "$NB"; \
+    git remote remove origin 2>/dev/null || true; \
+    git tag -l 2>/dev/null | xargs -r git tag -d 2>/dev/null || true; \
+    true )
+# <<< git-slim (compliance) <<<
+
+# offline login-shell toolchain fix: bake $PATH into /etc/profile.d so `bash -lc` keeps toolchain on PATH
+RUN printf 'export PATH="%s"\n' "$PATH" > /etc/profile.d/zzz_offline_path.sh && chmod 0644 /etc/profile.d/zzz_offline_path.sh

@@ -1,0 +1,14 @@
+patching file .wordlist-en-custom.txt
+patching file api/v1/cluster_types.go
+patching file api/v1/cluster_webhook.go
+patching file api/v1/zz_generated.deepcopy.go
+patching file config/crd/bases/postgresql.cnpg.io_clusters.yaml
+patching file docs/src/cloudnative-pg.v1.md
+patching file docs/src/index.md
+patching file docs/src/installation_upgrade.md
+patching file docs/src/operator_capability_levels.md
+patching file docs/src/replication.md
+patching file internal/management/controller/slots/infrastructure/postgresmanager.go
+patching file internal/management/controller/slots/infrastructure/replicationslot.go
+patching file internal/management/controller/slots/reconciler/replicationslot.go
+patching file internal/management/controller/slots/runner/runner.go

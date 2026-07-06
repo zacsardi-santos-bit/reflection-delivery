@@ -1,0 +1,29 @@
+{
+    "id": "8e153cc2-5f7a-4f95-9687-41f87b7c4c49",
+    "started_at": "2026-07-06T12:19:17.401658",
+    "finished_at": "2026-07-06T12:21:00.009716",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__argoproj-argo-cd-27049": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "argoproj-argo-cd-27049__XoDtDC9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

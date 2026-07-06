@@ -1,0 +1,29 @@
+{
+    "id": "0cddcbe7-001b-4874-8b66-aac47c357160",
+    "started_at": "2026-07-06T12:16:58.230734",
+    "finished_at": "2026-07-06T12:17:57.431342",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__openzeppelin-openzeppelin-contracts-6390": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "openzeppelin-openzeppelin-contra__48hwFsh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

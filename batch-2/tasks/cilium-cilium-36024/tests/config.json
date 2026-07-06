@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/bpf/tests && make CLANG=cilium-clang ipv6_ndp_from_netdev_test.o && mkdir -p /tmp/bpfempty && go test ./bpftest -bpf-test-path /tmp/bpfempty -v -count=1",
+  "test_files": [
+    "bpf/tests/ipv6_ndp_from_netdev_test.c",
+    "bpf/tests/pktgen.h"
+  ],
+  "num_test_files": 2,
+  "language": "c",
+  "FAIL_TO_PASS": [
+    "github.com/cilium/cilium/bpf/tests/bpftest::TestBPF"
+  ],
+  "PASS_TO_PASS": []
+}

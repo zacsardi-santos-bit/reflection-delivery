@@ -1,4 +1,0 @@
-patching file protocol/communities/community.go
-patching file protocol/communities/community_changes.go
-patching file protocol/communities/community_encryption_key_action.go
-patching file protocol/communities/community_event.go

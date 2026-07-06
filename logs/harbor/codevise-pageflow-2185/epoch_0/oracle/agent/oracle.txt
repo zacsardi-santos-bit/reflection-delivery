@@ -1,9 +1,0 @@
-patching file entry_types/scrolled/package/src/frontend/EditableTable.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/handleTableNavigation.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/helpers.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/index.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/plugin.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/transforms/cell.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/transforms/index.js
-patching file entry_types/scrolled/package/src/frontend/inlineEditing/EditableTable/withFixedColumns/transforms/table.js

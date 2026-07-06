@@ -1,0 +1,516 @@
+patching file pkg/gofr/datasource/surrealdb/surrealdb_test.go
+patching file pkg/gofr/migration/migration_test.go
+patching file pkg/gofr/migration/surreal_db_test.go
+{"Time":"2026-06-29T15:31:36.27596156Z","Action":"start","Package":"gofr.dev/pkg/gofr/datasource/surrealdb"}
+{"Time":"2026-06-29T15:31:36.288079792Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NewClient"}
+{"Time":"2026-06-29T15:31:36.288191742Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NewClient","Output":"=== RUN   Test_NewClient\n"}
+{"Time":"2026-06-29T15:31:36.288294368Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NewClient","Output":"--- PASS: Test_NewClient (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.2883222Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NewClient","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.288425777Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger"}
+{"Time":"2026-06-29T15:31:36.2884546Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger","Output":"=== RUN   Test_UseLogger\n"}
+{"Time":"2026-06-29T15:31:36.288582915Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger/valid_logger"}
+{"Time":"2026-06-29T15:31:36.288687583Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger/valid_logger","Output":"=== RUN   Test_UseLogger/valid_logger\n"}
+{"Time":"2026-06-29T15:31:36.288750078Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger/valid_logger","Output":"--- PASS: Test_UseLogger/valid_logger (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.288766253Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger/valid_logger","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.288804771Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger","Output":"--- PASS: Test_UseLogger (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.288841467Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_UseLogger","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.288891893Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace"}
+{"Time":"2026-06-29T15:31:36.288901397Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace","Output":"=== RUN   Test_useNamespace\n"}
+{"Time":"2026-06-29T15:31:36.288961198Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/successful_namespace_switch"}
+{"Time":"2026-06-29T15:31:36.289019316Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/successful_namespace_switch","Output":"=== RUN   Test_useNamespace/successful_namespace_switch\n"}
+{"Time":"2026-06-29T15:31:36.289103083Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/successful_namespace_switch","Output":"--- PASS: Test_useNamespace/successful_namespace_switch (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289116073Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/successful_namespace_switch","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.28912747Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/nil_database_connection"}
+{"Time":"2026-06-29T15:31:36.289141151Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/nil_database_connection","Output":"=== RUN   Test_useNamespace/nil_database_connection\n"}
+{"Time":"2026-06-29T15:31:36.289168182Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/nil_database_connection","Output":"--- PASS: Test_useNamespace/nil_database_connection (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289175563Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/nil_database_connection","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289182283Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/database_error"}
+{"Time":"2026-06-29T15:31:36.289196224Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/database_error","Output":"=== RUN   Test_useNamespace/database_error\n"}
+{"Time":"2026-06-29T15:31:36.289258368Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/database_error","Output":"--- PASS: Test_useNamespace/database_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289276085Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace/database_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289288544Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace","Output":"--- PASS: Test_useNamespace (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289300482Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useNamespace","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289317027Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase"}
+{"Time":"2026-06-29T15:31:36.28932533Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase","Output":"=== RUN   Test_useDatabase\n"}
+{"Time":"2026-06-29T15:31:36.289343878Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/successful_database_switch"}
+{"Time":"2026-06-29T15:31:36.289351329Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/successful_database_switch","Output":"=== RUN   Test_useDatabase/successful_database_switch\n"}
+{"Time":"2026-06-29T15:31:36.289363928Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/successful_database_switch","Output":"--- PASS: Test_useDatabase/successful_database_switch (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289386492Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/successful_database_switch","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289404369Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/nil_database_connection"}
+{"Time":"2026-06-29T15:31:36.2894111Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/nil_database_connection","Output":"=== RUN   Test_useDatabase/nil_database_connection\n"}
+{"Time":"2026-06-29T15:31:36.289433664Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/nil_database_connection","Output":"--- PASS: Test_useDatabase/nil_database_connection (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289447936Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/nil_database_connection","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289460104Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/database_error"}
+{"Time":"2026-06-29T15:31:36.289466574Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/database_error","Output":"=== RUN   Test_useDatabase/database_error\n"}
+{"Time":"2026-06-29T15:31:36.289481927Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/database_error","Output":"--- PASS: Test_useDatabase/database_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289490099Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase/database_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289501687Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase","Output":"--- PASS: Test_useDatabase (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289509268Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_useDatabase","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289515378Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query"}
+{"Time":"2026-06-29T15:31:36.289521717Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query","Output":"=== RUN   Test_Query\n"}
+{"Time":"2026-06-29T15:31:36.289541357Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/successful_query"}
+{"Time":"2026-06-29T15:31:36.28962884Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/successful_query","Output":"=== RUN   Test_Query/successful_query\n"}
+{"Time":"2026-06-29T15:31:36.28967518Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/successful_query","Output":"--- PASS: Test_Query/successful_query (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289683823Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/successful_query","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289696272Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/query_with_error"}
+{"Time":"2026-06-29T15:31:36.289703232Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/query_with_error","Output":"=== RUN   Test_Query/query_with_error\n"}
+{"Time":"2026-06-29T15:31:36.289717744Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/query_with_error","Output":"--- PASS: Test_Query/query_with_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289726177Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query/query_with_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.28973452Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query","Output":"--- PASS: Test_Query (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.2897414Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Query","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289752647Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create"}
+{"Time":"2026-06-29T15:31:36.289759157Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create","Output":"=== RUN   Test_Create\n"}
+{"Time":"2026-06-29T15:31:36.289766388Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/successful_create"}
+{"Time":"2026-06-29T15:31:36.289773128Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/successful_create","Output":"=== RUN   Test_Create/successful_create\n"}
+{"Time":"2026-06-29T15:31:36.289784295Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/successful_create","Output":"--- PASS: Test_Create/successful_create (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.289866209Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/successful_create","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.289898749Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/database_error"}
+{"Time":"2026-06-29T15:31:36.289909795Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/database_error","Output":"=== RUN   Test_Create/database_error\n"}
+{"Time":"2026-06-29T15:31:36.290102237Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/database_error","Output":"--- PASS: Test_Create/database_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29013721Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create/database_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290170821Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create","Output":"--- PASS: Test_Create (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290182919Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Create","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290192253Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update"}
+{"Time":"2026-06-29T15:31:36.290199284Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update","Output":"=== RUN   Test_Update\n"}
+{"Time":"2026-06-29T15:31:36.290212164Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/successful_update"}
+{"Time":"2026-06-29T15:31:36.290218323Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/successful_update","Output":"=== RUN   Test_Update/successful_update\n"}
+{"Time":"2026-06-29T15:31:36.290239174Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/successful_update","Output":"--- PASS: Test_Update/successful_update (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290252995Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/successful_update","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290277543Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/not_connected_error"}
+{"Time":"2026-06-29T15:31:36.290283341Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/not_connected_error","Output":"=== RUN   Test_Update/not_connected_error\n"}
+{"Time":"2026-06-29T15:31:36.290289781Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/not_connected_error","Output":"--- PASS: Test_Update/not_connected_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290326517Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update/not_connected_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290401801Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update","Output":"--- PASS: Test_Update (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29043442Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Update","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290451937Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select"}
+{"Time":"2026-06-29T15:31:36.290534672Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select","Output":"=== RUN   Test_Select\n"}
+{"Time":"2026-06-29T15:31:36.290571728Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/successful_select"}
+{"Time":"2026-06-29T15:31:36.290580672Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/successful_select","Output":"=== RUN   Test_Select/successful_select\n"}
+{"Time":"2026-06-29T15:31:36.29061892Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/successful_select","Output":"--- PASS: Test_Select/successful_select (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290644889Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/successful_select","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290668825Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/empty_result_set"}
+{"Time":"2026-06-29T15:31:36.290675305Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/empty_result_set","Output":"=== RUN   Test_Select/empty_result_set\n"}
+{"Time":"2026-06-29T15:31:36.290705972Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/empty_result_set","Output":"--- PASS: Test_Select/empty_result_set (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290723719Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select/empty_result_set","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290734605Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select","Output":"--- PASS: Test_Select (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290746433Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Select","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290755447Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert"}
+{"Time":"2026-06-29T15:31:36.290762347Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert","Output":"=== RUN   Test_Insert\n"}
+{"Time":"2026-06-29T15:31:36.290781056Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/successful_insert"}
+{"Time":"2026-06-29T15:31:36.290787796Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/successful_insert","Output":"=== RUN   Test_Insert/successful_insert\n"}
+{"Time":"2026-06-29T15:31:36.290867406Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/successful_insert","Output":"--- PASS: Test_Insert/successful_insert (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29090928Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/successful_insert","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290934077Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/not_connected_error"}
+{"Time":"2026-06-29T15:31:36.29094226Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/not_connected_error","Output":"=== RUN   Test_Insert/not_connected_error\n"}
+{"Time":"2026-06-29T15:31:36.290951283Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/not_connected_error","Output":"--- PASS: Test_Insert/not_connected_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.290958504Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/not_connected_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.290966066Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/unexpected_result_type_error"}
+{"Time":"2026-06-29T15:31:36.290974849Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/unexpected_result_type_error","Output":"=== RUN   Test_Insert/unexpected_result_type_error\n"}
+{"Time":"2026-06-29T15:31:36.291069793Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/unexpected_result_type_error","Output":"--- PASS: Test_Insert/unexpected_result_type_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291116173Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert/unexpected_result_type_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291129123Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert","Output":"--- PASS: Test_Insert (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291138427Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Insert","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291153109Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete"}
+{"Time":"2026-06-29T15:31:36.29116Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete","Output":"=== RUN   Test_Delete\n"}
+{"Time":"2026-06-29T15:31:36.291169043Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/successful_delete"}
+{"Time":"2026-06-29T15:31:36.291179449Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/successful_delete","Output":"=== RUN   Test_Delete/successful_delete\n"}
+{"Time":"2026-06-29T15:31:36.291308214Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/successful_delete","Output":"--- PASS: Test_Delete/successful_delete (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291348295Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/successful_delete","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291390399Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/not_connected_error"}
+{"Time":"2026-06-29T15:31:36.291399192Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/not_connected_error","Output":"=== RUN   Test_Delete/not_connected_error\n"}
+{"Time":"2026-06-29T15:31:36.291407615Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/not_connected_error","Output":"--- PASS: Test_Delete/not_connected_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291423589Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/not_connected_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291432142Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/no_results"}
+{"Time":"2026-06-29T15:31:36.291440224Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/no_results","Output":"=== RUN   Test_Delete/no_results\n"}
+{"Time":"2026-06-29T15:31:36.291460485Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/no_results","Output":"--- PASS: Test_Delete/no_results (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291474156Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete/no_results","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291487596Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete","Output":"--- PASS: Test_Delete (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291518513Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_Delete","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291526846Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue"}
+{"Time":"2026-06-29T15:31:36.291533295Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue","Output":"=== RUN   Test_convertValue\n"}
+{"Time":"2026-06-29T15:31:36.291540176Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion"}
+{"Time":"2026-06-29T15:31:36.291547537Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion","Output":"=== RUN   Test_convertValue/float64_conversion\n"}
+{"Time":"2026-06-29T15:31:36.291581308Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/valid_float64"}
+{"Time":"2026-06-29T15:31:36.291594328Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/valid_float64","Output":"=== RUN   Test_convertValue/float64_conversion/valid_float64\n"}
+{"Time":"2026-06-29T15:31:36.29160234Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/valid_float64","Output":"--- PASS: Test_convertValue/float64_conversion/valid_float64 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291616301Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/valid_float64","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291624694Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_large_float64"}
+{"Time":"2026-06-29T15:31:36.291632095Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_large_float64","Output":"=== RUN   Test_convertValue/float64_conversion/too_large_float64\n"}
+{"Time":"2026-06-29T15:31:36.291665896Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_large_float64","Output":"--- PASS: Test_convertValue/float64_conversion/too_large_float64 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291680999Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_large_float64","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.291688761Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_small_float64"}
+{"Time":"2026-06-29T15:31:36.291695451Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_small_float64","Output":"=== RUN   Test_convertValue/float64_conversion/too_small_float64\n"}
+{"Time":"2026-06-29T15:31:36.291720429Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_small_float64","Output":"--- PASS: Test_convertValue/float64_conversion/too_small_float64 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29172742Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion/too_small_float64","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.29176061Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion","Output":"--- PASS: Test_convertValue/float64_conversion (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.291779989Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/float64_conversion","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.29180686Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion"}
+{"Time":"2026-06-29T15:31:36.291820761Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion","Output":"=== RUN   Test_convertValue/uint64_conversion\n"}
+{"Time":"2026-06-29T15:31:36.291847812Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/valid_uint64"}
+{"Time":"2026-06-29T15:31:36.291854302Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/valid_uint64","Output":"=== RUN   Test_convertValue/uint64_conversion/valid_uint64\n"}
+{"Time":"2026-06-29T15:31:36.291957909Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/valid_uint64","Output":"--- PASS: Test_convertValue/uint64_conversion/valid_uint64 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29199172Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/valid_uint64","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292014555Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/too_large_uint64"}
+{"Time":"2026-06-29T15:31:36.292021976Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/too_large_uint64","Output":"=== RUN   Test_convertValue/uint64_conversion/too_large_uint64\n"}
+{"Time":"2026-06-29T15:31:36.292029587Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/too_large_uint64","Output":"--- PASS: Test_convertValue/uint64_conversion/too_large_uint64 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292040704Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion/too_large_uint64","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292052993Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion","Output":"--- PASS: Test_convertValue/uint64_conversion (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29206424Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/uint64_conversion","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292127045Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion"}
+{"Time":"2026-06-29T15:31:36.292139594Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion","Output":"=== RUN   Test_convertValue/int64_conversion\n"}
+{"Time":"2026-06-29T15:31:36.292152404Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/valid_int64"}
+{"Time":"2026-06-29T15:31:36.292165363Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/valid_int64","Output":"=== RUN   Test_convertValue/int64_conversion/valid_int64\n"}
+{"Time":"2026-06-29T15:31:36.29218964Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/valid_int64","Output":"--- PASS: Test_convertValue/int64_conversion/valid_int64 (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292195569Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/valid_int64","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292265966Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_max_boundary"}
+{"Time":"2026-06-29T15:31:36.292306126Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_max_boundary","Output":"=== RUN   Test_convertValue/int64_conversion/at_max_boundary\n"}
+{"Time":"2026-06-29T15:31:36.292344224Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_max_boundary","Output":"--- PASS: Test_convertValue/int64_conversion/at_max_boundary (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292359918Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_max_boundary","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292388211Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_min_boundary"}
+{"Time":"2026-06-29T15:31:36.292396934Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_min_boundary","Output":"=== RUN   Test_convertValue/int64_conversion/at_min_boundary\n"}
+{"Time":"2026-06-29T15:31:36.292410114Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_min_boundary","Output":"--- PASS: Test_convertValue/int64_conversion/at_min_boundary (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292424225Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion/at_min_boundary","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.29244698Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion","Output":"--- PASS: Test_convertValue/int64_conversion (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292464246Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/int64_conversion","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292492459Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/string_conversion"}
+{"Time":"2026-06-29T15:31:36.292508153Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/string_conversion","Output":"=== RUN   Test_convertValue/string_conversion\n"}
+{"Time":"2026-06-29T15:31:36.292560642Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/string_conversion","Output":"--- PASS: Test_convertValue/string_conversion (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.29259888Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/string_conversion","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292615004Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/default_case"}
+{"Time":"2026-06-29T15:31:36.29262507Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/default_case","Output":"=== RUN   Test_convertValue/default_case\n"}
+{"Time":"2026-06-29T15:31:36.292638921Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/default_case","Output":"--- PASS: Test_convertValue/default_case (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292657819Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue/default_case","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292681225Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue","Output":"--- PASS: Test_convertValue (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292708556Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_convertValue","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.29271787Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery"}
+{"Time":"2026-06-29T15:31:36.292726083Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery","Output":"=== RUN   Test_executeQuery\n"}
+{"Time":"2026-06-29T15:31:36.292739483Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/successful_query_execution"}
+{"Time":"2026-06-29T15:31:36.292752803Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/successful_query_execution","Output":"=== RUN   Test_executeQuery/successful_query_execution\n"}
+{"Time":"2026-06-29T15:31:36.292776579Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/successful_query_execution","Output":"--- PASS: Test_executeQuery/successful_query_execution (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292786184Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/successful_query_execution","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292797621Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/not_connected_error"}
+{"Time":"2026-06-29T15:31:36.292805012Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/not_connected_error","Output":"=== RUN   Test_executeQuery/not_connected_error\n"}
+{"Time":"2026-06-29T15:31:36.292822068Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/not_connected_error","Output":"--- PASS: Test_executeQuery/not_connected_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292857492Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/not_connected_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.29286958Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/query_execution_error"}
+{"Time":"2026-06-29T15:31:36.292876461Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/query_execution_error","Output":"=== RUN   Test_executeQuery/query_execution_error\n"}
+{"Time":"2026-06-29T15:31:36.292941209Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/query_execution_error","Output":"--- PASS: Test_executeQuery/query_execution_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292958195Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery/query_execution_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.292977974Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery","Output":"--- PASS: Test_executeQuery (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.292999096Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_executeQuery","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293016112Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations"}
+{"Time":"2026-06-29T15:31:36.293030414Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations","Output":"=== RUN   Test_NamespaceOperations\n"}
+{"Time":"2026-06-29T15:31:36.293043784Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/create_namespace_success"}
+{"Time":"2026-06-29T15:31:36.293051165Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/create_namespace_success","Output":"=== RUN   Test_NamespaceOperations/create_namespace_success\n"}
+{"Time":"2026-06-29T15:31:36.293069553Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/create_namespace_success","Output":"--- PASS: Test_NamespaceOperations/create_namespace_success (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293092248Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/create_namespace_success","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293101241Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/drop_namespace_success"}
+{"Time":"2026-06-29T15:31:36.293107821Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/drop_namespace_success","Output":"=== RUN   Test_NamespaceOperations/drop_namespace_success\n"}
+{"Time":"2026-06-29T15:31:36.293125408Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/drop_namespace_success","Output":"--- PASS: Test_NamespaceOperations/drop_namespace_success (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293149725Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations/drop_namespace_success","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293173451Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations","Output":"--- PASS: Test_NamespaceOperations (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293182514Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_NamespaceOperations","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293207122Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations"}
+{"Time":"2026-06-29T15:31:36.293218829Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations","Output":"=== RUN   Test_DatabaseOperations\n"}
+{"Time":"2026-06-29T15:31:36.293227963Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/create_database_success"}
+{"Time":"2026-06-29T15:31:36.29324568Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/create_database_success","Output":"=== RUN   Test_DatabaseOperations/create_database_success\n"}
+{"Time":"2026-06-29T15:31:36.293266842Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/create_database_success","Output":"--- PASS: Test_DatabaseOperations/create_database_success (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293278179Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/create_database_success","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293288064Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/drop_database_success"}
+{"Time":"2026-06-29T15:31:36.293303277Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/drop_database_success","Output":"=== RUN   Test_DatabaseOperations/drop_database_success\n"}
+{"Time":"2026-06-29T15:31:36.29331851Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/drop_database_success","Output":"--- PASS: Test_DatabaseOperations/drop_database_success (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293327073Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/drop_database_success","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293336878Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/database_operations_when_not_connected"}
+{"Time":"2026-06-29T15:31:36.293350519Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/database_operations_when_not_connected","Output":"=== RUN   Test_DatabaseOperations/database_operations_when_not_connected\n"}
+{"Time":"2026-06-29T15:31:36.293369468Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/database_operations_when_not_connected","Output":"--- PASS: Test_DatabaseOperations/database_operations_when_not_connected (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293381246Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations/database_operations_when_not_connected","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.293429939Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations","Output":"--- PASS: Test_DatabaseOperations (0.00s)\n"}
+{"Time":"2026-06-29T15:31:36.293464061Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Test":"Test_DatabaseOperations","Elapsed":0}
+{"Time":"2026-06-29T15:31:36.29348325Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:36.294198133Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Output":"ok  \tgofr.dev/pkg/gofr/datasource/surrealdb\t0.018s\n"}
+{"Time":"2026-06-29T15:31:36.294226276Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Elapsed":0.018}
+{"Time":"2026-06-29T15:31:53.469096963Z","Action":"start","Package":"gofr.dev/pkg/gofr/migration"}
+{"Time":"2026-06-29T15:31:53.498573599Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoCheckAndCreateMigrationTable"}
+{"Time":"2026-06-29T15:31:53.498668813Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoCheckAndCreateMigrationTable","Output":"=== RUN   Test_ArangoCheckAndCreateMigrationTable\n"}
+{"Time":"2026-06-29T15:31:53.500243259Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoCheckAndCreateMigrationTable","Output":"--- PASS: Test_ArangoCheckAndCreateMigrationTable (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.500302959Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoCheckAndCreateMigrationTable","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.500333836Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoGetLastMigration"}
+{"Time":"2026-06-29T15:31:53.500344692Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoGetLastMigration","Output":"=== RUN   Test_ArangoGetLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.500571045Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoGetLastMigration","Output":"--- PASS: Test_ArangoGetLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.500924952Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoGetLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.500969139Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoBeginTransaction"}
+{"Time":"2026-06-29T15:31:53.500987056Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoBeginTransaction","Output":"=== RUN   Test_ArangoBeginTransaction\n"}
+{"Time":"2026-06-29T15:31:53.501968383Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoBeginTransaction","Output":"--- PASS: Test_ArangoBeginTransaction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.501997607Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ArangoBeginTransaction","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.502028223Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCheckAndCreateMigrationTable"}
+{"Time":"2026-06-29T15:31:53.502035625Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCheckAndCreateMigrationTable","Output":"=== RUN   Test_CassandraCheckAndCreateMigrationTable\n"}
+{"Time":"2026-06-29T15:31:53.503347833Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCheckAndCreateMigrationTable","Output":"--- PASS: Test_CassandraCheckAndCreateMigrationTable (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.503588618Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCheckAndCreateMigrationTable","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.503637862Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraGetLastMigration"}
+{"Time":"2026-06-29T15:31:53.503664743Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraGetLastMigration","Output":"=== RUN   Test_CassandraGetLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.504867906Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraGetLastMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.504774875Z\",\"message\":\"cassandra last migration fetched value is: 0\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.50493615Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraGetLastMigration","Output":"--- PASS: Test_CassandraGetLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.504984553Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraGetLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.505000147Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCommitMigration"}
+{"Time":"2026-06-29T15:31:53.505012275Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCommitMigration","Output":"=== RUN   Test_CassandraCommitMigration\n"}
+{"Time":"2026-06-29T15:31:53.505282775Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCommitMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.505207381Z\",\"message\":\"inserted record for migration 10 in cassandra gofr_migrations table\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.505324458Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCommitMigration","Output":"{\"level\":\"INFO\",\"time\":\"2026-06-29T15:31:53.505249925Z\",\"message\":\"Migration 10 ran successfully\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.505361294Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCommitMigration","Output":"--- PASS: Test_CassandraCommitMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.505377018Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraCommitMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.505434976Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraBeginTransaction"}
+{"Time":"2026-06-29T15:31:53.505475938Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraBeginTransaction","Output":"=== RUN   Test_CassandraBeginTransaction\n"}
+{"Time":"2026-06-29T15:31:53.505747509Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraBeginTransaction","Output":"--- PASS: Test_CassandraBeginTransaction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.505793168Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_CassandraBeginTransaction","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.505819628Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCheckAndCreateMigrationTable"}
+{"Time":"2026-06-29T15:31:53.505827631Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCheckAndCreateMigrationTable","Output":"=== RUN   Test_ClickHouseCheckAndCreateMigrationTable\n"}
+{"Time":"2026-06-29T15:31:53.505997668Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCheckAndCreateMigrationTable","Output":"--- PASS: Test_ClickHouseCheckAndCreateMigrationTable (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.506025711Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCheckAndCreateMigrationTable","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.506044689Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseGetLastMigration"}
+{"Time":"2026-06-29T15:31:53.506052311Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseGetLastMigration","Output":"=== RUN   Test_ClickHouseGetLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.506116799Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseGetLastMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.506079622Z\",\"message\":\"SQL last migration fetched value is: 0\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.506157Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseGetLastMigration","Output":"--- PASS: Test_ClickHouseGetLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.506170039Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseGetLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.506184351Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCommitMigration"}
+{"Time":"2026-06-29T15:31:53.506190681Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCommitMigration","Output":"=== RUN   Test_ClickHouseCommitMigration\n"}
+{"Time":"2026-06-29T15:31:53.506319786Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCommitMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.506272865Z\",\"message\":\"inserted record for migration 10 in clickhouse gofr_migrations table\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.506370082Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCommitMigration","Output":"{\"level\":\"INFO\",\"time\":\"2026-06-29T15:31:53.506286376Z\",\"message\":\"Migration 10 ran successfully\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.506392336Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCommitMigration","Output":"--- PASS: Test_ClickHouseCommitMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.506400999Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseCommitMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.506415782Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseBeginTransaction"}
+{"Time":"2026-06-29T15:31:53.506423854Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseBeginTransaction","Output":"=== RUN   Test_ClickHouseBeginTransaction\n"}
+{"Time":"2026-06-29T15:31:53.506607562Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseBeginTransaction","Output":"--- PASS: Test_ClickHouseBeginTransaction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.50663272Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_ClickHouseBeginTransaction","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.50664539Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDatastoreNotInitialised"}
+{"Time":"2026-06-29T15:31:53.506652971Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDatastoreNotInitialised","Output":"=== RUN   Test_getMigratorDatastoreNotInitialised\n"}
+{"Time":"2026-06-29T15:31:53.506899695Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDatastoreNotInitialised","Output":"--- PASS: Test_getMigratorDatastoreNotInitialised (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.506940827Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDatastoreNotInitialised","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.506960717Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_InvalidKeys"}
+{"Time":"2026-06-29T15:31:53.50697529Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_InvalidKeys","Output":"=== RUN   TestMigration_InvalidKeys\n"}
+{"Time":"2026-06-29T15:31:53.507212519Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_InvalidKeys","Output":"--- PASS: TestMigration_InvalidKeys (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.507256796Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_InvalidKeys","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.507284618Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_NoDatasource"}
+{"Time":"2026-06-29T15:31:53.507296496Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_NoDatasource","Output":"=== RUN   TestMigration_NoDatasource\n"}
+{"Time":"2026-06-29T15:31:53.507381735Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_NoDatasource","Output":"--- PASS: TestMigration_NoDatasource (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.507405311Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigration_NoDatasource","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.50741765Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation"}
+{"Time":"2026-06-29T15:31:53.507424801Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"=== RUN   Test_getMigratorDBInitialisation\n"}
+{"Time":"2026-06-29T15:31:53.507534557Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.507487045Z\",\"message\":\"initialized data source for SQL\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507545784Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.507498492Z\",\"message\":\"initialized data source for redis\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507559925Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.507506144Z\",\"message\":\"initialized data source for Clickhouse\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507592174Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.50751006Z\",\"message\":\"initialized data source for Cassandra\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507598844Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.507514487Z\",\"message\":\"initialized data source for Mongo\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507613557Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.507525854Z\",\"message\":\"initialized data source for ArangoDB\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507634879Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.507535819Z\",\"message\":\"initialized data source for surrealDB\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.507650983Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Output":"--- PASS: Test_getMigratorDBInitialisation (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.507657824Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_getMigratorDBInitialisation","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.507669121Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseSuccess"}
+{"Time":"2026-06-29T15:31:53.507679567Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseSuccess","Output":"=== RUN   TestMigrationRunClickhouseSuccess\n"}
+{"Time":"2026-06-29T15:31:53.508192143Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseSuccess","Output":"--- PASS: TestMigrationRunClickhouseSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.50821654Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.508233105Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure"}
+{"Time":"2026-06-29T15:31:53.508241789Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"=== RUN   TestMigrationRunClickhouseMigrationFailure\n"}
+{"Time":"2026-06-29T15:31:53.508400259Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"initialized data source for Clickhouse\n"}
+{"Time":"2026-06-29T15:31:53.508431005Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"SQL last migration fetched value is: 0\n"}
+{"Time":"2026-06-29T15:31:53.508438917Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"running migration 1\n"}
+{"Time":"2026-06-29T15:31:53.508454471Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"Clickhouse Migrator begin successfully\n"}
+{"Time":"2026-06-29T15:31:53.508487651Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"migration 1 failed and rolled back\n"}
+{"Time":"2026-06-29T15:31:53.508581774Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Output":"--- PASS: TestMigrationRunClickhouseMigrationFailure (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.508602385Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailure","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.508627173Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailureWhileCheckingTable"}
+{"Time":"2026-06-29T15:31:53.508641625Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailureWhileCheckingTable","Output":"=== RUN   TestMigrationRunClickhouseMigrationFailureWhileCheckingTable\n"}
+{"Time":"2026-06-29T15:31:53.508755327Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailureWhileCheckingTable","Output":"initialized data source for Clickhouse\n"}
+{"Time":"2026-06-29T15:31:53.508771441Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailureWhileCheckingTable","Output":"failed to create gofr_migration table, err: sql: connection is already closed\n"}
+{"Time":"2026-06-29T15:31:53.508793925Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailureWhileCheckingTable","Output":"--- PASS: TestMigrationRunClickhouseMigrationFailureWhileCheckingTable (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.508817521Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseMigrationFailureWhileCheckingTable","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.508830751Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCurrentMigrationEqualLastMigration"}
+{"Time":"2026-06-29T15:31:53.508847537Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCurrentMigrationEqualLastMigration","Output":"=== RUN   TestMigrationRunClickhouseCurrentMigrationEqualLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.50924596Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCurrentMigrationEqualLastMigration","Output":"--- PASS: TestMigrationRunClickhouseCurrentMigrationEqualLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.509283888Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCurrentMigrationEqualLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.509311339Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError"}
+{"Time":"2026-06-29T15:31:53.50932467Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"=== RUN   TestMigrationRunClickhouseCommitError\n"}
+{"Time":"2026-06-29T15:31:53.509443109Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"initialized data source for Clickhouse\n"}
+{"Time":"2026-06-29T15:31:53.509458272Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"SQL last migration fetched value is: 0\n"}
+{"Time":"2026-06-29T15:31:53.509478803Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"running migration 1\n"}
+{"Time":"2026-06-29T15:31:53.50949639Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"Clickhouse Migrator begin successfully\n"}
+{"Time":"2026-06-29T15:31:53.509504923Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"migration 1 failed and rolled back\n"}
+{"Time":"2026-06-29T15:31:53.509550151Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Output":"--- PASS: TestMigrationRunClickhouseCommitError (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.509576992Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestMigrationRunClickhouseCommitError","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.509585164Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCheckAndCreateMigrationTable"}
+{"Time":"2026-06-29T15:31:53.509592626Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCheckAndCreateMigrationTable","Output":"=== RUN   Test_MongoCheckAndCreateMigrationTable\n"}
+{"Time":"2026-06-29T15:31:53.50972087Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCheckAndCreateMigrationTable","Output":"--- PASS: Test_MongoCheckAndCreateMigrationTable (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.509731356Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCheckAndCreateMigrationTable","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.509739118Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoGetLastMigration"}
+{"Time":"2026-06-29T15:31:53.509745687Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoGetLastMigration","Output":"=== RUN   Test_MongoGetLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.509854623Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoGetLastMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.50980675Z\",\"message\":\"MongoDB last migration fetched value is: 0\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.509867372Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoGetLastMigration","Output":"{\"level\":\"ERROR\",\"time\":\"2026-06-29T15:31:53.509834061Z\",\"message\":\"Failed to fetch migrations from MongoDB: error connecting to mongo\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.509891829Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoGetLastMigration","Output":"--- PASS: Test_MongoGetLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.509902295Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoGetLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.509929125Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCommitMigration"}
+{"Time":"2026-06-29T15:31:53.509942976Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCommitMigration","Output":"=== RUN   Test_MongoCommitMigration\n"}
+{"Time":"2026-06-29T15:31:53.510016959Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCommitMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.509977599Z\",\"message\":\"Inserted record for migration 10 in MongoDB gofr_migrations collection\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510033203Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCommitMigration","Output":"{\"level\":\"INFO\",\"time\":\"2026-06-29T15:31:53.509988115Z\",\"message\":\"Migration 10 ran successfully\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510056098Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCommitMigration","Output":"--- PASS: Test_MongoCommitMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510067465Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_MongoCommitMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.510075798Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Get"}
+{"Time":"2026-06-29T15:31:53.510105623Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Get","Output":"=== RUN   TestRedis_Get\n"}
+{"Time":"2026-06-29T15:31:53.510120235Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Get","Output":"--- PASS: TestRedis_Get (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510142989Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Get","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.51015663Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Set"}
+{"Time":"2026-06-29T15:31:53.510162489Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Set","Output":"=== RUN   TestRedis_Set\n"}
+{"Time":"2026-06-29T15:31:53.510194207Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Set","Output":"--- PASS: TestRedis_Set (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510213817Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Set","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.510222039Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Del"}
+{"Time":"2026-06-29T15:31:53.51022903Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Del","Output":"=== RUN   TestRedis_Del\n"}
+{"Time":"2026-06-29T15:31:53.510241128Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Del","Output":"--- PASS: TestRedis_Del (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510255069Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Del","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.510278375Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Rename"}
+{"Time":"2026-06-29T15:31:53.510285045Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Rename","Output":"=== RUN   TestRedis_Rename\n"}
+{"Time":"2026-06-29T15:31:53.510303142Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Rename","Output":"--- PASS: TestRedis_Rename (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510314129Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedis_Rename","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.510352637Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration"}
+{"Time":"2026-06-29T15:31:53.510363904Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Output":"=== RUN   TestRedisMigrator_GetLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.51057886Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.510522184Z\",\"message\":\"Redis last migration fetched value is: 2\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510649797Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Output":"{\"level\":\"ERROR\",\"time\":\"2026-06-29T15:31:53.510550257Z\",\"message\":\"failed to get migration record from Redis. err: redis: client is closed\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510677369Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Output":"{\"level\":\"ERROR\",\"time\":\"2026-06-29T15:31:53.510577177Z\",\"message\":\"failed to unmarshal redis Migration data err: invalid character 'i' looking for beginning of value\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510716378Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.510683699Z\",\"message\":\"Redis last migration fetched value is: 2\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510738282Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Output":"--- PASS: TestRedisMigrator_GetLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510752052Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_GetLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.510762368Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_beginTransaction"}
+{"Time":"2026-06-29T15:31:53.510771802Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_beginTransaction","Output":"=== RUN   TestRedisMigrator_beginTransaction\n"}
+{"Time":"2026-06-29T15:31:53.510925756Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_beginTransaction","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.510874919Z\",\"message\":\"Redis Transaction begin successful\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.510945475Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_beginTransaction","Output":"--- PASS: TestRedisMigrator_beginTransaction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.510960709Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRedisMigrator_beginTransaction","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.510967769Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery"}
+{"Time":"2026-06-29T15:31:53.510974259Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery","Output":"=== RUN   TestQuery\n"}
+{"Time":"2026-06-29T15:31:53.510998616Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/successful_query"}
+{"Time":"2026-06-29T15:31:53.51100762Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/successful_query","Output":"=== RUN   TestQuery/successful_query\n"}
+{"Time":"2026-06-29T15:31:53.511249867Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/successful_query","Output":"\u0026{Query SELECT * FROM users 157 []}\n"}
+{"Time":"2026-06-29T15:31:53.511303969Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/successful_query","Output":"--- PASS: TestQuery/successful_query (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.51131124Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/successful_query","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.511338721Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/query_error"}
+{"Time":"2026-06-29T15:31:53.511346072Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/query_error","Output":"=== RUN   TestQuery/query_error\n"}
+{"Time":"2026-06-29T15:31:53.511540157Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/query_error","Output":"\u0026{Query SELECT * FROM unknown_table 52 []}\n"}
+{"Time":"2026-06-29T15:31:53.511646578Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/query_error","Output":"--- PASS: TestQuery/query_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.511660399Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery/query_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.511693419Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery","Output":"--- PASS: TestQuery (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.511706218Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQuery","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.511719739Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow"}
+{"Time":"2026-06-29T15:31:53.51173353Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow","Output":"=== RUN   TestQueryRow\n"}
+{"Time":"2026-06-29T15:31:53.511745818Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow/successful_query_row"}
+{"Time":"2026-06-29T15:31:53.51175379Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow/successful_query_row","Output":"=== RUN   TestQueryRow/successful_query_row\n"}
+{"Time":"2026-06-29T15:31:53.511863266Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow/successful_query_row","Output":"\u0026{QueryRow SELECT * FROM users WHERE id = ? 30 [1]}\n"}
+{"Time":"2026-06-29T15:31:53.511888875Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow/successful_query_row","Output":"--- PASS: TestQueryRow/successful_query_row (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.511897568Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow/successful_query_row","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.511914444Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow","Output":"--- PASS: TestQueryRow (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.511921745Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRow","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.511936497Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext"}
+{"Time":"2026-06-29T15:31:53.511954514Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext","Output":"=== RUN   TestQueryRowContext\n"}
+{"Time":"2026-06-29T15:31:53.511966633Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext/successful_query_row_context"}
+{"Time":"2026-06-29T15:31:53.511972361Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext/successful_query_row_context","Output":"=== RUN   TestQueryRowContext/successful_query_row_context\n"}
+{"Time":"2026-06-29T15:31:53.512131703Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext/successful_query_row_context","Output":"\u0026{QueryRowContext SELECT * FROM users WHERE id = ? 46 [1]}\n"}
+{"Time":"2026-06-29T15:31:53.512173506Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext/successful_query_row_context","Output":"--- PASS: TestQueryRowContext/successful_query_row_context (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.512194768Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext/successful_query_row_context","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.512221779Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext","Output":"--- PASS: TestQueryRowContext (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.512239707Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestQueryRowContext","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.512257053Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec"}
+{"Time":"2026-06-29T15:31:53.512265045Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec","Output":"=== RUN   TestExec\n"}
+{"Time":"2026-06-29T15:31:53.512304955Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/successful_exec"}
+{"Time":"2026-06-29T15:31:53.512315692Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/successful_exec","Output":"=== RUN   TestExec/successful_exec\n"}
+{"Time":"2026-06-29T15:31:53.512530357Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/successful_exec","Output":"\u0026{Exec DELETE FROM users WHERE id = ? 108 [1]}\n"}
+{"Time":"2026-06-29T15:31:53.512548444Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/successful_exec","Output":"--- PASS: TestExec/successful_exec (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.512594634Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/successful_exec","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.512610549Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/exec_error"}
+{"Time":"2026-06-29T15:31:53.512616788Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/exec_error","Output":"=== RUN   TestExec/exec_error\n"}
+{"Time":"2026-06-29T15:31:53.51276312Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/exec_error","Output":"\u0026{Exec UPDATE unknown_table SET name = ? 34 [John]}\n"}
+{"Time":"2026-06-29T15:31:53.512776179Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/exec_error","Output":"--- PASS: TestExec/exec_error (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.512803761Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec/exec_error","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.51281586Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec","Output":"--- PASS: TestExec (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.51282905Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExec","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.512841098Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext"}
+{"Time":"2026-06-29T15:31:53.512858354Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext","Output":"=== RUN   TestExecContext\n"}
+{"Time":"2026-06-29T15:31:53.512871744Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext/successful_exec_context"}
+{"Time":"2026-06-29T15:31:53.512877503Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext/successful_exec_context","Output":"=== RUN   TestExecContext/successful_exec_context\n"}
+{"Time":"2026-06-29T15:31:53.512979768Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext/successful_exec_context","Output":"\u0026{ExecContext DELETE FROM users WHERE id = ? 8 [1]}\n"}
+{"Time":"2026-06-29T15:31:53.512998046Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext/successful_exec_context","Output":"--- PASS: TestExecContext/successful_exec_context (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513011286Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext/successful_exec_context","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513019388Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext","Output":"--- PASS: TestExecContext (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.51302721Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestExecContext","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513039448Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess"}
+{"Time":"2026-06-29T15:31:53.513057025Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"=== RUN   TestCheckAndCreateMigrationTableSuccess\n"}
+{"Time":"2026-06-29T15:31:53.513144387Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"\u0026{Exec CREATE TABLE IF NOT EXISTS gofr_migrations (\n"}
+{"Time":"2026-06-29T15:31:53.513161393Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"    version BIGINT not null ,\n"}
+{"Time":"2026-06-29T15:31:53.513170427Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"    method VARCHAR(4) not null ,\n"}
+{"Time":"2026-06-29T15:31:53.513176777Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"    start_time TIMESTAMP not null ,\n"}
+{"Time":"2026-06-29T15:31:53.513184959Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"    duration BIGINT,\n"}
+{"Time":"2026-06-29T15:31:53.513191509Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"    constraint primary_key primary key (version, method)\n"}
+{"Time":"2026-06-29T15:31:53.513205821Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"); 18 []}\n"}
+{"Time":"2026-06-29T15:31:53.513245651Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Output":"--- PASS: TestCheckAndCreateMigrationTableSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513252121Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.51325828Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError"}
+{"Time":"2026-06-29T15:31:53.513263458Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"=== RUN   TestCheckAndCreateMigrationTableExecError\n"}
+{"Time":"2026-06-29T15:31:53.51329105Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"\u0026{Exec CREATE TABLE IF NOT EXISTS gofr_migrations (\n"}
+{"Time":"2026-06-29T15:31:53.513301956Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"    version BIGINT not null ,\n"}
+{"Time":"2026-06-29T15:31:53.513307885Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"    method VARCHAR(4) not null ,\n"}
+{"Time":"2026-06-29T15:31:53.513318321Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"    start_time TIMESTAMP not null ,\n"}
+{"Time":"2026-06-29T15:31:53.513325822Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"    duration BIGINT,\n"}
+{"Time":"2026-06-29T15:31:53.513339233Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"    constraint primary_key primary key (version, method)\n"}
+{"Time":"2026-06-29T15:31:53.513346373Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"); 33 []}\n"}
+{"Time":"2026-06-29T15:31:53.513359543Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Output":"--- PASS: TestCheckAndCreateMigrationTableExecError (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513369068Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestCheckAndCreateMigrationTableExecError","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513381507Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionSuccess"}
+{"Time":"2026-06-29T15:31:53.513388537Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionSuccess","Output":"=== RUN   TestBeginTransactionSuccess\n"}
+{"Time":"2026-06-29T15:31:53.513533227Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionSuccess","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.513480437Z\",\"message\":\"SQL Transaction begin successful\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.513549381Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionSuccess","Output":"--- PASS: TestBeginTransactionSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513575691Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513584024Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionDBError"}
+{"Time":"2026-06-29T15:31:53.513589973Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionDBError","Output":"=== RUN   TestBeginTransactionDBError\n"}
+{"Time":"2026-06-29T15:31:53.513650374Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionDBError","Output":"{\"level\":\"ERROR\",\"time\":\"2026-06-29T15:31:53.513618286Z\",\"message\":\"unable to begin transaction: failed to begin transaction\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.513662302Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionDBError","Output":"--- PASS: TestBeginTransactionDBError (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513678797Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestBeginTransactionDBError","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513685297Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRollbackNoTransaction"}
+{"Time":"2026-06-29T15:31:53.513693149Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRollbackNoTransaction","Output":"=== RUN   TestRollbackNoTransaction\n"}
+{"Time":"2026-06-29T15:31:53.513731056Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRollbackNoTransaction","Output":"--- PASS: TestRollbackNoTransaction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513768673Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestRollbackNoTransaction","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513785188Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCheckAndCreateMigrationTable"}
+{"Time":"2026-06-29T15:31:53.51379941Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCheckAndCreateMigrationTable","Output":"=== RUN   Test_SurrealCheckAndCreateMigrationTable\n"}
+{"Time":"2026-06-29T15:31:53.513921415Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCheckAndCreateMigrationTable","Output":"--- PASS: Test_SurrealCheckAndCreateMigrationTable (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.513935436Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCheckAndCreateMigrationTable","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.513947334Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealGetLastMigration"}
+{"Time":"2026-06-29T15:31:53.513958571Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealGetLastMigration","Output":"=== RUN   Test_SurrealGetLastMigration\n"}
+{"Time":"2026-06-29T15:31:53.514006654Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealGetLastMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.513976128Z\",\"message\":\"surrealDB last migration fetched value is: 1\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.514027566Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealGetLastMigration","Output":"--- PASS: Test_SurrealGetLastMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.514043981Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealGetLastMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.51405675Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCommitMigration"}
+{"Time":"2026-06-29T15:31:53.514071813Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCommitMigration","Output":"=== RUN   Test_SurrealCommitMigration\n"}
+{"Time":"2026-06-29T15:31:53.514199917Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCommitMigration","Output":"{\"level\":\"DEBUG\",\"time\":\"2026-06-29T15:31:53.514153887Z\",\"message\":\"inserted record for migration 10 in surrealDB gofr_migrations table\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.514213918Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCommitMigration","Output":"{\"level\":\"INFO\",\"time\":\"2026-06-29T15:31:53.51416887Z\",\"message\":\"Migration 10 ran successfully\",\"gofrVersion\":\"dev\"}\n"}
+{"Time":"2026-06-29T15:31:53.514238035Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCommitMigration","Output":"--- PASS: Test_SurrealCommitMigration (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.514257895Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealCommitMigration","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.514270764Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealBeginTransaction"}
+{"Time":"2026-06-29T15:31:53.514289182Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealBeginTransaction","Output":"=== RUN   Test_SurrealBeginTransaction\n"}
+{"Time":"2026-06-29T15:31:53.514498019Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealBeginTransaction","Output":"--- PASS: Test_SurrealBeginTransaction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.514519601Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"Test_SurrealBeginTransaction","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.514544419Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_Query"}
+{"Time":"2026-06-29T15:31:53.514561194Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_Query","Output":"=== RUN   TestSurrealDS_Query\n"}
+{"Time":"2026-06-29T15:31:53.514633304Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_Query","Output":"--- PASS: TestSurrealDS_Query (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.514660064Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_Query","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.514672773Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateNamespace"}
+{"Time":"2026-06-29T15:31:53.514681777Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateNamespace","Output":"=== RUN   TestSurrealDS_CreateNamespace\n"}
+{"Time":"2026-06-29T15:31:53.514791143Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateNamespace","Output":"--- PASS: TestSurrealDS_CreateNamespace (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.514806927Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateNamespace","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.514820577Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateDatabase"}
+{"Time":"2026-06-29T15:31:53.514827348Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateDatabase","Output":"=== RUN   TestSurrealDS_CreateDatabase\n"}
+{"Time":"2026-06-29T15:31:53.514872015Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateDatabase","Output":"--- PASS: TestSurrealDS_CreateDatabase (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.514889812Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_CreateDatabase","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.514911265Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropNamespace"}
+{"Time":"2026-06-29T15:31:53.514923003Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropNamespace","Output":"=== RUN   TestSurrealDS_DropNamespace\n"}
+{"Time":"2026-06-29T15:31:53.515093932Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropNamespace","Output":"--- PASS: TestSurrealDS_DropNamespace (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.515107502Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropNamespace","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.515117447Z","Action":"run","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropDatabase"}
+{"Time":"2026-06-29T15:31:53.515124057Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropDatabase","Output":"=== RUN   TestSurrealDS_DropDatabase\n"}
+{"Time":"2026-06-29T15:31:53.515227274Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropDatabase","Output":"--- PASS: TestSurrealDS_DropDatabase (0.00s)\n"}
+{"Time":"2026-06-29T15:31:53.51530381Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Test":"TestSurrealDS_DropDatabase","Elapsed":0}
+{"Time":"2026-06-29T15:31:53.515326294Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:53.516943164Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Output":"ok  \tgofr.dev/pkg/gofr/migration\t0.047s\n"}
+{"Time":"2026-06-29T15:31:53.516977365Z","Action":"pass","Package":"gofr.dev/pkg/gofr/migration","Elapsed":0.048}
+reward=1 graded=111 found=111 failed=0 parsed=111 framework=go exit_code=0

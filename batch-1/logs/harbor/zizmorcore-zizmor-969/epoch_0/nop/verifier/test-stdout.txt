@@ -1,0 +1,203 @@
+patching file crates/zizmor/tests/integration/snapshot.rs
+patching file crates/zizmor/tests/integration/snapshots/integration__e2e__issue_569.snap
+patching file crates/zizmor/tests/integration/snapshots/integration__snapshot__obfuscation-2.snap
+patching file crates/zizmor/tests/integration/snapshots/integration__snapshot__obfuscation.snap
+patching file crates/zizmor/tests/integration/test-data/obfuscation/computed-indices.yml
+   Compiling zizmor v1.9.0 (/workspace/repo/crates/zizmor)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.57s
+────────────
+ Nextest run ID 64894759-1a00-4145-b3e2-02a46698aca4 with nextest profile: default
+    Starting 1 test across 1 binary (45 tests skipped)
+        FAIL [   1.571s] zizmor::integration snapshot::obfuscation
+──── STDOUT:             zizmor::integration snapshot::obfuscation
+
+running 1 test
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Snapshot file: crates/zizmor/tests/integration/snapshots/integration__snapshot__obfuscation.snap
+Snapshot: obfuscation
+Source: crates/zizmor/tests/integration/snapshot.rs:758
+────────────────────────────────────────────────────────────────────────────────
+Expression: zizmor().input(input_under_test("obfuscation.yml")).run()?
+────────────────────────────────────────────────────────────────────────────────
+-old snapshot
++new results
+────────────┬───────────────────────────────────────────────────────────────────
+   61    61 │    |
+   62    62 │    = note: audit confidence → High
+   63    63 │ 
+   64    64 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+   65       │-  --> @@INPUT@@:31:20
+         65 │+  --> @@INPUT@@:31:16
+   66    66 │    |
+   67    67 │ 31 |           echo ${{ '' }}
+   68       │-   |                    -- help: can be replaced by its static evaluation
+         68 │+   |                --------- help: expression can be replaced by its static evaluation
+   69    69 │    |
+   70    70 │    = note: audit confidence → High
+   71    71 │ 
+   72    72 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+   73       │-  --> @@INPUT@@:32:20
+         73 │+  --> @@INPUT@@:32:16
+   74    74 │    |
+   75    75 │ 32 |           echo ${{ 'a' }}
+   76       │-   |                    --- help: can be replaced by its static evaluation
+         76 │+   |                ---------- help: expression can be replaced by its static evaluation
+   77    77 │    |
+   78    78 │    = note: audit confidence → High
+   79    79 │ 
+   80    80 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+   81       │-  --> @@INPUT@@:33:20
+         81 │+  --> @@INPUT@@:33:16
+   82    82 │    |
+   83    83 │ 33 |           echo ${{ true }}
+   84       │-   |                    ---- help: can be replaced by its static evaluation
+         84 │+   |                ----------- help: expression can be replaced by its static evaluation
+   85    85 │    |
+   86    86 │    = note: audit confidence → High
+   87    87 │ 
+   88    88 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+   89       │-  --> @@INPUT@@:34:20
+         89 │+  --> @@INPUT@@:34:16
+   90    90 │    |
+   91    91 │ 34 |           echo ${{ true && false }}
+   92       │-   |                    ------------- help: can be replaced by its static evaluation
+         92 │+   |                -------------------- help: expression can be replaced by its static evaluation
+   93    93 │    |
+   94    94 │    = note: audit confidence → High
+   95    95 │ 
+   96    96 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+   97       │-  --> @@INPUT@@:35:20
+         97 │+  --> @@INPUT@@:35:16
+   98    98 │    |
+   99    99 │ 35 |           echo ${{ true || false }}
+  100       │-   |                    ------------- help: can be replaced by its static evaluation
+        100 │+   |                -------------------- help: expression can be replaced by its static evaluation
+  101   101 │    |
+  102   102 │    = note: audit confidence → High
+  103   103 │ 
+  104   104 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  105       │-  --> @@INPUT@@:36:20
+        105 │+  --> @@INPUT@@:36:16
+  106   106 │    |
+  107   107 │ 36 |           echo ${{ 1 > 2 || true }}
+  108       │-   |                    ------------- help: can be replaced by its static evaluation
+        108 │+   |                -------------------- help: expression can be replaced by its static evaluation
+  109   109 │    |
+  110   110 │    = note: audit confidence → High
+  111   111 │ 
+  112   112 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  113       │-  --> @@INPUT@@:37:20
+        113 │+  --> @@INPUT@@:37:16
+  114   114 │    |
+  115   115 │ 37 |           echo ${{ 1 != 2}}
+  116       │-   |                    ------ help: can be replaced by its static evaluation
+        116 │+   |                ------------ help: expression can be replaced by its static evaluation
+  117   117 │    |
+  118   118 │    = note: audit confidence → High
+  119   119 │ 
+  120   120 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  121       │-  --> @@INPUT@@:41:20
+        121 │+  --> @@INPUT@@:41:16
+  122   122 │    |
+  123   123 │ 41 |           echo ${{ format('{0}', 'abc') }}
+  124       │-   |                    -------------------- help: can be replaced by its static evaluation
+        124 │+   |                --------------------------- help: expression can be replaced by its static evaluation
+  125   125 │    |
+  126   126 │    = note: audit confidence → High
+  127   127 │ 
+  128   128 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  129       │-  --> @@INPUT@@:42:20
+        129 │+  --> @@INPUT@@:42:16
+  130   130 │    |
+  131   131 │ 42 |           echo ${{ format('{0} {1}', 'abc', 'def') }}
+  132       │-   |                    ------------------------------- help: can be replaced by its static evaluation
+        132 │+   |                -------------------------------------- help: expression can be replaced by its static evaluation
+  133   133 │    |
+  134   134 │    = note: audit confidence → High
+  135   135 │ 
+  136   136 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  137       │-  --> @@INPUT@@:43:20
+        137 │+  --> @@INPUT@@:43:16
+  138   138 │    |
+  139   139 │ 43 |           echo ${{ format('{0} {1}', 'abc', format('{0}', 'def')) }}
+  140       │-   |                    ---------------------------------------------- help: can be replaced by its static evaluation
+        140 │+   |                ----------------------------------------------------- help: expression can be replaced by its static evaluation
+  141   141 │    |
+  142   142 │    = note: audit confidence → High
+  143   143 │ 
+  144   144 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  145       │-  --> @@INPUT@@:44:20
+        145 │+  --> @@INPUT@@:44:16
+  146   146 │    |
+  147   147 │ 44 |           echo ${{ startsWith('abc', 'a') }}
+  148       │-   |                    ---------------------- help: can be replaced by its static evaluation
+        148 │+   |                ----------------------------- help: expression can be replaced by its static evaluation
+  149   149 │    |
+  150   150 │    = note: audit confidence → High
+  151   151 │ 
+  152   152 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  153       │-  --> @@INPUT@@:45:20
+        153 │+  --> @@INPUT@@:45:16
+  154   154 │    |
+  155   155 │ 45 |           echo ${{ ENDSWITH('abc', 'c') }}
+  156       │-   |                    -------------------- help: can be replaced by its static evaluation
+        156 │+   |                --------------------------- help: expression can be replaced by its static evaluation
+  157   157 │    |
+  158   158 │    = note: audit confidence → High
+  159   159 │ 
+  160   160 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  161       │-  --> @@INPUT@@:50:60
+        161 │+  --> @@INPUT@@:50:16
+  162   162 │    |
+  163   163 │ 50 |           echo ${{ format('{0}, {1}', github.event.number, format('{0}', 'abc')) }}
+  164       │-   |                                                            -------------------- help: can be reduced to a constant
+        164 │+   |                -------------------------------------------------------------------- help: expression contains constant-reducible subexpression
+  165   165 │    |
+  166   166 │    = note: audit confidence → High
+  167   167 │ 
+  168   168 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  169       │-  --> @@INPUT@@:52:99
+        169 │+  --> @@INPUT@@:52:16
+  170   170 │    |
+  171   171 │ 52 |           echo ${{ format('{0}, {1}', github.event.number, format('{0} {1}', github.event.number, true || false)) }}
+  172       │-   |                                                                                                   ------------- help: can be reduced to a constant
+        172 │+   |                ----------------------------------------------------------------------------------------------------- help: expression contains constant-reducible subexpression
+  173   173 │    |
+  174   174 │    = note: audit confidence → High
+  175   175 │ 
+  176   176 │ help[obfuscation]: obfuscated usage of GitHub Actions features
+  177       │-  --> @@INPUT@@:54:27
+        177 │+  --> @@INPUT@@:54:16
+  178   178 │    |
+  179   179 │ 54 |           echo ${{ foobar[format('{0}', 'event')]}}
+  180       │-   |                           ---------------------- help: can be reduced to a constant
+        180 │+   |                ------------------------------------ help: expression contains constant-reducible subexpression
+  181   181 │    |
+  182   182 │    = note: audit confidence → High
+  183   183 │ 
+  184       │-40 findings (1 ignored, 16 suppressed): 0 unknown, 0 informational, 23 low, 0 medium, 0 high
+        184 │+39 findings (1 ignored, 15 suppressed): 0 unknown, 0 informational, 23 low, 0 medium, 0 high
+────────────┴───────────────────────────────────────────────────────────────────
+To update snapshots run `cargo insta review`
+Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+test snapshot::obfuscation ... FAILED
+
+failures:
+
+failures:
+    snapshot::obfuscation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 45 filtered out; finished in 1.55s
+
+──── STDERR:             zizmor::integration snapshot::obfuscation
+stored new snapshot /workspace/repo/crates/zizmor/tests/integration/snapshots/integration__snapshot__obfuscation.snap.new
+
+thread 'snapshot::obfuscation' panicked at /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.43.1/src/runtime.rs:679:13:
+snapshot assertion for 'obfuscation' failed in line 758
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   1.573s] 1 test run: 0 passed, 1 failed, 45 skipped
+        FAIL [   1.571s] zizmor::integration snapshot::obfuscation
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

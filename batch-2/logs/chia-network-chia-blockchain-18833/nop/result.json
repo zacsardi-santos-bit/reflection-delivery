@@ -1,0 +1,29 @@
+{
+    "id": "9bfd4cf5-e99e-4be0-a52f-06d1ac77b328",
+    "started_at": "2026-07-04T15:37:29.305542",
+    "finished_at": "2026-07-04T15:40:24.325590",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__chia-network-chia-blockchain-18833": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "chia-network-chia-blockchain-188__tyBKHXN"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

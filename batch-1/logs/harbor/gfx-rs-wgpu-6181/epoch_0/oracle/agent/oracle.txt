@@ -1,0 +1,11 @@
+patching file CHANGELOG.md
+patching file Cargo.lock
+patching file naga/Cargo.toml
+patching file naga/src/back/glsl/mod.rs
+patching file naga/src/back/hlsl/conv.rs
+patching file naga/src/back/msl/mod.rs
+patching file naga/src/back/spv/writer.rs
+patching file naga/src/back/wgsl/writer.rs
+patching file naga/src/front/wgsl/parse/conv.rs
+patching file naga/src/lib.rs
+patching file naga/src/valid/interface.rs

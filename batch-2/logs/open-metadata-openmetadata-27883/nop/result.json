@@ -1,0 +1,29 @@
+{
+    "id": "8fc161aa-f1a7-4b21-a649-bc4312152dff",
+    "started_at": "2026-07-06T12:17:07.350470",
+    "finished_at": "2026-07-06T12:17:41.052915",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__open-metadata-openmetadata-27883": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "open-metadata-openmetadata-27883__oxaTbZf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

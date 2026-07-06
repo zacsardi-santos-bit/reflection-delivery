@@ -1,0 +1,15 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && FILTER=error-recovery pnpm exec vitest run packages/svelte/tests/runtime-runes/test.ts",
+  "test_files": [
+    "packages/svelte/tests/runtime-runes/samples/error-recovery/_config.js",
+    "packages/svelte/tests/runtime-runes/samples/error-recovery/main.svelte"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/svelte/tests/runtime-runes/test.ts::error-recovery (dom)",
+    "/workspace/repo/packages/svelte/tests/runtime-runes/test.ts::error-recovery (hydrate)"
+  ],
+  "PASS_TO_PASS": []
+}

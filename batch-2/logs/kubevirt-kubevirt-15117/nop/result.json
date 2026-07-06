@@ -1,0 +1,29 @@
+{
+    "id": "05ddf7b6-7927-4459-9362-cfc9f5fa5dff",
+    "started_at": "2026-07-06T12:17:18.265248",
+    "finished_at": "2026-07-06T12:18:40.375079",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__kubevirt-kubevirt-15117": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "kubevirt-kubevirt-15117__XXMAG2Q"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

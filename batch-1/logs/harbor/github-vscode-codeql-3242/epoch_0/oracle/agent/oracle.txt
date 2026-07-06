@@ -1,0 +1,3 @@
+patching file extensions/ql-vscode/src/view/common/SuggestBox/SuggestBox.tsx
+patching file extensions/ql-vscode/src/view/common/SuggestBox/useEffectEvent.ts
+patching file extensions/ql-vscode/src/view/common/SuggestBox/useOpenKey.ts

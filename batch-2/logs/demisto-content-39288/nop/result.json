@@ -1,0 +1,29 @@
+{
+    "id": "b4313ed3-5955-4da0-9557-1e8bef25faf7",
+    "started_at": "2026-07-06T12:17:23.132447",
+    "finished_at": "2026-07-06T12:17:58.115136",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__demisto-content-39288": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "demisto-content-39288__Xks7YoQ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

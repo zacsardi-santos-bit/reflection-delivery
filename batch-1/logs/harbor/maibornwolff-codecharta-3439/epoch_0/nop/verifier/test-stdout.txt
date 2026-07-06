@@ -1,0 +1,514 @@
+patching file visualization/app/codeCharta/ui/codeMap/arrow/codeMap.arrow.service.spec.ts
+patching file visualization/app/codeCharta/ui/codeMap/codeMap.render.service.spec.ts
+patching file visualization/app/codeCharta/ui/searchPanel/mapTreeView/areaMetricValidPipe.pipe.spec.ts
+patching file visualization/app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts
+patching file visualization/app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemName/mapTreeViewItemName.component.spec.ts
+patching file visualization/app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewLevel/mapTreeViewLevel.component.spec.ts
+patching file visualization/app/codeCharta/util/algorithm/treeMapLayout/treeMapGenerator.spec.ts
+patching file visualization/app/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts
+patching file visualization/app/codeCharta/util/deltaGenerator.spec.ts
+FAIL app/codeCharta/ui/searchPanel/mapTreeView/areaMetricValidPipe.pipe.spec.ts
+  ● Test suite failed to run
+
+    [96mapp/codeCharta/ui/searchPanel/mapTreeView/areaMetricValidPipe.pipe.spec.ts[0m:[93m2[0m:[93m37[0m - [91merror[0m[90m TS2307: [0mCannot find module './areaMetricValidPipe.pipe' or its corresponding type declarations.
+
+    [7m2[0m import { AreaMetricValidPipe } from "./areaMetricValidPipe.pipe"
+    [7m [0m [91m                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL app/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts
+  ● Test suite failed to run
+
+    [96mapp/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts[0m:[93m453[0m:[93m39[0m - [91merror[0m[90m TS2339: [0mProperty 'resolveHeightValue' does not exist on type '{ countNodes: (node: { children?: CodeMapNode[]; }) => number; buildingArrayToMap: (highlighted: CodeMapBuilding[]) => Map<number, CodeMapBuilding>; ... 6 more ...; HEIGHT_VALUE_WHEN_METRIC_NOT_FOUND: number; }'.
+
+    [7m453[0m    const resultHeight = TreeMapHelper.resolveHeightValue(1, 1, someNode, state)
+    [7m   [0m [91m                                      ~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts[0m:[93m462[0m:[93m48[0m - [91merror[0m[90m TS2339: [0mProperty 'resolveHeightValue' does not exist on type '{ countNodes: (node: { children?: CodeMapNode[]; }) => number; buildingArrayToMap: (highlighted: CodeMapBuilding[]) => Map<number, CodeMapBuilding>; ... 6 more ...; HEIGHT_VALUE_WHEN_METRIC_NOT_FOUND: number; }'.
+
+    [7m462[0m    const resultHeightWithDelta = TreeMapHelper.resolveHeightValue(10, 1, someNode, stateMCC)
+    [7m   [0m [91m                                               ~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts[0m:[93m463[0m:[93m51[0m - [91merror[0m[90m TS2339: [0mProperty 'resolveHeightValue' does not exist on type '{ countNodes: (node: { children?: CodeMapNode[]; }) => number; buildingArrayToMap: (highlighted: CodeMapBuilding[]) => Map<number, CodeMapBuilding>; ... 6 more ...; HEIGHT_VALUE_WHEN_METRIC_NOT_FOUND: number; }'.
+
+    [7m463[0m    const resultHeightWithoutDelta = TreeMapHelper.resolveHeightValue(10, 1, someNode, state)
+    [7m   [0m [91m                                                  ~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts[0m:[93m471[0m:[93m43[0m - [91merror[0m[90m TS2339: [0mProperty 'resolveHeightValue' does not exist on type '{ countNodes: (node: { children?: CodeMapNode[]; }) => number; buildingArrayToMap: (highlighted: CodeMapBuilding[]) => Map<number, CodeMapBuilding>; ... 6 more ...; HEIGHT_VALUE_WHEN_METRIC_NOT_FOUND: number; }'.
+
+    [7m471[0m    const resultHeightZero = TreeMapHelper.resolveHeightValue(0, 1, someNode, state)
+    [7m   [0m [91m                                          ~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/util/algorithm/treeMapLayout/treeMapHelper.spec.ts[0m:[93m472[0m:[93m47[0m - [91merror[0m[90m TS2339: [0mProperty 'resolveHeightValue' does not exist on type '{ countNodes: (node: { children?: CodeMapNode[]; }) => number; buildingArrayToMap: (highlighted: CodeMapBuilding[]) => Map<number, CodeMapBuilding>; ... 6 more ...; HEIGHT_VALUE_WHEN_METRIC_NOT_FOUND: number; }'.
+
+    [7m472[0m    const resultHeightPositive = TreeMapHelper.resolveHeightValue(10, 1, someNode, state)
+    [7m   [0m [91m                                              ~~~~~~~~~~~~~~~~~~[0m
+
+FAIL app/codeCharta/util/algorithm/treeMapLayout/treeMapGenerator.spec.ts
+  ● Test suite failed to run
+
+    [96mapp/codeCharta/util/algorithm/treeMapLayout/treeMapGenerator.spec.ts[0m:[93m11[0m:[93m2[0m - [91merror[0m[90m TS2305: [0mModule '"../../dataMocks"' has no exported member 'VALID_BIG_NODE_WITH_DELTAS'.
+
+    [7m11[0m  VALID_BIG_NODE_WITH_DELTAS
+    [7m  [0m [91m ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL app/codeCharta/ui/codeMap/arrow/codeMap.arrow.service.spec.ts
+  ● Test suite failed to run
+
+    [96mapp/codeCharta/ui/codeMap/arrow/codeMap.arrow.service.spec.ts[0m:[93m92[0m:[93m24[0m - [91merror[0m[90m TS2339: [0mProperty 'addEdgeMapBasedOnNodes' does not exist on type 'CodeMapArrowService'.
+
+    [7m92[0m    codeMapArrowService.addEdgeMapBasedOnNodes(nodes)
+    [7m  [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/ui/codeMap/arrow/codeMap.arrow.service.spec.ts[0m:[93m232[0m:[93m24[0m - [91merror[0m[90m TS2339: [0mProperty 'addEdgeMapBasedOnNodes' does not exist on type 'CodeMapArrowService'.
+
+    [7m232[0m    codeMapArrowService.addEdgeMapBasedOnNodes(nodes)
+    [7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/ui/codeMap/arrow/codeMap.arrow.service.spec.ts[0m:[93m247[0m:[93m24[0m - [91merror[0m[90m TS2339: [0mProperty 'addEdgeMapBasedOnNodes' does not exist on type 'CodeMapArrowService'.
+
+    [7m247[0m    codeMapArrowService.addEdgeMapBasedOnNodes(nodes)
+    [7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~~[0m
+    [96mapp/codeCharta/ui/codeMap/arrow/codeMap.arrow.service.spec.ts[0m:[93m258[0m:[93m24[0m - [91merror[0m[90m TS2339: [0mProperty 'addEdgeMapBasedOnNodes' does not exist on type 'CodeMapArrowService'.
+
+    [7m258[0m    codeMapArrowService.addEdgeMapBasedOnNodes(nodes)
+    [7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts (13.996 s)
+  ● MapTreeViewItemIconColorPipe › should return default color if getMarkingColor returns undefined
+
+    TypeError: Cannot read properties of undefined (reading 'unary')
+
+      15 | 		const { areaMetric } = this.state.getValue().dynamicSettings
+      16 |
+    > 17 | 		if (!value.attributes[areaMetric]) {
+         | 		                     ^
+      18 | 			return MapTreeViewItemIconColorPipe.areMetricZeroColor
+      19 | 		}
+      20 | 		if (isLeaf(value)) {
+
+      at MapTreeViewItemIconColorPipe.transform (app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.ts:17:24)
+      at app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts:28:50
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+  ● MapTreeViewItemIconColorPipe › should return color of getMarkingColor if valid delta present
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "#123456"
+    Received: "#BDBDBD"
+
+      38 | 		const fakeNodeWithDelta = { children: [{}], attributes: { unary: 0 }, deltas: { unary: -1 } } as unknown as CodeMapNode
+      39 | 		jest.spyOn(codeMapHelper, "getMarkingColor").mockImplementation(() => "#123456")
+    > 40 | 		expect(new MapTreeViewItemIconColorPipe(state).transform(fakeNodeWithDelta)).toBe("#123456")
+         | 		                                                                             ^
+      41 | 	})
+      42 |
+      43 | 	it("should return constant gray color if node has no attributes", () => {
+
+      at app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts:40:80
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+  ● MapTreeViewItemIconColorPipe › should return constant gray color if node has no attributes
+
+    TypeError: Cannot read properties of undefined (reading 'unary')
+
+      15 | 		const { areaMetric } = this.state.getValue().dynamicSettings
+      16 |
+    > 17 | 		if (!value.attributes[areaMetric]) {
+         | 		                     ^
+      18 | 			return MapTreeViewItemIconColorPipe.areMetricZeroColor
+      19 | 		}
+      20 | 		if (isLeaf(value)) {
+
+      at MapTreeViewItemIconColorPipe.transform (app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.ts:17:24)
+      at app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts:45:50
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+  ● MapTreeViewItemIconColorPipe › should return constant gray color if node has no area metric entry
+
+    TypeError: Cannot read properties of undefined (reading 'unary')
+
+      15 | 		const { areaMetric } = this.state.getValue().dynamicSettings
+      16 |
+    > 17 | 		if (!value.attributes[areaMetric]) {
+         | 		                     ^
+      18 | 			return MapTreeViewItemIconColorPipe.areMetricZeroColor
+      19 | 		}
+      20 | 		if (isLeaf(value)) {
+
+      at MapTreeViewItemIconColorPipe.transform (app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.ts:17:24)
+      at app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts:53:50
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+  ● MapTreeViewItemIconColorPipe › should return constant gray color if node has a value of zero for area metric entry
+
+    TypeError: Cannot read properties of undefined (reading 'unary')
+
+      15 | 		const { areaMetric } = this.state.getValue().dynamicSettings
+      16 |
+    > 17 | 		if (!value.attributes[areaMetric]) {
+         | 		                     ^
+      18 | 			return MapTreeViewItemIconColorPipe.areMetricZeroColor
+      19 | 		}
+      20 | 		if (isLeaf(value)) {
+
+      at MapTreeViewItemIconColorPipe.transform (app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.ts:17:24)
+      at app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemIcon/mapTreeViewItemIconColor.pipe.spec.ts:60:50
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+FAIL app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewItemName/mapTreeViewItemName.component.spec.ts (24.808 s)
+  ● mapTreeViewItemNameComponent › should not have class 'noAreaMetric' when node's delta area metric is smaller than 0
+
+    TypeError: Cannot read properties of undefined (reading 'rloc')
+
+      at MapTreeViewItemNameComponent_Template (ng:/MapTreeViewItemNameComponent.js:74:98)
+      at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12003:13)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13498:13)
+      at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:13663:9)
+      at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:13638:5)
+      at detectChangesInChildComponents (node_modules/@angular/core/fesm2022/core.mjs:13676:9)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13548:13)
+      at detectChangesInternal (node_modules/@angular/core/fesm2022/core.mjs:13437:9)
+      at RootViewRef.detectChanges (node_modules/@angular/core/fesm2022/core.mjs:13954:9)
+      at ComponentFixture._tick (node_modules/@angular/core/fesm2022/testing.mjs:127:32)
+      at node_modules/@angular/core/fesm2022/testing.mjs:140:22
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Object.onInvoke (node_modules/@angular/core/fesm2022/core.mjs:11083:33)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at NgZone.run (node_modules/@angular/core/fesm2022/core.mjs:10934:28)
+      at ComponentFixture.detectChanges (node_modules/@angular/core/fesm2022/testing.mjs:139:25)
+      at detectChanges (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:195:25)
+      at node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:199:13
+      at fulfilled (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:61:24)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at node_modules/zone.js/bundles/zone.umd.js:1314:38
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:445:35)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvokeTask (node_modules/zone.js/bundles/zone-testing.umd.js:331:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:444:64)
+      at Zone.Object.<anonymous>.Zone.runTask (node_modules/zone.js/bundles/zone.umd.js:210:51)
+      at drainMicroTaskQueue (node_modules/zone.js/bundles/zone.umd.js:634:39)
+
+  ● mapTreeViewItemNameComponent › should have class 'noAreaMetric' when node's delta area metric is 0 or positive
+
+    TypeError: Cannot read properties of undefined (reading 'rloc')
+
+      at MapTreeViewItemNameComponent_Template (ng:/MapTreeViewItemNameComponent.js:74:98)
+      at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12003:13)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13498:13)
+      at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:13663:9)
+      at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:13638:5)
+      at detectChangesInChildComponents (node_modules/@angular/core/fesm2022/core.mjs:13676:9)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13548:13)
+      at detectChangesInternal (node_modules/@angular/core/fesm2022/core.mjs:13437:9)
+      at RootViewRef.detectChanges (node_modules/@angular/core/fesm2022/core.mjs:13954:9)
+      at ComponentFixture._tick (node_modules/@angular/core/fesm2022/testing.mjs:127:32)
+      at node_modules/@angular/core/fesm2022/testing.mjs:140:22
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Object.onInvoke (node_modules/@angular/core/fesm2022/core.mjs:11083:33)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at NgZone.run (node_modules/@angular/core/fesm2022/core.mjs:10934:28)
+      at ComponentFixture.detectChanges (node_modules/@angular/core/fesm2022/testing.mjs:139:25)
+      at detectChanges (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:195:25)
+      at node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:199:13
+      at fulfilled (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:61:24)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at node_modules/zone.js/bundles/zone.umd.js:1314:38
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:445:35)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvokeTask (node_modules/zone.js/bundles/zone-testing.umd.js:331:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:444:64)
+      at Zone.Object.<anonymous>.Zone.runTask (node_modules/zone.js/bundles/zone.umd.js:210:51)
+      at drainMicroTaskQueue (node_modules/zone.js/bundles/zone.umd.js:634:39)
+
+  ● mapTreeViewItemNameComponent › should have class 'noAreaMetric' when node's delta area metric is 0 or positive
+
+    TypeError: Cannot read properties of undefined (reading 'rloc')
+
+      at MapTreeViewItemNameComponent_Template (ng:/MapTreeViewItemNameComponent.js:74:98)
+      at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12003:13)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13498:13)
+      at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:13663:9)
+      at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:13638:5)
+      at detectChangesInChildComponents (node_modules/@angular/core/fesm2022/core.mjs:13676:9)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13548:13)
+      at detectChangesInternal (node_modules/@angular/core/fesm2022/core.mjs:13437:9)
+      at RootViewRef.detectChanges (node_modules/@angular/core/fesm2022/core.mjs:13954:9)
+      at ComponentFixture._tick (node_modules/@angular/core/fesm2022/testing.mjs:127:32)
+      at node_modules/@angular/core/fesm2022/testing.mjs:140:22
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Object.onInvoke (node_modules/@angular/core/fesm2022/core.mjs:11083:33)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at NgZone.run (node_modules/@angular/core/fesm2022/core.mjs:10934:28)
+      at ComponentFixture.detectChanges (node_modules/@angular/core/fesm2022/testing.mjs:139:25)
+      at detectChanges (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:195:25)
+      at node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:199:13
+      at fulfilled (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:61:24)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at node_modules/zone.js/bundles/zone.umd.js:1314:38
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:445:35)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvokeTask (node_modules/zone.js/bundles/zone-testing.umd.js:331:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:444:64)
+      at Zone.Object.<anonymous>.Zone.runTask (node_modules/zone.js/bundles/zone.umd.js:210:51)
+      at drainMicroTaskQueue (node_modules/zone.js/bundles/zone.umd.js:634:39)
+
+  ● mapTreeViewItemNameComponent › should have class 'noAreaMetric' when node's delta area metric is 0 or positive
+
+    TypeError: Cannot read properties of undefined (reading 'rloc')
+
+      at MapTreeViewItemNameComponent_Template (ng:/MapTreeViewItemNameComponent.js:74:98)
+      at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12003:13)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13498:13)
+      at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:13663:9)
+      at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:13638:5)
+      at detectChangesInChildComponents (node_modules/@angular/core/fesm2022/core.mjs:13676:9)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13548:13)
+      at detectChangesInternal (node_modules/@angular/core/fesm2022/core.mjs:13437:9)
+      at RootViewRef.detectChanges (node_modules/@angular/core/fesm2022/core.mjs:13954:9)
+      at ComponentFixture._tick (node_modules/@angular/core/fesm2022/testing.mjs:127:32)
+      at node_modules/@angular/core/fesm2022/testing.mjs:140:22
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Object.onInvoke (node_modules/@angular/core/fesm2022/core.mjs:11083:33)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at NgZone.run (node_modules/@angular/core/fesm2022/core.mjs:10934:28)
+      at ComponentFixture.detectChanges (node_modules/@angular/core/fesm2022/testing.mjs:139:25)
+      at detectChanges (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:195:25)
+      at node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:199:13
+      at fulfilled (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:61:24)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at node_modules/zone.js/bundles/zone.umd.js:1314:38
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:445:35)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvokeTask (node_modules/zone.js/bundles/zone-testing.umd.js:331:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:444:64)
+      at Zone.Object.<anonymous>.Zone.runTask (node_modules/zone.js/bundles/zone.umd.js:210:51)
+      at drainMicroTaskQueue (node_modules/zone.js/bundles/zone.umd.js:634:39)
+
+  ● mapTreeViewItemNameComponent › should have class 'noAreaMetric' when node's delta metric doesn't exist
+
+    TypeError: Cannot read properties of undefined (reading 'rloc')
+
+      at MapTreeViewItemNameComponent_Template (ng:/MapTreeViewItemNameComponent.js:74:98)
+      at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12003:13)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13498:13)
+      at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:13663:9)
+      at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:13638:5)
+      at detectChangesInChildComponents (node_modules/@angular/core/fesm2022/core.mjs:13676:9)
+      at refreshView (node_modules/@angular/core/fesm2022/core.mjs:13548:13)
+      at detectChangesInternal (node_modules/@angular/core/fesm2022/core.mjs:13437:9)
+      at RootViewRef.detectChanges (node_modules/@angular/core/fesm2022/core.mjs:13954:9)
+      at ComponentFixture._tick (node_modules/@angular/core/fesm2022/testing.mjs:127:32)
+      at node_modules/@angular/core/fesm2022/testing.mjs:140:22
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Object.onInvoke (node_modules/@angular/core/fesm2022/core.mjs:11083:33)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at NgZone.run (node_modules/@angular/core/fesm2022/core.mjs:10934:28)
+      at ComponentFixture.detectChanges (node_modules/@angular/core/fesm2022/testing.mjs:139:25)
+      at detectChanges (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:195:25)
+      at node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:199:13
+      at fulfilled (node_modules/@testing-library/angular/fesm2022/testing-library-angular.mjs:61:24)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at node_modules/zone.js/bundles/zone.umd.js:1314:38
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:445:35)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvokeTask (node_modules/zone.js/bundles/zone-testing.umd.js:331:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:444:64)
+      at Zone.Object.<anonymous>.Zone.runTask (node_modules/zone.js/bundles/zone.umd.js:210:51)
+      at drainMicroTaskQueue (node_modules/zone.js/bundles/zone.umd.js:634:39)
+
+FAIL app/codeCharta/util/deltaGenerator.spec.ts (25.985 s)
+  ● deltaGenerator › golden test
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `deltaGenerator golden test 1`
+
+    - Snapshot  -  2
+    + Received  + 20
+
+    @@ -137,24 +137,42 @@
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {
+    -                 "monster": 666,
+    +                 "monster": 42,
+                    },
+                    "deltas": {
+    -                 "monster": 666,
+    +                 "monster": 42,
+                    },
+                    "fileCount": {
+                      "added": 1,
+                      "changed": 0,
+                      "removed": 0,
+                    },
+                    "isExcluded": false,
+                    "isFlattened": false,
+                    "name": "Narwal",
+                    "path": "/root/onlyA/special/Narwal",
+    +               "type": "File",
+    +             },
+    +             {
+    +               "attributes": {
+    +                 "monster": 666,
+    +               },
+    +               "deltas": {
+    +                 "monster": 665,
+    +               },
+    +               "fileCount": {
+    +                 "added": 0,
+    +                 "changed": 1,
+    +                 "removed": 0,
+    +               },
+    +               "isExcluded": false,
+    +               "isFlattened": false,
+    +               "name": "Cthulhu",
+    +               "path": "/root/onlyA/special/Cthulhu",
+                    "type": "File",
+                  },
+                  {
+                    "attributes": {
+                      "special": 42,
+
+      103 | 		const result = DeltaGenerator.getDeltaFile(fileA, fileB)
+      104 |
+    > 105 | 		expect(result.map).toMatchSnapshot()
+          | 		                   ^
+      106 | 	})
+      107 |
+      108 | 	it("getDeltaFile should result in expected deltaFiles", () => {
+
+      at app/codeCharta/util/deltaGenerator.spec.ts:105:22
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+ › 1 snapshot failed.
+FAIL app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewLevel/mapTreeViewLevel.component.spec.ts (33.941 s)
+  ● mapTreeViewLevel › should make searched items 'tree-search-result'
+
+    expect(received).toBeTruthy()
+
+    Received: null
+
+      128 | 		const bigLeaf = container.querySelector("#\\/root\\/bigLeaf")
+      129 | 		const hasTreeSearchResultClass = bigLeaf.querySelector(".tree-search-result")
+    > 130 | 		expect(hasTreeSearchResultClass).toBeTruthy()
+          | 		                                 ^
+      131 | 	})
+      132 |
+      133 | 	it("should change text color to gray if node has no area metric", async () => {
+
+      at app/codeCharta/ui/searchPanel/mapTreeView/mapTreeViewLevel/mapTreeViewLevel.component.spec.ts:130:36
+      at fulfilled (node_modules/tslib/tslib.js:166:62)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at node_modules/zone.js/bundles/zone.umd.js:1314:38
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:445:35)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvokeTask (node_modules/zone.js/bundles/zone-testing.umd.js:331:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invokeTask (node_modules/zone.js/bundles/zone.umd.js:444:64)
+      at Zone.Object.<anonymous>.Zone.runTask (node_modules/zone.js/bundles/zone.umd.js:210:51)
+      at drainMicroTaskQueue (node_modules/zone.js/bundles/zone.umd.js:634:39)
+
+FAIL app/codeCharta/ui/codeMap/codeMap.render.service.spec.ts (49.175 s)
+  ● Console
+
+    console.warn
+      WARNING: Multiple instances of Three.js being imported.
+
+      1 | import { Injectable } from "@angular/core"
+      2 | import { Camera, RGBAFormat, Scene, Vector2, WebGLInfo, WebGLRenderer, WebGLRenderTarget } from "three"
+    > 3 | import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass"
+        | ^
+      4 | import { WEBGL } from "three/examples/jsm/WebGL"
+      5 | import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass"
+      6 | import { CustomComposer } from "../rendering/postprocessor/customComposer"
+
+      at Object.<anonymous> (node_modules/three/build/three.module.js:48920:11)
+      at Object.<anonymous> (node_modules/three/examples/jsm/postprocessing/RenderPass.js:1:1)
+      at Object.<anonymous> (app/codeCharta/ui/codeMap/threeViewer/threeRenderer.service.ts:3:1)
+      at Object.<anonymous> (app/codeCharta/ui/codeMap/threeViewer/threeSceneService.ts:12:1)
+      at Object.<anonymous> (app/codeCharta/ui/codeMap/threeViewer/threeOrbitControls.service.ts:4:1)
+      at Object.<anonymous> (app/codeCharta/ui/codeMap/codeMap.label.service.ts:3:1)
+      at Object.<anonymous> (app/codeCharta/ui/codeMap/codeMap.render.service.ts:4:1)
+      at Object.<anonymous> (app/codeCharta/ui/codeMap/codeMap.render.service.spec.ts:2:1)
+
+  ● codeMapRenderService › setArrows › should call codeMapArrowService.addEdgeArrows
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: [{"attributes": {"a": 20, "b": 15, "mcc": 5}, "color": "#69AE40", "deltas": {"a": 1, "b": 2}, "depth": 4, "edgeAttributes": {"a": {"incoming": 2, "outgoing": 666}}, "flat": false, "height": 2, "heightDelta": 10, "id": 0, "incomingEdgePoint": {"x": 0, "y": 0, "z": 0}, "isLeaf": true, "length": 3, "link": "NO_LINK", "mapNodeDepth": 2, "markingColor": "0x000000", "name": "root", "outgoingEdgePoint": {"x": 0, "y": 0, "z": 0}, "path": "/root", "visible": true, "width": 1, "x0": 5, "y0": 7, "z0": 6}, {"attributes": {"a": 20, "b": 15, "mcc": 20}, "color": "#ddcc00", "deltas": {"a": 1, "b": 2}, "depth": 4, "edgeAttributes": {"a": {"incoming": 2, "outgoing": 666}}, "flat": false, "height": 2, "heightDelta": 20, "id": 1, "incomingEdgePoint": {"x": 0, "y": 0, "z": 0}, "isLeaf": true, "length": 3, "link": "NO_LINK", "mapNodeDepth": 2, "markingColor": "0xFFFFFF", "name": "root/big leaf.ts", "outgoingEdgePoint": {"x": 0, "y": 0, "z": 0}, "path": "/root/big leaf", "visible": true, "width": 1, "x0": 5, "y0": 7, "z0": 6}]
+
+    Number of calls: 0
+
+      325 | 			codeMapRenderService["setArrows"](sortedNodes)
+      326 |
+    > 327 | 			expect(codeMapArrowService["addEdgeMapBasedOnNodes"]).toHaveBeenCalledWith(sortedNodes)
+          | 			                                                      ^
+      328 | 			expect(codeMapArrowService["addEdgePreview"]).toHaveBeenCalled()
+      329 | 		})
+      330 | 	})
+
+      at app/codeCharta/ui/codeMap/codeMap.render.service.spec.ts:327:58
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:411:30)
+      at ProxyZoneSpec.Object.<anonymous>.ProxyZoneSpec.onInvoke (node_modules/zone.js/bundles/zone-testing.umd.js:300:43)
+      at _ZoneDelegate.Object.<anonymous>._ZoneDelegate.invoke (node_modules/zone.js/bundles/zone.umd.js:410:56)
+      at Zone.Object.<anonymous>.Zone.run (node_modules/zone.js/bundles/zone.umd.js:165:47)
+      at Object.wrappedFunc (node_modules/zone.js/bundles/zone-testing.umd.js:789:34)
+
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks. Active timers can also cause this, ensure that .unref() was called on them.
+Snapshot Summary
+ › 1 snapshot failed from 1 test suite. Inspect your code changes or run `npm run npx -- -u` to update them.
+
+Test Suites: 9 failed, 9 total
+Tests:       13 failed, 38 passed, 51 total
+Snapshots:   1 failed, 2 passed, 3 total
+Time:        53.073 s
+Ran all test suites matching /app\/codeCharta\/ui\/codeMap\/arrow\/codeMap.arrow.service.spec.ts|app\/codeCharta\/ui\/codeMap\/codeMap.render.service.spec.ts|app\/codeCharta\/ui\/searchPanel\/mapTreeView\/areaMetricValidPipe.pipe.spec.ts|app\/codeCharta\/ui\/searchPanel\/mapTreeView\/mapTreeViewItemIcon\/mapTreeViewItemIconColor.pipe.spec.ts|app\/codeCharta\/ui\/searchPanel\/mapTreeView\/mapTreeViewItemName\/mapTreeViewItemName.component.spec.ts|app\/codeCharta\/ui\/searchPanel\/mapTreeView\/mapTreeViewLevel\/mapTreeViewLevel.component.spec.ts|app\/codeCharta\/util\/algorithm\/treeMapLayout\/treeMapGenerator.spec.ts|app\/codeCharta\/util\/algorithm\/treeMapLayout\/treeMapHelper.spec.ts|app\/codeCharta\/util\/deltaGenerator.spec.ts/i.
+reward=0 graded=124 found=0 failed=0 parsed=0 framework=jest exit_code=1

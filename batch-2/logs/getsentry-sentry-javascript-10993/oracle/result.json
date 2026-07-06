@@ -1,0 +1,29 @@
+{
+    "id": "8a5da1bc-dab2-4ab3-80d5-f901c8983157",
+    "started_at": "2026-07-04T15:43:03.911738",
+    "finished_at": "2026-07-04T15:43:21.634536",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__getsentry-sentry-javascript-10993": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "getsentry-sentry-javascript-1099__Mo693fg"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

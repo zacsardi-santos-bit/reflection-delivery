@@ -1,0 +1,56 @@
+patching file controller/command/rate_limiter_test.go
+patching file controller/raft/mesh/mesh_test.go
+patching file zititest/models/links-test/main.go
+patching file zititest/models/links-test/validation.go
+patching file zititest/zitilab/actions/edge/init_routers.go
+patching file zititest/zitilab/chaos/chaos.go
+patching file zititest/zitilab/component_common.go
+patching file zititest/zitilab/component_router.go
+{"Time":"2026-06-29T15:23:18.306161449Z","Action":"start","Package":"github.com/openziti/ziti/controller/command"}
+{"Time":"2026-06-29T15:23:18.306242638Z","Action":"output","Package":"github.com/openziti/ziti/controller/command","Output":"?   \tgithub.com/openziti/ziti/controller/command\t[no test files]\n"}
+{"Time":"2026-06-29T15:23:18.306259885Z","Action":"skip","Package":"github.com/openziti/ziti/controller/command","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.306272713Z","Action":"start","Package":"github.com/openziti/ziti/controller/raft/mesh"}
+{"Time":"2026-06-29T15:23:18.321650234Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyFalseWhenAllVersionsMatch"}
+{"Time":"2026-06-29T15:23:18.321748838Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyFalseWhenAllVersionsMatch","Output":"=== RUN   Test_checkState_ReadonlyFalseWhenAllVersionsMatch\n"}
+{"Time":"2026-06-29T15:23:18.321884604Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyFalseWhenAllVersionsMatch","Output":"--- PASS: Test_checkState_ReadonlyFalseWhenAllVersionsMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.322008273Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyFalseWhenAllVersionsMatch","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.322075825Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch"}
+{"Time":"2026-06-29T15:23:18.322137913Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch","Output":"=== RUN   Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch\n"}
+{"Time":"2026-06-29T15:23:18.322875727Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer  has version \u0026{dne    }, not matching local version \u0026{}, entering read-only mode\"\n"}
+{"Time":"2026-06-29T15:23:18.322926933Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer  has version \u0026{dne    }, not matching local version \u0026{}, entering read-only mode\"\n"}
+{"Time":"2026-06-29T15:23:18.322954395Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch","Output":"--- PASS: Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.322976641Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlyTrueWhenAllVersionsDoNotMatch","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.322990313Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlySetToFalseWhenPreviouslyTrueAndAllVersionsNowMatch"}
+{"Time":"2026-06-29T15:23:18.323000783Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlySetToFalseWhenPreviouslyTrueAndAllVersionsNowMatch","Output":"=== RUN   Test_checkState_ReadonlySetToFalseWhenPreviouslyTrueAndAllVersionsNowMatch\n"}
+{"Time":"2026-06-29T15:23:18.323020207Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlySetToFalseWhenPreviouslyTrueAndAllVersionsNowMatch","Output":"--- PASS: Test_checkState_ReadonlySetToFalseWhenPreviouslyTrueAndAllVersionsNowMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.323031505Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_checkState_ReadonlySetToFalseWhenPreviouslyTrueAndAllVersionsNowMatch","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.323048963Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_PassesReadonlyWhenVersionsMatch"}
+{"Time":"2026-06-29T15:23:18.323067284Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_PassesReadonlyWhenVersionsMatch","Output":"=== RUN   Test_AddPeer_PassesReadonlyWhenVersionsMatch\n"}
+{"Time":"2026-06-29T15:23:18.323202866Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_PassesReadonlyWhenVersionsMatch","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer connected\" peerAddr= peerId=\n"}
+{"Time":"2026-06-29T15:23:18.323235091Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_PassesReadonlyWhenVersionsMatch","Output":"--- PASS: Test_AddPeer_PassesReadonlyWhenVersionsMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.32335401Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_PassesReadonlyWhenVersionsMatch","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.323397863Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch"}
+{"Time":"2026-06-29T15:23:18.323421338Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch","Output":"=== RUN   Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch\n"}
+{"Time":"2026-06-29T15:23:18.323564028Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer  has version \u0026{dne    }, not matching local version \u0026{}, entering read-only mode\"\n"}
+{"Time":"2026-06-29T15:23:18.323602585Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer connected\" peerAddr= peerId=\n"}
+{"Time":"2026-06-29T15:23:18.323621291Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch","Output":"--- PASS: Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.323633231Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_AddPeer_TurnsReadonlyWhenVersionsDoNotMatch","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.323642127Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions"}
+{"Time":"2026-06-29T15:23:18.32365027Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions","Output":"=== RUN   Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions\n"}
+{"Time":"2026-06-29T15:23:18.323664621Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer disconnected\" peerAddr=1 peerId=\n"}
+{"Time":"2026-06-29T15:23:18.323675509Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions","Output":"--- PASS: Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.323683144Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_StaysReadonlyWhenDeletingPeerAndStillHasMismatchedVersions","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.323730739Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches"}
+{"Time":"2026-06-29T15:23:18.323743002Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches","Output":"=== RUN   Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches\n"}
+{"Time":"2026-06-29T15:23:18.327308353Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer disconnected\" peerAddr=1 peerId=\n"}
+{"Time":"2026-06-29T15:23:18.32734286Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches","Output":"--- PASS: Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.327352395Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingPeerWithNoOtherMismatches","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.327364159Z","Action":"run","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer"}
+{"Time":"2026-06-29T15:23:18.327373347Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer","Output":"=== RUN   Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer\n"}
+{"Time":"2026-06-29T15:23:18.32738244Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer","Output":"time=\"2026-06-29T15:23:18Z\" level=info msg=\"peer disconnected\" peerAddr=1 peerId=\n"}
+{"Time":"2026-06-29T15:23:18.327395646Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer","Output":"--- PASS: Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer (0.00s)\n"}
+{"Time":"2026-06-29T15:23:18.32740468Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Test":"Test_RemovePeer_RemovesReadonlyWhenDeletingLastPeer","Elapsed":0}
+{"Time":"2026-06-29T15:23:18.327412963Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:18.327825616Z","Action":"output","Package":"github.com/openziti/ziti/controller/raft/mesh","Output":"ok  \tgithub.com/openziti/ziti/controller/raft/mesh\t0.021s\n"}
+{"Time":"2026-06-29T15:23:18.327892849Z","Action":"pass","Package":"github.com/openziti/ziti/controller/raft/mesh","Elapsed":0.022}
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=go exit_code=0

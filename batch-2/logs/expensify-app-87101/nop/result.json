@@ -1,0 +1,29 @@
+{
+    "id": "db242633-2d5a-4335-ab05-c46d60fc5fc5",
+    "started_at": "2026-07-06T12:16:45.127359",
+    "finished_at": "2026-07-06T12:19:05.334323",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__expensify-app-87101": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "expensify-app-87101__LbK9UA2"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

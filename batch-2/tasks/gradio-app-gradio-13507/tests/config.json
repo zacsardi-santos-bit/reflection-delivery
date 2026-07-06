@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/components/test_html.py -v",
+  "test_files": [
+    "test/components/test_html.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.components.test_html.TestScriptTagWarning::test_warns_on_script_in_value"
+  ],
+  "PASS_TO_PASS": [
+    "test.components.test_html.TestScriptTagWarning::test_no_warning_for_plain_html",
+    "test.components.test_html.TestToPublishFormat::test_basic_gr_html",
+    "test.components.test_html.TestToPublishFormat::test_name_defaults_to_label",
+    "test.components.test_html.TestToPublishFormat::test_name_defaults_to_untitled",
+    "test.components.test_html.TestToPublishFormat::test_subclass_name_from_class",
+    "test.components.test_html.TestToPublishFormat::test_subclass_python_code_from_source",
+    "test.components.test_html.TestToPublishFormat::test_explicit_name_overrides_class_name",
+    "test.components.test_html.TestToPublishFormat::test_tags_default_to_empty_list",
+    "test.components.test_html.TestToPublishFormat::test_repo_url_included_when_provided",
+    "test.components.test_html.TestToPublishFormat::test_repo_url_excluded_when_empty",
+    "test.components.test_html.TestToPublishFormat::test_head_included",
+    "test.components.test_html.TestToPublishFormat::test_default_props_includes_custom_props",
+    "test.components.test_html.TestToPublishFormat::test_none_value_becomes_empty_string",
+    "test.components.test_html.TestToPublishFormat::test_none_js_on_load_becomes_empty_string",
+    "test.components.test_html.TestToPublishFormat::test_id_slugification",
+    "test.components.test_html.TestToPublishFormat::test_id_slugification_special_chars",
+    "test.components.test_html.TestHTML::test_component_functions",
+    "test.components.test_html.TestHTML::test_layout_parameters",
+    "test.components.test_html.TestHTML::test_in_interface"
+  ]
+}

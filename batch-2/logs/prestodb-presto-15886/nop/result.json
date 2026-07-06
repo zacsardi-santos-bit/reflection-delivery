@@ -1,0 +1,29 @@
+{
+    "id": "c64f02a1-ae14-4828-97c4-0cd30934a26f",
+    "started_at": "2026-07-04T15:37:06.866429",
+    "finished_at": "2026-07-04T15:45:09.698722",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__prestodb-presto-15886": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "prestodb-presto-15886__QRntUYH"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

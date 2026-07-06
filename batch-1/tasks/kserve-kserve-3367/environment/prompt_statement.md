@@ -1,0 +1,3 @@
+I'm working on the inference graph feature and noticed that the router container doesn't have a readiness probe configured. This means Kubernetes can't tell when the router is actually ready to handle traffic — pods get requests before they're initialized, and traffic isn't drained properly when the router shuts down.
+
+I'd like to add a readiness probe to the router container so that Kubernetes can properly manage its lifecycle. The same probe should be applied consistently both when deploying with raw Kubernetes resources and when using Knative services. Ideally the probe configuration would be defined in a central shared location so it can be reused wherever the router container spec is built.

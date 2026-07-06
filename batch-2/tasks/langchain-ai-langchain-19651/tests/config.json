@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "bash -c 'cd /workspace/repo/libs/community && pytest tests/unit_tests/vectorstores/test_indexing_docs.py tests/unit_tests/vectorstores/test_tencentvectordb.py -v; EXIT1=$?; cd /workspace/repo/libs/langchain && pytest tests/unit_tests/retrievers/self_query/test_tencentvectordb.py -v; EXIT2=$?; exit $((EXIT1 > 0 || EXIT2 > 0))'",
+  "test_files": [
+    "libs/community/tests/unit_tests/vectorstores/test_indexing_docs.py",
+    "libs/community/tests/unit_tests/vectorstores/test_tencentvectordb.py",
+    "libs/langchain/tests/unit_tests/retrievers/self_query/test_tencentvectordb.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests/unit_tests/vectorstores/test_indexing_docs.py::test_compatible_vectorstore_documentation",
+    "tests/unit_tests/vectorstores/test_tencentvectordb.py::test_translate_filter",
+    "tests/unit_tests/vectorstores/test_tencentvectordb.py::test_translate_filter_with_in_comparison",
+    "tests/unit_tests/retrievers/self_query/test_tencentvectordb.py::test_translate_with_operator",
+    "tests/unit_tests/retrievers/self_query/test_tencentvectordb.py::test_translate_with_in_comparison",
+    "tests/unit_tests/retrievers/self_query/test_tencentvectordb.py::test_translate_with_allowed_fields",
+    "tests/unit_tests/retrievers/self_query/test_tencentvectordb.py::test_translate_with_unsupported_field"
+  ],
+  "PASS_TO_PASS": []
+}

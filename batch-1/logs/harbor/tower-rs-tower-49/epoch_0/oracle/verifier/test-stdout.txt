@@ -1,0 +1,56 @@
+patching file tower-in-flight-limit/tests/in_flight_limit.rs
+   Compiling futures v0.1.31
+   Compiling tower v0.1.0 (/workspace/repo)
+   Compiling tower-ready-service v0.1.0 (/workspace/repo/tower-ready-service)
+   Compiling tower-mock v0.1.0 (/workspace/repo/tower-mock)
+   Compiling tower-in-flight-limit v0.1.0 (/workspace/repo/tower-in-flight-limit)
+warning: unnecessary parentheses around method argument
+   --> tower-mock/src/lib.rs:168:54
+    |
+168 |         match self.tx.lock().unwrap().unbounded_send((request)) {
+    |                                                      ^       ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+168 -         match self.tx.lock().unwrap().unbounded_send((request)) {
+168 +         match self.tx.lock().unwrap().unbounded_send(request) {
+    |
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tower-in-flight-limit/src/lib.rs:227:36
+    |
+227 |             let actual = self.curr.compare_and_swap(curr, curr + 1, SeqCst);
+    |                                    ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: `tower-mock` (lib) generated 1 warning (run `cargo fix --lib -p tower-mock` to apply 1 suggestion)
+warning: `tower-in-flight-limit` (lib) generated 1 warning
+warning: the item `Future` is imported redundantly
+   --> tower-in-flight-limit/tests/in_flight_limit.rs:239:27
+    |
+8   | use futures::future::{Future, poll_fn};
+    |                       ------ the item `Future` is already imported here
+...
+239 |     use futures::future::{Future, lazy};
+    |                           ^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` on by default
+
+warning: `tower-in-flight-limit` (lib test) generated 1 warning (1 duplicate)
+warning: `tower-in-flight-limit` (test "in_flight_limit") generated 1 warning
+    Finished test [unoptimized + debuginfo] target(s) in 1.78s
+────────────
+ Nextest run ID 4acd7153-8547-4fd7-8515-caa959abfcd7 with nextest profile: default
+    Starting 7 tests across 2 binaries
+        PASS [   0.055s] (1/7) tower-in-flight-limit::in_flight_limit reserve_capacity_without_sending_request
+        PASS [   0.059s] (2/7) tower-in-flight-limit::in_flight_limit response_future_drop_releases_capacity
+        PASS [   0.060s] (3/7) tower-in-flight-limit::in_flight_limit service_drop_frees_capacity
+        PASS [   0.060s] (4/7) tower-in-flight-limit::in_flight_limit response_error_releases_capacity
+        PASS [   0.061s] (5/7) tower-in-flight-limit::in_flight_limit basic_service_limit_functionality_without_poll_ready
+        PASS [   0.061s] (6/7) tower-in-flight-limit::in_flight_limit request_without_capacity
+        PASS [   0.062s] (7/7) tower-in-flight-limit::in_flight_limit basic_service_limit_functionality_with_poll_ready
+────────────
+     Summary [   0.063s] 7 tests run: 7 passed, 0 skipped
+reward=1 graded=7 found=0 failed=0 parsed=7 framework=cargo exit_code=0

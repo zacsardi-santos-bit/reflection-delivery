@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/pandas-dev/pandas/pull/64802"
+source_type = "pr"
+
+[task]
+name = "pandas-dev/pandas"
+description = "I'm hitting a wall with axis-based reductions on 2D nullable arrays, both the integer and float kinds (the sort that show up from internal DataFrame ops). When I try to find the minimum or maximum ..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["python", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:pandas-dev-pandas-64802"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "medium"
+difficulty_explanation = "medium: solvable by a frontier model (opus-4.8 pass@8>0)"
+pass_at_k_opus_4_8 = "12/17"
+category = "Data Processing and ETL"
+subcategory = "Tabular transformation"
+objective_labels = ["Implement", "Fix"]
+artifact_type_labels = ["Codebase"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

@@ -1,0 +1,12 @@
+patching file generators/client/templates/common/package.json
+patching file generators/client/templates/react/src/main/webapp/app/index.tsx.ejs
+patching file generators/common/templates/sonar-project.properties.ejs
+patching file generators/entity-server/templates/src/main/java/package/common/get_all_template.ejs
+patching file generators/entity-server/templates/src/main/java/package/service/EntityQueryService.java.ejs
+patching file generators/server/__snapshots__/generator.spec.mjs.snap
+patching file generators/server/__snapshots__/needles.spec.mjs.snap
+patching file generators/server/files.js
+patching file generators/server/templates/src/main/java/package/Application.java.ejs
+patching file generators/server/templates/src/main/java/package/config/CRLFLogConverter.java.ejs
+patching file generators/server/templates/src/main/resources/config/application-prod.yml.ejs
+patching file generators/server/templates/src/main/resources/logback-spring.xml.ejs

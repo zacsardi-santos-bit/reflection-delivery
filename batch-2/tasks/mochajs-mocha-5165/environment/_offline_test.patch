@@ -1,0 +1,13 @@
+diff --git a/test/node-unit/cli/run.spec.js b/test/node-unit/cli/run.spec.js
+index 2c97e168..1e0ccd7b 100644
+--- a/test/node-unit/cli/run.spec.js
++++ b/test/node-unit/cli/run.spec.js
+@@ -7,7 +7,7 @@ describe('command', function () {
+   describe('run', function () {
+     describe('builder', function () {
+       const IGNORED_OPTIONS = new Set(['help', 'version']);
+-      const options = builder(require('yargs/yargs')().reset()).getOptions();
++      const options = builder(require('yargs')()).getOptions();
+       ['number', 'string', 'boolean', 'array'].forEach(type => {
+         describe(`${type} type`, function () {
+           Array.from(new Set(options[type])).forEach(option => {

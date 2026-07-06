@@ -1,0 +1,21 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run --config code/core/vitest.config.ts --reporter=verbose code/core/src/core-server/utils/runtime-instance-registry.test.ts",
+  "test_files": [
+    "code/core/src/core-server/utils/runtime-instance-registry.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::getMcpMetadataFromMainConfig marks MCP as not-installed when addon-mcp is not configured",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::getMcpMetadataFromMainConfig uses the default endpoint when addon-mcp is configured as a string",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::getMcpMetadataFromMainConfig uses endpoint from addon-mcp options",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::createRuntimeInstanceRecord creates a schemaVersion 1 runtime instance record",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::createRuntimeInstanceRecord marks MCP as not-installed by default",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::createRuntimeInstanceRecord uses provided MCP state",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::createRuntimeInstanceRecord stores only the Storybook origin in url and excludes initial path query params",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::writeRuntimeInstanceRecord writes via a temporary file in the registry directory and renames to the final JSON path",
+    "/workspace/repo/code/core/src/core-server/utils/runtime-instance-registry.test.ts::writeStorybookRuntimeInstanceRecord cleans up the written instance record"
+  ],
+  "PASS_TO_PASS": []
+}

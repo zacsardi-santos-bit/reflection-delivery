@@ -1,0 +1,38 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run src/utils/agentSettings.test.ts src/utils/featureToggleUtils.test.ts src/utils/skillSettings.test.ts --coverage=false",
+  "test_files": [
+    "packages/cli/src/utils/agentSettings.test.ts",
+    "packages/cli/src/utils/featureToggleUtils.test.ts",
+    "packages/cli/src/utils/skillSettings.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils enableFeature should return no-op when the feature is already enabled in all scopes",
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils enableFeature should enable the feature when disabled in one scope",
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils enableFeature should enable the feature when disabled in both scopes",
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils enableFeature should include correct scope paths in the result",
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils disableFeature should return no-op when the feature is already disabled in the target scope",
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils disableFeature should disable the feature when it is enabled",
+    "/workspace/repo/packages/cli/src/utils/featureToggleUtils.test.ts::featureToggleUtils disableFeature should return error for an invalid  scope"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/utils/agentSettings.test.ts::agentSettings agentStrategy (via enableAgent / disableAgent) enableAgent should return no-op when the agent is already enabled in both scopes",
+    "/workspace/repo/packages/cli/src/utils/agentSettings.test.ts::agentSettings agentStrategy (via enableAgent / disableAgent) enableAgent should enable the agent when not present in any scope",
+    "/workspace/repo/packages/cli/src/utils/agentSettings.test.ts::agentSettings agentStrategy (via enableAgent / disableAgent) enableAgent should enable the agent only in the scope where it is not enabled",
+    "/workspace/repo/packages/cli/src/utils/agentSettings.test.ts::agentSettings agentStrategy (via enableAgent / disableAgent) disableAgent should return no-op when agent is already explicitly disabled",
+    "/workspace/repo/packages/cli/src/utils/agentSettings.test.ts::agentSettings agentStrategy (via enableAgent / disableAgent) disableAgent should disable the agent when it is currently enabled",
+    "/workspace/repo/packages/cli/src/utils/agentSettings.test.ts::agentSettings agentStrategy (via enableAgent / disableAgent) disableAgent should return error for an invalid scope",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) enableSkill should return no-op when the skill is not in any disabled list",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) enableSkill should return no-op when skills.disabled is undefined",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) enableSkill should enable the skill when it is in the disabled list of one scope",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) enableSkill should enable the skill when it is in the disabled list of both scopes",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) enableSkill should not affect other skills in the disabled list",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) disableSkill should return no-op when the skill is already in the disabled list",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) disableSkill should disable the skill when it is not in the disabled list",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) disableSkill should disable the skill when skills.disabled is undefined",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) disableSkill should return error for an invalid scope",
+    "/workspace/repo/packages/cli/src/utils/skillSettings.test.ts::skillSettings skillStrategy (via enableSkill / disableSkill) disableSkill should disable in workspace and report user as already disabled"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p libsql-server --test bootstrap --no-fail-fast",
+  "test_files": [
+    "libsql-server/tests/bootstrap.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "libsql-server::bootstrap bootstrap"
+  ],
+  "PASS_TO_PASS": []
+}

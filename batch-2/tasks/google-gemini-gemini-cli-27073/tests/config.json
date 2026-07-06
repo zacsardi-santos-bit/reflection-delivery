@@ -1,0 +1,47 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/a2a-server && npx vitest run src/config/config.test.ts src/config/settings.test.ts",
+  "test_files": [
+    "packages/a2a-server/src/config/config.test.ts",
+    "packages/a2a-server/src/config/settings.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig policy engine configuration should merge V1 and V2 tool settings into policySettings",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig policy engine configuration should use V2 tool settings when V1 is missing",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig policy engine configuration should use V1 tool settings when V2 is also present",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration YOLO mode should use default approval mode and load default rules when GEMINI_YOLO_MODE is not true",
+    "/workspace/repo/packages/a2a-server/src/config/settings.test.ts::loadSettings security should NOT load workspace settings if workspace is NOT trusted",
+    "/workspace/repo/packages/a2a-server/src/config/settings.test.ts::loadSettings security should NOT allow workspace settings to override adminPolicyPaths or policyPaths even if trusted"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig admin settings overrides should not fetch admin controls if experiment is disabled",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig admin settings overrides should pass clientName as a2a-server to Config",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig admin settings overrides when admin controls experiment is enabled should fetch admin controls and apply them",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig admin settings overrides when admin controls experiment is enabled should treat unset admin settings as false when admin settings are passed",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig admin settings overrides when admin controls experiment is enabled should not pass default unset admin settings when no admin settings are present",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig admin settings overrides when admin controls experiment is enabled should fetch admin controls using the code assist server when available",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig should set customIgnoreFilePaths when CUSTOM_IGNORE_FILE_PATHS env var is present",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig should set customIgnoreFilePaths when settings.fileFiltering.customIgnoreFilePaths is present",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig should merge customIgnoreFilePaths from settings and env var",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig should split CUSTOM_IGNORE_FILE_PATHS using system delimiter",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig should have empty customIgnoreFilePaths when both are missing",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration should pass V1 allowedTools to Config properly",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration should pass V2 tools.allowed to Config properly",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration should prefer V1 allowedTools over V2 tools.allowed if both present",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration should pass enableAgents to Config constructor",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration should default enableAgents to true when not provided",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration interactivity should always set interactive true",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration interactivity should set enableInteractiveShell based on headless mode",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration YOLO mode should enable YOLO mode and add policy rule when GEMINI_YOLO_MODE is true",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration authentication logic should attempt COMPUTE_ADC by default and bypass LOGIN_WITH_GOOGLE if successful",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration authentication logic should fallback to LOGIN_WITH_GOOGLE if COMPUTE_ADC fails and interactive mode is available",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration authentication logic should throw FatalAuthenticationError in headless mode if COMPUTE_ADC fails",
+    "/workspace/repo/packages/a2a-server/src/config/config.test.ts::loadConfig tool configuration authentication logic should include both original and fallback error when LOGIN_WITH_GOOGLE fallback fails",
+    "/workspace/repo/packages/a2a-server/src/config/settings.test.ts::loadSettings should load other top-level settings correctly",
+    "/workspace/repo/packages/a2a-server/src/config/settings.test.ts::loadSettings should load experimental settings correctly",
+    "/workspace/repo/packages/a2a-server/src/config/settings.test.ts::loadSettings should overwrite top-level settings from workspace (shallow merge)",
+    "/workspace/repo/packages/a2a-server/src/config/settings.test.ts::loadSettings security should load workspace settings if workspace IS trusted"
+  ]
+}

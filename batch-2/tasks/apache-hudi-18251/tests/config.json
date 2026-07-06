@@ -1,0 +1,21 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl hudi-client/hudi-client-common test -Dtest=TestCommitBasedClusteringPlanStrategy --batch-mode -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true -Denforcer.skip=true",
+  "test_files": [
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/action/cluster/strategy/TestCommitBasedClusteringPlanStrategy.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3",
+    "jar:::test_4",
+    "jar:::test_5",
+    "jar:::test_6",
+    "jar:::test_7",
+    "jar:::test_8",
+    "jar:::test_9"
+  ],
+  "PASS_TO_PASS": []
+}

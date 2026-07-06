@@ -1,0 +1,443 @@
+diff --git a/examples/example_scene.py b/examples/example_scene.py
+new file mode 100644
+index 00000000..6c723cdf
+--- /dev/null
++++ b/examples/example_scene.py
+@@ -0,0 +1,24 @@
++"""Example for switching a light on and off."""
++import asyncio
++
++from xknx import XKNX
++from xknx.devices import Scene
++
++
++async def main():
++    """Connect to KNX/IP bus and run scene."""
++    xknx = XKNX()
++    await xknx.start()
++    scene = Scene(
++        xknx,
++        name='Romantic',
++        group_address='7/0/9',
++        scene_number=23)
++    await scene.run()
++    await xknx.stop()
++
++
++# pylint: disable=invalid-name
++loop = asyncio.get_event_loop()
++loop.run_until_complete(main())
++loop.close()
+diff --git a/home-assistant-plugin/custom_components/scene/xknx.py b/home-assistant-plugin/custom_components/scene/xknx.py
+new file mode 100644
+index 00000000..9b2704b8
+--- /dev/null
++++ b/home-assistant-plugin/custom_components/scene/xknx.py
+@@ -0,0 +1,94 @@
++"""
++Support for KNX scenes.
++
++For more details about this platform, please refer to the documentation at
++https://home-assistant.io/components/scene.knx/
++"""
++import asyncio
++import voluptuous as vol
++
++from homeassistant.components.scene import Scene, CONF_PLATFORM
++from custom_components.xknx import DATA_XKNX, ATTR_DISCOVER_DEVICES
++from homeassistant.const import CONF_NAME
++from homeassistant.core import callback
++import homeassistant.helpers.config_validation as cv
++
++CONF_ADDRESS = 'address'
++CONF_SCENE_NUMBER = 'scene_number'
++
++DEFAULT_NAME = 'XKNX SCENE'
++DEPENDENCIES = ['xknx']
++
++PLATFORM_SCHEMA = vol.Schema({
++    vol.Required(CONF_PLATFORM): 'knx',
++    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
++    vol.Required(CONF_ADDRESS): cv.string,
++    vol.Required(CONF_SCENE_NUMBER): cv.positive_int,
++})
++
++
++@asyncio.coroutine
++def async_setup_platform(hass, config, async_add_devices,
++                         discovery_info=None):
++    """Set up the scenes for KNX platform."""
++    if DATA_XKNX not in hass.data \
++            or not hass.data[DATA_XKNX].initialized:
++        return False
++
++    if discovery_info is not None:
++        async_add_devices_discovery(hass, discovery_info, async_add_devices)
++    else:
++        async_add_devices_config(hass, config, async_add_devices)
++
++    return True
++
++
++@callback
++def async_add_devices_discovery(hass, discovery_info, async_add_devices):
++    """Set up scenes for KNX platform configured via xknx.yaml."""
++    entities = []
++    for device_name in discovery_info[ATTR_DISCOVER_DEVICES]:
++        device = hass.data[DATA_XKNX].xknx.devices[device_name]
++        entities.append(KNXScene(hass, device))
++    async_add_devices(entities)
++
++
++@callback
++def async_add_devices_config(hass, config, async_add_devices):
++    """Set up scene for KNX platform configured within plattform."""
++    import xknx
++    scene = xknx.devices.Scene(
++        hass.data[DATA_XKNX].xknx,
++        name=config.get(CONF_NAME),
++        group_address=config.get(CONF_ADDRESS),
++        scene_number=config.get(CONF_SCENE_NUMBER))
++    hass.data[DATA_XKNX].xknx.devices.add(scene)
++    async_add_devices([KNXScene(hass, scene)])
++
++
++class KNXScene(Scene):
++    """Representation of a KNX scene."""
++
++    def __init__(self, hass, scene):
++        """Init KNX scene."""
++        self.hass = hass
++        self.scene = scene
++
++    @property
++    def name(self):
++        """Return the name of the scene."""
++        return self.scene.name
++
++    @property
++    def should_poll(self):
++        """Return that polling is not necessary."""
++        return False
++
++    @property
++    def is_on(self):
++        """There is no way of detecting if a scene is active (yet)."""
++        return False
++
++    def activate(self):
++        """Activate the scene."""
++        self.hass.async_add_job(self.scene.run())
+diff --git a/home-assistant-plugin/custom_components/xknx.py b/home-assistant-plugin/custom_components/xknx.py
+index fa6960fa..1aea7eae 100644
+--- a/home-assistant-plugin/custom_components/xknx.py
++++ b/home-assistant-plugin/custom_components/xknx.py
+@@ -108,6 +108,7 @@ def async_setup(hass, config):
+             ('light', 'Light'),
+             ('sensor', 'Sensor'),
+             ('binary_sensor', 'BinarySensor'),
++            ('scene', 'Scene'),
+             ('notify', 'Notification')):
+         found_devices = _get_devices(hass, discovery_type)
+         hass.async_add_job(
+@@ -297,6 +298,7 @@ class KNXAutomation():
+ 
+ class KNXExposeTime(object):
+     """Object to Expose Time/Date object to KNX bus."""
++
+     def __init__(self, hass, xknx, expose_type, address):
+         """Initialize of Expose class."""
+         self.hass = hass
+@@ -307,6 +309,7 @@ class KNXExposeTime(object):
+         self.register()
+ 
+     def register(self):
++        """Register listener."""
+         from xknx.devices import DateTime
+         from xknx.devices.datetime import DateTimeBroadcastType
+         broadcast_type_string = self.type.upper()
+@@ -323,6 +326,7 @@ class KNXExposeTime(object):
+ 
+ class KNXExposeSensor(object):
+     """Object to Expose HASS entity to KNX bus."""
++
+     def __init__(self, hass, xknx, expose_type, entity_id, address):
+         """Initialize of Expose class."""
+         self.hass = hass
+@@ -334,6 +338,7 @@ class KNXExposeSensor(object):
+         self.register()
+ 
+     def register(self):
++        """Register listener."""
+         from xknx.devices import ExposeSensor
+         self.device = ExposeSensor(
+             self.xknx,
+diff --git a/xknx.yaml b/xknx.yaml
+index 3b1e22ee..fb91d010 100644
+--- a/xknx.yaml
++++ b/xknx.yaml
+@@ -102,3 +102,7 @@ groups:
+ 
+     expose_sensor:
+         Outside.Temperature: {group_address: '2/0/3', value_type: 'temperature'}
++
++
++    scene:
++        Romantic: {group_address: '7/0/1', scene_number: 23}
+diff --git a/xknx/core/config.py b/xknx/core/config.py
+index 4fcfc664..8479c36b 100644
+--- a/xknx/core/config.py
++++ b/xknx/core/config.py
+@@ -7,10 +7,10 @@ Module for reading configfiles (xknx.yaml).
+ 
+ import yaml
+ 
+-from xknx.devices import (BinarySensor, Climate, Cover, DateTime, Light,
+-                          Notification, ExposeSensor, Sensor, Switch)
+-from xknx.knx import PhysicalAddress
++from xknx.devices import (BinarySensor, Climate, Cover, DateTime, ExposeSensor,
++                          Light, Notification, Scene, Sensor, Switch)
+ from xknx.exceptions import XKNXException
++from xknx.knx import PhysicalAddress
+ 
+ 
+ class Config:
+@@ -64,6 +64,8 @@ class Config:
+                 self.parse_group_binary_sensor(doc["groups"][group])
+             elif group.startswith("notification"):
+                 self.parse_group_notification(doc["groups"][group])
++            elif group.startswith("scene"):
++                self.parse_group_scene(doc["groups"][group])
+         except XKNXException as ex:
+             self.xknx.logger.error("Error while reading config file: Could not parse %s: %s", group, ex)
+ 
+@@ -147,3 +149,12 @@ class Config:
+                 entry,
+                 entries[entry])
+             self.xknx.devices.add(notification)
++
++    def parse_group_scene(self, entries):
++        """Parse a scene section of xknx.yaml."""
++        for entry in entries:
++            scene = Scene.from_config(
++                self.xknx,
++                entry,
++                entries[entry])
++            self.xknx.devices.add(scene)
+diff --git a/xknx/devices/__init__.py b/xknx/devices/__init__.py
+index 77e65719..078c0689 100644
+--- a/xknx/devices/__init__.py
++++ b/xknx/devices/__init__.py
+@@ -12,5 +12,6 @@ from .sensor import Sensor
+ from .expose_sensor import ExposeSensor
+ from .binary_sensor import BinarySensor, BinarySensorState
+ from .notification import Notification
++from .scene import Scene
+ from .remote_value import RemoteValue
+ from .remote_value_sensor import RemoteValueSensor
+diff --git a/xknx/devices/remote_value.py b/xknx/devices/remote_value.py
+index 2e2a0271..bb07e5ac 100644
+--- a/xknx/devices/remote_value.py
++++ b/xknx/devices/remote_value.py
+@@ -8,8 +8,9 @@ or a group address for both.
+ from enum import Enum
+ 
+ from xknx.exceptions import ConversionError, CouldNotParseTelegram
+-from xknx.knx import (DPTArray, DPTBinary, DPTScaling, DPTTemperature,
+-                      DPTValue1Count, GroupAddress, Telegram, TelegramType)
++from xknx.knx import (DPTArray, DPTBinary, DPTScaling, DPTSceneNumber,
++                      DPTTemperature, DPTValue1Count, GroupAddress, Telegram,
++                      TelegramType)
+ 
+ 
+ class RemoteValue():
+@@ -346,6 +347,39 @@ class RemoteValueScaling5001(RemoteValue):
+         return "%"
+ 
+ 
++class RemoteValueSceneNumber17001(RemoteValue):
++    """Abstraction for remote value of KNX DPT 17.001 (DPT_Scene_Number)."""
++
++    def __init__(self,
++                 xknx,
++                 group_address=None,
++                 device_name=None,
++                 after_update_cb=None):
++        """Initialize remote value of KNX DPT 17.001 (DPT_Scene_Number)."""
++        # pylint: disable=too-many-arguments
++        super(RemoteValueSceneNumber17001, self).__init__(
++            xknx, group_address, None,
++            device_name=device_name, after_update_cb=after_update_cb)
++
++    def payload_valid(self, payload):
++        """Test if telegram payload may be parsed."""
++        return (isinstance(payload, DPTArray)
++                and len(payload.value) == 1)
++
++    def to_knx(self, value):
++        """Convert value to payload."""
++        return DPTArray(DPTSceneNumber.to_knx(value))
++
++    def from_knx(self, payload):
++        """Convert current payload to value."""
++        return DPTSceneNumber.from_knx(payload.value)
++
++    @property
++    def unit_of_measurement(self):
++        """Return the unit of measurement."""
++        return "%"
++
++
+ class RemoteValue1Count(RemoteValue):
+     """Abstraction for remote value of KNX 6.010 (DPT_Value_1_Count)."""
+ 
+diff --git a/xknx/devices/scene.py b/xknx/devices/scene.py
+new file mode 100644
+index 00000000..47ff335c
+--- /dev/null
++++ b/xknx/devices/scene.py
+@@ -0,0 +1,69 @@
++"""Module for managing a KNX scene."""
++from .device import Device
++from .remote_value import RemoteValueSceneNumber17001
++
++
++class Scene(Device):
++    """Class for managing a scene."""
++
++    def __init__(self,
++                 xknx,
++                 name,
++                 group_address=None,
++                 scene_number=0,
++                 device_updated_cb=None):
++        """Initialize Sceneclass."""
++        # pylint: disable=too-many-arguments
++        super(Scene, self).__init__(xknx, name, device_updated_cb)
++
++        self.scene_value = RemoteValueSceneNumber17001(
++            xknx,
++            group_address,
++            device_name=self.name,
++            after_update_cb=self.after_update)
++        self.scene_number = int(scene_number)
++
++    @classmethod
++    def from_config(cls, xknx, name, config):
++        """Initialize object from configuration structure."""
++        group_address = \
++            config.get('group_address')
++        scene_number = \
++            int(config.get('scene_number'))
++        return cls(
++            xknx,
++            name=name,
++            group_address=group_address,
++            scene_number=scene_number)
++
++    def has_group_address(self, group_address):
++        """Test if device has given group address."""
++        return self.scene_value.has_group_address(group_address)
++
++    def __str__(self):
++        """Return object as readable string."""
++        return '<Scene name="{0}" ' \
++               'scene_value="{1}" scene_number="{2}" />' \
++            .format(
++                self.name,
++                self.scene_value.group_addr_str(),
++                self.scene_number)
++
++    async def run(self):
++        """Move cover down."""
++        await self.scene_value.set(self.scene_number)
++
++    async def do(self, action):
++        """Execute 'do' commands."""
++        if action == "run":
++            await self.run()
++        else:
++            self.xknx.logger.warning("Could not understand action %s for device %s", action, self.get_name())
++
++    def state_addresses(self):
++        """Return group addresses which should be requested to sync state."""
++        return []
++
++    def __eq__(self, other):
++        """Equal operator."""
++        return self.__dict__ == other.__dict__
+diff --git a/xknx/io/knxip_interface.py b/xknx/io/knxip_interface.py
+index ecef3242..4882ad9b 100644
+--- a/xknx/io/knxip_interface.py
++++ b/xknx/io/knxip_interface.py
+@@ -78,7 +78,7 @@ class KNXIPInterface():
+         """Start GatewayScanner and connect to the found device."""
+         gatewayscanner = GatewayScanner(self.xknx)
+         await gatewayscanner.start()
+-        gatewayscanner.stop()
++        await gatewayscanner.stop()
+ 
+         if not gatewayscanner.found:
+             raise XKNXException("No Gateways found")
+diff --git a/xknx/knx/__init__.py b/xknx/knx/__init__.py
+index 22e477a2..07071f21 100644
+--- a/xknx/knx/__init__.py
++++ b/xknx/knx/__init__.py
+@@ -20,6 +20,7 @@ from .dpt_hvac_mode import HVACOperationMode, DPTHVACMode, \
+ from .dpt_2byte import DPT2ByteUnsigned, DPTUElCurrentmA, DPT2Ucount, DPTBrightness
+ from .dpt_4byte import DPT4ByteUnsigned, DPT4ByteSigned
+ from .dpt_scaling import DPTScaling
++from .dpt_scene_number import DPTSceneNumber
+ from .dpt_time import DPTTime
+ from .dpt_date import DPTDate
+ from .dpt_datetime import DPTDateTime
+diff --git a/xknx/knx/dpt_scene_number.py b/xknx/knx/dpt_scene_number.py
+new file mode 100644
+index 00000000..c4cfc412
+--- /dev/null
++++ b/xknx/knx/dpt_scene_number.py
+@@ -0,0 +1,44 @@
++"""Implementation of Basic KNX DPT_Scaling (Percent) Values."""
++from xknx.exceptions import ConversionError
++
++from .dpt import DPTBase
++
++
++class DPTSceneNumber(DPTBase):
++    """
++    Abstraction for KNX 1 Octet Scene Number.
++
++    DPT 17.001
++    """
++
++    value_min = 0
++    value_max = 63
++    unit = ""
++    resolution = 1
++
++    @classmethod
++    def from_knx(cls, raw):
++        """Parse/deserialize from KNX/IP raw data."""
++        cls.test_bytesarray(raw, 1)
++
++        value = raw[0]
++
++        if not cls._test_boundaries(value):
++            raise ConversionError("Cant parse DPTSceneNumber", value=value, raw=raw)
++
++        return value
++
++    @classmethod
++    def to_knx(cls, value):
++        """Serialize to KNX/IP raw data."""
++        if not isinstance(value, (int)):
++            raise ConversionError("Cant serialize DPTSceneNumber", value=value)
++        if not cls._test_boundaries(value):
++            raise ConversionError("Cant serialize DPTSceneNumber", value=value)
++        return (value,)
++
++    @classmethod
++    def _test_boundaries(cls, value):
++        """Test if value is within defined range for this object."""
++        return value >= cls.value_min and \
++            value <= cls.value_max

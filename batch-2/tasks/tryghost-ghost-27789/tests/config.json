@@ -1,0 +1,18 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/ghost/core && ./node_modules/.bin/mocha --reporter spec --node-option import=tsx --require=./test/utils/overrides.js --exit --trace-warnings --extension=test.js,test.ts --timeout=2000 './test/unit/server/models/member.test.js'",
+  "test_files": [
+    "ghost/core/test/unit/server/models/member.test.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ghost/core/test/unit/server/models/member.test.js::Unit: models/member onSaving skips labels without a name instead of throwing"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/ghost/core/test/unit/server/models/member.test.js::Unit: models/member toJSON avatar_image: generates gravatar url",
+    "/workspace/repo/ghost/core/test/unit/server/models/member.test.js::Unit: models/member toJSON avatar_image: skips gravatar when privacy.useGravatar=false",
+    "/workspace/repo/ghost/core/test/unit/server/models/member.test.js::Unit: models/member updateTierExpiry calls updatePivot on member products to set expiry",
+    "/workspace/repo/ghost/core/test/unit/server/models/member.test.js::Unit: models/member updateTierExpiry calls updatePivot on member products to remove expiry"
+  ]
+}

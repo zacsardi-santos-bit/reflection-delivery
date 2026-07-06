@@ -1,0 +1,131 @@
+patching file packages/starlight/__tests__/basics/config-errors.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/i18n-sidebar-fallback-slug.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/i18n-sidebar.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/sidebar-internal-link-error.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/vitest.config.ts
+patching file packages/starlight/__tests__/sidebar-slug-error/sidebar-slug-error.test.ts
+patching file packages/starlight/__tests__/sidebar-slug-error/vitest.config.ts
+15:32:01 [types] Added src/env.d.ts type declarations
+15:32:01 [WARN] Missing pages directory: src/pages
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+(node:61) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 unhandledRejection listeners added to [process]. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+15:32:02 [types] Added src/env.d.ts type declarations
+15:32:02 [WARN] Missing pages directory: src/pages
+15:32:02 [ERROR] [vite] WebSocket server error: Port is already in use
+
+ RUN  v1.6.0 /workspace/repo/packages/starlight
+
+ ✓ |basics| toc.test.ts  (8 tests) 101ms
+ ✓ |basics| git.test.ts  (6 tests) 487ms
+ ✓ |basics| i18n.test.ts  (18 tests) 139ms
+ ✓ |basics| slugs.test.ts  (17 tests) 44ms
+ ✓ |basics| format-path.test.ts  (30 tests) 43ms
+ ✓ |remark-rehype| rehype-steps.test.ts  (10 tests) 237ms
+ ✓ |remark-rehype| rehype-tabs.test.ts  (7 tests) 85ms
+ ✓ |remark-rehype| rehype-file-tree.test.ts  (18 tests) 118ms
+ ✓ |basics| config-errors.test.ts  (11 tests) 56ms
+ ✓ |i18n-root-locale| slugs.test.ts  (12 tests) 9ms
+ ✓ |i18n| translations-ec.test.ts  (7 tests) 16ms
+ ✓ |i18n-root-locale| localizedUrl.test.ts  (14 tests) 7ms
+ ✓ |i18n| translations-fs.test.ts  (6 tests) 12ms
+ ✓ |basics| navigation.test.ts  (18 tests) 23ms
+stderr | ../../Module.getCollection (/workspace/repo/node_modules/.pnpm/astro@4.10.2_@types+node@18.16.19_typescript@5.4.5/node_modules/astro/dist/content/runtime.js:43:15)
+The collection "docs" does not exist or is empty. Ensure a collection directory with this name exists.
+
+ ✓ |i18n-sidebar| i18n-sidebar-fallback-slug.test.ts  (2 tests) 20ms
+ ✓ |i18n-sidebar| i18n-sidebar.test.ts  (5 tests) 23ms
+ ✓ |i18n| navigation-order.test.ts  (2 tests) 33ms
+ ✓ |basics| head.test.ts  (9 tests) 18ms
+ ✓ |plugins| config.test.ts  (10 tests) 51ms
+ ✓ |basics| route-data.test.ts  (5 tests) 29ms
+ ✓ |sidebar| navigation.test.ts  (1 test) 44ms
+ ✓ |sidebar| navigation-hidden.test.ts  (1 test) 59ms
+ ✓ |sidebar| navigation-order.test.ts  (1 test) 47ms
+ ✓ |sidebar| navigation-unicode.test.ts  (1 test) 109ms
+ ✓ |sidebar| navigation-badges.test.ts  (1 test) 103ms
+ ✓ |sidebar| navigation-attributes.test.ts  (1 test) 118ms
+ ✓ |remark-rehype| asides.test.ts  (21 tests) 825ms
+ ✓ |basics| starlight-page-route-data.test.ts  (21 tests) 396ms
+ ✓ |i18n| routing.test.ts  (5 tests) 122ms
+ ✓ |i18n| localizedUrl.test.ts  (8 tests) 27ms
+ ✓ |i18n-root-locale| routing.test.ts  (6 tests) 97ms
+stderr | ../../Module.getCollection (/workspace/repo/node_modules/.pnpm/astro@4.10.2_@types+node@18.16.19_typescript@5.4.5/node_modules/astro/dist/content/runtime.js:43:15)
+The collection "docs" does not exist or is empty. Ensure a collection directory with this name exists.
+
+ ✓ |basics| routing.test.ts  (5 tests) 149ms
+ ✓ |basics| starlight-page-route-data-extend.test.ts  (2 tests) 83ms
+ ✓ |basics| base.test.ts  (6 tests) 32ms
+ ✓ |plugins| integration.test.ts  (2 tests) 26ms
+ ✓ |i18n-non-root-single-locale| translations-fs.test.ts  (3 tests) 29ms
+ ✓ |i18n| i18n.test.ts  (2 tests) 34ms
+ ✓ |i18n-root-locale| i18n.test.ts  (2 tests) 35ms
+ ✓ |i18n-non-root-single-locale| i18n.test.ts  (2 tests) 84ms
+ ✓ |i18n-non-root-single-locale| slugs.test.ts  (6 tests) 50ms
+ ✓ |basics| schema.test.ts  (5 tests) 26ms
+ ✓ |i18n-single-root-locale| slugs.test.ts  (6 tests) 16ms
+ ✓ |basics| navigation-order.test.ts  (1 test) 32ms
+ ✓ |basics| navigation-labels.test.ts  (1 test) 35ms
+ ✓ |i18n-sidebar| sidebar-internal-link-error.test.ts  (1 test) 48ms
+ ✓ |i18n-single-root-locale| translations-fs.test.ts  (3 tests) 39ms
+ ✓ |basics| sitemap.test.ts  (3 tests) 19ms
+ ✓ |basics| sorting.test.ts  (1 test) 46ms
+ ✓ |i18n-non-root-single-locale| localizedUrl.test.ts  (4 tests) 20ms
+ ✓ |basics| localizedUrl.test.ts  (4 tests) 8ms
+ ✓ |remark-rehype| code-rtl-support.test.ts  (2 tests) 34ms
+ ✓ |basics| config.test.ts  (5 tests) 16ms
+ ✓ |i18n-single-root-locale| i18n.test.ts  (1 test) 8ms
+ ✓ |i18n| translations.test.ts  (4 tests) 7ms
+ ✓ |i18n| config.test.ts  (3 tests) 15ms
+ ✓ |i18n| route-data.test.ts  (2 tests) 14ms
+ ✓ |i18n| translations-with-user-config.test.ts  (2 tests) 5ms
+ ✓ |i18n-single-root-locale| config.test.ts  (3 tests) 7ms
+ ✓ |i18n-non-root-single-locale| config.test.ts  (3 tests) 8ms
+ ✓ |i18n-root-locale| config.test.ts  (3 tests) 9ms
+ ✓ |basics| user-config.test.ts  (1 test) 5ms
+ ✓ |i18n-non-root-single-locale| translations-with-user-config.test.ts  (1 test) 3ms
+ ✓ |i18n-non-root-single-locale| translations.test.ts  (3 tests) 13ms
+ ✓ |i18n-non-root-single-locale| routing.test.ts  (3 tests) 6ms
+ ✓ |i18n-single-root-locale| translations-with-user-config.test.ts  (1 test) 9ms
+ ✓ |i18n-single-root-locale| routing.test.ts  (3 tests) 7ms
+ ✓ |i18n-single-root-locale| translations.test.ts  (3 tests) 17ms
+ ✓ |i18n-non-root-single-locale| route-data.test.ts  (1 test) 11ms
+ ✓ |i18n-single-root-locale| route-data.test.ts  (1 test) 10ms
+ ✓ |edit-url| edit-url.test.ts  (2 tests) 20ms
+ ✓ |sidebar-slug-error| sidebar-slug-error.test.ts  (1 test) 3ms
+
+ Test Files  71 passed (71)
+      Tests  389 passed (389)
+   Start at  15:32:00
+   Duration  14.49s (transform 33.55s, setup 11ms, collect 106.41s, tests 4.54s, environment 64ms, prepare 42.65s)
+
+reward=1 graded=383 found=0 failed=0 parsed=0 framework=vitest exit_code=0

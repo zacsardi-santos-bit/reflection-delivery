@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/test_pr111365.py -v",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_pr111365::test_loongarch64_removed_from_platform_matrix",
+    "test_pr111365::test_loongarch64_removed_from_platform_matrix_multijob",
+    "test_pr111365::test_loongarch64_removed_from_docker_doc"
+  ],
+  "PASS_TO_PASS": []
+}

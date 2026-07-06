@@ -1,0 +1,17 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl tracing/opentelemetry -nsu",
+  "test_files": [
+    "tracing/opentelemetry/src/test/java/io/helidon/tracing/opentelemetry/TestSpanAndBaggage.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Helidon::test_1",
+    "Helidon::test_2",
+    "Helidon::test_3",
+    "Helidon::test_4",
+    "Helidon::test_5"
+  ],
+  "PASS_TO_PASS": []
+}

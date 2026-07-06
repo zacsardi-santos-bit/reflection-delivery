@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/google-gemini/gemini-cli/pull/22735"
+source_type = "pr"
+
+[task]
+name = "google-gemini/gemini-cli"
+description = "I'm working in the todo list tool and hit a gap: right now a task can be pending, in progress, completed, or cancelled, but there's no way to say a task is blocked. I keep running into cases where ..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["typescript", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:google-gemini-gemini-cli-22735"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/8"
+category = "Software Engineering"
+subcategory = "Feature implementation"
+objective_labels = ["Implement"]
+artifact_type_labels = ["Codebase"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

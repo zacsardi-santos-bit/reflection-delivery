@@ -1,0 +1,3006 @@
+patching file crates/biome_cli/tests/cases/mod.rs
+patching file crates/biome_cli/tests/cases/reporter_gitlab.rs
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_check_command.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_ci_command.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_format_command.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_lint_command.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap
+patching file crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap
+patching file crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap
+patching file crates/biome_cli/tests/snapshots/main_commands_ci/ci_help.snap
+patching file crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap
+patching file crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap
+patching file crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap
+patching file crates/biome_cli/tests/snapshots/main_commands_rage/rage_help.snap
+patching file crates/biome_lsp/tests/server.rs
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.8
+   Compiling memchr v2.7.4
+   Compiling autocfg v1.1.0
+   Compiling serde v1.0.204
+   Compiling once_cell v1.19.0
+   Compiling libc v0.2.154
+   Compiling hashbrown v0.14.3
+   Compiling equivalent v1.0.1
+   Compiling itoa v1.0.6
+   Compiling serde_json v1.0.122
+   Compiling pin-project-lite v0.2.13
+   Compiling ryu v1.0.13
+   Compiling log v0.4.20
+   Compiling syn v1.0.109
+   Compiling schemars v0.8.21
+   Compiling hashbrown v0.12.3
+   Compiling version_check v0.9.4
+   Compiling cfg-if v1.0.0
+   Compiling dyn-clone v1.0.11
+   Compiling tracing-core v0.1.32
+   Compiling unicode-segmentation v1.11.0
+   Compiling rustc-hash v1.1.0
+   Compiling countme v3.0.1
+   Compiling crossbeam-utils v0.8.19
+   Compiling parking_lot_core v0.9.9
+   Compiling thiserror v1.0.63
+   Compiling indexmap v1.9.3
+   Compiling lock_api v0.4.11
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling similar v2.6.0
+   Compiling proc-macro-error v1.0.4
+   Compiling cc v1.0.98
+   Compiling io-lifetimes v1.0.6
+   Compiling bitflags v1.3.2
+   Compiling scopeguard v1.1.0
+   Compiling rustix v0.37.7
+   Compiling linux-raw-sys v0.3.8
+   Compiling unicode-width v0.1.12
+   Compiling gimli v0.29.0
+   Compiling is_ci v1.1.1
+   Compiling adler v1.0.2
+   Compiling object v0.36.0
+   Compiling rustc-hash v2.0.0
+   Compiling miniz_oxide v0.7.2
+   Compiling termcolor v1.4.1
+   Compiling result v1.0.0
+   Compiling dunce v1.0.4
+   Compiling rustc-demangle v0.1.24
+   Compiling void v1.0.2
+   Compiling owo-colors v3.5.0
+   Compiling json-strip-comments v1.0.2
+   Compiling bitflags v2.6.0
+   Compiling quote v1.0.36
+   Compiling drop_bomb v0.1.5
+   Compiling biome_unicode_table v0.5.7 (/workspace/repo/crates/biome_unicode_table)
+   Compiling unicode-bom v2.0.3
+   Compiling biome_string_case v0.5.7 (/workspace/repo/crates/biome_string_case)
+   Compiling aho-corasick v1.1.2
+   Compiling regex-syntax v0.8.2
+   Compiling lazy_static v1.5.0
+   Compiling syn v2.0.59
+   Compiling num-traits v0.2.15
+   Compiling fnv v1.0.7
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.10.0
+   Compiling biome_diagnostics_categories v0.5.7 (/workspace/repo/crates/biome_diagnostics_categories)
+   Compiling typenum v1.17.0
+   Compiling crossbeam-epoch v0.9.18
+   Compiling getrandom v0.2.15
+   Compiling backtrace v0.3.73
+   Compiling rand_core v0.6.4
+   Compiling slab v0.4.8
+   Compiling futures-sink v0.3.30
+   Compiling futures-core v0.3.30
+   Compiling biome_aria_metadata v0.5.7 (/workspace/repo/crates/biome_aria_metadata)
+   Compiling crossbeam-deque v0.8.5
+   Compiling minimal-lexical v0.2.1
+   Compiling tinyvec_macros v0.1.1
+   Compiling radium v0.7.0
+   Compiling either v1.8.1
+   Compiling tinyvec v1.6.1
+   Compiling nom v7.1.3
+   Compiling futures-channel v0.3.30
+   Compiling addr2line v0.22.0
+   Compiling im v15.1.0
+   Compiling futures-io v0.3.30
+   Compiling is-terminal v0.4.7
+   Compiling pin-utils v0.1.0
+   Compiling rayon-core v1.12.1
+   Compiling regex-automata v0.4.5
+   Compiling supports-color v2.1.0
+   Compiling natord v1.0.9
+   Compiling ppv-lite86 v0.2.17
+   Compiling bytecount v0.6.7
+   Compiling anyhow v1.0.86
+   Compiling futures-task v0.3.30
+   Compiling tap v1.0.1
+   Compiling byteorder v1.5.0
+   Compiling unicode-normalization v0.1.23
+   Compiling rand_chacha v0.3.1
+   Compiling wyz v0.5.1
+   Compiling rand_xoshiro v0.6.0
+   Compiling mio v1.0.1
+   Compiling socket2 v0.5.6
+   Compiling signal-hook-registry v1.4.1
+   Compiling crossbeam-channel v0.5.11
+   Compiling rust-lapper v1.1.0
+   Compiling bitmaps v2.1.0
+   Compiling option-ext v0.2.0
+   Compiling funty v2.0.0
+   Compiling unicode-bidi v0.3.15
+   Compiling stable_deref_trait v1.2.0
+   Compiling bytemuck v1.16.1
+   Compiling percent-encoding v2.3.1
+   Compiling bytes v1.4.0
+   Compiling elsa v1.10.0
+   Compiling serde_derive_internals v0.29.0
+   Compiling form_urlencoded v1.2.1
+   Compiling dirs-sys v0.4.1
+   Compiling rand v0.8.5
+   Compiling roaring v0.10.6
+   Compiling bitvec v1.0.1
+   Compiling idna v0.5.0
+   Compiling sized-chunks v0.6.5
+   Compiling biome_aria v0.5.7 (/workspace/repo/crates/biome_aria)
+   Compiling darling_core v0.14.4
+   Compiling itertools v0.10.5
+   Compiling crossbeam-queue v0.3.11
+   Compiling slotmap v1.0.7
+   Compiling bstr v1.8.0
+   Compiling path-dedot v3.1.1
+   Compiling httparse v1.8.0
+   Compiling async-trait v0.1.66
+   Compiling regex v1.10.6
+   Compiling same-file v1.0.6
+   Compiling walkdir v2.5.0
+   Compiling globset v0.4.14
+   Compiling rayon v1.10.0
+   Compiling crossbeam v0.8.4
+   Compiling path-absolutize v3.1.1
+   Compiling directories v5.0.1
+   Compiling tower-service v0.3.2
+   Compiling tower-layer v0.3.2
+   Compiling biome_flags v0.0.0 (/workspace/repo/crates/biome_flags)
+   Compiling ignore v0.4.22
+   Compiling regex-syntax v0.6.28
+   Compiling overload v0.1.1
+   Compiling tikv-jemalloc-sys v0.5.3+5.3.0-patched
+   Compiling vte_generate_state_changes v0.1.1
+   Compiling sharded-slab v0.1.4
+   Compiling nu-ansi-term v0.46.0
+   Compiling tracing-log v0.2.0
+   Compiling serde_derive v1.0.204
+   Compiling tracing-attributes v0.1.27
+   Compiling schemars_derive v0.8.21
+   Compiling thiserror-impl v1.0.63
+   Compiling bpaf_derive v0.5.10
+   Compiling enumflags2_derive v0.7.10
+   Compiling miette-derive v5.10.0
+   Compiling futures-macro v0.3.30
+   Compiling tokio-macros v2.4.0
+   Compiling biome_markup v0.5.7 (/workspace/repo/crates/biome_markup)
+   Compiling biome_diagnostics_macros v0.5.7 (/workspace/repo/crates/biome_diagnostics_macros)
+   Compiling biome_deserialize_macros v0.6.0 (/workspace/repo/crates/biome_deserialize_macros)
+   Compiling pin-project-internal v1.0.12
+   Compiling darling_macro v0.14.4
+   Compiling serde_repr v0.1.11
+   Compiling auto_impl v1.0.1
+   Compiling tower-lsp-macros v0.9.0
+   Compiling regex-automata v0.1.10
+   Compiling thread_local v1.1.7
+   Compiling futures-util v0.3.30
+   Compiling utf8parse v0.2.1
+   Compiling tokio v1.39.2
+   Compiling matchers v0.1.0
+   Compiling powerfmt v0.2.0
+   Compiling vte v0.11.1
+   Compiling miette v5.10.0
+   Compiling bpaf v0.9.12
+   Compiling deranged v0.3.11
+   Compiling tracing v0.1.40
+   Compiling uuid v1.8.0
+   Compiling time-core v0.1.2
+   Compiling num-conv v0.1.0
+   Compiling newtype-uuid v1.1.0
+   Compiling chrono v0.4.38
+   Compiling pin-project v1.0.12
+   Compiling strip-ansi-escapes v0.2.0
+   Compiling quick-xml v0.31.0
+   Compiling nu-ansi-term v0.50.0
+   Compiling hdrhistogram v7.5.4
+   Compiling darling v0.14.4
+   Compiling console v0.15.5
+   Compiling linked-hash-map v0.5.6
+   Compiling derive_builder_core v0.13.1
+   Compiling time v0.3.36
+   Compiling insta v1.39.0
+   Compiling derive_builder_macro v0.13.1
+   Compiling futures-executor v0.3.30
+   Compiling futures v0.3.30
+   Compiling derive_builder v0.13.1
+   Compiling tower v0.4.13
+   Compiling tokio-util v0.7.2
+   Compiling smallvec v1.13.2
+   Compiling indexmap v2.3.0
+   Compiling serde_ini v0.2.0
+   Compiling enumflags2 v0.7.10
+   Compiling node-semver v2.1.0
+   Compiling grit-util v0.3.0
+   Compiling url v2.5.2
+   Compiling tracing-serde v0.1.3
+   Compiling dashmap v6.0.1
+   Compiling dashmap v5.5.3
+   Compiling parking_lot v0.12.3
+   Compiling grit-pattern-matcher v0.3.0
+   Compiling quick-junit v0.4.0
+   Compiling oxc_resolver v1.10.2
+   Compiling lsp-types v0.94.1
+   Compiling tracing-subscriber v0.3.18
+   Compiling biome_text_size v0.5.7 (/workspace/repo/crates/biome_text_size)
+   Compiling biome_text_edit v0.5.7 (/workspace/repo/crates/biome_text_edit)
+   Compiling biome_console v0.5.7 (/workspace/repo/crates/biome_console)
+   Compiling tracing-tree v0.3.1
+   Compiling tracing-appender v0.2.3
+   Compiling biome_rowan v0.5.7 (/workspace/repo/crates/biome_rowan)
+   Compiling biome_diagnostics v0.5.7 (/workspace/repo/crates/biome_diagnostics)
+   Compiling biome_json_syntax v0.5.7 (/workspace/repo/crates/biome_json_syntax)
+   Compiling biome_js_syntax v0.5.7 (/workspace/repo/crates/biome_js_syntax)
+   Compiling biome_css_syntax v0.5.7 (/workspace/repo/crates/biome_css_syntax)
+   Compiling biome_graphql_syntax v0.1.0 (/workspace/repo/crates/biome_graphql_syntax)
+   Compiling biome_grit_syntax v0.5.7 (/workspace/repo/crates/biome_grit_syntax)
+   Compiling biome_control_flow v0.5.7 (/workspace/repo/crates/biome_control_flow)
+   Compiling biome_json_factory v0.5.7 (/workspace/repo/crates/biome_json_factory)
+   Compiling biome_parser v0.5.7 (/workspace/repo/crates/biome_parser)
+   Compiling biome_suppression v0.5.7 (/workspace/repo/crates/biome_suppression)
+   Compiling biome_fs v0.5.7 (/workspace/repo/crates/biome_fs)
+   Compiling biome_graphql_factory v0.1.0 (/workspace/repo/crates/biome_graphql_factory)
+   Compiling biome_grit_factory v0.5.7 (/workspace/repo/crates/biome_grit_factory)
+   Compiling biome_json_parser v0.5.7 (/workspace/repo/crates/biome_json_parser)
+   Compiling biome_graphql_parser v0.1.0 (/workspace/repo/crates/biome_graphql_parser)
+   Compiling biome_grit_parser v0.1.0 (/workspace/repo/crates/biome_grit_parser)
+   Compiling biome_deserialize v0.6.0 (/workspace/repo/crates/biome_deserialize)
+   Compiling biome_analyze v0.5.7 (/workspace/repo/crates/biome_analyze)
+   Compiling biome_formatter v0.5.7 (/workspace/repo/crates/biome_formatter)
+   Compiling biome_project v0.5.7 (/workspace/repo/crates/biome_project)
+   Compiling tower-lsp v0.20.0
+   Compiling biome_css_factory v0.5.7 (/workspace/repo/crates/biome_css_factory)
+   Compiling biome_css_parser v0.5.7 (/workspace/repo/crates/biome_css_parser)
+   Compiling biome_json_analyze v0.5.7 (/workspace/repo/crates/biome_json_analyze)
+   Compiling biome_graphql_analyze v0.0.1 (/workspace/repo/crates/biome_graphql_analyze)
+   Compiling biome_css_analyze v0.5.7 (/workspace/repo/crates/biome_css_analyze)
+   Compiling biome_json_formatter v0.5.7 (/workspace/repo/crates/biome_json_formatter)
+   Compiling biome_css_formatter v0.5.7 (/workspace/repo/crates/biome_css_formatter)
+   Compiling biome_graphql_formatter v0.1.0 (/workspace/repo/crates/biome_graphql_formatter)
+   Compiling biome_migrate v0.0.0 (/workspace/repo/crates/biome_migrate)
+   Compiling biome_js_factory v0.5.7 (/workspace/repo/crates/biome_js_factory)
+   Compiling biome_js_semantic v0.5.7 (/workspace/repo/crates/biome_js_semantic)
+   Compiling biome_js_parser v0.5.7 (/workspace/repo/crates/biome_js_parser)
+   Compiling biome_js_formatter v0.5.7 (/workspace/repo/crates/biome_js_formatter)
+   Compiling biome_js_analyze v0.5.7 (/workspace/repo/crates/biome_js_analyze)
+   Compiling biome_grit_patterns v0.0.1 (/workspace/repo/crates/biome_grit_patterns)
+   Compiling biome_configuration v0.0.1 (/workspace/repo/crates/biome_configuration)
+   Compiling biome_service v0.0.0 (/workspace/repo/crates/biome_service)
+   Compiling biome_lsp v0.0.0 (/workspace/repo/crates/biome_lsp)
+   Compiling tikv-jemallocator v0.5.4
+   Compiling biome_cli v0.0.0 (/workspace/repo/crates/biome_cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 36s
+────────────
+ Nextest run ID e889b54c-ae32-4d44-a445-c392279abac4 with nextest profile: default
+    Starting 581 tests across 7 binaries (6 tests skipped)
+        PASS [   0.081s] (  1/581) biome_cli execute::migrate::ignorefile::tests::empty
+        PASS [   0.093s] (  2/581) biome_cli commands::tests::no_fix
+        PASS [   0.097s] (  3/581) biome_cli commands::tests::incompatible_arguments
+        PASS [   0.107s] (  4/581) biome_cli diagnostics::test::termination_diagnostic_size
+        PASS [   0.109s] (  5/581) biome_cli execute::migrate::eslint_to_biome::tests::flat_config_single_config_object
+        PASS [   0.112s] (  6/581) biome_cli commands::tests::safe_and_unsafe_fixes
+        PASS [   0.113s] (  7/581) biome_cli execute::migrate::ignorefile::tests::relative_patterns
+        PASS [   0.111s] (  8/581) biome_cli execute::migrate::ignorefile::tests::non_relative_patterns
+        PASS [   0.113s] (  9/581) biome_cli execute::migrate::ignorefile::tests::negated_pattern
+        PASS [   0.111s] ( 10/581) biome_cli commands::tests::safe_fixes
+        PASS [   0.113s] ( 11/581) biome_cli execute::migrate::ignorefile::tests::comments_and_empty_lines
+        PASS [   0.115s] ( 12/581) biome_cli execute::migrate::prettier::tests::some_properties
+        PASS [   0.114s] ( 13/581) biome_cli execute::migrate::ignorefile::tests::relative_patterns_starting_with_root_slash
+        PASS [   0.119s] ( 14/581) biome_cli metrics::tests::test_layer
+        PASS [   0.116s] ( 15/581) biome_cli execute::migrate::eslint_to_biome::tests::flat_config_multiple_config_object
+        PASS [   0.119s] ( 16/581) biome_cli execute::migrate::prettier::tests::ok
+        PASS [   0.138s] ( 17/581) biome_cli execute::migrate::ignorefile::tests::take_leading_spaces_into_account
+        PASS [   0.096s] ( 18/581) biome_cli metrics::tests::test_timing
+        PASS [   0.748s] ( 19/581) biome_cli commands::tests::check_options
+        PASS [   0.781s] ( 20/581) biome_cli::main cases::config_extends::extends_should_raise_an_error_for_unresolved_configuration
+        PASS [   0.806s] ( 21/581) biome_cli::main cases::config_extends::extends_should_raise_an_error_for_unresolved_configuration_and_show_verbose
+        PASS [   0.903s] ( 22/581) biome_cli::main cases::assists::assist_emit_diagnostic
+        PASS [   0.933s] ( 23/581) biome_cli::main cases::biome_json_support::linter_biome_json
+        PASS [   0.958s] ( 24/581) biome_cli::main cases::biome_json_support::always_disable_trailing_commas_biome_json
+        PASS [   0.995s] ( 25/581) biome_cli::main cases::config_extends::applies_extended_values_in_current_config
+        PASS [   1.013s] ( 26/581) biome_cli::main cases::config_extends::allows_reverting_fields_in_extended_config_to_default
+        PASS [   1.031s] ( 27/581) biome_cli::main cases::assists::assist_writes
+        PASS [   1.031s] ( 28/581) biome_cli::main cases::config_extends::extends_resolves_when_using_config_path
+        PASS [   1.043s] ( 29/581) biome_cli::main cases::biome_json_support::biome_json_is_not_ignored
+        PASS [   1.031s] ( 30/581) biome_cli::main cases::config_extends::respects_unaffected_values_from_extended_config
+        PASS [   1.073s] ( 31/581) biome_cli::main cases::config_extends::extends_config_ok_formatter_no_linter
+        PASS [   1.095s] ( 32/581) biome_cli::main cases::biome_json_support::check_biome_json
+        PASS [   1.103s] ( 33/581) biome_cli::main cases::biome_json_support::formatter_biome_json
+        PASS [   1.047s] ( 34/581) biome_cli::main cases::config_path::set_config_path_to_directory
+        PASS [   1.124s] ( 35/581) biome_cli::main cases::config_extends::extends_config_ok_linter_not_formatter
+        PASS [   1.156s] ( 36/581) biome_cli::main cases::biome_json_support::ci_biome_json
+        PASS [   1.064s] ( 37/581) biome_cli::main cases::config_path::set_config_path_to_file
+        PASS [   0.977s] ( 38/581) biome_cli::main cases::cts_files::should_allow_using_export_statements
+        PASS [   1.032s] ( 39/581) biome_cli::main cases::diagnostics::diagnostic_level
+        PASS [   1.058s] ( 40/581) biome_cli::main cases::diagnostics::logs_the_appropriate_messages_according_to_set_diagnostics_level
+        PASS [   0.891s] ( 41/581) biome_cli::main cases::graphql::format_and_write_graphql_files
+        PASS [   0.870s] ( 42/581) biome_cli::main cases::graphql::lint_single_rule
+        PASS [   1.046s] ( 43/581) biome_cli::main cases::diagnostics::max_diagnostics_no_verbose
+        PASS [   1.007s] ( 44/581) biome_cli::main cases::diagnostics::max_diagnostics_verbose
+        PASS [   0.985s] ( 45/581) biome_cli::main cases::editorconfig::should_use_editorconfig
+        PASS [   0.992s] ( 46/581) biome_cli::main cases::editorconfig::should_have_cli_override_editorconfig
+        PASS [   0.944s] ( 47/581) biome_cli::main cases::editorconfig::should_use_editorconfig_enabled_from_biome_conf
+        PASS [   0.924s] ( 48/581) biome_cli::main cases::handle_astro_files::astro_global_object
+        PASS [   0.969s] ( 49/581) biome_cli::main cases::graphql::format_graphql_files
+        PASS [   1.037s] ( 50/581) biome_cli::main cases::editorconfig::should_use_editorconfig_check_enabled_from_biome_conf
+        PASS [   1.063s] ( 51/581) biome_cli::main cases::editorconfig::should_use_editorconfig_check
+        PASS [   1.109s] ( 52/581) biome_cli::main cases::editorconfig::should_apply_path_overrides
+        PASS [   1.118s] ( 53/581) biome_cli::main cases::editorconfig::should_have_biome_override_editorconfig
+        PASS [   0.909s] ( 54/581) biome_cli::main cases::handle_astro_files::check_stdin_successfully
+        PASS [   0.948s] ( 55/581) biome_cli::main cases::handle_astro_files::check_stdin_write_successfully
+        PASS [   0.800s] ( 56/581) biome_cli::main cases::handle_astro_files::format_stdin_successfully
+        PASS [   0.990s] ( 57/581) biome_cli::main cases::handle_astro_files::check_stdin_write_unsafe_successfully
+        PASS [   0.848s] ( 58/581) biome_cli::main cases::handle_astro_files::format_empty_astro_files_write
+        PASS [   0.881s] ( 59/581) biome_cli::main cases::handle_astro_files::format_astro_files_write
+        PASS [   0.861s] ( 60/581) biome_cli::main cases::handle_astro_files::format_stdin_write_successfully
+        PASS [   0.944s] ( 61/581) biome_cli::main cases::handle_astro_files::format_astro_files
+        PASS [   0.948s] ( 62/581) biome_cli::main cases::handle_astro_files::format_astro_carriage_return_line_feed_files
+        PASS [   1.003s] ( 63/581) biome_cli::main cases::handle_astro_files::does_not_throw_parse_error_for_return
+        PASS [   0.851s] ( 64/581) biome_cli::main cases::handle_astro_files::lint_stdin_write_unsafe_successfully
+        PASS [   0.940s] ( 65/581) biome_cli::main cases::handle_astro_files::lint_and_fix_astro_files
+        PASS [   0.856s] ( 66/581) biome_cli::main cases::handle_astro_files::sorts_imports_write
+        PASS [   0.918s] ( 67/581) biome_cli::main cases::handle_astro_files::lint_astro_files
+        PASS [   0.891s] ( 68/581) biome_cli::main cases::handle_astro_files::lint_stdin_write_successfully
+        PASS [   0.929s] ( 69/581) biome_cli::main cases::handle_astro_files::lint_stdin_successfully
+        PASS [   0.954s] ( 70/581) biome_cli::main cases::handle_astro_files::sorts_imports_check
+        PASS [   0.801s] ( 71/581) biome_cli::main cases::handle_css_files::should_format_files_by_when_opt_in
+        PASS [   0.763s] ( 72/581) biome_cli::main cases::handle_css_files::should_format_write_files_by_when_opt_in
+        PASS [   0.657s] ( 73/581) biome_cli::main cases::handle_css_files::should_not_format_files_by_default
+        PASS [   0.714s] ( 74/581) biome_cli::main cases::handle_css_files::should_not_lint_files_by_default
+        PASS [   0.799s] ( 75/581) biome_cli::main cases::handle_css_files::should_lint_files_by_when_enabled
+        PASS [   0.684s] ( 76/581) biome_cli::main cases::handle_svelte_files::format_stdin_successfully
+        PASS [   0.753s] ( 77/581) biome_cli::main cases::handle_svelte_files::format_stdin_write_successfully
+        PASS [   0.834s] ( 78/581) biome_cli::main cases::handle_svelte_files::check_stdin_successfully
+        PASS [   0.760s] ( 79/581) biome_cli::main cases::handle_svelte_files::format_svelte_ts_context_module_files
+        PASS [   0.779s] ( 80/581) biome_cli::main cases::handle_svelte_files::format_svelte_carriage_return_line_feed_files
+        PASS [   0.769s] ( 81/581) biome_cli::main cases::handle_svelte_files::format_svelte_ts_context_module_files_write
+        PASS [   0.757s] ( 82/581) biome_cli::main cases::handle_svelte_files::lint_stdin_write_unsafe_successfully
+        PASS [   0.905s] ( 83/581) biome_cli::main cases::handle_svelte_files::check_stdin_write_successfully
+        PASS [   0.800s] ( 84/581) biome_cli::main cases::handle_svelte_files::lint_stdin_successfully
+        PASS [   0.809s] ( 85/581) biome_cli::main cases::handle_svelte_files::lint_stdin_write_successfully
+        PASS [   0.871s] ( 86/581) biome_cli::main cases::handle_svelte_files::check_stdin_write_unsafe_successfully
+        PASS [   0.768s] ( 87/581) biome_cli::main cases::handle_svelte_files::sorts_imports_check
+        PASS [   0.755s] ( 88/581) biome_cli::main cases::handle_svelte_files::sorts_imports_write
+        PASS [   0.830s] ( 89/581) biome_cli::main cases::handle_vue_files::check_stdin_write_successfully
+        PASS [   0.890s] ( 90/581) biome_cli::main cases::handle_vue_files::check_stdin_successfully
+        PASS [   0.765s] ( 91/581) biome_cli::main cases::handle_vue_files::format_empty_vue_js_files_write
+        PASS [   0.770s] ( 92/581) biome_cli::main cases::handle_vue_files::format_empty_vue_ts_files_write
+        PASS [   0.852s] ( 93/581) biome_cli::main cases::handle_vue_files::check_stdin_write_unsafe_successfully
+        PASS [   0.739s] ( 94/581) biome_cli::main cases::handle_vue_files::format_stdin_successfully
+        PASS [   0.763s] ( 95/581) biome_cli::main cases::handle_vue_files::format_stdin_write_successfully
+        PASS [   0.817s] ( 96/581) biome_cli::main cases::handle_vue_files::format_vue_carriage_return_line_feed_files
+        PASS [   0.805s] ( 97/581) biome_cli::main cases::handle_vue_files::format_vue_explicit_js_files_write
+        PASS [   0.786s] ( 98/581) biome_cli::main cases::handle_vue_files::format_vue_implicit_js_files_write
+        PASS [   0.813s] ( 99/581) biome_cli::main cases::handle_vue_files::format_vue_implicit_js_files
+        PASS [   0.861s] (100/581) biome_cli::main cases::handle_vue_files::format_vue_explicit_js_files
+        PASS [   0.878s] (101/581) biome_cli::main cases::handle_vue_files::format_vue_generic_component_files
+        PASS [   0.849s] (102/581) biome_cli::main cases::handle_vue_files::format_vue_ts_files_write
+        PASS [   0.904s] (103/581) biome_cli::main cases::handle_vue_files::format_vue_ts_files
+        PASS [   0.899s] (104/581) biome_cli::main cases::handle_vue_files::lint_stdin_successfully
+        PASS [   0.939s] (105/581) biome_cli::main cases::handle_vue_files::lint_stdin_write_successfully
+        PASS [   0.837s] (106/581) biome_cli::main cases::handle_vue_files::sorts_imports_write
+        PASS [   0.902s] (107/581) biome_cli::main cases::handle_vue_files::sorts_imports_check
+        PASS [   0.948s] (108/581) biome_cli::main cases::handle_vue_files::lint_vue_js_files
+        PASS [   0.992s] (109/581) biome_cli::main cases::handle_vue_files::lint_stdin_write_unsafe_successfully
+        PASS [   0.859s] (110/581) biome_cli::main cases::included_files::does_handle_only_included_files
+        PASS [   0.954s] (111/581) biome_cli::main cases::handle_vue_files::lint_vue_ts_files
+        PASS [   0.934s] (112/581) biome_cli::main cases::handle_vue_files::vue_compiler_macros_as_globals
+        PASS [   0.872s] (113/581) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_ignore_formatter
+        PASS [   0.897s] (114/581) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_ignore
+        PASS [   0.903s] (115/581) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_ignore_linter
+        PASS [   0.878s] (116/581) biome_cli::main cases::included_files::does_not_handle_included_files_if_overridden_by_organize_imports
+        PASS [   0.891s] (117/581) biome_cli::main cases::overrides_formatter::complex_enable_disable_overrides
+        PASS [   0.864s] (118/581) biome_cli::main cases::overrides_formatter::does_handle_included_file_and_disable_formatter
+        PASS [   0.911s] (119/581) biome_cli::main cases::overrides_formatter::does_include_file_with_different_formatting
+        PASS [   0.860s] (120/581) biome_cli::main cases::overrides_formatter::does_include_file_with_different_formatting_and_all_of_them
+        PASS [   0.910s] (121/581) biome_cli::main cases::overrides_formatter::does_include_file_with_different_overrides
+        PASS [   0.892s] (122/581) biome_cli::main cases::overrides_formatter::does_not_change_formatting_language_settings
+        PASS [   0.846s] (123/581) biome_cli::main cases::overrides_formatter::does_not_change_formatting_language_settings_2
+        PASS [   0.866s] (124/581) biome_cli::main cases::overrides_formatter::does_not_change_formatting_settings
+        PASS [   0.855s] (125/581) biome_cli::main cases::overrides_formatter::does_not_conceal_previous_overrides
+        PASS [   0.872s] (126/581) biome_cli::main cases::overrides_formatter::does_not_override_well_known_special_files_when_config_override_is_present
+        PASS [   0.865s] (127/581) biome_cli::main cases::overrides_formatter::takes_last_formatter_enabled_into_account
+        PASS [   0.874s] (128/581) biome_cli::main cases::overrides_linter::does_include_file_with_different_linting_and_applies_all_of_them
+        PASS [   0.997s] (129/581) biome_cli::main cases::overrides_linter::does_handle_included_file_and_disable_linter
+        PASS [   0.874s] (130/581) biome_cli::main cases::overrides_linter::does_not_change_linting_settings
+        PASS [   0.861s] (131/581) biome_cli::main cases::overrides_linter::does_not_conceal_overrides_globals
+        PASS [   0.940s] (132/581) biome_cli::main cases::overrides_linter::does_include_file_with_different_rules
+        PASS [   0.954s] (133/581) biome_cli::main cases::overrides_linter::does_merge_all_overrides
+        PASS [   1.016s] (134/581) biome_cli::main cases::overrides_linter::does_include_file_with_different_overrides
+        PASS [   0.998s] (135/581) biome_cli::main cases::overrides_linter::does_override_groupe_recommended
+        PASS [   0.946s] (136/581) biome_cli::main cases::overrides_linter::does_override_recommended
+        PASS [   0.945s] (137/581) biome_cli::main cases::overrides_linter::does_override_the_rules
+        PASS [   0.944s] (138/581) biome_cli::main cases::overrides_linter::does_preserve_group_recommended_when_override_global_recommened
+        PASS [   0.827s] (139/581) biome_cli::main cases::overrides_linter::does_preserve_individually_diabled_rules_in_overrides
+        PASS [   0.717s] (140/581) biome_cli::main cases::protected_files::not_process_file_from_cli_verbose
+        PASS [   0.704s] (141/581) biome_cli::main cases::protected_files::not_process_file_from_stdin_format
+        PASS [   0.772s] (142/581) biome_cli::main cases::protected_files::not_process_file_from_cli
+        PASS [   0.680s] (143/581) biome_cli::main cases::protected_files::not_process_file_from_stdin_verbose_format
+        PASS [   0.927s] (144/581) biome_cli::main cases::overrides_linter::takes_last_linter_enabled_into_account
+        PASS [   0.789s] (145/581) biome_cli::main cases::protected_files::not_process_file_from_stdin_lint
+        PASS [   0.925s] (146/581) biome_cli::main cases::overrides_organize_imports::does_handle_included_file_and_disable_organize_imports
+        PASS [   0.731s] (147/581) biome_cli::main cases::protected_files::not_process_file_from_stdin_verbose_lint
+        PASS [   0.680s] (148/581) biome_cli::main cases::protected_files::should_return_the_content_of_protected_files_via_stdin
+        PASS [   0.799s] (149/581) biome_cli::main cases::protected_files::not_process_file_linter_disabled_from_cli_verbose
+        PASS [   0.833s] (150/581) biome_cli::main cases::protected_files::not_process_ignored_file_from_cli_verbose
+        PASS [   0.795s] (151/581) biome_cli::main cases::reporter_github::reports_diagnostics_github_format_command
+        FAIL [   0.758s] (152/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_check_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_check_command.snap
+    Snapshot: reports_diagnostics_gitlab_check_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       47    47 │ 
+       48    48 │ # Termination Message
+       49    49 │ 
+       50    50 │ ```block
+       51       │-check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             51 │+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       52    52 │ 
+       53       │-  × Some errors were emitted while running checks.
+             53 │+  × Failed to parse CLI arguments.
+             54 │+    
+             55 │+    Caused by:
+             56 │+      couldn't parse `gitlab`: value "gitlab" is not valid for the --reporter argument
+       54    57 │   
+       55    58 │ 
+       56    59 │ 
+       57       │-```
+       58       │-
+       59       │-# Emitted Messages
+       60       │-
+       61       │-```block
+       62       │-[
+       63       │-  {
+       64       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       65       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       66       │-    "fingerprint": "6143155163249580709",
+       67       │-    "severity": "critical",
+       68       │-    "location": {
+       69       │-      "path": "main.ts",
+       70       │-      "lines": {
+       71       │-        "begin": 4
+       72       │-      }
+       73       │-    }
+       74       │-  },
+       75       │-  {
+       76       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       77       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       78       │-    "fingerprint": "16004470298861036684",
+       79       │-    "severity": "critical",
+       80       │-    "location": {
+       81       │-      "path": "main.ts",
+       82       │-      "lines": {
+       83       │-        "begin": 5
+       84       │-      }
+       85       │-    }
+       86       │-  },
+       87       │-  {
+       88       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       89       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       90       │-    "fingerprint": "6844513959367944349",
+       91       │-    "severity": "critical",
+       92       │-    "location": {
+       93       │-      "path": "main.ts",
+       94       │-      "lines": {
+       95       │-        "begin": 6
+       96       │-      }
+       97       │-    }
+       98       │-  },
+       99       │-  {
+      100       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      101       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      102       │-    "fingerprint": "3753031813987153088",
+      103       │-    "severity": "critical",
+      104       │-    "location": {
+      105       │-      "path": "main.ts",
+      106       │-      "lines": {
+      107       │-        "begin": 7
+      108       │-      }
+      109       │-    }
+      110       │-  },
+      111       │-  {
+      112       │-    "description": "This is an unexpected use of the debugger statement.",
+      113       │-    "check_name": "lint/suspicious/noDebugger",
+      114       │-    "fingerprint": "1649488708621366899",
+      115       │-    "severity": "critical",
+      116       │-    "location": {
+      117       │-      "path": "main.ts",
+      118       │-      "lines": {
+      119       │-        "begin": 9
+      120       │-      }
+      121       │-    }
+      122       │-  },
+      123       │-  {
+      124       │-    "description": "This is an unexpected use of the debugger statement.",
+      125       │-    "check_name": "lint/suspicious/noDebugger",
+      126       │-    "fingerprint": "12725857318666866021",
+      127       │-    "severity": "critical",
+      128       │-    "location": {
+      129       │-      "path": "main.ts",
+      130       │-      "lines": {
+      131       │-        "begin": 10
+      132       │-      }
+      133       │-    }
+      134       │-  },
+      135       │-  {
+      136       │-    "description": "This is an unexpected use of the debugger statement.",
+      137       │-    "check_name": "lint/suspicious/noDebugger",
+      138       │-    "fingerprint": "17763028641383623546",
+      139       │-    "severity": "critical",
+      140       │-    "location": {
+      141       │-      "path": "main.ts",
+      142       │-      "lines": {
+      143       │-        "begin": 11
+      144       │-      }
+      145       │-    }
+      146       │-  },
+      147       │-  {
+      148       │-    "description": "This is an unexpected use of the debugger statement.",
+      149       │-    "check_name": "lint/suspicious/noDebugger",
+      150       │-    "fingerprint": "4368420040174731745",
+      151       │-    "severity": "critical",
+      152       │-    "location": {
+      153       │-      "path": "main.ts",
+      154       │-      "lines": {
+      155       │-        "begin": 12
+      156       │-      }
+      157       │-    }
+      158       │-  },
+      159       │-  {
+      160       │-    "description": "This variable implicitly has the any type.",
+      161       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      162       │-    "fingerprint": "5606951167272714146",
+      163       │-    "severity": "critical",
+      164       │-    "location": {
+      165       │-      "path": "main.ts",
+      166       │-      "lines": {
+      167       │-        "begin": 14
+      168       │-      }
+      169       │-    }
+      170       │-  },
+      171       │-  {
+      172       │-    "description": "This variable implicitly has the any type.",
+      173       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      174       │-    "fingerprint": "5567686698145153289",
+      175       │-    "severity": "critical",
+      176       │-    "location": {
+      177       │-      "path": "main.ts",
+      178       │-      "lines": {
+      179       │-        "begin": 15
+      180       │-      }
+      181       │-    }
+      182       │-  },
+      183       │-  {
+      184       │-    "description": "This variable implicitly has the any type.",
+      185       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      186       │-    "fingerprint": "12478924188343149788",
+      187       │-    "severity": "critical",
+      188       │-    "location": {
+      189       │-      "path": "main.ts",
+      190       │-      "lines": {
+      191       │-        "begin": 16
+      192       │-      }
+      193       │-    }
+      194       │-  },
+      195       │-  {
+      196       │-    "description": "This variable implicitly has the any type.",
+      197       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      198       │-    "fingerprint": "12221078446259530036",
+      199       │-    "severity": "critical",
+      200       │-    "location": {
+      201       │-      "path": "main.ts",
+      202       │-      "lines": {
+      203       │-        "begin": 17
+      204       │-      }
+      205       │-    }
+      206       │-  },
+      207       │-  {
+      208       │-    "description": "This variable implicitly has the any type.",
+      209       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      210       │-    "fingerprint": "16715583845852699027",
+      211       │-    "severity": "critical",
+      212       │-    "location": {
+      213       │-      "path": "main.ts",
+      214       │-      "lines": {
+      215       │-        "begin": 18
+      216       │-      }
+      217       │-    }
+      218       │-  },
+      219       │-  {
+      220       │-    "description": "This variable implicitly has the any type.",
+      221       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      222       │-    "fingerprint": "97210195248059969",
+      223       │-    "severity": "critical",
+      224       │-    "location": {
+      225       │-      "path": "main.ts",
+      226       │-      "lines": {
+      227       │-        "begin": 19
+      228       │-      }
+      229       │-    }
+      230       │-  },
+      231       │-  {
+      232       │-    "description": "Shouldn't redeclare 'z'. Consider to delete it or rename it.",
+      233       │-    "check_name": "lint/suspicious/noRedeclare",
+      234       │-    "fingerprint": "4177467054814594004",
+      235       │-    "severity": "critical",
+      236       │-    "location": {
+      237       │-      "path": "main.ts",
+      238       │-      "lines": {
+      239       │-        "begin": 2
+      240       │-      }
+      241       │-    }
+      242       │-  },
+      243       │-  {
+      244       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      245       │-    "check_name": "lint/suspicious/noRedeclare",
+      246       │-    "fingerprint": "710662920264236176",
+      247       │-    "severity": "critical",
+      248       │-    "location": {
+      249       │-      "path": "main.ts",
+      250       │-      "lines": {
+      251       │-        "begin": 15
+      252       │-      }
+      253       │-    }
+      254       │-  },
+      255       │-  {
+      256       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      257       │-    "check_name": "lint/suspicious/noRedeclare",
+      258       │-    "fingerprint": "11240683920503391137",
+      259       │-    "severity": "critical",
+      260       │-    "location": {
+      261       │-      "path": "main.ts",
+      262       │-      "lines": {
+      263       │-        "begin": 16
+      264       │-      }
+      265       │-    }
+      266       │-  },
+      267       │-  {
+      268       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      269       │-    "check_name": "lint/suspicious/noRedeclare",
+      270       │-    "fingerprint": "14476601875768703957",
+      271       │-    "severity": "critical",
+      272       │-    "location": {
+      273       │-      "path": "main.ts",
+      274       │-      "lines": {
+      275       │-        "begin": 17
+      276       │-      }
+      277       │-    }
+      278       │-  },
+      279       │-  {
+      280       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      281       │-    "check_name": "lint/suspicious/noRedeclare",
+      282       │-    "fingerprint": "16119156397775465086",
+      283       │-    "severity": "critical",
+      284       │-    "location": {
+      285       │-      "path": "main.ts",
+      286       │-      "lines": {
+      287       │-        "begin": 18
+      288       │-      }
+      289       │-    }
+      290       │-  },
+      291       │-  {
+      292       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      293       │-    "check_name": "lint/suspicious/noRedeclare",
+      294       │-    "fingerprint": "16860125444609679494",
+      295       │-    "severity": "critical",
+      296       │-    "location": {
+      297       │-      "path": "main.ts",
+      298       │-      "lines": {
+      299       │-        "begin": 19
+      300       │-      }
+      301       │-    }
+      302       │-  },
+      303       │-  {
+      304       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      305       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      306       │-    "fingerprint": "8145265504203493155",
+      307       │-    "severity": "critical",
+      308       │-    "location": {
+      309       │-      "path": "index.ts",
+      310       │-      "lines": {
+      311       │-        "begin": 4
+      312       │-      }
+      313       │-    }
+      314       │-  },
+      315       │-  {
+      316       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      317       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      318       │-    "fingerprint": "9497329216962766751",
+      319       │-    "severity": "critical",
+      320       │-    "location": {
+      321       │-      "path": "index.ts",
+      322       │-      "lines": {
+      323       │-        "begin": 5
+      324       │-      }
+      325       │-    }
+      326       │-  },
+      327       │-  {
+      328       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      329       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      330       │-    "fingerprint": "18366180239442454213",
+      331       │-    "severity": "critical",
+      332       │-    "location": {
+      333       │-      "path": "index.ts",
+      334       │-      "lines": {
+      335       │-        "begin": 6
+      336       │-      }
+      337       │-    }
+      338       │-  },
+      339       │-  {
+      340       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      341       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      342       │-    "fingerprint": "17264185503232320851",
+      343       │-    "severity": "critical",
+      344       │-    "location": {
+      345       │-      "path": "index.ts",
+      346       │-      "lines": {
+      347       │-        "begin": 7
+      348       │-      }
+      349       │-    }
+      350       │-  },
+      351       │-  {
+      352       │-    "description": "This is an unexpected use of the debugger statement.",
+      353       │-    "check_name": "lint/suspicious/noDebugger",
+      354       │-    "fingerprint": "13874281744783264721",
+      355       │-    "severity": "critical",
+      356       │-    "location": {
+      357       │-      "path": "index.ts",
+      358       │-      "lines": {
+      359       │-        "begin": 9
+      360       │-      }
+      361       │-    }
+      362       │-  },
+      363       │-  {
+      364       │-    "description": "This is an unexpected use of the debugger statement.",
+      365       │-    "check_name": "lint/suspicious/noDebugger",
+      366       │-    "fingerprint": "3077767001374933992",
+      367       │-    "severity": "critical",
+      368       │-    "location": {
+      369       │-      "path": "index.ts",
+      370       │-      "lines": {
+      371       │-        "begin": 10
+      372       │-      }
+      373       │-    }
+      374       │-  },
+      375       │-  {
+      376       │-    "description": "This is an unexpected use of the debugger statement.",
+      377       │-    "check_name": "lint/suspicious/noDebugger",
+      378       │-    "fingerprint": "15654042585868945756",
+      379       │-    "severity": "critical",
+      380       │-    "location": {
+      381       │-      "path": "index.ts",
+      382       │-      "lines": {
+      383       │-        "begin": 11
+      384       │-      }
+      385       │-    }
+      386       │-  },
+      387       │-  {
+      388       │-    "description": "This is an unexpected use of the debugger statement.",
+      389       │-    "check_name": "lint/suspicious/noDebugger",
+      390       │-    "fingerprint": "13936915970079861829",
+      391       │-    "severity": "critical",
+      392       │-    "location": {
+      393       │-      "path": "index.ts",
+      394       │-      "lines": {
+      395       │-        "begin": 12
+      396       │-      }
+      397       │-    }
+      398       │-  },
+      399       │-  {
+      400       │-    "description": "This variable implicitly has the any type.",
+      401       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      402       │-    "fingerprint": "2162620893763553997",
+      403       │-    "severity": "critical",
+      404       │-    "location": {
+      405       │-      "path": "index.ts",
+      406       │-      "lines": {
+      407       │-        "begin": 14
+      408       │-      }
+      409       │-    }
+      410       │-  },
+      411       │-  {
+      412       │-    "description": "This variable implicitly has the any type.",
+      413       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      414       │-    "fingerprint": "1339939023879653211",
+      415       │-    "severity": "critical",
+      416       │-    "location": {
+      417       │-      "path": "index.ts",
+      418       │-      "lines": {
+      419       │-        "begin": 15
+      420       │-      }
+      421       │-    }
+      422       │-  },
+      423       │-  {
+      424       │-    "description": "This variable implicitly has the any type.",
+      425       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      426       │-    "fingerprint": "18285621777301161439",
+      427       │-    "severity": "critical",
+      428       │-    "location": {
+      429       │-      "path": "index.ts",
+      430       │-      "lines": {
+      431       │-        "begin": 16
+      432       │-      }
+      433       │-    }
+      434       │-  },
+      435       │-  {
+      436       │-    "description": "This variable implicitly has the any type.",
+      437       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      438       │-    "fingerprint": "10582308848964879795",
+      439       │-    "severity": "critical",
+      440       │-    "location": {
+      441       │-      "path": "index.ts",
+      442       │-      "lines": {
+      443       │-        "begin": 17
+      444       │-      }
+      445       │-    }
+      446       │-  },
+      447       │-  {
+      448       │-    "description": "This variable implicitly has the any type.",
+      449       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      450       │-    "fingerprint": "1645910940962206533",
+      451       │-    "severity": "critical",
+      452       │-    "location": {
+      453       │-      "path": "index.ts",
+      454       │-      "lines": {
+      455       │-        "begin": 18
+      456       │-      }
+      457       │-    }
+      458       │-  },
+      459       │-  {
+      460       │-    "description": "This variable implicitly has the any type.",
+      461       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      462       │-    "fingerprint": "9066604216297977404",
+      463       │-    "severity": "critical",
+      464       │-    "location": {
+      465       │-      "path": "index.ts",
+      466       │-      "lines": {
+      467       │-        "begin": 19
+      468       │-      }
+      469       │-    }
+      470       │-  },
+      471       │-  {
+      472       │-    "description": "Shouldn't redeclare 'z'. Consider to delete it or rename it.",
+      473       │-    "check_name": "lint/suspicious/noRedeclare",
+      474       │-    "fingerprint": "8595162422023295635",
+      475       │-    "severity": "critical",
+      476       │-    "location": {
+      477       │-      "path": "index.ts",
+      478       │-      "lines": {
+      479       │-        "begin": 2
+      480       │-      }
+      481       │-    }
+      482       │-  },
+      483       │-  {
+      484       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      485       │-    "check_name": "lint/suspicious/noRedeclare",
+      486       │-    "fingerprint": "13204486605360217019",
+      487       │-    "severity": "critical",
+      488       │-    "location": {
+      489       │-      "path": "index.ts",
+      490       │-      "lines": {
+      491       │-        "begin": 15
+      492       │-      }
+      493       │-    }
+      494       │-  },
+      495       │-  {
+      496       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      497       │-    "check_name": "lint/suspicious/noRedeclare",
+      498       │-    "fingerprint": "8601445511714044637",
+      499       │-    "severity": "critical",
+      500       │-    "location": {
+      501       │-      "path": "index.ts",
+      502       │-      "lines": {
+      503       │-        "begin": 16
+      504       │-      }
+      505       │-    }
+      506       │-  },
+      507       │-  {
+      508       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      509       │-    "check_name": "lint/suspicious/noRedeclare",
+      510       │-    "fingerprint": "7842353260163629265",
+      511       │-    "severity": "critical",
+      512       │-    "location": {
+      513       │-      "path": "index.ts",
+      514       │-      "lines": {
+      515       │-        "begin": 17
+      516       │-      }
+      517       │-    }
+      518       │-  },
+      519       │-  {
+      520       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      521       │-    "check_name": "lint/suspicious/noRedeclare",
+      522       │-    "fingerprint": "4835254919265693190",
+      523       │-    "severity": "critical",
+      524       │-    "location": {
+      525       │-      "path": "index.ts",
+      526       │-      "lines": {
+      527       │-        "begin": 18
+      528       │-      }
+      529       │-    }
+      530       │-  },
+      531       │-  {
+      532       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      533       │-    "check_name": "lint/suspicious/noRedeclare",
+      534       │-    "fingerprint": "3103625193263367010",
+      535       │-    "severity": "critical",
+      536       │-    "location": {
+      537       │-      "path": "index.ts",
+      538       │-      "lines": {
+      539       │-        "begin": 19
+      540       │-      }
+      541       │-    }
+      542       │-  }
+      543       │-]
+      544    60 │ ```
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_gitlab::reports_diagnostics_gitlab_check_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_gitlab::reports_diagnostics_gitlab_check_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.64s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_check_command.snap.new
+    thread 'cases::reporter_gitlab::reports_diagnostics_gitlab_check_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_gitlab_check_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.925s] (153/581) biome_cli::main cases::reporter_github::reports_diagnostics_github_check_command
+        PASS [   0.866s] (154/581) biome_cli::main cases::reporter_github::reports_diagnostics_github_lint_command
+        PASS [   0.985s] (155/581) biome_cli::main cases::reporter_github::reports_diagnostics_github_ci_command
+        FAIL [   0.759s] (156/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_ci_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_ci_command.snap
+    Snapshot: reports_diagnostics_gitlab_ci_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       47    47 │ 
+       48    48 │ # Termination Message
+       49    49 │ 
+       50    50 │ ```block
+       51       │-ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             51 │+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       52    52 │ 
+       53       │-  × Some errors were emitted while running checks.
+             53 │+  × Failed to parse CLI arguments.
+             54 │+    
+             55 │+    Caused by:
+             56 │+      couldn't parse `gitlab`: value "gitlab" is not valid for the --reporter argument
+       54    57 │   
+       55    58 │ 
+       56    59 │ 
+       57       │-```
+       58       │-
+       59       │-# Emitted Messages
+       60       │-
+       61       │-```block
+       62       │-[
+       63       │-  {
+       64       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       65       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       66       │-    "fingerprint": "6143155163249580709",
+       67       │-    "severity": "critical",
+       68       │-    "location": {
+       69       │-      "path": "main.ts",
+       70       │-      "lines": {
+       71       │-        "begin": 4
+       72       │-      }
+       73       │-    }
+       74       │-  },
+       75       │-  {
+       76       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       77       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       78       │-    "fingerprint": "16004470298861036684",
+       79       │-    "severity": "critical",
+       80       │-    "location": {
+       81       │-      "path": "main.ts",
+       82       │-      "lines": {
+       83       │-        "begin": 5
+       84       │-      }
+       85       │-    }
+       86       │-  },
+       87       │-  {
+       88       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       89       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       90       │-    "fingerprint": "6844513959367944349",
+       91       │-    "severity": "critical",
+       92       │-    "location": {
+       93       │-      "path": "main.ts",
+       94       │-      "lines": {
+       95       │-        "begin": 6
+       96       │-      }
+       97       │-    }
+       98       │-  },
+       99       │-  {
+      100       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      101       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      102       │-    "fingerprint": "3753031813987153088",
+      103       │-    "severity": "critical",
+      104       │-    "location": {
+      105       │-      "path": "main.ts",
+      106       │-      "lines": {
+      107       │-        "begin": 7
+      108       │-      }
+      109       │-    }
+      110       │-  },
+      111       │-  {
+      112       │-    "description": "This is an unexpected use of the debugger statement.",
+      113       │-    "check_name": "lint/suspicious/noDebugger",
+      114       │-    "fingerprint": "1649488708621366899",
+      115       │-    "severity": "critical",
+      116       │-    "location": {
+      117       │-      "path": "main.ts",
+      118       │-      "lines": {
+      119       │-        "begin": 9
+      120       │-      }
+      121       │-    }
+      122       │-  },
+      123       │-  {
+      124       │-    "description": "This is an unexpected use of the debugger statement.",
+      125       │-    "check_name": "lint/suspicious/noDebugger",
+      126       │-    "fingerprint": "12725857318666866021",
+      127       │-    "severity": "critical",
+      128       │-    "location": {
+      129       │-      "path": "main.ts",
+      130       │-      "lines": {
+      131       │-        "begin": 10
+      132       │-      }
+      133       │-    }
+      134       │-  },
+      135       │-  {
+      136       │-    "description": "This is an unexpected use of the debugger statement.",
+      137       │-    "check_name": "lint/suspicious/noDebugger",
+      138       │-    "fingerprint": "17763028641383623546",
+      139       │-    "severity": "critical",
+      140       │-    "location": {
+      141       │-      "path": "main.ts",
+      142       │-      "lines": {
+      143       │-        "begin": 11
+      144       │-      }
+      145       │-    }
+      146       │-  },
+      147       │-  {
+      148       │-    "description": "This is an unexpected use of the debugger statement.",
+      149       │-    "check_name": "lint/suspicious/noDebugger",
+      150       │-    "fingerprint": "4368420040174731745",
+      151       │-    "severity": "critical",
+      152       │-    "location": {
+      153       │-      "path": "main.ts",
+      154       │-      "lines": {
+      155       │-        "begin": 12
+      156       │-      }
+      157       │-    }
+      158       │-  },
+      159       │-  {
+      160       │-    "description": "This variable implicitly has the any type.",
+      161       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      162       │-    "fingerprint": "5606951167272714146",
+      163       │-    "severity": "critical",
+      164       │-    "location": {
+      165       │-      "path": "main.ts",
+      166       │-      "lines": {
+      167       │-        "begin": 14
+      168       │-      }
+      169       │-    }
+      170       │-  },
+      171       │-  {
+      172       │-    "description": "This variable implicitly has the any type.",
+      173       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      174       │-    "fingerprint": "5567686698145153289",
+      175       │-    "severity": "critical",
+      176       │-    "location": {
+      177       │-      "path": "main.ts",
+      178       │-      "lines": {
+      179       │-        "begin": 15
+      180       │-      }
+      181       │-    }
+      182       │-  },
+      183       │-  {
+      184       │-    "description": "This variable implicitly has the any type.",
+      185       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      186       │-    "fingerprint": "12478924188343149788",
+      187       │-    "severity": "critical",
+      188       │-    "location": {
+      189       │-      "path": "main.ts",
+      190       │-      "lines": {
+      191       │-        "begin": 16
+      192       │-      }
+      193       │-    }
+      194       │-  },
+      195       │-  {
+      196       │-    "description": "This variable implicitly has the any type.",
+      197       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      198       │-    "fingerprint": "12221078446259530036",
+      199       │-    "severity": "critical",
+      200       │-    "location": {
+      201       │-      "path": "main.ts",
+      202       │-      "lines": {
+      203       │-        "begin": 17
+      204       │-      }
+      205       │-    }
+      206       │-  },
+      207       │-  {
+      208       │-    "description": "This variable implicitly has the any type.",
+      209       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      210       │-    "fingerprint": "16715583845852699027",
+      211       │-    "severity": "critical",
+      212       │-    "location": {
+      213       │-      "path": "main.ts",
+      214       │-      "lines": {
+      215       │-        "begin": 18
+      216       │-      }
+      217       │-    }
+      218       │-  },
+      219       │-  {
+      220       │-    "description": "This variable implicitly has the any type.",
+      221       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      222       │-    "fingerprint": "97210195248059969",
+      223       │-    "severity": "critical",
+      224       │-    "location": {
+      225       │-      "path": "main.ts",
+      226       │-      "lines": {
+      227       │-        "begin": 19
+      228       │-      }
+      229       │-    }
+      230       │-  },
+      231       │-  {
+      232       │-    "description": "Shouldn't redeclare 'z'. Consider to delete it or rename it.",
+      233       │-    "check_name": "lint/suspicious/noRedeclare",
+      234       │-    "fingerprint": "4177467054814594004",
+      235       │-    "severity": "critical",
+      236       │-    "location": {
+      237       │-      "path": "main.ts",
+      238       │-      "lines": {
+      239       │-        "begin": 2
+      240       │-      }
+      241       │-    }
+      242       │-  },
+      243       │-  {
+      244       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      245       │-    "check_name": "lint/suspicious/noRedeclare",
+      246       │-    "fingerprint": "710662920264236176",
+      247       │-    "severity": "critical",
+      248       │-    "location": {
+      249       │-      "path": "main.ts",
+      250       │-      "lines": {
+      251       │-        "begin": 15
+      252       │-      }
+      253       │-    }
+      254       │-  },
+      255       │-  {
+      256       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      257       │-    "check_name": "lint/suspicious/noRedeclare",
+      258       │-    "fingerprint": "11240683920503391137",
+      259       │-    "severity": "critical",
+      260       │-    "location": {
+      261       │-      "path": "main.ts",
+      262       │-      "lines": {
+      263       │-        "begin": 16
+      264       │-      }
+      265       │-    }
+      266       │-  },
+      267       │-  {
+      268       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      269       │-    "check_name": "lint/suspicious/noRedeclare",
+      270       │-    "fingerprint": "14476601875768703957",
+      271       │-    "severity": "critical",
+      272       │-    "location": {
+      273       │-      "path": "main.ts",
+      274       │-      "lines": {
+      275       │-        "begin": 17
+      276       │-      }
+      277       │-    }
+      278       │-  },
+      279       │-  {
+      280       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      281       │-    "check_name": "lint/suspicious/noRedeclare",
+      282       │-    "fingerprint": "16119156397775465086",
+      283       │-    "severity": "critical",
+      284       │-    "location": {
+      285       │-      "path": "main.ts",
+      286       │-      "lines": {
+      287       │-        "begin": 18
+      288       │-      }
+      289       │-    }
+      290       │-  },
+      291       │-  {
+      292       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      293       │-    "check_name": "lint/suspicious/noRedeclare",
+      294       │-    "fingerprint": "16860125444609679494",
+      295       │-    "severity": "critical",
+      296       │-    "location": {
+      297       │-      "path": "main.ts",
+      298       │-      "lines": {
+      299       │-        "begin": 19
+      300       │-      }
+      301       │-    }
+      302       │-  },
+      303       │-  {
+      304       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      305       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      306       │-    "fingerprint": "8145265504203493155",
+      307       │-    "severity": "critical",
+      308       │-    "location": {
+      309       │-      "path": "index.ts",
+      310       │-      "lines": {
+      311       │-        "begin": 4
+      312       │-      }
+      313       │-    }
+      314       │-  },
+      315       │-  {
+      316       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      317       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      318       │-    "fingerprint": "9497329216962766751",
+      319       │-    "severity": "critical",
+      320       │-    "location": {
+      321       │-      "path": "index.ts",
+      322       │-      "lines": {
+      323       │-        "begin": 5
+      324       │-      }
+      325       │-    }
+      326       │-  },
+      327       │-  {
+      328       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      329       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      330       │-    "fingerprint": "18366180239442454213",
+      331       │-    "severity": "critical",
+      332       │-    "location": {
+      333       │-      "path": "index.ts",
+      334       │-      "lines": {
+      335       │-        "begin": 6
+      336       │-      }
+      337       │-    }
+      338       │-  },
+      339       │-  {
+      340       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      341       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      342       │-    "fingerprint": "17264185503232320851",
+      343       │-    "severity": "critical",
+      344       │-    "location": {
+      345       │-      "path": "index.ts",
+      346       │-      "lines": {
+      347       │-        "begin": 7
+      348       │-      }
+      349       │-    }
+      350       │-  },
+      351       │-  {
+      352       │-    "description": "This is an unexpected use of the debugger statement.",
+      353       │-    "check_name": "lint/suspicious/noDebugger",
+      354       │-    "fingerprint": "13874281744783264721",
+      355       │-    "severity": "critical",
+      356       │-    "location": {
+      357       │-      "path": "index.ts",
+      358       │-      "lines": {
+      359       │-        "begin": 9
+      360       │-      }
+      361       │-    }
+      362       │-  },
+      363       │-  {
+      364       │-    "description": "This is an unexpected use of the debugger statement.",
+      365       │-    "check_name": "lint/suspicious/noDebugger",
+      366       │-    "fingerprint": "3077767001374933992",
+      367       │-    "severity": "critical",
+      368       │-    "location": {
+      369       │-      "path": "index.ts",
+      370       │-      "lines": {
+      371       │-        "begin": 10
+      372       │-      }
+      373       │-    }
+      374       │-  },
+      375       │-  {
+      376       │-    "description": "This is an unexpected use of the debugger statement.",
+      377       │-    "check_name": "lint/suspicious/noDebugger",
+      378       │-    "fingerprint": "15654042585868945756",
+      379       │-    "severity": "critical",
+      380       │-    "location": {
+      381       │-      "path": "index.ts",
+      382       │-      "lines": {
+      383       │-        "begin": 11
+      384       │-      }
+      385       │-    }
+      386       │-  },
+      387       │-  {
+      388       │-    "description": "This is an unexpected use of the debugger statement.",
+      389       │-    "check_name": "lint/suspicious/noDebugger",
+      390       │-    "fingerprint": "13936915970079861829",
+      391       │-    "severity": "critical",
+      392       │-    "location": {
+      393       │-      "path": "index.ts",
+      394       │-      "lines": {
+      395       │-        "begin": 12
+      396       │-      }
+      397       │-    }
+      398       │-  },
+      399       │-  {
+      400       │-    "description": "This variable implicitly has the any type.",
+      401       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      402       │-    "fingerprint": "2162620893763553997",
+      403       │-    "severity": "critical",
+      404       │-    "location": {
+      405       │-      "path": "index.ts",
+      406       │-      "lines": {
+      407       │-        "begin": 14
+      408       │-      }
+      409       │-    }
+      410       │-  },
+      411       │-  {
+      412       │-    "description": "This variable implicitly has the any type.",
+      413       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      414       │-    "fingerprint": "1339939023879653211",
+      415       │-    "severity": "critical",
+      416       │-    "location": {
+      417       │-      "path": "index.ts",
+      418       │-      "lines": {
+      419       │-        "begin": 15
+      420       │-      }
+      421       │-    }
+      422       │-  },
+      423       │-  {
+      424       │-    "description": "This variable implicitly has the any type.",
+      425       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      426       │-    "fingerprint": "18285621777301161439",
+      427       │-    "severity": "critical",
+      428       │-    "location": {
+      429       │-      "path": "index.ts",
+      430       │-      "lines": {
+      431       │-        "begin": 16
+      432       │-      }
+      433       │-    }
+      434       │-  },
+      435       │-  {
+      436       │-    "description": "This variable implicitly has the any type.",
+      437       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      438       │-    "fingerprint": "10582308848964879795",
+      439       │-    "severity": "critical",
+      440       │-    "location": {
+      441       │-      "path": "index.ts",
+      442       │-      "lines": {
+      443       │-        "begin": 17
+      444       │-      }
+      445       │-    }
+      446       │-  },
+      447       │-  {
+      448       │-    "description": "This variable implicitly has the any type.",
+      449       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      450       │-    "fingerprint": "1645910940962206533",
+      451       │-    "severity": "critical",
+      452       │-    "location": {
+      453       │-      "path": "index.ts",
+      454       │-      "lines": {
+      455       │-        "begin": 18
+      456       │-      }
+      457       │-    }
+      458       │-  },
+      459       │-  {
+      460       │-    "description": "This variable implicitly has the any type.",
+      461       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      462       │-    "fingerprint": "9066604216297977404",
+      463       │-    "severity": "critical",
+      464       │-    "location": {
+      465       │-      "path": "index.ts",
+      466       │-      "lines": {
+      467       │-        "begin": 19
+      468       │-      }
+      469       │-    }
+      470       │-  },
+      471       │-  {
+      472       │-    "description": "Shouldn't redeclare 'z'. Consider to delete it or rename it.",
+      473       │-    "check_name": "lint/suspicious/noRedeclare",
+      474       │-    "fingerprint": "8595162422023295635",
+      475       │-    "severity": "critical",
+      476       │-    "location": {
+      477       │-      "path": "index.ts",
+      478       │-      "lines": {
+      479       │-        "begin": 2
+      480       │-      }
+      481       │-    }
+      482       │-  },
+      483       │-  {
+      484       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      485       │-    "check_name": "lint/suspicious/noRedeclare",
+      486       │-    "fingerprint": "13204486605360217019",
+      487       │-    "severity": "critical",
+      488       │-    "location": {
+      489       │-      "path": "index.ts",
+      490       │-      "lines": {
+      491       │-        "begin": 15
+      492       │-      }
+      493       │-    }
+      494       │-  },
+      495       │-  {
+      496       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      497       │-    "check_name": "lint/suspicious/noRedeclare",
+      498       │-    "fingerprint": "8601445511714044637",
+      499       │-    "severity": "critical",
+      500       │-    "location": {
+      501       │-      "path": "index.ts",
+      502       │-      "lines": {
+      503       │-        "begin": 16
+      504       │-      }
+      505       │-    }
+      506       │-  },
+      507       │-  {
+      508       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      509       │-    "check_name": "lint/suspicious/noRedeclare",
+      510       │-    "fingerprint": "7842353260163629265",
+      511       │-    "severity": "critical",
+      512       │-    "location": {
+      513       │-      "path": "index.ts",
+      514       │-      "lines": {
+      515       │-        "begin": 17
+      516       │-      }
+      517       │-    }
+      518       │-  },
+      519       │-  {
+      520       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      521       │-    "check_name": "lint/suspicious/noRedeclare",
+      522       │-    "fingerprint": "4835254919265693190",
+      523       │-    "severity": "critical",
+      524       │-    "location": {
+      525       │-      "path": "index.ts",
+      526       │-      "lines": {
+      527       │-        "begin": 18
+      528       │-      }
+      529       │-    }
+      530       │-  },
+      531       │-  {
+      532       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      533       │-    "check_name": "lint/suspicious/noRedeclare",
+      534       │-    "fingerprint": "3103625193263367010",
+      535       │-    "severity": "critical",
+      536       │-    "location": {
+      537       │-      "path": "index.ts",
+      538       │-      "lines": {
+      539       │-        "begin": 19
+      540       │-      }
+      541       │-    }
+      542       │-  }
+      543       │-]
+      544    60 │ ```
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_gitlab::reports_diagnostics_gitlab_ci_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_gitlab::reports_diagnostics_gitlab_ci_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.63s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_ci_command.snap.new
+    thread 'cases::reporter_gitlab::reports_diagnostics_gitlab_ci_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_gitlab_ci_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.730s] (157/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_lint_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_lint_command.snap
+    Snapshot: reports_diagnostics_gitlab_lint_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       47    47 │ 
+       48    48 │ # Termination Message
+       49    49 │ 
+       50    50 │ ```block
+       51       │-lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             51 │+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       52    52 │ 
+       53       │-  × Some errors were emitted while running checks.
+             53 │+  × Failed to parse CLI arguments.
+             54 │+    
+             55 │+    Caused by:
+             56 │+      couldn't parse `gitlab`: value "gitlab" is not valid for the --reporter argument
+       54    57 │   
+       55    58 │ 
+       56    59 │ 
+       57       │-```
+       58       │-
+       59       │-# Emitted Messages
+       60       │-
+       61       │-```block
+       62       │-[
+       63       │-  {
+       64       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       65       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       66       │-    "fingerprint": "6143155163249580709",
+       67       │-    "severity": "critical",
+       68       │-    "location": {
+       69       │-      "path": "main.ts",
+       70       │-      "lines": {
+       71       │-        "begin": 4
+       72       │-      }
+       73       │-    }
+       74       │-  },
+       75       │-  {
+       76       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       77       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       78       │-    "fingerprint": "16004470298861036684",
+       79       │-    "severity": "critical",
+       80       │-    "location": {
+       81       │-      "path": "main.ts",
+       82       │-      "lines": {
+       83       │-        "begin": 5
+       84       │-      }
+       85       │-    }
+       86       │-  },
+       87       │-  {
+       88       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+       89       │-    "check_name": "lint/suspicious/noDoubleEquals",
+       90       │-    "fingerprint": "6844513959367944349",
+       91       │-    "severity": "critical",
+       92       │-    "location": {
+       93       │-      "path": "main.ts",
+       94       │-      "lines": {
+       95       │-        "begin": 6
+       96       │-      }
+       97       │-    }
+       98       │-  },
+       99       │-  {
+      100       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      101       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      102       │-    "fingerprint": "3753031813987153088",
+      103       │-    "severity": "critical",
+      104       │-    "location": {
+      105       │-      "path": "main.ts",
+      106       │-      "lines": {
+      107       │-        "begin": 7
+      108       │-      }
+      109       │-    }
+      110       │-  },
+      111       │-  {
+      112       │-    "description": "This is an unexpected use of the debugger statement.",
+      113       │-    "check_name": "lint/suspicious/noDebugger",
+      114       │-    "fingerprint": "1649488708621366899",
+      115       │-    "severity": "critical",
+      116       │-    "location": {
+      117       │-      "path": "main.ts",
+      118       │-      "lines": {
+      119       │-        "begin": 9
+      120       │-      }
+      121       │-    }
+      122       │-  },
+      123       │-  {
+      124       │-    "description": "This is an unexpected use of the debugger statement.",
+      125       │-    "check_name": "lint/suspicious/noDebugger",
+      126       │-    "fingerprint": "12725857318666866021",
+      127       │-    "severity": "critical",
+      128       │-    "location": {
+      129       │-      "path": "main.ts",
+      130       │-      "lines": {
+      131       │-        "begin": 10
+      132       │-      }
+      133       │-    }
+      134       │-  },
+      135       │-  {
+      136       │-    "description": "This is an unexpected use of the debugger statement.",
+      137       │-    "check_name": "lint/suspicious/noDebugger",
+      138       │-    "fingerprint": "17763028641383623546",
+      139       │-    "severity": "critical",
+      140       │-    "location": {
+      141       │-      "path": "main.ts",
+      142       │-      "lines": {
+      143       │-        "begin": 11
+      144       │-      }
+      145       │-    }
+      146       │-  },
+      147       │-  {
+      148       │-    "description": "This is an unexpected use of the debugger statement.",
+      149       │-    "check_name": "lint/suspicious/noDebugger",
+      150       │-    "fingerprint": "4368420040174731745",
+      151       │-    "severity": "critical",
+      152       │-    "location": {
+      153       │-      "path": "main.ts",
+      154       │-      "lines": {
+      155       │-        "begin": 12
+      156       │-      }
+      157       │-    }
+      158       │-  },
+      159       │-  {
+      160       │-    "description": "This variable implicitly has the any type.",
+      161       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      162       │-    "fingerprint": "5606951167272714146",
+      163       │-    "severity": "critical",
+      164       │-    "location": {
+      165       │-      "path": "main.ts",
+      166       │-      "lines": {
+      167       │-        "begin": 14
+      168       │-      }
+      169       │-    }
+      170       │-  },
+      171       │-  {
+      172       │-    "description": "This variable implicitly has the any type.",
+      173       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      174       │-    "fingerprint": "5567686698145153289",
+      175       │-    "severity": "critical",
+      176       │-    "location": {
+      177       │-      "path": "main.ts",
+      178       │-      "lines": {
+      179       │-        "begin": 15
+      180       │-      }
+      181       │-    }
+      182       │-  },
+      183       │-  {
+      184       │-    "description": "This variable implicitly has the any type.",
+      185       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      186       │-    "fingerprint": "12478924188343149788",
+      187       │-    "severity": "critical",
+      188       │-    "location": {
+      189       │-      "path": "main.ts",
+      190       │-      "lines": {
+      191       │-        "begin": 16
+      192       │-      }
+      193       │-    }
+      194       │-  },
+      195       │-  {
+      196       │-    "description": "This variable implicitly has the any type.",
+      197       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      198       │-    "fingerprint": "12221078446259530036",
+      199       │-    "severity": "critical",
+      200       │-    "location": {
+      201       │-      "path": "main.ts",
+      202       │-      "lines": {
+      203       │-        "begin": 17
+      204       │-      }
+      205       │-    }
+      206       │-  },
+      207       │-  {
+      208       │-    "description": "This variable implicitly has the any type.",
+      209       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      210       │-    "fingerprint": "16715583845852699027",
+      211       │-    "severity": "critical",
+      212       │-    "location": {
+      213       │-      "path": "main.ts",
+      214       │-      "lines": {
+      215       │-        "begin": 18
+      216       │-      }
+      217       │-    }
+      218       │-  },
+      219       │-  {
+      220       │-    "description": "This variable implicitly has the any type.",
+      221       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      222       │-    "fingerprint": "97210195248059969",
+      223       │-    "severity": "critical",
+      224       │-    "location": {
+      225       │-      "path": "main.ts",
+      226       │-      "lines": {
+      227       │-        "begin": 19
+      228       │-      }
+      229       │-    }
+      230       │-  },
+      231       │-  {
+      232       │-    "description": "Shouldn't redeclare 'z'. Consider to delete it or rename it.",
+      233       │-    "check_name": "lint/suspicious/noRedeclare",
+      234       │-    "fingerprint": "4177467054814594004",
+      235       │-    "severity": "critical",
+      236       │-    "location": {
+      237       │-      "path": "main.ts",
+      238       │-      "lines": {
+      239       │-        "begin": 2
+      240       │-      }
+      241       │-    }
+      242       │-  },
+      243       │-  {
+      244       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      245       │-    "check_name": "lint/suspicious/noRedeclare",
+      246       │-    "fingerprint": "710662920264236176",
+      247       │-    "severity": "critical",
+      248       │-    "location": {
+      249       │-      "path": "main.ts",
+      250       │-      "lines": {
+      251       │-        "begin": 15
+      252       │-      }
+      253       │-    }
+      254       │-  },
+      255       │-  {
+      256       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      257       │-    "check_name": "lint/suspicious/noRedeclare",
+      258       │-    "fingerprint": "11240683920503391137",
+      259       │-    "severity": "critical",
+      260       │-    "location": {
+      261       │-      "path": "main.ts",
+      262       │-      "lines": {
+      263       │-        "begin": 16
+      264       │-      }
+      265       │-    }
+      266       │-  },
+      267       │-  {
+      268       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      269       │-    "check_name": "lint/suspicious/noRedeclare",
+      270       │-    "fingerprint": "14476601875768703957",
+      271       │-    "severity": "critical",
+      272       │-    "location": {
+      273       │-      "path": "main.ts",
+      274       │-      "lines": {
+      275       │-        "begin": 17
+      276       │-      }
+      277       │-    }
+      278       │-  },
+      279       │-  {
+      280       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      281       │-    "check_name": "lint/suspicious/noRedeclare",
+      282       │-    "fingerprint": "16119156397775465086",
+      283       │-    "severity": "critical",
+      284       │-    "location": {
+      285       │-      "path": "main.ts",
+      286       │-      "lines": {
+      287       │-        "begin": 18
+      288       │-      }
+      289       │-    }
+      290       │-  },
+      291       │-  {
+      292       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      293       │-    "check_name": "lint/suspicious/noRedeclare",
+      294       │-    "fingerprint": "16860125444609679494",
+      295       │-    "severity": "critical",
+      296       │-    "location": {
+      297       │-      "path": "main.ts",
+      298       │-      "lines": {
+      299       │-        "begin": 19
+      300       │-      }
+      301       │-    }
+      302       │-  },
+      303       │-  {
+      304       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      305       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      306       │-    "fingerprint": "8145265504203493155",
+      307       │-    "severity": "critical",
+      308       │-    "location": {
+      309       │-      "path": "index.ts",
+      310       │-      "lines": {
+      311       │-        "begin": 4
+      312       │-      }
+      313       │-    }
+      314       │-  },
+      315       │-  {
+      316       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      317       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      318       │-    "fingerprint": "9497329216962766751",
+      319       │-    "severity": "critical",
+      320       │-    "location": {
+      321       │-      "path": "index.ts",
+      322       │-      "lines": {
+      323       │-        "begin": 5
+      324       │-      }
+      325       │-    }
+      326       │-  },
+      327       │-  {
+      328       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      329       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      330       │-    "fingerprint": "18366180239442454213",
+      331       │-    "severity": "critical",
+      332       │-    "location": {
+      333       │-      "path": "index.ts",
+      334       │-      "lines": {
+      335       │-        "begin": 6
+      336       │-      }
+      337       │-    }
+      338       │-  },
+      339       │-  {
+      340       │-    "description": "Use === instead of ==. == is only allowed when comparing against `null`",
+      341       │-    "check_name": "lint/suspicious/noDoubleEquals",
+      342       │-    "fingerprint": "17264185503232320851",
+      343       │-    "severity": "critical",
+      344       │-    "location": {
+      345       │-      "path": "index.ts",
+      346       │-      "lines": {
+      347       │-        "begin": 7
+      348       │-      }
+      349       │-    }
+      350       │-  },
+      351       │-  {
+      352       │-    "description": "This is an unexpected use of the debugger statement.",
+      353       │-    "check_name": "lint/suspicious/noDebugger",
+      354       │-    "fingerprint": "13874281744783264721",
+      355       │-    "severity": "critical",
+      356       │-    "location": {
+      357       │-      "path": "index.ts",
+      358       │-      "lines": {
+      359       │-        "begin": 9
+      360       │-      }
+      361       │-    }
+      362       │-  },
+      363       │-  {
+      364       │-    "description": "This is an unexpected use of the debugger statement.",
+      365       │-    "check_name": "lint/suspicious/noDebugger",
+      366       │-    "fingerprint": "3077767001374933992",
+      367       │-    "severity": "critical",
+      368       │-    "location": {
+      369       │-      "path": "index.ts",
+      370       │-      "lines": {
+      371       │-        "begin": 10
+      372       │-      }
+      373       │-    }
+      374       │-  },
+      375       │-  {
+      376       │-    "description": "This is an unexpected use of the debugger statement.",
+      377       │-    "check_name": "lint/suspicious/noDebugger",
+      378       │-    "fingerprint": "15654042585868945756",
+      379       │-    "severity": "critical",
+      380       │-    "location": {
+      381       │-      "path": "index.ts",
+      382       │-      "lines": {
+      383       │-        "begin": 11
+      384       │-      }
+      385       │-    }
+      386       │-  },
+      387       │-  {
+      388       │-    "description": "This is an unexpected use of the debugger statement.",
+      389       │-    "check_name": "lint/suspicious/noDebugger",
+      390       │-    "fingerprint": "13936915970079861829",
+      391       │-    "severity": "critical",
+      392       │-    "location": {
+      393       │-      "path": "index.ts",
+      394       │-      "lines": {
+      395       │-        "begin": 12
+      396       │-      }
+      397       │-    }
+      398       │-  },
+      399       │-  {
+      400       │-    "description": "This variable implicitly has the any type.",
+      401       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      402       │-    "fingerprint": "2162620893763553997",
+      403       │-    "severity": "critical",
+      404       │-    "location": {
+      405       │-      "path": "index.ts",
+      406       │-      "lines": {
+      407       │-        "begin": 14
+      408       │-      }
+      409       │-    }
+      410       │-  },
+      411       │-  {
+      412       │-    "description": "This variable implicitly has the any type.",
+      413       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      414       │-    "fingerprint": "1339939023879653211",
+      415       │-    "severity": "critical",
+      416       │-    "location": {
+      417       │-      "path": "index.ts",
+      418       │-      "lines": {
+      419       │-        "begin": 15
+      420       │-      }
+      421       │-    }
+      422       │-  },
+      423       │-  {
+      424       │-    "description": "This variable implicitly has the any type.",
+      425       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      426       │-    "fingerprint": "18285621777301161439",
+      427       │-    "severity": "critical",
+      428       │-    "location": {
+      429       │-      "path": "index.ts",
+      430       │-      "lines": {
+      431       │-        "begin": 16
+      432       │-      }
+      433       │-    }
+      434       │-  },
+      435       │-  {
+      436       │-    "description": "This variable implicitly has the any type.",
+      437       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      438       │-    "fingerprint": "10582308848964879795",
+      439       │-    "severity": "critical",
+      440       │-    "location": {
+      441       │-      "path": "index.ts",
+      442       │-      "lines": {
+      443       │-        "begin": 17
+      444       │-      }
+      445       │-    }
+      446       │-  },
+      447       │-  {
+      448       │-    "description": "This variable implicitly has the any type.",
+      449       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      450       │-    "fingerprint": "1645910940962206533",
+      451       │-    "severity": "critical",
+      452       │-    "location": {
+      453       │-      "path": "index.ts",
+      454       │-      "lines": {
+      455       │-        "begin": 18
+      456       │-      }
+      457       │-    }
+      458       │-  },
+      459       │-  {
+      460       │-    "description": "This variable implicitly has the any type.",
+      461       │-    "check_name": "lint/suspicious/noImplicitAnyLet",
+      462       │-    "fingerprint": "9066604216297977404",
+      463       │-    "severity": "critical",
+      464       │-    "location": {
+      465       │-      "path": "index.ts",
+      466       │-      "lines": {
+      467       │-        "begin": 19
+      468       │-      }
+      469       │-    }
+      470       │-  },
+      471       │-  {
+      472       │-    "description": "Shouldn't redeclare 'z'. Consider to delete it or rename it.",
+      473       │-    "check_name": "lint/suspicious/noRedeclare",
+      474       │-    "fingerprint": "8595162422023295635",
+      475       │-    "severity": "critical",
+      476       │-    "location": {
+      477       │-      "path": "index.ts",
+      478       │-      "lines": {
+      479       │-        "begin": 2
+      480       │-      }
+      481       │-    }
+      482       │-  },
+      483       │-  {
+      484       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      485       │-    "check_name": "lint/suspicious/noRedeclare",
+      486       │-    "fingerprint": "13204486605360217019",
+      487       │-    "severity": "critical",
+      488       │-    "location": {
+      489       │-      "path": "index.ts",
+      490       │-      "lines": {
+      491       │-        "begin": 15
+      492       │-      }
+      493       │-    }
+      494       │-  },
+      495       │-  {
+      496       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      497       │-    "check_name": "lint/suspicious/noRedeclare",
+      498       │-    "fingerprint": "8601445511714044637",
+      499       │-    "severity": "critical",
+      500       │-    "location": {
+      501       │-      "path": "index.ts",
+      502       │-      "lines": {
+      503       │-        "begin": 16
+      504       │-      }
+      505       │-    }
+      506       │-  },
+      507       │-  {
+      508       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      509       │-    "check_name": "lint/suspicious/noRedeclare",
+      510       │-    "fingerprint": "7842353260163629265",
+      511       │-    "severity": "critical",
+      512       │-    "location": {
+      513       │-      "path": "index.ts",
+      514       │-      "lines": {
+      515       │-        "begin": 17
+      516       │-      }
+      517       │-    }
+      518       │-  },
+      519       │-  {
+      520       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      521       │-    "check_name": "lint/suspicious/noRedeclare",
+      522       │-    "fingerprint": "4835254919265693190",
+      523       │-    "severity": "critical",
+      524       │-    "location": {
+      525       │-      "path": "index.ts",
+      526       │-      "lines": {
+      527       │-        "begin": 18
+      528       │-      }
+      529       │-    }
+      530       │-  },
+      531       │-  {
+      532       │-    "description": "Shouldn't redeclare 'f'. Consider to delete it or rename it.",
+      533       │-    "check_name": "lint/suspicious/noRedeclare",
+      534       │-    "fingerprint": "3103625193263367010",
+      535       │-    "severity": "critical",
+      536       │-    "location": {
+      537       │-      "path": "index.ts",
+      538       │-      "lines": {
+      539       │-        "begin": 19
+      540       │-      }
+      541       │-    }
+      542       │-  }
+      543       │-]
+      544    60 │ ```
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_gitlab::reports_diagnostics_gitlab_lint_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_gitlab::reports_diagnostics_gitlab_lint_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.60s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_lint_command.snap.new
+    thread 'cases::reporter_gitlab::reports_diagnostics_gitlab_lint_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_gitlab_lint_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.739s] (158/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_format_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_format_command.snap
+    Snapshot: reports_diagnostics_gitlab_format_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       47    47 │ 
+       48    48 │ # Termination Message
+       49    49 │ 
+       50    50 │ ```block
+       51       │-format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             51 │+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       52    52 │ 
+       53       │-  × Some errors were emitted while running checks.
+             53 │+  × Failed to parse CLI arguments.
+             54 │+    
+             55 │+    Caused by:
+             56 │+      couldn't parse `gitlab`: value "gitlab" is not valid for the --reporter argument
+       54    57 │   
+       55    58 │ 
+       56    59 │ 
+       57       │-```
+       58       │-
+       59       │-# Emitted Messages
+       60       │-
+       61       │-```block
+       62       │-[]
+       63    60 │ ```
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_gitlab::reports_diagnostics_gitlab_format_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_gitlab::reports_diagnostics_gitlab_format_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.61s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_gitlab/reports_diagnostics_gitlab_format_command.snap.new
+    thread 'cases::reporter_gitlab::reports_diagnostics_gitlab_format_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_gitlab_format_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   6.738s] (159/581) biome_cli::main cases::diagnostics::max_diagnostics_are_lifted
+        PASS [   0.733s] (160/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_format_command
+        PASS [   0.783s] (161/581) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_format_command
+        FAIL [   0.990s] (162/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_check_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap
+    Snapshot: reports_diagnostics_junit_check_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       42    42 │ <?xml version="1.0" encoding="UTF-8"?>
+       43    43 │ <testsuites name="Biome" tests="12" failures="12" errors="16" time="<TIME>">
+       44    44 │     <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       45    45 │         <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
+       46       │-            <failure message="Use === instead of ==. == is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==. == is only allowed when comparing against `null`</failure>
+             46 │+            <failure message="Use === instead of ==.
+             47 │+== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
+             48 │+== is only allowed when comparing against `null`</failure>
+       47    49 │         </testcase>
+       48    50 │     </testsuite>
+       49    51 │     <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       50    52 │         <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
+    ┈┈┈┈┈┈┈┈┈┈┈┈┼┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+       72    74 │         </testcase>
+       73    75 │     </testsuite>
+       74    76 │     <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       75    77 │         <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
+       76       │-            <failure message="Use === instead of ==. == is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==. == is only allowed when comparing against `null`</failure>
+             78 │+            <failure message="Use === instead of ==.
+             79 │+== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
+             80 │+== is only allowed when comparing against `null`</failure>
+       77    81 │         </testcase>
+       78    82 │     </testsuite>
+       79    83 │     <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       80    84 │         <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_junit::reports_diagnostics_junit_check_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_junit::reports_diagnostics_junit_check_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.85s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap.new
+    thread 'cases::reporter_junit::reports_diagnostics_junit_check_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_junit_check_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.952s] (163/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_lint_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap
+    Snapshot: reports_diagnostics_junit_lint_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       42    42 │ <?xml version="1.0" encoding="UTF-8"?>
+       43    43 │ <testsuites name="Biome" tests="12" failures="12" errors="12" time="<TIME>">
+       44    44 │     <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       45    45 │         <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
+       46       │-            <failure message="Use === instead of ==. == is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==. == is only allowed when comparing against `null`</failure>
+             46 │+            <failure message="Use === instead of ==.
+             47 │+== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
+             48 │+== is only allowed when comparing against `null`</failure>
+       47    49 │         </testcase>
+       48    50 │     </testsuite>
+       49    51 │     <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       50    52 │         <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
+    ┈┈┈┈┈┈┈┈┈┈┈┈┼┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+       72    74 │         </testcase>
+       73    75 │     </testsuite>
+       74    76 │     <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       75    77 │         <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
+       76       │-            <failure message="Use === instead of ==. == is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==. == is only allowed when comparing against `null`</failure>
+             78 │+            <failure message="Use === instead of ==.
+             79 │+== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
+             80 │+== is only allowed when comparing against `null`</failure>
+       77    81 │         </testcase>
+       78    82 │     </testsuite>
+       79    83 │     <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       80    84 │         <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_junit::reports_diagnostics_junit_lint_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_junit::reports_diagnostics_junit_lint_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.81s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap.new
+    thread 'cases::reporter_junit::reports_diagnostics_junit_lint_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_junit_lint_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.897s] (164/581) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_check_command
+        PASS [   0.895s] (165/581) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_ci_command
+        PASS [   0.828s] (166/581) biome_cli::main cases::reporter_summary::reports_diagnostics_summary_lint_command
+        PASS [   0.789s] (167/581) biome_cli::main cases::unknown_files::should_not_print_a_diagnostic_unknown_file_because_ignored
+        FAIL [   1.044s] (168/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_ci_command
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap
+    Snapshot: reports_diagnostics_junit_ci_command
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       42    42 │ <?xml version="1.0" encoding="UTF-8"?>
+       43    43 │ <testsuites name="Biome" tests="12" failures="12" errors="16" time="<TIME>">
+       44    44 │     <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       45    45 │         <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
+       46       │-            <failure message="Use === instead of ==. == is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==. == is only allowed when comparing against `null`</failure>
+             46 │+            <failure message="Use === instead of ==.
+             47 │+== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
+             48 │+== is only allowed when comparing against `null`</failure>
+       47    49 │         </testcase>
+       48    50 │     </testsuite>
+       49    51 │     <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       50    52 │         <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
+    ┈┈┈┈┈┈┈┈┈┈┈┈┼┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+       72    74 │         </testcase>
+       73    75 │     </testsuite>
+       74    76 │     <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       75    77 │         <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
+       76       │-            <failure message="Use === instead of ==. == is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==. == is only allowed when comparing against `null`</failure>
+             78 │+            <failure message="Use === instead of ==.
+             79 │+== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
+             80 │+== is only allowed when comparing against `null`</failure>
+       77    81 │         </testcase>
+       78    82 │     </testsuite>
+       79    83 │     <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
+       80    84 │         <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test cases::reporter_junit::reports_diagnostics_junit_ci_command ... FAILED
+
+    failures:
+
+    failures:
+        cases::reporter_junit::reports_diagnostics_junit_ci_command
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.92s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap.new
+    thread 'cases::reporter_junit::reports_diagnostics_junit_ci_command' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'reports_diagnostics_junit_ci_command' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.757s] (169/581) biome_cli::main cases::unknown_files::should_print_a_diagnostic_unknown_file
+        PASS [   0.762s] (170/581) biome_cli::main commands::check::applies_organize_imports_from_cli
+        PASS [   0.814s] (171/581) biome_cli::main commands::check::applies_organize_imports
+        PASS [   0.878s] (172/581) biome_cli::main commands::check::all_rules
+        PASS [   0.608s] (173/581) biome_cli::main commands::check::apply_suggested_error
+        PASS [   0.801s] (174/581) biome_cli::main commands::check::apply_bogus_argument
+        PASS [   0.875s] (175/581) biome_cli::main commands::check::apply_noop
+        PASS [   0.844s] (176/581) biome_cli::main commands::check::apply_suggested
+        PASS [   0.896s] (177/581) biome_cli::main commands::check::apply_ok
+        FAIL [   0.739s] (178/581) biome_cli::main commands::check::check_help
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap
+    Snapshot: check_help
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      132   132 │         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were
+      133   133 │                               processed during the execution of the command.
+      134   134 │         --error-on-warnings   Tell Biome to exit with an error code if some diagnostics emit
+      135   135 │                               warnings.
+      136       │-        --reporter=<json|json-pretty|github|junit|summary|gitlab>  Allows to change how diagnostics
+      137       │-                              and summary are reported.
+            136 │+        --reporter=<json|json-pretty|github|junit|summary>  Allows to change how diagnostics and
+            137 │+                              summary are reported.
+      138   138 │         --log-level=<none|debug|info|warn|error>  The level of logging. In order, from the most
+      139   139 │                               verbose to the least verbose: debug, info, warn, error.
+      140   140 │                               The value `none` won't show any logging.
+      141   141 │                               [default: none]
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test commands::check::check_help ... FAILED
+
+    failures:
+
+    failures:
+        commands::check::check_help
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.62s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap.new
+    thread 'commands::check::check_help' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'check_help' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.913s] (179/581) biome_cli::main commands::check::apply_unsafe_with_error
+        PASS [   0.695s] (180/581) biome_cli::main commands::check::check_stdin_write_unsafe_only_organize_imports
+        PASS [   0.798s] (181/581) biome_cli::main commands::check::check_json_files
+        PASS [   0.833s] (182/581) biome_cli::main commands::check::check_stdin_returns_text_if_content_is_not_changed
+        PASS [   0.697s] (183/581) biome_cli::main commands::check::doesnt_error_if_no_files_were_processed
+        PASS [   0.861s] (184/581) biome_cli::main commands::check::check_stdin_write_unsafe_successfully
+        PASS [   0.844s] (185/581) biome_cli::main commands::check::config_recommended_group
+        PASS [   0.900s] (186/581) biome_cli::main commands::check::check_stdin_write_successfully
+        PASS [   0.894s] (187/581) biome_cli::main commands::check::deprecated_suppression_comment
+        PASS [   0.903s] (188/581) biome_cli::main commands::check::does_error_with_only_warnings
+        PASS [   0.698s] (189/581) biome_cli::main commands::check::file_too_large_cli_limit
+        PASS [   0.833s] (190/581) biome_cli::main commands::check::dont_applies_organize_imports_for_ignored_file
+        PASS [   0.779s] (191/581) biome_cli::main commands::check::file_too_large
+        PASS [   0.878s] (192/581) biome_cli::main commands::check::downgrade_severity
+        PASS [   0.640s] (193/581) biome_cli::main commands::check::files_max_size_parse_error
+        PASS [   0.327s] (194/581) biome_cli::main commands::check::fs_error_infinite_symlink_expansion_to_files
+        PASS [   0.768s] (195/581) biome_cli::main commands::check::file_too_large_config_limit
+        PASS [   0.602s] (196/581) biome_cli::main commands::check::fix_suggested_error
+        PASS [   0.849s] (197/581) biome_cli::main commands::check::fix_noop
+        PASS [   0.652s] (198/581) biome_cli::main commands::check::fs_error_dereferenced_symlink
+        PASS [   0.647s] (199/581) biome_cli::main commands::check::fs_error_infinite_symlink_expansion_to_dirs
+        PASS [   0.857s] (200/581) biome_cli::main commands::check::fix_ok
+        PASS [   0.614s] (201/581) biome_cli::main commands::check::fs_error_unknown
+        PASS [   0.823s] (202/581) biome_cli::main commands::check::fix_unsafe_ok
+        PASS [   0.845s] (203/581) biome_cli::main commands::check::fs_error_read_only
+        PASS [   0.982s] (204/581) biome_cli::main commands::check::fix_unsafe_with_error
+        PASS [   0.895s] (205/581) biome_cli::main commands::check::ignore_configured_globals
+        PASS [   1.073s] (206/581) biome_cli::main commands::check::fs_files_ignore_symlink
+        PASS [   0.934s] (207/581) biome_cli::main commands::check::ignores_file_inside_directory
+        PASS [   1.022s] (208/581) biome_cli::main commands::check::ignore_vcs_ignored_file_via_cli
+        PASS [   1.071s] (209/581) biome_cli::main commands::check::ignore_vcs_ignored_file
+        PASS [   1.009s] (210/581) biome_cli::main commands::check::ignore_vcs_os_independent_parse
+        PASS [   1.008s] (211/581) biome_cli::main commands::check::ignores_unknown_file
+        PASS [   1.016s] (212/581) biome_cli::main commands::check::lint_error
+        PASS [   1.013s] (213/581) biome_cli::main commands::check::lint_error_without_file_paths
+        PASS [   1.017s] (214/581) biome_cli::main commands::check::max_diagnostics
+        PASS [   0.662s] (215/581) biome_cli::main commands::check::no_supported_file_found
+        PASS [   0.959s] (216/581) biome_cli::main commands::check::no_lint_if_linter_is_disabled_when_run_apply
+        PASS [   0.975s] (217/581) biome_cli::main commands::check::no_lint_if_files_are_listed_in_ignore_option
+        PASS [   0.975s] (218/581) biome_cli::main commands::check::no_lint_if_linter_is_disabled
+        PASS [   0.770s] (219/581) biome_cli::main commands::check::no_lint_when_file_is_ignored
+        PASS [   0.826s] (220/581) biome_cli::main commands::check::no_lint_if_linter_is_disabled_when_run_apply_biome_jsonc
+        PASS [   0.522s] (221/581) biome_cli::main commands::check::ok
+        PASS [   0.510s] (222/581) biome_cli::main commands::check::ok_read_only
+        PASS [   1.169s] (223/581) biome_cli::main commands::check::maximum_diagnostics
+        PASS [   0.819s] (224/581) biome_cli::main commands::check::nursery_unstable
+        PASS [   1.388s] (225/581) biome_cli::main commands::check::max_diagnostics_default
+        PASS [   0.832s] (226/581) biome_cli::main commands::check::parse_error
+        PASS [   0.912s] (227/581) biome_cli::main commands::check::print_json
+        PASS [   0.913s] (228/581) biome_cli::main commands::check::print_json_pretty
+        PASS [   0.908s] (229/581) biome_cli::main commands::check::print_verbose
+        PASS [   0.702s] (230/581) biome_cli::main commands::check::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.902s] (231/581) biome_cli::main commands::check::should_disable_a_rule
+        PASS [   0.850s] (232/581) biome_cli::main commands::check::should_disable_a_rule_group
+        PASS [   0.689s] (233/581) biome_cli::main commands::check::should_error_if_unstaged_files_only_with_staged_flag
+        PASS [   0.961s] (234/581) biome_cli::main commands::check::should_apply_correct_file_source
+        PASS [   0.865s] (235/581) biome_cli::main commands::check::should_organize_imports_diff_on_check
+        PASS [   0.899s] (236/581) biome_cli::main commands::check::should_not_disable_recommended_rules_for_a_group
+        PASS [   0.898s] (237/581) biome_cli::main commands::check::should_not_enable_all_recommended_rules
+        PASS [   0.852s] (238/581) biome_cli::main commands::check::should_show_formatter_diagnostics_for_files_ignored_by_linter
+        PASS [   0.891s] (239/581) biome_cli::main commands::check::shows_organize_imports_diff_on_check
+        PASS [   0.942s] (240/581) biome_cli::main commands::check::should_pass_if_there_are_only_warnings
+        PASS [   0.817s] (241/581) biome_cli::main commands::check::suppression_syntax_error
+        PASS [   0.663s] (242/581) biome_cli::main commands::check::unsupported_file
+        PASS [   0.912s] (243/581) biome_cli::main commands::check::top_level_all_down_level_not_all
+        PASS [   0.885s] (244/581) biome_cli::main commands::check::top_level_not_all_down_level_all
+        PASS [   0.688s] (245/581) biome_cli::main commands::check::unsupported_file_verbose
+        PASS [   0.594s] (246/581) biome_cli::main commands::check::write_suggested_error
+        PASS [   0.874s] (247/581) biome_cli::main commands::check::upgrade_severity
+        PASS [   0.841s] (248/581) biome_cli::main commands::check::use_literal_keys_should_emit_correct_ast_issue_266
+        PASS [   0.833s] (249/581) biome_cli::main commands::check::write_noop
+        PASS [   0.794s] (250/581) biome_cli::main commands::check::write_ok
+        PASS [   0.815s] (251/581) biome_cli::main commands::check::write_unsafe_ok
+        PASS [   0.852s] (252/581) biome_cli::main commands::check::write_unsafe_with_error
+        PASS [   0.617s] (253/581) biome_cli::main commands::ci::ci_errors_for_all_disabled_checks
+        PASS [   0.749s] (254/581) biome_cli::main commands::ci::ci_does_not_run_formatter
+        PASS [   0.728s] (255/581) biome_cli::main commands::ci::ci_does_not_run_formatter_via_cli
+        PASS [   0.773s] (256/581) biome_cli::main commands::ci::ci_does_not_run_formatter_biome_jsonc
+        PASS [   0.808s] (257/581) biome_cli::main commands::ci::ci_does_not_organize_imports_via_cli
+        PASS [   0.739s] (258/581) biome_cli::main commands::ci::ci_does_not_run_linter
+        PASS [   0.769s] (259/581) biome_cli::main commands::ci::ci_does_not_run_linter_via_cli
+        FAIL [   0.713s] (260/581) biome_cli::main commands::ci::ci_help
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_commands_ci/ci_help.snap
+    Snapshot: ci_help
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      134   134 │         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were
+      135   135 │                               processed during the execution of the command.
+      136   136 │         --error-on-warnings   Tell Biome to exit with an error code if some diagnostics emit
+      137   137 │                               warnings.
+      138       │-        --reporter=<json|json-pretty|github|junit|summary|gitlab>  Allows to change how diagnostics
+      139       │-                              and summary are reported.
+            138 │+        --reporter=<json|json-pretty|github|junit|summary>  Allows to change how diagnostics and
+            139 │+                              summary are reported.
+      140   140 │         --log-level=<none|debug|info|warn|error>  The level of logging. In order, from the most
+      141   141 │                               verbose to the least verbose: debug, info, warn, error.
+      142   142 │                               The value `none` won't show any logging.
+      143   143 │                               [default: none]
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test commands::ci::ci_help ... FAILED
+
+    failures:
+
+    failures:
+        commands::ci::ci_help
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.61s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_commands_ci/ci_help.snap.new
+    thread 'commands::ci::ci_help' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'ci_help' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.798s] (261/581) biome_cli::main commands::ci::ci_formatter_linter_organize_imports
+        PASS [   0.721s] (262/581) biome_cli::main commands::ci::ci_parse_error
+        PASS [   0.803s] (263/581) biome_cli::main commands::ci::ci_lint_error
+        PASS [   0.779s] (264/581) biome_cli::main commands::ci::ci_runs_linter_not_formatter_issue_3495
+        PASS [   0.611s] (265/581) biome_cli::main commands::ci::doesnt_error_if_no_files_were_processed
+        PASS [   0.813s] (266/581) biome_cli::main commands::ci::correctly_handles_ignored_and_not_ignored_files
+        PASS [   0.575s] (267/581) biome_cli::main commands::ci::files_max_size_parse_error
+        PASS [   0.734s] (268/581) biome_cli::main commands::ci::file_too_large
+        PASS [   0.688s] (269/581) biome_cli::main commands::ci::file_too_large_cli_limit
+        PASS [   0.828s] (270/581) biome_cli::main commands::ci::does_error_with_only_warnings
+        PASS [   0.824s] (271/581) biome_cli::main commands::ci::does_formatting_error_without_file_paths
+        PASS [   0.706s] (272/581) biome_cli::main commands::ci::file_too_large_config_limit
+        PASS [   0.746s] (273/581) biome_cli::main commands::ci::formatting_error
+        PASS [   0.770s] (274/581) biome_cli::main commands::ci::ignores_unknown_file
+        PASS [   0.818s] (275/581) biome_cli::main commands::ci::ignore_vcs_ignored_file
+        PASS [   0.850s] (276/581) biome_cli::main commands::ci::ignore_vcs_ignored_file_via_cli
+        PASS [   0.755s] (277/581) biome_cli::main commands::ci::ok
+        PASS [   0.643s] (278/581) biome_cli::main commands::ci::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.588s] (279/581) biome_cli::main commands::explain::explain_help
+        PASS [   0.560s] (280/581) biome_cli::main commands::explain::explain_logs
+        PASS [   0.791s] (281/581) biome_cli::main commands::ci::print_verbose
+        PASS [   0.535s] (282/581) biome_cli::main commands::explain::explain_valid_rule
+        PASS [   0.577s] (283/581) biome_cli::main commands::explain::explain_not_found
+        PASS [   0.698s] (284/581) biome_cli::main commands::format::applies_custom_arrow_parentheses
+        PASS [   0.722s] (285/581) biome_cli::main commands::format::applies_configuration_from_biome_jsonc
+        PASS [   0.718s] (286/581) biome_cli::main commands::format::applies_custom_attribute_position
+        PASS [   0.757s] (287/581) biome_cli::main commands::format::applies_custom_bracket_same_line
+        PASS [   0.747s] (288/581) biome_cli::main commands::format::applies_custom_bracket_spacing
+        PASS [   0.691s] (289/581) biome_cli::main commands::format::applies_custom_bracket_spacing_for_graphql
+        PASS [   0.736s] (290/581) biome_cli::main commands::format::applies_custom_configuration
+        PASS [   0.746s] (291/581) biome_cli::main commands::format::applies_custom_configuration_over_config_file_issue_3175_v1
+        PASS [   0.802s] (292/581) biome_cli::main commands::format::applies_custom_configuration_over_config_file
+        PASS [   0.736s] (293/581) biome_cli::main commands::format::applies_custom_quote_style
+        PASS [   0.738s] (294/581) biome_cli::main commands::format::applies_custom_trailing_commas
+        PASS [   0.749s] (295/581) biome_cli::main commands::format::applies_custom_jsx_quote_style
+        PASS [   0.771s] (296/581) biome_cli::main commands::format::applies_custom_configuration_over_config_file_issue_3175_v2
+        PASS [   1.693s] (297/581) biome_cli::main commands::ci::max_diagnostics
+        PASS [   0.750s] (298/581) biome_cli::main commands::format::applies_custom_trailing_commas_overriding_the_deprecated_option
+        PASS [   0.764s] (299/581) biome_cli::main commands::format::applies_custom_trailing_commas_using_the_deprecated_option
+        PASS [   1.695s] (300/581) biome_cli::main commands::ci::max_diagnostics_default
+        PASS [   0.773s] (301/581) biome_cli::main commands::format::custom_config_file_path
+        PASS [   0.658s] (302/581) biome_cli::main commands::format::does_not_format_if_disabled
+        PASS [   0.671s] (303/581) biome_cli::main commands::format::does_not_format_if_files_are_listed_in_ignore_option
+        PASS [   0.663s] (304/581) biome_cli::main commands::format::does_not_format_ignored_files
+        PASS [   0.629s] (305/581) biome_cli::main commands::format::doesnt_error_if_no_files_were_processed
+        PASS [   0.769s] (306/581) biome_cli::main commands::format::does_not_format_ignored_directories
+        PASS [   0.797s] (307/581) biome_cli::main commands::format::does_not_format_ignored_file_in_included_directory
+        PASS [   0.656s] (308/581) biome_cli::main commands::format::file_too_large
+        PASS [   0.732s] (309/581) biome_cli::main commands::format::don_t_format_ignored_known_jsonc_files
+        PASS [   0.593s] (310/581) biome_cli::main commands::format::files_max_size_parse_error
+        PASS [   0.700s] (311/581) biome_cli::main commands::format::file_too_large_cli_limit
+        PASS [   0.688s] (312/581) biome_cli::main commands::format::file_too_large_config_limit
+        PASS [   0.716s] (313/581) biome_cli::main commands::format::fix
+        PASS [   0.732s] (314/581) biome_cli::main commands::format::format_empty_svelte_js_files_write
+        PASS [   0.686s] (315/581) biome_cli::main commands::format::format_is_disabled
+        FAIL [   0.752s] (316/581) biome_cli::main commands::format::format_help
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap
+    Snapshot: format_help
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       91    91 │         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were
+       92    92 │                               processed during the execution of the command.
+       93    93 │         --error-on-warnings   Tell Biome to exit with an error code if some diagnostics emit
+       94    94 │                               warnings.
+       95       │-        --reporter=<json|json-pretty|github|junit|summary|gitlab>  Allows to change how diagnostics
+       96       │-                              and summary are reported.
+             95 │+        --reporter=<json|json-pretty|github|junit|summary>  Allows to change how diagnostics and
+             96 │+                              summary are reported.
+       97    97 │         --log-level=<none|debug|info|warn|error>  The level of logging. In order, from the most
+       98    98 │                               verbose to the least verbose: debug, info, warn, error.
+       99    99 │                               The value `none` won't show any logging.
+      100   100 │                               [default: none]
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test commands::format::format_help ... FAILED
+
+    failures:
+
+    failures:
+        commands::format::format_help
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.60s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap.new
+    thread 'commands::format::format_help' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'format_help' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.766s] (317/581) biome_cli::main commands::format::format_empty_svelte_ts_files_write
+        PASS [   0.695s] (318/581) biome_cli::main commands::format::format_json_trailing_commas_none
+        PASS [   0.738s] (319/581) biome_cli::main commands::format::format_json_trailing_commas_all
+        PASS [   0.706s] (320/581) biome_cli::main commands::format::format_json_trailing_commas_overrides_all
+        PASS [   0.761s] (321/581) biome_cli::main commands::format::format_json_trailing_commas_overrides_none
+        PASS [   0.698s] (322/581) biome_cli::main commands::format::format_jsonc_files
+        PASS [   0.718s] (323/581) biome_cli::main commands::format::format_json_when_allow_trailing_commas
+        PASS [   0.726s] (324/581) biome_cli::main commands::format::format_json_when_allow_trailing_commas_write
+        PASS [   0.712s] (325/581) biome_cli::main commands::format::format_package_json
+        PASS [   0.630s] (326/581) biome_cli::main commands::format::format_stdin_with_errors
+        PASS [   0.645s] (327/581) biome_cli::main commands::format::format_stdin_successfully
+        PASS [   0.741s] (328/581) biome_cli::main commands::format::format_shows_parse_diagnostics
+        PASS [   0.445s] (329/581) biome_cli::main commands::format::format_with_configured_line_ending
+        PASS [   0.784s] (330/581) biome_cli::main commands::format::format_svelte_explicit_js_files
+        PASS [   0.745s] (331/581) biome_cli::main commands::format::format_svelte_implicit_js_files
+        PASS [   0.787s] (332/581) biome_cli::main commands::format::format_svelte_explicit_js_files_write
+        PASS [   0.786s] (333/581) biome_cli::main commands::format::format_svelte_implicit_js_files_write
+        PASS [   0.754s] (334/581) biome_cli::main commands::format::format_with_configuration
+        PASS [   0.691s] (335/581) biome_cli::main commands::format::fs_error_read_only
+        PASS [   0.802s] (336/581) biome_cli::main commands::format::format_svelte_ts_files_write
+        PASS [   0.808s] (337/581) biome_cli::main commands::format::format_svelte_ts_files
+        PASS [   0.754s] (338/581) biome_cli::main commands::format::format_without_file_paths
+        PASS [   0.735s] (339/581) biome_cli::main commands::format::ignore_comments_error_when_allow_comments
+        PASS [   0.586s] (340/581) biome_cli::main commands::format::indent_size_parse_errors_negative
+        PASS [   0.768s] (341/581) biome_cli::main commands::format::ignore_vcs_ignored_file_via_cli
+        PASS [   0.762s] (342/581) biome_cli::main commands::format::ignores_unknown_file
+        PASS [   0.830s] (343/581) biome_cli::main commands::format::ignore_vcs_ignored_file
+        PASS [   0.604s] (344/581) biome_cli::main commands::format::indent_size_parse_errors_overflow
+        PASS [   0.610s] (345/581) biome_cli::main commands::format::indent_style_parse_errors
+        PASS [   0.823s] (346/581) biome_cli::main commands::format::include_ignore_cascade
+        PASS [   0.582s] (347/581) biome_cli::main commands::format::invalid_config_file_path
+        PASS [   0.776s] (348/581) biome_cli::main commands::format::include_vcs_ignore_cascade
+        PASS [   0.579s] (349/581) biome_cli::main commands::format::line_width_parse_errors_overflow
+        PASS [   0.610s] (350/581) biome_cli::main commands::format::line_width_parse_errors_negative
+        PASS [   0.724s] (351/581) biome_cli::main commands::format::lint_warning
+        PASS [   0.641s] (352/581) biome_cli::main commands::format::no_supported_file_found
+        PASS [   0.750s] (353/581) biome_cli::main commands::format::override_don_t_affect_ignored_files
+        PASS [   0.762s] (354/581) biome_cli::main commands::format::print
+        PASS [   0.705s] (355/581) biome_cli::main commands::format::print_json
+        PASS [   0.634s] (356/581) biome_cli::main commands::format::quote_properties_parse_errors_letter_case
+        PASS [   0.760s] (357/581) biome_cli::main commands::format::print_verbose
+        PASS [   0.807s] (358/581) biome_cli::main commands::format::print_json_pretty
+        PASS [   0.699s] (359/581) biome_cli::main commands::format::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.702s] (360/581) biome_cli::main commands::format::should_error_if_unstaged_files_only_with_staged_flag
+        PASS [   1.120s] (361/581) biome_cli::main commands::format::max_diagnostics
+        PASS [   1.130s] (362/581) biome_cli::main commands::format::max_diagnostics_default
+        PASS [   0.881s] (363/581) biome_cli::main commands::format::should_apply_different_indent_style
+        PASS [   0.946s] (364/581) biome_cli::main commands::format::should_apply_different_formatting
+        PASS [   0.931s] (365/581) biome_cli::main commands::format::should_apply_different_formatting_with_cli
+        PASS [   0.834s] (366/581) biome_cli::main commands::format::should_format_files_in_folders_ignored_by_linter
+        PASS [   0.829s] (367/581) biome_cli::main commands::format::should_not_format_js_files_if_disabled
+        PASS [   0.861s] (368/581) biome_cli::main commands::format::should_not_format_css_files_if_disabled
+        PASS [   0.699s] (369/581) biome_cli::main commands::format::trailing_commas_parse_errors
+        PASS [   0.716s] (370/581) biome_cli::main commands::format::with_invalid_semicolons_option
+        PASS [   0.901s] (371/581) biome_cli::main commands::format::should_not_format_json_files_if_disabled
+        PASS [   0.874s] (372/581) biome_cli::main commands::format::treat_known_json_files_as_jsonc_files
+        PASS [   0.833s] (373/581) biome_cli::main commands::format::with_semicolons_options
+        PASS [   0.918s] (374/581) biome_cli::main commands::format::vcs_absolute_path
+        PASS [   0.696s] (375/581) biome_cli::main commands::init::creates_config_file
+        PASS [   0.689s] (376/581) biome_cli::main commands::init::creates_config_file_when_biome_installed_via_package_manager
+        PASS [   0.691s] (377/581) biome_cli::main commands::init::does_not_create_config_file_if_json_exists
+        PASS [   0.724s] (378/581) biome_cli::main commands::init::creates_config_jsonc_file
+        PASS [   0.869s] (379/581) biome_cli::main commands::format::write
+        PASS [   0.868s] (380/581) biome_cli::main commands::format::write_only_files_in_correct_base
+        PASS [   0.689s] (381/581) biome_cli::main commands::init::does_not_create_config_file_if_jsonc_exists
+        PASS [   0.666s] (382/581) biome_cli::main commands::init::init_help
+        PASS [   0.653s] (383/581) biome_cli::main commands::lint::apply_suggested_error
+        PASS [   0.889s] (384/581) biome_cli::main commands::lint::apply_bogus_argument
+        PASS [   0.895s] (385/581) biome_cli::main commands::lint::apply_noop
+        PASS [   0.885s] (386/581) biome_cli::main commands::lint::apply_suggested
+        PASS [   0.916s] (387/581) biome_cli::main commands::lint::apply_ok
+        PASS [   0.795s] (388/581) biome_cli::main commands::lint::check_json_files
+        PASS [   0.933s] (389/581) biome_cli::main commands::lint::apply_unsafe_with_error
+        PASS [   0.854s] (390/581) biome_cli::main commands::lint::check_stdin_shows_parse_diagnostics
+        PASS [   0.688s] (391/581) biome_cli::main commands::lint::doesnt_error_if_no_files_were_processed
+        PASS [   0.862s] (392/581) biome_cli::main commands::lint::check_stdin_write_successfully
+        PASS [   0.855s] (393/581) biome_cli::main commands::lint::check_stdin_write_unsafe_successfully
+        PASS [   0.725s] (394/581) biome_cli::main commands::lint::file_too_large_cli_limit
+        PASS [   0.857s] (395/581) biome_cli::main commands::lint::config_recommended_group
+        PASS [   0.748s] (396/581) biome_cli::main commands::lint::file_too_large
+        PASS [   0.913s] (397/581) biome_cli::main commands::lint::deprecated_suppression_comment
+        PASS [   0.867s] (398/581) biome_cli::main commands::lint::does_error_with_only_warnings
+        PASS [   0.837s] (399/581) biome_cli::main commands::lint::downgrade_severity
+        PASS [   0.841s] (400/581) biome_cli::main commands::lint::downgrade_severity_info
+        PASS [   0.611s] (401/581) biome_cli::main commands::lint::files_max_size_parse_error
+        PASS [   0.753s] (402/581) biome_cli::main commands::lint::file_too_large_config_limit
+        PASS [   0.334s] (403/581) biome_cli::main commands::lint::fs_error_infinite_symlink_expansion_to_files
+        PASS [   0.828s] (404/581) biome_cli::main commands::lint::fix_noop
+        PASS [   0.608s] (405/581) biome_cli::main commands::lint::fix_suggested_error
+        PASS [   0.805s] (406/581) biome_cli::main commands::lint::fix_ok
+        PASS [   0.829s] (407/581) biome_cli::main commands::lint::fix_suggested
+        PASS [   0.670s] (408/581) biome_cli::main commands::lint::fs_error_dereferenced_symlink
+        PASS [   0.695s] (409/581) biome_cli::main commands::lint::fs_error_infinite_symlink_expansion_to_dirs
+        PASS [   0.673s] (410/581) biome_cli::main commands::lint::fs_error_read_only
+        PASS [   0.746s] (411/581) biome_cli::main commands::lint::fs_error_unknown
+        PASS [   0.777s] (412/581) biome_cli::main commands::lint::ignore_configured_globals
+        PASS [   0.926s] (413/581) biome_cli::main commands::lint::fix_unsafe_with_error
+        PASS [   0.772s] (414/581) biome_cli::main commands::lint::ignore_file_in_subdir_in_symlinked_dir
+        PASS [   0.878s] (415/581) biome_cli::main commands::lint::group_level_recommended_false_enable_specific
+        PASS [   0.891s] (416/581) biome_cli::main commands::lint::ignore_vcs_ignored_file
+        PASS [   0.865s] (417/581) biome_cli::main commands::lint::ignores_unknown_file
+        PASS [   0.928s] (418/581) biome_cli::main commands::lint::ignore_vcs_ignored_file_via_cli
+        PASS [   0.914s] (419/581) biome_cli::main commands::lint::ignore_vcs_os_independent_parse
+        PASS [   0.911s] (420/581) biome_cli::main commands::lint::include_files_in_subdir
+        FAIL [   0.771s] (421/581) biome_cli::main commands::lint::lint_help
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap
+    Snapshot: lint_help
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       51    51 │         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were
+       52    52 │                               processed during the execution of the command.
+       53    53 │         --error-on-warnings   Tell Biome to exit with an error code if some diagnostics emit
+       54    54 │                               warnings.
+       55       │-        --reporter=<json|json-pretty|github|junit|summary|gitlab>  Allows to change how diagnostics
+       56       │-                              and summary are reported.
+             55 │+        --reporter=<json|json-pretty|github|junit|summary>  Allows to change how diagnostics and
+             56 │+                              summary are reported.
+       57    57 │         --log-level=<none|debug|info|warn|error>  The level of logging. In order, from the most
+       58    58 │                               verbose to the least verbose: debug, info, warn, error.
+       59    59 │                               The value `none` won't show any logging.
+       60    60 │                               [default: none]
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test commands::lint::lint_help ... FAILED
+
+    failures:
+
+    failures:
+        commands::lint::lint_help
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.65s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap.new
+    thread 'commands::lint::lint_help' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'lint_help' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.890s] (422/581) biome_cli::main commands::lint::include_files_in_symlinked_subdir
+        PASS [   0.860s] (423/581) biome_cli::main commands::lint::lint_error
+        PASS [   0.663s] (424/581) biome_cli::main commands::lint::lint_only_missing_group
+        PASS [   0.839s] (425/581) biome_cli::main commands::lint::lint_only_group_skip_rule
+        PASS [   0.901s] (426/581) biome_cli::main commands::lint::lint_only_group
+        PASS [   0.617s] (427/581) biome_cli::main commands::lint::lint_only_nursery_group
+        PASS [   0.600s] (428/581) biome_cli::main commands::lint::lint_only_rule_doesnt_exist
+        PASS [   0.805s] (429/581) biome_cli::main commands::lint::lint_only_multiple_rules
+        PASS [   0.898s] (430/581) biome_cli::main commands::lint::lint_only_group_with_disabled_rule
+        PASS [   0.803s] (431/581) biome_cli::main commands::lint::lint_only_rule
+        PASS [   0.809s] (432/581) biome_cli::main commands::lint::lint_only_rule_and_group
+        PASS [   0.800s] (433/581) biome_cli::main commands::lint::lint_only_rule_ignore_suppression_comments
+        PASS [   0.761s] (434/581) biome_cli::main commands::lint::lint_only_rule_skip_group
+        PASS [   0.739s] (435/581) biome_cli::main commands::lint::lint_only_rule_with_linter_disabled
+        PASS [   0.849s] (436/581) biome_cli::main commands::lint::lint_only_rule_with_config
+        PASS [   0.817s] (437/581) biome_cli::main commands::lint::lint_only_rule_with_recommended_disabled
+        PASS [   0.783s] (438/581) biome_cli::main commands::lint::lint_only_skip_group
+        PASS [   0.773s] (439/581) biome_cli::main commands::lint::lint_only_skip_rule
+        PASS [   0.847s] (440/581) biome_cli::main commands::lint::lint_only_write
+        PASS [   0.837s] (441/581) biome_cli::main commands::lint::lint_skip_group_with_enabled_rule
+        PASS [   0.857s] (442/581) biome_cli::main commands::lint::lint_skip_rule
+        PASS [   0.879s] (443/581) biome_cli::main commands::lint::lint_skip_multiple_rules
+        PASS [   0.735s] (444/581) biome_cli::main commands::lint::max_diagnostics
+        PASS [   0.920s] (445/581) biome_cli::main commands::lint::lint_skip_rule_and_group
+        PASS [   0.873s] (446/581) biome_cli::main commands::lint::lint_syntax_rules
+        PASS [   0.968s] (447/581) biome_cli::main commands::lint::lint_skip_write
+        PASS [   0.883s] (448/581) biome_cli::main commands::lint::max_diagnostics_default
+        PASS [   0.780s] (449/581) biome_cli::main commands::lint::no_lint_if_files_are_listed_in_ignore_option
+        PASS [   0.783s] (450/581) biome_cli::main commands::lint::no_lint_if_linter_is_disabled
+        PASS [   0.467s] (451/581) biome_cli::main commands::lint::ok
+        PASS [   0.777s] (452/581) biome_cli::main commands::lint::no_lint_if_linter_is_disabled_when_run_apply_biome_jsonc
+        PASS [   0.803s] (453/581) biome_cli::main commands::lint::no_lint_if_linter_is_disabled_when_run_apply
+        PASS [   0.746s] (454/581) biome_cli::main commands::lint::no_lint_when_file_is_ignored
+        PASS [   0.742s] (455/581) biome_cli::main commands::lint::no_supported_file_found
+        PASS [   0.567s] (456/581) biome_cli::main commands::lint::ok_read_only
+        PASS [   1.018s] (457/581) biome_cli::main commands::lint::maximum_diagnostics
+        PASS [   0.894s] (458/581) biome_cli::main commands::lint::no_unused_dependencies
+        PASS [   0.955s] (459/581) biome_cli::main commands::lint::nursery_unstable
+        PASS [   0.850s] (460/581) biome_cli::main commands::lint::print_verbose
+        PASS [   0.876s] (461/581) biome_cli::main commands::lint::parse_error
+        PASS [   0.614s] (462/581) biome_cli::main commands::lint::should_error_if_since_arg_is_used_without_changed
+        PASS [   0.672s] (463/581) biome_cli::main commands::lint::should_error_if_changed_flag_is_used_without_since_or_default_branch_config
+        PASS [   0.695s] (464/581) biome_cli::main commands::lint::should_error_if_changed_flag_and_staged_flag_are_active_at_the_same_time
+        PASS [   0.869s] (465/581) biome_cli::main commands::lint::should_apply_correct_file_source
+        PASS [   0.918s] (466/581) biome_cli::main commands::lint::should_disable_a_rule
+        PASS [   0.704s] (467/581) biome_cli::main commands::lint::should_error_if_unchanged_files_only_with_changed_flag
+        PASS [   0.687s] (468/581) biome_cli::main commands::lint::should_error_if_unstaged_files_only_with_staged_flag
+        PASS [   0.909s] (469/581) biome_cli::main commands::lint::should_disable_a_rule_group
+        PASS [   0.711s] (470/581) biome_cli::main commands::lint::should_not_error_for_no_changed_files_with_no_errors_on_unmatched
+        PASS [   0.729s] (471/581) biome_cli::main commands::lint::should_not_process_ignored_file_even_if_its_staged
+        PASS [   0.754s] (472/581) biome_cli::main commands::lint::should_not_process_ignored_file_even_if_its_changed
+        PASS [   0.818s] (473/581) biome_cli::main commands::lint::should_not_enable_all_recommended_rules
+        PASS [   0.884s] (474/581) biome_cli::main commands::lint::should_lint_error_without_file_paths
+        PASS [   0.903s] (475/581) biome_cli::main commands::lint::should_not_disable_recommended_rules_for_a_group
+        PASS [   0.957s] (476/581) biome_cli::main commands::lint::should_only_process_changed_file_if_its_included
+        PASS [   1.212s] (477/581) biome_cli::main commands::lint::should_only_process_staged_file_if_its_included
+        PASS [   1.116s] (478/581) biome_cli::main commands::lint::should_only_processes_changed_files_when_changed_flag_is_set
+        PASS [   1.195s] (479/581) biome_cli::main commands::lint::should_pass_if_there_are_only_warnings
+        PASS [   1.185s] (480/581) biome_cli::main commands::lint::should_process_changed_files_if_changed_flag_is_set_and_default_branch_is_configured
+        PASS [   1.193s] (481/581) biome_cli::main commands::lint::suppression_syntax_error
+        PASS [   1.232s] (482/581) biome_cli::main commands::lint::should_only_processes_staged_files_when_staged_flag_is_set
+        PASS [   1.182s] (483/581) biome_cli::main commands::lint::top_level_all_true_group_level_empty
+        PASS [   1.103s] (484/581) biome_cli::main commands::lint::unsupported_file
+        PASS [   1.049s] (485/581) biome_cli::main commands::lint::unsupported_file_verbose
+        PASS [   1.352s] (486/581) biome_cli::main commands::lint::top_level_all_false_group_level_all_true
+        PASS [   1.050s] (487/581) biome_cli::main commands::migrate::emit_diagnostic_for_rome_json
+        PASS [   1.075s] (488/581) biome_cli::main commands::lsp_proxy::lsp_proxy_help
+        PASS [   1.044s] (489/581) biome_cli::main commands::migrate::migrate_config_up_to_date
+        PASS [   1.329s] (490/581) biome_cli::main commands::lint::top_level_all_true_group_level_all_false
+        PASS [   1.436s] (491/581) biome_cli::main commands::lint::top_level_all_true
+        PASS [   1.359s] (492/581) biome_cli::main commands::lint::top_level_recommended_true_group_level_all_false
+        PASS [   1.333s] (493/581) biome_cli::main commands::lint::upgrade_severity
+        FAIL [   1.085s] (494/581) biome_cli::main commands::migrate::migrate_help
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap
+    Snapshot: migrate_help
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       22    22 │         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were
+       23    23 │                               processed during the execution of the command.
+       24    24 │         --error-on-warnings   Tell Biome to exit with an error code if some diagnostics emit
+       25    25 │                               warnings.
+       26       │-        --reporter=<json|json-pretty|github|junit|summary|gitlab>  Allows to change how diagnostics
+       27       │-                              and summary are reported.
+             26 │+        --reporter=<json|json-pretty|github|junit|summary>  Allows to change how diagnostics and
+             27 │+                              summary are reported.
+       28    28 │         --log-level=<none|debug|info|warn|error>  The level of logging. In order, from the most
+       29    29 │                               verbose to the least verbose: debug, info, warn, error.
+       30    30 │                               The value `none` won't show any logging.
+       31    31 │                               [default: none]
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test commands::migrate::migrate_help ... FAILED
+
+    failures:
+
+    failures:
+        commands::migrate::migrate_help
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.89s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap.new
+    thread 'commands::migrate::migrate_help' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'migrate_help' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.930s] (495/581) biome_cli::main commands::migrate::missing_configuration_file
+        PASS [   0.893s] (496/581) biome_cli::main commands::migrate::should_create_biome_json_file
+        PASS [   0.851s] (497/581) biome_cli::main commands::migrate::should_emit_incompatible_arguments_error
+        PASS [   0.903s] (498/581) biome_cli::main commands::migrate_eslint::migrate_eslint_config_packagejson
+        PASS [   0.935s] (499/581) biome_cli::main commands::migrate_eslint::migrate_eslintignore_and_ignore_patterns
+        PASS [   1.039s] (500/581) biome_cli::main commands::migrate_eslint::migrate_eslintignore
+        PASS [   0.964s] (501/581) biome_cli::main commands::migrate_eslint::migrate_eslintignore_negated_patterns
+        PASS [   0.980s] (502/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_empty
+        PASS [   0.989s] (503/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson
+        PASS [   1.016s] (504/581) biome_cli::main commands::migrate_eslint::migrate_eslintrc
+        PASS [   0.944s] (505/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_extended_rules
+        PASS [   0.965s] (506/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_exclude_inspired
+        PASS [   0.892s] (507/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_missing_biomejson
+        PASS [   0.993s] (508/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_fix
+        PASS [   0.981s] (509/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_include_inspired
+        PASS [   0.954s] (510/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_override_existing_config
+        PASS [   0.878s] (511/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_write
+        PASS [   1.103s] (512/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcjson_rule_options
+        PASS [   0.836s] (513/581) biome_cli::main commands::migrate_eslint::migrate_eslintrcyaml_unsupported
+        PASS [   0.938s] (514/581) biome_cli::main commands::migrate_eslint::migrate_no_eslint_config_packagejson
+        PASS [   0.910s] (515/581) biome_cli::main commands::migrate_prettier::prettier_migrate
+        PASS [   0.948s] (516/581) biome_cli::main commands::migrate_prettier::prettier_migrate_end_of_line
+        PASS [   0.956s] (517/581) biome_cli::main commands::migrate_prettier::prettier_migrate_fix
+        PASS [   0.884s] (518/581) biome_cli::main commands::migrate_prettier::prettier_migrate_jsonc
+        PASS [   0.844s] (519/581) biome_cli::main commands::migrate_prettier::prettier_migrate_no_file
+        PASS [   0.850s] (520/581) biome_cli::main commands::migrate_prettier::prettier_migrate_write
+        PASS [   0.849s] (521/581) biome_cli::main commands::migrate_prettier::prettier_migrate_write_packagejson
+        PASS [   0.891s] (522/581) biome_cli::main commands::migrate_prettier::prettier_migrate_with_ignore
+        PASS [   0.925s] (523/581) biome_cli::main commands::migrate_prettier::prettier_migrate_overrides
+        PASS [   0.777s] (524/581) biome_cli::main commands::rage::ok
+        PASS [   0.908s] (525/581) biome_cli::main commands::migrate_prettier::prettier_migrate_write_biome_jsonc
+        PASS [   0.884s] (526/581) biome_cli::main commands::migrate_prettier::prettier_migrate_yml_file
+        PASS [   0.880s] (527/581) biome_cli::main commands::migrate_prettier::prettierjson_migrate_write
+        PASS [   0.910s] (528/581) biome_cli::main commands::migrate_prettier::prettier_migrate_write_with_ignore_file
+        PASS [   0.760s] (529/581) biome_cli::main commands::rage::with_configuration
+        FAIL [   0.926s] (530/581) biome_cli::main commands::rage::rage_help
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/biome_cli/tests/snapshots/main_commands_rage/rage_help.snap
+    Snapshot: rage_help
+    Source: crates/biome_cli/tests/snap_test.rs:424
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: content
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       22    22 │         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were
+       23    23 │                               processed during the execution of the command.
+       24    24 │         --error-on-warnings   Tell Biome to exit with an error code if some diagnostics emit
+       25    25 │                               warnings.
+       26       │-        --reporter=<json|json-pretty|github|junit|summary|gitlab>  Allows to change how diagnostics
+       27       │-                              and summary are reported.
+             26 │+        --reporter=<json|json-pretty|github|junit|summary>  Allows to change how diagnostics and
+             27 │+                              summary are reported.
+       28    28 │         --log-level=<none|debug|info|warn|error>  The level of logging. In order, from the most
+       29    29 │                               verbose to the least verbose: debug, info, warn, error.
+       30    30 │                               The value `none` won't show any logging.
+       31    31 │                               [default: none]
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test commands::rage::rage_help ... FAILED
+
+    failures:
+
+    failures:
+        commands::rage::rage_help
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.76s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/biome_cli/tests/snapshots/main_commands_rage/rage_help.snap.new
+    thread 'commands::rage::rage_help' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'rage_help' failed in line 424
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.800s] (531/581) biome_cli::main commands::rage::with_formatter_configuration
+        PASS [   0.320s] (532/581) biome_cli::main main::incorrect_value
+        PASS [   0.367s] (533/581) biome_cli::main help::unknown_command
+        PASS [   0.057s] (534/581) biome_lsp converters::tests::empty_line
+        PASS [   0.846s] (535/581) biome_cli::main commands::rage::with_jsonc_configuration
+        PASS [   0.451s] (536/581) biome_cli::main main::empty_arguments
+        PASS [   0.072s] (537/581) biome_lsp converters::tests::empty_string
+        PASS [   0.798s] (538/581) biome_cli::main commands::rage::with_malformed_configuration
+        PASS [   0.076s] (539/581) biome_lsp converters::tests::line_end
+        PASS [   0.903s] (540/581) biome_cli::main commands::rage::with_linter_configuration
+        PASS [   0.071s] (541/581) biome_lsp converters::tests::out_of_bounds_line
+        PASS [   0.629s] (542/581) biome_cli::main configuration::ignore_globals
+        PASS [   0.780s] (543/581) biome_cli::main commands::rage::with_server_logs
+        PASS [   0.790s] (544/581) biome_cli::main commands::version::full
+        PASS [   0.324s] (545/581) biome_cli::main main::unexpected_argument
+        PASS [   0.092s] (546/581) biome_lsp utils::tests::test_diff_1
+        PASS [   0.787s] (547/581) biome_cli::main commands::version::ok
+        PASS [   0.105s] (548/581) biome_lsp converters::tests::unicode
+        PASS [   0.415s] (549/581) biome_cli::main main::missing_argument
+        PASS [   0.107s] (550/581) biome_lsp utils::tests::test_diff_2
+        PASS [   0.111s] (551/581) biome_lsp utils::tests::test_range_formatting
+        PASS [   0.467s] (552/581) biome_cli::main main::overflow_value
+        PASS [   0.793s] (553/581) biome_cli::main configuration::incorrect_globals
+        PASS [   0.402s] (554/581) biome_cli::main main::unknown_command
+        PASS [   0.888s] (555/581) biome_cli::main configuration::correct_root
+        PASS [   0.841s] (556/581) biome_cli::main configuration::line_width_error
+        PASS [   0.853s] (557/581) biome_cli::main configuration::incorrect_rule_name
+        PASS [   0.316s] (558/581) biome_lsp::server basic_lifecycle
+        PASS [   0.344s] (559/581) biome_lsp::server no_code_actions_for_ignored_json_files
+        PASS [   0.452s] (560/581) biome_lsp::server change_document_remove_line
+        PASS [   0.486s] (561/581) biome_lsp::server document_lifecycle
+        PASS [   0.435s] (562/581) biome_lsp::server format_with_syntax_errors
+        PASS [   0.449s] (563/581) biome_lsp::server does_not_format_ignored_files
+        PASS [   0.472s] (564/581) biome_lsp::server document_no_extension
+        PASS [   0.459s] (565/581) biome_lsp::server format_jsx_in_javascript_file
+        PASS [   1.115s] (566/581) biome_cli::main configuration::override_globals
+        PASS [   0.501s] (567/581) biome_lsp::server does_not_pull_action_for_disabled_rule_in_override_issue_2782
+        PASS [   0.512s] (568/581) biome_lsp::server multiple_projects
+        PASS [   0.333s] (569/581) biome_lsp::server pull_diagnostics_for_rome_json
+        PASS [   0.535s] (570/581) biome_lsp::server pull_biome_quick_fixes
+        PASS [   0.457s] (571/581) biome_lsp::server pull_biome_quick_fixes_ignore_unsafe
+        PASS [   0.384s] (572/581) biome_lsp::server pull_diagnostics_for_css_files
+        FAIL [   0.455s] (573/581) biome_lsp::server pull_diagnostics
+  stdout ───
+
+    running 1 test
+    test pull_diagnostics ... FAILED
+
+    failures:
+
+    failures:
+        pull_diagnostics
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.31s
+
+  stderr ───
+    thread 'pull_diagnostics' panicked at crates/biome_lsp/tests/server.rs:652:5:
+    assertion `left == right` failed
+      left: Some(PublishDiagnostics(PublishDiagnosticsParams { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/document.js", query: None, fragment: None }, diagnostics: [Diagnostic { range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } }, severity: Some(Error), code: Some(String("lint/suspicious/noDoubleEquals")), code_description: Some(CodeDescription { href: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("biomejs.dev")), port: None, path: "/linter/rules/no-double-equals", query: None, fragment: None } }), source: Some("biome"), message: "Use === instead of ==.\n== is only allowed when comparing against `null`", related_information: Some([DiagnosticRelatedInformation { location: Location { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/document.js", query: None, fragment: None }, range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } } }, message: "" }]), tags: None, data: None }], version: Some(0) }))
+     right: Some(PublishDiagnostics(PublishDiagnosticsParams { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/document.js", query: None, fragment: None }, diagnostics: [Diagnostic { range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } }, severity: Some(Error), code: Some(String("lint/suspicious/noDoubleEquals")), code_description: Some(CodeDescription { href: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("biomejs.dev")), port: None, path: "/linter/rules/no-double-equals", query: None, fragment: None } }), source: Some("biome"), message: "Use === instead of ==. == is only allowed when comparing against `null`", related_information: Some([DiagnosticRelatedInformation { location: Location { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/document.js", query: None, fragment: None }, range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } } }, message: "" }]), tags: None, data: None }], version: Some(0) }))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.189s] (574/581) biome_lsp::server server_shutdown
+        PASS [   0.552s] (575/581) biome_lsp::server pull_code_actions_with_import_sorting
+        PASS [   0.461s] (576/581) biome_lsp::server pull_diagnostics_of_syntax_rules
+        FAIL [   0.520s] (577/581) biome_lsp::server pull_diagnostics_from_new_file
+  stdout ───
+
+    running 1 test
+    test pull_diagnostics_from_new_file ... FAILED
+
+    failures:
+
+    failures:
+        pull_diagnostics_from_new_file
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.35s
+
+  stderr ───
+    thread 'pull_diagnostics_from_new_file' panicked at crates/biome_lsp/tests/server.rs:796:5:
+    assertion `left == right` failed
+      left: Some(PublishDiagnostics(PublishDiagnosticsParams { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/untitled-1", query: None, fragment: None }, diagnostics: [Diagnostic { range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } }, severity: Some(Error), code: Some(String("lint/suspicious/noDoubleEquals")), code_description: Some(CodeDescription { href: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("biomejs.dev")), port: None, path: "/linter/rules/no-double-equals", query: None, fragment: None } }), source: Some("biome"), message: "Use === instead of ==.\n== is only allowed when comparing against `null`", related_information: Some([DiagnosticRelatedInformation { location: Location { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/untitled-1", query: None, fragment: None }, range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } } }, message: "" }]), tags: None, data: None }], version: Some(0) }))
+     right: Some(PublishDiagnostics(PublishDiagnosticsParams { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/untitled-1", query: None, fragment: None }, diagnostics: [Diagnostic { range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } }, severity: Some(Error), code: Some(String("lint/suspicious/noDoubleEquals")), code_description: Some(CodeDescription { href: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("biomejs.dev")), port: None, path: "/linter/rules/no-double-equals", query: None, fragment: None } }), source: Some("biome"), message: "Use === instead of ==. == is only allowed when comparing against `null`", related_information: Some([DiagnosticRelatedInformation { location: Location { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/workspace/untitled-1", query: None, fragment: None }, range: Range { start: Position { line: 0, character: 5 }, end: Position { line: 0, character: 7 } } }, message: "" }]), tags: None, data: None }], version: Some(0) }))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.363s] (578/581) biome_lsp::server pull_quick_fixes
+        PASS [   0.412s] (579/581) biome_lsp::server pull_fix_all
+        PASS [   0.358s] (580/581) biome_lsp::server pull_quick_fixes_include_unsafe
+        PASS [   0.373s] (581/581) biome_lsp::server pull_refactors
+────────────
+     Summary [  25.954s] 581 tests run: 566 passed, 15 failed, 6 skipped
+        FAIL [   0.758s] (152/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_check_command
+        FAIL [   0.759s] (156/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_ci_command
+        FAIL [   0.730s] (157/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_lint_command
+        FAIL [   0.739s] (158/581) biome_cli::main cases::reporter_gitlab::reports_diagnostics_gitlab_format_command
+        FAIL [   0.990s] (162/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_check_command
+        FAIL [   0.952s] (163/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_lint_command
+        FAIL [   1.044s] (168/581) biome_cli::main cases::reporter_junit::reports_diagnostics_junit_ci_command
+        FAIL [   0.739s] (178/581) biome_cli::main commands::check::check_help
+        FAIL [   0.713s] (260/581) biome_cli::main commands::ci::ci_help
+        FAIL [   0.752s] (316/581) biome_cli::main commands::format::format_help
+        FAIL [   0.771s] (421/581) biome_cli::main commands::lint::lint_help
+        FAIL [   1.085s] (494/581) biome_cli::main commands::migrate::migrate_help
+        FAIL [   0.926s] (530/581) biome_cli::main commands::rage::rage_help
+        FAIL [   0.455s] (573/581) biome_lsp::server pull_diagnostics
+        FAIL [   0.520s] (577/581) biome_lsp::server pull_diagnostics_from_new_file
+error: test run failed
+reward=0 graded=581 found=94 failed=1 parsed=581 framework=cargo exit_code=100

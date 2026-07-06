@@ -1,0 +1,29 @@
+{
+    "id": "0a2506cf-97e9-4a8f-b0c2-320abba1fe17",
+    "started_at": "2026-07-06T12:18:29.034455",
+    "finished_at": "2026-07-06T12:18:54.612401",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tornadoweb-tornado-3628": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tornadoweb-tornado-3628__ydGbahC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

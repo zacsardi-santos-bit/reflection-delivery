@@ -1,0 +1,29 @@
+{
+    "id": "7ef2f3a5-6eea-44fb-8e0f-5de6f7dda52b",
+    "started_at": "2026-07-04T15:39:09.004045",
+    "finished_at": "2026-07-04T15:39:57.200913",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__grpc-grpc-31914": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "grpc-grpc-31914__ziN9Mvt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

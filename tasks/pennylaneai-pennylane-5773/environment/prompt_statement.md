@@ -1,7 +1,0 @@
-I'm working on a quantum chemistry project that uses both PennyLane and an external quantum chemistry library. I can already import fermionic operators from the external library into PennyLane's representation, but I'm stuck when I need to go the other direction — there's no function to convert PennyLane fermionic or qubit operators back into the external library's format. This makes it really inconvenient when I want to round-trip operators or share results with code that depends on the external library.
-
-I also noticed that importing qubit operators from the external library isn't supported at all — only fermionic ones are. It would be great to have a function that converts qubit operators from the external library into PennyLane's operator types, with the option to choose between different output formats (like a linear combination or a sum type) and a tolerance setting to handle complex coefficients that are nearly real.
-
-On top of that, a utility to render a fermionic operator word as a string in either PennyLane's own notation or the external library's shorthand notation would be very helpful for debugging and logging.
-
-For all these conversion functions, I'd expect clear error messages when given unsupported operator types, invalid format options, wire mappings that don't cover all the operator's wires, or when the external library is not installed. The export function should also accept a wire remapping parameter so I can remap orbital or qubit indices before converting.

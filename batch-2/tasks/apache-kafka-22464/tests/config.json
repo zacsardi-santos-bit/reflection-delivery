@@ -1,0 +1,28 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :group-coordinator:test --tests \"*StreamsGroupDescribeResultTest\" --tests \"*StreamsGroupHeartbeatResultTest\" --no-daemon --no-watch-fs > /dev/null 2>&1 && find /workspace/repo/group-coordinator/build/test-results -name 'TEST-*.xml' -exec cat {} +",
+  "test_files": [
+    "core/src/test/scala/unit/kafka/server/KafkaApisTest.scala",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/GroupCoordinatorServiceTest.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/GroupCoordinatorShardTest.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/GroupMetadataManagerTest.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/GroupMetadataManagerTestContext.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/streams/StreamsCoordinatorRecordHelpersTest.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/streams/StreamsGroupBuilder.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/streams/StreamsGroupDescribeResultTest.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/streams/StreamsGroupHeartbeatResultTest.java",
+    "group-coordinator/src/test/java/org/apache/kafka/coordinator/group/streams/StreamsGroupTest.java"
+  ],
+  "num_test_files": 10,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupDescribeResultTest::testCarriesDescribedGroupsAndPerGroupStoredEpoch()",
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupDescribeResultTest::testCollectionsAreImmutable()",
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupDescribeResultTest::testNullArgumentsRejected()",
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupHeartbeatResultTest::testCreatableTopicsMapIsImmutable()",
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupHeartbeatResultTest::testThreeArgConstructorPreservesTopologyEpoch()",
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupHeartbeatResultTest::testCurrentTopologyEpochIsPartOfEquality()",
+    "org.apache.kafka.coordinator.group.streams.StreamsGroupHeartbeatResultTest::testNullDataIsRejected()"
+  ],
+  "PASS_TO_PASS": []
+}

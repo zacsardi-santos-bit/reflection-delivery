@@ -1,0 +1,10 @@
+patching file CHANGELOG.md
+patching file examples/touch_gestures.rs (renamed from examples/touchpad_gestures.rs)
+patching file src/event.rs
+patching file src/platform/ios.rs
+patching file src/platform_impl/ios/uikit/gesture_recognizer.rs
+patching file src/platform_impl/ios/uikit/mod.rs
+patching file src/platform_impl/ios/uikit/view.rs
+patching file src/platform_impl/ios/view.rs
+patching file src/platform_impl/ios/window.rs
+patching file src/platform_impl/macos/view.rs

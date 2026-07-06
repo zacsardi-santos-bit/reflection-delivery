@@ -1,0 +1,7 @@
+patching file examples/internal/integration/integration_test.go
+# github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration_test [github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration.test]
+examples/internal/integration/integration_test.go:379:22: msg.GetResourceId undefined (type *"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/proto/examplepb".UnannotatedSimpleMessage has no field or method GetResourceId)
+examples/internal/integration/integration_test.go:407:22: msg.NId undefined (type *"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/proto/examplepb".UnannotatedSimpleMessage has no field or method NId)
+examples/internal/integration/integration_test.go:435:22: msg.NId undefined (type *"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/proto/examplepb".UnannotatedSimpleMessage has no field or method NId)
+FAIL	github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration [build failed]
+reward=0 graded=47 found=47 failed=47 parsed=1 framework=go exit_code=1

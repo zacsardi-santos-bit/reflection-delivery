@@ -1,0 +1,5 @@
+I'm working on the uprobe program controller in the bpfman operator and need to make a few related changes. Right now, the uprobe program spec accepts a list of targets, but we really only ever need one target per program. I'd like to simplify that to a single string field instead of a list.
+
+I also noticed that the controller always sends a container process ID of zero in every uprobe gRPC attachment request, even when no container is being targeted. That placeholder value shouldn't be sent at all when there's no container-level attachment happening.
+
+Finally, I need to add a pod discovery helper that, given a label selector, an optional namespace, and a node name, returns all the pods running on that node that match the selector. When no namespace is provided, it should search across all namespaces. This will be used later to support attaching uprobes inside specific containers running on a node. The selector should also support an empty label set, in which case all pods on the given node should be returned regardless of their labels.

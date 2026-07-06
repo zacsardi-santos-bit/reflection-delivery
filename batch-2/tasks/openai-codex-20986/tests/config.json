@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-memories-mcp",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/7) codex-memories-mcp local::tests::scoped_paths_reject_parent_segments",
+    "(2/7) codex-memories-mcp local::tests::read_rejects_symlinked_files",
+    "(3/7) codex-memories-mcp local::tests::read_rejects_invalid_line_offsets",
+    "(4/7) codex-memories-mcp local::tests::read_supports_line_offset",
+    "(5/7) codex-memories-mcp local::tests::read_rejects_directory_and_returns_file_content",
+    "(6/7) codex-memories-mcp local::tests::search_supports_directory_and_file_scopes",
+    "(7/7) codex-memories-mcp local::tests::list_returns_recursive_memory_paths"
+  ],
+  "PASS_TO_PASS": []
+}

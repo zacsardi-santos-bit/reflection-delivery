@@ -1,0 +1,26 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code/addons/review && npx vitest run --reporter=verbose src/preset.test.ts ../../core/src/core-server/change-detection/source-changes.test.ts",
+  "test_files": [
+    "code/addons/review/src/preset.test.ts",
+    "code/core/src/core-server/change-detection/source-changes.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel staleness marks the cached review stale and emits REVIEW_STALE after the grace window",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel staleness emits REVIEW_STALE only once across multiple changes",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel staleness resets staleness when a new review is pushed"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel on PUSH_REVIEW, enriches with git branch, caches, and broadcasts DISPLAY_REVIEW",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel on PUSH_REVIEW with no resolvable branch (e.g. non-git target), broadcasts unchanged",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel overwrites an agent-supplied branchName with the locally resolved one",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel strips an agent-supplied branchName when the local branch is unresolvable",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel on REQUEST_REVIEW with no cached state, emits nothing",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel on REQUEST_REVIEW after a PUSH_REVIEW, replays the cached enriched payload",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel registers exactly one listener per cross-repo event",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel staleness ignores source changes within the grace window",
+    "/workspace/repo/code/addons/review/src/preset.test.ts::addon-review experimental_serverChannel staleness ignores source changes when no review is cached"
+  ]
+}

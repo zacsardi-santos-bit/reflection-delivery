@@ -1,0 +1,29 @@
+{
+    "id": "a478c0d1-317f-4ede-a7c4-b357767d6f88",
+    "started_at": "2026-07-06T12:20:36.873466",
+    "finished_at": "2026-07-06T12:23:21.004896",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__saleor-saleor-19008": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "saleor-saleor-19008__TDzGxJY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

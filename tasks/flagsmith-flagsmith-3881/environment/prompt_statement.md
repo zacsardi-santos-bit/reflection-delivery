@@ -1,7 +1,0 @@
-I'm working on a DynamoDB migration process that moves identity overrides to a new data format. The migration currently runs without any throttling and can consume unlimited database read capacity, which is a problem in production.
-
-I need to add a read capacity budget feature to this migration. The idea is that each project can have its own configured budget, and when that's not set, the system should fall back to a global default setting. The migration should track how much read capacity it uses across paginated queries and stop gracefully when it hits the limit, recording the result as "incomplete" rather than erroring out. Items processed before the budget is hit should still be applied.
-
-There's also a rename involved: the migration status tracking enum and its corresponding field on the project model need to be renamed to better reflect their purpose. As part of this rename, a new "incomplete" status value needs to be added. A project in the incomplete state should not show edge identity overrides for features, behaving the same way as projects that haven't started or are still in progress with the migration.
-
-The component that fetches paginated DynamoDB records needs to support returning consumed capacity information, and the higher-level migration service needs to catch the budget-exceeded condition and return a structured result object containing both the migration status and the changeset of identity overrides.

@@ -1,0 +1,29 @@
+{
+    "id": "2e8f663a-9383-4947-89d7-c59be650eecb",
+    "started_at": "2026-07-04T15:38:04.956606",
+    "finished_at": "2026-07-04T15:38:58.895673",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__wasmerio-wasmer-5352": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "wasmerio-wasmer-5352__3xcGuzA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

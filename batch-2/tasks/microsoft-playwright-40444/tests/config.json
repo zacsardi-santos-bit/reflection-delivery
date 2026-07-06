@@ -1,0 +1,51 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npm run build > /dev/null 2>&1 && /usr/local/bin/playwright-run --config=tests/playwright-test/playwright.config.ts tests/playwright-test/reporter.spec.ts",
+  "test_files": [
+    "tests/playwright-test/reporter.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > onError receives workerInfo for fixture teardown errors (#39063)",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > onError receives workerInfo for fixture teardown errors (#39063)"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should work with custom reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should work without a file extension",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should report onEnd after global teardown",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should load reporter from node_modules",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should not have internal error when steps are finished after timeout",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should report forbid-only error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should report no-tests error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should report require error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should report global setup error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should report correct tests/suites when using grep",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > should use sourceMap-based file suite names",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > parallelIndex is presented in onTestEnd",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > test and step error should have code snippet",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::created > onError should have code snippet",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should work with custom reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should work without a file extension",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should report onEnd after global teardown",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should load reporter from node_modules",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should not have internal error when steps are finished after timeout",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should report forbid-only error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should report no-tests error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should report require error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should report global setup error to reporter",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should report correct tests/suites when using grep",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > should use sourceMap-based file suite names",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > parallelIndex is presented in onTestEnd",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > test and step error should have code snippet",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::merged > onError should have code snippet",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::should report a stable test.id",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::should report annotations from test declaration",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::attachments.push should not be enumerable to allow toEqual comparisons",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::tests skipped in serial mode receive onTestBegin/onTestEnd",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::step attachments are referentially equal to result attachments",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::step.attach attachments are reported on right steps",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::attachments are reported in onStepEnd",
+    "/workspace/repo/tests/playwright-test/reporter.spec.ts::should have static annotations on result when all tests are skipped"
+  ]
+}

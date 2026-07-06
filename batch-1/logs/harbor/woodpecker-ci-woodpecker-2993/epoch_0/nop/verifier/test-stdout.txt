@@ -1,0 +1,25 @@
+patching file pipeline/backend/docker/convert_test.go
+patching file pipeline/backend/kubernetes/pod_test.go
+patching file pipeline/backend/kubernetes/service_test.go
+patching file pipeline/frontend/yaml/compiler/convert_test.go
+patching file pipeline/frontend/yaml/types/container_test.go
+# go.woodpecker-ci.org/woodpecker/v2/pipeline/frontend/yaml/types [go.woodpecker-ci.org/woodpecker/v2/pipeline/frontend/yaml/types.test]
+pipeline/frontend/yaml/types/container_test.go:134:10: cannot use []string{…} (value of type []string) as []base.StringOrInt value in struct literal
+# go.woodpecker-ci.org/woodpecker/v2/pipeline/frontend/yaml/compiler [go.woodpecker-ci.org/woodpecker/v2/pipeline/frontend/yaml/compiler.test]
+pipeline/frontend/yaml/compiler/convert_test.go:26:21: undefined: convertPort
+pipeline/frontend/yaml/compiler/convert_test.go:28:32: undefined: backend_types.Port
+pipeline/frontend/yaml/compiler/convert_test.go:36:21: undefined: convertPort
+pipeline/frontend/yaml/compiler/convert_test.go:38:32: undefined: backend_types.Port
+pipeline/frontend/yaml/compiler/convert_test.go:46:12: undefined: convertPort
+pipeline/frontend/yaml/compiler/convert_test.go:52:12: undefined: convertPort
+pipeline/frontend/yaml/compiler/convert_test.go:58:12: undefined: convertPort
+# go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/docker [go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/docker.test]
+pipeline/backend/docker/convert_test.go:158:27: undefined: backend.Port
+FAIL	go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/docker [build failed]
+# go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes [go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes.test]
+pipeline/backend/kubernetes/pod_test.go:285:19: undefined: types.Port
+pipeline/backend/kubernetes/service_test.go:76:19: undefined: types.Port
+FAIL	go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes [build failed]
+FAIL	go.woodpecker-ci.org/woodpecker/v2/pipeline/frontend/yaml/compiler [build failed]
+FAIL	go.woodpecker-ci.org/woodpecker/v2/pipeline/frontend/yaml/types [build failed]
+reward=0 graded=58 found=58 failed=58 parsed=4 framework=go exit_code=1

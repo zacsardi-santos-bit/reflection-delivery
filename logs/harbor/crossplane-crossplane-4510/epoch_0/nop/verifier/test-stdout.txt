@@ -1,5 +1,0 @@
-patching file internal/xcrd/crd_test.go
-# github.com/crossplane/crossplane/internal/xcrd [github.com/crossplane/crossplane/internal/xcrd.test]
-internal/xcrd/crd_test.go:702:33: undefined: errCustomResourceValidationNil
-FAIL	github.com/crossplane/crossplane/internal/xcrd [build failed]
-reward=0 graded=23 found=23 failed=23 parsed=1 framework=go exit_code=1

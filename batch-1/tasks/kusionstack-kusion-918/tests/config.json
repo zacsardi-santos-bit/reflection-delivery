@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/oci/client -count=1",
+  "test_files": [
+    "pkg/oci/client/build_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild/non-existent_path",
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild/existing_path",
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild/absolute_directory_path",
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild/existing_path_with_leading_slash",
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild/relative_file_path",
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild/absolute_file_path",
+    "kusionstack.io/kusion/pkg/oci/client::TestBuild"
+  ],
+  "PASS_TO_PASS": []
+}

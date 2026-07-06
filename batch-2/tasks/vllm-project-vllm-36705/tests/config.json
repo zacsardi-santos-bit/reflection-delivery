@@ -1,0 +1,47 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/kernels/helion/test_pattern_matching.py /workspace/repo/tests/kernels/helion/test_register.py -v --noconftest",
+  "test_files": [
+    "tests/kernels/helion/helpers.py",
+    "tests/kernels/helion/test_autotune.py",
+    "tests/kernels/helion/test_pattern_matching.py",
+    "tests/kernels/helion/test_register.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.kernels.helion.test_register.TestConfiguredHelionKernel::test_config_selector_handles_none_from_picker",
+    "tests.kernels.helion.test_register.TestConfiguredHelionKernel::test_key_and_config_selector_use_same_logic",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_init_disables_on_missing_configs",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_disabled_wrapper_raises_on_call",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_disabled_wrapper_get_configured_op_raises",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_disabled_wrapper_supports_get_inputs",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_disabled_wrapper_supports_run_autotune",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_init_caches_configured_kernel",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_init_eagerly_initializes",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_get_or_register_custom_op_returns_cached_op",
+    "tests.kernels.helion.test_register.TestHelionKernelWrapper::test_get_or_register_custom_op_registers_new_op",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_get_kernel_by_name_returns_kernel",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_auto_generates_fake_impl",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_creates_wrapper",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_auto_detects_name",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_registers_in_global_registry",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_passes_helion_settings",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_supports_decorator_syntax",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_raises_on_duplicate_registration",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_rejects_autotuner_fn_in_settings",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_register_kernel_no_warning_with_static_shapes_false",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_disabled_kernel_appears_in_registry"
+  ],
+  "PASS_TO_PASS": [
+    "tests.kernels.helion.test_register.TestValidateHelionSettings::test_accepts_none_settings",
+    "tests.kernels.helion.test_register.TestValidateHelionSettings::test_accepts_valid_settings",
+    "tests.kernels.helion.test_register.TestValidateHelionSettings::test_rejects_autotuner_fn",
+    "tests.kernels.helion.test_register.TestValidateHelionSettings::test_warns_on_static_shapes_true",
+    "tests.kernels.helion.test_register.TestConfiguredHelionKernel::test_init_raises_without_picker",
+    "tests.kernels.helion.test_register.TestConfiguredHelionKernel::test_config_selector_validates_picker_result",
+    "tests.kernels.helion.test_register.TestConfiguredHelionKernel::test_create_decorated_kernel_passes_helion_settings",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_get_registered_kernels_returns_copy",
+    "tests.kernels.helion.test_register.TestKernelRegistry::test_get_kernel_by_name_returns_none_for_missing"
+  ]
+}

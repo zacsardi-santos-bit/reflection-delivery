@@ -1,0 +1,113 @@
+patching file fri/tests/fri.rs
+patching file fri/tests/pcs.rs
+patching file uni-stark/tests/fib_air.rs
+patching file uni-stark/tests/mul_air.rs
+   Compiling tracing-core v0.1.36
+   Compiling syn v2.0.118
+   Compiling regex-automata v0.4.14
+   Compiling clap_builder v4.6.0
+   Compiling num-integer v0.1.46
+   Compiling num-bigint v0.4.6
+   Compiling transpose v0.2.3
+   Compiling regex v1.12.4
+   Compiling clap v4.6.1
+   Compiling serde_derive v1.0.228
+   Compiling tracing-attributes v0.1.31
+   Compiling zerocopy-derive v0.8.52
+   Compiling thiserror-impl v2.0.18
+   Compiling thiserror v2.0.18
+   Compiling cobs v0.3.0
+   Compiling tracing v0.1.44
+   Compiling zerocopy v0.8.52
+   Compiling serde v1.0.228
+   Compiling p3-util v0.1.0 (/workspace/repo/util)
+   Compiling tinytemplate v1.2.1
+   Compiling postcard v1.1.3
+   Compiling p3-field v0.1.0 (/workspace/repo/field)
+   Compiling p3-matrix v0.1.0 (/workspace/repo/matrix)
+   Compiling p3-symmetric v0.1.0 (/workspace/repo/symmetric)
+   Compiling p3-challenger v0.1.0 (/workspace/repo/challenger)
+   Compiling p3-keccak v0.1.0 (/workspace/repo/keccak)
+   Compiling p3-dft v0.1.0 (/workspace/repo/dft)
+   Compiling p3-interpolation v0.1.0 (/workspace/repo/interpolation)
+   Compiling p3-air v0.1.0 (/workspace/repo/air)
+   Compiling half v2.7.1
+   Compiling p3-mds v0.1.0 (/workspace/repo/mds)
+   Compiling p3-commit v0.1.0 (/workspace/repo/commit)
+   Compiling p3-poseidon2 v0.1.0 (/workspace/repo/poseidon2)
+   Compiling p3-fri v0.1.0 (/workspace/repo/fri)
+   Compiling p3-merkle-tree v0.1.0 (/workspace/repo/merkle-tree)
+   Compiling p3-uni-stark v0.1.0 (/workspace/repo/uni-stark)
+   Compiling p3-monty-31 v0.1.0 (/workspace/repo/monty-31)
+   Compiling p3-mersenne-31 v0.1.0 (/workspace/repo/mersenne-31)
+   Compiling p3-goldilocks v0.1.0 (/workspace/repo/goldilocks)
+   Compiling ciborium-ll v0.2.2
+   Compiling ciborium v0.2.2
+   Compiling p3-circle v0.1.0 (/workspace/repo/circle)
+   Compiling p3-baby-bear v0.1.0 (/workspace/repo/baby-bear)
+   Compiling criterion v0.6.0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.00s
+────────────
+ Nextest run ID a709cf0c-c130-4662-8c15-c29fdfc4e43f with nextest profile: default
+    Starting 58 tests across 6 binaries
+        PASS [   0.054s] ( 1/58) p3-fri::fri test_fri_ldt_should_panic
+        PASS [   0.080s] ( 2/58) p3-fri::pcs m31_fri_pcs::blowup_1::single
+        PASS [   0.083s] ( 3/58) p3-fri::pcs babybear_fri_pcs::blowup_1::single
+        PASS [   0.094s] ( 4/58) p3-fri::pcs babybear_fri_pcs::blowup_2::single
+        PASS [   0.067s] ( 5/58) p3-fri::pcs m31_fri_pcs::blowup_2::single
+        PASS [   0.009s] ( 6/58) p3-uni-stark check_constraints::tests::test_incorrect_increment_logic
+        PASS [   0.009s] ( 7/58) p3-uni-stark check_constraints::tests::test_incremental_rows_with_last_row_check
+        PASS [   0.184s] ( 8/58) p3-fri::pcs m31_fri_pcs::blowup_1::many_equal
+        PASS [   0.010s] ( 9/58) p3-uni-stark check_constraints::tests::test_single_row_wraparound_logic
+        PASS [   0.193s] (10/58) p3-fri::pcs m31_fri_pcs::blowup_1::multiple_rounds
+        PASS [   0.013s] (11/58) p3-uni-stark check_constraints::tests::test_wrong_last_row_public_value
+        PASS [   0.013s] (12/58) p3-uni-stark symbolic_builder::tests::test_get_log_quotient_degree_multiple_constraints
+        PASS [   0.011s] (13/58) p3-uni-stark symbolic_builder::tests::test_get_log_quotient_degree_no_constraints
+        PASS [   0.208s] (14/58) p3-fri::pcs babybear_fri_pcs::blowup_1::multiple_rounds
+        PASS [   0.010s] (15/58) p3-uni-stark symbolic_builder::tests::test_get_log_quotient_degree_single_constraint
+        PASS [   0.011s] (16/58) p3-uni-stark symbolic_builder::tests::test_get_max_constraint_degree_multiple_constraints
+        PASS [   0.010s] (17/58) p3-uni-stark symbolic_builder::tests::test_get_max_constraint_degree_no_constraints
+        PASS [   0.013s] (18/58) p3-uni-stark symbolic_builder::tests::test_symbolic_air_builder_assert_zero
+        PASS [   0.014s] (19/58) p3-uni-stark symbolic_builder::tests::test_get_symbolic_constraints
+        PASS [   0.223s] (20/58) p3-fri::pcs babybear_fri_pcs::blowup_1::many_equal
+        PASS [   0.013s] (21/58) p3-uni-stark symbolic_builder::tests::test_symbolic_air_builder_initialization
+        PASS [   0.013s] (22/58) p3-uni-stark symbolic_builder::tests::test_symbolic_air_builder_is_first_last_row
+        PASS [   0.012s] (23/58) p3-uni-stark symbolic_expression::tests::test_addition_of_constants
+        PASS [   0.013s] (24/58) p3-uni-stark symbolic_expression::tests::test_degree_multiple_for_addition
+        PASS [   0.235s] (25/58) p3-fri::pcs babybear_fri_pcs::blowup_2::multiple_rounds
+        PASS [   0.012s] (26/58) p3-uni-stark symbolic_expression::tests::test_degree_multiple_for_multiplication
+        PASS [   0.011s] (27/58) p3-uni-stark symbolic_expression::tests::test_multiplication_of_constants
+        PASS [   0.013s] (28/58) p3-uni-stark symbolic_expression::tests::test_negation
+        PASS [   0.014s] (29/58) p3-uni-stark symbolic_expression::tests::test_product_operator
+        PASS [   0.014s] (30/58) p3-uni-stark symbolic_expression::tests::test_sum_operator
+        PASS [   0.015s] (31/58) p3-uni-stark symbolic_expression::tests::test_symbolic_expression_degree_multiple
+        PASS [   0.016s] (32/58) p3-uni-stark symbolic_expression::tests::test_subtraction_of_constants
+        PASS [   0.016s] (33/58) p3-uni-stark::fib_air test_incorrect_public_value
+        PASS [   0.018s] (34/58) p3-uni-stark::fib_air test_one_row_trace
+        PASS [   0.021s] (35/58) p3-uni-stark::fib_air test_public_value
+        PASS [   0.036s] (36/58) p3-uni-stark::fib_air test_zk
+        PASS [   0.236s] (37/58) p3-fri::pcs m31_fri_pcs::blowup_2::multiple_rounds
+        PASS [   0.268s] (38/58) p3-fri::pcs m31_fri_pcs::blowup_2::many_equal
+        PASS [   0.349s] (39/58) p3-fri::pcs babybear_fri_pcs::blowup_2::many_equal
+        PASS [   0.176s] (40/58) p3-uni-stark::mul_air prove_bb_trivial_deg2
+        PASS [   0.175s] (41/58) p3-uni-stark::mul_air prove_bb_trivial_deg3
+        PASS [   0.201s] (42/58) p3-uni-stark::mul_air prove_bb_twoadic_deg2
+        PASS [   0.212s] (43/58) p3-uni-stark::mul_air prove_bb_trivial_deg4
+        PASS [   0.472s] (44/58) p3-fri::fri test_fri_ldt
+        PASS [   0.190s] (45/58) p3-uni-stark::mul_air prove_bb_twoadic_deg3
+        PASS [   0.185s] (46/58) p3-uni-stark::mul_air prove_bb_twoadic_deg4
+        PASS [   0.530s] (47/58) p3-fri::pcs babybear_fri_pcs::blowup_1::many_different_rev
+        PASS [   0.184s] (48/58) p3-uni-stark::mul_air prove_bb_twoadic_deg5
+        PASS [   0.533s] (49/58) p3-fri::pcs m31_fri_pcs::blowup_1::many_different_rev
+        PASS [   0.541s] (50/58) p3-fri::pcs m31_fri_pcs::blowup_1::many_different
+        PASS [   0.613s] (51/58) p3-fri::pcs babybear_fri_pcs::blowup_1::many_different
+        PASS [   0.287s] (52/58) p3-uni-stark::mul_air prove_m31_circle_deg2
+        PASS [   0.865s] (53/58) p3-fri::pcs m31_fri_pcs::blowup_2::many_different_rev
+        PASS [   0.919s] (54/58) p3-fri::pcs babybear_fri_pcs::blowup_2::many_different_rev
+        PASS [   0.494s] (55/58) p3-uni-stark::mul_air prove_m31_circle_deg3
+        PASS [   0.950s] (56/58) p3-fri::pcs m31_fri_pcs::blowup_2::many_different
+        PASS [   1.032s] (57/58) p3-fri::pcs babybear_fri_pcs::blowup_2::many_different
+        PASS [   1.903s] (58/58) p3-uni-stark::mul_air prove_bb_twoadic_deg2_zk
+────────────
+     Summary [   2.173s] 58 tests run: 58 passed, 0 skipped
+reward=1 graded=58 found=7 failed=0 parsed=58 framework=cargo exit_code=0

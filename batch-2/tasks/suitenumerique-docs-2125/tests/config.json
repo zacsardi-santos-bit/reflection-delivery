@@ -1,0 +1,29 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/src/frontend/apps/impress && /workspace/repo/src/frontend/node_modules/.bin/vitest run src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts",
+  "test_files": [
+    "src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility headings does not nest a second heading when BlockNote already outputs h1\u2013h6",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility headings uses data-level when inner heading tag has a different level",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility lists splits lists when a heading sits between them"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility headings converts heading blocks without inner h tag to semantic h1\u2013h6",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility headings inserts an h1 with the document title when none exists",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility headings does not insert h1 when the document already has one",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility lists converts bullet list items to ul > li",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility lists converts numbered list items to ol > li",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility lists keeps consecutive same-type items in a single list",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility converts quote blocks to blockquote",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility converts callout blocks to aside with role=\"note\"",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility wraps check list items in a ul with role=\"list\" and adds aria-checked",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility converts code blocks to pre > code and preserves data attributes",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility adds empty alt to images without one",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility does not overwrite an existing alt",
+    "/workspace/repo/src/frontend/apps/impress/src/features/docs/doc-export/__tests__/utilsHtmlAccessibility.test.ts::improveHtmlAccessibility wraps body in article with role=\"document\""
+  ]
+}

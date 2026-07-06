@@ -1,0 +1,20 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && ./node_modules/.bin/tsc && ./node_modules/.bin/mocha --file ./build/compiled/test/utils/test-setup.js --bail --recursive --timeout 30000 ./build/compiled/test/functional/transaction/database-specific-isolation/sqlite-isolation.js",
+  "test_files": [
+    "test/functional/transaction/database-specific-isolation/entity/Category.ts",
+    "test/functional/transaction/database-specific-isolation/entity/Post.ts",
+    "test/functional/transaction/database-specific-isolation/full-isolation-support.ts",
+    "test/functional/transaction/database-specific-isolation/oracle-isolation.ts",
+    "test/functional/transaction/database-specific-isolation/sqlite-isolation.ts",
+    "test/functional/transaction/transaction-decorator/controller/PostController.ts",
+    "test/functional/transaction/transaction-decorator/transaction-decorator.ts"
+  ],
+  "num_test_files": 7,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "::transaction > transaction with sqlite connection partial isolation support should execute all operations in a single transaction with READ UNCOMMITTED isolation level",
+    "::transaction > transaction with sqlite connection partial isolation support should execute all operations in a single transaction with SERIALIZABLE isolation level"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,2 +1,0 @@
-patching file charts/tidb-cluster/templates/config/_prometheus-config.tpl
-patching file pkg/monitor/monitor/template.go

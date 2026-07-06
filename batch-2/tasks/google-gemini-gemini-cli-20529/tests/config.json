@@ -1,0 +1,38 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run --reporter=verbose --coverage.enabled=false src/ui/components/ToolConfirmationQueue.test.tsx src/ui/components/messages/ToolOverflowConsistencyChecks.test.tsx src/ui/components/shared/MaxSizedBox.test.tsx",
+  "test_files": [
+    "packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx",
+    "packages/cli/src/ui/components/messages/ToolOverflowConsistencyChecks.test.tsx",
+    "packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue calculates availableContentHeight based on availableTerminalHeight from UI state",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> hides lines when content exceeds maxHeight",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> hides lines at the end when content exceeds maxHeight and overflowDirection is bottom",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> shows plural \"lines\" when more than one line is hidden",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> shows singular \"line\" when exactly one line is hidden",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> accounts for additionalHiddenLinesCount",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> clips a long single text child from the top",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> clips a long single text child from the bottom",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> does not leak content after hidden indicator with bottom overflow",
+    "/workspace/repo/packages/cli/src/ui/components/messages/ToolOverflowConsistencyChecks.test.tsx::ToolOverflowConsistencyChecks: ToolGroupMessage and ToolResultDisplay synchronization should ensure explicit hasOverflow calculation is consistent with ToolResultDisplay truncation in Standard mode"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue renders the confirming tool with progress indicator",
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue returns null if tool has no confirmation details",
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue renders expansion hint when content is long and constrained",
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue provides more height for ask_user by subtracting less overhead",
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue does not render expansion hint when constrainHeight is false",
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue renders AskUser tool confirmation with Success color",
+    "/workspace/repo/packages/cli/src/ui/components/ToolConfirmationQueue.test.tsx::ToolConfirmationQueue renders ExitPlanMode tool confirmation with Success color",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> renders children without truncation when they fit",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> wraps text that exceeds maxWidth",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> does not truncate when maxHeight is undefined",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> renders an empty box for empty children",
+    "/workspace/repo/packages/cli/src/ui/components/shared/MaxSizedBox.test.tsx::<MaxSizedBox /> handles React.Fragment as a child",
+    "/workspace/repo/packages/cli/src/ui/components/messages/ToolOverflowConsistencyChecks.test.tsx::ToolOverflowConsistencyChecks: ToolGroupMessage and ToolResultDisplay synchronization should ensure explicit hasOverflow calculation is consistent with ToolResultDisplay truncation in Alternate Buffer (ASB) mode"
+  ]
+}

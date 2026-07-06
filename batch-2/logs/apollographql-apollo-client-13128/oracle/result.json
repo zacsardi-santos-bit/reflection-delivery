@@ -1,0 +1,29 @@
+{
+    "id": "8e0b96b5-8171-456f-8e84-7a25572554bb",
+    "started_at": "2026-07-06T12:17:58.124130",
+    "finished_at": "2026-07-06T12:18:34.592034",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apollographql-apollo-client-13128": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apollographql-apollo-client-1312__h4HgQpM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

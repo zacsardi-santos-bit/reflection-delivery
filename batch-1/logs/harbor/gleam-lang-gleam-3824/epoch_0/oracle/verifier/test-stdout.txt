@@ -1,0 +1,205 @@
+patching file compiler-core/src/language_server/tests/action.rs
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_nested_use_expressions_picks_inner_under_cursor.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_nested_use_expressions_picks_inner_under_cursor_2.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_use_expression_with_empty_parens.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_use_expression_with_multiple_patterns.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_use_expression_with_no_parens.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_use_expression_with_parens_and_other_args.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_use_expression_with_single_pattern.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__desugar_use_expression_with_type_annotations.snap
+   Compiling proc-macro2 v1.0.79
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.3.0
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.155
+   Compiling memchr v2.7.2
+   Compiling serde v1.0.204
+   Compiling thiserror v1.0.63
+   Compiling bitflags v2.5.0
+   Compiling version_check v0.9.4
+   Compiling itoa v1.0.11
+   Compiling regex-syntax v0.8.3
+   Compiling syn v1.0.109
+   Compiling once_cell v1.19.0
+   Compiling rustix v0.38.32
+   Compiling log v0.4.22
+   Compiling linux-raw-sys v0.4.13
+   Compiling protobuf v3.4.0
+   Compiling minimal-lexical v0.2.1
+   Compiling unicode-xid v0.2.4
+   Compiling num-conv v0.1.0
+   Compiling anyhow v1.0.86
+   Compiling time-core v0.1.2
+   Compiling unicase v2.7.0
+   Compiling powerfmt v0.2.0
+   Compiling num-traits v0.2.18
+   Compiling indexmap v1.9.3
+   Compiling time-macros v0.2.18
+   Compiling aho-corasick v1.1.3
+   Compiling nom v7.1.3
+   Compiling deranged v0.3.11
+   Compiling fastrand v2.0.2
+   Compiling either v1.10.0
+   Compiling home v0.5.9
+   Compiling hashbrown v0.12.3
+   Compiling tinyvec_macros v0.1.1
+   Compiling tinyvec v1.6.0
+   Compiling slab v0.4.9
+   Compiling percent-encoding v2.3.1
+   Compiling serde_json v1.0.116
+   Compiling typenum v1.17.0
+   Compiling quote v1.0.35
+   Compiling getrandom v0.2.15
+   Compiling cc v1.1.6
+   Compiling mime_guess v2.0.4
+   Compiling syn v2.0.58
+   Compiling regex-automata v0.4.6
+   Compiling rand_core v0.6.4
+   Compiling unicode-normalization v0.1.23
+   Compiling futures-core v0.3.30
+   Compiling crossbeam-utils v0.8.19
+   Compiling rusticata-macros v4.1.0
+   Compiling ryu v1.0.17
+   Compiling oid-registry v0.6.1
+   Compiling unicode-bidi v0.3.15
+   Compiling crc32fast v1.4.0
+   Compiling libm v0.2.8
+   Compiling which v4.4.2
+   Compiling tempfile v3.12.0
+   Compiling num-integer v0.1.46
+   Compiling ring v0.17.8
+   Compiling futures-sink v0.3.30
+   Compiling pin-project-lite v0.2.14
+   Compiling lazy_static v1.4.0
+   Compiling rustversion v1.0.14
+   Compiling futures-channel v0.3.30
+   Compiling num-bigint v0.4.6
+   Compiling idna v0.5.0
+   Compiling form_urlencoded v1.2.1
+   Compiling capnp v0.14.11
+   Compiling pin-utils v0.1.0
+   Compiling futures-io v0.3.30
+   Compiling camino v1.1.7
+   Compiling mime v0.3.17
+   Compiling adler v1.0.2
+   Compiling time v0.3.36
+   Compiling futures-task v0.3.30
+   Compiling bitmaps v2.1.0
+   Compiling miniz_oxide v0.7.2
+   Compiling regex v1.10.5
+   Compiling capnpc v0.14.9
+   Compiling bstr v1.9.1
+   Compiling im v15.1.0
+   Compiling fnv v1.0.7
+   Compiling hashbrown v0.14.3
+   Compiling spin v0.9.8
+   Compiling synstructure v0.12.6
+   Compiling base64 v0.13.1
+   Compiling bytes v1.8.0
+   Compiling heck v0.5.0
+   Compiling askama_parser v0.2.1
+   Compiling equivalent v1.0.1
+   Compiling pulldown-cmark v0.11.0
+   Compiling untrusted v0.9.0
+   Compiling unicode-width v0.1.11
+   Compiling rustc-hash v1.1.0
+   Compiling data-encoding v2.5.0
+   Compiling http-auth-basic v0.3.3
+   Compiling http v1.1.0
+   Compiling indexmap v2.2.6
+   Compiling humansize v2.1.3
+   Compiling sized-chunks v0.6.5
+   Compiling xattr v1.3.1
+   Compiling flate2 v1.0.30
+   Compiling crossbeam-channel v0.5.12
+   Compiling rand_xoshiro v0.6.0
+   Compiling dirs-sys-next v0.1.2
+   Compiling terminal_size v0.1.17
+   Compiling filetime v0.2.23
+   Compiling tracing-core v0.1.32
+   Compiling base16 v0.2.1
+   Compiling unicode-linebreak v0.1.5
+   Compiling smawk v0.3.2
+   Compiling askama_escape v0.10.3
+   Compiling ppv-lite86 v0.2.17
+   Compiling bitflags v1.3.2
+   Compiling same-file v1.0.6
+   Compiling fixedbitset v0.4.2
+   Compiling pulldown-cmark-escape v0.11.0
+   Compiling smallvec v1.13.2
+   Compiling termcolor v1.4.1
+   Compiling itertools v0.13.0
+   Compiling textwrap v0.15.0
+   Compiling petgraph v0.6.5
+   Compiling walkdir v2.5.0
+   Compiling tar v0.4.42
+   Compiling rand_chacha v0.3.1
+   Compiling spdx v0.10.6
+   Compiling codespan-reporting v0.11.1
+   Compiling dirs-next v2.0.0
+   Compiling console v0.15.8
+   Compiling serde_derive v1.0.204
+   Compiling thiserror-impl v1.0.63
+   Compiling asn1-rs-derive v0.4.0
+   Compiling asn1-rs-impl v0.1.0
+   Compiling displaydoc v0.2.4
+   Compiling futures-macro v0.3.30
+   Compiling tracing-attributes v0.1.27
+   Compiling strum_macros v0.26.4
+   Compiling serde_repr v0.1.18
+   Compiling async-trait v0.1.83
+   Compiling strsim v0.11.1
+   Compiling diff v0.1.13
+   Compiling linked-hash-map v0.5.6
+   Compiling vec1 v1.12.1
+   Compiling unicode-segmentation v1.12.0
+   Compiling id-arena v2.2.1
+   Compiling similar v2.5.0
+   Compiling debug-ignore v1.0.5
+   Compiling xxhash-rust v0.8.12
+   Compiling bimap v0.6.3
+   Compiling yansi v1.0.1
+   Compiling rand v0.8.5
+   Compiling pretty_assertions v1.4.1
+   Compiling futures-util v0.3.30
+   Compiling protobuf-support v3.4.0
+   Compiling asn1-rs v0.5.2
+   Compiling pubgrub v0.2.1
+   Compiling tracing v0.1.40
+   Compiling strum v0.26.3
+   Compiling gleam-core v1.6.1 (/workspace/repo/compiler-core)
+   Compiling der-parser v8.2.0
+   Compiling x509-parser v0.15.1
+   Compiling futures-executor v0.3.30
+   Compiling futures v0.3.30
+   Compiling url v2.5.0
+   Compiling globset v0.4.14
+   Compiling bincode v1.3.3
+   Compiling toml v0.5.11
+   Compiling ecow v0.2.3
+   Compiling basic-toml v0.1.9
+   Compiling protobuf-parse v3.4.0
+   Compiling pathdiff v0.2.1
+   Compiling insta v1.39.0
+   Compiling askama_derive v0.12.5
+   Compiling lsp-server v0.7.6
+   Compiling lsp-types v0.95.1
+   Compiling protobuf-codegen v3.4.0
+   Compiling hexpm v2.4.1
+   Compiling askama v0.12.1
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 49.14s
+────────────
+ Nextest run ID 4d567c66-7dc4-40be-b81b-17d60040e04e with nextest profile: default
+    Starting 9 tests across 1 binary (2957 tests skipped)
+        PASS [   0.158s] (1/9) gleam-core language_server::tests::action::desugar_use_expression_doesnt_work_with_complex_patterns
+        PASS [   0.239s] (2/9) gleam-core language_server::tests::action::desugar_use_expression_with_parens_and_other_args
+        PASS [   0.240s] (3/9) gleam-core language_server::tests::action::desugar_nested_use_expressions_picks_inner_under_cursor
+        PASS [   0.241s] (4/9) gleam-core language_server::tests::action::desugar_use_expression_with_type_annotations
+        PASS [   0.241s] (5/9) gleam-core language_server::tests::action::desugar_use_expression_with_empty_parens
+        PASS [   0.241s] (6/9) gleam-core language_server::tests::action::desugar_use_expression_with_single_pattern
+        PASS [   0.241s] (7/9) gleam-core language_server::tests::action::desugar_use_expression_with_no_parens
+        PASS [   0.242s] (8/9) gleam-core language_server::tests::action::desugar_nested_use_expressions_picks_inner_under_cursor_2
+        PASS [   0.242s] (9/9) gleam-core language_server::tests::action::desugar_use_expression_with_multiple_patterns
+────────────
+     Summary [   0.250s] 9 tests run: 9 passed, 2957 skipped
+reward=1 graded=9 found=1 failed=0 parsed=9 framework=cargo exit_code=0

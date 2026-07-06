@@ -1,0 +1,16 @@
+patching file .github/workflows/automated-tests.yml
+patching file cypress.json
+patching file cypress/e2e/web/createTechnology.js
+patching file cypress/fixtures/user.json
+patching file cypress/support/commands.js
+patching file package-lock.json
+patching file package.json
+patching file packages/web/components/Modal/ModalProvider.js
+patching file packages/web/components/Modal/NeedToCompleteTheRegistration/index.js
+patching file packages/web/components/Modal/NeedToCompleteTheRegistration/styles.js
+patching file packages/web/components/Technology/Details/Tables/Responsibles.js
+patching file packages/web/components/TechnologyForm/Costs/index.js
+patching file packages/web/components/TechnologyForm/MapAndAttachments/index.js
+patching file packages/web/components/TechnologyForm/Responsible/index.js
+patching file packages/web/components/TechnologyForm/Review/index.js
+patching file 'packages/web/pages/technology/[id]/edit.js'

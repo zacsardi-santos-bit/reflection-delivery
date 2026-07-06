@@ -1,0 +1,14 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/ui && npx jest src/dashboards/actions/views.test.ts --coverage=false --watchAll=false",
+  "test_files": [
+    "ui/src/dashboards/actions/views.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ui/src/dashboards/actions/views.test.ts::Dashboards.Actions.getViewForTimeMachine dispatches a SET_VIEW action and fetches the view if there is no view in the store",
+    "/workspace/repo/ui/src/dashboards/actions/views.test.ts::Dashboards.Actions.getViewForTimeMachine does not dispatch a SET_VIEW action and does not fetch the view if there is already a view in the store"
+  ],
+  "PASS_TO_PASS": []
+}

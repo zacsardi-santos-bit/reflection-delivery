@@ -1,0 +1,2124 @@
+diff --git a/lib/journal/src/concrete/archived.rs b/lib/journal/src/concrete/archived.rs
+index dfc5cfa803d..fb25b7be4ff 100644
+--- a/lib/journal/src/concrete/archived.rs
++++ b/lib/journal/src/concrete/archived.rs
+@@ -89,6 +89,7 @@ pub enum JournalEntryRecordType {
+     OpenFileDescriptorV2 = 61,
+     DuplicateFileDescriptorV2 = 62,
+     FileDescriptorSetFdFlagsV1 = 63,
++    SocketPairV1 = 64,
+ }
+ 
+ impl JournalEntryRecordType {
+@@ -231,6 +232,9 @@ impl JournalEntryRecordType {
+             JournalEntryRecordType::SocketOpenV1 => {
+                 ArchivedJournalEntry::SocketOpenV1(rkyv::access_unchecked(data))
+             }
++            JournalEntryRecordType::SocketPairV1 => {
++                ArchivedJournalEntry::SocketPairV1(rkyv::access_unchecked(data))
++            }
+             JournalEntryRecordType::SocketListenV1 => {
+                 ArchivedJournalEntry::SocketListenV1(rkyv::access_unchecked(data))
+             }
+@@ -349,6 +353,7 @@ impl<'a> JournalEntry<'a> {
+             Self::PortRouteClearV1 => JournalEntryRecordType::PortRouteClearV1,
+             Self::PortRouteDelV1 { .. } => JournalEntryRecordType::PortRouteDelV1,
+             Self::SocketOpenV1 { .. } => JournalEntryRecordType::SocketOpenV1,
++            Self::SocketPairV1 { .. } => JournalEntryRecordType::SocketPairV1,
+             Self::SocketListenV1 { .. } => JournalEntryRecordType::SocketListenV1,
+             Self::SocketBindV1 { .. } => JournalEntryRecordType::SocketBindV1,
+             Self::SocketConnectedV1 { .. } => JournalEntryRecordType::SocketConnectedV1,
+@@ -717,8 +722,8 @@ impl<'a> JournalEntry<'a> {
+                 },
+                 serializer,
+             ),
+-            JournalEntry::CreatePipeV1 { fd1, fd2 } => {
+-                serialize_using(&JournalEntryCreatePipeV1 { fd1, fd2 }, serializer)
++            JournalEntry::CreatePipeV1 { read_fd, write_fd } => {
++                serialize_using(&JournalEntryCreatePipeV1 { read_fd, write_fd }, serializer)
+             }
+             JournalEntry::CreateEventV1 {
+                 initial_val,
+@@ -783,6 +788,9 @@ impl<'a> JournalEntry<'a> {
+                 },
+                 serializer,
+             ),
++            JournalEntry::SocketPairV1 { fd1, fd2 } => {
++                serialize_using(&JournalEntrySocketPairV1 { fd1, fd2 }, serializer)
++            }
+             JournalEntry::SocketListenV1 { fd, backlog } => {
+                 serialize_using(&JournalEntrySocketListenV1 { fd, backlog }, serializer)
+             }
+@@ -1017,6 +1025,7 @@ pub enum ArchivedJournalEntry<'a> {
+     PortRouteClearV1,
+     PortRouteDelV1(&'a ArchivedJournalEntryPortRouteDelV1),
+     SocketOpenV1(&'a ArchivedJournalEntrySocketOpenV1),
++    SocketPairV1(&'a ArchivedJournalEntrySocketPairV1),
+     SocketListenV1(&'a ArchivedJournalEntrySocketListenV1),
+     SocketBindV1(&'a ArchivedJournalEntrySocketBindV1),
+     SocketConnectedV1(&'a ArchivedJournalEntrySocketConnectedV1),
+@@ -1384,8 +1393,8 @@ pub struct JournalEntryTtySetV1 {
+ #[derive(Debug, Clone, RkyvSerialize, RkyvDeserialize, Archive)]
+ #[rkyv(derive(Debug), attr(repr(align(8))))]
+ pub struct JournalEntryCreatePipeV1 {
+-    pub fd1: u32,
+-    pub fd2: u32,
++    pub read_fd: u32,
++    pub write_fd: u32,
+ }
+ 
+ #[repr(C)]
+@@ -1462,6 +1471,14 @@ pub struct JournalEntrySocketOpenV1 {
+     pub fd: u32,
+ }
+ 
++#[repr(align(8))]
++#[derive(Debug, Clone, RkyvSerialize, RkyvDeserialize, Archive)]
++#[rkyv(derive(Debug), attr(repr(align(8))))]
++pub struct JournalEntrySocketPairV1 {
++    pub fd1: u32,
++    pub fd2: u32,
++}
++
+ #[repr(C)]
+ #[repr(align(8))]
+ #[derive(Debug, Clone, RkyvSerialize, RkyvDeserialize, Archive)]
+diff --git a/lib/journal/src/concrete/archived_from.rs b/lib/journal/src/concrete/archived_from.rs
+index 00b10c82965..b85bda1853e 100644
+--- a/lib/journal/src/concrete/archived_from.rs
++++ b/lib/journal/src/concrete/archived_from.rs
+@@ -987,12 +987,13 @@ impl<'a> TryFrom<ArchivedJournalEntry<'a>> for JournalEntry<'a> {
+                 },
+                 line_feeds: *line_feeds,
+             },
+-            ArchivedJournalEntry::CreatePipeV1(ArchivedJournalEntryCreatePipeV1 { fd1, fd2 }) => {
+-                Self::CreatePipeV1 {
+-                    fd1: fd1.to_native(),
+-                    fd2: fd2.to_native(),
+-                }
+-            }
++            ArchivedJournalEntry::CreatePipeV1(ArchivedJournalEntryCreatePipeV1 {
++                read_fd,
++                write_fd,
++            }) => Self::CreatePipeV1 {
++                read_fd: read_fd.to_native(),
++                write_fd: write_fd.to_native(),
++            },
+             ArchivedJournalEntry::PortAddAddrV1(ArchivedJournalEntryPortAddAddrV1 { cidr }) => {
+                 Self::PortAddAddrV1 {
+                     cidr: JournalIpCidrV1 {
+@@ -1052,6 +1053,12 @@ impl<'a> TryFrom<ArchivedJournalEntry<'a>> for JournalEntry<'a> {
+                 pt: (pt.to_native()).try_into().unwrap_or(wasi::SockProto::Max),
+                 fd: fd.to_native(),
+             },
++            ArchivedJournalEntry::SocketPairV1(ArchivedJournalEntrySocketPairV1 { fd1, fd2 }) => {
++                Self::SocketPairV1 {
++                    fd1: fd1.to_native(),
++                    fd2: fd2.to_native(),
++                }
++            }
+             ArchivedJournalEntry::SocketListenV1(ArchivedJournalEntrySocketListenV1 {
+                 fd,
+                 backlog,
+diff --git a/lib/journal/src/concrete/auto_consistent.rs b/lib/journal/src/concrete/auto_consistent.rs
+index 511106afb23..09dc487e646 100644
+--- a/lib/journal/src/concrete/auto_consistent.rs
++++ b/lib/journal/src/concrete/auto_consistent.rs
+@@ -69,10 +69,10 @@ impl<W: WritableJournal> WritableJournal for AutoConsistentJournalTx<W> {
+                 let mut state = self.state.lock().unwrap();
+                 state.open_sockets.insert(*fd);
+             }
+-            JournalEntry::CreatePipeV1 { fd1, fd2 } => {
++            JournalEntry::CreatePipeV1 { read_fd, write_fd } => {
+                 let mut state = self.state.lock().unwrap();
+-                state.open_files.insert(*fd1);
+-                state.open_files.insert(*fd2);
++                state.open_files.insert(*read_fd);
++                state.open_files.insert(*write_fd);
+             }
+             JournalEntry::RenumberFileDescriptorV1 { old_fd, new_fd } => {
+                 let mut state = self.state.lock().unwrap();
+diff --git a/lib/journal/src/concrete/compacting.rs b/lib/journal/src/concrete/compacting.rs
+index 1af303a9ed5..a7d8922df21 100644
+--- a/lib/journal/src/concrete/compacting.rs
++++ b/lib/journal/src/concrete/compacting.rs
+@@ -742,10 +742,10 @@ impl WritableJournal for CompactingJournalTx {
+                 }
+             }
+             // Pipes that remain open at the end will be added
+-            JournalEntry::CreatePipeV1 { fd1, fd2, .. } => {
++            JournalEntry::CreatePipeV1 { read_fd, write_fd } => {
+                 let lookup = state.insert_new_sub_events(event_index);
+-                state.open_pipes.insert(*fd1, lookup);
+-                state.open_pipes.insert(*fd2, lookup);
++                state.open_pipes.insert(*read_fd, lookup);
++                state.open_pipes.insert(*write_fd, lookup);
+             }
+             // Epoll events
+             JournalEntry::EpollCreateV1 { fd } => {
+@@ -766,6 +766,11 @@ impl WritableJournal for CompactingJournalTx {
+                 let lookup = state.insert_new_sub_events(event_index);
+                 state.open_sockets.insert(*fd, lookup);
+             }
++            JournalEntry::SocketPairV1 { fd1, fd2 } => {
++                let lookup = state.insert_new_sub_events(event_index);
++                state.open_sockets.insert(*fd1, lookup);
++                state.open_sockets.insert(*fd2, lookup);
++            }
+             JournalEntry::InitModuleV1 { .. } => {
+                 state.clear_run_sub_events();
+                 state.init_module = Some(event_index);
+diff --git a/lib/journal/src/concrete/filter.rs b/lib/journal/src/concrete/filter.rs
+index a69e97fad7d..17ed9e17b6e 100644
+--- a/lib/journal/src/concrete/filter.rs
++++ b/lib/journal/src/concrete/filter.rs
+@@ -340,6 +340,7 @@ impl<W: WritableJournal> WritableJournal for FilteredJournalTx<W> {
+             | JournalEntry::PortRouteClearV1
+             | JournalEntry::PortRouteDelV1 { .. }
+             | JournalEntry::SocketOpenV1 { .. }
++            | JournalEntry::SocketPairV1 { .. }
+             | JournalEntry::SocketListenV1 { .. }
+             | JournalEntry::SocketBindV1 { .. }
+             | JournalEntry::SocketConnectedV1 { .. }
+diff --git a/lib/journal/src/concrete/log_file.rs b/lib/journal/src/concrete/log_file.rs
+index ab8a0337602..db69298e756 100644
+--- a/lib/journal/src/concrete/log_file.rs
++++ b/lib/journal/src/concrete/log_file.rs
+@@ -412,7 +412,10 @@ mod tests {
+         // Write some events to it
+         let journal = LogFileJournal::from_file(file.as_file().try_clone().unwrap()).unwrap();
+         journal
+-            .write(JournalEntry::CreatePipeV1 { fd1: 1, fd2: 2 })
++            .write(JournalEntry::CreatePipeV1 {
++                read_fd: 1,
++                write_fd: 2,
++            })
+             .unwrap();
+         journal
+             .write(JournalEntry::SetThreadV1 {
+@@ -441,7 +444,13 @@ mod tests {
+         let event4 = journal.read().unwrap().map(LogReadResult::into_inner);
+ 
+         // Check the events
+-        assert_eq!(event1, Some(JournalEntry::CreatePipeV1 { fd1: 1, fd2: 2 }));
++        assert_eq!(
++            event1,
++            Some(JournalEntry::CreatePipeV1 {
++                read_fd: 1,
++                write_fd: 2
++            })
++        );
+         assert_eq!(
+             event2,
+             Some(JournalEntry::SetThreadV1 {
+@@ -481,8 +490,8 @@ mod tests {
+         // Before we read it, we will throw in another event
+         journal
+             .write(JournalEntry::CreatePipeV1 {
+-                fd1: 1234,
+-                fd2: 5432,
++                read_fd: 1234,
++                write_fd: 5432,
+             })
+             .unwrap();
+ 
+@@ -491,7 +500,13 @@ mod tests {
+         let event3 = journal.read().unwrap().map(LogReadResult::into_inner);
+         let event4 = journal.read().unwrap().map(LogReadResult::into_inner);
+         let event5 = journal.read().unwrap().map(LogReadResult::into_inner);
+-        assert_eq!(event1, Some(JournalEntry::CreatePipeV1 { fd1: 1, fd2: 2 }));
++        assert_eq!(
++            event1,
++            Some(JournalEntry::CreatePipeV1 {
++                read_fd: 1,
++                write_fd: 2
++            })
++        );
+         assert_eq!(
+             event2,
+             Some(JournalEntry::SetThreadV1 {
+@@ -538,7 +553,13 @@ mod tests {
+         tracing::info!("event5 {:?}", event5);
+         tracing::info!("event6 {:?}", event6);
+ 
+-        assert_eq!(event1, Some(JournalEntry::CreatePipeV1 { fd1: 1, fd2: 2 }));
++        assert_eq!(
++            event1,
++            Some(JournalEntry::CreatePipeV1 {
++                read_fd: 1,
++                write_fd: 2
++            })
++        );
+         assert_eq!(
+             event2,
+             Some(JournalEntry::SetThreadV1 {
+@@ -569,8 +590,8 @@ mod tests {
+         assert_eq!(
+             event5,
+             Some(JournalEntry::CreatePipeV1 {
+-                fd1: 1234,
+-                fd2: 5432,
++                read_fd: 1234,
++                write_fd: 5432,
+             })
+         );
+         assert_eq!(event6, None);
+diff --git a/lib/journal/src/concrete/printing.rs b/lib/journal/src/concrete/printing.rs
+index 17eab10244e..b317fa85825 100644
+--- a/lib/journal/src/concrete/printing.rs
++++ b/lib/journal/src/concrete/printing.rs
+@@ -205,8 +205,8 @@ impl<'a> fmt::Display for JournalEntry<'a> {
+                 write!(f, "epoll-ctl (epfd={epfd}, op={op:?}, fd={fd})")
+             }
+             JournalEntry::TtySetV1 { tty, line_feeds } => write!(f, "tty-set (echo={}, buffering={}, feeds={})", tty.echo, tty.line_buffered, line_feeds),
+-            JournalEntry::CreatePipeV1 { fd1, fd2 } => {
+-                write!(f, "fd-pipe (fd1={fd1}, fd2={fd2})")
++            JournalEntry::CreatePipeV1 { read_fd, write_fd } => {
++                write!(f, "fd-pipe (read_fd={read_fd}, write_fd={write_fd})")
+             }
+             JournalEntry::CreateEventV1 {
+                 initial_val, fd, ..
+@@ -234,6 +234,9 @@ impl<'a> fmt::Display for JournalEntry<'a> {
+             JournalEntry::SocketOpenV1 { af, ty, pt, fd } => {
+                 write!(f, "sock-open (fd={fd}, af={af:?}, ty={ty:?}, pt={pt:?})")
+             }
++            JournalEntry::SocketPairV1 { fd1, fd2 } => {
++                write!(f, "sock-pair (fd1={fd1}, fd2={fd2})")
++            }
+             JournalEntry::SocketListenV1 { fd, backlog } => {
+                 write!(f, "sock-listen (fd={fd}, backlog={backlog})")
+             }
+diff --git a/lib/journal/src/entry.rs b/lib/journal/src/entry.rs
+index 6c0c0297cf5..90554010a97 100644
+--- a/lib/journal/src/entry.rs
++++ b/lib/journal/src/entry.rs
+@@ -260,8 +260,8 @@ pub enum JournalEntry<'a> {
+         line_feeds: bool,
+     },
+     CreatePipeV1 {
+-        fd1: Fd,
+-        fd2: Fd,
++        read_fd: Fd,
++        write_fd: Fd,
+     },
+     CreateEventV1 {
+         initial_val: u64,
+@@ -301,6 +301,10 @@ pub enum JournalEntry<'a> {
+         pt: SockProto,
+         fd: Fd,
+     },
++    SocketPairV1 {
++        fd1: Fd,
++        fd2: Fd,
++    },
+     SocketListenV1 {
+         fd: Fd,
+         backlog: u32,
+@@ -618,7 +622,9 @@ impl<'a> JournalEntry<'a> {
+                 event,
+             },
+             Self::TtySetV1 { tty, line_feeds } => JournalEntry::TtySetV1 { tty, line_feeds },
+-            Self::CreatePipeV1 { fd1, fd2 } => JournalEntry::CreatePipeV1 { fd1, fd2 },
++            Self::CreatePipeV1 { read_fd, write_fd } => {
++                JournalEntry::CreatePipeV1 { read_fd, write_fd }
++            }
+             Self::CreateEventV1 {
+                 initial_val,
+                 flags,
+@@ -657,6 +663,7 @@ impl<'a> JournalEntry<'a> {
+             Self::PortRouteClearV1 => JournalEntry::PortRouteClearV1,
+             Self::PortRouteDelV1 { ip } => JournalEntry::PortRouteDelV1 { ip },
+             Self::SocketOpenV1 { af, ty, pt, fd } => JournalEntry::SocketOpenV1 { af, ty, pt, fd },
++            Self::SocketPairV1 { fd1, fd2 } => JournalEntry::SocketPairV1 { fd1, fd2 },
+             Self::SocketListenV1 { fd, backlog } => JournalEntry::SocketListenV1 { fd, backlog },
+             Self::SocketBindV1 { fd, addr } => JournalEntry::SocketBindV1 { fd, addr },
+             Self::SocketConnectedV1 {
+@@ -832,6 +839,7 @@ impl<'a> JournalEntry<'a> {
+             JournalEntry::PortRouteClearV1 => base_size,
+             JournalEntry::PortRouteDelV1 { .. } => base_size,
+             JournalEntry::SocketOpenV1 { .. } => base_size,
++            JournalEntry::SocketPairV1 { .. } => base_size,
+             JournalEntry::SocketListenV1 { .. } => base_size,
+             JournalEntry::SocketBindV1 { .. } => base_size,
+             JournalEntry::SocketConnectedV1 { .. } => base_size,
+diff --git a/lib/virtual-fs/src/pipe.rs b/lib/virtual-fs/src/pipe.rs
+index f88d1489c8e..84d35e237b2 100644
+--- a/lib/virtual-fs/src/pipe.rs
++++ b/lib/virtual-fs/src/pipe.rs
+@@ -1,19 +1,24 @@
+ use bytes::{Buf, Bytes};
+-#[cfg(feature = "futures")]
+-use futures::Future;
+-use std::io::IoSlice;
+ use std::io::{self, Read, Seek, SeekFrom};
+-use std::ops::DerefMut;
+ use std::pin::Pin;
+ use std::sync::Arc;
+ use std::sync::Mutex;
+ use std::task::Context;
+ use std::task::Poll;
+-use tokio::io::{AsyncRead, AsyncSeek, AsyncWrite};
+-use tokio::sync::{mpsc, mpsc::error::TryRecvError};
++use std::{io::IoSlice, sync::MutexGuard};
++use tokio::sync::mpsc;
++use tokio::{
++    io::{AsyncRead, AsyncSeek, AsyncWrite},
++    sync::mpsc::error::TryRecvError,
++};
+ 
+ use crate::{ArcFile, FsError, VirtualFile};
+ 
++// Each pipe end is separately cloneable. The overall pipe
++// remains open as long as at least one tx end and one rx
++// end are still alive.
++// As such, closing a pipe isn't a well-defined operation,
++// since more references to the ends may still be alive.
+ #[derive(Debug, Clone)]
+ pub struct Pipe {
+     /// Transmit side of the pipe
+@@ -25,37 +30,56 @@ pub struct Pipe {
+ #[derive(Debug, Clone)]
+ pub struct PipeTx {
+     /// Sends bytes down the pipe
+-    tx: Arc<Mutex<mpsc::UnboundedSender<Vec<u8>>>>,
++    tx: Option<mpsc::UnboundedSender<Vec<u8>>>,
+ }
+ 
+ #[derive(Debug, Clone)]
+ pub struct PipeRx {
+     /// Receives bytes from the pipe
+     /// Also, buffers the last read message from the pipe while its being consumed
+-    rx: Arc<Mutex<PipeReceiver>>,
++    rx: Option<Arc<Mutex<PipeReceiver>>>,
+ }
+ 
+ impl PipeRx {
+-    fn try_read(&mut self, buf: &mut [u8]) -> Option<usize> {
+-        let max_size = buf.len();
++    // Tries to read from the internal buffer if data is available.
++    fn try_read_from_buffer(
++        rx: &mut MutexGuard<'_, PipeReceiver>,
++        max_len: usize,
++        // Should return how much actual data was read from the provided slice
++        write: impl FnOnce(&[u8]) -> Option<usize>,
++    ) -> Option<usize> {
++        rx.buffer.as_mut().and_then(|read_buffer| {
++            let buf_len = read_buffer.len();
++            if buf_len > 0 {
++                let mut read = buf_len.min(max_len);
++                let inner_buf = &read_buffer[..read];
++                // read = ?;
++                read = write(inner_buf)?;
++                read_buffer.advance(read);
++                Some(read)
++            } else {
++                None
++            }
++        })
++    }
++
++    pub fn close(&mut self) {
++        _ = self.rx.take();
++    }
+ 
+-        let mut rx = self.rx.lock().unwrap();
++    pub fn try_read(&mut self, buf: &mut [u8]) -> Option<usize> {
++        let Some(ref mut rx) = self.rx else {
++            return Some(0);
++        };
++
++        let mut rx = rx.lock().unwrap();
+         loop {
+-            {
+-                if let Some(read_buffer) = rx.buffer.as_mut() {
+-                    let buf_len = read_buffer.len();
+-                    if buf_len > 0 {
+-                        let mut read = buf_len.min(max_size);
+-                        let mut inner_buf = &read_buffer[..read];
+-                        read = match Read::read(&mut inner_buf, buf) {
+-                            Ok(a) => a,
+-                            Err(_) => return None,
+-                        };
+-                        read_buffer.advance(read);
+-                        return Some(read);
+-                    }
+-                }
+-            }
++            if let Some(read) = Self::try_read_from_buffer(&mut rx, buf.len(), |mut read_buf| {
++                Read::read(&mut read_buf, buf).ok()
++            }) {
++                return Some(read);
++            };
++
+             let data = {
+                 match rx.chan.try_recv() {
+                     Ok(a) => a,
+@@ -70,27 +94,57 @@ impl PipeRx {
+             rx.buffer.replace(Bytes::from(data));
+         }
+     }
++
++    pub fn poll_read_ready(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<usize>> {
++        let Some(ref rx) = self.rx else {
++            return Poll::Ready(Err(std::io::Error::new(
++                std::io::ErrorKind::BrokenPipe,
++                "PipeRx is closed",
++            )));
++        };
++
++        let mut rx = rx.lock().unwrap();
++        loop {
++            {
++                if let Some(inner_buf) = rx.buffer.as_mut() {
++                    let buf_len = inner_buf.len();
++                    if buf_len > 0 {
++                        return Poll::Ready(Ok(buf_len));
++                    }
++                }
++            }
++
++            let mut pinned_rx = Pin::new(&mut rx.chan);
++            let data = match pinned_rx.poll_recv(cx) {
++                Poll::Ready(Some(a)) => a,
++                Poll::Ready(None) => return Poll::Ready(Ok(0)),
++                Poll::Pending => return Poll::Pending,
++            };
++
++            rx.buffer.replace(Bytes::from(data));
++        }
++    }
+ }
+ 
+ #[derive(Debug)]
+ struct PipeReceiver {
++    // Note: Since we need to store the buffer alongside the
++    // actual receiver, we can't make use of an mpmc channel
+     chan: mpsc::UnboundedReceiver<Vec<u8>>,
+     buffer: Option<Bytes>,
+ }
+ 
+ impl Pipe {
+-    fn new() -> Self {
++    pub fn new() -> Self {
+         let (tx, rx) = mpsc::unbounded_channel();
+ 
+         Pipe {
+-            send: PipeTx {
+-                tx: Arc::new(Mutex::new(tx)),
+-            },
++            send: PipeTx { tx: Some(tx) },
+             recv: PipeRx {
+-                rx: Arc::new(Mutex::new(PipeReceiver {
++                rx: Some(Arc::new(Mutex::new(PipeReceiver {
+                     chan: rx,
+                     buffer: None,
+-                })),
++                }))),
+             },
+         }
+     }
+@@ -117,6 +171,12 @@ impl Pipe {
+     }
+ }
+ 
++impl Default for Pipe {
++    fn default() -> Self {
++        Self::new()
++    }
++}
++
+ impl From<Pipe> for PipeTx {
+     fn from(val: Pipe) -> Self {
+         val.send
+@@ -129,19 +189,23 @@ impl From<Pipe> for PipeRx {
+     }
+ }
+ 
+-impl Pipe {
+-    pub fn close(&self) {
+-        self.send.close();
++impl PipeTx {
++    pub fn close(&mut self) {
++        _ = self.tx.take();
+     }
+-}
+ 
+-impl PipeTx {
+-    pub fn close(&self) {
+-        // TODO: proper close() implementation - Propably want to store the writer in an Option<>
+-        let (mut null_tx, _) = mpsc::unbounded_channel();
+-        {
+-            let mut guard = self.tx.lock().unwrap();
+-            std::mem::swap(guard.deref_mut(), &mut null_tx);
++    pub fn poll_write_ready(self: Pin<&mut Self>) -> Poll<io::Result<usize>> {
++        let Some(ref tx) = self.tx else {
++            return Poll::Ready(Err(std::io::Error::new(
++                std::io::ErrorKind::BrokenPipe,
++                "PipeTx is closed",
++            )));
++        };
++
++        if tx.is_closed() {
++            Poll::Ready(Ok(0))
++        } else {
++            Poll::Ready(Ok(8192))
+         }
+     }
+ }
+@@ -172,22 +236,21 @@ impl Read for Pipe {
+ 
+ impl Read for PipeRx {
+     fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+-        let max_size = buf.len();
++        let Some(ref mut rx) = self.rx else {
++            return Err(std::io::Error::new(
++                std::io::ErrorKind::BrokenPipe,
++                "PipeRx is closed",
++            ));
++        };
+ 
+-        let mut rx = self.rx.lock().unwrap();
++        let mut rx = rx.lock().unwrap();
+         loop {
+-            {
+-                if let Some(read_buffer) = rx.buffer.as_mut() {
+-                    let buf_len = read_buffer.len();
+-                    if buf_len > 0 {
+-                        let mut read = buf_len.min(max_size);
+-                        let mut inner_buf = &read_buffer[..read];
+-                        read = Read::read(&mut inner_buf, buf)?;
+-                        read_buffer.advance(read);
+-                        return Ok(read);
+-                    }
+-                }
++            if let Some(read) = Self::try_read_from_buffer(&mut rx, buf.len(), |mut read_buf| {
++                Read::read(&mut read_buf, buf).ok()
++            }) {
++                return Ok(read);
+             }
++
+             let data = {
+                 match rx.chan.blocking_recv() {
+                     Some(a) => a,
+@@ -225,7 +288,13 @@ impl std::io::Write for Pipe {
+ 
+ impl std::io::Write for PipeTx {
+     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+-        let tx = self.tx.lock().unwrap();
++        let Some(ref tx) = self.tx else {
++            return Err(std::io::Error::new(
++                std::io::ErrorKind::BrokenPipe,
++                "PipeTx is closed",
++            ));
++        };
++
+         tx.send(buf.to_vec())
+             .map_err(|_| Into::<std::io::Error>::into(std::io::ErrorKind::BrokenPipe))?;
+         Ok(buf.len())
+@@ -305,8 +374,14 @@ impl AsyncWrite for PipeTx {
+         _cx: &mut Context<'_>,
+         buf: &[u8],
+     ) -> Poll<io::Result<usize>> {
+-        let guard = self.tx.lock().unwrap();
+-        match guard.send(buf.to_vec()) {
++        let Some(ref tx) = self.tx else {
++            return Poll::Ready(Err(std::io::Error::new(
++                std::io::ErrorKind::BrokenPipe,
++                "PipeTx is closed",
++            )));
++        };
++
++        match tx.send(buf.to_vec()) {
+             Ok(()) => Poll::Ready(Ok(buf.len())),
+             Err(_) => Poll::Ready(Err(Into::<std::io::Error>::into(
+                 std::io::ErrorKind::BrokenPipe,
+@@ -318,7 +393,7 @@ impl AsyncWrite for PipeTx {
+         Poll::Ready(Ok(()))
+     }
+ 
+-    fn poll_shutdown(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<io::Result<()>> {
++    fn poll_shutdown(mut self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<io::Result<()>> {
+         self.close();
+         Poll::Ready(Ok(()))
+     }
+@@ -337,24 +412,28 @@ impl AsyncRead for Pipe {
+ 
+ impl AsyncRead for PipeRx {
+     fn poll_read(
+-        self: Pin<&mut Self>,
++        mut self: Pin<&mut Self>,
+         cx: &mut Context<'_>,
+         buf: &mut tokio::io::ReadBuf<'_>,
+     ) -> Poll<io::Result<()>> {
+-        let mut rx = self.rx.lock().unwrap();
++        let Some(ref mut rx) = self.rx else {
++            return Poll::Ready(Err(std::io::Error::new(
++                std::io::ErrorKind::BrokenPipe,
++                "PipeRx is closed",
++            )));
++        };
++
++        let mut rx = rx.lock().unwrap();
+         loop {
++            if Self::try_read_from_buffer(&mut rx, buf.remaining(), |read_buf| {
++                buf.put_slice(read_buf);
++                Some(read_buf.len())
++            })
++            .is_some()
+             {
+-                if let Some(inner_buf) = rx.buffer.as_mut() {
+-                    let buf_len = inner_buf.len();
+-                    if buf_len > 0 {
+-                        let read = buf_len.min(buf.remaining());
+-                        buf.put_slice(&inner_buf[..read]);
+-                        inner_buf.advance(read);
+-                        return Poll::Ready(Ok(()));
+-                    }
+-                }
++                return Poll::Ready(Ok(()));
+             }
+-            let mut rx = Pin::new(rx.deref_mut());
++
+             let data = match rx.chan.poll_recv(cx) {
+                 Poll::Ready(Some(a)) => a,
+                 Poll::Ready(None) => return Poll::Ready(Ok(())),
+@@ -403,43 +482,22 @@ impl VirtualFile for Pipe {
+     fn is_open(&self) -> bool {
+         self.send
+             .tx
+-            .try_lock()
++            .as_ref()
+             .map(|a| !a.is_closed())
+-            .unwrap_or_else(|_| true)
++            .unwrap_or_else(|| false)
+     }
+ 
+     /// Polls the file for when there is data to be read
+-    fn poll_read_ready(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<usize>> {
+-        let mut rx = self.recv.rx.lock().unwrap();
+-        loop {
+-            {
+-                if let Some(inner_buf) = rx.buffer.as_mut() {
+-                    let buf_len = inner_buf.len();
+-                    if buf_len > 0 {
+-                        return Poll::Ready(Ok(buf_len));
+-                    }
+-                }
+-            }
+-
+-            let mut pinned_rx = Pin::new(&mut rx.chan);
+-            let data = match pinned_rx.poll_recv(cx) {
+-                Poll::Ready(Some(a)) => a,
+-                Poll::Ready(None) => return Poll::Ready(Ok(0)),
+-                Poll::Pending => return Poll::Pending,
+-            };
+-
+-            rx.buffer.replace(Bytes::from(data));
+-        }
++    fn poll_read_ready(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<usize>> {
++        Pin::new(&mut self.recv).poll_read_ready(cx)
+     }
+ 
+     /// Polls the file for when it is available for writing
+-    fn poll_write_ready(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<io::Result<usize>> {
+-        let tx = self.send.tx.lock().unwrap();
+-        if tx.is_closed() {
+-            Poll::Ready(Ok(0))
+-        } else {
+-            Poll::Ready(Ok(8192))
+-        }
++    fn poll_write_ready(
++        mut self: Pin<&mut Self>,
++        _cx: &mut Context<'_>,
++    ) -> Poll<io::Result<usize>> {
++        Pin::new(&mut self.send).poll_write_ready()
+     }
+ }
+ 
+diff --git a/lib/wasix/src/fs/fd.rs b/lib/wasix/src/fs/fd.rs
+index a1586fa4519..436c8b0445c 100644
+--- a/lib/wasix/src/fs/fd.rs
++++ b/lib/wasix/src/fs/fd.rs
+@@ -11,7 +11,7 @@ use futures::Future;
+ use serde_derive::{Deserialize, Serialize};
+ use std::sync::Mutex as StdMutex;
+ use tokio::sync::{watch, Mutex as AsyncMutex};
+-use virtual_fs::{Pipe, VirtualFile};
++use virtual_fs::{Pipe, PipeRx, PipeTx, VirtualFile};
+ use wasmer_wasix_types::wasi::{EpollType, Fd as WasiFd, Fdflags, Fdflagsext, Filestat, Rights};
+ 
+ use crate::{net::socket::InodeSocket, syscalls::EpollJoinWaker};
+@@ -184,8 +184,15 @@ pub enum Kind {
+         socket: InodeSocket,
+     },
+     #[cfg_attr(feature = "enable-serde", serde(skip))]
+-    Pipe {
+-        /// Reference to the pipe
++    PipeTx {
++        tx: PipeTx,
++    },
++    #[cfg_attr(feature = "enable-serde", serde(skip))]
++    PipeRx {
++        rx: PipeRx,
++    },
++    #[cfg_attr(feature = "enable-serde", serde(skip))]
++    DuplexPipe {
+         pipe: Pipe,
+     },
+     Epoll {
+diff --git a/lib/wasix/src/fs/inode_guard.rs b/lib/wasix/src/fs/inode_guard.rs
+index 2e298c718c3..ed3a4fec7c2 100644
+--- a/lib/wasix/src/fs/inode_guard.rs
++++ b/lib/wasix/src/fs/inode_guard.rs
+@@ -8,7 +8,7 @@ use std::{
+ };
+ 
+ use tokio::io::{AsyncRead, AsyncSeek, AsyncWrite};
+-use virtual_fs::{FsError, Pipe as VirtualPipe, VirtualFile};
++use virtual_fs::{FsError, PipeRx, PipeTx, VirtualFile};
+ use wasmer_wasix_types::{
+     types::Eventtype,
+     wasi::{self, EpollType},
+@@ -28,7 +28,8 @@ pub(crate) enum InodeValFilePollGuardMode {
+     File(Arc<RwLock<Box<dyn VirtualFile + Send + Sync + 'static>>>),
+     EventNotifications(Arc<NotificationInner>),
+     Socket { inner: Arc<InodeSocketInner> },
+-    Pipe { pipe: Arc<RwLock<Box<VirtualPipe>>> },
++    PipeRx { rx: Arc<RwLock<Box<PipeRx>>> },
++    PipeTx { tx: Arc<RwLock<Box<PipeTx>>> },
+ }
+ 
+ pub struct InodeValFilePollGuard {
+@@ -56,8 +57,11 @@ impl InodeValFilePollGuard {
+                 handle: Some(handle),
+                 ..
+             } => InodeValFilePollGuardMode::File(handle.clone()),
+-            Kind::Pipe { pipe, .. } => InodeValFilePollGuardMode::Pipe {
+-                pipe: Arc::new(RwLock::new(Box::new(pipe.clone()))),
++            Kind::PipeRx { rx } => InodeValFilePollGuardMode::PipeRx {
++                rx: Arc::new(RwLock::new(Box::new(rx.clone()))),
++            },
++            Kind::PipeTx { tx } => InodeValFilePollGuardMode::PipeTx {
++                tx: Arc::new(RwLock::new(Box::new(tx.clone()))),
+             },
+             _ => {
+                 return None;
+@@ -107,8 +111,11 @@ impl std::fmt::Debug for InodeValFilePollGuard {
+                     _ => write!(f, "guard-socket(fd={}), peb={})", self.fd, self.peb),
+                 }
+             }
+-            InodeValFilePollGuardMode::Pipe { .. } => {
+-                write!(f, "guard-pipe(...)")
++            InodeValFilePollGuardMode::PipeRx { .. } => {
++                write!(f, "guard-pipe-rx(...)")
++            }
++            InodeValFilePollGuardMode::PipeTx { .. } => {
++                write!(f, "guard-pipe-tx(...)")
+             }
+         }
+     }
+@@ -148,8 +155,9 @@ impl InodeValFilePollGuardJoin {
+             InodeValFilePollGuardMode::EventNotifications(inner) => {
+                 inner.reset();
+             }
+-            InodeValFilePollGuardMode::Socket { .. } => {}
+-            InodeValFilePollGuardMode::Pipe { .. } => {}
++            InodeValFilePollGuardMode::Socket { .. }
++            | InodeValFilePollGuardMode::PipeRx { .. }
++            | InodeValFilePollGuardMode::PipeTx { .. } => {}
+         }
+         self.spent = false;
+     }
+@@ -200,11 +208,15 @@ impl Future for InodeValFilePollGuardJoin {
+                     let mut guard = inner.protected.write().unwrap();
+                     guard.poll_read_ready(cx)
+                 }
+-                InodeValFilePollGuardMode::Pipe { pipe } => {
+-                    let mut guard = pipe.write().unwrap();
+-                    let pipe = Pin::new(guard.as_mut());
+-                    pipe.poll_read_ready(cx)
++                InodeValFilePollGuardMode::PipeRx { rx } => {
++                    let mut guard = rx.write().unwrap();
++                    let rx = Pin::new(guard.as_mut());
++                    rx.poll_read_ready(cx)
+                 }
++                InodeValFilePollGuardMode::PipeTx { .. } => Poll::Ready(Err(std::io::Error::new(
++                    std::io::ErrorKind::InvalidInput,
++                    "Cannot read from a pipe write end",
++                ))),
+             };
+             match poll_result {
+                 Poll::Ready(Err(err)) if has_close && is_err_closed(&err) => {
+@@ -290,11 +302,15 @@ impl Future for InodeValFilePollGuardJoin {
+                     let mut guard = inner.protected.write().unwrap();
+                     guard.poll_write_ready(cx)
+                 }
+-                InodeValFilePollGuardMode::Pipe { pipe } => {
+-                    let mut guard = pipe.write().unwrap();
+-                    let pipe = Pin::new(guard.as_mut());
+-                    pipe.poll_write_ready(cx)
++                InodeValFilePollGuardMode::PipeTx { tx } => {
++                    let mut guard = tx.write().unwrap();
++                    let tx = Pin::new(guard.as_mut());
++                    tx.poll_write_ready()
+                 }
++                InodeValFilePollGuardMode::PipeRx { .. } => Poll::Ready(Err(std::io::Error::new(
++                    std::io::ErrorKind::InvalidInput,
++                    "Cannot write to a pipe read end",
++                ))),
+             };
+             match poll_result {
+                 Poll::Ready(Err(err)) if has_close && is_err_closed(&err) => {
+diff --git a/lib/wasix/src/fs/mod.rs b/lib/wasix/src/fs/mod.rs
+index 4d086bf4b6f..56961f0cd61 100644
+--- a/lib/wasix/src/fs/mod.rs
++++ b/lib/wasix/src/fs/mod.rs
+@@ -186,6 +186,8 @@ impl InodeGuard {
+                 trace!(%file_ref_count, %ino, "dropping file handle");
+                 drop(handle.take().unwrap());
+             }
++            Kind::PipeRx { rx } => rx.close(),
++            Kind::PipeTx { tx } => tx.close(),
+             _ => (),
+         }
+     }
+@@ -1215,7 +1217,9 @@ impl WasiFs {
+                     }
+                     Kind::File { .. }
+                     | Kind::Socket { .. }
+-                    | Kind::Pipe { .. }
++                    | Kind::PipeRx { .. }
++                    | Kind::PipeTx { .. }
++                    | Kind::DuplexPipe { .. }
+                     | Kind::EventNotifications { .. }
+                     | Kind::Epoll { .. } => {
+                         return Err(Errno::Notdir);
+diff --git a/lib/wasix/src/journal/effector/mod.rs b/lib/wasix/src/journal/effector/mod.rs
+index 866918bdc3b..e1c5bd7b9fe 100644
+--- a/lib/wasix/src/journal/effector/mod.rs
++++ b/lib/wasix/src/journal/effector/mod.rs
+@@ -70,6 +70,7 @@ mod syscalls {
+     mod sock_leave_ipv6_multicast;
+     mod sock_listen;
+     mod sock_open;
++    mod sock_pair;
+     mod sock_send;
+     mod sock_send_file;
+     mod sock_send_to;
+diff --git a/lib/wasix/src/journal/effector/syscalls/fd_pipe.rs b/lib/wasix/src/journal/effector/syscalls/fd_pipe.rs
+index b99575477d0..99434b2f0a4 100644
+--- a/lib/wasix/src/journal/effector/syscalls/fd_pipe.rs
++++ b/lib/wasix/src/journal/effector/syscalls/fd_pipe.rs
+@@ -3,18 +3,18 @@ use super::*;
+ impl JournalEffector {
+     pub fn save_fd_pipe(
+         ctx: &mut FunctionEnvMut<'_, WasiEnv>,
+-        fd1: Fd,
+-        fd2: Fd,
++        read_fd: Fd,
++        write_fd: Fd,
+     ) -> anyhow::Result<()> {
+-        Self::save_event(ctx, JournalEntry::CreatePipeV1 { fd1, fd2 })
++        Self::save_event(ctx, JournalEntry::CreatePipeV1 { read_fd, write_fd })
+     }
+ 
+     pub fn apply_fd_pipe(
+         ctx: &mut FunctionEnvMut<'_, WasiEnv>,
+-        fd1: Fd,
+-        fd2: Fd,
++        read_fd: Fd,
++        write_fd: Fd,
+     ) -> anyhow::Result<()> {
+-        crate::syscalls::fd_pipe_internal(ctx, Some(fd1), Some(fd2)).map_err(|err| {
++        crate::syscalls::fd_pipe_internal(ctx, Some(read_fd), Some(write_fd)).map_err(|err| {
+             anyhow::format_err!("journal restore error: failed to create pipe - {}", err)
+         })?;
+ 
+diff --git a/lib/wasix/src/journal/effector/syscalls/fd_write.rs b/lib/wasix/src/journal/effector/syscalls/fd_write.rs
+index 689adc97a87..d6700c3c9af 100644
+--- a/lib/wasix/src/journal/effector/syscalls/fd_write.rs
++++ b/lib/wasix/src/journal/effector/syscalls/fd_write.rs
+@@ -46,7 +46,7 @@ impl JournalEffector {
+     }
+ 
+     pub fn apply_fd_write<M: MemorySize>(
+-        ctx: &FunctionEnvMut<'_, WasiEnv>,
++        ctx: &mut FunctionEnvMut<'_, WasiEnv>,
+         fd: Fd,
+         offset: u64,
+         data: Cow<'_, [u8]>,
+diff --git a/lib/wasix/src/journal/effector/syscalls/sock_pair.rs b/lib/wasix/src/journal/effector/syscalls/sock_pair.rs
+new file mode 100644
+index 00000000000..1dd2582413a
+--- /dev/null
++++ b/lib/wasix/src/journal/effector/syscalls/sock_pair.rs
+@@ -0,0 +1,30 @@
++use super::*;
++
++impl JournalEffector {
++    // Note: since the current implementation uses a pipe, we don't store the
++    // socket properties (domain, address family, etc.) in the journal.
++    // Once the sock_pair syscall is fixed, we should create a SocketPairV2
++    // entry that stores the socket properties as well. This ensures
++    // forward-compatibility when that change is implemented.
++    pub fn save_sock_pair(
++        ctx: &mut FunctionEnvMut<'_, WasiEnv>,
++        fd1: Fd,
++        fd2: Fd,
++    ) -> anyhow::Result<()> {
++        Self::save_event(ctx, JournalEntry::SocketPairV1 { fd1, fd2 })
++    }
++
++    pub fn apply_sock_pair(
++        ctx: &mut FunctionEnvMut<'_, WasiEnv>,
++        fd1: Fd,
++        fd2: Fd,
++    ) -> anyhow::Result<()> {
++        crate::syscalls::sock_pair_internal(ctx, Some(fd1), Some(fd2)).map_err(|err| {
++            anyhow::format_err!(
++                "journal restore error: failed to create socket pair - {}",
++                err
++            )
++        })?;
++        Ok(())
++    }
++}
+diff --git a/lib/wasix/src/lib.rs b/lib/wasix/src/lib.rs
+index 6803558bc01..dd7d57a062d 100644
+--- a/lib/wasix/src/lib.rs
++++ b/lib/wasix/src/lib.rs
+@@ -594,6 +594,7 @@ fn wasix_exports_32(mut store: &mut impl AsStoreMut, env: &FunctionEnv<WasiEnv>)
+         "sock_addr_local" => Function::new_typed_with_env(&mut store, env, sock_addr_local::<Memory32>),
+         "sock_addr_peer" => Function::new_typed_with_env(&mut store, env, sock_addr_peer::<Memory32>),
+         "sock_open" => Function::new_typed_with_env(&mut store, env, sock_open::<Memory32>),
++        "sock_pair" => Function::new_typed_with_env(&mut store, env, sock_pair::<Memory32>),
+         "sock_set_opt_flag" => Function::new_typed_with_env(&mut store, env, sock_set_opt_flag),
+         "sock_get_opt_flag" => Function::new_typed_with_env(&mut store, env, sock_get_opt_flag::<Memory32>),
+         "sock_set_opt_time" => Function::new_typed_with_env(&mut store, env, sock_set_opt_time::<Memory32>),
+@@ -721,6 +722,7 @@ fn wasix_exports_64(mut store: &mut impl AsStoreMut, env: &FunctionEnv<WasiEnv>)
+         "sock_addr_local" => Function::new_typed_with_env(&mut store, env, sock_addr_local::<Memory64>),
+         "sock_addr_peer" => Function::new_typed_with_env(&mut store, env, sock_addr_peer::<Memory64>),
+         "sock_open" => Function::new_typed_with_env(&mut store, env, sock_open::<Memory64>),
++        "sock_pair" => Function::new_typed_with_env(&mut store, env, sock_pair::<Memory64>),
+         "sock_set_opt_flag" => Function::new_typed_with_env(&mut store, env, sock_set_opt_flag),
+         "sock_get_opt_flag" => Function::new_typed_with_env(&mut store, env, sock_get_opt_flag::<Memory64>),
+         "sock_set_opt_time" => Function::new_typed_with_env(&mut store, env, sock_set_opt_time::<Memory64>),
+diff --git a/lib/wasix/src/os/console/mod.rs b/lib/wasix/src/os/console/mod.rs
+index 647cab42bf3..c5d81fb5149 100644
+--- a/lib/wasix/src/os/console/mod.rs
++++ b/lib/wasix/src/os/console/mod.rs
+@@ -361,7 +361,6 @@ mod tests {
+                 )
+                 .await?;
+ 
+-                stdin_tx.close();
+                 std::mem::drop(stdin_tx);
+ 
+                 let res = handle.wait_finished().await?;
+diff --git a/lib/wasix/src/os/task/thread.rs b/lib/wasix/src/os/task/thread.rs
+index 6724634940a..9b758975637 100644
+--- a/lib/wasix/src/os/task/thread.rs
++++ b/lib/wasix/src/os/task/thread.rs
+@@ -318,6 +318,7 @@ impl WasiThread {
+     pub fn set_or_get_exit_code_for_signal(&self, sig: Signal) -> ExitCode {
+         let default_exitcode: ExitCode = match sig {
+             Signal::Sigquit | Signal::Sigabrt => Errno::Success.into(),
++            Signal::Sigpipe => Errno::Pipe.into(),
+             _ => Errno::Intr.into(),
+         };
+         // This will only set the status code if its not already set
+diff --git a/lib/wasix/src/state/env.rs b/lib/wasix/src/state/env.rs
+index 1819d5ebb30..77952afb003 100644
+--- a/lib/wasix/src/state/env.rs
++++ b/lib/wasix/src/state/env.rs
+@@ -710,6 +710,7 @@ impl WasiEnv {
+                         || sig == Signal::Sigquit
+                         || sig == Signal::Sigkill
+                         || sig == Signal::Sigabrt
++                        || sig == Signal::Sigpipe
+                     {
+                         let exit_code = env.thread.set_or_get_exit_code_for_signal(sig);
+                         return Err(WasiError::Exit(exit_code));
+diff --git a/lib/wasix/src/syscalls/journal/actions/fd_write.rs b/lib/wasix/src/syscalls/journal/actions/fd_write.rs
+index 06e7249d85e..31c505a7e27 100644
+--- a/lib/wasix/src/syscalls/journal/actions/fd_write.rs
++++ b/lib/wasix/src/syscalls/journal/actions/fd_write.rs
+@@ -20,9 +20,9 @@ impl<'a, 'c> JournalSyscallPlayer<'a, 'c> {
+         }
+ 
+         if is_64bit {
+-            JournalEffector::apply_fd_write::<Memory64>(&self.ctx, fd, offset, data)
++            JournalEffector::apply_fd_write::<Memory64>(&mut self.ctx, fd, offset, data)
+         } else {
+-            JournalEffector::apply_fd_write::<Memory32>(&self.ctx, fd, offset, data)
++            JournalEffector::apply_fd_write::<Memory32>(&mut self.ctx, fd, offset, data)
+         }
+         .map_err(anyhow_err_to_runtime_err)?;
+         Ok(())
+diff --git a/lib/wasix/src/syscalls/journal/play_event.rs b/lib/wasix/src/syscalls/journal/play_event.rs
+index 65e9e10b3ce..60daa5e74c2 100644
+--- a/lib/wasix/src/syscalls/journal/play_event.rs
++++ b/lib/wasix/src/syscalls/journal/play_event.rs
+@@ -203,7 +203,7 @@ impl<'a, 'c> JournalSyscallPlayer<'a, 'c> {
+                 if self.real_fd.contains(&original_fd) {
+                     self.action_fd_dup(original_fd, copied_fd, cloexec)?;
+                 } else if let Some(differ_ethereal) = differ_ethereal {
+-                    tracing::trace!(%original_fd, %copied_fd, "Differ(ether) journal - FdDuplicate");
++                    tracing::trace!(%original_fd, %copied_fd, %cloexec, "Differ(ether) journal - FdDuplicate");
+                     differ_ethereal.push(JournalEntry::DuplicateFileDescriptorV2 {
+                         original_fd,
+                         copied_fd,
+@@ -276,7 +276,7 @@ impl<'a, 'c> JournalSyscallPlayer<'a, 'c> {
+                 if self.real_fd.contains(&fd) {
+                     self.action_fd_set_fdflags(fd, flags)?;
+                 } else if let Some(differ_ethereal) = differ_ethereal {
+-                    tracing::trace!(%fd, ?flags, "Differ(ether) journal - FdSetFlags");
++                    tracing::trace!(%fd, ?flags, "Differ(ether) journal - FdSetFdFlags");
+                     differ_ethereal.push(JournalEntry::FileDescriptorSetFdFlagsV1 { fd, flags });
+                 } else {
+                     self.action_fd_set_fdflags(fd, flags)?;
+@@ -376,13 +376,13 @@ impl<'a, 'c> JournalSyscallPlayer<'a, 'c> {
+                 JournalEffector::apply_chdir(&mut self.ctx, &path)
+                     .map_err(anyhow_err_to_runtime_err)?;
+             }
+-            JournalEntry::CreatePipeV1 { fd1, fd2 } => {
++            JournalEntry::CreatePipeV1 { read_fd, write_fd } => {
+                 if let Some(differ_ethereal) = differ_ethereal {
+-                    tracing::trace!(%fd1, %fd2,  "Differ(ether) journal - CreatePipe");
+-                    differ_ethereal.push(JournalEntry::CreatePipeV1 { fd1, fd2 });
++                    tracing::trace!(%read_fd, %write_fd,  "Differ(ether) journal - CreatePipe");
++                    differ_ethereal.push(JournalEntry::CreatePipeV1 { read_fd, write_fd });
+                 } else {
+-                    tracing::trace!(%fd1, %fd2,  "Replay journal - CreatePipe");
+-                    JournalEffector::apply_fd_pipe(&mut self.ctx, fd1, fd2)
++                    tracing::trace!(%read_fd, %write_fd,  "Replay journal - CreatePipe");
++                    JournalEffector::apply_fd_pipe(&mut self.ctx, read_fd, write_fd)
+                         .map_err(anyhow_err_to_runtime_err)?;
+                 }
+             }
+@@ -499,6 +499,16 @@ impl<'a, 'c> JournalSyscallPlayer<'a, 'c> {
+                         .map_err(anyhow_err_to_runtime_err)?
+                 }
+             }
++            JournalEntry::SocketPairV1 { fd1, fd2 } => {
++                if let Some(differ_ethereal) = differ_ethereal {
++                    tracing::trace!(%fd1, %fd2, "Differ(ether) journal - SocketPair");
++                    differ_ethereal.push(JournalEntry::SocketPairV1 { fd1, fd2 });
++                } else {
++                    tracing::trace!(%fd1, %fd2, "Replay journal - SocketOpen");
++                    JournalEffector::apply_sock_pair(&mut self.ctx, fd1, fd2)
++                        .map_err(anyhow_err_to_runtime_err)?
++                }
++            }
+             JournalEntry::SocketListenV1 { fd, backlog } => {
+                 if let Some(differ_ethereal) = differ_ethereal {
+                     tracing::trace!(%fd, "Differ(ether) journal - SocketListen");
+diff --git a/lib/wasix/src/syscalls/journal/restore_snapshot.rs b/lib/wasix/src/syscalls/journal/restore_snapshot.rs
+index 883bd1d1812..32a0a471611 100644
+--- a/lib/wasix/src/syscalls/journal/restore_snapshot.rs
++++ b/lib/wasix/src/syscalls/journal/restore_snapshot.rs
+@@ -34,9 +34,9 @@ pub unsafe fn restore_snapshot(
+     tracing::trace!("replaying stdout");
+     for (offset, data, is_64bit) in runner.stdout {
+         if is_64bit {
+-            JournalEffector::apply_fd_write::<Memory64>(&runner.ctx, 1, offset, data)
++            JournalEffector::apply_fd_write::<Memory64>(&mut runner.ctx, 1, offset, data)
+         } else {
+-            JournalEffector::apply_fd_write::<Memory32>(&runner.ctx, 1, offset, data)
++            JournalEffector::apply_fd_write::<Memory32>(&mut runner.ctx, 1, offset, data)
+         }
+         .map_err(anyhow_err_to_runtime_err)?;
+     }
+@@ -44,9 +44,9 @@ pub unsafe fn restore_snapshot(
+     tracing::trace!("replaying stdout");
+     for (offset, data, is_64bit) in runner.stderr {
+         if is_64bit {
+-            JournalEffector::apply_fd_write::<Memory64>(&runner.ctx, 2, offset, data)
++            JournalEffector::apply_fd_write::<Memory64>(&mut runner.ctx, 2, offset, data)
+         } else {
+-            JournalEffector::apply_fd_write::<Memory32>(&runner.ctx, 2, offset, data)
++            JournalEffector::apply_fd_write::<Memory32>(&mut runner.ctx, 2, offset, data)
+         }
+         .map_err(anyhow_err_to_runtime_err)?;
+     }
+diff --git a/lib/wasix/src/syscalls/wasi/fd_allocate.rs b/lib/wasix/src/syscalls/wasi/fd_allocate.rs
+index b4a7c2fab30..2b2a4fa2a59 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_allocate.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_allocate.rs
+@@ -57,13 +57,16 @@ pub(crate) fn fd_allocate_internal(
+                     return Err(Errno::Badf);
+                 }
+             }
+-            Kind::Socket { .. } => return Err(Errno::Badf),
+-            Kind::Pipe { .. } => return Err(Errno::Badf),
+             Kind::Buffer { buffer } => {
+                 buffer.resize(new_size as usize, 0);
+             }
+-            Kind::Symlink { .. } => return Err(Errno::Badf),
+-            Kind::EventNotifications { .. } | Kind::Epoll { .. } => return Err(Errno::Badf),
++            Kind::Socket { .. }
++            | Kind::PipeRx { .. }
++            | Kind::PipeTx { .. }
++            | Kind::DuplexPipe { .. }
++            | Kind::Symlink { .. }
++            | Kind::EventNotifications { .. }
++            | Kind::Epoll { .. } => return Err(Errno::Badf),
+             Kind::Dir { .. } | Kind::Root { .. } => return Err(Errno::Isdir),
+         }
+     }
+diff --git a/lib/wasix/src/syscalls/wasi/fd_close.rs b/lib/wasix/src/syscalls/wasi/fd_close.rs
+index 0bab878f475..fa05af87887 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_close.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_close.rs
+@@ -31,7 +31,12 @@ pub fn fd_close(mut ctx: FunctionEnvMut<'_, WasiEnv>, fd: WasiFd) -> Result<Errn
+     // HACK: we use tokio files to back WASI file handles. Since tokio
+     // does writes in the background, it may miss writes if the file is
+     // closed without flushing first. Hence, we flush once here.
+-    wasi_try_ok!(__asyncify_light(env, None, state.fs.flush(fd))?);
++    match __asyncify_light(env, None, state.fs.flush(fd))? {
++        Ok(_) | Err(Errno::Io) | Err(Errno::Access) => {}
++        Err(e) => {
++            return Ok(e);
++        }
++    }
+     wasi_try_ok!(state.fs.close_fd(fd));
+ 
+     #[cfg(feature = "journal")]
+diff --git a/lib/wasix/src/syscalls/wasi/fd_filestat_set_size.rs b/lib/wasix/src/syscalls/wasi/fd_filestat_set_size.rs
+index f2c15c6e5d3..d851f9fa5e3 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_filestat_set_size.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_filestat_set_size.rs
+@@ -56,10 +56,13 @@ pub(crate) fn fd_filestat_set_size_internal(
+             Kind::Buffer { buffer } => {
+                 buffer.resize(st_size as usize, 0);
+             }
+-            Kind::Socket { .. } => return Err(Errno::Badf),
+-            Kind::Pipe { .. } => return Err(Errno::Badf),
+-            Kind::Symlink { .. } => return Err(Errno::Badf),
+-            Kind::EventNotifications { .. } | Kind::Epoll { .. } => return Err(Errno::Badf),
++            Kind::Socket { .. }
++            | Kind::PipeRx { .. }
++            | Kind::PipeTx { .. }
++            | Kind::DuplexPipe { .. }
++            | Kind::Symlink { .. }
++            | Kind::EventNotifications { .. }
++            | Kind::Epoll { .. } => return Err(Errno::Badf),
+             Kind::Dir { .. } | Kind::Root { .. } => return Err(Errno::Isdir),
+         }
+     }
+diff --git a/lib/wasix/src/syscalls/wasi/fd_prestat_dir_name.rs b/lib/wasix/src/syscalls/wasi/fd_prestat_dir_name.rs
+index 3e8b9dda5b6..98b21872b66 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_prestat_dir_name.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_prestat_dir_name.rs
+@@ -40,7 +40,9 @@ pub fn fd_prestat_dir_name<M: MemorySize>(
+         | Kind::Buffer { .. }
+         | Kind::File { .. }
+         | Kind::Socket { .. }
+-        | Kind::Pipe { .. }
++        | Kind::PipeRx { .. }
++        | Kind::PipeTx { .. }
++        | Kind::DuplexPipe { .. }
+         | Kind::EventNotifications { .. }
+         | Kind::Epoll { .. } => Errno::Notdir,
+     }
+diff --git a/lib/wasix/src/syscalls/wasi/fd_read.rs b/lib/wasix/src/syscalls/wasi/fd_read.rs
+index d44f6902fa1..a0dbd5b438d 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_read.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_read.rs
+@@ -280,9 +280,63 @@ pub(crate) fn fd_read_internal<M: MemorySize>(
+                         }
+                     }
+                 }
+-                Kind::Pipe { pipe } => {
+-                    let mut pipe = pipe.clone();
++                Kind::PipeTx { .. } => return Ok(Err(Errno::Badf)),
++                Kind::PipeRx { rx } => {
++                    let mut rx = rx.clone();
++                    drop(guard);
++
++                    let nonblocking = fd_flags.contains(Fdflags::NONBLOCK);
++
++                    let res = __asyncify_light(
++                        env,
++                        if fd_flags.contains(Fdflags::NONBLOCK) {
++                            Some(Duration::ZERO)
++                        } else {
++                            None
++                        },
++                        async move {
++                            let mut total_read = 0usize;
+ 
++                            let iovs_arr =
++                                iovs.slice(&memory, iovs_len).map_err(mem_error_to_wasi)?;
++                            let iovs_arr = iovs_arr.access().map_err(mem_error_to_wasi)?;
++                            for iovs in iovs_arr.iter() {
++                                let mut buf = WasmPtr::<u8, M>::new(iovs.buf)
++                                    .slice(&memory, iovs.buf_len)
++                                    .map_err(mem_error_to_wasi)?
++                                    .access()
++                                    .map_err(mem_error_to_wasi)?;
++
++                                let local_read = match nonblocking {
++                                    true => match rx.try_read(buf.as_mut()) {
++                                        Some(amt) => amt,
++                                        None => {
++                                            return Err(Errno::Again);
++                                        }
++                                    },
++                                    false => {
++                                        virtual_fs::AsyncReadExt::read(&mut rx, buf.as_mut())
++                                            .await?
++                                    }
++                                };
++                                total_read += local_read;
++                                if local_read != buf.len() {
++                                    break;
++                                }
++                            }
++                            Ok(total_read)
++                        },
++                    );
++
++                    let bytes_read = wasi_try_ok_ok!(res?.map_err(|err| match err {
++                        Errno::Timedout => Errno::Again,
++                        a => a,
++                    }));
++
++                    (bytes_read, false)
++                }
++                Kind::DuplexPipe { pipe } => {
++                    let mut pipe = pipe.clone();
+                     drop(guard);
+ 
+                     let nonblocking = fd_flags.contains(Fdflags::NONBLOCK);
+diff --git a/lib/wasix/src/syscalls/wasi/fd_readdir.rs b/lib/wasix/src/syscalls/wasi/fd_readdir.rs
+index 89ef2f3dd2c..266e4902d02 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_readdir.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_readdir.rs
+@@ -104,7 +104,9 @@ pub fn fd_readdir<M: MemorySize>(
+             | Kind::Symlink { .. }
+             | Kind::Buffer { .. }
+             | Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeRx { .. }
++            | Kind::PipeTx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => return Errno::Notdir,
+         }
+diff --git a/lib/wasix/src/syscalls/wasi/fd_seek.rs b/lib/wasix/src/syscalls/wasi/fd_seek.rs
+index 226cb6c1c46..3b650cb4629 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_seek.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_seek.rs
+@@ -121,7 +121,9 @@ pub(crate) fn fd_seek_internal(
+                 Kind::Dir { .. }
+                 | Kind::Root { .. }
+                 | Kind::Socket { .. }
+-                | Kind::Pipe { .. }
++                | Kind::PipeRx { .. }
++                | Kind::PipeTx { .. }
++                | Kind::DuplexPipe { .. }
+                 | Kind::EventNotifications { .. }
+                 | Kind::Epoll { .. } => {
+                     // TODO: check this
+diff --git a/lib/wasix/src/syscalls/wasi/fd_sync.rs b/lib/wasix/src/syscalls/wasi/fd_sync.rs
+index 91b1cfb388f..bd9202b41e8 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_sync.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_sync.rs
+@@ -63,7 +63,9 @@ pub fn fd_sync(mut ctx: FunctionEnvMut<'_, WasiEnv>, fd: WasiFd) -> Result<Errno
+             Kind::Buffer { .. }
+             | Kind::Symlink { .. }
+             | Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeTx { .. }
++            | Kind::PipeRx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => return Ok(Errno::Inval),
+         }
+diff --git a/lib/wasix/src/syscalls/wasi/fd_write.rs b/lib/wasix/src/syscalls/wasi/fd_write.rs
+index 55a547aa788..109feb0483a 100644
+--- a/lib/wasix/src/syscalls/wasi/fd_write.rs
++++ b/lib/wasix/src/syscalls/wasi/fd_write.rs
+@@ -33,6 +33,7 @@ pub fn fd_write<M: MemorySize>(
+     wasi_try_ok!(WasiEnv::process_signals_and_exit(&mut ctx)?);
+ 
+     let env = ctx.data();
++    let enable_journal = env.enable_journal;
+     let offset = {
+         let state = env.state.clone();
+         let inodes = state.inodes.clone();
+@@ -42,12 +43,12 @@ pub fn fd_write<M: MemorySize>(
+     };
+ 
+     let bytes_written = wasi_try_ok!(fd_write_internal::<M>(
+-        &ctx,
++        &mut ctx,
+         fd,
+         FdWriteSource::Iovs { iovs, iovs_len },
+         offset as u64,
+         true,
+-        env.enable_journal,
++        enable_journal,
+     )?);
+ 
+     Span::current().record("nwritten", bytes_written);
+@@ -90,7 +91,7 @@ pub fn fd_pwrite<M: MemorySize>(
+     let enable_snapshot_capture = ctx.data().enable_journal;
+ 
+     let bytes_written = wasi_try_ok!(fd_write_internal::<M>(
+-        &ctx,
++        &mut ctx,
+         fd,
+         FdWriteSource::Iovs { iovs, iovs_len },
+         offset,
+@@ -120,7 +121,7 @@ pub(crate) enum FdWriteSource<'a, M: MemorySize> {
+ 
+ #[allow(clippy::await_holding_lock)]
+ pub(crate) fn fd_write_internal<M: MemorySize>(
+-    ctx: &FunctionEnvMut<'_, WasiEnv>,
++    mut ctx: &mut FunctionEnvMut<'_, WasiEnv>,
+     fd: WasiFd,
+     data: FdWriteSource<'_, M>,
+     offset: u64,
+@@ -274,11 +275,15 @@ pub(crate) fn fd_write_internal<M: MemorySize>(
+                     let written = wasi_try_ok_ok!(res?);
+                     (written, false, false)
+                 }
+-                Kind::Pipe { pipe } => {
++                Kind::PipeRx { .. } => {
++                    return Ok(Err(Errno::Badf));
++                }
++                Kind::PipeTx { tx } => {
+                     let mut written = 0usize;
+ 
+                     match &data {
+                         FdWriteSource::Iovs { iovs, iovs_len } => {
++                            let mut raise_sigpipe = false;
+                             let iovs_arr = wasi_try_ok_ok!(iovs
+                                 .slice(&memory, *iovs_len)
+                                 .map_err(mem_error_to_wasi));
+@@ -289,20 +294,98 @@ pub(crate) fn fd_write_internal<M: MemorySize>(
+                                     .slice(&memory, iovs.buf_len)
+                                     .map_err(mem_error_to_wasi));
+                                 let buf = wasi_try_ok_ok!(buf.access().map_err(mem_error_to_wasi));
+-                                let local_written =
+-                                    wasi_try_ok_ok!(std::io::Write::write(pipe, buf.as_ref())
+-                                        .map_err(map_io_err));
++                                let write_result = std::io::Write::write(tx, buf.as_ref());
++                                let local_written = match write_result {
++                                    Ok(w) => w,
++                                    Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => {
++                                        // Need to do this to avoid double borrow on ctx with iovs_arr
++                                        raise_sigpipe = true;
++                                        break;
++                                    }
++                                    Err(e) => return Ok(Err(map_io_err(e))),
++                                };
+ 
+                                 written += local_written;
+                                 if local_written != buf.len() {
+                                     break;
+                                 }
+                             }
++
++                            drop(iovs_arr);
++
++                            if raise_sigpipe {
++                                env.process.signal_process(Signal::Sigpipe);
++                                wasi_try_ok_ok!(WasiEnv::process_signals_and_exit(ctx)?);
++                                return Ok(Err(Errno::Pipe));
++                            }
+                         }
+                         FdWriteSource::Buffer(data) => {
+-                            wasi_try_ok_ok!(
+-                                std::io::Write::write_all(pipe, data).map_err(map_io_err)
+-                            );
++                            match std::io::Write::write_all(tx, data) {
++                                Ok(()) => (),
++                                Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => {
++                                    env.process.signal_process(Signal::Sigpipe);
++                                    wasi_try_ok_ok!(WasiEnv::process_signals_and_exit(ctx)?);
++                                    return Ok(Err(Errno::Pipe));
++                                }
++                                Err(e) => return Ok(Err(map_io_err(e))),
++                            };
++                            written += data.len();
++                        }
++                    }
++
++                    (written, false, true)
++                }
++                Kind::DuplexPipe { pipe } => {
++                    let mut written = 0usize;
++
++                    match &data {
++                        FdWriteSource::Iovs { iovs, iovs_len } => {
++                            let mut raise_sigpipe = false;
++                            let iovs_arr = wasi_try_ok_ok!(iovs
++                                .slice(&memory, *iovs_len)
++                                .map_err(mem_error_to_wasi));
++                            let iovs_arr =
++                                wasi_try_ok_ok!(iovs_arr.access().map_err(mem_error_to_wasi));
++                            for iovs in iovs_arr.iter() {
++                                let buf = wasi_try_ok_ok!(WasmPtr::<u8, M>::new(iovs.buf)
++                                    .slice(&memory, iovs.buf_len)
++                                    .map_err(mem_error_to_wasi));
++                                let buf = wasi_try_ok_ok!(buf.access().map_err(mem_error_to_wasi));
++                                let write_result = std::io::Write::write(pipe, buf.as_ref());
++                                let local_written = match write_result {
++                                    Ok(w) => w,
++                                    Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => {
++                                        // Need to do this to avoid double borrow on ctx with iovs_arr
++                                        raise_sigpipe = true;
++                                        break;
++                                    }
++                                    Err(e) => return Ok(Err(map_io_err(e))),
++                                };
++
++                                written += local_written;
++                                if local_written != buf.len() {
++                                    break;
++                                }
++                            }
++
++                            drop(iovs_arr);
++
++                            if raise_sigpipe {
++                                env.process.signal_process(Signal::Sigpipe);
++                                wasi_try_ok_ok!(WasiEnv::process_signals_and_exit(ctx)?);
++                                return Ok(Err(Errno::Pipe));
++                            }
++                        }
++                        FdWriteSource::Buffer(data) => {
++                            match std::io::Write::write_all(pipe, data) {
++                                Ok(()) => (),
++                                Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => {
++                                    env.process.signal_process(Signal::Sigpipe);
++                                    wasi_try_ok_ok!(WasiEnv::process_signals_and_exit(ctx)?);
++                                    return Ok(Err(Errno::Pipe));
++                                }
++                                Err(e) => return Ok(Err(map_io_err(e))),
++                            };
+                             written += data.len();
+                         }
+                     }
+diff --git a/lib/wasix/src/syscalls/wasi/path_link.rs b/lib/wasix/src/syscalls/wasi/path_link.rs
+index 848c055ec7d..9937b22d951 100644
+--- a/lib/wasix/src/syscalls/wasi/path_link.rs
++++ b/lib/wasix/src/syscalls/wasi/path_link.rs
+@@ -119,7 +119,9 @@ pub(crate) fn path_link_internal(
+             | Kind::Symlink { .. }
+             | Kind::Buffer { .. }
+             | Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeTx { .. }
++            | Kind::PipeRx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => return Err(Errno::Notdir),
+         }
+diff --git a/lib/wasix/src/syscalls/wasi/path_rename.rs b/lib/wasix/src/syscalls/wasi/path_rename.rs
+index ccace7a98e5..04313fe9925 100644
+--- a/lib/wasix/src/syscalls/wasi/path_rename.rs
++++ b/lib/wasix/src/syscalls/wasi/path_rename.rs
+@@ -106,7 +106,9 @@ pub fn path_rename_internal(
+             }
+             Kind::Root { .. } => return Ok(Errno::Notcapable),
+             Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeTx { .. }
++            | Kind::PipeRx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => return Ok(Errno::Inval),
+             Kind::Symlink { .. } | Kind::File { .. } | Kind::Buffer { .. } => {
+@@ -124,7 +126,9 @@ pub fn path_rename_internal(
+             }
+             Kind::Root { .. } => return Ok(Errno::Notcapable),
+             Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeRx { .. }
++            | Kind::PipeTx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => {
+                 return Ok(Errno::Inval);
+@@ -190,7 +194,9 @@ pub fn path_rename_internal(
+             Kind::Buffer { .. }
+             | Kind::Symlink { .. }
+             | Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeTx { .. }
++            | Kind::PipeRx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::Epoll { .. }
+             | Kind::EventNotifications { .. } => {}
+             Kind::Root { .. } => unreachable!("The root can not be moved"),
+diff --git a/lib/wasix/src/syscalls/wasi/path_symlink.rs b/lib/wasix/src/syscalls/wasi/path_symlink.rs
+index 2376fe12a8b..ba9e22ac889 100644
+--- a/lib/wasix/src/syscalls/wasi/path_symlink.rs
++++ b/lib/wasix/src/syscalls/wasi/path_symlink.rs
+@@ -95,7 +95,9 @@ pub fn path_symlink_internal(
+             }
+             Kind::Root { .. } => return Err(Errno::Notcapable),
+             Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeRx { .. }
++            | Kind::PipeTx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => return Err(Errno::Inval),
+             Kind::File { .. } | Kind::Symlink { .. } | Kind::Buffer { .. } => {
+diff --git a/lib/wasix/src/syscalls/wasi/poll_oneoff.rs b/lib/wasix/src/syscalls/wasi/poll_oneoff.rs
+index e3f5e2b0b74..67365663ba0 100644
+--- a/lib/wasix/src/syscalls/wasi/poll_oneoff.rs
++++ b/lib/wasix/src/syscalls/wasi/poll_oneoff.rs
+@@ -256,7 +256,9 @@ where
+                             Ok(a) => a,
+                             Err(err) => return Ok(err),
+                         };
+-                        if !fd_entry.inner.rights.contains(Rights::POLL_FD_READWRITE) {
++                        if !(fd_entry.inner.rights.contains(Rights::POLL_FD_READWRITE)
++                            && fd_entry.inner.rights.contains(Rights::FD_READ))
++                        {
+                             return Ok(Errno::Access);
+                         }
+                     }
+@@ -274,7 +276,9 @@ where
+                             Ok(a) => a,
+                             Err(err) => return Ok(err),
+                         };
+-                        if !fd_entry.inner.rights.contains(Rights::POLL_FD_READWRITE) {
++                        if !(fd_entry.inner.rights.contains(Rights::POLL_FD_READWRITE)
++                            && fd_entry.inner.rights.contains(Rights::FD_WRITE))
++                        {
+                             return Ok(Errno::Access);
+                         }
+                     }
+diff --git a/lib/wasix/src/syscalls/wasix/fd_pipe.rs b/lib/wasix/src/syscalls/wasix/fd_pipe.rs
+index 3e341bbe76a..1f7e5343352 100644
+--- a/lib/wasix/src/syscalls/wasix/fd_pipe.rs
++++ b/lib/wasix/src/syscalls/wasix/fd_pipe.rs
+@@ -7,21 +7,21 @@ use crate::syscalls::*;
+ /// Creates ta pipe that feeds data between two file handles
+ /// Output:
+ /// - `Fd`
+-///     First file handle that represents one end of the pipe
++///     First file handle that represents the read end of the pipe
+ /// - `Fd`
+-///     Second file handle that represents the other end of the pipe
++///     Second file handle that represents the write end of the pipe
+ #[instrument(level = "trace", skip_all, fields(fd1 = field::Empty, fd2 = field::Empty), ret)]
+ pub fn fd_pipe<M: MemorySize>(
+     mut ctx: FunctionEnvMut<'_, WasiEnv>,
+-    ro_fd1: WasmPtr<WasiFd, M>,
+-    ro_fd2: WasmPtr<WasiFd, M>,
++    ro_read_fd: WasmPtr<WasiFd, M>,
++    ro_write_fd: WasmPtr<WasiFd, M>,
+ ) -> Result<Errno, WasiError> {
+-    let (fd1, fd2) = wasi_try_ok!(fd_pipe_internal(&mut ctx, None, None));
++    let (read_fd, write_fd) = wasi_try_ok!(fd_pipe_internal(&mut ctx, None, None));
+     let env = ctx.data();
+ 
+     #[cfg(feature = "journal")]
+     if env.enable_journal {
+-        JournalEffector::save_fd_pipe(&mut ctx, fd1, fd2).map_err(|err| {
++        JournalEffector::save_fd_pipe(&mut ctx, read_fd, write_fd).map_err(|err| {
+             tracing::error!("failed to save create pipe event - {}", err);
+             WasiError::Exit(ExitCode::from(Errno::Fault))
+         })?;
+@@ -30,92 +30,91 @@ pub fn fd_pipe<M: MemorySize>(
+     let env = ctx.data();
+     let (memory, state, inodes) = unsafe { env.get_memory_and_wasi_state_and_inodes(&ctx, 0) };
+ 
+-    Span::current().record("fd1", fd1).record("fd2", fd2);
++    Span::current()
++        .record("read_fd", read_fd)
++        .record("write_fd", write_fd);
+ 
+-    wasi_try_mem_ok!(ro_fd1.write(&memory, fd1));
+-    wasi_try_mem_ok!(ro_fd2.write(&memory, fd2));
++    wasi_try_mem_ok!(ro_read_fd.write(&memory, read_fd));
++    wasi_try_mem_ok!(ro_write_fd.write(&memory, write_fd));
+ 
+     Ok(Errno::Success)
+ }
+ 
+ pub fn fd_pipe_internal(
+     ctx: &mut FunctionEnvMut<'_, WasiEnv>,
+-    with_fd1: Option<WasiFd>,
+-    with_fd2: Option<WasiFd>,
++    with_read_fd: Option<WasiFd>,
++    with_write_fd: Option<WasiFd>,
+ ) -> Result<(WasiFd, WasiFd), Errno> {
+     let env = ctx.data();
+     let (memory, state, inodes) = unsafe { env.get_memory_and_wasi_state_and_inodes(&ctx, 0) };
+-    let (pipe1, pipe2) = Pipe::channel();
++    let (tx, rx) = Pipe::new().split();
+ 
+-    let inode1 = state.fs.create_inode_with_default_stat(
+-        inodes,
+-        Kind::Pipe { pipe: pipe1 },
+-        false,
+-        "pipe".to_string().into(),
+-    );
+-    let inode2 = state.fs.create_inode_with_default_stat(
+-        inodes,
+-        Kind::Pipe { pipe: pipe2 },
+-        false,
+-        "pipe".to_string().into(),
+-    );
++    let rx_inode =
++        state
++            .fs
++            .create_inode_with_default_stat(inodes, Kind::PipeRx { rx }, false, "pipe".into());
++    let tx_inode =
++        state
++            .fs
++            .create_inode_with_default_stat(inodes, Kind::PipeTx { tx }, false, "pipe".into());
+ 
+-    let rights = Rights::FD_READ
+-        | Rights::FD_WRITE
+-        | Rights::FD_SYNC
++    let rights = Rights::FD_SYNC
+         | Rights::FD_DATASYNC
+         | Rights::POLL_FD_READWRITE
+         | Rights::SOCK_SEND
+         | Rights::FD_FDSTAT_SET_FLAGS
+         | Rights::FD_FILESTAT_GET;
+ 
+-    let fd1 = if let Some(fd) = with_fd1 {
++    let read_rights = rights | Rights::FD_READ;
++    let write_rights = rights | Rights::FD_WRITE;
++
++    let read_fd = if let Some(fd) = with_read_fd {
+         state
+             .fs
+             .with_fd(
+-                rights,
+-                rights,
++                read_rights,
++                read_rights,
+                 Fdflags::empty(),
+                 Fdflagsext::empty(),
+                 0,
+-                inode1,
++                rx_inode,
+                 fd,
+             )
+-            .map(|_| fd)?
++            .map(|()| fd)?
+     } else {
+         state.fs.create_fd(
+-            rights,
+-            rights,
++            read_rights,
++            read_rights,
+             Fdflags::empty(),
+             Fdflagsext::empty(),
+             0,
+-            inode1,
++            rx_inode,
+         )?
+     };
+ 
+-    let fd2 = if let Some(fd) = with_fd2 {
++    let write_fd = if let Some(fd) = with_write_fd {
+         state
+             .fs
+             .with_fd(
+-                rights,
+-                rights,
++                write_rights,
++                write_rights,
+                 Fdflags::empty(),
+                 Fdflagsext::empty(),
+                 0,
+-                inode2,
++                tx_inode,
+                 fd,
+             )
+-            .map(|_| fd)?
++            .map(|()| fd)?
+     } else {
+         state.fs.create_fd(
+-            rights,
+-            rights,
++            write_rights,
++            write_rights,
+             Fdflags::empty(),
+             Fdflagsext::empty(),
+             0,
+-            inode2,
++            tx_inode,
+         )?
+     };
+ 
+-    Ok((fd1, fd2))
++    Ok((read_fd, write_fd))
+ }
+diff --git a/lib/wasix/src/syscalls/wasix/mod.rs b/lib/wasix/src/syscalls/wasix/mod.rs
+index 8adede05b4b..0b7a47161e8 100644
+--- a/lib/wasix/src/syscalls/wasix/mod.rs
++++ b/lib/wasix/src/syscalls/wasix/mod.rs
+@@ -50,6 +50,7 @@ mod sock_leave_multicast_v4;
+ mod sock_leave_multicast_v6;
+ mod sock_listen;
+ mod sock_open;
++mod sock_pair;
+ mod sock_recv;
+ mod sock_recv_from;
+ mod sock_send;
+@@ -124,6 +125,7 @@ pub use sock_leave_multicast_v4::*;
+ pub use sock_leave_multicast_v6::*;
+ pub use sock_listen::*;
+ pub use sock_open::*;
++pub use sock_pair::*;
+ pub use sock_recv::*;
+ pub use sock_recv_from::*;
+ pub use sock_send::*;
+diff --git a/lib/wasix/src/syscalls/wasix/path_open2.rs b/lib/wasix/src/syscalls/wasix/path_open2.rs
+index bd0a5fdf53f..f650a741b7e 100644
+--- a/lib/wasix/src/syscalls/wasix/path_open2.rs
++++ b/lib/wasix/src/syscalls/wasix/path_open2.rs
+@@ -282,7 +282,9 @@ pub(crate) fn path_open_internal(
+                 }
+             }
+             Kind::Socket { .. }
+-            | Kind::Pipe { .. }
++            | Kind::PipeTx { .. }
++            | Kind::PipeRx { .. }
++            | Kind::DuplexPipe { .. }
+             | Kind::EventNotifications { .. }
+             | Kind::Epoll { .. } => {}
+             Kind::Symlink {
+diff --git a/lib/wasix/src/syscalls/wasix/proc_spawn.rs b/lib/wasix/src/syscalls/wasix/proc_spawn.rs
+index 5962c231010..be2d67253f6 100644
+--- a/lib/wasix/src/syscalls/wasix/proc_spawn.rs
++++ b/lib/wasix/src/syscalls/wasix/proc_spawn.rs
+@@ -151,23 +151,32 @@ pub fn proc_spawn_internal(
+     // Replace the STDIO
+     let (stdin, stdout, stderr) = {
+         let (child_state, child_inodes) = child_env.get_wasi_state_and_inodes();
+-        let mut conv_stdio_mode = |mode: WasiStdioMode, fd: WasiFd| -> Result<OptionFd, Errno> {
++        let mut conv_stdio_mode = |mode: WasiStdioMode,
++                                   fd: WasiFd,
++                                   pipe_towards_child: bool|
++         -> Result<OptionFd, Errno> {
+             match mode {
+                 WasiStdioMode::Piped => {
+-                    let (pipe1, pipe2) = Pipe::channel();
+-                    let inode1 = child_state.fs.create_inode_with_default_stat(
++                    let (tx, rx) = Pipe::new().split();
++                    let read_inode = child_state.fs.create_inode_with_default_stat(
+                         child_inodes,
+-                        Kind::Pipe { pipe: pipe1 },
++                        Kind::PipeRx { rx },
+                         false,
+                         "pipe".into(),
+                     );
+-                    let inode2 = child_state.fs.create_inode_with_default_stat(
++                    let write_inode = child_state.fs.create_inode_with_default_stat(
+                         child_inodes,
+-                        Kind::Pipe { pipe: pipe2 },
++                        Kind::PipeTx { tx },
+                         false,
+                         "pipe".into(),
+                     );
+ 
++                    let (parent_end, child_end) = if pipe_towards_child {
++                        (write_inode, read_inode)
++                    } else {
++                        (read_inode, write_inode)
++                    };
++
+                     let rights = crate::net::socket::all_socket_rights();
+                     let pipe = ctx.data().state.fs.create_fd(
+                         rights,
+@@ -175,7 +184,7 @@ pub fn proc_spawn_internal(
+                         Fdflags::empty(),
+                         Fdflagsext::empty(),
+                         0,
+-                        inode1,
++                        parent_end,
+                     )?;
+                     child_state.fs.create_fd_ext(
+                         rights,
+@@ -183,7 +192,7 @@ pub fn proc_spawn_internal(
+                         Fdflags::empty(),
+                         Fdflagsext::empty(),
+                         0,
+-                        inode2,
++                        child_end,
+                         Some(fd),
+                         false,
+                     )?;
+@@ -207,15 +216,17 @@ pub fn proc_spawn_internal(
+                 }
+             }
+         };
+-        let stdin = match conv_stdio_mode(stdin, 0) {
++        // TODO: proc_spawn isn't used in WASIX at the time of writing
++        // this code, so the implementation isn't tested at all
++        let stdin = match conv_stdio_mode(stdin, 0, true) {
+             Ok(a) => a,
+             Err(err) => return Ok(Err(err)),
+         };
+-        let stdout = match conv_stdio_mode(stdout, 1) {
++        let stdout = match conv_stdio_mode(stdout, 1, false) {
+             Ok(a) => a,
+             Err(err) => return Ok(Err(err)),
+         };
+-        let stderr = match conv_stdio_mode(stderr, 2) {
++        let stderr = match conv_stdio_mode(stderr, 2, false) {
+             Ok(a) => a,
+             Err(err) => return Ok(Err(err)),
+         };
+diff --git a/lib/wasix/src/syscalls/wasix/sock_pair.rs b/lib/wasix/src/syscalls/wasix/sock_pair.rs
+new file mode 100644
+index 00000000000..58172f9c250
+--- /dev/null
++++ b/lib/wasix/src/syscalls/wasix/sock_pair.rs
+@@ -0,0 +1,150 @@
++use virtual_fs::Pipe;
++
++use super::*;
++use crate::{
++    net::socket::{self, SocketProperties},
++    syscalls::*,
++};
++
++// FIXME
++/// ### `sock_pair()`
++/// Create an interconnected socket pair; or at least it's supposed to.
++///
++/// Currently, this creates a pipe rather than a pair of sockets. Before this
++/// syscall was added, wasix-libc would just do pipe2 in its socketpair
++/// implementation. Since we fixed pipe2 to return a simplex pipe, that was no
++/// longer an option; hence this syscall was added, but the implementation
++/// still uses a pipe as the underlying communication mechanism. This is not
++/// the correct implementation and needs to be fixed. We hope that the pipe
++/// is sufficient for anything that doesn't do socket-specific stuff, such
++/// as sending out-of-band packets.
++///
++/// Note: This is (supposed to be) similar to `socketpair` in POSIX using PF_INET
++///
++/// ## Parameters
++///
++/// * `af` - Address family
++/// * `socktype` - Socket type, either datagram or stream
++/// * `sock_proto` - Socket protocol
++///
++/// ## Return
++///
++/// The file descriptor of the socket that has been opened.
++#[instrument(level = "trace", skip_all, fields(?af, ?ty, ?pt, sock1 = field::Empty, sock2 = field::Empty), ret)]
++pub fn sock_pair<M: MemorySize>(
++    mut ctx: FunctionEnvMut<'_, WasiEnv>,
++    af: Addressfamily,
++    ty: Socktype,
++    pt: SockProto,
++    ro_sock1: WasmPtr<WasiFd, M>,
++    ro_sock2: WasmPtr<WasiFd, M>,
++) -> Result<Errno, WasiError> {
++    // only certain combinations are supported
++    match pt {
++        SockProto::Tcp => {
++            if ty != Socktype::Stream {
++                return Ok(Errno::Notsup);
++            }
++        }
++        SockProto::Udp => {
++            if ty != Socktype::Dgram {
++                return Ok(Errno::Notsup);
++            }
++        }
++        _ => {}
++    }
++
++    // FIXME: currently, socket properties are ignored outright, since they
++    // make no sense for the underlying pipe
++    let (fd1, fd2) = wasi_try_ok!(sock_pair_internal(&mut ctx, None, None));
++
++    #[cfg(feature = "journal")]
++    if ctx.data().enable_journal {
++        JournalEffector::save_sock_pair(&mut ctx, fd1, fd2).map_err(|err| {
++            tracing::error!("failed to save sock_pair event - {}", err);
++            WasiError::Exit(ExitCode::from(Errno::Fault))
++        })?;
++    }
++
++    let env = ctx.data();
++    let (memory, state, inodes) = unsafe { env.get_memory_and_wasi_state_and_inodes(&ctx, 0) };
++    wasi_try_mem_ok!(ro_sock1.write(&memory, fd1));
++    wasi_try_mem_ok!(ro_sock2.write(&memory, fd2));
++
++    Ok(Errno::Success)
++}
++
++pub(crate) fn sock_pair_internal(
++    ctx: &mut FunctionEnvMut<'_, WasiEnv>,
++    with_fd1: Option<WasiFd>,
++    with_fd2: Option<WasiFd>,
++) -> Result<(WasiFd, WasiFd), Errno> {
++    let env = ctx.data();
++    let (memory, state, inodes) = unsafe { env.get_memory_and_wasi_state_and_inodes(&ctx, 0) };
++    let (end1, end2) = Pipe::channel();
++
++    let inode1 = state.fs.create_inode_with_default_stat(
++        inodes,
++        Kind::DuplexPipe { pipe: end1 },
++        false,
++        "socketpair".into(),
++    );
++    let inode2 = state.fs.create_inode_with_default_stat(
++        inodes,
++        Kind::DuplexPipe { pipe: end2 },
++        false,
++        "socketpair".into(),
++    );
++
++    let rights = Rights::all_socket();
++    let fd1 = if let Some(fd) = with_fd1 {
++        state
++            .fs
++            .with_fd(
++                rights,
++                rights,
++                Fdflags::empty(),
++                Fdflagsext::empty(),
++                0,
++                inode1,
++                fd,
++            )
++            .map(|_| fd)?
++    } else {
++        state.fs.create_fd(
++            rights,
++            rights,
++            Fdflags::empty(),
++            Fdflagsext::empty(),
++            0,
++            inode1,
++        )?
++    };
++    let fd2 = if let Some(fd) = with_fd2 {
++        state
++            .fs
++            .with_fd(
++                rights,
++                rights,
++                Fdflags::empty(),
++                Fdflagsext::empty(),
++                0,
++                inode2,
++                fd,
++            )
++            .map(|_| fd)?
++    } else {
++        state.fs.create_fd(
++            rights,
++            rights,
++            Fdflags::empty(),
++            Fdflagsext::empty(),
++            0,
++            inode2,
++        )?
++    };
++    Span::current().record("end1", fd1);
++    Span::current().record("end2", fd2);
++
++    Ok((fd1, fd2))
++}
+diff --git a/lib/wasix/src/syscalls/wasix/sock_recv.rs b/lib/wasix/src/syscalls/wasix/sock_recv.rs
+index 04ead0aeefe..a621b33cbea 100644
+--- a/lib/wasix/src/syscalls/wasix/sock_recv.rs
++++ b/lib/wasix/src/syscalls/wasix/sock_recv.rs
+@@ -29,7 +29,7 @@ pub fn sock_recv<M: MemorySize>(
+     let env = ctx.data();
+     let fd_entry = wasi_try_ok!(env.state.fs.get_fd(sock));
+     let guard = fd_entry.inode.read();
+-    let use_read = matches!(guard.deref(), Kind::Pipe { .. });
++    let use_read = matches!(guard.deref(), Kind::PipeRx { .. });
+     drop(guard);
+     if use_read {
+         fd_read(ctx, sock, ri_data, ri_data_len, ro_data_len)
+diff --git a/lib/wasix/src/syscalls/wasix/sock_send.rs b/lib/wasix/src/syscalls/wasix/sock_send.rs
+index 14594aa7ab0..b50c08fd111 100644
+--- a/lib/wasix/src/syscalls/wasix/sock_send.rs
++++ b/lib/wasix/src/syscalls/wasix/sock_send.rs
+@@ -29,8 +29,9 @@ pub fn sock_send<M: MemorySize>(
+ 
+     let env = ctx.data();
+     let fd_entry = wasi_try_ok!(env.state.fs.get_fd(fd));
++    let enable_journal = env.enable_journal;
+     let guard = fd_entry.inode.read();
+-    let use_write = matches!(guard.deref(), Kind::Pipe { .. });
++    let use_write = matches!(guard.deref(), Kind::PipeTx { .. });
+     drop(guard);
+ 
+     let bytes_written = if use_write {
+@@ -43,7 +44,7 @@ pub fn sock_send<M: MemorySize>(
+         };
+ 
+         wasi_try_ok!(fd_write_internal::<M>(
+-            &ctx,
++            &mut ctx,
+             fd,
+             FdWriteSource::Iovs {
+                 iovs: si_data,
+@@ -51,7 +52,7 @@ pub fn sock_send<M: MemorySize>(
+             },
+             offset as u64,
+             true,
+-            env.enable_journal,
++            enable_journal
+         )?)
+     } else {
+         wasi_try_ok!(sock_send_internal::<M>(
+diff --git a/lib/wasix/src/syscalls/wasix/sock_send_file.rs b/lib/wasix/src/syscalls/wasix/sock_send_file.rs
+index eea5d437902..6bd3f3afc7f 100644
+--- a/lib/wasix/src/syscalls/wasix/sock_send_file.rs
++++ b/lib/wasix/src/syscalls/wasix/sock_send_file.rs
+@@ -159,7 +159,20 @@ pub(crate) fn sock_send_file_internal(
+                                 env = ctx.data();
+                                 data
+                             }
+-                            Kind::Pipe { ref mut pipe, .. } => {
++                            Kind::PipeRx { ref mut rx } => {
++                                let data = wasi_try_ok_ok!(__asyncify(ctx, None, async move {
++                                    // TODO: optimize with MaybeUninit
++                                    let mut buf = vec![0u8; sub_count as usize];
++                                    let amt = virtual_fs::AsyncReadExt::read(rx, &mut buf[..])
++                                        .await
++                                        .map_err(map_io_err)?;
++                                    buf.truncate(amt);
++                                    Ok(buf)
++                                })?);
++                                env = ctx.data();
++                                data
++                            }
++                            Kind::DuplexPipe { ref mut pipe } => {
+                                 let data = wasi_try_ok_ok!(__asyncify(ctx, None, async move {
+                                     // TODO: optimize with MaybeUninit
+                                     let mut buf = vec![0u8; sub_count as usize];
+@@ -172,15 +185,14 @@ pub(crate) fn sock_send_file_internal(
+                                 env = ctx.data();
+                                 data
+                             }
+-                            Kind::Epoll { .. } => {
++                            Kind::PipeTx { .. }
++                            | Kind::Epoll { .. }
++                            | Kind::EventNotifications { .. } => {
+                                 return Ok(Err(Errno::Inval));
+                             }
+                             Kind::Dir { .. } | Kind::Root { .. } => {
+                                 return Ok(Err(Errno::Isdir));
+                             }
+-                            Kind::EventNotifications { .. } => {
+-                                return Ok(Err(Errno::Inval));
+-                            }
+                             Kind::Symlink { .. } => unimplemented!("Symlinks in wasi::fd_read"),
+                             Kind::Buffer { buffer } => {
+                                 // TODO: optimize with MaybeUninit

@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/py-polars && VIRTUAL_ENV=/workspace/venv PATH=/workspace/venv/bin:/root/.cargo/bin:$PATH maturin develop && pytest /workspace/repo/py-polars/tests/unit/operations/test_join_asof.py -v",
+  "test_files": [
+    "py-polars/tests/unit/operations/test_join_asof.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.operations.test_join_asof::test_asof_join_nearest_with_tolerance",
+    "tests.unit.operations.test_join_asof::test_asof_join_nearest_by_with_tolerance"
+  ],
+  "PASS_TO_PASS": [
+    "tests.unit.operations.test_join_asof::test_asof_join_inline_cast_6438",
+    "tests.unit.operations.test_join_asof::test_asof_join_projection_resolution_4606",
+    "tests.unit.operations.test_join_asof::test_asof_join_schema_5211",
+    "tests.unit.operations.test_join_asof::test_asof_join_schema_5684",
+    "tests.unit.operations.test_join_asof::test_join_asof_mismatched_dtypes",
+    "tests.unit.operations.test_join_asof::test_join_asof_floats",
+    "tests.unit.operations.test_join_asof::test_join_asof_tolerance",
+    "tests.unit.operations.test_join_asof::test_join_asof_tolerance_forward",
+    "tests.unit.operations.test_join_asof::test_join_asof_projection",
+    "tests.unit.operations.test_join_asof::test_asof_join_by_logical_types",
+    "tests.unit.operations.test_join_asof::test_join_asof_projection_7481",
+    "tests.unit.operations.test_join_asof::test_asof_join_sorted_by_group",
+    "tests.unit.operations.test_join_asof::test_asof_join_nearest",
+    "tests.unit.operations.test_join_asof::test_asof_join_nearest_by",
+    "tests.unit.operations.test_join_asof::test_asof_join_nearest_by_date",
+    "tests.unit.operations.test_join_asof::test_asof_join_string_err",
+    "tests.unit.operations.test_join_asof::test_join_asof_by_argument_parsing"
+  ]
+}

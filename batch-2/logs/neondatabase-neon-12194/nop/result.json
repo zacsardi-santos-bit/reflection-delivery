@@ -1,0 +1,29 @@
+{
+    "id": "0d9198e1-d459-43df-97f4-f49450c66b72",
+    "started_at": "2026-07-04T15:37:02.376287",
+    "finished_at": "2026-07-04T15:39:32.820100",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__neondatabase-neon-12194": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "neondatabase-neon-12194__pkDHgYk"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

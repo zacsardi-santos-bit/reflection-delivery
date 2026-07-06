@@ -1,0 +1,30 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pilot/pkg/proxy/envoy/v2 -count=1 -run 'TestEnvoyRDSProtocolError|TestEnvoyRDSUpdatedRouteRequest|TestRDS|TestSyncz|TestAdsUpdate|TestEdsUpdate|TestConfigDump' -timeout 300s",
+  "test_files": [
+    "pilot/pkg/proxy/envoy/v2/ads_test.go",
+    "pilot/pkg/proxy/envoy/v2/debug_test.go",
+    "pilot/pkg/proxy/envoy/v2/eds_test.go",
+    "pilot/pkg/proxy/envoy/v2/init_test.go",
+    "pilot/pkg/proxy/envoy/v2/rds_test.go"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestEnvoyRDSProtocolError"
+  ],
+  "PASS_TO_PASS": [
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestAdsUpdate",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestEnvoyRDSUpdatedRouteRequest",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestSyncz/return_the_sent_and_ack_status_of_adsClient_connections",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestSyncz/sync_status_not_set_when_Nackd",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestSyncz",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestConfigDump/dumps_most_recent_proxy_with_200",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestConfigDump/returns_404_if_proxy_not_found",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestConfigDump/returns_400_if_no_proxyID",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestConfigDump",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestRDS/sidecar",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestRDS/gateway",
+    "istio.io/istio/pilot/pkg/proxy/envoy/v2::TestRDS"
+  ]
+}

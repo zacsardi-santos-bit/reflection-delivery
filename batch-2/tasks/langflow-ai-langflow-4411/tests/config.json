@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest src/backend/tests/unit/components/prototypes/test_create_data_component.py src/backend/tests/unit/components/prototypes/test_update_data_component.py -v --noconftest",
+  "test_files": [
+    "src/backend/tests/conftest.py",
+    "src/backend/tests/unit/components/prototypes/test_create_data_component.py",
+    "src/backend/tests/unit/components/prototypes/test_update_data_component.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "src.backend.tests.unit.components.prototypes.test_update_data_component::test_validate_text_key_invalid"
+  ],
+  "PASS_TO_PASS": [
+    "src.backend.tests.unit.components.prototypes.test_create_data_component::test_update_build_config",
+    "src.backend.tests.unit.components.prototypes.test_create_data_component::test_update_build_config_exceed_limit",
+    "src.backend.tests.unit.components.prototypes.test_create_data_component::test_build_data",
+    "src.backend.tests.unit.components.prototypes.test_create_data_component::test_get_data",
+    "src.backend.tests.unit.components.prototypes.test_create_data_component::test_validate_text_key_valid",
+    "src.backend.tests.unit.components.prototypes.test_create_data_component::test_validate_text_key_invalid",
+    "src.backend.tests.unit.components.prototypes.test_update_data_component::test_update_build_config",
+    "src.backend.tests.unit.components.prototypes.test_update_data_component::test_update_build_config_exceed_limit",
+    "src.backend.tests.unit.components.prototypes.test_update_data_component::test_build_data",
+    "src.backend.tests.unit.components.prototypes.test_update_data_component::test_get_data",
+    "src.backend.tests.unit.components.prototypes.test_update_data_component::test_validate_text_key_valid"
+  ]
+}

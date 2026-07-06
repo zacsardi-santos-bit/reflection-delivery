@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/airflow-core/tests/unit/api_fastapi/common/test_parameters.py -v",
+  "test_files": [
+    "airflow-core/tests/unit/api_fastapi/common/test_parameters.py",
+    "airflow-core/tests/unit/api_fastapi/core_api/routes/public/test_dag_run.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSortParam::test_aliased_sort_resolves_row_value_via_to_replace",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSortParam::test_row_value_raises_on_column_form_to_replace",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSortParam::test_primary_key_is_not_duplicated_when_alias_maps_to_pk"
+  ],
+  "PASS_TO_PASS": [
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestFilterParam::test_filter_param_factory_description",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSortParam::test_sort_param_max_number_of_filers",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSearchParam::test_to_orm_single_value",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSearchParam::test_to_orm_multiple_values_or",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSearchParam::test_to_orm_pipe_with_trailing_pipe",
+    "airflow-core.tests.unit.api_fastapi.common.test_parameters.TestSearchParam::test_to_orm_pipe_with_leading_pipe"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && BABEL_ENV=test NODE_ENV=test npx jest --config=tests/js/jest.config.js assets/js/components/notifications/OfflineNotification.test.js assets/js/googlesitekit/datastore/ui/ui.test.js assets/js/hooks/useMonitorInternetConnection.test.js --coverage=false --watchAll=false",
+  "test_files": [
+    "assets/js/components/notifications/OfflineNotification.test.js",
+    "assets/js/googlesitekit/datastore/ui/ui.test.js",
+    "assets/js/hooks/useMonitorInternetConnection.test.js",
+    "tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_0_small.png",
+    "tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_1_medium.png",
+    "tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_2_large.png"
+  ],
+  "num_test_files": 6,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions resetInViewHook increments the value of core/ui useInViewResetCount",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setIsOnline sets the isOnline value",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store selectors getInViewResetCount returns a specific key in state",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store selectors getIsOnline returns isOnline value from the state",
+    "/workspace/repo/assets/js/components/notifications/OfflineNotification.test.js::OfflineNotification should display the notification when offline",
+    "/workspace/repo/assets/js/components/notifications/OfflineNotification.test.js::OfflineNotification should not display the notification when online",
+    "/workspace/repo/assets/js/components/notifications/OfflineNotification.test.js::OfflineNotification should dismiss the notification when connection is back",
+    "/workspace/repo/assets/js/hooks/useMonitorInternetConnection.test.js::useMonitorInternetConnection should set online status correctly",
+    "/workspace/repo/assets/js/hooks/useMonitorInternetConnection.test.js::useMonitorInternetConnection should set offline status correctly",
+    "/workspace/repo/assets/js/hooks/useMonitorInternetConnection.test.js::useMonitorInternetConnection should correctly change connection status when going offline then online",
+    "/workspace/repo/assets/js/hooks/useMonitorInternetConnection.test.js::useMonitorInternetConnection should check online status in correct interval when online",
+    "/workspace/repo/assets/js/hooks/useMonitorInternetConnection.test.js::useMonitorInternetConnection should check online status in correct interval when offline"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues requires the values param",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues requires the values param to be an object not an array",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues does not throw if values is an object",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues requires the values param to be an object not a string",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues does not overwrite unrelated keys",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues returns a newly-set value if a new value for an existing key is set",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues does not overwrite unrelated keys when an empty object is supplied to values",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues works with empty values where the key value is updated",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues preserves data from state when new data is assigned",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues sets object values",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues sets boolean values",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValues sets array values",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue requires the key param",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue does not throw with a key",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue works with key and value",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue works with a boolean value",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue works with the value as an object",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue works with the value as an array",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store actions setValue works with the value undefined",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store selectors getValue works with a key that does not exist",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store selectors getValue works with key where the key does not exist",
+    "/workspace/repo/assets/js/googlesitekit/datastore/ui/ui.test.js::core/ui store selectors getValue works with an existing key"
+  ]
+}

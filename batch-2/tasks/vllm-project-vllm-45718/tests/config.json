@@ -1,0 +1,35 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/reasoning/test_minimax_m3_reasoning_parser.py -v --noconftest",
+  "test_files": [
+    "tests/reasoning/test_minimax_m3_reasoning_parser.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_split_marker_tokens_are_not_returned",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_split_end_marker_content_ids_are_stripped",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_split_marker_tokens_enabled_mode",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_split_marker_text_across_deltas",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_split_leading_end_marker_text_across_deltas",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_token_id_helpers_with_split_marker_tokens"
+  ],
+  "PASS_TO_PASS": [
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_parser_registration",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_nonstreaming_extracts_explicit_reasoning_block",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_nonstreaming_without_start_tag_is_content",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_nonstreaming_drops_leading_end_tag",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_nonstreaming_non_leading_end_tag_is_content",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_nonstreaming_enabled_mode_starts_in_reasoning",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_nonstreaming_open_reasoning_block",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_reasoning_tags_are_not_returned",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_boundary_can_emit_reasoning_and_content",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_drops_leading_end_tag",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_non_leading_end_tag_is_content",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_enabled_mode_starts_in_reasoning",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_plain_content_ends_reasoning_phase",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_streaming_split_marker_text_drives_end_state",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_token_id_helpers",
+    "tests.reasoning.test_minimax_m3_reasoning_parser::test_token_id_helpers_enabled_mode"
+  ]
+}

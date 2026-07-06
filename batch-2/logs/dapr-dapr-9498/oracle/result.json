@@ -1,0 +1,29 @@
+{
+    "id": "26e2cacf-0698-4559-a465-4a423fe78b3d",
+    "started_at": "2026-07-06T12:18:49.575349",
+    "finished_at": "2026-07-06T12:19:50.674424",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__dapr-dapr-9498": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "dapr-dapr-9498__2C3cW5b"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

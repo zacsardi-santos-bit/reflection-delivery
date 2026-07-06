@@ -1,0 +1,8 @@
+patching file internal/endtoend/testdata/params_in_nested_func_isolated/mysql/db/db.go
+patching file internal/endtoend/testdata/params_in_nested_func_isolated/mysql/db/models.go
+patching file internal/endtoend/testdata/params_in_nested_func_isolated/mysql/db/query.sql.go
+patching file internal/endtoend/testdata/params_in_nested_func_isolated/mysql/query.sql
+patching file internal/endtoend/testdata/params_in_nested_func_isolated/mysql/schema.sql
+patching file internal/endtoend/testdata/params_in_nested_func_isolated/mysql/sqlc.yaml
+ok  	github.com/sqlc-dev/sqlc/internal/endtoend	0.831s
+reward=1 graded=4 found=0 failed=0 parsed=0 framework=go exit_code=0

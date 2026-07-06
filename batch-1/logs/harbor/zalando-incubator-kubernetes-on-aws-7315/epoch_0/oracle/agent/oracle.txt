@@ -1,0 +1,4 @@
+patching file cluster/config-defaults.yaml
+patching file cluster/manifests/stackset-controller/01-stack-crd.yaml
+patching file cluster/manifests/stackset-controller/01-stackset-crd.yaml
+patching file cluster/manifests/stackset-controller/deployment.yaml

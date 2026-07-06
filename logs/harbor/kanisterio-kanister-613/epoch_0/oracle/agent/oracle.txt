@@ -1,4 +1,0 @@
-patching file pkg/blockstorage/awsebs/awsebs.go
-patching file pkg/blockstorage/azure/azuredisk.go
-patching file pkg/blockstorage/gcepd/gcepd.go
-patching file pkg/blockstorage/zone/zone.go

@@ -1,0 +1,4 @@
+patching file scipy/ndimage/__init__.py
+patching file scipy/ndimage/_delegators.py
+patching file scipy/ndimage/_filters.py
+patching file scipy/ndimage/_ni_docstrings.py

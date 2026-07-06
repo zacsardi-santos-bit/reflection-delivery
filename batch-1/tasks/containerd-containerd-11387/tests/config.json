@@ -1,0 +1,11 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -json ./core/events -count=1",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/containerd/containerd/v2/core/events::TestHttp2SettingEnableConnectProtocol"
+  ],
+  "PASS_TO_PASS": []
+}

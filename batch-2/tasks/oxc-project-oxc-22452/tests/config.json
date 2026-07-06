@@ -1,0 +1,15 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm install && pnpm --filter \"@oxapps/shared\" test",
+  "test_files": [
+    "apps/shared/test/node_version.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/shared/test/node_version.test.ts::detects supported TypeScript config specifiers",
+    "/workspace/repo/apps/shared/test/node_version.test.ts::returns a node version hint for unsupported TypeScript module loading",
+    "/workspace/repo/apps/shared/test/node_version.test.ts::does not add the hint for non-TypeScript specifiers or unrelated errors"
+  ],
+  "PASS_TO_PASS": []
+}

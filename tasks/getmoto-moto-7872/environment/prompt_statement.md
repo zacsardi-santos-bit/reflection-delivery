@@ -1,5 +1,0 @@
-I'm trying to write unit tests for my Python code that uses SageMaker's next-generation AutoML v2 job APIs, but the AWS mock library doesn't seem to support these endpoints at all. When I set up my tests with the AWS mock and try to create an AutoML v2 job through the SageMaker client, the call fails because the mock doesn't recognize the API operation.
-
-I need the mock library to support the full AutoML v2 workflow: creating a job (with various problem type configurations like image classification, text classification, tabular, time series forecasting, or text generation), describing the created job, listing jobs with filtering and sorting, and stopping a job. It should also integrate with the standard SageMaker tagging APIs so I can add, list, and remove tags from AutoML job ARNs. Finally, jobs with tags should show up when I query the Resource Groups Tagging API with a SageMaker resource filter.
-
-Essentially, I want the mock library to handle these SageMaker AutoML v2 endpoints the same way it already handles other SageMaker resources, so I can test my application logic without connecting to real AWS.

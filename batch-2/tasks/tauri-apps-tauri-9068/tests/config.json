@@ -1,0 +1,25 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p acl-tests",
+  "test_files": [
+    "core/tests/acl/fixtures/capabilities/multiwindow/cap-external.toml",
+    "core/tests/acl/fixtures/capabilities/multiwindow/cap-main.json",
+    "core/tests/acl/fixtures/capabilities/multiwindow/required-plugins.json",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__basic-ping.snap",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__file-explorer-remote.snap",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__file-explorer.snap",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__multiwebview.snap",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__multiwindow.snap",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__scope-extended.snap",
+    "core/tests/acl/fixtures/snapshots/acl_tests__tests__scope.snap",
+    "core/tests/acl/fixtures/snapshots/linux/acl_tests__tests__platform-specific-permissions.snap",
+    "core/tests/acl/fixtures/snapshots/macOS/acl_tests__tests__platform-specific-permissions.snap",
+    "core/tests/acl/fixtures/snapshots/windows/acl_tests__tests__platform-specific-permissions.snap"
+  ],
+  "num_test_files": 13,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) acl-tests tests::resolve_acl"
+  ],
+  "PASS_TO_PASS": []
+}

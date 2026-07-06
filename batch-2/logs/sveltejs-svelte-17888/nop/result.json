@@ -1,0 +1,29 @@
+{
+    "id": "277809dd-a53b-4a36-8c6a-24c635754a30",
+    "started_at": "2026-07-04T15:36:57.152064",
+    "finished_at": "2026-07-04T15:38:07.798932",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__sveltejs-svelte-17888": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "sveltejs-svelte-17888__yfwUw9A"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

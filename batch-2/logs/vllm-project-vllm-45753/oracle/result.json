@@ -1,0 +1,29 @@
+{
+    "id": "c7da53b7-60cd-425e-8a9d-df92a22fa881",
+    "started_at": "2026-07-04T15:38:21.209765",
+    "finished_at": "2026-07-04T15:39:53.338638",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__vllm-project-vllm-45753": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "vllm-project-vllm-45753__UE6dHAZ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

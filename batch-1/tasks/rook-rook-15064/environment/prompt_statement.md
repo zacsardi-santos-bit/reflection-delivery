@@ -1,0 +1,5 @@
+I'm working on adding protocol API configuration support to the Rook Ceph object store operator. Right now, there's no way to control which APIs (S3, Swift, admin, etc.) the gateway exposes — the operator assumes everything is always enabled. I need to add logic that determines the set of enabled APIs based on the object store's protocol spec, including handling cases where S3 is explicitly disabled or where Swift is configured at the root URL path (which implicitly conflicts with S3).
+
+I also need the gateway health probe path to adapt dynamically: if S3 is enabled, use the default S3 path; if S3 is disabled but Swift is available, switch to the Swift health endpoint (accounting for any custom Swift URL prefix); and if neither S3 nor Swift is active, disable the probe entirely.
+
+When an explicit list of APIs is provided, it should take priority over any per-protocol enable/disable settings, and whitespace in API names should be trimmed. The gateway configuration command-line flags should be built to include an argument specifying the comma-separated list of enabled APIs when they are configured.

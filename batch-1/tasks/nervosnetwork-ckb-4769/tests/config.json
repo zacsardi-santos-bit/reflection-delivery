@@ -1,0 +1,38 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ckb-types --no-fail-fast",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/27) ckb-types extension::test::empty_extra_hash",
+    "( 2/27) ckb-types core::tests::blockchain::test_dep_type",
+    "( 3/27) ckb-types core::tests::cell::resolve_transaction_resolve_dep_group_failed_because_invalid_data",
+    "( 4/27) ckb-types core::tests::cell::cell_provider_trait_works",
+    "( 5/27) ckb-types core::tests::views::test_extension_field_in_block_view",
+    "( 6/27) ckb-types core::tests::cell::resolve_transaction_should_test_have_invalid_header_dep",
+    "( 7/27) ckb-types core::tests::cell::resolve_transaction_test_header_deps_all_ok",
+    "( 8/27) ckb-types core::tests::tx_pool::test_argv_too_long_error_is_malformed_tx",
+    "( 9/27) ckb-types core::tests::cell::resolve_transaction_should_allow_dep_cell_in_current_tx_input",
+    "(10/27) ckb-types core::tests::fee_rate::test_fee_rate_calculate",
+    "(11/27) ckb-types core::tests::cell::resolve_transaction_should_reject_dep_cell_consumed_by_previous_input",
+    "(12/27) ckb-types tests::test_panic_if_a_molecule_result_should_be_ok_but_not",
+    "(13/27) ckb-types core::tests::transaction_meta::test_transaction_meta_constructors",
+    "(14/27) ckb-types core::tests::tx_pool::test_if_is_malformed_tx",
+    "(15/27) ckb-types core::tests::cell::resolve_transaction_should_reject_incorrect_order_txs",
+    "(16/27) ckb-types core::tests::views::test_block_view_convert_from_packed_block",
+    "(17/27) ckb-types core::tests::cell::resolve_transaction_should_resolve_dep_group",
+    "(18/27) ckb-types core::tests::blockchain::test_script_hash_type",
+    "(19/27) ckb-types core::tests::cell::resolve_transaction_resolve_dep_group_failed_because_unknown_sub_cell",
+    "(20/27) ckb-types core::tests::transaction_meta::set_unset_dead_out_of_bounds",
+    "(22/27) ckb-types tests::test_panic_if_molecule_from_slice_should_be_ok_but_not_1",
+    "(23/27) ckb-types utilities::tests::difficulty::test_compact_convert",
+    "(24/27) ckb-types tests::test_panic_if_molecule_from_slice_should_be_ok_but_not_2",
+    "(25/27) ckb-types utilities::tests::difficulty::test_compact_overflowing2",
+    "(26/27) ckb-types utilities::tests::difficulty::test_extremes"
+  ],
+  "PASS_TO_PASS": [
+    "(21/27) ckb-types tests::test_panic_if_an_option_should_be_some_but_not",
+    "(27/27) ckb-types utilities::tests::difficulty::test_compact_overflowing1"
+  ]
+}

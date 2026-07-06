@@ -1,0 +1,28 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && dart test --reporter=json test/general.shard/web/web_asset_server_test.dart | python3 /usr/local/bin/dart_to_nextest.py",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/web/web_asset_server_test.dart"
+  ],
+  "num_test_files": 1,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "release asset server does not serve non-source files from the project or flutter root"
+  ],
+  "PASS_TO_PASS": [
+    "loading test/general.shard/web/web_asset_server_test.dart",
+    "release asset server serves correct mime type and content length for png",
+    "release asset server serves correct mime type and content length for JavaScript",
+    "release asset server serves correct mime type and content length for html",
+    "release asset server serves content from flutter root",
+    "release asset server serves content from project directory",
+    "release asset server serves html content with COOP/COEP headers when specified",
+    "release asset server serves html content without COOP/COEP headers when specified",
+    "WebAssetServer serves with COOP/COEP headers when crossOriginIsolation is true",
+    "WebAssetServer serves without COOP/COEP headers when crossOriginIsolation is false",
+    "WebAssetServer serves with COOP/COEP headers when web renderer is skwasm",
+    "WebAssetServer serves without COOP/COEP headers when web renderer is not skwasm",
+    "WebAssetServer sets basePath from baseHref config",
+    "WebAssetServer basePath defaults to empty when baseHref is not provided"
+  ]
+}

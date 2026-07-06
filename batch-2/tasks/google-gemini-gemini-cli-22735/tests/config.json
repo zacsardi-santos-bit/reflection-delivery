@@ -1,0 +1,31 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run src/ui/components/ChecklistItem.test.tsx --coverage.enabled=false && cd /workspace/repo/packages/core && npx vitest run src/tools/trackerTools.test.ts src/tools/write-todos.test.ts --coverage.enabled=false",
+  "test_files": [
+    "packages/cli/src/ui/components/ChecklistItem.test.tsx",
+    "packages/core/src/tools/trackerTools.test.ts",
+    "packages/core/src/tools/write-todos.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration buildTodosReturnDisplay sorts tasks by status",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should not throw for valid parameters",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool execute should return a formatted todo list on success"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration creates and lists tasks",
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration updates task status",
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration adds dependencies and visualizes the graph",
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration buildTodosReturnDisplay returns empty list for no tasks",
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration buildTodosReturnDisplay returns formatted todos",
+    "/workspace/repo/packages/core/src/tools/trackerTools.test.ts::Tracker Tools Integration buildTodosReturnDisplay detects cycles",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should not throw for an empty list",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should throw an error if todos is not an array",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should throw an error if a todo item is not an object",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should throw an error if a todo description is missing or empty",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should throw an error if a todo status is invalid",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool validation should throw an error if more than one task is in_progress",
+    "/workspace/repo/packages/core/src/tools/write-todos.test.ts::WriteTodosTool execute should return a success message for clearing the list"
+  ]
+}

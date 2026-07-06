@@ -1,0 +1,12 @@
+patching file lib/build_test.go
+patching file lib/git_utils_test.go
+patching file lib/manifest_test.go
+# github.com/mbtproject/mbt/lib [github.com/mbtproject/mbt/lib.test]
+/go/src/github.com/mbtproject/mbt/lib/build_test.go:54:11: undefined: BuildDir
+/go/src/github.com/mbtproject/mbt/lib/git_utils_test.go:99:15: undefined: getDiffFromIndex
+/go/src/github.com/mbtproject/mbt/lib/manifest_test.go:283:12: undefined: ManifestByLocalDir
+/go/src/github.com/mbtproject/mbt/lib/manifest_test.go:295:11: undefined: ManifestByLocalDir
+/go/src/github.com/mbtproject/mbt/lib/manifest_test.go:301:11: undefined: ManifestByLocalDir
+/go/src/github.com/mbtproject/mbt/lib/manifest_test.go:319:12: undefined: ManifestByLocalDir
+FAIL	github.com/mbtproject/mbt/lib [build failed]
+reward=0 graded=65 found=65 failed=65 parsed=1 framework=go exit_code=1

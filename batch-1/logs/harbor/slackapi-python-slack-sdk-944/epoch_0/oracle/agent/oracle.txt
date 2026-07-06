@@ -1,0 +1,5 @@
+patching file slack_sdk/audit_logs/v1/logs.py
+patching file slack_sdk/scim/v1/group.py
+patching file slack_sdk/scim/v1/internal_utils.py
+patching file slack_sdk/scim/v1/types.py
+patching file slack_sdk/scim/v1/user.py

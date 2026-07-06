@@ -1,3 +1,0 @@
-patching file plugin/storage/badger/spanstore/cache.go
-patching file plugin/storage/badger/spanstore/reader.go
-patching file plugin/storage/badger/spanstore/writer.go

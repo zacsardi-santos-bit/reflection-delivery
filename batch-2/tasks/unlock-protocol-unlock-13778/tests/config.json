@@ -1,0 +1,31 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && yarn install 2>&1 | tail -5 && cd packages/hardhat-plugin && yarn test",
+  "test_files": [
+    "packages/hardhat-plugin/test/fixture-projects/hardhat-project/hardhat.config.ts",
+    "packages/hardhat-plugin/test/fixtures.js",
+    "packages/hardhat-plugin/test/index.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension Should add the unlock field",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension unlockAddress should init as undefined ",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension should store and extend existing networks info",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension should store additional networks info",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions deployProtocol() Should deploy the PublicLock contract",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions deployProtocol() Should deploy the Unlock contract",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions deployProtocol() Should set the Unlock owner correctly",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions deployProtocol() Should set the template correctly",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions deployProtocol() Should store deployed Unlock address in hre",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions getUnlockContract() Should retrieve the Unlock contract instance",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions createLock() Should create a new lock w correct params",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions deployAndSetTemplate() Should deploy and set a new version",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Unlock Hardhat plugin HRE extension functions getLock() Should retrieve a lock w correct params",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::HardhatConfig unlock extension Should add existing unlock networks to the config",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::HardhatConfig unlock extension Should allow user to configure exsiting network",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::HardhatConfig unlock extension Should allow user to pass a new network",
+    "/workspace/repo/packages/hardhat-plugin/test/index.test.ts::Tasks unlock:create-lock Should create a lock from command line args"
+  ],
+  "PASS_TO_PASS": []
+}

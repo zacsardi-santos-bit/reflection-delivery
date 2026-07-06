@@ -1,0 +1,192 @@
+patching file test/expected/function_calls.out
+patching file test/expected/function_calls_unsupported.out
+patching file test/expected/page_info.out
+patching file test/expected/resolve_graphiql_schema.out
+patching file test/sql/page_info.sql
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+[32m[1m       Using[0m[39m [37m[1mPgConfig("pg15")[0m[39m and `pg_config` from [36m/usr/lib/postgresql/15/bin/pg_config[39m
+[32m[1m    Building[0m[39m extension with features [36mpg15[39m
+[32m[1m     Running[0m[39m command [36m"/root/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo" "build" "--features" "pg15" "--no-default-features" "--message-format=json-render-diagnostics"[39m
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: unexpected `cfg` condition value: `pg11`
+  --> src/lib.rs:17:1
+   |
+17 | pg_module_magic!();
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `default`, `pg14`, `pg15`, `pg16`, and `pg_test`
+   = note: using a cfg inside a macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `$crate::pg_magic_func` crate for guidance on how handle this unexpected cfg
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+   = note: this warning originates in the macro `$crate::pg_magic_func` which comes from the expansion of the macro `pg_module_magic` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `pg12`
+  --> src/lib.rs:17:1
+   |
+17 | pg_module_magic!();
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `default`, `pg14`, `pg15`, `pg16`, and `pg_test`
+   = note: using a cfg inside a macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `$crate::pg_magic_func` crate for guidance on how handle this unexpected cfg
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `$crate::pg_magic_func` which comes from the expansion of the macro `pg_module_magic` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `pg13`
+  --> src/lib.rs:17:1
+   |
+17 | pg_module_magic!();
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `default`, `pg14`, `pg15`, `pg16`, and `pg_test`
+   = note: using a cfg inside a macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `$crate::pg_magic_func` crate for guidance on how handle this unexpected cfg
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `$crate::pg_magic_func` which comes from the expansion of the macro `pg_module_magic` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: field `alias` is never read
+  --> src/builder.rs:14:9
+   |
+13 | pub struct InsertBuilder {
+   |            ------------- field in this struct
+14 |     pub alias: String,
+   |         ^^^^^
+   |
+   = note: `InsertBuilder` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `alias` is never read
+   --> src/builder.rs:325:9
+    |
+324 | pub struct UpdateBuilder {
+    |            ------------- field in this struct
+325 |     pub alias: String,
+    |         ^^^^^
+    |
+    = note: `UpdateBuilder` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `alias` is never read
+   --> src/builder.rs:491:9
+    |
+490 | pub struct DeleteBuilder {
+    |            ------------- field in this struct
+491 |     pub alias: String,
+    |         ^^^^^
+    |
+    = note: `DeleteBuilder` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `alias` is never read
+   --> src/builder.rs:591:9
+    |
+590 | pub struct FunctionCallBuilder {
+    |            ------------------- field in this struct
+591 |     pub alias: String,
+    |         ^^^^^
+
+warning: field `schema` is never read
+    --> src/builder.rs:1920:9
+     |
+1919 | pub struct __SchemaBuilder {
+     |            --------------- field in this struct
+1920 |     pub schema: __Schema,
+     |         ^^^^^^
+     |
+     = note: `__SchemaBuilder` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: method `of_type` is never used
+   --> src/graphql.rs:254:8
+    |
+208 | pub trait ___Type {
+    |           ------- method in this trait
+...
+254 |     fn of_type(&self) -> Option<__Type> {
+    |        ^^^^^^^
+
+warning: method `arg_map` is never used
+   --> src/graphql.rs:346:8
+    |
+322 | pub trait ___Field {
+    |           -------- method in this trait
+...
+346 |     fn arg_map(&self) -> HashMap<String, __InputValue> {
+    |        ^^^^^^^
+
+warning: struct `SchemaType` is never constructed
+   --> src/graphql.rs:932:12
+    |
+932 | pub struct SchemaType {
+    |            ^^^^^^^^^^
+
+warning: `pg_graphql` (lib) generated 11 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.85s
+[32m[1m  Installing[0m[39m extension
+[32m[1m     Copying[0m[39m control file to [36m/usr/share/postgresql/15/extension/pg_graphql.control[39m
+[32m[1m     Copying[0m[39m shared library to [36m/usr/lib/postgresql/15/lib/pg_graphql.so[39m
+[32m[1m Discovering[0m[39m SQL entities
+[32m[1m  Discovered[0m[39m [36m[1m5[0m[39m SQL entities: [36m[1m0[0m[39m schemas ([36m[1m0[0m[39m unique), [36m[1m1[0m[39m functions, [36m[1m0[0m[39m types, [36m[1m0[0m[39m enums, [36m[1m4[0m[39m sqls, [36m[1m0[0m[39m ords, [36m[1m0[0m[39m hashes, [36m[1m0[0m[39m aggregates, [36m[1m0[0m[39m triggers
+[32m[1m     Writing[0m[39m SQL entities to [36m/usr/share/postgresql/15/extension/pg_graphql--1.4.4.sql[39m
+[32m[1m    Finished[0m[39m installing pg_graphql
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "C".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory /tmp/tmp.3UkrO8GVRQ ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+
+Sync to disk skipped.
+The data directory might become corrupt if the operating system crashes.
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /tmp/tmp.3UkrO8GVRQ -l logfile start
+
+waiting for server to start....2026-06-29 15:24:55.598 UTC [94] LOG:  starting PostgreSQL 15.18 (Debian 15.18-0+deb12u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-06-29 15:24:55.598 UTC [94] LOG:  listening on Unix socket "/tmp/tmp.3UkrO8GVRQ/.s.PGSQL.5432"
+2026-06-29 15:24:55.602 UTC [97] LOG:  database system was shut down at 2026-06-29 15:24:55 UTC
+2026-06-29 15:24:55.609 UTC [94] LOG:  database system is ready to accept connections
+ done
+server started
+psql:test/fixtures.sql:1: NOTICE:  extension "pg_graphql" does not exist, skipping
+DROP EXTENSION
+CREATE EXTENSION
+COMMENT
+CREATE FUNCTION
+(using postmaster on /tmp/tmp.3UkrO8GVRQ, default port)
+============== running regression test queries        ==============
+FAIL [   0.001s] pg_graphql page_info
+FAIL [   0.001s] pg_graphql function_calls
+FAIL [   0.001s] pg_graphql function_calls_unsupported
+FAIL [   0.001s] pg_graphql resolve_graphiql_schema
+
+======================
+ 4 of 4 tests failed. 
+======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/workspace/repo/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/workspace/repo/regression.out".
+
+waiting for server to shut down....2026-06-29 15:24:57.790 UTC [94] LOG:  received immediate shutdown request
+2026-06-29 15:24:57.792 UTC [94] LOG:  database system is shut down
+ done
+server stopped
+reward=0 graded=4 found=4 failed=4 parsed=4 framework=cargo exit_code=1

@@ -1,9 +1,0 @@
-patching file packages/opentelemetry-instrumentation-alephalpha/tests/cassettes/test_completion/test_alephalpha_completion_with_events_with_content.yaml
-patching file packages/opentelemetry-instrumentation-alephalpha/tests/cassettes/test_completion/test_alephalpha_completion_with_events_with_no_content.yaml
-patching file packages/opentelemetry-instrumentation-alephalpha/tests/conftest.py
-patching file packages/opentelemetry-instrumentation-alephalpha/tests/test_completion.py
-ImportError while loading conftest '/workspace/repo/packages/opentelemetry-instrumentation-alephalpha/tests/conftest.py'.
-tests/conftest.py:7: in <module>
-    from opentelemetry.instrumentation.alephalpha import (
-E   ImportError: cannot import name 'TRACELOOP_TRACE_CONTENT' from 'opentelemetry.instrumentation.alephalpha' (/workspace/repo/packages/opentelemetry-instrumentation-alephalpha/opentelemetry/instrumentation/alephalpha/__init__.py)
-reward=0 graded=3 found=0 failed=0 parsed=0 framework=pytest exit_code=4

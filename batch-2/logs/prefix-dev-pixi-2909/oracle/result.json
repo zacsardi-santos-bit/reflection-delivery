@@ -1,0 +1,29 @@
+{
+    "id": "3a23934b-b67b-4b12-b099-cd07d3feab45",
+    "started_at": "2026-07-04T15:38:19.101005",
+    "finished_at": "2026-07-04T15:39:29.994184",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__prefix-dev-pixi-2909": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "prefix-dev-pixi-2909__Z8Rpnzq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

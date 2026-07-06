@@ -1,0 +1,29 @@
+{
+    "id": "290b2cf2-3fa9-4db5-9803-4fb9317cc681",
+    "started_at": "2026-07-06T12:18:42.537042",
+    "finished_at": "2026-07-06T12:19:10.631323",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pydantic-pydantic-ai-5140": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pydantic-pydantic-ai-5140__PngRsk8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

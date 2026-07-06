@@ -1,0 +1,40 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/server && NODE_ENV=test ./node_modules/.bin/mocha ./test/bootstrap.test.js ./test/lib/system/system.removeContainer.test.js ./test/lib/system/system.stopContainer.test.js ./test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js ./test/services/zigbee2mqtt/lib/reset.test.js --exit",
+  "test_files": [
+    "server/test/lib/system/system.removeContainer.test.js",
+    "server/test/lib/system/system.stopContainer.test.js",
+    "server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js",
+    "server/test/services/zigbee2mqtt/lib/reset.test.js"
+  ],
+  "num_test_files": 4,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/server/test/lib/system/system.removeContainer.test.js::system.removeContainer should removeContainer command with success",
+    "/workspace/repo/server/test/lib/system/system.removeContainer.test.js::system.removeContainer should resolve when container does not exist (HTTP 404)",
+    "/workspace/repo/server/test/lib/system/system.stopContainer.test.js::system.stopContainer should stopContainer command with success",
+    "/workspace/repo/server/test/lib/system/system.stopContainer.test.js::system.stopContainer should resolve when container is already stopped (HTTP 304)",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/reset",
+    "/workspace/repo/server/test/services/zigbee2mqtt/lib/reset.test.js::zigbee2mqtt reset should reset the integration completely",
+    "/workspace/repo/server/test/services/zigbee2mqtt/lib/reset.test.js::zigbee2mqtt reset should throw when folder deletion fails",
+    "/workspace/repo/server/test/services/zigbee2mqtt/lib/reset.test.js::zigbee2mqtt reset should disconnect MQTT client during reset",
+    "/workspace/repo/server/test/services/zigbee2mqtt/lib/reset.test.js::zigbee2mqtt reset should cancel backup scheduled job during reset"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/server/test/lib/system/system.removeContainer.test.js::system.removeContainer should failed as not on docker env",
+    "/workspace/repo/server/test/lib/system/system.removeContainer.test.js::system.removeContainer should throw on other Docker errors",
+    "/workspace/repo/server/test/lib/system/system.stopContainer.test.js::system.stopContainer should failed as not on docker env",
+    "/workspace/repo/server/test/lib/system/system.stopContainer.test.js::system.stopContainer should throw on other Docker errors",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API get /api/v1/service/zigbee2mqtt/discovered",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API get /api/v1/service/zigbee2mqtt/adapter",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API get /api/v1/service/zigbee2mqtt/status",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API get /api/v1/service/zigbee2mqtt/setup",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/setup",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/connect",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/mqtt/start",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/z2m/start",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/disconnect",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API post /api/v1/service/zigbee2mqtt/permit_join",
+    "/workspace/repo/server/test/services/zigbee2mqtt/api/zigbee2mqtt.controller.test.js::zigbee2mqtt API get /api/v1/service/zigbee2mqtt/permit_join"
+  ]
+}

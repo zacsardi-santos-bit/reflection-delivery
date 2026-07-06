@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p deno_npm -E 'test(parse_catalog_override)' 2>&1 | tee /tmp/nx_out.txt && grep -q 'PASS \\[' /tmp/nx_out.txt",
+  "test_files": [
+    "tests/specs/npm/overrides/__test__.jsonc",
+    "tests/specs/npm/overrides/catalog_override/main.ts",
+    "tests/specs/npm/overrides/catalog_override/package.json"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) deno_npm resolution::overrides::test::parse_catalog_override_with_key_selector",
+    "(2/5) deno_npm resolution::overrides::test::parse_catalog_override_in_nested_dot_key",
+    "(3/5) deno_npm resolution::overrides::test::parse_catalog_override",
+    "(4/5) deno_npm resolution::overrides::test::parse_catalog_override_unresolved",
+    "(5/5) deno_npm resolution::overrides::test::parse_catalog_override_named"
+  ],
+  "PASS_TO_PASS": []
+}

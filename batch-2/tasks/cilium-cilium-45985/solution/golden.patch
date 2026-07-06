@@ -1,0 +1,398 @@
+diff --git a/Documentation/operations/upgrade.rst b/Documentation/operations/upgrade.rst
+index a442da4320..b954d512c2 100644
+--- a/Documentation/operations/upgrade.rst
++++ b/Documentation/operations/upgrade.rst
+@@ -300,6 +300,18 @@ Informational Notes
+   warning log. Existing empty policies already present in the cluster are not
+   affected, but any create or update that results in an empty policy will be
+   rejected.
++* The Azure IPAM status on ``CiliumNode`` now tracks the subnet at the
++  interface level, matching the AWS and AlibabaCloud IPAM representations.
++  All IP configurations on an Azure NIC must share a subnet, so the new
++  ``status.azure.interfaces[].subnet`` object (``id`` and ``cidr``) is the
++  authoritative source of subnet information. The previously redundant
++  ``status.azure.interfaces[].addresses[].subnet`` and flat
++  ``status.azure.interfaces[].cidr`` fields are deprecated and continue to
++  be populated as mirrors for one release so that operator and agent
++  rolling upgrades work in either order and so that external consumers
++  parsing the CRD have a window to switch their reads to
++  ``status.azure.interfaces[].subnet``. A future release will remove both
++  deprecated fields.
+ * Cilium MCS-API implementation now uses the ``v1beta1`` version of the
+   MCS-API CRDs. Note that ``v1alpha1`` remains fully supported, and this
+   upgrade should be fully transparent. You are still encouraged to update
+diff --git a/pkg/alibabacloud/eni/types/types.go b/pkg/alibabacloud/eni/types/types.go
+index b579758133..0b2731ef29 100644
+--- a/pkg/alibabacloud/eni/types/types.go
++++ b/pkg/alibabacloud/eni/types/types.go
+@@ -141,7 +141,7 @@ func (e *ENI) ForeachAddress(id string, fn types.AddressIterator) error {
+ 		if address.Primary {
+ 			continue
+ 		}
+-		if err := fn(id, e.NetworkInterfaceID, address.PrivateIpAddress, "", address); err != nil {
++		if err := fn(id, e.NetworkInterfaceID, address.PrivateIpAddress, address); err != nil {
+ 			return err
+ 		}
+ 	}
+diff --git a/pkg/aws/eni/types/types.go b/pkg/aws/eni/types/types.go
+index ab7c34a066..bf90fab8b9 100644
+--- a/pkg/aws/eni/types/types.go
++++ b/pkg/aws/eni/types/types.go
+@@ -181,7 +181,7 @@ func (e *ENI) InterfaceID() string {
+ // ForeachAddress iterates over all addresses and calls fn
+ func (e *ENI) ForeachAddress(id string, fn types.AddressIterator) error {
+ 	for _, address := range e.Addresses {
+-		if err := fn(id, e.ID, address, "", address); err != nil {
++		if err := fn(id, e.ID, address, address); err != nil {
+ 			return err
+ 		}
+ 	}
+diff --git a/pkg/azure/api/api.go b/pkg/azure/api/api.go
+index 05e69ac1a1..8a5e84012f 100644
+--- a/pkg/azure/api/api.go
++++ b/pkg/azure/api/api.go
+@@ -334,6 +334,21 @@ func parseInterface(iface *armnetwork.Interface, subnets ipamTypes.SubnetMap, us
+ 			if ip.Properties.PrivateIPAddress == nil {
+ 				continue
+ 			}
++
++			// Azure enforces one subnet per NIC, so record it once. Doing
++			// this before the primary-skip below also covers NICs whose only
++			// IPConfig is the primary.
++			if ip.Properties.Subnet != nil && i.Subnet.ID == "" {
++				i.Subnet.ID = *ip.Properties.Subnet.ID
++				if subnet, ok := subnets[i.Subnet.ID]; ok {
++					if subnet.CIDR.IsValid() {
++						i.Subnet.CIDR = subnet.CIDR.String()
++						i.CIDR = i.Subnet.CIDR //nolint:staticcheck // transitional, see https://github.com/cilium/cilium/issues/46074
++					}
++					i.Gateway = deriveGatewayIP(subnet.CIDR.Addr())
++				}
++			}
++
+ 			isPrimary := ip.Properties.Primary != nil && *ip.Properties.Primary
+ 			if isPrimary {
+ 				i.IP = *ip.Properties.PrivateIPAddress
+@@ -346,17 +361,9 @@ func parseInterface(iface *armnetwork.Interface, subnets ipamTypes.SubnetMap, us
+ 				IP:    *ip.Properties.PrivateIPAddress,
+ 				State: strings.ToLower(string(*ip.Properties.ProvisioningState)),
+ 			}
+-
+ 			if ip.Properties.Subnet != nil {
+-				addr.Subnet = *ip.Properties.Subnet.ID
+-				if subnet, ok := subnets[addr.Subnet]; ok {
+-					if subnet.CIDR.IsValid() {
+-						i.CIDR = subnet.CIDR.String()
+-					}
+-					i.Gateway = deriveGatewayIP(subnet.CIDR.Addr())
+-				}
++				addr.Subnet = *ip.Properties.Subnet.ID //nolint:staticcheck // transitional, see https://github.com/cilium/cilium/issues/46074
+ 			}
+-
+ 			i.Addresses = append(i.Addresses, addr)
+ 		}
+ 	}
+diff --git a/pkg/azure/api/mock/mock.go b/pkg/azure/api/mock/mock.go
+index 76c7d3efbc..1503dc1a7f 100644
+--- a/pkg/azure/api/mock/mock.go
++++ b/pkg/azure/api/mock/mock.go
+@@ -262,7 +262,7 @@ func (a *API) AssignPrivateIpAddressesVMSS(ctx context.Context, vmName, vmssName
+ 			}
+ 			intf.Addresses = append(intf.Addresses, types.AzureAddress{
+ 				IP:     ip.String(),
+-				Subnet: subnetID,
++				Subnet: subnetID, //nolint:staticcheck // deprecated mirror; matches parseInterface, see https://github.com/cilium/cilium/issues/46074
+ 				State:  types.StateSucceeded,
+ 			})
+ 		}
+diff --git a/pkg/azure/ipam/instances.go b/pkg/azure/ipam/instances.go
+index fddaef03ca..e0c5d2ffaf 100644
+--- a/pkg/azure/ipam/instances.go
++++ b/pkg/azure/ipam/instances.go
+@@ -13,6 +13,8 @@ import (
+ 	"k8s.io/apimachinery/pkg/util/sets"
+ 
+ 	"github.com/cilium/cilium/operator/pkg/ipam/nodemanager"
++	azureTypes "github.com/cilium/cilium/pkg/azure/types"
++
+ 	// Register the Azure resource-ID parser. This is the canonical place
+ 	// for Azure-IPAM-enabled binaries to wire in pkg/azure/types' parser
+ 	// so AzureInterface.SetID() can populate the VMSS/VM/RG fields.
+@@ -162,9 +164,9 @@ func (m *InstancesManager) resyncInstance(ctx context.Context, instanceID string
+ func (m *InstancesManager) extractSubnetIDs(instances *ipamTypes.InstanceMap) []string {
+ 	subnetIDs := sets.New[string]()
+ 
+-	instances.ForeachAddress("", func(instanceID, interfaceID, ip, poolID string, address ipamTypes.Address) error {
+-		if poolID != "" {
+-			subnetIDs.Insert(poolID)
++	instances.ForeachInterface("", func(instanceID, interfaceID string, iface ipamTypes.Interface) error {
++		if azIface, ok := iface.(*azureTypes.AzureInterface); ok && azIface.Subnet.ID != "" {
++			subnetIDs.Insert(azIface.Subnet.ID)
+ 		}
+ 		return nil
+ 	})
+diff --git a/pkg/azure/ipam/node.go b/pkg/azure/ipam/node.go
+index 865a86fcd8..e5c4035881 100644
+--- a/pkg/azure/ipam/node.go
++++ b/pkg/azure/ipam/node.go
+@@ -102,11 +102,9 @@ func (n *Node) PrepareIPAllocation(scopedLog *slog.Logger) (a *nodemanager.Alloc
+ 				logfields.AvailableAddresses, availableOnInterface,
+ 			)
+ 
+-			preferredPoolIDs := []ipamTypes.PoolID{}
+-			for _, address := range iface.Addresses {
+-				if address.Subnet != "" {
+-					preferredPoolIDs = append(preferredPoolIDs, ipamTypes.PoolID(address.Subnet))
+-				}
++			var preferredPoolIDs []ipamTypes.PoolID
++			if iface.Subnet.ID != "" {
++				preferredPoolIDs = []ipamTypes.PoolID{ipamTypes.PoolID(iface.Subnet.ID)}
+ 			}
+ 
+ 			poolID, available := n.manager.subnets.FirstSubnetWithAvailableAddresses(preferredPoolIDs)
+@@ -171,7 +169,7 @@ func (n *Node) ResyncInterfacesAndIPs(ctx context.Context, scopedLog *slog.Logge
+ 	n.manager.mutex.RLock()
+ 	defer n.manager.mutex.RUnlock()
+ 	usePrimary := n.manager.usePrimary
+-	err = n.manager.instances.ForeachAddress(n.node.InstanceID(), func(instanceID, interfaceID, ip, poolID string, addressObj ipamTypes.Address) error {
++	err = n.manager.instances.ForeachAddress(n.node.InstanceID(), func(instanceID, interfaceID, ip string, addressObj ipamTypes.Address) error {
+ 		address, ok := addressObj.(types.AzureAddress)
+ 		if !ok {
+ 			scopedLog.Warn(
+diff --git a/pkg/azure/types/types.go b/pkg/azure/types/types.go
+index 468780794f..98de16b5e6 100644
+--- a/pkg/azure/types/types.go
++++ b/pkg/azure/types/types.go
+@@ -56,13 +56,28 @@ type AzureAddress struct {
+ 	// IP is the ip address of the address
+ 	IP string `json:"ip,omitempty"`
+ 
+-	// Subnet is the subnet the address belongs to
++	// Subnet is the subnet the address belongs to.
++	//
++	// Deprecated: use AzureInterface.Subnet.ID. Populated as a mirror for one
++	// release so external consumers of CiliumNode.Status.Azure can migrate.
++	// TODO(https://github.com/cilium/cilium/issues/46074): remove once the migration window closes.
+ 	Subnet string `json:"subnet,omitempty"`
+ 
+ 	// State is the provisioning state of the address
+ 	State string `json:"state,omitempty"`
+ }
+ 
++// AzureSubnet describes the subnet an AzureInterface is attached to. Azure
++// enforces one subnet per NIC, so it is tracked once per interface (mirroring
++// the AWS and Alibaba patterns).
++type AzureSubnet struct {
++	// ID is the resource ID of the subnet
++	ID string `json:"id,omitempty"`
++
++	// CIDR is the CIDR range associated with the subnet
++	CIDR string `json:"cidr,omitempty"`
++}
++
+ // AzureInterface represents an Azure Interface
+ //
+ // +k8s:deepcopy-gen=true
+@@ -103,6 +118,11 @@ type AzureInterface struct {
+ 	// SecurityGroup is the security group associated with the interface
+ 	SecurityGroup string `json:"security-group,omitempty"`
+ 
++	// Subnet is the subnet the interface is attached to.
++	//
++	// +optional
++	Subnet AzureSubnet `json:"subnet,omitzero"`
++
+ 	// Gateway is the interface's subnet's default route
+ 	//
+ 	// +optional
+@@ -110,6 +130,10 @@ type AzureInterface struct {
+ 
+ 	// CIDR is the range that the interface belongs to.
+ 	//
++	// Deprecated: use Subnet.CIDR. Retained for one release so agent/operator
++	// rolling upgrades work in either order.
++	// TODO(https://github.com/cilium/cilium/issues/46074): remove once the migration window closes.
++	//
+ 	// +optional
+ 	CIDR string `json:"cidr,omitempty"`
+ 
+@@ -163,10 +187,10 @@ func (a *AzureInterface) GetVMID() string {
+ 	return a.vmID
+ }
+ 
+-// ForeachAddress iterates over all addresses and calls fn
++// ForeachAddress iterates over all addresses and calls fn.
+ func (a *AzureInterface) ForeachAddress(id string, fn types.AddressIterator) error {
+ 	for _, address := range a.Addresses {
+-		if err := fn(id, a.ID, address.IP, address.Subnet, address); err != nil {
++		if err := fn(id, a.ID, address.IP, address); err != nil {
+ 			return err
+ 		}
+ 	}
+diff --git a/pkg/azure/types/zz_generated.deepcopy.go b/pkg/azure/types/zz_generated.deepcopy.go
+index ad51b4527a..6ad9bea2a9 100644
+--- a/pkg/azure/types/zz_generated.deepcopy.go
++++ b/pkg/azure/types/zz_generated.deepcopy.go
+@@ -16,6 +16,7 @@ func (in *AzureInterface) DeepCopyInto(out *AzureInterface) {
+ 		*out = make([]AzureAddress, len(*in))
+ 		copy(*out, *in)
+ 	}
++	out.Subnet = in.Subnet
+ 	return
+ }
+ 
+diff --git a/pkg/azure/types/zz_generated.deepequal.go b/pkg/azure/types/zz_generated.deepequal.go
+index 73a4752aab..c96337ded8 100644
+--- a/pkg/azure/types/zz_generated.deepequal.go
++++ b/pkg/azure/types/zz_generated.deepequal.go
+@@ -70,6 +70,10 @@ func (in *AzureInterface) DeepEqual(other *AzureInterface) bool {
+ 	if in.SecurityGroup != other.SecurityGroup {
+ 		return false
+ 	}
++	if in.Subnet != other.Subnet {
++		return false
++	}
++
+ 	if in.Gateway != other.Gateway {
+ 		return false
+ 	}
+@@ -129,3 +133,20 @@ func (in *AzureStatus) DeepEqual(other *AzureStatus) bool {
+ 
+ 	return true
+ }
++
++// DeepEqual is an autogenerated deepequal function, deeply comparing the
++// receiver with other. in must be non-nil.
++func (in *AzureSubnet) DeepEqual(other *AzureSubnet) bool {
++	if other == nil {
++		return false
++	}
++
++	if in.ID != other.ID {
++		return false
++	}
++	if in.CIDR != other.CIDR {
++		return false
++	}
++
++	return true
++}
+diff --git a/pkg/ipam/crd.go b/pkg/ipam/crd.go
+index f96d6b0832..ad51192022 100644
+--- a/pkg/ipam/crd.go
++++ b/pkg/ipam/crd.go
+@@ -24,6 +24,7 @@ import (
+ 	"k8s.io/client-go/tools/cache"
+ 
+ 	alibabaCloud "github.com/cilium/cilium/pkg/alibabacloud/utils"
++	azureTypes "github.com/cilium/cilium/pkg/azure/types"
+ 	"github.com/cilium/cilium/pkg/cidr"
+ 	"github.com/cilium/cilium/pkg/datapath/linux/sysctl"
+ 	"github.com/cilium/cilium/pkg/ip"
+@@ -250,7 +251,7 @@ func deriveVpcCIDRs(node *ciliumv2.CiliumNode) (primaryCIDR *cidr.CIDR, secondar
+ 		}
+ 	}
+ 	for _, azif := range node.Status.Azure.Interfaces {
+-		c, err := cidr.ParseCIDR(azif.CIDR)
++		c, err := cidr.ParseCIDR(azureInterfaceCIDR(azif))
+ 		if err == nil {
+ 			primaryCIDR = c
+ 			return
+@@ -712,7 +713,7 @@ func (a *crdAllocator) buildAllocationResult(addr netip.Addr, ipInfo *ipamTypes.
+ 				if gatewayIP, err := netip.ParseAddr(iface.Gateway); err == nil {
+ 					result.GatewayIP = gatewayIP
+ 				}
+-				if p, err := netip.ParsePrefix(iface.CIDR); err == nil {
++				if p, err := netip.ParsePrefix(azureInterfaceCIDR(iface)); err == nil {
+ 					result.CIDRs = append(result.CIDRs, p)
+ 				}
+ 				// Add manually configured Native Routing CIDR
+@@ -958,3 +959,16 @@ func (e *ErrIPNotAvailableInPool) Is(target error) bool {
+ 	}
+ 	return t.addr == e.addr
+ }
++
++// azureInterfaceCIDR returns Subnet.CIDR, falling back to the deprecated
++// AzureInterface.CIDR for CiliumNodes written by operators predating the
++// Subnet.CIDR migration.
++//
++// TODO(https://github.com/cilium/cilium/issues/46074): remove once
++// AzureInterface.CIDR is deleted.
++func azureInterfaceCIDR(iface azureTypes.AzureInterface) string {
++	if iface.Subnet.CIDR != "" {
++		return iface.Subnet.CIDR
++	}
++	return iface.CIDR //nolint:staticcheck // fallback for operators predating the Subnet.CIDR migration
++}
+diff --git a/pkg/ipam/types/types.go b/pkg/ipam/types/types.go
+index 7b4f17ebec..e8978a85d5 100644
+--- a/pkg/ipam/types/types.go
++++ b/pkg/ipam/types/types.go
+@@ -552,7 +552,7 @@ func (m *InstanceMap) updateLocked(instanceID string, iface Interface) {
+ type Address any
+ 
+ // AddressIterator is the function called by the ForeachAddress iterator
+-type AddressIterator func(instanceID, interfaceID, ip, poolID string, address Address) error
++type AddressIterator func(instanceID, interfaceID, ip string, address Address) error
+ 
+ func foreachAddress(instanceID string, instance *Instance, fn AddressIterator) error {
+ 	for _, iface := range instance.Interfaces {
+diff --git a/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnodes.yaml b/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnodes.yaml
+index e2613883f9..97045007f5 100644
+--- a/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnodes.yaml
++++ b/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnodes.yaml
+@@ -543,14 +543,20 @@ spec:
+                                   address
+                                 type: string
+                               subnet:
+-                                description: Subnet is the subnet the address belongs
+-                                  to
++                                description: |-
++                                  Subnet is the subnet the address belongs to.
++
++                                  Deprecated: use AzureInterface.Subnet.ID. Populated as a mirror for one
++                                  release so external consumers of CiliumNode.Status.Azure can migrate.
+                                 type: string
+                             type: object
+                           type: array
+                         cidr:
+-                          description: CIDR is the range that the interface belongs
+-                            to.
++                          description: |-
++                            CIDR is the range that the interface belongs to.
++
++                            Deprecated: use Subnet.CIDR. Retained for one release so agent/operator
++                            rolling upgrades work in either order.
+                           type: string
+                         gateway:
+                           description: Gateway is the interface's subnet's default
+@@ -575,6 +581,18 @@ spec:
+                         state:
+                           description: State is the provisioning state
+                           type: string
++                        subnet:
++                          description: Subnet is the subnet the interface is attached
++                            to.
++                          properties:
++                            cidr:
++                              description: CIDR is the CIDR range associated with
++                                the subnet
++                              type: string
++                            id:
++                              description: ID is the resource ID of the subnet
++                              type: string
++                          type: object
+                       type: object
+                     type: array
+                 type: object
+diff --git a/pkg/k8s/apis/cilium.io/register.go b/pkg/k8s/apis/cilium.io/register.go
+index ccd400fa71..7ce768274f 100644
+--- a/pkg/k8s/apis/cilium.io/register.go
++++ b/pkg/k8s/apis/cilium.io/register.go
+@@ -15,5 +15,5 @@ const (
+ 	//
+ 	// Maintainers: Run ./Documentation/check-crd-compat-table.sh for each release
+ 	// Developers: Bump patch for each change in the CRD schema.
+-	CustomResourceDefinitionSchemaVersion = "1.33.5"
++	CustomResourceDefinitionSchemaVersion = "1.33.6"
+ )

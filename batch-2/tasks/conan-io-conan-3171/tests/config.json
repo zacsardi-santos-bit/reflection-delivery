@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest conans/test/functional/merge_directories_test.py conans/test/integration/export_sources_test.py conans/test/integration/private_deps_test.py -v",
+  "test_files": [
+    "conans/test/functional/merge_directories_test.py",
+    "conans/test/integration/export_sources_test.py",
+    "conans/test/integration/private_deps_test.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "conans.test.integration.private_deps_test.PrivateBinariesTest::test_own_private_skip",
+    "conans.test.integration.private_deps_test.PrivateBinariesTest::test_private_skip"
+  ],
+  "PASS_TO_PASS": [
+    "conans.test.functional.merge_directories_test.MergeDirectoriesTest::test_empty_dest_merge",
+    "conans.test.functional.merge_directories_test.MergeDirectoriesTest::test_non_empty_dest_merge",
+    "conans.test.integration.private_deps_test.PrivateBinariesTest::test_multiple_private_skip"
+  ]
+}

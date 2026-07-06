@@ -1,0 +1,7 @@
+patching file images/bank-vaults/tests/full-test.sh
+patching file images/caddy/README.md
+patching file images/caddy/config/main.tf
+patching file images/caddy/config/template.apko.yaml
+patching file images/caddy/main.tf
+patching file images/tigera-operator/tests/main.tf
+patching file main.tf

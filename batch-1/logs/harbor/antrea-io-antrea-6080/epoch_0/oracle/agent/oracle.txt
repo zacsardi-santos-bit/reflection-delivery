@@ -1,0 +1,13 @@
+patching file build/charts/antrea/templates/controller/clusterrole.yaml
+patching file build/yamls/antrea-aks.yml
+patching file build/yamls/antrea-eks.yml
+patching file build/yamls/antrea-gke.yml
+patching file build/yamls/antrea-ipsec.yml
+patching file build/yamls/antrea.yml
+patching file multicluster/cmd/multicluster-controller/controller.go
+patching file pkg/apiserver/apiserver.go
+patching file pkg/apiserver/certificate/cacert_controller.go
+patching file pkg/apiserver/certificate/certificate.go
+patching file pkg/apiserver/certificate/config.go
+patching file pkg/apiserver/certificate/selfsignedcert_provider.go
+patching file pkg/util/env/env.go

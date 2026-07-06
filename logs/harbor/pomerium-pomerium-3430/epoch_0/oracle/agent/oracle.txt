@@ -1,2 +1,0 @@
-patching file authenticate/handlers/webauthn/webauthn.go
-patching file internal/httputil/httputil.go

@@ -1,5 +1,0 @@
-I'm working on adding a durable, disk-backed queue to the Prometheus remote write component in Grafana Alloy. The idea is that when data is sent to the queue it gets written to disk so it survives a process restart. Each queued item should carry a raw byte payload plus an optional map of string key-value metadata. When the process starts up again and a new queue is created on the same directory, any previously committed but unread items should be delivered to the consumer in the same order they were stored before any new items are processed.
-
-The queue also needs to handle failure cases gracefully. If a file is corrupted or has been removed by the time the consumer tries to read it, that individual item should return an error, but the rest of the items in the queue should continue to be processed normally. Unrelated files that happen to be present in the queue directory should be ignored completely.
-
-I also need a serializable record type that bundles the data payload and metadata together for storage on disk — it should support binary serialization so it can be efficiently written to and read from files. Can you implement this queue and the supporting types?

@@ -1,0 +1,29 @@
+{
+    "id": "12eab5d5-ef1b-47ea-861c-f607dd6fe7f0",
+    "started_at": "2026-07-06T12:18:37.658583",
+    "finished_at": "2026-07-06T12:24:43.640921",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__openai-codex-15154": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "openai-codex-15154__7tePkAV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

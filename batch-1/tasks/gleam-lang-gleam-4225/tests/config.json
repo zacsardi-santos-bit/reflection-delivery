@@ -1,0 +1,28 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(/convert_to_function_call/)'",
+  "test_files": [
+    "compiler-core/src/language_server/tests/action.rs",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_always_inlines_the_first_step.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_argument_in_first_position.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_argument_in_first_position_2.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_argument_in_first_position_3.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_argument_in_first_position_4.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_function_producing_another_function.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_hole_in_first_position.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_to_function_call_works_with_hole_not_in_first_position.snap"
+  ],
+  "num_test_files": 9,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(6/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_hole_not_in_first_position",
+    "(1/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_argument_in_first_position_3",
+    "(2/8) gleam-core language_server::tests::action::convert_to_function_call_always_inlines_the_first_step",
+    "(3/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_argument_in_first_position_4",
+    "(4/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_argument_in_first_position_2",
+    "(5/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_function_producing_another_function",
+    "(7/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_argument_in_first_position",
+    "(8/8) gleam-core language_server::tests::action::convert_to_function_call_works_with_hole_in_first_position"
+  ],
+  "PASS_TO_PASS": []
+}

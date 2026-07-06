@@ -1,0 +1,4 @@
+patching file packages/svelte/src/compiler/phases/3-transform/client/transform-template/index.js
+patching file packages/svelte/src/compiler/phases/3-transform/client/transform-template/to-functions.js
+patching file packages/svelte/src/internal/client/dom/operations.js
+patching file packages/svelte/src/internal/client/dom/template.js

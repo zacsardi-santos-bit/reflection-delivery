@@ -1,0 +1,238 @@
+patching file babel/src/test/java/org/apache/calcite/test/BabelQuidemTest.java
+patching file babel/src/test/resources/sql/postgresql.iq
+patching file core/src/test/java/org/apache/calcite/util/format/PostgresqlDateTimeFormatterTest.java
+patching file core/src/test/resources/pg_to_char_queries.sql
+patching file core/src/test/resources/to_char_generate_iq.py
+patching file testkit/src/main/java/org/apache/calcite/test/QuidemTest.java
+patching file testkit/src/main/java/org/apache/calcite/test/SqlOperatorTest.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+Remote build cache is disabled when running with --offline.
+> Task :buildSrc:compileKotlin NO-SOURCE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:autostyleKotlinCheck NO-SOURCE
+> Task :buildSrc:autostyleKotlinGradleCheck UP-TO-DATE
+> Task :buildSrc:autostyleCheck UP-TO-DATE
+> Task :buildSrc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:buildext:compileKotlin UP-TO-DATE
+> Task :buildSrc:fmpp:compileKotlin UP-TO-DATE
+> Task :buildSrc:javacc:compileKotlin UP-TO-DATE
+> Task :buildSrc:buildext:compileJava NO-SOURCE
+> Task :buildSrc:fmpp:compileJava NO-SOURCE
+> Task :buildSrc:javacc:compileJava NO-SOURCE
+> Task :buildSrc:buildext:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:javacc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:fmpp:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:buildext:processResources UP-TO-DATE
+> Task :buildSrc:buildext:classes UP-TO-DATE
+> Task :buildSrc:javacc:processResources UP-TO-DATE
+> Task :buildSrc:fmpp:processResources UP-TO-DATE
+> Task :buildSrc:fmpp:classes UP-TO-DATE
+> Task :buildSrc:javacc:classes UP-TO-DATE
+> Task :buildSrc:buildext:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:javacc:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:fmpp:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:buildext:jar UP-TO-DATE
+> Task :buildSrc:buildext:assemble UP-TO-DATE
+> Task :buildSrc:javacc:jar UP-TO-DATE
+> Task :buildSrc:fmpp:jar UP-TO-DATE
+> Task :buildSrc:javacc:assemble UP-TO-DATE
+> Task :buildSrc:fmpp:assemble UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Task :buildSrc:javacc:autostyleKotlinCheck UP-TO-DATE
+> Task :buildSrc:buildext:autostyleKotlinCheck UP-TO-DATE
+> Task :buildSrc:fmpp:autostyleKotlinCheck UP-TO-DATE
+> Task :buildSrc:buildext:autostyleKotlinGradleCheck UP-TO-DATE
+> Task :buildSrc:buildext:autostyleCheck UP-TO-DATE
+> Task :buildSrc:javacc:autostyleKotlinGradleCheck UP-TO-DATE
+> Task :buildSrc:javacc:autostyleCheck UP-TO-DATE
+> Task :buildSrc:buildext:compileTestKotlin NO-SOURCE
+> Task :buildSrc:fmpp:autostyleKotlinGradleCheck UP-TO-DATE
+> Task :buildSrc:fmpp:autostyleCheck UP-TO-DATE
+> Task :buildSrc:buildext:compileTestJava NO-SOURCE
+> Task :buildSrc:javacc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:javacc:compileTestJava NO-SOURCE
+> Task :buildSrc:fmpp:compileTestKotlin NO-SOURCE
+> Task :buildSrc:buildext:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:buildext:processTestResources NO-SOURCE
+> Task :buildSrc:buildext:testClasses UP-TO-DATE
+> Task :buildSrc:javacc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:fmpp:compileTestJava NO-SOURCE
+> Task :buildSrc:javacc:processTestResources NO-SOURCE
+> Task :buildSrc:javacc:testClasses UP-TO-DATE
+> Task :buildSrc:buildext:test NO-SOURCE
+> Task :buildSrc:javacc:test NO-SOURCE
+> Task :buildSrc:fmpp:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:fmpp:processTestResources NO-SOURCE
+> Task :buildSrc:fmpp:testClasses UP-TO-DATE
+> Task :buildSrc:buildext:validatePlugins UP-TO-DATE
+> Task :buildSrc:javacc:validatePlugins UP-TO-DATE
+> Task :buildSrc:buildext:check UP-TO-DATE
+> Task :buildSrc:javacc:check UP-TO-DATE
+> Task :buildSrc:javacc:build UP-TO-DATE
+> Task :buildSrc:buildext:build UP-TO-DATE
+> Task :buildSrc:fmpp:test NO-SOURCE
+> Task :buildSrc:fmpp:validatePlugins UP-TO-DATE
+> Task :buildSrc:fmpp:check UP-TO-DATE
+> Task :buildSrc:fmpp:build UP-TO-DATE
+
+> Configure project :
+Building Apache Calcite 1.38.0-SNAPSHOT
+
+> Task :testkit:processResources NO-SOURCE
+> Task :core:fmppMain UP-TO-DATE
+> Task :core:javaCCMain UP-TO-DATE
+> Task :core:versionClass UP-TO-DATE
+> Task :core:processResources UP-TO-DATE
+> Task :core:fmppTest UP-TO-DATE
+> Task :core:javaCCTest UP-TO-DATE
+> Task :linq4j:compileJava UP-TO-DATE
+> Task :linq4j:processResources NO-SOURCE
+> Task :linq4j:classes UP-TO-DATE
+> Task :linq4j:jandexMain UP-TO-DATE
+> Task :linq4j:processJandexIndex NO-SOURCE
+> Task :linq4j:jar UP-TO-DATE
+> Task :core:processTestResources
+> Task :core:compileKotlin NO-SOURCE
+
+> Task :core:compileJava
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :core:classes
+> Task :core:inspectClassesForKotlinIC
+> Task :core:jandexMain
+> Task :core:processJandexIndex NO-SOURCE
+> Task :core:jar
+> Task :testkit:compileKotlin
+
+> Task :testkit:compileJava
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :testkit:classes
+> Task :testkit:inspectClassesForKotlinIC
+> Task :testkit:jandexMain
+> Task :testkit:processJandexIndex NO-SOURCE
+> Task :testkit:jar
+> Task :core:compileTestKotlin
+
+> Task :core:compileTestJava
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :core:testClasses
+
+> Task :core:test
+          0.1sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestEraLowerCaseNoDots(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestEraUpperCaseWithDots(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestSSSSS(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestHH12(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestMS(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestEraUpperCaseNoDots(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestAMLowerCase(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestAMUpperCase(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestAMWithDotsLowerCase(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestEraLowerCaseWithDots(String)[0m
+          0.0sec,    2 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.[0;1mPostgresqlDateTimeFormatterTest[0m > [0;1mtestAMWithDotsUpperCase(String)[0m
+          0.2sec,   70 completed,   0 failed,   0 skipped, org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest
+          0.9sec,   70 completed,   0 failed,   0 skipped, Gradle Test Run :core:test
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.6.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 49s
+52 actionable tasks: 13 executed, 39 up-to-date
+The build is running offline. A build scan will not be published at this time, but it can be published if you run the 'buildScanPublishPrevious' task in the next build.
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" tests="70" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:27:33" hostname="modal" time="0.144">
+  <properties/>
+  <testcase name="[1] ad" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.042"/>
+  <testcase name="[2] bc" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testDayFullUpperTranslate()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.011"/>
+  <testcase name="testMonthShortLowerCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.005"/>
+  <testcase name="testMonthFullLowerCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testDayFullLowerCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.004"/>
+  <testcase name="testYearWithCommas()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.003"/>
+  <testcase name="[1] A.D." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[2] B.C." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testDDD()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testFF1()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testFF2()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testFF4()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.002"/>
+  <testcase name="testFF5()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testFF6()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testIYY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.002"/>
+  <testcase name="testYYY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[1] SSSSS" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[2] SSSS" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testDayShortLowerCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[1] HH12" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[2] HH" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testHH24()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testIDDD()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testIYYY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testYYYY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testDayFullUpperNoTranslate()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testMonthShortUpperCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testMonthFullUpperCaseNoTranslate()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testCC()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testDD()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testID()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testIW()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.002"/>
+  <testcase name="testIY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testMI()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testMM()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[1] MS" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[2] FF3" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testSS()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testUS()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testWW()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testYY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testMonthFullUpperCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testDayFullUpperCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testDayFullCapitalized()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testDayShortUpperCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testMonthShortCapitalized()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testRMLowerCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testD()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testI()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testJ()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testQ()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testW()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testY()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[1] AD" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[2] BC" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[1] am" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[2] pm" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testRMUpperCase()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="testMonthFullUpperCaseTranslate()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.002"/>
+  <testcase name="[1] AM" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[2] PM" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[1] a.m." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[2] p.m." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[1] a.d." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[2] b.c." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testMonthFullCapitalized()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="testDayShortCapitalized()" classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.001"/>
+  <testcase name="[1] A.M." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <testcase name="[2] P.M." classname="org.apache.calcite.util.format.PostgresqlDateTimeFormatterTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=70 found=70 failed=0 parsed=70 framework=junit exit_code=0

@@ -1,0 +1,29 @@
+{
+    "id": "3487c20e-a33d-46b9-842e-40e0de675132",
+    "started_at": "2026-07-04T15:37:41.378149",
+    "finished_at": "2026-07-04T15:40:47.224026",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__webpack-webpack-20623": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "webpack-webpack-20623__UPdx9my"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

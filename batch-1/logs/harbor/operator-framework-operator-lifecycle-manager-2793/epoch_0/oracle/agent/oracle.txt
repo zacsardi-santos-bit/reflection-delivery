@@ -1,0 +1,3 @@
+patching file pkg/controller/bundle/bundle_unpacker.go
+patching file pkg/controller/registry/reconciler/reconciler.go
+patching file pkg/controller/security/security.go

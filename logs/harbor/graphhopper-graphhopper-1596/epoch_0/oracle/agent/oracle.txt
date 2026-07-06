@@ -1,6 +1,0 @@
-patching file core/src/main/java/com/graphhopper/routing/AbstractBidirectionEdgeCHNoSOD.java
-patching file core/src/main/java/com/graphhopper/routing/QueryGraph.java
-patching file core/src/main/java/com/graphhopper/routing/ch/EdgeBasedNodeContractor.java
-patching file core/src/main/java/com/graphhopper/routing/weighting/TurnWeighting.java
-patching file core/src/main/java/com/graphhopper/storage/TurnCostExtension.java
-patching file core/src/main/java/com/graphhopper/util/GHUtility.java

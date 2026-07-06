@@ -1,0 +1,29 @@
+{
+    "id": "52d9cbfa-d5e2-4de8-adf9-652d7c814d59",
+    "started_at": "2026-07-06T12:17:17.944979",
+    "finished_at": "2026-07-06T12:18:03.715464",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__zephyrproject-rtos-zephyr-82515": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "zephyrproject-rtos-zephyr-82515__Teb65Hp"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

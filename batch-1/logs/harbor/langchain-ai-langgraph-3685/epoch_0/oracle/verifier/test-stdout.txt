@@ -1,0 +1,32 @@
+patching file libs/langgraph/tests/__snapshots__/test_pregel.ambr
+patching file libs/langgraph/tests/test_pregel.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/libs/langgraph
+configfile: pyproject.toml
+plugins: syrupy-5.3.4, langsmith-0.9.3, anyio-4.14.1, mock-3.15.1, asyncio-1.4.0, xdist-3.8.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 364 items / 362 deselected / 2 selected
+
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory] PASSED [ 50%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite] PASSED [100%]
+
+=============================== warnings summary ===============================
+../checkpoint/langgraph/checkpoint/base/__init__.py:21
+  /workspace/repo/libs/checkpoint/langgraph/checkpoint/base/__init__.py:21: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+../checkpoint-postgres/langgraph/store/postgres/base.py:469
+  /workspace/repo/libs/checkpoint-postgres/langgraph/store/postgres/base.py:469: DeprecationWarning: invalid escape sequence '\.'
+    query = """
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 5 durations ==============================
+0.33s call     tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory]
+0.32s call     tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite]
+0.01s setup    tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory]
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+================ 2 passed, 362 deselected, 2 warnings in 1.11s =================
+reward=1 graded=2 found=0 failed=0 parsed=364 framework=pytest exit_code=0

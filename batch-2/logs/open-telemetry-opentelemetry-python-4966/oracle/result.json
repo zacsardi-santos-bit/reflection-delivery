@@ -1,0 +1,29 @@
+{
+    "id": "ea27ba85-9134-4845-b926-d6d55ed16127",
+    "started_at": "2026-07-06T12:17:58.456906",
+    "finished_at": "2026-07-06T12:18:41.245322",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__open-telemetry-opentelemetry-python-4966": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "open-telemetry-opentelemetry-pyt__7QHk9Ww"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

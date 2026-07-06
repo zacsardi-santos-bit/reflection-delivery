@@ -1,0 +1,29 @@
+{
+    "id": "75b20b53-5244-44bb-b167-f450d5906b8c",
+    "started_at": "2026-07-04T15:40:14.389158",
+    "finished_at": "2026-07-04T15:40:43.707734",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__google-gemini-gemini-cli-17490": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "google-gemini-gemini-cli-17490__nxrG4wa"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

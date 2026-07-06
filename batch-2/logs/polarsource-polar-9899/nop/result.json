@@ -1,0 +1,29 @@
+{
+    "id": "0fae0fe0-e809-495c-8ef7-987a91b5caa8",
+    "started_at": "2026-07-06T12:17:09.354999",
+    "finished_at": "2026-07-06T12:18:05.896694",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__polarsource-polar-9899": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "polarsource-polar-9899__sNeGjHW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p tauri-utils --features resources resources::tests",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "tauri-utils resources::tests::resource_paths_iter_map_allow_walk",
+    "tauri-utils resources::tests::resource_paths_iter_map_no_walk",
+    "tauri-utils resources::tests::resource_paths_iter_slice_allow_walk",
+    "tauri-utils resources::tests::resource_paths_iter_slice_no_walk"
+  ],
+  "PASS_TO_PASS": []
+}

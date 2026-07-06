@@ -1,0 +1,9 @@
+patching file changelog/issue-7404.md
+patching file workers/generic-worker/mounts.go
+patching file workers/generic-worker/mounts_insecure.go
+patching file workers/generic-worker/mounts_multiuser.go
+patching file workers/generic-worker/multiuser_linux.go
+patching file workers/generic-worker/multiuser_posix.go
+patching file workers/generic-worker/multiuser_windows.go
+patching file workers/generic-worker/runtime/runtime.go
+patching file workers/generic-worker/runtime/runtime_linux.go

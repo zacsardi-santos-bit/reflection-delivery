@@ -1,0 +1,21 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run scripts/tests/eval-analysis.test.ts",
+  "test_files": [
+    "scripts/tests/eval-analysis.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis extracts direct eval helper calls and static metadata",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis maps simple local wrapper helpers to their base helper",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis maps nested wrapper helpers defined inside describe blocks",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis maps variable wrapper helpers in multi-declaration statements",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis does not map outer functions from nested helper calls",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis maps imported eval helper aliases",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis parses TSX eval files with component helpers",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis normalizes relative paths to forward slashes",
+    "/workspace/repo/scripts/tests/eval-analysis.test.ts::eval-analysis reports diagnostics for dynamic eval shapes"
+  ],
+  "PASS_TO_PASS": []
+}

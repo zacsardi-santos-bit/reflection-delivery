@@ -1,7 +1,0 @@
-patching file gen/calc.py
-patching file gen/dcos-config.yaml
-patching file packages/adminrouter/docker/Dockerfile
-patching file packages/adminrouter/docker/adminrouter-tls-agent.conf
-patching file packages/adminrouter/docker/adminrouter-tls-master.conf (renamed from packages/adminrouter/docker/adminrouter-tls.conf)
-patching file packages/adminrouter/extra/src/nginx.agent.conf
-patching file packages/adminrouter/extra/src/nginx.master.conf

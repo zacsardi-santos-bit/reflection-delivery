@@ -1,0 +1,29 @@
+{
+    "id": "cbe495ed-9ecd-4ee3-a893-3ba6579825f9",
+    "started_at": "2026-07-06T12:17:31.450557",
+    "finished_at": "2026-07-06T12:19:44.522757",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__usebruno-bruno-7622": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "usebruno-bruno-7622__rDJaWjC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

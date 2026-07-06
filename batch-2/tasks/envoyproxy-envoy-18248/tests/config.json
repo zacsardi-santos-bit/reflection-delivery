@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/test_headers.py -v",
+  "test_files": [
+    "contrib/kafka/filters/network/test/mesh/command_handlers/produce_unit_test.cc",
+    "contrib/kafka/filters/network/test/mesh/integration_test/kafka_mesh_integration_test.py",
+    "contrib/kafka/filters/network/test/mesh/upstream_kafka_client_impl_unit_test.cc"
+  ],
+  "num_test_files": 3,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "test_headers::test_outbound_record_exists",
+    "test_headers::test_outbound_record_has_headers_field",
+    "test_headers::test_upstream_client_impl_has_convert_headers"
+  ],
+  "PASS_TO_PASS": []
+}

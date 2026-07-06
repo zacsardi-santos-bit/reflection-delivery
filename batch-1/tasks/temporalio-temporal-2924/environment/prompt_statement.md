@@ -1,0 +1,7 @@
+I'm working on namespace replication in a multi-cluster Temporal setup and running into two related problems.
+
+First, when a global namespace is registered on the active cluster, no replication message is sent out. This means standby clusters never learn about the new namespace from replication — they have to be configured separately. It seems like the registration path should be publishing a replication event the same way updates do, but it currently doesn't.
+
+Second, when a namespace's cluster membership list is changed (for example, when clusters are added or removed from the namespace), the receiving cluster sometimes ignores the incoming replication task entirely. The logic that decides whether to apply an incoming namespace update checks if the local cluster is in the new cluster list — but if the local cluster was just removed from the list, that check fails and the update is skipped. This leaves the cluster with a stale cluster list rather than applying the change.
+
+I also need a way for the replication publisher to handle the case where a cluster list change has occurred and the update needs to go out even if the namespace currently has only a single cluster in its replication config (which would otherwise suppress publication). The publisher should accept a flag indicating that the cluster list was updated, and when that flag is set, it should publish the replication task regardless of how many clusters are in the config.

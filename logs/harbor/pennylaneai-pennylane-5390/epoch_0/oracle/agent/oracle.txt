@@ -1,4 +1,0 @@
-patching file doc/releases/changelog-dev.md
-patching file pennylane/__init__.py
-patching file pennylane/fermi/__init__.py
-patching file pennylane/fermi/conversion.py

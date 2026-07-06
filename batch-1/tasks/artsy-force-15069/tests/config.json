@@ -1,0 +1,18 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx --coverage=false --verbose --watchAll=false",
+  "test_files": [
+    "src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx::ArtistMediumsTitle renders default title when no mediums are selected",
+    "/workspace/repo/src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx::ArtistMediumsTitle renders title with single medium when one medium is selected",
+    "/workspace/repo/src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx::ArtistMediumsTitle renders title with multiple mediums when multiple are selected",
+    "/workspace/repo/src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx::ArtistMediumsTitle renders title with multiple mediums in alphabetical order",
+    "/workspace/repo/src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx::ArtistMediumsTitle renders default title when filters are reset",
+    "/workspace/repo/src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx::ArtistMediumsTitle uses URL params for initial render"
+  ],
+  "PASS_TO_PASS": []
+}

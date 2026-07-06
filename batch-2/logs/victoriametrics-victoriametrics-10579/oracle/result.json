@@ -1,0 +1,29 @@
+{
+    "id": "80f613f6-614d-4a53-9cd5-efdd28d5266c",
+    "started_at": "2026-07-06T12:18:37.043962",
+    "finished_at": "2026-07-06T12:19:43.866298",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__victoriametrics-victoriametrics-10579": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "victoriametrics-victoriametrics__djMjFQT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

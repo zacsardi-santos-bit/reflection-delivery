@@ -1,0 +1,838 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 048d0cd7f..2c00278ac 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -8732,6 +8732,7 @@ dependencies = [
+  "blake2 0.10.6 (registry+https://github.com/rust-lang/crates.io-index)",
+  "chrono",
+  "hex",
++ "itertools 0.10.5",
+  "num 0.4.1",
+  "num_enum",
+  "once_cell",
+diff --git a/core/lib/dal/.sqlx/query-de55102189196905a7dadb5a8b599acee63cae615e16007cccb0ed0cbe903467.json b/core/lib/dal/.sqlx/query-de55102189196905a7dadb5a8b599acee63cae615e16007cccb0ed0cbe903467.json
+new file mode 100644
+index 000000000..24fd849f8
+--- /dev/null
++++ b/core/lib/dal/.sqlx/query-de55102189196905a7dadb5a8b599acee63cae615e16007cccb0ed0cbe903467.json
+@@ -0,0 +1,53 @@
++{
++  "db_name": "PostgreSQL",
++  "query": "\n            SELECT\n                address,\n                topic1,\n                topic2,\n                topic3,\n                topic4,\n                value\n            FROM\n                events\n            WHERE\n                miniblock_number BETWEEN $1 AND $2\n            ORDER BY\n                miniblock_number ASC,\n                event_index_in_block ASC\n            ",
++  "describe": {
++    "columns": [
++      {
++        "ordinal": 0,
++        "name": "address",
++        "type_info": "Bytea"
++      },
++      {
++        "ordinal": 1,
++        "name": "topic1",
++        "type_info": "Bytea"
++      },
++      {
++        "ordinal": 2,
++        "name": "topic2",
++        "type_info": "Bytea"
++      },
++      {
++        "ordinal": 3,
++        "name": "topic3",
++        "type_info": "Bytea"
++      },
++      {
++        "ordinal": 4,
++        "name": "topic4",
++        "type_info": "Bytea"
++      },
++      {
++        "ordinal": 5,
++        "name": "value",
++        "type_info": "Bytea"
++      }
++    ],
++    "parameters": {
++      "Left": [
++        "Int8",
++        "Int8"
++      ]
++    },
++    "nullable": [
++      false,
++      false,
++      false,
++      false,
++      false,
++      false
++    ]
++  },
++  "hash": "de55102189196905a7dadb5a8b599acee63cae615e16007cccb0ed0cbe903467"
++}
+diff --git a/core/lib/dal/src/events_dal.rs b/core/lib/dal/src/events_dal.rs
+index 1231b34e9..9414fc407 100644
+--- a/core/lib/dal/src/events_dal.rs
++++ b/core/lib/dal/src/events_dal.rs
+@@ -7,10 +7,11 @@ use zksync_types::{
+     event::L1_MESSENGER_BYTECODE_PUBLICATION_EVENT_SIGNATURE,
+     l2_to_l1_log::{L2ToL1Log, UserL2ToL1Log},
+     tx::IncludedTxLocation,
+-    L1BatchNumber, MiniblockNumber, VmEvent, H256,
++    Address, L1BatchNumber, MiniblockNumber, VmEvent, H256,
+ };
+ 
+ use crate::{
++    instrument::InstrumentExt,
+     models::storage_event::{StorageL2ToL1Log, StorageWeb3Log},
+     SqlxError, StorageProcessor,
+ };
+@@ -327,6 +328,66 @@ impl EventsDal<'_, '_> {
+ 
+         Ok(result)
+     }
++
++    pub async fn get_vm_events_for_l1_batch(
++        &mut self,
++        l1_batch_number: L1BatchNumber,
++    ) -> Result<Option<Vec<VmEvent>>, SqlxError> {
++        let Some((from_miniblock, to_miniblock)) = self
++            .storage
++            .blocks_dal()
++            .get_miniblock_range_of_l1_batch(l1_batch_number)
++            .await?
++        else {
++            return Ok(None);
++        };
++        let events = sqlx::query!(
++            r#"
++            SELECT
++                address,
++                topic1,
++                topic2,
++                topic3,
++                topic4,
++                value
++            FROM
++                events
++            WHERE
++                miniblock_number BETWEEN $1 AND $2
++            ORDER BY
++                miniblock_number ASC,
++                event_index_in_block ASC
++            "#,
++            i64::from(from_miniblock.0),
++            i64::from(to_miniblock.0),
++        )
++        .instrument("get_vm_events_for_l1_batch")
++        .report_latency()
++        .fetch_all(self.storage)
++        .await?
++        .into_iter()
++        .enumerate()
++        .map(|(index_in_l1_batch, row)| {
++            let indexed_topics = vec![row.topic1, row.topic2, row.topic3, row.topic4]
++                .into_iter()
++                .filter_map(|topic| {
++                    if !topic.is_empty() {
++                        Some(H256::from_slice(&topic))
++                    } else {
++                        None
++                    }
++                })
++                .collect();
++            VmEvent {
++                location: (l1_batch_number, index_in_l1_batch as u32),
++                address: Address::from_slice(&row.address),
++                indexed_topics,
++                value: row.value,
++            }
++        })
++        .collect();
++        Ok(Some(events))
++    }
+ }
+ 
+ #[cfg(test)]
+diff --git a/core/lib/types/Cargo.toml b/core/lib/types/Cargo.toml
+index 0655f0c5b..fbae399e7 100644
+--- a/core/lib/types/Cargo.toml
++++ b/core/lib/types/Cargo.toml
+@@ -32,6 +32,7 @@ thiserror = "1.0"
+ num_enum = "0.6"
+ hex = "0.4"
+ prost = "0.12.1"
++itertools = "0.10.3"
+ 
+ # Crypto stuff
+ secp256k1 = { version = "0.27", features = ["recovery", "global-context"] }
+diff --git a/core/lib/types/src/event.rs b/core/lib/types/src/event/mod.rs
+similarity index 69%
+rename from core/lib/types/src/event.rs
+rename to core/lib/types/src/event/mod.rs
+index 9bd037490..404a6ec2d 100644
+--- a/core/lib/types/src/event.rs
++++ b/core/lib/types/src/event/mod.rs
+@@ -1,18 +1,26 @@
+ use std::fmt::Debug;
+ 
++use itertools::Itertools;
+ use once_cell::sync::Lazy;
+ use serde::{Deserialize, Serialize};
+ use zksync_basic_types::ethabi::Token;
+-use zksync_utils::{h256_to_account_address, u256_to_bytes_be, u256_to_h256};
++use zksync_system_constants::EVENT_WRITER_ADDRESS;
++use zksync_utils::{
++    address_to_u256, h256_to_account_address, h256_to_u256, u256_to_bytes_be, u256_to_h256,
++};
+ 
+ use crate::{
+     ethabi,
+     l2_to_l1_log::L2ToL1Log,
+     tokens::{TokenInfo, TokenMetadata},
++    zk_evm_types::{LogQuery, Timestamp},
+     Address, L1BatchNumber, CONTRACT_DEPLOYER_ADDRESS, H256, KNOWN_CODES_STORAGE_ADDRESS,
+     L1_MESSENGER_ADDRESS, U256,
+ };
+ 
++#[cfg(test)]
++mod tests;
++
+ #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+ pub struct VmEvent {
+     pub location: (L1BatchNumber, u32),
+@@ -339,167 +347,73 @@ pub struct VmEventGroupKey {
+     pub topic: (u32, H256),
+ }
+ 
+-#[cfg(test)]
+-mod tests {
+-    use zksync_basic_types::{
+-        ethabi::{self, Token},
+-        Address, L1BatchNumber, U256,
+-    };
+-    use zksync_system_constants::{
+-        BOOTLOADER_ADDRESS, KNOWN_CODES_STORAGE_ADDRESS, L1_MESSENGER_ADDRESS, L2_ETH_TOKEN_ADDRESS,
+-    };
+-    use zksync_utils::u256_to_h256;
+-
+-    use super::{
+-        extract_bytecode_publication_requests_from_l1_messenger,
+-        extract_l2tol1logs_from_l1_messenger, L1MessengerBytecodePublicationRequest,
+-        L1MessengerL2ToL1Log,
+-    };
+-    use crate::VmEvent;
+-
+-    fn create_l2_to_l1_log_sent_value(
+-        tx_number: U256,
+-        sender: Address,
+-        key: U256,
+-        value: U256,
+-    ) -> Vec<u8> {
+-        let mut key_arr = [0u8; 32];
+-        key.to_big_endian(&mut key_arr);
+-
+-        let mut val_arr = [0u8; 32];
+-        value.to_big_endian(&mut val_arr);
+-
+-        let tokens = vec![
+-            /*`l2ShardId`*/ Token::Uint(U256::from(0)),
+-            /*`isService`*/ Token::Bool(true),
+-            /*`txNumberInBlock`*/ Token::Uint(tx_number),
+-            /*sender*/ Token::Address(sender),
+-            /*key*/ Token::FixedBytes(key_arr.to_vec()),
+-            /*value*/ Token::FixedBytes(val_arr.to_vec()),
+-        ];
+-
+-        ethabi::encode(&tokens)
+-    }
+-
+-    fn create_byte_code_publication_req_value(hash: U256) -> Vec<u8> {
+-        let mut hash_arr = [0u8; 32];
+-        hash.to_big_endian(&mut hash_arr);
+-
+-        let tokens = vec![/*bytecode hash*/ Token::FixedBytes(hash_arr.to_vec())];
+-
+-        ethabi::encode(&tokens)
+-    }
+-
+-    fn create_l2_to_l1_log_vm_event(
+-        from: Address,
+-        tx_number: U256,
+-        sender: Address,
+-        key: U256,
+-        value: U256,
+-    ) -> VmEvent {
+-        let l1_messenger_l2_to_l1_log_event_signature = ethabi::long_signature(
+-            "L2ToL1LogSent",
+-            &[ethabi::ParamType::Tuple(vec![
+-                ethabi::ParamType::Uint(8),
+-                ethabi::ParamType::Bool,
+-                ethabi::ParamType::Uint(16),
+-                ethabi::ParamType::Address,
+-                ethabi::ParamType::FixedBytes(32),
+-                ethabi::ParamType::FixedBytes(32),
+-            ])],
+-        );
+-
+-        VmEvent {
+-            location: (L1BatchNumber(1), 0u32),
+-            address: from,
+-            indexed_topics: vec![l1_messenger_l2_to_l1_log_event_signature],
+-            value: create_l2_to_l1_log_sent_value(tx_number, sender, key, value),
+-        }
+-    }
+-
+-    fn create_bytecode_publication_vm_event(from: Address, hash: U256) -> VmEvent {
+-        let bytecode_publication_event_signature = ethabi::long_signature(
+-            "BytecodeL1PublicationRequested",
+-            &[ethabi::ParamType::FixedBytes(32)],
+-        );
+-
+-        VmEvent {
+-            location: (L1BatchNumber(1), 0u32),
+-            address: from,
+-            indexed_topics: vec![bytecode_publication_event_signature],
+-            value: create_byte_code_publication_req_value(hash),
+-        }
+-    }
+-
+-    #[test]
+-    fn test_extract_l2tol1logs_from_l1_messenger() {
+-        let expected = vec![
+-            L1MessengerL2ToL1Log {
+-                l2_shard_id: 0u8,
+-                is_service: true,
+-                tx_number_in_block: 5u16,
+-                sender: KNOWN_CODES_STORAGE_ADDRESS,
+-                key: U256::from(11),
+-                value: U256::from(19),
+-            },
+-            L1MessengerL2ToL1Log {
+-                l2_shard_id: 0u8,
++/// Each `VmEvent` can be translated to several log queries.
++/// This methods converts each event from input to log queries and returns all produced log queries.
++pub fn convert_vm_events_to_log_queries(events: &[VmEvent]) -> Vec<LogQuery> {
++    events
++        .iter()
++        .flat_map(|event| {
++            // Construct first query. This query holds an information about
++            // - number of event topics (on log query level `event.address` is treated as a topic, thus + 1 is added)
++            // - length of event value
++            // - `event.address` (or first topic in terms of log query terminology).
++            let first_key_word =
++                (event.indexed_topics.len() as u64 + 1) + ((event.value.len() as u64) << 32);
++            let key = U256([first_key_word, 0, 0, 0]);
++
++            // `timestamp`, `aux_byte`, `read_value`, `rw_flag`, `rollback` are set as per convention.
++            let first_log = LogQuery {
++                timestamp: Timestamp(0),
++                tx_number_in_block: event.location.1 as u16,
++                aux_byte: 0,
++                shard_id: 0,
++                address: EVENT_WRITER_ADDRESS,
++                key,
++                read_value: U256::zero(),
++                written_value: address_to_u256(&event.address),
++                rw_flag: false,
++                rollback: false,
+                 is_service: true,
+-                tx_number_in_block: 7u16,
+-                sender: L1_MESSENGER_ADDRESS,
+-                key: U256::from(19),
+-                value: U256::from(93),
+-            },
+-        ];
+-
+-        let events = vec![
+-            create_l2_to_l1_log_vm_event(
+-                L1_MESSENGER_ADDRESS,
+-                U256::from(5),
+-                KNOWN_CODES_STORAGE_ADDRESS,
+-                U256::from(11),
+-                U256::from(19),
+-            ),
+-            create_l2_to_l1_log_vm_event(
+-                BOOTLOADER_ADDRESS,
+-                U256::from(6),
+-                L2_ETH_TOKEN_ADDRESS,
+-                U256::from(6),
+-                U256::from(8),
+-            ),
+-            create_l2_to_l1_log_vm_event(
+-                L1_MESSENGER_ADDRESS,
+-                U256::from(7),
+-                L1_MESSENGER_ADDRESS,
+-                U256::from(19),
+-                U256::from(93),
+-            ),
+-        ];
+-
+-        let logs = extract_l2tol1logs_from_l1_messenger(&events);
+-
+-        assert_eq!(expected, logs);
+-    }
+-
+-    #[test]
+-    fn test_extract_bytecode_publication_requests_from_l1_messenger() {
+-        let expected = vec![
+-            L1MessengerBytecodePublicationRequest {
+-                bytecode_hash: u256_to_h256(U256::from(1438284388)),
+-            },
+-            L1MessengerBytecodePublicationRequest {
+-                bytecode_hash: u256_to_h256(U256::from(1231014388)),
+-            },
+-        ];
+-
+-        let events = vec![
+-            create_bytecode_publication_vm_event(L2_ETH_TOKEN_ADDRESS, U256::from(1337)),
+-            create_bytecode_publication_vm_event(L1_MESSENGER_ADDRESS, U256::from(1438284388)),
+-            create_bytecode_publication_vm_event(L1_MESSENGER_ADDRESS, U256::from(1231014388)),
+-        ];
+-
+-        let logs = extract_bytecode_publication_requests_from_l1_messenger(&events);
++            };
+ 
+-        assert_eq!(expected, logs);
+-    }
++            // The next logs hold information about remaining topics and `event.value`.
++            // Each log can hold at most two values each of 32 bytes.
++            // The following piece of code prepares these 32-byte values.
++            let values = event.indexed_topics.iter().map(|h| h256_to_u256(*h)).chain(
++                event.value.chunks(32).map(|value_chunk| {
++                    let mut padded = value_chunk.to_vec();
++                    padded.resize(32, 0);
++                    U256::from_big_endian(&padded)
++                }),
++            );
++
++            // And now we process these values in chunks by two.
++            let value_chunks = values.chunks(2);
++            let other_logs = value_chunks.into_iter().map(|mut chunk| {
++                // The first value goes to `log_query.key`.
++                let key = chunk.next().unwrap();
++
++                // If the second one is present then it goes to `log_query.written_value`.
++                let written_value = chunk.next().unwrap_or_default();
++
++                LogQuery {
++                    timestamp: Timestamp(0),
++                    tx_number_in_block: event.location.1 as u16,
++                    aux_byte: 0,
++                    shard_id: 0,
++                    address: EVENT_WRITER_ADDRESS,
++                    key,
++                    read_value: U256::zero(),
++                    written_value,
++                    rw_flag: false,
++                    rollback: false,
++                    is_service: false,
++                }
++            });
++
++            std::iter::once(first_log)
++                .chain(other_logs)
++                .collect::<Vec<_>>()
++        })
++        .collect()
+ }
+diff --git a/core/lib/types/src/event/test_vectors/event_with_1_topic_and_long_value.json b/core/lib/types/src/event/test_vectors/event_with_1_topic_and_long_value.json
+new file mode 100644
+index 000000000..3f2fdc891
+--- /dev/null
++++ b/core/lib/types/src/event/test_vectors/event_with_1_topic_and_long_value.json
+@@ -0,0 +1,80 @@
++{
++  "event": {
++    "location": [
++      0,
++      0
++    ],
++    "address": "0x0000000000000000000000000000000000008008",
++    "indexed_topics": [
++      "0x27fe8c0b49f49507b9d4fe5968c9f49edfe5c9df277d433a07a0717ede97638d"
++    ],
++    "value": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,128,1,131,93,77,80,77,27,248,56,5,106,236,164,80,162,118,139,64,10,85,255,36,123,49,178,158,152,204,57,43,174,113,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
++  },
++  "list": [
++    {
++      "key": "0xc000000002",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": true,
++      "read_value": "0x0",
++      "written_value": "0x8008",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0x27fe8c0b49f49507b9d4fe5968c9f49edfe5c9df277d433a07a0717ede97638d",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x0",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0x1",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x0",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0x8001",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x835d4d504d1bf838056aeca450a2768b400a55ff247b31b29e98cc392bae7119",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0x1",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x0",
++      "tx_number_in_block": 0
++    }
++  ]
++}
+diff --git a/core/lib/types/src/event/test_vectors/event_with_2_topics.json b/core/lib/types/src/event/test_vectors/event_with_2_topics.json
+new file mode 100644
+index 000000000..1cdb548c4
+--- /dev/null
++++ b/core/lib/types/src/event/test_vectors/event_with_2_topics.json
+@@ -0,0 +1,55 @@
++{
++  "event": {
++    "location": [
++      0,
++      0
++    ],
++    "address": "0x000000000000000000000000000000000000800a",
++    "indexed_topics": [
++      "0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885",
++      "0x00000000000000000000000036615cf349d7f6344891b1e7ca7c72883f5dc049"
++    ],
++    "value": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,104,21,90,67,103,110,0,0]
++  },
++  "list": [
++    {
++      "key": "0x2000000003",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": true,
++      "read_value": "0x0",
++      "written_value": "0x800a",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0xf6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x36615cf349d7f6344891b1e7ca7c72883f5dc049",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0x68155a43676e0000",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x0",
++      "tx_number_in_block": 0
++    }
++  ]
++}
+diff --git a/core/lib/types/src/event/test_vectors/event_with_3_topics.json b/core/lib/types/src/event/test_vectors/event_with_3_topics.json
+new file mode 100644
+index 000000000..7cd607235
+--- /dev/null
++++ b/core/lib/types/src/event/test_vectors/event_with_3_topics.json
+@@ -0,0 +1,56 @@
++{
++  "event": {
++    "location": [
++      0,
++      0
++    ],
++    "address": "0x0000000000000000000000000000000000008004",
++    "indexed_topics": [
++      "0xc94722ff13eacf53547c4741dab5228353a05938ffcdd5d4a2d533ae0e618287",
++      "0x010000691fa4f751f8312bc555242f18ed78cdc9aabc0ea77d7d5a675ee8ac6f",
++      "0x0000000000000000000000000000000000000000000000000000000000000000"
++    ],
++    "value": []
++  },
++  "list": [
++    {
++      "key": "0x4",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": true,
++      "read_value": "0x0",
++      "written_value": "0x8004",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0xc94722ff13eacf53547c4741dab5228353a05938ffcdd5d4a2d533ae0e618287",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x10000691fa4f751f8312bc555242f18ed78cdc9aabc0ea77d7d5a675ee8ac6f",
++      "tx_number_in_block": 0
++    },
++    {
++      "key": "0x0",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x0",
++      "tx_number_in_block": 0
++    }
++  ]
++}
+diff --git a/core/lib/types/src/event/test_vectors/event_with_4_topics.json b/core/lib/types/src/event/test_vectors/event_with_4_topics.json
+new file mode 100644
+index 000000000..96dfbc067
+--- /dev/null
++++ b/core/lib/types/src/event/test_vectors/event_with_4_topics.json
+@@ -0,0 +1,57 @@
++{
++  "event": {
++    "location": [
++      0,
++      1
++    ],
++    "address": "0x0000000000000000000000000000000000008006",
++    "indexed_topics": [
++      "0x290afdae231a3fc0bbae8b1af63698b0a1d79b21ad17df0342dfb952fe74f8e5",
++      "0x0000000000000000000000004ab56cd027a9ac1e5408d1290e24fd4624b4e8d1",
++      "0x010001e3c92e1345fb2a4ec50f5b99c01deab45eeb81eab41d0f0ab8ff2f58b4",
++      "0x000000000000000000000000e3c0f6a36d71e4f7354a8fb319474bc7e5d822ca"
++    ],
++    "value": []
++  },
++  "list": [
++    {
++      "key": "0x5",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": true,
++      "read_value": "0x0",
++      "written_value": "0x8006",
++      "tx_number_in_block": 1
++    },
++    {
++      "key": "0x290afdae231a3fc0bbae8b1af63698b0a1d79b21ad17df0342dfb952fe74f8e5",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x4ab56cd027a9ac1e5408d1290e24fd4624b4e8d1",
++      "tx_number_in_block": 1
++    },
++    {
++      "key": "0x10001e3c92e1345fb2a4ec50f5b99c01deab45eeb81eab41d0f0ab8ff2f58b4",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0xe3c0f6a36d71e4f7354a8fb319474bc7e5d822ca",
++      "tx_number_in_block": 1
++    }
++  ]
++}
+diff --git a/core/lib/types/src/event/test_vectors/event_with_value_len_1.json b/core/lib/types/src/event/test_vectors/event_with_value_len_1.json
+new file mode 100644
+index 000000000..fcb1546a4
+--- /dev/null
++++ b/core/lib/types/src/event/test_vectors/event_with_value_len_1.json
+@@ -0,0 +1,41 @@
++{
++  "event": {
++    "location": [
++      0,
++      1
++    ],
++    "address": "0xed38c34b90b125d6b59c02b8ac7ed8387876a8c8",
++    "indexed_topics": [
++      "0x1111111111111111111111111111111111111111111111111111111111111111"
++    ],
++    "value": [17]
++  },
++  "list": [
++    {
++      "key": "0x100000002",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": true,
++      "read_value": "0x0",
++      "written_value": "0xed38c34b90b125d6b59c02b8ac7ed8387876a8c8",
++      "tx_number_in_block": 1
++    },
++    {
++      "key": "0x1111111111111111111111111111111111111111111111111111111111111111",
++      "address": "0x000000000000000000000000000000000000800d",
++      "rw_flag": false,
++      "aux_byte": 0,
++      "rollback": false,
++      "shard_id": 0,
++      "timestamp": 0,
++      "is_service": false,
++      "read_value": "0x0",
++      "written_value": "0x1100000000000000000000000000000000000000000000000000000000000000",
++      "tx_number_in_block": 1
++    }
++  ]
++}
+diff --git a/core/lib/zksync_core/src/commitment_generator/mod.rs b/core/lib/zksync_core/src/commitment_generator/mod.rs
+index 132e9ca1f..6932c953e 100644
+--- a/core/lib/zksync_core/src/commitment_generator/mod.rs
++++ b/core/lib/zksync_core/src/commitment_generator/mod.rs
+@@ -11,6 +11,7 @@ use zksync_health_check::{Health, HealthStatus, HealthUpdater, ReactiveHealthChe
+ use zksync_l1_contract_interface::i_executor::commit::kzg::pubdata_to_blob_commitments;
+ use zksync_types::{
+     commitment::{AuxCommitments, CommitmentCommonInput, CommitmentInput, L1BatchCommitment},
++    event::convert_vm_events_to_log_queries,
+     writes::{InitialStorageWrite, RepeatedStorageWrite, StateDiffRecord},
+     L1BatchNumber, ProtocolVersionId, StorageKey, H256,
+ };
+@@ -47,11 +48,28 @@ impl CommitmentGenerator {
+             .connection_pool
+             .access_storage_tagged("commitment_generator")
+             .await?;
+-        let events_queue = connection
++        let events_queue_from_db = connection
+             .blocks_dal()
+             .get_events_queue(l1_batch_number)
+             .await?
+             .with_context(|| format!("Events queue is missing for L1 batch #{l1_batch_number}"))?;
++
++        // Calculate events queue using VM events.
++        // For now we only check that it results in the same set of events that are saved in `events_queue` DB table.
++        // Later, `events_queue` table will be removed and this will be the only way to get events queue.
++        let events_queue_calculated = {
++            let events = connection
++                .events_dal()
++                .get_vm_events_for_l1_batch(l1_batch_number)
++                .await?
++                .with_context(|| format!("Events are missing for L1 batch #{l1_batch_number}"))?;
++            convert_vm_events_to_log_queries(&events)
++        };
++
++        if events_queue_from_db != events_queue_calculated {
++            tracing::error!("Events queue mismatch for L1 batch #{l1_batch_number}");
++        }
++
+         let initial_bootloader_contents = connection
+             .blocks_dal()
+             .get_initial_bootloader_heap(l1_batch_number)
+@@ -65,7 +83,7 @@ impl CommitmentGenerator {
+             tokio::task::spawn_blocking(move || {
+                 let latency = METRICS.events_queue_commitment_latency.start();
+                 let events_queue_commitment =
+-                    events_queue_commitment(&events_queue, protocol_version)
++                    events_queue_commitment(&events_queue_from_db, protocol_version)
+                         .context("Events queue commitment is required for post-boojum batch")?;
+                 latency.observe();
+ 
+@@ -105,6 +123,8 @@ impl CommitmentGenerator {
+         &self,
+         l1_batch_number: L1BatchNumber,
+     ) -> anyhow::Result<CommitmentInput> {
++        tracing::info!("Started preparing commitment input for L1 batch #{l1_batch_number}");
++
+         let mut connection = self
+             .connection_pool
+             .access_storage_tagged("commitment_generator")
+@@ -295,7 +315,9 @@ impl CommitmentGenerator {
+                 continue;
+             };
+ 
++            tracing::info!("Started commitment generation for L1 batch #{l1_batch_number}");
+             self.step(l1_batch_number).await?;
++            tracing::info!("Finished commitment generation for L1 batch #{l1_batch_number}");
+         }
+         Ok(())
+     }
+diff --git a/prover/Cargo.lock b/prover/Cargo.lock
+index cd7cf0fa1..08a2eda64 100644
+--- a/prover/Cargo.lock
++++ b/prover/Cargo.lock
+@@ -7360,6 +7360,7 @@ dependencies = [
+  "blake2 0.10.6 (registry+https://github.com/rust-lang/crates.io-index)",
+  "chrono",
+  "hex",
++ "itertools 0.10.5",
+  "num",
+  "num_enum",
+  "once_cell",

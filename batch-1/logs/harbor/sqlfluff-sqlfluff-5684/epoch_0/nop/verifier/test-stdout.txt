@@ -1,0 +1,493 @@
+patching file test/fixtures/dialects/snowflake/alter_external_volume.sql
+patching file test/fixtures/dialects/snowflake/alter_external_volume.yml
+patching file test/fixtures/dialects/snowflake/create_external_volume.sql
+patching file test/fixtures/dialects/snowflake/create_external_volume.yml
+patching file test/fixtures/dialects/snowflake/describe_statements.sql
+patching file test/fixtures/dialects/snowflake/describe_statements.yml
+patching file test/fixtures/dialects/snowflake/drop_statements.sql
+patching file test/fixtures/dialects/snowflake/drop_statements.yml
+patching file test/fixtures/dialects/snowflake/undrop.sql
+patching file test/fixtures/dialects/snowflake/undrop.yml
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdist-3.8.0, cov-7.1.0, hypothesis-6.155.7
+collecting ... collected 4275 items / 4265 deselected / 10 selected
+
+test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-alter_external_volume.sql] FAILED [ 10%]
+test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-create_external_volume.sql] FAILED [ 20%]
+test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-describe_statements.sql] FAILED [ 30%]
+test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-drop_statements.sql] FAILED [ 40%]
+test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-undrop.sql] FAILED [ 50%]
+test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-alter_external_volume.sql-True-alter_external_volume.yml] FAILED [ 60%]
+test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-create_external_volume.sql-True-create_external_volume.yml] FAILED [ 70%]
+test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-describe_statements.sql-True-describe_statements.yml] FAILED [ 80%]
+test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-drop_statements.sql-True-drop_statements.yml] FAILED [ 90%]
+test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-undrop.sql-True-undrop.yml] FAILED [100%]
+
+=================================== FAILURES ===================================
+_____ test__dialect__base_file_parse[snowflake-alter_external_volume.sql] ______
+
+dialect = 'snowflake', file = 'alter_external_volume.sql'
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,file", parse_success_examples)
+    def test__dialect__base_file_parse(dialect, file):
+        """For given test examples, check successful parsing."""
+        raw = load_file(dialect, file)
+        config_overrides = dict(dialect=dialect)
+        # Use the helper function to avoid parsing twice
+>       parsed: Optional[ParsedString] = lex_and_parse(config_overrides, raw)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/dialects/dialects_test.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config_overrides = {'dialect': 'snowflake'}
+raw = "ALTER EXTERNAL VOLUME exvol1\n  ADD STORAGE_LOCATION =\n    (\n      NAME = 'my-s3-us-central-2'\n      STORAGE_PROVI...ALTER EXTERNAL VOLUME exvol5 SET ALLOW_WRITES = TRUE;\n\nALTER EXTERNAL VOLUME IF EXISTS exvol6 SET COMMENT = 'bar';\n"
+
+    def lex_and_parse(config_overrides: Dict[str, Any], raw: str) -> Optional[ParsedString]:
+        """Performs a Lex and Parse, with cacheable inputs within fixture."""
+        # Load the right dialect
+        config = FluffConfig(overrides=config_overrides)
+        # Construct rendered file (to skip the templater)
+        templated_file = TemplatedFile.from_string(raw)
+        rendered_file = RenderedFile(
+            templated_file,
+            [],
+            config,
+            {},
+            templated_file.fname,
+            "utf8",
+            raw,
+        )
+        # Parse (which includes lexing)
+        linter = Linter(config=config)
+        parsed_file = linter.parse_rendered(rendered_file)
+        if not raw:  # Empty file case
+            # We're just checking there aren't exceptions in this case.
+            return None
+        # Check we managed to parse
+        assert parsed_file.tree
+        # From just the initial parse, check we're all there
+        assert "".join(token.raw for token in parsed_file.tree.raw_segments) == raw
+        # Check we don't have lexing or parsing issues
+>       assert not parsed_file.violations
+E       assert not [SQLParseError("Line 1, Position 1: Found unparsable section: 'ALTER EXTERNAL VOLUME exvol1\\n  ADD STORA...'")]
+E        +  where [SQLParseError("Line 1, Position 1: Found unparsable section: 'ALTER EXTERNAL VOLUME exvol1\\n  ADD STORA...'")] = ParsedString(tree=<FileSegment: ([L:  1, P:  1])>, violations=[SQLParseError("Line 1, Position 1: Found unparsable section: 'ALTER EXTERNAL VOLUME exvol1\\n  ADD STORA...'")], time_dict={'lexing': 0.004966971999998293, 'parsing': 0.018887339000002612}, templated_file=<TemplatedFile>, config=<sqlfluff.core.config.FluffConfig object at 0x2aea409ddad0>, fname='<string>', source_str="ALTER EXTERNAL VOLUME exvol1\n  ADD STORAGE_LOCATION =\n    (\n      NAME = 'my-s3-us-central-2'\n      STORAGE_PROVIDER = 'S3'\n      STORAGE_BASE_URL = 's3://my_bucket_us_central-1/'\n      STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::123456789012:role/myrole'\n    );\n\nALTER EXTERNAL VOLUME exvol2\n  ADD STORAGE_LOCATION =\n    (\n      NAME = 'my-gcs-europe-west4'\n      STORAGE_PROVIDER = 'GCS'\n      STORAGE_BASE_URL = 'gcs://my_bucket_europe-west4/'\n    );\n\nALTER EXTERNAL VOLUME exvol3\n  ADD STORAGE_LOCATION =\n    (\n      NAME = 'my-azure-japaneast'\n      STORAGE_PROVIDER = 'AZURE'\n      STORAGE_BASE_URL = 'azure://sfcdev1.blob.core.windows.net/my_container_japaneast/'\n      AZURE_TENANT_ID = 'a9876545-4321-987b-b23c-2kz436789d0'\n    );\n\nALTER EXTERNAL VOLUME exvol4 REMOVE STORAGE_LOCATION 'foo';\n\nALTER EXTERNAL VOLUME exvol5 SET ALLOW_WRITES = TRUE;\n\nALTER EXTERNAL VOLUME IF EXISTS exvol6 SET COMMENT = 'bar';\n").violations
+
+test/dialects/dialects_test.py:55: AssertionError
+_____ test__dialect__base_file_parse[snowflake-create_external_volume.sql] _____
+
+dialect = 'snowflake', file = 'create_external_volume.sql'
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,file", parse_success_examples)
+    def test__dialect__base_file_parse(dialect, file):
+        """For given test examples, check successful parsing."""
+        raw = load_file(dialect, file)
+        config_overrides = dict(dialect=dialect)
+        # Use the helper function to avoid parsing twice
+>       parsed: Optional[ParsedString] = lex_and_parse(config_overrides, raw)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/dialects/dialects_test.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config_overrides = {'dialect': 'snowflake'}
+raw = "CREATE OR REPLACE EXTERNAL VOLUME exvol\n  STORAGE_LOCATIONS =\n      (\n        (\n            NAME = 'my-s3-us-west...MS' KMS_KEY_ID='1234abcd-12ab-34cd-56ef-1234567890ab')\n        )\n      )\n  ALLOW_WRITES=FALSE\n  COMMENT='foo'\n;\n"
+
+    def lex_and_parse(config_overrides: Dict[str, Any], raw: str) -> Optional[ParsedString]:
+        """Performs a Lex and Parse, with cacheable inputs within fixture."""
+        # Load the right dialect
+        config = FluffConfig(overrides=config_overrides)
+        # Construct rendered file (to skip the templater)
+        templated_file = TemplatedFile.from_string(raw)
+        rendered_file = RenderedFile(
+            templated_file,
+            [],
+            config,
+            {},
+            templated_file.fname,
+            "utf8",
+            raw,
+        )
+        # Parse (which includes lexing)
+        linter = Linter(config=config)
+        parsed_file = linter.parse_rendered(rendered_file)
+        if not raw:  # Empty file case
+            # We're just checking there aren't exceptions in this case.
+            return None
+        # Check we managed to parse
+        assert parsed_file.tree
+        # From just the initial parse, check we're all there
+        assert "".join(token.raw for token in parsed_file.tree.raw_segments) == raw
+        # Check we don't have lexing or parsing issues
+>       assert not parsed_file.violations
+E       assert not [SQLParseError("Line 1, Position 1: Found unparsable section: 'CREATE OR REPLACE EXTERNAL VOLUME exvol\\n...'")]
+E        +  where [SQLParseError("Line 1, Position 1: Found unparsable section: 'CREATE OR REPLACE EXTERNAL VOLUME exvol\\n...'")] = ParsedString(tree=<FileSegment: ([L:  1, P:  1])>, violations=[SQLParseError("Line 1, Position 1: Found unparsable section: 'CREATE OR REPLACE EXTERNAL VOLUME exvol\\n...'")], time_dict={'lexing': 0.00735569300000094, 'parsing': 0.004768691999998964}, templated_file=<TemplatedFile>, config=<sqlfluff.core.config.FluffConfig object at 0x2aea41997ad0>, fname='<string>', source_str="CREATE OR REPLACE EXTERNAL VOLUME exvol\n  STORAGE_LOCATIONS =\n      (\n        (\n            NAME = 'my-s3-us-west-2'\n            STORAGE_PROVIDER = 'S3'\n            STORAGE_BASE_URL = 's3://MY_EXAMPLE_BUCKET/'\n            STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::123456789012:role/myrole'\n            ENCRYPTION=(TYPE='AWS_SSE_KMS' KMS_KEY_ID='1234abcd-12ab-34cd-56ef-1234567890ab')\n        )\n      )\n;\n\nCREATE EXTERNAL VOLUME exvol\n  STORAGE_LOCATIONS =\n    (\n      (\n        NAME = 'my-us-east-1'\n        STORAGE_PROVIDER = 'GCS'\n        STORAGE_BASE_URL = 'gcs://mybucket1/path1/'\n        ENCRYPTION=(TYPE='GCS_SSE_KMS' KMS_KEY_ID = '1234abcd-12ab-34cd-56ef-1234567890ab')\n      )\n    );\n\nCREATE EXTERNAL VOLUME exvol\n  STORAGE_LOCATIONS =\n    (\n      (\n        NAME = 'my-azure-northeurope'\n        STORAGE_PROVIDER = 'AZURE'\n        STORAGE_BASE_URL = 'azure://exampleacct.blob.core.windows.net/my_container_northeurope/'\n        AZURE_TENANT_ID = 'a123b4c5-1234-123a-a12b-1a23b45678c9'\n      )\n    );\n\nCREATE EXTERNAL VOLUME IF NOT EXISTS exvol\n  STORAGE_LOCATIONS =\n      (\n        (\n            NAME = 'my-s3-us-west-2'\n            STORAGE_PROVIDER = 'S3'\n            STORAGE_BASE_URL = 's3://MY_EXAMPLE_BUCKET/'\n            STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::123456789012:role/myrole'\n            ENCRYPTION=(TYPE='AWS_SSE_KMS' KMS_KEY_ID='1234abcd-12ab-34cd-56ef-1234567890ab')\n        ),\n        (\n            NAME = 'my-s3-us-west-3'\n            STORAGE_PROVIDER = 'S3'\n            STORAGE_BASE_URL = 's3://MY_EXAMPLE_BUCKET_2/'\n            STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::123456789012:role/myrole'\n            ENCRYPTION=(TYPE='AWS_SSE_KMS' KMS_KEY_ID='1234abcd-12ab-34cd-56ef-1234567890ab')\n        )\n      )\n  ALLOW_WRITES=FALSE\n  COMMENT='foo'\n;\n").violations
+
+test/dialects/dialects_test.py:55: AssertionError
+______ test__dialect__base_file_parse[snowflake-describe_statements.sql] _______
+
+dialect = 'snowflake', file = 'describe_statements.sql'
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,file", parse_success_examples)
+    def test__dialect__base_file_parse(dialect, file):
+        """For given test examples, check successful parsing."""
+        raw = load_file(dialect, file)
+        config_overrides = dict(dialect=dialect)
+        # Use the helper function to avoid parsing twice
+>       parsed: Optional[ParsedString] = lex_and_parse(config_overrides, raw)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/dialects/dialects_test.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config_overrides = {'dialect': 'snowflake'}
+raw = "DESCRIBE RESULT 'f2f07bdb-6a08-4689-9ad8-a1ba968a44b6';\nDESC RESULT 'f2f07bdb-6a08-4689-9ad8-a1ba968a44b6';\n\nDESCR...CRIBE PROCEDURE area_of_circle(FLOAT);\nDESC PROCEDURE area_of_circle(FLOAT);\n\nDESCRIBE EXTERNAL VOLUME my_volume;\n"
+
+    def lex_and_parse(config_overrides: Dict[str, Any], raw: str) -> Optional[ParsedString]:
+        """Performs a Lex and Parse, with cacheable inputs within fixture."""
+        # Load the right dialect
+        config = FluffConfig(overrides=config_overrides)
+        # Construct rendered file (to skip the templater)
+        templated_file = TemplatedFile.from_string(raw)
+        rendered_file = RenderedFile(
+            templated_file,
+            [],
+            config,
+            {},
+            templated_file.fname,
+            "utf8",
+            raw,
+        )
+        # Parse (which includes lexing)
+        linter = Linter(config=config)
+        parsed_file = linter.parse_rendered(rendered_file)
+        if not raw:  # Empty file case
+            # We're just checking there aren't exceptions in this case.
+            return None
+        # Check we managed to parse
+        assert parsed_file.tree
+        # From just the initial parse, check we're all there
+        assert "".join(token.raw for token in parsed_file.tree.raw_segments) == raw
+        # Check we don't have lexing or parsing issues
+>       assert not parsed_file.violations
+E       assert not [SQLParseError("Line 118, Position 1: Found unparsable section: 'DESCRIBE EXTERNAL VOLUME my_volume;'")]
+E        +  where [SQLParseError("Line 118, Position 1: Found unparsable section: 'DESCRIBE EXTERNAL VOLUME my_volume;'")] = ParsedString(tree=<FileSegment: ([L:  1, P:  1])>, violations=[SQLParseError("Line 118, Position 1: Found unparsable section: 'DESCRIBE EXTERNAL VOLUME my_volume;'")], time_dict={'lexing': 0.021273928999995917, 'parsing': 0.042413870000004295}, templated_file=<TemplatedFile>, config=<sqlfluff.core.config.FluffConfig object at 0x2aea41ab6a50>, fname='<string>', source_str='DESCRIBE RESULT \'f2f07bdb-6a08-4689-9ad8-a1ba968a44b6\';\nDESC RESULT \'f2f07bdb-6a08-4689-9ad8-a1ba968a44b6\';\n\nDESCRIBE RESULT LAST_QUERY_ID();\nDESC RESULT LAST_QUERY_ID();\n\nDESCRIBE NETWORK POLICY my_policy;\nDESC NETWORK POLICY my_policy;\n\nDESCRIBE SHARE sales_s;\nDESC SHARE sales_s;\n\nDESCRIBE SHARE ab67890.sales_s;\nDESC SHARE ab67890.sales_s;\n\nDESCRIBE USER test_user;\nDESC USER test_user;\n\nDESCRIBE WAREHOUSE my_warehouse;\nDESC WAREHOUSE my_warehouse;\n\nDESCRIBE WAREHOUSE "my warehouse";\nDESC WAREHOUSE "my warehouse";\n\nDESCRIBE DATABASE my_database;\nDESC DATABASE my_database;\n\nDESCRIBE API INTEGRATION my_integration;\nDESC API INTEGRATION my_integration;\n\nDESCRIBE NOTIFICATION INTEGRATION my_integration;\nDESC NOTIFICATION INTEGRATION my_integration;\n\nDESCRIBE SECURITY INTEGRATION...SCRIBE EXTERNAL TABLE my_table TYPE = STAGE;\nDESC EXTERNAL TABLE my_table TYPE = STAGE;\n\nDESCRIBE VIEW my_view;\nDESC VIEW my_view;\n\nDESCRIBE VIEW my_database.my_schema.my_view;\nDESC VIEW my_database.my_schema.my_view;\n\nDESCRIBE MATERIALIZED VIEW my_view;\nDESC MATERIALIZED VIEW my_view;\n\nDESCRIBE MATERIALIZED VIEW my_database.my_schema.my_view;\nDESC MATERIALIZED VIEW my_database.my_schema.my_view;\n\nDESCRIBE SEQUENCE my_sequence;\nDESC SEQUENCE my_sequence;\n\nDESCRIBE MASKING POLICY my_masking_policy;\nDESC MASKING POLICY my_masking_policy;\n\nDESCRIBE ROW ACCESS POLICY my_row_access_policy;\nDESC ROW ACCESS POLICY my_row_access_policy;\n\nDESCRIBE FILE FORMAT my_file_format;\nDESC FILE FORMAT my_file_format;\n\nDESCRIBE STAGE my_stage;\nDESC STAGE my_stage;\n\nDESCRIBE PIPE my_pipe;\nDESC PIPE my_pipe;\n\nDESCRIBE STREAM my_stream;\nDESC STREAM my_stream;\n\nDESCRIBE TASK my_task;\nDESC TASK my_task;\n\nDESCRIBE FUNCTION multiply(NUMBER, NUMBER);\nDESC FUNCTION multiply(NUMBER, NUMBER);\n\nDESCRIBE PROCEDURE my_pi();\nDESC PROCEDURE my_pi();\n\nDESCRIBE PROCEDURE area_of_circle(FLOAT);\nDESC PROCEDURE area_of_circle(FLOAT);\n\nDESCRIBE EXTERNAL VOLUME my_volume;\n').violations
+
+test/dialects/dialects_test.py:55: AssertionError
+________ test__dialect__base_file_parse[snowflake-drop_statements.sql] _________
+
+dialect = 'snowflake', file = 'drop_statements.sql'
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,file", parse_success_examples)
+    def test__dialect__base_file_parse(dialect, file):
+        """For given test examples, check successful parsing."""
+        raw = load_file(dialect, file)
+        config_overrides = dict(dialect=dialect)
+        # Use the helper function to avoid parsing twice
+>       parsed: Optional[ParsedString] = lex_and_parse(config_overrides, raw)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/dialects/dialects_test.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config_overrides = {'dialect': 'snowflake'}
+raw = 'DROP CONNECTION MY_SCHEMA.T1;\n\nDROP CONNECTION IF EXISTS MY_SCHEMA.T1;\n\nDROP DATABASE MYTESTDB2;\n\nDROP DATABASE...\n\nDROP WAREHOUSE IF EXISTS MY_WAREHOUSE;\n\nDROP EXTERNAL VOLUME my_volume;\n\nDROP EXTERNAL VOLUME IF EXISTS foo;\n'
+
+    def lex_and_parse(config_overrides: Dict[str, Any], raw: str) -> Optional[ParsedString]:
+        """Performs a Lex and Parse, with cacheable inputs within fixture."""
+        # Load the right dialect
+        config = FluffConfig(overrides=config_overrides)
+        # Construct rendered file (to skip the templater)
+        templated_file = TemplatedFile.from_string(raw)
+        rendered_file = RenderedFile(
+            templated_file,
+            [],
+            config,
+            {},
+            templated_file.fname,
+            "utf8",
+            raw,
+        )
+        # Parse (which includes lexing)
+        linter = Linter(config=config)
+        parsed_file = linter.parse_rendered(rendered_file)
+        if not raw:  # Empty file case
+            # We're just checking there aren't exceptions in this case.
+            return None
+        # Check we managed to parse
+        assert parsed_file.tree
+        # From just the initial parse, check we're all there
+        assert "".join(token.raw for token in parsed_file.tree.raw_segments) == raw
+        # Check we don't have lexing or parsing issues
+>       assert not parsed_file.violations
+E       assert not [SQLParseError("Line 111, Position 1: Found unparsable section: 'DROP EXTERNAL VOLUME my_volume;\\n\\nDROP EX...'")]
+E        +  where [SQLParseError("Line 111, Position 1: Found unparsable section: 'DROP EXTERNAL VOLUME my_volume;\\n\\nDROP EX...'")] = ParsedString(tree=<FileSegment: ([L:  1, P:  1])>, violations=[SQLParseError("Line 111, Position 1: Found unparsable section: 'DROP EXTERNAL VOLUME my_volume;\\n\\nDROP EX...'")], time_dict={'lexing': 0.0483408919999988, 'parsing': 0.04769807199999576}, templated_file=<TemplatedFile>, config=<sqlfluff.core.config.FluffConfig object at 0x2aea41ac02d0>, fname='<string>', source_str='DROP CONNECTION MY_SCHEMA.T1;\n\nDROP CONNECTION IF EXISTS MY_SCHEMA.T1;\n\nDROP DATABASE MYTESTDB2;\n\nDROP DATABASE IF EXISTS MYTESTDB2;\n\nDROP DATABASE IF EXISTS MYTESTDB2 CASCADE;\n\nDROP EXTERNAL TABLE MY_SCHEMA.T1;\n\nDROP EXTERNAL TABLE IF EXISTS MY_SCHEMA.T1;\n\nDROP EXTERNAL TABLE IF EXISTS MY_SCHEMA.T1 RESTRICT;\n\nDROP FILE FORMAT MY_SCHEMA.MY_FORMAT;\n\nDROP FILE FORMAT IF EXISTS MY_SCHEMA.MY_FORMAT;\n\nDROP FUNCTION MY_SCHEMA.MY_FUNCTION(NUMBER, NUMBER);\n\nDROP FUNCTION IF EXISTS MY_SCHEMA.MY_FUNCTION(NUMBER, NUMBER);\n\nDROP INTEGRATION T2;\n\nDROP API INTEGRATION IF EXISTS T2;\n\nDROP MANAGED ACCOUNT READER_ACCT1;\n\nDROP MASKING POLICY SSN_MASK;\n\nDROP MATERIALIZED VIEW MY_SCHEMA.MV1;\n\nDROP MATERIALIZED VIEW IF EXISTS MY_SCHEMA.MV1;\n\nDROP NETWORK POLICY MY_POLICY;\n\nDROP NETWORK ...E;\n\nDROP ROW ACCESS POLICY RAP_TABLE_EMPLOYEE_INFO;\n\nDROP ROW ACCESS POLICY IF EXISTS RAP_TABLE_EMPLOYEE_INFO;\n\nDROP SCHEMA MY_SCHEMA;\n\nDROP SCHEMA IF EXISTS MY_SCHEMA;\n\nDROP SCHEMA IF EXISTS MY_SCHEMA CASCADE;\n\nDROP SEQUENCE MY_SCHEMA.INVOICE_SEQUENCE_NUMBER;\n\nDROP SEQUENCE IF EXISTS MY_SCHEMA.INVOICE_SEQUENCE_NUMBER;\n\nDROP SEQUENCE IF EXISTS MY_SCHEMA.INVOICE_SEQUENCE_NUMBER CASCADE;\n\nDROP SESSION POLICY SESSION_POLICY_PRODUCTION_1;\n\nDROP SESSION POLICY IF EXISTS SESSION_POLICY_PRODUCTION_1;\n\nDROP SHARE SALES_S;\n\nDROP STAGE MY_SCHEMA.MY_STAGE;\n\nDROP STAGE IF EXISTS MY_SCHEMA.MY_STAGE;\n\nDROP STREAM MY_SCHEMA.T2;\n\nDROP STREAM IF EXISTS MY_SCHEMA.T2;\n\nDROP TABLE MY_SCHEMA.T2;\n\nDROP TABLE IF EXISTS MY_SCHEMA.T2;\n\nDROP TABLE IF EXISTS MY_SCHEMA.T2 CASCADE;\n\nDROP TAG COST_CENTER;\n\nDROP TAG IF EXISTS COST_CENTER;\n\nDROP TASK MY_SCHEAM.T2;\n\nDROP TASK IF EXISTS MY_SCHEAM.T2;\n\nDROP USER USER1;\n\nDROP USER IF EXISTS USER1;\n\nDROP VIEW MY_SCHEMA.MY_VIEW;\n\nDROP VIEW IF EXISTS MY_SCHEMA.MY_VIEW;\n\nDROP WAREHOUSE MY_WAREHOUSE;\n\nDROP WAREHOUSE IF EXISTS MY_WAREHOUSE;\n\nDROP EXTERNAL VOLUME my_volume;\n\nDROP EXTERNAL VOLUME IF EXISTS foo;\n').violations
+
+test/dialects/dialects_test.py:55: AssertionError
+_____________ test__dialect__base_file_parse[snowflake-undrop.sql] _____________
+
+dialect = 'snowflake', file = 'undrop.sql'
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,file", parse_success_examples)
+    def test__dialect__base_file_parse(dialect, file):
+        """For given test examples, check successful parsing."""
+        raw = load_file(dialect, file)
+        config_overrides = dict(dialect=dialect)
+        # Use the helper function to avoid parsing twice
+>       parsed: Optional[ParsedString] = lex_and_parse(config_overrides, raw)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/dialects/dialects_test.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config_overrides = {'dialect': 'snowflake'}
+raw = 'UNDROP database mytestdb2;\nundrop schema myschema;\nundrop table t2;\nUNDROP EXTERNAL VOLUME my_external_volume;\n'
+
+    def lex_and_parse(config_overrides: Dict[str, Any], raw: str) -> Optional[ParsedString]:
+        """Performs a Lex and Parse, with cacheable inputs within fixture."""
+        # Load the right dialect
+        config = FluffConfig(overrides=config_overrides)
+        # Construct rendered file (to skip the templater)
+        templated_file = TemplatedFile.from_string(raw)
+        rendered_file = RenderedFile(
+            templated_file,
+            [],
+            config,
+            {},
+            templated_file.fname,
+            "utf8",
+            raw,
+        )
+        # Parse (which includes lexing)
+        linter = Linter(config=config)
+        parsed_file = linter.parse_rendered(rendered_file)
+        if not raw:  # Empty file case
+            # We're just checking there aren't exceptions in this case.
+            return None
+        # Check we managed to parse
+        assert parsed_file.tree
+        # From just the initial parse, check we're all there
+        assert "".join(token.raw for token in parsed_file.tree.raw_segments) == raw
+        # Check we don't have lexing or parsing issues
+>       assert not parsed_file.violations
+E       assert not [SQLParseError("Line 4, Position 1: Found unparsable section: 'UNDROP EXTERNAL VOLUME my_external_volum...'")]
+E        +  where [SQLParseError("Line 4, Position 1: Found unparsable section: 'UNDROP EXTERNAL VOLUME my_external_volum...'")] = ParsedString(tree=<FileSegment: ([L:  1, P:  1])>, violations=[SQLParseError("Line 4, Position 1: Found unparsable section: 'UNDROP EXTERNAL VOLUME my_external_volum...'")], time_dict={'lexing': 0.000895300999999904, 'parsing': 0.002661221000003877}, templated_file=<TemplatedFile>, config=<sqlfluff.core.config.FluffConfig object at 0x2aea41985350>, fname='<string>', source_str='UNDROP database mytestdb2;\nundrop schema myschema;\nundrop table t2;\nUNDROP EXTERNAL VOLUME my_external_volume;\n').violations
+
+test/dialects/dialects_test.py:55: AssertionError
+_ test__dialect__base_parse_struct[snowflake-alter_external_volume.sql-True-alter_external_volume.yml] _
+
+dialect = 'snowflake', sqlfile = 'alter_external_volume.sql', code_only = True
+yamlfile = 'alter_external_volume.yml'
+yaml_loader = <function load_yaml at 0x2aea404dbb00>
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,sqlfile,code_only,yamlfile", parse_structure_examples)
+    def test__dialect__base_parse_struct(
+        dialect,
+        sqlfile,
+        code_only,
+        yamlfile,
+        yaml_loader,
+    ):
+        """For given test examples, check parsed structure against yaml."""
+        parsed: Optional[BaseSegment] = parse_example_file(dialect, sqlfile)
+        actual_hash = compute_parse_tree_hash(parsed)
+        # Load the YAML
+        expected_hash, res = yaml_loader(make_dialect_path(dialect, yamlfile))
+        if not parsed:
+            assert parsed == res
+            return
+    
+        # Verify the current parse tree matches the historic parse tree.
+        parsed_tree = parsed.to_tuple(code_only=code_only, show_raw=True)
+        # The parsed tree consists of a tuple of "File:", followed by the
+        # statements. So only compare when there is at least one statement.
+        if parsed_tree[1] or res[1]:
+>           assert parsed_tree == res
+E           assert ('file', (('u...ON'), ...)),)) == ('file', (('s...', ';'), ...))
+E             
+E             At index 1 diff: (('unparsable', (('word', 'ALTER'), ('word', 'EXTERNAL'), ('word', 'VOLUME'), ('word', 'exvol1'), ('word', 'ADD'), ('word', 'STORAGE_LOCATION'), ('equals', '='), ('start_bracket', '('), ('word', 'NAME'), ('equals', '='), ('single_quote', "'my-s3-us-central-2'"), ('word', 'STORAGE_PROVIDER'), ('equals', '='), ('single_quote', "'S3'"), ('word', 'STORAGE_BASE_URL'), ('equals', '='), ('single_quote', "'s3://my_bucket_us_central-1/'"), ('word', 'STORAGE_AWS_ROLE_ARN'), ('equals', '='), ('single_quote', "'arn:aws:iam::123456789012:role/myrole'"), ('end_bracke...
+E             
+E             ...Full output truncated (938 lines hidden), use '-vv' to show
+
+test/dialects/dialects_test.py:149: AssertionError
+_ test__dialect__base_parse_struct[snowflake-create_external_volume.sql-True-create_external_volume.yml] _
+
+dialect = 'snowflake', sqlfile = 'create_external_volume.sql', code_only = True
+yamlfile = 'create_external_volume.yml'
+yaml_loader = <function load_yaml at 0x2aea404dbb00>
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,sqlfile,code_only,yamlfile", parse_structure_examples)
+    def test__dialect__base_parse_struct(
+        dialect,
+        sqlfile,
+        code_only,
+        yamlfile,
+        yaml_loader,
+    ):
+        """For given test examples, check parsed structure against yaml."""
+        parsed: Optional[BaseSegment] = parse_example_file(dialect, sqlfile)
+        actual_hash = compute_parse_tree_hash(parsed)
+        # Load the YAML
+        expected_hash, res = yaml_loader(make_dialect_path(dialect, yamlfile))
+        if not parsed:
+            assert parsed == res
+            return
+    
+        # Verify the current parse tree matches the historic parse tree.
+        parsed_tree = parsed.to_tuple(code_only=code_only, show_raw=True)
+        # The parsed tree consists of a tuple of "File:", followed by the
+        # statements. So only compare when there is at least one statement.
+        if parsed_tree[1] or res[1]:
+>           assert parsed_tree == res
+E           assert ('file', (('u...ol'), ...)),)) == ('file', (('s...', ';'), ...))
+E             
+E             At index 1 diff: (('unparsable', (('word', 'CREATE'), ('word', 'OR'), ('word', 'REPLACE'), ('word', 'EXTERNAL'), ('word', 'VOLUME'), ('word', 'exvol'), ('word', 'STORAGE_LOCATIONS'), ('equals', '='), ('start_bracket', '('), ('start_bracket', '('), ('word', 'NAME'), ('equals', '='), ('single_quote', "'my-s3-us-west-2'"), ('word', 'STORAGE_PROVIDER'), ('equals', '='), ('single_quote', "'S3'"), ('word', 'STORAGE_BASE_URL'), ('equals', '='), ('single_quote', "'s3://MY_EXAMPLE_BUCKET/'"), ('word', 'STORAGE_AWS_ROLE_ARN'), ('equals', '='), ('single_quote', "'arn:aws:iam::1234...
+E             
+E             ...Full output truncated (1583 lines hidden), use '-vv' to show
+
+test/dialects/dialects_test.py:149: AssertionError
+_ test__dialect__base_parse_struct[snowflake-describe_statements.sql-True-describe_statements.yml] _
+
+dialect = 'snowflake', sqlfile = 'describe_statements.sql', code_only = True
+yamlfile = 'describe_statements.yml'
+yaml_loader = <function load_yaml at 0x2aea404dbb00>
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,sqlfile,code_only,yamlfile", parse_structure_examples)
+    def test__dialect__base_parse_struct(
+        dialect,
+        sqlfile,
+        code_only,
+        yamlfile,
+        yaml_loader,
+    ):
+        """For given test examples, check parsed structure against yaml."""
+        parsed: Optional[BaseSegment] = parse_example_file(dialect, sqlfile)
+        actual_hash = compute_parse_tree_hash(parsed)
+        # Load the YAML
+        expected_hash, res = yaml_loader(make_dialect_path(dialect, yamlfile))
+        if not parsed:
+            assert parsed == res
+            return
+    
+        # Verify the current parse tree matches the historic parse tree.
+        parsed_tree = parsed.to_tuple(code_only=code_only, show_raw=True)
+        # The parsed tree consists of a tuple of "File:", followed by the
+        # statements. So only compare when there is at least one statement.
+        if parsed_tree[1] or res[1]:
+>           assert parsed_tree == res
+E           assert ('file', (('s...', ';'), ...)) == ('file', (('s...', ';'), ...))
+E             
+E             At index 1 diff: (('statement', (('describe_statement', (('keyword', 'DESCRIBE'), ('keyword', 'RESULT'), ('quoted_literal', "'f2f07bdb-6a08-4689-9ad8-a1ba968a44b6'"))),)), ('statement_terminator', ';'), ('statement', (('describe_statement', (('keyword', 'DESC'), ('keyword', 'RESULT'), ('quoted_literal', "'f2f07bdb-6a08-4689-9ad8-a1ba968a44b6'"))),)), ('statement_terminator', ';'), ('statement', (('describe_statement', (('keyword', 'DESCRIBE'), ('keyword', 'RESULT'), ('keyword', 'LAST_QUERY_ID'), ('bracketed', (('start_bracket', '('), ('end_bracket', ')'))))),)), ('state...
+E             
+E             ...Full output truncated (3020 lines hidden), use '-vv' to show
+
+test/dialects/dialects_test.py:149: AssertionError
+_ test__dialect__base_parse_struct[snowflake-drop_statements.sql-True-drop_statements.yml] _
+
+dialect = 'snowflake', sqlfile = 'drop_statements.sql', code_only = True
+yamlfile = 'drop_statements.yml'
+yaml_loader = <function load_yaml at 0x2aea404dbb00>
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,sqlfile,code_only,yamlfile", parse_structure_examples)
+    def test__dialect__base_parse_struct(
+        dialect,
+        sqlfile,
+        code_only,
+        yamlfile,
+        yaml_loader,
+    ):
+        """For given test examples, check parsed structure against yaml."""
+        parsed: Optional[BaseSegment] = parse_example_file(dialect, sqlfile)
+        actual_hash = compute_parse_tree_hash(parsed)
+        # Load the YAML
+        expected_hash, res = yaml_loader(make_dialect_path(dialect, yamlfile))
+        if not parsed:
+            assert parsed == res
+            return
+    
+        # Verify the current parse tree matches the historic parse tree.
+        parsed_tree = parsed.to_tuple(code_only=code_only, show_raw=True)
+        # The parsed tree consists of a tuple of "File:", followed by the
+        # statements. So only compare when there is at least one statement.
+        if parsed_tree[1] or res[1]:
+>           assert parsed_tree == res
+E           AssertionError: assert ('file', (('s...', ';'), ...)) == ('file', (('s...', ';'), ...))
+E             
+E             At index 1 diff: (('statement', (('drop_object_statement', (('keyword', 'DROP'), ('keyword', 'CONNECTION'), ('object_reference', (('naked_identifier', 'MY_SCHEMA'), ('dot', '.'), ('naked_identifier', 'T1'))))),)), ('statement_terminator', ';'), ('statement', (('drop_object_statement', (('keyword', 'DROP'), ('keyword', 'CONNECTION'), ('keyword', 'IF'), ('keyword', 'EXISTS'), ('object_reference', (('naked_identifier', 'MY_SCHEMA'), ('dot', '.'), ('naked_identifier', 'T1'))))),)), ('statement_terminator', ';'), ('statement', (('drop_database_statement', (('keyword', 'DROP'...
+E             
+E             ...Full output truncated (2488 lines hidden), use '-vv' to show
+
+test/dialects/dialects_test.py:149: AssertionError
+____ test__dialect__base_parse_struct[snowflake-undrop.sql-True-undrop.yml] ____
+
+dialect = 'snowflake', sqlfile = 'undrop.sql', code_only = True
+yamlfile = 'undrop.yml', yaml_loader = <function load_yaml at 0x2aea404dbb00>
+
+    @pytest.mark.integration
+    @pytest.mark.parse_suite
+    @pytest.mark.parametrize("dialect,sqlfile,code_only,yamlfile", parse_structure_examples)
+    def test__dialect__base_parse_struct(
+        dialect,
+        sqlfile,
+        code_only,
+        yamlfile,
+        yaml_loader,
+    ):
+        """For given test examples, check parsed structure against yaml."""
+        parsed: Optional[BaseSegment] = parse_example_file(dialect, sqlfile)
+        actual_hash = compute_parse_tree_hash(parsed)
+        # Load the YAML
+        expected_hash, res = yaml_loader(make_dialect_path(dialect, yamlfile))
+        if not parsed:
+            assert parsed == res
+            return
+    
+        # Verify the current parse tree matches the historic parse tree.
+        parsed_tree = parsed.to_tuple(code_only=code_only, show_raw=True)
+        # The parsed tree consists of a tuple of "File:", followed by the
+        # statements. So only compare when there is at least one statement.
+        if parsed_tree[1] or res[1]:
+>           assert parsed_tree == res
+E           AssertionError: assert ('file', (('s...', ';'), ...)) == ('file', (('s...', ';'), ...))
+E             
+E             At index 1 diff: (('statement', (('undrop_statement', (('keyword', 'UNDROP'), ('keyword', 'database'), ('database_reference', (('naked_identifier', 'mytestdb2'),)))),)), ('statement_terminator', ';'), ('statement', (('undrop_statement', (('keyword', 'undrop'), ('keyword', 'schema'), ('schema_reference', (('naked_identifier', 'myschema'),)))),)), ('statement_terminator', ';'), ('statement', (('undrop_statement', (('keyword', 'undrop'), ('keyword', 'table'), ('table_reference', (('naked_identifier', 't2'),)))),)), ('statement_terminator', ';'), ('unparsable', (('word', 'U...
+E             
+E             ...Full output truncated (168 lines hidden), use '-vv' to show
+
+test/dialects/dialects_test.py:149: AssertionError
+=========================== short test summary info ============================
+FAILED test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-alter_external_volume.sql]
+FAILED test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-create_external_volume.sql]
+FAILED test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-describe_statements.sql]
+FAILED test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-drop_statements.sql]
+FAILED test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-undrop.sql]
+FAILED test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-alter_external_volume.sql-True-alter_external_volume.yml]
+FAILED test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-create_external_volume.sql-True-create_external_volume.yml]
+FAILED test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-describe_statements.sql-True-describe_statements.yml]
+FAILED test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-drop_statements.sql-True-drop_statements.yml]
+FAILED test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-undrop.sql-True-undrop.yml]
+===================== 10 failed, 4265 deselected in 1.78s ======================
+reward=0 graded=10 found=0 failed=0 parsed=0 framework=pytest exit_code=1

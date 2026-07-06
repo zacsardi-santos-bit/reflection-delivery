@@ -1,0 +1,116 @@
+patching file python/paddle/fluid/tests/unittests/test_var_base.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace
+collecting ... collected 9 items
+
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_backward PASSED [ 11%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_block PASSED [ 22%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_gradient PASSED [ 33%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_set_value PASSED [ 44%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_slice FAILED [ 55%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_to_string PASSED [ 66%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_to_variable PASSED [ 77%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_var_base_to_np PASSED [ 88%]
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_write_property PASSED [100%]
+
+=================================== FAILURES ===================================
+____________________________ TestVarBase.test_slice ____________________________
+
+self = <repo.python.paddle.fluid.tests.unittests.test_var_base.TestVarBase testMethod=test_slice>
+
+    def test_slice(self):
+        with fluid.dygraph.guard():
+>           self._test_slice()
+
+repo/python/paddle/fluid/tests/unittests/test_var_base.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+repo/python/paddle/fluid/tests/unittests/test_var_base.py:104: in _test_slice
+    nw = w[i]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <paddle.fluid.core_avx.VarBase object at 0x2a6fd8ed7130>, item = [0]
+
+    def __getitem__(self, item):
+        if not isinstance(item, tuple):
+            item = [item]
+    
+        decrease_axis = []
+        slice_axis = []
+        slice_start = []
+        slice_end = []
+        reverse_axis = []
+    
+        for dim, slice_item in enumerate(item):
+            if isinstance(slice_item, slice):
+                start = slice_item.start
+                end = slice_item.stop
+                step = slice_item.step if slice_item.step else 1
+    
+                assert (step == 1 or step == -1)
+    
+                if step == -1:
+                    reverse_axis.append(dim)
+                    assert (start is None and end is None)
+    
+                if start is None and end is None:
+                    continue
+    
+                if start is None:
+                    start = 0
+    
+                if end is None:
+                    end = 10000000
+    
+                slice_axis.append(dim)
+                slice_start.append(start)
+                slice_end.append(end)
+            else:
+                # int
+                decrease_axis.append(dim)
+                slice_axis.append(dim)
+                slice_start.append(slice_item)
+                slice_end.append(slice_item + 1
+                                 if slice_item != -1 else 10000000)
+    
+        out = self
+        if len(slice_axis) > 0:
+            # append slice_op here
+            inputs = {'Input': [out]}
+            attrs = {
+                'axes': slice_axis,
+                'starts': slice_start,
+                'ends': slice_end,
+                'decrease_axis': decrease_axis
+            }
+>           outs = core.ops.slice(inputs, attrs)
+E           TypeError: slice(): incompatible function arguments. The following argument types are supported:
+E               1. (arg0: paddle::imperative::VarBase, *args) -> paddle::imperative::VarBase
+E           
+E           Invoked with: {'Input': [<paddle.fluid.core_avx.VarBase object at 0x2a6fd8ed7130>]}, {'axes': [0], 'starts': [0], 'ends': [1], 'decrease_axis': [0]}
+
+/usr/local/lib/python3.7/site-packages/paddle/fluid/dygraph/varbase_patch_methods.py:259: TypeError
+=============================== warnings summary ===============================
+../usr/local/lib/python3.7/site-packages/paddle/fluid/framework.py:19
+  /usr/local/lib/python3.7/site-packages/paddle/fluid/framework.py:19: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+    from collections import Iterable
+
+../usr/local/lib/python3.7/site-packages/paddle/fluid/layers/utils.py:25
+  /usr/local/lib/python3.7/site-packages/paddle/fluid/layers/utils.py:25: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    def convert_to_list(value, n, name, dtype=np.int):
+
+../usr/local/lib/python3.7/site-packages/paddle/fluid/dygraph/dygraph_to_static/utils.py:22
+  /usr/local/lib/python3.7/site-packages/paddle/fluid/dygraph/dygraph_to_static/utils.py:22: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_var_base_to_np
+  /usr/local/lib/python3.7/site-packages/paddle/fluid/framework.py:261: UserWarning: paddle.fluid.framework._var_base_to_np is deprecated, please use var_base.numpy() instead of _var_base_to_np(var_base).
+    "paddle.fluid.framework._var_base_to_np is deprecated, please use var_base.numpy() instead of _var_base_to_np(var_base)."
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED repo/python/paddle/fluid/tests/unittests/test_var_base.py::TestVarBase::test_slice
+=================== 1 failed, 8 passed, 4 warnings in 3.65s ====================
+reward=0 graded=9 found=0 failed=0 parsed=9 framework=pytest exit_code=1

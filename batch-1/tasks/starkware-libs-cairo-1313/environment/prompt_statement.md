@@ -1,0 +1,5 @@
+I'm working on the Cairo compiler and the test that verifies dictionary compilation is failing. The compiler generates assembly output that includes embedded Python hint blocks for dictionary operations, but the formatting of these hints doesn't match what's expected.
+
+The issue is with indentation and spacing: the hint blocks are using too many levels of indentation (they appear to be indented one extra level compared to where they should be), individual lines inside the hint blocks have trailing spaces that shouldn't be there, and single-line hints need exactly one space of padding on each side of the content within the hint delimiters. Also, the hint delimiter tokens themselves are acquiring extra spaces that shouldn't be there — the delimiter and its content should be directly adjacent without extra whitespace between them.
+
+Could you fix the hint formatting code so that the generated output matches the correct canonical format? The dictionary-related hints and the general hint display code both need to be updated to produce properly indented, clean output without extra trailing spaces.

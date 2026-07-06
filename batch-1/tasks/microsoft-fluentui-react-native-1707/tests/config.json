@@ -1,0 +1,50 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/experimental/Avatar && npx jest --watchAll=false --coverage=false --verbose",
+  "test_files": [
+    "packages/experimental/Avatar/src/__tests__/__snapshots__/JSAvatar.test.jsx.snap",
+    "packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::Avatar rendering renders Avatar"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials handles null inputs",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR for non-ASCII characters",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with a hypen",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with numbers",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with parentheses",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with brackets",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with curly braces",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with multiple parentheses, extra spaces, and unwanted characters",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR with multiple types of unwanted text",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in RTL if one was not specified",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials in LTR for names with multiple components",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials for Arabic names",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials for Chinese names",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials for Korean names",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates an expected initials for Japanese names",
+    "/workspace/repo/packages/experimental/Avatar/src/utils/getInitials.test.ts::getInitials calculates expected initials for phone numbers",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::validateAlphabeticalCharacters method validates alphabetical characters",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::validateAlphabeticalCharacters method doesn't validate undefined name",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::validateAlphabeticalCharacters method doesn't validate an empty string",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::validateAlphabeticalCharacters method doesn't validate null name",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::removeTitlesFromName method removes titles from the name",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method returns correct initials",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method returns an empty string if name is undefined",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method return initials for alphabetical words",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method return initials for words with titles",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method returns initials when there's a coma",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method handles null inputs",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials in LTR with a hypen",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials in LTR with multiple parentheses, extra spaces, and unwanted characters",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials in LTR with multiple types of unwanted text",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials for Arabic names",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials for Chinese names",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials for Korean names",
+    "/workspace/repo/packages/experimental/Avatar/src/__tests__/JSAvatar.test.jsx::getInitials method calculates an expected initials for Japanese names"
+  ]
+}

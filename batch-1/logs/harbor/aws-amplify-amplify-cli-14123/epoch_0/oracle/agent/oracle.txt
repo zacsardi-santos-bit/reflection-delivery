@@ -1,0 +1,10 @@
+patching file packages/amplify-gen2-codegen/API.md
+patching file packages/amplify-gen2-codegen/src/backend/synthesizer.ts
+patching file packages/amplify-gen2-codegen/src/data/source_builder.ts
+patching file packages/amplify-gen2-codegen/src/function/source_builder.ts
+patching file packages/amplify-gen2-codegen/src/index.ts
+patching file packages/amplify-gen2-codegen/src/npm_package/renderer.ts
+patching file packages/amplify-gen2-codegen/src/storage/source_builder.ts
+patching file packages/amplify-migration/package.json
+patching file packages/amplify-migration/src/data_definition_fetcher.ts
+patching file yarn.lock

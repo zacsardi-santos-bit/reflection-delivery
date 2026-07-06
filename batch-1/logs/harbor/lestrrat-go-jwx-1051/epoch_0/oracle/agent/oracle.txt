@@ -1,0 +1,769 @@
+patching file .bazelversion
+patching file .github/workflows/benchmark.yml
+patching file .github/workflows/ci.yml
+patching file .github/workflows/codeql.yml
+patching file .github/workflows/lint.yml
+patching file .github/workflows/smoke.yml
+patching file .github/workflows/stale.yml
+patching file Changes
+patching file cmd/jwx/go.mod
+patching file cmd/jwx/go.sum
+Hunk #1 succeeded at 2 with fuzz 3 (offset 1 line).
+Hunk #2 succeeded at 12 (offset 2 lines).
+Hunk #3 FAILED at 37.
+Hunk #4 FAILED at 63.
+2 out of 4 hunks FAILED -- saving rejects to file cmd/jwx/go.sum.rej
+patching file deps.bzl
+patching file examples/go.sum
+Hunk #1 succeeded at 40 with fuzz 2 (offset 4 lines).
+Hunk #2 succeeded at 82 with fuzz 3 (offset 8 lines).
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 2 with fuzz 3 (offset 1 line).
+Hunk #2 succeeded at 14 (offset 1 line).
+Hunk #3 FAILED at 20.
+1 out of 3 hunks FAILED -- saving rejects to file go.sum.rej
+patching file jws/jws.go
+patching file jws/message.go
+patching file tools/cmd/genjwa/go.mod
+patching file tools/cmd/genjwa/go.sum
+Hunk #1 FAILED at 26.
+Hunk #2 FAILED at 48.
+2 out of 2 hunks FAILED -- saving rejects to file tools/cmd/genjwa/go.sum.rej
+patching file tools/cmd/genjwe/go.mod
+patching file tools/cmd/genjwe/go.sum
+Hunk #1 succeeded at 2 with fuzz 3.
+Hunk #2 succeeded at 12 (offset 1 line).
+Hunk #3 succeeded at 31 (offset 1 line).
+Hunk #4 succeeded at 53 (offset 3 lines).
+Hunk #5 FAILED at 67.
+Hunk #6 FAILED at 78.
+2 out of 6 hunks FAILED -- saving rejects to file tools/cmd/genjwe/go.sum.rej
+patching file tools/cmd/genjwk/go.mod
+patching file tools/cmd/genjwk/go.sum
+Hunk #1 succeeded at 2 with fuzz 3.
+Hunk #2 succeeded at 12 (offset 1 line).
+Hunk #3 succeeded at 31 (offset 1 line).
+Hunk #4 succeeded at 53 (offset 3 lines).
+Hunk #5 FAILED at 67.
+Hunk #6 FAILED at 78.
+2 out of 6 hunks FAILED -- saving rejects to file tools/cmd/genjwk/go.sum.rej
+patching file tools/cmd/genjws/go.mod
+patching file tools/cmd/genjws/go.sum
+Hunk #1 succeeded at 2 with fuzz 3.
+Hunk #2 succeeded at 12 (offset 1 line).
+Hunk #3 succeeded at 31 (offset 1 line).
+Hunk #4 succeeded at 53 (offset 3 lines).
+Hunk #5 FAILED at 67.
+Hunk #6 FAILED at 78.
+2 out of 6 hunks FAILED -- saving rejects to file tools/cmd/genjws/go.sum.rej
+patching file tools/cmd/genjwt/go.mod
+patching file tools/cmd/genjwt/go.sum
+Hunk #1 succeeded at 2 with fuzz 3.
+Hunk #2 succeeded at 12 (offset 1 line).
+Hunk #3 succeeded at 33 (offset 1 line).
+Hunk #4 succeeded at 55 (offset 3 lines).
+Hunk #5 FAILED at 69.
+Hunk #6 FAILED at 80.
+2 out of 6 hunks FAILED -- saving rejects to file tools/cmd/genjwt/go.sum.rej
+patching file tools/cmd/genoptions/go.mod
+patching file tools/cmd/genoptions/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 23.
+Hunk #3 succeeded at 51 (offset 4 lines).
+Hunk #4 FAILED at 57.
+3 out of 4 hunks FAILED -- saving rejects to file tools/cmd/genoptions/go.sum.rej
+patching file tools/cmd/genreadfile/go.mod
+patching file tools/cmd/genreadfile/go.sum
+Hunk #1 FAILED at 26.
+Hunk #2 FAILED at 48.
+2 out of 2 hunks FAILED -- saving rejects to file tools/cmd/genreadfile/go.sum.rej
+patching file .bazelversion
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .bazelversion.rej
+patching file .github/workflows/benchmark.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/benchmark.yml.rej
+patching file .github/workflows/ci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/ci.yml.rej
+patching file .github/workflows/codeql.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file .github/workflows/codeql.yml.rej
+patching file .github/workflows/lint.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/lint.yml.rej
+patching file .github/workflows/smoke.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/smoke.yml.rej
+patching file .github/workflows/stale.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/stale.yml.rej
+patching file Changes
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Changes.rej
+patching file cmd/jwx/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/jwx/go.mod.rej
+patching file cmd/jwx/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/jwx/go.sum.rej
+patching file deps.bzl
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file deps.bzl.rej
+patching file examples/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file examples/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file go.sum.rej
+patching file jws/jws.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file jws/jws.go.rej
+patching file jws/message.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file jws/message.go.rej
+patching file tools/cmd/genjwa/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwa/go.mod.rej
+patching file tools/cmd/genjwa/go.sum
+Hunk #1 FAILED at 26.
+Hunk #2 FAILED at 48.
+2 out of 2 hunks FAILED -- saving rejects to file tools/cmd/genjwa/go.sum.rej
+patching file tools/cmd/genjwe/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwe/go.mod.rej
+patching file tools/cmd/genjwe/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjwe/go.sum.rej
+patching file tools/cmd/genjwk/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwk/go.mod.rej
+patching file tools/cmd/genjwk/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjwk/go.sum.rej
+patching file tools/cmd/genjws/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjws/go.mod.rej
+patching file tools/cmd/genjws/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjws/go.sum.rej
+patching file tools/cmd/genjwt/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwt/go.mod.rej
+patching file tools/cmd/genjwt/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjwt/go.sum.rej
+patching file tools/cmd/genoptions/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genoptions/go.mod.rej
+patching file tools/cmd/genoptions/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 23.
+Hunk #3 FAILED at 47.
+Hunk #4 FAILED at 58.
+4 out of 4 hunks FAILED -- saving rejects to file tools/cmd/genoptions/go.sum.rej
+patching file tools/cmd/genreadfile/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genreadfile/go.mod.rej
+patching file tools/cmd/genreadfile/go.sum
+Hunk #1 FAILED at 26.
+Hunk #2 FAILED at 48.
+2 out of 2 hunks FAILED -- saving rejects to file tools/cmd/genreadfile/go.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.bazelversion b/.bazelversion
+|index 09b254e9..19b860c1 100644
+|--- a/.bazelversion
+|+++ b/.bazelversion
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 12
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/benchmark.yml b/.github/workflows/benchmark.yml
+|index 793cc044..00392dbe 100644
+|--- a/.github/workflows/benchmark.yml
+|+++ b/.github/workflows/benchmark.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 25
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+|index 29dba0b2..fa1866f6 100644
+|--- a/.github/workflows/ci.yml
+|+++ b/.github/workflows/ci.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 38
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/codeql.yml b/.github/workflows/codeql.yml
+|index 26cf4a6b..b72cdc54 100644
+|--- a/.github/workflows/codeql.yml
+|+++ b/.github/workflows/codeql.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 68
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/lint.yml b/.github/workflows/lint.yml
+|index 7bd3f7f8..73fbb900 100644
+|--- a/.github/workflows/lint.yml
+|+++ b/.github/workflows/lint.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 81
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/smoke.yml b/.github/workflows/smoke.yml
+|index d88341df..7701c6c2 100644
+|--- a/.github/workflows/smoke.yml
+|+++ b/.github/workflows/smoke.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 94
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/stale.yml b/.github/workflows/stale.yml
+|index 4277b638..c69612c1 100644
+|--- a/.github/workflows/stale.yml
+|+++ b/.github/workflows/stale.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 107
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Changes b/Changes
+|index 2de87d4c..ab8312eb 100644
+|--- a/Changes
+|+++ b/Changes
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 134
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/jwx/go.mod b/cmd/jwx/go.mod
+|index 0e6d4f3f..be396731 100644
+|--- a/cmd/jwx/go.mod
+|+++ b/cmd/jwx/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 168
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/jwx/go.sum b/cmd/jwx/go.sum
+|index 7bc897d4..3e6a405d 100644
+|--- a/cmd/jwx/go.sum
+|+++ b/cmd/jwx/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 248
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/deps.bzl b/deps.bzl
+|index ab3a455a..25d35d92 100644
+|--- a/deps.bzl
+|+++ b/deps.bzl
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 316
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/go.sum b/examples/go.sum
+|index 4b5882b8..67772b16 100644
+|--- a/examples/go.sum
+|+++ b/examples/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 339
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 6033b447..e8fe7dc8 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 366
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 11a3c77c..6fabf723 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 444
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/jws/jws.go b/jws/jws.go
+|index 4cf2c317..4a9e8194 100644
+|--- a/jws/jws.go
+|+++ b/jws/jws.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 468
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/jws/message.go b/jws/message.go
+|index adec8445..dca5dfeb 100644
+|--- a/jws/message.go
+|+++ b/jws/message.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 496
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwa/go.mod b/tools/cmd/genjwa/go.mod
+|index a01de2d9..b44fee4f 100644
+|--- a/tools/cmd/genjwa/go.mod
+|+++ b/tools/cmd/genjwa/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 508
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwa/go.sum b/tools/cmd/genjwa/go.sum
+|index 65255c63..165a983f 100644
+|--- a/tools/cmd/genjwa/go.sum
+|+++ b/tools/cmd/genjwa/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 577
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwe/go.mod b/tools/cmd/genjwe/go.mod
+|index e26e4fa8..38e950c6 100644
+|--- a/tools/cmd/genjwe/go.mod
+|+++ b/tools/cmd/genjwe/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 598
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwe/go.sum b/tools/cmd/genjwe/go.sum
+|index f0a1338a..d1b519b7 100644
+|--- a/tools/cmd/genjwe/go.sum
+|+++ b/tools/cmd/genjwe/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 724
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwk/go.mod b/tools/cmd/genjwk/go.mod
+|index 816d2ac6..0223ec1d 100644
+|--- a/tools/cmd/genjwk/go.mod
+|+++ b/tools/cmd/genjwk/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 745
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwk/go.sum b/tools/cmd/genjwk/go.sum
+|index f0a1338a..d1b519b7 100644
+|--- a/tools/cmd/genjwk/go.sum
+|+++ b/tools/cmd/genjwk/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 871
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjws/go.mod b/tools/cmd/genjws/go.mod
+|index ca02a6c1..8c9f7101 100644
+|--- a/tools/cmd/genjws/go.mod
+|+++ b/tools/cmd/genjws/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 892
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjws/go.sum b/tools/cmd/genjws/go.sum
+|index f0a1338a..d1b519b7 100644
+|--- a/tools/cmd/genjws/go.sum
+|+++ b/tools/cmd/genjws/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 1018
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwt/go.mod b/tools/cmd/genjwt/go.mod
+|index 9306cf8d..3db1f165 100644
+|--- a/tools/cmd/genjwt/go.mod
+|+++ b/tools/cmd/genjwt/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1041
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genjwt/go.sum b/tools/cmd/genjwt/go.sum
+|index 76868e31..666116f2 100644
+|--- a/tools/cmd/genjwt/go.sum
+|+++ b/tools/cmd/genjwt/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 1171
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genoptions/go.mod b/tools/cmd/genoptions/go.mod
+|index a59b76ce..f89683c8 100644
+|--- a/tools/cmd/genoptions/go.mod
+|+++ b/tools/cmd/genoptions/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1203
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genoptions/go.sum b/tools/cmd/genoptions/go.sum
+|index 06d5d099..c9525b96 100644
+|--- a/tools/cmd/genoptions/go.sum
+|+++ b/tools/cmd/genoptions/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1302
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genreadfile/go.mod b/tools/cmd/genreadfile/go.mod
+|index 4beb63b6..2219f429 100644
+|--- a/tools/cmd/genreadfile/go.mod
+|+++ b/tools/cmd/genreadfile/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1314
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/cmd/genreadfile/go.sum b/tools/cmd/genreadfile/go.sum
+|index 65255c63..165a983f 100644
+|--- a/tools/cmd/genreadfile/go.sum
+|+++ b/tools/cmd/genreadfile/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file .bazelversion
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .bazelversion.rej
+patching file .github/workflows/benchmark.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/benchmark.yml.rej
+patching file .github/workflows/ci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/ci.yml.rej
+patching file .github/workflows/codeql.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file .github/workflows/codeql.yml.rej
+patching file .github/workflows/lint.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/lint.yml.rej
+patching file .github/workflows/smoke.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/smoke.yml.rej
+patching file .github/workflows/stale.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/stale.yml.rej
+patching file Changes
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Changes.rej
+patching file cmd/jwx/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/jwx/go.mod.rej
+patching file cmd/jwx/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/jwx/go.sum.rej
+patching file deps.bzl
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file deps.bzl.rej
+patching file examples/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file examples/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file go.sum.rej
+patching file jws/jws.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file jws/jws.go.rej
+patching file jws/message.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file jws/message.go.rej
+patching file tools/cmd/genjwa/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwa/go.mod.rej
+patching file tools/cmd/genjwa/go.sum
+Hunk #1 FAILED at 26.
+Hunk #2 FAILED at 48.
+2 out of 2 hunks FAILED -- saving rejects to file tools/cmd/genjwa/go.sum.rej
+patching file tools/cmd/genjwe/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwe/go.mod.rej
+patching file tools/cmd/genjwe/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjwe/go.sum.rej
+patching file tools/cmd/genjwk/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwk/go.mod.rej
+patching file tools/cmd/genjwk/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjwk/go.sum.rej
+patching file tools/cmd/genjws/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjws/go.mod.rej
+patching file tools/cmd/genjws/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjws/go.sum.rej
+patching file tools/cmd/genjwt/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genjwt/go.mod.rej
+patching file tools/cmd/genjwt/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tools/cmd/genjwt/go.sum.rej
+patching file tools/cmd/genoptions/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genoptions/go.mod.rej
+patching file tools/cmd/genoptions/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 23.
+Hunk #3 FAILED at 47.
+Hunk #4 FAILED at 58.
+4 out of 4 hunks FAILED -- saving rejects to file tools/cmd/genoptions/go.sum.rej
+patching file tools/cmd/genreadfile/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/cmd/genreadfile/go.mod.rej
+patching file tools/cmd/genreadfile/go.sum
+Hunk #1 FAILED at 26.
+Hunk #2 FAILED at 48.
+2 out of 2 hunks FAILED -- saving rejects to file tools/cmd/genreadfile/go.sum.rej
+ERROR: golden patch failed to apply by all strategies

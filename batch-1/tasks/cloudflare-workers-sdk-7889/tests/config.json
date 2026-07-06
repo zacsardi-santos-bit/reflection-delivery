@@ -1,0 +1,26 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/wrangler && npx vitest run src/__tests__/provision.test.ts",
+  "test_files": [
+    "packages/wrangler/e2e/provision.test.ts",
+    "packages/wrangler/src/__tests__/provision.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings can provision KV, R2 and D1 bindings with existing resources",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings can provision KV, R2 and D1 bindings with existing resources, and lets you search when there are too many to list",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings can provision KV, R2 and D1 bindings with new resources",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings can prefill d1 database name from config file if provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings will not inherit d1 binding when the database name is provided but has changed",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings can prefill r2 bucket name from config file if provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings won't prompt to provision if a D1 database name belongs to an existing database",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings will provision if the jurisdiction changes"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision should inherit KV, R2 and D1 bindings if they could be found from the settings",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings can inherit d1 binding when the database name is provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision provisions KV, R2 and D1 bindings if not found in worker settings won't prompt to provision if an r2 bucket name belongs to an existing bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/provision.test.ts::--x-provision should error if used with a service environment"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/Packs/DemistoRESTAPI/Scripts/GetIncidentTasks && pytest GetIncidentTasks_test.py -v",
+  "test_files": [
+    "Packs/DemistoRESTAPI/Scripts/GetIncidentTasks/GetIncidentTasks_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_is_task_match[task0-First Task-None-states0-True]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_is_task_match[task1-None-testtag-states1-True]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_is_task_match[task2--testtag-states2-False]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_is_task_match[task3-None-testtag-states3-True]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_states[states0-output0]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_states[states1-output1]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_states[states2-output2]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_playbook_tasks[tasks0-output0]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_playbook_tasks[tasks1-output1]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_playbook_tasks[tasks2-output2]",
+    "Packs.DemistoRESTAPI.Scripts.GetIncidentTasks.GetIncidentTasks_test::test_get_task_command"
+  ],
+  "PASS_TO_PASS": []
+}

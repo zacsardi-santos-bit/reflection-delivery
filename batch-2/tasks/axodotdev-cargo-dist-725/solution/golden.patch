@@ -1,0 +1,153 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index dc0d2aec..73516dc3 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -335,7 +335,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "cargo-dist"
+-version = "0.7.3-prerelease.2"
++version = "0.7.3-prerelease.3"
+ dependencies = [
+  "axoasset",
+  "axocli",
+@@ -375,7 +375,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "cargo-dist-schema"
+-version = "0.7.3-prerelease.2"
++version = "0.7.3-prerelease.3"
+ dependencies = [
+  "camino",
+  "gazenot",
+diff --git a/cargo-dist-schema/Cargo.toml b/cargo-dist-schema/Cargo.toml
+index 65b3b548..3bcf0912 100644
+--- a/cargo-dist-schema/Cargo.toml
++++ b/cargo-dist-schema/Cargo.toml
+@@ -1,7 +1,7 @@
+ [package]
+ name = "cargo-dist-schema"
+ description = "Schema information for cargo-dist's dist-manifest.json"
+-version = "0.7.3-prerelease.2"
++version = "0.7.3-prerelease.3"
+ edition = "2021"
+ license = "MIT OR Apache-2.0"
+ repository = "https://github.com/axodotdev/cargo-dist"
+diff --git a/cargo-dist-schema/src/lib.rs b/cargo-dist-schema/src/lib.rs
+index 44642d75..4b1742fc 100644
+--- a/cargo-dist-schema/src/lib.rs
++++ b/cargo-dist-schema/src/lib.rs
+@@ -38,6 +38,11 @@ pub struct DistManifest {
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub announcement_tag: Option<String>,
++    /// True if --tag wasn't explicitly passed to cargo-dist. This usually indicates
++    /// some kind of dry-run state like pr-run-mode=upload. Some third-party tools
++    /// may use this as a proxy for "is dry run"
++    #[serde(default)]
++    pub announcement_tag_is_implicit: bool,
+     /// Whether this announcement appears to be a prerelease
+     #[serde(default)]
+     pub announcement_is_prerelease: bool,
+@@ -371,6 +376,7 @@ impl DistManifest {
+         Self {
+             dist_version: None,
+             announcement_tag: None,
++            announcement_tag_is_implicit: false,
+             announcement_is_prerelease: false,
+             announcement_title: None,
+             announcement_changelog: None,
+diff --git a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+index 41151b7b..536515c5 100644
+--- a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
++++ b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+@@ -37,6 +37,11 @@ expression: json_schema
+         "null"
+       ]
+     },
++    "announcement_tag_is_implicit": {
++      "description": "True if --tag wasn't explicitly passed to cargo-dist. This usually indicates some kind of dry-run state like pr-run-mode=upload. Some third-party tools may use this as a proxy for \"is dry run\"",
++      "default": false,
++      "type": "boolean"
++    },
+     "announcement_title": {
+       "description": "A title for the announcement",
+       "type": [
+diff --git a/cargo-dist/Cargo.toml b/cargo-dist/Cargo.toml
+index 096f3bc2..f2c367d4 100644
+--- a/cargo-dist/Cargo.toml
++++ b/cargo-dist/Cargo.toml
+@@ -1,7 +1,7 @@
+ [package]
+ name = "cargo-dist"
+ description = "Shippable application packaging for Rust"
+-version = "0.7.3-prerelease.2"
++version = "0.7.3-prerelease.3"
+ edition = "2021"
+ license = "MIT OR Apache-2.0"
+ repository = "https://github.com/axodotdev/cargo-dist"
+@@ -34,7 +34,7 @@ axocli = { version = "0.1.1", optional = true }
+ 
+ # Features used by the cli and library
+ axotag = "0.1.0"
+-cargo-dist-schema = { version = "=0.7.3-prerelease.2", path = "../cargo-dist-schema" }
++cargo-dist-schema = { version = "=0.7.3-prerelease.3", path = "../cargo-dist-schema" }
+ 
+ axoasset = { version = "0.6.1", features = ["json-serde", "toml-serde", "toml-edit", "compression"] }
+ axoprocess = { version = "0.1.0" }
+diff --git a/cargo-dist/src/manifest.rs b/cargo-dist/src/manifest.rs
+index 0df8533c..f6c2f754 100644
+--- a/cargo-dist/src/manifest.rs
++++ b/cargo-dist/src/manifest.rs
+@@ -34,6 +34,7 @@ pub fn load_and_merge_manifests(
+             releases,
+             publish_prereleases,
+             announcement_tag,
++            announcement_tag_is_implicit,
+             announcement_is_prerelease,
+             announcement_title,
+             announcement_changelog,
+@@ -64,6 +65,7 @@ pub fn load_and_merge_manifests(
+             output.announcement_tag = Some(val);
+             // Didn't wrap these in an option, so use announcement_tag as a proxy
+             output.announcement_is_prerelease = announcement_is_prerelease;
++            output.announcement_tag_is_implicit = announcement_tag_is_implicit;
+             output.publish_prereleases = publish_prereleases;
+         }
+         if let Some(val) = announcement_title {
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+index 302810a1..c024cd01 100644
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -680,6 +680,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         workspace: &'pkg_graph WorkspaceInfo,
+         artifact_mode: ArtifactMode,
+         allow_all_dirty: bool,
++        announcement_tag_is_implicit: bool,
+     ) -> DistResult<Self> {
+         let target_dir = workspace.target_dir.clone();
+         let workspace_dir = workspace.workspace_dir.clone();
+@@ -972,6 +973,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+                 system_info: Some(cargo_dist_schema::SystemInfo { cargo_version_line }),
+                 announcement_tag: None,
+                 announcement_is_prerelease: false,
++                announcement_tag_is_implicit,
+                 announcement_title: None,
+                 announcement_changelog: None,
+                 announcement_github_body: None,
+@@ -2601,8 +2603,13 @@ pub fn gather_work(cfg: &Config) -> Result<(DistGraph, DistManifest)> {
+     info!("analyzing workspace:");
+     let tools = tool_info()?;
+     let workspace = crate::config::get_project()?;
+-    let mut graph =
+-        DistGraphBuilder::new(tools, &workspace, cfg.artifact_mode, cfg.allow_all_dirty)?;
++    let mut graph = DistGraphBuilder::new(
++        tools,
++        &workspace,
++        cfg.artifact_mode,
++        cfg.allow_all_dirty,
++        cfg.announcement_tag.is_none(),
++    )?;
+ 
+     // Immediately check if there's other manifests kicking around that provide info
+     // we don't want to recompute (lets us move towards more of an architecture where

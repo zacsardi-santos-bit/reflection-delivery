@@ -1,0 +1,29 @@
+{
+    "id": "2f73942e-7187-40f5-ae6d-bb6b4f19e817",
+    "started_at": "2026-07-06T12:18:23.193700",
+    "finished_at": "2026-07-06T12:20:27.277799",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__nushell-nushell-17575": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "nushell-nushell-17575__EGTofXr"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8): No such file or directory
+patching file warehouse/accounts/forms.py
+patching file warehouse/accounts/views.py
+patching file warehouse/locale/messages.pot
+patching file warehouse/manage/views/__init__.py
+patching file warehouse/oidc/forms/__init__.py
+patching file warehouse/oidc/forms/google.py
+patching file warehouse/templates/manage/account/publishing.html
+patching file warehouse/templates/manage/manage_base.html
+patching file warehouse/templates/manage/project/publishing.html

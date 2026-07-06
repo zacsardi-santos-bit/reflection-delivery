@@ -1,0 +1,29 @@
+{
+    "id": "7bc98e1b-3b13-46db-a3c0-b8329c975272",
+    "started_at": "2026-07-04T15:37:27.639528",
+    "finished_at": "2026-07-04T15:40:33.627110",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__vllm-project-vllm-39554": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "vllm-project-vllm-39554__Q8JJfYU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

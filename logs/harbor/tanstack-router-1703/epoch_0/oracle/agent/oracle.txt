@@ -1,3 +1,0 @@
-patching file packages/react-router/src/link.tsx
-patching file packages/react-router/src/router.ts
-patching file packages/react-router/src/useNavigate.tsx

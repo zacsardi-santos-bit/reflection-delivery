@@ -1,3 +1,0 @@
-patching file lib/runtime-c-api/src/lib.rs
-patching file lib/runtime-c-api/wasmer.h
-patching file lib/runtime-c-api/wasmer.hh

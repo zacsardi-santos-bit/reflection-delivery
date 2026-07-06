@@ -1,0 +1,23 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./bpfman-operator/controllers/bpfman-agent -count=1",
+  "test_files": [
+    "bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestDiscoveredProgramControllerCreate",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestDiscoveredProgramControllerCreateAndDeleteStale",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestKprobeProgramControllerCreate",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestTcProgramControllerCreate",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestTcProgramControllerCreateMultiIntf",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestTracepointProgramControllerCreate",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestUprobeProgramControllerCreate",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestGetPods",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestXdpProgramControllerCreate",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestXdpProgramControllerCreateMultiIntf",
+    "github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent::TestUpdateStatus"
+  ],
+  "PASS_TO_PASS": []
+}

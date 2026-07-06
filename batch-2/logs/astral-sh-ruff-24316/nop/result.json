@@ -1,0 +1,29 @@
+{
+    "id": "1e60fcdb-9001-46f6-8cae-eebdef6d8501",
+    "started_at": "2026-07-06T12:16:32.180262",
+    "finished_at": "2026-07-06T12:19:49.895139",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__astral-sh-ruff-24316": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "astral-sh-ruff-24316__AbPL7FD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

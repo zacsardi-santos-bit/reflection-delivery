@@ -1,0 +1,444 @@
+diff --git a/src/main/webapp/app/core/home/home.component.ts b/src/main/webapp/app/core/home/home.component.ts
+index cf12233c50..6e91884965 100644
+--- a/src/main/webapp/app/core/home/home.component.ts
++++ b/src/main/webapp/app/core/home/home.component.ts
+@@ -21,6 +21,8 @@ import { WebauthnService } from 'app/core/user/settings/passkey-settings/webauth
+ import { ProfileInfo } from 'app/core/layouts/profiles/profile-info.model';
+ import { WebauthnApiService } from 'app/core/user/settings/passkey-settings/webauthn-api.service';
+ import { ButtonComponent, ButtonSize, ButtonType } from 'app/shared/components/button/button.component';
++import { getCredentialWithGracefullyHandlingAuthenticatorIssues } from 'app/core/user/settings/passkey-settings/util/credential.util';
++import { InvalidCredentialError } from 'app/core/user/settings/passkey-settings/entities/invalid-credential-error';
+ 
+ @Component({
+     selector: 'jhi-home',
+@@ -102,17 +104,30 @@ export class HomeComponent implements OnInit, AfterViewChecked {
+ 
+     async loginWithPasskey() {
+         try {
+-            const credential = await this.webauthnService.getCredential();
++            const authenticatorCredential = await this.webauthnService.getCredential();
+ 
+-            if (!credential || credential.type != 'public-key') {
+-                alert("Credential is undefined or type is not 'public-key'");
+-                return;
++            if (!authenticatorCredential || authenticatorCredential.type != 'public-key') {
++                // noinspection ExceptionCaughtLocallyJS - intended to be caught locally
++                throw new InvalidCredentialError();
++            }
++
++            const credential = getCredentialWithGracefullyHandlingAuthenticatorIssues(authenticatorCredential) as unknown as PublicKeyCredential;
++            if (!credential) {
++                // noinspection ExceptionCaughtLocallyJS - intended to be caught locally
++                throw new InvalidCredentialError();
+             }
+ 
+             await this.webauthnApiService.loginWithPasskey(credential);
+             this.handleLoginSuccess();
+         } catch (error) {
+-            this.alertService.addErrorAlert('artemisApp.userSettings.passkeySettingsPage.error.login');
++            if (error instanceof InvalidCredentialError) {
++                this.alertService.addErrorAlert('artemisApp.userSettings.passkeySettingsPage.error.invalidCredential');
++            } else {
++                this.alertService.addErrorAlert('artemisApp.userSettings.passkeySettingsPage.error.login');
++            }
++            // eslint-disable-next-line no-undef
++            console.error(error);
++            throw error;
+         }
+     }
+ 
+@@ -212,7 +227,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
+         this.account = account;
+         if (account) {
+             // previousState was set in the authExpiredInterceptor before being redirected to the login modal.
+-            // since login is successful, go to stored previousState and clear previousState
++            // since login is successful, go to the stored previousState and clear the previousState
+             const redirect = this.stateStorageService.getUrl();
+             if (redirect && redirect !== '') {
+                 this.stateStorageService.storeUrl('');
+@@ -223,10 +238,6 @@ export class HomeComponent implements OnInit, AfterViewChecked {
+         }
+     }
+ 
+-    isAuthenticated() {
+-        return this.accountService.isAuthenticated();
+-    }
+-
+     inputChange(event: any) {
+         if (event.target && event.target.name === 'username') {
+             this.username = event.target.value;
+diff --git a/src/main/webapp/app/core/user/settings/passkey-settings/entities/invalid-credential-error.ts b/src/main/webapp/app/core/user/settings/passkey-settings/entities/invalid-credential-error.ts
+new file mode 100644
+index 0000000000..5aa6934ae8
+--- /dev/null
++++ b/src/main/webapp/app/core/user/settings/passkey-settings/entities/invalid-credential-error.ts
+@@ -0,0 +1,7 @@
++export class InvalidCredentialError extends Error {
++    constructor(message: string = 'Invalid credential') {
++        super(message);
++        this.name = 'InvalidCredentialError';
++        Object.setPrototypeOf(this, InvalidCredentialError.prototype); // ensure instanceof checks work correctly
++    }
++}
+diff --git a/src/main/webapp/app/core/user/settings/passkey-settings/entities/malformed-bitwarden-credential.ts b/src/main/webapp/app/core/user/settings/passkey-settings/entities/malformed-bitwarden-credential.ts
+new file mode 100644
+index 0000000000..a8fa37ad0f
+--- /dev/null
++++ b/src/main/webapp/app/core/user/settings/passkey-settings/entities/malformed-bitwarden-credential.ts
+@@ -0,0 +1,53 @@
++/**
++ * <a href="https://chromewebstore.google.com/detail/nngceckbapebfimnlniiiahkandclblb?utm_source=item-share-cb">Bitwarden Browser Plugin</a>
++ * does not return a valid Credential object on Chrome https://github.com/bitwarden/clients/issues/12060
++ */
++export interface MalformedBitwardenCredential {
++    id: string;
++    rawId: Record<string, number>;
++    type: string;
++    authenticatorAttachment: string;
++    response: {
++        clientDataJSON: Record<string, number>;
++        /**
++         * only available during registration.
++         */
++        attestationObject?: Record<string, number>;
++
++        /**
++         * only available during registration.
++         */
++        getAuthenticatorData?: () => Record<string, number>;
++
++        /**
++         * only available during login.
++         */
++        authenticatorData?: Record<string, number>;
++
++        /**
++         * only available during registration.
++         */
++        getPublicKey?: () => Record<string, number>;
++
++        /**
++         * only available during registration.
++         */
++        getPublicKeyAlgorithm?: () => number;
++
++        /**
++         * only available during registration.
++         */
++        getTransports?: () => string[];
++
++        /**
++         * only available during login.
++         */
++        signature?: Record<string, number>;
++
++        /**
++         * only available during login.
++         */
++        userHandle?: Record<string, number>;
++    };
++    getClientExtensionResults: () => unknown;
++}
+diff --git a/src/main/webapp/app/core/user/settings/passkey-settings/passkey-settings.component.ts b/src/main/webapp/app/core/user/settings/passkey-settings/passkey-settings.component.ts
+index 28d3dfdb5b..0c6c65e4ce 100644
+--- a/src/main/webapp/app/core/user/settings/passkey-settings/passkey-settings.component.ts
++++ b/src/main/webapp/app/core/user/settings/passkey-settings/passkey-settings.component.ts
+@@ -14,10 +14,12 @@ import { ActionType, EntitySummary } from 'app/shared/delete-dialog/delete-dialo
+ import { getOS } from 'app/shared/util/os-detector.util';
+ import { DeleteButtonDirective } from 'app/shared/delete-dialog/directive/delete-button.directive';
+ import { ButtonComponent, ButtonSize, ButtonType } from 'app/shared/components/button/button.component';
+-import { decodeBase64url } from 'app/shared/util/base64.util';
+ import { FormsModule } from '@angular/forms';
+ import { CommonModule } from '@angular/common';
+ import { CustomMaxLengthDirective } from 'app/shared/validators/custom-max-length-validator/custom-max-length-validator.directive';
++import { createCredentialOptions } from 'app/core/user/settings/passkey-settings/util/credential-option.util';
++import { getCredentialWithGracefullyHandlingAuthenticatorIssues } from 'app/core/user/settings/passkey-settings/util/credential.util';
++import { InvalidCredentialError } from 'app/core/user/settings/passkey-settings/entities/invalid-credential-error';
+ 
+ const InvalidStateError = {
+     name: 'InvalidStateError',
+@@ -94,12 +96,17 @@ export class PasskeySettingsComponent implements OnDestroy {
+                 // noinspection ExceptionCaughtLocallyJS - intended to be caught locally
+                 throw new Error('User or Username is not defined');
+             }
+-            const options = await this.webauthnApiService.getRegistrationOptions();
++            const registrationOptions = await this.webauthnApiService.getRegistrationOptions();
++            const credentialOptions = createCredentialOptions(registrationOptions, user);
+ 
+-            const credentialOptions = this.createCredentialOptions(options, user);
+-            const credential = await navigator.credentials.create({
++            const authenticatorCredential = await navigator.credentials.create({
+                 publicKey: credentialOptions,
+             });
++            const credential = getCredentialWithGracefullyHandlingAuthenticatorIssues(authenticatorCredential);
++            if (!credential) {
++                // noinspection ExceptionCaughtLocallyJS - intended to be caught locally
++                throw new InvalidCredentialError();
++            }
+ 
+             await this.webauthnApiService.registerPasskey({
+                 publicKey: {
+@@ -108,17 +115,22 @@ export class PasskeySettingsComponent implements OnDestroy {
+                 },
+             });
+         } catch (error) {
+-            if (error.name == UserAbortedPasskeyCreationError.name && error.code == UserAbortedPasskeyCreationError.code) {
+-                return; // the user pressed cancel in the passkey creation dialog
++            const userPressedCancelInPasskeyCreationDialog = error.name == UserAbortedPasskeyCreationError.name && error.code == UserAbortedPasskeyCreationError.code;
++            if (userPressedCancelInPasskeyCreationDialog) {
++                return;
+             }
+ 
+-            if (error.name == InvalidStateError.name && error.code == InvalidStateError.authenticatorCredentialAlreadyRegisteredWithRelyingPartyCode) {
++            if (error instanceof InvalidCredentialError) {
++                this.alertService.addErrorAlert('artemisApp.userSettings.passkeySettingsPage.error.invalidCredential');
++            } else if (error.name == InvalidStateError.name && error.code == InvalidStateError.authenticatorCredentialAlreadyRegisteredWithRelyingPartyCode) {
+                 this.alertService.addErrorAlert('artemisApp.userSettings.passkeySettingsPage.error.passkeyAlreadyRegistered');
+             } else {
+                 this.alertService.addErrorAlert('artemisApp.userSettings.passkeySettingsPage.error.registration');
+             }
+-            return;
++
++            throw error;
+         }
++
+         await this.updateRegisteredPasskeys();
+     }
+ 
+@@ -140,32 +152,6 @@ export class PasskeySettingsComponent implements OnDestroy {
+         }
+     }
+ 
+-    private createCredentialOptions(options: PublicKeyCredentialCreationOptions, user: User): PublicKeyCredentialCreationOptions {
+-        const username = user.email;
+-
+-        if (!user.id || !username) {
+-            throw new Error('Invalid credential');
+-        }
+-
+-        return {
+-            ...options,
+-            challenge: decodeBase64url(options.challenge),
+-            user: {
+-                id: new TextEncoder().encode(user.id.toString()),
+-                name: username,
+-                displayName: username,
+-            },
+-            excludeCredentials: options.excludeCredentials?.map((credential) => ({
+-                ...credential,
+-                id: decodeBase64url(credential.id),
+-            })),
+-            authenticatorSelection: {
+-                requireResidentKey: true,
+-                userVerification: 'discouraged', // a little less secure than 'preferred' or 'required', but more user-friendly
+-            },
+-        };
+-    }
+-
+     getDeleteSummary(passkey: PasskeyDTO | undefined): Observable<EntitySummary> | undefined {
+         if (!passkey) {
+             return undefined;
+diff --git a/src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.ts b/src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.ts
+new file mode 100644
+index 0000000000..38c0d57063
+--- /dev/null
++++ b/src/main/webapp/app/core/user/settings/passkey-settings/util/bitwarden.util.ts
+@@ -0,0 +1,63 @@
++import cloneDeep from 'lodash';
++import { MalformedBitwardenCredential } from 'app/core/user/settings/passkey-settings/entities/malformed-bitwarden-credential';
++import { encodeAsBase64Url } from 'app/shared/util/base64.util';
++
++/**
++ * Converts a record containing numeric values into a Base64-encoded string.
++ *
++ * @param rawObject - which can be a record of numbers, null, or undefined.
++ * @returns A Base64-encoded string representation of the object, or undefined if the input is invalid.
++ */
++function convertToBase64(rawObject: Record<string, number> | null | undefined): string | undefined {
++    if (!rawObject || typeof rawObject !== 'object') {
++        return undefined;
++    }
++    const uint8Array = new Uint8Array(Object.values(rawObject));
++    return encodeAsBase64Url(uint8Array);
++}
++
++/**
++ * <p><strong>The Bitwarden Plugin does not work properly on Chrome; the returned credential is malformed and cannot be stringified.</strong></p>
++ *
++ * <p>Unfortunately, Bitwarden does not seem to show any interest in fixing this issue:
++ * <a href="https://github.com/bitwarden/clients/issues/12060" target="_blank">https://github.com/bitwarden/clients/issues/12060</a>,
++ * and relies on other developers to fix it within their applications. 😞</p>
++ *
++ * <p>As Bitwarden is a widely used password manager, we decided to implement a workaround in our application
++ * to ensure a smooth user experience.</p>
++ *
++ * <p>The underlying issue is that Bitwarden's returned credential does not implement <code>toJSON()</code>,
++ * which is required for <code>JSON.stringify()</code> to work. As a result, the browser cannot serialize the object properly,
++ * causing credential registration and login with passkeys to fail when using the Bitwarden browser plugin in Chrome.</p>
++ *
++ * <p><strong>We fix the issue by creating a serializable copy of the object with its properties converted into the correct format.</strong></p>
++ */
++export function getCredentialFromMalformedBitwardenObject(malformedBitwardenCredential: MalformedBitwardenCredential | null): Credential | null {
++    if (!malformedBitwardenCredential) {
++        return null;
++    }
++
++    const clonedCredential: Credential = cloneDeep(malformedBitwardenCredential) as unknown as Credential;
++    const credential = JSON.parse(JSON.stringify(clonedCredential));
++
++    return {
++        //@ts-expect-error authenticatorAttachment is a method in the (getAuthenticatorAttachment) object, but we return it as property here for simplicity, assuming that we only want to stringify it afterward anyway
++        authenticatorAttachment: credential.authenticatorAttachment,
++        clientExtensionResults: malformedBitwardenCredential.getClientExtensionResults(),
++        id: credential.id,
++        rawId: convertToBase64(credential.rawId),
++        response: {
++            attestationObject: convertToBase64(credential.response.attestationObject),
++            authenticatorData: convertToBase64(
++                malformedBitwardenCredential.response.authenticatorData ?? malformedBitwardenCredential.response.getAuthenticatorData?.() ?? undefined,
++            ),
++            clientDataJSON: convertToBase64(credential.response.clientDataJSON),
++            publicKey: convertToBase64(malformedBitwardenCredential.response.getPublicKey?.() ?? undefined),
++            publicKeyAlgorithm: malformedBitwardenCredential.response.getPublicKeyAlgorithm?.() ?? undefined,
++            transports: malformedBitwardenCredential.response.getTransports?.() ?? undefined,
++            signature: convertToBase64(malformedBitwardenCredential.response.signature),
++            userHandle: convertToBase64(malformedBitwardenCredential.response.userHandle),
++        },
++        type: credential.type,
++    };
++}
+diff --git a/src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.ts b/src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.ts
+new file mode 100644
+index 0000000000..8298289554
+--- /dev/null
++++ b/src/main/webapp/app/core/user/settings/passkey-settings/util/credential-option.util.ts
+@@ -0,0 +1,28 @@
++import { decodeBase64url } from 'app/shared/util/base64.util';
++import { User } from 'app/core/user/user.model';
++
++export function createCredentialOptions(options: PublicKeyCredentialCreationOptions, user: User): PublicKeyCredentialCreationOptions {
++    const username = user.email;
++
++    if (!user.id || !username) {
++        throw new Error('Invalid credential');
++    }
++
++    return {
++        ...options,
++        challenge: decodeBase64url(options.challenge),
++        user: {
++            id: new TextEncoder().encode(user.id.toString()),
++            name: username,
++            displayName: username,
++        },
++        excludeCredentials: options.excludeCredentials?.map((credential) => ({
++            ...credential,
++            id: decodeBase64url(credential.id),
++        })),
++        authenticatorSelection: {
++            requireResidentKey: true,
++            userVerification: 'preferred',
++        },
++    };
++}
+diff --git a/src/main/webapp/app/core/user/settings/passkey-settings/util/credential.util.ts b/src/main/webapp/app/core/user/settings/passkey-settings/util/credential.util.ts
+new file mode 100644
+index 0000000000..abaa748888
+--- /dev/null
++++ b/src/main/webapp/app/core/user/settings/passkey-settings/util/credential.util.ts
+@@ -0,0 +1,38 @@
++import { MalformedBitwardenCredential } from 'app/core/user/settings/passkey-settings/entities/malformed-bitwarden-credential';
++import { getCredentialFromMalformedBitwardenObject } from 'app/core/user/settings/passkey-settings/util/bitwarden.util';
++import { InvalidCredentialError } from 'app/core/user/settings/passkey-settings/entities/invalid-credential-error';
++import { captureException } from '@sentry/angular';
++
++function handleMalformedBitwardenCredential(credential: Credential | null) {
++    try {
++        const malformedBitwardenCredential: MalformedBitwardenCredential = credential as unknown as MalformedBitwardenCredential;
++        return getCredentialFromMalformedBitwardenObject(malformedBitwardenCredential);
++    } catch (error) {
++        throw new InvalidCredentialError();
++    }
++}
++
++/**
++ * <p>Handles credentials gracefully by attempting to stringify them. If the credential cannot
++ * be stringified (e.g., due to issues with certain authenticators like Bitwarden), it attempts
++ * a workaround to convert the malformed credential into a valid format. This workaround was introduced
++ * for Bitwarden and might fail for other authenticators.
++ * </p>
++ *
++ * <p><strong>Authenticators that return a proper {@link Credential} are not affected by this workaround!</strong></p>
++ *
++ * @throws {@link InvalidCredentialError} if the credential cannot be processed.
++ */
++export function getCredentialWithGracefullyHandlingAuthenticatorIssues(credential: Credential | null) {
++    try {
++        // properly returned credentials can be stringified
++        JSON.stringify(credential);
++        return credential;
++    } catch (error) {
++        captureException(error);
++        // eslint-disable-next-line no-undef
++        console.warn('Authenticator returned a malformed credential, attempting to fix it', error);
++        // Authenticators, such as bitwarden, do not handle the credential generation properly; this is a workaround for it
++        return handleMalformedBitwardenCredential(credential);
++    }
++}
+diff --git a/src/main/webapp/app/lti/overview/lti13-exercise-launch/lti13-exercise-launch.component.ts b/src/main/webapp/app/lti/overview/lti13-exercise-launch/lti13-exercise-launch.component.ts
+index 7c2082322e..d368b69736 100644
+--- a/src/main/webapp/app/lti/overview/lti13-exercise-launch/lti13-exercise-launch.component.ts
++++ b/src/main/webapp/app/lti/overview/lti13-exercise-launch/lti13-exercise-launch.component.ts
+@@ -7,7 +7,7 @@ import { captureException } from '@sentry/angular';
+ import { SessionStorageService } from 'ngx-webstorage';
+ import { LtiService } from 'app/shared/service/lti.service';
+ import { Theme, ThemeService } from 'app/core/theme/shared/theme.service';
+-import { TranslateDirective } from '../../../shared/language/translate.directive';
++import { TranslateDirective } from 'app/shared/language/translate.directive';
+ 
+ type LtiLaunchResponse = {
+     targetLinkUri: string;
+diff --git a/src/main/webapp/app/shared/util/base64.util.ts b/src/main/webapp/app/shared/util/base64.util.ts
+index a31ab33b90..acea85a07a 100644
+--- a/src/main/webapp/app/shared/util/base64.util.ts
++++ b/src/main/webapp/app/shared/util/base64.util.ts
+@@ -41,3 +41,15 @@ export function decodeBase64url(input: string | BufferSource): ArrayBuffer {
+ 
+     return bytes.buffer;
+ }
++
++/**
++ * Base64 encoding used in URLs (URL-safe Base64) replaces / with _ and + with - to avoid issues with reserved characters in URLs.
++ * It ensures the result does not include padding (=).
++ */
++export function encodeAsBase64Url(uint8array: Uint8Array) {
++    // eslint-disable-next-line no-undef
++    return btoa(String.fromCharCode(...uint8array))
++        .replace(/\//g, '_')
++        .replace(/\+/g, '-')
++        .replace(/=+$/, ''); // Remove padding
++}
+diff --git a/src/main/webapp/i18n/de/userSettings.json b/src/main/webapp/i18n/de/userSettings.json
+index dd6cd0a36f..586d92dd9c 100644
+--- a/src/main/webapp/i18n/de/userSettings.json
++++ b/src/main/webapp/i18n/de/userSettings.json
+@@ -102,6 +102,7 @@
+                     "labelLength": "Die Passkey-Bezeichnung darf maximal {{maxLabelLength}} Zeichen lang sein."
+                 },
+                 "error": {
++                    "invalidCredential": "Es wurde ein ungültiger Passkey bereitgestellt. Bitte versuche es erneut mit einem anderen Authentifikator (z. B. Apple Keychain, Windows Hello, Google Password Manager, etc.).",
+                     "login": "Login mit Passkey fehlgeschlagen. Bitte überprüfe, ob du einen Passkey bei Artemis registriert hast.",
+                     "passkeyAlreadyRegistered": "Du hast bereits einen Passkey mit dem ausgewählten Authentifikator registriert. Wähle einen anderen Authentifikator, wenn du einen weiteren Passkey registrieren möchtest.",
+                     "registration": "Der Passkey konnte nicht registriert werden. Bitte versuche es erneut.",
+diff --git a/src/main/webapp/i18n/en/userSettings.json b/src/main/webapp/i18n/en/userSettings.json
+index d6ddce64fa..2c7cf27569 100644
+--- a/src/main/webapp/i18n/en/userSettings.json
++++ b/src/main/webapp/i18n/en/userSettings.json
+@@ -102,6 +102,7 @@
+                     "labelLength": "The label must not exceed {{maxLabelLength}} characters."
+                 },
+                 "error": {
++                    "invalidCredential": "An invalid passkey was provided. Please try again with a different authenticator (e.g. Apple Keychain, Windows Hello, Google Password Manager, etc.).",
+                     "login": "Login with Passkey failed. Please check you registered a passkey with Artemis.",
+                     "passkeyAlreadyRegistered": "You have already registered a passkey with the selected authenticator, choose a different authenticator if you want to register another passkey.",
+                     "registration": "The passkey could not be registered. Please try again.",

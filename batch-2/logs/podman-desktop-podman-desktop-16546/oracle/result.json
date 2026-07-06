@@ -1,0 +1,29 @@
+{
+    "id": "d4ad2e85-3083-409b-88b2-18ba77b34c4b",
+    "started_at": "2026-07-06T12:18:14.947381",
+    "finished_at": "2026-07-06T12:18:42.178934",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__podman-desktop-podman-desktop-16546": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "podman-desktop-podman-desktop-16__3aXkhTq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

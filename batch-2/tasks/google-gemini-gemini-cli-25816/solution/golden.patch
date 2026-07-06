@@ -1,0 +1,1250 @@
+diff --git a/.gemini/settings.json b/.gemini/settings.json
+index 155abb708..0fc36089f 100644
+--- a/.gemini/settings.json
++++ b/.gemini/settings.json
+@@ -2,7 +2,7 @@
+   "experimental": {
+     "extensionReloading": true,
+     "modelSteering": true,
+-    "memoryManager": true
++    "autoMemory": true
+   },
+   "general": {
+     "devtools": true
+diff --git a/docs/cli/settings.md b/docs/cli/settings.md
+index 7653afff0..94103dae3 100644
+--- a/docs/cli/settings.md
++++ b/docs/cli/settings.md
+@@ -161,19 +161,19 @@ they appear in the UI.
+ 
+ ### Experimental
+ 
+-| UI Label                                             | Setting                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Default |
+-| ---------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+-| Enable Git Worktrees                                 | `experimental.worktrees`                        | Enable automated Git worktree management for parallel work.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `false` |
+-| Use OSC 52 Paste                                     | `experimental.useOSC52Paste`                    | Use OSC 52 for pasting. This may be more robust than the default system when using remote terminal sessions (if your terminal is configured to allow it).                                                                                                                                                                                                                                                                                                                                                                                                   | `false` |
+-| Use OSC 52 Copy                                      | `experimental.useOSC52Copy`                     | Use OSC 52 for copying. This may be more robust than the default system when using remote terminal sessions (if your terminal is configured to allow it).                                                                                                                                                                                                                                                                                                                                                                                                   | `false` |
+-| Model Steering                                       | `experimental.modelSteering`                    | Enable model steering (user hints) to guide the model during tool execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `false` |
+-| Direct Web Fetch                                     | `experimental.directWebFetch`                   | Enable web fetch behavior that bypasses LLM summarization.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `false` |
+-| Enable Gemma Model Router                            | `experimental.gemmaModelRouter.enabled`         | Enable the Gemma Model Router (experimental). Requires a local endpoint serving Gemma via the Gemini API using LiteRT-LM shim.                                                                                                                                                                                                                                                                                                                                                                                                                              | `false` |
+-| Auto-start LiteRT Server                             | `experimental.gemmaModelRouter.autoStartServer` | Automatically start the LiteRT-LM server when Gemini CLI starts and the Gemma router is enabled.                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `false` |
+-| Memory v2                                            | `experimental.memoryV2`                         | Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Routes facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits). | `false` |
+-| Auto Memory                                          | `experimental.autoMemory`                       | Automatically extract reusable skills from past sessions in the background. Review results with /memory inbox.                                                                                                                                                                                                                                                                                                                                                                                                                                              | `false` |
+-| Use the generalist profile to manage agent contexts. | `experimental.generalistProfile`                | Suitable for general coding and software development tasks.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `false` |
+-| Enable Context Management                            | `experimental.contextManagement`                | Enable logic for context management.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false` |
++| UI Label                                             | Setting                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Default |
++| ---------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
++| Enable Git Worktrees                                 | `experimental.worktrees`                        | Enable automated Git worktree management for parallel work.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `false` |
++| Use OSC 52 Paste                                     | `experimental.useOSC52Paste`                    | Use OSC 52 for pasting. This may be more robust than the default system when using remote terminal sessions (if your terminal is configured to allow it).                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `false` |
++| Use OSC 52 Copy                                      | `experimental.useOSC52Copy`                     | Use OSC 52 for copying. This may be more robust than the default system when using remote terminal sessions (if your terminal is configured to allow it).                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `false` |
++| Model Steering                                       | `experimental.modelSteering`                    | Enable model steering (user hints) to guide the model during tool execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `false` |
++| Direct Web Fetch                                     | `experimental.directWebFetch`                   | Enable web fetch behavior that bypasses LLM summarization.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `false` |
++| Enable Gemma Model Router                            | `experimental.gemmaModelRouter.enabled`         | Enable the Gemma Model Router (experimental). Requires a local endpoint serving Gemma via the Gemini API using LiteRT-LM shim.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `false` |
++| Auto-start LiteRT Server                             | `experimental.gemmaModelRouter.autoStartServer` | Automatically start the LiteRT-LM server when Gemini CLI starts and the Gemma router is enabled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `false` |
++| Memory v2                                            | `experimental.memoryV2`                         | Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Route facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits). Set to false to fall back to the legacy save_memory tool. | `true`  |
++| Auto Memory                                          | `experimental.autoMemory`                       | Automatically extract reusable skills from past sessions in the background. Review results with /memory inbox.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `false` |
++| Use the generalist profile to manage agent contexts. | `experimental.generalistProfile`                | Suitable for general coding and software development tasks.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `false` |
++| Enable Context Management                            | `experimental.contextManagement`                | Enable logic for context management.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `false` |
+ 
+ ### Skills
+ 
+diff --git a/docs/reference/configuration.md b/docs/reference/configuration.md
+index 97b880f84..b582da4ea 100644
+--- a/docs/reference/configuration.md
++++ b/docs/reference/configuration.md
+@@ -1759,13 +1759,14 @@ their corresponding top-level category object in your `settings.json` file.
+ - **`experimental.memoryV2`** (boolean):
+   - **Description:** Disable the built-in save_memory tool and let the main
+     agent persist project context by editing markdown files directly with
+-    edit/write_file. Routes facts across four tiers: team-shared conventions go
++    edit/write_file. Route facts across four tiers: team-shared conventions go
+     to project GEMINI.md files, project-specific personal notes go to the
+     per-project private memory folder (MEMORY.md as index + sibling .md files
+     for detail), and cross-project personal preferences go to the global
+     ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit
+-    — settings, credentials, etc. remain off-limits).
+-  - **Default:** `false`
++    — settings, credentials, etc. remain off-limits). Set to false to fall back
++    to the legacy save_memory tool.
++  - **Default:** `true`
+   - **Requires restart:** Yes
+ 
+ - **`experimental.autoMemory`** (boolean):
+diff --git a/packages/cli/src/config/settingsSchema.ts b/packages/cli/src/config/settingsSchema.ts
+index 46d94a969..f5da86b60 100644
+--- a/packages/cli/src/config/settingsSchema.ts
++++ b/packages/cli/src/config/settingsSchema.ts
+@@ -2280,9 +2280,9 @@ const SETTINGS_SCHEMA = {
+         label: 'Memory v2',
+         category: 'Experimental',
+         requiresRestart: true,
+-        default: false,
++        default: true,
+         description:
+-          'Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Routes facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits).',
++          'Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Route facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits). Set to false to fall back to the legacy save_memory tool.',
+         showInDialog: true,
+       },
+       autoMemory: {
+diff --git a/packages/cli/src/nonInteractiveCliAgentSession.ts b/packages/cli/src/nonInteractiveCliAgentSession.ts
+index 4fee7eb61..0cf16da47 100644
+--- a/packages/cli/src/nonInteractiveCliAgentSession.ts
++++ b/packages/cli/src/nonInteractiveCliAgentSession.ts
+@@ -80,7 +80,7 @@ export async function runNonInteractive({
+       const { setupInitialActivityLogger } = await import(
+         './utils/devtoolsService.js'
+       );
+-      await setupInitialActivityLogger(config);
++      setupInitialActivityLogger(config);
+     }
+ 
+     const { stdout: workingStdout } = createWorkingStdio();
+diff --git a/packages/core/src/config/config.ts b/packages/core/src/config/config.ts
+index d2bc6d9a4..a6ca91d7b 100644
+--- a/packages/core/src/config/config.ts
++++ b/packages/core/src/config/config.ts
+@@ -1172,7 +1172,7 @@ export class Config implements McpContext, AgentLoopContext {
+     );
+ 
+     this.experimentalJitContext = params.experimentalJitContext ?? true;
+-    this.experimentalMemoryV2 = params.experimentalMemoryV2 ?? false;
++    this.experimentalMemoryV2 = params.experimentalMemoryV2 ?? true;
+     this.experimentalAutoMemory = params.experimentalAutoMemory ?? false;
+     this.experimentalContextManagementConfig =
+       params.experimentalContextManagementConfig;
+diff --git a/packages/core/src/services/chatRecordingService.ts b/packages/core/src/services/chatRecordingService.ts
+index cab67f80a..b3cfb9752 100644
+--- a/packages/core/src/services/chatRecordingService.ts
++++ b/packages/core/src/services/chatRecordingService.ts
+@@ -109,6 +109,7 @@ export async function loadConversationRecord(
+ ): Promise<
+   | (ConversationRecord & {
+       messageCount?: number;
++      userMessageCount?: number;
+       firstUserMessage?: string;
+       hasUserOrAssistantMessage?: boolean;
+     })
+@@ -128,8 +129,11 @@ export async function loadConversationRecord(
+     let metadata: Partial<ConversationRecord> = {};
+     const messagesMap = new Map<string, MessageRecord>();
+     const messageIds: string[] = [];
++    const messageKinds = new Map<
++      string,
++      { isUser: boolean; isUserOrAssistant: boolean }
++    >();
+     let firstUserMessageStr: string | undefined;
+-    let hasUserOrAssistant = false;
+ 
+     for await (const line of rl) {
+       if (!line.trim()) continue;
+@@ -140,13 +144,14 @@ export async function loadConversationRecord(
+           if (options?.metadataOnly) {
+             const idx = messageIds.indexOf(rewindId);
+             if (idx !== -1) {
+-              messageIds.splice(idx);
++              const removedIds = messageIds.splice(idx);
++              for (const removedId of removedIds) {
++                messageKinds.delete(removedId);
++              }
+             } else {
+               messageIds.length = 0;
++              messageKinds.clear();
+             }
+-            // For metadataOnly we can't perfectly un-track hasUserOrAssistant if it was rewinded,
+-            // but we can assume false if messageIds is empty.
+-            if (messageIds.length === 0) hasUserOrAssistant = false;
+           } else {
+             let found = false;
+             const idsToDelete: string[] = [];
+@@ -164,20 +169,18 @@ export async function loadConversationRecord(
+           }
+         } else if (isMessageRecord(record)) {
+           const id = record.id;
+-          if (
++          const isUser = hasProperty(record, 'type') && record.type === 'user';
++          const isUserOrAssistant =
+             hasProperty(record, 'type') &&
+-            (record.type === 'user' || record.type === 'gemini')
+-          ) {
+-            hasUserOrAssistant = true;
+-          }
++            (record.type === 'user' || record.type === 'gemini');
+           // Track message count and first user message
+           if (options?.metadataOnly) {
+             messageIds.push(id);
++            messageKinds.set(id, { isUser, isUserOrAssistant });
+           }
+           if (
+             !firstUserMessageStr &&
+-            hasProperty(record, 'type') &&
+-            record['type'] === 'user' &&
++            isUser &&
+             hasProperty(record, 'content') &&
+             record['content']
+           ) {
+@@ -221,6 +224,33 @@ export async function loadConversationRecord(
+       return await parseLegacyRecordFallback(filePath, options);
+     }
+ 
++    const metadataMessages = Array.isArray(metadata.messages)
++      ? metadata.messages
++      : [];
++    const loadedMessages =
++      metadataMessages.length > 0
++        ? metadataMessages
++        : Array.from(messagesMap.values());
++    const metadataFirstUserMessage =
++      metadataMessages.find((message) => message.type === 'user') ?? null;
++    let fallbackFirstUserMessage = firstUserMessageStr;
++    if (!fallbackFirstUserMessage && metadataFirstUserMessage) {
++      const rawContent = metadataFirstUserMessage.content;
++      if (Array.isArray(rawContent)) {
++        fallbackFirstUserMessage = rawContent
++          .map((part: unknown) => (isTextPart(part) ? part['text'] : ''))
++          .join('');
++      } else if (typeof rawContent === 'string') {
++        fallbackFirstUserMessage = rawContent;
++      }
++    }
++    const userMessageCount = options?.metadataOnly
++      ? Array.from(messageKinds.values()).filter((m) => m.isUser).length
++      : loadedMessages.filter((m) => m.type === 'user').length;
++    const hasUserOrAssistant = options?.metadataOnly
++      ? Array.from(messageKinds.values()).some((m) => m.isUserOrAssistant)
++      : loadedMessages.some((m) => m.type === 'user' || m.type === 'gemini');
++
+     return {
+       sessionId: metadata.sessionId,
+       projectHash: metadata.projectHash,
+@@ -229,16 +259,21 @@ export async function loadConversationRecord(
+       summary: metadata.summary,
+       directories: metadata.directories,
+       kind: metadata.kind,
+-      messages: Array.from(messagesMap.values()),
++      messages: options?.metadataOnly ? [] : loadedMessages,
+       messageCount: options?.metadataOnly
+-        ? messageIds.length
+-        : messagesMap.size,
+-      firstUserMessage: firstUserMessageStr,
+-      hasUserOrAssistantMessage: options?.metadataOnly
+-        ? hasUserOrAssistant
+-        : Array.from(messagesMap.values()).some(
+-            (m) => m.type === 'user' || m.type === 'gemini',
+-          ),
++        ? metadataMessages.length || messageIds.length
++        : loadedMessages.length,
++      userMessageCount:
++        options?.metadataOnly && metadataMessages.length > 0
++          ? metadataMessages.filter((m) => m.type === 'user').length
++          : userMessageCount,
++      firstUserMessage: fallbackFirstUserMessage,
++      hasUserOrAssistantMessage:
++        options?.metadataOnly && metadataMessages.length > 0
++          ? metadataMessages.some(
++              (m) => m.type === 'user' || m.type === 'gemini',
++            )
++          : hasUserOrAssistant,
+     };
+   } catch (error) {
+     debugLogger.error('Error loading conversation record from JSONL:', error);
+@@ -816,6 +851,7 @@ async function parseLegacyRecordFallback(
+ ): Promise<
+   | (ConversationRecord & {
+       messageCount?: number;
++      userMessageCount?: number;
+       firstUserMessage?: string;
+       hasUserOrAssistantMessage?: boolean;
+     })
+@@ -849,6 +885,8 @@ async function parseLegacyRecordFallback(
+           ...legacyRecord,
+           messages: [],
+           messageCount: legacyRecord.messages?.length || 0,
++          userMessageCount:
++            legacyRecord.messages?.filter((m) => m.type === 'user').length || 0,
+           firstUserMessage: fallbackFirstUserMessageStr,
+           hasUserOrAssistantMessage:
+             legacyRecord.messages?.some(
+@@ -858,6 +896,8 @@ async function parseLegacyRecordFallback(
+       }
+       return {
+         ...legacyRecord,
++        userMessageCount:
++          legacyRecord.messages?.filter((m) => m.type === 'user').length || 0,
+         hasUserOrAssistantMessage:
+           legacyRecord.messages?.some(
+             (m) => m.type === 'user' || m.type === 'gemini',
+diff --git a/packages/core/src/services/memoryService.ts b/packages/core/src/services/memoryService.ts
+index 29b2b1870..4fdb51e50 100644
+--- a/packages/core/src/services/memoryService.ts
++++ b/packages/core/src/services/memoryService.ts
+@@ -12,6 +12,7 @@ import * as Diff from 'diff';
+ import type { Config } from '../config/config.js';
+ import {
+   SESSION_FILE_PREFIX,
++  loadConversationRecord,
+   type ConversationRecord,
+ } from './chatRecordingService.js';
+ import { debugLogger } from '../utils/debugLogger.js';
+@@ -21,6 +22,7 @@ import { FRONTMATTER_REGEX, parseFrontmatter } from '../skills/skillLoader.js';
+ import { LocalAgentExecutor } from '../agents/local-executor.js';
+ import { SkillExtractionAgent } from '../agents/skill-extraction-agent.js';
+ import { getModelConfigAlias } from '../agents/registry.js';
++import type { SubagentActivityEvent } from '../agents/types.js';
+ import { ExecutionLifecycleService } from './executionLifecycleService.js';
+ import { PromptRegistry } from '../prompts/prompt-registry.js';
+ import { ResourceRegistry } from '../resources/resource-registry.js';
+@@ -29,6 +31,7 @@ import { PolicyDecision } from '../policy/types.js';
+ import { MessageBus } from '../confirmation-bus/message-bus.js';
+ import { Storage } from '../config/storage.js';
+ import type { AgentLoopContext } from '../config/agent-loop-context.js';
++import { READ_FILE_TOOL_NAME } from '../tools/tool-names.js';
+ import {
+   applyParsedSkillPatches,
+   hasParsedPatchHunks,
+@@ -40,6 +43,7 @@ const LOCK_STALE_MS = 35 * 60 * 1000; // 35 minutes (exceeds agent's 30-min time
+ const MIN_USER_MESSAGES = 10;
+ const MIN_IDLE_MS = 3 * 60 * 60 * 1000; // 3 hours
+ const MAX_SESSION_INDEX_SIZE = 50;
++const MAX_NEW_SESSION_BATCH_SIZE = 10;
+ 
+ /**
+  * Lock file content for coordinating across CLI instances.
+@@ -49,12 +53,39 @@ interface LockInfo {
+   startedAt: string;
+ }
+ 
++function hasProperty<T extends string>(
++  obj: unknown,
++  prop: T,
++): obj is { [key in T]: unknown } {
++  return obj !== null && typeof obj === 'object' && prop in obj;
++}
++
++function isStringProperty<T extends string>(
++  obj: unknown,
++  prop: T,
++): obj is { [key in T]: string } {
++  return hasProperty(obj, prop) && typeof obj[prop] === 'string';
++}
++
++interface SessionVersion {
++  sessionId: string;
++  lastUpdated: string;
++}
++
++interface IndexedSession extends SessionVersion {
++  filePath: string;
++  summary?: string;
++  userMessageCount: number;
++}
++
+ /**
+  * Metadata for a single extraction run.
+  */
+ export interface ExtractionRun {
+   runAt: string;
+   sessionIds: string[];
++  candidateSessions?: SessionVersion[];
++  processedSessions?: SessionVersion[];
+   skillsCreated: string[];
+ }
+ 
+@@ -71,7 +102,10 @@ export interface ExtractionState {
+ export function getProcessedSessionIds(state: ExtractionState): Set<string> {
+   const ids = new Set<string>();
+   for (const run of state.runs) {
+-    for (const id of run.sessionIds) {
++    const processedSessionIds =
++      run.processedSessions?.map((session) => session.sessionId) ??
++      run.sessionIds;
++    for (const id of processedSessionIds) {
+       ids.add(id);
+     }
+   }
+@@ -89,30 +123,49 @@ function isLockInfo(value: unknown): value is LockInfo {
+   );
+ }
+ 
+-function isConversationRecord(value: unknown): value is ConversationRecord {
++function isSessionVersion(value: unknown): value is SessionVersion {
+   return (
+     typeof value === 'object' &&
+     value !== null &&
+     'sessionId' in value &&
+     typeof value.sessionId === 'string' &&
+-    'messages' in value &&
+-    Array.isArray(value.messages) &&
+-    'projectHash' in value &&
+-    'startTime' in value &&
+-    'lastUpdated' in value
++    'lastUpdated' in value &&
++    typeof value.lastUpdated === 'string'
+   );
+ }
+ 
+-function isExtractionRun(value: unknown): value is ExtractionRun {
++function normalizeSessionVersions(value: unknown): SessionVersion[] {
++  if (!Array.isArray(value)) {
++    return [];
++  }
++
++  return value.filter(isSessionVersion).map((session) => ({
++    sessionId: session.sessionId,
++    lastUpdated: session.lastUpdated,
++  }));
++}
++
++function normalizeStringArray(value: unknown): string[] {
++  if (!Array.isArray(value)) {
++    return [];
++  }
++
++  return value.filter((item): item is string => typeof item === 'string');
++}
++
++function isExtractionRunLike(value: unknown): value is {
++  runAt: string;
++  sessionIds?: unknown;
++  candidateSessions?: unknown;
++  processedSessions?: unknown;
++  skillsCreated: unknown;
++} {
+   return (
+     typeof value === 'object' &&
+     value !== null &&
+     'runAt' in value &&
+     typeof value.runAt === 'string' &&
+-    'sessionIds' in value &&
+-    Array.isArray(value.sessionIds) &&
+-    'skillsCreated' in value &&
+-    Array.isArray(value.skillsCreated)
++    'skillsCreated' in value
+   );
+ }
+ 
+@@ -125,6 +178,208 @@ function isExtractionState(value: unknown): value is { runs: unknown[] } {
+   );
+ }
+ 
++function buildExtractionRun(value: unknown): ExtractionRun | null {
++  if (!isExtractionRunLike(value)) {
++    return null;
++  }
++
++  const candidateSessions = normalizeSessionVersions(value.candidateSessions);
++  const processedSessions = normalizeSessionVersions(value.processedSessions);
++  const sessionIds = normalizeStringArray(value.sessionIds);
++
++  return {
++    runAt: value.runAt,
++    sessionIds:
++      sessionIds.length > 0
++        ? sessionIds
++        : processedSessions.map((session) => session.sessionId),
++    candidateSessions:
++      candidateSessions.length > 0 ? candidateSessions : undefined,
++    processedSessions:
++      processedSessions.length > 0 ? processedSessions : undefined,
++    skillsCreated: normalizeStringArray(value.skillsCreated),
++  };
++}
++
++function getTimestampMs(timestamp: string): number {
++  const parsed = Date.parse(timestamp);
++  return Number.isNaN(parsed) ? 0 : parsed;
++}
++
++function getSessionVersionKey(session: SessionVersion): string {
++  return `${session.sessionId}\u0000${session.lastUpdated}`;
++}
++
++function hasLegacyRunProcessedSession(
++  run: ExtractionRun,
++  session: SessionVersion,
++): boolean {
++  return (
++    run.sessionIds.includes(session.sessionId) &&
++    getTimestampMs(run.runAt) >= getTimestampMs(session.lastUpdated)
++  );
++}
++
++function isSessionVersionProcessed(
++  state: ExtractionState,
++  session: SessionVersion,
++): boolean {
++  const sessionKey = getSessionVersionKey(session);
++
++  for (const run of state.runs) {
++    if (
++      run.processedSessions?.some(
++        (processed) => getSessionVersionKey(processed) === sessionKey,
++      )
++    ) {
++      return true;
++    }
++
++    if (!run.processedSessions && hasLegacyRunProcessedSession(run, session)) {
++      return true;
++    }
++  }
++
++  return false;
++}
++
++function getSessionAttemptCount(
++  state: ExtractionState,
++  session: SessionVersion,
++): number {
++  const sessionKey = getSessionVersionKey(session);
++  let attempts = 0;
++
++  for (const run of state.runs) {
++    if (run.candidateSessions) {
++      if (
++        run.candidateSessions.some(
++          (candidate) => getSessionVersionKey(candidate) === sessionKey,
++        )
++      ) {
++        attempts++;
++      }
++      continue;
++    }
++
++    if (hasLegacyRunProcessedSession(run, session)) {
++      attempts++;
++    }
++  }
++
++  return attempts;
++}
++
++function compareIndexedSessions(a: IndexedSession, b: IndexedSession): number {
++  const timestampDelta =
++    getTimestampMs(b.lastUpdated) - getTimestampMs(a.lastUpdated);
++  if (timestampDelta !== 0) {
++    return timestampDelta;
++  }
++
++  if (a.filePath.endsWith('.jsonl') !== b.filePath.endsWith('.jsonl')) {
++    return a.filePath.endsWith('.jsonl') ? -1 : 1;
++  }
++
++  return b.filePath.localeCompare(a.filePath);
++}
++
++function shouldReplaceIndexedSession(
++  existing: IndexedSession,
++  candidate: IndexedSession,
++): boolean {
++  return compareIndexedSessions(candidate, existing) < 0;
++}
++
++function isReadFileStartActivity(
++  activity: SubagentActivityEvent,
++): activity is SubagentActivityEvent & {
++  data: { name: string; args?: { file_path?: unknown }; callId?: unknown };
++} {
++  return (
++    activity.type === 'TOOL_CALL_START' &&
++    activity.data['name'] === READ_FILE_TOOL_NAME
++  );
++}
++
++function getResolvedReadFilePath(
++  config: Config,
++  activity: SubagentActivityEvent,
++): string | null {
++  if (!isReadFileStartActivity(activity)) {
++    return null;
++  }
++
++  const args = activity.data.args;
++  if (
++    typeof args !== 'object' ||
++    args === null ||
++    !('file_path' in args) ||
++    typeof args.file_path !== 'string'
++  ) {
++    return null;
++  }
++
++  return path.resolve(config.getTargetDir(), args.file_path);
++}
++
++function getReadFileStartCallId(
++  activity: SubagentActivityEvent,
++): string | null {
++  if (
++    !isReadFileStartActivity(activity) ||
++    !isStringProperty(activity.data, 'callId')
++  ) {
++    return null;
++  }
++
++  return activity.data.callId;
++}
++
++function getCompletedReadFileCallId(
++  activity: SubagentActivityEvent,
++): string | null {
++  if (
++    activity.type !== 'TOOL_CALL_END' ||
++    activity.data['name'] !== READ_FILE_TOOL_NAME ||
++    !isStringProperty(activity.data, 'id')
++  ) {
++    return null;
++  }
++
++  return activity.data['id'];
++}
++
++function getFailedReadFileCallId(
++  activity: SubagentActivityEvent,
++): string | null {
++  if (
++    activity.type !== 'ERROR' ||
++    activity.data['name'] !== READ_FILE_TOOL_NAME ||
++    !isStringProperty(activity.data, 'callId')
++  ) {
++    return null;
++  }
++
++  return activity.data['callId'];
++}
++
++function getUserMessageCount(
++  conversation: ConversationRecord & { userMessageCount?: number },
++): number {
++  return (
++    conversation.userMessageCount ??
++    conversation.messages.filter((message) => message.type === 'user').length
++  );
++}
++
++function isSupportedSessionFile(fileName: string): boolean {
++  return (
++    fileName.startsWith(SESSION_FILE_PREFIX) &&
++    (fileName.endsWith('.json') || fileName.endsWith('.jsonl'))
++  );
++}
++
+ /**
+  * Attempts to acquire an exclusive lock file using O_CREAT | O_EXCL.
+  * Returns true if the lock was acquired, false if another instance owns it.
+@@ -231,16 +486,9 @@ export async function readExtractionState(
+ 
+     const runs: ExtractionRun[] = [];
+     for (const run of parsed.runs) {
+-      if (!isExtractionRun(run)) continue;
+-      runs.push({
+-        runAt: run.runAt,
+-        sessionIds: run.sessionIds.filter(
+-          (sid): sid is string => typeof sid === 'string',
+-        ),
+-        skillsCreated: run.skillsCreated.filter(
+-          (sk): sk is string => typeof sk === 'string',
+-        ),
+-      });
++      const normalizedRun = buildExtractionRun(run);
++      if (!normalizedRun) continue;
++      runs.push(normalizedRun);
+     }
+ 
+     return { runs };
+@@ -270,30 +518,32 @@ export async function writeExtractionState(
+  * Filters out subagent sessions, sessions that haven't been idle long enough,
+  * and sessions with too few user messages.
+  */
+-function shouldProcessConversation(parsed: ConversationRecord): boolean {
++function shouldProcessConversation(
++  parsed: ConversationRecord & { userMessageCount?: number },
++): boolean {
+   // Skip subagent sessions
+   if (parsed.kind === 'subagent') return false;
+ 
+   // Skip sessions that are still active (not idle for 3+ hours)
+-  const lastUpdated = new Date(parsed.lastUpdated).getTime();
++  const lastUpdated = getTimestampMs(parsed.lastUpdated);
+   if (Date.now() - lastUpdated < MIN_IDLE_MS) return false;
+ 
+   // Skip sessions with too few user messages
+-  const userMessageCount = parsed.messages.filter(
+-    (m) => m.type === 'user',
+-  ).length;
+-  if (userMessageCount < MIN_USER_MESSAGES) return false;
++  if (getUserMessageCount(parsed) < MIN_USER_MESSAGES) return false;
+ 
+   return true;
+ }
+ 
+ /**
+- * Scans the chats directory for eligible session files (sorted most-recent-first,
+- * capped at MAX_SESSION_INDEX_SIZE). Shared by buildSessionIndex.
++ * Scans the chats directory for eligible session files, loading metadata from
++ * both JSONL and legacy JSON sessions, deduplicating migrated sessions by
++ * session ID, and sorting by actual lastUpdated. We scan the full directory
++ * here so already-processed recent sessions cannot permanently block older
++ * backlog sessions from surfacing as new candidates.
+  */
+ async function scanEligibleSessions(
+   chatsDir: string,
+-): Promise<Array<{ conversation: ConversationRecord; filePath: string }>> {
++): Promise<IndexedSession[]> {
+   let allFiles: string[];
+   try {
+     allFiles = await fs.readdir(chatsDir);
+@@ -301,33 +551,48 @@ async function scanEligibleSessions(
+     return [];
+   }
+ 
+-  const sessionFiles = allFiles.filter(
+-    (f) => f.startsWith(SESSION_FILE_PREFIX) && f.endsWith('.json'),
+-  );
+-
+-  // Sort by filename descending (most recent first)
+-  sessionFiles.sort((a, b) => b.localeCompare(a));
++  const candidates: Array<{ filePath: string; mtimeMs: number }> = [];
++  for (const file of allFiles) {
++    if (!isSupportedSessionFile(file)) continue;
++    const filePath = path.join(chatsDir, file);
++    try {
++      const stat = await fs.stat(filePath);
++      if (!stat.isFile()) continue;
++      candidates.push({ filePath, mtimeMs: stat.mtimeMs });
++    } catch {
++      // Skip files that disappeared between readdir and stat.
++    }
++  }
+ 
+-  const results: Array<{ conversation: ConversationRecord; filePath: string }> =
+-    [];
++  candidates.sort((a, b) => b.mtimeMs - a.mtimeMs);
+ 
+-  for (const file of sessionFiles) {
+-    if (results.length >= MAX_SESSION_INDEX_SIZE) break;
++  const latestBySessionId = new Map<string, IndexedSession>();
+ 
+-    const filePath = path.join(chatsDir, file);
++  for (const { filePath } of candidates) {
+     try {
+-      const content = await fs.readFile(filePath, 'utf-8');
+-      const parsed: unknown = JSON.parse(content);
+-      if (!isConversationRecord(parsed)) continue;
+-      if (!shouldProcessConversation(parsed)) continue;
+-
+-      results.push({ conversation: parsed, filePath });
++      const conversation = await loadConversationRecord(filePath, {
++        metadataOnly: true,
++      });
++      if (!conversation || !shouldProcessConversation(conversation)) continue;
++
++      const indexedSession: IndexedSession = {
++        sessionId: conversation.sessionId,
++        lastUpdated: conversation.lastUpdated,
++        filePath,
++        summary: conversation.summary,
++        userMessageCount: getUserMessageCount(conversation),
++      };
++
++      const existing = latestBySessionId.get(indexedSession.sessionId);
++      if (!existing || shouldReplaceIndexedSession(existing, indexedSession)) {
++        latestBySessionId.set(indexedSession.sessionId, indexedSession);
++      }
+     } catch {
+       // Skip unreadable files
+     }
+   }
+ 
+-  return results;
++  return Array.from(latestBySessionId.values()).sort(compareIndexedSessions);
+ }
+ 
+ /**
+@@ -335,39 +600,67 @@ async function scanEligibleSessions(
+  * eligible sessions with their summary, file path, and new/previously-processed status.
+  * The agent can use read_file on paths to inspect sessions that look promising.
+  *
+- * Returns the index text and the list of new (unprocessed) session IDs.
++ * Returns the index text, the list of selected new (unprocessed) session IDs,
++ * and the surfaced candidate sessions for this run.
+  */
+ export async function buildSessionIndex(
+   chatsDir: string,
+   state: ExtractionState,
+-): Promise<{ sessionIndex: string; newSessionIds: string[] }> {
+-  const processedSet = getProcessedSessionIds(state);
++): Promise<{
++  sessionIndex: string;
++  newSessionIds: string[];
++  candidateSessions: IndexedSession[];
++}> {
+   const eligible = await scanEligibleSessions(chatsDir);
+ 
+   if (eligible.length === 0) {
+-    return { sessionIndex: '', newSessionIds: [] };
++    return { sessionIndex: '', newSessionIds: [], candidateSessions: [] };
+   }
+ 
+-  const lines: string[] = [];
+-  const newSessionIds: string[] = [];
++  const newSessions: IndexedSession[] = [];
++  const oldSessions: IndexedSession[] = [];
++  for (const session of eligible) {
++    if (isSessionVersionProcessed(state, session)) {
++      oldSessions.push(session);
++    } else {
++      newSessions.push(session);
++    }
++  }
+ 
+-  for (const { conversation, filePath } of eligible) {
+-    const userMessageCount = conversation.messages.filter(
+-      (m) => m.type === 'user',
+-    ).length;
+-    const isNew = !processedSet.has(conversation.sessionId);
+-    if (isNew) {
+-      newSessionIds.push(conversation.sessionId);
++  newSessions.sort((a, b) => {
++    const attemptDelta =
++      getSessionAttemptCount(state, a) - getSessionAttemptCount(state, b);
++    if (attemptDelta !== 0) {
++      return attemptDelta;
+     }
++    return compareIndexedSessions(a, b);
++  });
+ 
+-    const status = isNew ? '[NEW]' : '[old]';
+-    const summary = conversation.summary ?? '(no summary)';
+-    lines.push(
+-      `${status} ${summary} (${userMessageCount} user msgs) — ${filePath}`,
+-    );
+-  }
++  const candidateSessions = newSessions.slice(0, MAX_NEW_SESSION_BATCH_SIZE);
++  const remainingSlots = Math.max(
++    0,
++    MAX_SESSION_INDEX_SIZE - candidateSessions.length,
++  );
++  const displayedOldSessions = oldSessions.slice(0, remainingSlots);
++  const candidateSessionIds = new Set(
++    candidateSessions.map((session) => getSessionVersionKey(session)),
++  );
+ 
+-  return { sessionIndex: lines.join('\n'), newSessionIds };
++  const lines = [...candidateSessions, ...displayedOldSessions].map(
++    (session) => {
++      const status = candidateSessionIds.has(getSessionVersionKey(session))
++        ? '[NEW]'
++        : '[old]';
++      const summary = session.summary ?? '(no summary)';
++      return `${status} ${summary} (${session.userMessageCount} user msgs) — ${session.filePath}`;
++    },
++  );
++
++  return {
++    sessionIndex: lines.join('\n'),
++    newSessionIds: candidateSessions.map((session) => session.sessionId),
++    candidateSessions,
++  };
+ }
+ 
+ /**
+@@ -632,14 +925,12 @@ export async function startMemoryService(config: Config): Promise<void> {
+ 
+     // Build session index: all eligible sessions with summaries + file paths.
+     // The agent decides which to read in full via read_file.
+-    const { sessionIndex, newSessionIds } = await buildSessionIndex(
+-      chatsDir,
+-      state,
+-    );
++    const { sessionIndex, newSessionIds, candidateSessions } =
++      await buildSessionIndex(chatsDir, state);
+ 
+     const totalInIndex = sessionIndex ? sessionIndex.split('\n').length : 0;
+     debugLogger.log(
+-      `[MemoryService] Session scan: ${totalInIndex} eligible session(s) found, ${newSessionIds.length} new`,
++      `[MemoryService] Session scan: ${totalInIndex} indexed session(s), ${candidateSessions.length} surfaced as new candidates`,
+     );
+ 
+     if (newSessionIds.length === 0) {
+@@ -702,8 +993,59 @@ export async function startMemoryService(config: Config): Promise<void> {
+       `[MemoryService] Starting extraction agent (model: ${agentDefinition.modelConfig.model}, maxTurns: 30, maxTime: 30min)`,
+     );
+ 
++    const candidateSessionsByPath = new Map(
++      candidateSessions.map((session) => [
++        path.resolve(session.filePath),
++        session,
++      ]),
++    );
++    const processedSessionKeys = new Set<string>();
++    const pendingReadFileSessions = new Map<string, string>();
++
+     // Create and run the extraction agent
+-    const executor = await LocalAgentExecutor.create(agentDefinition, context);
++    const executor = await LocalAgentExecutor.create(
++      agentDefinition,
++      context,
++      (activity) => {
++        const readFileCallId = getReadFileStartCallId(activity);
++        if (readFileCallId) {
++          const resolvedPath = getResolvedReadFilePath(config, activity);
++          if (!resolvedPath) {
++            return;
++          }
++
++          const session = candidateSessionsByPath.get(resolvedPath);
++          if (!session) {
++            return;
++          }
++
++          pendingReadFileSessions.set(
++            readFileCallId,
++            getSessionVersionKey(session),
++          );
++          return;
++        }
++
++        const completedReadFileCallId = getCompletedReadFileCallId(activity);
++        if (completedReadFileCallId) {
++          const sessionKey = pendingReadFileSessions.get(
++            completedReadFileCallId,
++          );
++          if (!sessionKey) {
++            return;
++          }
++
++          processedSessionKeys.add(sessionKey);
++          pendingReadFileSessions.delete(completedReadFileCallId);
++          return;
++        }
++
++        const failedReadFileCallId = getFailedReadFileCallId(activity);
++        if (failedReadFileCallId) {
++          pendingReadFileSessions.delete(failedReadFileCallId);
++        }
++      },
++    );
+ 
+     await executor.run(
+       { request: 'Extract skills from the provided sessions.' },
+@@ -746,10 +1088,24 @@ export async function startMemoryService(config: Config): Promise<void> {
+       );
+     }
+ 
++    const processedSessions = candidateSessions
++      .filter((session) =>
++        processedSessionKeys.has(getSessionVersionKey(session)),
++      )
++      .map((session) => ({
++        sessionId: session.sessionId,
++        lastUpdated: session.lastUpdated,
++      }));
++
+     // Record the run with full metadata
+     const run: ExtractionRun = {
+       runAt: new Date().toISOString(),
+-      sessionIds: newSessionIds,
++      sessionIds: processedSessions.map((session) => session.sessionId),
++      candidateSessions: candidateSessions.map((session) => ({
++        sessionId: session.sessionId,
++        lastUpdated: session.lastUpdated,
++      })),
++      processedSessions,
+       skillsCreated,
+     };
+     const updatedState: ExtractionState = {
+@@ -770,7 +1126,7 @@ export async function startMemoryService(config: Config): Promise<void> {
+         );
+       }
+       debugLogger.log(
+-        `[MemoryService] Completed in ${elapsed}s. ${completionParts.join('; ')} (processed ${newSessionIds.length} session(s))`,
++        `[MemoryService] Completed in ${elapsed}s. ${completionParts.join('; ')} (read ${processedSessions.length}/${candidateSessions.length} surfaced session(s))`,
+       );
+       const feedbackParts: string[] = [];
+       if (skillsCreated.length > 0) {
+@@ -789,7 +1145,7 @@ export async function startMemoryService(config: Config): Promise<void> {
+       );
+     } else {
+       debugLogger.log(
+-        `[MemoryService] Completed in ${elapsed}s. No new skills or patches created (processed ${newSessionIds.length} session(s))`,
++        `[MemoryService] Completed in ${elapsed}s. No new skills or patches created (read ${processedSessions.length}/${candidateSessions.length} surfaced session(s))`,
+       );
+     }
+   } catch (error) {
+diff --git a/packages/core/src/services/sessionSummaryUtils.ts b/packages/core/src/services/sessionSummaryUtils.ts
+index c64f19870..592a0b42b 100644
+--- a/packages/core/src/services/sessionSummaryUtils.ts
++++ b/packages/core/src/services/sessionSummaryUtils.ts
+@@ -10,6 +10,7 @@ import { BaseLlmClient } from '../core/baseLlmClient.js';
+ import { debugLogger } from '../utils/debugLogger.js';
+ import {
+   SESSION_FILE_PREFIX,
++  loadConversationRecord,
+   type ConversationRecord,
+ } from './chatRecordingService.js';
+ import fs from 'node:fs/promises';
+@@ -17,6 +18,60 @@ import path from 'node:path';
+ 
+ const MIN_MESSAGES_FOR_SUMMARY = 1;
+ 
++type LoadedSession = ConversationRecord & {
++  messageCount?: number;
++  userMessageCount?: number;
++};
++
++interface SessionFileCandidate {
++  filePath: string;
++  mtimeMs: number;
++}
++
++function isSupportedSessionFile(fileName: string): boolean {
++  return (
++    fileName.startsWith(SESSION_FILE_PREFIX) &&
++    (fileName.endsWith('.json') || fileName.endsWith('.jsonl'))
++  );
++}
++
++async function listSessionFileCandidates(
++  chatsDir: string,
++): Promise<SessionFileCandidate[]> {
++  const allFiles = await fs.readdir(chatsDir);
++  const candidates: SessionFileCandidate[] = [];
++
++  for (const fileName of allFiles) {
++    if (!isSupportedSessionFile(fileName)) continue;
++
++    const filePath = path.join(chatsDir, fileName);
++    try {
++      const stat = await fs.stat(filePath);
++      if (!stat.isFile()) continue;
++      candidates.push({ filePath, mtimeMs: stat.mtimeMs });
++    } catch {
++      // Skip files that disappeared between readdir and stat.
++    }
++  }
++
++  candidates.sort((a, b) => {
++    const mtimeDelta = b.mtimeMs - a.mtimeMs;
++    if (mtimeDelta !== 0) {
++      return mtimeDelta;
++    }
++
++    return path.basename(b.filePath).localeCompare(path.basename(a.filePath));
++  });
++
++  return candidates;
++}
++
++function getSessionTimestampMs(session: LoadedSession): number {
++  if (!session.lastUpdated) return 0;
++  const parsed = Date.parse(session.lastUpdated);
++  return Number.isNaN(parsed) ? 0 : parsed;
++}
++
+ /**
+  * Generates and saves a summary for a session file.
+  */
+@@ -24,10 +79,11 @@ async function generateAndSaveSummary(
+   config: Config,
+   sessionPath: string,
+ ): Promise<void> {
+-  // Read session file
+-  const content = await fs.readFile(sessionPath, 'utf-8');
+-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+-  const conversation: ConversationRecord = JSON.parse(content);
++  const conversation = await loadConversationRecord(sessionPath);
++  if (!conversation) {
++    debugLogger.debug(`[SessionSummary] Could not read session ${sessionPath}`);
++    return;
++  }
+ 
+   // Skip if summary already exists
+   if (conversation.summary) {
+@@ -68,10 +124,17 @@ async function generateAndSaveSummary(
+     return;
+   }
+ 
+-  // Re-read the file before writing to handle race conditions
+-  const freshContent = await fs.readFile(sessionPath, 'utf-8');
+-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+-  const freshConversation: ConversationRecord = JSON.parse(freshContent);
++  // Re-read the file before writing to handle race conditions. For JSONL we
++  // only need the metadata; for legacy JSON we need the full record so we can
++  // round-trip the messages back to disk.
++  const isJsonl = sessionPath.endsWith('.jsonl');
++  const freshConversation = await loadConversationRecord(sessionPath, {
++    metadataOnly: isJsonl,
++  });
++  if (!freshConversation) {
++    debugLogger.debug(`[SessionSummary] Could not re-read ${sessionPath}`);
++    return;
++  }
+ 
+   // Check if summary was added by another process
+   if (freshConversation.summary) {
+@@ -81,17 +144,33 @@ async function generateAndSaveSummary(
+     return;
+   }
+ 
+-  // Add summary and write back
+-  freshConversation.summary = summary;
+-  freshConversation.lastUpdated = new Date().toISOString();
+-  await fs.writeFile(sessionPath, JSON.stringify(freshConversation, null, 2));
++  if (isJsonl) {
++    await fs.appendFile(
++      sessionPath,
++      `${JSON.stringify({ $set: { summary } })}\n`,
++    );
++  } else {
++    const lastUpdated = freshConversation.lastUpdated;
++    await fs.writeFile(
++      sessionPath,
++      JSON.stringify(
++        {
++          ...freshConversation,
++          summary,
++          lastUpdated,
++        },
++        null,
++        2,
++      ),
++    );
++  }
+   debugLogger.debug(
+     `[SessionSummary] Saved summary for ${sessionPath}: "${summary}"`,
+   );
+ }
+ 
+ /**
+- * Finds the most recently created session that needs a summary.
++ * Finds the most recently updated previous session that still needs a summary.
+  * Returns the path if it needs a summary, null otherwise.
+  */
+ export async function getPreviousSession(
+@@ -108,53 +187,74 @@ export async function getPreviousSession(
+       return null;
+     }
+ 
+-    // List session files
+-    const allFiles = await fs.readdir(chatsDir);
+-    const sessionFiles = allFiles.filter(
+-      (f) => f.startsWith(SESSION_FILE_PREFIX) && f.endsWith('.json'),
+-    );
+-
++    const sessionFiles = await listSessionFileCandidates(chatsDir);
+     if (sessionFiles.length === 0) {
+       debugLogger.debug('[SessionSummary] No session files found');
+       return null;
+     }
+ 
+-    // Sort by filename descending (most recently created first)
+-    // Filename format: session-YYYY-MM-DDTHH-MM-XXXXXXXX.json
+-    sessionFiles.sort((a, b) => b.localeCompare(a));
+-
+-    // Check the most recently created session
+-    const mostRecentFile = sessionFiles[0];
+-    const filePath = path.join(chatsDir, mostRecentFile);
++    let bestPreviousSession: {
++      filePath: string;
++      conversation: LoadedSession;
++    } | null = null;
+ 
+-    try {
+-      const content = await fs.readFile(filePath, 'utf-8');
+-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+-      const conversation: ConversationRecord = JSON.parse(content);
+-
+-      if (conversation.summary) {
+-        debugLogger.debug(
+-          '[SessionSummary] Most recent session already has summary',
+-        );
+-        return null;
++    for (const { filePath, mtimeMs } of sessionFiles) {
++      const bestTimestamp = bestPreviousSession
++        ? getSessionTimestampMs(bestPreviousSession.conversation)
++        : null;
++      if (
++        bestPreviousSession &&
++        bestTimestamp !== null &&
++        bestTimestamp > 0 &&
++        mtimeMs < bestTimestamp
++      ) {
++        break;
+       }
+ 
+-      // Only generate summaries for sessions with more than 1 user message
+-      const userMessageCount = conversation.messages.filter(
+-        (m) => m.type === 'user',
+-      ).length;
+-      if (userMessageCount <= MIN_MESSAGES_FOR_SUMMARY) {
+-        debugLogger.debug(
+-          `[SessionSummary] Most recent session has ${userMessageCount} user message(s), skipping (need more than ${MIN_MESSAGES_FOR_SUMMARY})`,
+-        );
+-        return null;
++      try {
++        const conversation = await loadConversationRecord(filePath, {
++          metadataOnly: true,
++        });
++        if (!conversation) continue;
++        if (conversation.sessionId === config.getSessionId()) continue;
++        if (conversation.summary) continue;
++
++        // Only generate summaries for sessions with more than 1 user message.
++        // `loadConversationRecord` populates `userMessageCount` in metadataOnly
++        // mode; fall back to scanning messages for the legacy fallback path.
++        const userMessageCount =
++          conversation.userMessageCount ??
++          conversation.messages.filter((message) => message.type === 'user')
++            .length;
++        if (userMessageCount <= MIN_MESSAGES_FOR_SUMMARY) {
++          continue;
++        }
++
++        if (
++          !bestPreviousSession ||
++          getSessionTimestampMs(conversation) >
++            getSessionTimestampMs(bestPreviousSession.conversation) ||
++          (getSessionTimestampMs(conversation) ===
++            getSessionTimestampMs(bestPreviousSession.conversation) &&
++            path
++              .basename(filePath)
++              .localeCompare(path.basename(bestPreviousSession.filePath)) > 0)
++        ) {
++          bestPreviousSession = { filePath, conversation };
++        }
++      } catch {
++        // Ignore unreadable session files
+       }
++    }
+ 
+-      return filePath;
+-    } catch {
+-      debugLogger.debug('[SessionSummary] Could not read most recent session');
++    if (!bestPreviousSession) {
++      debugLogger.debug(
++        '[SessionSummary] No previous session needs summary generation',
++      );
+       return null;
+     }
++
++    return bestPreviousSession.filePath;
+   } catch (error) {
+     debugLogger.debug(
+       `[SessionSummary] Error finding previous session: ${error instanceof Error ? error.message : String(error)}`,
+diff --git a/schemas/settings.schema.json b/schemas/settings.schema.json
+index d9fb8e3a1..e7b362fc4 100644
+--- a/schemas/settings.schema.json
++++ b/schemas/settings.schema.json
+@@ -2993,9 +2993,9 @@
+         },
+         "memoryV2": {
+           "title": "Memory v2",
+-          "description": "Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Routes facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits).",
+-          "markdownDescription": "Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Routes facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits).\n\n- Category: `Experimental`\n- Requires restart: `yes`\n- Default: `false`",
+-          "default": false,
++          "description": "Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Route facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits). Set to false to fall back to the legacy save_memory tool.",
++          "markdownDescription": "Disable the built-in save_memory tool and let the main agent persist project context by editing markdown files directly with edit/write_file. Route facts across four tiers: team-shared conventions go to project GEMINI.md files, project-specific personal notes go to the per-project private memory folder (MEMORY.md as index + sibling .md files for detail), and cross-project personal preferences go to the global ~/.gemini/GEMINI.md (the only file under ~/.gemini/ that the agent can edit — settings, credentials, etc. remain off-limits). Set to false to fall back to the legacy save_memory tool.\n\n- Category: `Experimental`\n- Requires restart: `yes`\n- Default: `true`",
++          "default": true,
+           "type": "boolean"
+         },
+         "autoMemory": {

@@ -1,0 +1,12 @@
+patching file monosketch-svelte/src/lib/mono/shape/shape/group.test.ts
+
+ RUN  v2.1.8 /workspace/repo/monosketch-svelte
+
+ ✓ src/lib/mono/shape/shape/group.test.ts (6 tests) 8ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  15:14:04
+   Duration  1.06s (transform 265ms, setup 0ms, collect 328ms, tests 8ms, environment 0ms, prepare 261ms)
+
+reward=1 graded=6 found=0 failed=0 parsed=0 framework=vitest exit_code=0

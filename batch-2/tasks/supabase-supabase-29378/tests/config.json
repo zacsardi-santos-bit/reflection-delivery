@@ -1,0 +1,19 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/docs && npx vitest run --reporter=verbose app/api/revalidate/route.test.ts",
+  "test_files": [
+    "apps/docs/app/api/revalidate/route.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should return 401 if Authorization header is missing",
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should return 401 if Authorization header is invalid",
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should return 400 if request body is malformed",
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should revalidate tags if request is valid with basic permissions",
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should return 429 if last revalidation was less than 6 hours ago with basic permissions",
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should revalidate if last revalidation was more than 6 hours ago with basic permissions",
+    "/workspace/repo/apps/docs/app/api/revalidate/route.test.ts::_handleRevalidateRequest should revalidate regardless of last revalidation time with override permissions"
+  ],
+  "PASS_TO_PASS": []
+}

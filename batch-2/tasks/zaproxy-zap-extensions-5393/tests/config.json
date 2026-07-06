@@ -1,0 +1,14 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :addOns:automation:test --tests \"*AutomationAPIUnitTest\" --no-daemon --no-watch-fs; cat addOns/automation/build/test-results/test/TEST-*.xml 2>/dev/null || true",
+  "test_files": [
+    "addOns/automation/src/test/java/org/zaproxy/addon/automation/AutomationAPIUnitTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.zaproxy.addon.automation.AutomationAPIUnitTest::shouldGetPlanProgressAsJson()",
+    "org.zaproxy.addon.automation.AutomationAPIUnitTest::shouldGetPlanProgressAsXml()"
+  ],
+  "PASS_TO_PASS": []
+}

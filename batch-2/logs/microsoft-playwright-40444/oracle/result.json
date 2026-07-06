@@ -1,0 +1,29 @@
+{
+    "id": "11943043-f270-4670-b2c2-75dc0cbbcd60",
+    "started_at": "2026-07-06T12:19:33.325755",
+    "finished_at": "2026-07-06T12:21:27.439985",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microsoft-playwright-40444": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microsoft-playwright-40444__KnaHUPt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

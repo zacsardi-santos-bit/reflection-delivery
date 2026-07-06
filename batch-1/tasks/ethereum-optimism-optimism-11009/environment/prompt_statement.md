@@ -1,0 +1,5 @@
+I'm working on the supervisor service for an optimistic rollup system and I need to implement a component that monitors chain head state for connected L2 chains. Right now there's no mechanism to subscribe to new block arrivals or to poll for safe and finalized head changes — the supervisor just has no awareness of chain head progression.
+
+I need a monitoring component that subscribes to real-time unsafe head events from the chain and notifies registered listeners when a new unsafe head arrives. If that subscription ever fails or errors out, the monitor should automatically resubscribe without any manual intervention. Additionally, the monitor should periodically poll for safe and finalized head changes and notify listeners when those change too.
+
+The component needs clean start and stop lifecycle controls: it should do nothing until started, and stopping it should cleanly tear down all active subscriptions and polling. Listeners should be notified separately for unsafe, safe, and finalized head changes, so different parts of the system can react appropriately to each type of update.

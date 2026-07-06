@@ -1,0 +1,482 @@
+diff --git a/poetry.lock b/poetry.lock
+index fd85d670f..592acd803 100644
+--- a/poetry.lock
++++ b/poetry.lock
+@@ -358,6 +358,22 @@ azure-common = ">=1.1,<2.0"
+ azure-mgmt-core = ">=1.3.2,<2.0.0"
+ isodate = ">=0.6.1,<1.0.0"
+ 
++[[package]]
++name = "azure-mgmt-compute"
++version = "30.5.0"
++description = "Microsoft Azure Compute Management Client Library for Python"
++optional = false
++python-versions = ">=3.7"
++files = [
++    {file = "azure-mgmt-compute-30.5.0.tar.gz", hash = "sha256:ed3ea34b799db0d52ee55e2f1ab4b0f09fa4a08f35e061ecb9aad9fb5a218844"},
++    {file = "azure_mgmt_compute-30.5.0-py3-none-any.whl", hash = "sha256:b65a6c1e22be7334604257d8d9f96a9c6dc4c6d4869f95d0d551c7c8170a2e71"},
++]
++
++[package.dependencies]
++azure-common = ">=1.1,<2.0"
++azure-mgmt-core = ">=1.3.2,<2.0.0"
++isodate = ">=0.6.1,<1.0.0"
++
+ [[package]]
+ name = "azure-mgmt-core"
+ version = "1.4.0"
+@@ -2947,8 +2963,8 @@ astroid = ">=3.0.1,<=3.1.0-dev0"
+ colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
+ dill = [
+     {version = ">=0.2", markers = "python_version < \"3.11\""},
++    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
+     {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
+-    {version = ">=0.3.6", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
+ ]
+ isort = ">=4.2.5,<5.13.0 || >5.13.0,<6"
+ mccabe = ">=0.6,<0.8"
+@@ -4235,4 +4251,4 @@ docs = ["mkdocs", "mkdocs-material"]
+ [metadata]
+ lock-version = "2.0"
+ python-versions = ">=3.9,<3.13"
+-content-hash = "cb76dd1a0fafbfa685bca46d1f214b7fb5158fa76bbcec46159a1b68add29456"
++content-hash = "a73ada50dafeb373f791cf7b138519863b907c0f9198fa45809d7fb53c934de9"
+diff --git a/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/__init__.py b/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed.metadata.json b/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed.metadata.json
+new file mode 100644
+index 000000000..943c62b65
+--- /dev/null
++++ b/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed.metadata.json
+@@ -0,0 +1,30 @@
++{
++  "Provider": "azure",
++  "CheckID": "defender_assessments_vm_endpoint_protection_installed",
++  "CheckTitle": "Ensure that Endpoint Protection for all Virtual Machines is installed",
++  "CheckType": [],
++  "ServiceName": "defender",
++  "SubServiceName": "",
++  "ResourceIdTemplate": "",
++  "Severity": "high",
++  "ResourceType": "Microsoft.Security/assessments",
++  "Description": "Install endpoint protection for all virtual machines.",
++  "Risk": "Installing endpoint protection systems (like anti-malware for Azure) provides for real-time protection capability that helps identify and remove viruses, spyware, and other malicious software. These also offer configurable alerts when known-malicious or unwanted software attempts to install itself or run on Azure systems.",
++  "RelatedUrl": "https://learn.microsoft.com/en-us/azure/security/fundamentals/antimalware",
++  "Remediation": {
++    "Code": {
++      "CLI": "",
++      "NativeIaC": "",
++      "Other": "https://www.trendmicro.com/cloudoneconformity/knowledge-base/azure/VirtualMachines/install-endpoint-protection.html#",
++      "Terraform": ""
++    },
++    "Recommendation": {
++      "Text": "Follow Microsoft Azure documentation to install endpoint protection from the security center. Alternatively, you can employ your own endpoint protection tool for your OS.",
++      "Url": ""
++    }
++  },
++  "Categories": [],
++  "DependsOn": [],
++  "RelatedTo": [],
++  "Notes": "Endpoint protection will incur an additional cost to you."
++}
+diff --git a/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed.py b/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed.py
+new file mode 100644
+index 000000000..29e649cb8
+--- /dev/null
++++ b/prowler/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed.py
+@@ -0,0 +1,41 @@
++from prowler.lib.check.models import Check, Check_Report_Azure
++from prowler.providers.azure.services.defender.defender_client import defender_client
++
++
++class defender_assessments_vm_endpoint_protection_installed(Check):
++    def execute(self) -> Check_Report_Azure:
++        findings = []
++
++        for (
++            subscription_name,
++            assessments,
++        ) in defender_client.assessments.items():
++            pass
++
++            if (
++                "Install endpoint protection solution on virtual machines"
++                in assessments
++            ):
++                report = Check_Report_Azure(self.metadata())
++                report.status = "PASS"
++                report.subscription = subscription_name
++                report.resource_name = assessments[
++                    "Install endpoint protection solution on virtual machines"
++                ].resource_name
++                report.resource_id = assessments[
++                    "Install endpoint protection solution on virtual machines"
++                ].resource_id
++                report.status_extended = f"Endpoint protection is set up in all VMs in subscription {subscription_name}."
++
++                if (
++                    assessments[
++                        "Install endpoint protection solution on virtual machines"
++                    ].status
++                    == "Unhealthy"
++                ):
++                    report.status = "FAIL"
++                    report.status_extended = f"Endpoint protection is not set up in all VMs in subscription {subscription_name}."
++
++                findings.append(report)
++
++        return findings
+diff --git a/prowler/providers/azure/services/vm/__init__.py b/prowler/providers/azure/services/vm/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/prowler/providers/azure/services/vm/vm_client.py b/prowler/providers/azure/services/vm/vm_client.py
+new file mode 100644
+index 000000000..33bde5b1b
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_client.py
+@@ -0,0 +1,4 @@
++from prowler.providers.azure.lib.audit_info.audit_info import azure_audit_info
++from prowler.providers.azure.services.vm.vm_service import VirtualMachines
++
++vm_client = VirtualMachines(azure_audit_info)
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/__init__.py b/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk.metadata.json b/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk.metadata.json
+new file mode 100644
+index 000000000..dc79e5154
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk.metadata.json
+@@ -0,0 +1,30 @@
++{
++  "Provider": "azure",
++  "CheckID": "vm_ensure_attached_disks_encrypted_with_cmk",
++  "CheckTitle": "Ensure that 'OS and Data' disks are encrypted with Customer Managed Key (CMK)",
++  "CheckType": [],
++  "ServiceName": "vm",
++  "SubServiceName": "",
++  "ResourceIdTemplate": "",
++  "Severity": "high",
++  "ResourceType": "Microsoft.Compute/virtualMachines",
++  "Description": "Ensure that OS disks (boot volumes) and data disks (non-boot volumes) are encrypted with CMK (Customer Managed Keys). Customer Managed keys can be either ADE or Server Side Encryption (SSE).",
++  "Risk": "Encrypting the IaaS VM's OS disk (boot volume) and Data disks (non-boot volume) ensures that the entire content is fully unrecoverable without a key, thus protecting the volume from unwanted reads. PMK (Platform Managed Keys) are enabled by default in Azure-managed disks and allow encryption at rest. CMK is recommended because it gives the customer the option to control which specific keys are used for the encryption and decryption of the disk. The customer can then change keys and increase security by disabling them instead of relying on the PMK key that remains unchanging. There is also the option to increase security further by using automatically rotating keys so that access to disk is ensured to be limited. Organizations should evaluate what their security requirements are, however, for the data stored on the disk. For high-risk data using CMK is a must, as it provides extra steps of security. If the data is low risk, PMK is enabled by default and provides sufficient data security.",
++  "RelatedUrl": "https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview",
++  "Remediation": {
++    "Code": {
++      "CLI": "",
++      "NativeIaC": "",
++      "Other": "https://www.trendmicro.com/cloudoneconformity/knowledge-base/azure/VirtualMachines/sse-boot-disk-cmk.html#",
++      "Terraform": "https://docs.bridgecrew.io/docs/bc_azr_general_1#terraform"
++    },
++    "Recommendation": {
++      "Text": "Note: Disks must be detached from VMs to have encryption changed. 1. Go to Virtual machines 2. For each virtual machine, go to Settings 3. Click on Disks 4. Click the ellipsis (...), then click Detach to detach the disk from the VM 5. Now search for Disks and locate the unattached disk 6. Click the disk then select Encryption 7. Change your encryption type, then select your encryption set 8. Click Save 9. Go back to the VM and re-attach the disk",
++      "Url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/data-encryption-best-practices#protect-data-at-rest"
++    }
++  },
++  "Categories": [],
++  "DependsOn": [],
++  "RelatedTo": [],
++  "Notes": "Using CMK/BYOK will entail additional management of keys."
++}
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk.py b/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk.py
+new file mode 100644
+index 000000000..de3331107
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk.py
+@@ -0,0 +1,28 @@
++from prowler.lib.check.models import Check, Check_Report_Azure
++from prowler.providers.azure.services.vm.vm_client import vm_client
++
++
++class vm_ensure_attached_disks_encrypted_with_cmk(Check):
++    def execute(self) -> Check_Report_Azure:
++        findings = []
++
++        for subscription_name, disks in vm_client.disks.items():
++            for disk_id, disk in disks.items():
++                if disk.vms_attached:
++                    report = Check_Report_Azure(self.metadata())
++                    report.status = "PASS"
++                    report.subscription = subscription_name
++                    report.resource_name = disk.resource_name
++                    report.resource_id = disk.resource_id
++                    report.status_extended = f"Disk '{disk_id}' is encrypted with a customer-managed key in subscription {subscription_name}."
++
++                    if (
++                        not disk.encryption_type
++                        or disk.encryption_type == "EncryptionAtRestWithPlatformKey"
++                    ):
++                        report.status = "FAIL"
++                        report.status_extended = f"Disk '{disk_id}' is not encrypted with a customer-managed key in subscription {subscription_name}."
++
++                    findings.append(report)
++
++        return findings
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/__init__.py b/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk.metadata.json b/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk.metadata.json
+new file mode 100644
+index 000000000..9ea330491
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk.metadata.json
+@@ -0,0 +1,30 @@
++{
++  "Provider": "azure",
++  "CheckID": "vm_ensure_unattached_disks_encrypted_with_cmk",
++  "CheckTitle": "Ensure that 'Unattached disks' are encrypted with 'Customer Managed Key' (CMK)",
++  "CheckType": [],
++  "ServiceName": "vm",
++  "SubServiceName": "",
++  "ResourceIdTemplate": "",
++  "Severity": "high",
++  "ResourceType": "Microsoft.Compute/virtualMachines",
++  "Description": "Ensure that unattached disks in a subscription are encrypted with a Customer Managed Key (CMK).",
++  "Risk": "Managed disks are encrypted by default with Platform-managed keys. Using Customer-managed keys may provide an additional level of security or meet an organization's regulatory requirements. Encrypting managed disks ensures that its entire content is fully unrecoverable without a key and thus protects the volume from unwarranted reads. Even if the disk is not attached to any of the VMs, there is always a risk where a compromised user account with administrative access to VM service can mount/attach these data disks, which may lead to sensitive information disclosure and tampering.",
++  "RelatedUrl": "https://docs.microsoft.com/en-us/azure/security/fundamentals/azure-disk-encryption-vms-vmss",
++  "Remediation": {
++    "Code": {
++      "CLI": "",
++      "NativeIaC": "",
++      "Other": "https://www.trendmicro.com/cloudoneconformity/knowledge-base/azure/VirtualMachines/sse-unattached-disk-cmk.html#",
++      "Terraform": ""
++    },
++    "Recommendation": {
++      "Text": "If data stored in the disk is no longer useful, refer to Azure documentation to delete unattached data disks at: https://learn.microsoft.com/en-us/rest/api/compute/disks/delete?view=rest-compute-2023-10-02&tabs=HTTP",
++      "Url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/data-encryption-best-practices#protect-data-at-rest"
++    }
++  },
++  "Categories": [],
++  "DependsOn": [],
++  "RelatedTo": [],
++  "Notes": "You must have your key vault set up to utilize this. Encryption is available only on Standard tier VMs. This might cost you more. Utilizing and maintaining Customer-managed keys will require additional work to create, protect, and rotate keys."
++}
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk.py b/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk.py
+new file mode 100644
+index 000000000..20ea322b5
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk.py
+@@ -0,0 +1,28 @@
++from prowler.lib.check.models import Check, Check_Report_Azure
++from prowler.providers.azure.services.vm.vm_client import vm_client
++
++
++class vm_ensure_unattached_disks_encrypted_with_cmk(Check):
++    def execute(self) -> Check_Report_Azure:
++        findings = []
++
++        for subscription_name, disks in vm_client.disks.items():
++            for disk_id, disk in disks.items():
++                if not disk.vms_attached:
++                    report = Check_Report_Azure(self.metadata())
++                    report.status = "PASS"
++                    report.subscription = subscription_name
++                    report.resource_name = disk.resource_name
++                    report.resource_id = disk.resource_id
++                    report.status_extended = f"Disk '{disk_id}' is encrypted with a customer-managed key in subscription {subscription_name}."
++
++                    if (
++                        not disk.encryption_type
++                        or disk.encryption_type == "EncryptionAtRestWithPlatformKey"
++                    ):
++                        report.status = "FAIL"
++                        report.status_extended = f"Disk '{disk_id}' is not encrypted with a customer-managed key in subscription {subscription_name}."
++
++                    findings.append(report)
++
++        return findings
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/__init__.py b/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks.metadata.json b/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks.metadata.json
+new file mode 100644
+index 000000000..1297a3d05
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks.metadata.json
+@@ -0,0 +1,30 @@
++{
++  "Provider": "azure",
++  "CheckID": "vm_ensure_using_managed_disks",
++  "CheckTitle": "Ensure Virtual Machines are utilizing Managed Disks",
++  "CheckType": [],
++  "ServiceName": "vm",
++  "SubServiceName": "",
++  "ResourceIdTemplate": "",
++  "Severity": "medium",
++  "ResourceType": "Microsoft.Compute/virtualMachines",
++  "Description": "Migrate blob-based VHDs to Managed Disks on Virtual Machines to exploit the default features of this configuration. The features include: 1. Default Disk Encryption 2. Resilience, as Microsoft will managed the disk storage and move around if underlying hardware goes faulty 3. Reduction of costs over storage accounts",
++  "Risk": "Managed disks are by default encrypted on the underlying hardware, so no additional encryption is required for basic protection. It is available if additional encryption is required. Managed disks are by design more resilient that storage accounts. For ARM-deployed Virtual Machines, Azure Adviser will at some point recommend moving VHDs to managed disks both from a security and cost management perspective.",
++  "RelatedUrl": "https://learn.microsoft.com/en-us/azure/virtual-machines/unmanaged-disks-deprecation",
++  "Remediation": {
++    "Code": {
++      "CLI": "",
++      "NativeIaC": "",
++      "Other": "https://www.trendmicro.com/cloudoneconformity/knowledge-base/azure/VirtualMachines/managed-disks-in-use.html",
++      "Terraform": "https://docs.bridgecrew.io/docs/ensure-virtual-machines-are-utilizing-managed-disks#terraform"
++    },
++    "Recommendation": {
++      "Text": "There are additional costs for managed disks based off of disk space allocated. When converting to managed disks, VMs will be powered off and back on.",
++      "Url": "https://docs.microsoft.com/en-us/security/benchmark/azure/security-controls-v3-data-protection#dp-4-enable-data-at-rest-encryption-by-default"
++    }
++  },
++  "Categories": [],
++  "DependsOn": [],
++  "RelatedTo": [],
++  "Notes": "There are additional costs for managed disks based off of disk space allocated. When converting to managed disks, VMs will be powered off and back on."
++}
+diff --git a/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks.py b/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks.py
+new file mode 100644
+index 000000000..96d241096
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks.py
+@@ -0,0 +1,40 @@
++from prowler.lib.check.models import Check, Check_Report_Azure
++from prowler.providers.azure.services.vm.vm_client import vm_client
++
++
++class vm_ensure_using_managed_disks(Check):
++    def execute(self) -> Check_Report_Azure:
++        findings = []
++
++        for subscription_name, vms in vm_client.virtual_machines.items():
++            for vm_id, vm in vms.items():
++                report = Check_Report_Azure(self.metadata())
++                report.status = "PASS"
++                report.subscription = subscription_name
++                report.resource_name = vm.resource_name
++                report.resource_id = vm_id
++                report.status_extended = f"VM {vm.resource_name} is using managed disks in subscription {subscription_name}"
++
++                using_managed_disks = (
++                    True
++                    if vm.storage_profile
++                    and getattr(vm.storage_profile, "os_disk", False)
++                    and getattr(vm.storage_profile.os_disk, "managed_disk", False)
++                    else False
++                )
++
++                if using_managed_disks and getattr(
++                    vm.storage_profile, "data_disks", False
++                ):
++                    for data_disk in vm.storage_profile.data_disks:
++                        if not getattr(data_disk, "managed_disk", False):
++                            using_managed_disks = False
++                            break
++
++                if not using_managed_disks:
++                    report.status = "FAIL"
++                    report.status_extended = f"VM {vm.resource_name} is not using managed disks in subscription {subscription_name}"
++
++                findings.append(report)
++
++        return findings
+diff --git a/prowler/providers/azure/services/vm/vm_service.py b/prowler/providers/azure/services/vm/vm_service.py
+new file mode 100644
+index 000000000..4a84f7cb8
+--- /dev/null
++++ b/prowler/providers/azure/services/vm/vm_service.py
+@@ -0,0 +1,91 @@
++from dataclasses import dataclass
++
++from azure.mgmt.compute import ComputeManagementClient
++from azure.mgmt.compute.models import StorageProfile
++
++from prowler.lib.logger import logger
++from prowler.providers.azure.lib.audit_info.models import Azure_Audit_Info
++from prowler.providers.azure.lib.service.service import AzureService
++
++
++########################## VirtualMachines
++class VirtualMachines(AzureService):
++    def __init__(self, audit_info: Azure_Audit_Info):
++        super().__init__(ComputeManagementClient, audit_info)
++        self.virtual_machines = self.__get_virtual_machines__()
++        self.disks = self.__get_disks__()
++
++    def __get_virtual_machines__(self):
++        logger.info("VirtualMachines - Getting virtual machines...")
++        virtual_machines = {}
++
++        for subscription_name, client in self.clients.items():
++            try:
++                virtual_machines_list = client.virtual_machines.list_all()
++                virtual_machines.update({subscription_name: {}})
++
++                for vm in virtual_machines_list:
++                    virtual_machines[subscription_name].update(
++                        {
++                            vm.vm_id: VirtualMachine(
++                                resource_id=vm.id,
++                                resource_name=vm.name,
++                                storage_profile=getattr(vm, "storage_profile", None),
++                            )
++                        }
++                    )
++            except Exception as error:
++                logger.error(
++                    f"Subscription name: {subscription_name} -- {error.__class__.__name__}[{error.__traceback__.tb_lineno}]: {error}"
++                )
++
++        return virtual_machines
++
++    def __get_disks__(self):
++        logger.info("VirtualMachines - Getting disks...")
++        disks = {}
++
++        for subscription_name, client in self.clients.items():
++            try:
++                disks_list = client.disks.list()
++                disks.update({subscription_name: {}})
++
++                for disk in disks_list:
++                    vms_attached = []
++                    if disk.managed_by:
++                        vms_attached.append(disk.managed_by)
++                    if disk.managed_by_extended:
++                        vms_attached.extend(disk.managed_by_extended)
++                    disks[subscription_name].update(
++                        {
++                            disk.unique_id: Disk(
++                                resource_id=disk.id,
++                                resource_name=disk.name,
++                                vms_attached=vms_attached,
++                                encryption_type=getattr(
++                                    getattr(disk, "encryption", None), "type", None
++                                ),
++                            )
++                        }
++                    )
++            except Exception as error:
++                logger.error(
++                    f"Subscription name: {subscription_name} -- {error.__class__.__name__}[{error.__traceback__.tb_lineno}]: {error}"
++                )
++
++        return disks
++
++
++@dataclass
++class VirtualMachine:
++    resource_id: str
++    resource_name: str
++    storage_profile: StorageProfile
++
++
++@dataclass
++class Disk:
++    resource_id: str
++    resource_name: str
++    vms_attached: list[str]
++    encryption_type: str
+diff --git a/pyproject.toml b/pyproject.toml
+index 410bdb57a..812d94cf9 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -30,6 +30,7 @@ awsipranges = "0.3.3"
+ azure-identity = "1.15.0"
+ azure-mgmt-applicationinsights = "4.0.0"
+ azure-mgmt-authorization = "4.0.0"
++azure-mgmt-compute = "30.5.0"
+ azure-mgmt-rdbms = "10.1.0"
+ azure-mgmt-cosmosdb = "9.4.0"
+ azure-mgmt-network = "25.2.0"

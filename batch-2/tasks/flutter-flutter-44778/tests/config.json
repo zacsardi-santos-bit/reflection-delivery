@@ -1,0 +1,35 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/packages/flutter && flutter test --machine test/rendering/sliver_fixed_extent_layout_test.dart test/widgets/page_view_test.dart test/widgets/sliver_fill_viewport_test.dart | python3 /workspace/flutter_to_junit.py",
+  "test_files": [
+    "packages/flutter/test/rendering/sliver_fixed_extent_layout_test.dart",
+    "packages/flutter/test/widgets/page_view_test.dart",
+    "packages/flutter/test/widgets/sliver_fill_viewport_test.dart"
+  ],
+  "num_test_files": 3,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "flutter::SliverFillViewport control test"
+  ],
+  "PASS_TO_PASS": [
+    "flutter::RenderSliverFixedExtentList layout test - rounding error",
+    "flutter::PageView control test",
+    "flutter::PageView does not squish when overscrolled",
+    "flutter::PageController control test",
+    "flutter::PageController page stability",
+    "flutter::PageController nextPage and previousPage return Futures that resolve",
+    "flutter::PageView in zero-size container",
+    "flutter::Page changes at halfway point",
+    "flutter::Bouncing scroll physics ballistics does not overshoot",
+    "flutter::PageView viewportFraction",
+    "flutter::Page snapping disable and reenable",
+    "flutter::PageView small viewportFraction",
+    "flutter::PageView large viewportFraction",
+    "flutter::Updating PageView large viewportFraction",
+    "flutter::PageView does not report page changed on overscroll",
+    "flutter::PageView can restore page",
+    "flutter::PageView exposes semantics of children",
+    "flutter::PageMetrics",
+    "flutter::Page controller can handle rounding issue"
+  ]
+}

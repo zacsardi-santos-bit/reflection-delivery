@@ -1,0 +1,29 @@
+{
+    "id": "92d1ab93-f32c-40ff-afdd-1a9a2e984f62",
+    "started_at": "2026-07-06T12:16:54.997083",
+    "finished_at": "2026-07-06T12:18:29.219084",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__delta-io-delta-6075": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "delta-io-delta-6075__qPt5xhp"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

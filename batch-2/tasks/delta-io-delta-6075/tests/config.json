@@ -1,0 +1,19 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && build/sbt -J-Xmx4G \"sparkV2/testOnly io.delta.spark.internal.v2.read.CDCDataFileTest io.delta.spark.internal.v2.read.IndexedFileTest\"; SBT_EXIT=$?; find /workspace/repo/spark/v2/target -name 'TEST-*.xml' -exec cat {} \\; 2>/dev/null; exit $SBT_EXIT",
+  "test_files": [
+    "spark/v2/src/test/java/io/delta/spark/internal/v2/read/CDCDataFileTest.java",
+    "spark/v2/src/test/java/io/delta/spark/internal/v2/read/IndexedFileTest.java",
+    "spark/v2/src/test/java/io/delta/spark/internal/v2/read/SparkMicroBatchStreamCDCTest.java",
+    "spark/v2/src/test/java/io/delta/spark/internal/v2/read/SparkMicroBatchStreamTest.java"
+  ],
+  "num_test_files": 4,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "io.delta.spark.internal.v2.read.CDCDataFileTest::testFromAddFile()",
+    "io.delta.spark.internal.v2.read.IndexedFileTest::testAddFile()",
+    "io.delta.spark.internal.v2.read.IndexedFileTest::testCdc()",
+    "io.delta.spark.internal.v2.read.IndexedFileTest::testSentinel()"
+  ],
+  "PASS_TO_PASS": []
+}

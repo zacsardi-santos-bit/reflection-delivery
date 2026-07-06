@@ -1,0 +1,29 @@
+{
+    "id": "69eb921e-b959-4805-8358-7d027b8ef28e",
+    "started_at": "2026-07-06T12:17:09.669471",
+    "finished_at": "2026-07-06T12:17:51.797430",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-graphrag-2236": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-graphrag-2236__kt2DGF4"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

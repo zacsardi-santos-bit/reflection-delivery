@@ -1,0 +1,277 @@
+patching file tests/shell/pipeline/commands/external.rs
+warning: unused import: `windows::*`
+   --> crates/nu-ansi-term/src/lib.rs:262:9
+    |
+262 | pub use windows::*;
+    |         ^^^^^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` on by default
+
+warning: `nu-ansi-term` (lib) generated 1 warning (run `cargo fix --lib -p nu-ansi-term` to apply 1 suggestion)
+   Compiling ucd-trie v0.1.3
+warning: panic message is not a string literal
+   --> crates/nu-engine/src/types/deduction.rs:867:47
+    |
+867 |   ...                   s => unreachable!(format!(
+    |  _________________________________________^
+868 | | ...                       "Shape of {:?} should have failed at parsing stage",
+869 | | ...                       s
+870 | | ...                   )),
+    | |_______________________^
+    |
+    = note: this usage of `unreachable!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `unreachable!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: `#[warn(non_fmt_panics)]` on by default
+help: remove the `format!(..)` macro call
+    |
+867 ~                             s => unreachable!(
+868 |                                 "Shape of {:?} should have failed at parsing stage",
+869 |                                 s
+870 ~                             ),
+    |
+
+warning: `nu-engine` (lib) generated 1 warning (run `cargo fix --lib -p nu-engine` to apply 1 suggestion)
+   Compiling serial_test_derive v0.5.1
+warning: private item shadows public glob re-export
+  --> crates/nu-command/src/commands/mod.rs:14:1
+   |
+14 | mod path;
+   | ^^^^^^^^^
+   |
+note: the name `path` in the type namespace is supposed to be publicly re-exported here
+  --> crates/nu-command/src/commands/mod.rs:24:9
+   |
+24 | pub use config::*;
+   |         ^^^^^^^^^
+note: but the private item here shadows it
+  --> crates/nu-command/src/commands/mod.rs:14:1
+   |
+14 | mod path;
+   | ^^^^^^^^^
+   = note: `#[warn(hidden_glob_reexports)]` on by default
+
+warning: unused import: `camel_case::SubCommand as CamelCase`
+  --> crates/nu-command/src/commands/strings/str_/case/mod.rs:14:9
+   |
+14 | pub use camel_case::SubCommand as CamelCase;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `pascal_case::SubCommand as PascalCase`
+  --> crates/nu-command/src/commands/strings/str_/case/mod.rs:15:9
+   |
+15 | pub use pascal_case::SubCommand as PascalCase;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `screaming_snake_case::SubCommand as ScreamingSnakeCase`
+  --> crates/nu-command/src/commands/strings/str_/case/mod.rs:16:9
+   |
+16 | pub use screaming_snake_case::SubCommand as ScreamingSnakeCase;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `snake_case::SubCommand as SnakeCase`
+  --> crates/nu-command/src/commands/strings/str_/case/mod.rs:17:9
+   |
+17 | pub use snake_case::SubCommand as SnakeCase;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: ambiguous glob re-exports
+  --> crates/nu-command/src/commands/mod.rs:24:9
+   |
+24 | pub use config::*;
+   |         ^^^^^^^^^ the name `command` in the type namespace is first re-exported here
+...
+60 | pub use viewers::*;
+   |         ---------- but the name `command` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> crates/nu-command/src/commands/mod.rs:24:9
+   |
+24 | pub use config::*;
+   |         ^^^^^^^^^ the name `get` in the type namespace is first re-exported here
+...
+48 | pub use filters::*;
+   |         ---------- but the name `get` in the type namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> crates/nu-command/src/commands/mod.rs:24:9
+   |
+24 | pub use config::*;
+   |         ^^^^^^^^^ the name `remove` in the type namespace is first re-exported here
+...
+54 | pub use pathvar::*;
+   |         ---------- but the name `remove` in the type namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> crates/nu-command/src/commands/mod.rs:56:9
+   |
+56 | pub use random::*;
+   |         ^^^^^^^^^ the name `chars` in the type namespace is first re-exported here
+57 | pub use shells::*;
+58 | pub use strings::*;
+   |         ---------- but the name `chars` in the type namespace is also re-exported here
+
+warning: field `args` is never read
+ --> crates/nu-command/src/classified/dynamic.rs:6:16
+  |
+5 | pub(crate) struct Command {
+  |                   ------- field in this struct
+6 |     pub(crate) args: hir::Call,
+  |                ^^^^
+  |
+  = note: `Command` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: fields `variable` and `block` are never read
+  --> crates/nu-command/src/commands/env/with_env.rs:16:5
+   |
+15 | struct WithEnvArgs {
+   |        ----------- fields in this struct
+16 |     variable: Value,
+   |     ^^^^^^^^
+17 |     block: CapturedBlock,
+   |     ^^^^^
+   |
+   = note: `WithEnvArgs` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `wide` and `tall` are never read
+  --> crates/nu-command/src/commands/platform/termsize.rs:11:5
+   |
+10 | pub struct TermSizeArgs {
+   |            ------------ fields in this struct
+11 |     wide: bool,
+   |     ^^^^
+12 |     tall: bool,
+   |     ^^^^
+   |
+   = note: `TermSizeArgs` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `nu-command` (lib) generated 12 warnings (run `cargo fix --lib -p nu-command` to apply 4 suggestions)
+   Compiling pest v2.1.3
+   Compiling semver-parser v0.10.2
+   Compiling semver v0.11.0
+   Compiling rustc_version v0.3.3
+   Compiling rstest v0.10.0
+   Compiling serial_test v0.5.1
+   Compiling nu v0.40.0 (/workspace/repo)
+    Finished test [unoptimized + debuginfo] target(s) in 20.39s
+warning: the following packages contain code that will be rejected by a future version of Rust: fs_extra v1.2.0, nom v1.2.4, quick-xml v0.19.0, quick-xml v0.22.0, rstest v0.10.0
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 2`
+────────────
+ Nextest run ID e86f2298-6921-4c46-b09f-c75f1b705e8d with nextest profile: default
+    Starting 4 tests across 3 binaries (229 tests skipped)
+        FAIL [   0.062s] (1/4) nu::main shell::pipeline::commands::external::external_command_arguments::semicolons_are_sanitized_before_passing_to_subshell
+  stdout ───
+
+    running 1 test
+    === stderr
+    sh: 1: b: not found
+
+    test shell::pipeline::commands::external::external_command_arguments::semicolons_are_sanitized_before_passing_to_subshell ... FAILED
+
+    failures:
+
+    failures:
+        shell::pipeline::commands::external::external_command_arguments::semicolons_are_sanitized_before_passing_to_subshell
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 232 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'shell::pipeline::commands::external::external_command_arguments::semicolons_are_sanitized_before_passing_to_subshell' panicked at tests/shell/pipeline/commands/external.rs:413:9:
+    assertion `left == right` failed
+      left: "a"
+     right: "a;b"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.063s] (2/4) nu::main shell::pipeline::commands::external::external_command_arguments::ampersands_are_sanitized_before_passing_to_subshell
+  stdout ───
+
+    running 1 test
+    === stderr
+    sh: 1: b: not found
+
+    test shell::pipeline::commands::external::external_command_arguments::ampersands_are_sanitized_before_passing_to_subshell ... FAILED
+
+    failures:
+
+    failures:
+        shell::pipeline::commands::external::external_command_arguments::ampersands_are_sanitized_before_passing_to_subshell
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 232 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'shell::pipeline::commands::external::external_command_arguments::ampersands_are_sanitized_before_passing_to_subshell' panicked at tests/shell/pipeline/commands/external.rs:424:9:
+    assertion `left == right` failed
+      left: "a"
+     right: "a&b"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.064s] (3/4) nu::main shell::pipeline::commands::external::external_command_arguments::shell_arguments_are_sanitized_even_if_coming_from_other_commands
+  stdout ───
+
+    running 1 test
+    === stderr
+    error: Cannot change to directory
+      ┌─ shell:2:32
+      │
+    2 │                             cd "/workspace/repo/,"
+      │                                ^^^^^^^^^^^^^^^^^^^ directory not found
+
+    sh: 1: hello: not found
+
+    test shell::pipeline::commands::external::external_command_arguments::shell_arguments_are_sanitized_even_if_coming_from_other_commands ... FAILED
+
+    failures:
+
+    failures:
+        shell::pipeline::commands::external::external_command_arguments::shell_arguments_are_sanitized_even_if_coming_from_other_commands
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 232 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'shell::pipeline::commands::external::external_command_arguments::shell_arguments_are_sanitized_even_if_coming_from_other_commands' panicked at tests/shell/pipeline/commands/external.rs:446:9:
+    assertion `left == right` failed
+      left: "a;&"
+     right: "a;&$(hello)"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.070s] (4/4) nu::main shell::pipeline::commands::external::external_command_arguments::subcommands_are_sanitized_before_passing_to_subshell
+  stdout ───
+
+    running 1 test
+    === stderr
+    error: Cannot change to directory
+      ┌─ shell:2:32
+      │
+    2 │                             cd "/workspace/repo/,"
+      │                                ^^^^^^^^^^^^^^^^^^^ directory not found
+
+
+    test shell::pipeline::commands::external::external_command_arguments::subcommands_are_sanitized_before_passing_to_subshell ... FAILED
+
+    failures:
+
+    failures:
+        shell::pipeline::commands::external::external_command_arguments::subcommands_are_sanitized_before_passing_to_subshell
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 232 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'shell::pipeline::commands::external::external_command_arguments::subcommands_are_sanitized_before_passing_to_subshell' panicked at tests/shell/pipeline/commands/external.rs:435:9:
+    assertion `left == right` failed
+      left: "CODE_OF_CONDUCT.md CONTRIBUTING.md Cargo.lock Cargo.toml LICENSE Makefile.toml README.build.txt README.md crates debian docker docs extra_features_cargo_install.sh images pkg_mgrs rustfmt.toml samples src target tests wix"
+     right: "$(ls)"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.071s] 4 tests run: 0 passed, 4 failed, 229 skipped
+        FAIL [   0.062s] (1/4) nu::main shell::pipeline::commands::external::external_command_arguments::semicolons_are_sanitized_before_passing_to_subshell
+        FAIL [   0.063s] (2/4) nu::main shell::pipeline::commands::external::external_command_arguments::ampersands_are_sanitized_before_passing_to_subshell
+        FAIL [   0.064s] (3/4) nu::main shell::pipeline::commands::external::external_command_arguments::shell_arguments_are_sanitized_even_if_coming_from_other_commands
+        FAIL [   0.070s] (4/4) nu::main shell::pipeline::commands::external::external_command_arguments::subcommands_are_sanitized_before_passing_to_subshell
+error: test run failed
+reward=0 graded=4 found=2 failed=2 parsed=4 framework=cargo exit_code=100

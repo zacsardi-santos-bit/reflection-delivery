@@ -1,3 +1,0 @@
-patching file plugins/inputs/nvidia_smi/schema_v12/parser.go
-patching file plugins/inputs/nvidia_smi/schema_v12/types.go
-patching file plugins/inputs/nvidia_smi/testdata/quadro-p2000-v12.xml

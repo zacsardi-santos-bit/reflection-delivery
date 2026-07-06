@@ -1,0 +1,29 @@
+{
+    "id": "d3afb721-1112-4dfa-9c9a-015f00ea6651",
+    "started_at": "2026-07-04T15:37:50.171952",
+    "finished_at": "2026-07-04T15:50:00.340933",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__project-chip-connectedhomeip-37446": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "project-chip-connectedhomeip-374__Q8G5KJt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

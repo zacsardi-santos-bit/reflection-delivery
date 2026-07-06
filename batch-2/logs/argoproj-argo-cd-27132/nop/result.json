@@ -1,0 +1,29 @@
+{
+    "id": "45ee7c1e-cbdb-44fd-a7ec-136877fbbc0e",
+    "started_at": "2026-07-06T12:16:25.903774",
+    "finished_at": "2026-07-06T12:18:50.518607",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__argoproj-argo-cd-27132": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "argoproj-argo-cd-27132__33CjGvD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

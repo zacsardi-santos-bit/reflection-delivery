@@ -1,7 +1,0 @@
-I'm working on improving the circuit breaker in my service mesh framework. Right now it opens after a fixed number of failures — say, 3 failures in a row — but that doesn't account for traffic volume at all. If I have an endpoint handling 1000 requests per minute and 3 fail, the circuit trips even though the failure rate is tiny. On the flip side, if traffic is very low and only 3 requests come in, all failing, the circuit should definitely open.
-
-I'd like to switch to a rate-based approach: the circuit should only open when the failure rate exceeds a configurable threshold percentage AND at least a minimum number of requests have been made within a time window. The window itself should periodically reset so stale failure data doesn't carry over indefinitely.
-
-There also seems to be a gap in the half-open state logic — when the circuit is in half-open mode and a test request is dispatched, the endpoint should be unavailable to other requests until we know whether that probe succeeded or failed. Currently nothing blocks further requests during that brief window.
-
-Finally, the events emitted when the circuit opens currently include raw internal objects instead of simple string identifiers, and they don't include the total request count or computed failure rate. I'd like those events to carry node ID (as a string), action name (as a string), failure count, total request count, and the failure rate — making them more useful for monitoring. The same cleaner format should apply to the half-open event as well.

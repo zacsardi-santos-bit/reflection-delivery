@@ -1,0 +1,16 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/components/Notification && /workspace/repo/node_modules/.bin/jest --watchAll=false",
+  "test_files": [
+    "packages/components/Notification/src/__tests__/Notification.test.tsx",
+    "packages/components/Notification/src/__tests__/__snapshots__/Notification.test.tsx.snap"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/components/Notification/src/__tests__/Notification.test.tsx::Notification component tests Notification default",
+    "/workspace/repo/packages/components/Notification/src/__tests__/Notification.test.tsx::Notification component tests Notification simple rendering does not invalidate styling",
+    "/workspace/repo/packages/components/Notification/src/__tests__/Notification.test.tsx::Notification component tests Notification re-renders correctly"
+  ],
+  "PASS_TO_PASS": []
+}

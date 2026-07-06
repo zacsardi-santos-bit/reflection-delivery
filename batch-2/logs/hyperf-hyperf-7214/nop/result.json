@@ -1,0 +1,29 @@
+{
+    "id": "f0950e9c-0b10-4a0d-9a0a-bb9a9b337468",
+    "started_at": "2026-07-04T15:37:39.564831",
+    "finished_at": "2026-07-04T15:39:10.637185",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__hyperf-hyperf-7214": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "hyperf-hyperf-7214__egXejws"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

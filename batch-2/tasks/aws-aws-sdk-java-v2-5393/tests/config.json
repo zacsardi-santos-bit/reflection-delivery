@@ -1,0 +1,21 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && MAVEN_OPTS='-Xmx2g -XX:MaxMetaspaceSize=512m' mvn -pl v2-migration test -Dtest=EnumCasingToV2Test,EnumGettersToV2Test -Dsurefire.failIfNoSpecifiedTests=false -Dspotbugs.skip=true -Dcheckstyle.skip=true",
+  "test_files": [
+    "test/v2-migration-tests/src/test/resources/maven/after/pom.xml",
+    "test/v2-migration-tests/src/test/resources/maven/after/src/main/java/foo/bar/Enums.java",
+    "test/v2-migration-tests/src/test/resources/maven/before/pom.xml",
+    "test/v2-migration-tests/src/test/resources/maven/before/src/main/java/foo/bar/Enums.java",
+    "test/v2-migration-tests/src/test/resources/run-test",
+    "v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumCasingToV2Test.java",
+    "v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumGettersToV2Test.java"
+  ],
+  "num_test_files": 7,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "AWS::test_1",
+    "AWS::test_2",
+    "AWS::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

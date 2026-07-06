@@ -1,3 +1,0 @@
-patching file config/enterprise_versions.yml
-patching file pkg/components/enterprise.go
-patching file pkg/render/monitor/monitor.go

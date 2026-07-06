@@ -1,2 +1,0 @@
-patching file @commitlint/cli/package.json
-patching file jest.config.js

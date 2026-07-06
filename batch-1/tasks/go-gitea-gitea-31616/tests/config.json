@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -v -json ./modules/svg/ -count=1",
+  "test_files": [
+    "modules/svg/pr31616_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "code.gitea.io/gitea/modules/svg::TestNewOcticonsExist"
+  ],
+  "PASS_TO_PASS": [
+    "code.gitea.io/gitea/modules/svg::TestNormalize"
+  ]
+}

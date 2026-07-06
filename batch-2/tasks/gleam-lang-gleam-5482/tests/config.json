@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(record_update_with_constructor_with_no_labelled_fields) | test(const_record_update_with_constructor_with_no_labelled_fields) | test(const_record_update_unlabelled_fields) | test(const_record_update_variant_without_args)'",
+  "test_files": [
+    "compiler-core/src/type_/tests/errors.rs",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__const_record_update_with_constructor_with_no_labelled_fields.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__record_update_with_constructor_with_no_labelled_fields.snap",
+    "language-server/src/tests/snapshots/gleam_language_server__tests__completion__completions_for_labels_in_record_update.snap.new",
+    "language-server/src/tests/snapshots/gleam_language_server__tests__hover__hover_for_invalid_record_update_4.snap.new"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(3/4) gleam-core type_::tests::errors::record_update_with_constructor_with_no_labelled_fields",
+    "(4/4) gleam-core type_::tests::errors::const_record_update_with_constructor_with_no_labelled_fields",
+    "(1/4) gleam-core type_::tests::const_record_update_unlabelled_fields",
+    "(2/4) gleam-core type_::tests::const_record_update_variant_without_args"
+  ],
+  "PASS_TO_PASS": []
+}

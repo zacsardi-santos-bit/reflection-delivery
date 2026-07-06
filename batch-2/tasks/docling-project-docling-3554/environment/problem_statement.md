@@ -1,0 +1,9 @@
+I'm hitting a few related gaps in the document conversion service client and want to knock them out together.
+
+First, when a conversion task fails server-side, all I get back is a plain string message. The server actually knows way more, the failure category, which processing phase went wrong, and whether the thing is retryable, but none of that shows up in the client's response models. I want a proper structured failure model on the response side capturing category, phase, and retryability, plus a dedicated exception type raised specifically when a task fails execution, carrying that failure message so callers can tell task execution failures apart from other errors and inspect the metadata to decide whether to retry.
+
+Second, serialization is noisy. When I build a request with only a couple of options set, the payload still includes all the defaults (null/empty values for unset fields like timeouts) which clutters things and triggers warnings from the underlying validation library. I want option serialization to only include values I explicitly set, dropping defaults and nulls, and it's gotta be warning-free, both when I serialize the conversion options directly and when they ride along as part of a submission.
+
+Third, the per-item submit-and-retrieve flow (the batch retrieval path) doesn't do automatic delivery target selection. I want it to try presigned URL delivery first since it's more efficient, and gracefully fall back to inline body delivery if the server says presigned isn't configured. It should also still accept an explicit target when I want to control delivery mode myself.
+
+Finally, if the server hands back a response that doesn't match the expected schema (happens when client and server drift to different versions), I want a specific, informative exception that makes the version skew obvious to diagnose, not some generic unhandled error.

@@ -1,0 +1,9 @@
+patching file src/internal/log/benchmark_test.go
+patching file src/internal/log/log_test.go
+patching file src/internal/log/span_test.go
+# github.com/pachyderm/pachyderm/v2/src/internal/log [github.com/pachyderm/pachyderm/v2/src/internal/log.test]
+src/internal/log/benchmark_test.go:128:12: undefined: newBenchInfoLogger
+{"Time":"2026-06-29T15:25:53.860387557Z","Action":"start","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log"}
+{"Time":"2026-06-29T15:25:53.860474731Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Output":"FAIL\tgithub.com/pachyderm/pachyderm/v2/src/internal/log [build failed]\n"}
+{"Time":"2026-06-29T15:25:53.860495762Z","Action":"fail","Package":"github.com/pachyderm/pachyderm/v2/src/internal/log","Elapsed":0}
+reward=0 graded=55 found=0 failed=0 parsed=1 framework=go exit_code=1

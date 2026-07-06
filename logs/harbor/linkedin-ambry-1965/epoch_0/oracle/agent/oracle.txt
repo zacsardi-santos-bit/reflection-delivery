@@ -1,8 +1,0 @@
-patching file ambry-api/src/main/java/com/github/ambry/server/StorageStatsUtil.java
-patching file ambry-api/src/main/java/com/github/ambry/server/storagestats/HostPartitionClassStorageStats.java
-patching file ambry-clustermap/src/main/java/com/github/ambry/clustermap/HelixClusterAggregator.java
-patching file ambry-clustermap/src/main/java/com/github/ambry/clustermap/HelixParticipant.java
-patching file ambry-clustermap/src/main/java/com/github/ambry/clustermap/MySqlClusterAggregator.java
-patching file ambry-clustermap/src/main/java/com/github/ambry/clustermap/MySqlReportAggregatorTask.java
-patching file ambry-mysql/src/main/java/com/github/ambry/accountstats/AccountStatsMySqlStore.java
-patching file build.gradle

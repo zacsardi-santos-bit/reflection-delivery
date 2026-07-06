@@ -1,0 +1,29 @@
+{
+    "id": "000bfa6a-c4f8-4f92-86c6-b9faae4eea6e",
+    "started_at": "2026-07-06T12:17:12.303820",
+    "finished_at": "2026-07-06T12:17:54.371145",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__grpc-ecosystem-grpc-gateway-6673": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "grpc-ecosystem-grpc-gateway-6673__pK5d2a8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

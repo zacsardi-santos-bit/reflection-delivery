@@ -1,0 +1,28 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 /usr/local/bin/fixup_planner.py 2>/dev/null; pytest /workspace/repo/test/registered/debug_utils/comparator/unshard/test_execute.py /workspace/repo/test/registered/debug_utils/comparator/unshard/test_parallel_info.py /workspace/repo/test/registered/debug_utils/comparator/unshard/test_plan.py -v",
+  "test_files": [
+    "test/registered/debug_utils/comparator/unshard/test_execute.py",
+    "test/registered/debug_utils/comparator/unshard/test_parallel_info.py",
+    "test/registered/debug_utils/comparator/unshard/test_plan.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "registered.debug_utils.comparator.unshard.test_execute.TestExecuteUnshardPlan::test_tp4_concat",
+    "registered.debug_utils.comparator.unshard.test_execute.TestExecuteUnshardPlan::test_scrambled_world_ranks_correct_result",
+    "registered.debug_utils.comparator.unshard.test_parallel_info.TestNormalizeParallelInfo::test_sglang_info",
+    "registered.debug_utils.comparator.unshard.test_parallel_info.TestNormalizeParallelInfo::test_megatron_info",
+    "registered.debug_utils.comparator.unshard.test_parallel_info.TestNormalizeParallelInfo::test_no_parallel_info",
+    "registered.debug_utils.comparator.unshard.test_parallel_info.TestNormalizeParallelInfo::test_both_present_raises",
+    "registered.debug_utils.comparator.unshard.test_parallel_info.TestNormalizeParallelInfo::test_size_1_filtered",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_tp4_plan",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_inconsistent_axis_size_raises",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_missing_axis_in_parallel_info_raises",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_empty_parallel_infos_raises",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_scrambled_world_ranks",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_no_sharded_axes_returns_none",
+    "registered.debug_utils.comparator.unshard.test_plan.TestComputeUnshardPlan::test_multi_axis_raises"
+  ],
+  "PASS_TO_PASS": []
+}

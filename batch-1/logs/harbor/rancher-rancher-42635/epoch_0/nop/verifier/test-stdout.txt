@@ -1,0 +1,13 @@
+patching file pkg/auth/providers/ldap/ldap_client_test.go
+patching file pkg/auth/providers/ldap/ldap_provider_test.go
+# github.com/rancher/rancher/pkg/auth/providers/ldap [github.com/rancher/rancher/pkg/auth/providers/ldap.test]
+pkg/auth/providers/ldap/ldap_client_test.go:180:112: too many arguments in call to p.loginUser
+	have ("github.com/go-ldap/ldap/v3".Client, *"github.com/rancher/rancher/pkg/apis/management.cattle.io/v3".BasicLogin, *"github.com/rancher/rancher/pkg/apis/management.cattle.io/v3".LdapConfig, *x509.CertPool)
+	want (*"github.com/rancher/rancher/pkg/apis/management.cattle.io/v3".BasicLogin, *"github.com/rancher/rancher/pkg/apis/management.cattle.io/v3".LdapConfig, *x509.CertPool)
+pkg/auth/providers/ldap/ldap_provider_test.go:65:21: undefined: toBasicLogin
+pkg/auth/providers/ldap/ldap_provider_test.go:133:59: too many arguments in call to p.getLDAPConfig
+	have (mockGenericClient)
+	want ()
+FAIL	github.com/rancher/rancher/pkg/auth/providers/ldap [build failed]
+FAIL
+reward=0 graded=9 found=9 failed=9 parsed=1 framework=go exit_code=1

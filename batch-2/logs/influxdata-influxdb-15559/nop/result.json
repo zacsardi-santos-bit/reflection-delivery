@@ -1,0 +1,29 @@
+{
+    "id": "947e11b6-9487-45f5-8fe9-91174b0de7b5",
+    "started_at": "2026-07-04T15:37:35.274215",
+    "finished_at": "2026-07-04T15:40:50.854873",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__influxdata-influxdb-15559": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "influxdata-influxdb-15559__Lm835p6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

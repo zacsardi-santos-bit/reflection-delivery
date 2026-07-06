@@ -1,0 +1,26 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm exec vitest run --project unit packages/core/src/SpringContext.test.tsx packages/core/src/hooks/useSprings.test.tsx",
+  "test_files": [
+    "packages/core/src/SpringContext.test.tsx",
+    "packages/core/src/hooks/useSprings.test.tsx",
+    "packages/core/test/setup.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/SpringContext.test.tsx::SpringContext can pause future animations"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/SpringContext.test.tsx::SpringContext only merges when changed",
+    "/workspace/repo/packages/core/src/SpringContext.test.tsx::SpringContext can pause current animations",
+    "/workspace/repo/packages/core/src/SpringContext.test.tsx::SpringContext can make current animations immediate",
+    "/workspace/repo/packages/core/src/SpringContext.test.tsx::SpringContext can make future animations immediate",
+    "/workspace/repo/packages/core/src/hooks/useSprings.test.tsx::useSprings when only a props function is passed should reach final value in strict mode",
+    "/workspace/repo/packages/core/src/hooks/useSprings.test.tsx::useSprings when only a props function is passed calls the props function once per new spring",
+    "/workspace/repo/packages/core/src/hooks/useSprings.test.tsx::useSprings when both a props function and a deps array are passed updates each spring when the deps have changed",
+    "/workspace/repo/packages/core/src/hooks/useSprings.test.tsx::useSprings when only a props array is passed updates each spring on every render",
+    "/workspace/repo/packages/core/src/hooks/useSprings.test.tsx::useSprings when the length argument increases creates new springs",
+    "/workspace/repo/packages/core/src/hooks/useSprings.test.tsx::useSprings when the length argument decreases removes old springs"
+  ]
+}

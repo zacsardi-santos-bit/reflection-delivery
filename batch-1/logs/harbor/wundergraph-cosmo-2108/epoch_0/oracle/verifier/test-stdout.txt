@@ -1,0 +1,136 @@
+patching file cli/test/fixtures/schema-with-nullable-list-items.graphql
+patching file cli/test/fixtures/schema-with-validation-errors.graphql
+patching file cli/test/fixtures/schema-with-warnings-and-errors.graphql
+patching file cli/test/grpc-service.test.ts
+patching file protographic/tests/sdl-validation/01-basic-validation.test.ts
+
+> @wundergraph/protographic@0.7.2 build /workspace/repo/protographic
+> tsc
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v3.1.4 /workspace/repo
+
+ ✓ |@wundergraph/protographic| tests/sdl-validation/01-basic-validation.test.ts (6 tests) 8ms
+- Generating protobuf schema...
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should generate proto and mapping files
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/full-schema.graphql
+ ├──── output dir: /tmp/grpc-test-1782746292273
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+(node:130) [DEP0147] DeprecationWarning: In future versions of Node.js, fs.rmdir(path, { recursive: true }) will be removed. Use fs.rm(path, { recursive: true }) instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should create output directory if it does not exist
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/full-schema.graphql
+ ├──── output dir: /tmp/grpc-test-non-existent-1782746292301
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+Input file /tmp/non-existent-schema.graphql does not exist
+[●] Failed to generate protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when input file does not exist
+ │
+ ├────────── name: testservice
+ ├───────── state: failed
+ └───────── error: process.exit unexpectedly called with "1"
+
+- Generating protobuf schema...
+Output directory /tmp/grpc-test-1782746292315/output.txt is not a directory
+[●] Failed to generate protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when output path is a file
+ │
+ ├────────── name: testservice
+ ├───────── state: failed
+ └───────── error: process.exit unexpectedly called with "1"
+
+- Generating protobuf schema...
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should generate all files with warnings
+
+[!] Schema validation warnings:
+ │
+ ├──────── file: /workspace/repo/cli/test/fixtures/schema-with-nullable-list-items.graphql
+ ├──── warnings: 2
+ │
+ ├─ warn: Nullable items are not supported in list types: [Project] at line 2, column 13
+ └─ warn: Nullable items are not supported in list types: [String] at line 12, column 9
+ │
+ └─ Continuing with generation despite warnings...
+
+
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should generate all files with warnings
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/schema-with-nullable-list-items.graphql
+ ├──── output dir: /tmp/grpc-test-1782746292317
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when schema has validation errors
+
+[✕] Schema validation errors:
+ │
+ ├──────── file: /workspace/repo/cli/test/fixtures/schema-with-validation-errors.graphql
+ ├────── errors: 1
+ │
+ └─ error: Nested key directives are not supported yet at line 10, column 16
+ │
+ └─ Generation stopped due to validation errors.
+
+
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when schema has validation errors
+ │
+ ├────────── name: testservice
+ ├───────── state: failed
+ └───────── error: Schema validation failed with 1 error(s)
+
+[●] Failed to generate protobuf schema
+- Generating protobuf schema...
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should display warnings and stop on errors
+
+[!] Schema validation warnings:
+ │
+ ├──────── file: /workspace/repo/cli/test/fixtures/schema-with-warnings-and-errors.graphql
+ ├──── warnings: 2
+ │
+ ├─ warn: Nullable items are not supported in list types: [String] at line 3, column 10
+ ├─ warn: Nullable items are not supported in list types: [User] at line 4, column 10
+
+[✕] Schema validation errors:
+ │
+ ├──────── file: /workspace/repo/cli/test/fixtures/schema-with-warnings-and-errors.graphql
+ ├────── errors: 1
+ │
+ └─ error: Nested key directives are not supported yet at line 13, column 16
+ │
+ └─ Generation stopped due to validation errors.
+
+
+[●] Failed to generate protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should display warnings and stop on errors
+ │
+ ├────────── name: testservice
+ ├───────── state: failed
+ └───────── error: Schema validation failed with 1 error(s)
+
+ ✓ |wgc| test/grpc-service.test.ts (7 tests) 65ms
+
+ Test Files  2 passed (2)
+      Tests  13 passed (13)
+   Start at  15:18:10
+   Duration  1.68s (transform 485ms, setup 0ms, collect 1.25s, tests 73ms, environment 0ms, prepare 254ms)
+
+reward=1 graded=13 found=0 failed=0 parsed=0 framework=vitest exit_code=0

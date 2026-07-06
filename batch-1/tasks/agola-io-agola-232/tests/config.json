@@ -1,0 +1,31 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/config -count=1",
+  "test_files": [
+    "internal/config/starlark_test.go",
+    "tests/setup_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "agola.io/agola/internal/config::TestParseConfig/test_no_runs_1",
+    "agola.io/agola/internal/config::TestParseConfig/test_no_runs_2",
+    "agola.io/agola/internal/config::TestParseConfig/test_empty_run",
+    "agola.io/agola/internal/config::TestParseConfig/test_empty_task",
+    "agola.io/agola/internal/config::TestParseConfig/test_empty_runtime_arch",
+    "agola.io/agola/internal/config::TestParseConfig/test_invalid_runtime_arch",
+    "agola.io/agola/internal/config::TestParseConfig/test_missing_task_dependency",
+    "agola.io/agola/internal/config::TestParseConfig/test_circular_dependency_between_2_tasks_a_->_b_->_a",
+    "agola.io/agola/internal/config::TestParseConfig/test_task_parent_same_dep_a_->_b_->_c,_a_->_c",
+    "agola.io/agola/internal/config::TestParseConfig/test_task_parent_same_dep_a_->_b_->_c_->_d,_a_->_d",
+    "agola.io/agola/internal/config::TestParseConfig",
+    "agola.io/agola/internal/config::TestParseOutput/test_task_all_options",
+    "agola.io/agola/internal/config::TestParseOutput",
+    "agola.io/agola/internal/config::TestStarlarkJSON/test_key_as_a_string",
+    "agola.io/agola/internal/config::TestStarlarkJSON/test_key_not_a_string",
+    "agola.io/agola/internal/config::TestStarlarkJSON/test_list",
+    "agola.io/agola/internal/config::TestStarlarkJSON/test_string_special_chars",
+    "agola.io/agola/internal/config::TestStarlarkJSON"
+  ],
+  "PASS_TO_PASS": []
+}

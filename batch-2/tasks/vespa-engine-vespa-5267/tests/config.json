@@ -1,0 +1,18 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl searchlib -Dtest=DropoutImportTestCase -DfailIfNoTests=false -Dmaven.javadoc.skip=true 2>&1",
+  "test_files": [
+    "config-model/src/test/java/com/yahoo/searchdefinition/processing/RankingExpressionWithTensorFlowTestCase.java",
+    "searchlib/src/test/files/integration/tensorflow/dropout/dropout.py",
+    "searchlib/src/test/files/integration/tensorflow/dropout/saved/saved_model.pbtxt",
+    "searchlib/src/test/files/integration/tensorflow/dropout/saved/variables/variables.data-00000-of-00001",
+    "searchlib/src/test/files/integration/tensorflow/dropout/saved/variables/variables.index",
+    "searchlib/src/test/java/com/yahoo/searchlib/rankingexpression/integration/tensorflow/DropoutImportTestCase.java"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "searchlib::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

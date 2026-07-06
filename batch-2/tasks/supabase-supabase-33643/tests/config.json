@@ -1,0 +1,15 @@
+{
+  "test_framework": "vitest",
+  "test_command": "PGVERSION=$(ls /usr/lib/postgresql/ | head -1) && mkdir -p /var/run/postgresql && chown postgres:postgres /var/run/postgresql && (su postgres -c \"/usr/lib/postgresql/${PGVERSION}/bin/pg_ctl status -D /var/lib/postgresql/testdata\" > /dev/null 2>&1 || su postgres -c \"/usr/lib/postgresql/${PGVERSION}/bin/pg_ctl start -D /var/lib/postgresql/testdata -l /var/log/postgresql/test.log -w\") && cd /workspace/repo/packages/pg-meta && ./node_modules/.bin/vitest run test/column-privileges.test.ts",
+  "test_files": [
+    "packages/pg-meta/test/column-privileges.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/pg-meta/test/column-privileges.test.ts::list column privileges",
+    "/workspace/repo/packages/pg-meta/test/column-privileges.test.ts::revoke & grant column privileges",
+    "/workspace/repo/packages/pg-meta/test/column-privileges.test.ts::revoke & grant column privileges w/ quoted column name"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,104 @@
+diff --git a/src/_utils/_git_secret_tools.sh b/src/_utils/_git_secret_tools.sh
+index 4051ddb..a264676 100644
+--- a/src/_utils/_git_secret_tools.sh
++++ b/src/_utils/_git_secret_tools.sh
+@@ -561,6 +561,25 @@ function _user_required {
+   fi
+ }
+ 
++function _assert_keychain_contains_emails {
++  local homedir=$1
++  local emails=$2
++
++  local gpg_uids
++  gpg_uids=$(_get_users_in_gpg_keyring "$homedir")
++  for email in "${emails[@]}"; do
++    local email_ok=0
++    for uid in $gpg_uids; do
++        if [[ "$uid" == "$email" ]]; then
++            email_ok=1
++        fi
++    done
++    if [[ $email_ok -eq 0 ]]; then
++      _abort "email not found in gpg keyring: $email"
++    fi
++  done
++}
++
+ 
+ function _get_raw_filename {
+   echo "$(dirname "$1")/$(basename "$1" "$SECRETS_EXTENSION")" | sed -e 's#^\./##'
+@@ -574,9 +593,20 @@ function _get_encrypted_filename {
+ }
+ 
+ 
++function _get_users_in_gpg_keyring {
++  local homedir=$1
++  local result
++  local args=()
++  if [[ -n "$homedir" ]]; then
++    args+=( "--homedir" "$homedir" )
++  fi
++  result=$($SECRETS_GPG_COMMAND "${args[@]}" --no-permission-warning --list-public-keys --with-colon --fixed-list-mode | grep ^uid: | gawk -F':' '{print $10;}' | sed 's/.*<\(.*\)>.*/\1/')
++
++  echo "$result"
++}
+ 
+ 
+-function _get_users_in_keyring {
++function _get_users_in_gitsecret_keyring {
+   # This function is required to show the users in the keyring.
+   # `whoknows` command uses it internally.
+   # It basically just parses the `gpg` public keys
+@@ -599,7 +629,7 @@ function _get_recipients {
+   # It basically just parses the `gpg` public keys
+ 
+   local result
+-  result=$(_get_users_in_keyring | sed 's/^/-r/')   # put -r before each user
++  result=$(_get_users_in_gitsecret_keyring | sed 's/^/-r/')   # put -r before each user
+   echo "$result"
+ }
+ 
+diff --git a/src/commands/git_secret_killperson.sh b/src/commands/git_secret_killperson.sh
+index ffd5cc3..db542e4 100644
+--- a/src/commands/git_secret_killperson.sh
++++ b/src/commands/git_secret_killperson.sh
+@@ -24,10 +24,12 @@ function killperson {
+   if [[ ${#emails[@]} -eq 0 ]]; then
+     _abort "at least one email is required for killperson."
+   fi
+-
+   # Getting the local git-secret `gpg` key directory:
+   local secrets_dir_keys
+   secrets_dir_keys=$(_get_secrets_dir_keys)
++
++  _assert_keychain_contains_emails "$secrets_dir_keys" "${emails[@]}"
++
+   for email in "${emails[@]}"; do
+     $SECRETS_GPG_COMMAND --homedir "$secrets_dir_keys" --no-permission-warning --batch --yes --delete-key "$email"
+     local exit_code=$?
+diff --git a/src/commands/git_secret_tell.sh b/src/commands/git_secret_tell.sh
+index 13d6f49..2e3cf2c 100644
+--- a/src/commands/git_secret_tell.sh
++++ b/src/commands/git_secret_tell.sh
+@@ -64,6 +64,8 @@ function tell {
+     _abort "you must provide at least one email address."
+   fi
+ 
++  _assert_keychain_contains_emails "$homedir" "${emails[@]}"
++
+   local start_key_cnt
+   start_key_cnt=$(get_gpg_key_count)
+   for email in "${emails[@]}"; do
+diff --git a/src/commands/git_secret_whoknows.sh b/src/commands/git_secret_whoknows.sh
+index 6a6f8e4..afed1f6 100644
+--- a/src/commands/git_secret_whoknows.sh
++++ b/src/commands/git_secret_whoknows.sh
+@@ -21,6 +21,6 @@ function whoknows {
+   local keys
+ 
+   # Getting the users from gpg:
+-  keys=$(_get_users_in_keyring)
++  keys=$(_get_users_in_gitsecret_keyring)
+   echo "$keys"
+ }

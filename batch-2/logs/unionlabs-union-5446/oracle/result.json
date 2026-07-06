@@ -1,0 +1,29 @@
+{
+    "id": "fa9e2b73-a2f6-4fe3-b1d6-a4835d4d7f57",
+    "started_at": "2026-07-04T15:38:17.069140",
+    "finished_at": "2026-07-04T15:38:45.382667",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__unionlabs-union-5446": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "unionlabs-union-5446__C79BJXQ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

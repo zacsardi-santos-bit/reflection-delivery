@@ -1,0 +1,31 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cargo nextest run -p ruff_linter -E 'test(~flake8_async)'",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC115.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/18) ruff_linter rules::flake8_async::tests::rules::rule_asyncfunctionwithtimeout_path_new_async109_1_py_expects",
+    "( 2/18) ruff_linter rules::flake8_async::tests::rules::rule_blockingopencallinasyncfunction_path_new_async230_py_expects",
+    "( 3/18) ruff_linter rules::flake8_async::tests::rules::rule_waitforprocessinasyncfunction_path_new_async22x_py_expects",
+    "( 4/18) ruff_linter rules::flake8_async::tests::rules::rule_asyncfunctionwithtimeout_path_new_async109_0_py_expects",
+    "( 5/18) ruff_linter rules::flake8_async::tests::rules::rule_runprocessinasyncfunction_path_new_async22x_py_expects",
+    "( 6/18) ruff_linter rules::flake8_async::tests::rules::rule_asyncbusywait_path_new_async110_py_expects",
+    "( 7/18) ruff_linter rules::flake8_async::tests::rules::rule_cancelscopenocheckpoint_path_new_async100_py_expects",
+    "( 8/18) ruff_linter rules::flake8_async::tests::rules::rule_blockingsleepinasyncfunction_path_new_async251_py_expects",
+    "( 9/18) ruff_linter rules::flake8_async::tests::rules::rule_blockinginputinasyncfunction_path_new_async250_py_expects",
+    "(10/18) ruff_linter rules::flake8_async::tests::async109_python_310_or_older::asyncio",
+    "(11/18) ruff_linter rules::flake8_async::tests::rules::rule_blockinghttpcallinasyncfunction_path_new_async210_py_expects",
+    "(12/18) ruff_linter rules::flake8_async::tests::rules::rule_asynczerosleep_path_new_async115_py_expects",
+    "(13/18) ruff_linter rules::flake8_async::tests::rules::rule_createsubprocessinasyncfunction_path_new_async22x_py_expects",
+    "(14/18) ruff_linter rules::flake8_async::tests::rules::rule_longsleepnotforever_path_new_async116_py_expects",
+    "(16/18) ruff_linter rules::flake8_async::tests::rules::rule_blockingpathmethodinasyncfunction_path_new_async240_py_expects",
+    "(17/18) ruff_linter rules::flake8_async::tests::rules::rule_triosynccall_path_new_async105_py_expects",
+    "(18/18) ruff_linter rules::flake8_async::tests::async109_python_310_or_older::trio"
+  ],
+  "PASS_TO_PASS": [
+    "(15/18) ruff_linter rules::flake8_async::tests::rules::rule_blockinghttpcallhttpxinasyncfunction_path_new_async212_py_expects"
+  ]
+}

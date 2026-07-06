@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p hstr --no-fail-fast",
+  "test_files": [
+    "crates/hstr/src/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) hstr tests::store_multiple",
+    "(2/3) hstr tests::simple_usage",
+    "(3/3) hstr tests::eager_drop"
+  ],
+  "PASS_TO_PASS": []
+}

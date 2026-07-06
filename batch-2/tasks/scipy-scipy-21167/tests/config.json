@@ -1,0 +1,46 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /testenv/tests/test_aaa.py -v --rootdir=/testenv --noconftest",
+  "test_files": [
+    "scipy/interpolate/tests/meson.build",
+    "scipy/interpolate/tests/test_aaa.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_aaa.TestAAA::test_input_validation"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_aaa.TestAAA::test_convergence_error",
+    "tests.test_aaa.TestAAA::test_dtype_preservation[float32]",
+    "tests.test_aaa.TestAAA::test_dtype_preservation[float64]",
+    "tests.test_aaa.TestAAA::test_dtype_preservation[complex64]",
+    "tests.test_aaa.TestAAA::test_dtype_preservation[complex128]",
+    "tests.test_aaa.TestAAA::test_exp",
+    "tests.test_aaa.TestAAA::test_tan",
+    "tests.test_aaa.TestAAA::test_short_cases",
+    "tests.test_aaa.TestAAA::test_scale_invariance",
+    "tests.test_aaa.TestAAA::test_log_func",
+    "tests.test_aaa.TestAAA::test_infinite_data",
+    "tests.test_aaa.TestAAA::test_nan",
+    "tests.test_aaa.TestAAA::test_residues",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-5e-13-1e-07]",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-2e-13-1e-07_0]",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-3.5e-13-0]",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-7e-13-0]",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-1e-14-0]",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-2e-13-1e-07_1]",
+    "tests.test_aaa.TestAAA::test_basic_functions[<lambda>-1e-06-1e-07]",
+    "tests.test_aaa.TestAAA::test_poles_zeros_residues",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>0]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>1]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>2]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>3]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>4]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>5]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>6]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>7]",
+    "tests.test_aaa.TestAAA::test_polynomials_and_reciprocals[<lambda>8]",
+    "tests.test_aaa.TestAAA::test_spiral"
+  ]
+}

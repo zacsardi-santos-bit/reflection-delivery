@@ -1,0 +1,37 @@
+patching file internal/configs/version2/templates_test.go
+patching file internal/configs/virtualserver_test.go
+patching file pkg/apis/configuration/validation/policy_test.go
+# github.com/nginx/kubernetes-ingress/pkg/apis/configuration/validation [github.com/nginx/kubernetes-ingress/pkg/apis/configuration/validation.test]
+pkg/apis/configuration/validation/policy_test.go:607:5: unknown field Condition in struct literal of type "github.com/nginx/kubernetes-ingress/pkg/apis/configuration/v1".RateLimit
+pkg/apis/configuration/validation/policy_test.go:607:20: undefined: v1.RateLimitCondition
+pkg/apis/configuration/validation/policy_test.go:608:15: undefined: v1.JWTCondition
+pkg/apis/configuration/validation/policy_test.go:696:7: r.Condition undefined (type *"github.com/nginx/kubernetes-ingress/pkg/apis/configuration/v1".RateLimit has no field or method Condition)
+pkg/apis/configuration/validation/policy_test.go:696:23: undefined: v1.RateLimitCondition
+pkg/apis/configuration/validation/policy_test.go:697:15: undefined: v1.JWTCondition
+pkg/apis/configuration/validation/policy_test.go:708:7: r.Condition undefined (type *"github.com/nginx/kubernetes-ingress/pkg/apis/configuration/v1".RateLimit has no field or method Condition)
+pkg/apis/configuration/validation/policy_test.go:708:23: undefined: v1.RateLimitCondition
+# github.com/nginx/kubernetes-ingress/internal/configs [github.com/nginx/kubernetes-ingress/internal/configs.test]
+internal/configs/virtualserver_test.go:6452:7: unknown field Condition in struct literal of type "github.com/nginx/kubernetes-ingress/pkg/apis/configuration/v1".RateLimit
+internal/configs/virtualserver_test.go:6452:27: undefined: conf_v1.RateLimitCondition
+internal/configs/virtualserver_test.go:6453:22: undefined: conf_v1.JWTCondition
+internal/configs/virtualserver_test.go:6467:7: unknown field Condition in struct literal of type "github.com/nginx/kubernetes-ingress/pkg/apis/configuration/v1".RateLimit
+internal/configs/virtualserver_test.go:6467:27: undefined: conf_v1.RateLimitCondition
+internal/configs/virtualserver_test.go:6468:22: undefined: conf_v1.JWTCondition
+internal/configs/virtualserver_test.go:6488:3: unknown field AuthJWTClaimSets in struct literal of type version2.VirtualServerConfig
+internal/configs/virtualserver_test.go:6488:32: undefined: version2.AuthJWTClaimSet
+internal/configs/virtualserver_test.go:9142:23: undefined: version2.AuthJWTClaimSet
+internal/configs/virtualserver_test.go:9143:23: undefined: version2.AuthJWTClaimSet
+internal/configs/virtualserver_test.go:9143:23: too many errors
+# github.com/nginx/kubernetes-ingress/internal/configs/version2 [github.com/nginx/kubernetes-ingress/internal/configs/version2.test]
+internal/configs/version2/templates_test.go:1577:3: unknown field AuthJWTClaimSets in struct literal of type VirtualServerConfig
+internal/configs/version2/templates_test.go:1577:23: undefined: AuthJWTClaimSet
+{"Time":"2026-06-29T15:21:19.737218703Z","Action":"start","Package":"github.com/nginx/kubernetes-ingress/internal/configs"}
+{"Time":"2026-06-29T15:21:19.737359337Z","Action":"output","Package":"github.com/nginx/kubernetes-ingress/internal/configs","Output":"FAIL\tgithub.com/nginx/kubernetes-ingress/internal/configs [build failed]\n"}
+{"Time":"2026-06-29T15:21:19.737441646Z","Action":"fail","Package":"github.com/nginx/kubernetes-ingress/internal/configs","Elapsed":0}
+{"Time":"2026-06-29T15:21:19.737401027Z","Action":"start","Package":"github.com/nginx/kubernetes-ingress/internal/configs/version2"}
+{"Time":"2026-06-29T15:21:19.737590285Z","Action":"output","Package":"github.com/nginx/kubernetes-ingress/internal/configs/version2","Output":"FAIL\tgithub.com/nginx/kubernetes-ingress/internal/configs/version2 [build failed]\n"}
+{"Time":"2026-06-29T15:21:19.737643728Z","Action":"fail","Package":"github.com/nginx/kubernetes-ingress/internal/configs/version2","Elapsed":0}
+{"Time":"2026-06-29T15:21:19.971137319Z","Action":"start","Package":"github.com/nginx/kubernetes-ingress/pkg/apis/configuration/validation"}
+{"Time":"2026-06-29T15:21:19.971249076Z","Action":"output","Package":"github.com/nginx/kubernetes-ingress/pkg/apis/configuration/validation","Output":"FAIL\tgithub.com/nginx/kubernetes-ingress/pkg/apis/configuration/validation [build failed]\n"}
+{"Time":"2026-06-29T15:21:19.97128203Z","Action":"fail","Package":"github.com/nginx/kubernetes-ingress/pkg/apis/configuration/validation","Elapsed":0}
+reward=0 graded=745 found=0 failed=0 parsed=3 framework=go exit_code=1

@@ -1,0 +1,29 @@
+{
+    "id": "085c3e28-b886-420f-8397-3812b5ba98c2",
+    "started_at": "2026-07-04T15:40:15.514578",
+    "finished_at": "2026-07-04T15:41:07.595224",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tensorflow-tensorflow-33068": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tensorflow-tensorflow-33068__8hhvhPj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "7df91af9-4b4e-4e1f-87bd-be952feb2481",
+    "started_at": "2026-07-06T12:16:53.787100",
+    "finished_at": "2026-07-06T12:18:12.354416",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__bytecodealliance-wasmtime-13460": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "bytecodealliance-wasmtime-13460__GpYHY5y"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

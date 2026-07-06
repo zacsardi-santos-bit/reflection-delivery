@@ -1,9 +1,0 @@
-patching file crates/ide-assists/src/handlers/convert_tuple_struct_to_named_struct.rs
-patching file crates/ide-assists/src/handlers/destructure_struct_binding.rs
-patching file crates/ide-assists/src/handlers/destructure_tuple_binding.rs
-patching file crates/ide-assists/src/handlers/fill_record_pattern_fields.rs
-patching file crates/ide-assists/src/lib.rs
-patching file crates/ide-assists/src/utils.rs
-patching file crates/ide-assists/src/utils/gen_trait_fn_body.rs
-patching file crates/ide-assists/src/utils/ref_field_expr.rs
-patching file crates/syntax/src/ast/make.rs

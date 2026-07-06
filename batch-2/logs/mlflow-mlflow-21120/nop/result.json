@@ -1,0 +1,29 @@
+{
+    "id": "69bd0e5c-9d96-4559-ae94-2aaa4e81193e",
+    "started_at": "2026-07-06T12:16:56.798168",
+    "finished_at": "2026-07-06T12:17:45.342861",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__mlflow-mlflow-21120": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "mlflow-mlflow-21120__dvhWyj7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

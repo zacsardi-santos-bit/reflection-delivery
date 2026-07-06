@@ -1,0 +1,221 @@
+patching file packages/theming/android-theme/src/__tests__/__snapshots__/android-theme.test.ts.snap
+FAIL src/__tests__/android-theme.test.ts
+  ● getAndroidTheme light appearance test
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `getAndroidTheme light appearance test 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -202,14 +202,11 @@
+          "neutralForeground3BrandPressed": undefined,
+          "neutralForeground3BrandSelected": undefined,
+          "neutralForeground3Hover": undefined,
+          "neutralForeground3Pressed": undefined,
+          "neutralForeground3Selected": undefined,
+    -     "neutralForegroundDisabled1": "#bdbdbd",
+    -     "neutralForegroundDisabled2": "#ffffff",
+          "neutralForegroundInverted": "#ffffff",
+    -     "neutralForegroundOnColor": "#ffffff",
+          "neutralStencil1": "#e6e6e6",
+          "neutralStencil2": "#fafafa",
+          "neutralStroke1": "#d1d1d1",
+          "neutralStroke1Hover": undefined,
+          "neutralStroke1Pressed": undefined,
+
+      20 | it('getAndroidTheme light appearance test', () => {
+      21 |   const lightTheme = getAndroidTheme('light');
+    > 22 |   expect(lightTheme).toMatchSnapshot();
+         |                      ^
+      23 | });
+      24 |
+      25 | it('getAndroidTheme dark appearance test', () => {
+
+      at Object.<anonymous> (src/__tests__/android-theme.test.ts:22:22)
+
+  ● getAndroidTheme dark appearance test
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `getAndroidTheme dark appearance test 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -202,14 +202,11 @@
+          "neutralForeground3BrandPressed": undefined,
+          "neutralForeground3BrandSelected": undefined,
+          "neutralForeground3Hover": undefined,
+          "neutralForeground3Pressed": undefined,
+          "neutralForeground3Selected": undefined,
+    -     "neutralForegroundDisabled1": "#5c5c5c",
+    -     "neutralForegroundDisabled2": "#2e2e2e",
+          "neutralForegroundInverted": "#ffffff",
+    -     "neutralForegroundOnColor": "#000000",
+          "neutralStencil1": "#575757",
+          "neutralStencil2": "#333333",
+          "neutralStroke1": "#525252",
+          "neutralStroke1Hover": undefined,
+          "neutralStroke1Pressed": undefined,
+
+      25 | it('getAndroidTheme dark appearance test', () => {
+      26 |   const darkTheme = getAndroidTheme('dark');
+    > 27 |   expect(darkTheme).toMatchSnapshot();
+         |                     ^
+      28 | });
+      29 |
+      30 | it.concurrent.each(themeOptions)('createAndroidTheme test option %o', (option: ThemeOptions) => {
+
+      at Object.<anonymous> (src/__tests__/android-theme.test.ts:27:21)
+
+  ● createAndroidTheme test option { appearance: 'light', defaultAppearance: 'light' }
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `createAndroidTheme test option { appearance: 'light', defaultAppearance: 'light' } 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -202,14 +202,11 @@
+          "neutralForeground3BrandPressed": undefined,
+          "neutralForeground3BrandSelected": undefined,
+          "neutralForeground3Hover": undefined,
+          "neutralForeground3Pressed": undefined,
+          "neutralForeground3Selected": undefined,
+    -     "neutralForegroundDisabled1": "#bdbdbd",
+    -     "neutralForegroundDisabled2": "#ffffff",
+          "neutralForegroundInverted": "#ffffff",
+    -     "neutralForegroundOnColor": "#ffffff",
+          "neutralStencil1": "#e6e6e6",
+          "neutralStencil2": "#fafafa",
+          "neutralStroke1": "#d1d1d1",
+          "neutralStroke1Hover": undefined,
+          "neutralStroke1Pressed": undefined,
+
+      30 | it.concurrent.each(themeOptions)('createAndroidTheme test option %o', (option: ThemeOptions) => {
+      31 |   const theme = createAndroidTheme(option).theme;
+    > 32 |   expect(theme).toMatchSnapshot();
+         |                 ^
+      33 | });
+      34 |
+
+      at src/__tests__/android-theme.test.ts:32:17
+
+  ● createAndroidTheme test option { appearance: 'dark', defaultAppearance: 'light' }
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `createAndroidTheme test option { appearance: 'dark', defaultAppearance: 'light' } 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -202,14 +202,11 @@
+          "neutralForeground3BrandPressed": undefined,
+          "neutralForeground3BrandSelected": undefined,
+          "neutralForeground3Hover": undefined,
+          "neutralForeground3Pressed": undefined,
+          "neutralForeground3Selected": undefined,
+    -     "neutralForegroundDisabled1": "#5c5c5c",
+    -     "neutralForegroundDisabled2": "#2e2e2e",
+          "neutralForegroundInverted": "#ffffff",
+    -     "neutralForegroundOnColor": "#000000",
+          "neutralStencil1": "#575757",
+          "neutralStencil2": "#333333",
+          "neutralStroke1": "#525252",
+          "neutralStroke1Hover": undefined,
+          "neutralStroke1Pressed": undefined,
+
+      30 | it.concurrent.each(themeOptions)('createAndroidTheme test option %o', (option: ThemeOptions) => {
+      31 |   const theme = createAndroidTheme(option).theme;
+    > 32 |   expect(theme).toMatchSnapshot();
+         |                 ^
+      33 | });
+      34 |
+
+      at src/__tests__/android-theme.test.ts:32:17
+
+  ● createAndroidTheme test option { appearance: 'highContrast', defaultAppearance: 'light' }
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `createAndroidTheme test option { appearance: 'highContrast', defaultAppearance: 'light' } 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -202,14 +202,11 @@
+          "neutralForeground3BrandPressed": undefined,
+          "neutralForeground3BrandSelected": undefined,
+          "neutralForeground3Hover": undefined,
+          "neutralForeground3Pressed": undefined,
+          "neutralForeground3Selected": undefined,
+    -     "neutralForegroundDisabled1": "#5c5c5c",
+    -     "neutralForegroundDisabled2": "#2e2e2e",
+          "neutralForegroundInverted": "#ffffff",
+    -     "neutralForegroundOnColor": "#000000",
+          "neutralStencil1": "#575757",
+          "neutralStencil2": "#333333",
+          "neutralStroke1": "#525252",
+          "neutralStroke1Hover": undefined,
+          "neutralStroke1Pressed": undefined,
+
+      30 | it.concurrent.each(themeOptions)('createAndroidTheme test option %o', (option: ThemeOptions) => {
+      31 |   const theme = createAndroidTheme(option).theme;
+    > 32 |   expect(theme).toMatchSnapshot();
+         |                 ^
+      33 | });
+      34 |
+
+      at src/__tests__/android-theme.test.ts:32:17
+
+  ● createAndroidTheme test option { appearance: 'dynamic', defaultAppearance: 'light' }
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `createAndroidTheme test option { appearance: 'dynamic', defaultAppearance: 'light' } 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -202,14 +202,11 @@
+          "neutralForeground3BrandPressed": undefined,
+          "neutralForeground3BrandSelected": undefined,
+          "neutralForeground3Hover": undefined,
+          "neutralForeground3Pressed": undefined,
+          "neutralForeground3Selected": undefined,
+    -     "neutralForegroundDisabled1": "#5c5c5c",
+    -     "neutralForegroundDisabled2": "#2e2e2e",
+          "neutralForegroundInverted": "#ffffff",
+    -     "neutralForegroundOnColor": "#000000",
+          "neutralStencil1": "#575757",
+          "neutralStencil2": "#333333",
+          "neutralStroke1": "#525252",
+          "neutralStroke1Hover": undefined,
+          "neutralStroke1Pressed": undefined,
+
+      30 | it.concurrent.each(themeOptions)('createAndroidTheme test option %o', (option: ThemeOptions) => {
+      31 |   const theme = createAndroidTheme(option).theme;
+    > 32 |   expect(theme).toMatchSnapshot();
+         |                 ^
+      33 | });
+      34 |
+
+      at src/__tests__/android-theme.test.ts:32:17
+
+ › 6 snapshots failed.
+Snapshot Summary
+ › 6 snapshots failed from 1 test suite. Inspect your code changes or re-run jest with `-u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 6 total
+Snapshots:   6 failed, 6 total
+Time:        3.299 s
+Ran all test suites.
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

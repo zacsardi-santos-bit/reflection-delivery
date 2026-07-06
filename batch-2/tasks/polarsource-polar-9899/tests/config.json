@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "service postgresql start && mkdir -p /tmp/minio-data && MINIO_ROOT_USER=polar MINIO_ROOT_PASSWORD=polarpolar /usr/local/bin/minio server /tmp/minio-data --address :9000 --quiet & sleep 3 && cd /workspace/repo/server && pytest tests/organization_review/test_feedback.py -v",
+  "test_files": [
+    "server/tests/organization_review/test_feedback.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_empty_records",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_single_human_decision",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_agent_decision_with_summary",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_agent_decision_with_dimensions",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_no_agent_review_has_empty_dimensions",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_multiple_records_preserve_order",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_null_fields_default_to_unknown",
+    "tests.organization_review.test_feedback.TestCollectFeedbackData::test_agent_review_parse_error_gracefully_handled",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_no_feedback_omits_section",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_feedback_renders_section_header",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_feedback_renders_entry_details",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_feedback_renders_dimensions",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_feedback_omits_none_fields",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_multiple_entries_rendered_chronologically",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_unknown_date_rendered_for_none_created_at",
+    "tests.organization_review.test_feedback.TestBuildPromptPriorFeedback::test_feedback_placed_before_policy",
+    "tests.organization_review.test_feedback.TestPriorFeedbackSchema::test_data_snapshot_defaults_to_empty_feedback",
+    "tests.organization_review.test_feedback.TestPriorFeedbackSchema::test_deserialize_old_jsonb_without_prior_feedback",
+    "tests.organization_review.test_feedback.TestPriorFeedbackSchema::test_serialization_roundtrip",
+    "tests.organization_review.test_feedback.TestPriorFeedbackSchema::test_deserialize_old_entry_without_new_fields",
+    "tests.organization_review.test_feedback.TestPriorFeedbackSchema::test_v2_report_roundtrip_with_prior_feedback",
+    "tests.organization_review.test_feedback.TestGetFeedbackHistory::test_returns_empty_when_no_feedback",
+    "tests.organization_review.test_feedback.TestGetFeedbackHistory::test_returns_feedback_ordered_by_created_at",
+    "tests.organization_review.test_feedback.TestGetFeedbackHistory::test_includes_linked_agent_review",
+    "tests.organization_review.test_feedback.TestGetFeedbackHistory::test_excludes_deleted_feedback",
+    "tests.organization_review.test_feedback.TestGetFeedbackHistory::test_scoped_to_organization",
+    "tests.organization_review.test_feedback.TestCollectFeedbackDataIntegration::test_full_pipeline"
+  ],
+  "PASS_TO_PASS": []
+}

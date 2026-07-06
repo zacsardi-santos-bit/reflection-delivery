@@ -1,0 +1,284 @@
+patching file site/README.md
+patching file site/config.js
+patching file site/package-lock.json
+Hunk #1 succeeded at 1426 with fuzz 3.
+Hunk #2 succeeded at 1474 with fuzz 3.
+Hunk #3 succeeded at 1691 with fuzz 3.
+Hunk #4 succeeded at 1736 with fuzz 3.
+Hunk #5 succeeded at 1773 with fuzz 3.
+Hunk #6 succeeded at 1873 with fuzz 3.
+Hunk #7 succeeded at 2053 with fuzz 3.
+Hunk #8 succeeded at 2149 with fuzz 3.
+Hunk #9 FAILED at 2182.
+Hunk #10 succeeded at 2238 with fuzz 3.
+Hunk #11 succeeded at 2267 with fuzz 3.
+Hunk #12 succeeded at 2511 with fuzz 3.
+Hunk #13 FAILED at 2615.
+Hunk #14 FAILED at 2636.
+Hunk #15 FAILED at 2656.
+Hunk #16 FAILED at 2783.
+Hunk #17 succeeded at 2795 with fuzz 3.
+Hunk #18 succeeded at 2810 with fuzz 3.
+Hunk #19 FAILED at 2818.
+Hunk #20 succeeded at 2842 with fuzz 3.
+Hunk #21 FAILED at 2923.
+Hunk #22 succeeded at 2935 with fuzz 3.
+Hunk #23 FAILED at 3021.
+Hunk #24 succeeded at 3057 with fuzz 3.
+Hunk #25 succeeded at 3077 with fuzz 3.
+Hunk #26 FAILED at 3121.
+Hunk #27 succeeded at 3136 with fuzz 3.
+Hunk #28 succeeded at 3236 with fuzz 3.
+Hunk #29 succeeded at 3301 with fuzz 3.
+Hunk #30 succeeded at 3408 with fuzz 3.
+Hunk #31 succeeded at 3523 with fuzz 3.
+Hunk #32 succeeded at 3588 with fuzz 3.
+Hunk #33 succeeded at 3687 with fuzz 3.
+Hunk #34 FAILED at 3732.
+Hunk #35 FAILED at 3766.
+Hunk #36 succeeded at 3796 with fuzz 3.
+Hunk #37 succeeded at 3830 with fuzz 3.
+Hunk #38 succeeded at 3905 with fuzz 3.
+Hunk #39 succeeded at 3991 with fuzz 3.
+Hunk #40 succeeded at 4105 with fuzz 3.
+Hunk #41 succeeded at 4129 with fuzz 3.
+Hunk #42 succeeded at 4190 with fuzz 3.
+Hunk #43 succeeded at 4261 with fuzz 3.
+Hunk #44 succeeded at 4319 with fuzz 3.
+Hunk #45 succeeded at 4480 with fuzz 3.
+Hunk #46 succeeded at 4539 with fuzz 3.
+Hunk #47 succeeded at 4615 with fuzz 3.
+Hunk #48 succeeded at 4803 with fuzz 3.
+Hunk #49 succeeded at 5070 with fuzz 3.
+Hunk #50 succeeded at 5147 with fuzz 3.
+Hunk #51 succeeded at 5363 with fuzz 3.
+Hunk #52 succeeded at 5377 with fuzz 3.
+Hunk #53 succeeded at 5415 with fuzz 3.
+Hunk #54 FAILED at 5456.
+Hunk #55 succeeded at 5819 with fuzz 3.
+Hunk #56 FAILED at 5936.
+13 out of 56 hunks FAILED -- saving rejects to file site/package-lock.json.rej
+patching file site/package.json
+patching file site/src/routes/docs/_sections.js
+patching file site/src/utils/slug.js
+patching file site/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file site/README.md.rej
+The next patch would create the file site/config.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file site/package-lock.json
+Hunk #1 succeeded at 1426 with fuzz 3.
+Hunk #2 succeeded at 1474 with fuzz 3.
+Hunk #3 succeeded at 1691 with fuzz 3.
+Hunk #4 succeeded at 1736 with fuzz 3.
+Hunk #5 succeeded at 1773 with fuzz 3.
+Hunk #6 succeeded at 1873 with fuzz 3.
+Hunk #7 succeeded at 2053 with fuzz 3.
+Hunk #8 succeeded at 2149 with fuzz 3.
+Hunk #9 FAILED at 2182.
+Hunk #10 succeeded at 2238 with fuzz 3.
+Hunk #11 succeeded at 2267 with fuzz 3.
+Hunk #12 succeeded at 2511 with fuzz 3.
+Hunk #13 succeeded at 2653 with fuzz 3 (offset 38 lines).
+Hunk #14 FAILED at 2637.
+Hunk #15 FAILED at 2657.
+Hunk #16 succeeded at 4156 with fuzz 3 (offset 1372 lines).
+Hunk #17 succeeded at 4164 with fuzz 2 (offset 1367 lines).
+Hunk #18 succeeded at 5978 with fuzz 2 (offset 3166 lines).
+Hunk #19 FAILED at 2820.
+Hunk #20 succeeded at 5999 with fuzz 2 (offset 3155 lines).
+Hunk #21 FAILED at 2925.
+Hunk #22 succeeded at 6092 with fuzz 3 (offset 3155 lines).
+Hunk #23 FAILED at 3023.
+Hunk #24 succeeded at 6214 with fuzz 3 (offset 3155 lines).
+Hunk #25 succeeded at 6234 with fuzz 3 (offset 3155 lines).
+Hunk #26 FAILED at 3123.
+Hunk #27 succeeded at 6293 with fuzz 3 (offset 3155 lines).
+Hunk #28 succeeded at 6393 with fuzz 3 (offset 3155 lines).
+Hunk #29 succeeded at 6458 with fuzz 3 (offset 3155 lines).
+Hunk #30 succeeded at 6565 with fuzz 3 (offset 3155 lines).
+Hunk #31 succeeded at 6680 with fuzz 3 (offset 3155 lines).
+Hunk #32 succeeded at 6745 with fuzz 3 (offset 3155 lines).
+Hunk #33 succeeded at 6844 with fuzz 3 (offset 3155 lines).
+Hunk #34 FAILED at 3734.
+Hunk #35 FAILED at 3768.
+Hunk #36 succeeded at 6953 with fuzz 3 (offset 3155 lines).
+Hunk #37 succeeded at 6987 with fuzz 3 (offset 3155 lines).
+Hunk #38 succeeded at 7062 with fuzz 3 (offset 3155 lines).
+Hunk #39 succeeded at 7148 with fuzz 3 (offset 3155 lines).
+Hunk #40 succeeded at 7262 with fuzz 3 (offset 3155 lines).
+Hunk #41 succeeded at 7286 with fuzz 3 (offset 3155 lines).
+Hunk #42 succeeded at 7347 with fuzz 3 (offset 3155 lines).
+Hunk #43 succeeded at 7418 with fuzz 3 (offset 3155 lines).
+Hunk #44 succeeded at 7476 with fuzz 3 (offset 3155 lines).
+Hunk #45 succeeded at 7564 with fuzz 3 (offset 3082 lines).
+Hunk #46 FAILED at 4541.
+Hunk #47 FAILED at 4597.
+Hunk #48 FAILED at 4775.
+Hunk #49 FAILED at 5030.
+Hunk #50 FAILED at 5101.
+Hunk #51 FAILED at 5311.
+Hunk #52 FAILED at 5320.
+Hunk #53 FAILED at 5352.
+Hunk #54 FAILED at 5383.
+Hunk #55 FAILED at 5746.
+Hunk #56 FAILED at 5801.
+20 out of 56 hunks FAILED -- saving rejects to file site/package-lock.json.rej
+patching file site/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file site/package.json.rej
+patching file site/src/routes/docs/_sections.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file site/src/routes/docs/_sections.js.rej
+The next patch would create the file site/src/utils/slug.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/site/README.md b/site/README.md
+|index d3c1da3b0..223830b3f 100644
+|--- a/site/README.md
+|+++ b/site/README.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/site/config.js
+can't find file to patch at input line 28
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/site/package-lock.json b/site/package-lock.json
+|index d34978103..d6c11be7f 100644
+|--- a/site/package-lock.json
+|+++ b/site/package-lock.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+56 out of 56 hunks ignored
+can't find file to patch at input line 1233
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/site/package.json b/site/package.json
+|index 5d5aa548f..ae9ef5c72 100644
+|--- a/site/package.json
+|+++ b/site/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1263
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/site/src/routes/docs/_sections.js b/site/src/routes/docs/_sections.js
+|index dbef07357..6a10659a8 100644
+|--- a/site/src/routes/docs/_sections.js
+|+++ b/site/src/routes/docs/_sections.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+patching file b/site/src/utils/slug.js
+patching file site/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file site/README.md.rej
+The next patch would create the file site/config.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file site/package-lock.json
+Hunk #1 succeeded at 1426 with fuzz 3.
+Hunk #2 succeeded at 1474 with fuzz 3.
+Hunk #3 succeeded at 1691 with fuzz 3.
+Hunk #4 succeeded at 1736 with fuzz 3.
+Hunk #5 succeeded at 1773 with fuzz 3.
+Hunk #6 succeeded at 1873 with fuzz 3.
+Hunk #7 succeeded at 2053 with fuzz 3.
+Hunk #8 succeeded at 2149 with fuzz 3.
+Hunk #9 FAILED at 2182.
+Hunk #10 succeeded at 2238 with fuzz 3.
+Hunk #11 succeeded at 2267 with fuzz 3.
+Hunk #12 succeeded at 2511 with fuzz 3.
+Hunk #13 succeeded at 2653 with fuzz 3 (offset 38 lines).
+Hunk #14 FAILED at 2637.
+Hunk #15 FAILED at 2657.
+Hunk #16 succeeded at 6092 with fuzz 3 (offset 3308 lines).
+Hunk #17 succeeded at 6110 with fuzz 2 (offset 3313 lines).
+Hunk #18 succeeded at 7307 with fuzz 2 (offset 4495 lines).
+Hunk #19 FAILED at 2820.
+Hunk #20 succeeded at 7323 with fuzz 2 (offset 4479 lines).
+Hunk #21 FAILED at 2925.
+Hunk #22 succeeded at 7416 with fuzz 3 (offset 4479 lines).
+Hunk #23 FAILED at 3023.
+Hunk #24 succeeded at 7538 with fuzz 3 (offset 4479 lines).
+Hunk #25 succeeded at 7558 with fuzz 3 (offset 4479 lines).
+Hunk #26 FAILED at 3123.
+Hunk #27 succeeded at 7617 with fuzz 3 (offset 4479 lines).
+Hunk #28 succeeded at 7713 with fuzz 3 (offset 4475 lines).
+Hunk #29 FAILED at 3303.
+Hunk #30 FAILED at 3402.
+Hunk #31 FAILED at 3511.
+Hunk #32 FAILED at 3570.
+Hunk #33 FAILED at 3663.
+Hunk #34 FAILED at 3698.
+Hunk #35 FAILED at 3732.
+Hunk #36 FAILED at 3762.
+Hunk #37 FAILED at 3787.
+Hunk #38 FAILED at 3851.
+Hunk #39 FAILED at 3931.
+Hunk #40 FAILED at 3988.
+Hunk #41 FAILED at 4002.
+Hunk #42 FAILED at 4046.
+Hunk #43 FAILED at 4102.
+Hunk #44 FAILED at 4138.
+Hunk #45 FAILED at 4246.
+Hunk #46 FAILED at 4299.
+Hunk #47 FAILED at 4355.
+Hunk #48 FAILED at 4533.
+Hunk #49 FAILED at 4788.
+Hunk #50 FAILED at 4859.
+Hunk #51 FAILED at 5069.
+Hunk #52 FAILED at 5078.
+Hunk #53 FAILED at 5110.
+Hunk #54 FAILED at 5141.
+Hunk #55 FAILED at 5504.
+Hunk #56 FAILED at 5559.
+35 out of 56 hunks FAILED -- saving rejects to file site/package-lock.json.rej
+patching file site/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file site/package.json.rej
+patching file site/src/routes/docs/_sections.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file site/src/routes/docs/_sections.js.rej
+The next patch would create the file site/src/utils/slug.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+ERROR: golden patch failed to apply by all strategies

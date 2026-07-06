@@ -1,0 +1,1679 @@
+diff --git a/apps/fluent-tester/package.json b/apps/fluent-tester/package.json
+index ae5dc488c..74d083a63 100644
+--- a/apps/fluent-tester/package.json
++++ b/apps/fluent-tester/package.json
+@@ -63,6 +63,7 @@
+     "@fluentui-react-native/menu": "workspace:*",
+     "@fluentui-react-native/merge-props": "workspace:*",
+     "@fluentui-react-native/notification": "workspace:*",
++    "@fluentui-react-native/overflow": "workspace:*",
+     "@fluentui-react-native/radio-group": "workspace:*",
+     "@fluentui-react-native/separator": "workspace:*",
+     "@fluentui-react-native/spinner": "workspace:*",
+diff --git a/apps/fluent-tester/src/TestComponents/Overflow/MoreHorizontalFilled.svg b/apps/fluent-tester/src/TestComponents/Overflow/MoreHorizontalFilled.svg
+new file mode 100644
+index 000000000..d3765a3a4
+--- /dev/null
++++ b/apps/fluent-tester/src/TestComponents/Overflow/MoreHorizontalFilled.svg
+@@ -0,0 +1,3 @@
++<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M6.25 10C6.25 10.6904 5.69036 11.25 5 11.25C4.30964 11.25 3.75 10.6904 3.75 10C3.75 9.30964 4.30964 8.75 5 8.75C5.69036 8.75 6.25 9.30964 6.25 10ZM11.25 10C11.25 10.6904 10.6904 11.25 10 11.25C9.30964 11.25 8.75 10.6904 8.75 10C8.75 9.30964 9.30964 8.75 10 8.75C10.6904 8.75 11.25 9.30964 11.25 10ZM15 11.25C15.6904 11.25 16.25 10.6904 16.25 10C16.25 9.30964 15.6904 8.75 15 8.75C14.3096 8.75 13.75 9.30964 13.75 10C13.75 10.6904 14.3096 11.25 15 11.25Z" fill="#424242"/>
++</svg>
+diff --git a/apps/fluent-tester/src/TestComponents/Overflow/OverflowTest.tsx b/apps/fluent-tester/src/TestComponents/Overflow/OverflowTest.tsx
+new file mode 100644
+index 000000000..f55f6c870
+--- /dev/null
++++ b/apps/fluent-tester/src/TestComponents/Overflow/OverflowTest.tsx
+@@ -0,0 +1,176 @@
++import * as React from 'react';
++import { View, StyleSheet } from 'react-native';
++import type { ViewStyle } from 'react-native';
++
++import { ButtonV1 as Button } from '@fluentui-react-native/button';
++import { Divider } from '@fluentui-react-native/divider';
++import { Menu, MenuTrigger, MenuList, MenuPopover, MenuItem } from '@fluentui-react-native/menu';
++import { Overflow, OverflowItem, useOverflowMenu } from '@fluentui-react-native/overflow';
++import { TabList, Tab } from '@fluentui-react-native/tablist';
++import { TextV1 as Text } from '@fluentui-react-native/text';
++
++import MoreHorizontalIcon from './MoreHorizontalFilled.svg';
++import { Test } from '../Test';
++
++const items = ['a', 'b', 'c', 'd', 'e'];
++const itemLabels = {
++  a: 'Item A',
++  b: 'Item B Item B Item B',
++  c: 'Item C Item C',
++  d: 'Item D',
++  e: 'Item E Item E Item E Item E',
++};
++
++const overflowTestPageStyles = StyleSheet.create({
++  containerStyle: {
++    paddingVertical: 4,
++  },
++  width100: {
++    width: 100,
++  },
++  width250: {
++    width: 250,
++  },
++  width400: {
++    width: 400,
++  },
++  menuTrigger: {
++    alignSelf: 'center',
++  },
++});
++
++interface OverflowMenuProps {
++  onItemPress: (id: string) => void;
++}
++
++function OverflowMenu(props: OverflowMenuProps) {
++  const { showMenu, visibleMenuItems, menuTriggerRef, onMenuTriggerLayout } = useOverflowMenu();
++  if (showMenu) {
++    return (
++      <Menu>
++        <MenuTrigger>
++          <Button
++            accessibilityLabel="More options"
++            onLayout={onMenuTriggerLayout}
++            style={overflowTestPageStyles.menuTrigger}
++            appearance="subtle"
++            iconOnly
++            icon={{ svgSource: { src: MoreHorizontalIcon, viewBox: '0 0 20 20' } }}
++            componentRef={menuTriggerRef}
++          />
++        </MenuTrigger>
++        <MenuPopover>
++          <MenuList>
++            {visibleMenuItems.map((id) => (
++              <MenuItem onClick={() => props.onItemPress(id)} key={id}>
++                {itemLabels[id]}
++              </MenuItem>
++            ))}
++          </MenuList>
++        </MenuPopover>
++      </Menu>
++    );
++  } else {
++    return null;
++  }
++}
++
++function OverflowMainTest() {
++  return (
++    <View style={overflowTestPageStyles.containerStyle}>
++      <Overflow itemIDs={items}>
++        {items.map((item) => (
++          <OverflowItem key={item} overflowID={item}>
++            <Button onClick={() => console.log(item)}>{itemLabels[item]}</Button>
++          </OverflowItem>
++        ))}
++        <OverflowMenu onItemPress={console.log} />
++      </Overflow>
++    </View>
++  );
++}
++
++function OverflowTabTest() {
++  const [key, setKey] = React.useState('a');
++  return (
++    <View style={overflowTestPageStyles.containerStyle}>
++      <Overflow dontHideBeforeReady itemIDs={items}>
++        <TabList selectedKey={key} onTabSelect={setKey}>
++          {items.map((item) => (
++            <OverflowItem priority={key === item ? 2 : 1} key={item} overflowID={item}>
++              <Tab tabKey={item}>{itemLabels[item]}</Tab>
++            </OverflowItem>
++          ))}
++          <OverflowMenu onItemPress={setKey} />
++        </TabList>
++      </Overflow>
++    </View>
++  );
++}
++
++function OverflowWidthExample(props: { width: number; dontHideBeforeReady?: boolean }) {
++  const style = React.useMemo<ViewStyle>(() => ({ width: props.width }), [props]);
++  return (
++    <View style={overflowTestPageStyles.containerStyle}>
++      <Text variant="body1Strong">{`Width: ${props.width}`}</Text>
++      <Overflow dontHideBeforeReady={props.dontHideBeforeReady} style={style} itemIDs={items}>
++        {items.map((item) => (
++          <OverflowItem overflowID={item} key={item}>
++            <Button>Item {' ' + item}</Button>
++          </OverflowItem>
++        ))}
++        <OverflowMenu onItemPress={console.log} />
++      </Overflow>
++    </View>
++  );
++}
++
++function OverflowDifferentWidthTest() {
++  return (
++    <View>
++      <Text variant="heroStandard">Hidden Before Layout</Text>
++      <OverflowWidthExample width={100} />
++      <OverflowWidthExample width={250} />
++      <OverflowWidthExample width={400} />
++      <Divider />
++      <Text variant="heroStandard">Visible Before Layout</Text>
++      <OverflowWidthExample dontHideBeforeReady width={100} />
++      <OverflowWidthExample dontHideBeforeReady width={250} />
++      <OverflowWidthExample dontHideBeforeReady width={400} />
++    </View>
++  );
++}
++
++export const OverflowTest: React.FunctionComponent = () => {
++  const description =
++    'The `Overflow` and `OverflowItem` components, based off the same Fluent web v9 components of the same name, are low level utilities that enable users to create overflow experiences with any component. These components will detect and hide overflowing elements on screen and manage the overflow state.';
++
++  return (
++    <Test
++      name="Overflow Test"
++      description={description}
++      sections={[
++        {
++          name: 'Overflow',
++          component: OverflowMainTest,
++        },
++        {
++          name: 'Overflow TabList',
++          component: OverflowTabTest,
++        },
++        {
++          name: 'Overflow Variable Width',
++          component: OverflowDifferentWidthTest,
++        },
++      ]}
++      spec="https://github.com/microsoft/fluentui-react-native/blob/main/packages/experimental/Overflow/SPEC.md"
++      status={{
++        win32Status: 'Experimental',
++        uwpStatus: 'Backlog',
++        iosStatus: 'Backlog',
++        macosStatus: 'Experimental',
++        androidStatus: 'Backlog',
++      }}
++    />
++  );
++};
+diff --git a/apps/fluent-tester/src/testPages.ts b/apps/fluent-tester/src/testPages.ts
+index 462aba1d2..092d4854f 100644
+--- a/apps/fluent-tester/src/testPages.ts
++++ b/apps/fluent-tester/src/testPages.ts
+@@ -25,6 +25,7 @@ import { MenuButtonLegacyTest } from './TestComponents/MenuButtonLegacy';
+ import { MenuButtonV1Test } from './TestComponents/MenuButtonV1';
+ import { NativeDatePickerTest, HOMEPAGE_NATIVEDATEPICKER_BUTTON } from './TestComponents/NativeDatePicker';
+ import { NotificationTest, HOMEPAGE_NOTIFICATION_BUTTON } from './TestComponents/Notification';
++import { OverflowTest } from './TestComponents/Overflow/OverflowTest';
+ import { PersonaTest } from './TestComponents/Persona';
+ import { PersonaCoinTest } from './TestComponents/PersonaCoin';
+ import { PressableTest } from './TestComponents/Pressable';
+@@ -210,6 +211,12 @@ export const tests: TestDescription[] = [
+     testPageButton: HOMEPAGE_NOTIFICATION_BUTTON,
+     platforms: ['android', 'ios'],
+   },
++  {
++    name: 'Overflow',
++    component: OverflowTest,
++    testPageButton: '',
++    platforms: ['win32', 'macos'],
++  },
+   {
+     name: 'Persona',
+     component: PersonaTest,
+diff --git a/change/@fluentui-react-native-overflow-edc78969-243c-496e-b453-b94647512038.json b/change/@fluentui-react-native-overflow-edc78969-243c-496e-b453-b94647512038.json
+new file mode 100644
+index 000000000..a39995e9a
+--- /dev/null
++++ b/change/@fluentui-react-native-overflow-edc78969-243c-496e-b453-b94647512038.json
+@@ -0,0 +1,7 @@
++{
++  "type": "minor",
++  "comment": "Add Overflow / OverflowItem components",
++  "packageName": "@fluentui-react-native/overflow",
++  "email": "winlarry@microsoft.com",
++  "dependentChangeType": "patch"
++}
+diff --git a/change/@fluentui-react-native-tester-8b0b8530-038e-4218-9639-017eaf9ab3a5.json b/change/@fluentui-react-native-tester-8b0b8530-038e-4218-9639-017eaf9ab3a5.json
+new file mode 100644
+index 000000000..35949c095
+--- /dev/null
++++ b/change/@fluentui-react-native-tester-8b0b8530-038e-4218-9639-017eaf9ab3a5.json
+@@ -0,0 +1,7 @@
++{
++  "type": "patch",
++  "comment": "Add Overflow page",
++  "packageName": "@fluentui-react-native/tester",
++  "email": "winlarry@microsoft.com",
++  "dependentChangeType": "patch"
++}
+diff --git a/packages/experimental/Overflow/.eslintrc.js b/packages/experimental/Overflow/.eslintrc.js
+new file mode 100644
+index 000000000..16d1d51ba
+--- /dev/null
++++ b/packages/experimental/Overflow/.eslintrc.js
+@@ -0,0 +1,3 @@
++module.exports = {
++  extends: ['@fluentui-react-native/eslint-config-rules'],
++};
+diff --git a/packages/experimental/Overflow/SPEC.md b/packages/experimental/Overflow/SPEC.md
+new file mode 100644
+index 000000000..f5770821c
+--- /dev/null
++++ b/packages/experimental/Overflow/SPEC.md
+@@ -0,0 +1,201 @@
++# Overflow
++
++## Background
++
++The `Overflow` and `OverflowItem` components, based off the same Fluent web v9 components of the same name, are low level utilities that enable users to create overflow experiences with any component. These components will detect and hide overflowing elements on screen and manage the overflow state.
++
++## Documentation and Usage
++
++Because this component is so new, expect multiple changes to the docs. More work must be done to align the APIs of Fluent web's `Overflow` and FURN's `Overflow` suite.
++
++### Overflow
++
++The `Overflow` component is the parent container of `OverflowItems` to be rendered.
++
++Below is a list of props the `Overflow` supports.
++
++```ts
++export interface OverflowProps extends ViewProps {
++  /**
++   * Horizontal padding to add to the container
++   */
++  padding?: ViewStyle['padding'];
++  /**
++   * List of all IDs that will be rendered in the overflow container
++   */
++  itemIDs: string[];
++  /**
++   * By default, the overflow container's opacity is set to 0 while the overflow manager figures out which items should be hidden due to noticable pop-in.
++   * This flag sets the opacity to always be visible.
++   */
++  dontHideBeforeReady?: boolean;
++  /**
++   * Callback triggering whenever the visibility of one or more items changes
++   */
++  onOverflowUpdate?: (data: OverflowUpdatePayload) => void;
++}
++
++interface OverflowUpdatePayload {
++  visibleIds: string[];
++  invisibleIds: string[];
++}
++```
++
++Keep in mind that unlike the web equivalent, every item ID that will be rendered as an `OverflowItem` must be passed into the `itemIDs` prop. This is a consequence of how element measurements are taken on web (using the DOM) vs on native (using layout events).
++
++While you can change padding of the Overflow using the `style` prop, it is better to use the `padding` prop above directly because only then will the padding measurement be factored into overflow calculations.
++
++### OverflowItem
++
++The `OverflowItem` component represents a single item that can be shown or hidden within the `Overflow` container.
++
++Below is a list of props the `OverflowItem` supports.
++
++```ts
++export interface OverflowItemProps extends ViewProps {
++  /** Unique ID assigned to the item */
++  overflowID: string;
++  /** Priority of item. Greater priority value means item will stay visible longer vs other items */
++  priority?: number;
++  /** Callback that runs whenever this item's visibility changes or whenever its dimensions should be manually set */
++  onOverflowItemChange?: OverflowItemChangeHandler;
++}
++```
++
++There are two things to note about FURN's `OverflowItem`.
++
++1. The FURN `OverflowItem` has extra functionality that the web equivalent doesn't have. As of writing this, the FURN `Overflow` will always render one visible item, vs the web component which allows the customization of the minimum items shown. If the width of the container becomes smaller than the item, then the `Overflow` item will control the width of its child to make both the item and rendered menu fit into the container neatly. Customization of this behavior may come in the future.
++2. The child of the `OverflowItem` must be able to accept and use a `style` prop and an `onLayout` prop to accomplish its ability to hide itself and change its width to fit within the `Overflow`. If the child cannot accept either, then the `Overflow` will not work as intended. If the child can accept both props, but functionality is broken, check if it is actually able to receive both `style` and `onLayout` props - props might not be passing correctly.
++
++### useOverflowMenu
++
++The `useOverflowMenu` hook is a utility hook that registers an overflow menu element within the entire overflow context. This must be used within the `Overflow` container for the component to work as intended.
++
++The hook returns the following state below:
++
++```ts
++export interface OverflowMenuState {
++  /** Flag for whether the menu should be showing */
++  showMenu: boolean;
++  /** Map of overflow items and their visibility in their menu - true means they should show as menu items */
++  visibleMenuItems: string[];
++  /** Component ref to attach to this OverflowMenu's trigger */
++  menuTriggerRef: React.RefObject<View>;
++  /** Callback for RN onLayout event */
++  onMenuTriggerLayout: (e: LayoutChangeEvent) => void;
++}
++```
++
++It is important to pass the `onMenuTriggerLayout` callback to your "menu trigger" that will be rendered inside `Overflow`. Otherwise, the container will not render or not work as intended.
++
++The examples below will show this hook being used to populate the items of a [FURN `Menu`](../../components/Menu/SPEC.md), but the "overflow menu" can really be any React element / FURN component that can accept the layout callback from the hook.
++
++### Usage and Examples
++
++See the test page for
++
++Below is an example of using the `useOverflowMenu` hook with a Menu component.
++
++```tsx
++import { ButtonV1 as Button } from '@fluentui-react-native/button';
++import { Menu, MenuTrigger, MenuList, MenuPopover, MenuItem } from '@fluentui-react-native/menu';
++import { useOverflowMenu } from '@fluentui-react-native/overflow';
++
++interface OverflowMenuProps extends ButtonProps {
++  onItemPress: (id: string) => void;
++}
++
++export function OverflowMenu(props: OverflowMenuProps) {
++  const { onItemPress, appearance = 'outline' } = props;
++  const { showMenu, visibleMenuItems, menuTriggerRef, onMenuTriggerLayout } = useOverflowMenu();
++  const overflowCount = visibleMenuItems.length;
++  if (showMenu) {
++    return (
++      <Menu>
++        <MenuTrigger>
++          <Button
++            accessibilityLabel="More options"
++            onLayout={onMenuTriggerLayout}
++            style={overflowTestPageStyles.menuTrigger}
++            componentRef={menuTriggerRef}
++          >
++            {`+ ${overflowCount} item${visibleItems.length !== 1 ? 's' : ''}`}
++          </Button>
++        </MenuTrigger>
++        <MenuPopover>
++          <MenuList>
++            {visibleMenuItems.map((id) => (
++              <MenuItem onClick={() => onItemPress(id)} key={id}>
++                {itemLabels[id]}
++              </MenuItem>
++            ))}
++          </MenuList>
++        </MenuPopover>
++      </Menu>
++    );
++  } else {
++    return null;
++  }
++}
++```
++
++With the Overflow Menu set, we can now use our custom component in a barebones Overflow experience below.
++
++```tsx
++import { Overflow, OverflowItem } from '@fluentui-react-native/overflow';
++
++import { OverflowMenu } from '.';
++
++const items = ['a', 'b', 'c', 'd'];
++const itemLabels = {
++  a: 'Item A',
++  b: 'Item B',
++  c: 'Item C',
++  d: 'Item D',
++};
++
++function OverflowExperience() {
++  return (
++    <Overflow itemIDs={items}>
++      {items.map((item) => (
++        <OverflowItem key={item} overflowID={item}>
++          <Button onClick={() => console.log(item)}>{itemLabels[item]}</Button>
++        </OverflowItem>
++      ))}
++      <OverflowMenu onItemPress={console.log} />
++    </Overflow>
++  );
++}
++```
++
++You can even integrate the `Overflow` and `OverflowItem` with existing FURN components, such as a TabList.
++
++```tsx
++import { TabList, Tab } from '@fluentui-react-native/tablist';
++
++import { OverflowMenu } from '.';
++
++const items = ['a', 'b', 'c', 'd'];
++const itemLabels = {
++  a: 'Item A',
++  b: 'Item B',
++  c: 'Item C',
++  d: 'Item D',
++};
++
++function OverflowTabListExperience() {
++  const [key, setKey] = React.useState('a');
++  return (
++    <Overflow itemIDs={items}>
++      <TabList selectedKey={key} onTabSelect={setKey}>
++        {items.map((item) => (
++          <OverflowItem priority={key === item ? 2 : 1} key={item} overflowID={item}>
++            <Tab tabKey={item}>{itemLabels[item]}</Tab>
++          </OverflowItem>
++        ))}
++        <OverflowMenu appearance="subtle" onItemPress={setKey} />
++      </TabList>
++    </Overflow>
++  );
++}
++```
+diff --git a/packages/experimental/Overflow/babel.config.js b/packages/experimental/Overflow/babel.config.js
+new file mode 100644
+index 000000000..e55017b16
+--- /dev/null
++++ b/packages/experimental/Overflow/babel.config.js
+@@ -0,0 +1 @@
++module.exports = require('@fluentui-react-native/scripts/babel.config');
+diff --git a/packages/experimental/Overflow/jest.config.js b/packages/experimental/Overflow/jest.config.js
+new file mode 100644
+index 000000000..f6813bad7
+--- /dev/null
++++ b/packages/experimental/Overflow/jest.config.js
+@@ -0,0 +1,2 @@
++const { configureReactNativeJest } = require('@fluentui-react-native/scripts');
++module.exports = configureReactNativeJest('win32');
+diff --git a/packages/experimental/Overflow/just.config.js b/packages/experimental/Overflow/just.config.js
+new file mode 100644
+index 000000000..4f26f8acb
+--- /dev/null
++++ b/packages/experimental/Overflow/just.config.js
+@@ -0,0 +1,3 @@
++const { preset } = require('@fluentui-react-native/scripts');
++
++preset();
+diff --git a/packages/experimental/Overflow/package.json b/packages/experimental/Overflow/package.json
+new file mode 100644
+index 000000000..21c68be5b
+--- /dev/null
++++ b/packages/experimental/Overflow/package.json
+@@ -0,0 +1,64 @@
++{
++  "name": "@fluentui-react-native/overflow",
++  "version": "0.1.0",
++  "description": "A cross-platform Overflow component for React Native.",
++  "main": "src/index.ts",
++  "module": "src/index.ts",
++  "typings": "lib/index.d.ts",
++  "onPublish": {
++    "main": "lib-commonjs/index.js",
++    "module": "lib/index.js"
++  },
++  "scripts": {
++    "build": "fluentui-scripts build",
++    "clean": "fluentui-scripts clean",
++    "depcheck": "fluentui-scripts depcheck",
++    "just": "fluentui-scripts",
++    "lint": "fluentui-scripts eslint",
++    "test": "fluentui-scripts jest",
++    "update-snapshots": "fluentui-scripts jest -u",
++    "prettier": "fluentui-scripts prettier",
++    "prettier-fix": "fluentui-scripts prettier --fix true"
++  },
++  "repository": {
++    "type": "git",
++    "url": "https://github.com/microsoft/fluentui-react-native.git",
++    "directory": "packages/experimental/Overflow"
++  },
++  "dependencies": {
++    "@fluentui-react-native/framework": "workspace:*",
++    "tslib": "^2.3.1"
++  },
++  "devDependencies": {
++    "@fluentui-react-native/button": "workspace:*",
++    "@fluentui-react-native/eslint-config-rules": "workspace:*",
++    "@fluentui-react-native/menu": "workspace:*",
++    "@fluentui-react-native/scripts": "workspace:*",
++    "@fluentui-react-native/test-tools": "workspace:*",
++    "@office-iss/react-native-win32": "^0.72.0",
++    "@react-native/metro-config": "^0.72.0",
++    "react": "18.2.0",
++    "react-native": "^0.72.0"
++  },
++  "peerDependencies": {
++    "react": "18.2.0",
++    "react-native": "^0.72.0"
++  },
++  "author": "",
++  "license": "MIT",
++  "rnx-kit": {
++    "kitType": "library",
++    "alignDeps": {
++      "presets": [
++        "microsoft/react-native"
++      ],
++      "requirements": [
++        "react-native@0.72"
++      ],
++      "capabilities": [
++        "core",
++        "react"
++      ]
++    }
++  }
++}
+diff --git a/packages/experimental/Overflow/src/Overflow/Overflow.tsx b/packages/experimental/Overflow/src/Overflow/Overflow.tsx
+new file mode 100644
+index 000000000..e515d5798
+--- /dev/null
++++ b/packages/experimental/Overflow/src/Overflow/Overflow.tsx
+@@ -0,0 +1,47 @@
++/** @jsxRuntime classic */
++import * as React from 'react';
++import { View } from 'react-native';
++import type { DimensionValue } from 'react-native';
++
++import { mergeProps, stagedComponent, memoize } from '@fluentui-react-native/framework';
++
++import type { OverflowProps } from './Overflow.types';
++import { overflowName } from './Overflow.types';
++import { useOverflow } from './useOverflow';
++import { OverflowContext } from '../OverflowContext';
++
++export const getOverflowStyleProps = memoize(overflowStylePropsWorker);
++function overflowStylePropsWorker(
++  dontHideBeforeReady: boolean,
++  initialOverflowLayoutDone: boolean,
++  padding?: DimensionValue,
++): Partial<OverflowProps> {
++  return {
++    style: {
++      opacity: dontHideBeforeReady || initialOverflowLayoutDone ? 1 : 0,
++      display: 'flex',
++      flexDirection: 'row',
++      flexWrap: 'wrap',
++      paddingHorizontal: padding,
++    },
++  };
++}
++
++export const Overflow = stagedComponent<OverflowProps>((initial: OverflowProps) => {
++  const { props, state } = useOverflow(initial);
++  return (final: OverflowProps, ...children: React.ReactNode[]) => {
++    const { itemIDs: _, ...mergedProps } = mergeProps(
++      props,
++      final,
++      getOverflowStyleProps(props.dontHideBeforeReady, state.initialOverflowLayoutDone, props.padding),
++    );
++    return (
++      <OverflowContext.Provider value={state}>
++        <View {...mergedProps}>{children}</View>
++      </OverflowContext.Provider>
++    );
++  };
++});
++Overflow.displayName = overflowName;
++
++export default Overflow;
+diff --git a/packages/experimental/Overflow/src/Overflow/Overflow.types.ts b/packages/experimental/Overflow/src/Overflow/Overflow.types.ts
+new file mode 100644
+index 000000000..913b07d74
+--- /dev/null
++++ b/packages/experimental/Overflow/src/Overflow/Overflow.types.ts
+@@ -0,0 +1,77 @@
++import type { View, ViewProps, ViewStyle } from 'react-native';
++
++import type { LayoutRectangle } from '@office-iss/react-native-win32';
++
++import type { OverflowItemEntry, OverflowUpdatePayload } from '../overflowManager.types';
++
++export type LayoutSize = Pick<LayoutRectangle, 'width' | 'height'>;
++
++export const overflowName = 'Overflow';
++
++export interface OverflowProps extends ViewProps {
++  /**
++   * Horizontal padding to add to the container
++   */
++  padding?: ViewStyle['padding'];
++  /**
++   * List of all IDs that will be rendered in the overflow container
++   */
++  itemIDs: string[];
++  /**
++   * By default, the overflow container's opacity is set to 0 while the overflow manager figures out which items should be hidden due to noticable pop-in.
++   * This flag sets the opacity to always be visible.
++   */
++  dontHideBeforeReady?: boolean;
++  /**
++   * Callback triggering whenever the visibility of one or more items changes
++   */
++  onOverflowUpdate?: (data: OverflowUpdatePayload) => void;
++}
++
++type MenuSetLayoutStateParam = { type: 'menu'; layoutDone: boolean };
++type ItemSetLayoutStateParam = { type: 'item'; id: string; layoutDone: boolean };
++export type SetLayoutStateParam = MenuSetLayoutStateParam | ItemSetLayoutStateParam;
++
++export type OverflowItemVisibilityChangePayload = {
++  id: string;
++  type: 'visibility';
++  visible: boolean;
++};
++export type OverflowItemLayoutChangePayload = {
++  id: string;
++  type: 'layout';
++  newLayout: LayoutSize | null;
++};
++export type OverflowItemChangePayload = OverflowItemVisibilityChangePayload | OverflowItemLayoutChangePayload;
++export type OverflowItemChangeHandler = (data: OverflowItemChangePayload) => void;
++
++// Data passed to the Overflow Context
++export interface OverflowState {
++  /** Size of the Overflow Container */
++  containerSize?: LayoutSize;
++  /**  Flag set to true when one or more items are hidden by the manager */
++  hasOverflow: boolean;
++  /**  Flag set to true once the overflow manager runs its first calculation to see which items should initially be visible / hidden */
++  initialOverflowLayoutDone: boolean;
++  /**  Map with item IDs as keys and their boolean visibilities as entries */
++  itemVisibility: Record<string, boolean>;
++  /**  The component ref to pass to the OverflowMenu's trigger */
++  overflowMenuRef?: React.RefObject<View>;
++  /**  Called by OverflowItem when mounting, used to add item to overflow manager */
++  register: (id: string, onItemChange: OverflowItemChangeHandler) => void;
++  /**  Called by OverflowITem when unmounting */
++  disconnect: (id: string) => void;
++  /**  Method called by overflow menu trigger / overflow item to signal that initial layout has finished */
++  setLayoutState: (data: SetLayoutStateParam) => void;
++  /**  Called to update OverflowItem's layout info / priority */
++  updateItem: (item: OverflowItemEntry) => void;
++  /**  Used to set OverflowMenu trigger's size */
++  updateMenuSize: (size: LayoutSize) => void;
++  /**  Used to force the overflow manager to run its `update()` method */
++  updateOverflow: () => void;
++}
++
++export interface OverflowInfo {
++  props: OverflowProps;
++  state: OverflowState;
++}
+diff --git a/packages/experimental/Overflow/src/Overflow/useOverflow.ts b/packages/experimental/Overflow/src/Overflow/useOverflow.ts
+new file mode 100644
+index 000000000..92af4dcc1
+--- /dev/null
++++ b/packages/experimental/Overflow/src/Overflow/useOverflow.ts
+@@ -0,0 +1,179 @@
++import * as React from 'react';
++import type { View, LayoutChangeEvent } from 'react-native';
++
++import type {
++  LayoutSize,
++  OverflowInfo,
++  OverflowState,
++  OverflowProps,
++  SetLayoutStateParam,
++  OverflowItemChangeHandler,
++} from './Overflow.types';
++import { createOverflowManager } from '../overflowManager';
++import type {
++  ItemVisibilityUpdatePayload,
++  ItemDimensionUpdatePayload,
++  OverflowItemEntry,
++  OverflowManager,
++  OverflowUpdatePayload,
++} from '../overflowManager.types';
++
++type PartialOverflowState = Pick<OverflowState, 'hasOverflow' | 'itemVisibility'>;
++
++interface LayoutState {
++  container: boolean;
++  menu: boolean;
++  items: Record<string, boolean>;
++}
++
++/**
++ * Hook for Overflow component. Used as middle man between Overflow / Overflow item components and overflow manager. Can be integrated with
++ * other components.
++ *
++ * Returns state to feed into context provider and props (with an important onLayout callback) to pass to Overflow's containing view. */
++export function useOverflow(props: OverflowProps): OverflowInfo {
++  const { itemIDs, onLayout, onOverflowUpdate: overflowUpdateCallback } = props;
++
++  // The overflow manager records layout info of the container, menu, and items and calculates what is visible and what isn't.
++  const overflowManager = React.useRef<OverflowManager>(createOverflowManager()).current;
++  const overflowItemUpdateCallbacks = React.useRef<Record<string, OverflowItemChangeHandler>>({}).current;
++  const overflowMenuRef = React.useRef<View>(null);
++
++  const [containerSize, setContainerSize] = React.useState<LayoutSize | undefined>(undefined);
++  const [overflowState, setOverflowState] = React.useState<PartialOverflowState>({
++    hasOverflow: false,
++    itemVisibility: {},
++  });
++  // This is used to check if the container, menu, and each overflow item has received a layout event and recorded it in the
++  // overflow manager.
++  const [layoutState, setLayoutState] = React.useState<LayoutState>(() => {
++    const itemLayoutState = {};
++    for (const id of props.itemIDs) {
++      itemLayoutState[id] = false;
++    }
++    return {
++      container: false,
++      menu: false,
++      items: itemLayoutState,
++    };
++  });
++
++  const register = React.useCallback(
++    (id: string, onItemChange: OverflowItemChangeHandler) => {
++      overflowItemUpdateCallbacks[id] = onItemChange;
++    },
++    [overflowItemUpdateCallbacks],
++  );
++  const disconnect = React.useCallback((id: string) => delete overflowItemUpdateCallbacks[id], [overflowItemUpdateCallbacks]);
++
++  const userSetLayoutState = React.useCallback((data: SetLayoutStateParam) => {
++    if (data.type === 'menu') {
++      setLayoutState((prev) => ({ ...prev, menu: data.layoutDone }));
++    } else {
++      setLayoutState((prev) => ({ ...prev, items: { ...prev.items, [data.id]: data.layoutDone } }));
++    }
++  }, []);
++
++  const onContainerLayout = React.useCallback(
++    (e: LayoutChangeEvent) => {
++      const { width, height } = e.nativeEvent.layout;
++      if (width !== undefined && height !== undefined) {
++        setContainerSize({ width, height });
++      }
++      onLayout && onLayout(e);
++    },
++    [onLayout],
++  );
++
++  const handleItemUpdate = React.useCallback(
++    (item: OverflowItemEntry) => {
++      if (overflowManager.hasItem(item.id)) {
++        overflowManager.updateItem(item.id, item);
++      } else {
++        overflowManager.addItem(item);
++      }
++    },
++    [overflowManager],
++  );
++
++  const onMenuLayout = React.useCallback((size: LayoutSize) => overflowManager.setMenuSize(size), [overflowManager]);
++
++  // Callback for when the overflow manager has calculated all overall changes towards item visibilities in its update cycle.
++  const onOverflowUpdate = React.useCallback(
++    (data: OverflowUpdatePayload) => {
++      setOverflowState((prev) => {
++        const visibilities: Record<string, boolean> = {};
++        for (const id of data.visibleIds) {
++          visibilities[id] = true;
++        }
++        for (const id of data.invisibleIds) {
++          visibilities[id] = false;
++        }
++        return { ...prev, itemVisibility: visibilities, hasOverflow: data.invisibleIds.length > 0 };
++      });
++      overflowUpdateCallback && overflowUpdateCallback(data);
++    },
++    [overflowUpdateCallback],
++  );
++
++  // If there is one item showing, callback to send the dimensions the item should have to truncate itself and have everything fit neatly
++  // in the overflow container.
++  const onUpdateItemDimension = React.useCallback(
++    (data: ItemDimensionUpdatePayload) => {
++      overflowItemUpdateCallbacks[data.id] && overflowItemUpdateCallbacks[data.id]({ type: 'layout', id: data.id, newLayout: data.update });
++    },
++    [overflowItemUpdateCallbacks],
++  );
++
++  // Callback for when a single item has its visibility changed.
++  const onUpdateItemVisibility = React.useCallback(
++    (data: ItemVisibilityUpdatePayload) => {
++      overflowItemUpdateCallbacks[data.id] && overflowItemUpdateCallbacks[data.id]({ type: 'visibility', ...data });
++    },
++    [overflowItemUpdateCallbacks],
++  );
++
++  // This layout effect is run before re-rendering, allowing us to calculate what's visible / invisible with our overflow manager.
++  React.useLayoutEffect(() => {
++    if (!containerSize) {
++      return;
++    }
++
++    if (!layoutState.container) {
++      overflowManager.initialize({
++        initialContainerSize: containerSize,
++        onOverflowUpdate,
++        onUpdateItemDimension,
++        onUpdateItemVisibility,
++      });
++      overflowManager.update();
++      setLayoutState((prev) => ({ ...prev, container: true }));
++    } else {
++      overflowManager.update(containerSize);
++    }
++    // We only want to run this layout effect whenever the container's size updates.
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [containerSize]);
++
++  const initialLayoutDone =
++    layoutState.container && layoutState.menu && itemIDs.map((id) => layoutState.items[id]).reduce((prev, curr) => prev && curr);
++
++  return {
++    state: {
++      ...overflowState,
++      containerSize,
++      initialOverflowLayoutDone: initialLayoutDone,
++      overflowMenuRef: overflowMenuRef,
++      register: register,
++      disconnect: disconnect,
++      setLayoutState: userSetLayoutState,
++      updateOverflow: overflowManager.update,
++      updateItem: handleItemUpdate,
++      updateMenuSize: onMenuLayout,
++    },
++    props: {
++      ...props,
++      onLayout: onContainerLayout,
++    },
++  };
++}
+diff --git a/packages/experimental/Overflow/src/OverflowContext.ts b/packages/experimental/Overflow/src/OverflowContext.ts
+new file mode 100644
+index 000000000..b65d69cd2
+--- /dev/null
++++ b/packages/experimental/Overflow/src/OverflowContext.ts
+@@ -0,0 +1,20 @@
++import { createContext, useContext } from 'react';
++
++import type { OverflowState } from './Overflow/Overflow.types';
++
++const noop = () => null;
++
++export const OverflowContext = createContext<OverflowState>({
++  containerSize: undefined,
++  hasOverflow: false,
++  initialOverflowLayoutDone: false,
++  itemVisibility: {},
++  register: noop,
++  disconnect: noop,
++  setLayoutState: noop,
++  updateOverflow: noop,
++  updateItem: noop,
++  updateMenuSize: noop,
++});
++
++export const useOverflowContext = () => useContext(OverflowContext);
+diff --git a/packages/experimental/Overflow/src/OverflowItem/OverflowItem.tsx b/packages/experimental/Overflow/src/OverflowItem/OverflowItem.tsx
+new file mode 100644
+index 000000000..acaee7ec3
+--- /dev/null
++++ b/packages/experimental/Overflow/src/OverflowItem/OverflowItem.tsx
+@@ -0,0 +1,47 @@
++/** @jsxRuntime classic */
++import * as React from 'react';
++import type { LayoutChangeEvent, StyleProp, ViewProps, ViewStyle } from 'react-native';
++
++import { mergeProps, stagedComponent, memoize } from '@fluentui-react-native/framework';
++
++import type { OverflowItemProps } from './OverflowItem.types';
++import { overflowItemName } from './OverflowItem.types';
++import { useOverflowItem } from './useOverflowItem';
++
++const getOverflowItemProps = memoize(overflowItemPropWorker);
++function overflowItemPropWorker(style: StyleProp<ViewStyle>, onLayout: (e: LayoutChangeEvent) => void): ViewProps {
++  return { style, onLayout };
++}
++
++export const OverflowItem = stagedComponent<OverflowItemProps>((userProps: OverflowItemProps) => {
++  const { props, state } = useOverflowItem(userProps);
++  return (finalProps: OverflowItemProps, children: React.ReactNode) => {
++    if (!state.visible) {
++      return null;
++    }
++
++    finalProps = mergeProps(props, finalProps);
++    const childrenArray = React.Children.toArray(children);
++    const child = childrenArray[0];
++
++    if (childrenArray.length !== 1 && __DEV__) {
++      console.warn('OverflowItem can only have one child passed to it.');
++    }
++
++    if (!React.isValidElement(child)) {
++      if (__DEV__) {
++        console.warn('OverflowItem must receive a valid React Element as a child');
++      }
++      return null;
++    }
++
++    // Assume that the child can accept ViewProps.
++    const viewProps = getOverflowItemProps(finalProps.style, finalProps.onLayout);
++
++    const clone = React.cloneElement(child, viewProps);
++    return clone;
++  };
++});
++OverflowItem.displayName = overflowItemName;
++
++export default OverflowItem;
+diff --git a/packages/experimental/Overflow/src/OverflowItem/OverflowItem.types.ts b/packages/experimental/Overflow/src/OverflowItem/OverflowItem.types.ts
+new file mode 100644
+index 000000000..a0fb03b0c
+--- /dev/null
++++ b/packages/experimental/Overflow/src/OverflowItem/OverflowItem.types.ts
+@@ -0,0 +1,23 @@
++import type { ViewProps } from 'react-native';
++
++import type { OverflowItemChangeHandler } from '../Overflow/Overflow.types';
++
++export const overflowItemName = 'OverflowItem';
++
++export interface OverflowItemProps extends ViewProps {
++  /** Unique ID assigned to the item */
++  overflowID: string;
++  /** Priority of item. Greater priority value means item will stay visible longer vs other items */
++  priority?: number;
++  /** Callback that runs whenever this item's visibility changes or whenever its dimensions should be manually set */
++  onOverflowItemChange?: OverflowItemChangeHandler;
++}
++
++export interface OverflowItemState {
++  visible: boolean;
++}
++
++export interface OverflowItemInfo {
++  props: OverflowItemProps;
++  state: OverflowItemState;
++}
+diff --git a/packages/experimental/Overflow/src/OverflowItem/useOverflowItem.ts b/packages/experimental/Overflow/src/OverflowItem/useOverflowItem.ts
+new file mode 100644
+index 000000000..40b9b4f4b
+--- /dev/null
++++ b/packages/experimental/Overflow/src/OverflowItem/useOverflowItem.ts
+@@ -0,0 +1,82 @@
++import * as React from 'react';
++import type { ViewStyle, LayoutChangeEvent } from 'react-native';
++
++import { mergeStyles } from '@fluentui-react-native/framework';
++
++import type { OverflowItemInfo, OverflowItemProps } from './OverflowItem.types';
++import type { LayoutSize, OverflowItemChangePayload } from '../Overflow/Overflow.types';
++import { useOverflowContext } from '../OverflowContext';
++
++/**
++ * Hook for getting the item's onLayout callback and whether the item should be showing.
++ */
++export function useOverflowItem(props: OverflowItemProps): OverflowItemInfo {
++  const { overflowID, priority, onOverflowItemChange: onOveflowItemChange } = props;
++  const { containerSize, itemVisibility, initialOverflowLayoutDone, disconnect, register, setLayoutState, updateItem } =
++    useOverflowContext();
++
++  const [size, setSize] = React.useState<LayoutSize>();
++  const [controlledSize, setControlledSize] = React.useState<LayoutSize | null>(null);
++
++  const handleOverflowItemChange = React.useCallback(
++    (data: OverflowItemChangePayload) => {
++      if (data.id === overflowID && data.type === 'layout') {
++        setControlledSize(data.newLayout);
++      }
++      onOveflowItemChange && onOveflowItemChange(data);
++    },
++    [onOveflowItemChange, overflowID],
++  );
++
++  React.useEffect(() => {
++    if (size) {
++      updateItem({ id: overflowID, size: size, priority: priority });
++    }
++    // The item's size updates whenever the onLayout callback runs. This is purely for updating the item info when its priority changes.
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [priority]);
++
++  React.useEffect(() => {
++    register(overflowID, handleOverflowItemChange);
++    return () => disconnect(overflowID);
++    // Runs when mounting / unmounting / whenever an onOverflowItemChange callback is added. Register / disconnect shouldn't be called at any
++    // other point.
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [onOveflowItemChange]);
++
++  React.useLayoutEffect(() => {
++    // When rendered in a ScrollView on win32, the layout event initially returns a width = 0 before getting the correct layout values.
++    // By waiting until the container size is more accurate, we reduce unnecessary updates in the OverflowManager and reduce visual quirks / OverflowItem pop-in.
++    if (containerSize && containerSize.width > 0 && size) {
++      updateItem({ id: overflowID, size: size, priority: priority });
++
++      if (!initialOverflowLayoutDone) {
++        setLayoutState({ type: 'item', id: overflowID, layoutDone: true });
++      }
++    }
++    // This effect should only run when the size of the item or container changes.
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [size, containerSize]);
++
++  const onLayout = React.useCallback(
++    (e: LayoutChangeEvent) => {
++      const itemSize = { width: e.nativeEvent.layout.width, height: e.nativeEvent.layout.height };
++      setSize(itemSize);
++      props.onLayout && props.onLayout(e);
++    },
++    [props],
++  ); // Get item dimensions
++
++  const styles = React.useMemo<ViewStyle>(() => {
++    const stylesToMerge = [props.style];
++    if (controlledSize !== null) {
++      stylesToMerge.push({ width: controlledSize.width });
++    }
++    return mergeStyles(...stylesToMerge);
++  }, [controlledSize, props.style]);
++
++  return {
++    props: { ...props, style: styles, onLayout },
++    state: { visible: !initialOverflowLayoutDone || itemVisibility[overflowID] },
++  };
++}
+diff --git a/packages/experimental/Overflow/src/OverflowMenu/OverflowMenu.types.ts b/packages/experimental/Overflow/src/OverflowMenu/OverflowMenu.types.ts
+new file mode 100644
+index 000000000..bb2f066b1
+--- /dev/null
++++ b/packages/experimental/Overflow/src/OverflowMenu/OverflowMenu.types.ts
+@@ -0,0 +1,12 @@
++import type { LayoutChangeEvent, View } from 'react-native';
++
++export interface OverflowMenuState {
++  /** Flag for whether the menu should be showing */
++  showMenu: boolean;
++  /** Map of overflow items and their visibility in their menu - true means they should show as menu items */
++  visibleMenuItems: string[];
++  /** Component ref to attach to this OverflowMenu's trigger */
++  menuTriggerRef: React.RefObject<View>;
++  /** Callback for RN onLayout event */
++  onMenuTriggerLayout: (e: LayoutChangeEvent) => void;
++}
+diff --git a/packages/experimental/Overflow/src/OverflowMenu/useOverflowMenu.ts b/packages/experimental/Overflow/src/OverflowMenu/useOverflowMenu.ts
+new file mode 100644
+index 000000000..6a6cfd278
+--- /dev/null
++++ b/packages/experimental/Overflow/src/OverflowMenu/useOverflowMenu.ts
+@@ -0,0 +1,36 @@
++import * as React from 'react';
++import type { LayoutChangeEvent } from 'react-native';
++
++import type { OverflowMenuState } from './OverflowMenu.types';
++import { useOverflowContext } from '../OverflowContext';
++
++/**
++ * Hook to get state for an overflow menu dropdown.
++ *
++ * A menu must be created as a child in the Overflow component, and this hook must be called. Otherwise, the Overflow will not render correctly.
++ */
++export function useOverflowMenu(): OverflowMenuState {
++  const { itemVisibility, initialOverflowLayoutDone, hasOverflow, overflowMenuRef, setLayoutState, updateMenuSize } = useOverflowContext();
++
++  const onTriggerLayout = React.useCallback(
++    (e: LayoutChangeEvent) => {
++      const { width, height } = e.nativeEvent.layout;
++      updateMenuSize({ width, height });
++
++      if (!initialOverflowLayoutDone) {
++        setLayoutState({ type: 'menu', layoutDone: true });
++      }
++    },
++    [updateMenuSize, initialOverflowLayoutDone, setLayoutState],
++  );
++
++  // Visibility of a menu item is the inverse of whether an item is visible within the overflow
++  const visibleMenuItems = React.useMemo(() => Object.keys(itemVisibility).filter((item) => !itemVisibility[item]), [itemVisibility]);
++
++  return {
++    showMenu: !initialOverflowLayoutDone || hasOverflow,
++    visibleMenuItems: visibleMenuItems,
++    menuTriggerRef: overflowMenuRef,
++    onMenuTriggerLayout: onTriggerLayout,
++  };
++}
+diff --git a/packages/experimental/Overflow/src/index.ts b/packages/experimental/Overflow/src/index.ts
+new file mode 100644
+index 000000000..330bfd31d
+--- /dev/null
++++ b/packages/experimental/Overflow/src/index.ts
+@@ -0,0 +1,11 @@
++export { Overflow } from './Overflow/Overflow';
++export { overflowName } from './Overflow/Overflow.types';
++export type { OverflowProps, OverflowState } from './Overflow/Overflow.types';
++export { useOverflow } from './Overflow/useOverflow';
++export { OverflowItem } from './OverflowItem/OverflowItem';
++export { useOverflowItem } from './OverflowItem/useOverflowItem';
++export { overflowItemName } from './OverflowItem/OverflowItem.types';
++export type { OverflowItemProps, OverflowItemState } from './OverflowItem/OverflowItem.types';
++export { useOverflowMenu } from './OverflowMenu/useOverflowMenu';
++export type { OverflowMenuState } from './OverflowMenu/OverflowMenu.types';
++export { OverflowContext } from './OverflowContext';
+diff --git a/packages/experimental/Overflow/src/overflowManager.ts b/packages/experimental/Overflow/src/overflowManager.ts
+new file mode 100644
+index 000000000..f0a69a623
+--- /dev/null
++++ b/packages/experimental/Overflow/src/overflowManager.ts
+@@ -0,0 +1,251 @@
++import type { LayoutSize } from './Overflow/Overflow.types';
++import type {
++  OverflowManagerOptions,
++  OverflowManager,
++  OverflowItemEntry,
++  OverflowUpdatePayload,
++  ItemDimensionUpdatePayload,
++} from './overflowManager.types';
++import { createPriorityQueue } from './priorityQueue';
++import type { PriorityQueue } from './priorityQueue';
++
++type ProcessOverflowItemsReturn = { type: 'visibility' } | { type: 'dimension'; shrinking: boolean };
++
++/**
++ * This function is used to construct an overflow manager.
++ *
++ * The OverflowManager is a helper object that keeps track of each overflow item, calculates which items are visible and invisible
++ * when the container's size changes, and emits events that help track changes to visibilities and sizes of given OverflowItems. This
++ * logic is put here instead of within a React hook for better modularity and becausehaving the calculations here will not cause
++ * unnecessary re-renders.
++ *
++ * The cycle for calculating visibility goes as follows:
++ *   1. Overflow onLayout - size of the container has changed / OverflowItem mounting - item has been added or removed
++ *   2. processOverflowItems() - Get the total container width and the current visible item width. Show / hide items if there is space to
++ *      be added or removed. Track which items have visibility changes, if any.
++ *   3. If a change has occured, dispatch events to the Overflow container and the individual OverflowItem whose visibility has changed.
++ *
++ * The useOverflow hook of the Overflow component creates and uses an overflow manager.
++ */
++export function createOverflowManager(): OverflowManager {
++  const items: Record<string, OverflowItemEntry> = {};
++
++  let forceDispatch = false;
++  let numItems = 0;
++
++  // processItemsChangeMap is used to track which OverflowItems have had visibility changes during `processOverflowItems` calls.
++  // Keys are ids and values are whether their visibilities have changed.
++  let processItemsChangeMap: Record<string, boolean> = {};
++  let menuSize: LayoutSize = { width: 0, height: 0 };
++  let containerSize: LayoutSize;
++  let padding: number;
++  let lastItemDimensionHasChanged: boolean = false;
++  let itemToShrink: string;
++  let onUpdateItemDimension: OverflowManagerOptions['onUpdateItemDimension'];
++  let onUpdateItemVisibility: OverflowManagerOptions['onUpdateItemVisibility'];
++  let onOverflowUpdate: OverflowManagerOptions['onOverflowUpdate'];
++
++  // Comparison functions to order items in priority queue. Items with a larger priority value are sorted first. If there's a tie, then
++  // the initial ordering set when adding an item to the manager is used.
++  const compareVisibleItems = (lt: string | null, rt: string | null): number => {
++    if (!lt || !rt || !items[lt] || !items[rt]) {
++      return 0;
++    }
++    if (items[lt].priority !== items[rt].priority) {
++      return items[lt].priority > items[rt].priority ? 1 : -1;
++    }
++    return items[lt].initialOrder < items[rt].initialOrder ? 1 : -1;
++  };
++
++  // Same as above, except items with equal priority will be sorted by lower order rather than higher
++  const compareInvisibleItems = (lt: string | null, rt: string | null): number => {
++    return -1 * compareVisibleItems(lt, rt);
++  };
++
++  const sortByInitialOrder = (lt: string, rt: string) => items[lt].initialOrder - items[rt].initialOrder;
++
++  // Priority queue of item ids that are to be shown or hidden.
++  const visibleItems: PriorityQueue<string> = createPriorityQueue(compareVisibleItems);
++  const invisibleItems: PriorityQueue<string> = createPriorityQueue(compareInvisibleItems);
++
++  // Method for getting the occupied size = sum(visible items) + current menu size
++  // TODO: add support for vertical overflow using height.
++  const occupiedSize = () => {
++    let totalSize = 0;
++    for (const id of visibleItems.all()) {
++      totalSize += items[id].size.width;
++    }
++    if (invisibleItems.size() > 0) {
++      totalSize += menuSize.width;
++    }
++    return totalSize;
++  };
++
++  // Flag for whether the last visible item should be shrunk and whether we should emit OverflowItemVisibilityChange events.
++  const shouldShrinkMinVisible = () => {
++    const availableSize = containerSize.width - padding;
++    const shouldShrink = visibleItems.size() === 1 && occupiedSize() > availableSize;
++    const canShrink = availableSize - (invisibleItems.size() > 0 ? menuSize.width : 0) > 0;
++    return shouldShrink && canShrink;
++  };
++
++  // Method for emitting overflow update events.
++  const dispatchUpdates = (updates: ProcessOverflowItemsReturn[]) => {
++    for (const update of updates) {
++      if (update.type === 'dimension' && onUpdateItemDimension) {
++        let newSize = containerSize.width - padding;
++        if (invisibleItems.size() > 0) {
++          newSize -= menuSize.width;
++        }
++        let payload: ItemDimensionUpdatePayload;
++        if (update.shrinking) {
++          if (!itemToShrink) itemToShrink = visibleItems.peek();
++          payload = { id: itemToShrink, update: { width: newSize, height: items[itemToShrink].size.height } };
++        } else {
++          payload = { id: itemToShrink, update: null };
++          itemToShrink = undefined;
++        }
++        onUpdateItemDimension(payload);
++      } else {
++        const payload: OverflowUpdatePayload = {
++          visibleIds: [...visibleItems.all()].sort(sortByInitialOrder), // need to unsort ordering returned by min-heap.
++          invisibleIds: [...invisibleItems.all()].sort(sortByInitialOrder),
++        };
++        onOverflowUpdate && onOverflowUpdate(payload);
++        // dispatch visibility updates to individual items
++        for (const item in processItemsChangeMap) {
++          if (processItemsChangeMap[item]) {
++            onUpdateItemVisibility && onUpdateItemVisibility({ id: item, visible: visibleItems.contains(item) });
++          }
++        }
++      }
++    }
++  };
++
++  const showItem = () => {
++    const itemToShow = invisibleItems.dequeue();
++    visibleItems.enqueue(itemToShow);
++    processItemsChangeMap[itemToShow] = !processItemsChangeMap[itemToShow];
++  };
++
++  const hideItem = () => {
++    const itemToHide = visibleItems.dequeue();
++    invisibleItems.enqueue(itemToHide);
++    processItemsChangeMap[itemToHide] = !processItemsChangeMap[itemToHide];
++  };
++
++  /** Method called whenever `update()` is called. On container size changing / items being added or deleted, we re-do our math
++   * to see if any items can be shown or hidden. If one item remains, and the size of the item exceeds that of the container, we
++   * also calculate what the new size of the item should be to truncate it.
++   *
++   * If any item visibilities should be updated or if the last items dimensions should change, we return objects that state said updates.*/
++  const processOverflowItems = (): ProcessOverflowItemsReturn[] => {
++    if (!containerSize) {
++      return [];
++    }
++    processItemsChangeMap = {}; // clear the map
++
++    const ret: ProcessOverflowItemsReturn[] = [];
++    const availableSize = containerSize.width - padding;
++
++    const visibleTop = visibleItems.peek();
++    const invisibleTop = invisibleItems.peek();
++
++    for (let i = 0; i < 2; i++) {
++      while ((occupiedSize() < availableSize && invisibleItems.size() > 0) || invisibleItems.size() === 1) {
++        showItem();
++      }
++      while (occupiedSize() > availableSize && visibleItems.size() > 1) {
++        hideItem();
++      }
++    }
++
++    const itemVisibilityHasChanged = visibleTop !== visibleItems.peek() || invisibleTop !== invisibleItems.peek();
++    const lastVisibleSizeShouldShrink = shouldShrinkMinVisible();
++
++    if (itemVisibilityHasChanged) {
++      ret.push({ type: 'visibility' });
++    }
++    if (lastVisibleSizeShouldShrink || lastItemDimensionHasChanged) {
++      ret.push({
++        type: 'dimension',
++        shrinking: lastVisibleSizeShouldShrink,
++      });
++    }
++    lastItemDimensionHasChanged = lastVisibleSizeShouldShrink;
++    return ret;
++  };
++
++  // Public method to create and parameterize the manager
++  const initialize = (options: OverflowManagerOptions) => {
++    containerSize = options.initialContainerSize;
++    padding = options.padding ?? 0;
++    onUpdateItemVisibility = options.onUpdateItemVisibility;
++    onOverflowUpdate = options.onOverflowUpdate;
++    onUpdateItemDimension = options.onUpdateItemDimension;
++  };
++
++  // Public method to update properties of a given item
++  const updateItem = (id: string, updates: Partial<OverflowItemEntry>) => {
++    if (!shouldShrinkMinVisible()) {
++      items[id] = { ...items[id], ...updates };
++    }
++    update();
++  };
++
++  // Public method to set / reset the overflow's menu size
++  const setMenuSize = (size: LayoutSize) => {
++    // implement
++    menuSize = size;
++    update();
++  };
++
++  // Public method to register an overflow item
++  const addItem = (entry: OverflowItemEntry) => {
++    items[entry.id] = { ...entry, initialOrder: numItems++ };
++    visibleItems.enqueue(entry.id);
++    forceDispatch = true;
++    update();
++  };
++
++  // Public method that returns whether an item with the given id exists in the manager
++  const hasItem = (id: string) => !!items[id];
++
++  // Public method to delete and cleanup an item from the manager
++  const removeItem = (id: string) => {
++    // implement
++    delete items[id];
++    if (visibleItems.contains(id)) {
++      visibleItems.remove(id);
++    } else if (invisibleItems.contains(id)) {
++      invisibleItems.remove(id);
++    }
++    forceDispatch = true;
++    update();
++  };
++
++  // Public method to run whenever the Overflow container receives a layout event
++  const update = (newContainerSize?: LayoutSize) => {
++    if (newContainerSize) {
++      containerSize = newContainerSize;
++    }
++    const processOverflowItemsRet = processOverflowItems();
++    if (processOverflowItemsRet.length > 0) {
++      forceDispatch = false;
++      dispatchUpdates(processOverflowItemsRet);
++    } else if (forceDispatch) {
++      forceDispatch = false;
++      dispatchUpdates([{ type: 'visibility' }]);
++    }
++  };
++
++  return {
++    addItem,
++    hasItem,
++    initialize,
++    removeItem,
++    updateItem,
++    setMenuSize,
++    update,
++  };
++}
+diff --git a/packages/experimental/Overflow/src/overflowManager.types.ts b/packages/experimental/Overflow/src/overflowManager.types.ts
+new file mode 100644
+index 000000000..ab842f1f4
+--- /dev/null
++++ b/packages/experimental/Overflow/src/overflowManager.types.ts
+@@ -0,0 +1,68 @@
++import type { LayoutSize } from './Overflow/Overflow.types';
++
++/** Data entered for a single overflow item */
++export interface OverflowItemEntry {
++  /** Required overflowID of an item */
++  id: string;
++  /** Width and height of an item */
++  size: LayoutSize;
++  /** Optional priority given to the item specified by the user */
++  priority?: number;
++  /** Order in which the item was registered under the manager, not assigned by the user */
++  initialOrder?: number;
++}
++
++/** Event payload sent when a single item's visibility changes */
++export interface ItemVisibilityUpdatePayload {
++  id: string;
++  visible: boolean;
++}
++
++/** Event payload sent when a visibility update should complete, with the new visible / invisible ids shown */
++export interface OverflowUpdatePayload {
++  visibleIds: string[];
++  invisibleIds: string[];
++}
++
++/**
++ * Event payload sent when an item's dimensions should change.
++ *
++ * This happens when there is a single remaining item that should be truncated when its dimensions exceed the space of the overflow container. */
++export interface ItemDimensionUpdatePayload {
++  id: string;
++  update: LayoutSize | null;
++}
++
++/** Options to initialize a FURN overflow manager. */
++export interface OverflowManagerOptions {
++  /** Flag to enable debug logs in the overflow manager */
++  debug?: boolean;
++  /** Width and height of overflow container */
++  initialContainerSize: LayoutSize;
++  /** Padding of container (width right now, will add support for height later) */
++  padding?: number;
++  /** Callback passed for handling when the last item of an overflow menu should shrink / grow */
++  onUpdateItemDimension?: (data: ItemDimensionUpdatePayload) => void;
++  /** Callback passed for handling when an individual item's visibility changes */
++  onUpdateItemVisibility?: (data: ItemVisibilityUpdatePayload) => void;
++  /** Callback passed for handling the overall update for an overflow's item visibilities */
++  onOverflowUpdate?: (data: OverflowUpdatePayload) => void;
++}
++
++/** Methods exposed by the overflow manager */
++export interface OverflowManager {
++  /** Initialize the overflow manager with user-passed parameters */
++  initialize: (options: OverflowManagerOptions) => void;
++  /** Add a new overflow item to the manager */
++  addItem: (entry: OverflowItemEntry) => void;
++  /** Check if an overflow item exists within the manager */
++  hasItem: (id: string) => boolean;
++  /** Delete an overflow item from the manager */
++  removeItem: (id: string) => void;
++  /** Used to update either the size or priority of a given item. */
++  updateItem: (id: string, update: Partial<OverflowItemEntry>) => void;
++  /** Update overflow manager with the overflow menu trigger's width and height */
++  setMenuSize: (size: LayoutSize) => void;
++  /** Should run whenever the overflow container receives a layout event.  */
++  update: (newContainerSize?: LayoutSize) => void;
++}
+diff --git a/packages/experimental/Overflow/src/priorityQueue.ts b/packages/experimental/Overflow/src/priorityQueue.ts
+new file mode 100644
+index 000000000..ff8982734
+--- /dev/null
++++ b/packages/experimental/Overflow/src/priorityQueue.ts
+@@ -0,0 +1,129 @@
++/**
++ * Lifted from the priority-overflow package within the microsoft/fluentui github repo:
++ * https://github.com/microsoft/fluentui/blob/master/packages/react-components/priority-overflow/src/priorityQueue.ts
++ */
++
++export type PriorityQueueCompareFn<T> = (a: T, b: T) => number;
++
++export interface PriorityQueue<T> {
++  all: () => T[];
++  clear: () => void;
++  contains: (item: T) => boolean;
++  dequeue: () => T;
++  enqueue: (item: T) => void;
++  peek: () => T | null;
++  remove: (item: T) => void;
++  size: () => number;
++}
++
++/**
++ * @param compare - comparison function for items
++ * @returns Priority queue implemented with a min heap
++ */
++export function createPriorityQueue<T>(compare: PriorityQueueCompareFn<T>): PriorityQueue<T> {
++  const arr: T[] = [];
++  let size = 0;
++
++  const left = (i: number) => {
++    return 2 * i + 1;
++  };
++
++  const right = (i: number) => {
++    return 2 * i + 2;
++  };
++
++  const parent = (i: number) => {
++    return Math.floor((i - 1) / 2);
++  };
++
++  const swap = (a: number, b: number) => {
++    const tmp = arr[a];
++    arr[a] = arr[b];
++    arr[b] = tmp;
++  };
++
++  const heapify = (i: number) => {
++    let smallest = i;
++    const l = left(i);
++    const r = right(i);
++
++    if (l < size && compare(arr[l], arr[smallest]) < 0) {
++      smallest = l;
++    }
++
++    if (r < size && compare(arr[r], arr[smallest]) < 0) {
++      smallest = r;
++    }
++
++    if (smallest !== i) {
++      swap(smallest, i);
++      heapify(smallest);
++    }
++  };
++
++  const dequeue = () => {
++    if (size === 0) {
++      throw new Error('Priority queue empty');
++    }
++
++    const res = arr[0];
++    arr[0] = arr[--size];
++    heapify(0);
++
++    return res;
++  };
++
++  const peek = () => {
++    if (size === 0) {
++      return null;
++    }
++
++    return arr[0];
++  };
++
++  const enqueue = (item: T) => {
++    arr[size++] = item;
++    let i = size - 1;
++    let p = parent(i);
++    while (i > 0 && compare(arr[p], arr[i]) > 0) {
++      swap(p, i);
++      i = p;
++      p = parent(i);
++    }
++  };
++
++  const contains = (item: T) => {
++    const index = arr.indexOf(item);
++    return index >= 0 && index < size;
++  };
++
++  const remove = (item: T) => {
++    const i = arr.indexOf(item);
++
++    if (i === -1 || i >= size) {
++      return;
++    }
++
++    arr[i] = arr[--size];
++    heapify(i);
++  };
++
++  const clear = () => {
++    size = 0;
++  };
++
++  const all = () => {
++    return arr.slice(0, size);
++  };
++
++  return {
++    all,
++    clear,
++    contains,
++    dequeue,
++    enqueue,
++    peek,
++    remove,
++    size: () => size,
++  };
++}
+diff --git a/packages/experimental/Overflow/tsconfig.json b/packages/experimental/Overflow/tsconfig.json
+new file mode 100644
+index 000000000..65d97d1a9
+--- /dev/null
++++ b/packages/experimental/Overflow/tsconfig.json
+@@ -0,0 +1,9 @@
++{
++  "extends": "@fluentui-react-native/scripts/tsconfig.json",
++  "compilerOptions": {
++    "importHelpers": true,
++    "outDir": "lib",
++    "types": ["node", "jest"]
++  },
++  "include": ["src"]
++}
+diff --git a/yarn.lock b/yarn.lock
+index 79b88b62b..99f911695 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -3354,6 +3354,27 @@ __metadata:
+   languageName: unknown
+   linkType: soft
+ 
++"@fluentui-react-native/overflow@workspace:*, @fluentui-react-native/overflow@workspace:packages/experimental/Overflow":
++  version: 0.0.0-use.local
++  resolution: "@fluentui-react-native/overflow@workspace:packages/experimental/Overflow"
++  dependencies:
++    "@fluentui-react-native/button": "workspace:*"
++    "@fluentui-react-native/eslint-config-rules": "workspace:*"
++    "@fluentui-react-native/framework": "workspace:*"
++    "@fluentui-react-native/menu": "workspace:*"
++    "@fluentui-react-native/scripts": "workspace:*"
++    "@fluentui-react-native/test-tools": "workspace:*"
++    "@office-iss/react-native-win32": ^0.72.0
++    "@react-native/metro-config": ^0.72.0
++    react: 18.2.0
++    react-native: ^0.72.0
++    tslib: ^2.3.1
++  peerDependencies:
++    react: 18.2.0
++    react-native: ^0.72.0
++  languageName: unknown
++  linkType: soft
++
+ "@fluentui-react-native/persona-coin@*, @fluentui-react-native/persona-coin@workspace:*, @fluentui-react-native/persona-coin@workspace:packages/components/PersonaCoin":
+   version: 0.0.0-use.local
+   resolution: "@fluentui-react-native/persona-coin@workspace:packages/components/PersonaCoin"
+@@ -3749,6 +3770,7 @@ __metadata:
+     "@fluentui-react-native/menu": "workspace:*"
+     "@fluentui-react-native/merge-props": "workspace:*"
+     "@fluentui-react-native/notification": "workspace:*"
++    "@fluentui-react-native/overflow": "workspace:*"
+     "@fluentui-react-native/radio-group": "workspace:*"
+     "@fluentui-react-native/scripts": "workspace:*"
+     "@fluentui-react-native/separator": "workspace:*"

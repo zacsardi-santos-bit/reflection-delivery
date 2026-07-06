@@ -1,0 +1,8 @@
+patching file src/ast/mod.rs
+patching file src/ast/query.rs
+patching file src/ast/spans.rs
+patching file src/dialect/hive.rs
+patching file src/dialect/mod.rs
+patching file src/keywords.rs
+patching file src/parser/mod.rs
+patching file src/test_utils.rs

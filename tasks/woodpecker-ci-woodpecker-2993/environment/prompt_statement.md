@@ -1,5 +1,0 @@
-I'm working on adding protocol support to port definitions in pipeline service configurations. Right now, ports can only be specified as plain numbers, but I need to support an optional transport protocol (like UDP or TCP) alongside the port number. The format should be a port number optionally followed by a slash and a protocol name — for example, a UDP service port would be written as the number, a slash, then "udp".
-
-This change needs to propagate through the whole pipeline: port strings in the YAML configuration should be parsed into structured port objects that carry both the port number and the protocol. When invalid formats are used — such as putting the protocol before the port number, using a wrong delimiter, or providing a non-numeric port — it should result in an error.
-
-On the Kubernetes backend side, both pod containers and services need to expose these ports with the correct protocol in uppercase (as Kubernetes requires). Ports without a specified protocol should omit the protocol field. The Docker backend also needs to work with this new structured port type instead of plain integers.

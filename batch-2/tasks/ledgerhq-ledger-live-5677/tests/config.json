@@ -1,0 +1,16 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/apps/ledger-live-desktop && pnpm exec jest src/renderer/hooks/useLocalizedUrls/useLocalizedUrls.test.tsx --coverage=false --watchAll=false --forceExit",
+  "test_files": [
+    "apps/ledger-live-desktop/src/renderer/hooks/useLocalizedUrls/useLocalizedUrls.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/ledger-live-desktop/src/renderer/hooks/useLocalizedUrls/useLocalizedUrls.test.tsx::useLocalizedUrl LEDGER",
+    "/workspace/repo/apps/ledger-live-desktop/src/renderer/hooks/useLocalizedUrls/useLocalizedUrls.test.tsx::useLocalizedUrl LEDGER_SUPPORT",
+    "/workspace/repo/apps/ledger-live-desktop/src/renderer/hooks/useLocalizedUrls/useLocalizedUrls.test.tsx::useLocalizedUrl SHOP",
+    "/workspace/repo/apps/ledger-live-desktop/src/renderer/hooks/useLocalizedUrls/useLocalizedUrls.test.tsx::useLocalizedUrl other url"
+  ],
+  "PASS_TO_PASS": []
+}

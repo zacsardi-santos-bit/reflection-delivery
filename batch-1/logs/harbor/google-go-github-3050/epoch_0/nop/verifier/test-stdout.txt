@@ -1,0 +1,16 @@
+patching file github/github-accessors_test.go
+patching file github/repos_deployment_protection_rules_test.go
+# github.com/google/go-github/v58/github [github.com/google/go-github/v58/github.test]
+github/github-accessors_test.go:5403:8: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5411:8: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5413:7: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5421:8: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5423:7: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5431:8: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5433:7: undefined: CustomDeploymentProtectionRule
+github/github-accessors_test.go:5441:8: undefined: CustomDeploymentProtectionRuleApp
+github/github-accessors_test.go:5443:7: undefined: CustomDeploymentProtectionRuleApp
+github/github-accessors_test.go:5451:8: undefined: CustomDeploymentProtectionRuleApp
+github/github-accessors_test.go:5451:8: too many errors
+FAIL	github.com/google/go-github/v58/github [build failed]
+reward=0 graded=5307 found=5307 failed=5307 parsed=1 framework=go exit_code=1

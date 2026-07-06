@@ -1,0 +1,355 @@
+diff --git a/mlflow/store/artifact/artifact_repo.py b/mlflow/store/artifact/artifact_repo.py
+index 5d0b8520a..c813a77ac 100644
+--- a/mlflow/store/artifact/artifact_repo.py
++++ b/mlflow/store/artifact/artifact_repo.py
+@@ -9,13 +9,14 @@ from abc import ABC, ABCMeta, abstractmethod
+ from concurrent.futures import ThreadPoolExecutor, as_completed
+ from contextlib import contextmanager
+ from pathlib import Path
+-from typing import Any
++from typing import TYPE_CHECKING, Any
+ 
+ from mlflow.entities.file_info import FileInfo
+ from mlflow.entities.multipart_upload import (
+     CreateMultipartUploadResponse,
+     MultipartUploadPart,
+ )
++from mlflow.entities.trace_data import TraceData
+ from mlflow.exceptions import (
+     MlflowException,
+     MlflowTraceDataCorrupted,
+@@ -33,6 +34,9 @@ from mlflow.utils.async_logging.async_artifacts_logging_queue import (
+ from mlflow.utils.file_utils import ArtifactProgressBar, create_tmp_dir
+ from mlflow.utils.validation import bad_path_message, path_not_unique
+ 
++if TYPE_CHECKING:
++    from mlflow.entities.span import Span
++
+ # Constants used to determine max level of parallelism to use while uploading/downloading artifacts.
+ # Max threads to use for parallelism.
+ _NUM_MAX_THREADS = 20
+@@ -395,6 +399,23 @@ class ArtifactRepository:
+                 raise MlflowTraceDataNotFound(artifact_path=TRACE_DATA_FILE_NAME) from e
+             return try_read_trace_data(temp_file)
+ 
++    def download_archived_trace_data(self) -> TraceData:
++        """
++        Download archived trace data from ``traces.pb``.
++
++        Returns:
++            The archived trace data.
++        """
++        from mlflow.tracing.otel.otel_archival import TRACE_ARCHIVAL_FILENAME
++
++        with tempfile.TemporaryDirectory() as temp_dir:
++            temp_file = Path(temp_dir, TRACE_ARCHIVAL_FILENAME)
++            try:
++                self._download_file(TRACE_ARCHIVAL_FILENAME, temp_file)
++            except Exception as e:
++                raise MlflowTraceDataNotFound(artifact_path=TRACE_ARCHIVAL_FILENAME) from e
++            return TraceData(spans=_try_read_trace_data_pb(temp_file))
++
+     def download_trace_attachment(self, path: str) -> bytes:
+         _validate_attachment_path(path)
+         with tempfile.TemporaryDirectory() as temp_dir:
+@@ -412,6 +433,30 @@ class ArtifactRepository:
+         with write_local_temp_trace_data_file(trace_data) as temp_file:
+             self.log_artifact(temp_file)
+ 
++    def upload_archived_trace_data(self, trace_data: TraceData | str) -> None:
++        """
++        Upload archived trace data as OTLP protobuf to ``traces.pb``.
++
++        Args:
++            trace_data: The archived trace data as a ``TraceData`` object or serialized JSON.
++        """
++        from mlflow.tracing.otel.otel_archival import spans_to_traces_data_pb
++
++        data = spans_to_traces_data_pb(_coerce_archived_trace_data(trace_data).spans)
++        self.upload_archived_trace_data_bytes(data)
++
++    def upload_archived_trace_data_bytes(self, data: bytes) -> None:
++        """
++        Upload serialized archived trace data bytes to ``traces.pb``.
++
++        Backends can override this hook to avoid the default temp-file staging path when their
++        storage SDK supports in-memory uploads or more efficient multipart transfer primitives.
++        Overriding is useful for remote object stores where direct byte uploads can reduce local
++        disk I/O and let the backend apply transport-specific optimizations.
++        """
++        with _write_local_temp_trace_data_pb_file(data) as temp_file:
++            self.log_artifact(temp_file)
++
+     def upload_attachment(self, attachment_id: str, content_bytes: bytes) -> None:
+         _validate_attachment_path(attachment_id)
+         with tempfile.TemporaryDirectory() as temp_dir:
+@@ -428,6 +473,32 @@ def write_local_temp_trace_data_file(trace_data: str):
+         yield temp_file
+ 
+ 
++@contextmanager
++def _write_local_temp_trace_data_pb_file(data: bytes):
++    from mlflow.tracing.otel.otel_archival import TRACE_ARCHIVAL_FILENAME
++
++    with tempfile.TemporaryDirectory() as temp_dir:
++        temp_file = Path(temp_dir, TRACE_ARCHIVAL_FILENAME)
++        temp_file.write_bytes(data)
++        yield temp_file
++
++
++def _coerce_archived_trace_data(trace_data: TraceData | str) -> TraceData:
++    if isinstance(trace_data, TraceData):
++        return trace_data
++    if isinstance(trace_data, str):
++        try:
++            return TraceData.from_dict(json.loads(trace_data))
++        except (TypeError, json.JSONDecodeError) as e:
++            raise MlflowException.invalid_parameter_value(
++                "Archived trace data must be a TraceData object or valid serialized "
++                "trace-data JSON."
++            ) from e
++    raise MlflowException.invalid_parameter_value(
++        "Archived trace data must be a TraceData object or valid serialized trace-data JSON."
++    )
++
++
+ def try_read_trace_data(trace_data_path):
+     if not os.path.exists(trace_data_path):
+         raise MlflowTraceDataNotFound(artifact_path=trace_data_path)
+@@ -441,6 +512,20 @@ def try_read_trace_data(trace_data_path):
+         raise MlflowTraceDataCorrupted(artifact_path=trace_data_path) from e
+ 
+ 
++def _try_read_trace_data_pb(trace_data_path) -> list["Span"]:
++    from mlflow.tracing.otel.otel_archival import traces_data_pb_to_spans
++
++    if not os.path.exists(trace_data_path):
++        raise MlflowTraceDataNotFound(artifact_path=trace_data_path)
++    data = Path(trace_data_path).read_bytes()
++    if not data:
++        raise MlflowTraceDataCorrupted(artifact_path=trace_data_path)
++    try:
++        return traces_data_pb_to_spans(data)
++    except Exception as e:
++        raise MlflowTraceDataCorrupted(artifact_path=trace_data_path) from e
++
++
+ class MultipartUploadMixin(ABC):
+     @abstractmethod
+     def create_multipart_upload(
+diff --git a/mlflow/store/artifact/databricks_artifact_repo.py b/mlflow/store/artifact/databricks_artifact_repo.py
+index a64de429e..c9e343a53 100644
+--- a/mlflow/store/artifact/databricks_artifact_repo.py
++++ b/mlflow/store/artifact/databricks_artifact_repo.py
+@@ -18,7 +18,7 @@ from mlflow.azure.client import (
+     put_block,
+     put_block_list,
+ )
+-from mlflow.entities import FileInfo
++from mlflow.entities import FileInfo, TraceData
+ from mlflow.environment_variables import (
+     MLFLOW_ASYNC_TRACE_LOGGING_RETRY_TIMEOUT,
+     MLFLOW_MULTIPART_DOWNLOAD_CHUNK_SIZE,
+@@ -268,6 +268,11 @@ class DatabricksArtifactRepository(CloudArtifactRepository):
+             except json.JSONDecodeError as e:
+                 raise MlflowTraceDataCorrupted(request_id=self.resource.id) from e
+ 
++    def download_archived_trace_data(self) -> TraceData:
++        raise MlflowException.invalid_parameter_value(
++            "Databricks trace artifact repositories do not yet support ARCHIVE_REPO trace payloads."
++        )
++
+     def upload_trace_data(self, trace_data: str) -> None:
+         cred = self._get_upload_trace_data_cred_info()
+         with write_local_temp_trace_data_file(trace_data) as temp_file:
+@@ -299,6 +304,16 @@ class DatabricksArtifactRepository(CloudArtifactRepository):
+             ):
+                 self._signed_url_upload_file(cred, temp_file)
+ 
++    def upload_archived_trace_data(self, trace_data: TraceData | str) -> None:
++        raise MlflowException.invalid_parameter_value(
++            "Databricks trace artifact repositories do not yet support ARCHIVE_REPO trace payloads."
++        )
++
++    def upload_archived_trace_data_bytes(self, data: bytes) -> None:
++        raise MlflowException.invalid_parameter_value(
++            "Databricks trace artifact repositories do not yet support ARCHIVE_REPO trace payloads."
++        )
++
+     def _get_upload_trace_data_cred_info(self):
+         """Returns the credential info for trace data upload."""
+         [cred], _ = self.resource.get_credentials(
+diff --git a/mlflow/store/artifact/s3_artifact_repo.py b/mlflow/store/artifact/s3_artifact_repo.py
+index aa70a3c10..d3fd0cb2e 100644
+--- a/mlflow/store/artifact/s3_artifact_repo.py
++++ b/mlflow/store/artifact/s3_artifact_repo.py
+@@ -4,6 +4,7 @@ import posixpath
+ import urllib.parse
+ from datetime import datetime, timezone
+ from functools import lru_cache
++from io import BytesIO
+ from mimetypes import guess_type
+ 
+ from mlflow.entities import FileInfo
+@@ -314,6 +315,23 @@ class S3ArtifactRepository(ArtifactRepository, MultipartUploadMixin, MultipartDo
+                     key=posixpath.join(upload_path, f),
+                 )
+ 
++    def upload_archived_trace_data_bytes(self, data: bytes) -> None:
++        from mlflow.tracing.otel.otel_archival import TRACE_ARCHIVAL_FILENAME
++
++        (bucket, dest_path) = self.parse_s3_compliant_uri(self.artifact_uri)
++        key = posixpath.join(dest_path, TRACE_ARCHIVAL_FILENAME)
++        extra_args = {"ContentType": "application/octet-stream"}
++        extra_args.update(self._bucket_owner_params)
++        environ_extra_args = self.get_s3_file_upload_extra_args()
++        if environ_extra_args is not None:
++            extra_args.update(environ_extra_args)
++        self._get_s3_client().upload_fileobj(
++            Fileobj=BytesIO(data),
++            Bucket=bucket,
++            Key=key,
++            ExtraArgs=extra_args,
++        )
++
+     def _iterate_s3_paginated_results(self, bucket, prefix):
+         """
+         Iterate over paginated S3 list_objects_v2 results with error handling.
+diff --git a/mlflow/tracing/constant.py b/mlflow/tracing/constant.py
+index ca4b3bd91..446d6abf0 100644
+--- a/mlflow/tracing/constant.py
++++ b/mlflow/tracing/constant.py
+@@ -192,6 +192,7 @@ GET_TRACE_V4_RETRY_TIMEOUT_SECONDS = 15
+ class SpansLocation(str, Enum):
+     TRACKING_STORE = "TRACKING_STORE"
+     ARTIFACT_REPO = "ARTIFACT_REPO"
++    ARCHIVE_REPO = "ARCHIVE_REPO"
+ 
+ 
+ # Path to the notebook trace renderer directory
+diff --git a/mlflow/tracing/otel/otel_archival.py b/mlflow/tracing/otel/otel_archival.py
+new file mode 100644
+index 000000000..b0299072a
+--- /dev/null
++++ b/mlflow/tracing/otel/otel_archival.py
+@@ -0,0 +1,120 @@
++"""
++Helpers for serializing archived trace spans as OTLP ``TracesData`` protobuf.
++"""
++
++from __future__ import annotations
++
++from typing import Any
++
++from google.protobuf.message import DecodeError
++from opentelemetry.proto.trace.v1.trace_pb2 import TracesData
++
++from mlflow.entities.span import Span
++from mlflow.exceptions import MlflowException
++from mlflow.tracing.utils.otlp import resource_to_otel_proto
++
++TRACE_ARCHIVAL_FILENAME = "traces.pb"
++
++
++def normalize_otel_resource_attributes(resource) -> tuple[tuple[str, Any], ...]:
++    """Convert resource attributes into an order-insensitive comparable representation."""
++    if resource is None:
++        return ()
++
++    return tuple(
++        (str(key), _normalize_otel_resource_attribute_value(value))
++        for key, value in sorted(resource.attributes.items(), key=lambda item: str(item[0]))
++    )
++
++
++def _normalize_otel_resource_attribute_value(value: Any) -> Any:
++    if isinstance(value, dict):
++        return tuple(
++            (str(key), _normalize_otel_resource_attribute_value(nested_value))
++            for key, nested_value in sorted(value.items(), key=lambda item: str(item[0]))
++        )
++    if isinstance(value, (list, tuple)):
++        return tuple(_normalize_otel_resource_attribute_value(item) for item in value)
++    return value
++
++
++def spans_to_traces_data_pb(spans: list[Span]) -> bytes:
++    """
++    Serialize MLflow spans to OTLP ``TracesData`` protobuf bytes.
++
++    Archived trace payloads must be non-empty and all spans must belong to the
++    same underlying OTLP trace and resource.
++    """
++    if not spans:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must include at least one span."
++        )
++
++    otlp_trace_ids = {span._trace_id for span in spans}
++    if len(otlp_trace_ids) > 1:
++        raise MlflowException.invalid_parameter_value(
++            "Archived spans must belong to a single OTLP trace, but got distinct trace IDs: "
++            f"{sorted(otlp_trace_ids)}"
++        )
++
++    resource = getattr(spans[0]._span, "resource", None)
++    normalized_resource = normalize_otel_resource_attributes(resource)
++    resource_proto = resource_to_otel_proto(resource)
++    if any(
++        normalize_otel_resource_attributes(getattr(span._span, "resource", None))
++        != normalized_resource
++        for span in spans[1:]
++    ):
++        raise MlflowException.invalid_parameter_value(
++            "Archived spans must share the same OTLP resource."
++        )
++
++    traces_data = TracesData()
++    resource_spans = traces_data.resource_spans.add()
++    resource_spans.resource.CopyFrom(resource_proto)
++    scope_spans = resource_spans.scope_spans.add()
++    scope_spans.spans.extend(span.to_otel_proto() for span in spans)
++    return traces_data.SerializeToString()
++
++
++def traces_data_pb_to_spans(data: bytes) -> list[Span]:
++    """Deserialize OTLP ``TracesData`` protobuf bytes into MLflow spans."""
++    if not data:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must be a non-empty OTLP TracesData protobuf."
++        )
++
++    traces_data = TracesData()
++    try:
++        traces_data.ParseFromString(data)
++    except DecodeError as e:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must be a valid OTLP TracesData protobuf."
++        ) from e
++    # Archived payloads use a single canonical OTLP wrapper shape. MLflow's trace model is a flat
++    # list of spans and does not preserve ResourceSpans / ScopeSpans groupings as first-class data.
++    if len(traces_data.resource_spans) != 1:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must contain exactly one ResourceSpans group."
++        )
++    if len(traces_data.resource_spans[0].scope_spans) != 1:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must contain exactly one ScopeSpans group."
++        )
++    spans = [
++        Span.from_otel_proto(otel_span)
++        for resource_spans in traces_data.resource_spans
++        for scope_spans in resource_spans.scope_spans
++        for otel_span in scope_spans.spans
++    ]
++    if not spans:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must contain at least one span."
++        )
++    otlp_trace_ids = {span._trace_id for span in spans}
++    if len(otlp_trace_ids) > 1:
++        raise MlflowException.invalid_parameter_value(
++            "Archived trace payload must contain spans for a single OTLP trace, "
++            f"but got distinct trace IDs: {sorted(otlp_trace_ids)}"
++        )
++    return spans

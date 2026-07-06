@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test execution_spec -E 'test(grpc-oneof)'",
+  "test_files": [
+    "tests/core/snapshots/grpc-oneof.md_0.snap",
+    "tests/core/snapshots/grpc-oneof.md_client.snap",
+    "tests/core/snapshots/grpc-oneof.md_merged.snap",
+    "tests/execution/grpc-oneof.md"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) tailcall::execution_spec run_execution_spec::grpc-oneof.md"
+  ],
+  "PASS_TO_PASS": []
+}

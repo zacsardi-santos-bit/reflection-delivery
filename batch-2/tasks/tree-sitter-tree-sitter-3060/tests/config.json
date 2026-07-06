@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --package tree-sitter-cli -E 'test(test_parse_test_with_markers)' --no-fail-fast",
+  "test_files": [
+    "cli/src/tests/parser_test.rs",
+    "cli/src/tests/proc_macro/Cargo.toml"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) tree-sitter-cli test::tests::test_parse_test_with_markers"
+  ],
+  "PASS_TO_PASS": []
+}

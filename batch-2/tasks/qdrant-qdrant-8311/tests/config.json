@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --package qdrant -E 'test(~storage_read_api)' --no-fail-fast",
+  "test_files": [
+    "src/tonic/api/storage_read_api/tests.rs",
+    "tests/consensus_tests/auth_tests/test_jwt_access.py"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_bytes_stream_zero_length_checks_file_exists",
+    "( 2/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::nonexistent_collection_returns_not_found",
+    "( 3/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::list_files_returns_paths_relative_to_collection_dir",
+    "( 4/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::file_exists_rejects_symlinked_collection_dir_escape",
+    "( 5/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::file_exists_reports_true_for_existing_and_false_for_missing_files",
+    "( 6/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::file_length_not_found_returns_error",
+    "( 7/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::dot_slash_path_is_rejected",
+    "( 8/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::file_exists_rejects_path_traversal",
+    "( 9/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_bytes_stream_out_of_bounds_returns_error",
+    "(10/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::file_length_returns_file_size",
+    "(11/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::dot_path_is_rejected",
+    "(12/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_batch_returns_each_requested_slice",
+    "(13/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::access_denied_for_wrong_collection",
+    "(14/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::file_exists_rejects_symlink_escape_to_other_collection",
+    "(15/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_bytes_stream_returns_empty_stream_for_zero_length",
+    "(16/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_bytes_returns_requested_range",
+    "(17/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_multi_reads_ranges_in_request_order",
+    "(18/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_bytes_out_of_bounds_returns_error",
+    "(19/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::access_granted_for_matching_collection",
+    "(20/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_bytes_stream_splits_large_reads_into_chunks",
+    "(21/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_multi_rejects_empty_entry_path",
+    "(22/22) qdrant::bin/qdrant tonic::api::storage_read_api::tests::read_whole_returns_entire_file"
+  ],
+  "PASS_TO_PASS": []
+}

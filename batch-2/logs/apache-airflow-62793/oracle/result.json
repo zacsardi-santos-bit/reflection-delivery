@@ -1,0 +1,29 @@
+{
+    "id": "5d116710-ed01-40ca-bc8c-5f002d72670d",
+    "started_at": "2026-07-06T12:19:16.467780",
+    "finished_at": "2026-07-06T12:19:40.463844",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-airflow-62793": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-airflow-62793__kSWisa7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

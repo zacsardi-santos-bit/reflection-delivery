@@ -1,0 +1,29 @@
+{
+    "id": "37a5c857-2bc9-455b-ab2e-bf7bf06faf87",
+    "started_at": "2026-07-06T12:19:06.095147",
+    "finished_at": "2026-07-06T12:19:39.724806",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__jaegertracing-jaeger-7699": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "jaegertracing-jaeger-7699__GfKmsak"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,8 +1,0 @@
-patching file DEVELOPMENT.md
-patching file docs/README.md
-patching file docs/developers/README.md
-patching file examples/v1beta1/pipelineruns/pipeline-result-conditions.yaml
-patching file pkg/apis/pipeline/v1alpha1/pipeline_types.go
-patching file pkg/reconciler/pipelinerun/resources/apply.go
-patching file pkg/reconciler/pipelinerun/resources/resultrefresolution.go
-patching file pkg/reconciler/taskrun/resources/apply.go

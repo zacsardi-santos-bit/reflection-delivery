@@ -1,0 +1,679 @@
+diff --git a/hadoop-hdds/common/src/main/java/org/apache/hadoop/hdds/utils/db/DelegatedCodec.java b/hadoop-hdds/common/src/main/java/org/apache/hadoop/hdds/utils/db/DelegatedCodec.java
+index 272e862d68..af0772769a 100644
+--- a/hadoop-hdds/common/src/main/java/org/apache/hadoop/hdds/utils/db/DelegatedCodec.java
++++ b/hadoop-hdds/common/src/main/java/org/apache/hadoop/hdds/utils/db/DelegatedCodec.java
+@@ -114,6 +114,17 @@ public T copyObject(T message) {
+     }
+   }
+ 
++  public static <T, DELEGATE> DelegatedCodec<T, DELEGATE> decodeOnly(
++      Codec<DELEGATE> delegate, CheckedFunction<DELEGATE, T, CodecException> forward, Class<T> clazz) {
++    return new DelegatedCodec<>(delegate, forward, unsupportedBackward(), clazz, CopyType.DEEP);
++  }
++
++  private static <A, B> CheckedFunction<A, B, CodecException> unsupportedBackward() {
++    return a -> {
++      throw new UnsupportedOperationException("Unsupported backward conversion");
++    };
++  }
++
+   @Override
+   public String toString() {
+     return name;
+diff --git a/hadoop-ozone/interface-client/src/main/proto/OmClientProtocol.proto b/hadoop-ozone/interface-client/src/main/proto/OmClientProtocol.proto
+index 78d417367e..ee9535ac39 100644
+--- a/hadoop-ozone/interface-client/src/main/proto/OmClientProtocol.proto
++++ b/hadoop-ozone/interface-client/src/main/proto/OmClientProtocol.proto
+@@ -1172,6 +1172,25 @@ message KeyInfo {
+     optional uint64 expectedDataGeneration = 22;
+ }
+ 
++// KeyInfoProtoLight is a lightweight subset of KeyInfo message containing
++// selected fields only, while maintaining the same field indices as KeyInfo
++// for compatibility and consistency.
++message KeyInfoProtoLight {
++  required string volumeName = 1;
++  required string bucketName = 2;
++  required string keyName = 3;
++  required uint64 dataSize = 4;
++  required hadoop.hdds.ReplicationType type = 5;
++  optional hadoop.hdds.ReplicationFactor factor = 6;
++  required uint64 creationTime = 8;
++  required uint64 modificationTime = 9;
++  optional uint64 objectID = 14;
++  optional uint64 updateID = 15;
++  optional uint64 parentID = 16;
++  optional hadoop.hdds.ECReplicationConfig ecReplicationConfig = 17;
++  optional bool isFile = 19;
++}
++
+ message BasicKeyInfo {
+     optional string keyName = 1;
+     optional uint64 dataSize = 2;
+diff --git a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/OMDBInsightEndpoint.java b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/OMDBInsightEndpoint.java
+index 4c7841b757..20e0868351 100644
+--- a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/OMDBInsightEndpoint.java
++++ b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/OMDBInsightEndpoint.java
+@@ -69,11 +69,11 @@
+ import org.apache.hadoop.ozone.recon.ReconUtils;
+ import org.apache.hadoop.ozone.recon.api.handlers.BucketHandler;
+ import org.apache.hadoop.ozone.recon.api.types.KeyEntityInfo;
+-import org.apache.hadoop.ozone.recon.api.types.KeyEntityInfoProtoWrapper;
+ import org.apache.hadoop.ozone.recon.api.types.KeyInsightInfoResponse;
+ import org.apache.hadoop.ozone.recon.api.types.ListKeysResponse;
+ import org.apache.hadoop.ozone.recon.api.types.NSSummary;
+ import org.apache.hadoop.ozone.recon.api.types.ParamInfo;
++import org.apache.hadoop.ozone.recon.api.types.ReconBasicOmKeyInfo;
+ import org.apache.hadoop.ozone.recon.api.types.ResponseStatus;
+ import org.apache.hadoop.ozone.recon.recovery.ReconOMMetadataManager;
+ import org.apache.hadoop.ozone.recon.spi.impl.ReconNamespaceSummaryManagerImpl;
+@@ -1014,7 +1014,7 @@ public Response listKeys(@QueryParam("replicationType") String replicationType,
+       listKeysResponse = (ListKeysResponse) response.getEntity();
+     }
+ 
+-    List<KeyEntityInfoProtoWrapper> keyInfoList = listKeysResponse.getKeys();
++    List<ReconBasicOmKeyInfo> keyInfoList = listKeysResponse.getKeys();
+     if (!keyInfoList.isEmpty()) {
+       listKeysResponse.setLastKey(keyInfoList.get(keyInfoList.size() - 1).getKey());
+     }
+@@ -1029,9 +1029,9 @@ private Response getListKeysResponse(ParamInfo paramInfo) {
+       long replicatedTotal = 0;
+       long unreplicatedTotal = 0;
+ 
+-      // Search keys from non-FSO layout.
+-      Table<String, KeyEntityInfoProtoWrapper> keyTable =
+-          omMetadataManager.getKeyTableLite(BucketLayout.LEGACY);
++      Table<String, ReconBasicOmKeyInfo> keyTable =
++          omMetadataManager.getKeyTableBasic(BucketLayout.LEGACY);
++
+       retrieveKeysFromTable(keyTable, paramInfo, listKeysResponse.getKeys());
+ 
+       // Search keys from FSO layout.
+@@ -1042,7 +1042,7 @@ private Response getListKeysResponse(ParamInfo paramInfo) {
+         return ReconResponseUtils.noMatchedKeysResponse(paramInfo.getStartPrefix());
+       }
+ 
+-      for (KeyEntityInfoProtoWrapper keyEntityInfo : listKeysResponse.getKeys()) {
++      for (ReconBasicOmKeyInfo keyEntityInfo : listKeysResponse.getKeys()) {
+         replicatedTotal += keyEntityInfo.getReplicatedSize();
+         unreplicatedTotal += keyEntityInfo.getSize();
+       }
+@@ -1067,13 +1067,14 @@ private Response getListKeysResponse(ParamInfo paramInfo) {
+     }
+   }
+ 
+-  public void searchKeysInFSO(ParamInfo paramInfo, List<KeyEntityInfoProtoWrapper> results)
++  public void searchKeysInFSO(ParamInfo paramInfo, List<ReconBasicOmKeyInfo> results)
+       throws IOException {
+     // Convert the search prefix to an object path for FSO buckets
+     String startPrefixObjectPath = convertStartPrefixPathToObjectIdPath(paramInfo.getStartPrefix());
+     String[] names = parseRequestPath(startPrefixObjectPath);
+-    Table<String, KeyEntityInfoProtoWrapper> fileTable =
+-        omMetadataManager.getKeyTableLite(BucketLayout.FILE_SYSTEM_OPTIMIZED);
++
++    Table<String, ReconBasicOmKeyInfo> fileTable =
++        omMetadataManager.getKeyTableBasic(BucketLayout.FILE_SYSTEM_OPTIMIZED);
+ 
+     // If names.length > 2, then the search prefix is at the level above bucket level hence
+     // no need to find parent or extract id's or find subpaths as the fileTable is
+@@ -1181,16 +1182,16 @@ public String convertStartPrefixPathToObjectIdPath(String startPrefixPath)
+    * @throws IOException If there are problems accessing the table.
+    */
+   private void retrieveKeysFromTable(
+-      Table<String, KeyEntityInfoProtoWrapper> table, ParamInfo paramInfo, List<KeyEntityInfoProtoWrapper> results)
++      Table<String, ReconBasicOmKeyInfo> table, ParamInfo paramInfo, List<ReconBasicOmKeyInfo> results)
+       throws IOException {
+     boolean skipPrevKey = false;
+     String seekKey = paramInfo.getPrevKey();
+     try (
+-        TableIterator<String, ? extends Table.KeyValue<String, KeyEntityInfoProtoWrapper>> keyIter = table.iterator()) {
++        TableIterator<String, ? extends Table.KeyValue<String, ReconBasicOmKeyInfo>> keyIter = table.iterator()) {
+ 
+       if (!paramInfo.isSkipPrevKeyDone() && isNotBlank(seekKey)) {
+         skipPrevKey = true;
+-        Table.KeyValue<String, KeyEntityInfoProtoWrapper> seekKeyValue =
++        Table.KeyValue<String, ReconBasicOmKeyInfo> seekKeyValue =
+             keyIter.seek(seekKey);
+ 
+         // check if RocksDB was able to seek correctly to the given key prefix
+@@ -1207,7 +1208,7 @@ private void retrieveKeysFromTable(
+       StringBuilder keyPrefix = null;
+       int keyPrefixLength = 0;
+       while (keyIter.hasNext()) {
+-        Table.KeyValue<String, KeyEntityInfoProtoWrapper> entry = keyIter.next();
++        Table.KeyValue<String, ReconBasicOmKeyInfo> entry = keyIter.next();
+         String dbKey = entry.getKey();
+         if (!dbKey.startsWith(paramInfo.getStartPrefix())) {
+           break; // Exit the loop if the key no longer matches the prefix
+@@ -1217,7 +1218,7 @@ private void retrieveKeysFromTable(
+           continue;
+         }
+         if (applyFilters(entry, paramInfo)) {
+-          KeyEntityInfoProtoWrapper keyEntityInfo = entry.getValue();
++          ReconBasicOmKeyInfo keyEntityInfo = entry.getValue();
+           keyEntityInfo.setKey(dbKey);
+           if (keyEntityInfo.getParentId() == 0) {
+             // Legacy bucket keys have a parentID of zero. OBS bucket keys have a parentID of the bucketID.
+@@ -1258,7 +1259,7 @@ private void retrieveKeysFromTable(
+     }
+   }
+ 
+-  private boolean applyFilters(Table.KeyValue<String, KeyEntityInfoProtoWrapper> entry, ParamInfo paramInfo)
++  private boolean applyFilters(Table.KeyValue<String, ReconBasicOmKeyInfo> entry, ParamInfo paramInfo)
+       throws IOException {
+ 
+     LOG.debug("Applying filters on : {}", entry.getKey());
+diff --git a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/KeyEntityInfoProtoWrapper.java b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/KeyEntityInfoProtoWrapper.java
+deleted file mode 100644
+index b515ff1475..0000000000
+--- a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/KeyEntityInfoProtoWrapper.java
++++ /dev/null
+@@ -1,144 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements. See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.hadoop.ozone.recon.api.types;
+-
+-import com.fasterxml.jackson.annotation.JsonProperty;
+-import org.apache.hadoop.hdds.client.ReplicationConfig;
+-import org.apache.hadoop.hdds.utils.db.Codec;
+-import org.apache.hadoop.hdds.utils.db.DelegatedCodec;
+-import org.apache.hadoop.hdds.utils.db.Proto2Codec;
+-import org.apache.hadoop.ozone.om.helpers.QuotaUtil;
+-import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos;
+-
+-/**
+- * POJO object wrapper for metadata of a given key/file. This class wraps a KeyInfo protobuf
+- * object and delegates most accessors to it.
+- */
+-public final class KeyEntityInfoProtoWrapper {
+-
+-  private final OzoneManagerProtocolProtos.KeyInfo keyInfoProto;
+-
+-  /** This is key table key of rocksDB and will help UI to implement pagination
+-   * where UI will use the last record key to send in API as preKeyPrefix. */
+-  @JsonProperty("key")
+-  private String key;
+-
+-  /** Path of a key/file. */
+-  @JsonProperty("path")
+-  private String path;
+-
+-  @JsonProperty("replicatedSize")
+-  private final long replicatedSize;
+-
+-  @JsonProperty("replicationInfo")
+-  private final ReplicationConfig replicationConfig;
+-
+-  private KeyEntityInfoProtoWrapper(OzoneManagerProtocolProtos.KeyInfo proto) {
+-    keyInfoProto = proto;
+-    replicationConfig = ReplicationConfig.fromProto(proto.getType(), proto.getFactor(),
+-        proto.getEcReplicationConfig());
+-    this.replicatedSize = QuotaUtil.getReplicatedSize(getSize(), getReplicationConfig());
+-  }
+-
+-  public static Codec<KeyEntityInfoProtoWrapper> getCodec() {
+-    return new DelegatedCodec<>(
+-        Proto2Codec.get(OzoneManagerProtocolProtos.KeyInfo.getDefaultInstance()),
+-        KeyEntityInfoProtoWrapper::getFromProtobuf,
+-        KeyEntityInfoProtoWrapper::toProtobuf,
+-        KeyEntityInfoProtoWrapper.class);
+-  }
+-
+-  public static KeyEntityInfoProtoWrapper getFromProtobuf(OzoneManagerProtocolProtos.KeyInfo keyInfo) {
+-    return new KeyEntityInfoProtoWrapper(keyInfo);
+-  }
+-
+-  public OzoneManagerProtocolProtos.KeyInfo toProtobuf() {
+-    throw new UnsupportedOperationException("This method is not supported.");
+-  }
+-
+-  @JsonProperty("key")
+-  public String getKey() {
+-    if (key == null) {
+-      throw new IllegalStateException("Key must be set to correctly serialize this object.");
+-    }
+-    return key;
+-  }
+-
+-  public void setKey(String key) {
+-    this.key = key;
+-  }
+-
+-  @JsonProperty("path")
+-  public String getPath() {
+-    if (path == null) {
+-      throw new IllegalStateException("Path must be set to correctly serialize this object.");
+-    }
+-    return path;
+-  }
+-
+-  public void setPath(String path) {
+-    this.path = path;
+-  }
+-
+-  @JsonProperty("size")
+-  public long getSize() {
+-    return keyInfoProto.getDataSize();
+-  }
+-
+-  @JsonProperty("replicatedSize")
+-  public long getReplicatedSize() {
+-    return replicatedSize;
+-  }
+-
+-  @JsonProperty("replicationInfo")
+-  public ReplicationConfig getReplicationConfig() {
+-    return replicationConfig;
+-  }
+-
+-  @JsonProperty("creationTime")
+-  public long getCreationTime() {
+-    return keyInfoProto.getCreationTime();
+-  }
+-
+-  @JsonProperty("modificationTime")
+-  public long getModificationTime() {
+-    return keyInfoProto.getModificationTime();
+-  }
+-
+-  @JsonProperty("isKey")
+-  public boolean getIsKey() {
+-    return keyInfoProto.getIsFile();
+-  }
+-
+-  public long getParentId() {
+-    return keyInfoProto.getParentID();
+-  }
+-
+-  public String getVolumeName() {
+-    return keyInfoProto.getVolumeName();
+-  }
+-
+-  public String getBucketName() {
+-    return keyInfoProto.getBucketName();
+-  }
+-
+-  /** Returns the key name of the key stored in the OM Key Info object. */
+-  public String getKeyName() {
+-    return keyInfoProto.getKeyName();
+-  }
+-}
+diff --git a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ListKeysResponse.java b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ListKeysResponse.java
+index ed875f61d4..bb6e3df1c8 100644
+--- a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ListKeysResponse.java
++++ b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ListKeysResponse.java
+@@ -49,7 +49,7 @@ public class ListKeysResponse {
+ 
+   /** list of keys. */
+   @JsonProperty("keys")
+-  private List<KeyEntityInfoProtoWrapper> keys;
++  private List<ReconBasicOmKeyInfo> keys;
+ 
+   public ListKeysResponse() {
+     this.status = ResponseStatus.OK;
+@@ -92,11 +92,11 @@ public void setPath(String path) {
+     this.path = path;
+   }
+ 
+-  public List<KeyEntityInfoProtoWrapper> getKeys() {
++  public List<ReconBasicOmKeyInfo> getKeys() {
+     return keys;
+   }
+ 
+-  public void setKeys(List<KeyEntityInfoProtoWrapper> keys) {
++  public void setKeys(List<ReconBasicOmKeyInfo> keys) {
+     this.keys = keys;
+   }
+ 
+diff --git a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ReconBasicOmKeyInfo.java b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ReconBasicOmKeyInfo.java
+new file mode 100644
+index 0000000000..c22010580e
+--- /dev/null
++++ b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/api/types/ReconBasicOmKeyInfo.java
+@@ -0,0 +1,278 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.hadoop.ozone.recon.api.types;
++
++import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
++import com.fasterxml.jackson.annotation.JsonProperty;
++import java.util.Objects;
++import org.apache.hadoop.hdds.client.ReplicationConfig;
++import org.apache.hadoop.hdds.utils.db.Codec;
++import org.apache.hadoop.hdds.utils.db.DelegatedCodec;
++import org.apache.hadoop.hdds.utils.db.Proto2Codec;
++import org.apache.hadoop.ozone.om.helpers.QuotaUtil;
++import org.apache.hadoop.ozone.om.helpers.WithParentObjectId;
++import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos;
++
++/**
++ * Lightweight OmKeyInfo class.
++ */
++@JsonIgnoreProperties({
++    "metadata", "objectID", "updateID", "parentObjectID", "objectInfo"
++})
++public final class ReconBasicOmKeyInfo extends WithParentObjectId {
++
++  private final String volumeName;
++  private final String bucketName;
++  private final String keyName;
++  private final long dataSize;
++  private final long creationTime;
++  private final long modificationTime;
++
++  /** This is key table key of rocksDB and will help UI to implement pagination
++   * where UI will use the last record key to send in API as preKeyPrefix. */
++  @JsonProperty("key")
++  private String key;
++
++  /** Path of a key/file. */
++  @JsonProperty("path")
++  private String path;
++
++  @JsonProperty("replicatedSize")
++  private final long replicatedSize;
++
++  @JsonProperty("replicationInfo")
++  private final ReplicationConfig replicationConfig;
++
++  private final boolean isFile;
++  private long parentId;
++
++  public static Codec<ReconBasicOmKeyInfo> getCodec() {
++    return DelegatedCodec.decodeOnly(
++        Proto2Codec.get(OzoneManagerProtocolProtos.KeyInfoProtoLight.getDefaultInstance()),
++        ReconBasicOmKeyInfo::getFromProtobuf,
++        ReconBasicOmKeyInfo.class);
++  }
++
++  private ReconBasicOmKeyInfo(Builder b) {
++    this.volumeName = b.volumeName;
++    this.bucketName = b.bucketName;
++    this.keyName = b.keyName;
++    this.dataSize = b.dataSize;
++    this.creationTime = b.creationTime;
++    this.modificationTime = b.modificationTime;
++    this.replicationConfig = b.replicationConfig;
++    this.replicatedSize = QuotaUtil.getReplicatedSize(getDataSize(), replicationConfig);
++    this.isFile = b.isFile;
++    this.parentId = b.parentId;
++  }
++
++  public String getVolumeName() {
++    return volumeName;
++  }
++
++  public String getBucketName() {
++    return bucketName;
++  }
++
++  public String getKeyName() {
++    return keyName;
++  }
++
++  public long getDataSize() {
++    return dataSize;
++  }
++
++  @JsonProperty("creationTime")
++  public long getCreationTime() {
++    return creationTime;
++  }
++
++  @JsonProperty("modificationTime")
++  public long getModificationTime() {
++    return modificationTime;
++  }
++
++  @JsonProperty("replicationInfo")
++  public ReplicationConfig getReplicationConfig() {
++    return replicationConfig;
++  }
++
++  public boolean isFile() {
++    return isFile;
++  }
++
++  @JsonProperty("replicatedSize")
++  public long getReplicatedSize() {
++    return replicatedSize;
++  }
++
++  @JsonProperty("key")
++  public String getKey() {
++    if (key == null) {
++      throw new IllegalStateException("Key must be set to correctly serialize this object.");
++    }
++    return key;
++  }
++
++  public void setKey(String key) {
++    this.key = key;
++  }
++
++  @JsonProperty("path")
++  public String getPath() {
++    if (path == null) {
++      throw new IllegalStateException("Path must be set to correctly serialize this object.");
++    }
++    return path;
++  }
++
++  public void setPath(String path) {
++    this.path = path;
++  }
++
++  @JsonProperty("size")
++  public long getSize() {
++    return dataSize;
++  }
++
++  @JsonProperty("isKey")
++  public boolean getIsKey() {
++    return isFile();
++  }
++
++  public long getParentId() {
++    return parentId;
++  }
++
++  /**
++   * Builder of BasicOmKeyInfo.
++   */
++  public static class Builder {
++    private String volumeName;
++    private String bucketName;
++    private String keyName;
++    private long dataSize;
++    private long creationTime;
++    private long modificationTime;
++    private ReplicationConfig replicationConfig;
++    private boolean isFile;
++    private long parentId;
++
++    public Builder setVolumeName(String volumeName) {
++      this.volumeName = volumeName;
++      return this;
++    }
++
++    public Builder setBucketName(String bucketName) {
++      this.bucketName = bucketName;
++      return this;
++    }
++
++    public Builder setKeyName(String keyName) {
++      this.keyName = keyName;
++      return this;
++    }
++
++    public Builder setDataSize(long dataSize) {
++      this.dataSize = dataSize;
++      return this;
++    }
++
++    public Builder setCreationTime(long creationTime) {
++      this.creationTime = creationTime;
++      return this;
++    }
++
++    public Builder setModificationTime(long modificationTime) {
++      this.modificationTime = modificationTime;
++      return this;
++    }
++
++    public Builder setReplicationConfig(ReplicationConfig replicationConfig) {
++      this.replicationConfig = replicationConfig;
++      return this;
++    }
++
++    public Builder setIsFile(boolean isFile) {
++      this.isFile = isFile;
++      return this;
++    }
++
++    public Builder setParentId(long parentId) {
++      this.parentId = parentId;
++      return this;
++    }
++
++    public ReconBasicOmKeyInfo build() {
++      return new ReconBasicOmKeyInfo(this);
++    }
++  }
++
++  public static ReconBasicOmKeyInfo getFromProtobuf(OzoneManagerProtocolProtos.KeyInfoProtoLight keyInfoProtoLight) {
++    if (keyInfoProtoLight == null) {
++      return null;
++    }
++
++    String keyName = keyInfoProtoLight.getKeyName();
++
++    Builder builder = new Builder()
++        .setVolumeName(keyInfoProtoLight.getVolumeName())
++        .setBucketName(keyInfoProtoLight.getBucketName())
++        .setKeyName(keyName)
++        .setDataSize(keyInfoProtoLight.getDataSize())
++        .setCreationTime(keyInfoProtoLight.getCreationTime())
++        .setModificationTime(keyInfoProtoLight.getModificationTime())
++        .setReplicationConfig(ReplicationConfig.fromProto(
++            keyInfoProtoLight.getType(),
++            keyInfoProtoLight.getFactor(),
++            keyInfoProtoLight.getEcReplicationConfig()))
++        .setIsFile(!keyName.endsWith("/"))
++        .setParentId(keyInfoProtoLight.getParentID());
++
++    return builder.build();
++  }
++
++  public OzoneManagerProtocolProtos.KeyInfoProtoLight toProtobuf() {
++    throw new UnsupportedOperationException("This method is not supported.");
++  }
++
++  @Override
++  public boolean equals(Object o) {
++    if (this == o) {
++      return true;
++    }
++    if (o == null || getClass() != o.getClass()) {
++      return false;
++    }
++    ReconBasicOmKeyInfo basicOmKeyInfo = (ReconBasicOmKeyInfo) o;
++    return volumeName.equals(basicOmKeyInfo.volumeName) &&
++        bucketName.equals(basicOmKeyInfo.bucketName) &&
++        keyName.equals(basicOmKeyInfo.keyName) &&
++        dataSize == basicOmKeyInfo.dataSize &&
++        creationTime == basicOmKeyInfo.creationTime &&
++        modificationTime == basicOmKeyInfo.modificationTime &&
++        replicationConfig.equals(basicOmKeyInfo.replicationConfig) &&
++        isFile == basicOmKeyInfo.isFile;
++  }
++
++  @Override
++  public int hashCode() {
++    return Objects.hash(volumeName, bucketName, keyName);
++  }
++
++}
+diff --git a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOMMetadataManager.java b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOMMetadataManager.java
+index c08a310fc4..9fbe7876b7 100644
+--- a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOMMetadataManager.java
++++ b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOMMetadataManager.java
+@@ -26,7 +26,7 @@
+ import org.apache.hadoop.ozone.om.helpers.BucketLayout;
+ import org.apache.hadoop.ozone.om.helpers.OmBucketInfo;
+ import org.apache.hadoop.ozone.om.helpers.OmVolumeArgs;
+-import org.apache.hadoop.ozone.recon.api.types.KeyEntityInfoProtoWrapper;
++import org.apache.hadoop.ozone.recon.api.types.ReconBasicOmKeyInfo;
+ 
+ /**
+  * Interface for the OM Metadata Manager + DB store maintained by
+@@ -115,12 +115,12 @@ List<OmBucketInfo> listBucketsUnderVolume(
+   OzoneConfiguration getOzoneConfiguration();
+ 
+   /**
+-   * A lighter weight version of the getKeyTable method that only returns the KeyEntityInfo wrapper object. This
++   * A lighter weight version of the getKeyTable method that only returns the ReconBasicOmKeyInfo wrapper object. This
+    * avoids creating a full OMKeyInfo object for each key if it is not needed.
+    * @param bucketLayout The Bucket layout to use for the key table.
+    * @return A table of keys and their metadata.
+    * @throws IOException
+    */
+-  Table<String, KeyEntityInfoProtoWrapper> getKeyTableLite(BucketLayout bucketLayout) throws IOException;
++  Table<String, ReconBasicOmKeyInfo> getKeyTableBasic(BucketLayout bucketLayout) throws IOException;
+ 
+ }
+diff --git a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOmMetadataManagerImpl.java b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOmMetadataManagerImpl.java
+index b18c45f835..5087c7b455 100644
+--- a/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOmMetadataManagerImpl.java
++++ b/hadoop-ozone/recon/src/main/java/org/apache/hadoop/ozone/recon/recovery/ReconOmMetadataManagerImpl.java
+@@ -45,7 +45,7 @@
+ import org.apache.hadoop.ozone.om.helpers.OmBucketInfo;
+ import org.apache.hadoop.ozone.om.helpers.OmVolumeArgs;
+ import org.apache.hadoop.ozone.recon.ReconUtils;
+-import org.apache.hadoop.ozone.recon.api.types.KeyEntityInfoProtoWrapper;
++import org.apache.hadoop.ozone.recon.api.types.ReconBasicOmKeyInfo;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+@@ -106,9 +106,9 @@ private void initializeNewRdbStore(File dbFile) throws IOException {
+   }
+ 
+   @Override
+-  public Table<String, KeyEntityInfoProtoWrapper> getKeyTableLite(BucketLayout bucketLayout) throws IOException {
++  public Table<String, ReconBasicOmKeyInfo> getKeyTableBasic(BucketLayout bucketLayout) throws IOException {
+     String tableName = bucketLayout.isFileSystemOptimized() ? OMDBDefinition.FILE_TABLE : OMDBDefinition.KEY_TABLE;
+-    return getStore().getTable(tableName, StringCodec.get(), KeyEntityInfoProtoWrapper.getCodec());
++    return getStore().getTable(tableName, StringCodec.get(), ReconBasicOmKeyInfo.getCodec());
+   }
+ 
+   @Override

@@ -1,0 +1,29 @@
+{
+    "id": "676c06ed-33d4-478b-9101-62028e227aab",
+    "started_at": "2026-07-06T12:18:57.479198",
+    "finished_at": "2026-07-06T12:19:51.418901",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__kubernetes-kubernetes-138645": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "kubernetes-kubernetes-138645__gZF4qKb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

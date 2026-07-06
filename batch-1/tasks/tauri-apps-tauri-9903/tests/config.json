@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p acl-tests",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) acl-tests tests::capability_description_starts_uppercase"
+  ],
+  "PASS_TO_PASS": [
+    "(2/2) acl-tests tests::resolve_acl"
+  ]
+}

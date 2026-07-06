@@ -1,0 +1,4 @@
+patching file cmd/templ/lspcmd/proxy/server.go
+patching file cmd/templ/lspcmd/proxy/templdoclazyloader.go
+patching file cmd/templ/main.go
+patching file flake.nix

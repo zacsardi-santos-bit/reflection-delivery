@@ -1,0 +1,31 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/tool_parsers/test_minimax_m2_tool_parser.py -v --noconftest",
+  "test_files": [
+    "tests/tool_parsers/test_minimax_m2_tool_parser.py",
+    "tests/tool_use/test_minimax_m2_tool_parser.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestContentStreaming::test_content_before_tool_call",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestSingleInvoke::test_incremental_chunks",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestSingleInvoke::test_single_chunk_complete",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestSingleInvoke::test_multiple_params",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestMultipleInvokes::test_two_invokes_incremental",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestMultipleInvokes::test_two_invokes_in_single_delta",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestMultipleInvokes::test_different_functions",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestInternalState::test_prev_tool_call_arr_single",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestInternalState::test_prev_tool_call_arr_multiple",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestDeltaMessageFormat::test_tool_call_fields",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestDeltaMessageFormat::test_multi_invoke_indices",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestSpecialTokenDetection::test_start_token_via_id",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestLargeChunks::test_header_and_params_in_separate_chunks"
+  ],
+  "PASS_TO_PASS": [
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestContentStreaming::test_plain_content",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestContentStreaming::test_empty_delta_no_crash",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestEOSHandling::test_eos_after_tool_calls",
+    "tests.tool_parsers.test_minimax_m2_tool_parser.TestEOSHandling::test_end_token_ignored"
+  ]
+}

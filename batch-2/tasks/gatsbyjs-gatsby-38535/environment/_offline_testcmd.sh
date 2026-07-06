@@ -1,0 +1,1 @@
+cd /workspace/repo && yarn install --frozen-lockfile --silent && cd packages/gatsby && npx jest cache-dir/__tests__/runtime-errors.js --coverage=false --watchAll=false --verbose --json

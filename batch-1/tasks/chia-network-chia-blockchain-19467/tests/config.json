@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/chia/_tests/core/full_node/test_address_manager.py -v",
+  "test_files": [
+    "chia/_tests/core/full_node/test_address_manager.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_load_missing_file",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_migration",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_serialization",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_bad_ip_encoding"
+  ],
+  "PASS_TO_PASS": [
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addr_manager_ports",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_select",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_eviction_works",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_tried_bucket",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addr_manager",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_no_evict",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_select_collision_no_collision",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_create",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_cleanup",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_collisions_new",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_find",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_delete",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_collisions_tried",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_new_bucket",
+    "chia._tests.core.full_node.test_address_manager.TestPeerManager::test_addrman_get_peers"
+  ]
+}

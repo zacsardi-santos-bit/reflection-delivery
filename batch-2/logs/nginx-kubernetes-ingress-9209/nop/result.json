@@ -1,0 +1,29 @@
+{
+    "id": "427a8f22-e577-44d6-9c82-672ce1e509e0",
+    "started_at": "2026-07-06T12:17:08.968081",
+    "finished_at": "2026-07-06T12:18:02.759962",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__nginx-kubernetes-ingress-9209": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "nginx-kubernetes-ingress-9209__5Ti8RhD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

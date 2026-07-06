@@ -1,0 +1,30 @@
+{
+  "test_framework": "junit",
+  "test_command": "mkdir -p /tmp/trx-out && dotnet test /workspace/repo/dotnet/src/Experimental/Process.Runtime.Dapr.UnitTests/Process.Runtime.Dapr.UnitTests.csproj --logger trx --results-directory /tmp/trx-out && find /tmp/trx-out -name '*.trx' | head -1 | xargs python3 /usr/local/bin/trx2junit",
+  "test_files": [
+    "dotnet/src/Experimental/Process.Runtime.Dapr.UnitTests/KernelProcessEventSerializationTests.cs",
+    "dotnet/src/Experimental/Process.Runtime.Dapr.UnitTests/Process.Runtime.Dapr.UnitTests.csproj",
+    "dotnet/src/Experimental/Process.Runtime.Dapr.UnitTests/ProcessEventSerializationTests.cs",
+    "dotnet/src/Experimental/Process.Runtime.Dapr.UnitTests/ProcessMessageSerializationTests.cs",
+    "dotnet/src/Experimental/Process.Runtime.Dapr.UnitTests/TestSerializer.cs",
+    "dotnet/src/Experimental/Process.Utilities.UnitTests/Process.Utilities.UnitTests.csproj",
+    "dotnet/src/Experimental/Process.Utilities.UnitTests/ProcessEventTests.cs",
+    "dotnet/src/Experimental/Process.Utilities.UnitTests/ProcessMessageTests.cs",
+    "dotnet/src/Experimental/Process.Utilities.UnitTests/ProcessTypeExtensionsTests.cs"
+  ],
+  "num_test_files": 9,
+  "language": "csharp",
+  "FAIL_TO_PASS": [
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.KernelProcessEventSerializationTests::VerifyDataContractSerializationTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessEventSerializationTests::VerifySerializeEventMixedTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.KernelProcessEventSerializationTests::VerifySerializeEventSingleTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.KernelProcessEventSerializationTests::VerifySerializeEventMixedTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessEventSerializationTests::VerifySerializeEventSingleTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessMessageSerializationTests::VerifyDataContractSerializationTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessMessageSerializationTests::VerifySerializeEventMixedTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessEventSerializationTests::VerifyDataContractSerializationTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessMessageSerializationTests::VerifySerializeEventManyTest",
+    "SemanticKernel.Process.Dapr.Runtime.UnitTests.ProcessMessageSerializationTests::VerifySerializeEventSingleTest"
+  ],
+  "PASS_TO_PASS": []
+}

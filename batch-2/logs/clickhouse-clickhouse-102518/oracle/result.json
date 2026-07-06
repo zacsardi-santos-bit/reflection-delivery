@@ -1,0 +1,29 @@
+{
+    "id": "82b5f2ab-5519-4ba2-b7c0-dd7d5a3cc4c1",
+    "started_at": "2026-07-06T12:18:04.413000",
+    "finished_at": "2026-07-06T12:18:35.259588",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__clickhouse-clickhouse-102518": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "clickhouse-clickhouse-102518__C6ekSBt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/libs/core && pytest tests/unit_tests/runnables/test_config.py -v",
+  "test_files": [
+    "libs/core/tests/unit_tests/runnables/test_config.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.runnables.test_config::test_ensure_config_copies_model_to_metadata",
+    "tests.unit_tests.runnables.test_config::test_ensure_config_copies_top_level_checkpoint_ns_to_metadata"
+  ],
+  "PASS_TO_PASS": [
+    "tests.unit_tests.runnables.test_config::test_ensure_config",
+    "tests.unit_tests.runnables.test_config::test_ensure_config_metadata_is_not_overridden_by_configurable_model",
+    "tests.unit_tests.runnables.test_config::test_ensure_config_copies_top_level_model_to_metadata",
+    "tests.unit_tests.runnables.test_config::test_get_langsmith_inheritable_metadata_from_config_uses_previous_copy_rules",
+    "tests.unit_tests.runnables.test_config::test_merge_config_callbacks",
+    "tests.unit_tests.runnables.test_config::test_config_arbitrary_keys",
+    "tests.unit_tests.runnables.test_config::test_run_in_executor"
+  ]
+}

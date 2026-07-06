@@ -1,0 +1,28 @@
+{
+  "test_framework": "pytest",
+  "test_command": "redis-server --daemonize yes && gcloud beta emulators datastore start --project=dev-project-id --host-port=localhost:8089 --no-store-on-disk --consistency=1.0 --quiet & sleep 15 && cd /workspace/repo && pytest core/jobs/batch_jobs/blog_author_details_migration_jobs_test.py -v",
+  "test_files": [
+    "core/jobs/batch_jobs/blog_author_details_migration_jobs_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_active_user_without_author_details_is_not_reported",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_deleted_user_without_author_details_is_reported",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_draft_blog_posts_are_excluded",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_empty_storage_produces_no_output",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_mixed_deleted_active_and_valid_authors",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_multiple_posts_by_same_orphaned_author_counted_once",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.AuditBlogAuthorDetailsForDeletedUsersJobTests::test_no_orphaned_authors_produces_count_only",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_active_user_without_author_details_is_not_migrated",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_already_migrated_deleted_user_is_not_migrated_again",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_deleted_user_gets_migrated",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_draft_blog_posts_are_excluded_from_migration",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_empty_storage_produces_no_output",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_migration_creates_model_with_correct_fallback_values",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_mixed_deleted_and_active_authors_only_migrates_deleted",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_multiple_deleted_authors_are_all_migrated",
+    "core.jobs.batch_jobs.blog_author_details_migration_jobs_test.MigrateBlogAuthorDetailsForDeletedUsersJobTests::test_no_orphaned_authors_produces_no_migration"
+  ],
+  "PASS_TO_PASS": []
+}

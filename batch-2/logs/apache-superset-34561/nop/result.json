@@ -1,0 +1,29 @@
+{
+    "id": "aad8384e-d87a-4aea-a6fd-573971d5c5a9",
+    "started_at": "2026-07-04T15:36:32.120350",
+    "finished_at": "2026-07-04T15:38:15.075028",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-superset-34561": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-superset-34561__78cSmyt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

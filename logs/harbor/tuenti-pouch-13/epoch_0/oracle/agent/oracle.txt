@@ -1,3 +1,0 @@
-patching file pouch.go
-patching file pouchfile.go
-patching file state.go

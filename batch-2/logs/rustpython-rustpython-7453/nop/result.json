@@ -1,0 +1,29 @@
+{
+    "id": "092526a0-a686-4488-a1e5-2960210ab6e6",
+    "started_at": "2026-07-06T12:17:33.904310",
+    "finished_at": "2026-07-06T12:19:22.664982",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rustpython-rustpython-7453": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rustpython-rustpython-7453__hky6T4i"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

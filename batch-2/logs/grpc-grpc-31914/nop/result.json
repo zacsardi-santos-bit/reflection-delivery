@@ -1,0 +1,29 @@
+{
+    "id": "0b71db5c-92b4-4d9a-8687-09dbbf34c0ab",
+    "started_at": "2026-07-04T15:37:47.131010",
+    "finished_at": "2026-07-04T15:38:55.018276",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__grpc-grpc-31914": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "grpc-grpc-31914__T8u4AEG"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

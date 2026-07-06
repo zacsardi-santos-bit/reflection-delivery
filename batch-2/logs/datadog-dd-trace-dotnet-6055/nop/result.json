@@ -1,0 +1,29 @@
+{
+    "id": "efb9ef53-9fc4-41b1-878b-c464c61bf53e",
+    "started_at": "2026-07-04T15:37:08.464132",
+    "finished_at": "2026-07-04T15:39:54.928830",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__datadog-dd-trace-dotnet-6055": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "datadog-dd-trace-dotnet-6055__wq5Zxaw"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

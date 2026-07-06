@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/scripts/tests/ci/test_analyze_ci_job_durations.py -v",
+  "test_files": [
+    "scripts/tests/ci/test_analyze_ci_job_durations.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.test_analyze_ci_job_durations.TestGhApi::test_forces_get_method",
+    "tests.ci.test_analyze_ci_job_durations.TestParseIso::test_parses_z_suffix",
+    "tests.ci.test_analyze_ci_job_durations.TestParseIso::test_parses_offset",
+    "tests.ci.test_analyze_ci_job_durations.TestParseIso::test_none_for_empty",
+    "tests.ci.test_analyze_ci_job_durations.TestParseIso::test_none_for_garbage",
+    "tests.ci.test_analyze_ci_job_durations.TestDurationSeconds::test_computes_positive_duration",
+    "tests.ci.test_analyze_ci_job_durations.TestDurationSeconds::test_none_when_unparsable",
+    "tests.ci.test_analyze_ci_job_durations.TestDurationSeconds::test_none_when_negative",
+    "tests.ci.test_analyze_ci_job_durations.TestMedian::test_odd",
+    "tests.ci.test_analyze_ci_job_durations.TestMedian::test_even",
+    "tests.ci.test_analyze_ci_job_durations.TestFormatDuration::test_minutes_and_seconds",
+    "tests.ci.test_analyze_ci_job_durations.TestFormatDuration::test_seconds_only",
+    "tests.ci.test_analyze_ci_job_durations.TestFormatDuration::test_zero_pads_seconds",
+    "tests.ci.test_analyze_ci_job_durations.TestDetectRegression::test_flags_regression_above_both_thresholds",
+    "tests.ci.test_analyze_ci_job_durations.TestDetectRegression::test_no_regression_below_relative_threshold",
+    "tests.ci.test_analyze_ci_job_durations.TestDetectRegression::test_no_regression_below_absolute_floor",
+    "tests.ci.test_analyze_ci_job_durations.TestDetectRegression::test_robust_to_single_baseline_outlier",
+    "tests.ci.test_analyze_ci_job_durations.TestDetectRegression::test_empty_inputs",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRecentRuns::test_filters_to_successful_and_computes_duration",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRecentRuns::test_includes_failures_when_not_filtering",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRecentRuns::test_passes_event_to_api",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRecentRuns::test_omits_event_when_empty",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRecentRuns::test_empty_on_api_failure",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRunJobs::test_parses_successful_jobs",
+    "tests.ci.test_analyze_ci_job_durations.TestGetRunJobs::test_empty_on_command_failure",
+    "tests.ci.test_analyze_ci_job_durations.TestAnalyzeJobs::test_reports_only_regressed_jobs_with_enough_baseline",
+    "tests.ci.test_analyze_ci_job_durations.TestFormatSlackMessage::test_includes_channel_and_blocks"
+  ],
+  "PASS_TO_PASS": []
+}

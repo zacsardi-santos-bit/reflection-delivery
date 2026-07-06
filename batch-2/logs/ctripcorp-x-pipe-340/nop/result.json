@@ -1,0 +1,29 @@
+{
+    "id": "b10bd0e4-ea70-4352-86b9-050f5ba19f52",
+    "started_at": "2026-07-04T15:37:10.060285",
+    "finished_at": "2026-07-04T15:40:19.991568",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__ctripcorp-x-pipe-340": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "ctripcorp-x-pipe-340__EfAcMAz"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

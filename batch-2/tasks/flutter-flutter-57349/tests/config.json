@@ -1,0 +1,13 @@
+{
+  "test_framework": "lust",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && pub run test test/general.shard/device_test.dart && echo \"0 failures\"",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/device_test.dart"
+  ],
+  "num_test_files": 1,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "test_suite"
+  ],
+  "PASS_TO_PASS": []
+}

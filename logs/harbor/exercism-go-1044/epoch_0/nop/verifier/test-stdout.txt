@@ -1,7 +1,0 @@
-patching file exercises/rectangles/cases_test.go
-patching file exercises/rectangles/rectangles_test.go
-# _/workspace/repo/exercises/rectangles [_/workspace/repo/exercises/rectangles.test]
-exercises/rectangles/rectangles_test.go:9:16: undefined: Count
-exercises/rectangles/rectangles_test.go:19:4: undefined: Count
-FAIL	_/workspace/repo/exercises/rectangles [build failed]
-reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

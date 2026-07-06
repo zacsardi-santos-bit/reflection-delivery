@@ -1,0 +1,29 @@
+{
+    "id": "10ed0171-ed64-4740-a2d2-19a38832554a",
+    "started_at": "2026-07-06T12:17:35.350759",
+    "finished_at": "2026-07-06T12:17:57.256033",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__schemastore-schemastore-5396": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "schemastore-schemastore-5396__ai2F2kZ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

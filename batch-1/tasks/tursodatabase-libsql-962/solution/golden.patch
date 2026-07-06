@@ -1,0 +1,24 @@
+diff --git a/bindings/go/go.mod b/bindings/go/go.mod
+index da35e737b5..3804dc6c12 100644
+--- a/bindings/go/go.mod
++++ b/bindings/go/go.mod
+@@ -5,6 +5,7 @@ go 1.20
+ require (
+ 	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9
+ 	github.com/libsql/sqlite-antlr4-parser v0.0.0-20230802215326-5cb5bb604475
++	golang.org/x/sync v0.6.0
+ 	gotest.tools v2.2.0+incompatible
+ )
+ 
+diff --git a/bindings/go/go.sum b/bindings/go/go.sum
+index ffefaedefe..240cd711c0 100644
+--- a/bindings/go/go.sum
++++ b/bindings/go/go.sum
+@@ -8,5 +8,7 @@ github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+ golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e h1:+WEEuIdZHnUeJJmEUjyYC2gfUMj69yZXw17EnHg/otA=
+ golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e/go.mod h1:Kr81I6Kryrl9sr8s2FK3vxD90NdsKWRuOIl2O4CvYbA=
++golang.org/x/sync v0.6.0 h1:5BMeUDZ7vkXGfEr1x9B4bRcTH4lpkTkpdh0T/J+qjbQ=
++golang.org/x/sync v0.6.0/go.mod h1:Czt+wKu1gCyEFDUtn0jG5QVvpJ6rzVqr5aXyt9drQfk=
+ gotest.tools v2.2.0+incompatible h1:VsBPFP1AI068pPrMxtb/S8Zkgf9xEmTLJjfM+P5UIEo=
+ gotest.tools v2.2.0+incompatible/go.mod h1:DsYFclhRJ6vuDpmuTbkuFWG+y2sxOXAzmJt81HFBacw=

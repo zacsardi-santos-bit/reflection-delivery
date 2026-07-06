@@ -1,0 +1,22 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/ghost/core && yarn test:base './test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js' --timeout=2000",
+  "test_files": [
+    "ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer web renders iframe embed with data-src",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer web renders noscript fallback iframe",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer web renders background detection script",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer web includes siteUuid as ctx param",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer web renders without ctx param when siteUuid is not provided"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer email renders email template with {uuid} placeholder",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer email renders link to Transistor",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer email uses site accent color for icon background",
+    "/workspace/repo/ghost/core/test/unit/server/services/koenig/node-renderers/transistor-renderer.test.js::services/koenig/node-renderers/transistor-renderer email uses default accent color when not provided"
+  ]
+}

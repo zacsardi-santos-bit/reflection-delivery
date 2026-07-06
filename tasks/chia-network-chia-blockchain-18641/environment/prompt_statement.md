@@ -1,9 +1,0 @@
-I'm working on the Chia blockchain CLI and want to refactor the coin management commands — listing, combining, and splitting coins — to use the shared class-based command framework instead of calling the wallet RPC layer directly. Right now these commands don't check whether the wallet is synced before acting, and they crash rather than printing a friendly message when a wallet ID doesn't exist. I'd like them to behave consistently with other wallet commands.
-
-As part of this refactor, I need to introduce new shared classes that commands can embed to declare their configuration needs — for coin selection settings and for full transaction configuration including fees, push behavior, and timelocks. These classes should map cleanly to CLI options. There should also be a decorator that must be applied to the run method of any transaction endpoint command, and instantiating such a command without the decorator should raise a clear error.
-
-The transaction file reader and writer classes currently live in the signer command module but should be moved to the shared command class module so other commands can reuse them. Their CLI flags should also be renamed from short single-letter abbreviations to full descriptive names.
-
-The coin listing command needs to support showing unconfirmed coins, optional pagination (5 coins per page with 'c' to continue and 'q' to quit), and display each coin's identifier and amount in the smallest unit. The combine and split commands should require the user to confirm before sending, and should output appropriate messages when something goes wrong or when no transactions are produced.
-
-Finally, there should be a constant and a helper method available in the test environment to easily construct default and per-environment arguments for any transaction endpoint command.

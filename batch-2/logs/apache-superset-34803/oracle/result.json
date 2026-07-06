@@ -1,0 +1,29 @@
+{
+    "id": "8c7663c3-f98b-41a3-891c-b4575b25b51d",
+    "started_at": "2026-07-04T15:40:32.053613",
+    "finished_at": "2026-07-04T15:41:00.057035",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-superset-34803": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-superset-34803__C6UzTtG"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

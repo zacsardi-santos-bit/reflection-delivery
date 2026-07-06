@@ -1,0 +1,29 @@
+{
+    "id": "32729eae-611f-437a-ba8f-1c659e9f7dd2",
+    "started_at": "2026-07-04T15:37:01.487242",
+    "finished_at": "2026-07-04T15:45:19.383083",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-iotdb-14611": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-iotdb-14611__J2x9S4S"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

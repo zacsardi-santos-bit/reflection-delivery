@@ -1,0 +1,26 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl seatunnel-common install -DskipTests -q && mvn -pl seatunnel-formats/seatunnel-format-json test -Dtest=DebeziumJsonSerDeSchemaTest -DfailIfNoTests=false",
+  "test_files": [
+    "seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonSerDeSchemaTest.java",
+    "seatunnel-formats/seatunnel-format-json/src/test/resources/debezium-mysql.txt",
+    "seatunnel-formats/seatunnel-format-json/src/test/resources/debezium-oracle.txt",
+    "seatunnel-formats/seatunnel-format-json/src/test/resources/debezium-postgresql.txt",
+    "seatunnel-formats/seatunnel-format-json/src/test/resources/debezium-sqlserver.txt"
+  ],
+  "num_test_files": 5,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "SeaTunnel::test_1",
+    "SeaTunnel::test_2",
+    "SeaTunnel::test_3",
+    "SeaTunnel::test_4",
+    "SeaTunnel::test_5",
+    "SeaTunnel::test_6",
+    "SeaTunnel::test_7",
+    "SeaTunnel::test_8",
+    "SeaTunnel::test_9",
+    "SeaTunnel::test_10"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,71 @@
+patching file integration-tests/bats/log.bats
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites time="0.906">
+<testsuite name="log.bats" tests="3" failures="3" errors="0" skipped="0" time="0.906" timestamp="2026-06-29T15:19:48" hostname="modal">
+    <testcase classname="log.bats" name="log: --stat shows diffstat" time="0.197">
+        <failure type="failure">(in test file /workspace/repo/integration-tests/bats/log.bats, line 757)
+  `[ &quot;$status&quot; -eq 0 ]&#39; failed
+Successfully initialized dolt data repository.
+commit jokh2sqgk3hm4op8ep7p0t67ej5i69a6 (HEAD -&gt; main) 
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:47 +0000 2026
+
+	create table test</failure>
+    </testcase>
+    <testcase classname="log.bats" name="log: --stat works with --oneline" time="0.263">
+        <failure type="failure">(in test file /workspace/repo/integration-tests/bats/log.bats, line 798)
+  `[ &quot;$status&quot; -eq 0 ]&#39; failed
+Successfully initialized dolt data repository.
+commit ak80o6nignqc5fppekq7dm7om200sidq (HEAD -&gt; main) 
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:47 +0000 2026
+
+	create table test
+
+Query OK, 1 row affected (0.00 sec)
+commit pj5f2fu9mv86tslb5gfbna0km0mgfcds (HEAD -&gt; main) 
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:47 +0000 2026
+
+	insert into test</failure>
+    </testcase>
+    <testcase classname="log.bats" name="log: --stat doesn&#39;t print diffstat for merge commits" time="0.446">
+        <failure type="failure">(in test file /workspace/repo/integration-tests/bats/log.bats, line 824)
+  `[ &quot;$status&quot; -eq 0 ]&#39; failed
+Successfully initialized dolt data repository.
+commit a5f7kphif18hu264b3tos74vmmi8l6e2 (HEAD -&gt; main) 
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:47 +0000 2026
+
+	create table test
+
+Query OK, 1 row affected (0.00 sec)
+commit 25om014f7u88qdhejrvp4li4n83jusqa (HEAD -&gt; main) 
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:48 +0000 2026
+
+	insert into test
+
+Switched to branch &#39;branch1&#39;
+Query OK, 1 row affected (0.00 sec)
+commit 1mkamu6e4ipqdfrqro4l7m1fh3fitbe6 (HEAD -&gt; branch1) 
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:48 +0000 2026
+
+	insert into test
+
+Updating 5veaonh8or8j1ubite5lppur39vmlso0..25om014f7u88qdhejrvp4li4n83jusqa
+commit 5veaonh8or8j1ubite5lppur39vmlso0 (HEAD -&gt; branch1) 
+Merge: 1mkamu6e4ipqdfrqro4l7m1fh3fitbe6 25om014f7u88qdhejrvp4li4n83jusqa
+Author: Bats Tests &lt;bats@email.fake&gt;
+Date:  Mon Jun 29 15:19:48 +0000 2026
+
+	merge main
+
+test | 1 +
+1 tables changed, 1 rows added(+), 0 rows modified(*), 0 rows deleted(-)</failure>
+    </testcase>
+
+</testsuite>
+</testsuites>
+reward=0 graded=3 found=3 failed=3 parsed=3 framework=junit exit_code=1

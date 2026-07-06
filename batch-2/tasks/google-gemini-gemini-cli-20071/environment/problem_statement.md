@@ -1,0 +1,7 @@
+I've been staring at the context window indicator in the CLI footer and the framing feels backwards. Right now it shows something like "50% context left," which is counterintuitive, when the window is completely full it reads "0% context left" instead of the more natural "100% context used." I want to flip it so we display how much context has been consumed, so "50% context used," "100% context used" when fully consumed, "0% context used" when nothing's used yet. On narrow terminals keep the abbreviated form that drops the label and just shows the percentage.
+
+Also, when the CLI auto-compresses conversation history to free up space it happens silently right now and users have no clue it happened. After a compression event I want a visible informational message that reports the before and after context usage percentages, and mentions where the compression threshold can be adjusted in settings.
+
+Oh and the context overflow warning wording bugs me too, it currently says "remaining context window limit" which is redundant. It should say "context window limit" with the remaining token count shown separately as "N tokens left."
+
+Last thing, numeric settings that have units should show those units in the settings viewer. If a setting stores a decimal representing a percentage, show both the raw value and its percentage equivalent. If a setting stores a number in a time unit like seconds, append the unit abbreviation to the value. Right now these display as bare numbers and it's ambiguous what they mean without looking it up.

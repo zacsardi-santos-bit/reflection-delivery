@@ -1,0 +1,10 @@
+patching file airflow/api_connexion/endpoints/dag_parsing.py
+patching file airflow/api_connexion/openapi/v1.yaml
+patching file airflow/dag_processing/manager.py
+patching file airflow/migrations/versions/0144_2_10_0_added_dagpriorityparsingrequest_table.py
+patching file airflow/models/dagbag.py
+patching file airflow/utils/db.py
+patching file airflow/www/static/js/types/api-generated.ts
+patching file docs/apache-airflow/img/airflow_erd.sha256
+patching file docs/apache-airflow/img/airflow_erd.svg
+patching file docs/apache-airflow/migrations-ref.rst

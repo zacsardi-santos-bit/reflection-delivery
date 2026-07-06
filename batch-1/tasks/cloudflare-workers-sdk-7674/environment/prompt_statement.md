@@ -1,0 +1,5 @@
+I use dotenv-style files (with key-value pair lines) to manage my local development secrets, but when I try to bulk-upload them to my Worker or Pages project using wrangler, it only accepts JSON format. I'd like to be able to pass my env file directly to the bulk secret upload command without having to convert it to JSON first.
+
+This should work for all three bulk upload contexts I use: regular Workers, Pages projects, and versioned Workers. The CLI help text for the command's file argument should also be updated to mention that both JSON and env-file formats are accepted.
+
+Along with this, the error messages when no input is provided currently reference JSON specifically, which should be updated since the command now accepts more than just JSON. Also, the "finished processing" success message should similarly stop saying "JSON file" since it may not be a JSON file anymore. For the versioned Workers command in particular, when a file contains content that can't be parsed as either JSON or env format, the error should include the filename and the specific parse failure details rather than a generic message.

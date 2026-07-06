@@ -1,0 +1,29 @@
+{
+    "id": "fc5f76fb-96b8-4b0a-9788-41f4784cdfb2",
+    "started_at": "2026-07-06T12:17:08.606820",
+    "finished_at": "2026-07-06T12:17:43.635203",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__paddlepaddle-paddle-22967": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "paddlepaddle-paddle-22967__rqufHaX"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

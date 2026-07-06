@@ -1,0 +1,330 @@
+diff --git a/lib/streamlit/components/v2/presentation.py b/lib/streamlit/components/v2/presentation.py
+index c056a946e8..b78a57e15d 100644
+--- a/lib/streamlit/components/v2/presentation.py
++++ b/lib/streamlit/components/v2/presentation.py
+@@ -69,8 +69,8 @@ def make_bidi_component_presenter(
+             if ctx is not None and component_id is not None:
+                 user_key = session_state._key_id_mapper.get_key_from_id(component_id)
+                 if (
+-                    component_id in ctx.widget_ids_this_run
+-                    or user_key in ctx.form_ids_this_run
++                    component_id in ctx.shared.widget_ids_this_run
++                    or user_key in ctx.shared.form_ids_this_run
+                 ):
+                     raise StreamlitAPIException(
+                         f"`st.session_state.{user_key}.{k}` cannot be modified after the component"
+diff --git a/lib/streamlit/elements/form.py b/lib/streamlit/elements/form.py
+index 79ce1b22b0..76c8ec151f 100644
+--- a/lib/streamlit/elements/form.py
++++ b/lib/streamlit/elements/form.py
+@@ -220,7 +220,7 @@ class FormMixin:
+         form_id = key
+ 
+         ctx = get_script_run_ctx()
+-        if ctx is not None and not ctx.form_ids_this_run.check_and_add(form_id):
++        if ctx is not None and not ctx.shared.form_ids_this_run.check_and_add(form_id):
+             raise StreamlitAPIException(_build_duplicate_form_message(key))
+ 
+         block_proto = Block_pb2.Block()
+diff --git a/lib/streamlit/elements/lib/utils.py b/lib/streamlit/elements/lib/utils.py
+index 3156666ce5..6a2025d837 100644
+--- a/lib/streamlit/elements/lib/utils.py
++++ b/lib/streamlit/elements/lib/utils.py
+@@ -139,10 +139,10 @@ def _register_element_id(
+         return
+ 
+     user_key = user_key_from_element_id(element_id)
+-    if user_key and not ctx.widget_user_keys_this_run.check_and_add(user_key):
++    if user_key and not ctx.shared.widget_user_keys_this_run.check_and_add(user_key):
+         raise StreamlitDuplicateElementKey(user_key)
+ 
+-    if not ctx.widget_ids_this_run.check_and_add(element_id):
++    if not ctx.shared.widget_ids_this_run.check_and_add(element_id):
+         raise StreamlitDuplicateElementId(element_type)
+ 
+ 
+diff --git a/lib/streamlit/runtime/fragment.py b/lib/streamlit/runtime/fragment.py
+index fc88f13bf6..e573cf4264 100644
+--- a/lib/streamlit/runtime/fragment.py
++++ b/lib/streamlit/runtime/fragment.py
+@@ -397,7 +397,7 @@ def _fragment(
+             # we need to add them anyways and for fragment runs we add them
+             # in case the to-be-executed fragment id was cleared from the storage
+             # by the full app run.
+-            ctx.new_fragment_ids.check_and_add(fragment_id)
++            ctx.shared.new_fragment_ids.check_and_add(fragment_id)
+             # Pin the active script hash to the value captured at fragment
+             # definition (consistent widget IDs across reruns). Computed
+             # above ThreadState.scoped() so the comparison isn't coupled
+diff --git a/lib/streamlit/runtime/metrics_util.py b/lib/streamlit/runtime/metrics_util.py
+index 2f37c58641..b3195d5750 100644
+--- a/lib/streamlit/runtime/metrics_util.py
++++ b/lib/streamlit/runtime/metrics_util.py
+@@ -21,7 +21,7 @@ import sys
+ import threading
+ import time
+ import uuid
+-from collections.abc import Callable, Sized
++from collections.abc import Callable, Sequence, Sized
+ from functools import lru_cache, wraps
+ from typing import Any, Final, TypeVar, cast, overload
+ 
+@@ -660,7 +660,7 @@ def gather_metrics(name: str, func: F | None = None) -> Callable[[F], F] | F:
+             ctx is not None
+             and ctx.gather_usage_stats
+             and not ctx.command_tracking_deactivated
+-            and len(ctx.tracked_commands)
++            and ctx.shared.tracked_commands_count
+             < _MAX_TRACKED_COMMANDS  # Prevent too much memory usage
+         )
+ 
+@@ -677,13 +677,7 @@ def gather_metrics(name: str, func: F | None = None) -> Callable[[F], F] | F:
+                     non_optional_func, name, *args, **kwargs
+                 )
+ 
+-                if (
+-                    command_telemetry.name not in ctx.tracked_commands_counter
+-                    or ctx.tracked_commands_counter[command_telemetry.name]
+-                    < _MAX_TRACKED_PER_COMMAND
+-                ):
+-                    ctx.tracked_commands.append(command_telemetry)
+-                ctx.tracked_commands_counter.update([command_telemetry.name])
++                ctx.shared.track_command(command_telemetry, _MAX_TRACKED_PER_COMMAND)
+                 # Deactivate tracking to prevent calls inside already tracked commands
+                 ctx.command_tracking_deactivated = True
+                 # The ctx.command_tracking_deactivated flag was set to True,
+@@ -726,7 +720,7 @@ def gather_metrics(name: str, func: F | None = None) -> Callable[[F], F] | F:
+ 
+ 
+ def create_page_profile_message(
+-    commands: list[Command],
++    commands: Sequence[Command],
+     exec_time: int,
+     prep_time: int,
+     uncaught_exception: str | None = None,
+diff --git a/lib/streamlit/runtime/scriptrunner/script_runner.py b/lib/streamlit/runtime/scriptrunner/script_runner.py
+index b3b94490fa..1504f13774 100644
+--- a/lib/streamlit/runtime/scriptrunner/script_runner.py
++++ b/lib/streamlit/runtime/scriptrunner/script_runner.py
+@@ -796,7 +796,7 @@ class ScriptRunner:
+                             coordinator.drain()
+                             raise
+                         self._fragment_storage.clear(
+-                            new_fragment_ids=ctx.new_fragment_ids.snapshot()
++                            new_fragment_ids=ctx.shared.new_fragment_ids.snapshot()
+                         )
+ 
+                     self._session_state.maybe_check_serializable()
+@@ -829,7 +829,7 @@ class ScriptRunner:
+                     # Create and send page profile information
+                     ctx.enqueue(
+                         create_page_profile_message(
+-                            commands=ctx.tracked_commands,
++                            commands=ctx.shared.tracked_commands,
+                             exec_time=to_microseconds(timer() - start_time),
+                             prep_time=to_microseconds(prep_time),
+                             uncaught_exception=(
+@@ -865,7 +865,9 @@ class ScriptRunner:
+ 
+         # Tell session_state to update itself in response
+         if not premature_stop:
+-            self._session_state.on_script_finished(ctx.widget_ids_this_run.snapshot())
++            self._session_state.on_script_finished(
++                ctx.shared.widget_ids_this_run.snapshot()
++            )
+ 
+         # Signal that the script has finished. (We use SCRIPT_STOPPED_WITH_SUCCESS
+         # even if we were stopped with an exception.)
+diff --git a/lib/streamlit/runtime/scriptrunner_utils/script_run_context.py b/lib/streamlit/runtime/scriptrunner_utils/script_run_context.py
+index b279c9c2e3..3fbb47dff0 100644
+--- a/lib/streamlit/runtime/scriptrunner_utils/script_run_context.py
++++ b/lib/streamlit/runtime/scriptrunner_utils/script_run_context.py
+@@ -14,7 +14,6 @@
+ 
+ from __future__ import annotations
+ 
+-import collections
+ import contextlib
+ import contextvars
+ import dataclasses
+@@ -43,7 +42,7 @@ from streamlit.runtime.parallel_coordinator import ParallelFragmentCoordinator
+ from streamlit.runtime.scriptrunner_utils.script_run_context_attr import (
+     SCRIPT_RUN_CONTEXT_ATTR_NAME,
+ )
+-from streamlit.runtime.scriptrunner_utils.thread_safe_set import ThreadSafeSet
++from streamlit.runtime.scriptrunner_utils.shared_run_state import SharedRunState
+ 
+ if TYPE_CHECKING:
+     from collections.abc import Generator
+@@ -52,7 +51,6 @@ if TYPE_CHECKING:
+     from streamlit.cursor import RunningCursor
+     from streamlit.proto.ClientState_pb2 import ContextInfo
+     from streamlit.proto.ForwardMsg_pb2 import ForwardMsg
+-    from streamlit.proto.PageProfile_pb2 import Command
+     from streamlit.runtime.fragment import FragmentStorage
+     from streamlit.runtime.pages_manager import PagesManager
+     from streamlit.runtime.scriptrunner_utils.script_requests import ScriptRequests
+@@ -212,18 +210,11 @@ class ScriptRunContext:
+     context_info: ContextInfo | None = None
+     gather_usage_stats: bool = False
+     command_tracking_deactivated: bool = False
+-    tracked_commands: list[Command] = field(default_factory=list)
+-    tracked_commands_counter: collections.Counter[str] = field(
+-        default_factory=collections.Counter
+-    )
+     _has_script_started: bool = False
+-    widget_ids_this_run: ThreadSafeSet[str] = field(default_factory=ThreadSafeSet)
+-    widget_user_keys_this_run: ThreadSafeSet[str] = field(default_factory=ThreadSafeSet)
+-    form_ids_this_run: ThreadSafeSet[str] = field(default_factory=ThreadSafeSet)
++    shared: SharedRunState = field(default_factory=SharedRunState)
+     cursors: dict[int, RunningCursor] = field(default_factory=dict)
+     script_requests: ScriptRequests | None = None
+     fragment_ids_this_run: list[str] | None = None
+-    new_fragment_ids: ThreadSafeSet[str] = field(default_factory=ThreadSafeSet)
+     # we allow only one dialog to be open at the same time
+     has_dialog_opened: bool = False
+     parallel_coordinator: ParallelFragmentCoordinator | None = None
+@@ -269,9 +260,7 @@ class ScriptRunContext:
+         is_same_page = self.page_script_hash == page_script_hash
+ 
+         self.cursors = {}
+-        self.widget_ids_this_run.clear()
+-        self.widget_user_keys_this_run.clear()
+-        self.form_ids_this_run.clear()
++        self.shared.reset()
+         self.query_string = query_string
+         self.context_info = context_info
+         self.pages_manager.set_current_page_script_hash(page_script_hash)
+@@ -284,10 +273,7 @@ class ScriptRunContext:
+         )
+         self._has_script_started = False
+         self.command_tracking_deactivated: bool = False
+-        self.tracked_commands = []
+-        self.tracked_commands_counter = collections.Counter()
+         self.fragment_ids_this_run = fragment_ids_this_run
+-        self.new_fragment_ids.clear()
+         self.has_dialog_opened = False
+         self.cached_message_hashes = cached_message_hashes or set()
+ 
+diff --git a/lib/streamlit/runtime/scriptrunner_utils/shared_run_state.py b/lib/streamlit/runtime/scriptrunner_utils/shared_run_state.py
+new file mode 100644
+index 0000000000..a5167f9049
+--- /dev/null
++++ b/lib/streamlit/runtime/scriptrunner_utils/shared_run_state.py
+@@ -0,0 +1,86 @@
++# Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022-2026)
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++from __future__ import annotations
++
++import collections
++import threading
++from typing import TYPE_CHECKING
++
++from streamlit.runtime.scriptrunner_utils.thread_safe_set import ThreadSafeSet
++
++if TYPE_CHECKING:
++    from streamlit.proto.PageProfile_pb2 import Command
++
++
++class SharedRunState:
++    """Thread-safe container for shared mutable state during a script run.
++
++    A single instance is shared across the main thread and all worker threads.
++    Callers access state only through synchronized methods — direct field
++    access to the underlying data structures is not exposed.
++    """
++
++    def __init__(self) -> None:
++        self.widget_ids_this_run: ThreadSafeSet[str] = ThreadSafeSet()
++        self.widget_user_keys_this_run: ThreadSafeSet[str] = ThreadSafeSet()
++        self.form_ids_this_run: ThreadSafeSet[str] = ThreadSafeSet()
++        self.new_fragment_ids: ThreadSafeSet[str] = ThreadSafeSet()
++
++        self._telemetry_lock = threading.Lock()
++        self._tracked_commands: list[Command] = []
++        self._tracked_commands_counter: collections.Counter[str] = collections.Counter()
++
++    def reset(self) -> None:
++        """Re-initialize all shared mutable state for a new script run.
++
++        Must only be called from the main script thread before parallel
++        dispatch.
++        """
++        self.widget_ids_this_run.clear()
++        self.widget_user_keys_this_run.clear()
++        self.form_ids_this_run.clear()
++        self.new_fragment_ids.clear()
++
++        with self._telemetry_lock:
++            self._tracked_commands = []
++            self._tracked_commands_counter = collections.Counter()
++
++    @property
++    def tracked_commands(self) -> tuple[Command, ...]:
++        """Return an immutable snapshot of tracked commands."""
++        with self._telemetry_lock:
++            return tuple(self._tracked_commands)
++
++    @property
++    def tracked_commands_count(self) -> int:
++        """Return the number of commands stored in the tracked list (capped)."""
++        with self._telemetry_lock:
++            return len(self._tracked_commands)
++
++    def track_command(self, command: Command, max_per_command: int) -> None:
++        """Atomically track a command.
++
++        Appends the command to the list if it is under the per-command cap, and
++        always updates the counter.
++        """
++        with self._telemetry_lock:
++            if self._tracked_commands_counter[command.name] < max_per_command:
++                self._tracked_commands.append(command)
++            self._tracked_commands_counter.update([command.name])
++
++    def command_count_for(self, name: str) -> int:
++        """Return how many times a command name has been tracked."""
++        with self._telemetry_lock:
++            return self._tracked_commands_counter[name]
+diff --git a/lib/streamlit/runtime/state/session_state.py b/lib/streamlit/runtime/state/session_state.py
+index 099033c5c2..2123dc6c24 100644
+--- a/lib/streamlit/runtime/state/session_state.py
++++ b/lib/streamlit/runtime/state/session_state.py
+@@ -601,8 +601,8 @@ class SessionState:
+ 
+         if ctx is not None:
+             widget_id = self._key_id_mapper.get_id_from_key(user_key, None)
+-            widget_ids = ctx.widget_ids_this_run
+-            form_ids = ctx.form_ids_this_run
++            widget_ids = ctx.shared.widget_ids_this_run
++            form_ids = ctx.shared.form_ids_this_run
+ 
+             if widget_id in widget_ids or user_key in form_ids:
+                 raise StreamlitAPIException(
+diff --git a/lib/streamlit/testing/v1/local_script_runner.py b/lib/streamlit/testing/v1/local_script_runner.py
+index f15b13d829..4df30a9f4b 100644
+--- a/lib/streamlit/testing/v1/local_script_runner.py
++++ b/lib/streamlit/testing/v1/local_script_runner.py
+@@ -155,7 +155,9 @@ class LocalScriptRunner(ScriptRunner):
+         self, ctx: ScriptRunContext, event: ScriptRunnerEvent, premature_stop: bool
+     ) -> None:
+         if not premature_stop:
+-            self._session_state.on_script_finished(ctx.widget_ids_this_run.snapshot())
++            self._session_state.on_script_finished(
++                ctx.shared.widget_ids_this_run.snapshot()
++            )
+ 
+         # Signal that the script has finished. (We use SCRIPT_STOPPED_WITH_SUCCESS
+         # even if we were stopped with an exception.)

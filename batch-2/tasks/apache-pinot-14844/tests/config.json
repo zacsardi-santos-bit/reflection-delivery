@@ -1,0 +1,33 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && ./mvnw install -pl pinot-spi,pinot-segment-local -DskipTests -Dcheckstyle.skip -Dspotless.skip -Denforcer.skip -Dlicense.skip -DskipShade -q && ./mvnw test -pl pinot-core,pinot-broker -Dtest=QueryValidationTest,GroovyFunctionEvaluatorTest,GroovyStaticAnalyzerConfigTest -DfailIfNoTests=false -Dcheckstyle.skip -Dspotless.skip -Denforcer.skip -Dlicense.skip -DskipShade",
+  "test_files": [
+    "pinot-broker/src/test/java/org/apache/pinot/broker/requesthandler/QueryValidationTest.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/data/function/GroovyFunctionEvaluatorTest.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/data/function/GroovyStaticAnalyzerConfigTest.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7",
+    "Pinot::test_8",
+    "Pinot::test_9",
+    "Pinot::test_10",
+    "Pinot::test_11",
+    "Pinot::test_12",
+    "Pinot::test_13",
+    "Pinot::test_14",
+    "Pinot::test_15",
+    "Pinot::test_16",
+    "Pinot::test_17",
+    "Pinot::test_18",
+    "Pinot::test_19"
+  ],
+  "PASS_TO_PASS": []
+}

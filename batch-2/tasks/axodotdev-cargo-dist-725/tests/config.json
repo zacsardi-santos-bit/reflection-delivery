@@ -1,0 +1,51 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p cargo-dist --test cli-tests",
+  "test_files": [
+    "cargo-dist/src/tests/tag.rs",
+    "cargo-dist/tests/snapshots/akaikatana_basic.snap",
+    "cargo-dist/tests/snapshots/akaikatana_musl.snap",
+    "cargo-dist/tests/snapshots/akaikatana_repo_with_dot_git.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_abyss.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_abyss_only.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_basic.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_custom_github_runners.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_musl.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_musl_no_gnu.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign_prod.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_user_global_build_job.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_user_host_job.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_user_local_build_job.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_user_plan_job.snap",
+    "cargo-dist/tests/snapshots/axolotlsay_user_publish_job.snap",
+    "cargo-dist/tests/snapshots/install_path_cargo_home.snap",
+    "cargo-dist/tests/snapshots/install_path_env_no_subdir.snap",
+    "cargo-dist/tests/snapshots/install_path_env_subdir.snap",
+    "cargo-dist/tests/snapshots/install_path_env_subdir_space.snap",
+    "cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap",
+    "cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap",
+    "cargo-dist/tests/snapshots/install_path_home_subdir_min.snap",
+    "cargo-dist/tests/snapshots/install_path_home_subdir_space.snap",
+    "cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap",
+    "cargo-dist/tests/snapshots/lib_manifest.snap",
+    "cargo-dist/tests/snapshots/lib_manifest_slash.snap",
+    "cargo-dist/tests/snapshots/manifest.snap"
+  ],
+  "num_test_files": 31,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(8/8) cargo-dist::cli-tests test_manifest",
+    "(5/8) cargo-dist::cli-tests test_lib_manifest_slash",
+    "(6/8) cargo-dist::cli-tests test_error_manifest",
+    "(7/8) cargo-dist::cli-tests test_lib_manifest"
+  ],
+  "PASS_TO_PASS": [
+    "(1/8) cargo-dist::cli-tests test_version",
+    "(2/8) cargo-dist::cli-tests test_short_help",
+    "(3/8) cargo-dist::cli-tests test_long_help",
+    "(4/8) cargo-dist::cli-tests test_markdown_help"
+  ]
+}

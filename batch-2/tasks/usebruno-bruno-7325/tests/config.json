@@ -1,0 +1,51 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/bruno-converters && npx jest tests/postman/bruno-to-postman.spec.js --coverage=false --verbose --json",
+  "test_files": [
+    "packages/bruno-converters/tests/postman/bruno-to-postman.spec.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman multipartForm handling should export contentType when specified",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman multipartForm handling should handle mixed file and text fields",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman multipartForm handling should handle file type with string value (not array)",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman multipartForm handling should handle file type with empty value",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman protocolProfileBehavior handling should add disableBodyPruning for GET requests with body",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman protocolProfileBehavior handling should add disableBodyPruning for HEAD requests with body"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::transformUrl should handle basic URL with path variables",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::transformUrl should handle URL with query parameters",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::transformUrl should handle URL without protocol",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::sanitizeUrl should replace backslashes with slashes",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::sanitizeUrl should collapse multiple slashes into a single slash",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::sanitizeUrl should handle URLs with mixed slashes",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined headers",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined items in headers",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined body",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined body mode",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined formUrlEncoded array",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined multipartForm array",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined items in form data",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined method",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined url",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined params",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined docs",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined folder name",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined request name",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined folder items",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle null or undefined auth object",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle missing token in bearer auth",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle missing username/password in basic auth",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman null checks and fallbacks should handle missing key/value in apikey auth",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman multipartForm handling should export file type with type: file and src field",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman multipartForm handling should export text type with type: text and value field",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman protocolProfileBehavior handling should not add protocolProfileBehavior for POST requests with body",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman protocolProfileBehavior handling should not add protocolProfileBehavior for GET requests without body",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman event handling should generate events for request scripts (req/res)",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman event handling should generate events for folder scripts",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman event handling should generate collection-level events from root",
+    "/workspace/repo/packages/bruno-converters/tests/postman/bruno-to-postman.spec.js::brunoToPostman event handling should handle nested folders and requests with scripts"
+  ]
+}

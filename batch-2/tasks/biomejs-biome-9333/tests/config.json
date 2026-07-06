@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_html_formatter inline_before_self_closing",
+  "test_files": [
+    "crates/biome_html_formatter/tests/specs/html/elements/inline/inline-before-self-closing.html",
+    "crates/biome_html_formatter/tests/specs/html/elements/inline/inline-before-self-closing.html.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_html_formatter::spec_tests formatter::html::html::elements::inline::inline_before_self_closing_html"
+  ],
+  "PASS_TO_PASS": []
+}

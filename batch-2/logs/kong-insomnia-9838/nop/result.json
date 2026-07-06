@@ -1,0 +1,29 @@
+{
+    "id": "810e48a9-cca4-4932-a05e-7e41b1fd8629",
+    "started_at": "2026-07-06T12:17:21.797879",
+    "finished_at": "2026-07-06T12:19:24.067823",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__kong-insomnia-9838": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "kong-insomnia-9838__9rGpyer"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

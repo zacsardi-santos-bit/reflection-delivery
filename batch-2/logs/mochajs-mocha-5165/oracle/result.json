@@ -1,0 +1,29 @@
+{
+    "id": "e173dc44-b273-456c-9204-e0dbd62bd3a6",
+    "started_at": "2026-07-04T15:39:06.428519",
+    "finished_at": "2026-07-04T15:39:41.674001",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__mochajs-mocha-5165": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "mochajs-mocha-5165__YKi3ebq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

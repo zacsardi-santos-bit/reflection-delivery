@@ -1,0 +1,21 @@
+{
+  "test_framework": "maven",
+  "test_command": "mvn -B -pl modules/openapi-generator test -Dtest=KotlinMiskServerCodegenTest,KotlinMiskServerCodegenOptionsTest -DfailIfNoTests=false",
+  "test_files": [
+    "modules/openapi-generator/src/test/java/org/openapitools/codegen/kotlin/misk/KotlinMiskServerCodegenOptionsTest.java",
+    "modules/openapi-generator/src/test/java/org/openapitools/codegen/kotlin/misk/KotlinMiskServerCodegenTest.java",
+    "modules/openapi-generator/src/test/java/org/openapitools/codegen/options/KotlinMiskServerCodegenOptionsProvider.java",
+    "samples/server/petstore/kotlin-misk-config/src/test/kotlin/org/openapitools/server/api/api/PetApiTest.kt",
+    "samples/server/petstore/kotlin-misk-config/src/test/kotlin/org/openapitools/server/api/api/StoreApiTest.kt",
+    "samples/server/petstore/kotlin-misk-config/src/test/kotlin/org/openapitools/server/api/api/UserApiTest.kt"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "openapi-generator::test_1",
+    "openapi-generator::test_2",
+    "openapi-generator::test_3",
+    "openapi-generator::test_4"
+  ],
+  "PASS_TO_PASS": []
+}

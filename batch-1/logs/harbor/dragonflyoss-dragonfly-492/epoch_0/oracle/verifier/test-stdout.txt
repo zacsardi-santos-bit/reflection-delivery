@@ -1,0 +1,10 @@
+patching file internal/tasks/tasks_test.go
+{"Time":"2026-06-29T15:24:45.615087625Z","Action":"start","Package":"d7y.io/dragonfly/v2/internal/tasks"}
+{"Time":"2026-06-29T15:24:45.628152131Z","Action":"run","Package":"d7y.io/dragonfly/v2/internal/tasks","Test":"TestMarshalAndUnmarshal"}
+{"Time":"2026-06-29T15:24:45.628197265Z","Action":"output","Package":"d7y.io/dragonfly/v2/internal/tasks","Test":"TestMarshalAndUnmarshal","Output":"=== RUN   TestMarshalAndUnmarshal\n"}
+{"Time":"2026-06-29T15:24:45.628872717Z","Action":"output","Package":"d7y.io/dragonfly/v2/internal/tasks","Test":"TestMarshalAndUnmarshal","Output":"--- PASS: TestMarshalAndUnmarshal (0.00s)\n"}
+{"Time":"2026-06-29T15:24:45.628910164Z","Action":"pass","Package":"d7y.io/dragonfly/v2/internal/tasks","Test":"TestMarshalAndUnmarshal","Elapsed":0}
+{"Time":"2026-06-29T15:24:45.628932716Z","Action":"output","Package":"d7y.io/dragonfly/v2/internal/tasks","Output":"PASS\n"}
+{"Time":"2026-06-29T15:24:45.629325877Z","Action":"output","Package":"d7y.io/dragonfly/v2/internal/tasks","Output":"ok  \td7y.io/dragonfly/v2/internal/tasks\t0.014s\n"}
+{"Time":"2026-06-29T15:24:45.629351217Z","Action":"pass","Package":"d7y.io/dragonfly/v2/internal/tasks","Elapsed":0.014}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

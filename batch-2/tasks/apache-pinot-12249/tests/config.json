@@ -1,0 +1,19 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-plugins/pinot-stream-ingestion/pinot-kafka-2.0 -am test -Dtest=KafkaSSLUtilsTest -Dsurefire.failIfNoSpecifiedTests=false",
+  "test_files": [
+    "pinot-plugins/pinot-stream-ingestion/pinot-kafka-2.0/src/test/java/org/apache/pinot/plugin/stream/kafka20/KafkaSSLUtilsTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7"
+  ],
+  "PASS_TO_PASS": []
+}

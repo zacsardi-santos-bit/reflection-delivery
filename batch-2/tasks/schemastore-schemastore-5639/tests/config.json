@@ -1,0 +1,29 @@
+{
+  "test_framework": "jest",
+  "test_command": "python3 -c 'import json,subprocess,os;files=[\"src/test/yamlfmt/basic-config.yaml\",\"src/test/yamlfmt/implicit-basic-config.yaml\",\"src/test/yamlfmt/kyaml-config.yaml\",\"src/negative_test/yamlfmt/invalid-force-array-style.yaml\",\"src/negative_test/yamlfmt/invalid-force-quote-style.yaml\",\"src/negative_test/yamlfmt/invalid-kyaml-basic-option.yaml\",\"src/negative_test/yamlfmt/invalid-line-ending.yaml\",\"src/negative_test/yamlfmt/invalid-match-type.yaml\",\"src/negative_test/yamlfmt/invalid-output-format.yaml\"];r=subprocess.run([\"node\",\"cli.js\",\"check\",\"--schema-name\",\"yamlfmt.json\"],capture_output=True);s=\"passed\" if r.returncode==0 else \"failed\";d={\"testResults\":[{\"testFilePath\":f,\"assertionResults\":[{\"status\":s,\"fullName\":f,\"title\":f,\"ancestorTitles\":[]}]} for f in files]};os.makedirs(\"/workspace/test-results\",exist_ok=True);open(\"/workspace/test-results/output.json\",\"w\").write(json.dumps(d));exit(r.returncode)'",
+  "test_files": [
+    "src/negative_test/yamlfmt/invalid-force-array-style.yaml",
+    "src/negative_test/yamlfmt/invalid-force-quote-style.yaml",
+    "src/negative_test/yamlfmt/invalid-kyaml-basic-option.yaml",
+    "src/negative_test/yamlfmt/invalid-line-ending.yaml",
+    "src/negative_test/yamlfmt/invalid-match-type.yaml",
+    "src/negative_test/yamlfmt/invalid-output-format.yaml",
+    "src/test/yamlfmt/basic-config.yaml",
+    "src/test/yamlfmt/implicit-basic-config.yaml",
+    "src/test/yamlfmt/kyaml-config.yaml"
+  ],
+  "num_test_files": 9,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "::src/test/yamlfmt/basic-config.yaml",
+    "::src/test/yamlfmt/implicit-basic-config.yaml",
+    "::src/test/yamlfmt/kyaml-config.yaml",
+    "::src/negative_test/yamlfmt/invalid-force-array-style.yaml",
+    "::src/negative_test/yamlfmt/invalid-force-quote-style.yaml",
+    "::src/negative_test/yamlfmt/invalid-kyaml-basic-option.yaml",
+    "::src/negative_test/yamlfmt/invalid-line-ending.yaml",
+    "::src/negative_test/yamlfmt/invalid-match-type.yaml",
+    "::src/negative_test/yamlfmt/invalid-output-format.yaml"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,5 +1,0 @@
-I'm working on the Google quantum engine client and need to refactor how authentication and project identification work. Right now the client takes an API key as its main parameter and embeds it in request URLs, but this isn't the right approach for Google Cloud — the project ID should live on the client itself and be sent as a request header for billing attribution instead.
-
-Specifically, I'd like the client to accept a project ID at construction time (not an API key), store it, and automatically use it when building the underlying API service, listing processors, retrieving calibrations, and inferring job configuration paths. Job configurations shouldn't need to carry a project ID anymore since the client already knows it.
-
-I also want to support an optional custom discovery URL for accessing alternative endpoints, but only if no version is also specified — providing both should be an error. The helper function that creates the client from environment variables should look for a project ID environment variable and fail with a clear error if it's absent.

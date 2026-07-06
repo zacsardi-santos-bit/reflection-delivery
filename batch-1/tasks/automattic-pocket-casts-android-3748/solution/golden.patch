@@ -1,0 +1,2656 @@
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/PlayerHeaderFragment.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/PlayerHeaderFragment.kt
+index eb2f727ea..8dd59d573 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/PlayerHeaderFragment.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/PlayerHeaderFragment.kt
+@@ -12,6 +12,7 @@ import android.view.View
+ import android.view.ViewGroup
+ import androidx.activity.result.ActivityResultLauncher
+ import androidx.compose.runtime.LaunchedEffect
++import androidx.core.view.isInvisible
+ import androidx.core.view.isVisible
+ import androidx.fragment.app.Fragment
+ import androidx.fragment.app.activityViewModels
+@@ -376,6 +377,7 @@ class PlayerHeaderFragment : BaseFragment(), PlayerClickListener {
+                 shelfSharedViewModel.transitionState.collect { transitionState ->
+                     when (transitionState) {
+                         is TransitionState.OpenTranscript -> binding?.openTranscript()
++                        is TransitionState.UpsellTranscript -> binding?.hidePlaybackControls()
+                         is TransitionState.CloseTranscript -> binding?.closeTranscript(transitionState.withTransition)
+                     }
+                 }
+@@ -402,6 +404,12 @@ class PlayerHeaderFragment : BaseFragment(), PlayerClickListener {
+         root.setScrollingEnabled(false)
+     }
+ 
++    private fun AdapterPlayerHeaderBinding.hidePlaybackControls() {
++        playerGroup.layoutTransition = LayoutTransition()
++        seekBar.isInvisible = true
++        playerControlsComposeView.isInvisible = true
++    }
++
+     private fun AdapterPlayerHeaderBinding.closeTranscript(
+         withTransition: Boolean,
+     ) {
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptError.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptError.kt
+index 7d12d31c5..d3f53d80a 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptError.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptError.kt
+@@ -129,6 +129,7 @@ private fun ErrorPreview() {
+                     episodeUuid = "uuid",
+                     type = TranscriptFormat.HTML.mimeType,
+                     url = "url",
++                    isGenerated = false,
+                 ),
+             ),
+             onRetry = {},
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPage.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPage.kt
+index 59d417fed..b34e2e9df 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPage.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPage.kt
+@@ -25,6 +25,8 @@ import androidx.compose.runtime.CompositionLocalProvider
+ import androidx.compose.runtime.LaunchedEffect
+ import androidx.compose.ui.Alignment
+ import androidx.compose.ui.Modifier
++import androidx.compose.ui.draw.alpha
++import androidx.compose.ui.draw.blur
+ import androidx.compose.ui.graphics.Color
+ import androidx.compose.ui.platform.LocalClipboardManager
+ import androidx.compose.ui.platform.LocalConfiguration
+@@ -92,7 +94,7 @@ fun TranscriptPage(
+     val searchState = searchViewModel.searchState.collectAsStateWithLifecycle()
+     val refreshing = transcriptViewModel.isRefreshing.collectAsStateWithLifecycle()
+     val pullRefreshState = rememberPullRefreshState(refreshing.value, {
+-        transcriptViewModel.parseAndLoadTranscript(isTranscriptViewOpen = true, pulledToRefresh = true)
++        transcriptViewModel.parseAndLoadTranscript(pulledToRefresh = true)
+     })
+     val playerBackgroundColor = Color(theme.playerBackgroundColor(uiState.value.podcastAndEpisode?.podcast))
+     val colors = TranscriptColors(playerBackgroundColor)
+@@ -120,7 +122,6 @@ fun TranscriptPage(
+                     state = loadedState,
+                     searchState = searchState.value,
+                     colors = colors,
+-                    modifier = modifier,
+                     transitionState = transitionState.value,
+                 )
+ 
+@@ -138,10 +139,7 @@ fun TranscriptPage(
+                 TranscriptError(
+                     state = errorState,
+                     onRetry = {
+-                        transcriptViewModel.parseAndLoadTranscript(
+-                            isTranscriptViewOpen = true,
+-                            retryOnFail = true,
+-                        )
++                        transcriptViewModel.parseAndLoadTranscript(retryOnFail = true)
+                     },
+                     colors = colors,
+                     modifier = modifier,
+@@ -151,7 +149,9 @@ fun TranscriptPage(
+     }
+ 
+     LaunchedEffect(uiState.value.transcript?.episodeUuid, uiState.value.transcript?.type, transitionState.value) {
+-        transcriptViewModel.parseAndLoadTranscript(transitionState.value is TransitionState.OpenTranscript)
++        if (transitionState.value is TransitionState.OpenTranscript) {
++            transcriptViewModel.parseAndLoadTranscript()
++        }
+     }
+ 
+     if (uiState.value is UiState.TranscriptLoaded) {
+@@ -174,44 +174,55 @@ private fun TranscriptContent(
+     state: UiState.TranscriptLoaded,
+     searchState: SearchUiState,
+     colors: TranscriptColors,
+-    modifier: Modifier,
+     transitionState: TransitionState?,
+ ) {
+     Box(
+-        modifier = modifier
++        modifier = Modifier
+             .fillMaxWidth()
+             .background(colors.backgroundColor()),
+     ) {
+-        if (state.isTranscriptEmpty) {
+-            TextP40(
+-                text = stringResource(LR.string.transcript_empty),
+-                color = TranscriptColors.textColor(),
++        Box(
++            modifier = if (state.showPaywall) {
++                if (Build.VERSION.SDK_INT >= 31) {
++                    Modifier.blur(8.dp)
++                } else {
++                    Modifier.alpha(0f)
++                }
++            } else {
++                Modifier
++            },
++        ) {
++            if (state.isTranscriptEmpty) {
++                TextP40(
++                    text = stringResource(LR.string.transcript_empty),
++                    color = TranscriptColors.textColor(),
++                    modifier = Modifier
++                        .padding(horizontal = 16.dp)
++                        .padding(top = 60.dp),
++                )
++            } else {
++                ScrollableTranscriptView(
++                    state = state,
++                    searchState = searchState,
++                    transitionState = transitionState,
++                )
++            }
++
++            GradientView(
++                baseColor = colors.backgroundColor(),
+                 modifier = Modifier
+-                    .padding(horizontal = 16.dp)
+-                    .padding(top = 60.dp),
++                    .align(Alignment.TopCenter),
++                fadeDirection = FadeDirection.TopToBottom,
+             )
+-        } else {
+-            ScrollableTranscriptView(
+-                state = state,
+-                searchState = searchState,
+-                transitionState = transitionState,
++
++            GradientView(
++                baseColor = colors.backgroundColor(),
++                modifier = Modifier
++                    .align(Alignment.BottomCenter)
++                    .padding(bottom = bottomPadding()),
++                fadeDirection = FadeDirection.BottomToTop,
+             )
+         }
+-
+-        GradientView(
+-            baseColor = colors.backgroundColor(),
+-            modifier = Modifier
+-                .align(Alignment.TopCenter),
+-            fadeDirection = FadeDirection.TopToBottom,
+-        )
+-
+-        GradientView(
+-            baseColor = colors.backgroundColor(),
+-            modifier = Modifier
+-                .align(Alignment.BottomCenter)
+-                .padding(bottom = bottomPadding()),
+-            fadeDirection = FadeDirection.BottomToTop,
+-        )
+     }
+ }
+ 
+@@ -450,6 +461,7 @@ private fun TranscriptContentPreview(
+                     episodeUuid = "uuid",
+                     type = TranscriptFormat.HTML.mimeType,
+                     url = "url",
++                    isGenerated = false,
+                 ),
+                 cuesInfo = ImmutableList.of(
+                     TranscriptCuesInfo(
+@@ -473,11 +485,11 @@ private fun TranscriptContentPreview(
+                         DisplayItem("Maecenas fermentum senectus penatibus tenectus integer per vulputate tellus ted.", false, 115, 195),
+                     ),
+                 ),
++                isSubscriptionRequired = false,
+             ),
+             searchState = searchState,
+             transitionState = null,
+             colors = TranscriptColors(Color.Black),
+-            modifier = Modifier.fillMaxSize(),
+         )
+     }
+ }
+@@ -494,17 +506,18 @@ private fun TranscriptEmptyContentPreview() {
+                     episodeUuid = "uuid",
+                     type = TranscriptFormat.HTML.mimeType,
+                     url = "url",
++                    isGenerated = false,
+                 ),
+                 cuesInfo = emptyList(),
+                 displayInfo = DisplayInfo(
+                     text = "",
+                     items = emptyList(),
+                 ),
++                isSubscriptionRequired = false,
+             ),
+             searchState = SearchUiState(),
+             transitionState = null,
+             colors = TranscriptColors(Color.Black),
+-            modifier = Modifier.fillMaxSize(),
+         )
+     }
+ }
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPageWrapper.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPageWrapper.kt
+index 4148d7853..daa4f78c0 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPageWrapper.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptPageWrapper.kt
+@@ -86,6 +86,7 @@ fun TranscriptPageWrapper(
+ 
+         val configuration = LocalConfiguration.current
+ 
++        var showPaywall by remember { mutableStateOf(false) }
+         var showSearch by remember { mutableStateOf(false) }
+         var expandSearch by remember { mutableStateOf(false) }
+         when (transitionState.value) {
+@@ -112,6 +113,10 @@ fun TranscriptPageWrapper(
+                     .height(configuration.screenHeightDp.dp),
+             )
+ 
++            if (showPaywall) {
++                TranscriptsPaywall()
++            }
++
+             TranscriptToolbar(
+                 onCloseClick = {
+                     shelfSharedViewModel.closeTranscript(
+@@ -141,7 +146,16 @@ fun TranscriptPageWrapper(
+ 
+         LaunchedEffect(transcriptUiState.value) {
+             showSearch = (transcriptUiState.value as? TranscriptViewModel.UiState.TranscriptLoaded)?.showSearch == true
+-            if (!showSearch) expandSearch = false
++            if (!showSearch) {
++                expandSearch = false
++            }
++        }
++
++        LaunchedEffect(transcriptUiState.value, transitionState.value) {
++            showPaywall = (transcriptUiState.value as? TranscriptViewModel.UiState.TranscriptLoaded)?.showPaywall == true
++            if (transitionState.value is TransitionState.OpenTranscript && showPaywall) {
++                shelfSharedViewModel.showUpsell()
++            }
+         }
+     }
+ }
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModel.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModel.kt
+index b6c48c081..a74b25042 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModel.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModel.kt
+@@ -13,6 +13,7 @@ import au.com.shiftyjelly.pocketcasts.repositories.di.IoDispatcher
+ import au.com.shiftyjelly.pocketcasts.repositories.playback.PlaybackManager
+ import au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptFormat
+ import au.com.shiftyjelly.pocketcasts.repositories.podcast.TranscriptsManager
++import au.com.shiftyjelly.pocketcasts.repositories.subscription.SubscriptionManager
+ import au.com.shiftyjelly.pocketcasts.utils.exception.EmptyDataException
+ import au.com.shiftyjelly.pocketcasts.utils.exception.NoNetworkException
+ import au.com.shiftyjelly.pocketcasts.utils.exception.ParsingException
+@@ -25,6 +26,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
+ import kotlinx.coroutines.flow.MutableStateFlow
+ import kotlinx.coroutines.flow.StateFlow
+ import kotlinx.coroutines.flow.distinctUntilChanged
++import kotlinx.coroutines.flow.first
+ import kotlinx.coroutines.flow.flatMapLatest
+ import kotlinx.coroutines.flow.map
+ import kotlinx.coroutines.flow.stateIn
+@@ -39,6 +41,7 @@ class TranscriptViewModel @Inject constructor(
+     private val playbackManager: PlaybackManager,
+     private val analyticsTracker: AnalyticsTracker,
+     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
++    private val subscriptionManager: SubscriptionManager,
+ ) : ViewModel() {
+     private var _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Empty())
+     val uiState: StateFlow<UiState> = _uiState
+@@ -56,7 +59,7 @@ class TranscriptViewModel @Inject constructor(
+     }
+ 
+     private fun transcriptFlow(podcastAndEpisode: PodcastAndEpisode) =
+-        transcriptsManager.observerTranscriptForEpisode(podcastAndEpisode.episodeUuid)
++        transcriptsManager.observeTranscriptForEpisode(podcastAndEpisode.episodeUuid)
+             .distinctUntilChanged { t1, t2 -> t1?.episodeUuid == t2?.episodeUuid && t1?.type == t2?.type }
+             .map { transcript ->
+                 transcript?.let {
+@@ -65,11 +68,9 @@ class TranscriptViewModel @Inject constructor(
+             }
+ 
+     fun parseAndLoadTranscript(
+-        isTranscriptViewOpen: Boolean,
+         pulledToRefresh: Boolean = false,
+         retryOnFail: Boolean = false,
+     ) {
+-        if (isTranscriptViewOpen.not()) return
+         val podcastAndEpisode = _uiState.value.podcastAndEpisode
+         if (pulledToRefresh) {
+             _isRefreshing.value = true
+@@ -96,6 +97,11 @@ class TranscriptViewModel @Inject constructor(
+                         podcastAndEpisode = podcastAndEpisode,
+                         displayInfo = displayInfo,
+                         cuesInfo = cuesInfo,
++                        isSubscriptionRequired = if (transcript.isGenerated) {
++                            !subscriptionManager.subscriptionTier().first().isPaid
++                        } else {
++                            false
++                        },
+                     )
+ 
+                     if (!pulledToRefresh) {
+@@ -228,15 +234,19 @@ class TranscriptViewModel @Inject constructor(
+             override val transcript: Transcript,
+             val displayInfo: DisplayInfo,
+             val cuesInfo: List<TranscriptCuesInfo>,
++            val isSubscriptionRequired: Boolean,
+         ) : UiState() {
+             val isTranscriptEmpty: Boolean = cuesInfo.isEmpty()
++
++            val showPaywall = isSubscriptionRequired && !isTranscriptEmpty
++
+             val showAsWebPage: Boolean
+                 get() = transcript.type == TranscriptFormat.HTML.mimeType &&
+                     cuesInfo.isNotEmpty() && cuesInfo[0].cuesWithTiming.cues.any {
+                         it.text?.contains("<script type=\"text/javascript\">") ?: false
+                     }
+ 
+-            val showSearch = !showAsWebPage
++            val showSearch = !showAsWebPage && !isSubscriptionRequired
+         }
+ 
+         data class Error(
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptsPaywall.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptsPaywall.kt
+new file mode 100644
+index 000000000..8e7e6549b
+--- /dev/null
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptsPaywall.kt
+@@ -0,0 +1,34 @@
++package au.com.shiftyjelly.pocketcasts.player.view.transcripts
++
++import androidx.compose.foundation.clickable
++import androidx.compose.foundation.layout.Box
++import androidx.compose.foundation.layout.fillMaxSize
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.Alignment
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.tooling.preview.Preview
++import au.com.shiftyjelly.pocketcasts.compose.AppThemeWithBackground
++import au.com.shiftyjelly.pocketcasts.compose.components.TextH10
++import au.com.shiftyjelly.pocketcasts.ui.theme.Theme
++
++@Composable
++internal fun TranscriptsPaywall() {
++    Box(
++        contentAlignment = Alignment.Center,
++        modifier = Modifier
++            .fillMaxSize()
++            .clickable(indication = null, interactionSource = null, onClick = {}),
++    ) {
++        TextH10(text = "Paywall")
++    }
++}
++
++@Preview
++@Composable
++private fun TranscriptsPaywallPreview() {
++    AppThemeWithBackground(
++        themeType = Theme.ThemeType.DARK,
++    ) {
++        TranscriptsPaywall()
++    }
++}
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfSharedViewModel.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfSharedViewModel.kt
+index 5481c485a..4d6c65e45 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfSharedViewModel.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfSharedViewModel.kt
+@@ -139,6 +139,12 @@ class ShelfSharedViewModel @Inject constructor(
+         }
+     }
+ 
++    fun showUpsell() {
++        viewModelScope.launch {
++            _transitionState.emit(TransitionState.UpsellTranscript)
++        }
++    }
++
+     fun closeTranscript(
+         podcast: Podcast?,
+         episode: BaseEpisode?,
+@@ -359,6 +365,7 @@ class ShelfSharedViewModel @Inject constructor(
+ 
+     sealed class TransitionState {
+         data object OpenTranscript : TransitionState()
++        data object UpsellTranscript : TransitionState()
+         data class CloseTranscript(val withTransition: Boolean) : TransitionState()
+     }
+ 
+diff --git a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModel.kt b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModel.kt
+index 652b685dc..3cc59bac6 100644
+--- a/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModel.kt
++++ b/modules/features/player/src/main/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModel.kt
+@@ -40,7 +40,7 @@ class ShelfViewModel @AssistedInject constructor(
+ 
+     init {
+         viewModelScope.launch {
+-            transcriptsManager.observerTranscriptForEpisode(episodeId)
++            transcriptsManager.observeTranscriptForEpisode(episodeId)
+                 .distinctUntilChangedBy { it?.episodeUuid }
+                 .stateIn(viewModelScope)
+                 .collectLatest { transcript ->
+diff --git a/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/110.json b/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/110.json
+index b89beb201..ec91f0dd1 100644
+--- a/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/110.json
++++ b/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/110.json
+@@ -2,7 +2,7 @@
+   "formatVersion": 1,
+   "database": {
+     "version": 110,
+-    "identityHash": "c491d631af3dc5c496a2e66e2d3dec81",
++    "identityHash": "53a6c3f5c60a6282e82e8a186799fccc",
+     "entities": [
+       {
+         "tableName": "bump_stats",
+@@ -1821,7 +1821,7 @@
+       },
+       {
+         "tableName": "episode_transcript",
+-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_uuid` TEXT NOT NULL, `url` TEXT NOT NULL, `type` TEXT NOT NULL, `language` TEXT, PRIMARY KEY(`episode_uuid`, `url`))",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_uuid` TEXT NOT NULL, `url` TEXT NOT NULL, `type` TEXT NOT NULL, `is_generated` INTEGER NOT NULL, `language` TEXT, PRIMARY KEY(`episode_uuid`, `url`))",
+         "fields": [
+           {
+             "fieldPath": "episodeUuid",
+@@ -1841,6 +1841,12 @@
+             "affinity": "TEXT",
+             "notNull": true
+           },
++          {
++            "fieldPath": "isGenerated",
++            "columnName": "is_generated",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
+           {
+             "fieldPath": "language",
+             "columnName": "language",
+@@ -1904,7 +1910,7 @@
+     "views": [],
+     "setupQueries": [
+       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c491d631af3dc5c496a2e66e2d3dec81')"
++      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '53a6c3f5c60a6282e82e8a186799fccc')"
+     ]
+   }
+ }
+\ No newline at end of file
+diff --git a/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/111.json b/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/111.json
+new file mode 100644
+index 000000000..15f0aa86f
+--- /dev/null
++++ b/modules/services/model/schemas/au.com.shiftyjelly.pocketcasts.models.db.AppDatabase/111.json
+@@ -0,0 +1,1916 @@
++{
++  "formatVersion": 1,
++  "database": {
++    "version": 111,
++    "identityHash": "53a6c3f5c60a6282e82e8a186799fccc",
++    "entities": [
++      {
++        "tableName": "bump_stats",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `event_time` INTEGER NOT NULL, `custom_event_props` TEXT NOT NULL, PRIMARY KEY(`name`, `event_time`, `custom_event_props`))",
++        "fields": [
++          {
++            "fieldPath": "name",
++            "columnName": "name",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "eventTime",
++            "columnName": "event_time",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "customEventProps",
++            "columnName": "custom_event_props",
++            "affinity": "TEXT",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "name",
++            "event_time",
++            "custom_event_props"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "bookmarks",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `podcast_uuid` TEXT NOT NULL, `episode_uuid` TEXT NOT NULL, `time` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `title` TEXT NOT NULL, `title_modified` INTEGER, `deleted` INTEGER NOT NULL, `deleted_modified` INTEGER, `sync_status` INTEGER NOT NULL, PRIMARY KEY(`uuid`))",
++        "fields": [
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastUuid",
++            "columnName": "podcast_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeUuid",
++            "columnName": "episode_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "timeSecs",
++            "columnName": "time",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "createdAt",
++            "columnName": "created_at",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "titleModified",
++            "columnName": "title_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "deleted",
++            "columnName": "deleted",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "deletedModified",
++            "columnName": "deleted_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "syncStatus",
++            "columnName": "sync_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "uuid"
++          ]
++        },
++        "indices": [
++          {
++            "name": "bookmarks_podcast_uuid",
++            "unique": false,
++            "columnNames": [
++              "podcast_uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `bookmarks_podcast_uuid` ON `${TABLE_NAME}` (`podcast_uuid`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "podcast_episodes",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `episode_description` TEXT NOT NULL, `published_date` INTEGER NOT NULL, `title` TEXT NOT NULL, `size_in_bytes` INTEGER NOT NULL, `episode_status` INTEGER NOT NULL, `file_type` TEXT, `duration` REAL NOT NULL, `download_url` TEXT, `downloaded_file_path` TEXT, `downloaded_error_details` TEXT, `play_error_details` TEXT, `played_up_to` REAL NOT NULL, `playing_status` INTEGER NOT NULL, `podcast_id` TEXT NOT NULL, `added_date` INTEGER NOT NULL, `auto_download_status` INTEGER NOT NULL, `starred` INTEGER NOT NULL, `thumbnail_status` INTEGER NOT NULL, `last_download_attempt_date` INTEGER, `playing_status_modified` INTEGER, `played_up_to_modified` INTEGER, `duration_modified` INTEGER, `starred_modified` INTEGER, `archived` INTEGER NOT NULL, `archived_modified` INTEGER, `season` INTEGER, `number` INTEGER, `type` TEXT, `cleanTitle` TEXT, `last_playback_interaction_date` INTEGER, `last_playback_interaction_sync_status` INTEGER NOT NULL, `exclude_from_episode_limit` INTEGER NOT NULL, `download_task_id` TEXT, `last_archive_interaction_date` INTEGER, `image_url` TEXT, `deselected_chapters` TEXT NOT NULL, `deselected_chapters_modified` INTEGER, PRIMARY KEY(`uuid`))",
++        "fields": [
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeDescription",
++            "columnName": "episode_description",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "publishedDate",
++            "columnName": "published_date",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "sizeInBytes",
++            "columnName": "size_in_bytes",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeStatus",
++            "columnName": "episode_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "fileType",
++            "columnName": "file_type",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "duration",
++            "columnName": "duration",
++            "affinity": "REAL",
++            "notNull": true
++          },
++          {
++            "fieldPath": "downloadUrl",
++            "columnName": "download_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "downloadedFilePath",
++            "columnName": "downloaded_file_path",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "downloadErrorDetails",
++            "columnName": "downloaded_error_details",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playErrorDetails",
++            "columnName": "play_error_details",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playedUpTo",
++            "columnName": "played_up_to",
++            "affinity": "REAL",
++            "notNull": true
++          },
++          {
++            "fieldPath": "playingStatus",
++            "columnName": "playing_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastUuid",
++            "columnName": "podcast_id",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "addedDate",
++            "columnName": "added_date",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoDownloadStatus",
++            "columnName": "auto_download_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isStarred",
++            "columnName": "starred",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "thumbnailStatus",
++            "columnName": "thumbnail_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "lastDownloadAttemptDate",
++            "columnName": "last_download_attempt_date",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playingStatusModified",
++            "columnName": "playing_status_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playedUpToModified",
++            "columnName": "played_up_to_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "durationModified",
++            "columnName": "duration_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "starredModified",
++            "columnName": "starred_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "isArchived",
++            "columnName": "archived",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "archivedModified",
++            "columnName": "archived_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "season",
++            "columnName": "season",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "number",
++            "columnName": "number",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "type",
++            "columnName": "type",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "cleanTitle",
++            "columnName": "cleanTitle",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "lastPlaybackInteraction",
++            "columnName": "last_playback_interaction_date",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "lastPlaybackInteractionSyncStatus",
++            "columnName": "last_playback_interaction_sync_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "excludeFromEpisodeLimit",
++            "columnName": "exclude_from_episode_limit",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "downloadTaskId",
++            "columnName": "download_task_id",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "lastArchiveInteraction",
++            "columnName": "last_archive_interaction_date",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "imageUrl",
++            "columnName": "image_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "deselectedChapters",
++            "columnName": "deselected_chapters",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "deselectedChaptersModified",
++            "columnName": "deselected_chapters_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "uuid"
++          ]
++        },
++        "indices": [
++          {
++            "name": "episode_last_download_attempt_date",
++            "unique": false,
++            "columnNames": [
++              "last_download_attempt_date"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `episode_last_download_attempt_date` ON `${TABLE_NAME}` (`last_download_attempt_date`)"
++          },
++          {
++            "name": "episode_podcast_id",
++            "unique": false,
++            "columnNames": [
++              "podcast_id"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `episode_podcast_id` ON `${TABLE_NAME}` (`podcast_id`)"
++          },
++          {
++            "name": "episode_published_date",
++            "unique": false,
++            "columnNames": [
++              "published_date"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `episode_published_date` ON `${TABLE_NAME}` (`published_date`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "folders",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL, `added_date` INTEGER NOT NULL, `sort_position` INTEGER NOT NULL, `podcasts_sort_type` INTEGER NOT NULL, `deleted` INTEGER NOT NULL, `sync_modified` INTEGER NOT NULL, PRIMARY KEY(`uuid`))",
++        "fields": [
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "name",
++            "columnName": "name",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "color",
++            "columnName": "color",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "addedDate",
++            "columnName": "added_date",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "sortPosition",
++            "columnName": "sort_position",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastsSortType",
++            "columnName": "podcasts_sort_type",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "deleted",
++            "columnName": "deleted",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "syncModified",
++            "columnName": "sync_modified",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "uuid"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "suggested_folders",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`folder_name` TEXT NOT NULL, `podcast_uuid` TEXT NOT NULL, PRIMARY KEY(`folder_name`, `podcast_uuid`))",
++        "fields": [
++          {
++            "fieldPath": "name",
++            "columnName": "folder_name",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastUuid",
++            "columnName": "podcast_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "folder_name",
++            "podcast_uuid"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "filters",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER, `uuid` TEXT NOT NULL, `title` TEXT NOT NULL, `sortPosition` INTEGER, `manual` INTEGER NOT NULL, `unplayed` INTEGER NOT NULL, `partiallyPlayed` INTEGER NOT NULL, `finished` INTEGER NOT NULL, `audioVideo` INTEGER NOT NULL, `allPodcasts` INTEGER NOT NULL, `podcastUuids` TEXT, `downloaded` INTEGER NOT NULL, `downloading` INTEGER NOT NULL, `notDownloaded` INTEGER NOT NULL, `autoDownload` INTEGER NOT NULL, `autoDownloadWifiOnly` INTEGER NOT NULL, `autoDownloadPowerOnly` INTEGER NOT NULL, `sortId` INTEGER NOT NULL, `iconId` INTEGER NOT NULL, `filterHours` INTEGER NOT NULL, `starred` INTEGER NOT NULL, `deleted` INTEGER NOT NULL, `syncStatus` INTEGER NOT NULL, `autoDownloadLimit` INTEGER NOT NULL, `filterDuration` INTEGER NOT NULL, `longerThan` INTEGER NOT NULL, `shorterThan` INTEGER NOT NULL, `draft` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
++        "fields": [
++          {
++            "fieldPath": "id",
++            "columnName": "_id",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "sortPosition",
++            "columnName": "sortPosition",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "manual",
++            "columnName": "manual",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "unplayed",
++            "columnName": "unplayed",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "partiallyPlayed",
++            "columnName": "partiallyPlayed",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "finished",
++            "columnName": "finished",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "audioVideo",
++            "columnName": "audioVideo",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "allPodcasts",
++            "columnName": "allPodcasts",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastUuids",
++            "columnName": "podcastUuids",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "downloaded",
++            "columnName": "downloaded",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "downloading",
++            "columnName": "downloading",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "notDownloaded",
++            "columnName": "notDownloaded",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoDownload",
++            "columnName": "autoDownload",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoDownloadUnmeteredOnly",
++            "columnName": "autoDownloadWifiOnly",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoDownloadPowerOnly",
++            "columnName": "autoDownloadPowerOnly",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "sortId",
++            "columnName": "sortId",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "iconId",
++            "columnName": "iconId",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "filterHours",
++            "columnName": "filterHours",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "starred",
++            "columnName": "starred",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "deleted",
++            "columnName": "deleted",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "syncStatus",
++            "columnName": "syncStatus",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autodownloadLimit",
++            "columnName": "autoDownloadLimit",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "filterDuration",
++            "columnName": "filterDuration",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "longerThan",
++            "columnName": "longerThan",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "shorterThan",
++            "columnName": "shorterThan",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "draft",
++            "columnName": "draft",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "_id"
++          ]
++        },
++        "indices": [
++          {
++            "name": "filters_uuid",
++            "unique": false,
++            "columnNames": [
++              "uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `filters_uuid` ON `${TABLE_NAME}` (`uuid`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "filter_episodes",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `playlistId` INTEGER NOT NULL, `episodeUuid` TEXT NOT NULL, `position` INTEGER NOT NULL)",
++        "fields": [
++          {
++            "fieldPath": "id",
++            "columnName": "_id",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playlistId",
++            "columnName": "playlistId",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeUuid",
++            "columnName": "episodeUuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "position",
++            "columnName": "position",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": true,
++          "columnNames": [
++            "_id"
++          ]
++        },
++        "indices": [
++          {
++            "name": "filter_episodes_playlist_id",
++            "unique": false,
++            "columnNames": [
++              "playlistId"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `filter_episodes_playlist_id` ON `${TABLE_NAME}` (`playlistId`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "podcasts",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `added_date` INTEGER, `thumbnail_url` TEXT, `title` TEXT NOT NULL, `podcast_url` TEXT, `podcast_description` TEXT NOT NULL, `podcast_html_description` TEXT NOT NULL, `podcast_category` TEXT NOT NULL, `podcast_language` TEXT NOT NULL, `media_type` TEXT, `latest_episode_uuid` TEXT, `author` TEXT NOT NULL, `sort_order` INTEGER NOT NULL, `episodes_sort_order` INTEGER NOT NULL, `episodes_sort_order_modified` INTEGER, `latest_episode_date` INTEGER, `episodes_to_keep` INTEGER NOT NULL, `override_global_settings` INTEGER NOT NULL, `override_global_effects` INTEGER NOT NULL, `override_global_effects_modified` INTEGER, `start_from` INTEGER NOT NULL, `start_from_modified` INTEGER, `playback_speed` REAL NOT NULL, `playback_speed_modified` INTEGER, `volume_boosted` INTEGER NOT NULL, `volume_boosted_modified` INTEGER, `is_folder` INTEGER NOT NULL, `subscribed` INTEGER NOT NULL, `show_notifications` INTEGER NOT NULL, `show_notifications_modified` INTEGER, `auto_download_status` INTEGER NOT NULL, `auto_add_to_up_next` INTEGER NOT NULL, `auto_add_to_up_next_modified` INTEGER, `most_popular_color` INTEGER NOT NULL, `primary_color` INTEGER NOT NULL, `secondary_color` INTEGER NOT NULL, `light_overlay_color` INTEGER NOT NULL, `fab_for_light_bg` INTEGER NOT NULL, `link_for_dark_bg` INTEGER NOT NULL, `link_for_light_bg` INTEGER NOT NULL, `color_version` INTEGER NOT NULL, `color_last_downloaded` INTEGER NOT NULL, `sync_status` INTEGER NOT NULL, `exclude_from_auto_archive` INTEGER NOT NULL, `override_global_archive` INTEGER NOT NULL, `override_global_archive_modified` INTEGER, `auto_archive_played_after` INTEGER NOT NULL, `auto_archive_played_after_modified` INTEGER, `auto_archive_inactive_after` INTEGER NOT NULL, `auto_archive_inactive_after_modified` INTEGER, `auto_archive_episode_limit` INTEGER NOT NULL, `auto_archive_episode_limit_modified` INTEGER, `estimated_next_episode` INTEGER, `episode_frequency` TEXT, `grouping` INTEGER NOT NULL, `grouping_modified` INTEGER, `skip_last` INTEGER NOT NULL, `skip_last_modified` INTEGER, `show_archived` INTEGER NOT NULL, `show_archived_modified` INTEGER, `trim_silence_level` INTEGER NOT NULL, `trim_silence_level_modified` INTEGER, `refresh_available` INTEGER NOT NULL, `folder_uuid` TEXT, `licensing` INTEGER NOT NULL, `isPaid` INTEGER NOT NULL, `is_private` INTEGER NOT NULL, `is_header_expanded` INTEGER NOT NULL DEFAULT 1, `bundleuuid` TEXT, `bundlebundleUrl` TEXT, `bundlepaymentUrl` TEXT, `bundledescription` TEXT, `bundlepodcastUuid` TEXT, `bundlepaidType` TEXT, PRIMARY KEY(`uuid`))",
++        "fields": [
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "addedDate",
++            "columnName": "added_date",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "thumbnailUrl",
++            "columnName": "thumbnail_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastUrl",
++            "columnName": "podcast_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "podcastDescription",
++            "columnName": "podcast_description",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastHtmlDescription",
++            "columnName": "podcast_html_description",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastCategory",
++            "columnName": "podcast_category",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastLanguage",
++            "columnName": "podcast_language",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "mediaType",
++            "columnName": "media_type",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "latestEpisodeUuid",
++            "columnName": "latest_episode_uuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "author",
++            "columnName": "author",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "sortPosition",
++            "columnName": "sort_order",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodesSortType",
++            "columnName": "episodes_sort_order",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodesSortTypeModified",
++            "columnName": "episodes_sort_order_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "latestEpisodeDate",
++            "columnName": "latest_episode_date",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episodesToKeep",
++            "columnName": "episodes_to_keep",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "overrideGlobalSettings",
++            "columnName": "override_global_settings",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "overrideGlobalEffects",
++            "columnName": "override_global_effects",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "overrideGlobalEffectsModified",
++            "columnName": "override_global_effects_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "startFromSecs",
++            "columnName": "start_from",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "startFromModified",
++            "columnName": "start_from_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playbackSpeed",
++            "columnName": "playback_speed",
++            "affinity": "REAL",
++            "notNull": true
++          },
++          {
++            "fieldPath": "playbackSpeedModified",
++            "columnName": "playback_speed_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "isVolumeBoosted",
++            "columnName": "volume_boosted",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "volumeBoostedModified",
++            "columnName": "volume_boosted_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "isFolder",
++            "columnName": "is_folder",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isSubscribed",
++            "columnName": "subscribed",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isShowNotifications",
++            "columnName": "show_notifications",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "showNotificationsModified",
++            "columnName": "show_notifications_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "autoDownloadStatus",
++            "columnName": "auto_download_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoAddToUpNext",
++            "columnName": "auto_add_to_up_next",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoAddToUpNextModified",
++            "columnName": "auto_add_to_up_next_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "backgroundColor",
++            "columnName": "most_popular_color",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "tintColorForLightBg",
++            "columnName": "primary_color",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "tintColorForDarkBg",
++            "columnName": "secondary_color",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "fabColorForDarkBg",
++            "columnName": "light_overlay_color",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "fabColorForLightBg",
++            "columnName": "fab_for_light_bg",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "linkColorForLightBg",
++            "columnName": "link_for_dark_bg",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "linkColorForDarkBg",
++            "columnName": "link_for_light_bg",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "colorVersion",
++            "columnName": "color_version",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "colorLastDownloaded",
++            "columnName": "color_last_downloaded",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "syncStatus",
++            "columnName": "sync_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "excludeFromAutoArchive",
++            "columnName": "exclude_from_auto_archive",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "overrideGlobalArchive",
++            "columnName": "override_global_archive",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "overrideGlobalArchiveModified",
++            "columnName": "override_global_archive_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "rawAutoArchiveAfterPlaying",
++            "columnName": "auto_archive_played_after",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoArchiveAfterPlayingModified",
++            "columnName": "auto_archive_played_after_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "rawAutoArchiveInactive",
++            "columnName": "auto_archive_inactive_after",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoArchiveInactiveModified",
++            "columnName": "auto_archive_inactive_after_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "rawAutoArchiveEpisodeLimit",
++            "columnName": "auto_archive_episode_limit",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoArchiveEpisodeLimitModified",
++            "columnName": "auto_archive_episode_limit_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "estimatedNextEpisode",
++            "columnName": "estimated_next_episode",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episodeFrequency",
++            "columnName": "episode_frequency",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "grouping",
++            "columnName": "grouping",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "groupingModified",
++            "columnName": "grouping_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "skipLastSecs",
++            "columnName": "skip_last",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "skipLastModified",
++            "columnName": "skip_last_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "showArchived",
++            "columnName": "show_archived",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "showArchivedModified",
++            "columnName": "show_archived_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "trimMode",
++            "columnName": "trim_silence_level",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "trimModeModified",
++            "columnName": "trim_silence_level_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "refreshAvailable",
++            "columnName": "refresh_available",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "rawFolderUuid",
++            "columnName": "folder_uuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "licensing",
++            "columnName": "licensing",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isPaid",
++            "columnName": "isPaid",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isPrivate",
++            "columnName": "is_private",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isHeaderExpanded",
++            "columnName": "is_header_expanded",
++            "affinity": "INTEGER",
++            "notNull": true,
++            "defaultValue": "1"
++          },
++          {
++            "fieldPath": "singleBundle.uuid",
++            "columnName": "bundleuuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "singleBundle.bundleUrl",
++            "columnName": "bundlebundleUrl",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "singleBundle.paymentUrl",
++            "columnName": "bundlepaymentUrl",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "singleBundle.description",
++            "columnName": "bundledescription",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "singleBundle.podcastUuid",
++            "columnName": "bundlepodcastUuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "singleBundle.paidType",
++            "columnName": "bundlepaidType",
++            "affinity": "TEXT",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "uuid"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "search_history",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `modified` INTEGER NOT NULL, `term` TEXT, `podcast_uuid` TEXT, `podcast_title` TEXT, `podcast_author` TEXT, `folder_uuid` TEXT, `folder_title` TEXT, `folder_color` INTEGER, `folder_podcastIds` TEXT, `episode_uuid` TEXT, `episode_title` TEXT, `episode_duration` REAL, `episode_podcastUuid` TEXT, `episode_podcastTitle` TEXT, `episode_artworkUrl` TEXT)",
++        "fields": [
++          {
++            "fieldPath": "id",
++            "columnName": "_id",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "modified",
++            "columnName": "modified",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "term",
++            "columnName": "term",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "podcast.uuid",
++            "columnName": "podcast_uuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "podcast.title",
++            "columnName": "podcast_title",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "podcast.author",
++            "columnName": "podcast_author",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "folder.uuid",
++            "columnName": "folder_uuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "folder.title",
++            "columnName": "folder_title",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "folder.color",
++            "columnName": "folder_color",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "folder.podcastIds",
++            "columnName": "folder_podcastIds",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episode.uuid",
++            "columnName": "episode_uuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episode.title",
++            "columnName": "episode_title",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episode.duration",
++            "columnName": "episode_duration",
++            "affinity": "REAL",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episode.podcastUuid",
++            "columnName": "episode_podcastUuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episode.podcastTitle",
++            "columnName": "episode_podcastTitle",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episode.artworkUrl",
++            "columnName": "episode_artworkUrl",
++            "affinity": "TEXT",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": true,
++          "columnNames": [
++            "_id"
++          ]
++        },
++        "indices": [
++          {
++            "name": "index_search_history_term",
++            "unique": true,
++            "columnNames": [
++              "term"
++            ],
++            "orders": [],
++            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_search_history_term` ON `${TABLE_NAME}` (`term`)"
++          },
++          {
++            "name": "index_search_history_podcast_uuid",
++            "unique": true,
++            "columnNames": [
++              "podcast_uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_search_history_podcast_uuid` ON `${TABLE_NAME}` (`podcast_uuid`)"
++          },
++          {
++            "name": "index_search_history_folder_uuid",
++            "unique": true,
++            "columnNames": [
++              "folder_uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_search_history_folder_uuid` ON `${TABLE_NAME}` (`folder_uuid`)"
++          },
++          {
++            "name": "index_search_history_episode_uuid",
++            "unique": true,
++            "columnNames": [
++              "episode_uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_search_history_episode_uuid` ON `${TABLE_NAME}` (`episode_uuid`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "up_next_changes",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `type` INTEGER NOT NULL, `uuid` TEXT, `uuids` TEXT, `modified` INTEGER NOT NULL)",
++        "fields": [
++          {
++            "fieldPath": "id",
++            "columnName": "_id",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "type",
++            "columnName": "type",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "uuids",
++            "columnName": "uuids",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "modified",
++            "columnName": "modified",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": true,
++          "columnNames": [
++            "_id"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "up_next_episodes",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `episodeUuid` TEXT NOT NULL, `position` INTEGER NOT NULL, `playlistId` INTEGER, `title` TEXT NOT NULL, `publishedDate` INTEGER, `downloadUrl` TEXT, `podcastUuid` TEXT)",
++        "fields": [
++          {
++            "fieldPath": "id",
++            "columnName": "_id",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "episodeUuid",
++            "columnName": "episodeUuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "position",
++            "columnName": "position",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "playlistId",
++            "columnName": "playlistId",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "publishedDate",
++            "columnName": "publishedDate",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "downloadUrl",
++            "columnName": "downloadUrl",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "podcastUuid",
++            "columnName": "podcastUuid",
++            "affinity": "TEXT",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": true,
++          "columnNames": [
++            "_id"
++          ]
++        },
++        "indices": [
++          {
++            "name": "up_next_episode_episodeUuid",
++            "unique": false,
++            "columnNames": [
++              "episodeUuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `up_next_episode_episodeUuid` ON `${TABLE_NAME}` (`episodeUuid`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "user_episodes",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `published_date` INTEGER NOT NULL, `episode_description` TEXT NOT NULL, `title` TEXT NOT NULL, `size_in_bytes` INTEGER NOT NULL, `episode_status` INTEGER NOT NULL, `file_type` TEXT, `duration` REAL NOT NULL, `download_url` TEXT, `played_up_to` REAL NOT NULL, `playing_status` INTEGER NOT NULL, `added_date` INTEGER NOT NULL, `auto_download_status` INTEGER NOT NULL, `last_download_attempt_date` INTEGER, `archived` INTEGER NOT NULL, `download_task_id` TEXT, `downloaded_file_path` TEXT, `playing_status_modified` INTEGER, `played_up_to_modified` INTEGER, `artwork_url` TEXT, `play_error_details` TEXT, `server_status` INTEGER NOT NULL, `upload_error_details` TEXT, `downloaded_error_details` TEXT, `tint_color_index` INTEGER NOT NULL, `has_custom_image` INTEGER NOT NULL, `upload_task_id` TEXT, `deselected_chapters` TEXT NOT NULL, `deselected_chapters_modified` INTEGER, PRIMARY KEY(`uuid`))",
++        "fields": [
++          {
++            "fieldPath": "uuid",
++            "columnName": "uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "publishedDate",
++            "columnName": "published_date",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeDescription",
++            "columnName": "episode_description",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "sizeInBytes",
++            "columnName": "size_in_bytes",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeStatus",
++            "columnName": "episode_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "fileType",
++            "columnName": "file_type",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "duration",
++            "columnName": "duration",
++            "affinity": "REAL",
++            "notNull": true
++          },
++          {
++            "fieldPath": "downloadUrl",
++            "columnName": "download_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playedUpTo",
++            "columnName": "played_up_to",
++            "affinity": "REAL",
++            "notNull": true
++          },
++          {
++            "fieldPath": "playingStatus",
++            "columnName": "playing_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "addedDate",
++            "columnName": "added_date",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "autoDownloadStatus",
++            "columnName": "auto_download_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "lastDownloadAttemptDate",
++            "columnName": "last_download_attempt_date",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "isArchived",
++            "columnName": "archived",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "downloadTaskId",
++            "columnName": "download_task_id",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "downloadedFilePath",
++            "columnName": "downloaded_file_path",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playingStatusModified",
++            "columnName": "playing_status_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playedUpToModified",
++            "columnName": "played_up_to_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "artworkUrl",
++            "columnName": "artwork_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "playErrorDetails",
++            "columnName": "play_error_details",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "serverStatus",
++            "columnName": "server_status",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "uploadErrorDetails",
++            "columnName": "upload_error_details",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "downloadErrorDetails",
++            "columnName": "downloaded_error_details",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "tintColorIndex",
++            "columnName": "tint_color_index",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "hasCustomImage",
++            "columnName": "has_custom_image",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "uploadTaskId",
++            "columnName": "upload_task_id",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "deselectedChapters",
++            "columnName": "deselected_chapters",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "deselectedChaptersModified",
++            "columnName": "deselected_chapters_modified",
++            "affinity": "INTEGER",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "uuid"
++          ]
++        },
++        "indices": [
++          {
++            "name": "user_episode_last_download_attempt_date",
++            "unique": false,
++            "columnNames": [
++              "last_download_attempt_date"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `user_episode_last_download_attempt_date` ON `${TABLE_NAME}` (`last_download_attempt_date`)"
++          },
++          {
++            "name": "user_episode_published_date",
++            "unique": false,
++            "columnNames": [
++              "published_date"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `user_episode_published_date` ON `${TABLE_NAME}` (`published_date`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "podcast_ratings",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`podcast_uuid` TEXT NOT NULL, `average` REAL, `total` INTEGER, PRIMARY KEY(`podcast_uuid`))",
++        "fields": [
++          {
++            "fieldPath": "podcastUuid",
++            "columnName": "podcast_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "average",
++            "columnName": "average",
++            "affinity": "REAL",
++            "notNull": false
++          },
++          {
++            "fieldPath": "total",
++            "columnName": "total",
++            "affinity": "INTEGER",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "podcast_uuid"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "episode_chapters",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`chapter_index` INTEGER NOT NULL, `episode_uuid` TEXT NOT NULL, `start_time` INTEGER NOT NULL, `end_time` INTEGER, `title` TEXT, `image_url` TEXT, `url` TEXT, `is_embedded` INTEGER NOT NULL, PRIMARY KEY(`episode_uuid`, `chapter_index`))",
++        "fields": [
++          {
++            "fieldPath": "index",
++            "columnName": "chapter_index",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "episodeUuid",
++            "columnName": "episode_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "startTimeMs",
++            "columnName": "start_time",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "endTimeMs",
++            "columnName": "end_time",
++            "affinity": "INTEGER",
++            "notNull": false
++          },
++          {
++            "fieldPath": "title",
++            "columnName": "title",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "imageUrl",
++            "columnName": "image_url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "url",
++            "columnName": "url",
++            "affinity": "TEXT",
++            "notNull": false
++          },
++          {
++            "fieldPath": "isEmbedded",
++            "columnName": "is_embedded",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "episode_uuid",
++            "chapter_index"
++          ]
++        },
++        "indices": [
++          {
++            "name": "chapter_episode_uuid_index",
++            "unique": false,
++            "columnNames": [
++              "episode_uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `chapter_episode_uuid_index` ON `${TABLE_NAME}` (`episode_uuid`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "curated_podcasts",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`list_id` TEXT NOT NULL, `list_title` TEXT NOT NULL, `podcast_id` TEXT NOT NULL, `podcast_title` TEXT NOT NULL, `podcast_description` TEXT, PRIMARY KEY(`list_id`, `podcast_id`))",
++        "fields": [
++          {
++            "fieldPath": "listId",
++            "columnName": "list_id",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "listTitle",
++            "columnName": "list_title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastId",
++            "columnName": "podcast_id",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastTitle",
++            "columnName": "podcast_title",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "podcastDescription",
++            "columnName": "podcast_description",
++            "affinity": "TEXT",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "list_id",
++            "podcast_id"
++          ]
++        },
++        "indices": [
++          {
++            "name": "curated_podcasts_list_id_index",
++            "unique": false,
++            "columnNames": [
++              "list_id"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `curated_podcasts_list_id_index` ON `${TABLE_NAME}` (`list_id`)"
++          },
++          {
++            "name": "curated_podcasts_podcast_id_index",
++            "unique": false,
++            "columnNames": [
++              "podcast_id"
++            ],
++            "orders": [],
++            "createSql": "CREATE INDEX IF NOT EXISTS `curated_podcasts_podcast_id_index` ON `${TABLE_NAME}` (`podcast_id`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "episode_transcript",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_uuid` TEXT NOT NULL, `url` TEXT NOT NULL, `type` TEXT NOT NULL, `is_generated` INTEGER NOT NULL, `language` TEXT, PRIMARY KEY(`episode_uuid`, `url`))",
++        "fields": [
++          {
++            "fieldPath": "episodeUuid",
++            "columnName": "episode_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "url",
++            "columnName": "url",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "type",
++            "columnName": "type",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "isGenerated",
++            "columnName": "is_generated",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "language",
++            "columnName": "language",
++            "affinity": "TEXT",
++            "notNull": false
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "episode_uuid",
++            "url"
++          ]
++        },
++        "indices": [
++          {
++            "name": "transcript_episode_uuid_index",
++            "unique": true,
++            "columnNames": [
++              "episode_uuid"
++            ],
++            "orders": [],
++            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `transcript_episode_uuid_index` ON `${TABLE_NAME}` (`episode_uuid`)"
++          }
++        ],
++        "foreignKeys": []
++      },
++      {
++        "tableName": "user_podcast_ratings",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`podcast_uuid` TEXT NOT NULL, `rating` INTEGER NOT NULL, `modified_at` INTEGER NOT NULL, PRIMARY KEY(`podcast_uuid`))",
++        "fields": [
++          {
++            "fieldPath": "podcastUuid",
++            "columnName": "podcast_uuid",
++            "affinity": "TEXT",
++            "notNull": true
++          },
++          {
++            "fieldPath": "rating",
++            "columnName": "rating",
++            "affinity": "INTEGER",
++            "notNull": true
++          },
++          {
++            "fieldPath": "modifiedAt",
++            "columnName": "modified_at",
++            "affinity": "INTEGER",
++            "notNull": true
++          }
++        ],
++        "primaryKey": {
++          "autoGenerate": false,
++          "columnNames": [
++            "podcast_uuid"
++          ]
++        },
++        "indices": [],
++        "foreignKeys": []
++      }
++    ],
++    "views": [],
++    "setupQueries": [
++      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
++      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '53a6c3f5c60a6282e82e8a186799fccc')"
++    ]
++  }
++}
+\ No newline at end of file
+diff --git a/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/AppDatabase.kt b/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/AppDatabase.kt
+index 8e11ac3ec..f2434e0fb 100644
+--- a/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/AppDatabase.kt
++++ b/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/AppDatabase.kt
+@@ -93,7 +93,7 @@ import au.com.shiftyjelly.pocketcasts.localization.R as LR
+         Transcript::class,
+         UserPodcastRating::class,
+     ],
+-    version = 110,
++    version = 111,
+     exportSchema = true,
+     autoMigrations = [
+         AutoMigration(from = 81, to = 82, spec = AppDatabase.Companion.DeleteSilenceRemovedMigration::class),
+@@ -960,6 +960,10 @@ abstract class AppDatabase : RoomDatabase() {
+             database.execSQL("UPDATE podcasts SET is_header_expanded = 0 WHERE subscribed IS NOT 0")
+         }
+ 
++        val MIGRATION_110_111 = addMigration(110, 111) { database ->
++            database.execSQL("ALTER TABLE episode_transcript ADD COLUMN is_generated INTEGER NOT NULL DEFAULT 0")
++        }
++
+         fun addMigrations(databaseBuilder: Builder<AppDatabase>, context: Context) {
+             databaseBuilder.addMigrations(
+                 addMigration(1, 2) { },
+@@ -1360,6 +1364,7 @@ abstract class AppDatabase : RoomDatabase() {
+                 MIGRATION_107_108,
+                 MIGRATION_108_109,
+                 MIGRATION_109_110,
++                MIGRATION_110_111,
+             )
+         }
+ 
+diff --git a/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/dao/TranscriptDao.kt b/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/dao/TranscriptDao.kt
+index b52b21c30..ccf8c06b2 100644
+--- a/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/dao/TranscriptDao.kt
++++ b/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/db/dao/TranscriptDao.kt
+@@ -13,5 +13,5 @@ abstract class TranscriptDao {
+     abstract fun insertBlocking(transcript: Transcript)
+ 
+     @Query("SELECT * FROM episode_transcript WHERE episode_uuid IS :episodeUuid")
+-    abstract fun observerTranscriptForEpisode(episodeUuid: String): Flow<Transcript?>
++    abstract fun observeTranscriptForEpisode(episodeUuid: String): Flow<Transcript?>
+ }
+diff --git a/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/to/Transcript.kt b/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/to/Transcript.kt
+index f212bc755..8556f4602 100644
+--- a/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/to/Transcript.kt
++++ b/modules/services/model/src/main/java/au/com/shiftyjelly/pocketcasts/models/to/Transcript.kt
+@@ -11,9 +11,10 @@ import androidx.room.Index
+         Index(name = "transcript_episode_uuid_index", value = ["episode_uuid"], unique = true),
+     ],
+ )
+-data class Transcript(
++data class Transcript constructor(
+     @ColumnInfo(name = "episode_uuid") val episodeUuid: String,
+     @ColumnInfo(name = "url") val url: String,
+     @ColumnInfo(name = "type") val type: String,
++    @ColumnInfo(name = "is_generated") val isGenerated: Boolean,
+     @ColumnInfo(name = "language") val language: String? = null,
+ )
+diff --git a/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManager.kt b/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManager.kt
+index af9ddf7a0..9081e93be 100644
+--- a/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManager.kt
++++ b/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManager.kt
+@@ -15,7 +15,7 @@ interface TranscriptsManager {
+         fromUpdateAlternativeTranscript: Boolean = false,
+     )
+ 
+-    fun observerTranscriptForEpisode(episodeUuid: String): Flow<Transcript?>
++    fun observeTranscriptForEpisode(episodeUuid: String): Flow<Transcript?>
+ 
+     @OptIn(UnstableApi::class)
+     suspend fun loadTranscriptCuesInfo(
+diff --git a/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImpl.kt b/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImpl.kt
+index c2405f3d6..01f636b52 100644
+--- a/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImpl.kt
++++ b/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImpl.kt
+@@ -6,21 +6,22 @@ import androidx.media3.common.util.UnstableApi
+ import au.com.shiftyjelly.pocketcasts.models.db.dao.TranscriptDao
+ import au.com.shiftyjelly.pocketcasts.models.to.Transcript
+ import au.com.shiftyjelly.pocketcasts.repositories.di.ApplicationScope
+-import au.com.shiftyjelly.pocketcasts.repositories.shownotes.toTranscript
++import au.com.shiftyjelly.pocketcasts.repositories.shownotes.findTranscripts
+ import au.com.shiftyjelly.pocketcasts.servers.ShowNotesServiceManager
+ import au.com.shiftyjelly.pocketcasts.servers.podcast.TranscriptCacheService
+ import au.com.shiftyjelly.pocketcasts.utils.NetworkWrapper
+ import au.com.shiftyjelly.pocketcasts.utils.exception.EmptyDataException
+ import au.com.shiftyjelly.pocketcasts.utils.exception.NoNetworkException
+ import au.com.shiftyjelly.pocketcasts.utils.exception.ParsingException
++import au.com.shiftyjelly.pocketcasts.utils.featureflag.Feature
++import au.com.shiftyjelly.pocketcasts.utils.featureflag.FeatureFlag
+ import au.com.shiftyjelly.pocketcasts.utils.log.LogBuffer
+ import java.net.UnknownHostException
++import java.util.concurrent.ConcurrentHashMap
+ import javax.inject.Inject
+ import kotlinx.coroutines.CoroutineScope
+ import kotlinx.coroutines.Dispatchers
+-import kotlinx.coroutines.flow.MutableStateFlow
+-import kotlinx.coroutines.flow.asStateFlow
+-import kotlinx.coroutines.flow.update
++import kotlinx.coroutines.flow.map
+ import kotlinx.coroutines.launch
+ import kotlinx.coroutines.withContext
+ import okhttp3.CacheControl
+@@ -37,8 +38,7 @@ class TranscriptsManagerImpl @Inject constructor(
+     private val transcriptCuesInfoBuilder: TranscriptCuesInfoBuilder,
+ ) : TranscriptsManager {
+     private val supportedFormats = listOf(TranscriptFormat.SRT, TranscriptFormat.VTT, TranscriptFormat.JSON_PODCAST_INDEX, TranscriptFormat.HTML)
+-    private val _failedTranscriptFormats = MutableStateFlow(emptyMap<String, List<TranscriptFormat>>())
+-    val failedTranscriptFormats = _failedTranscriptFormats.asStateFlow()
++    private val invalidTranscriptUrls = ConcurrentHashMap<String, Set<String>>()
+ 
+     override suspend fun updateTranscripts(
+         podcastUuid: String,
+@@ -49,7 +49,7 @@ class TranscriptsManagerImpl @Inject constructor(
+     ) {
+         if (transcripts.isEmpty()) return
+         if (!fromUpdateAlternativeTranscript) {
+-            _failedTranscriptFormats.update { it.minus(episodeUuid) }
++            invalidTranscriptUrls.remove(episodeUuid)
+         }
+ 
+         findBestTranscript(transcripts)?.let { bestTranscript ->
+@@ -66,11 +66,19 @@ class TranscriptsManagerImpl @Inject constructor(
+         }
+     }
+ 
+-    override fun observerTranscriptForEpisode(episodeUuid: String) =
+-        transcriptDao.observerTranscriptForEpisode(episodeUuid)
++    override fun observeTranscriptForEpisode(episodeUuid: String) = transcriptDao
++        .observeTranscriptForEpisode(episodeUuid)
++        .map { transcript ->
++            if (FeatureFlag.isEnabled(Feature.GENERATED_TRANSCRIPTS)) {
++                transcript
++            } else {
++                transcript?.takeIf { !it.isGenerated }
++            }
++        }
+ 
+     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+-    fun findBestTranscript(availableTranscripts: List<Transcript>): Transcript? {
++    fun findBestTranscript(transcripts: List<Transcript>): Transcript? {
++        val availableTranscripts = transcripts.sortedBy { it.isGenerated }
+         for (format in supportedFormats) {
+             val transcript = availableTranscripts.firstOrNull { it.type in format.possibleMimeTypes() }
+             if (transcript != null) {
+@@ -145,28 +153,23 @@ class TranscriptsManagerImpl @Inject constructor(
+         source: LoadTranscriptSource,
+     ) {
+         try {
+-            _failedTranscriptFormats.update { currentMap ->
+-                val format = TranscriptFormat.fromType(transcript.type) ?: return@update currentMap
+-                currentMap + (transcript.episodeUuid to (currentMap[transcript.episodeUuid]?.plus(format)?.distinct() ?: listOf(format)))
+-            }
+-            val episodeFailedFormats = _failedTranscriptFormats.value[transcript.episodeUuid]
+-            if (!episodeFailedFormats.isNullOrEmpty()) {
++            val invalidUrls = invalidTranscriptUrls.merge(transcript.episodeUuid, setOf(transcript.url)) { old, new -> old + new }
++
++            if (!invalidUrls.isNullOrEmpty()) {
+                 // Get available transcripts from show notes
+                 showNotesServiceManager.loadShowNotes(
+                     podcastUuid = podcastUuid,
+                     episodeUuid = transcript.episodeUuid,
+                 ) { showNotes ->
+-                    val transcriptsAvailable = showNotes.podcast?.episodes
+-                        ?.firstOrNull { it.uuid == transcript.episodeUuid }
+-                        ?.transcripts
+-                        ?.mapNotNull { it.takeIf { it.url != null && it.type != null }?.toTranscript(transcript.episodeUuid) } ?: emptyList()
+-                    // Try alternative from filtered transcripts
+-                    val filteredTranscripts = transcriptsAvailable.filter { it.type !in episodeFailedFormats.flatMap { format -> format.possibleMimeTypes() } }
++                    val availableTranscripts = showNotes
++                        .findTranscripts(transcript.episodeUuid)
++                        ?.filter { it.url !in invalidUrls }
++                        .orEmpty()
+                     scope.launch {
+                         updateTranscripts(
+                             podcastUuid = podcastUuid,
+                             episodeUuid = transcript.episodeUuid,
+-                            transcripts = filteredTranscripts,
++                            transcripts = availableTranscripts,
+                             loadTranscriptSource = source,
+                             fromUpdateAlternativeTranscript = true,
+                         )
+diff --git a/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessor.kt b/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessor.kt
+index 341987912..05fa0f399 100644
+--- a/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessor.kt
++++ b/modules/services/repositories/src/main/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessor.kt
+@@ -82,11 +82,10 @@ class ShowNotesProcessor @Inject constructor(
+         showNotes: ShowNotesResponse,
+         loadTranscriptSource: LoadTranscriptSource,
+     ) = scope.launch {
+-        val transcripts = showNotes.podcast?.episodes
+-            ?.firstOrNull { it.uuid == episodeUuid }
+-            ?.transcripts
+-            ?.mapNotNull { it.takeIf { it.url != null && it.type != null }?.toTranscript(episodeUuid) }
+-        transcripts?.let { transcriptsManager.updateTranscripts(showNotes.podcast?.uuid.orEmpty(), episodeUuid, it, loadTranscriptSource) }
++        val transcripts = showNotes.findTranscripts(episodeUuid)
++        if (transcripts != null) {
++            transcriptsManager.updateTranscripts(showNotes.podcast?.uuid.orEmpty(), episodeUuid, transcripts, loadTranscriptSource)
++        }
+     }
+ 
+     private fun ShowNotesChapter.toDbChapter(index: Int, episodeUuid: String) = if (useInTableOfContents != false) {
+@@ -105,9 +104,24 @@ class ShowNotesProcessor @Inject constructor(
+     }
+ }
+ 
+-fun ShowNotesTranscript.toTranscript(episodeUuid: String) = Transcript(
+-    episodeUuid = episodeUuid,
+-    url = requireNotNull(url),
+-    type = requireNotNull(type),
+-    language = language,
+-)
++internal fun ShowNotesResponse.findTranscripts(episodeUuid: String): List<Transcript>? {
++    val episode = podcast?.episodes?.firstOrNull { it.uuid == episodeUuid } ?: return null
++    val transcripts = episode.transcripts?.mapNotNull { it.toTranscript(episodeUuid, isGenerated = false) }.orEmpty()
++    val pocketCastsTranscripts = episode.pocketCastsTranscripts?.mapNotNull { it.toTranscript(episodeUuid, isGenerated = true) }.orEmpty()
++    return transcripts + pocketCastsTranscripts
++}
++
++private fun ShowNotesTranscript.toTranscript(
++    episodeUuid: String,
++    isGenerated: Boolean,
++) = if (url != null && type != null) {
++    Transcript(
++        episodeUuid = episodeUuid,
++        url = requireNotNull(url),
++        type = requireNotNull(type),
++        isGenerated = isGenerated,
++        language = language,
++    )
++} else {
++    null
++}
+diff --git a/modules/services/servers/src/main/java/au/com/shiftyjelly/pocketcasts/servers/podcast/ShowNotesResponse.kt b/modules/services/servers/src/main/java/au/com/shiftyjelly/pocketcasts/servers/podcast/ShowNotesResponse.kt
+index 2a09cc4e1..53d9b1c21 100644
+--- a/modules/services/servers/src/main/java/au/com/shiftyjelly/pocketcasts/servers/podcast/ShowNotesResponse.kt
++++ b/modules/services/servers/src/main/java/au/com/shiftyjelly/pocketcasts/servers/podcast/ShowNotesResponse.kt
+@@ -31,6 +31,7 @@ data class ShowNotesEpisode(
+     @Json(name = "chapters") val chapters: List<ShowNotesChapter>? = null,
+     @Json(name = "chapters_url") val chaptersUrl: String? = null,
+     @Json(name = "transcripts") val transcripts: List<ShowNotesTranscript>? = null,
++    @Json(name = "pocket_casts_transcripts") val pocketCastsTranscripts: List<ShowNotesTranscript>? = null,
+ )
+ 
+ @JsonClass(generateAdapter = true)
+diff --git a/modules/services/utils/src/main/java/au/com/shiftyjelly/pocketcasts/utils/featureflag/Feature.kt b/modules/services/utils/src/main/java/au/com/shiftyjelly/pocketcasts/utils/featureflag/Feature.kt
+index a3fed1e59..d390fa041 100644
+--- a/modules/services/utils/src/main/java/au/com/shiftyjelly/pocketcasts/utils/featureflag/Feature.kt
++++ b/modules/services/utils/src/main/java/au/com/shiftyjelly/pocketcasts/utils/featureflag/Feature.kt
+@@ -211,6 +211,14 @@ enum class Feature(
+         hasFirebaseRemoteFlag = false,
+         hasDevToggle = true,
+     ),
++    GENERATED_TRANSCRIPTS(
++        key = "generated_transcripts",
++        title = "Generated transcripts",
++        defaultValue = BuildConfig.DEBUG,
++        tier = FeatureTier.Free,
++        hasFirebaseRemoteFlag = false,
++        hasDevToggle = true,
++    ),
+     ;
+ 
+     companion object {

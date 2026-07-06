@@ -1,0 +1,30 @@
+patching file config/stack_validation_test.go (renamed from config/stack_test.go)
+patching file test/fixtures/stacks/errors/stack-empty-path/terragrunt.stack.hcl
+patching file test/fixtures/stacks/errors/unit-empty-path/terragrunt.stack.hcl (renamed from test/fixtures/stacks/errors/empty-path/terragrunt.stack.hcl)
+patching file test/fixtures/stacks/errors/unit-empty-path/units/app/main.tf (renamed from test/fixtures/stacks/errors/empty-path/units/app/main.tf)
+patching file test/fixtures/stacks/errors/unit-empty-path/units/app/terragrunt.hcl (renamed from test/fixtures/stacks/errors/empty-path/units/app/terragrunt.hcl)
+patching file test/fixtures/stacks/nested/project/terragrunt.stack.hcl
+patching file test/fixtures/stacks/nested/stacks/dev/terragrunt.stack.hcl
+patching file test/fixtures/stacks/nested/stacks/prod/terragrunt.stack.hcl
+patching file test/fixtures/stacks/nested/units/api/main.tf
+patching file test/fixtures/stacks/nested/units/api/terragrunt.hcl
+patching file test/fixtures/stacks/nested/units/db/main.tf
+patching file test/fixtures/stacks/nested/units/db/terragrunt.hcl
+patching file test/fixtures/stacks/nested/units/web/main.tf
+patching file test/fixtures/stacks/nested/units/web/terragrunt.hcl
+patching file test/integration_stacks_test.go
+# github.com/gruntwork-io/terragrunt/config_test [github.com/gruntwork-io/terragrunt/config.test]
+config/stack_validation_test.go:161:5: unknown field Stacks in struct literal of type "github.com/gruntwork-io/terragrunt/config".StackConfigFile
+config/stack_validation_test.go:161:23: undefined: config.Stack
+config/stack_validation_test.go:179:5: unknown field Stacks in struct literal of type "github.com/gruntwork-io/terragrunt/config".StackConfigFile
+config/stack_validation_test.go:179:23: undefined: config.Stack
+config/stack_validation_test.go:192:5: unknown field Stacks in struct literal of type "github.com/gruntwork-io/terragrunt/config".StackConfigFile
+config/stack_validation_test.go:192:23: undefined: config.Stack
+config/stack_validation_test.go:205:5: unknown field Stacks in struct literal of type "github.com/gruntwork-io/terragrunt/config".StackConfigFile
+config/stack_validation_test.go:205:23: undefined: config.Stack
+config/stack_validation_test.go:218:5: unknown field Stacks in struct literal of type "github.com/gruntwork-io/terragrunt/config".StackConfigFile
+config/stack_validation_test.go:218:23: undefined: config.Stack
+config/stack_validation_test.go:218:5: too many errors
+FAIL	github.com/gruntwork-io/terragrunt/config [build failed]
+FAIL
+reward=0 graded=20 found=20 failed=20 parsed=1 framework=go exit_code=1

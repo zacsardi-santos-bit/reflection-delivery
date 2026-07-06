@@ -1,0 +1,268 @@
+patching file lib/build_test.go
+patching file lib/git_utils_test.go
+patching file lib/manifest_test.go
+{"Time":"2026-07-01T14:55:39.275987545Z","Action":"start","Package":"github.com/mbtproject/mbt/lib"}
+{"Time":"2026-07-01T14:55:39.278393287Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildExecution"}
+{"Time":"2026-07-01T14:55:39.278414899Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildExecution","Output":"=== RUN   TestBuildExecution\n"}
+{"Time":"2026-07-01T14:55:39.283438442Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildExecution","Output":"--- PASS: TestBuildExecution (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.283462299Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildExecution","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.283470406Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildDirExecution"}
+{"Time":"2026-07-01T14:55:39.283476078Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildDirExecution","Output":"=== RUN   TestBuildDirExecution\n"}
+{"Time":"2026-07-01T14:55:39.287745638Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildDirExecution","Output":"--- PASS: TestBuildDirExecution (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.287768435Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildDirExecution","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.287776222Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildSkip"}
+{"Time":"2026-07-01T14:55:39.287781071Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildSkip","Output":"=== RUN   TestBuildSkip\n"}
+{"Time":"2026-07-01T14:55:39.292250802Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildSkip","Output":"--- PASS: TestBuildSkip (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.292274066Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildSkip","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.292280478Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildBranch"}
+{"Time":"2026-07-01T14:55:39.292284364Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildBranch","Output":"=== RUN   TestBuildBranch\n"}
+{"Time":"2026-07-01T14:55:39.302819572Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildBranch","Output":"--- PASS: TestBuildBranch (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.302839555Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildBranch","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.302849815Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirtyWorkingDir"}
+{"Time":"2026-07-01T14:55:39.30285432Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirtyWorkingDir","Output":"=== RUN   TestDirtyWorkingDir\n"}
+{"Time":"2026-07-01T14:55:39.308952108Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirtyWorkingDir","Output":"--- PASS: TestDirtyWorkingDir (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.308971275Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirtyWorkingDir","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.308979008Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildEnvironment"}
+{"Time":"2026-07-01T14:55:39.308982364Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildEnvironment","Output":"=== RUN   TestBuildEnvironment\n"}
+{"Time":"2026-07-01T14:55:39.314464199Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildEnvironment","Output":"--- PASS: TestBuildEnvironment (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.314476885Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBuildEnvironment","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.314485712Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonGitRepo"}
+{"Time":"2026-07-01T14:55:39.314488658Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonGitRepo","Output":"=== RUN   TestNonGitRepo\n"}
+{"Time":"2026-07-01T14:55:39.315310478Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonGitRepo","Output":"--- PASS: TestNonGitRepo (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.315318544Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonGitRepo","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.31532177Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBadSha"}
+{"Time":"2026-07-01T14:55:39.315325451Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBadSha","Output":"=== RUN   TestBadSha\n"}
+{"Time":"2026-07-01T14:55:39.317707758Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBadSha","Output":"--- PASS: TestBadSha (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.317717332Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBadSha","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.317722351Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingSha"}
+{"Time":"2026-07-01T14:55:39.317726537Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingSha","Output":"=== RUN   TestMissingSha\n"}
+{"Time":"2026-07-01T14:55:39.320921722Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingSha","Output":"--- PASS: TestMissingSha (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.320930483Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingSha","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.320936719Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyLinks"}
+{"Time":"2026-07-01T14:55:39.320939468Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyLinks","Output":"=== RUN   TestDependencyLinks\n"}
+{"Time":"2026-07-01T14:55:39.320983389Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyLinks","Output":"--- PASS: TestDependencyLinks (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.320990156Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyLinks","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.320994256Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionCalculation"}
+{"Time":"2026-07-01T14:55:39.320998515Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionCalculation","Output":"=== RUN   TestVersionCalculation\n"}
+{"Time":"2026-07-01T14:55:39.321003493Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionCalculation","Output":"--- PASS: TestVersionCalculation (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.321020719Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionCalculation","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.321024516Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestMalformedSpec"}
+{"Time":"2026-07-01T14:55:39.321028299Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMalformedSpec","Output":"=== RUN   TestMalformedSpec\n"}
+{"Time":"2026-07-01T14:55:39.32487218Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMalformedSpec","Output":"--- PASS: TestMalformedSpec (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.324888443Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestMalformedSpec","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.32489302Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingBlobs"}
+{"Time":"2026-07-01T14:55:39.324896817Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingBlobs","Output":"=== RUN   TestMissingBlobs\n"}
+{"Time":"2026-07-01T14:55:39.327587929Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingBlobs","Output":"--- PASS: TestMissingBlobs (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.32759514Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingBlobs","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.327599995Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingTreeObject"}
+{"Time":"2026-07-01T14:55:39.327603419Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingTreeObject","Output":"=== RUN   TestMissingTreeObject\n"}
+{"Time":"2026-07-01T14:55:39.330279436Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingTreeObject","Output":"--- PASS: TestMissingTreeObject (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.330290335Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingTreeObject","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.330293585Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingDependencies"}
+{"Time":"2026-07-01T14:55:39.330296306Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingDependencies","Output":"=== RUN   TestMissingDependencies\n"}
+{"Time":"2026-07-01T14:55:39.330329742Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingDependencies","Output":"--- PASS: TestMissingDependencies (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.330336852Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestMissingDependencies","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.330342018Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestModuleNameConflicts"}
+{"Time":"2026-07-01T14:55:39.330346126Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestModuleNameConflicts","Output":"=== RUN   TestModuleNameConflicts\n"}
+{"Time":"2026-07-01T14:55:39.330351342Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestModuleNameConflicts","Output":"--- PASS: TestModuleNameConflicts (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.330360823Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestModuleNameConflicts","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.330367478Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirectoryEntriesCalledMbtYml"}
+{"Time":"2026-07-01T14:55:39.330371192Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirectoryEntriesCalledMbtYml","Output":"=== RUN   TestDirectoryEntriesCalledMbtYml\n"}
+{"Time":"2026-07-01T14:55:39.333640608Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirectoryEntriesCalledMbtYml","Output":"--- PASS: TestDirectoryEntriesCalledMbtYml (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.333650593Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDirectoryEntriesCalledMbtYml","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.333657159Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnNew"}
+{"Time":"2026-07-01T14:55:39.333660262Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnNew","Output":"=== RUN   TestStatusCountOnNew\n"}
+{"Time":"2026-07-01T14:55:39.335484699Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnNew","Output":"--- PASS: TestStatusCountOnNew (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.335492552Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnNew","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.335498558Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnEdit"}
+{"Time":"2026-07-01T14:55:39.335502251Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnEdit","Output":"=== RUN   TestStatusCountOnEdit\n"}
+{"Time":"2026-07-01T14:55:39.339610373Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnEdit","Output":"--- PASS: TestStatusCountOnEdit (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.33962014Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnEdit","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.339626245Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnRename"}
+{"Time":"2026-07-01T14:55:39.33962992Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnRename","Output":"=== RUN   TestStatusCountOnRename\n"}
+{"Time":"2026-07-01T14:55:39.342794387Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnRename","Output":"--- PASS: TestStatusCountOnRename (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.342807838Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestStatusCountOnRename","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.342813983Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestInvalidBranch"}
+{"Time":"2026-07-01T14:55:39.342817855Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestInvalidBranch","Output":"=== RUN   TestInvalidBranch\n"}
+{"Time":"2026-07-01T14:55:39.345595971Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestInvalidBranch","Output":"--- PASS: TestInvalidBranch (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.345609135Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestInvalidBranch","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.345616749Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestBranchName"}
+{"Time":"2026-07-01T14:55:39.345619854Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBranchName","Output":"=== RUN   TestBranchName\n"}
+{"Time":"2026-07-01T14:55:39.348562237Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestBranchName","Output":"--- PASS: TestBranchName (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.348570575Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestBranchName","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.348576397Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffByIndex"}
+{"Time":"2026-07-01T14:55:39.348579274Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffByIndex","Output":"=== RUN   TestDiffByIndex\n"}
+{"Time":"2026-07-01T14:55:39.352889117Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffByIndex","Output":"--- PASS: TestDiffByIndex (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.352899779Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffByIndex","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.352916602Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithElements"}
+{"Time":"2026-07-01T14:55:39.352920934Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithElements","Output":"=== RUN   TestIntersectionWithElements\n"}
+{"Time":"2026-07-01T14:55:39.363771662Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithElements","Output":"--- PASS: TestIntersectionWithElements (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.363783986Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithElements","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.363792717Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithoutElements"}
+{"Time":"2026-07-01T14:55:39.363796965Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithoutElements","Output":"=== RUN   TestIntersectionWithoutElements\n"}
+{"Time":"2026-07-01T14:55:39.374058669Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithoutElements","Output":"--- PASS: TestIntersectionWithoutElements (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.374074741Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithoutElements","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.374080691Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionByBranchWithElements"}
+{"Time":"2026-07-01T14:55:39.374085982Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionByBranchWithElements","Output":"=== RUN   TestIntersectionByBranchWithElements\n"}
+{"Time":"2026-07-01T14:55:39.384230337Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionByBranchWithElements","Output":"--- PASS: TestIntersectionByBranchWithElements (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.38424353Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionByBranchWithElements","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.384256132Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithDependencies"}
+{"Time":"2026-07-01T14:55:39.384260301Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithDependencies","Output":"=== RUN   TestIntersectionWithDependencies\n"}
+{"Time":"2026-07-01T14:55:39.394983584Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithDependencies","Output":"--- PASS: TestIntersectionWithDependencies (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.394993784Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersectionWithDependencies","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.395000118Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersctionOfTwoChangesWithSharedDependency"}
+{"Time":"2026-07-01T14:55:39.395002726Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersctionOfTwoChangesWithSharedDependency","Output":"=== RUN   TestIntersctionOfTwoChangesWithSharedDependency\n"}
+{"Time":"2026-07-01T14:55:39.40606228Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersctionOfTwoChangesWithSharedDependency","Output":"--- PASS: TestIntersctionOfTwoChangesWithSharedDependency (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.40608723Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestIntersctionOfTwoChangesWithSharedDependency","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.406091743Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestSingleModDir"}
+{"Time":"2026-07-01T14:55:39.406094418Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestSingleModDir","Output":"=== RUN   TestSingleModDir\n"}
+{"Time":"2026-07-01T14:55:39.409544351Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestSingleModDir","Output":"--- PASS: TestSingleModDir (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.409554326Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestSingleModDir","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.409557954Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonModContent"}
+{"Time":"2026-07-01T14:55:39.409560536Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonModContent","Output":"=== RUN   TestNonModContent\n"}
+{"Time":"2026-07-01T14:55:39.41325227Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonModContent","Output":"--- PASS: TestNonModContent (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.413263245Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonModContent","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.413269941Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedAppDir"}
+{"Time":"2026-07-01T14:55:39.413272623Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedAppDir","Output":"=== RUN   TestNestedAppDir\n"}
+{"Time":"2026-07-01T14:55:39.417398371Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedAppDir","Output":"--- PASS: TestNestedAppDir (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.417407571Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedAppDir","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.41741363Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestModsDirInModDir"}
+{"Time":"2026-07-01T14:55:39.417418215Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestModsDirInModDir","Output":"=== RUN   TestModsDirInModDir\n"}
+{"Time":"2026-07-01T14:55:39.421246482Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestModsDirInModDir","Output":"--- PASS: TestModsDirInModDir (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.421256031Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestModsDirInModDir","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.421265794Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestEmptyRepo"}
+{"Time":"2026-07-01T14:55:39.421268516Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestEmptyRepo","Output":"=== RUN   TestEmptyRepo\n"}
+{"Time":"2026-07-01T14:55:39.422805792Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestEmptyRepo","Output":"--- PASS: TestEmptyRepo (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.42281332Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestEmptyRepo","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.422817624Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoBranches"}
+{"Time":"2026-07-01T14:55:39.422820166Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoBranches","Output":"=== RUN   TestDiffingTwoBranches\n"}
+{"Time":"2026-07-01T14:55:39.427918578Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoBranches","Output":"--- PASS: TestDiffingTwoBranches (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.427931268Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoBranches","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.42793642Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoProgressedBranches"}
+{"Time":"2026-07-01T14:55:39.42793917Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoProgressedBranches","Output":"=== RUN   TestDiffingTwoProgressedBranches\n"}
+{"Time":"2026-07-01T14:55:39.435864221Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoProgressedBranches","Output":"--- PASS: TestDiffingTwoProgressedBranches (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.435875973Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingTwoProgressedBranches","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.435882605Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingWithMultipleChangesToSameMod"}
+{"Time":"2026-07-01T14:55:39.43588643Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingWithMultipleChangesToSameMod","Output":"=== RUN   TestDiffingWithMultipleChangesToSameMod\n"}
+{"Time":"2026-07-01T14:55:39.442355689Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingWithMultipleChangesToSameMod","Output":"--- PASS: TestDiffingWithMultipleChangesToSameMod (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.442365417Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingWithMultipleChangesToSameMod","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.442370956Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForDeletes"}
+{"Time":"2026-07-01T14:55:39.442375261Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForDeletes","Output":"=== RUN   TestDiffingForDeletes\n"}
+{"Time":"2026-07-01T14:55:39.447893337Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForDeletes","Output":"--- PASS: TestDiffingForDeletes (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.447911848Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForDeletes","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.447920591Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForRenames"}
+{"Time":"2026-07-01T14:55:39.447924892Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForRenames","Output":"=== RUN   TestDiffingForRenames\n"}
+{"Time":"2026-07-01T14:55:39.453028364Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForRenames","Output":"--- PASS: TestDiffingForRenames (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.453040916Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffingForRenames","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.453046548Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestModOnRoot"}
+{"Time":"2026-07-01T14:55:39.453049796Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestModOnRoot","Output":"=== RUN   TestModOnRoot\n"}
+{"Time":"2026-07-01T14:55:39.455716042Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestModOnRoot","Output":"--- PASS: TestModOnRoot (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.455724412Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestModOnRoot","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.455731814Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByDiff"}
+{"Time":"2026-07-01T14:55:39.455734316Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByDiff","Output":"=== RUN   TestManifestByDiff\n"}
+{"Time":"2026-07-01T14:55:39.460637658Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByDiff","Output":"--- PASS: TestManifestByDiff (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.4606496Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByDiff","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.460652989Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByHead"}
+{"Time":"2026-07-01T14:55:39.460655949Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByHead","Output":"=== RUN   TestManifestByHead\n"}
+{"Time":"2026-07-01T14:55:39.464149679Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByHead","Output":"--- PASS: TestManifestByHead (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.464156966Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByHead","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.464163644Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDir"}
+{"Time":"2026-07-01T14:55:39.464169288Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDir","Output":"=== RUN   TestManifestByLocalDir\n"}
+{"Time":"2026-07-01T14:55:39.471634378Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDir","Output":"--- PASS: TestManifestByLocalDir (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.471649403Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDir","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.471655892Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDirAll"}
+{"Time":"2026-07-01T14:55:39.471658789Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDirAll","Output":"=== RUN   TestManifestByLocalDirAll\n"}
+{"Time":"2026-07-01T14:55:39.47513567Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDirAll","Output":"--- PASS: TestManifestByLocalDirAll (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.475146189Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestByLocalDirAll","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.4751533Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyChange"}
+{"Time":"2026-07-01T14:55:39.475157881Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyChange","Output":"=== RUN   TestDependencyChange\n"}
+{"Time":"2026-07-01T14:55:39.480112158Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyChange","Output":"--- PASS: TestDependencyChange (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.480120637Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependencyChange","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.480128358Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestIndirectDependencyChange"}
+{"Time":"2026-07-01T14:55:39.480132527Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIndirectDependencyChange","Output":"=== RUN   TestIndirectDependencyChange\n"}
+{"Time":"2026-07-01T14:55:39.486690964Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestIndirectDependencyChange","Output":"--- PASS: TestIndirectDependencyChange (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.486707934Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestIndirectDependencyChange","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.486713686Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffOfDependentChange"}
+{"Time":"2026-07-01T14:55:39.486717739Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffOfDependentChange","Output":"=== RUN   TestDiffOfDependentChange\n"}
+{"Time":"2026-07-01T14:55:39.491975653Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffOfDependentChange","Output":"--- PASS: TestDiffOfDependentChange (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.491983718Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDiffOfDependentChange","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.49199045Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndependentModules"}
+{"Time":"2026-07-01T14:55:39.491994688Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndependentModules","Output":"=== RUN   TestVersionOfIndependentModules\n"}
+{"Time":"2026-07-01T14:55:39.497878883Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndependentModules","Output":"--- PASS: TestVersionOfIndependentModules (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.497886893Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndependentModules","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.497899945Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfDependentModules"}
+{"Time":"2026-07-01T14:55:39.497902919Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfDependentModules","Output":"=== RUN   TestVersionOfDependentModules\n"}
+{"Time":"2026-07-01T14:55:39.503171737Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfDependentModules","Output":"--- PASS: TestVersionOfDependentModules (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.503180926Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfDependentModules","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.503185271Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndirectlyDependentModules"}
+{"Time":"2026-07-01T14:55:39.503188711Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndirectlyDependentModules","Output":"=== RUN   TestVersionOfIndirectlyDependentModules\n"}
+{"Time":"2026-07-01T14:55:39.509401353Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndirectlyDependentModules","Output":"--- PASS: TestVersionOfIndirectlyDependentModules (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.509412927Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestVersionOfIndirectlyDependentModules","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.509418361Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestChangeToFileDependency"}
+{"Time":"2026-07-01T14:55:39.509422403Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestChangeToFileDependency","Output":"=== RUN   TestChangeToFileDependency\n"}
+{"Time":"2026-07-01T14:55:39.516490431Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestChangeToFileDependency","Output":"--- PASS: TestChangeToFileDependency (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.516500251Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestChangeToFileDependency","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.516507215Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestFileDependencyInADependentModule"}
+{"Time":"2026-07-01T14:55:39.51653279Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestFileDependencyInADependentModule","Output":"=== RUN   TestFileDependencyInADependentModule\n"}
+{"Time":"2026-07-01T14:55:39.523583449Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestFileDependencyInADependentModule","Output":"--- PASS: TestFileDependencyInADependentModule (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.523607364Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestFileDependencyInADependentModule","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.523616891Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependentOfAModuleWithFileDependency"}
+{"Time":"2026-07-01T14:55:39.523621231Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependentOfAModuleWithFileDependency","Output":"=== RUN   TestDependentOfAModuleWithFileDependency\n"}
+{"Time":"2026-07-01T14:55:39.531143555Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependentOfAModuleWithFileDependency","Output":"--- PASS: TestDependentOfAModuleWithFileDependency (0.01s)\n"}
+{"Time":"2026-07-01T14:55:39.531162414Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestDependentOfAModuleWithFileDependency","Elapsed":0.01}
+{"Time":"2026-07-01T14:55:39.531171126Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestBySha"}
+{"Time":"2026-07-01T14:55:39.531175135Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestBySha","Output":"=== RUN   TestManifestBySha\n"}
+{"Time":"2026-07-01T14:55:39.535985487Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestBySha","Output":"--- PASS: TestManifestBySha (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.536002518Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestManifestBySha","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.536008355Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonRepository"}
+{"Time":"2026-07-01T14:55:39.536012145Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonRepository","Output":"=== RUN   TestNonRepository\n"}
+{"Time":"2026-07-01T14:55:39.537049998Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonRepository","Output":"--- PASS: TestNonRepository (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.537064638Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonRepository","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.537070948Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestOrderOfModules"}
+{"Time":"2026-07-01T14:55:39.537075448Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestOrderOfModules","Output":"=== RUN   TestOrderOfModules\n"}
+{"Time":"2026-07-01T14:55:39.540436633Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestOrderOfModules","Output":"--- PASS: TestOrderOfModules (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540450166Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestOrderOfModules","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540457159Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleError"}
+{"Time":"2026-07-01T14:55:39.540461725Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleError","Output":"=== RUN   TestSimpleError\n"}
+{"Time":"2026-07-01T14:55:39.540468923Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleError","Output":"--- PASS: TestSimpleError (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540475348Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleError","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540481136Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleErrorWithFormat"}
+{"Time":"2026-07-01T14:55:39.54048513Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleErrorWithFormat","Output":"=== RUN   TestSimpleErrorWithFormat\n"}
+{"Time":"2026-07-01T14:55:39.540531737Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleErrorWithFormat","Output":"--- PASS: TestSimpleErrorWithFormat (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.54054103Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestSimpleErrorWithFormat","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540551431Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedErrorWithMessage"}
+{"Time":"2026-07-01T14:55:39.540555285Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedErrorWithMessage","Output":"=== RUN   TestWrappedErrorWithMessage\n"}
+{"Time":"2026-07-01T14:55:39.54057146Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedErrorWithMessage","Output":"--- PASS: TestWrappedErrorWithMessage (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540576085Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedErrorWithMessage","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.54058088Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedError"}
+{"Time":"2026-07-01T14:55:39.540584817Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedError","Output":"=== RUN   TestWrappedError\n"}
+{"Time":"2026-07-01T14:55:39.540596266Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedError","Output":"--- PASS: TestWrappedError (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540602933Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestWrappedError","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540608875Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestLine"}
+{"Time":"2026-07-01T14:55:39.540612504Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestLine","Output":"=== RUN   TestLine\n"}
+{"Time":"2026-07-01T14:55:39.540637301Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestLine","Output":"--- PASS: TestLine (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540644464Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestLine","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540652446Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestFile"}
+{"Time":"2026-07-01T14:55:39.540656692Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestFile","Output":"=== RUN   TestFile\n"}
+{"Time":"2026-07-01T14:55:39.540676627Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestFile","Output":"--- PASS: TestFile (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540683838Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestFile","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540689705Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestLocation"}
+{"Time":"2026-07-01T14:55:39.540694017Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestLocation","Output":"=== RUN   TestLocation\n"}
+{"Time":"2026-07-01T14:55:39.540715209Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestLocation","Output":"--- PASS: TestLocation (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540722447Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestLocation","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540728584Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestFlatMap"}
+{"Time":"2026-07-01T14:55:39.540732308Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestFlatMap","Output":"=== RUN   TestFlatMap\n"}
+{"Time":"2026-07-01T14:55:39.540755418Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestFlatMap","Output":"--- PASS: TestFlatMap (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540762668Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestFlatMap","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540768768Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedMap"}
+{"Time":"2026-07-01T14:55:39.540772778Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedMap","Output":"=== RUN   TestNestedMap\n"}
+{"Time":"2026-07-01T14:55:39.540800759Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedMap","Output":"--- PASS: TestNestedMap (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540807733Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestNestedMap","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540817029Z","Action":"run","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonStringKey"}
+{"Time":"2026-07-01T14:55:39.540821627Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonStringKey","Output":"=== RUN   TestNonStringKey\n"}
+{"Time":"2026-07-01T14:55:39.540828589Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonStringKey","Output":"--- PASS: TestNonStringKey (0.00s)\n"}
+{"Time":"2026-07-01T14:55:39.540836635Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Test":"TestNonStringKey","Elapsed":0}
+{"Time":"2026-07-01T14:55:39.540842283Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Output":"PASS\n"}
+{"Time":"2026-07-01T14:55:39.541566721Z","Action":"output","Package":"github.com/mbtproject/mbt/lib","Output":"ok  \tgithub.com/mbtproject/mbt/lib\t0.265s\n"}
+{"Time":"2026-07-01T14:55:39.541587309Z","Action":"pass","Package":"github.com/mbtproject/mbt/lib","Elapsed":0.266}
+reward=1 graded=65 found=65 failed=0 parsed=65 framework=go exit_code=0

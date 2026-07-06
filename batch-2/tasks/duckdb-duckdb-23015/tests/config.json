@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/scripts/ci/test_run_tests.py -v",
+  "test_files": [
+    "scripts/ci/test_run_tests.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_failed_batch_includes_mismatch_context",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_failed_batch_prints_single_compact_summary_after_retries",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_fatal_stdout_failure_uses_last_started_test_and_signal",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_generic_failure_uses_failing_stderr_block_instead_of_stdout",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_prefers_failing_stderr_block_and_single_test_reproduce",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_retries_failed_fake_job",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_retries_timed_out_sleep_job",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_snippet_trims_blank_edges",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_stdout_failed_block_extracts_explicit_message_reason",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_summarizes_wrong_result_failure",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_timeout_names_last_file_in_multi_test_batch",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_timeout_uses_first_started_but_not_completed_test"
+  ],
+  "PASS_TO_PASS": [
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_aggregates_skipped_tests_from_multiple_batches",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_changed_tests_auto_stabilize_reruns_only_added_tests",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_changed_tests_flag_uses_second_list_file",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_changed_tests_large_set_uses_fast_three_total_runs",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_ci_groups_close_when_all_configs_pass",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_ci_groups_stay_open_after_first_failed_config",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_does_not_double_count_summary_when_in_stdout_and_stderr",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_fail_require_skip_enabled_fails",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_generate_list",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_multiple_test_configs_aggregate_failure",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_multiple_test_configs_run_independently",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_reports_skipped_tests_summary",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_retry_only_counts_skips_from_successful_attempt",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_runs_with_echo_test_command",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_stabilization_failure_fails_config_run",
+    "scripts.ci.test_run_tests.RunTestsScriptTest::test_stabilize_tests_reruns_selected_tests_with_fast_and_slow_policy"
+  ]
+}

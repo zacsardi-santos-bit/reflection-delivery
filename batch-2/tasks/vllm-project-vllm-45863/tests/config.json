@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/kernels/attention/test_flashmla_sparse.py::test_flashinfer_sparse_indices_cache -v --noconftest",
+  "test_files": [
+    "tests/kernels/attention/test_flashmla_sparse.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.kernels.attention.test_flashmla_sparse::test_flashinfer_sparse_indices_cache"
+  ],
+  "PASS_TO_PASS": []
+}

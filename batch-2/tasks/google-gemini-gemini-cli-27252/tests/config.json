@@ -1,0 +1,31 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run --coverage.enabled=false src/acp/acpResume.test.ts src/acp/acpSession.test.ts && cd /workspace/repo/packages/core && npx vitest run --coverage.enabled=false src/confirmation-bus/message-bus.test.ts",
+  "test_files": [
+    "packages/cli/src/acp/acpResume.test.ts",
+    "packages/cli/src/acp/acpSession.test.ts",
+    "packages/core/src/confirmation-bus/message-bus.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should emit error for invalid message",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should validate tool confirmation requests have correlationId",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should emit confirmation response when policy allows",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should emit rejection and response when policy denies",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should pass through to UI when policy says ASK_USER",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should forward toolAnnotations to policyEngine.check",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus publish should emit other message types directly",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus subscribe/unsubscribe should allow subscribing to specific message types",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus subscribe/unsubscribe should allow unsubscribing from message types",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus subscribe/unsubscribe should support multiple subscribers for the same message type",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus error handling should not crash on errors during message processing",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus derive should receive responses from parent bus on derived bus",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus derive should correctly chain subagent names for nested subagents",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus derive should strip sensitive metadata and enforce subagent identity on derived bus",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus subscribe with AbortSignal should remove listener when signal is aborted",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus subscribe with AbortSignal should not add listener if signal is already aborted",
+    "/workspace/repo/packages/core/src/confirmation-bus/message-bus.test.ts::MessageBus subscribe with AbortSignal should remove abort listener when unsubscribe is called"
+  ],
+  "PASS_TO_PASS": []
+}

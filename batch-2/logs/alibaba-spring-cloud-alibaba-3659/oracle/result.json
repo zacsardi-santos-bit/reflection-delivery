@@ -1,0 +1,29 @@
+{
+    "id": "16f4ced8-4cf8-45c5-9454-dcc61fc8e19f",
+    "started_at": "2026-07-04T15:39:32.560552",
+    "finished_at": "2026-07-04T15:39:59.843268",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__alibaba-spring-cloud-alibaba-3659": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "alibaba-spring-cloud-alibaba-365__5bMXqEj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

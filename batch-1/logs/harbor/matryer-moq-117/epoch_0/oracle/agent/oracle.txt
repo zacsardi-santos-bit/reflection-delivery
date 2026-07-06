@@ -1,0 +1,7 @@
+patching file README.md
+patching file main.go
+patching file pkg/moq/formatter.go
+patching file pkg/moq/golint_initialisms.go
+patching file pkg/moq/moq.go
+patching file pkg/moq/testpackages/imports/testdata/gofmt.golden.go
+patching file pkg/moq/testpackages/imports/testdata/goimports.golden.go

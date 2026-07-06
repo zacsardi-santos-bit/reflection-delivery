@@ -1,0 +1,4 @@
+patching file .changeset/gold-days-fly.md
+patching file packages/graphql/src/schema/get-obj-field-meta.ts
+patching file packages/graphql/src/schema/validation/custom-rules/directives/default.ts
+patching file packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts

@@ -1,0 +1,29 @@
+{
+    "id": "3cc06beb-7966-47ca-b1c9-bcca064ce5d6",
+    "started_at": "2026-07-04T15:38:03.646572",
+    "finished_at": "2026-07-04T15:39:03.461637",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__metalbear-co-mirrord-3124": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "metalbear-co-mirrord-3124__WCWrVb7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

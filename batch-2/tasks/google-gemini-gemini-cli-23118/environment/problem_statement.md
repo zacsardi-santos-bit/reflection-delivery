@@ -1,0 +1,7 @@
+I'm adding telemetry to the auth and onboarding flow in our CLI because right now when someone authenticates for the first time we record nothing, so I can't tell if onboarding even started, whether it finished, or what tier folks end up on. Impossible to watch success rates or spot drop-offs. I want two new events: one that fires at the very start of the onboarding flow signaling onboarding has begun, and a second that fires once the user's been onboarded successfully, carrying their user tier along with it.
+
+Both events need to go to two places. First the clearcut structured logging backend with sensible event names and metadata keys, and also the OpenTelemetry metrics pipeline. The start event should emit a counter metric, and the success event should emit a counter metric that also records the user's tier.
+
+Also the user profile data we return after setup needs a new boolean saying whether the user had previously completed onboarding, and for anyone who's freshly onboarded that flag should be false so we can tell first-timers from returning users.
+
+Oh and the function that sets up users currently takes a narrow validation callback as its second param. I need that swapped out to accept the full application config object instead so it can reach everything it needs (the validation handler, the session ID, and whatever else lives in config) to actually emit these telemetry events.

@@ -1,0 +1,2156 @@
+diff --git a/.agents/skills/frontend-unit-testing/SKILL.md b/.agents/skills/frontend-unit-testing/SKILL.md
+new file mode 100644
+index 000000000..dbaf5700f
+--- /dev/null
++++ b/.agents/skills/frontend-unit-testing/SKILL.md
+@@ -0,0 +1,365 @@
++---
++name: "frontend-unit-testing"
++description: "Write comprehensive, behaviour-driven unit tests for Gradio frontend Svelte components using Vitest browser mode, Playwright, and the @self/tootils test utilities."
++---
++
++# Frontend Unit Testing Skill
++
++You are an expert at writing unit tests for Gradio's Svelte frontend components. Follow these instructions precisely.
++
++## Core Principles (Non-Negotiable)
++
++1. **Test everything.** Unit tests are cheap. Having too many is a problem we want to have. When in doubt, write the test. Multiple tests per feature/argument is fine and encouraged.
++
++2. **Test behaviour, not implementation.** Never assert on implementation details like CSS class names, internal state, or DOM structure for its own sake. Instead, test observable behaviour.
++   - BAD: assert that an input has a `step` attribute set to `5`
++   - GOOD: type a value, click the increment button, and assert the value increased by `5`
++   - BAD: assert that a container has class `hidden`
++   - GOOD: assert that the element is not visible with `toBeVisible()`
++
++3. **Test Gradio-specific functionality.** Every component has `get_data`, `set_data`, and dispatches events. These must be tested, including their interactions with props.
++   - `set_data` -> verify the DOM reflects the change
++   - `get_data` -> verify it returns the current state
++   - `set_data` -> `get_data` round-trips
++   - User interaction -> `get_data` reflects it
++   - Events: `change`, `input`, `submit`, `blur`, `focus`, `clear`, `upload`, `select`, `custom_button_click`, etc.
++
++4. **Real browser environment.** Tests run in Vitest browser mode with a Playwright provider. This is a real browser, not jsdom. **Do not mock or stub** unless absolutely unavoidable (e.g., `navigator.clipboard`, `MediaStream`). If you must mock, explain why in a comment.
++
++5. **Test sub-components in isolation** when they have meaningful standalone logic (e.g., a utility function, a shared inner component). These tests are *in addition to* full `Index.svelte` integration tests.
++
++6. **Never refactor production code for testability** without explicit user approval. If a refactor would help, recommend it and wait for a go-ahead.
++
++7. **Visual-only props get `test.todo` placeholders.** If a prop or argument results in a purely visual change (colours, spacing, fonts, border styles, shadows, etc.) that cannot be meaningfully asserted with behavioural queries, do NOT skip it silently. Instead:
++   - Add a `test.todo("description")` explaining that it needs a visual regression test
++   - The description should state what prop/value is being tested and what the expected visual outcome is
++   - This ensures visual-only behaviour is tracked and not forgotten
++
++   ```ts
++   test.todo(
++     "VISUAL: container_color='red' applies a red background to the component wrapper — needs Playwright visual regression screenshot comparison"
++   );
++   ```
++
++## Test Environment & Utilities
++
++All test utilities come from `@self/tootils/render`. Never import from `@testing-library/svelte` directly.
++
++### `render(Component, props?, options?)`
++
++Mounts a Gradio component with the full shared prop infrastructure (loading_status, dispatcher, i18n, etc.).
++
++Returns:
++- `container` — the root DOM element
++- `listen(event_name, opts?)` — returns a `vi.fn()` mock that records dispatched Gradio events. By default only captures events fired *after* the call. **Use `{ retrospective: true }` when testing mount-time events** — this replays any events that were buffered during render before `listen` was called. Without this flag, mount-time events are invisible.
++- `set_data(data)` — programmatically set component data (simulates backend push). Automatically ticks.
++- `get_data()` — read current component data.
++- All `@testing-library/dom` query functions (`getByRole`, `getByText`, `getByDisplayValue`, `queryByRole`, etc.)
++- `debug()` — prints pretty DOM to console.
++- `unmount()` — teardown.
++
++Props are split automatically: keys in `allowed_shared_props` go to `shared_props`, everything else goes to `props`.
++
++### `fireEvent`
++
++Re-exported from `@testing-library/dom` but wrapped to `await tick()` twice after each event (to let Svelte reactivity settle). Always `await` fireEvent calls.
++
++### `cleanup()`
++
++Call in `afterEach` to unmount all rendered components.
++
++### `run_shared_prop_tests(config)` (MANDATORY)
++
++Runs a standard suite of shared prop tests (`elem_id`, `elem_classes`, `visible`, `label`, `show_label`, `validation_error`). **Every component test file MUST call this.** Never manually re-implement these tests.
++
++```ts
++run_shared_prop_tests({
++  component: MyComponent,
++  name: "MyComponent",
++  base_props: { /* minimum props to render */ },
++  has_label: true,        // default true; false for label-less components
++  has_validation_error: true  // default true
++});
++```
++
++**When a shared test doesn't apply to a component** (e.g., the component has no label), use the config flags to disable that specific test — do NOT skip `run_shared_prop_tests` entirely and rewrite everything by hand:
++
++```ts
++// Accordion has no label — disable label tests, keep everything else
++run_shared_prop_tests({
++  component: Accordion,
++  name: "Accordion",
++  base_props: { label: "Section", open: true },
++  has_label: false,
++  has_validation_error: false
++});
++```
++
++If a shared test fails for a component-specific reason that the flags don't cover, the correct response is to:
++1. Still call `run_shared_prop_tests` with appropriate flags to cover what it can
++2. Write a targeted custom test for the specific behaviour that differs
++3. Explain why the shared test doesn't apply in a comment
++
++### File utilities
++
++- `upload_file(fixture, selector?)` — sets files on a file input using real fixtures
++- `drop_file(fixture, selector)` — simulates drag-and-drop with real files
++- `download_file(selector)` — clicks an element and captures the download
++- `mock_client()` — returns a mock client for components that use file uploads (the upload mock echoes input unchanged)
++
++### Fixtures
++
++Pre-built `FileData` objects pointing to real test files:
++- `TEST_TXT`, `TEST_JPG`, `TEST_PNG`, `TEST_MP4`, `TEST_WAV`, `TEST_PDF`
++
++### User events
++
++For keyboard/typing interactions, import `@testing-library/user-event`:
++
++```ts
++import event from "@testing-library/user-event";
++
++el.focus();
++await event.keyboard("some text");
++await event.type(el, "123");
++await event.clear(el);
++```
++
++## Running Tests
++
++**Always use `pnpm test:run`.** Never use `pnpm test` — it starts in watch mode and never exits.
++
++All commands are run from the repo root.
++
++```bash
++# Run all unit tests
++pnpm test:run
++
++# Run a specific test file (match by filename)
++pnpm test:run Textbox.test.ts
++
++# Run all tests within a folder (match by path segment)
++pnpm test:run dataframe
++
++# Filter by test name with -t
++pnpm test:run -t elem_id
++
++# Combine file/folder filter with test name filter
++pnpm test:run accordion -t elem_id
++```
++
++After writing or modifying tests, always run them to verify they pass.
++
++## Test File Structure
++
++```ts
++import { test, describe, afterEach, expect, vi } from "vitest";
++import { cleanup, render, fireEvent, waitFor } from "@self/tootils/render";
++import { run_shared_prop_tests } from "@self/tootils/shared-prop-tests";
++import event from "@testing-library/user-event";
++
++import Component from "./Index.svelte";
++
++const default_props = {
++  // Minimum props for a working render, always including:
++  label: "Component Name",
++  show_label: true,
++  interactive: true,
++  // ...component-specific props
++};
++
++// 1. Shared prop tests
++run_shared_prop_tests({
++  component: Component,
++  name: "ComponentName",
++  base_props: { /* ... */ }
++});
++
++// 2. Describe blocks grouped by prop, feature, or concern
++describe("ComponentName", () => {
++  afterEach(() => cleanup());
++  // General rendering and basic behaviour
++});
++
++describe("Props: propName", () => {
++  afterEach(() => cleanup());
++  // Tests for each meaningful prop value
++});
++
++describe("Events", () => {
++  afterEach(() => cleanup());
++  // change, input, submit, blur, focus, clear, etc.
++});
++
++describe("get_data / set_data", () => {
++  afterEach(() => cleanup());
++  // Round-trip, DOM reflection, interaction flow
++});
++
++describe("Edge cases", () => {
++  afterEach(() => cleanup());
++  // Null/undefined handling, deduplication, mount-time behaviour
++});
++```
++
++### Naming conventions
++
++- **Describe blocks**: Group by `Props: <name>`, `Events`, `Events: <name>`, `get_data / set_data`, `Edge cases`, or component area.
++- **Test names**: Declarative sentences describing what should happen. e.g., `"lines > 1 renders a textarea with correct rows"`, `"change: emitted when value changes from outside"`.
++
++## Two Modes of Operation
++
++### Mode 1: Targeted tests (for a specific feature or regression)
++
++When asked to write tests for a specific feature, prop, or bug fix:
++- Read the relevant component source to understand the behaviour
++- Write focused tests covering the specific area
++- Include edge cases related to that feature
++- Proceed directly — no plan needed unless the scope is ambiguous
++
++### Mode 2: Full component test battery
++
++When asked to write or rewrite tests for an entire component:
++
++**You MUST follow this process:**
++
++1. **Research phase** — Read thoroughly:
++   - The component's `Index.svelte` (the main entry point)
++   - Any shared sub-components in the component's `shared/` directory
++   - The Python component definition in `gradio/components/` to understand all props, events, and data types
++   - Any existing tests for the component
++   - The component's demo files in `demo/` if they exist
++
++2. **Analysis phase** — Identify every testable surface:
++   - Every prop and its meaningful values (including defaults, edge cases, combinations)
++   - Every event the component dispatches
++   - `get_data` / `set_data` behaviour
++   - Interactive vs non-interactive behaviour
++   - Sub-components with standalone testable logic
++   - Accessibility-relevant behaviour (labels, ARIA attributes as they affect user behaviour)
++   - Edge cases: null/undefined values, empty strings, boundary values, mount-time behaviour, event deduplication
++   - Visual-only props: identify props that only affect appearance and flag them for `test.todo` with visual regression notes
++
++3. **Plan phase** — Present a structured testing plan:
++   - Organised by describe block
++   - Each test listed with: name, what it verifies, key assertion
++   - Call out any tests that might need mocking (and why)
++   - Call out any sub-components worth testing in isolation
++   - Call out any visual-only props that need `test.todo` placeholders for visual regression testing
++   - Note any refactoring that would improve testability (but don't do it)
++
++4. **Wait for approval** — Present the plan and ask for feedback before writing code.
++
++5. **Implementation phase** — Write the tests following the plan.
++
++## Assertion Patterns
++
++### Query priority (strict)
++
++Always use the query utilities returned by `render()`. **Never use `container.querySelector` unless every option below has been exhausted.** Follow this priority order:
++
++1. **Semantic role queries** (best — reflects how users and assistive tech see the component):
++   ```ts
++   getByRole("textbox")
++   getByRole("button", { name: "Submit" })
++   getByRole("slider")
++   ```
++
++2. **Label and text queries** (good — reflects visible content):
++   ```ts
++   getByLabelText("Upload file")
++   getByText("Submit")
++   getByDisplayValue("hello")
++   getByPlaceholderText("Enter text...")
++   ```
++
++3. **Test ID queries** (acceptable — when no semantic/text query works):
++   ```ts
++   getByTestId("source-select")
++   getByTestId("password")
++   ```
++   If the component lacks a useful `data-testid`, recommend adding one rather than falling back to `querySelector`.
++
++4. **`container.querySelector`** (absolute last resort — only when the DOM structure makes all of the above impossible):
++   ```ts
++   // Only when there is genuinely no role, label, text, or testid available.
++   // Document WHY in a comment when you use this.
++   // e.g., querying an <img> tag that has no alt text and no testid
++   const img = container.querySelector("img"); // no role/label available for bare img
++   ```
++
++Use `queryBy*` variants (which return `null` instead of throwing) when asserting something is **not** in the DOM:
++```ts
++expect(queryByRole("button")).toBeNull();
++expect(queryByLabelText("Upload file")).toBeNull();
++```
++
++### Common assertion patterns
++
++```ts
++// Visibility
++expect(el).toBeVisible();
++expect(el).not.toBeVisible();
++
++// Presence
++expect(queryByRole("button")).toBeNull();        // not in DOM
++expect(getByRole("button")).toBeTruthy();         // in DOM
++
++// Values
++expect(el).toHaveValue("hello");
++expect(el).toHaveAttribute("type", "password");
++
++// State
++expect(el).toBeDisabled();
++expect(el).toBeEnabled();
++expect(el).toHaveFocus();
++
++// Events
++const change = listen("change");
++await set_data({ value: "new" });
++expect(change).toHaveBeenCalledTimes(1);
++expect(change).toHaveBeenCalledWith("new");
++
++// Mount-time events — use { retrospective: true }
++// listen() only captures events fired AFTER it is called. Since render()
++// is awaited before listen() runs, any events fired during mount are missed.
++// Pass { retrospective: true } to also replay events from the buffer.
++//
++// Use this whenever you need to assert about mount-time behaviour:
++//   - "no spurious change event on mount"
++//   - "component fires 'load' on mount"
++//   - "initial value triggers change on mount" (or doesn't)
++const change = listen("change", { retrospective: true });
++expect(change).not.toHaveBeenCalled();  // no spurious mount event
++
++// If you expect an event WAS fired on mount:
++const load = listen("load", { retrospective: true });
++expect(load).toHaveBeenCalledTimes(1);
++
++// Event deduplication
++await set_data({ value: "x" });
++await set_data({ value: "x" });
++expect(change).toHaveBeenCalledTimes(1);
++
++// Async operations (uploads, etc.)
++await waitFor(() => {
++  expect(upload).toHaveBeenCalledTimes(1);
++});
++```
++
++## What NOT to Do
++
++- **Don't use `container.querySelector`** as a default. Use `getByRole`, `getByText`, `getByLabelText`, `getByDisplayValue`, `getByPlaceholderText`, or `getByTestId` first. If none of those work, recommend adding a `data-testid` to the component. `querySelector` is an absolute last resort and must include a comment explaining why no query utility works.
++- **Don't mock Svelte internals**, the DOM, or browser APIs that work natively.
++- **Don't unit-test purely visual styling** (colours, spacing, fonts, shadows). Instead, add `test.todo` placeholders recommending Playwright visual regression tests. Do test behavioural *effects* of styling (visibility, disabled state).
++- **Don't assert on internal class names** unless they are the mechanism by which a behaviour is expressed and there's no semantic alternative (e.g., `.sr-only` for screen-reader-only labels).
++- **Don't manually rewrite shared prop tests.** `run_shared_prop_tests` handles `elem_id`, `elem_classes`, `visible`, `label`, `show_label`, `validation_error`. Always call it. If a specific test doesn't apply, use the config flags (`has_label: false`, `has_validation_error: false`) — never skip the utility and hand-roll the tests instead.
++- **Don't add `setTimeout` or artificial delays.** Use `await tick()`, `await fireEvent.x()`, or `await waitFor()`.
++- **Don't write snapshot tests.** They test implementation, not behaviour.
++- **Don't import from `@testing-library/svelte`** — always use `@self/tootils/render`.
++
++## Reference: Exemplar Test Files
++
++Study these files for patterns and quality bar:
++- `js/textbox/Textbox.test.ts` — comprehensive prop, event, and edge case testing
++- `js/image/Image.test.ts` — file upload/drop, sub-component isolation (`get_coordinates_of_clicked_image`), interactive vs static modes, custom buttons
+diff --git a/.changeset/young-pens-cry.md b/.changeset/young-pens-cry.md
+new file mode 100644
+index 000000000..14e68b5fd
+--- /dev/null
++++ b/.changeset/young-pens-cry.md
+@@ -0,0 +1,7 @@
++---
++"@gradio/accordion": patch
++"@self/tootils": patch
++"gradio": patch
++---
++
++fix:Ensure the Accordion's `expand` and `collapse` events fire when toggled from python
+diff --git a/.claude/skills b/.claude/skills
+new file mode 120000
+index 000000000..2b7a412b8
+--- /dev/null
++++ b/.claude/skills
+@@ -0,0 +1 @@
++../.agents/skills
+\ No newline at end of file
+diff --git a/.gitignore b/.gitignore
+index 91c8559cd..9b3841c5c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -100,7 +100,7 @@ js/storybook/theme.css
+ .config/playwright/.cache
+ 
+ *.local.*
+-.claude/
++.claude/settings.local
+ CLAUDE.md
+ .sonda/
+ 
+diff --git a/home/runner/work/gradio/gradio/client/js/src/client.d.ts b/home/runner/work/gradio/gradio/client/js/src/client.d.ts
+deleted file mode 100644
+index aed6efd7b..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/client.d.ts
++++ /dev/null
+@@ -1,77 +0,0 @@
+-import type { ApiData, ApiInfo, ClientOptions, Config, DuplicateOptions, EndpointInfo, JsApiData, PredictReturn, SpaceStatus, Status, UploadResponse, SubmitIterable, GradioEvent } from "./types";
+-import { FileData } from "./upload";
+-export declare class Client {
+-    app_reference: string;
+-    options: ClientOptions;
+-    deep_link: string | null;
+-    config: Config | undefined;
+-    api_prefix: string;
+-    api_info: ApiInfo<JsApiData> | undefined;
+-    api_map: Record<string, number>;
+-    session_hash: string;
+-    jwt: string | false;
+-    last_status: Record<string, Status["stage"]>;
+-    private cookies;
+-    stream_status: {
+-        open: boolean;
+-    };
+-    closed: boolean;
+-    pending_stream_messages: Record<string, any[][]>;
+-    pending_diff_streams: Record<string, any[][]>;
+-    event_callbacks: Record<string, (data?: unknown) => Promise<void>>;
+-    unclosed_events: Set<string>;
+-    heartbeat_event: EventSource | null;
+-    abort_controller: AbortController | null;
+-    stream_instance: EventSource | null;
+-    current_payload: any;
+-    get_url_config(url?: string | null): Config;
+-    get_page_config(page: string): Config;
+-    fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
+-    stream(url: URL): EventSource;
+-    view_api: () => Promise<ApiInfo<JsApiData>>;
+-    upload_files: (root_url: string, files: (Blob | File)[], upload_id?: string) => Promise<UploadResponse>;
+-    upload: (file_data: FileData[], root_url: string, upload_id?: string, max_file_size?: number) => Promise<(FileData | null)[] | null>;
+-    handle_blob: (endpoint: string, data: unknown[], endpoint_info: EndpointInfo<ApiData | JsApiData>) => Promise<unknown[]>;
+-    post_data: (url: string, body: unknown, additional_headers?: any) => Promise<unknown[]>;
+-    submit: (endpoint: string | number, data: unknown[] | Record<string, unknown> | undefined, event_data?: unknown, trigger_id?: number | null, all_events?: boolean) => SubmitIterable<GradioEvent>;
+-    predict: <T = unknown>(endpoint: string | number, data: unknown[] | Record<string, unknown> | undefined, event_data?: unknown) => Promise<PredictReturn<T>>;
+-    open_stream: () => Promise<void>;
+-    private resolve_config;
+-    private resolve_cookies;
+-    constructor(app_reference: string, options?: ClientOptions);
+-    private init;
+-    _resolve_heartbeat(_config: Config): Promise<void>;
+-    static connect(app_reference: string, options?: ClientOptions): Promise<Client>;
+-    reconnect(): Promise<"connected" | "broken" | "changed">;
+-    close(): void;
+-    set_current_payload(payload: any): void;
+-    static duplicate(app_reference: string, options?: DuplicateOptions): Promise<Client>;
+-    private _resolve_config;
+-    private config_success;
+-    handle_space_success(status: SpaceStatus): Promise<Config | void>;
+-    component_server(component_id: number, fn_name: string, data: unknown | {
+-        binary: boolean;
+-        data: Record<string, any>;
+-    }): Promise<unknown>;
+-    set_cookies(raw_cookies: string): void;
+-    private prepare_return_obj;
+-}
+-/**
+- * @deprecated This method will be removed in v1.0. Use `Client.connect()` instead.
+- * Creates a client instance for interacting with Gradio apps.
+- *
+- * @param {string} app_reference - The reference or URL to a Gradio space or app.
+- * @param {ClientOptions} options - Configuration options for the client.
+- * @returns {Promise<Client>} A promise that resolves to a `Client` instance.
+- */
+-export declare function client(app_reference: string, options?: ClientOptions): Promise<Client>;
+-/**
+- * @deprecated This method will be removed in v1.0. Use `Client.duplicate()` instead.
+- * Creates a duplicate of a space and returns a client instance for the duplicated space.
+- *
+- * @param {string} app_reference - The reference or URL to a Gradio space or app to duplicate.
+- * @param {DuplicateOptions} options - Configuration options for the client.
+- * @returns {Promise<Client>} A promise that resolves to a `Client` instance.
+- */
+-export declare function duplicate_space(app_reference: string, options: DuplicateOptions): Promise<Client>;
+-export type ClientInstance = Client;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/constants.d.ts b/home/runner/work/gradio/gradio/client/js/src/constants.d.ts
+deleted file mode 100644
+index 3d93f43ff..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/constants.d.ts
++++ /dev/null
+@@ -1,33 +0,0 @@
+-export declare const HOST_URL = "host";
+-export declare const API_URL = "predict/";
+-export declare const SSE_URL_V0 = "queue/join";
+-export declare const SSE_DATA_URL_V0 = "queue/data";
+-export declare const SSE_URL = "queue/data";
+-export declare const SSE_DATA_URL = "queue/join";
+-export declare const UPLOAD_URL = "upload";
+-export declare const LOGIN_URL = "login";
+-export declare const CONFIG_URL = "config";
+-export declare const API_INFO_URL = "info";
+-export declare const RUNTIME_URL = "runtime";
+-export declare const SLEEPTIME_URL = "sleeptime";
+-export declare const HEARTBEAT_URL = "heartbeat";
+-export declare const COMPONENT_SERVER_URL = "component_server";
+-export declare const RESET_URL = "reset";
+-export declare const CANCEL_URL = "cancel";
+-export declare const APP_ID_URL = "app_id";
+-export declare const RAW_API_INFO_URL = "info?serialize=False";
+-export declare const SPACE_FETCHER_URL = "https://gradio-space-api-fetcher-v2.hf.space/api";
+-export declare const SPACE_URL = "https://hf.space/{}";
+-export declare const QUEUE_FULL_MSG = "This application is currently busy. Please try again. ";
+-export declare const BROKEN_CONNECTION_MSG = "Connection errored out. ";
+-export declare const CONFIG_ERROR_MSG = "Could not resolve app config. ";
+-export declare const SPACE_STATUS_ERROR_MSG = "Could not get space status. ";
+-export declare const API_INFO_ERROR_MSG = "Could not get API info. ";
+-export declare const SPACE_METADATA_ERROR_MSG = "Space metadata could not be loaded. ";
+-export declare const INVALID_URL_MSG = "Invalid URL. A full URL path is required.";
+-export declare const UNAUTHORIZED_MSG = "Not authorized to access this space. ";
+-export declare const INVALID_CREDENTIALS_MSG = "Invalid credentials. Could not login. ";
+-export declare const MISSING_CREDENTIALS_MSG = "Login credentials are required to access this space.";
+-export declare const NODEJS_FS_ERROR_MSG = "File system access is only available in Node.js environments";
+-export declare const ROOT_URL_ERROR_MSG = "Root URL not found in client config";
+-export declare const FILE_PROCESSING_ERROR_MSG = "Error uploading file";
+diff --git a/home/runner/work/gradio/gradio/client/js/src/helpers/api_info.d.ts b/home/runner/work/gradio/gradio/client/js/src/helpers/api_info.d.ts
+deleted file mode 100644
+index df3a7873e..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/helpers/api_info.d.ts
++++ /dev/null
+@@ -1,47 +0,0 @@
+-import type { ApiData, ApiInfo, Config, JsApiData, EndpointInfo, Status } from "../types";
+-export declare const RE_SPACE_NAME: RegExp;
+-export declare const RE_SPACE_DOMAIN: RegExp;
+-export declare function process_endpoint(app_reference: string, token?: `hf_${string}`): Promise<{
+-    space_id: string | false;
+-    host: string;
+-    ws_protocol: "ws" | "wss";
+-    http_protocol: "http:" | "https:";
+-}>;
+-export declare const join_urls: (...urls: string[]) => string;
+-export declare function transform_api_info(api_info: ApiInfo<ApiData>, config: Config, api_map: Record<string, number>): ApiInfo<JsApiData>;
+-export declare function get_type(type: {
+-    type: any;
+-    description: string;
+-}, component: string, serializer: string, signature_type: "return" | "parameter"): string | undefined;
+-export declare function get_description(type: {
+-    type: any;
+-    description: string;
+-}, serializer: string): string;
+-export declare function handle_message(data: any, last_status: Status["stage"]): {
+-    type: "hash" | "data" | "update" | "complete" | "generating" | "log" | "none" | "heartbeat" | "streaming" | "broken_connection" | "unexpected_error";
+-    data?: any;
+-    status?: Status;
+-    original_msg?: string;
+-};
+-/**
+- * Maps the provided `data` to the parameters defined by the `/info` endpoint response.
+- * This allows us to support both positional and keyword arguments passed to the client
+- * and ensures that all parameters are either directly provided or have default values assigned.
+- *
+- * @param {unknown[] | Record<string, unknown>} data - The input data for the function,
+- *        which can be either an array of values for positional arguments or an object
+- *        with key-value pairs for keyword arguments.
+- * @param {JsApiData[]} parameters - Array of parameter descriptions retrieved from the
+- *        `/info` endpoint.
+- *
+- * @returns {unknown[]} - Returns an array of resolved data where each element corresponds
+- *         to the expected parameter from the API. The `parameter_default` value is used where
+- *         a value is not provided for a parameter, and optional parameters without defaults are
+- * 		   set to `undefined`.
+- *
+- * @throws {Error} - Throws an error:
+- *         - If more arguments are provided than are defined in the parameters.
+- *  *      - If no parameter value is provided for a required parameter and no default value is defined.
+- *         - If an argument is provided that does not match any defined parameter.
+- */
+-export declare const map_data_to_params: (data: (unknown[] | Record<string, unknown>) | undefined, endpoint_info: EndpointInfo<JsApiData | ApiData>) => unknown[];
+diff --git a/home/runner/work/gradio/gradio/client/js/src/helpers/data.d.ts b/home/runner/work/gradio/gradio/client/js/src/helpers/data.d.ts
+deleted file mode 100644
+index 78d8c6f5f..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/helpers/data.d.ts
++++ /dev/null
+@@ -1,20 +0,0 @@
+-import { type ApiData, type BlobRef, type Config, type EndpointInfo, type JsApiData, type DataType, Command, type Dependency, type ComponentMeta } from "../types";
+-import { FileData } from "../upload";
+-export declare function update_object(object: {
+-    [x: string]: any;
+-}, newValue: any, stack: (string | number)[]): void;
+-export declare function walk_and_store_blobs(data: DataType, type?: string | undefined, path?: string[], root?: boolean, endpoint_info?: EndpointInfo<ApiData | JsApiData> | undefined): Promise<BlobRef[]>;
+-export declare function skip_queue(id: number, config: Config): boolean;
+-export declare function post_message<Res = any>(message: any, origin: string): Promise<Res>;
+-export declare function handle_file(file_or_url: File | string | Blob | Buffer): FileData | Blob | Command;
+-/**
+- * Handles the payload by filtering out state inputs and returning an array of resolved payload values.
+- * We send null values for state inputs to the server, but we don't want to include them in the resolved payload.
+- *
+- * @param resolved_payload - The resolved payload values received from the client or the server
+- * @param dependency - The dependency object.
+- * @param components - The array of component metadata.
+- * @param with_null_state - Optional. Specifies whether to include null values for state inputs. Default is false.
+- * @returns An array of resolved payload values, filtered based on the dependency and component metadata.
+- */
+-export declare function handle_payload(resolved_payload: unknown[], dependency: Dependency, components: ComponentMeta[], type: "input" | "output", with_null_state?: boolean): unknown[];
+diff --git a/home/runner/work/gradio/gradio/client/js/src/helpers/init_helpers.d.ts b/home/runner/work/gradio/gradio/client/js/src/helpers/init_helpers.d.ts
+deleted file mode 100644
+index 34c0a9dd3..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/helpers/init_helpers.d.ts
++++ /dev/null
+@@ -1,24 +0,0 @@
+-import type { Config } from "../types";
+-import { Client } from "..";
+-/**
+- * This function is used to resolve the URL for making requests when the app has a root path.
+- * The root path could be a path suffix like "/app" which is appended to the end of the base URL. Or
+- * it could be a full URL like "https://abidlabs-test-client-replica--gqf2x.hf.space" which is used when hosting
+- * Gradio apps on Hugging Face Spaces.
+- * @param {string} base_url The base URL at which the Gradio server is hosted
+- * @param {string} root_path The root path, which could be a path suffix (e.g. mounted in FastAPI app) or a full URL (e.g. hosted on Hugging Face Spaces)
+- * @param {boolean} prioritize_base Whether to prioritize the base URL over the root path. This is used when both the base path and root paths are full URLs. For example, for fetching files the root path should be prioritized, but for making requests, the base URL should be prioritized.
+- * @returns {string} the resolved URL
+- */
+-export declare function resolve_root(base_url: string, root_path: string, prioritize_base: boolean): string;
+-export declare function get_jwt(space: string, token: `hf_${string}`, cookies?: string | null): Promise<string | false>;
+-export declare function map_names_to_ids(fns: Config["dependencies"]): Record<string, number>;
+-export declare function resolve_config(this: Client, endpoint: string): Promise<Config | undefined>;
+-export declare function resolve_cookies(this: Client): Promise<void>;
+-export declare function get_cookie_header(http_protocol: string, host: string, auth: [string, string], _fetch: typeof fetch, token?: `hf_${string}`): Promise<string | null>;
+-export declare function determine_protocol(endpoint: string): {
+-    ws_protocol: "ws" | "wss";
+-    http_protocol: "http:" | "https:";
+-    host: string;
+-};
+-export declare const parse_and_set_cookies: (cookie_header: string) => string[];
+diff --git a/home/runner/work/gradio/gradio/client/js/src/helpers/spaces.d.ts b/home/runner/work/gradio/gradio/client/js/src/helpers/spaces.d.ts
+deleted file mode 100644
+index cf2d2cb61..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/helpers/spaces.d.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-import type { SpaceStatusCallback } from "../types";
+-export declare function check_space_status(id: string, type: "subdomain" | "space_name", status_callback: SpaceStatusCallback): Promise<void>;
+-export declare const check_and_wake_space: (space_id: string, status_callback: SpaceStatusCallback) => Promise<void>;
+-export declare function discussions_enabled(space_id: string): Promise<boolean>;
+-export declare function get_space_hardware(space_id: string, token?: `hf_${string}` | undefined): Promise<(typeof hardware_types)[number]>;
+-export declare function set_space_timeout(space_id: string, timeout: number, token?: `hf_${string}`): Promise<any>;
+-export declare const hardware_types: readonly ["cpu-basic", "cpu-upgrade", "cpu-xl", "t4-small", "t4-medium", "a10g-small", "a10g-large", "a10g-largex2", "a10g-largex4", "a100-large", "zero-a10g", "h100", "h100x8"];
+diff --git a/home/runner/work/gradio/gradio/client/js/src/index.d.ts b/home/runner/work/gradio/gradio/client/js/src/index.d.ts
+deleted file mode 100644
+index 61d5b9879..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/index.d.ts
++++ /dev/null
+@@ -1,10 +0,0 @@
+-export { Client } from "./client";
+-export { predict } from "./utils/predict";
+-export { submit } from "./utils/submit";
+-export { upload_files } from "./utils/upload_files";
+-export { FileData, upload, prepare_files } from "./upload";
+-export { handle_file } from "./helpers/data";
+-export type { SpaceStatus, StatusMessage, Status, client_return, UploadResponse, RenderMessage, LogMessage, Payload, Config, ValidationError } from "./types";
+-export { MISSING_CREDENTIALS_MSG } from "./constants";
+-export { client } from "./client";
+-export { duplicate_space as duplicate } from "./client";
+diff --git a/home/runner/work/gradio/gradio/client/js/src/types.d.ts b/home/runner/work/gradio/gradio/client/js/src/types.d.ts
+deleted file mode 100644
+index c4e39f170..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/types.d.ts
++++ /dev/null
+@@ -1,347 +0,0 @@
+-import { hardware_types } from "./helpers/spaces";
+-import type { SvelteComponent } from "svelte";
+-import type { ComponentType } from "svelte";
+-export interface ApiData {
+-    label: string;
+-    parameter_name: string;
+-    parameter_default?: any;
+-    parameter_has_default?: boolean;
+-    type: {
+-        type: any;
+-        description: string;
+-    };
+-    component: string;
+-    example_input?: any;
+-    python_type: {
+-        type: string;
+-        description: string;
+-    };
+-    serializer: string;
+-}
+-export interface JsApiData {
+-    label: string;
+-    parameter_name: string;
+-    parameter_default?: any;
+-    parameter_has_default?: boolean;
+-    type: string;
+-    description: string;
+-    component: string;
+-    example_input?: any;
+-    serializer: string;
+-    python_type: {
+-        type: string;
+-        description: string;
+-    };
+-}
+-export interface EndpointInfo<T extends ApiData | JsApiData> {
+-    parameters: T[];
+-    returns: T[];
+-    type?: DependencyTypes;
+-}
+-export interface ApiInfo<T extends ApiData | JsApiData> {
+-    named_endpoints: Record<string, EndpointInfo<T>>;
+-    unnamed_endpoints: Record<string, EndpointInfo<T>>;
+-}
+-export interface BlobRef {
+-    path: string[];
+-    type: string | undefined;
+-    blob: Blob | File | false;
+-}
+-export type DataType = string | Buffer | Record<string, any> | any[];
+-export declare class Command {
+-    type: string;
+-    command: string;
+-    meta: {
+-        path: string;
+-        name: string;
+-        orig_path: string;
+-    };
+-    fileData?: FileData;
+-    constructor(command: string, meta: {
+-        path: string;
+-        name: string;
+-        orig_path: string;
+-    });
+-}
+-export type SubmitFunction = (endpoint: string | number, data?: unknown[] | Record<string, unknown>, event_data?: unknown, trigger_id?: number | null, all_events?: boolean, additional_headers?: Record<string, string>) => SubmitIterable<GradioEvent>;
+-export type PredictFunction = <T = unknown>(endpoint: string | number, data?: unknown[] | Record<string, unknown>, event_data?: unknown) => Promise<PredictReturn<T>>;
+-export type client_return = {
+-    config: Config | undefined;
+-    predict: PredictFunction;
+-    submit: SubmitFunction;
+-    component_server: (component_id: number, fn_name: string, data: unknown[]) => any;
+-    view_api: (_fetch: typeof fetch) => Promise<ApiInfo<JsApiData>>;
+-};
+-export interface SubmitIterable<T> extends AsyncIterable<T> {
+-    [Symbol.asyncIterator](): SubmitIterable<T>;
+-    next: () => Promise<IteratorResult<T, unknown>>;
+-    throw: (value: unknown) => Promise<IteratorResult<T, unknown>>;
+-    return: () => Promise<IteratorReturnResult<undefined>>;
+-    cancel: () => Promise<void>;
+-    event_id: () => string;
+-    send_chunk: (payload: Record<string, unknown>) => void;
+-    wait_for_id: () => Promise<string | null>;
+-    close_stream: () => void;
+-}
+-export type PredictReturn<T = unknown> = {
+-    type: EventType;
+-    time: Date;
+-    data: T;
+-    endpoint: string;
+-    fn_index: number;
+-};
+-export type SpaceStatus = SpaceStatusNormal | SpaceStatusError;
+-export interface SpaceStatusNormal {
+-    status: "sleeping" | "running" | "building" | "error" | "stopped" | "starting";
+-    detail: "SLEEPING" | "RUNNING" | "RUNNING_BUILDING" | "BUILDING" | "APP_STARTING" | "NOT_FOUND";
+-    load_status: "pending" | "error" | "complete" | "generating";
+-    message: string;
+-}
+-export interface SpaceStatusError {
+-    status: "space_error" | "paused";
+-    detail: "NO_APP_FILE" | "CONFIG_ERROR" | "BUILD_ERROR" | "RUNTIME_ERROR" | "PAUSED";
+-    load_status: "error";
+-    message: string;
+-    discussions_enabled: boolean;
+-}
+-export type SpaceStatusCallback = (a: SpaceStatus) => void;
+-export interface Config {
+-    deep_link_state?: "none" | "valid" | "invalid";
+-    auth_required?: true;
+-    app_id?: string;
+-    analytics_enabled: boolean;
+-    connect_heartbeat: boolean;
+-    dev_mode: boolean;
+-    vibe_mode: boolean;
+-    auth_message: string;
+-    components: ComponentMeta[];
+-    css: string | null;
+-    js: string | null;
+-    head: string | null;
+-    dependencies: Dependency[];
+-    enable_queue: boolean;
+-    show_error: boolean;
+-    layout: any;
+-    mode: "blocks" | "interface" | "chat_interface";
+-    root: string;
+-    root_url?: string;
+-    theme: string;
+-    title: string;
+-    version: string;
+-    space_id: string | null;
+-    is_space: boolean;
+-    is_colab: boolean;
+-    footer_links: string[];
+-    stylesheets: string[];
+-    current_page: string;
+-    page: Record<string, {
+-        components: number[];
+-        dependencies: number[];
+-        layout: any;
+-    }>;
+-    pages: [string, string, boolean][];
+-    protocol: "sse_v3" | "sse_v2.1" | "sse_v2" | "sse_v1" | "sse" | "ws";
+-    max_file_size?: number;
+-    theme_hash?: number;
+-    username: string | null;
+-    api_prefix?: string;
+-    fill_height?: boolean;
+-    fill_width?: boolean;
+-    pwa?: boolean;
+-    i18n_translations?: Record<string, Record<string, string>> | null;
+-    mcp_server?: boolean;
+-}
+-export interface ComponentMeta {
+-    type: string;
+-    id: number;
+-    has_modes: boolean;
+-    props: SharedProps;
+-    instance: SvelteComponent;
+-    component: ComponentType<SvelteComponent>;
+-    documentation?: Documentation;
+-    children?: ComponentMeta[];
+-    parent?: ComponentMeta;
+-    value?: any;
+-    component_class_id: string;
+-    key: string | number | null;
+-    rendered_in?: number;
+-}
+-interface SharedProps {
+-    elem_id?: string;
+-    elem_classes?: string[];
+-    components?: string[];
+-    server_fns?: string[];
+-    interactive: boolean;
+-    visible: boolean | "hidden";
+-    [key: string]: unknown;
+-    root_url?: string;
+-}
+-export interface Documentation {
+-    type?: TypeDescription;
+-    description?: TypeDescription;
+-    example_data?: string;
+-}
+-interface TypeDescription {
+-    input_payload?: string;
+-    response_object?: string;
+-    payload?: string;
+-}
+-export interface Dependency {
+-    id: number;
+-    targets: [number, string][];
+-    inputs: number[];
+-    outputs: number[];
+-    backend_fn: boolean;
+-    js: string | null;
+-    scroll_to_output: boolean;
+-    trigger: "click" | "load" | string;
+-    max_batch_size: number;
+-    show_progress: "full" | "minimal" | "hidden";
+-    show_progress_on: number[] | null;
+-    frontend_fn: ((...args: unknown[]) => Promise<unknown[]>) | null;
+-    status?: string;
+-    queue: boolean | null;
+-    every: number | null;
+-    batch: boolean;
+-    api_name: string | null;
+-    cancels: number[];
+-    types: DependencyTypes;
+-    collects_event_data: boolean;
+-    pending_request?: boolean;
+-    trigger_after?: number;
+-    trigger_only_on_success?: boolean;
+-    trigger_only_on_failure?: boolean;
+-    trigger_mode: "once" | "multiple" | "always_last";
+-    final_event: Payload | null;
+-    api_visibility: "public" | "private" | "undocumented";
+-    rendered_in: number | null;
+-    render_id: number | null;
+-    connection: "stream" | "sse";
+-    time_limit: number;
+-    stream_every: number;
+-    like_user_message: boolean;
+-    event_specific_args: string[];
+-    component_prop_inputs: number[];
+-    js_implementation: string | null;
+-}
+-export interface DependencyTypes {
+-    generator: boolean;
+-    cancel: boolean;
+-}
+-export interface Payload {
+-    fn_index: number;
+-    data: unknown[];
+-    time?: Date;
+-    event_data?: unknown;
+-    trigger_id?: number | null;
+-}
+-export interface PostResponse {
+-    error?: string;
+-    [x: string]: any;
+-}
+-export interface UploadResponse {
+-    error?: string;
+-    files?: string[];
+-}
+-export interface DuplicateOptions extends ClientOptions {
+-    private?: boolean;
+-    hardware?: (typeof hardware_types)[number];
+-    timeout?: number;
+-}
+-export interface ClientOptions {
+-    token?: `hf_${string}`;
+-    status_callback?: SpaceStatusCallback | null;
+-    auth?: [string, string] | null;
+-    with_null_state?: boolean;
+-    events?: EventType[];
+-    headers?: Record<string, string> | Headers;
+-    query_params?: Record<string, string>;
+-    session_hash?: string;
+-    cookies?: string;
+-}
+-export interface FileData {
+-    name: string;
+-    orig_name?: string;
+-    size?: number;
+-    data: string;
+-    blob?: File;
+-    is_file?: boolean;
+-    mime_type?: string;
+-    alt_text?: string;
+-}
+-export type EventType = "data" | "status" | "log" | "render";
+-export interface EventMap {
+-    data: PayloadMessage;
+-    status: StatusMessage;
+-    log: LogMessage;
+-    render: RenderMessage;
+-}
+-export type GradioEvent = {
+-    [P in EventType]: EventMap[P];
+-}[EventType];
+-export interface Log {
+-    log: string;
+-    title: string;
+-    level: "warning" | "info" | "success" | "error";
+-}
+-export interface Render {
+-    data: {
+-        components: any[];
+-        layout: any;
+-        dependencies: Dependency[];
+-        render_id: number;
+-    };
+-}
+-export interface ValidationError {
+-    is_valid: boolean;
+-    message: string;
+-}
+-export interface Status {
+-    queue: boolean;
+-    code?: string;
+-    success?: boolean;
+-    stage: "pending" | "error" | "complete" | "generating" | "streaming";
+-    duration?: number;
+-    visible?: boolean;
+-    broken?: boolean;
+-    size?: number;
+-    position?: number;
+-    eta?: number;
+-    title?: string;
+-    message?: string | ValidationError[];
+-    progress_data?: {
+-        progress: number | null;
+-        index: number | null;
+-        length: number | null;
+-        unit: string | null;
+-        desc: string | null;
+-    }[];
+-    time?: Date;
+-    changed_state_ids?: number[];
+-    time_limit?: number;
+-    session_not_found?: boolean;
+-}
+-export interface StatusMessage extends Status {
+-    type: "status";
+-    endpoint: string;
+-    fn_index: number;
+-    original_msg?: string;
+-}
+-export interface PayloadMessage extends Payload {
+-    type: "data";
+-    endpoint: string;
+-    fn_index: number;
+-}
+-export interface LogMessage extends Log {
+-    type: "log";
+-    endpoint: string;
+-    fn_index: number;
+-    duration: number | null;
+-    visible: boolean;
+-}
+-export interface RenderMessage extends Render {
+-    type: "render";
+-    endpoint: string;
+-    fn_index: number;
+-}
+-export {};
+diff --git a/home/runner/work/gradio/gradio/client/js/src/upload.d.ts b/home/runner/work/gradio/gradio/client/js/src/upload.d.ts
+deleted file mode 100644
+index 44bdfe5ec..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/upload.d.ts
++++ /dev/null
+@@ -1,28 +0,0 @@
+-import type { Client } from "./client";
+-export declare function upload(this: Client, file_data: FileData[], root_url: string, upload_id?: string, max_file_size?: number): Promise<(FileData | null)[] | null>;
+-export declare function prepare_files(files: File[], is_stream?: boolean): Promise<FileData[]>;
+-export declare class FileData {
+-    path: string;
+-    url?: string;
+-    orig_name?: string;
+-    size?: number;
+-    blob?: File;
+-    is_stream?: boolean;
+-    mime_type?: string;
+-    alt_text?: string;
+-    b64?: string;
+-    readonly meta: {
+-        _type: string;
+-    };
+-    constructor({ path, url, orig_name, size, blob, is_stream, mime_type, alt_text, b64 }: {
+-        path: string;
+-        url?: string;
+-        orig_name?: string;
+-        size?: number;
+-        blob?: File;
+-        is_stream?: boolean;
+-        mime_type?: string;
+-        alt_text?: string;
+-        b64?: string;
+-    });
+-}
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/duplicate.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/duplicate.d.ts
+deleted file mode 100644
+index 2d7cd2438..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/duplicate.d.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-import type { DuplicateOptions } from "../types";
+-import { Client } from "../client";
+-export declare function duplicate(app_reference: string, options: DuplicateOptions): Promise<Client>;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/filesize.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/filesize.d.ts
+deleted file mode 100644
+index 914e5e03d..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/filesize.d.ts
++++ /dev/null
+@@ -1,14 +0,0 @@
+-type SPEC = {
+-    readonly radix: number;
+-    readonly unit: string[];
+-};
+-export declare const SPECS: Record<string, SPEC>;
+-/**
+- * file size from https://github.com/hustcc/filesize.js
+- * @param bytes - The number of bytes to convert to human-readable format
+- * @param fixed - Number of decimal places to display (default: 1)
+- * @param spec - Size specification to use: "si", "iec", or "jedec" (default: "jedec")
+- * @returns Human-readable file size string
+- */
+-export declare function filesize(bytes: number, fixed?: number, spec?: string): string;
+-export {};
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/handle_blob.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/handle_blob.d.ts
+deleted file mode 100644
+index a5c1acb5b..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/handle_blob.d.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-import { type ApiData, type EndpointInfo, type JsApiData } from "../types";
+-import type { Client } from "..";
+-export declare function handle_blob(this: Client, endpoint: string, data: unknown[], api_info: EndpointInfo<JsApiData | ApiData>): Promise<unknown[]>;
+-export declare function process_local_file_commands(client: Client, data: unknown[]): Promise<void>;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/post_data.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/post_data.d.ts
+deleted file mode 100644
+index 444c39307..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/post_data.d.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-import type { PostResponse } from "../types";
+-import { Client } from "..";
+-export declare function post_data(this: Client, url: string, body: unknown, additional_headers?: any): Promise<[PostResponse, number]>;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/predict.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/predict.d.ts
+deleted file mode 100644
+index 25593588f..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/predict.d.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-import { Client } from "../client";
+-import type { PredictReturn } from "../types";
+-export declare function predict<T = unknown>(this: Client, endpoint: string | number, data?: unknown[] | Record<string, unknown>): Promise<PredictReturn<T>>;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/stream.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/stream.d.ts
+deleted file mode 100644
+index c6a069b1c..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/stream.d.ts
++++ /dev/null
+@@ -1,8 +0,0 @@
+-import type { Client } from "../client";
+-export declare function open_stream(this: Client): Promise<void>;
+-export declare function close_stream(stream_status: {
+-    open: boolean;
+-}, abort_controller: AbortController | null): void;
+-export declare function apply_diff_stream(pending_diff_streams: Record<string, any[][]>, event_id: string, data: any): void;
+-export declare function apply_diff(obj: any, diff: [string, (number | string)[], any][]): any;
+-export declare function readable_stream(input: RequestInfo | URL, init?: RequestInit): EventSource;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/submit.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/submit.d.ts
+deleted file mode 100644
+index e8b3c253b..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/submit.d.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-import type { GradioEvent, SubmitIterable } from "../types";
+-import { Client } from "../client";
+-export declare function submit(this: Client, endpoint: string | number, data?: unknown[] | Record<string, unknown>, event_data?: unknown, trigger_id?: number | null, all_events?: boolean, additional_headers?: Record<string, string>): SubmitIterable<GradioEvent>;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/upload_files.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/upload_files.d.ts
+deleted file mode 100644
+index a357a73b7..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/upload_files.d.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-import type { Client } from "..";
+-import type { UploadResponse } from "../types";
+-export declare function upload_files(this: Client, root_url: string, files: (Blob | File)[], upload_id?: string): Promise<UploadResponse>;
+diff --git a/home/runner/work/gradio/gradio/client/js/src/utils/view_api.d.ts b/home/runner/work/gradio/gradio/client/js/src/utils/view_api.d.ts
+deleted file mode 100644
+index 33fa48fb2..000000000
+--- a/home/runner/work/gradio/gradio/client/js/src/utils/view_api.d.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-import { Client } from "../client";
+-export declare function view_api(this: Client): Promise<any>;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/Block.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/Block.svelte.d.ts
+deleted file mode 100644
+index 8c31f4cd4..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/Block.svelte.d.ts
++++ /dev/null
+@@ -1,51 +0,0 @@
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
+-    default: any;
+-} ? Props extends Record<string, never> ? any : {
+-    children?: any;
+-} : {});
+-declare const Block: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
+-    height?: number | string | undefined;
+-    min_height?: number | string | undefined;
+-    max_height?: number | string | undefined;
+-    width?: number | string | undefined;
+-    elem_id?: string;
+-    elem_classes?: string[];
+-    variant?: "solid" | "dashed" | "none";
+-    border_mode?: "base" | "focus" | "contrast";
+-    padding?: boolean;
+-    type?: "normal" | "fieldset";
+-    test_id?: string | undefined;
+-    explicit_call?: boolean;
+-    container?: boolean;
+-    visible?: boolean | "hidden";
+-    allow_overflow?: boolean;
+-    overflow_behavior?: "visible" | "auto";
+-    scale?: number | null;
+-    min_width?: number;
+-    flex?: boolean;
+-    resizable?: boolean;
+-    rtl?: boolean;
+-    fullscreen?: boolean;
+-    label?: string | undefined;
+-}, {
+-    default: {};
+-}>, {
+-    [evt: string]: CustomEvent<any>;
+-}, {
+-    default: {};
+-}, {}, string>;
+-type Block = InstanceType<typeof Block>;
+-export default Block;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/BlockLabel.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/BlockLabel.svelte.d.ts
+deleted file mode 100644
+index f4d91d7ea..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/BlockLabel.svelte.d.ts
++++ /dev/null
+@@ -1,25 +0,0 @@
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-declare const BlockLabel: $$__sveltets_2_IsomorphicComponent<{
+-    label?: string | null;
+-    Icon: any;
+-    show_label?: boolean;
+-    disable?: boolean;
+-    float?: boolean;
+-    rtl?: boolean;
+-}, {
+-    [evt: string]: CustomEvent<any>;
+-}, {}, {}, string>;
+-type BlockLabel = InstanceType<typeof BlockLabel>;
+-export default BlockLabel;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/BlockTitle.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/BlockTitle.svelte.d.ts
+deleted file mode 100644
+index 6133c740d..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/BlockTitle.svelte.d.ts
++++ /dev/null
+@@ -1,31 +0,0 @@
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
+-    default: any;
+-} ? Props extends Record<string, never> ? any : {
+-    children?: any;
+-} : {});
+-declare const BlockTitle: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
+-    show_label?: boolean;
+-    info?: string | undefined;
+-    rtl?: boolean;
+-}, {
+-    default: {};
+-}>, {
+-    [evt: string]: CustomEvent<any>;
+-}, {
+-    default: {};
+-}, {}, string>;
+-type BlockTitle = InstanceType<typeof BlockTitle>;
+-export default BlockTitle;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/CustomButton.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/CustomButton.svelte.d.ts
+deleted file mode 100644
+index 8d42822a3..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/CustomButton.svelte.d.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-import type { CustomButton } from "@gradio/utils";
+-declare const CustomButton: any;
+-type CustomButton = InstanceType<typeof CustomButton>;
+-export default CustomButton;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/DownloadLink.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/DownloadLink.svelte.d.ts
+deleted file mode 100644
+index a39f25d65..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/DownloadLink.svelte.d.ts
++++ /dev/null
+@@ -1,30 +0,0 @@
+-import type { HTMLAnchorAttributes } from "svelte/elements";
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
+-    default: any;
+-} ? Props extends Record<string, never> ? any : {
+-    children?: any;
+-} : {});
+-declare const DownloadLink: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<Omit<HTMLAnchorAttributes, "target"> & {
+-    download: NonNullable<HTMLAnchorAttributes["download"]>;
+-}, {
+-    default: {};
+-}>, {
+-    [evt: string]: CustomEvent<any>;
+-}, {
+-    default: {};
+-}, {}, string>;
+-type DownloadLink = InstanceType<typeof DownloadLink>;
+-export default DownloadLink;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/Empty.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/Empty.svelte.d.ts
+deleted file mode 100644
+index 4c3b0dab4..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/Empty.svelte.d.ts
++++ /dev/null
+@@ -1,30 +0,0 @@
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
+-    default: any;
+-} ? Props extends Record<string, never> ? any : {
+-    children?: any;
+-} : {});
+-declare const Empty: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
+-    size?: "small" | "large";
+-    unpadded_box?: boolean;
+-}, {
+-    default: {};
+-}>, {
+-    [evt: string]: CustomEvent<any>;
+-}, {
+-    default: {};
+-}, {}, string>;
+-type Empty = InstanceType<typeof Empty>;
+-export default Empty;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/FullscreenButton.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/FullscreenButton.svelte.d.ts
+deleted file mode 100644
+index d1e9cfe5d..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/FullscreenButton.svelte.d.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-type $$ComponentProps = {
+-    fullscreen: boolean;
+-    onclick: (fullscreen: boolean) => void;
+-};
+-declare const FullscreenButton: import("svelte").Component<$$ComponentProps, {}, "">;
+-type FullscreenButton = ReturnType<typeof FullscreenButton>;
+-export default FullscreenButton;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/IconButton.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/IconButton.svelte.d.ts
+deleted file mode 100644
+index 149777110..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/IconButton.svelte.d.ts
++++ /dev/null
+@@ -1,21 +0,0 @@
+-import { type Component, type Snippet } from "svelte";
+-type $$ComponentProps = {
+-    Icon: Component;
+-    label?: string;
+-    show_label?: boolean;
+-    pending?: boolean;
+-    size?: "x-small" | "small" | "large" | "medium";
+-    padded?: boolean;
+-    highlight?: boolean;
+-    disabled?: boolean;
+-    hasPopup?: boolean;
+-    color?: string;
+-    transparent?: boolean;
+-    background?: string;
+-    border?: string;
+-    onclick?: (event: MouseEvent) => void;
+-    children?: Snippet;
+-};
+-declare const IconButton: Component<$$ComponentProps, {}, "">;
+-type IconButton = ReturnType<typeof IconButton>;
+-export default IconButton;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/IconButtonWrapper.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/IconButtonWrapper.svelte.d.ts
+deleted file mode 100644
+index 06e4f534e..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/IconButtonWrapper.svelte.d.ts
++++ /dev/null
+@@ -1,13 +0,0 @@
+-import type { CustomButton as CustomButtonType } from "@gradio/utils";
+-import type { Snippet } from "svelte";
+-type $$ComponentProps = {
+-    top_panel?: boolean;
+-    display_top_corner?: boolean;
+-    show_background?: boolean;
+-    buttons?: (string | CustomButtonType)[] | null;
+-    on_custom_button_click?: ((id: number) => void) | null;
+-    children?: Snippet;
+-};
+-declare const IconButtonWrapper: import("svelte").Component<$$ComponentProps, {}, "">;
+-type IconButtonWrapper = ReturnType<typeof IconButtonWrapper>;
+-export default IconButtonWrapper;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/Info.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/Info.svelte.d.ts
+deleted file mode 100644
+index a54b4d8ef..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/Info.svelte.d.ts
++++ /dev/null
+@@ -1,20 +0,0 @@
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-declare const Info: $$__sveltets_2_IsomorphicComponent<{
+-    info: string;
+-}, {
+-    [evt: string]: CustomEvent<any>;
+-}, {}, {}, string>;
+-type Info = InstanceType<typeof Info>;
+-export default Info;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/ScrollFade.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/ScrollFade.svelte.d.ts
+deleted file mode 100644
+index 4f7667e53..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/ScrollFade.svelte.d.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-type $$ComponentProps = {
+-    visible: boolean;
+-    position?: "sticky" | "absolute";
+-};
+-declare const ScrollFade: import("svelte").Component<$$ComponentProps, {}, "">;
+-type ScrollFade = ReturnType<typeof ScrollFade>;
+-export default ScrollFade;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/SelectSource.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/SelectSource.svelte.d.ts
+deleted file mode 100644
+index dfd9b7712..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/SelectSource.svelte.d.ts
++++ /dev/null
+@@ -1,10 +0,0 @@
+-type source_types = "upload" | "microphone" | "webcam" | "clipboard" | "webcam-video" | null;
+-type $$ComponentProps = {
+-    sources: Partial<source_types>[];
+-    active_source?: Partial<source_types>;
+-    handle_clear?: () => void;
+-    handle_select?: (source_type: Partial<source_types>) => void;
+-};
+-declare const SelectSource: import("svelte").Component<$$ComponentProps, {}, "active_source">;
+-type SelectSource = ReturnType<typeof SelectSource>;
+-export default SelectSource;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/ShareButton.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/ShareButton.svelte.d.ts
+deleted file mode 100644
+index 9e623fc5b..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/ShareButton.svelte.d.ts
++++ /dev/null
+@@ -1,27 +0,0 @@
+-import type { ShareData } from "@gradio/utils";
+-import type { I18nFormatter } from "@gradio/utils";
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-declare const ShareButton: $$__sveltets_2_IsomorphicComponent<{
+-    formatter: (arg0: any) => Promise<string>;
+-    value: any;
+-    i18n: I18nFormatter;
+-}, {
+-    share: CustomEvent<ShareData>;
+-    error: CustomEvent<string>;
+-} & {
+-    [evt: string]: CustomEvent<any>;
+-}, {}, {}, string>;
+-type ShareButton = InstanceType<typeof ShareButton>;
+-export default ShareButton;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/Toolbar.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/Toolbar.svelte.d.ts
+deleted file mode 100644
+index 05d332045..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/Toolbar.svelte.d.ts
++++ /dev/null
+@@ -1,29 +0,0 @@
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
+-    default: any;
+-} ? Props extends Record<string, never> ? any : {
+-    children?: any;
+-} : {});
+-declare const Toolbar: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
+-    show_border?: boolean;
+-}, {
+-    default: {};
+-}>, {
+-    [evt: string]: CustomEvent<any>;
+-}, {
+-    default: {};
+-}, {}, string>;
+-type Toolbar = InstanceType<typeof Toolbar>;
+-export default Toolbar;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/UploadText.svelte.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/UploadText.svelte.d.ts
+deleted file mode 100644
+index 1c5a7f73c..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/UploadText.svelte.d.ts
++++ /dev/null
+@@ -1,26 +0,0 @@
+-import type { I18nFormatter } from "@gradio/utils";
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-declare const UploadText: $$__sveltets_2_IsomorphicComponent<{
+-    type?: "video" | "image" | "audio" | "file" | "csv" | "clipboard" | "gallery";
+-    i18n: I18nFormatter;
+-    message?: string | undefined;
+-    mode?: "full" | "short";
+-    hovered?: boolean;
+-    placeholder?: string | undefined;
+-}, {
+-    [evt: string]: CustomEvent<any>;
+-}, {}, {}, string>;
+-type UploadText = InstanceType<typeof UploadText>;
+-export default UploadText;
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/index.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/index.d.ts
+deleted file mode 100644
+index e5b309460..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/index.d.ts
++++ /dev/null
+@@ -1,16 +0,0 @@
+-export { default as Block } from "./Block.svelte";
+-export { default as BlockTitle } from "./BlockTitle.svelte";
+-export { default as BlockLabel } from "./BlockLabel.svelte";
+-export { default as DownloadLink } from "./DownloadLink.svelte";
+-export { default as IconButton } from "./IconButton.svelte";
+-export { default as Empty } from "./Empty.svelte";
+-export { default as Info } from "./Info.svelte";
+-export { default as ShareButton } from "./ShareButton.svelte";
+-export { default as UploadText } from "./UploadText.svelte";
+-export { default as Toolbar } from "./Toolbar.svelte";
+-export { default as SelectSource } from "./SelectSource.svelte";
+-export { default as IconButtonWrapper } from "./IconButtonWrapper.svelte";
+-export { default as FullscreenButton } from "./FullscreenButton.svelte";
+-export { default as CustomButton } from "./CustomButton.svelte";
+-export { default as ScrollFade } from "./ScrollFade.svelte";
+-export declare const BLOCK_KEY: {};
+diff --git a/home/runner/work/gradio/gradio/js/atoms/src/utils/parse_placeholder.d.ts b/home/runner/work/gradio/gradio/js/atoms/src/utils/parse_placeholder.d.ts
+deleted file mode 100644
+index fb20ace5f..000000000
+--- a/home/runner/work/gradio/gradio/js/atoms/src/utils/parse_placeholder.d.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export declare function inject(text: string): [string | false, string | false];
+diff --git a/home/runner/work/gradio/gradio/js/audio/shared/types.d.ts b/home/runner/work/gradio/gradio/js/audio/shared/types.d.ts
+deleted file mode 100644
+index b41727f68..000000000
+--- a/home/runner/work/gradio/gradio/js/audio/shared/types.d.ts
++++ /dev/null
+@@ -1,56 +0,0 @@
+-import { FileData } from "@gradio/client";
+-import type { CustomButton } from "@gradio/utils";
+-export type WaveformOptions = {
+-    waveform_color?: string;
+-    waveform_progress_color?: string;
+-    show_controls?: boolean;
+-    skip_length?: number;
+-    trim_region_color?: string;
+-    show_recording_waveform?: boolean;
+-    sample_rate?: number;
+-};
+-export interface SubtitleData {
+-    start: number;
+-    end: number;
+-    text: string;
+-}
+-export interface AudioProps {
+-    sources: ["microphone"] | ["upload"] | ["microphone", "upload"] | ["upload", "microphone"];
+-    value: FileData | null;
+-    type: "numpy" | "filepath";
+-    autoplay: boolean;
+-    buttons: ("play" | "download" | "share" | CustomButton)[];
+-    recording: boolean;
+-    loop: boolean;
+-    subtitles: FileData | SubtitleData[] | null;
+-    waveform_options: WaveformOptions;
+-    editable: boolean;
+-    pending: boolean;
+-    streaming: boolean;
+-    stream_every: number;
+-    input_ready: boolean;
+-    minimal?: boolean;
+-    playback_position: number;
+-}
+-export interface AudioEvents {
+-    change: any;
+-    upload: any;
+-    stream: any;
+-    clear: any;
+-    play: any;
+-    pause: any;
+-    stop: any;
+-    start_recording: any;
+-    pause_recording: any;
+-    stop_recording: any;
+-    input: any;
+-    error: any;
+-    warning: any;
+-    clear_status: any;
+-    close_stream: any;
+-    edit: any;
+-    share: any;
+-    custom_button_click: {
+-        id: number;
+-    };
+-}
+diff --git a/home/runner/work/gradio/gradio/js/core/src/gradio_helper.d.ts b/home/runner/work/gradio/gradio/js/core/src/gradio_helper.d.ts
+deleted file mode 100644
+index c49f20e17..000000000
+--- a/home/runner/work/gradio/gradio/js/core/src/gradio_helper.d.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-export { Gradio } from "@gradio/utils";
+-export type I18nFormatter = typeof formatter;
+-export declare function formatter(value: string | null | undefined): string;
+-export declare const reactive_formatter: import("svelte/store").Readable<typeof formatter>;
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/index.d.ts b/home/runner/work/gradio/gradio/js/statustracker/index.d.ts
+deleted file mode 100644
+index bdccc9e0e..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/index.d.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-export { default as StatusTracker } from "./static/index.svelte";
+-export { default as Toast } from "./static/Toast.svelte";
+-export { default as Loader } from "./static/Loader.svelte";
+-export { default as StreamingBar } from "./static/StreamingBar.svelte";
+-export type * from "./static/types";
+-export { default } from "./static/index.svelte";
+-export { LoadingStatus } from "./static/state.svelte.js";
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/Loader.svelte.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/Loader.svelte.d.ts
+deleted file mode 100644
+index 9325cba2f..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/Loader.svelte.d.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-interface Props {
+-    margin?: boolean;
+-}
+-declare const Loader: import("svelte").Component<Props, {}, "">;
+-type Loader = ReturnType<typeof Loader>;
+-export default Loader;
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/StreamingBar.svelte.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/StreamingBar.svelte.d.ts
+deleted file mode 100644
+index 7cfe1ab07..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/StreamingBar.svelte.d.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-interface Props {
+-    time_limit: number | null;
+-}
+-declare const StreamingBar: import("svelte").Component<Props, {}, "">;
+-type StreamingBar = ReturnType<typeof StreamingBar>;
+-export default StreamingBar;
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/Toast.svelte.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/Toast.svelte.d.ts
+deleted file mode 100644
+index 3e1d118c0..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/Toast.svelte.d.ts
++++ /dev/null
+@@ -1,8 +0,0 @@
+-import type { ToastMessage } from "./types";
+-interface Props {
+-    messages?: ToastMessage[];
+-    on_close: (id: number) => void;
+-}
+-declare const Toast: import("svelte").Component<Props, {}, "">;
+-type Toast = ReturnType<typeof Toast>;
+-export default Toast;
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/ToastContent.svelte.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/ToastContent.svelte.d.ts
+deleted file mode 100644
+index 1a1ec6775..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/ToastContent.svelte.d.ts
++++ /dev/null
+@@ -1,11 +0,0 @@
+-import type { ToastMessage } from "./types";
+-interface Props {
+-    type: ToastMessage["type"];
+-    messages?: ToastMessage[];
+-    expanded?: boolean;
+-    ontoggle?: () => void;
+-    onclose?: (id: number) => void;
+-}
+-declare const ToastContent: import("svelte").Component<Props, {}, "">;
+-type ToastContent = ReturnType<typeof ToastContent>;
+-export default ToastContent;
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/index.svelte.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/index.svelte.d.ts
+deleted file mode 100644
+index 168b9a4cf..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/index.svelte.d.ts
++++ /dev/null
+@@ -1,45 +0,0 @@
+-import type { LoadingStatus } from "./types";
+-import type { I18nFormatter } from "@gradio/utils";
+-interface Props {
+-    i18n: I18nFormatter;
+-    eta?: number | null;
+-    queue_position: number | null;
+-    queue_size: number | null;
+-    status: "complete" | "pending" | "error" | "generating" | "streaming" | null;
+-    scroll_to_output?: boolean;
+-    timer?: boolean;
+-    show_progress?: "full" | "minimal" | "hidden";
+-    message?: string | null;
+-    progress?: LoadingStatus["progress"] | null | undefined;
+-    variant?: "default" | "center";
+-    loading_text?: string;
+-    absolute?: boolean;
+-    translucent?: boolean;
+-    border?: boolean;
+-    autoscroll: boolean;
+-    validation_error?: string | null;
+-    show_validation_error?: boolean;
+-    type?: "input" | "output" | null;
+-    on_clear_status?: () => void;
+-}
+-interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+-    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+-        $$bindings?: Bindings;
+-    } & Exports;
+-    (internal: unknown, props: Props & {
+-        $$events?: Events;
+-        $$slots?: Slots;
+-    }): Exports & {
+-        $set?: any;
+-        $on?: any;
+-    };
+-    z_$$bindings?: Bindings;
+-}
+-declare const Index: $$__sveltets_2_IsomorphicComponent<Props, {
+-    [evt: string]: CustomEvent<any>;
+-}, {
+-    'additional-loading-text': {};
+-    error: {};
+-}, {}, "">;
+-type Index = InstanceType<typeof Index>;
+-export default Index;
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/state.svelte.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/state.svelte.d.ts
+deleted file mode 100644
+index 130973758..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/state.svelte.d.ts
++++ /dev/null
+@@ -1,31 +0,0 @@
+-import type { ILoadingStatus, LoadingStatusArgs } from "./types.js";
+-export declare class LoadingStatus {
+-    current: Record<string, ILoadingStatus>;
+-    fn_outputs: Record<number, number[]>;
+-    fn_inputs: Record<number, number[]>;
+-    pending_outputs: Map<number, number>;
+-    fn_status: Record<number, ILoadingStatus["status"]>;
+-    show_progress: Record<number, "full" | "minimal" | "hidden">;
+-    register(dependency_id: number, outputs: number[], inputs: number[], show_progress: "full" | "minimal" | "hidden"): void;
+-    clear(id: number): void;
+-    update(args: LoadingStatusArgs): void;
+-    set_status(id: number, status: ILoadingStatus["status"]): void;
+-    resolve_args(args: LoadingStatusArgs): {
+-        id: number;
+-        queue_position: number | null;
+-        queue_size: number | undefined;
+-        eta: number | null;
+-        status: "pending" | "error" | "complete" | "generating" | "streaming";
+-        message: string | null;
+-        progress: {
+-            progress: number | null;
+-            index: number | null;
+-            length: number | null;
+-            unit: string | null;
+-            desc: string | null;
+-        }[] | null;
+-        stream_state: "open" | "closed" | "waiting" | null;
+-        time_limit: number | null;
+-        type: "input" | "output" | "skip";
+-    }[];
+-}
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/types.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/types.d.ts
+deleted file mode 100644
+index 7759ab4c6..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/types.d.ts
++++ /dev/null
+@@ -1,50 +0,0 @@
+-export interface ILoadingStatus {
+-    eta: number | null;
+-    status: "pending" | "error" | "complete" | "generating" | "streaming";
+-    queue: boolean;
+-    queue_position: number | null;
+-    queue_size?: number;
+-    fn_index: number;
+-    message?: string | null;
+-    scroll_to_output?: boolean;
+-    show_progress?: "full" | "minimal" | "hidden";
+-    time_limit?: number | null | undefined;
+-    progress?: {
+-        progress: number | null;
+-        index: number | null;
+-        length: number | null;
+-        unit: string | null;
+-        desc: string | null;
+-    }[];
+-    validation_error?: string | null;
+-    type: "input" | "output";
+-    stream_state: "open" | "closed" | "waiting" | null;
+-}
+-export interface LoadingStatusArgs {
+-    fn_index: ILoadingStatus["fn_index"];
+-    status: ILoadingStatus["status"];
+-    queue?: ILoadingStatus["queue"];
+-    size?: ILoadingStatus["queue_size"];
+-    position?: ILoadingStatus["queue_position"];
+-    eta?: ILoadingStatus["eta"];
+-    message?: ILoadingStatus["message"];
+-    progress_data?: ILoadingStatus["progress"];
+-    time_limit?: ILoadingStatus["time_limit"];
+-    type?: "input" | "output";
+-    stream_state: "open" | "closed" | "waiting" | null;
+-    validation_error?: string;
+-    show_validation_error?: boolean;
+-}
+-export interface ToastMessage {
+-    type: "error" | "warning" | "info" | "success";
+-    title: string;
+-    message: string;
+-    id: number;
+-    duration: number | null;
+-    visible: boolean;
+-}
+-export interface GroupedToastMessage {
+-    type: "error" | "warning" | "info" | "success";
+-    messages: ToastMessage[];
+-    expanded: boolean;
+-}
+diff --git a/home/runner/work/gradio/gradio/js/statustracker/static/utils.d.ts b/home/runner/work/gradio/gradio/js/statustracker/static/utils.d.ts
+deleted file mode 100644
+index ad38c4631..000000000
+--- a/home/runner/work/gradio/gradio/js/statustracker/static/utils.d.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export declare function pretty_si(num: number): string;
+diff --git a/js/accordion/Index.svelte b/js/accordion/Index.svelte
+index c1afd6f52..060b2c6e3 100644
+--- a/js/accordion/Index.svelte
++++ b/js/accordion/Index.svelte
+@@ -12,8 +12,13 @@
+ 	let props = $props();
+ 	class AccordionGradio extends Gradio<AccordionEvents, AccordionProps> {
+ 		set_data(data: Partial<object & SharedProps>): void {
+-			if ("open" in data && data.open) {
+-				this.dispatch("gradio_expand");
++			if ("open" in data && data.open !== this.props.open) {
++				if (data.open) {
++					this.dispatch("expand");
++					this.dispatch("gradio_expand");
++				} else {
++					this.dispatch("collapse");
++				}
+ 			}
+ 			super.set_data(data);
+ 			this.shared.loading_status.status = "complete";
+diff --git a/js/accordion/shared/Accordion.svelte b/js/accordion/shared/Accordion.svelte
+index 78250a102..b5f03ed0a 100644
+--- a/js/accordion/shared/Accordion.svelte
++++ b/js/accordion/shared/Accordion.svelte
+@@ -29,7 +29,7 @@
+ 		▼
+ 	</span>
+ </button>
+-<div style:display={open ? "block" : "none"}>
++<div data-testid="accordion-content" style:display={open ? "block" : "none"}>
+ 	<slot />
+ </div>
+ 
+diff --git a/js/tootils/src/render.ts b/js/tootils/src/render.ts
+index af0bd590d..f5a6e7f84 100644
+--- a/js/tootils/src/render.ts
++++ b/js/tootils/src/render.ts
+@@ -14,7 +14,7 @@ import type {
+ } from "@testing-library/dom";
+ import { vi, type Mock } from "vitest";
+ import { GRADIO_ROOT, allowed_shared_props } from "@gradio/utils";
+-import type { LoadingStatus } from "@gradio/statustracker";
++import type { LoadingStatus, ILoadingStatus } from "@gradio/statustracker";
+ import { _ } from "svelte-i18n";
+ 
+ const containerCache = new Map();
+@@ -31,16 +31,44 @@ export type RenderResult<
+ 	debug: (el?: HTMLElement | DocumentFragment) => void;
+ 	unmount: () => void;
+ } & { [P in keyof Q]: BoundFunction<Q[P]> };
++export interface ILoadingStatus {
++	eta: number | null;
++	status: "pending" | "error" | "complete" | "generating" | "streaming";
++	queue: boolean;
++	queue_position: number | null;
++	queue_size?: number;
++	fn_index: number;
++	message?: string | null;
++	scroll_to_output?: boolean;
++	show_progress?: "full" | "minimal" | "hidden";
++	time_limit?: number | null | undefined;
++	progress?: {
++		progress: number | null;
++		index: number | null;
++		length: number | null;
++		unit: string | null;
++		desc: string | null;
++	}[];
++	validation_error?: string | null;
++	type: "input" | "output";
++	stream_state: "open" | "closed" | "waiting" | null;
++}
+ 
+-const loading_status: LoadingStatus = {
++const loading_status: ILoadingStatus = {
+ 	eta: 0,
+ 	queue_position: 1,
+ 	queue_size: 1,
+-	status: "complete" as LoadingStatus["status"],
++	queue: true,
++	message: null,
++	time_limit: null,
++	progress: [],
++	validation_error: null,
++	type: "output",
++	stream_state: null,
++	status: "complete" as ILoadingStatus["status"],
+ 	scroll_to_output: false,
+-	visible: true,
+ 	fn_index: 0,
+-	show_progress: "full"
++	show_progress: "full" as ILoadingStatus["show_progress"]
+ };
+ 
+ export interface RenderOptions<Q extends Queries = typeof queries> {
+@@ -166,6 +194,10 @@ export async function render<
+ 		}
+ 	}
+ 
++	shared_props_obj.loading_status = props?.loading_status
++		? props.loading_status
++		: loading_status;
++
+ 	const componentProps = {
+ 		shared_props: shared_props_obj,
+ 		props: {
+diff --git a/js/tootils/src/shared-prop-tests.ts b/js/tootils/src/shared-prop-tests.ts
+index a16c15a8e..a94726c67 100644
+--- a/js/tootils/src/shared-prop-tests.ts
++++ b/js/tootils/src/shared-prop-tests.ts
+@@ -28,6 +28,13 @@ export interface SharedPropTestConfig {
+ 	 * @default true
+ 	 */
+ 	has_validation_error?: boolean;
++	/**
++	 * Some components (e.g. Accordion) map visible=false to "hidden"
++	 * instead of removing from the DOM. Set to true to expect hidden
++	 * behaviour rather than removal.
++	 * @default false
++	 */
++	visible_false_hides?: boolean;
+ }
+ 
+ export function run_shared_prop_tests(config: SharedPropTestConfig): void {
+@@ -36,7 +43,8 @@ export function run_shared_prop_tests(config: SharedPropTestConfig): void {
+ 		base_props,
+ 		name,
+ 		has_label = true,
+-		has_validation_error = true
++		has_validation_error = true,
++		visible_false_hides = false
+ 	} = config;
+ 
+ 	const label = "Test Label";
+@@ -93,15 +101,28 @@ export function run_shared_prop_tests(config: SharedPropTestConfig): void {
+ 			expect(el).not.toBeVisible();
+ 		});
+ 
+-		test("visible: false removes the component from the DOM", async () => {
+-			const result = await render(
+-				component,
+-				make_props({ visible: false, elem_id: "gone-test" })
+-			);
++		if (visible_false_hides) {
++			test("visible: false hides the component but keeps it in the DOM", async () => {
++				const result = await render(
++					component,
++					make_props({ visible: false, elem_id: "gone-test" })
++				);
+ 
+-			const el = result.container.querySelector("#gone-test");
+-			expect(el).toBeNull();
+-		});
++				const el = result.container.querySelector("#gone-test");
++				expect(el).not.toBeNull();
++				expect(el).not.toBeVisible();
++			});
++		} else {
++			test("visible: false removes the component from the DOM", async () => {
++				const result = await render(
++					component,
++					make_props({ visible: false, elem_id: "gone-test" })
++				);
++
++				const el = result.container.querySelector("#gone-test");
++				expect(el).toBeNull();
++			});
++		}
+ 
+ 		if (has_label) {
+ 			test("label text is rendered", async () => {
+@@ -139,7 +160,10 @@ export function run_shared_prop_tests(config: SharedPropTestConfig): void {
+ 			test("validation_error displays error text", async () => {
+ 				const result = await render(
+ 					component,
+-					make_props({ validation_error: "This field is required" })
++					make_props({
++						validation_error: "This field is required",
++						show_validation_error: true
++					})
+ 				);
+ 				const el = result.getByText("This field is required");
+ 				expect(el).toBeTruthy();
+diff --git a/package.json b/package.json
+index ca967605a..e62157a05 100644
+--- a/package.json
++++ b/package.json
+@@ -88,6 +88,7 @@
+ 		"typescript-svelte-plugin": "^0.3.50",
+ 		"vite": "^7.1.9",
+ 		"vite-plugin-turbosnap": "1.0.3",
++		"vitefu": "^1.1.3",
+ 		"vitest": "^4.0.18"
+ 	},
+ 	"devDependencies": {
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 6ebbc3a8e..d25c3e288 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -181,6 +181,9 @@ importers:
+       vite-plugin-turbosnap:
+         specifier: 1.0.3
+         version: 1.0.3
++      vitefu:
++        specifier: ^1.1.3
++        version: 1.1.3(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
+       vitest:
+         specifier: ^4.0.18
+         version: 4.0.18(@types/node@24.10.9)(@vitest/browser-playwright@4.0.18)(happy-dom@19.0.2)(jiti@1.21.7)(jsdom@27.4.0(bufferutil@4.1.0))(lightningcss@1.31.0)(msw@2.12.7(@types/node@24.10.9)(typescript@5.9.3))(sass@1.97.2)(stylus@0.64.0)(terser@5.46.0)
+@@ -7482,6 +7485,7 @@ packages:
+   tar@7.5.4:
+     resolution: {integrity: sha512-AN04xbWGrSTDmVwlI4/GTlIIwMFk/XEv7uL8aa57zuvRy6s4hdBed+lVq2fAZ89XDa7Us3ANXcE3Tvqvja1kTA==}
+     engines: {node: '>=18'}
++    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+ 
+   term-size@2.2.1:
+     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
+@@ -8021,10 +8025,10 @@ packages:
+       yaml:
+         optional: true
+ 
+-  vitefu@1.1.1:
+-    resolution: {integrity: sha512-B/Fegf3i8zh0yFbpzZ21amWzHmuNlLlmJT6n7bu5e+pCHUKQIfXSYokrqOBGEMMe9UG2sostKQF9mml/vYaWJQ==}
++  vitefu@1.1.3:
++    resolution: {integrity: sha512-ub4okH7Z5KLjb6hDyjqrGXqWtWvoYdU3IGm/NorpgHncKoLTCfRIbvlhBm7r0YstIaQRYlp4yEbFqDcKSzXSSg==}
+     peerDependencies:
+-      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0-beta.0
++      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+     peerDependenciesMeta:
+       vite:
+         optional: true
+@@ -10142,7 +10146,7 @@ snapshots:
+       magic-string: 0.30.21
+       svelte: 5.48.0
+       vite: 7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)
+-      vitefu: 1.1.1(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
++      vitefu: 1.1.3(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
+     transitivePeerDependencies:
+       - supports-color
+ 
+@@ -10154,7 +10158,7 @@ snapshots:
+       obug: 2.1.1
+       svelte: 5.48.0
+       vite: 7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)
+-      vitefu: 1.1.1(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
++      vitefu: 1.1.3(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
+ 
+   '@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.48.0)(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(terser@5.46.0))':
+     dependencies:
+@@ -10164,7 +10168,7 @@ snapshots:
+       obug: 2.1.1
+       svelte: 5.48.0
+       vite: 7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)
+-      vitefu: 1.1.1(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
++      vitefu: 1.1.3(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0))
+ 
+   '@tailwindcss/forms@0.5.11(tailwindcss@3.4.19)':
+     dependencies:
+@@ -14361,7 +14365,7 @@ snapshots:
+       sugarss: 5.0.1(postcss@8.5.6)
+       terser: 5.46.0
+ 
+-  vitefu@1.1.1(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)):
++  vitefu@1.1.3(vite@7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)):
+     optionalDependencies:
+       vite: 7.3.1(@types/node@24.10.9)(jiti@1.21.7)(lightningcss@1.31.0)(sass@1.97.2)(stylus@0.64.0)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)

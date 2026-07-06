@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -E 'test(init_application_package_uv)' --no-fail-fast",
+  "test_files": [
+    "crates/uv/tests/it/init.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "uv::it init::init_application_package_uv"
+  ],
+  "PASS_TO_PASS": []
+}

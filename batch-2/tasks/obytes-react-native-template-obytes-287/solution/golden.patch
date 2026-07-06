@@ -1,0 +1,2722 @@
+diff --git a/ios/ObytesApp.xcodeproj/project.pbxproj b/ios/ObytesApp.xcodeproj/project.pbxproj
+index 9598416..87c2482 100644
+--- a/ios/ObytesApp.xcodeproj/project.pbxproj
++++ b/ios/ObytesApp.xcodeproj/project.pbxproj
+@@ -11,29 +11,29 @@
+ 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+ 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+ 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
++		4737D5E3A3CA48A19FD13D9E /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6542FF9237A4BC9BB247377 /* Inter.ttf */; };
++		86275658D25A4D2AA1083E5E /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F26355A6444F5BA123175 /* noop-file.swift */; };
+ 		96905EF65AED1B983A6B3ABC /* libPods-ObytesApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ObytesApp.a */; };
+-		A42E97E898204B12BA3A4558 /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EBEB5C25186D4F0C9362805F /* Inter.ttf */; };
+ 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
+ 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+-		C5D6F5C152B040D192573865 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06E17A4B6A34FA094D0B3C9 /* noop-file.swift */; };
+ /* End PBXBuildFile section */
+ 
+ /* Begin PBXFileReference section */
++		055F26355A6444F5BA123175 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "ObytesApp/noop-file.swift"; sourceTree = "<group>"; };
+ 		13B07F961A680F5B00A75B9A /* ObytesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObytesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+ 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ObytesApp/AppDelegate.h; sourceTree = "<group>"; };
+ 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ObytesApp/AppDelegate.mm; sourceTree = "<group>"; };
+ 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ObytesApp/Images.xcassets; sourceTree = "<group>"; };
+ 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ObytesApp/Info.plist; sourceTree = "<group>"; };
+ 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ObytesApp/main.m; sourceTree = "<group>"; };
++		3B54AAF413124180B31A1706 /* ObytesApp-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "ObytesApp-Bridging-Header.h"; path = "ObytesApp/ObytesApp-Bridging-Header.h"; sourceTree = "<group>"; };
+ 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ObytesApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ObytesApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+ 		6C2E3173556A471DD304B334 /* Pods-ObytesApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObytesApp.debug.xcconfig"; path = "Target Support Files/Pods-ObytesApp/Pods-ObytesApp.debug.xcconfig"; sourceTree = "<group>"; };
+ 		7A4D352CD337FB3A3BF06240 /* Pods-ObytesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObytesApp.release.xcconfig"; path = "Target Support Files/Pods-ObytesApp/Pods-ObytesApp.release.xcconfig"; sourceTree = "<group>"; };
+-		91DFF62915824559B8BF20B1 /* ObytesApp-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "ObytesApp-Bridging-Header.h"; path = "ObytesApp/ObytesApp-Bridging-Header.h"; sourceTree = "<group>"; };
+ 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = ObytesApp/SplashScreen.storyboard; sourceTree = "<group>"; };
+ 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+-		E06E17A4B6A34FA094D0B3C9 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "ObytesApp/noop-file.swift"; sourceTree = "<group>"; };
+-		EBEB5C25186D4F0C9362805F /* Inter.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Inter.ttf; path = ../assets/fonts/Inter.ttf; sourceTree = "<group>"; };
+ 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
++		F6542FF9237A4BC9BB247377 /* Inter.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Inter.ttf; path = ../assets/fonts/Inter.ttf; sourceTree = "<group>"; };
+ 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ObytesApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+ /* End PBXFileReference section */
+ 
+@@ -59,8 +59,8 @@
+ 				13B07FB61A68108700A75B9A /* Info.plist */,
+ 				13B07FB71A68108700A75B9A /* main.m */,
+ 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+-				E06E17A4B6A34FA094D0B3C9 /* noop-file.swift */,
+-				91DFF62915824559B8BF20B1 /* ObytesApp-Bridging-Header.h */,
++				055F26355A6444F5BA123175 /* noop-file.swift */,
++				3B54AAF413124180B31A1706 /* ObytesApp-Bridging-Header.h */,
+ 			);
+ 			name = ObytesApp;
+ 			sourceTree = "<group>";
+@@ -90,7 +90,7 @@
+ 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+ 				D65327D7A22EEC0BE12398D9 /* Pods */,
+ 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+-				EDC333CF465A4CCF9F5C730C /* Resources */,
++				A3B66ED490934E8CA7C419F6 /* Resources */,
+ 			);
+ 			indentWidth = 2;
+ 			sourceTree = "<group>";
+@@ -113,6 +113,15 @@
+ 			name = ObytesApp;
+ 			sourceTree = "<group>";
+ 		};
++		A3B66ED490934E8CA7C419F6 /* Resources */ = {
++			isa = PBXGroup;
++			children = (
++				F6542FF9237A4BC9BB247377 /* Inter.ttf */,
++			);
++			name = Resources;
++			path = "";
++			sourceTree = "<group>";
++		};
+ 		BB2F792B24A3F905000567C9 /* Supporting */ = {
+ 			isa = PBXGroup;
+ 			children = (
+@@ -139,15 +148,6 @@
+ 			name = ExpoModulesProviders;
+ 			sourceTree = "<group>";
+ 		};
+-		EDC333CF465A4CCF9F5C730C /* Resources */ = {
+-			isa = PBXGroup;
+-			children = (
+-				EBEB5C25186D4F0C9362805F /* Inter.ttf */,
+-			);
+-			name = Resources;
+-			path = "";
+-			sourceTree = "<group>";
+-		};
+ /* End PBXGroup section */
+ 
+ /* Begin PBXNativeTarget section */
+@@ -156,13 +156,13 @@
+ 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ObytesApp" */;
+ 			buildPhases = (
+ 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
+-				AE7CB89C86A92C7F344E0F4F /* [Expo] Configure project */,
++				E2B1F1E6EC5774A947E4AF47 /* [Expo] Configure project */,
+ 				13B07F871A680F5B00A75B9A /* Sources */,
+ 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+ 				13B07F8E1A680F5B00A75B9A /* Resources */,
+ 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+ 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+-				C053EEDA47B262D34A0425CC /* [CP] Embed Pods Frameworks */,
++				B653CAF31F291B9EFA7B2A31 /* [CP] Embed Pods Frameworks */,
+ 			);
+ 			buildRules = (
+ 			);
+@@ -212,7 +212,7 @@
+ 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
+ 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+ 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+-				A42E97E898204B12BA3A4558 /* Inter.ttf in Resources */,
++				4737D5E3A3CA48A19FD13D9E /* Inter.ttf in Resources */,
+ 			);
+ 			runOnlyForDeploymentPostprocessing = 0;
+ 		};
+@@ -280,42 +280,42 @@
+ 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObytesApp/Pods-ObytesApp-resources.sh\"\n";
+ 			showEnvVarsInLog = 0;
+ 		};
+-		AE7CB89C86A92C7F344E0F4F /* [Expo] Configure project */ = {
++		B653CAF31F291B9EFA7B2A31 /* [CP] Embed Pods Frameworks */ = {
+ 			isa = PBXShellScriptBuildPhase;
+-			alwaysOutOfDate = 1;
+ 			buildActionMask = 2147483647;
+ 			files = (
+ 			);
+-			inputFileListPaths = (
+-			);
+ 			inputPaths = (
++				"${PODS_ROOT}/Target Support Files/Pods-ObytesApp/Pods-ObytesApp-frameworks.sh",
++				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+ 			);
+-			name = "[Expo] Configure project";
+-			outputFileListPaths = (
+-			);
++			name = "[CP] Embed Pods Frameworks";
+ 			outputPaths = (
++				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+ 			);
+ 			runOnlyForDeploymentPostprocessing = 0;
+ 			shellPath = /bin/sh;
+-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-ObytesApp/expo-configure-project.sh\"\n";
++			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObytesApp/Pods-ObytesApp-frameworks.sh\"\n";
++			showEnvVarsInLog = 0;
+ 		};
+-		C053EEDA47B262D34A0425CC /* [CP] Embed Pods Frameworks */ = {
++		E2B1F1E6EC5774A947E4AF47 /* [Expo] Configure project */ = {
+ 			isa = PBXShellScriptBuildPhase;
++			alwaysOutOfDate = 1;
+ 			buildActionMask = 2147483647;
+ 			files = (
+ 			);
++			inputFileListPaths = (
++			);
+ 			inputPaths = (
+-				"${PODS_ROOT}/Target Support Files/Pods-ObytesApp/Pods-ObytesApp-frameworks.sh",
+-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+ 			);
+-			name = "[CP] Embed Pods Frameworks";
++			name = "[Expo] Configure project";
++			outputFileListPaths = (
++			);
+ 			outputPaths = (
+-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+ 			);
+ 			runOnlyForDeploymentPostprocessing = 0;
+ 			shellPath = /bin/sh;
+-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObytesApp/Pods-ObytesApp-frameworks.sh\"\n";
+-			showEnvVarsInLog = 0;
++			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-ObytesApp/expo-configure-project.sh\"\n";
+ 		};
+ /* End PBXShellScriptBuildPhase section */
+ 
+@@ -327,7 +327,7 @@
+ 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+ 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+ 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
+-				C5D6F5C152B040D192573865 /* noop-file.swift in Sources */,
++				86275658D25A4D2AA1083E5E /* noop-file.swift in Sources */,
+ 			);
+ 			runOnlyForDeploymentPostprocessing = 0;
+ 		};
+@@ -358,7 +358,7 @@
+ 				);
+ 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+ 				PRODUCT_BUNDLE_IDENTIFIER = com.obytes.development;
+-				PRODUCT_NAME = "ObytesApp";
++				PRODUCT_NAME = ObytesApp;
+ 				SWIFT_OBJC_BRIDGING_HEADER = "ObytesApp/ObytesApp-Bridging-Header.h";
+ 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+ 				SWIFT_VERSION = 5.0;
+@@ -386,7 +386,7 @@
+ 				);
+ 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+ 				PRODUCT_BUNDLE_IDENTIFIER = com.obytes.development;
+-				PRODUCT_NAME = "ObytesApp";
++				PRODUCT_NAME = ObytesApp;
+ 				SWIFT_OBJC_BRIDGING_HEADER = "ObytesApp/ObytesApp-Bridging-Header.h";
+ 				SWIFT_VERSION = 5.0;
+ 				TARGETED_DEVICE_FAMILY = "1,2";
+diff --git a/ios/Podfile.lock b/ios/Podfile.lock
+index c36f548..4676c9f 100644
+--- a/ios/Podfile.lock
++++ b/ios/Podfile.lock
+@@ -8,17 +8,17 @@ PODS:
+   - EXJSONUtils (0.12.3)
+   - EXManifests (0.13.2):
+     - ExpoModulesCore
+-  - Expo (50.0.8):
++  - Expo (50.0.14):
+     - ExpoModulesCore
+-  - expo-dev-client (3.3.9):
++  - expo-dev-client (3.3.11):
+     - EXManifests
+     - expo-dev-launcher
+     - expo-dev-menu
+     - expo-dev-menu-interface
+     - EXUpdatesInterface
+-  - expo-dev-launcher (3.6.7):
++  - expo-dev-launcher (3.6.9):
+     - EXManifests
+-    - expo-dev-launcher/Main (= 3.6.7)
++    - expo-dev-launcher/Main (= 3.6.9)
+     - expo-dev-menu
+     - expo-dev-menu-interface
+     - ExpoModulesCore
+@@ -27,7 +27,7 @@ PODS:
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+     - React-RCTAppDelegate
+-  - expo-dev-launcher/Main (3.6.7):
++  - expo-dev-launcher/Main (3.6.9):
+     - EXManifests
+     - expo-dev-launcher/Unsafe
+     - expo-dev-menu
+@@ -38,7 +38,7 @@ PODS:
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+     - React-RCTAppDelegate
+-  - expo-dev-launcher/Unsafe (3.6.7):
++  - expo-dev-launcher/Unsafe (3.6.9):
+     - EXManifests
+     - expo-dev-menu
+     - expo-dev-menu-interface
+@@ -48,14 +48,14 @@ PODS:
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+     - React-RCTAppDelegate
+-  - expo-dev-menu (4.5.6):
+-    - expo-dev-menu/Main (= 4.5.6)
+-    - expo-dev-menu/ReactNativeCompatibles (= 4.5.6)
++  - expo-dev-menu (4.5.8):
++    - expo-dev-menu/Main (= 4.5.8)
++    - expo-dev-menu/ReactNativeCompatibles (= 4.5.8)
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+   - expo-dev-menu-interface (1.7.2)
+-  - expo-dev-menu/Main (4.5.6):
++  - expo-dev-menu/Main (4.5.8):
+     - EXManifests
+     - expo-dev-menu-interface
+     - expo-dev-menu/Vendored
+@@ -63,23 +63,23 @@ PODS:
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+-  - expo-dev-menu/ReactNativeCompatibles (4.5.6):
++  - expo-dev-menu/ReactNativeCompatibles (4.5.8):
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+-  - expo-dev-menu/SafeAreaView (4.5.6):
++  - expo-dev-menu/SafeAreaView (4.5.8):
+     - ExpoModulesCore
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+-  - expo-dev-menu/Vendored (4.5.6):
++  - expo-dev-menu/Vendored (4.5.8):
+     - expo-dev-menu/SafeAreaView
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+-  - ExpoFileSystem (16.0.6):
++  - ExpoFileSystem (16.0.8):
+     - ExpoModulesCore
+-  - ExpoHead (3.4.7):
++  - ExpoHead (3.4.8):
+     - ExpoModulesCore
+   - ExpoImage (1.10.6):
+     - ExpoModulesCore
+@@ -91,7 +91,7 @@ PODS:
+     - ExpoModulesCore
+   - ExpoLocalization (14.8.3):
+     - ExpoModulesCore
+-  - ExpoModulesCore (1.11.9):
++  - ExpoModulesCore (1.11.12):
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+@@ -106,19 +106,19 @@ PODS:
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Core
+   - EXUpdatesInterface (0.15.3)
+-  - FBLazyVector (0.73.4)
+-  - FBReactNativeSpec (0.73.4):
++  - FBLazyVector (0.73.6)
++  - FBReactNativeSpec (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+-    - RCTRequired (= 0.73.4)
+-    - RCTTypeSafety (= 0.73.4)
+-    - React-Core (= 0.73.4)
+-    - React-jsi (= 0.73.4)
+-    - ReactCommon/turbomodule/core (= 0.73.4)
++    - RCTRequired (= 0.73.6)
++    - RCTTypeSafety (= 0.73.6)
++    - React-Core (= 0.73.6)
++    - React-jsi (= 0.73.6)
++    - ReactCommon/turbomodule/core (= 0.73.6)
+   - fmt (6.2.1)
+   - glog (0.3.5)
+-  - hermes-engine (0.73.4):
+-    - hermes-engine/Pre-built (= 0.73.4)
+-  - hermes-engine/Pre-built (0.73.4)
++  - hermes-engine (0.73.6):
++    - hermes-engine/Pre-built (= 0.73.6)
++  - hermes-engine/Pre-built (0.73.6)
+   - libaom (3.0.0):
+     - libvmaf (>= 2.2.0)
+   - libavif (0.11.1):
+@@ -166,26 +166,26 @@ PODS:
+     - fmt (~> 6.2.1)
+     - glog
+     - libevent
+-  - RCTRequired (0.73.4)
+-  - RCTTypeSafety (0.73.4):
+-    - FBLazyVector (= 0.73.4)
+-    - RCTRequired (= 0.73.4)
+-    - React-Core (= 0.73.4)
+-  - React (0.73.4):
+-    - React-Core (= 0.73.4)
+-    - React-Core/DevSupport (= 0.73.4)
+-    - React-Core/RCTWebSocket (= 0.73.4)
+-    - React-RCTActionSheet (= 0.73.4)
+-    - React-RCTAnimation (= 0.73.4)
+-    - React-RCTBlob (= 0.73.4)
+-    - React-RCTImage (= 0.73.4)
+-    - React-RCTLinking (= 0.73.4)
+-    - React-RCTNetwork (= 0.73.4)
+-    - React-RCTSettings (= 0.73.4)
+-    - React-RCTText (= 0.73.4)
+-    - React-RCTVibration (= 0.73.4)
+-  - React-callinvoker (0.73.4)
+-  - React-Codegen (0.73.4):
++  - RCTRequired (0.73.6)
++  - RCTTypeSafety (0.73.6):
++    - FBLazyVector (= 0.73.6)
++    - RCTRequired (= 0.73.6)
++    - React-Core (= 0.73.6)
++  - React (0.73.6):
++    - React-Core (= 0.73.6)
++    - React-Core/DevSupport (= 0.73.6)
++    - React-Core/RCTWebSocket (= 0.73.6)
++    - React-RCTActionSheet (= 0.73.6)
++    - React-RCTAnimation (= 0.73.6)
++    - React-RCTBlob (= 0.73.6)
++    - React-RCTImage (= 0.73.6)
++    - React-RCTLinking (= 0.73.6)
++    - React-RCTNetwork (= 0.73.6)
++    - React-RCTSettings (= 0.73.6)
++    - React-RCTText (= 0.73.6)
++    - React-RCTVibration (= 0.73.6)
++  - React-callinvoker (0.73.6)
++  - React-Codegen (0.73.6):
+     - DoubleConversion
+     - FBReactNativeSpec
+     - glog
+@@ -200,11 +200,11 @@ PODS:
+     - React-rncore
+     - ReactCommon/turbomodule/bridging
+     - ReactCommon/turbomodule/core
+-  - React-Core (0.73.4):
++  - React-Core (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-Core/Default (= 0.73.4)
++    - React-Core/Default (= 0.73.6)
+     - React-cxxreact
+     - React-hermes
+     - React-jsi
+@@ -214,7 +214,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/CoreModulesHeaders (0.73.4):
++  - React-Core/CoreModulesHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -228,7 +228,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/Default (0.73.4):
++  - React-Core/Default (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -241,23 +241,23 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/DevSupport (0.73.4):
++  - React-Core/DevSupport (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-Core/Default (= 0.73.4)
+-    - React-Core/RCTWebSocket (= 0.73.4)
++    - React-Core/Default (= 0.73.6)
++    - React-Core/RCTWebSocket (= 0.73.6)
+     - React-cxxreact
+     - React-hermes
+     - React-jsi
+     - React-jsiexecutor
+-    - React-jsinspector (= 0.73.4)
++    - React-jsinspector (= 0.73.6)
+     - React-perflogger
+     - React-runtimescheduler
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTActionSheetHeaders (0.73.4):
++  - React-Core/RCTActionSheetHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -271,7 +271,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTAnimationHeaders (0.73.4):
++  - React-Core/RCTAnimationHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -285,7 +285,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTBlobHeaders (0.73.4):
++  - React-Core/RCTBlobHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -299,7 +299,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTImageHeaders (0.73.4):
++  - React-Core/RCTImageHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -313,7 +313,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTLinkingHeaders (0.73.4):
++  - React-Core/RCTLinkingHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -327,7 +327,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTNetworkHeaders (0.73.4):
++  - React-Core/RCTNetworkHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -341,7 +341,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTSettingsHeaders (0.73.4):
++  - React-Core/RCTSettingsHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -355,7 +355,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTTextHeaders (0.73.4):
++  - React-Core/RCTTextHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -369,7 +369,7 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTVibrationHeaders (0.73.4):
++  - React-Core/RCTVibrationHeaders (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -383,11 +383,11 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-Core/RCTWebSocket (0.73.4):
++  - React-Core/RCTWebSocket (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-Core/Default (= 0.73.4)
++    - React-Core/Default (= 0.73.6)
+     - React-cxxreact
+     - React-hermes
+     - React-jsi
+@@ -397,33 +397,33 @@ PODS:
+     - React-utils
+     - SocketRocket (= 0.6.1)
+     - Yoga
+-  - React-CoreModules (0.73.4):
++  - React-CoreModules (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+-    - RCTTypeSafety (= 0.73.4)
++    - RCTTypeSafety (= 0.73.6)
+     - React-Codegen
+-    - React-Core/CoreModulesHeaders (= 0.73.4)
+-    - React-jsi (= 0.73.4)
++    - React-Core/CoreModulesHeaders (= 0.73.6)
++    - React-jsi (= 0.73.6)
+     - React-NativeModulesApple
+     - React-RCTBlob
+-    - React-RCTImage (= 0.73.4)
++    - React-RCTImage (= 0.73.6)
+     - ReactCommon
+     - SocketRocket (= 0.6.1)
+-  - React-cxxreact (0.73.4):
++  - React-cxxreact (0.73.6):
+     - boost (= 1.83.0)
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-callinvoker (= 0.73.4)
+-    - React-debug (= 0.73.4)
+-    - React-jsi (= 0.73.4)
+-    - React-jsinspector (= 0.73.4)
+-    - React-logger (= 0.73.4)
+-    - React-perflogger (= 0.73.4)
+-    - React-runtimeexecutor (= 0.73.4)
+-  - React-debug (0.73.4)
+-  - React-Fabric (0.73.4):
++    - React-callinvoker (= 0.73.6)
++    - React-debug (= 0.73.6)
++    - React-jsi (= 0.73.6)
++    - React-jsinspector (= 0.73.6)
++    - React-logger (= 0.73.6)
++    - React-perflogger (= 0.73.6)
++    - React-runtimeexecutor (= 0.73.6)
++  - React-debug (0.73.6)
++  - React-Fabric (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -434,20 +434,20 @@ PODS:
+     - React-Core
+     - React-cxxreact
+     - React-debug
+-    - React-Fabric/animations (= 0.73.4)
+-    - React-Fabric/attributedstring (= 0.73.4)
+-    - React-Fabric/componentregistry (= 0.73.4)
+-    - React-Fabric/componentregistrynative (= 0.73.4)
+-    - React-Fabric/components (= 0.73.4)
+-    - React-Fabric/core (= 0.73.4)
+-    - React-Fabric/imagemanager (= 0.73.4)
+-    - React-Fabric/leakchecker (= 0.73.4)
+-    - React-Fabric/mounting (= 0.73.4)
+-    - React-Fabric/scheduler (= 0.73.4)
+-    - React-Fabric/telemetry (= 0.73.4)
+-    - React-Fabric/templateprocessor (= 0.73.4)
+-    - React-Fabric/textlayoutmanager (= 0.73.4)
+-    - React-Fabric/uimanager (= 0.73.4)
++    - React-Fabric/animations (= 0.73.6)
++    - React-Fabric/attributedstring (= 0.73.6)
++    - React-Fabric/componentregistry (= 0.73.6)
++    - React-Fabric/componentregistrynative (= 0.73.6)
++    - React-Fabric/components (= 0.73.6)
++    - React-Fabric/core (= 0.73.6)
++    - React-Fabric/imagemanager (= 0.73.6)
++    - React-Fabric/leakchecker (= 0.73.6)
++    - React-Fabric/mounting (= 0.73.6)
++    - React-Fabric/scheduler (= 0.73.6)
++    - React-Fabric/telemetry (= 0.73.6)
++    - React-Fabric/templateprocessor (= 0.73.6)
++    - React-Fabric/textlayoutmanager (= 0.73.6)
++    - React-Fabric/uimanager (= 0.73.6)
+     - React-graphics
+     - React-jsi
+     - React-jsiexecutor
+@@ -456,7 +456,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/animations (0.73.4):
++  - React-Fabric/animations (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -475,7 +475,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/attributedstring (0.73.4):
++  - React-Fabric/attributedstring (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -494,7 +494,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/componentregistry (0.73.4):
++  - React-Fabric/componentregistry (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -513,7 +513,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/componentregistrynative (0.73.4):
++  - React-Fabric/componentregistrynative (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -532,7 +532,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components (0.73.4):
++  - React-Fabric/components (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -543,17 +543,17 @@ PODS:
+     - React-Core
+     - React-cxxreact
+     - React-debug
+-    - React-Fabric/components/inputaccessory (= 0.73.4)
+-    - React-Fabric/components/legacyviewmanagerinterop (= 0.73.4)
+-    - React-Fabric/components/modal (= 0.73.4)
+-    - React-Fabric/components/rncore (= 0.73.4)
+-    - React-Fabric/components/root (= 0.73.4)
+-    - React-Fabric/components/safeareaview (= 0.73.4)
+-    - React-Fabric/components/scrollview (= 0.73.4)
+-    - React-Fabric/components/text (= 0.73.4)
+-    - React-Fabric/components/textinput (= 0.73.4)
+-    - React-Fabric/components/unimplementedview (= 0.73.4)
+-    - React-Fabric/components/view (= 0.73.4)
++    - React-Fabric/components/inputaccessory (= 0.73.6)
++    - React-Fabric/components/legacyviewmanagerinterop (= 0.73.6)
++    - React-Fabric/components/modal (= 0.73.6)
++    - React-Fabric/components/rncore (= 0.73.6)
++    - React-Fabric/components/root (= 0.73.6)
++    - React-Fabric/components/safeareaview (= 0.73.6)
++    - React-Fabric/components/scrollview (= 0.73.6)
++    - React-Fabric/components/text (= 0.73.6)
++    - React-Fabric/components/textinput (= 0.73.6)
++    - React-Fabric/components/unimplementedview (= 0.73.6)
++    - React-Fabric/components/view (= 0.73.6)
+     - React-graphics
+     - React-jsi
+     - React-jsiexecutor
+@@ -562,7 +562,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/inputaccessory (0.73.4):
++  - React-Fabric/components/inputaccessory (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -581,7 +581,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/legacyviewmanagerinterop (0.73.4):
++  - React-Fabric/components/legacyviewmanagerinterop (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -600,7 +600,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/modal (0.73.4):
++  - React-Fabric/components/modal (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -619,7 +619,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/rncore (0.73.4):
++  - React-Fabric/components/rncore (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -638,7 +638,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/root (0.73.4):
++  - React-Fabric/components/root (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -657,7 +657,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/safeareaview (0.73.4):
++  - React-Fabric/components/safeareaview (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -676,7 +676,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/scrollview (0.73.4):
++  - React-Fabric/components/scrollview (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -695,7 +695,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/text (0.73.4):
++  - React-Fabric/components/text (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -714,7 +714,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/textinput (0.73.4):
++  - React-Fabric/components/textinput (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -733,7 +733,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/unimplementedview (0.73.4):
++  - React-Fabric/components/unimplementedview (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -752,7 +752,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/components/view (0.73.4):
++  - React-Fabric/components/view (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -772,7 +772,7 @@ PODS:
+     - React-utils
+     - ReactCommon/turbomodule/core
+     - Yoga
+-  - React-Fabric/core (0.73.4):
++  - React-Fabric/core (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -791,7 +791,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/imagemanager (0.73.4):
++  - React-Fabric/imagemanager (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -810,7 +810,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/leakchecker (0.73.4):
++  - React-Fabric/leakchecker (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -829,7 +829,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/mounting (0.73.4):
++  - React-Fabric/mounting (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -848,7 +848,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/scheduler (0.73.4):
++  - React-Fabric/scheduler (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -867,7 +867,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/telemetry (0.73.4):
++  - React-Fabric/telemetry (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -886,7 +886,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/templateprocessor (0.73.4):
++  - React-Fabric/templateprocessor (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -905,7 +905,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/textlayoutmanager (0.73.4):
++  - React-Fabric/textlayoutmanager (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -925,7 +925,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-Fabric/uimanager (0.73.4):
++  - React-Fabric/uimanager (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+@@ -944,42 +944,42 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - ReactCommon/turbomodule/core
+-  - React-FabricImage (0.73.4):
++  - React-FabricImage (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly/Fabric (= 2022.05.16.00)
+-    - RCTRequired (= 0.73.4)
+-    - RCTTypeSafety (= 0.73.4)
++    - RCTRequired (= 0.73.6)
++    - RCTTypeSafety (= 0.73.6)
+     - React-Fabric
+     - React-graphics
+     - React-ImageManager
+     - React-jsi
+-    - React-jsiexecutor (= 0.73.4)
++    - React-jsiexecutor (= 0.73.6)
+     - React-logger
+     - React-rendererdebug
+     - React-utils
+     - ReactCommon
+     - Yoga
+-  - React-graphics (0.73.4):
++  - React-graphics (0.73.6):
+     - glog
+     - RCT-Folly/Fabric (= 2022.05.16.00)
+-    - React-Core/Default (= 0.73.4)
++    - React-Core/Default (= 0.73.6)
+     - React-utils
+-  - React-hermes (0.73.4):
++  - React-hermes (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+     - RCT-Folly/Futures (= 2022.05.16.00)
+-    - React-cxxreact (= 0.73.4)
++    - React-cxxreact (= 0.73.6)
+     - React-jsi
+-    - React-jsiexecutor (= 0.73.4)
+-    - React-jsinspector (= 0.73.4)
+-    - React-perflogger (= 0.73.4)
+-  - React-ImageManager (0.73.4):
++    - React-jsiexecutor (= 0.73.6)
++    - React-jsinspector (= 0.73.6)
++    - React-perflogger (= 0.73.6)
++  - React-ImageManager (0.73.6):
+     - glog
+     - RCT-Folly/Fabric
+     - React-Core/Default
+@@ -988,31 +988,31 @@ PODS:
+     - React-graphics
+     - React-rendererdebug
+     - React-utils
+-  - React-jserrorhandler (0.73.4):
++  - React-jserrorhandler (0.73.6):
+     - RCT-Folly/Fabric (= 2022.05.16.00)
+     - React-debug
+     - React-jsi
+     - React-Mapbuffer
+-  - React-jsi (0.73.4):
++  - React-jsi (0.73.6):
+     - boost (= 1.83.0)
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-  - React-jsiexecutor (0.73.4):
++  - React-jsiexecutor (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-cxxreact (= 0.73.4)
+-    - React-jsi (= 0.73.4)
+-    - React-perflogger (= 0.73.4)
+-  - React-jsinspector (0.73.4)
+-  - React-logger (0.73.4):
++    - React-cxxreact (= 0.73.6)
++    - React-jsi (= 0.73.6)
++    - React-perflogger (= 0.73.6)
++  - React-jsinspector (0.73.6)
++  - React-logger (0.73.6):
+     - glog
+-  - React-Mapbuffer (0.73.4):
++  - React-Mapbuffer (0.73.6):
+     - glog
+     - React-debug
+   - react-native-mmkv (2.6.3):
+@@ -1022,8 +1022,8 @@ PODS:
+     - React-Core
+   - react-native-safe-area-context (4.8.2):
+     - React-Core
+-  - React-nativeconfig (0.73.4)
+-  - React-NativeModulesApple (0.73.4):
++  - React-nativeconfig (0.73.6)
++  - React-NativeModulesApple (0.73.6):
+     - glog
+     - hermes-engine
+     - React-callinvoker
+@@ -1033,10 +1033,10 @@ PODS:
+     - React-runtimeexecutor
+     - ReactCommon/turbomodule/bridging
+     - ReactCommon/turbomodule/core
+-  - React-perflogger (0.73.4)
+-  - React-RCTActionSheet (0.73.4):
+-    - React-Core/RCTActionSheetHeaders (= 0.73.4)
+-  - React-RCTAnimation (0.73.4):
++  - React-perflogger (0.73.6)
++  - React-RCTActionSheet (0.73.6):
++    - React-Core/RCTActionSheetHeaders (= 0.73.6)
++  - React-RCTAnimation (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+     - RCTTypeSafety
+     - React-Codegen
+@@ -1044,7 +1044,7 @@ PODS:
+     - React-jsi
+     - React-NativeModulesApple
+     - ReactCommon
+-  - React-RCTAppDelegate (0.73.4):
++  - React-RCTAppDelegate (0.73.6):
+     - RCT-Folly
+     - RCTRequired
+     - RCTTypeSafety
+@@ -1058,7 +1058,7 @@ PODS:
+     - React-RCTNetwork
+     - React-runtimescheduler
+     - ReactCommon
+-  - React-RCTBlob (0.73.4):
++  - React-RCTBlob (0.73.6):
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Codegen
+@@ -1068,7 +1068,7 @@ PODS:
+     - React-NativeModulesApple
+     - React-RCTNetwork
+     - ReactCommon
+-  - React-RCTFabric (0.73.4):
++  - React-RCTFabric (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly/Fabric (= 2022.05.16.00)
+@@ -1086,7 +1086,7 @@ PODS:
+     - React-runtimescheduler
+     - React-utils
+     - Yoga
+-  - React-RCTImage (0.73.4):
++  - React-RCTImage (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+     - RCTTypeSafety
+     - React-Codegen
+@@ -1095,14 +1095,14 @@ PODS:
+     - React-NativeModulesApple
+     - React-RCTNetwork
+     - ReactCommon
+-  - React-RCTLinking (0.73.4):
++  - React-RCTLinking (0.73.6):
+     - React-Codegen
+-    - React-Core/RCTLinkingHeaders (= 0.73.4)
+-    - React-jsi (= 0.73.4)
++    - React-Core/RCTLinkingHeaders (= 0.73.6)
++    - React-jsi (= 0.73.6)
+     - React-NativeModulesApple
+     - ReactCommon
+-    - ReactCommon/turbomodule/core (= 0.73.4)
+-  - React-RCTNetwork (0.73.4):
++    - ReactCommon/turbomodule/core (= 0.73.6)
++  - React-RCTNetwork (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+     - RCTTypeSafety
+     - React-Codegen
+@@ -1110,7 +1110,7 @@ PODS:
+     - React-jsi
+     - React-NativeModulesApple
+     - ReactCommon
+-  - React-RCTSettings (0.73.4):
++  - React-RCTSettings (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+     - RCTTypeSafety
+     - React-Codegen
+@@ -1118,25 +1118,25 @@ PODS:
+     - React-jsi
+     - React-NativeModulesApple
+     - ReactCommon
+-  - React-RCTText (0.73.4):
+-    - React-Core/RCTTextHeaders (= 0.73.4)
++  - React-RCTText (0.73.6):
++    - React-Core/RCTTextHeaders (= 0.73.6)
+     - Yoga
+-  - React-RCTVibration (0.73.4):
++  - React-RCTVibration (0.73.6):
+     - RCT-Folly (= 2022.05.16.00)
+     - React-Codegen
+     - React-Core/RCTVibrationHeaders
+     - React-jsi
+     - React-NativeModulesApple
+     - ReactCommon
+-  - React-rendererdebug (0.73.4):
++  - React-rendererdebug (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - RCT-Folly (= 2022.05.16.00)
+     - React-debug
+-  - React-rncore (0.73.4)
+-  - React-runtimeexecutor (0.73.4):
+-    - React-jsi (= 0.73.4)
+-  - React-runtimescheduler (0.73.4):
++  - React-rncore (0.73.6)
++  - React-runtimeexecutor (0.73.6):
++    - React-jsi (= 0.73.6)
++  - React-runtimescheduler (0.73.6):
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+@@ -1147,48 +1147,48 @@ PODS:
+     - React-rendererdebug
+     - React-runtimeexecutor
+     - React-utils
+-  - React-utils (0.73.4):
++  - React-utils (0.73.6):
+     - glog
+     - RCT-Folly (= 2022.05.16.00)
+     - React-debug
+-  - ReactCommon (0.73.4):
+-    - React-logger (= 0.73.4)
+-    - ReactCommon/turbomodule (= 0.73.4)
+-  - ReactCommon/turbomodule (0.73.4):
++  - ReactCommon (0.73.6):
++    - React-logger (= 0.73.6)
++    - ReactCommon/turbomodule (= 0.73.6)
++  - ReactCommon/turbomodule (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-callinvoker (= 0.73.4)
+-    - React-cxxreact (= 0.73.4)
+-    - React-jsi (= 0.73.4)
+-    - React-logger (= 0.73.4)
+-    - React-perflogger (= 0.73.4)
+-    - ReactCommon/turbomodule/bridging (= 0.73.4)
+-    - ReactCommon/turbomodule/core (= 0.73.4)
+-  - ReactCommon/turbomodule/bridging (0.73.4):
++    - React-callinvoker (= 0.73.6)
++    - React-cxxreact (= 0.73.6)
++    - React-jsi (= 0.73.6)
++    - React-logger (= 0.73.6)
++    - React-perflogger (= 0.73.6)
++    - ReactCommon/turbomodule/bridging (= 0.73.6)
++    - ReactCommon/turbomodule/core (= 0.73.6)
++  - ReactCommon/turbomodule/bridging (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-callinvoker (= 0.73.4)
+-    - React-cxxreact (= 0.73.4)
+-    - React-jsi (= 0.73.4)
+-    - React-logger (= 0.73.4)
+-    - React-perflogger (= 0.73.4)
+-  - ReactCommon/turbomodule/core (0.73.4):
++    - React-callinvoker (= 0.73.6)
++    - React-cxxreact (= 0.73.6)
++    - React-jsi (= 0.73.6)
++    - React-logger (= 0.73.6)
++    - React-perflogger (= 0.73.6)
++  - ReactCommon/turbomodule/core (0.73.6):
+     - DoubleConversion
+     - fmt (~> 6.2.1)
+     - glog
+     - hermes-engine
+     - RCT-Folly (= 2022.05.16.00)
+-    - React-callinvoker (= 0.73.4)
+-    - React-cxxreact (= 0.73.4)
+-    - React-jsi (= 0.73.4)
+-    - React-logger (= 0.73.4)
+-    - React-perflogger (= 0.73.4)
++    - React-callinvoker (= 0.73.6)
++    - React-cxxreact (= 0.73.6)
++    - React-jsi (= 0.73.6)
++    - React-logger (= 0.73.6)
++    - React-perflogger (= 0.73.6)
+   - ReactNativeAvoidSoftinput (4.0.2):
+     - React-Core
+   - RNFlashList (1.6.3):
+@@ -1367,7 +1367,7 @@ EXTERNAL SOURCES:
+     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+   hermes-engine:
+     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
+-    :tag: hermes-2023-11-17-RNv0.73.0-21043a3fc062be445e56a2c10ecd8be028dd9cc5
++    :tag: hermes-2024-02-20-RNv0.73.5-18f99ace4213052c5e7cdbcd39ee9766cd5df7e4
+   RCT-Folly:
+     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
+   RCTRequired:
+@@ -1473,30 +1473,30 @@ EXTERNAL SOURCES:
+ 
+ SPEC CHECKSUMS:
+   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
+-  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
++  DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
+   EXConstants: 988aa430ca0f76b43cd46b66e7fae3287f9cc2fc
+   EXFont: f20669cb266ef48b004f1eb1f2b20db96cd1df9f
+   EXJSONUtils: 5c42959e87be238b045ef37cc5268b16a6c0ad4a
+   EXManifests: 5e8c29f36c716af768a4ea47ec05e1b89ab93091
+-  Expo: c2d3edc1b1e833e26d837b03aa46d9137ca63302
+-  expo-dev-client: dbc8e8a81d17a9d92e083a2856d056ba9a58984d
+-  expo-dev-launcher: 3f2a78d97842a3fdc2f0116f775d8dbc32396cbd
+-  expo-dev-menu: b964921baa1bda2a7ff42a407d1d7698ce215faf
++  Expo: e01a77c6fa4bc80a6d1bb949cda1d12d21044abd
++  expo-dev-client: 29a32387346fe7b6d2a57918fae985bc48bfe9a2
++  expo-dev-launcher: f45e0f751addcc5ff891e0446e4762508b9030f2
++  expo-dev-menu: 0e07e86ed397e431ee1171bb26caf7dc69cb494d
+   expo-dev-menu-interface: 7ba029c9d1a82ac22b9b584c00514860b060553e
+-  ExpoFileSystem: a9273932e69a9a1e1a8d01b6ba895bb8294bbea2
+-  ExpoHead: 5aa4ef0a18a83f323e21cf83ff29b94d3c53e050
++  ExpoFileSystem: eecaf6796aed0f4dd20042dc2ca2cac6c4bc1185
++  ExpoHead: 8224345e80abcf4c97b31c99805dd5a3c8d3404d
+   ExpoImage: 8cf2d51de3d03b7e984e9b0ba8f19c0c22057001
+   ExpoKeepAwake: 0f5cad99603a3268e50af9a6eb8b76d0d9ac956c
+   ExpoLocalization: f5f5d71dc0c9514d3d77b2771144f6fed6398d04
+-  ExpoModulesCore: 1391529545de72f7f64ecabc7adb912306ab4d34
++  ExpoModulesCore: 61dc57c6e2a35f2f84baf488146db624e03af4cd
+   ExpoSystemUI: 40e222dd9d52222fe1bce389724ac52e662158dc
+-  EXSplashScreen: 39244885abfb1b12765aae89edb90f8c88db6bbd
++  EXSplashScreen: 5538a51beec451bf1fcf5198e3062790e2534df3
+   EXUpdatesInterface: 3e444e2093e25b7ca0999a7d8c16e8392dee70c3
+-  FBLazyVector: 84f6edbe225f38aebd9deaf1540a4160b1f087d7
+-  FBReactNativeSpec: d0086a479be91c44ce4687a962956a352d2dc697
++  FBLazyVector: f64d1e2ea739b4d8f7e4740cde18089cd97fe864
++  FBReactNativeSpec: 9f2b8b243131565335437dba74923a8d3015e780
+   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
+-  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+-  hermes-engine: b2669ce35fc4ac14f523b307aff8896799829fe2
++  glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
++  hermes-engine: 9cecf9953a681df7556b8cc9c74905de8f3293c0
+   libaom: 144606b1da4b5915a1054383c3a4459ccdb3c661
+   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
+   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+@@ -1505,61 +1505,61 @@ SPEC CHECKSUMS:
+   MMKV: f902fb6719da13c2ab0965233d8963a59416f911
+   MMKVCore: d26e4d3edd5cb8588c2569222cbd8be4231374e9
+   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
+-  RCTRequired: ab7f915c15569f04a49669e573e6e319a53f9faa
+-  RCTTypeSafety: 63b97ced7b766865057e7154db0e81ce4ee6cf1e
+-  React: 1c87497e50fa40ba9c54e5ea5e53483a0f8eecc0
+-  React-callinvoker: e3a52a9a93e3eb004d7282c26a4fb27003273fe6
+-  React-Codegen: 50c0f8f073e71b929b057b68bf31be604f1dccc8
+-  React-Core: d0ecde72894b792cb8922efaa0990199cbe85169
+-  React-CoreModules: 2ff1684dd517f0c441495d90a704d499f05e9d0a
+-  React-cxxreact: d9be2fac926741052395da0a6d0bab8d71e2f297
+-  React-debug: 4678e73a37cb501d784e99ff0f219b4940362a3b
+-  React-Fabric: 460ee9d4b8b9de3382504a711430bfead1d5be1e
+-  React-FabricImage: d0a0631bc8ad9143f42bfccf9d3d533a144cc3d6
+-  React-graphics: f0d5040263a9649e2a70ebe27b3120c49411afef
+-  React-hermes: b9ac2f7b0c1eeb206eb883583cab7a973d570a6e
+-  React-ImageManager: 6c4bf9d5ed363ead7b5aaf820a3feab221b7063e
+-  React-jserrorhandler: 6e7a7e187583e14dc7a0053a2bdd66c252ea3b21
+-  React-jsi: 380cd24dd81a705dd042c18989fb10b07182210c
+-  React-jsiexecutor: 8ed7a18b9f119440efdcd424c8257dc7e18067e2
+-  React-jsinspector: 9ac353eccf6ab54d1e0a33862ba91221d1e88460
+-  React-logger: 0a57b68dd2aec7ff738195f081f0520724b35dab
+-  React-Mapbuffer: 63913773ed7f96b814a2521e13e6d010282096ad
++  RCTRequired: ca1d7414aba0b27efcfa2ccd37637edb1ab77d96
++  RCTTypeSafety: 678e344fb976ff98343ca61dc62e151f3a042292
++  React: e296bcebb489deaad87326067204eb74145934ab
++  React-callinvoker: d0b7015973fa6ccb592bb0363f6bc2164238ab8c
++  React-Codegen: f034a5de6f28e15e8d95d171df17e581d5309268
++  React-Core: 44c936d0ab879e9c32e5381bd7596a677c59c974
++  React-CoreModules: 558228e12cddb9ca00ff7937894cc5104a21be6b
++  React-cxxreact: 1fcf565012c203655b3638f35aa03c13c2ed7e9e
++  React-debug: d444db402065cca460d9c5b072caab802a04f729
++  React-Fabric: 7d11905695e42f8bdaedddcf294959b43b290ab8
++  React-FabricImage: 6e06a512d2fb5f55669c721578736785d915d4f5
++  React-graphics: 5500206f7c9a481456365403c9fcf1638de108b7
++  React-hermes: 783023e43af9d6be4fbaeeb96b5beee00649a5f7
++  React-ImageManager: df193215ff3cf1a8dad297e554c89c632e42436c
++  React-jserrorhandler: a4d0f541c5852cf031db2f82f51de90be55b1334
++  React-jsi: ae102ccb38d2e4d0f512b7074d0c9b4e1851f402
++  React-jsiexecutor: bd12ec75873d3ef0a755c11f878f2c420430f5a9
++  React-jsinspector: 85583ef014ce53d731a98c66a0e24496f7a83066
++  React-logger: 3eb80a977f0d9669468ef641a5e1fabbc50a09ec
++  React-Mapbuffer: 84ea43c6c6232049135b1550b8c60b2faac19fab
+   react-native-mmkv: 2e5bf67513cc8deed86fcffe87e12b8cc250dfab
+   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
+   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
+-  React-nativeconfig: d7af5bae6da70fa15ce44f045621cf99ed24087c
+-  React-NativeModulesApple: 0123905d5699853ac68519607555a9a4f5c7b3ac
+-  React-perflogger: 8a1e1af5733004bdd91258dcefbde21e0d1faccd
+-  React-RCTActionSheet: 64bbff3a3963664c2d0146f870fe8e0264aee4c4
+-  React-RCTAnimation: b698168a7269265a4694727196484342d695f0c1
+-  React-RCTAppDelegate: dcd8e955116eb1d1908dfaf08b4c970812e6a1e6
+-  React-RCTBlob: 47f8c3b2b4b7fa2c5f19c43f0b7f77f57fb9d953
+-  React-RCTFabric: 6067a32d683d0c2b84d444548bc15a263c64abed
+-  React-RCTImage: ac0e77a44c290b20db783649b2b9cddc93e3eb99
+-  React-RCTLinking: e626fd2900913fe5d25922ea1be394b7aafa09c9
+-  React-RCTNetwork: d3114bce3977dafe8bd06421b29812f5a8527ba0
+-  React-RCTSettings: a53511f90d8df637a1a11ac729179a4d2f734481
+-  React-RCTText: f0176f5f5952f9a4a2c7354f5ae71f7c420aaf34
+-  React-RCTVibration: 8160223c6eda5b187079fec204f80eca8b8f3177
+-  React-rendererdebug: ed286b4da8648c27d6ed3ae1410d4b21ba890d5a
+-  React-rncore: 43f133b89ac10c4b6ab43702a541dee1c292a3bf
+-  React-runtimeexecutor: e6ab6bb083dbdbdd489cff426ed0bce0652e6edf
+-  React-runtimescheduler: ed48e5faac6751e66ee1261c4bd01643b436f112
+-  React-utils: 6e5ad394416482ae21831050928ae27348f83487
+-  ReactCommon: 840a955d37b7f3358554d819446bffcf624b2522
++  React-nativeconfig: b4d4e9901d4cabb57be63053fd2aa6086eb3c85f
++  React-NativeModulesApple: cd26e56d56350e123da0c1e3e4c76cb58a05e1ee
++  React-perflogger: 5f49905de275bac07ac7ea7f575a70611fa988f2
++  React-RCTActionSheet: 37edf35aeb8e4f30e76c82aab61f12d1b75c04ec
++  React-RCTAnimation: a69de7f3daa8462743094f4736c455e844ea63f7
++  React-RCTAppDelegate: 51fb96b554a6acd0cd7818acecd5aa5ca2f3ab9f
++  React-RCTBlob: d91771caebf2d015005d750cd1dc2b433ad07c99
++  React-RCTFabric: c5b9451d1f2b546119b7a0353226a8a26247d4a9
++  React-RCTImage: a0bfe87b6908c7b76bd7d74520f40660bd0ad881
++  React-RCTLinking: 5f10be1647952cceddfa1970fdb374087582fc34
++  React-RCTNetwork: a0bc3dd45a2dc7c879c80cebb6f9707b2c8bbed6
++  React-RCTSettings: 28c202b68afa59afb4067510f2c69c5a530fb9e3
++  React-RCTText: 4119d9e53ca5db9502b916e1b146e99798986d21
++  React-RCTVibration: 55bd7c48487eb9a2562f2bd3fdc833274f5b0636
++  React-rendererdebug: 5fa97ba664806cee4700e95aec42dff1b6f8ea36
++  React-rncore: b0a8e1d14dabb7115c7a5b4ec8b9b74d1727d382
++  React-runtimeexecutor: bb328dbe2865f3a550df0240df8e2d8c3aaa4c57
++  React-runtimescheduler: 9636eee762c699ca7c85751a359101797e4c8b3b
++  React-utils: d16c1d2251c088ad817996621947d0ac8167b46c
++  ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
+   ReactNativeAvoidSoftinput: b4ec4c8084c397a91800d21170a9949a263d288a
+   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
+-  RNGestureHandler: 25b969a1ffc806b9f9ad2e170d4a3b049c6af85e
+-  RNReanimated: 5589be82dc26b3f94738eb7c6b1f942787532b25
+-  RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
++  RNGestureHandler: 15c6ef51acba34c49ff03003806cf5dd6098f383
++  RNReanimated: 4f0931c29b1535a3a40a6c06797b1d9d39f50754
++  RNScreens: 17e2f657f1b09a71ec3c821368a04acbb7ebcb46
+   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
+   SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
+   SDWebImageAVIFCoder: 8348fef6d0ec69e129c66c9fe4d74fbfbf366112
+   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
+   SDWebImageWebPCoder: af09429398d99d524cae2fe00f6f0f6e491ed102
+   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+-  Yoga: 1b901a6d6eeba4e8a2e8f308f708691cdb5db312
++  Yoga: d17d2cc8105eed528474683b42e2ea310e1daf61
+ 
+ PODFILE CHECKSUM: ac55d8c0b92af1b0a5da5f8cb8448313ecc7948e
+ 
+diff --git a/package.json b/package.json
+index 1d78661..d2ed056 100644
+--- a/package.json
++++ b/package.json
+@@ -47,10 +47,10 @@
+     "@tanstack/react-query": "^4.36.1",
+     "app-icon-badge": "^0.0.15",
+     "axios": "^1.6.5",
+-    "expo": "~50.0.13",
++    "expo": "~50.0.14",
+     "expo-build-properties": "~0.11.1",
+     "expo-constants": "~15.4.5",
+-    "expo-dev-client": "~3.3.10",
++    "expo-dev-client": "~3.3.11",
+     "expo-font": "~11.10.3",
+     "expo-image": "~1.10.6",
+     "expo-linking": "~6.2.2",
+@@ -62,13 +62,13 @@
+     "i18next": "^22.5.1",
+     "lodash.memoize": "^4.1.2",
+     "moti": "^0.28.1",
+-    "nativewind": "^4.0.23",
++    "nativewind": "^4.0.36",
+     "react": "18.2.0",
+     "react-dom": "18.2.0",
+     "react-error-boundary": "^3.1.4",
+     "react-hook-form": "^7.49.3",
+     "react-i18next": "^12.3.1",
+-    "react-native": "0.73.5",
++    "react-native": "0.73.6",
+     "react-native-avoid-softinput": "^4.0.2",
+     "react-native-flash-message": "^0.4.2",
+     "react-native-gesture-handler": "~2.14.1",
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 08364cb..50113c8 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -7,28 +7,28 @@ settings:
+ dependencies:
+   '@expo/metro-runtime':
+     specifier: ^3.1.3
+-    version: 3.1.3(react-native@0.73.5)
++    version: 3.1.3(react-native@0.73.6)
+   '@gorhom/bottom-sheet':
+     specifier: ^4.6.0
+-    version: 4.6.0(@types/react@18.2.48)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.2)(react-native@0.73.5)(react@18.2.0)
++    version: 4.6.0(@types/react@18.2.48)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.2)(react-native@0.73.6)(react@18.2.0)
+   '@hookform/resolvers':
+     specifier: ^2.9.11
+     version: 2.9.11(react-hook-form@7.49.3)
+   '@react-navigation/bottom-tabs':
+     specifier: ^6.5.11
+-    version: 6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0)
++    version: 6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0)
+   '@react-navigation/native':
+     specifier: ^6.1.9
+-    version: 6.1.9(react-native@0.73.5)(react@18.2.0)
++    version: 6.1.9(react-native@0.73.6)(react@18.2.0)
+   '@react-navigation/native-stack':
+     specifier: ^6.9.17
+-    version: 6.9.17(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0)
++    version: 6.9.17(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0)
+   '@shopify/flash-list':
+     specifier: 1.6.3
+-    version: 1.6.3(@babel/runtime@7.23.8)(react-native@0.73.5)(react@18.2.0)
++    version: 1.6.3(@babel/runtime@7.23.8)(react-native@0.73.6)(react@18.2.0)
+   '@tanstack/react-query':
+     specifier: ^4.36.1
+-    version: 4.36.1(react-dom@18.2.0)(react-native@0.73.5)(react@18.2.0)
++    version: 4.36.1(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
+   app-icon-badge:
+     specifier: ^0.0.15
+     version: 0.0.15
+@@ -36,41 +36,41 @@ dependencies:
+     specifier: ^1.6.5
+     version: 1.6.5
+   expo:
+-    specifier: ~50.0.13
+-    version: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++    specifier: ~50.0.14
++    version: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+   expo-build-properties:
+     specifier: ~0.11.1
+-    version: 0.11.1(expo@50.0.13)
++    version: 0.11.1(expo@50.0.14)
+   expo-constants:
+     specifier: ~15.4.5
+-    version: 15.4.5(expo@50.0.13)
++    version: 15.4.5(expo@50.0.14)
+   expo-dev-client:
+-    specifier: ~3.3.10
+-    version: 3.3.10(expo@50.0.13)
++    specifier: ~3.3.11
++    version: 3.3.11(expo@50.0.14)
+   expo-font:
+     specifier: ~11.10.3
+-    version: 11.10.3(expo@50.0.13)
++    version: 11.10.3(expo@50.0.14)
+   expo-image:
+     specifier: ~1.10.6
+-    version: 1.10.6(expo@50.0.13)
++    version: 1.10.6(expo@50.0.14)
+   expo-linking:
+     specifier: ~6.2.2
+-    version: 6.2.2(expo@50.0.13)
++    version: 6.2.2(expo@50.0.14)
+   expo-localization:
+     specifier: ~14.8.3
+-    version: 14.8.3(expo@50.0.13)
++    version: 14.8.3(expo@50.0.14)
+   expo-router:
+     specifier: ~3.4.8
+-    version: 3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.13)(react-dom@18.2.0)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0)
++    version: 3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.14)(react-dom@18.2.0)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0)
+   expo-splash-screen:
+     specifier: 0.26.4
+-    version: 0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.13)
++    version: 0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.14)
+   expo-status-bar:
+     specifier: ~1.11.1
+     version: 1.11.1
+   expo-system-ui:
+     specifier: ~2.9.3
+-    version: 2.9.3(expo@50.0.13)
++    version: 2.9.3(expo@50.0.14)
+   i18next:
+     specifier: ^22.5.1
+     version: 22.5.1
+@@ -81,8 +81,8 @@ dependencies:
+     specifier: ^0.28.1
+     version: 0.28.1(react-dom@18.2.0)(react-native-reanimated@3.6.2)(react@18.2.0)
+   nativewind:
+-    specifier: ^4.0.23
+-    version: 4.0.23(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.5)(react@18.2.0)(tailwindcss@3.3.2)
++    specifier: ^4.0.36
++    version: 4.0.36(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.6)(react@18.2.0)(tailwindcss@3.3.2)
+   react:
+     specifier: 18.2.0
+     version: 18.2.0
+@@ -97,37 +97,37 @@ dependencies:
+     version: 7.49.3(react@18.2.0)
+   react-i18next:
+     specifier: ^12.3.1
+-    version: 12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.73.5)(react@18.2.0)
++    version: 12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
+   react-native:
+-    specifier: 0.73.5
+-    version: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++    specifier: 0.73.6
++    version: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+   react-native-avoid-softinput:
+     specifier: ^4.0.2
+-    version: 4.0.2(react-native@0.73.5)(react@18.2.0)
++    version: 4.0.2(react-native@0.73.6)(react@18.2.0)
+   react-native-flash-message:
+     specifier: ^0.4.2
+-    version: 0.4.2(prop-types@15.8.1)(react-native@0.73.5)(react@18.2.0)
++    version: 0.4.2(prop-types@15.8.1)(react-native@0.73.6)(react@18.2.0)
+   react-native-gesture-handler:
+     specifier: ~2.14.1
+-    version: 2.14.1(react-native@0.73.5)(react@18.2.0)
++    version: 2.14.1(react-native@0.73.6)(react@18.2.0)
+   react-native-mmkv:
+     specifier: 2.6.3
+-    version: 2.6.3(react-native@0.73.5)(react@18.2.0)
++    version: 2.6.3(react-native@0.73.6)(react@18.2.0)
+   react-native-reanimated:
+     specifier: ~3.6.2
+-    version: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0)
++    version: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.6)(react@18.2.0)
+   react-native-restart:
+     specifier: 0.0.27
+-    version: 0.0.27(react-native@0.73.5)(react@18.2.0)
++    version: 0.0.27(react-native@0.73.6)(react@18.2.0)
+   react-native-safe-area-context:
+     specifier: 4.8.2
+-    version: 4.8.2(react-native@0.73.5)(react@18.2.0)
++    version: 4.8.2(react-native@0.73.6)(react@18.2.0)
+   react-native-screens:
+     specifier: ~3.29.0
+-    version: 3.29.0(react-native@0.73.5)(react@18.2.0)
++    version: 3.29.0(react-native@0.73.6)(react@18.2.0)
+   react-native-svg:
+     specifier: 14.1.0
+-    version: 14.1.0(react-native@0.73.5)(react@18.2.0)
++    version: 14.1.0(react-native@0.73.6)(react@18.2.0)
+   react-native-web:
+     specifier: ~0.19.10
+     version: 0.19.10(react-dom@18.2.0)(react@18.2.0)
+@@ -156,10 +156,10 @@ devDependencies:
+     version: 17.8.1
+   '@dev-plugins/react-navigation':
+     specifier: ^0.0.5
+-    version: 0.0.5(@react-navigation/core@6.4.10)(expo@50.0.13)(react@18.2.0)
++    version: 0.0.5(@react-navigation/core@6.4.10)(expo@50.0.14)(react@18.2.0)
+   '@dev-plugins/react-query':
+     specifier: ^0.0.5
+-    version: 0.0.5(@tanstack/react-query@4.36.1)(expo@50.0.13)
++    version: 0.0.5(@tanstack/react-query@4.36.1)(expo@50.0.14)
+   '@expo/config':
+     specifier: ~8.5.4
+     version: 8.5.4
+@@ -171,7 +171,7 @@ devDependencies:
+     version: 5.17.0
+   '@testing-library/react-native':
+     specifier: ^12.4.3
+-    version: 12.4.3(jest@29.7.0)(react-native@0.73.5)(react-test-renderer@18.2.0)(react@18.2.0)
++    version: 12.4.3(jest@29.7.0)(react-native@0.73.6)(react-test-renderer@18.2.0)(react@18.2.0)
+   '@types/i18n-js':
+     specifier: ^3.8.9
+     version: 3.8.9
+@@ -1870,7 +1870,7 @@ packages:
+     dependencies:
+       '@jridgewell/trace-mapping': 0.3.9
+ 
+-  /@dev-plugins/react-navigation@0.0.5(@react-navigation/core@6.4.10)(expo@50.0.13)(react@18.2.0):
++  /@dev-plugins/react-navigation@0.0.5(@react-navigation/core@6.4.10)(expo@50.0.14)(react@18.2.0):
+     resolution: {integrity: sha512-CtDY0drL/BmSvM9mYKi64xUkCdk2FHgX4mMXT1zSShk7LwTV2R7y5eY9vAEtWkmrLy8sfK4Tg220+uK2lHgnjQ==}
+     peerDependencies:
+       '@react-navigation/core': '*'
+@@ -1878,20 +1878,20 @@ packages:
+     dependencies:
+       '@react-navigation/core': 6.4.10(react@18.2.0)
+       '@react-navigation/devtools': 6.0.25(react@18.2.0)
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+       nanoid: 3.3.7
+     transitivePeerDependencies:
+       - react
+     dev: true
+ 
+-  /@dev-plugins/react-query@0.0.5(@tanstack/react-query@4.36.1)(expo@50.0.13):
++  /@dev-plugins/react-query@0.0.5(@tanstack/react-query@4.36.1)(expo@50.0.14):
+     resolution: {integrity: sha512-GMzjuRk6oTo4FdQjw3bO9SxGgZHrBvrJ8JltAYzlEu2OMHkfcYdx1DFyixf9Wbxqq5p3q3TZGtTNBlaf9e7jCw==}
+     peerDependencies:
+       '@tanstack/react-query': '*'
+       expo: '*'
+     dependencies:
+-      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react-native@0.73.5)(react@18.2.0)
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+       flatted: 3.2.9
+     dev: true
+ 
+@@ -1982,7 +1982,7 @@ packages:
+       '@expo/rudder-sdk-node': 1.1.1
+       '@expo/spawn-async': 1.5.0
+       '@expo/xcpretty': 4.3.1
+-      '@react-native/dev-middleware': 0.73.7
++      '@react-native/dev-middleware': 0.73.8
+       '@urql/core': 2.3.6(graphql@15.8.0)
+       '@urql/exchange-retry': 0.3.0(graphql@15.8.0)
+       accepts: 1.3.8
+@@ -2196,12 +2196,12 @@ packages:
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  /@expo/metro-runtime@3.1.3(react-native@0.73.5):
++  /@expo/metro-runtime@3.1.3(react-native@0.73.6):
+     resolution: {integrity: sha512-u1CaQJJlSgvxBB5NJ6YMVvSDTTRzjT71dHpEBnKPZhpFv5ebVry52FZ2sEeEEA6mHG5zGxWXmHImW3hNKHh8EA==}
+     peerDependencies:
+       react-native: '*'
+     dependencies:
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+   /@expo/osascript@2.1.0:
+@@ -2337,7 +2337,7 @@ packages:
+   /@gar/promisify@1.1.3:
+     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
+ 
+-  /@gorhom/bottom-sheet@4.6.0(@types/react@18.2.48)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.2)(react-native@0.73.5)(react@18.2.0):
++  /@gorhom/bottom-sheet@4.6.0(@types/react@18.2.48)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.2)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-XgNflkhATUqTIiMDGuLaQZAtjUzcrhGOEJGHT+7Tou1ctTMb958YRGGnU9KFo5TkD6YCZcfWfxHPi9F0FF+DjA==}
+     peerDependencies:
+       '@types/react': '*'
+@@ -2352,16 +2352,16 @@ packages:
+       '@types/react-native':
+         optional: true
+     dependencies:
+-      '@gorhom/portal': 1.0.14(react-native@0.73.5)(react@18.2.0)
++      '@gorhom/portal': 1.0.14(react-native@0.73.6)(react@18.2.0)
+       '@types/react': 18.2.48
+       invariant: 2.2.4
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      react-native-gesture-handler: 2.14.1(react-native@0.73.5)(react@18.2.0)
+-      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native-gesture-handler: 2.14.1(react-native@0.73.6)(react@18.2.0)
++      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.6)(react@18.2.0)
+     dev: false
+ 
+-  /@gorhom/portal@1.0.14(react-native@0.73.5)(react@18.2.0):
++  /@gorhom/portal@1.0.14(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-MXyL4xvCjmgaORr/rtryDNFy3kU4qUbKlwtQqqsygd0xX3mhKjOLn6mQK8wfu0RkoE0pBE0nAasRoHua+/QZ7A==}
+     peerDependencies:
+       react: '*'
+@@ -2369,7 +2369,7 @@ packages:
+     dependencies:
+       nanoid: 3.3.7
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+   /@graphql-typed-document-node/core@3.2.0(graphql@15.8.0):
+@@ -3460,24 +3460,6 @@ packages:
+     resolution: {integrity: sha512-RgEKnWuoo54dh7gQhV7kvzKhXZEhpF9LlMdZolyhGxHsBqZ2gXdibfDlfcARFFifPIiaZ3lXuOVVa4ei+uPgTw==}
+     engines: {node: '>=18'}
+ 
+-  /@react-native/dev-middleware@0.73.7:
+-    resolution: {integrity: sha512-BZXpn+qKp/dNdr4+TkZxXDttfx8YobDh8MFHsMk9usouLm22pKgFIPkGBV0X8Do4LBkFNPGtrnsKkWk/yuUXKg==}
+-    engines: {node: '>=18'}
+-    dependencies:
+-      '@isaacs/ttlcache': 1.4.1
+-      '@react-native/debugger-frontend': 0.73.3
+-      chrome-launcher: 0.15.2
+-      chromium-edge-launcher: 1.0.0
+-      connect: 3.7.0
+-      debug: 2.6.9
+-      node-fetch: 2.7.0
+-      open: 7.4.2
+-      serve-static: 1.15.0
+-      temp-dir: 2.0.0
+-    transitivePeerDependencies:
+-      - encoding
+-      - supports-color
+-
+   /@react-native/dev-middleware@0.73.8:
+     resolution: {integrity: sha512-oph4NamCIxkMfUL/fYtSsE+JbGOnrlawfQ0kKtDQ5xbOjPKotKoXqrs1eGwozNKv7FfQ393stk1by9a6DyASSg==}
+     engines: {node: '>=18'}
+@@ -3527,7 +3509,7 @@ packages:
+   /@react-native/normalize-colors@0.73.2:
+     resolution: {integrity: sha512-bRBcb2T+I88aG74LMVHaKms2p/T8aQd8+BZ7LuuzXlRfog1bMWWn/C5i0HVuvW4RPtXQYgIlGiXVDy9Ir1So/w==}
+ 
+-  /@react-native/virtualized-lists@0.73.4(react-native@0.73.5):
++  /@react-native/virtualized-lists@0.73.4(react-native@0.73.6):
+     resolution: {integrity: sha512-HpmLg1FrEiDtrtAbXiwCgXFYyloK/dOIPIuWW3fsqukwJEWAiTzm1nXGJ7xPU5XTHiWZ4sKup5Ebaj8z7iyWog==}
+     engines: {node: '>=18'}
+     peerDependencies:
+@@ -3535,9 +3517,9 @@ packages:
+     dependencies:
+       invariant: 2.2.4
+       nullthrows: 1.1.1
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+ 
+-  /@react-navigation/bottom-tabs@6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0):
++  /@react-navigation/bottom-tabs@6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-CBN/NOdxnMvmjw+AJQI1kltOYaClTZmGec5pQ3ZNTPX86ytbIOylDIITKMfTgHZcIEFQDymx1SHeS++PIL3Szw==}
+     peerDependencies:
+       '@react-navigation/native': ^6.0.0
+@@ -3546,13 +3528,13 @@ packages:
+       react-native-safe-area-context: '>= 3.0.0'
+       react-native-screens: '>= 3.0.0'
+     dependencies:
+-      '@react-navigation/elements': 1.3.21(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native@0.73.5)(react@18.2.0)
+-      '@react-navigation/native': 6.1.9(react-native@0.73.5)(react@18.2.0)
++      '@react-navigation/elements': 1.3.21(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native@0.73.6)(react@18.2.0)
++      '@react-navigation/native': 6.1.9(react-native@0.73.6)(react@18.2.0)
+       color: 4.2.3
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      react-native-safe-area-context: 4.8.2(react-native@0.73.5)(react@18.2.0)
+-      react-native-screens: 3.29.0(react-native@0.73.5)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native-safe-area-context: 4.8.2(react-native@0.73.6)(react@18.2.0)
++      react-native-screens: 3.29.0(react-native@0.73.6)(react@18.2.0)
+       warn-once: 0.1.1
+     dev: false
+ 
+@@ -3580,7 +3562,7 @@ packages:
+       stacktrace-parser: 0.1.10
+     dev: true
+ 
+-  /@react-navigation/elements@1.3.21(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native@0.73.5)(react@18.2.0):
++  /@react-navigation/elements@1.3.21(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-eyS2C6McNR8ihUoYfc166O1D8VYVh9KIl0UQPI8/ZJVsStlfSTgeEEh+WXge6+7SFPnZ4ewzEJdSAHH+jzcEfg==}
+     peerDependencies:
+       '@react-navigation/native': ^6.0.0
+@@ -3588,13 +3570,13 @@ packages:
+       react-native: '*'
+       react-native-safe-area-context: '>= 3.0.0'
+     dependencies:
+-      '@react-navigation/native': 6.1.9(react-native@0.73.5)(react@18.2.0)
++      '@react-navigation/native': 6.1.9(react-native@0.73.6)(react@18.2.0)
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      react-native-safe-area-context: 4.8.2(react-native@0.73.5)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native-safe-area-context: 4.8.2(react-native@0.73.6)(react@18.2.0)
+     dev: false
+ 
+-  /@react-navigation/native-stack@6.9.17(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0):
++  /@react-navigation/native-stack@6.9.17(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-X8p8aS7JptQq7uZZNFEvfEcPf6tlK4PyVwYDdryRbG98B4bh2wFQYMThxvqa+FGEN7USEuHdv2mF0GhFKfX0ew==}
+     peerDependencies:
+       '@react-navigation/native': ^6.0.0
+@@ -3603,16 +3585,16 @@ packages:
+       react-native-safe-area-context: '>= 3.0.0'
+       react-native-screens: '>= 3.0.0'
+     dependencies:
+-      '@react-navigation/elements': 1.3.21(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native@0.73.5)(react@18.2.0)
+-      '@react-navigation/native': 6.1.9(react-native@0.73.5)(react@18.2.0)
++      '@react-navigation/elements': 1.3.21(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native@0.73.6)(react@18.2.0)
++      '@react-navigation/native': 6.1.9(react-native@0.73.6)(react@18.2.0)
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      react-native-safe-area-context: 4.8.2(react-native@0.73.5)(react@18.2.0)
+-      react-native-screens: 3.29.0(react-native@0.73.5)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native-safe-area-context: 4.8.2(react-native@0.73.6)(react@18.2.0)
++      react-native-screens: 3.29.0(react-native@0.73.6)(react@18.2.0)
+       warn-once: 0.1.1
+     dev: false
+ 
+-  /@react-navigation/native@6.1.9(react-native@0.73.5)(react@18.2.0):
++  /@react-navigation/native@6.1.9(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-AMuJDpwXE7UlfyhIXaUCCynXmv69Kb8NzKgKJO7v0k0L+u6xUTbt6xvshmJ79vsvaFyaEH9Jg5FMzek5/S5qNw==}
+     peerDependencies:
+       react: '*'
+@@ -3623,7 +3605,7 @@ packages:
+       fast-deep-equal: 3.1.3
+       nanoid: 3.3.7
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+   /@react-navigation/routers@6.1.9:
+@@ -3726,7 +3708,7 @@ packages:
+       component-type: 1.2.2
+       join-component: 1.1.0
+ 
+-  /@shopify/flash-list@1.6.3(@babel/runtime@7.23.8)(react-native@0.73.5)(react@18.2.0):
++  /@shopify/flash-list@1.6.3(@babel/runtime@7.23.8)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-XM2iu4CeD9SOEUxaGG3UkxfUxGPWG9yacga1yQSgskAjUsRDFTsD3y4Dyon9n8MfDwgrRpEwuijd+7NeQQoWaQ==}
+     peerDependencies:
+       '@babel/runtime': '*'
+@@ -3735,8 +3717,8 @@ packages:
+     dependencies:
+       '@babel/runtime': 7.23.8
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      recyclerlistview: 4.2.0(react-native@0.73.5)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      recyclerlistview: 4.2.0(react-native@0.73.6)(react@18.2.0)
+       tslib: 2.4.0
+     dev: false
+ 
+@@ -3796,7 +3778,7 @@ packages:
+   /@tanstack/query-core@4.36.1:
+     resolution: {integrity: sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==}
+ 
+-  /@tanstack/react-query@4.36.1(react-dom@18.2.0)(react-native@0.73.5)(react@18.2.0):
++  /@tanstack/react-query@4.36.1(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==}
+     peerDependencies:
+       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+@@ -3811,7 +3793,7 @@ packages:
+       '@tanstack/query-core': 4.36.1
+       react: 18.2.0
+       react-dom: 18.2.0(react@18.2.0)
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+       use-sync-external-store: 1.2.0(react@18.2.0)
+ 
+   /@testing-library/jest-dom@5.17.0:
+@@ -3829,7 +3811,7 @@ packages:
+       redent: 3.0.0
+     dev: true
+ 
+-  /@testing-library/react-native@12.4.3(jest@29.7.0)(react-native@0.73.5)(react-test-renderer@18.2.0)(react@18.2.0):
++  /@testing-library/react-native@12.4.3(jest@29.7.0)(react-native@0.73.6)(react-test-renderer@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-WLE7VbbR5jZJQl3vfNK7Wt+IHnzhOxyu95Mr56EHmzH3XhC8DkrPVAnUq9asq/QWj4aGnymbinFx6zZys/WZmA==}
+     peerDependencies:
+       jest: '>=28.0.0'
+@@ -3844,7 +3826,7 @@ packages:
+       jest-matcher-utils: 29.7.0
+       pretty-format: 29.7.0
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+       react-test-renderer: 18.2.0(react@18.2.0)
+       redent: 3.0.0
+     dev: true
+@@ -6672,148 +6654,148 @@ packages:
+       jest-util: 29.7.0
+     dev: true
+ 
+-  /expo-asset@9.0.2(expo@50.0.13):
++  /expo-asset@9.0.2(expo@50.0.14):
+     resolution: {integrity: sha512-PzYKME1MgUOoUvwtdzhAyXkjXOXGiSYqGKG/MsXwWr0Ef5wlBaBm2DCO9V6KYbng5tBPFu6hTjoRNil1tBOSow==}
+     dependencies:
+       '@react-native/assets-registry': 0.73.1
+       blueimp-md5: 2.19.0
+-      expo-constants: 15.4.5(expo@50.0.13)
+-      expo-file-system: 16.0.8(expo@50.0.13)
++      expo-constants: 15.4.5(expo@50.0.14)
++      expo-file-system: 16.0.8(expo@50.0.14)
+       invariant: 2.2.4
+       md5-file: 3.2.3
+     transitivePeerDependencies:
+       - expo
+       - supports-color
+ 
+-  /expo-build-properties@0.11.1(expo@50.0.13):
++  /expo-build-properties@0.11.1(expo@50.0.14):
+     resolution: {integrity: sha512-m4j4aEjFaDuBE6KWYMxDhWgLzzSmpE7uHKAwtvXyNmRK+6JKF0gjiXi0sXgI5ngNppDQpsyPFMvqG7uQpRuCuw==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       ajv: 8.12.0
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+       semver: 7.5.4
+     dev: false
+ 
+-  /expo-constants@15.4.5(expo@50.0.13):
++  /expo-constants@15.4.5(expo@50.0.14):
+     resolution: {integrity: sha512-1pVVjwk733hbbIjtQcvUFCme540v4gFemdNlaxM2UXKbfRCOh2hzgKN5joHMOysoXQe736TTUrRj7UaZI5Yyhg==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       '@expo/config': 8.5.4
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  /expo-dev-client@3.3.10(expo@50.0.13):
+-    resolution: {integrity: sha512-UhZOJ+O90dRo7S/rmFmVIWwa/HxOqoQ4ySCqvWh87O3pFQuluPfVI9PdKicF4djYrNHZZmE8UXqBDN41hiYtAA==}
++  /expo-dev-client@3.3.11(expo@50.0.14):
++    resolution: {integrity: sha512-9nhhbfbskfmjp/tlRS5KvDpCoW0BREJBxpu2GyjKu7nDB33W8fJLL0wXgNhP+QEb93r37o3uezKmUm2kibOvTw==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+-      expo-dev-launcher: 3.6.8(expo@50.0.13)
+-      expo-dev-menu: 4.5.7(expo@50.0.13)
+-      expo-dev-menu-interface: 1.7.2(expo@50.0.13)
+-      expo-manifests: 0.13.2(expo@50.0.13)
+-      expo-updates-interface: 0.15.3(expo@50.0.13)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo-dev-launcher: 3.6.9(expo@50.0.14)
++      expo-dev-menu: 4.5.8(expo@50.0.14)
++      expo-dev-menu-interface: 1.7.2(expo@50.0.14)
++      expo-manifests: 0.13.2(expo@50.0.14)
++      expo-updates-interface: 0.15.3(expo@50.0.14)
+     transitivePeerDependencies:
+       - supports-color
+     dev: false
+ 
+-  /expo-dev-launcher@3.6.8(expo@50.0.13):
+-    resolution: {integrity: sha512-lFyxRXpUk0z7V7BDd1tFg/M9eFPzo+WRq7kQBA4F8bFPX6drYuTjPqs/bEF/6A5S38oA1wcA34bY9TNgkiKf5w==}
++  /expo-dev-launcher@3.6.9(expo@50.0.14):
++    resolution: {integrity: sha512-MBDMAqjCMVYt1Zv47u2dJTp4d8gCZMfM4GWAFhfQy3G6XzkUlFtewaQefAqy93FcYOv6BYdC9yZOLOb06tqTfA==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       ajv: 8.11.0
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+-      expo-dev-menu: 4.5.7(expo@50.0.13)
+-      expo-manifests: 0.13.2(expo@50.0.13)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo-dev-menu: 4.5.8(expo@50.0.14)
++      expo-manifests: 0.13.2(expo@50.0.14)
+       resolve-from: 5.0.0
+       semver: 7.5.4
+     transitivePeerDependencies:
+       - supports-color
+     dev: false
+ 
+-  /expo-dev-menu-interface@1.7.2(expo@50.0.13):
++  /expo-dev-menu-interface@1.7.2(expo@50.0.14):
+     resolution: {integrity: sha512-V/geSB9rW0IPTR+d7E5CcvkV0uVUCE7SMHZqE/J0/dH06Wo8AahB16fimXeh5/hTL2Qztq8CQ41xpFUBoA9TEw==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+     dev: false
+ 
+-  /expo-dev-menu@4.5.7(expo@50.0.13):
+-    resolution: {integrity: sha512-yIAsiKIhxvAmzd6x25HTvANeengGg2Uax6JnKy7+YfxgynKtqmWUlGCyc9EECoQI4+ItxbfjU4fSTxTiQYGFug==}
++  /expo-dev-menu@4.5.8(expo@50.0.14):
++    resolution: {integrity: sha512-GXfI0CmYlqjOqyFjtplXO9PSoJQoy89+50lbUSNZykDsGyvzCPzl4txdQcdHHSglKYr7lWV7aeMVeehuSct60w==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+-      expo-dev-menu-interface: 1.7.2(expo@50.0.13)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo-dev-menu-interface: 1.7.2(expo@50.0.14)
+       semver: 7.5.4
+     dev: false
+ 
+-  /expo-file-system@16.0.8(expo@50.0.13):
++  /expo-file-system@16.0.8(expo@50.0.14):
+     resolution: {integrity: sha512-yDbVT0TUKd7ewQjaY5THum2VRFx2n/biskGhkUmLh3ai21xjIVtaeIzHXyv9ir537eVgt4ReqDNWi7jcXjdUcA==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+ 
+-  /expo-font@11.10.3(expo@50.0.13):
++  /expo-font@11.10.3(expo@50.0.14):
+     resolution: {integrity: sha512-q1Td2zUvmLbCA9GV4OG4nLPw5gJuNY1VrPycsnemN1m8XWTzzs8nyECQQqrcBhgulCgcKZZJJ6U0kC2iuSoQHQ==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+       fontfaceobserver: 2.3.0
+ 
+-  /expo-image@1.10.6(expo@50.0.13):
++  /expo-image@1.10.6(expo@50.0.14):
+     resolution: {integrity: sha512-vcnAIym1eU8vQgV1re1E7rVQZStJimBa4aPDhjFfzMzbddAF7heJuagyewiUkTzbZUwYzPaZAie6VJPyWx9Ueg==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       '@react-native/assets-registry': 0.73.1
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+     dev: false
+ 
+   /expo-json-utils@0.12.3:
+     resolution: {integrity: sha512-4pypQdinpNc6XY9wsZk56njvzDh+B/9mISr7FPP3CVk1QGB1nSLh883/BCDSgnsephATZkC5HG+cdE60kCAR6A==}
+     dev: false
+ 
+-  /expo-keep-awake@12.8.2(expo@50.0.13):
++  /expo-keep-awake@12.8.2(expo@50.0.14):
+     resolution: {integrity: sha512-uiQdGbSX24Pt8nGbnmBtrKq6xL/Tm3+DuDRGBk/3ZE/HlizzNosGRIufIMJ/4B4FRw4dw8KU81h2RLuTjbay6g==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+ 
+-  /expo-linking@6.2.2(expo@50.0.13):
++  /expo-linking@6.2.2(expo@50.0.14):
+     resolution: {integrity: sha512-FEe6lP4f7xFT/vjoHRG+tt6EPVtkEGaWNK1smpaUevmNdyCJKqW0PDB8o8sfG6y7fly8ULe8qg3HhKh5J7aqUQ==}
+     dependencies:
+-      expo-constants: 15.4.5(expo@50.0.13)
++      expo-constants: 15.4.5(expo@50.0.14)
+       invariant: 2.2.4
+     transitivePeerDependencies:
+       - expo
+       - supports-color
+     dev: false
+ 
+-  /expo-localization@14.8.3(expo@50.0.13):
++  /expo-localization@14.8.3(expo@50.0.14):
+     resolution: {integrity: sha512-leg1e+7ocUgfNWa7Men/g16waXtdSpBMR9tCdv3CG4wztmFU8C+87VAnnVkvHi4CCUkTLzhP3y0FcE6KIWTwdw==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+       rtl-detect: 1.1.2
+     dev: false
+ 
+-  /expo-manifests@0.13.2(expo@50.0.13):
++  /expo-manifests@0.13.2(expo@50.0.14):
+     resolution: {integrity: sha512-l0Sia1WmLULx8V41K8RzGLsFoTe4qqthPRGpHjItsYn8ZB6lRrdTBM9OYp2McIflgqN1HAimUCQMFIwJyH+UmA==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       '@expo/config': 8.5.4
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+       expo-json-utils: 0.12.3
+     transitivePeerDependencies:
+       - supports-color
+@@ -6837,7 +6819,7 @@ packages:
+     dependencies:
+       invariant: 2.2.4
+ 
+-  /expo-router@3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.13)(react-dom@18.2.0)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0):
++  /expo-router@3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.14)(react-dom@18.2.0)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-fOOAWHH4LSPjPFtIZbApxdTNU8xSS8qKvhZ7PfWNMfx9510J1R1Ce/nwENPzcRLHRuVofDsSAEBfi4kV03fJwg==}
+     peerDependencies:
+       '@react-navigation/drawer': ^6.5.8
+@@ -6857,21 +6839,21 @@ packages:
+       react-native-reanimated:
+         optional: true
+     dependencies:
+-      '@expo/metro-runtime': 3.1.3(react-native@0.73.5)
++      '@expo/metro-runtime': 3.1.3(react-native@0.73.6)
+       '@expo/server': 0.3.0
+       '@radix-ui/react-slot': 1.0.1(react@18.2.0)
+-      '@react-navigation/bottom-tabs': 6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0)
+-      '@react-navigation/native': 6.1.9(react-native@0.73.5)(react@18.2.0)
+-      '@react-navigation/native-stack': 6.9.17(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0)
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+-      expo-constants: 15.4.5(expo@50.0.13)
+-      expo-linking: 6.2.2(expo@50.0.13)
+-      expo-splash-screen: 0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.13)
++      '@react-navigation/bottom-tabs': 6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0)
++      '@react-navigation/native': 6.1.9(react-native@0.73.6)(react@18.2.0)
++      '@react-navigation/native-stack': 6.9.17(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.6)(react@18.2.0)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo-constants: 15.4.5(expo@50.0.14)
++      expo-linking: 6.2.2(expo@50.0.14)
++      expo-splash-screen: 0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.14)
+       expo-status-bar: 1.11.1
+       react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
+-      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0)
+-      react-native-safe-area-context: 4.8.2(react-native@0.73.5)(react@18.2.0)
+-      react-native-screens: 3.29.0(react-native@0.73.5)(react@18.2.0)
++      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.6)(react@18.2.0)
++      react-native-safe-area-context: 4.8.2(react-native@0.73.6)(react@18.2.0)
++      react-native-screens: 3.29.0(react-native@0.73.6)(react@18.2.0)
+       schema-utils: 4.2.0
+     transitivePeerDependencies:
+       - encoding
+@@ -6882,13 +6864,13 @@ packages:
+       - supports-color
+     dev: false
+ 
+-  /expo-splash-screen@0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.13):
++  /expo-splash-screen@0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.14):
+     resolution: {integrity: sha512-2DwofTQ0FFQCsvDysm/msENsbyNsJiAJwK3qK/oXeizECAPqD7bK19J4z9kuEbr7ORPX9MLnTQYKl6kmX3keUg==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       '@expo/prebuild-config': 6.7.4(expo-modules-autolinking@1.10.3)
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+     transitivePeerDependencies:
+       - encoding
+       - expo-modules-autolinking
+@@ -6899,28 +6881,28 @@ packages:
+     resolution: {integrity: sha512-ddQEtCOgYHTLlFUe/yH67dDBIoct5VIULthyT3LRJbEwdpzAgueKsX2FYK02ldh440V87PWKCamh7R9evk1rrg==}
+     dev: false
+ 
+-  /expo-system-ui@2.9.3(expo@50.0.13):
++  /expo-system-ui@2.9.3(expo@50.0.14):
+     resolution: {integrity: sha512-RNFNBLJ9lhnjOGrHhtfDc15Ry/lF+SA4kwulmHzYGqaTeYvsL9q0K0+m9qmxuDdrbKJkuurvzvjVylDNnKNFVg==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+       '@react-native/normalize-color': 2.1.0
+       debug: 4.3.4
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+     transitivePeerDependencies:
+       - supports-color
+     dev: false
+ 
+-  /expo-updates-interface@0.15.3(expo@50.0.13):
++  /expo-updates-interface@0.15.3(expo@50.0.14):
+     resolution: {integrity: sha512-uLvsbaCmUsXgJqeen8rYH/jPr874ZUCXEvWpKHxrCv5/XATPlYEaDuecbNSGQ+cu78i6MdtB4BHOwZmoH2d47A==}
+     peerDependencies:
+       expo: '*'
+     dependencies:
+-      expo: 50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
++      expo: 50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21)
+     dev: false
+ 
+-  /expo@50.0.13(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21):
+-    resolution: {integrity: sha512-p0FYrhUJZe92YOwOXx6GZ/WaxF6YtsLXtWkql9pFIIocYBN6iQ3OMGsbQCRSu0ao8rlxsk7HgQDEWK4D+y9tAg==}
++  /expo@50.0.14(@babel/core@7.23.7)(@react-native/babel-preset@0.73.21):
++    resolution: {integrity: sha512-yLPdxCMVAbmeEIpzzyAuJ79wvr6ToDDtQmuLDMAgWtjqP8x3CGddXxUe07PpKEQgzwJabdHvCLP5Bv94wMFIjQ==}
+     hasBin: true
+     dependencies:
+       '@babel/runtime': 7.23.8
+@@ -6930,10 +6912,10 @@ packages:
+       '@expo/metro-config': 0.17.6(@react-native/babel-preset@0.73.21)
+       '@expo/vector-icons': 14.0.0
+       babel-preset-expo: 10.0.1(@babel/core@7.23.7)
+-      expo-asset: 9.0.2(expo@50.0.13)
+-      expo-file-system: 16.0.8(expo@50.0.13)
+-      expo-font: 11.10.3(expo@50.0.13)
+-      expo-keep-awake: 12.8.2(expo@50.0.13)
++      expo-asset: 9.0.2(expo@50.0.14)
++      expo-file-system: 16.0.8(expo@50.0.14)
++      expo-font: 11.10.3(expo@50.0.14)
++      expo-keep-awake: 12.8.2(expo@50.0.14)
+       expo-modules-autolinking: 1.10.3
+       expo-modules-core: 1.11.12
+       fbemitter: 3.0.0
+@@ -10147,7 +10129,7 @@ packages:
+       react-native-reanimated: '*'
+     dependencies:
+       framer-motion: 6.5.1(react-dom@18.2.0)(react@18.2.0)
+-      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0)
++      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.6)(react@18.2.0)
+     transitivePeerDependencies:
+       - react
+       - react-dom
+@@ -10197,13 +10179,13 @@ packages:
+     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+     hasBin: true
+ 
+-  /nativewind@4.0.23(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.5)(react@18.2.0)(tailwindcss@3.3.2):
+-    resolution: {integrity: sha512-7eKMjcdoZMqxmPwJhLwe5VbuwCNTdIXChxV9n4FwdzKTpZX3kNGj95J7fpqpefFPRT6yYp6SqK2n6TG/BSzA+w==}
++  /nativewind@4.0.36(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.6)(react@18.2.0)(tailwindcss@3.3.2):
++    resolution: {integrity: sha512-nd0Xgjzaq0ISvUAjibZXcuSvvpX1BGX2mfOGBPZpjGfHL3By6fwLGsNhrKU6mi2FF30c+kdok3e2I4k/O0UO1Q==}
+     engines: {node: '>=16'}
+     peerDependencies:
+       tailwindcss: '>3.3.0'
+     dependencies:
+-      react-native-css-interop: 0.0.22(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.5)(react@18.2.0)(tailwindcss@3.3.2)
++      react-native-css-interop: 0.0.36(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.6)(react@18.2.0)(tailwindcss@3.3.2)
+       tailwindcss: 3.3.2(ts-node@10.9.2)
+     transitivePeerDependencies:
+       - '@babel/core'
+@@ -11270,7 +11252,7 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
+-  /react-i18next@12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.73.5)(react@18.2.0):
++  /react-i18next@12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-5v8E2XjZDFzK7K87eSwC7AJcAkcLt5xYZ4+yTPDAW1i7C93oOY1dnr4BaQM7un4Hm+GmghuiPvevWwlca5PwDA==}
+     peerDependencies:
+       i18next: '>= 19.0.0'
+@@ -11288,7 +11270,7 @@ packages:
+       i18next: 22.5.1
+       react: 18.2.0
+       react-dom: 18.2.0(react@18.2.0)
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+   /react-is@16.13.1:
+@@ -11300,23 +11282,23 @@ packages:
+   /react-is@18.2.0:
+     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+ 
+-  /react-native-avoid-softinput@4.0.2(react-native@0.73.5)(react@18.2.0):
++  /react-native-avoid-softinput@4.0.2(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-/i8xNWGjpu3hEPCVjW2WsWTsM/mC4zTBr3DabOrdPfgw9Ww0Na69YQY1TSXCjbTjJmWwfTToPK5OEVm+ZwHmiQ==}
+     peerDependencies:
+       react: '>=17.0.0'
+       react-native: '>=0.65.0'
+     dependencies:
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-css-interop@0.0.22(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.5)(react@18.2.0)(tailwindcss@3.3.2):
+-    resolution: {integrity: sha512-JHLYHlLEqM13dy0XSxIPOWvqmQkPrqUt+KHPkbLV0sIiw/4aN6B5TPsNKZFX9bJJaZ//dAECn782R0MqDrTBWQ==}
+-    engines: {node: '>=16'}
++  /react-native-css-interop@0.0.36(@babel/core@7.23.7)(react-native-reanimated@3.6.2)(react-native-safe-area-context@4.8.2)(react-native-svg@14.1.0)(react-native@0.73.6)(react@18.2.0)(tailwindcss@3.3.2):
++    resolution: {integrity: sha512-ZWoKQlq6XrI5DB4BdPk5ABvJQsX7zls1SQYWuYXOQB8u5QE0KH3OfOGAGRZPekTjgkhjqGO4Bf8G2JTSWAYMSg==}
++    engines: {node: '>=18'}
+     peerDependencies:
+       react: '>=18'
+       react-native: '*'
+-      react-native-reanimated: '>=3.3.0'
++      react-native-reanimated: '>=3.6.2'
+       react-native-safe-area-context: '*'
+       react-native-svg: '*'
+       tailwindcss: ~3
+@@ -11332,17 +11314,17 @@ packages:
+       babel-plugin-tester: 11.0.4(@babel/core@7.23.7)
+       lightningcss: 1.22.0
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0)
+-      react-native-safe-area-context: 4.8.2(react-native@0.73.5)(react@18.2.0)
+-      react-native-svg: 14.1.0(react-native@0.73.5)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native-reanimated: 3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.6)(react@18.2.0)
++      react-native-safe-area-context: 4.8.2(react-native@0.73.6)(react@18.2.0)
++      react-native-svg: 14.1.0(react-native@0.73.6)(react@18.2.0)
+       tailwindcss: 3.3.2(ts-node@10.9.2)
+     transitivePeerDependencies:
+       - '@babel/core'
+       - supports-color
+     dev: false
+ 
+-  /react-native-flash-message@0.4.2(prop-types@15.8.1)(react-native@0.73.5)(react@18.2.0):
++  /react-native-flash-message@0.4.2(prop-types@15.8.1)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-YvdXRW9AGMTI99S3DJZhLO0mbk/ehKv/UQf4/Df+3dtGi8DlkidRbyqCQZk1WMtZ7rN85PMTGr/xEI9CF9z0YA==}
+     peerDependencies:
+       prop-types: ^15.0 || ^16.0
+@@ -11351,11 +11333,11 @@ packages:
+     dependencies:
+       prop-types: 15.8.1
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+-      react-native-iphone-screen-helper: 2.1.1(react-native@0.73.5)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native-iphone-screen-helper: 2.1.1(react-native@0.73.6)
+     dev: false
+ 
+-  /react-native-gesture-handler@2.14.1(react-native@0.73.5)(react@18.2.0):
++  /react-native-gesture-handler@2.14.1(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-YiM1BApV4aKeuwsM6O4C2ufwewYEKk6VMXOt0YqEZFMwABBFWhXLySFZYjBSNRU2USGppJbfHP1q1DfFQpKhdA==}
+     peerDependencies:
+       react: '*'
+@@ -11367,28 +11349,28 @@ packages:
+       lodash: 4.17.21
+       prop-types: 15.8.1
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-iphone-screen-helper@2.1.1(react-native@0.73.5):
++  /react-native-iphone-screen-helper@2.1.1(react-native@0.73.6):
+     resolution: {integrity: sha512-geuw/bli83+tOg8UpoioLk1H1aEy0wnMDusWkCazsyH6fSk6qzmgaZ2cRyyJRU8s2tG87HctZFKGTkyYzcUcfA==}
+     peerDependencies:
+       react-native: '>=0.42.0'
+     dependencies:
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-mmkv@2.6.3(react-native@0.73.5)(react@18.2.0):
++  /react-native-mmkv@2.6.3(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-CkLAU5EX18eDw0Q+h6qEXPvynb+NVDu54cOY3h4h9VUhaaflfAmGWBJRQCBQz5M0VdnS8utjgJNryTAWKUTqpw==}
+     peerDependencies:
+       react: '*'
+       react-native: '>=0.71.0'
+     dependencies:
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-reanimated@3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0):
++  /react-native-reanimated@3.6.2(@babel/core@7.23.7)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-IIMREMOrxhtK35drfpzh2UhxNqAOHnuvGgtMofj7yHcMj16tmWZR2zFvMUf6z2MfmXv+aVgFQ6TRZ6yKYf7LNA==}
+     peerDependencies:
+       '@babel/core': ^7.0.0-0
+@@ -11411,30 +11393,30 @@ packages:
+       convert-source-map: 2.0.0
+       invariant: 2.2.4
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-restart@0.0.27(react-native@0.73.5)(react@18.2.0):
++  /react-native-restart@0.0.27(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-8KScVICrXwcTSJ1rjWkqVTHyEKQIttm5AIMGSK1QG1+RS5owYlE4z/1DykOTdWfVl9l16FIk0w9Xzk9ZO6jxlA==}
+     peerDependencies:
+       react: '*'
+       react-native: '*'
+     dependencies:
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-safe-area-context@4.8.2(react-native@0.73.5)(react@18.2.0):
++  /react-native-safe-area-context@4.8.2(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-ffUOv8BJQ6RqO3nLml5gxJ6ab3EestPiyWekxdzO/1MQ7NF8fW1Mzh1C5QE9yq573Xefnc7FuzGXjtesZGv7cQ==}
+     peerDependencies:
+       react: '*'
+       react-native: '*'
+     dependencies:
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+-  /react-native-screens@3.29.0(react-native@0.73.5)(react@18.2.0):
++  /react-native-screens@3.29.0(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-yB1GoAMamFAcYf4ku94uBPn0/ani9QG7NdI98beJ5cet2YFESYYzuEIuU+kt+CNRcO8qqKeugxlfgAa3HyTqlg==}
+     peerDependencies:
+       react: '*'
+@@ -11442,11 +11424,11 @@ packages:
+     dependencies:
+       react: 18.2.0
+       react-freeze: 1.0.3(react@18.2.0)
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+       warn-once: 0.1.1
+     dev: false
+ 
+-  /react-native-svg@14.1.0(react-native@0.73.5)(react@18.2.0):
++  /react-native-svg@14.1.0(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-HeseElmEk+AXGwFZl3h56s0LtYD9HyGdrpg8yd9QM26X+d7kjETrRQ9vCjtxuT5dCZEIQ5uggU1dQhzasnsCWA==}
+     peerDependencies:
+       react: '*'
+@@ -11455,7 +11437,7 @@ packages:
+       css-select: 5.1.0
+       css-tree: 1.1.3
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+     dev: false
+ 
+   /react-native-web@0.19.10(react-dom@18.2.0)(react@18.2.0):
+@@ -11478,8 +11460,8 @@ packages:
+       - encoding
+     dev: false
+ 
+-  /react-native@0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0):
+-    resolution: {integrity: sha512-iHgDArmF4CrhL0qTj+Rn+CBN5pZWUL9lUGl8ub+V9Hwu/vnzQQh8rTMVSwVd2sV6N76KjpE5a4TfIAHkpIHhKg==}
++  /react-native@0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0):
++    resolution: {integrity: sha512-oqmZe8D2/VolIzSPZw+oUd6j/bEmeRHwsLn1xLA5wllEYsZ5zNuMsDus235ONOnCRwexqof/J3aztyQswSmiaA==}
+     engines: {node: '>=18'}
+     hasBin: true
+     peerDependencies:
+@@ -11495,7 +11477,7 @@ packages:
+       '@react-native/gradle-plugin': 0.73.4
+       '@react-native/js-polyfills': 0.73.1
+       '@react-native/normalize-colors': 0.73.2
+-      '@react-native/virtualized-lists': 0.73.4(react-native@0.73.5)
++      '@react-native/virtualized-lists': 0.73.4(react-native@0.73.6)
+       abort-controller: 3.0.0
+       anser: 1.4.10
+       ansi-regex: 5.0.1
+@@ -11540,7 +11522,7 @@ packages:
+       '@tanstack/react-query':
+         optional: true
+     dependencies:
+-      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react-native@0.73.5)(react@18.2.0)
++      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
+     dev: false
+ 
+   /react-refresh@0.14.0:
+@@ -11641,7 +11623,7 @@ packages:
+       source-map: 0.6.1
+       tslib: 2.6.2
+ 
+-  /recyclerlistview@4.2.0(react-native@0.73.5)(react@18.2.0):
++  /recyclerlistview@4.2.0(react-native@0.73.6)(react@18.2.0):
+     resolution: {integrity: sha512-uuBCi0c+ggqHKwrzPX4Z/mJOzsBbjZEAwGGmlwpD/sD7raXixdAbdJ6BTcAmuWG50Cg4ru9p12M94Njwhr/27A==}
+     peerDependencies:
+       react: '>= 15.2.1'
+@@ -11650,7 +11632,7 @@ packages:
+       lodash.debounce: 4.0.8
+       prop-types: 15.8.1
+       react: 18.2.0
+-      react-native: 0.73.5(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
++      react-native: 0.73.6(@babel/core@7.23.7)(@babel/preset-env@7.23.8)(react@18.2.0)
+       ts-object-utils: 0.0.5
+     dev: false
+ 
+diff --git a/src/app/(app)/_layout.tsx b/src/app/(app)/_layout.tsx
+index 84075bb..086e551 100644
+--- a/src/app/(app)/_layout.tsx
++++ b/src/app/(app)/_layout.tsx
+@@ -67,8 +67,8 @@ export default function TabLayout() {
+ const CreateNewPostLink = () => {
+   return (
+     <Link href="/feed/add-post" asChild>
+-      <Pressable className="px-3">
+-        <Text className="text-primary-300">Create</Text>
++      <Pressable>
++        <Text className="px-3 text-primary-300">Create</Text>
+       </Pressable>
+     </Link>
+   );
+diff --git a/src/app/(app)/style.tsx b/src/app/(app)/style.tsx
+index 8cc139e..b919ef3 100644
+--- a/src/app/(app)/style.tsx
++++ b/src/app/(app)/style.tsx
+@@ -10,8 +10,8 @@ export default function Style() {
+   return (
+     <>
+       <FocusAwareStatusBar />
+-      <ScrollView>
+-        <SafeAreaView className="flex-1 px-4">
++      <ScrollView className="px-4">
++        <SafeAreaView className="flex-1">
+           <Typography />
+           <Colors />
+           <Buttons />
+diff --git a/src/app/_layout.tsx b/src/app/_layout.tsx
+index af92439..dba050b 100644
+--- a/src/app/_layout.tsx
++++ b/src/app/_layout.tsx
+@@ -45,9 +45,11 @@ function RootLayoutNav() {
+ 
+ function Providers({ children }: { children: React.ReactNode }) {
+   const theme = useThemeConfig();
+-
+   return (
+-    <GestureHandlerRootView style={styles.container}>
++    <GestureHandlerRootView
++      style={styles.container}
++      className={theme.dark ? `dark` : undefined}
++    >
+       <ThemeProvider value={theme}>
+         <APIProvider>
+           <BottomSheetModalProvider>
+diff --git a/src/components/card.tsx b/src/components/card.tsx
+index 1dc0d74..f579229 100644
+--- a/src/components/card.tsx
++++ b/src/components/card.tsx
+@@ -17,20 +17,22 @@ const images = [
+ export const Card = ({ title, body, id }: Props) => {
+   return (
+     <Link href={`/feed/${id}`} asChild>
+-      <Pressable className="m-2 overflow-hidden rounded-xl  border border-neutral-300 bg-white  dark:bg-neutral-900">
+-        <Image
+-          className="h-56 w-full overflow-hidden rounded-t-xl"
+-          contentFit="cover"
+-          source={{
+-            uri: images[Math.floor(Math.random() * images.length)],
+-          }}
+-        />
++      <Pressable>
++        <View className="m-2 overflow-hidden rounded-xl  border border-neutral-300 bg-white  dark:bg-neutral-900">
++          <Image
++            className="h-56 w-full overflow-hidden rounded-t-xl"
++            contentFit="cover"
++            source={{
++              uri: images[Math.floor(Math.random() * images.length)],
++            }}
++          />
+ 
+-        <View className="p-2">
+-          <Text className="py-3 text-2xl ">{title}</Text>
+-          <Text numberOfLines={3} className="leading-snug text-gray-600">
+-            {body}
+-          </Text>
++          <View className="p-2">
++            <Text className="py-3 text-2xl ">{title}</Text>
++            <Text numberOfLines={3} className="leading-snug text-gray-600">
++              {body}
++            </Text>
++          </View>
+         </View>
+       </Pressable>
+     </Link>
+diff --git a/src/core/hooks/use-selected-theme.tsx b/src/core/hooks/use-selected-theme.tsx
+index e213c7f..a678e37 100644
+--- a/src/core/hooks/use-selected-theme.tsx
++++ b/src/core/hooks/use-selected-theme.tsx
+@@ -1,4 +1,4 @@
+-import { useColorScheme } from 'nativewind';
++import { colorScheme, useColorScheme } from 'nativewind';
+ import React from 'react';
+ import { useMMKVString } from 'react-native-mmkv';
+ 
+@@ -33,6 +33,6 @@ export const loadSelectedTheme = () => {
+   const theme = storage.getString(SELECTED_THEME);
+   if (theme !== undefined) {
+     console.log('theme', theme);
+-    // setColorScheme.setColorScheme(theme as ColorSchemeType);
++    colorScheme.set(theme as ColorSchemeType);
+   }
+ };
+diff --git a/src/core/i18n/index.tsx b/src/core/i18n/index.tsx
+index a1f8447..f43b0a3 100644
+--- a/src/core/i18n/index.tsx
++++ b/src/core/i18n/index.tsx
+@@ -9,7 +9,7 @@ export * from './utils';
+ 
+ i18n.use(initReactI18next).init({
+   resources,
+-  lng: getLanguage() || locale,
++  lng: getLanguage() || locale, // TODO: if you are not supporting multiple languages or languages with multiple directions you can set the default value to `en`
+   fallbackLng: 'en',
+   compatibilityJSON: 'v3', // By default React Native projects does not support Intl
+ 
+diff --git a/src/core/i18n/utils.tsx b/src/core/i18n/utils.tsx
+index 97bd369..ac69972 100644
+--- a/src/core/i18n/utils.tsx
++++ b/src/core/i18n/utils.tsx
+@@ -2,7 +2,7 @@ import type TranslateOptions from 'i18next';
+ import i18n from 'i18next';
+ import memoize from 'lodash.memoize';
+ import { useCallback } from 'react';
+-import { I18nManager, NativeModules } from 'react-native';
++import { I18nManager, NativeModules, Platform } from 'react-native';
+ import { useMMKVString } from 'react-native-mmkv';
+ import RNRestart from 'react-native-restart';
+ 
+@@ -31,8 +31,12 @@ export const changeLanguage = (lang: Language) => {
+   } else {
+     I18nManager.forceRTL(false);
+   }
+-  if (__DEV__) NativeModules.DevSettings.reload();
+-  else RNRestart.restart();
++  if (Platform.OS === 'ios' || Platform.OS === 'android') {
++    if (__DEV__) NativeModules.DevSettings.reload();
++    else RNRestart.restart();
++  } else if (Platform.OS === 'web') {
++    window.location.reload();
++  }
+ };
+ 
+ export const useSelectedLanguage = () => {
+diff --git a/src/core/test-utils.tsx b/src/core/test-utils.tsx
+index bf404ac..c9e74d9 100644
+--- a/src/core/test-utils.tsx
++++ b/src/core/test-utils.tsx
+@@ -1,3 +1,5 @@
++import '@shopify/flash-list/jestSetup';
++
+ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+ import { NavigationContainer } from '@react-navigation/native';
+ import type { RenderOptions } from '@testing-library/react-native';
+diff --git a/src/ui/button.tsx b/src/ui/button.tsx
+index 5c89f9a..65a0bbc 100644
+--- a/src/ui/button.tsx
++++ b/src/ui/button.tsx
+@@ -14,8 +14,9 @@ const button = tv({
+   variants: {
+     variant: {
+       default: {
+-        container: 'bg-black',
+-        label: 'text-white',
++        container: 'bg-black dark:bg-white',
++        label: 'text-white dark:text-black',
++        indicator: 'text-white dark:text-black',
+       },
+       secondary: {
+         container: 'bg-primary-600',
+@@ -25,7 +26,7 @@ const button = tv({
+       outline: {
+         container: 'border border-neutral-400',
+         label: 'text-black dark:text-neutral-100',
+-        indicator: 'text-black',
++        indicator: 'text-black dark:text-neutral-100',
+       },
+       destructive: {
+         container: 'bg-red-600',
+@@ -34,8 +35,8 @@ const button = tv({
+       },
+       ghost: {
+         container: 'bg-transparent',
+-        label: 'text-black underline',
+-        indicator: 'text-black',
++        label: 'text-black underline dark:text-white',
++        indicator: 'text-black dark:text-white',
+       },
+       link: {
+         container: 'bg-transparent',
+@@ -61,9 +62,9 @@ const button = tv({
+     },
+     disabled: {
+       true: {
+-        container: 'bg-neutral-300',
+-        label: 'text-neutral-600',
+-        indicator: 'text-neutral-400',
++        container: 'bg-neutral-300 dark:bg-neutral-300',
++        label: 'text-neutral-600 dark:text-neutral-600',
++        indicator: 'text-neutral-400 dark:text-neutral-400',
+       },
+     },
+     fullWidth: {
+diff --git a/src/ui/input.tsx b/src/ui/input.tsx
+index 891c769..858b5d0 100644
+--- a/src/ui/input.tsx
++++ b/src/ui/input.tsx
+@@ -19,13 +19,13 @@ const inputTv = tv({
+     container: 'mb-2',
+     label: 'text-grey-100 dark:text-neutral-100 text-lg mb-1',
+     input:
+-      'mt-0 border-[0.5px] font-jakarta text-base leading-5 font-[500] px-4 py-3 rounded-xl  bg-neutral-100 border-neutral-300 ',
++      'mt-0 border-[0.5px] font-jakarta text-base leading-5 font-[500] px-4 py-3 rounded-xl  bg-neutral-100 border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white',
+   },
+ 
+   variants: {
+     focused: {
+       true: {
+-        input: 'border-neutral-400',
++        input: 'border-neutral-400 dark:border-neutral-300',
+       },
+     },
+     error: {
+@@ -132,7 +132,7 @@ export function ControlledInput<T extends FieldValues>(
+       ref={field.ref}
+       autoCapitalize="none"
+       onChangeText={field.onChange}
+-      value={field.value as string}
++      value={(field.value as string) || ''}
+       {...inputProps}
+       error={fieldState.error?.message}
+     />
+diff --git a/src/ui/modal.tsx b/src/ui/modal.tsx
+index fe1d25e..073ed65 100644
+--- a/src/ui/modal.tsx
++++ b/src/ui/modal.tsx
+@@ -87,7 +87,7 @@ export const Modal = React.forwardRef(
+     const renderHandleComponent = React.useCallback(
+       () => (
+         <>
+-          <View className="mb-6 mt-2 h-1 w-12 self-center rounded-lg bg-gray-400 dark:bg-gray-700" />
++          <View className="mb-8 mt-2 h-1 w-12 self-center rounded-lg bg-gray-400 dark:bg-gray-700" />
+           <ModalHeader title={title} dismiss={modal.dismiss} />
+         </>
+       ),
+@@ -184,7 +184,7 @@ const CloseButton = ({ close }: { close: () => void }) => {
+       accessibilityHint="closes the modal"
+     >
+       <Svg
+-        className="fill-neutral-100 dark:fill-white"
++        className="fill-neutral-300 dark:fill-white"
+         width={24}
+         height={24}
+         fill="none"
+diff --git a/src/ui/select.tsx b/src/ui/select.tsx
+index da4880b..921f4a7 100644
+--- a/src/ui/select.tsx
++++ b/src/ui/select.tsx
+@@ -1,11 +1,14 @@
+ /* eslint-disable max-lines-per-function */
+-import type { BottomSheetModal } from '@gorhom/bottom-sheet';
+-import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
++import {
++  BottomSheetFlatList,
++  type BottomSheetModal,
++} from '@gorhom/bottom-sheet';
++import { FlashList } from '@shopify/flash-list';
+ import { useColorScheme } from 'nativewind';
+ import * as React from 'react';
+ import type { FieldValues } from 'react-hook-form';
+ import { useController } from 'react-hook-form';
+-import { TouchableOpacity, View } from 'react-native';
++import { Platform, TouchableOpacity, View } from 'react-native';
+ import { Pressable, type PressableProps } from 'react-native';
+ import type { SvgProps } from 'react-native-svg';
+ import Svg, { Path } from 'react-native-svg';
+@@ -24,7 +27,7 @@ const selectTv = tv({
+     container: 'mb-4',
+     label: 'text-grey-100 dark:text-neutral-100 text-lg mb-1',
+     input:
+-      'mt-0 flex-row items-center justify-center border-[0.5px] border-grey-50 px-3 py-3  rounded-xl',
++      'mt-0 flex-row items-center justify-center border-[0.5px] border-grey-50 px-3 py-3  rounded-xl dark:bg-neutral-800 dark:border-neutral-500',
+     inputValue: 'dark:text-neutral-100',
+   },
+ 
+@@ -53,6 +56,8 @@ const selectTv = tv({
+   },
+ });
+ 
++const List = Platform.OS === 'web' ? FlashList : BottomSheetFlatList;
++
+ export type Option = { label: string; value: string | number };
+ 
+ type OptionsProps = {
+@@ -72,6 +77,7 @@ export const Options = React.forwardRef<BottomSheetModal, OptionsProps>(
+     const snapPoints = React.useMemo(() => [height], [height]);
+     const { colorScheme } = useColorScheme();
+     const isDark = colorScheme === 'dark';
++
+     const renderSelectItem = React.useCallback(
+       ({ item }: { item: Option }) => (
+         <Option
+@@ -91,14 +97,15 @@ export const Options = React.forwardRef<BottomSheetModal, OptionsProps>(
+         index={0}
+         snapPoints={snapPoints}
+         backgroundStyle={{
+-          backgroundColor: isDark ? colors.charcoal[800] : colors.white,
++          backgroundColor: isDark ? colors.neutral[800] : colors.white,
+         }}
+       >
+-        <BottomSheetFlatList
++        <List
+           data={options}
+           keyExtractor={keyExtractor}
+           renderItem={renderSelectItem}
+           testID={testID ? `${testID}-modal` : undefined}
++          estimatedItemSize={52}
+         />
+       </Modal>
+     );
+@@ -120,7 +127,7 @@ const Option = React.memo(
+         {...props}
+       >
+         <Text className="flex-1 dark:text-neutral-100 ">{label}</Text>
+-        {selected && <Check fill="#000" />}
++        {selected && <Check />}
+       </Pressable>
+     );
+   }
+@@ -243,11 +250,17 @@ export function ControlledSelect<T extends FieldValues>(
+   );
+ }
+ 
+-const Check = ({ fill = '#000', ...props }: SvgProps) => (
+-  <Svg width={25} height={24} fill="none" viewBox="0 0 25 24" {...props}>
++const Check = ({ ...props }: SvgProps) => (
++  <Svg
++    width={25}
++    height={24}
++    fill="none"
++    viewBox="0 0 25 24"
++    {...props}
++    className="stroke-black dark:stroke-white"
++  >
+     <Path
+       d="m20.256 6.75-10.5 10.5L4.506 12"
+-      stroke={fill}
+       strokeWidth={2.438}
+       strokeLinecap="round"
+       strokeLinejoin="round"
+diff --git a/tailwind.config.js b/tailwind.config.js
+index 36c6739..2951253 100644
+--- a/tailwind.config.js
++++ b/tailwind.config.js
+@@ -4,6 +4,7 @@ const colors = require('./src/ui/colors');
+ module.exports = {
+   // NOTE: Update this to include the paths to all of your component files.
+   content: ['./src/**/*.{js,jsx,ts,tsx}'],
++  darkMode: 'class',
+   presets: [require('nativewind/preset')],
+   theme: {
+     extend: {

@@ -1,0 +1,29 @@
+{
+    "id": "197dfa3f-830f-4477-a4f3-4f8245c44b12",
+    "started_at": "2026-07-04T15:36:52.071485",
+    "finished_at": "2026-07-04T15:39:54.988925",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tensorflow-tensorflow-33068": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tensorflow-tensorflow-33068__JLXfcFR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

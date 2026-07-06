@@ -1,0 +1,7 @@
+I'm working on Ray's monitoring system and want to fix up the per-component memory metrics the reporter agent emits. Right now the resident set size and unique set size are only reported in megabytes, which is a pain because our alerting and dashboarding stuff all works natively in bytes, so we're stuck multiplying by 1,000,000 everywhere and that's error-prone.
+
+What I want is new byte-unit variants of both the component RSS and USS metrics living alongside the existing megabyte ones, so consumers can just pick whichever unit fits. The byte metrics should report the exact raw byte value with no rounding, scaling, or lossy conversion, just the number straight through. Keep the existing megabyte metrics emitting unchanged for backward compat, don't touch those. The reporter agent should emit both the megabyte and byte versions side by side for each component, which means the total number of metric records it produces goes up to account for the new ones.
+
+Oh and there's a shared memory metric that still uses a legacy naming convention that doesn't match the byte-unit naming style used elsewhere, so rename that to follow the same consistent convention as the new metrics. Make sure that rename is reflected anywhere the old name is currently referenced too, don't leave a dangling reference.
+
+This all lives in the reporter agent side of Ray's monitoring code where the component memory metrics get defined and recorded.

@@ -1,3 +1,0 @@
-patching file crates/oxc_transformer/src/typescript/namespace.rs
-patching file tasks/coverage/snapshots/semantic_typescript.snap
-patching file tasks/transform_conformance/snapshots/oxc.snap.md

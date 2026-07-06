@@ -1,0 +1,40 @@
+patching file test/components/generators/test_hugging_face_api.py
+patching file test/utils/test_url_validation.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: rerunfailures-16.3, anyio-4.14.1, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+_____ ERROR collecting test/components/generators/test_hugging_face_api.py _____
+ImportError while importing test module '/workspace/repo/test/components/generators/test_hugging_face_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/components/generators/test_hugging_face_api.py:7: in <module>
+    from haystack.components.generators import HuggingFaceAPIGenerator
+E   ImportError: cannot import name 'HuggingFaceAPIGenerator' from 'haystack.components.generators' (/workspace/repo/haystack/components/generators/__init__.py)
+------------------------------- Captured stderr --------------------------------
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+______________ ERROR collecting test/utils/test_url_validation.py ______________
+ImportError while importing test module '/workspace/repo/test/utils/test_url_validation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/utils/test_url_validation.py:1: in <module>
+    from haystack.utils.url_validation import is_valid_http_url
+E   ModuleNotFoundError: No module named 'haystack.utils.url_validation'
+=========================== short test summary info ============================
+ERROR test/components/generators/test_hugging_face_api.py
+ERROR test/utils/test_url_validation.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.74s ===============================
+reward=0 graded=18 found=0 failed=0 parsed=0 framework=pytest exit_code=2

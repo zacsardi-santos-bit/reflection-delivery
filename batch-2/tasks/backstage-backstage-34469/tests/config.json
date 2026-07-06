@@ -1,0 +1,16 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/ui && yarn backstage-cli package test --watchAll=false --coverage=false --json src/components/Header/HeaderNav.test.tsx",
+  "test_files": [
+    "packages/ui/src/components/Header/HeaderNav.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/ui/src/components/Header/HeaderNav.test.tsx::HeaderNav includes the router basename in flat tab hrefs"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/ui/src/components/Header/HeaderNav.test.tsx::HeaderNav automatically detects the active flat tab under a router basename",
+    "/workspace/repo/packages/ui/src/components/Header/HeaderNav.test.tsx::HeaderNav includes the router basename in grouped tab hrefs"
+  ]
+}

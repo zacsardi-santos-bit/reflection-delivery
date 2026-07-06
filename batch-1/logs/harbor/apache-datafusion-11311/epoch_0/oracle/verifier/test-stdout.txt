@@ -1,0 +1,328 @@
+patching file datafusion/substrait/tests/cases/consumer_integration.rs
+patching file datafusion/substrait/tests/testdata/tpch_substrait_plans/query_4.json
+patching file datafusion/substrait/tests/testdata/tpch_substrait_plans/query_5.json
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+   --> datafusion/common/src/hash_utils.rs:308:7
+    |
+308 | #[cfg(feature = "force_hash_collisions")]
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `apache-avro`, `avro`, `backtrace`, `object_store`, `parquet`, `pyarrow`, and `pyo3`
+    = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+   --> datafusion/common/src/hash_utils.rs:324:7
+    |
+324 | #[cfg(feature = "force_hash_collisions")]
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `apache-avro`, `avro`, `backtrace`, `object_store`, `parquet`, `pyarrow`, and `pyo3`
+    = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+   --> datafusion/common/src/hash_utils.rs:337:11
+    |
+337 | #[cfg(not(feature = "force_hash_collisions"))]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `apache-avro`, `avro`, `backtrace`, `object_store`, `parquet`, `pyarrow`, and `pyo3`
+    = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+   --> datafusion/common/src/hash_utils.rs:357:11
+    |
+357 | #[cfg(not(feature = "force_hash_collisions"))]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `apache-avro`, `avro`, `backtrace`, `object_store`, `parquet`, `pyarrow`, and `pyo3`
+    = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+   --> datafusion/common/src/hash_utils.rs:423:7
+    |
+423 | #[cfg(feature = "force_hash_collisions")]
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `apache-avro`, `avro`, `backtrace`, `object_store`, `parquet`, `pyarrow`, and `pyo3`
+    = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+   --> datafusion/common/src/hash_utils.rs:436:11
+    |
+436 | #[cfg(not(feature = "force_hash_collisions"))]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `apache-avro`, `avro`, `backtrace`, `object_store`, `parquet`, `pyarrow`, and `pyo3`
+    = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: `datafusion-common` (lib) generated 6 warnings
+warning: for loop over a `&Option`. This is more readably written as an `if let` statement
+  --> datafusion/expr/src/simplify.rs:77:23
+   |
+77 |         for schema in &self.schema {
+   |                       ^^^^^^^^^^^^
+   |
+   = note: `#[warn(for_loops_over_fallibles)]` on by default
+help: to check pattern in a loop use `while let`
+   |
+77 -         for schema in &self.schema {
+77 +         while let Some(schema) = &self.schema {
+   |
+help: consider using `if let` to clear intent
+   |
+77 -         for schema in &self.schema {
+77 +         if let Some(schema) = &self.schema {
+   |
+
+warning: `datafusion-expr` (lib) generated 1 warning
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:43:23
+   |
+43 |             #[cfg(not(feature = "force_hash_collisions"))]
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+55 | hash_integer!(i8, i16, i32, i64, i128, i256);
+   | -------------------------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+   = note: this warning originates in the macro `hash_integer` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:48:19
+   |
+48 |             #[cfg(feature = "force_hash_collisions")]
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+55 | hash_integer!(i8, i16, i32, i64, i128, i256);
+   | -------------------------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_integer` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:43:23
+   |
+43 |             #[cfg(not(feature = "force_hash_collisions"))]
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+56 | hash_integer!(u8, u16, u32, u64);
+   | -------------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_integer` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:48:19
+   |
+48 |             #[cfg(feature = "force_hash_collisions")]
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+56 | hash_integer!(u8, u16, u32, u64);
+   | -------------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_integer` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:43:23
+   |
+43 |             #[cfg(not(feature = "force_hash_collisions"))]
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+57 | hash_integer!(IntervalDayTime, IntervalMonthDayNano);
+   | ---------------------------------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_integer` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:48:19
+   |
+48 |             #[cfg(feature = "force_hash_collisions")]
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+57 | hash_integer!(IntervalDayTime, IntervalMonthDayNano);
+   | ---------------------------------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_integer` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:62:23
+   |
+62 |             #[cfg(not(feature = "force_hash_collisions"))]
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+75 | hash_float!(f16, f32, f64);
+   | -------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_float` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `force_hash_collisions`
+  --> datafusion/physical-plan/src/aggregates/group_values/primitive.rs:67:19
+   |
+67 |             #[cfg(feature = "force_hash_collisions")]
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: remove the condition
+...
+75 | hash_float!(f16, f32, f64);
+   | -------------------------- in this macro invocation
+   |
+   = note: no expected values for `feature`
+   = help: consider adding `force_hash_collisions` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `hash_float` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `datafusion-physical-plan` (lib) generated 8 warnings
+warning: unused `ControlFlow` that must be used
+   --> datafusion/core/src/catalog/mod.rs:287:25
+    |
+287 |                         cte.visit(self);
+    |                         ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+    |
+287 |                         let _ = cte.visit(self);
+    |                         +++++++
+
+warning: unused `ControlFlow` that must be used
+   --> datafusion/core/src/catalog/mod.rs:360:21
+    |
+360 |                     query.visit(visitor);
+    |                     ^^^^^^^^^^^^^^^^^^^^
+    |
+help: use `let _ = ...` to ignore the resulting value
+    |
+360 |                     let _ = query.visit(visitor);
+    |                     +++++++
+
+warning: `datafusion` (lib) generated 2 warnings
+   Compiling datafusion-substrait v39.0.0 (/workspace/repo/datafusion/substrait)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.93s
+────────────
+ Nextest run ID de02e786-86bc-46f7-bfdc-90d758a66ff9 with nextest profile: default
+    Starting 98 tests across 2 binaries (2 tests skipped)
+        PASS [   0.190s] ( 1/98) datafusion-substrait logical_plan::producer::test::round_trip_types
+        PASS [   0.246s] ( 2/98) datafusion-substrait logical_plan::producer::test::round_trip_literals
+        PASS [   0.831s] ( 3/98) datafusion-substrait::substrait_integration cases::logical_plans::tests::scalar_function_compound_signature
+        PASS [   0.845s] ( 4/98) datafusion-substrait::substrait_integration cases::function_test::tests::contains_function_test
+        PASS [   0.874s] ( 5/98) datafusion-substrait::substrait_integration cases::logical_plans::tests::window_function_compound_signature
+        PASS [   0.890s] ( 6/98) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_1
+        PASS [   0.911s] ( 7/98) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_4
+        PASS [   0.917s] ( 8/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::between_integers
+        PASS [   0.945s] ( 9/98) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_3
+        PASS [   0.946s] (10/98) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_5
+        PASS [   0.965s] (11/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::aggregate_case
+        PASS [   0.969s] (12/98) datafusion-substrait::substrait_integration cases::logical_plans::tests::non_nullable_lists
+        PASS [   0.997s] (13/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::aggregate_grouping_rollup
+        PASS [   1.043s] (14/98) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_2
+        PASS [   1.178s] (15/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::all_type_literal
+        PASS [   1.249s] (16/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::aggregate_multiple_keys
+        PASS [   1.324s] (17/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::aggregate_grouping_sets
+        PASS [   1.375s] (18/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::aggregate_distinct_with_having
+        PASS [   1.232s] (19/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::case_with_base_expression
+        PASS [   1.273s] (20/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::case_without_base_expression
+        PASS [   0.970s] (21/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::extension_logical_plan
+        PASS [   1.142s] (22/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::not_between_integers
+        PASS [   1.178s] (23/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::inner_join
+        PASS [   1.218s] (24/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::new_test_grammar
+        PASS [   1.179s] (25/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::qualified_schema_table_reference
+        PASS [   1.241s] (26/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::qualified_catalog_schema_table_reference
+        PASS [   1.374s] (27/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::decimal_literal
+        PASS [   1.382s] (28/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::implicit_cast
+        PASS [   1.455s] (29/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::cast_decimal_to_int
+        PASS [   1.368s] (30/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::null_decimal_literal
+        PASS [   1.378s] (31/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_aggregate_udf
+        PASS [   1.236s] (32/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_exists_filter
+        PASS [   1.362s] (33/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_cross_join
+        PASS [   1.300s] (34/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_ilike
+        PASS [   1.589s] (35/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_arithmetic_ops
+        PASS [   1.420s] (36/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_inlist_1
+        PASS [   1.379s] (37/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_inlist_2
+        PASS [   1.323s] (38/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_inlist_3
+        PASS [   1.091s] (39/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_inlist_5
+        PASS [   1.358s] (40/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_inlist_4
+        PASS [   1.227s] (41/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_is_false
+        PASS [   1.243s] (42/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_is_not_false
+        PASS [   1.114s] (43/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_is_unknown
+        PASS [   1.340s] (44/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_inner_join
+        PASS [   1.233s] (45/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_is_not_true
+        PASS [   1.264s] (46/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_is_not_unknown
+        PASS [   1.270s] (47/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_is_true
+        PASS [   1.212s] (48/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_like
+        PASS [   0.956s] (49/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_non_equi_inner_join
+        PASS [   1.058s] (50/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_literal_struct
+        PASS [   1.290s] (51/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_left_join
+        PASS [   1.216s] (52/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_literal_list
+        PASS [   1.002s] (53/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_non_equi_join
+        PASS [   1.201s] (54/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_negative
+        PASS [   1.165s] (55/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_not
+        PASS [   1.208s] (56/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_outer_join
+        PASS [   0.943s] (57/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_repartition_hash
+        PASS [   0.951s] (58/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_repartition_roundrobin
+        PASS [   0.936s] (59/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_values_empty_relation
+        PASS [   0.955s] (60/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_distinct_two_fields
+        PASS [   1.170s] (61/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_self_implicit_cross_join
+        PASS [   1.049s] (62/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_values
+        PASS [   1.112s] (63/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_union_all
+        PASS [   1.252s] (64/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_right_join
+        PASS [   1.195s] (65/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_union
+        PASS [   1.265s] (66/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_union2
+        PASS [   1.306s] (67/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_self_join
+        PASS [   1.111s] (68/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_alias
+        PASS [   1.174s] (69/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::roundtrip_values_duplicate_column_join
+        PASS [   1.189s] (70/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_filter
+        PASS [   0.980s] (71/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_limit
+        PASS [   1.140s] (72/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_filter_date
+        PASS [   1.171s] (73/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_filter_bool_expr
+        PASS [   0.954s] (74/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_without_limit
+        PASS [   1.070s] (75/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_limit_offset
+        PASS [   1.183s] (76/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::select_with_reused_functions
+        PASS [   0.962s] (77/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_alias
+        PASS [   0.981s] (78/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_distinct
+        PASS [   1.029s] (79/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_intersect
+        PASS [   1.055s] (80/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_intersect_table_reuse
+        PASS [   1.140s] (81/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_scalar_function_abs
+        PASS [   1.255s] (82/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_aggregate
+        PASS [   1.161s] (83/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_scalar_function_is_not_null
+        PASS [   1.105s] (84/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_scalar_function_is_null
+        PASS [   1.138s] (85/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_scalar_function_isnan
+        PASS [   1.155s] (86/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_scalar_function_pow
+        PASS [   1.018s] (87/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_select
+        PASS [   0.957s] (88/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::two_table_alias
+        PASS [   1.159s] (89/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_scalar_function_substr
+        PASS [   0.632s] (90/98) datafusion-substrait::substrait_integration cases::roundtrip_physical_plan::parquet_exec
+        PASS [   1.110s] (91/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::u32_literal
+        PASS [   0.980s] (92/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::wildcard_select
+        PASS [   1.177s] (93/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::simple_window_function
+        PASS [   0.612s] (94/98) datafusion-substrait::substrait_integration cases::serialize::tests::table_scan_without_projection
+        PASS [   0.765s] (95/98) datafusion-substrait::substrait_integration cases::roundtrip_physical_plan::simple_select
+        PASS [   0.742s] (96/98) datafusion-substrait::substrait_integration cases::roundtrip_physical_plan::wildcard_select
+        PASS [   0.691s] (97/98) datafusion-substrait::substrait_integration cases::serialize::tests::serialize_simple_select
+        PASS [   1.263s] (98/98) datafusion-substrait::substrait_integration cases::roundtrip_logical_plan::window_with_rows
+────────────
+     Summary [   6.389s] 98 tests run: 98 passed, 2 skipped
+reward=1 graded=98 found=18 failed=0 parsed=98 framework=cargo exit_code=0

@@ -1,0 +1,7 @@
+I'm working on a community messaging protocol that supports token-gated communities and channels with encryption. I need a way to evaluate what encryption key actions are required when the state of a community changes — for example, when permissions are added or removed, or when members join or leave.
+
+The idea is to compare the community's state before and after a modification and determine what should happen to encryption keys. For instance, if a community goes from open to token-gated, a new encryption key needs to be created. If a member is removed from a token-gated community, the key should be rotated so the removed member can no longer decrypt future messages. If only new members are added without any removals, the existing key should just be sent to those new members. If a community drops its token requirements entirely, the key should be removed.
+
+This logic needs to work at both the community level and the individual channel level, since channels can also have their own access restrictions. The evaluation should return a structured result that includes the action type for the community as a whole, and a map of per-channel actions. Each action should carry a set of relevant members — for example, when sending a key to new members, the action should specify which members should receive it, and when rekeying, it should specify the remaining members who need the new key.
+
+I'd appreciate help implementing this evaluation logic with all the necessary types and the evaluation function itself.

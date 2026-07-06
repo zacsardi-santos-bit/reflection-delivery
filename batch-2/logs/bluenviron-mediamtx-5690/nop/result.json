@@ -1,0 +1,29 @@
+{
+    "id": "066239d2-47b2-46eb-8520-1055e48e0a01",
+    "started_at": "2026-07-06T12:16:49.839092",
+    "finished_at": "2026-07-06T12:17:45.727550",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__bluenviron-mediamtx-5690": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "bluenviron-mediamtx-5690__Hcsms6c"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

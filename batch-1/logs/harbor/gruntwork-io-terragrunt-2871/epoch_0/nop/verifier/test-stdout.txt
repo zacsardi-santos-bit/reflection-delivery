@@ -1,0 +1,33 @@
+patching file configstack/module_test.go
+patching file test/fixture-graph/dependency-graph.png
+patching file test/fixture-graph/eks/main.tf
+patching file test/fixture-graph/eks/terragrunt.hcl
+patching file test/fixture-graph/lambda/main.tf
+patching file test/fixture-graph/lambda/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-1/main.tf
+patching file test/fixture-graph/services/eks-service-1/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-2-v2/main.tf
+patching file test/fixture-graph/services/eks-service-2-v2/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-2/main.tf
+patching file test/fixture-graph/services/eks-service-2/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-3-v2/main.tf
+patching file test/fixture-graph/services/eks-service-3-v2/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-3-v3/main.tf
+patching file test/fixture-graph/services/eks-service-3-v3/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-3/main.tf
+patching file test/fixture-graph/services/eks-service-3/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-4/main.tf
+patching file test/fixture-graph/services/eks-service-4/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-5/main.tf
+patching file test/fixture-graph/services/eks-service-5/terragrunt.hcl
+patching file test/fixture-graph/services/lambda-service-1/main.tf
+patching file test/fixture-graph/services/lambda-service-1/terragrunt.hcl
+patching file test/fixture-graph/services/lambda-service-2/main.tf
+patching file test/fixture-graph/services/lambda-service-2/terragrunt.hcl
+patching file test/integration_test.go
+# github.com/gruntwork-io/terragrunt/configstack [github.com/gruntwork-io/terragrunt/configstack.test]
+configstack/module_test.go:972:12: undefined: ListStackDependentModules
+configstack/module_test.go:998:12: undefined: ListStackDependentModules
+configstack/module_test.go:1027:12: undefined: ListStackDependentModules
+FAIL	github.com/gruntwork-io/terragrunt/configstack [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=1 framework=go exit_code=1

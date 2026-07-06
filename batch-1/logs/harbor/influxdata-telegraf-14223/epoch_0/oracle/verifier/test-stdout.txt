@@ -1,0 +1,146 @@
+patching file plugins/processors/ifname/ifname_test.go
+patching file plugins/processors/snmp_lookup/lookup_test.go
+patching file plugins/processors/snmp_lookup/store_test.go
+{"Time":"2026-07-01T14:58:44.017326368Z","Action":"start","Package":"github.com/influxdata/telegraf/plugins/processors/ifname"}
+{"Time":"2026-07-01T14:58:44.049103534Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestCache"}
+{"Time":"2026-07-01T14:58:44.049140085Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestCache","Output":"=== RUN   TestCache\n"}
+{"Time":"2026-07-01T14:58:44.049198795Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestCache","Output":"--- PASS: TestCache (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.049205142Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestCache","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.049221291Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTableIntegration"}
+{"Time":"2026-07-01T14:58:44.049226131Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTableIntegration","Output":"=== RUN   TestTableIntegration\n"}
+{"Time":"2026-07-01T14:58:44.04923468Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTableIntegration","Output":"    ifname_test.go:23: Skipping test due to connect failures\n"}
+{"Time":"2026-07-01T14:58:44.049242377Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTableIntegration","Output":"--- SKIP: TestTableIntegration (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.049247867Z","Action":"skip","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTableIntegration","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.049252938Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestIfNameIntegration"}
+{"Time":"2026-07-01T14:58:44.049257252Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestIfNameIntegration","Output":"=== RUN   TestIfNameIntegration\n"}
+{"Time":"2026-07-01T14:58:44.049264391Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestIfNameIntegration","Output":"    ifname_test.go:50: Skipping test due to connect failures\n"}
+{"Time":"2026-07-01T14:58:44.049270832Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestIfNameIntegration","Output":"--- SKIP: TestIfNameIntegration (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.049275591Z","Action":"skip","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestIfNameIntegration","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.049280179Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestGetMap"}
+{"Time":"2026-07-01T14:58:44.049284261Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestGetMap","Output":"=== RUN   TestGetMap\n"}
+{"Time":"2026-07-01T14:58:44.049324466Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestGetMap","Output":"--- PASS: TestGetMap (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.04932965Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestGetMap","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.049336125Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTracking"}
+{"Time":"2026-07-01T14:58:44.04934057Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTracking","Output":"=== RUN   TestTracking\n"}
+{"Time":"2026-07-01T14:58:44.099463647Z","Action":"start","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup"}
+{"Time":"2026-07-01T14:58:44.110042121Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestRegistry"}
+{"Time":"2026-07-01T14:58:44.110070736Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestRegistry","Output":"=== RUN   TestRegistry\n"}
+{"Time":"2026-07-01T14:58:44.110120264Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestRegistry","Output":"--- PASS: TestRegistry (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.110125342Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestRegistry","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110130489Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestSampleConfig"}
+{"Time":"2026-07-01T14:58:44.110133382Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestSampleConfig","Output":"=== RUN   TestSampleConfig\n"}
+{"Time":"2026-07-01T14:58:44.110522748Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestSampleConfig","Output":"--- PASS: TestSampleConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.11052935Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestSampleConfig","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110533637Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit"}
+{"Time":"2026-07-01T14:58:44.110536276Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit","Output":"=== RUN   TestInit\n"}
+{"Time":"2026-07-01T14:58:44.110564223Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/empty"}
+{"Time":"2026-07-01T14:58:44.110567316Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/empty","Output":"=== RUN   TestInit/empty\n"}
+{"Time":"2026-07-01T14:58:44.110718774Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/empty","Output":"--- PASS: TestInit/empty (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.110725531Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/empty","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110731975Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/defaults"}
+{"Time":"2026-07-01T14:58:44.1107352Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/defaults","Output":"=== RUN   TestInit/defaults\n"}
+{"Time":"2026-07-01T14:58:44.110806846Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/defaults","Output":"2026/07/01 14:58:44 W! [processors.snmp_lookup] No mibs found\n"}
+{"Time":"2026-07-01T14:58:44.110811561Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/defaults","Output":"2026/07/01 14:58:44 W! [processors.snmp_lookup] MIB path doesn't exist: \"/usr/share/snmp/mibs\"\n"}
+{"Time":"2026-07-01T14:58:44.110817539Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/defaults","Output":"--- PASS: TestInit/defaults (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.110822705Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/defaults","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110826981Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/wrong_SNMP_client_config"}
+{"Time":"2026-07-01T14:58:44.110829773Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/wrong_SNMP_client_config","Output":"=== RUN   TestInit/wrong_SNMP_client_config\n"}
+{"Time":"2026-07-01T14:58:44.110854097Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/wrong_SNMP_client_config","Output":"--- PASS: TestInit/wrong_SNMP_client_config (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.110862526Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/wrong_SNMP_client_config","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110865664Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/table_init"}
+{"Time":"2026-07-01T14:58:44.110868392Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/table_init","Output":"=== RUN   TestInit/table_init\n"}
+{"Time":"2026-07-01T14:58:44.110887912Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/table_init","Output":"--- PASS: TestInit/table_init (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.110893223Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit/table_init","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110897724Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit","Output":"--- PASS: TestInit (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.110900765Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestInit","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.110904742Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestStart"}
+{"Time":"2026-07-01T14:58:44.110907332Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestStart","Output":"=== RUN   TestStart\n"}
+{"Time":"2026-07-01T14:58:44.110999498Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestStart","Output":"--- PASS: TestStart (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111004552Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestStart","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111009304Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection"}
+{"Time":"2026-07-01T14:58:44.111012067Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection","Output":"=== RUN   TestGetConnection\n"}
+{"Time":"2026-07-01T14:58:44.111059215Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/agent_error"}
+{"Time":"2026-07-01T14:58:44.111078916Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/agent_error","Output":"=== RUN   TestGetConnection/agent_error\n"}
+{"Time":"2026-07-01T14:58:44.111093271Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/agent_error","Output":"--- PASS: TestGetConnection/agent_error (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111100906Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/agent_error","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111107767Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/v2_trap"}
+{"Time":"2026-07-01T14:58:44.11111187Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/v2_trap","Output":"=== RUN   TestGetConnection/v2_trap\n"}
+{"Time":"2026-07-01T14:58:44.111255068Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/v2_trap","Output":"--- PASS: TestGetConnection/v2_trap (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111267484Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection/v2_trap","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111273672Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection","Output":"--- PASS: TestGetConnection (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111288409Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestGetConnection","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111293899Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent"}
+{"Time":"2026-07-01T14:58:44.111298048Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent","Output":"=== RUN   TestUpdateAgent\n"}
+{"Time":"2026-07-01T14:58:44.111334389Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/success"}
+{"Time":"2026-07-01T14:58:44.111339665Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/success","Output":"=== RUN   TestUpdateAgent/success\n"}
+{"Time":"2026-07-01T14:58:44.111412853Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/success","Output":"--- PASS: TestUpdateAgent/success (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.1114213Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/success","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111425965Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/table_build_fail"}
+{"Time":"2026-07-01T14:58:44.111430348Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/table_build_fail","Output":"=== RUN   TestUpdateAgent/table_build_fail\n"}
+{"Time":"2026-07-01T14:58:44.1114606Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/table_build_fail","Output":"2026/07/01 14:58:44 E! [processors.snmp_lookup] Building table for \"127.0.0.1\" failed: performing bulk walk for field ifName: No values\n"}
+{"Time":"2026-07-01T14:58:44.111473161Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/table_build_fail","Output":"--- PASS: TestUpdateAgent/table_build_fail (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111480339Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/table_build_fail","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111491896Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/connection_fail"}
+{"Time":"2026-07-01T14:58:44.111496267Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/connection_fail","Output":"=== RUN   TestUpdateAgent/connection_fail\n"}
+{"Time":"2026-07-01T14:58:44.111518003Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/connection_fail","Output":"2026/07/01 14:58:44 E! [processors.snmp_lookup] Getting connection for \"127.0.0.1\" failed: Random connection error\n"}
+{"Time":"2026-07-01T14:58:44.111528867Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/connection_fail","Output":"--- PASS: TestUpdateAgent/connection_fail (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111535997Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent/connection_fail","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111573495Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent","Output":"--- PASS: TestUpdateAgent (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.111579352Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestUpdateAgent","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.111588235Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd"}
+{"Time":"2026-07-01T14:58:44.111591124Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}
+{"Time":"2026-07-01T14:58:44.111634464Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_source_tag"}
+{"Time":"2026-07-01T14:58:44.111637901Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_source_tag","Output":"=== RUN   TestAdd/no_source_tag\n"}
+{"Time":"2026-07-01T14:58:44.11170062Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_source_tag","Output":"2026/07/01 14:58:44 W! [processors.snmp_lookup] Agent tag missing\n"}
+{"Time":"2026-07-01T14:58:44.149984229Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTracking","Output":"--- PASS: TestTracking (0.10s)\n"}
+{"Time":"2026-07-01T14:58:44.15002117Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTracking","Elapsed":0.1}
+{"Time":"2026-07-01T14:58:44.150038267Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCacheExpire"}
+{"Time":"2026-07-01T14:58:44.150043711Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCacheExpire","Output":"=== RUN   TestTTLCacheExpire\n"}
+{"Time":"2026-07-01T14:58:44.150097814Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCacheExpire","Output":"--- PASS: TestTTLCacheExpire (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.150104545Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCacheExpire","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.150110661Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCache"}
+{"Time":"2026-07-01T14:58:44.150113848Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCache","Output":"=== RUN   TestTTLCache\n"}
+{"Time":"2026-07-01T14:58:44.150155275Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCache","Output":"--- PASS: TestTTLCache (0.00s)\n"}
+{"Time":"2026-07-01T14:58:44.150161584Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Test":"TestTTLCache","Elapsed":0}
+{"Time":"2026-07-01T14:58:44.150171514Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Output":"PASS\n"}
+{"Time":"2026-07-01T14:58:44.151035482Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Output":"ok  \tgithub.com/influxdata/telegraf/plugins/processors/ifname\t0.133s\n"}
+{"Time":"2026-07-01T14:58:44.151055362Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Elapsed":0.134}
+{"Time":"2026-07-01T14:58:44.212293052Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_source_tag","Output":"--- PASS: TestAdd/no_source_tag (0.10s)\n"}
+{"Time":"2026-07-01T14:58:44.212328485Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_source_tag","Elapsed":0.1}
+{"Time":"2026-07-01T14:58:44.212335916Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_index_tag"}
+{"Time":"2026-07-01T14:58:44.212339652Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_index_tag","Output":"=== RUN   TestAdd/no_index_tag\n"}
+{"Time":"2026-07-01T14:58:44.212352318Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_index_tag","Output":"2026/07/01 14:58:44 W! [processors.snmp_lookup] Index tag missing\n"}
+{"Time":"2026-07-01T14:58:44.313438227Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_index_tag","Output":"--- PASS: TestAdd/no_index_tag (0.10s)\n"}
+{"Time":"2026-07-01T14:58:44.313455171Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/no_index_tag","Elapsed":0.1}
+{"Time":"2026-07-01T14:58:44.313459941Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/cached"}
+{"Time":"2026-07-01T14:58:44.313462938Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/cached","Output":"=== RUN   TestAdd/cached\n"}
+{"Time":"2026-07-01T14:58:44.414749316Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/cached","Output":"--- PASS: TestAdd/cached (0.10s)\n"}
+{"Time":"2026-07-01T14:58:44.414779907Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/cached","Elapsed":0.1}
+{"Time":"2026-07-01T14:58:44.414792976Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/non-existing_index"}
+{"Time":"2026-07-01T14:58:44.41479593Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/non-existing_index","Output":"=== RUN   TestAdd/non-existing_index\n"}
+{"Time":"2026-07-01T14:58:44.414872001Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/non-existing_index","Output":"2026/07/01 14:58:44 W! [processors.snmp_lookup] Cannot resolve metrics because index \"999\" not found for agent \"127.0.0.1\"!\n"}
+{"Time":"2026-07-01T14:58:44.51533454Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/non-existing_index","Output":"--- PASS: TestAdd/non-existing_index (0.10s)\n"}
+{"Time":"2026-07-01T14:58:44.515365362Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd/non-existing_index","Elapsed":0.1}
+{"Time":"2026-07-01T14:58:44.515377172Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd","Output":"--- PASS: TestAdd (0.40s)\n"}
+{"Time":"2026-07-01T14:58:44.515384042Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAdd","Elapsed":0.4}
+{"Time":"2026-07-01T14:58:44.515389586Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestExpiry"}
+{"Time":"2026-07-01T14:58:44.515393574Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestExpiry","Output":"=== RUN   TestExpiry\n"}
+{"Time":"2026-07-01T14:58:44.515511163Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestExpiry","Output":"2026/07/01 14:58:44 W! [processors.snmp_lookup] Cannot resolve metrics because index \"123\" not found for agent \"127.0.0.1\"!\n"}
+{"Time":"2026-07-01T14:58:44.717189963Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestExpiry","Output":"--- PASS: TestExpiry (0.20s)\n"}
+{"Time":"2026-07-01T14:58:44.717216724Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestExpiry","Elapsed":0.2}
+{"Time":"2026-07-01T14:58:44.717222464Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestOrdered"}
+{"Time":"2026-07-01T14:58:44.717226609Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestOrdered","Output":"=== RUN   TestOrdered\n"}
+{"Time":"2026-07-01T14:58:44.918429177Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestOrdered","Output":"--- PASS: TestOrdered (0.20s)\n"}
+{"Time":"2026-07-01T14:58:44.918465681Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestOrdered","Elapsed":0.2}
+{"Time":"2026-07-01T14:58:44.91847668Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAddBacklog"}
+{"Time":"2026-07-01T14:58:44.918480721Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAddBacklog","Output":"=== RUN   TestAddBacklog\n"}
+{"Time":"2026-07-01T14:58:44.930456759Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAddBacklog","Output":"--- PASS: TestAddBacklog (0.01s)\n"}
+{"Time":"2026-07-01T14:58:44.930469501Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestAddBacklog","Elapsed":0.01}
+{"Time":"2026-07-01T14:58:44.930475964Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestLookup"}
+{"Time":"2026-07-01T14:58:44.930479084Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestLookup","Output":"=== RUN   TestLookup\n"}
+{"Time":"2026-07-01T14:58:45.0342545Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestLookup","Output":"--- PASS: TestLookup (0.10s)\n"}
+{"Time":"2026-07-01T14:58:45.034291772Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Test":"TestLookup","Elapsed":0.1}
+{"Time":"2026-07-01T14:58:45.034299182Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Output":"PASS\n"}
+{"Time":"2026-07-01T14:58:45.035261043Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Output":"ok  \tgithub.com/influxdata/telegraf/plugins/processors/snmp_lookup\t0.936s\n"}
+{"Time":"2026-07-01T14:58:45.035280865Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Elapsed":0.936}
+reward=1 graded=29 found=29 failed=0 parsed=31 framework=go exit_code=0

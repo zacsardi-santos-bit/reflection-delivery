@@ -1,0 +1,18 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -c \"import sys,os; jxml=next((a.split('=',1)[1] for a in sys.argv[1:] if a.startswith('--junitxml=')),None); f='/workspace/repo/tracer/src/Datadog.Trace/Generated/net6.0/Datadog.Trace.SourceGenerators/InstrumentationDefinitionsGenerator/InstrumentationDefinitions.g.cs'; ok=os.path.exists(f) and any('MySqlCommand' in ln and '9, 65535, 65535' in ln for ln in open(f)); xml='<?xml version=\\\"1.0\\\"?><testsuites><testsuite name=\\\"mysql\\\" tests=\\\"1\\\" failures=\\\"'+('0' if ok else '1')+'\\\"><testcase name=\\\"test_mysql9_instrumentation_support\\\"'+('/' if ok else '><failure message=\\\"not found\\\"/></testcase')+'></testsuite></testsuites>'; os.makedirs(os.path.dirname(jxml),exist_ok=True) if jxml else None; open(jxml,'w').write(xml) if jxml else None; print('PASSED test_mysql9_instrumentation_support' if ok else 'FAILED test_mysql9_instrumentation_support')\"",
+  "test_files": [
+    "tracer/test/Datadog.Trace.ClrProfiler.IntegrationTests/AdoNet/MySqlCommandTests.cs",
+    "tracer/test/Datadog.Trace.ClrProfiler.IntegrationTests/PackageVersionsLatestMajors.g.cs",
+    "tracer/test/Datadog.Trace.ClrProfiler.IntegrationTests/PackageVersionsLatestMinors.g.cs",
+    "tracer/test/Datadog.Trace.ClrProfiler.IntegrationTests/PackageVersionsLatestSpecific.g.cs",
+    "tracer/test/test-applications/integrations/Samples.MySql/Program.cs",
+    "tracer/test/test-applications/integrations/Samples.MySql/Samples.MySql.csproj"
+  ],
+  "num_test_files": 6,
+  "language": "csharp",
+  "FAIL_TO_PASS": [
+    "test_mysql9_instrumentation_support"
+  ],
+  "PASS_TO_PASS": []
+}

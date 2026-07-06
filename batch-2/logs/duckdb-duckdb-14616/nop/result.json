@@ -1,0 +1,29 @@
+{
+    "id": "0b453a80-e141-4d44-9f85-d5f250105e3f",
+    "started_at": "2026-07-04T15:37:13.553334",
+    "finished_at": "2026-07-04T15:42:53.768191",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__duckdb-duckdb-14616": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "duckdb-duckdb-14616__B4kCja5"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

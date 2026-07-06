@@ -1,0 +1,29 @@
+{
+    "id": "56723d7d-ee60-4c42-800f-2b94f8e59408",
+    "started_at": "2026-07-04T15:39:24.613831",
+    "finished_at": "2026-07-04T15:40:08.523239",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__langflow-ai-langflow-4411": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "langflow-ai-langflow-4411__8zFy72Q"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

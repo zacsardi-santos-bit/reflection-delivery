@@ -1,0 +1,27 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/extensions/ql-vscode && npx jest --projects src/view --testPathPattern='SuggestBox/__tests__/(useEffectEvent|useOpenKey)' --watchAll=false --coverage=false",
+  "test_files": [
+    "extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useEffectEvent.test.ts",
+    "extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts",
+    "extensions/ql-vscode/test/mocked-object.ts",
+    "extensions/ql-vscode/test/vscode-tests/utils/mocking.helpers.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useEffectEvent.test.ts::useEffectEvent does not change reference when changing the callback function",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey opens when pressing Ctrl + Space and it is closed",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + Space and it is open",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Cmd + Space",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + Shift + Space",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + Alt + Space",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + Cmd + Space",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + Shift + Alt + Space",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Space",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + Tab",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not open when pressing Ctrl + a letter",
+    "/workspace/repo/extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts::useOpenKey does not change reference when the context changes"
+  ],
+  "PASS_TO_PASS": []
+}

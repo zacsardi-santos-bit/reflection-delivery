@@ -1,0 +1,386 @@
+diff --git a/src/commands/eval.ts b/src/commands/eval.ts
+index 380e31db6..3f72aa784 100644
+--- a/src/commands/eval.ts
++++ b/src/commands/eval.ts
+@@ -11,7 +11,11 @@ import cliState from '../cliState';
+ import { DEFAULT_MAX_CONCURRENCY } from '../constants';
+ import { getEnvBool, getEnvFloat, getEnvInt, isCI } from '../envars';
+ import { evaluate } from '../evaluator';
+-import { checkEmailStatusAndMaybeExit, promptForEmailUnverified } from '../globalConfig/accounts';
++import {
++  checkEmailStatusAndMaybeExit,
++  getAuthor,
++  promptForEmailUnverified,
++} from '../globalConfig/accounts';
+ import { cloudConfig } from '../globalConfig/cloud';
+ import logger, { getLogLevel } from '../logger';
+ import { runDbMigrations } from '../migrate';
+@@ -532,11 +536,12 @@ export async function doEval(
+     }
+ 
+     // Create or load eval record
++    const author = getAuthor();
+     const evalRecord = resumeEval
+       ? resumeEval
+       : cmdObj.write
+-        ? await Eval.create(config, testSuite.prompts, { runtimeOptions: options })
+-        : new Eval(config, { runtimeOptions: options });
++        ? await Eval.create(config, testSuite.prompts, { author, runtimeOptions: options })
++        : new Eval(config, { author, runtimeOptions: options });
+ 
+     // Graceful pause support via Ctrl+C (only when writing to database)
+     const abortController = new AbortController();
+diff --git a/src/globalConfig/accounts.ts b/src/globalConfig/accounts.ts
+index ab82530d1..8a8eae27a 100644
+--- a/src/globalConfig/accounts.ts
++++ b/src/globalConfig/accounts.ts
+@@ -80,8 +80,17 @@ export function setUserEmailValidated(validated: boolean) {
+   writeGlobalConfigPartial(config);
+ }
+ 
+-export function getAuthor(): string | null {
+-  return getEnvString('PROMPTFOO_AUTHOR') || getUserEmail() || null;
++export function getAuthor(override?: string | null): string | null {
++  const userEmail = getUserEmail();
++  const envAuthor = getEnvString('PROMPTFOO_AUTHOR');
++  if (isLoggedIntoCloud() && userEmail) {
++    if (override && override !== userEmail) {
++      // Don't log the full emails — the rest of the codebase treats them as PII.
++      logger.debug('[Author] Ignoring author override because cloud identity takes precedence');
++    }
++    return userEmail;
++  }
++  return override || userEmail || envAuthor || null;
+ }
+ 
+ export function isLoggedIntoCloud(): boolean {
+@@ -101,16 +110,10 @@ export function getAuthMethod(): 'api-key' | 'email' | 'none' {
+   const hasApiKey = cloudConfig.isEnabled();
+   const hasEmail = !!getUserEmail();
+ 
+-  if (hasApiKey && hasEmail) {
+-    // Both present - API key is the actual auth mechanism
+-    return 'api-key';
+-  }
+   if (hasApiKey) {
+     return 'api-key';
+   }
+   if (hasEmail) {
+-    // Email without API key - not fully authenticated
+-    // (this shouldn't happen in normal flow but handle it)
+     return 'email';
+   }
+   return 'none';
+diff --git a/src/index.ts b/src/index.ts
+index 2d8dc16a6..9089a356a 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -2,6 +2,7 @@ import assertions from './assertions/index';
+ import * as cache from './cache';
+ import cliState from './cliState';
+ import { evaluate as doEvaluate } from './evaluator';
++import { getAuthor } from './globalConfig/accounts';
+ import guardrails from './guardrails';
+ import logger from './logger';
+ import { runDbMigrations } from './migrate';
+@@ -70,12 +71,14 @@ function cloneTestForResolve<T extends Pick<TestCase, 'options' | 'assert'>>(tes
+ }
+ 
+ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions = {}) {
+-  if (testSuite.writeLatestResults) {
++  const { author: suiteAuthor, ...testSuiteConfig } = testSuite;
++
++  if (testSuiteConfig.writeLatestResults) {
+     await runDbMigrations();
+   }
+ 
+-  const loadedProviders = await loadApiProviders(testSuite.providers, {
+-    env: testSuite.env,
++  const loadedProviders = await loadApiProviders(testSuiteConfig.providers, {
++    env: testSuiteConfig.env,
+   });
+   const providerMap: Record<string, ApiProvider> = {};
+   for (const p of loadedProviders) {
+@@ -86,22 +89,25 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+   }
+ 
+   // Resolve defaultTest from file reference if needed
+-  let resolvedDefaultTest = testSuite.defaultTest;
+-  if (typeof testSuite.defaultTest === 'string' && testSuite.defaultTest.startsWith('file://')) {
+-    resolvedDefaultTest = await maybeLoadFromExternalFile(testSuite.defaultTest);
++  let resolvedDefaultTest = testSuiteConfig.defaultTest;
++  if (
++    typeof testSuiteConfig.defaultTest === 'string' &&
++    testSuiteConfig.defaultTest.startsWith('file://')
++  ) {
++    resolvedDefaultTest = await maybeLoadFromExternalFile(testSuiteConfig.defaultTest);
+   }
+ 
+   const constructedTestSuite: TestSuite = {
+-    ...testSuite,
++    ...testSuiteConfig,
+     defaultTest: resolvedDefaultTest as TestSuite['defaultTest'],
+-    scenarios: testSuite.scenarios as Scenario[],
++    scenarios: testSuiteConfig.scenarios as Scenario[],
+     providers: loadedProviders,
+-    tests: await readTests(testSuite.tests),
++    tests: await readTests(testSuiteConfig.tests),
+ 
+-    nunjucksFilters: await readFilters(testSuite.nunjucksFilters || {}),
++    nunjucksFilters: await readFilters(testSuiteConfig.nunjucksFilters || {}),
+ 
+     // Full prompts expected (not filepaths)
+-    prompts: await processPrompts(testSuite.prompts),
++    prompts: await processPrompts(testSuiteConfig.prompts),
+   };
+ 
+   // Resolve nested providers. `constructedTestSuite` shallow-shares `defaultTest`
+@@ -117,7 +123,7 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+       constructedTestSuite.defaultTest.provider = await resolveProvider(
+         constructedTestSuite.defaultTest.provider,
+         providerMap,
+-        { env: testSuite.env, basePath: cliState.basePath },
++        { env: testSuiteConfig.env, basePath: cliState.basePath },
+       );
+     }
+     if (
+@@ -127,7 +133,7 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+       constructedTestSuite.defaultTest.options.provider = await resolveProvider(
+         constructedTestSuite.defaultTest.options.provider,
+         providerMap,
+-        { env: testSuite.env, basePath: cliState.basePath },
++        { env: testSuiteConfig.env, basePath: cliState.basePath },
+       );
+     }
+   }
+@@ -137,7 +143,7 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+   for (const test of constructedTestSuite.tests) {
+     if (test.options?.provider && !isApiProvider(test.options.provider)) {
+       test.options.provider = await resolveProvider(test.options.provider, providerMap, {
+-        env: testSuite.env,
++        env: testSuiteConfig.env,
+         basePath: cliState.basePath,
+       });
+     }
+@@ -147,7 +153,7 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+       }
+       if (assertion.provider && !isApiProvider(assertion.provider)) {
+         assertion.provider = await resolveProvider(assertion.provider, providerMap, {
+-          env: testSuite.env,
++          env: testSuiteConfig.env,
+           basePath: cliState.basePath,
+         });
+       }
+@@ -159,15 +165,19 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+     cache.disableCache();
+   }
+ 
+-  const parsedProviderPromptMap = readProviderPromptMap(testSuite, constructedTestSuite.prompts);
++  const parsedProviderPromptMap = readProviderPromptMap(
++    testSuiteConfig,
++    constructedTestSuite.prompts,
++  );
+   // INVARIANT: the unified config persisted to the Eval record must not alias any
+   // object mutated above with a resolved ApiProvider (see `cloneTestForResolve()`).
+   // Live SDK clients hold circular refs and break drizzle JSON serialization on
+   // `evalRecord.save()`. Fixes #8687.
+-  const unifiedConfig = { ...testSuite, prompts: constructedTestSuite.prompts };
+-  const evalRecord = testSuite.writeLatestResults
+-    ? await Eval.create(unifiedConfig, constructedTestSuite.prompts)
+-    : new Eval(unifiedConfig);
++  const unifiedConfig = { ...testSuiteConfig, prompts: constructedTestSuite.prompts };
++  const author = getAuthor(suiteAuthor);
++  const evalRecord = testSuiteConfig.writeLatestResults
++    ? await Eval.create(unifiedConfig, constructedTestSuite.prompts, { author })
++    : new Eval(unifiedConfig, { author });
+ 
+   // Run the eval!
+   const ret = await doEvaluate(
+@@ -178,13 +188,13 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+     evalRecord,
+     {
+       eventSource: 'library',
+-      isRedteam: Boolean(testSuite.redteam),
++      isRedteam: Boolean(testSuiteConfig.redteam),
+       ...options,
+     },
+   );
+ 
+   // Handle sharing if enabled
+-  if (testSuite.writeLatestResults && testSuite.sharing) {
++  if (testSuiteConfig.writeLatestResults && testSuiteConfig.sharing) {
+     if (isSharingEnabled(ret)) {
+       try {
+         const shareableUrl = await createShareableUrl(ret, { silent: true });
+@@ -202,11 +212,11 @@ async function evaluate(testSuite: EvaluateTestSuite, options: EvaluateOptions =
+     }
+   }
+ 
+-  if (testSuite.outputPath) {
+-    if (typeof testSuite.outputPath === 'string') {
+-      await writeOutput(testSuite.outputPath, evalRecord, null);
+-    } else if (Array.isArray(testSuite.outputPath)) {
+-      await writeMultipleOutputs(testSuite.outputPath, evalRecord, null);
++  if (testSuiteConfig.outputPath) {
++    if (typeof testSuiteConfig.outputPath === 'string') {
++      await writeOutput(testSuiteConfig.outputPath, evalRecord, null);
++    } else if (Array.isArray(testSuiteConfig.outputPath)) {
++      await writeMultipleOutputs(testSuiteConfig.outputPath, evalRecord, null);
+     }
+   }
+ 
+diff --git a/src/models/eval.ts b/src/models/eval.ts
+index 3fedab480..8660a4503 100644
+--- a/src/models/eval.ts
++++ b/src/models/eval.ts
+@@ -13,7 +13,7 @@ import {
+   tagsTable,
+ } from '../database/tables';
+ import { getEnvBool } from '../envars';
+-import { getUserEmail } from '../globalConfig/accounts';
++import { getAuthor } from '../globalConfig/accounts';
+ import logger from '../logger';
+ import { hashPrompt } from '../prompts/utils';
+ import { PLUGIN_CATEGORIES } from '../redteam/constants';
+@@ -318,7 +318,7 @@ export class EvalQueries {
+ export default class Eval {
+   id: string;
+   createdAt: number;
+-  author?: string;
++  author: string | null;
+   description?: string;
+   config: Partial<UnifiedConfig>;
+   // If these are empty, you need to call loadResults(). We don't load them by default to save memory.
+@@ -403,7 +403,7 @@ export default class Eval {
+     const evalInstance = new Eval(eval_.config, {
+       id: eval_.id,
+       createdAt: new Date(eval_.createdAt),
+-      author: eval_.author || undefined,
++      author: eval_.author,
+       description: eval_.description || undefined,
+       prompts: eval_.prompts || [],
+       datasetId,
+@@ -441,7 +441,7 @@ export default class Eval {
+         new Eval(e.config, {
+           id: e.id,
+           createdAt: new Date(e.createdAt),
+-          author: e.author || undefined,
++          author: e.author,
+           description: e.description || undefined,
+           prompts: e.prompts || [],
+           persisted: true,
+@@ -471,7 +471,7 @@ export default class Eval {
+         new Eval(e.config, {
+           id: e.id,
+           createdAt: new Date(e.createdAt),
+-          author: e.author || undefined,
++          author: e.author,
+           description: e.description || undefined,
+           prompts: e.prompts || [],
+           persisted: true,
+@@ -494,7 +494,7 @@ export default class Eval {
+     opts?: {
+       id?: string;
+       createdAt?: Date;
+-      author?: string;
++      author?: string | null;
+       // Be wary, this is EvalResult[] and not EvaluateResult[]
+       results?: EvalResult[];
+       vars?: string[];
+@@ -504,7 +504,10 @@ export default class Eval {
+   ): Promise<Eval> {
+     const createdAt = opts?.createdAt || new Date();
+     const evalId = opts?.id || createEvalId(createdAt);
+-    const author = opts?.author || getUserEmail();
++    // Callers that resolve the author themselves (CLI/programmatic eval, import)
++    // pass it explicitly — honor that value. Only fall back to the global
++    // resolution chain when the caller did not provide one at all.
++    const author = opts && 'author' in opts ? (opts.author ?? null) : getAuthor();
+     const db = getDb();
+ 
+     const datasetId = sha256(JSON.stringify(config.tests || []));
+@@ -602,7 +605,7 @@ export default class Eval {
+ 
+     return new Eval(config, {
+       id: evalId,
+-      author: opts?.author,
++      author,
+       createdAt,
+       persisted: true,
+       runtimeOptions: sanitizeRuntimeOptions(opts?.runtimeOptions),
+@@ -614,7 +617,7 @@ export default class Eval {
+     opts?: {
+       id?: string;
+       createdAt?: Date;
+-      author?: string;
++      author?: string | null;
+       description?: string;
+       prompts?: CompletedPrompt[];
+       datasetId?: string;
+@@ -629,7 +632,7 @@ export default class Eval {
+     const createdAt = opts?.createdAt || new Date();
+     this.createdAt = createdAt.getTime();
+     this.id = opts?.id || createEvalId(createdAt);
+-    this.author = opts?.author;
++    this.author = opts?.author ?? null;
+     this.config = config;
+     this.results = [];
+     this.prompts = opts?.prompts || [];
+@@ -1431,7 +1434,7 @@ export default class Eval {
+ 
+     const newPrompts = structuredClone(this.prompts);
+     const newVars = this.vars ? structuredClone(this.vars) : [];
+-    const author = getUserEmail();
++    const author = getAuthor();
+ 
+     const db = getDb();
+ 
+diff --git a/src/share.ts b/src/share.ts
+index 1f7488562..d02f5b8cb 100644
+--- a/src/share.ts
++++ b/src/share.ts
+@@ -537,6 +537,14 @@ export function stripAuthFromUrl(urlString: string): string {
+ }
+ 
+ async function handleEmailCollection(evalRecord: Eval): Promise<void> {
++  // Skip email collection if author is already set
++  if (evalRecord.author) {
++    logger.debug(`[Share] Skipping email collection because author is already set`, {
++      evalId: evalRecord.id,
++    });
++    return;
++  }
++
+   if (!process.stdout.isTTY || isCI() || getEnvBool('PROMPTFOO_DISABLE_SHARE_EMAIL_REQUEST')) {
+     return;
+   }
+diff --git a/src/types/index.ts b/src/types/index.ts
+index 5f5a65ae0..a5fce4e3e 100644
+--- a/src/types/index.ts
++++ b/src/types/index.ts
+@@ -1281,6 +1281,13 @@ export interface EvalWithMetadata {
+ export type EvaluateTestSuite = {
+   prompts: (string | object | PromptFunction)[];
+   writeLatestResults?: boolean;
++  /**
++   * Author to attribute the evaluation to.
++   * When the user is logged into cloud with a stored email, that identity
++   * takes precedence and this option is ignored. Otherwise resolution is:
++   * this option > stored user email > PROMPTFOO_AUTHOR env var > null.
++   */
++  author?: string;
+ } & Omit<TestSuiteConfig, 'prompts'>;
+ 
+ export type EvaluateTestSuiteWithEvaluateOptions = EvaluateTestSuite & {
+diff --git a/src/util/output.ts b/src/util/output.ts
+index e04fb6bf6..113ed2634 100644
+--- a/src/util/output.ts
++++ b/src/util/output.ts
+@@ -69,7 +69,7 @@ export function createOutputMetadata(evalRecord: Eval) {
+     arch: os.arch(),
+     exportedAt: new Date().toISOString(),
+     evaluationCreatedAt,
+-    author: evalRecord.author,
++    author: evalRecord.author ?? undefined,
+   };
+ }

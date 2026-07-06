@@ -1,0 +1,29 @@
+{
+    "id": "ac8838f9-7244-433a-9992-50bba778fca9",
+    "started_at": "2026-07-04T15:39:47.967469",
+    "finished_at": "2026-07-04T15:40:07.876271",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__rapidsai-cuml-1891": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "rapidsai-cuml-1891__fnYZpZC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

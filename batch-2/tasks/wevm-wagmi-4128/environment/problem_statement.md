@@ -1,0 +1,7 @@
+I'm working in this web3 frontend library and there's a gap around the standard wallet "watch asset" capability, you know the flow where a dapp asks the user's wallet to start tracking a token so it shows up in their balance view. This comes up all the time after a swap or airdrop or bridge, but right now there's no first-class way to do it, I have to call the low-level wallet method by hand which bypasses all the type safety and connection management the library gives me.
+
+What I want is a proper core action that wraps this capability. It should take the token type plus the asset details (contract address, symbol, and decimal precision) and return a boolean telling me whether the user accepted or rejected the prompt. Alongside that I need a mutation options factory living in the query utilities module, with a sensible mutation key identifying the watch-asset operation, so I can wire it into my query/mutation layer.
+
+Then a React hook that wraps the action as a mutation in the same style as the other mutation hooks here, so I get a trigger function (named consistently with the action), loading/success/error state, and the boolean result data.
+
+Oh and all three, the core action, the mutation options factory, and the hook, need to be exported from their respective package entry points (core and React) so existing consumers can just import them. The Vue package's action and query utility exports should pick up the new core action and mutation options too.

@@ -1,0 +1,42 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/dev/breeze/tests/test_reproduce_ci.py -v",
+  "test_files": [
+    "dev/breeze/tests/test_reproduce_ci.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_reproduce_ci::test_should_print_local_reproduction_only_in_github_actions[env_vars0-True]",
+    "tests.test_reproduce_ci::test_should_print_local_reproduction_only_in_github_actions[env_vars1-False]",
+    "tests.test_reproduce_ci::test_should_print_local_reproduction_only_in_github_actions[env_vars2-False]",
+    "tests.test_reproduce_ci::test_should_print_local_reproduction_only_in_github_actions[env_vars3-False]",
+    "tests.test_reproduce_ci::test_build_ci_image_reproduction_command_with_custom_repo",
+    "tests.test_reproduce_ci::test_build_ci_image_reproduction_command_default_repo",
+    "tests.test_reproduce_ci::test_build_checkout_reproduction_commands_fetches_pull_request_ref[merge]",
+    "tests.test_reproduce_ci::test_build_checkout_reproduction_commands_fetches_pull_request_ref[head]",
+    "tests.test_reproduce_ci::test_build_checkout_reproduction_commands_plain_sha",
+    "tests.test_reproduce_ci::test_print_local_reproduction_renders_copyable_commands",
+    "tests.test_reproduce_ci::test_breeze_command_smoke_skip_cleanup_is_included_in_rendered_command",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_simple_bool_flag_emitted_when_true",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_simple_bool_flag_omitted_when_default",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_flag_pair_emits_positive_side",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_flag_pair_emits_negative_side",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_flag_pair_omitted_when_default",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_flag_pair_prefers_long_form",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_string_option_emitted_when_explicit",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_string_option_omitted_when_default",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_multiple_option_repeats_flag",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_positional_arguments_appended_at_end",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_expose_value_false_option_excluded",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_excluded_params_filtered_out",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_envvar_source_included",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_envvar_same_as_default_still_included",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_custom_comment",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_default_comment",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_subcommand_path",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_integer_option_converted_to_string",
+    "tests.test_reproduce_ci.TestBuildReproductionCommandFromContext::test_prefers_long_option_form"
+  ],
+  "PASS_TO_PASS": []
+}

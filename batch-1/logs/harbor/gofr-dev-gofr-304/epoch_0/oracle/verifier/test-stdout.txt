@@ -1,0 +1,199 @@
+patching file pkg/gofr/datasource/sql/db_test.go
+patching file pkg/gofr/datasource/sql/health_test.go
+patching file pkg/gofr/datasource/sql/sql_test.go
+{"Time":"2026-06-29T15:35:59.082762581Z","Action":"start","Package":"gofr.dev/pkg/gofr/datasource/sql"}
+{"Time":"2026-06-29T15:35:59.087898821Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToString"}
+{"Time":"2026-06-29T15:35:59.087932871Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToString","Output":"=== RUN   TestDB_SelectSingleColumnFromIntToString\n"}
+{"Time":"2026-06-29T15:35:59.087980791Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToString","Output":"--- PASS: TestDB_SelectSingleColumnFromIntToString (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.088010131Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToString","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.088046191Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToString"}
+{"Time":"2026-06-29T15:35:59.088068271Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToString","Output":"=== RUN   TestDB_SelectSingleColumnFromStringToString\n"}
+{"Time":"2026-06-29T15:35:59.08827031Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToString","Output":"--- PASS: TestDB_SelectSingleColumnFromStringToString (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.08832051Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToString","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.08834568Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToInt"}
+{"Time":"2026-06-29T15:35:59.088367689Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToInt","Output":"=== RUN   TestDB_SelectSingleColumnFromIntToInt\n"}
+{"Time":"2026-06-29T15:35:59.088398399Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToInt","Output":"--- PASS: TestDB_SelectSingleColumnFromIntToInt (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.088421829Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToInt","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.088444859Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToCustomInt"}
+{"Time":"2026-06-29T15:35:59.088466939Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToCustomInt","Output":"=== RUN   TestDB_SelectSingleColumnFromIntToCustomInt\n"}
+{"Time":"2026-06-29T15:35:59.088530549Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToCustomInt","Output":"--- PASS: TestDB_SelectSingleColumnFromIntToCustomInt (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.088574869Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromIntToCustomInt","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.088599919Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomInt"}
+{"Time":"2026-06-29T15:35:59.088622898Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomInt","Output":"=== RUN   TestDB_SelectSingleColumnFromStringToCustomInt\n"}
+{"Time":"2026-06-29T15:35:59.088652058Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomInt","Output":"--- PASS: TestDB_SelectSingleColumnFromStringToCustomInt (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.088679358Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomInt","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.088709298Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectContextError"}
+{"Time":"2026-06-29T15:35:59.088739928Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectContextError","Output":"=== RUN   TestDB_SelectContextError\n"}
+{"Time":"2026-06-29T15:35:59.089962793Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectContextError","Output":"--- PASS: TestDB_SelectContextError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.089997813Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectContextError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090022793Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerError"}
+{"Time":"2026-06-29T15:35:59.090045293Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerError","Output":"=== RUN   TestDB_SelectDataPointerError\n"}
+{"Time":"2026-06-29T15:35:59.090073963Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerError","Output":"--- PASS: TestDB_SelectDataPointerError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090100763Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090123793Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomString"}
+{"Time":"2026-06-29T15:35:59.090147703Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomString","Output":"=== RUN   TestDB_SelectSingleColumnFromStringToCustomString\n"}
+{"Time":"2026-06-29T15:35:59.090176092Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomString","Output":"--- PASS: TestDB_SelectSingleColumnFromStringToCustomString (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090199282Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnFromStringToCustomString","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090222392Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumn"}
+{"Time":"2026-06-29T15:35:59.090246282Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumn","Output":"=== RUN   TestDB_SelectSingleRowMultiColumn\n"}
+{"Time":"2026-06-29T15:35:59.090273792Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumn","Output":"--- PASS: TestDB_SelectSingleRowMultiColumn (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090296032Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumn","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090319052Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumnWithTags"}
+{"Time":"2026-06-29T15:35:59.090341512Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumnWithTags","Output":"=== RUN   TestDB_SelectSingleRowMultiColumnWithTags\n"}
+{"Time":"2026-06-29T15:35:59.090369912Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumnWithTags","Output":"--- PASS: TestDB_SelectSingleRowMultiColumnWithTags (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090392252Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleRowMultiColumnWithTags","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090417652Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectMultiRowMultiColumnWithTags"}
+{"Time":"2026-06-29T15:35:59.090440101Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectMultiRowMultiColumnWithTags","Output":"=== RUN   TestDB_SelectMultiRowMultiColumnWithTags\n"}
+{"Time":"2026-06-29T15:35:59.090467591Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectMultiRowMultiColumnWithTags","Output":"--- PASS: TestDB_SelectMultiRowMultiColumnWithTags (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090498371Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectMultiRowMultiColumnWithTags","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090521691Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnError"}
+{"Time":"2026-06-29T15:35:59.090544431Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnError","Output":"=== RUN   TestDB_SelectSingleColumnError\n"}
+{"Time":"2026-06-29T15:35:59.090572541Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnError","Output":"--- PASS: TestDB_SelectSingleColumnError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090595091Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectSingleColumnError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.090618661Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerNotExpected"}
+{"Time":"2026-06-29T15:35:59.090641071Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerNotExpected","Output":"=== RUN   TestDB_SelectDataPointerNotExpected\n"}
+{"Time":"2026-06-29T15:35:59.090667491Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerNotExpected","Output":"--- PASS: TestDB_SelectDataPointerNotExpected (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.09070125Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_SelectDataPointerNotExpected","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.09072482Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Query"}
+{"Time":"2026-06-29T15:35:59.0907465Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Query","Output":"=== RUN   TestDB_Query\n"}
+{"Time":"2026-06-29T15:35:59.09077513Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Query","Output":"--- PASS: TestDB_Query (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.0907977Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Query","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.09082055Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryError"}
+{"Time":"2026-06-29T15:35:59.09084262Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryError","Output":"=== RUN   TestDB_QueryError\n"}
+{"Time":"2026-06-29T15:35:59.09087032Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryError","Output":"--- PASS: TestDB_QueryError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.09089277Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.09091646Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRow"}
+{"Time":"2026-06-29T15:35:59.09093863Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRow","Output":"=== RUN   TestDB_QueryRow\n"}
+{"Time":"2026-06-29T15:35:59.090966309Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRow","Output":"--- PASS: TestDB_QueryRow (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.090989669Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRow","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091013599Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRowContext"}
+{"Time":"2026-06-29T15:35:59.091035699Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRowContext","Output":"=== RUN   TestDB_QueryRowContext\n"}
+{"Time":"2026-06-29T15:35:59.091063009Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRowContext","Output":"--- PASS: TestDB_QueryRowContext (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091085169Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_QueryRowContext","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091114719Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Exec"}
+{"Time":"2026-06-29T15:35:59.091136539Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Exec","Output":"=== RUN   TestDB_Exec\n"}
+{"Time":"2026-06-29T15:35:59.091163959Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Exec","Output":"--- PASS: TestDB_Exec (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091186209Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Exec","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091210198Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecError"}
+{"Time":"2026-06-29T15:35:59.091232378Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecError","Output":"=== RUN   TestDB_ExecError\n"}
+{"Time":"2026-06-29T15:35:59.091260188Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecError","Output":"--- PASS: TestDB_ExecError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091282518Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091305348Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContext"}
+{"Time":"2026-06-29T15:35:59.091327778Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContext","Output":"=== RUN   TestDB_ExecContext\n"}
+{"Time":"2026-06-29T15:35:59.091355548Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContext","Output":"--- PASS: TestDB_ExecContext (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091378178Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContext","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091401458Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContextError"}
+{"Time":"2026-06-29T15:35:59.091423688Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContextError","Output":"=== RUN   TestDB_ExecContextError\n"}
+{"Time":"2026-06-29T15:35:59.091576047Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContextError","Output":"--- PASS: TestDB_ExecContextError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091629477Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_ExecContextError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091653897Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Prepare"}
+{"Time":"2026-06-29T15:35:59.091684597Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Prepare","Output":"=== RUN   TestDB_Prepare\n"}
+{"Time":"2026-06-29T15:35:59.091724206Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Prepare","Output":"--- PASS: TestDB_Prepare (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091747406Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Prepare","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091770336Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_PrepareError"}
+{"Time":"2026-06-29T15:35:59.091808216Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_PrepareError","Output":"=== RUN   TestDB_PrepareError\n"}
+{"Time":"2026-06-29T15:35:59.091832956Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_PrepareError","Output":"--- PASS: TestDB_PrepareError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091856346Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_PrepareError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091879076Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Begin"}
+{"Time":"2026-06-29T15:35:59.091900876Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Begin","Output":"=== RUN   TestDB_Begin\n"}
+{"Time":"2026-06-29T15:35:59.091924706Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Begin","Output":"--- PASS: TestDB_Begin (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.091957456Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_Begin","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.091980275Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_BeginError"}
+{"Time":"2026-06-29T15:35:59.092002745Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_BeginError","Output":"=== RUN   TestDB_BeginError\n"}
+{"Time":"2026-06-29T15:35:59.092026475Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_BeginError","Output":"--- PASS: TestDB_BeginError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092049095Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestDB_BeginError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092071915Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Query"}
+{"Time":"2026-06-29T15:35:59.092093945Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Query","Output":"=== RUN   TestTx_Query\n"}
+{"Time":"2026-06-29T15:35:59.092123015Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Query","Output":"--- PASS: TestTx_Query (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092145015Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Query","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092168085Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryError"}
+{"Time":"2026-06-29T15:35:59.092190545Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryError","Output":"=== RUN   TestTx_QueryError\n"}
+{"Time":"2026-06-29T15:35:59.092214555Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryError","Output":"--- PASS: TestTx_QueryError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092237364Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092260814Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRow"}
+{"Time":"2026-06-29T15:35:59.092282634Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRow","Output":"=== RUN   TestTx_QueryRow\n"}
+{"Time":"2026-06-29T15:35:59.092306174Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRow","Output":"--- PASS: TestTx_QueryRow (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092329134Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRow","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092352664Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRowContext"}
+{"Time":"2026-06-29T15:35:59.092374674Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRowContext","Output":"=== RUN   TestTx_QueryRowContext\n"}
+{"Time":"2026-06-29T15:35:59.092398764Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRowContext","Output":"--- PASS: TestTx_QueryRowContext (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092421914Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_QueryRowContext","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092444464Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Exec"}
+{"Time":"2026-06-29T15:35:59.092466034Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Exec","Output":"=== RUN   TestTx_Exec\n"}
+{"Time":"2026-06-29T15:35:59.092493884Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Exec","Output":"--- PASS: TestTx_Exec (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092516133Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Exec","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092538753Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecError"}
+{"Time":"2026-06-29T15:35:59.092566793Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecError","Output":"=== RUN   TestTx_ExecError\n"}
+{"Time":"2026-06-29T15:35:59.092590083Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecError","Output":"--- PASS: TestTx_ExecError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092612973Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092635523Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContext"}
+{"Time":"2026-06-29T15:35:59.092657453Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContext","Output":"=== RUN   TestTx_ExecContext\n"}
+{"Time":"2026-06-29T15:35:59.092690943Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContext","Output":"--- PASS: TestTx_ExecContext (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092716533Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContext","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092740113Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContextError"}
+{"Time":"2026-06-29T15:35:59.092762362Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContextError","Output":"=== RUN   TestTx_ExecContextError\n"}
+{"Time":"2026-06-29T15:35:59.092789012Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContextError","Output":"--- PASS: TestTx_ExecContextError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092812782Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_ExecContextError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092836022Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Prepare"}
+{"Time":"2026-06-29T15:35:59.092857742Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Prepare","Output":"=== RUN   TestTx_Prepare\n"}
+{"Time":"2026-06-29T15:35:59.092885132Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Prepare","Output":"--- PASS: TestTx_Prepare (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.092907572Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Prepare","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.092930532Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_PrepareError"}
+{"Time":"2026-06-29T15:35:59.092952802Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_PrepareError","Output":"=== RUN   TestTx_PrepareError\n"}
+{"Time":"2026-06-29T15:35:59.092980572Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_PrepareError","Output":"--- PASS: TestTx_PrepareError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093003652Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_PrepareError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093026471Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Commit"}
+{"Time":"2026-06-29T15:35:59.093048241Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Commit","Output":"=== RUN   TestTx_Commit\n"}
+{"Time":"2026-06-29T15:35:59.093075801Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Commit","Output":"--- PASS: TestTx_Commit (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093097991Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_Commit","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093121241Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_CommitError"}
+{"Time":"2026-06-29T15:35:59.093143591Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_CommitError","Output":"=== RUN   TestTx_CommitError\n"}
+{"Time":"2026-06-29T15:35:59.093171001Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_CommitError","Output":"--- PASS: TestTx_CommitError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093200311Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_CommitError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093224041Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollBack"}
+{"Time":"2026-06-29T15:35:59.093246571Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollBack","Output":"=== RUN   TestTx_RollBack\n"}
+{"Time":"2026-06-29T15:35:59.093270441Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollBack","Output":"--- PASS: TestTx_RollBack (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093294Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollBack","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.09332244Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollbackError"}
+{"Time":"2026-06-29T15:35:59.09334376Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollbackError","Output":"=== RUN   TestTx_RollbackError\n"}
+{"Time":"2026-06-29T15:35:59.09336713Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollbackError","Output":"--- PASS: TestTx_RollbackError (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.09339068Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestTx_RollbackError","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.09341348Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheck"}
+{"Time":"2026-06-29T15:35:59.09343513Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheck","Output":"=== RUN   TestHealth_HealthCheck\n"}
+{"Time":"2026-06-29T15:35:59.09345851Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheck","Output":"--- PASS: TestHealth_HealthCheck (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.09348131Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheck","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.09350384Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBNotConnected"}
+{"Time":"2026-06-29T15:35:59.09352559Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBNotConnected","Output":"=== RUN   TestHealth_HealthCheckDBNotConnected\n"}
+{"Time":"2026-06-29T15:35:59.093549119Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBNotConnected","Output":"--- PASS: TestHealth_HealthCheckDBNotConnected (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093571959Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBNotConnected","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093595049Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBPingFailed"}
+{"Time":"2026-06-29T15:35:59.093616899Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBPingFailed","Output":"=== RUN   TestHealth_HealthCheckDBPingFailed\n"}
+{"Time":"2026-06-29T15:35:59.093640389Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBPingFailed","Output":"--- PASS: TestHealth_HealthCheckDBPingFailed (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093666939Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestHealth_HealthCheckDBPingFailed","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093699039Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_GetDBConfig"}
+{"Time":"2026-06-29T15:35:59.093720959Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_GetDBConfig","Output":"=== RUN   TestSQL_GetDBConfig\n"}
+{"Time":"2026-06-29T15:35:59.093744549Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_GetDBConfig","Output":"--- PASS: TestSQL_GetDBConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093769009Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_GetDBConfig","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093809808Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString"}
+{"Time":"2026-06-29T15:35:59.093837498Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString","Output":"=== RUN   TestSQL_getDBConnectionString\n"}
+{"Time":"2026-06-29T15:35:59.093860328Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/mysql_dialect"}
+{"Time":"2026-06-29T15:35:59.093881988Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/mysql_dialect","Output":"=== RUN   TestSQL_getDBConnectionString/mysql_dialect\n"}
+{"Time":"2026-06-29T15:35:59.093909058Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/mysql_dialect","Output":"--- PASS: TestSQL_getDBConnectionString/mysql_dialect (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.093946788Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/mysql_dialect","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.093975648Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/postgresql_dialect"}
+{"Time":"2026-06-29T15:35:59.094002778Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/postgresql_dialect","Output":"=== RUN   TestSQL_getDBConnectionString/postgresql_dialect\n"}
+{"Time":"2026-06-29T15:35:59.094027428Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/postgresql_dialect","Output":"--- PASS: TestSQL_getDBConnectionString/postgresql_dialect (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.094052197Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/postgresql_dialect","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.094075377Z","Action":"run","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/unsupported_dialect"}
+{"Time":"2026-06-29T15:35:59.094096997Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/unsupported_dialect","Output":"=== RUN   TestSQL_getDBConnectionString/unsupported_dialect\n"}
+{"Time":"2026-06-29T15:35:59.094120407Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/unsupported_dialect","Output":"--- PASS: TestSQL_getDBConnectionString/unsupported_dialect (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.094143277Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString/unsupported_dialect","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.094166707Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString","Output":"--- PASS: TestSQL_getDBConnectionString (0.00s)\n"}
+{"Time":"2026-06-29T15:35:59.094189087Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Test":"TestSQL_getDBConnectionString","Elapsed":0}
+{"Time":"2026-06-29T15:35:59.094211527Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Output":"PASS\n"}
+{"Time":"2026-06-29T15:35:59.094294127Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/sql","Output":"ok  \tgofr.dev/pkg/gofr/datasource/sql\t0.011s\n"}
+{"Time":"2026-06-29T15:35:59.094322806Z","Action":"pass","Package":"gofr.dev/pkg/gofr/datasource/sql","Elapsed":0.012}
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

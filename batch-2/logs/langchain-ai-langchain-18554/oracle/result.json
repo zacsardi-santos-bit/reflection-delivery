@@ -1,0 +1,29 @@
+{
+    "id": "2f235671-5f6f-460c-ac40-4e3d510e6af7",
+    "started_at": "2026-07-04T15:39:44.766938",
+    "finished_at": "2026-07-04T15:40:06.182830",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__langchain-ai-langchain-18554": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "langchain-ai-langchain-18554__5wodJkR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

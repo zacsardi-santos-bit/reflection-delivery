@@ -1,0 +1,2701 @@
+diff --git a/.github/workflows/build_documentation.yml b/.github/workflows/build_documentation.yml
+index 77e2b170d..9d15aae06 100644
+--- a/.github/workflows/build_documentation.yml
++++ b/.github/workflows/build_documentation.yml
+@@ -10,7 +10,7 @@ on:
+ 
+ jobs:
+   build:
+-    uses: huggingface/doc-builder/.github/workflows/build_main_documentation.yml@90b4ee2c10b81b5c1a6367c4e6fc9e2fb510a7e3  # main
++    uses: huggingface/doc-builder/.github/workflows/build_main_documentation.yml@main
+     with:
+       commit_sha: ${{ github.sha }}
+       package: datasets
+diff --git a/.github/workflows/build_pr_documentation.yml b/.github/workflows/build_pr_documentation.yml
+index 92d60e11f..90952fef0 100644
+--- a/.github/workflows/build_pr_documentation.yml
++++ b/.github/workflows/build_pr_documentation.yml
+@@ -9,7 +9,7 @@ concurrency:
+ 
+ jobs:
+   build:
+-    uses: huggingface/doc-builder/.github/workflows/build_pr_documentation.yml@90b4ee2c10b81b5c1a6367c4e6fc9e2fb510a7e3  # main
++    uses: huggingface/doc-builder/.github/workflows/build_pr_documentation.yml@main
+     with:
+       commit_sha: ${{ github.event.pull_request.head.sha }}
+       pr_number: ${{ github.event.number }}
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 86f68a90d..bee7b037e 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -17,9 +17,9 @@ jobs:
+   check_code_quality:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
++      - uses: actions/checkout@v4
+       - name: Set up Python
+-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
++        uses: actions/setup-python@v5
+         with:
+           python-version: "3.10"
+       - name: Install dependencies
+@@ -41,7 +41,7 @@ jobs:
+     continue-on-error: ${{ matrix.test == 'integration' }}
+     runs-on: ${{ matrix.os }}
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
++      - uses: actions/checkout@v4
+         with:
+           fetch-depth: 0
+       - name: Setup FFmpeg
+@@ -50,12 +50,12 @@ jobs:
+           sudo apt update
+           sudo apt install -y ffmpeg 
+       - name: Set up Python 3.10
+-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
++        uses: actions/setup-python@v5
+         with:
+           python-version: "3.10"
+       - name: Setup conda env (windows)
+         if: ${{ matrix.os == 'windows-latest' }}
+-        uses: conda-incubator/setup-miniconda@9f54435e0e72c53962ee863144e47a4b094bfd35  # v2
++        uses: conda-incubator/setup-miniconda@v2
+         with:
+           auto-update-conda: true
+           miniconda-version: "latest"
+@@ -92,7 +92,7 @@ jobs:
+     continue-on-error: false
+     runs-on: ${{ matrix.os }}
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
++      - uses: actions/checkout@v4
+         with:
+           fetch-depth: 0
+       - name: Setup FFmpeg
+@@ -101,12 +101,12 @@ jobs:
+           sudo apt update
+           sudo apt install -y ffmpeg
+       - name: Set up Python 3.14
+-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
++        uses: actions/setup-python@v5
+         with:
+           python-version: "3.14"
+       - name: Setup conda env (windows)
+         if: ${{ matrix.os == 'windows-latest' }}
+-        uses: conda-incubator/setup-miniconda@9f54435e0e72c53962ee863144e47a4b094bfd35  # v2
++        uses: conda-incubator/setup-miniconda@v2
+         with:
+           auto-update-conda: true
+           miniconda-version: "latest"
+@@ -137,7 +137,7 @@ jobs:
+     continue-on-error: false
+     runs-on: ${{ matrix.os }}
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
++      - uses: actions/checkout@v4
+         with:
+           fetch-depth: 0
+       - name: Setup FFmpeg
+@@ -146,12 +146,12 @@ jobs:
+           sudo apt update
+           sudo apt install -y ffmpeg 
+       - name: Set up Python 3.14
+-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
++        uses: actions/setup-python@v5
+         with:
+           python-version: "3.14"
+       - name: Setup conda env (windows)
+         if: ${{ matrix.os == 'windows-latest' }}
+-        uses: conda-incubator/setup-miniconda@9f54435e0e72c53962ee863144e47a4b094bfd35  # v2
++        uses: conda-incubator/setup-miniconda@v2
+         with:
+           auto-update-conda: true
+           miniconda-version: "latest"
+diff --git a/.github/workflows/trufflehog.yml b/.github/workflows/trufflehog.yml
+index 4b23d8974..368d6901e 100644
+--- a/.github/workflows/trufflehog.yml
++++ b/.github/workflows/trufflehog.yml
+@@ -11,10 +11,10 @@ jobs:
+     runs-on: ubuntu-latest
+     steps:
+     - name: Checkout code
+-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
++      uses: actions/checkout@v5
+       with:
+         fetch-depth: 0
+     - name: Secret Scanning
+-      uses: trufflesecurity/trufflehog@6bd2d14f7a4bc1e569fa3550efa7ec632a4fa67b  # main
++      uses: trufflesecurity/trufflehog@main
+       with:
+         extra_args: --results=verified
+diff --git a/.github/workflows/upload_pr_documentation.yml b/.github/workflows/upload_pr_documentation.yml
+index 181f5473f..9977120fa 100644
+--- a/.github/workflows/upload_pr_documentation.yml
++++ b/.github/workflows/upload_pr_documentation.yml
+@@ -8,7 +8,7 @@ on:
+ 
+ jobs:
+   build:
+-    uses: huggingface/doc-builder/.github/workflows/upload_pr_documentation.yml@9ad2de8582b56c017cb530c1165116d40433f1c6  # main
++    uses: huggingface/doc-builder/.github/workflows/upload_pr_documentation.yml@main
+     with:
+       package_name: datasets
+     secrets:
+diff --git a/setup.py b/setup.py
+index 4c0059fd2..e72d6d6a1 100644
+--- a/setup.py
++++ b/setup.py
+@@ -168,6 +168,7 @@ TESTS_REQUIRE = [
+     "faiss-cpu>=1.8.0.post1",  # Pins numpy < 2
+     "h5py",
+     "pylance",
++    "pyiceberg[sql-sqlite,pyarrow]",
+     "jax>=0.3.14; sys_platform != 'win32'",
+     "jaxlib>=0.3.14; sys_platform != 'win32'",
+     "lz4; python_version < '3.14'",  # python 3.14 gives ImportError: cannot import name '_compression' from partially initialized module 'lz4.frame
+@@ -211,6 +212,8 @@ PDFS_REQUIRE = ["pdfplumber>=0.11.4"]
+ 
+ NIBABEL_REQUIRE = ["nibabel>=5.3.2", "ipyniivue==2.4.2"]
+ 
++ICEBERG_REQUIRE = ["pyiceberg>=0.7.0"]
++
+ EXTRAS_REQUIRE = {
+     "audio": AUDIO_REQUIRE,
+     "vision": VISION_REQUIRE,
+@@ -229,11 +232,12 @@ EXTRAS_REQUIRE = {
+     "docs": DOCS_REQUIRE,
+     "pdfs": PDFS_REQUIRE,
+     "nibabel": NIBABEL_REQUIRE,
++    "iceberg": ICEBERG_REQUIRE,
+ }
+ 
+ setup(
+     name="datasets",
+-    version="4.8.6.dev0",  # expected format is one of x.y.z.dev0, or x.y.z.rc1 or x.y.z (no to dashes, yes to dots)
++    version="4.8.5.dev0",  # expected format is one of x.y.z.dev0, or x.y.z.rc1 or x.y.z (no to dashes, yes to dots)
+     description="HuggingFace community-driven open-source library of datasets",
+     long_description=open("README.md", encoding="utf-8").read(),
+     long_description_content_type="text/markdown",
+diff --git a/src/datasets/__init__.py b/src/datasets/__init__.py
+index 9cdb3c818..1e3bd3a1d 100644
+--- a/src/datasets/__init__.py
++++ b/src/datasets/__init__.py
+@@ -12,7 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-__version__ = "4.8.6.dev0"
++__version__ = "4.8.5.dev0"
+ 
+ from .arrow_dataset import Column, Dataset
+ from .arrow_reader import ReadInstruction
+diff --git a/src/datasets/arrow_dataset.py b/src/datasets/arrow_dataset.py
+index 366ce911e..0f29da034 100644
+--- a/src/datasets/arrow_dataset.py
++++ b/src/datasets/arrow_dataset.py
+@@ -75,7 +75,7 @@ from huggingface_hub.utils import EntryNotFoundError, HfHubHTTPError, Repository
+ from packaging import version
+ from tqdm.contrib.concurrent import thread_map
+ 
+-from . import __version__, config
++from . import config
+ from .arrow_reader import ArrowReader
+ from .arrow_writer import ArrowWriter, OptimizedTypedSequence
+ from .data_files import sanitize_patterns
+@@ -113,7 +113,6 @@ from .table import (
+     InMemoryTable,
+     MemoryMappedTable,
+     Table,
+-    _batch_arrow_table,
+     _memory_mapped_record_batch_reader_from_file,
+     cast_array_to_feature,
+     concat_tables,
+@@ -4100,17 +4099,6 @@ class Dataset(DatasetInfoMixin, IndexableMixin, TensorflowDatasetMixin):
+         def batch_fn(example):
+             return {k: [v] for k, v in example.items()}
+ 
+-        if self._format_type in ("arrow", "pandas", "polars"):
+-            return self.with_format("arrow").map(
+-                _batch_arrow_table,
+-                batched=True,
+-                batch_size=batch_size,
+-                drop_last_batch=drop_last_batch,
+-                num_proc=num_proc,
+-                new_fingerprint=new_fingerprint,
+-                desc="Batching examples",
+-            )
+-
+         return self.map(
+             batch_fn,
+             batched=True,
+@@ -5384,17 +5372,11 @@ class Dataset(DatasetInfoMixin, IndexableMixin, TensorflowDatasetMixin):
+         >>> ds.to_dict()
+         ```
+         """
+-        result = query_table(
++        return query_table(
+             table=self._data,
+             key=slice(0, len(self)),
+             indices=self._indices,
+         ).to_pydict()
+-        from .utils.json import get_json_field_paths_from_feature, json_decode_field
+-
+-        for json_field_path in get_json_field_paths_from_feature(self.features):
+-            col, *json_field_subpath = json_field_path
+-            result[col] = [json_decode_field(row, json_field_subpath) for row in result[col]]
+-        return result
+ 
+     def to_list(self) -> list:
+         """Returns the dataset as a Python list.
+@@ -5408,18 +5390,11 @@ class Dataset(DatasetInfoMixin, IndexableMixin, TensorflowDatasetMixin):
+         >>> ds.to_list()
+         ```
+         """
+-        result = query_table(
++        return query_table(
+             table=self._data,
+             key=slice(0, len(self)),
+             indices=self._indices,
+         ).to_pylist()
+-        from .utils.json import get_json_field_paths_from_feature, json_decode_field
+-
+-        for json_field_path in get_json_field_paths_from_feature(self.features):
+-            col, *json_field_subpath = json_field_path
+-            for row in result:
+-                row[col] = json_decode_field(row[col], json_field_subpath)
+-        return result
+ 
+     def to_json(
+         self,
+@@ -5861,7 +5836,7 @@ class Dataset(DatasetInfoMixin, IndexableMixin, TensorflowDatasetMixin):
+             (start + i, self.shard(num_shards=end - start, index=i, contiguous=True)) for i in range(end - start)
+         )
+ 
+-        api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++        api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+ 
+         additions: list[CommitOperationAdd] = []
+         new_parquet_paths: list[str] = []
+@@ -6159,7 +6134,7 @@ class Dataset(DatasetInfoMixin, IndexableMixin, TensorflowDatasetMixin):
+         if not data_dir:
+             data_dir = config_name if config_name != "default" else "data"  # for backward compatibility
+ 
+-        api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++        api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+         if repo_id.startswith("buckets/"):
+             if BucketNotFoundError is None:
+                 raise ImportError("Pushing datasets to buckets requires huggingface_hub>=1.6.0")
+@@ -6628,7 +6603,7 @@ def _push_to_repo(
+     embed_external_files: bool = True,
+     num_proc: Optional[int] = None,
+ ) -> CommitInfo:
+-    api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++    api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+     resolved_output_path = HfFileSystemResolvedRepositoryPath(
+         repo_id=repo_id, repo_type="dataset", revision=revision or "main", path_in_repo=""
+     )
+@@ -6791,7 +6766,7 @@ def _push_to_bucket(
+     embed_external_files: bool = True,
+     num_proc: Optional[int] = None,
+ ) -> None:
+-    api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++    api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+     resolved_output_path = HfFileSystemResolvedBucketPath(bucket_id=bucket_id, path=path)
+     hf_path = resolved_output_path.unresolve()
+     hffs = HfFileSystem(endpoint=config.HF_ENDPOINT, token=token)
+diff --git a/src/datasets/arrow_writer.py b/src/datasets/arrow_writer.py
+index 2bd6f9fc6..e51fa3f8c 100644
+--- a/src/datasets/arrow_writer.py
++++ b/src/datasets/arrow_writer.py
+@@ -652,7 +652,7 @@ class ArrowWriter:
+                     row[0][col].to_pylist()[0] if isinstance(row[0][col], (pa.Array, pa.ChunkedArray)) else row[0][col]
+                     for row in self.current_examples
+                 ]
+-        self._write_batch(batch_examples=batch_examples)
++        self.write_batch(batch_examples=batch_examples)
+         self.current_examples = []
+ 
+     def write_rows_on_file(self):
+@@ -660,7 +660,7 @@ class ArrowWriter:
+         if not self.current_rows:
+             return
+         table = pa.concat_tables(self.current_rows)
+-        self._write_table(table)
++        self.write_table(table)
+         self.current_rows = []
+ 
+     def write(
+@@ -709,15 +709,6 @@ class ArrowWriter:
+             batch_examples: the batch of examples to add.
+             try_original_type: use `try_type` when instantiating OptimizedTypedSequence if `True`, otherwise `try_type = None`.
+         """
+-        self.write_examples_on_file()  # in case there are buffered examples to write first
+-        self._write_batch(batch_examples, writer_batch_size=writer_batch_size, try_original_type=try_original_type)
+-
+-    def _write_batch(
+-        self,
+-        batch_examples: dict[str, list],
+-        writer_batch_size: Optional[int] = None,
+-        try_original_type: Optional[bool] = True,
+-    ):
+         if batch_examples and len(next(iter(batch_examples.values()))) == 0:
+             return
+         features = None if self.pa_writer is None and self.update_features else self._features
+@@ -761,10 +752,6 @@ class ArrowWriter:
+         Args:
+             example: the Table to add.
+         """
+-        self.write_rows_on_file()  # in case there are buffered rows to write first
+-        self._write_table(pa_table, writer_batch_size=writer_batch_size)
+-
+-    def _write_table(self, pa_table: pa.Table, writer_batch_size: Optional[int] = None):
+         if writer_batch_size is None:
+             writer_batch_size = self.writer_batch_size
+         if self.pa_writer is None:
+@@ -772,7 +759,7 @@ class ArrowWriter:
+         pa_table = pa_table.combine_chunks()
+         pa_table = table_cast(pa_table, self._schema)
+         if self.embed_local_files:
+-            pa_table = embed_table_storage(pa_table, local_files=True, remote_files=False)
++            pa_table = embed_table_storage(pa_table)
+         self._num_bytes += pa_table.nbytes
+         self._num_examples += pa_table.num_rows
+         self.pa_writer.write_table(pa_table, writer_batch_size)
+diff --git a/src/datasets/builder.py b/src/datasets/builder.py
+index b995242f0..604cb9cd2 100644
+--- a/src/datasets/builder.py
++++ b/src/datasets/builder.py
+@@ -24,7 +24,7 @@ import posixpath
+ import shutil
+ import time
+ import urllib
+-from collections.abc import Iterator
++from collections.abc import Iterator, Mapping
+ from dataclasses import dataclass
+ from functools import partial
+ from pathlib import Path
+@@ -56,7 +56,7 @@ from .filesystems import (
+     rename,
+ )
+ from .fingerprint import Hasher
+-from .info import DatasetInfo
++from .info import DatasetInfo, PostProcessedInfo
+ from .iterable_dataset import ArrowExamplesIterable, ExamplesIterable, IterableDataset
+ from .naming import INVALID_WINDOWS_CHARACTERS_IN_PATH, camelcase_to_snakecase
+ from .splits import Split, SplitDict, SplitGenerator, SplitInfo
+@@ -66,7 +66,7 @@ from .utils import logging
+ from .utils import tqdm as hf_tqdm
+ from .utils._filelock import FileLock
+ from .utils.file_utils import is_remote_url
+-from .utils.info_utils import VerificationMode, verify_checksums, verify_splits
++from .utils.info_utils import VerificationMode, get_size_checksum_dict, verify_checksums, verify_splits
+ from .utils.py_utils import (
+     classproperty,
+     convert_file_size_to_int,
+@@ -406,7 +406,7 @@ class DatasetBuilder:
+         self.dl_manager = None
+ 
+         # Set to True by "datasets-cli test" to generate file checksums for (deprecated) dataset_infos.json independently of verification_mode value.
+-        self._record_checksums = False
++        self._record_infos = False
+ 
+         # Set in `.download_and_prepare` once the format of the generated dataset is known
+         self._file_format = None
+@@ -805,7 +805,7 @@ class DatasetBuilder:
+                 download_config=download_config,
+                 data_dir=self.config.data_dir,
+                 base_path=base_path,
+-                record_checksums=self._record_checksums,
++                record_checksums=(self._record_infos or verification_mode == VerificationMode.ALL_CHECKS),
+             )
+ 
+         is_local = not is_remote_filesystem(self._fs)
+@@ -826,6 +826,7 @@ class DatasetBuilder:
+                 # We need to update the info in case some splits were added in the meantime
+                 # for example when calling load_dataset from multiple workers.
+                 self.info = self._load_info()
++                self.download_post_processing_resources(dl_manager)
+                 return
+ 
+             logger.info(f"Generating dataset {self.dataset_name} ({self._output_dir})")
+@@ -834,7 +835,7 @@ class DatasetBuilder:
+                     self.info.size_in_bytes or 0, directory=Path(self._output_dir).parent
+                 ):
+                     raise OSError(
+-                        f"Not enough disk space. Needed: {size_str(self.info.size_in_bytes or 0)} (download: {size_str(self.info.download_size or 0)}, generated: {size_str(self.info.dataset_size or 0)}"
++                        f"Not enough disk space. Needed: {size_str(self.info.size_in_bytes or 0)} (download: {size_str(self.info.download_size or 0)}, generated: {size_str(self.info.dataset_size or 0)}, post-processed: {size_str(self.info.post_processing_size or 0)})"
+                     )
+ 
+             @contextlib.contextmanager
+@@ -863,6 +864,7 @@ class DatasetBuilder:
+                 logger.info(
+                     f"Downloading and preparing dataset {self.dataset_name}/{self.config.name} "
+                     f"(download: {size_str(self.info.download_size)}, generated: {size_str(self.info.dataset_size)}, "
++                    f"post-processed: {size_str(self.info.post_processing_size)}, "
+                     f"total: {size_str(self.info.size_in_bytes)}) to {self._output_dir}..."
+                 )
+             else:
+@@ -887,13 +889,15 @@ class DatasetBuilder:
+                     )
+                     # Sync info
+                     self.info.dataset_size = sum(split.num_bytes for split in self.info.splits.values())
+-                    if dl_manager.record_checksums:
+-                        self.info.download_checksums = dl_manager.get_recorded_sizes_checksums()
++                    self.info.download_checksums = dl_manager.get_recorded_sizes_checksums()
+                     if self.info.download_size is not None:
+                         self.info.size_in_bytes = self.info.dataset_size + self.info.download_size
+                     # Save info
+                     self._save_info()
+ 
++            # Download post processing resources
++            self.download_post_processing_resources(dl_manager)
++
+             logger.info(
+                 f"Dataset {self.dataset_name} downloaded and prepared to {self._output_dir}. "
+                 f"Subsequent calls will reuse this data."
+@@ -952,6 +956,22 @@ class DatasetBuilder:
+         self.info.splits = split_dict
+         self.info.download_size = dl_manager.downloaded_size
+ 
++    def download_post_processing_resources(self, dl_manager):
++        for split in self.info.splits or []:
++            for resource_name, resource_file_name in self._post_processing_resources(split).items():
++                if not not is_remote_filesystem(self._fs):
++                    raise NotImplementedError(f"Post processing is not supported on filesystem {self._fs}")
++                if os.sep in resource_file_name:
++                    raise ValueError(f"Resources shouldn't be in a sub-directory: {resource_file_name}")
++                resource_path = os.path.join(self._output_dir, resource_file_name)
++                if not os.path.exists(resource_path):
++                    downloaded_resource_path = self._download_post_processing_resources(
++                        split, resource_name, dl_manager
++                    )
++                    if downloaded_resource_path:
++                        logger.info(f"Downloaded post-processing resource {resource_name} as {resource_file_name}")
++                        shutil.move(downloaded_resource_path, resource_path)
++
+     def _load_info(self) -> DatasetInfo:
+         return DatasetInfo.from_directory(self._output_dir, storage_options=self._fs.storage_options)
+ 
+@@ -972,6 +992,8 @@ class DatasetBuilder:
+     def as_dataset(
+         self,
+         split: Optional[Union[str, Split, list[str], list[Split]]] = None,
++        run_post_process=True,
++        verification_mode: Optional[Union[VerificationMode, str]] = None,
+         in_memory=False,
+     ) -> Union[Dataset, DatasetDict]:
+         """Return a Dataset for the specified split.
+@@ -979,6 +1001,9 @@ class DatasetBuilder:
+         Args:
+             split (`datasets.Split`):
+                 Which subset of the data to return.
++            run_post_process (`bool`, defaults to `True`):
++                Whether to run post-processing dataset transforms and/or add
++                indexes.
+             verification_mode ([`VerificationMode`] or `str`, defaults to `BASIC_CHECKS`):
+                 Verification mode determining the checks to run on the
+                 downloaded/processed dataset information (checksums/size/splits/...).
+@@ -1021,10 +1046,14 @@ class DatasetBuilder:
+         if split is None:
+             split = {s: s for s in self.info.splits}
+ 
++        verification_mode = VerificationMode(verification_mode or VerificationMode.BASIC_CHECKS)
++
+         # Create a dataset for each of the given splits
+         datasets = map_nested(
+             partial(
+                 self._build_single_dataset,
++                run_post_process=run_post_process,
++                verification_mode=verification_mode,
+                 in_memory=in_memory,
+             ),
+             split,
+@@ -1038,6 +1067,8 @@ class DatasetBuilder:
+     def _build_single_dataset(
+         self,
+         split: Union[str, ReadInstruction, Split],
++        run_post_process: bool,
++        verification_mode: VerificationMode,
+         in_memory: bool = False,
+     ):
+         """as_dataset for a single split."""
+@@ -1052,6 +1083,54 @@ class DatasetBuilder:
+             split=split,
+             in_memory=in_memory,
+         )
++        if run_post_process:
++            for resource_file_name in self._post_processing_resources(split).values():
++                if os.sep in resource_file_name:
++                    raise ValueError(f"Resources shouldn't be in a sub-directory: {resource_file_name}")
++            resources_paths = {
++                resource_name: os.path.join(self._output_dir, resource_file_name)
++                for resource_name, resource_file_name in self._post_processing_resources(split).items()
++            }
++            post_processed = self._post_process(ds, resources_paths)
++            if post_processed is not None:
++                ds = post_processed
++                recorded_checksums = {}
++                record_checksums = False
++                for resource_name, resource_path in resources_paths.items():
++                    size_checksum = get_size_checksum_dict(resource_path)
++                    recorded_checksums[resource_name] = size_checksum
++                if verification_mode == VerificationMode.ALL_CHECKS and record_checksums:
++                    if self.info.post_processed is None or self.info.post_processed.resources_checksums is None:
++                        expected_checksums = None
++                    else:
++                        expected_checksums = self.info.post_processed.resources_checksums.get(split)
++                    verify_checksums(expected_checksums, recorded_checksums, "post processing resources")
++                if self.info.post_processed is None:
++                    self.info.post_processed = PostProcessedInfo()
++                if self.info.post_processed.resources_checksums is None:
++                    self.info.post_processed.resources_checksums = {}
++                self.info.post_processed.resources_checksums[str(split)] = recorded_checksums
++                self.info.post_processing_size = sum(
++                    checksums_dict["num_bytes"]
++                    for split_checksums_dicts in self.info.post_processed.resources_checksums.values()
++                    for checksums_dict in split_checksums_dicts.values()
++                )
++                if self.info.dataset_size is not None and self.info.download_size is not None:
++                    self.info.size_in_bytes = (
++                        self.info.dataset_size + self.info.download_size + self.info.post_processing_size
++                    )
++                self._save_info()
++                ds._info.post_processed = self.info.post_processed
++                ds._info.post_processing_size = self.info.post_processing_size
++                ds._info.size_in_bytes = self.info.size_in_bytes
++                if self.info.post_processed.features is not None:
++                    if self.info.post_processed.features.type != ds.features.type:
++                        raise ValueError(
++                            f"Post-processed features info don't match the dataset:\nGot\n{self.info.post_processed.features}\nbut expected something like\n{ds.features}"
++                        )
++                    else:
++                        ds.info.features = self.info.post_processed.features
++
+         return ds
+ 
+     def _as_dataset(self, split: Union[ReadInstruction, Split] = Split.TRAIN, in_memory: bool = False) -> Dataset:
+@@ -1137,6 +1216,20 @@ class DatasetBuilder:
+             ex_iterable, info=self.info, split=splits_generator.name, token_per_repo_id=token_per_repo_id
+         )
+ 
++    def _post_process(self, dataset: Dataset, resources_paths: Mapping[str, str]) -> Optional[Dataset]:
++        """Run dataset transforms or add indexes"""
++        return None
++
++    def _post_processing_resources(self, split: str) -> dict[str, str]:
++        """Mapping resource_name -> resource_file_name"""
++        return {}
++
++    def _download_post_processing_resources(
++        self, split: str, resource_name: str, dl_manager: DownloadManager
++    ) -> Optional[str]:
++        """Download the resource using the download manager and return the downloaded path."""
++        return None
++
+     @abc.abstractmethod
+     def _split_generators(self, dl_manager: Union[DownloadManager, StreamingDownloadManager]):
+         """Specify feature dictionary generators and dataset splits.
+@@ -1794,10 +1887,7 @@ class ArrowBasedBuilder(DatasetBuilder):
+                             embed_local_files=embed_local_files,
+                         )
+                     try:
+-                        if len(table) == 1:
+-                            writer.write_row(table)
+-                        else:
+-                            writer.write_table(table)
++                        writer.write_table(table)
+                     except CastError as cast_error:
+                         raise DatasetGenerationCastError.from_cast_error(
+                             cast_error=cast_error,
+diff --git a/src/datasets/commands/test.py b/src/datasets/commands/test.py
+index 1aca3253d..e54169c30 100644
+--- a/src/datasets/commands/test.py
++++ b/src/datasets/commands/test.py
+@@ -144,7 +144,7 @@ class TestCommand(BaseDatasetsCLICommand):
+ 
+         for j, builder in enumerate(get_builders()):
+             print(f"Testing builder '{builder.config.name}' ({j + 1}/{n_builders})")
+-            builder._record_checksums = os.path.exists(
++            builder._record_infos = os.path.exists(
+                 os.path.join(builder.get_imported_module_dir(), datasets.config.DATASETDICT_INFOS_FILENAME)
+             )  # record checksums only if we need to update a (deprecated) dataset_infos.json
+             builder.download_and_prepare(
+diff --git a/src/datasets/dataset_dict.py b/src/datasets/dataset_dict.py
+index 4abea0a38..34f84f7fc 100644
+--- a/src/datasets/dataset_dict.py
++++ b/src/datasets/dataset_dict.py
+@@ -26,7 +26,7 @@ from huggingface_hub import (
+ from huggingface_hub.utils import EntryNotFoundError, HfHubHTTPError, RepositoryNotFoundError
+ from packaging import version
+ 
+-from . import __version__, config
++from . import config
+ from .arrow_dataset import (
+     Dataset,
+     _get_updated_dataset_card,
+@@ -1762,7 +1762,7 @@ class DatasetDict(dict[Union[str, NamedSplit], "Dataset"]):
+         if not data_dir:
+             data_dir = config_name if config_name != "default" else "data"  # for backward compatibility
+ 
+-        api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++        api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+         if repo_id.startswith("buckets/"):
+             if BucketNotFoundError is None:
+                 raise ImportError("Pushing datasets to buckets requires huggingface_hub>=1.6.0")
+@@ -2461,7 +2461,7 @@ class IterableDatasetDict(dict[Union[str, NamedSplit], IterableDataset]):
+         if not data_dir:
+             data_dir = config_name if config_name != "default" else "data"  # for backward compatibility
+ 
+-        api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++        api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+         if repo_id.startswith("buckets/"):
+             if BucketNotFoundError is None:
+                 raise ImportError("Pushing datasets to buckets requires huggingface_hub>=1.6.0")
+@@ -2534,7 +2534,7 @@ def _push_to_repo(
+     embed_external_files: bool = True,
+     num_proc: Optional[int] = None,
+ ) -> CommitInfo:
+-    api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++    api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+     resolved_output_path = HfFileSystemResolvedRepositoryPath(
+         repo_id=repo_id, repo_type="dataset", revision=revision or "main", path_in_repo=""
+     )
+@@ -2706,7 +2706,7 @@ def _push_to_bucket(
+     embed_external_files: bool = True,
+     num_proc: Optional[int] = None,
+ ) -> None:
+-    api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++    api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+     resolved_output_path = HfFileSystemResolvedBucketPath(bucket_id=bucket_id, path=path)
+     hf_path = resolved_output_path.unresolve()
+     hffs = HfFileSystem(endpoint=config.HF_ENDPOINT, token=token)
+diff --git a/src/datasets/download/download_manager.py b/src/datasets/download/download_manager.py
+index b3515bc0e..4e84d9947 100644
+--- a/src/datasets/download/download_manager.py
++++ b/src/datasets/download/download_manager.py
+@@ -77,7 +77,7 @@ class DownloadManager:
+         data_dir: Optional[str] = None,
+         download_config: Optional[DownloadConfig] = None,
+         base_path: Optional[str] = None,
+-        record_checksums=False,
++        record_checksums=True,
+     ):
+         """Download manager constructor.
+ 
+@@ -93,7 +93,7 @@ class DownloadManager:
+             base_path (`str`):
+                 base path that is used when relative paths are used to
+                 download files. This can be a remote url.
+-            record_checksums (`bool`, defaults to `False`):
++            record_checksums (`bool`, defaults to `True`):
+                 Whether to record the checksums of the downloaded files. If None, the value is inferred from the builder.
+         """
+         self._dataset_name = dataset_name
+diff --git a/src/datasets/features/audio.py b/src/datasets/features/audio.py
+index ac2ddeef6..a398b110d 100644
+--- a/src/datasets/features/audio.py
++++ b/src/datasets/features/audio.py
+@@ -10,7 +10,7 @@ import pyarrow as pa
+ from .. import config
+ from ..download.download_config import DownloadConfig
+ from ..table import array_cast
+-from ..utils.file_utils import is_local_path, is_remote_url, xopen
++from ..utils.file_utils import is_local_path, xopen
+ from ..utils.py_utils import no_op_if_value_is_null, string_to_dict
+ 
+ 
+@@ -277,25 +277,12 @@ class Audio:
+             storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+-    def embed_storage(
+-        self, storage: pa.StructArray, token_per_repo_id=None, local_files: bool = True, remote_files: bool = True
+-    ) -> pa.StructArray:
++    def embed_storage(self, storage: pa.StructArray, token_per_repo_id=None) -> pa.StructArray:
+         """Embed audio files into the Arrow array.
+ 
+         Args:
+             storage (`pa.StructArray`):
+                 PyArrow array to embed.
+-            token_per_repo_id (`dict`, optional):
+-                Dictionary repo_id -> token to fetch the files bytes.
+-            local_files (`bool`, defaults to `True`)
+-                Whether to embed local files data in the array
+-
+-                <Added version="4.8.5"/>
+-            remote_files (`bool`, defaults to `True`)
+-                Whether to embed remote files data in the array.
+-                E.g. files with paths that start with hf:// or https://
+-
+-                <Added version="4.8.5"/>
+ 
+         Returns:
+             `pa.StructArray`: Array in the Audio arrow storage type, that is
+@@ -318,32 +305,16 @@ class Audio:
+ 
+         bytes_array = pa.array(
+             [
+-                (
+-                    path_to_bytes(x["path"])
+-                    if x["bytes"] is None
+-                    and ((local_files and is_local_path(x["path"])) or (remote_files and is_remote_url(x["path"])))
+-                    else x["bytes"]
+-                )
+-                if x is not None
+-                else None
++                (path_to_bytes(x["path"]) if x["bytes"] is None else x["bytes"]) if x is not None else None
+                 for x in storage.to_pylist()
+             ],
+             type=pa.binary(),
+         )
+         path_array = pa.array(
+-            [
+-                (
+-                    os.path.basename(path)
+-                    if (local_files and is_local_path(path)) or (remote_files and is_remote_url(path))
+-                    else path
+-                )
+-                if path is not None
+-                else None
+-                for path in storage.field("path").to_pylist()
+-            ],
++            [os.path.basename(path) if path is not None else None for path in storage.field("path").to_pylist()],
+             type=pa.string(),
+         )
+-        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
++        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=bytes_array.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+ 
+diff --git a/src/datasets/features/image.py b/src/datasets/features/image.py
+index 9a7953dd6..98586627c 100644
+--- a/src/datasets/features/image.py
++++ b/src/datasets/features/image.py
+@@ -12,7 +12,7 @@ import pyarrow as pa
+ from .. import config
+ from ..download.download_config import DownloadConfig
+ from ..table import array_cast
+-from ..utils.file_utils import is_local_path, is_remote_url, xopen
++from ..utils.file_utils import is_local_path, xopen
+ from ..utils.py_utils import first_non_null_value, no_op_if_value_is_null, string_to_dict
+ 
+ 
+@@ -272,25 +272,12 @@ class Image:
+             )
+         return array_cast(storage, self.pa_type)
+ 
+-    def embed_storage(
+-        self, storage: pa.StructArray, token_per_repo_id=None, local_files: bool = True, remote_files: bool = True
+-    ) -> pa.StructArray:
++    def embed_storage(self, storage: pa.StructArray, token_per_repo_id=None) -> pa.StructArray:
+         """Embed image files into the Arrow array.
+ 
+         Args:
+             storage (`pa.StructArray`):
+                 PyArrow array to embed.
+-            token_per_repo_id (`dict`, optional):
+-                Dictionary repo_id -> token to fetch the files bytes.
+-            local_files (`bool`, defaults to `True`)
+-                Whether to embed local files data in the array
+-
+-                <Added version="4.8.5"/>
+-            remote_files (`bool`, defaults to `True`)
+-                Whether to embed remote files data in the array.
+-                E.g. files with paths that start with hf:// or https://
+-
+-                <Added version="4.8.5"/>
+ 
+         Returns:
+             `pa.StructArray`: Array in the Image arrow storage type, that is
+@@ -313,32 +300,16 @@ class Image:
+ 
+         bytes_array = pa.array(
+             [
+-                (
+-                    path_to_bytes(x["path"])
+-                    if x["bytes"] is None
+-                    and ((local_files and is_local_path(x["path"])) or (remote_files and is_remote_url(x["path"])))
+-                    else x["bytes"]
+-                )
+-                if x is not None
+-                else None
++                (path_to_bytes(x["path"]) if x["bytes"] is None else x["bytes"]) if x is not None else None
+                 for x in storage.to_pylist()
+             ],
+             type=pa.binary(),
+         )
+         path_array = pa.array(
+-            [
+-                (
+-                    os.path.basename(path)
+-                    if (local_files and is_local_path(path)) or (remote_files and is_remote_url(path))
+-                    else path
+-                )
+-                if path is not None
+-                else None
+-                for path in storage.field("path").to_pylist()
+-            ],
++            [os.path.basename(path) if path is not None else None for path in storage.field("path").to_pylist()],
+             type=pa.string(),
+         )
+-        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
++        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=bytes_array.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+ 
+diff --git a/src/datasets/features/nifti.py b/src/datasets/features/nifti.py
+index 1e78cad9e..6a45969b3 100644
+--- a/src/datasets/features/nifti.py
++++ b/src/datasets/features/nifti.py
+@@ -8,7 +8,7 @@ import pyarrow as pa
+ from .. import config
+ from ..download.download_config import DownloadConfig
+ from ..table import array_cast
+-from ..utils.file_utils import is_local_path, is_remote_url, xopen
++from ..utils.file_utils import is_local_path, xopen
+ from ..utils.py_utils import no_op_if_value_is_null, string_to_dict
+ 
+ 
+@@ -210,25 +210,12 @@ class Nifti:
+ 
+         return Nifti1ImageWrapper(nifti)
+ 
+-    def embed_storage(
+-        self, storage: pa.StructArray, token_per_repo_id=None, local_files: bool = True, remote_files: bool = True
+-    ) -> pa.StructArray:
++    def embed_storage(self, storage: pa.StructArray, token_per_repo_id=None) -> pa.StructArray:
+         """Embed NifTI files into the Arrow array.
+ 
+         Args:
+             storage (`pa.StructArray`):
+                 PyArrow array to embed.
+-            token_per_repo_id (`dict`, optional):
+-                Dictionary repo_id -> token to fetch the files bytes.
+-            local_files (`bool`, defaults to `True`)
+-                Whether to embed local files data in the array
+-
+-                <Added version="4.8.5"/>
+-            remote_files (`bool`, defaults to `True`)
+-                Whether to embed remote files data in the array.
+-                E.g. files with paths that start with hf:// or https://
+-
+-                <Added version="4.8.5"/>
+ 
+         Returns:
+             `pa.StructArray`: Array in the NifTI arrow storage type, that is
+@@ -251,32 +238,16 @@ class Nifti:
+ 
+         bytes_array = pa.array(
+             [
+-                (
+-                    path_to_bytes(x["path"])
+-                    if x["bytes"] is None
+-                    and ((local_files and is_local_path(x["path"])) or (remote_files and is_remote_url(x["path"])))
+-                    else x["bytes"]
+-                )
+-                if x is not None
+-                else None
++                (path_to_bytes(x["path"]) if x["bytes"] is None else x["bytes"]) if x is not None else None
+                 for x in storage.to_pylist()
+             ],
+             type=pa.binary(),
+         )
+         path_array = pa.array(
+-            [
+-                (
+-                    os.path.basename(path)
+-                    if (local_files and is_local_path(path)) or (remote_files and is_remote_url(path))
+-                    else path
+-                )
+-                if path is not None
+-                else None
+-                for path in storage.field("path").to_pylist()
+-            ],
++            [os.path.basename(path) if path is not None else None for path in storage.field("path").to_pylist()],
+             type=pa.string(),
+         )
+-        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
++        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=bytes_array.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+     def flatten(self) -> Union["FeatureType", Dict[str, "FeatureType"]]:
+diff --git a/src/datasets/features/pdf.py b/src/datasets/features/pdf.py
+index 74c7560d5..756530554 100644
+--- a/src/datasets/features/pdf.py
++++ b/src/datasets/features/pdf.py
+@@ -9,7 +9,7 @@ import pyarrow as pa
+ from .. import config
+ from ..download.download_config import DownloadConfig
+ from ..table import array_cast
+-from ..utils.file_utils import is_local_path, is_remote_url, xopen
++from ..utils.file_utils import is_local_path, xopen
+ from ..utils.py_utils import no_op_if_value_is_null, string_to_dict
+ 
+ 
+@@ -218,25 +218,12 @@ class Pdf:
+             storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+-    def embed_storage(
+-        self, storage: pa.StructArray, token_per_repo_id=None, local_files: bool = True, remote_files: bool = True
+-    ) -> pa.StructArray:
++    def embed_storage(self, storage: pa.StructArray, token_per_repo_id=None) -> pa.StructArray:
+         """Embed PDF files into the Arrow array.
+ 
+         Args:
+             storage (`pa.StructArray`):
+                 PyArrow array to embed.
+-            token_per_repo_id (`dict`, optional):
+-                Dictionary repo_id -> token to fetch the files bytes.
+-            local_files (`bool`, defaults to `True`)
+-                Whether to embed local files data in the array
+-
+-                <Added version="4.8.5"/>
+-            remote_files (`bool`, defaults to `True`)
+-                Whether to embed remote files data in the array.
+-                E.g. files with paths that start with hf:// or https://
+-
+-                <Added version="4.8.5"/>
+ 
+         Returns:
+             `pa.StructArray`: Array in the PDF arrow storage type, that is
+@@ -259,32 +246,16 @@ class Pdf:
+ 
+         bytes_array = pa.array(
+             [
+-                (
+-                    path_to_bytes(x["path"])
+-                    if x["bytes"] is None
+-                    and ((local_files and is_local_path(x["path"])) or (remote_files and is_remote_url(x["path"])))
+-                    else x["bytes"]
+-                )
+-                if x is not None
+-                else None
++                (path_to_bytes(x["path"]) if x["bytes"] is None else x["bytes"]) if x is not None else None
+                 for x in storage.to_pylist()
+             ],
+             type=pa.binary(),
+         )
+         path_array = pa.array(
+-            [
+-                (
+-                    os.path.basename(path)
+-                    if (local_files and is_local_path(path)) or (remote_files and is_remote_url(path))
+-                    else path
+-                )
+-                if path is not None
+-                else None
+-                for path in storage.field("path").to_pylist()
+-            ],
++            [os.path.basename(path) if path is not None else None for path in storage.field("path").to_pylist()],
+             type=pa.string(),
+         )
+-        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
++        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=bytes_array.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+ 
+diff --git a/src/datasets/features/video.py b/src/datasets/features/video.py
+index 8522c2cb1..cf1c19551 100644
+--- a/src/datasets/features/video.py
++++ b/src/datasets/features/video.py
+@@ -9,7 +9,7 @@ import pyarrow as pa
+ from .. import config
+ from ..download.download_config import DownloadConfig
+ from ..table import array_cast
+-from ..utils.file_utils import is_local_path, is_remote_url, xopen
++from ..utils.file_utils import is_local_path, xopen
+ from ..utils.py_utils import no_op_if_value_is_null, string_to_dict
+ 
+ 
+@@ -288,25 +288,12 @@ class Video:
+             )
+         return array_cast(storage, self.pa_type)
+ 
+-    def embed_storage(
+-        self, storage: pa.StructArray, token_per_repo_id=None, local_files: bool = True, remote_files: bool = True
+-    ) -> pa.StructArray:
++    def embed_storage(self, storage: pa.StructArray, token_per_repo_id=None) -> pa.StructArray:
+         """Embed image files into the Arrow array.
+ 
+         Args:
+             storage (`pa.StructArray`):
+                 PyArrow array to embed.
+-            token_per_repo_id (`dict`, optional):
+-                Dictionary repo_id -> token to fetch the files bytes.
+-            local_files (`bool`, defaults to `True`)
+-                Whether to embed local files data in the array
+-
+-                <Added version="4.8.5"/>
+-            remote_files (`bool`, defaults to `True`)
+-                Whether to embed remote files data in the array.
+-                E.g. files with paths that start with hf:// or https://
+-
+-                <Added version="4.8.5"/>
+ 
+         Returns:
+             `pa.StructArray`: Array in the Video arrow storage type, that is
+@@ -329,32 +316,16 @@ class Video:
+ 
+         bytes_array = pa.array(
+             [
+-                (
+-                    path_to_bytes(x["path"])
+-                    if x["bytes"] is None
+-                    and ((local_files and is_local_path(x["path"])) or (remote_files and is_remote_url(x["path"])))
+-                    else x["bytes"]
+-                )
+-                if x is not None
+-                else None
++                (path_to_bytes(x["path"]) if x["bytes"] is None else x["bytes"]) if x is not None else None
+                 for x in storage.to_pylist()
+             ],
+             type=pa.binary(),
+         )
+         path_array = pa.array(
+-            [
+-                (
+-                    os.path.basename(path)
+-                    if (local_files and is_local_path(path)) or (remote_files and is_remote_url(path))
+-                    else path
+-                )
+-                if path is not None
+-                else None
+-                for path in storage.field("path").to_pylist()
+-            ],
++            [os.path.basename(path) if path is not None else None for path in storage.field("path").to_pylist()],
+             type=pa.string(),
+         )
+-        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=storage.is_null())
++        storage = pa.StructArray.from_arrays([bytes_array, path_array], ["bytes", "path"], mask=bytes_array.is_null())
+         return array_cast(storage, self.pa_type)
+ 
+ 
+diff --git a/src/datasets/hub.py b/src/datasets/hub.py
+index fd64e04cd..c6594760d 100644
+--- a/src/datasets/hub.py
++++ b/src/datasets/hub.py
+@@ -12,7 +12,6 @@ from huggingface_hub import (
+ )
+ 
+ import datasets.config
+-from datasets import __version__
+ from datasets.info import DatasetInfosDict
+ from datasets.load import load_dataset_builder
+ from datasets.utils.metadata import MetadataConfigs
+@@ -75,12 +74,7 @@ def delete_from_hub(
+     operations.append(
+         CommitOperationAdd(path_in_repo=datasets.config.REPOCARD_FILENAME, path_or_fileobj=str(dataset_card).encode())
+     )
+-    api = HfApi(
+-        endpoint=datasets.config.HF_ENDPOINT,
+-        token=token,
+-        library_name="datasets",
+-        library_version=__version__,
+-    )
++    api = HfApi(endpoint=datasets.config.HF_ENDPOINT, token=token)
+     commit_info = api.create_commit(
+         repo_id,
+         operations=operations,
+@@ -96,12 +90,7 @@ def delete_from_hub(
+ 
+ 
+ def _delete_files(dataset_id, revision=None, token=None):
+-    hf_api = HfApi(
+-        endpoint=datasets.config.HF_ENDPOINT,
+-        token=token,
+-        library_name="datasets",
+-        library_version=__version__,
+-    )
++    hf_api = HfApi(endpoint=datasets.config.HF_ENDPOINT, token=token)
+     repo_files = hf_api.list_repo_files(
+         dataset_id,
+         repo_type="dataset",
+diff --git a/src/datasets/info.py b/src/datasets/info.py
+index 13fd972cb..2650efc33 100644
+--- a/src/datasets/info.py
++++ b/src/datasets/info.py
+@@ -109,7 +109,7 @@ class DatasetInfo:
+         features ([`Features`], *optional*):
+             The features used to specify the dataset's column types.
+         post_processed (`PostProcessedInfo`, *optional*):
+-            Deprecated. Information regarding the resources of a possible post-processing of a dataset. For example, it can contain the information of an index.
++            Information regarding the resources of a possible post-processing of a dataset. For example, it can contain the information of an index.
+         supervised_keys (`SupervisedKeysData`, *optional*):
+             Specifies the input feature and the label for supervised learning if applicable for the dataset (legacy from TFDS).
+         builder_name (`str`, *optional*):
+@@ -125,7 +125,7 @@ class DatasetInfo:
+         download_size (`int`, *optional*):
+             The size of the files to download to generate the dataset, in bytes.
+         post_processing_size (`int`, *optional*):
+-            Deprecated. Size of the dataset in bytes after post-processing, if any.
++            Size of the dataset in bytes after post-processing, if any.
+         dataset_size (`int`, *optional*):
+             The combined size in bytes of the Arrow tables for all splits.
+         size_in_bytes (`int`, *optional*):
+@@ -140,7 +140,7 @@ class DatasetInfo:
+     homepage: str = dataclasses.field(default_factory=str)
+     license: str = dataclasses.field(default_factory=str)
+     features: Optional[Features] = None
+-    post_processed: Optional[PostProcessedInfo] = None  # kept for bawkard compat
++    post_processed: Optional[PostProcessedInfo] = None
+     supervised_keys: Optional[SupervisedKeysData] = None
+ 
+     # Set later by the builder
+@@ -320,16 +320,6 @@ class DatasetInfo:
+         field_names = {f.name for f in dataclasses.fields(cls)}
+         return cls(**{k: v for k, v in yaml_data.items() if k in field_names})
+ 
+-    def __repr__(self):
+-        return (
+-            self.__class__.__qualname__
+-            + "("
+-            + ", ".join(
+-                [f"{f.name}={repr(getattr(self, f.name))}" for f in dataclasses.fields(self) if getattr(self, f.name)]
+-            )
+-            + ")"
+-        )
+-
+ 
+ class DatasetInfosDict(dict[str, DatasetInfo]):
+     def write_to_directory(self, dataset_infos_dir, overwrite=False, pretty_print=False) -> None:
+diff --git a/src/datasets/io/csv.py b/src/datasets/io/csv.py
+index 13d87d040..4ac2ea113 100644
+--- a/src/datasets/io/csv.py
++++ b/src/datasets/io/csv.py
+@@ -60,7 +60,9 @@ class CsvDatasetReader(AbstractDatasetReader):
+                 base_path=base_path,
+                 num_proc=self.num_proc,
+             )
+-            dataset = self.builder.as_dataset(split=self.split, in_memory=self.keep_in_memory)
++            dataset = self.builder.as_dataset(
++                split=self.split, verification_mode=verification_mode, in_memory=self.keep_in_memory
++            )
+         return dataset
+ 
+ 
+diff --git a/src/datasets/io/generator.py b/src/datasets/io/generator.py
+index cb5ae767b..6c1eaee9b 100644
+--- a/src/datasets/io/generator.py
++++ b/src/datasets/io/generator.py
+@@ -56,7 +56,9 @@ class GeneratorDatasetInputStream(AbstractDatasetInputStream):
+                 base_path=base_path,
+                 num_proc=self.num_proc,
+             )
+-            dataset = self.builder.as_dataset(split=self.builder.config.split, in_memory=self.keep_in_memory)
++            dataset = self.builder.as_dataset(
++                split=self.builder.config.split, verification_mode=verification_mode, in_memory=self.keep_in_memory
++            )
+             if self.fingerprint:
+                 dataset._fingerprint = self.fingerprint
+         return dataset
+diff --git a/src/datasets/io/json.py b/src/datasets/io/json.py
+index eb347aea7..41abfa518 100644
+--- a/src/datasets/io/json.py
++++ b/src/datasets/io/json.py
+@@ -1,6 +1,5 @@
+ import multiprocessing
+ import os
+-from functools import partial
+ from typing import BinaryIO, Optional, Union
+ 
+ import fsspec
+@@ -9,7 +8,6 @@ from .. import Dataset, Features, NamedSplit, config
+ from ..formatting import query_table
+ from ..packaged_modules.json.json import Json
+ from ..utils import tqdm as hf_tqdm
+-from ..utils.json import get_json_field_paths_from_feature, json_decode_field
+ from ..utils.typing import NestedDataStructureLike, PathLike
+ from .abc import AbstractDatasetReader
+ 
+@@ -65,7 +63,9 @@ class JsonDatasetReader(AbstractDatasetReader):
+                 base_path=base_path,
+                 num_proc=self.num_proc,
+             )
+-            dataset = self.builder.as_dataset(split=self.split, in_memory=self.keep_in_memory)
++            dataset = self.builder.as_dataset(
++                split=self.split, verification_mode=verification_mode, in_memory=self.keep_in_memory
++            )
+         return dataset
+ 
+ 
+@@ -131,11 +131,7 @@ class JsonDatasetWriter:
+             key=slice(offset, offset + self.batch_size),
+             indices=self.dataset._indices,
+         )
+-        batch = batch.to_pandas()
+-        for json_field_path in get_json_field_paths_from_feature(self.dataset.features):
+-            col, *json_field_subpath = json_field_path
+-            batch[col] = batch[col].apply(partial(json_decode_field, json_field_path=json_field_subpath))
+-        json_str = batch.to_json(path_or_buf=None, orient=orient, lines=lines, **to_json_kwargs)
++        json_str = batch.to_pandas().to_json(path_or_buf=None, orient=orient, lines=lines, **to_json_kwargs)
+         if not json_str.endswith("\n"):
+             json_str += "\n"
+         return json_str.encode(self.encoding)
+diff --git a/src/datasets/io/parquet.py b/src/datasets/io/parquet.py
+index 7d17fbfdf..e2617658b 100644
+--- a/src/datasets/io/parquet.py
++++ b/src/datasets/io/parquet.py
+@@ -66,7 +66,9 @@ class ParquetDatasetReader(AbstractDatasetReader):
+                 base_path=base_path,
+                 num_proc=self.num_proc,
+             )
+-            dataset = self.builder.as_dataset(split=self.split, in_memory=self.keep_in_memory)
++            dataset = self.builder.as_dataset(
++                split=self.split, verification_mode=verification_mode, in_memory=self.keep_in_memory
++            )
+         return dataset
+ 
+ 
+diff --git a/src/datasets/io/sql.py b/src/datasets/io/sql.py
+index f74374a5a..2331e3e64 100644
+--- a/src/datasets/io/sql.py
++++ b/src/datasets/io/sql.py
+@@ -47,7 +47,9 @@ class SqlDatasetReader(AbstractDatasetInputStream):
+         )
+ 
+         # Build dataset for splits
+-        dataset = self.builder.as_dataset(split="train", in_memory=self.keep_in_memory)
++        dataset = self.builder.as_dataset(
++            split="train", verification_mode=verification_mode, in_memory=self.keep_in_memory
++        )
+         return dataset
+ 
+ 
+diff --git a/src/datasets/io/text.py b/src/datasets/io/text.py
+index d010ddcbd..58963f3c7 100644
+--- a/src/datasets/io/text.py
++++ b/src/datasets/io/text.py
+@@ -54,5 +54,7 @@ class TextDatasetReader(AbstractDatasetReader):
+                 base_path=base_path,
+                 num_proc=self.num_proc,
+             )
+-            dataset = self.builder.as_dataset(split=self.split, in_memory=self.keep_in_memory)
++            dataset = self.builder.as_dataset(
++                split=self.split, verification_mode=verification_mode, in_memory=self.keep_in_memory
++            )
+         return dataset
+diff --git a/src/datasets/iterable_dataset.py b/src/datasets/iterable_dataset.py
+index 6db496569..cc0dde529 100644
+--- a/src/datasets/iterable_dataset.py
++++ b/src/datasets/iterable_dataset.py
+@@ -33,7 +33,7 @@ from huggingface_hub import (
+ from huggingface_hub.utils import RepositoryNotFoundError
+ from packaging import version
+ 
+-from . import __version__, config
++from . import config
+ from .arrow_dataset import Dataset, DatasetInfoMixin, _push_to_bucket, _push_to_repo
+ from .features import Features
+ from .features.features import (
+@@ -58,7 +58,7 @@ from .formatting import (
+ from .info import DatasetInfo
+ from .naming import _split_re
+ from .splits import NamedSplit, Split, SplitInfo
+-from .table import _batch_arrow_table, cast_table_to_features, embed_table_storage, read_schema_from_file, table_cast
++from .table import cast_table_to_features, embed_table_storage, read_schema_from_file, table_cast
+ from .utils import tqdm as hf_tqdm
+ from .utils.logging import get_logger
+ from .utils.py_utils import (
+@@ -3428,11 +3428,10 @@ class IterableDataset(DatasetInfoMixin):
+                 force_convert_to_arrow=True,
+             )
+         else:
+-            if self._ex_iterable.iter_arrow:
+-                if self._formatting or input_features:
+-                    ex_iterable = RebatchedArrowExamplesIterable(
+-                        self._ex_iterable, batch_size=batch_size if batched else 1, drop_last_batch=drop_last_batch
+-                    )
++            if self._formatting and self._ex_iterable.iter_arrow:
++                ex_iterable = RebatchedArrowExamplesIterable(
++                    self._ex_iterable, batch_size=batch_size if batched else 1, drop_last_batch=drop_last_batch
++                )
+             if self._formatting or input_features:
+                 # apply formatting after iter_arrow to avoid re-encoding the examples
+                 ex_iterable = FormattedExamplesIterable(
+@@ -4224,18 +4223,6 @@ class IterableDataset(DatasetInfoMixin):
+             features = Features({col: List(feature) for col, feature in self.features.items()})
+         else:
+             features = None
+-        if self._formatting and self._formatting.is_table:
+-            return (
+-                self.with_format("arrow")
+-                .map(
+-                    _batch_arrow_table,
+-                    batched=True,
+-                    batch_size=batch_size,
+-                    drop_last_batch=drop_last_batch,
+-                    features=features,
+-                )
+-                .with_format(self._formatting.format_type)
+-            )
+         return self.map(
+             _batch_fn, batched=True, batch_size=batch_size, drop_last_batch=drop_last_batch, features=features
+         )
+@@ -4574,7 +4561,7 @@ class IterableDataset(DatasetInfoMixin):
+             (start + i, self.shard(num_shards=end - start, index=i, contiguous=True)) for i in range(end - start)
+         )
+ 
+-        api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++        api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+ 
+         dataset_nbytes = 0
+         num_examples = 0
+@@ -4890,7 +4877,7 @@ class IterableDataset(DatasetInfoMixin):
+         if not data_dir:
+             data_dir = config_name if config_name != "default" else "data"  # for backward compatibility
+ 
+-        api = HfApi(endpoint=config.HF_ENDPOINT, token=token, library_name="datasets", library_version=__version__)
++        api = HfApi(endpoint=config.HF_ENDPOINT, token=token)
+         if repo_id.startswith("buckets/"):
+             if BucketNotFoundError is None:
+                 raise ImportError("Pushing datasets to buckets requires huggingface_hub>=1.6.0")
+diff --git a/src/datasets/load.py b/src/datasets/load.py
+index 560bcad3a..e938cb35e 100644
+--- a/src/datasets/load.py
++++ b/src/datasets/load.py
+@@ -669,7 +669,7 @@ class HubDatasetModuleFactory(_DatasetModuleFactory):
+             ]
+             default_config_name = None
+         builder_kwargs = {
+-            "base_path": base_path,
++            "base_path": hf_dataset_url(self.name, "", revision=self.commit_hash).rstrip("/"),
+             "repo_id": self.name,
+             "dataset_name": camelcase_to_snakecase(Path(self.name).name),
+         }
+@@ -1717,7 +1717,7 @@ def load_dataset(
+     keep_in_memory = (
+         keep_in_memory if keep_in_memory is not None else is_small_dataset(builder_instance.info.dataset_size)
+     )
+-    ds = builder_instance.as_dataset(split=split, in_memory=keep_in_memory)
++    ds = builder_instance.as_dataset(split=split, verification_mode=verification_mode, in_memory=keep_in_memory)
+ 
+     return ds
+ 
+diff --git a/src/datasets/packaged_modules/__init__.py b/src/datasets/packaged_modules/__init__.py
+index f0ebcb796..efcfcf4b6 100644
+--- a/src/datasets/packaged_modules/__init__.py
++++ b/src/datasets/packaged_modules/__init__.py
+@@ -10,6 +10,7 @@ from .cache import cache
+ from .csv import csv
+ from .eval import eval
+ from .hdf5 import hdf5
++from .iceberg import iceberg
+ from .imagefolder import imagefolder
+ from .json import json
+ from .lance import lance
+@@ -55,6 +56,7 @@ _PACKAGED_DATASETS_MODULES = {
+     "hdf5": (hdf5.__name__, _hash_python_lines(inspect.getsource(hdf5).splitlines())),
+     "eval": (eval.__name__, _hash_python_lines(inspect.getsource(eval).splitlines())),
+     "lance": (lance.__name__, _hash_python_lines(inspect.getsource(lance).splitlines())),
++    "iceberg": (iceberg.__name__, _hash_python_lines(inspect.getsource(iceberg).splitlines())),
+ }
+ 
+ # get importable module names and hash for caching
+diff --git a/src/datasets/packaged_modules/folder_based_builder/folder_based_builder.py b/src/datasets/packaged_modules/folder_based_builder/folder_based_builder.py
+index 82586c648..513f13e93 100644
+--- a/src/datasets/packaged_modules/folder_based_builder/folder_based_builder.py
++++ b/src/datasets/packaged_modules/folder_based_builder/folder_based_builder.py
+@@ -400,9 +400,8 @@ class FolderBasedBuilder(datasets.GeneratorBasedBuilder):
+                             feature_path[0] + "_file_name", None
+                         )
+                     elif len(feature_path) == 0:
+-                        if item is not None:
+-                            file_relpath = os.path.normpath(item).replace("\\", "/")
+-                            item = os.path.join(downloaded_metadata_dir, file_relpath)
++                        file_relpath = os.path.normpath(item).replace("\\", "/")
++                        item = os.path.join(downloaded_metadata_dir, file_relpath)
+                     return item
+ 
+                 for pa_metadata_table in self._read_metadata(downloaded_metadata_file, metadata_ext=metadata_ext):
+diff --git a/src/datasets/packaged_modules/iceberg/__init__.py b/src/datasets/packaged_modules/iceberg/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/src/datasets/packaged_modules/iceberg/iceberg.py b/src/datasets/packaged_modules/iceberg/iceberg.py
+new file mode 100644
+index 000000000..447ed10fc
+--- /dev/null
++++ b/src/datasets/packaged_modules/iceberg/iceberg.py
+@@ -0,0 +1,173 @@
++from dataclasses import dataclass
++from typing import TYPE_CHECKING, Dict, List, Optional, Union
++
++import pyarrow as pa
++
++import datasets
++from datasets.builder import Key
++from datasets.features import Features
++from datasets.table import table_cast
++
++
++if TYPE_CHECKING:
++    from pyiceberg.catalog import Catalog
++    from pyiceberg.expressions import BooleanExpression
++    from pyiceberg.table import FileScanTask
++
++logger = datasets.utils.logging.get_logger(__name__)
++
++
++@dataclass
++class IcebergConfig(datasets.BuilderConfig):
++    """BuilderConfig for Apache Iceberg format.
++
++    Args:
++        catalog (`pyiceberg.catalog.Catalog`):
++            A pre-configured pyiceberg Catalog object.
++        table (`str` or `Dict[str, str]`):
++            Iceberg table identifier, e.g. ``"db.my_table"``.
++            Pass a dict to map split names to table identifiers,
++            e.g. ``{"train": "db.train", "test": "db.test"}``.
++        features (`Features`, *optional*):
++            Cast the data to these features.
++        columns (`List[str]`, *optional*):
++            List of columns to load; others are ignored.
++        filters (`str` or `BooleanExpression`, *optional*):
++            Row filter with predicate pushdown. Accepts a SQL-style string
++            (``"col > 1 AND col2 == 'foo'"``), or a pyiceberg
++            ``BooleanExpression`` object. Parsed by pyiceberg internally.
++        batch_size (`int`, defaults to ``131072``):
++            Number of rows per RecordBatch when reading.
++        snapshot_id (`int`, *optional*):
++            Load a specific snapshot for time-travel queries.
++    """
++
++    catalog: Optional["Catalog"] = None
++    table: Optional[Union[str, Dict[str, str]]] = None
++    features: Optional[datasets.Features] = None
++    columns: Optional[List[str]] = None
++    filters: Optional[Union[str, "BooleanExpression"]] = None
++    batch_size: int = 131072
++    snapshot_id: Optional[int] = None
++
++    def __post_init__(self):
++        super().__post_init__()
++        if self.catalog is None:
++            raise ValueError("`catalog` must be a pyiceberg Catalog object, but got None.")
++        if self.table is None:
++            raise ValueError("`table` must be specified, e.g. table='db.my_table'")
++        # Normalize table to Dict[split_name, table_identifier]
++        if isinstance(self.table, str):
++            self.table = {"train": self.table}
++        # Generate a stable config name for caching
++        if self.name == "default":
++            catalog_id = f"{self.catalog.__class__.__name__}_{self.catalog.name}"
++            table_id = "_".join(sorted(self.table.values()))
++            self.name = f"{catalog_id}_{table_id}"
++
++    def create_config_id(
++        self,
++        config_kwargs: dict,
++        custom_features: Optional[Features] = None,
++    ) -> str:
++        # The catalog object is not picklable (contains SQLAlchemy engines, etc.),
++        # so we replace it with a hashable string representation before the
++        # parent class hashes config_kwargs via dill.
++        config_kwargs = config_kwargs.copy()
++        catalog = config_kwargs.pop("catalog", None)
++        if catalog is not None:
++            config_kwargs["_catalog_id"] = f"{catalog.__class__.__name__}_{catalog.name}"
++        # filters may contain pyiceberg Expression objects that are not picklable
++        filters = config_kwargs.pop("filters", None)
++        if filters is not None:
++            config_kwargs["_filters_repr"] = repr(filters)
++        return super().create_config_id(config_kwargs, custom_features=custom_features)
++
++
++class Iceberg(datasets.ArrowBasedBuilder, datasets.builder._CountableBuilderMixin):
++    BUILDER_CONFIG_CLASS = IcebergConfig
++
++    def _info(self):
++        return datasets.DatasetInfo(features=self.config.features)
++
++    def _split_generators(self, dl_manager):
++        splits = []
++        for split_name, table_id in self.config.table.items():
++            iceberg_table = self.config.catalog.load_table(table_id)
++
++            scan_kwargs = {}
++            if self.config.filters is not None:
++                scan_kwargs["row_filter"] = self.config.filters
++            if self.config.columns:
++                scan_kwargs["selected_fields"] = tuple(self.config.columns)
++            if self.config.snapshot_id is not None:
++                scan_kwargs["snapshot_id"] = self.config.snapshot_id
++
++            scan = iceberg_table.scan(**scan_kwargs)
++
++            # Infer features from Arrow schema if not user-provided
++            if self.info.features is None:
++                arrow_schema = scan.projection().as_arrow()
++                self.info.features = datasets.Features.from_arrow_schema(arrow_schema)
++
++            # Plan files for parallel processing: passing a list in gen_kwargs
++            # enables _split_gen_kwargs to distribute tasks across num_proc workers.
++            tasks = list(scan.plan_files())
++
++            # Extract picklable scan context for multiprocessing compatibility.
++            # The scan object itself is not picklable (holds catalog connections),
++            # but these components are individually serializable.
++            scan_context = (
++                scan.table_metadata,
++                scan.io,
++                scan.projection(),
++                scan.row_filter,
++                scan.case_sensitive,
++                scan.limit,
++            )
++
++            splits.append(
++                datasets.SplitGenerator(
++                    name=split_name,
++                    gen_kwargs={"tasks": tasks, "scan_context": scan_context},
++                )
++            )
++
++        # Drop the catalog reference so the builder becomes picklable for num_proc > 1.
++        # All data needed for reading has been extracted into scan_context above.
++        self.config.catalog = None
++        self.config_kwargs.pop("catalog", None)
++
++        return splits
++
++    def _cast_table(self, pa_table: pa.Table) -> pa.Table:
++        if self.info.features is not None:
++            # More expensive cast to support nested features with keys in a different order
++            # allows str <-> int/float or str to Audio for example
++            pa_table = table_cast(pa_table, self.info.features.arrow_schema)
++        return pa_table
++
++    def _generate_shards(self, tasks: List["FileScanTask"], scan_context):
++        for task in tasks:
++            yield task.file.file_path
++
++    def _generate_num_examples(self, tasks: List["FileScanTask"], scan_context):
++        for task in tasks:
++            yield task.file.record_count
++
++    def _generate_tables(self, tasks: List["FileScanTask"], scan_context):
++        from pyiceberg.io.pyarrow import ArrowScan
++
++        table_metadata, io, projected_schema, row_filter, case_sensitive, limit = scan_context
++        arrow_scan = ArrowScan(
++            table_metadata,
++            io,
++            projected_schema,
++            row_filter,
++            case_sensitive=case_sensitive,
++            limit=limit,
++        )
++        for task_idx, task in enumerate(tasks):
++            for batch_idx, batch in enumerate(arrow_scan.to_record_batches([task])):
++                pa_table = pa.Table.from_batches([batch])
++                yield Key(task_idx, batch_idx), self._cast_table(pa_table)
+diff --git a/src/datasets/packaged_modules/json/json.py b/src/datasets/packaged_modules/json/json.py
+index db70ff03b..243a16346 100644
+--- a/src/datasets/packaged_modules/json/json.py
++++ b/src/datasets/packaged_modules/json/json.py
+@@ -1,5 +1,4 @@
+ import io
+-import os
+ from dataclasses import dataclass
+ from typing import Literal, Optional
+ 
+@@ -51,7 +50,6 @@ class JsonConfig(datasets.BuilderConfig):
+     chunksize: int = 10 << 20  # 10MB
+     newlines_in_values: Optional[bool] = None
+     on_mixed_types: Optional[Literal["use_json"]] = "use_json"
+-    parse_agent_traces: bool = True
+ 
+     def __post_init__(self):
+         super().__post_init__()
+@@ -85,19 +83,13 @@ class Json(datasets.ArrowBasedBuilder):
+             splits.append(
+                 datasets.SplitGenerator(
+                     name=split_name,
+-                    gen_kwargs={
+-                        "files_iterables": files_iterables,
+-                        "base_files": base_data_files[split_name],
+-                        "original_files": self.config.data_files[split_name],
+-                    },
++                    gen_kwargs={"files_iterables": files_iterables, "base_files": base_data_files[split_name]},
+                 )
+             )
+         if self.info.features is None:
+             try:
+                 pa_table = next(iter(self._generate_tables(**splits[0].gen_kwargs, allow_full_read=False)))[1]
+                 self.info.features = datasets.Features.from_arrow_schema(pa_table.schema)
+-                if self.config.parse_agent_traces and has_agent_traces_markers(self.info.features):
+-                    self.info.features = AGENT_TRACES_FEATURES
+             except FullReadDisallowed:
+                 pass
+         return splits
+@@ -132,18 +124,14 @@ class Json(datasets.ArrowBasedBuilder):
+             pa_table = table_cast(pa_table, features.arrow_schema)
+         return pa_table
+ 
+-    def _generate_shards(self, base_files, files_iterables, original_files):
++    def _generate_shards(self, base_files, files_iterables):
+         yield from base_files
+ 
+-    def _generate_tables(self, base_files, files_iterables, original_files, allow_full_read=True):
++    def _generate_tables(self, base_files, files_iterables, allow_full_read=True):
+         json_field_paths = []
+-        is_agent_traces = False
+ 
+         if self.info.features is not None:
+-            if self.info.features == AGENT_TRACES_FEATURES:
+-                is_agent_traces = True
+-            else:
+-                json_field_paths = get_json_field_paths_from_feature(self.info.features)
++            json_field_paths = get_json_field_paths_from_feature(self.info.features)
+ 
+         for shard_idx, files_iterable in enumerate(files_iterables):
+             for file in files_iterable:
+@@ -161,24 +149,6 @@ class Json(datasets.ArrowBasedBuilder):
+                     pa_table = pa.Table.from_pandas(df, preserve_index=False)
+                     yield Key(shard_idx, 0), self._cast_table(pa_table)
+ 
+-                # If the files are agent traces (one row = one file)
+-                elif is_agent_traces:
+-                    with open(file, "r", encoding="utf-8") as f:
+-                        traces = f.readlines()
+-                    harness, session_id = parse_traces_info(traces)
+-                    file_path = original_files[shard_idx]
+-                    if file_path.startswith(self.base_path):
+-                        file_path = os.path.relpath(file_path, self.base_path)
+-                    pa_table = pa.Table.from_pydict(
+-                        {
+-                            "harness": [harness],
+-                            "session_id": [session_id],
+-                            "traces": [traces],
+-                            "file_path": [file_path],
+-                        }
+-                    )
+-                    yield Key(shard_idx, 0), self._cast_table(pa_table)
+-
+                 # If the file has one json object per line
+                 else:
+                     with open(file, "rb") as f:
+@@ -295,89 +265,3 @@ class Json(datasets.ArrowBasedBuilder):
+                                 self._cast_table(pa_table, json_field_paths=json_field_paths),
+                             )
+                             batch_idx += 1
+-
+-
+-AGENT_TRACES_TYPES_VALUES = {
+-    "claude_code": ["user", "assistant", "system"],
+-    "pi": ["session", "message"],
+-    "codex": ["session_meta", "turn_context", "response_item", "event_msg"],
+-}
+-AGENT_TRACES_TYPE_TO_HARNESS = {}
+-for _harness, _trace_types in AGENT_TRACES_TYPES_VALUES.items():
+-    for _trace_type in _trace_types:
+-        AGENT_TRACES_TYPE_TO_HARNESS[_trace_type] = _harness
+-
+-
+-AGENT_TRACES_FEATURES_MARKERS = {
+-    "claude_code": datasets.Features(
+-        {
+-            "type": datasets.Value("string"),
+-            "message": datasets.Json(),
+-        }
+-    ),
+-    "pi": datasets.Features(
+-        {
+-            "type": datasets.Value("string"),
+-            "message": datasets.Json(),
+-        }
+-    ),
+-    "codex": datasets.Features(
+-        {
+-            "type": datasets.Value("string"),
+-            "payload": datasets.Json(),
+-        }
+-    ),
+-}
+-
+-AGENT_TRACES_FEATURES = datasets.Features(
+-    {
+-        "harness": datasets.Value("string"),
+-        "session_id": datasets.Value("string"),
+-        "traces": datasets.List(datasets.Json()),
+-        "file_path": datasets.Value("string"),
+-    }
+-)
+-
+-
+-def has_agent_traces_markers(features: datasets.Features) -> bool:
+-    for agent_traces_features_marker in AGENT_TRACES_FEATURES_MARKERS.values():
+-        if all(features.get(key) == feature for key, feature in agent_traces_features_marker.items()):
+-            return True
+-    return False
+-
+-
+-def parse_traces_info(traces: list[str]) -> tuple[Optional[str], Optional[str]]:
+-    harness, session_id = None, None
+-    for trace in traces:
+-        decoded_trace = ujson_loads(trace)
+-        if harness is None:
+-            if "type" in decoded_trace and isinstance(decoded_trace["type"], str):
+-                harness = AGENT_TRACES_TYPE_TO_HARNESS.get(decoded_trace["type"])
+-        if session_id is None:
+-            # claude
+-            if "sessionId" in decoded_trace and isinstance(decoded_trace["sessionId"], str):
+-                session_id = decoded_trace["sessionId"]
+-            # claude (not sure but this format does exist online)
+-            elif "session_id" in decoded_trace and isinstance(decoded_trace["session_id"], str):
+-                session_id = decoded_trace["session_id"]
+-            # codex
+-            elif (
+-                "payload" in decoded_trace
+-                and isinstance(decoded_trace["payload"], dict)
+-                and "id" in decoded_trace["payload"]
+-                and isinstance(decoded_trace["payload"]["id"], str)
+-            ):
+-                session_id = decoded_trace["payload"]["id"]
+-            # pi / openclaw (openclaw embeds pi-agent; distinguish via cwd)
+-            elif (
+-                "type" in decoded_trace
+-                and decoded_trace["type"] == "session"
+-                and "id" in decoded_trace
+-                and isinstance(decoded_trace["id"], str)
+-            ):
+-                session_id = decoded_trace["id"]
+-                if isinstance(decoded_trace.get("cwd"), str) and "/.openclaw/" in decoded_trace["cwd"]:
+-                    harness = "openclaw"
+-        if harness and session_id:
+-            break
+-    return harness, session_id
+diff --git a/src/datasets/packaged_modules/lance/lance.py b/src/datasets/packaged_modules/lance/lance.py
+index 411f9398f..4264f50ad 100644
+--- a/src/datasets/packaged_modules/lance/lance.py
++++ b/src/datasets/packaged_modules/lance/lance.py
+@@ -118,7 +118,7 @@ class Lance(datasets.ArrowBasedBuilder, datasets.builder._CountableBuilderMixin)
+ 
+         splits: list[datasets.SplitGenerator] = []
+         for split_name, files in data_files.items():
+-            storage_options = dl_manager.download_config.storage_options.get(files[0].split("://", 1)[0])
++            storage_options = dl_manager.download_config.storage_options.get(files[0].split("://", 0)[0] + "://")
+ 
+             lance_dataset_uris = resolve_dataset_uris(files)
+             if lance_dataset_uris:
+diff --git a/src/datasets/splits.py b/src/datasets/splits.py
+index 7e8ea953a..966bd396c 100644
+--- a/src/datasets/splits.py
++++ b/src/datasets/splits.py
+@@ -55,16 +55,6 @@ class SplitInfo:
+         )
+         return instructions.file_instructions
+ 
+-    def __repr__(self):
+-        return (
+-            self.__class__.__qualname__
+-            + "("
+-            + ", ".join(
+-                [f"{f.name}={repr(getattr(self, f.name))}" for f in dataclasses.fields(self) if getattr(self, f.name)]
+-            )
+-            + ")"
+-        )
+-
+ 
+ @dataclass
+ class SubSplitInfo:
+diff --git a/src/datasets/table.py b/src/datasets/table.py
+index ca8949d39..8d301afea 100644
+--- a/src/datasets/table.py
++++ b/src/datasets/table.py
+@@ -59,15 +59,6 @@ def read_schema_from_file(filename: str) -> pa.Schema:
+     return schema
+ 
+ 
+-def _batch_arrow_table(table: pa.Table) -> pa.Table:
+-    batched_columns = []
+-    for column_name in table.column_names:
+-        column = table[column_name].combine_chunks()
+-        offsets = pa.array([0, len(column)], type=pa.int32())
+-        batched_columns.append(pa.ListArray.from_arrays(offsets, column))
+-    return pa.Table.from_arrays(batched_columns, names=table.column_names)
+-
+-
+ def _memory_mapped_arrow_table_from_file(filename: str) -> pa.Table:
+     opened_stream = _memory_mapped_record_batch_reader_from_file(filename)
+     pa_table = opened_stream.read_all()
+@@ -2102,13 +2093,7 @@ def cast_array_to_feature(
+ 
+ 
+ @_wrap_for_chunked_arrays
+-def embed_array_storage(
+-    array: pa.Array,
+-    feature: "FeatureType",
+-    token_per_repo_id=None,
+-    local_files: bool = True,
+-    remote_files: bool = True,
+-):
++def embed_array_storage(array: pa.Array, feature: "FeatureType", token_per_repo_id=None):
+     """Embed data into an arrays's storage.
+     For custom features like Audio or Image, it takes into account the "embed_storage" methods
+     they define to embed external data (e.g. an image file) into an array.
+@@ -2120,15 +2105,6 @@ def embed_array_storage(
+             The PyArrow array in which to embed data.
+         feature (`datasets.features.FeatureType`):
+             Array features.
+-        local_files (`bool`, defaults to `True`)
+-            Whether to embed local files data in the array
+-
+-            <Added version="4.8.5"/>
+-        remote_files (`bool`, defaults to `True`)
+-            Whether to embed remote files data in the array.
+-            E.g. files with paths that start with hf:// or https://
+-
+-            <Added version="4.8.5"/>
+ 
+     Raises:
+         `TypeError`: if the target type is not supported according, e.g.
+@@ -2138,21 +2114,14 @@ def embed_array_storage(
+     Returns:
+          array (`pyarrow.Array`): the casted array
+     """
+-    if not local_files and not remote_files:
+-        return array
+-
+     from .features import LargeList, List
+ 
+-    _e = partial(
+-        embed_array_storage, token_per_repo_id=token_per_repo_id, local_files=local_files, remote_files=remote_files
+-    )
++    _e = partial(embed_array_storage, token_per_repo_id=token_per_repo_id)
+ 
+     if isinstance(array, pa.ExtensionArray):
+         array = array.storage
+     if hasattr(feature, "embed_storage"):
+-        return feature.embed_storage(
+-            array, token_per_repo_id=token_per_repo_id, local_files=local_files, remote_files=remote_files
+-        )
++        return feature.embed_storage(array, token_per_repo_id=token_per_repo_id)
+     elif pa.types.is_struct(array.type):
+         # feature must be a dict
+         if isinstance(feature, dict):
+@@ -2261,7 +2230,7 @@ def cast_table_to_schema(table: pa.Table, schema: pa.Schema):
+     return pa.Table.from_arrays(arrays, schema=schema)
+ 
+ 
+-def embed_table_storage(table: pa.Table, token_per_repo_id=None, local_files: bool = True, remote_files: bool = True):
++def embed_table_storage(table: pa.Table, token_per_repo_id=None):
+     """Embed external data into a table's storage.
+ 
+     <Added version="2.4.0"/>
+@@ -2269,33 +2238,15 @@ def embed_table_storage(table: pa.Table, token_per_repo_id=None, local_files: bo
+     Args:
+         table (`pyarrow.Table`):
+             PyArrow table in which to embed data.
+-        local_files (`bool`, defaults to `True`)
+-            Whether to embed local files data in the table
+-
+-            <Added version="4.8.5"/>
+-        remote_files (`bool`, defaults to `True`)
+-            Whether to embed remote files data in the table.
+-            E.g. files with paths that start with hf:// or https://
+-
+-            <Added version="4.8.5"/>
+ 
+     Returns:
+         table (`pyarrow.Table`): the table with embedded data
+     """
+-    if not local_files and not remote_files:
+-        return table
+-
+     from .features.features import Features, require_storage_embed
+ 
+     features = Features.from_arrow_schema(table.schema)
+     arrays = [
+-        embed_array_storage(
+-            table[name],
+-            feature,
+-            token_per_repo_id=token_per_repo_id,
+-            local_files=local_files,
+-            remote_files=remote_files,
+-        )
++        embed_array_storage(table[name], feature, token_per_repo_id=token_per_repo_id)
+         if require_storage_embed(feature)
+         else table[name]
+         for name, feature in features.items()
+diff --git a/src/datasets/utils/info_utils.py b/src/datasets/utils/info_utils.py
+index c3e246f85..659959c57 100644
+--- a/src/datasets/utils/info_utils.py
++++ b/src/datasets/utils/info_utils.py
+@@ -77,7 +77,7 @@ def verify_splits(expected_splits: Optional[dict], recorded_splits: dict):
+     logger.info("All the splits matched successfully.")
+ 
+ 
+-def get_size_checksum_dict(path: str, record_checksum: bool = False) -> dict:
++def get_size_checksum_dict(path: str, record_checksum: bool = True) -> dict:
+     """Compute the file size and the sha256 checksum of a file"""
+     if record_checksum:
+         m = insecure_hashlib.sha256()
+diff --git a/src/datasets/utils/json.py b/src/datasets/utils/json.py
+index 216338fd0..e6ff24cd3 100644
+--- a/src/datasets/utils/json.py
++++ b/src/datasets/utils/json.py
+@@ -23,7 +23,7 @@ def ujson_loads(*args, **kwargs):
+         return pd.io.json.loads(*args, **kwargs)
+ 
+ 
+-def json_encode_field(example: Any, json_field_path: list[str]) -> Any:
++def json_encode_field(example: Any, json_field_path: str) -> Any:
+     if json_field_path:
+         field, *json_field_path = json_field_path
+         if example is None:
+@@ -32,6 +32,7 @@ def json_encode_field(example: Any, json_field_path: list[str]) -> Any:
+             return [json_encode_field(x, json_field_path) for x in example]
+         else:
+             return {**example, field: json_encode_field(example.get(field), json_field_path)}
++        return example
+     else:
+         try:
+             ujson_loads(example)
+@@ -41,23 +42,7 @@ def json_encode_field(example: Any, json_field_path: list[str]) -> Any:
+             return example
+ 
+ 
+-def json_decode_field(example: Any, json_field_path: str) -> Any:
+-    if json_field_path:
+-        field, *json_field_path = json_field_path
+-        if example is None:
+-            return None
+-        elif field == 0:
+-            return [json_decode_field(x, json_field_path) for x in example]
+-        else:
+-            return {**example, field: json_decode_field(example.get(field), json_field_path)}
+-    else:
+-        try:
+-            return ujson_loads(example)
+-        except Exception:
+-            return example
+-
+-
+-def find_mixed_struct_types_field_paths(examples: list, allow_root=False) -> list[list[str]]:
++def find_mixed_struct_types_field_paths(examples: list, allow_root=False) -> list[str]:
+     mixed_struct_types_field_paths = []
+     examples = [example for example in examples if example is not None]
+     if not examples:
+@@ -84,7 +69,7 @@ def find_mixed_struct_types_field_paths(examples: list, allow_root=False) -> lis
+     return mixed_struct_types_field_paths
+ 
+ 
+-def get_json_field_path_from_pyarrow_json_error(err_str: str) -> list[str]:
++def get_json_field_path_from_pyarrow_json_error(err_str: str) -> str:
+     # e.g. json_field_path_str = "col/subfield_containing_a_list/[]/subsubfield_in_item_in_the_list"
+     json_field_path_str = err_str.split("Column(", 1)[1].rsplit(") changed from", 1)[0].strip("/")
+     # e.g. json_field_path = ["col", "subfield_containing_a_list", 0, "subsubfield_in_item_in_the_list"]
+@@ -92,7 +77,7 @@ def get_json_field_path_from_pyarrow_json_error(err_str: str) -> list[str]:
+     return json_field_path
+ 
+ 
+-def insert_json_field_path(json_field_paths: list[list[str]], json_field_path: list[str]) -> None:
++def insert_json_field_path(json_field_paths: list[str], json_field_path: str) -> None:
+     # Add to list of json_field_paths and check if other share a common path
+     for i in range(len(json_field_paths)):
+         if json_field_paths[i][: len(json_field_path)] == json_field_path:
+@@ -102,7 +87,7 @@ def insert_json_field_path(json_field_paths: list[list[str]], json_field_path: l
+         json_field_paths.append(json_field_path)
+ 
+ 
+-def json_encode_fields_in_json_lines(original_batch: bytes, json_field_paths: list[list[str]]) -> bytes:
++def json_encode_fields_in_json_lines(original_batch: bytes, json_field_paths: list[str]) -> bytes:
+     examples = [ujson_loads(line) for line in original_batch.splitlines()]
+     for json_field_path in json_field_paths:
+         examples = [json_encode_field(example, json_field_path) for example in examples]
+@@ -110,7 +95,7 @@ def json_encode_fields_in_json_lines(original_batch: bytes, json_field_paths: li
+     return batch
+ 
+ 
+-def get_json_field_paths_from_feature(feature: "FeatureType") -> list[list[str]]:
++def get_json_field_paths_from_feature(feature: "FeatureType") -> list[str]:
+     from datasets.features.features import Json, _visit_with_path
+ 
+     json_field_paths = []
+@@ -124,7 +109,7 @@ def get_json_field_paths_from_feature(feature: "FeatureType") -> list[list[str]]
+     return json_field_paths
+ 
+ 
+-def set_json_types_in_feature(feature: "FeatureType", json_field_paths: list[list[str]]) -> None:
++def set_json_types_in_feature(feature: "FeatureType", json_field_paths: list[str]) -> None:
+     from datasets.features.features import Json, _visit_with_path
+ 
+     def set_json_type(feature, feature_path):
+diff --git a/tests/fixtures/hub.py b/tests/fixtures/hub.py
+index 42b64f173..909491e23 100644
+--- a/tests/fixtures/hub.py
++++ b/tests/fixtures/hub.py
+@@ -19,7 +19,7 @@ if config.HF_HUB_VERSION >= version.parse("1.6.0"):
+ else:
+     BucketNotFoundError = None
+ 
+-CI_HUB_USER = "__DUMMY_DATASETS_USER__"
++CI_HUB_USER = "__DUMMY_TRANSFORMERS_USER__"
+ CI_HUB_USER_FULL_NAME = "Dummy User"
+ CI_HUB_USER_TOKEN = "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"
+ 
+diff --git a/tests/packaged_modules/test_json.py b/tests/packaged_modules/test_json.py
+index db6f6478a..1ae094b42 100644
+--- a/tests/packaged_modules/test_json.py
++++ b/tests/packaged_modules/test_json.py
+@@ -326,10 +326,7 @@ def test_json_generate_tables(file_fixture, config_kwargs, expected, request):
+     json = Json(**config_kwargs)
+     base_files = [request.getfixturevalue(file_fixture)]
+     files_iterables = [[file] for file in base_files]
+-    original_files = list(base_files)
+-    generator = json._generate_tables(
+-        base_files=base_files, files_iterables=files_iterables, original_files=original_files
+-    )
++    generator = json._generate_tables(base_files=base_files, files_iterables=files_iterables)
+     pa_table = pa.concat_tables([table for _, table in generator])
+     out = Features.from_arrow_schema(pa_table.schema).decode_batch(pa_table.to_pydict())
+     assert out == expected
+@@ -361,10 +358,7 @@ def test_json_generate_tables_with_missing_features(file_fixture, config_kwargs,
+     json = Json(**config_kwargs)
+     base_files = [request.getfixturevalue(file_fixture)]
+     files_iterables = [[file] for file in base_files]
+-    original_files = list(base_files)
+-    generator = json._generate_tables(
+-        base_files=base_files, files_iterables=files_iterables, original_files=original_files
+-    )
++    generator = json._generate_tables(base_files=base_files, files_iterables=files_iterables)
+     pa_table = pa.concat_tables([table for _, table in generator])
+     assert pa_table.to_pydict() == {"col_1": [-1, 1, 10], "col_2": [None, 2, 20], "missing_col": [None, None, None]}
+ 
+@@ -380,9 +374,6 @@ def test_json_generate_tables_with_sorted_columns(file_fixture, config_kwargs, r
+     json = Json(**config_kwargs)
+     base_files = [request.getfixturevalue(file_fixture)]
+     files_iterables = [[file] for file in base_files]
+-    original_files = list(base_files)
+-    generator = json._generate_tables(
+-        base_files=base_files, files_iterables=files_iterables, original_files=original_files
+-    )
++    generator = json._generate_tables(base_files=base_files, files_iterables=files_iterables)
+     pa_table = pa.concat_tables([table for _, table in generator])
+     assert pa_table.column_names == ["ID", "Language", "Topic"]
+diff --git a/tests/test_arrow_dataset.py b/tests/test_arrow_dataset.py
+index e17e7b0d0..2f50c4cac 100644
+--- a/tests/test_arrow_dataset.py
++++ b/tests/test_arrow_dataset.py
+@@ -80,28 +80,6 @@ class Unpicklable:
+         raise pickle.PicklingError()
+ 
+ 
+-def _normalize_batched_output(batch):
+-    def to_python(value):
+-        if isinstance(value, np.ndarray):
+-            return [to_python(item) for item in value.tolist()]
+-        if isinstance(value, list):
+-            return [to_python(item) for item in value]
+-        if isinstance(value, tuple):
+-            return [to_python(item) for item in value]
+-        return value
+-
+-    if isinstance(batch, pa.Table):
+-        return {column: to_python(values) for column, values in batch.to_pydict().items()}
+-    if isinstance(batch, pd.DataFrame):
+-        return {column: to_python(batch[column].tolist()) for column in batch.columns}
+-    if datasets.config.POLARS_AVAILABLE and "polars" in sys.modules:
+-        import polars as pl
+-
+-        if isinstance(batch, pl.DataFrame):
+-            return {column: to_python(values) for column, values in batch.to_dict(as_series=False).items()}
+-    return to_python(batch)
+-
+-
+ def picklable_map_function(x):
+     return {"id": int(x["filename"].split("_")[-1])}
+ 
+@@ -3466,36 +3444,6 @@ class MiscellaneousDatasetTest(TestCase):
+             self.assertEqual(dset[:], data)
+             self.assertEqual(dset.features["empty_struct"], Json())
+ 
+-    def test_to_list_and_to_dict_decode_json(self):
+-        # Regression test for the addition of JSON type. to_list() and to_dict() should not return raw JSON strings for Json() columns.
+-        data = {"col": [{"a": 1}, {"b": 2}]}
+-        test_dataset = Dataset.from_dict(data, features=Features({"col": Json()}))
+-
+-        # access through list
+-        result_list = test_dataset.to_list()
+-        assert isinstance(result_list[0]["col"], dict), f"expected dict, got {type(result_list[0]['col'])}"
+-        assert result_list == [{"col": {"a": 1}}, {"col": {"b": 2}}]
+-
+-        # access through dict
+-        result_dict = test_dataset.to_dict()
+-        assert isinstance(result_dict["col"][0], dict), f"expected dict, got {type(result_dict[0]['col'])}"
+-        assert result_dict == {"col": [{"a": 1}, {"b": 2}]}
+-
+-    def test_to_list_and_to_dict_decode_nested_json(self):
+-        # Regression test for the addition of JSON type. to_list() and to_dict() should not return raw JSON strings for Json() columns.
+-        data = {"col": [{"a": {"b": {"c": 1}}, "d": [2, {"e": 3}]}]}
+-        test_dataset = Dataset.from_dict(data, features=Features({"col": Json()}))
+-
+-        # access through list
+-        result_list = test_dataset.to_list()
+-        assert isinstance(result_list[0]["col"], dict), f"expected dict, got {type(result_list[0]['col'])}"
+-        assert result_list == [{"col": {"a": {"b": {"c": 1}}, "d": [2, {"e": 3}]}}]
+-
+-        # access through dict
+-        result_dict = test_dataset.to_dict()
+-        assert isinstance(result_dict["col"][0], dict), f"expected dict, got {type(result_dict[0]['col'])}"
+-        assert result_dict == {"col": [{"a": {"b": {"c": 1}}, "d": [2, {"e": 3}]}]}
+-
+     def test_concatenate_mixed_memory_and_disk(self):
+         data1, data2, data3 = {"id": [0, 1, 2]}, {"id": [3, 4, 5]}, {"id": [6, 7]}
+         info1 = DatasetInfo(description="Dataset1")
+@@ -4832,33 +4780,6 @@ def test_dataset_batch():
+     assert batches[2]["text"] == ["Text 8", "Text 9"]
+ 
+ 
+-@pytest.mark.parametrize("format_type", ["pyarrow", "pandas"])
+-def test_dataset_batch_with_table_format(format_type):
+-    ds = Dataset.from_dict({"a": [1, 2, 3, 4]})
+-
+-    left = list(ds.with_format(format_type).batch(2))
+-    right = list(ds.batch(2).with_format(format_type))
+-
+-    assert len(left) == len(right) == 2
+-    assert all(type(lhs) is type(rhs) for lhs, rhs in zip(left, right))
+-    assert [_normalize_batched_output(batch) for batch in left] == [
+-        _normalize_batched_output(batch) for batch in right
+-    ]
+-
+-
+-@require_polars
+-def test_dataset_batch_with_polars_format():
+-    ds = Dataset.from_dict({"a": [1, 2, 3, 4]})
+-
+-    left = list(ds.with_format("polars").batch(2))
+-    right = list(ds.batch(2).with_format("polars"))
+-
+-    assert len(left) == len(right) == 2
+-    assert [_normalize_batched_output(batch) for batch in left] == [
+-        _normalize_batched_output(batch) for batch in right
+-    ]
+-
+-
+ def test_dataset_from_dict_with_large_list():
+     data = {"col_1": [[1, 2], [3, 4]]}
+     features = Features({"col_1": LargeList(Value("int64"))})
+diff --git a/tests/test_builder.py b/tests/test_builder.py
+index 14d44fae7..ae1560124 100644
+--- a/tests/test_builder.py
++++ b/tests/test_builder.py
+@@ -8,6 +8,7 @@ from pathlib import Path
+ from unittest import TestCase
+ from unittest.mock import patch
+ 
++import numpy as np
+ import pyarrow as pa
+ import pyarrow.parquet as pq
+ import pytest
+@@ -26,18 +27,20 @@ from datasets.builder import (
+ from datasets.data_files import DataFilesList
+ from datasets.dataset_dict import DatasetDict, IterableDatasetDict
+ from datasets.download.download_manager import DownloadMode
+-from datasets.features import Features, Value
+-from datasets.info import DatasetInfo
++from datasets.features import Features, List, Value
++from datasets.info import DatasetInfo, PostProcessedInfo
+ from datasets.iterable_dataset import IterableDataset
+ from datasets.load import configure_builder_class
+ from datasets.splits import Split, SplitDict, SplitGenerator, SplitInfo
+ from datasets.streaming import xjoin
+ from datasets.utils.file_utils import is_local_path
++from datasets.utils.info_utils import VerificationMode
+ from datasets.utils.logging import INFO, get_logger
+ 
+ from .utils import (
+     assert_arrow_memory_doesnt_increase,
+     assert_arrow_memory_increases,
++    require_faiss,
+     set_current_working_directory_to_temp_dir,
+ )
+ 
+@@ -240,14 +243,18 @@ class BuilderTest(TestCase):
+ 
+     def test_download_and_prepare_checksum_computation(self):
+         with tempfile.TemporaryDirectory() as tmp_dir:
+-            builder_default = DummyBuilder(cache_dir=tmp_dir)
+-            builder_default.download_and_prepare(download_mode=DownloadMode.FORCE_REDOWNLOAD)
+-            self.assertIsNone(builder_default.info.download_checksums)
+-            builder_with_checksums = DummyBuilder(cache_dir=tmp_dir)
+-            builder_with_checksums._record_checksums = True
+-            builder_with_checksums.download_and_prepare(download_mode=DownloadMode.FORCE_REDOWNLOAD)
++            builder_no_verification = DummyBuilder(cache_dir=tmp_dir)
++            builder_no_verification.download_and_prepare(download_mode=DownloadMode.FORCE_REDOWNLOAD)
+             self.assertTrue(
+-                all(v["checksum"] is not None for _, v in builder_with_checksums.info.download_checksums.items())
++                all(v["checksum"] is not None for _, v in builder_no_verification.info.download_checksums.items())
++            )
++            builder_with_verification = DummyBuilder(cache_dir=tmp_dir)
++            builder_with_verification.download_and_prepare(
++                download_mode=DownloadMode.FORCE_REDOWNLOAD,
++                verification_mode=VerificationMode.ALL_CHECKS,
++            )
++            self.assertTrue(
++                all(v["checksum"] is None for _, v in builder_with_verification.info.download_checksums.items())
+             )
+ 
+     def test_concurrent_download_and_prepare(self):
+@@ -308,6 +315,304 @@ class BuilderTest(TestCase):
+                 )
+             )
+ 
++    def test_as_dataset_with_post_process(self):
++        def _post_process(self, dataset, resources_paths):
++            def char_tokenize(example):
++                return {"tokens": list(example["text"])}
++
++            return dataset.map(char_tokenize, cache_file_name=resources_paths["tokenized_dataset"])
++
++        def _post_processing_resources(self, split):
++            return {"tokenized_dataset": f"tokenized_dataset-{split}.arrow"}
++
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            builder = DummyBuilder(cache_dir=tmp_dir)
++            builder.info.post_processed = PostProcessedInfo(
++                features=Features({"text": Value("string"), "tokens": List(Value("string"))})
++            )
++            builder._post_process = types.MethodType(_post_process, builder)
++            builder._post_processing_resources = types.MethodType(_post_processing_resources, builder)
++            os.makedirs(builder.cache_dir)
++
++            builder.info.splits = SplitDict()
++            builder.info.splits.add(SplitInfo("train", num_examples=10))
++            builder.info.splits.add(SplitInfo("test", num_examples=10))
++
++            for split in builder.info.splits:
++                with ArrowWriter(
++                    path=os.path.join(builder.cache_dir, f"{builder.dataset_name}-{split}.arrow"),
++                    features=Features({"text": Value("string")}),
++                ) as writer:
++                    writer.write_batch({"text": ["foo"] * 10})
++                    writer.finalize()
++
++                with ArrowWriter(
++                    path=os.path.join(builder.cache_dir, f"tokenized_dataset-{split}.arrow"),
++                    features=Features({"text": Value("string"), "tokens": List(Value("string"))}),
++                ) as writer:
++                    writer.write_batch({"text": ["foo"] * 10, "tokens": [list("foo")] * 10})
++                    writer.finalize()
++
++            dsets = builder.as_dataset()
++            self.assertIsInstance(dsets, DatasetDict)
++            self.assertListEqual(list(dsets.keys()), ["train", "test"])
++            self.assertEqual(len(dsets["train"]), 10)
++            self.assertEqual(len(dsets["test"]), 10)
++            self.assertDictEqual(
++                dsets["train"].features, Features({"text": Value("string"), "tokens": List(Value("string"))})
++            )
++            self.assertDictEqual(
++                dsets["test"].features, Features({"text": Value("string"), "tokens": List(Value("string"))})
++            )
++            self.assertListEqual(dsets["train"].column_names, ["text", "tokens"])
++            self.assertListEqual(dsets["test"].column_names, ["text", "tokens"])
++            del dsets
++
++            dset = builder.as_dataset("train")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train")
++            self.assertEqual(len(dset), 10)
++            self.assertDictEqual(dset.features, Features({"text": Value("string"), "tokens": List(Value("string"))}))
++            self.assertListEqual(dset.column_names, ["text", "tokens"])
++            self.assertGreater(builder.info.post_processing_size, 0)
++            self.assertGreater(
++                builder.info.post_processed.resources_checksums["train"]["tokenized_dataset"]["num_bytes"], 0
++            )
++            del dset
++
++            dset = builder.as_dataset("train+test[:30%]")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train+test[:30%]")
++            self.assertEqual(len(dset), 13)
++            self.assertDictEqual(dset.features, Features({"text": Value("string"), "tokens": List(Value("string"))}))
++            self.assertListEqual(dset.column_names, ["text", "tokens"])
++            del dset
++
++            dset = builder.as_dataset("all")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train+test")
++            self.assertEqual(len(dset), 20)
++            self.assertDictEqual(dset.features, Features({"text": Value("string"), "tokens": List(Value("string"))}))
++            self.assertListEqual(dset.column_names, ["text", "tokens"])
++            del dset
++
++        def _post_process(self, dataset, resources_paths):
++            return dataset.select([0, 1], keep_in_memory=True)
++
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            builder = DummyBuilder(cache_dir=tmp_dir)
++            builder._post_process = types.MethodType(_post_process, builder)
++            os.makedirs(builder.cache_dir)
++
++            builder.info.splits = SplitDict()
++            builder.info.splits.add(SplitInfo("train", num_examples=10))
++            builder.info.splits.add(SplitInfo("test", num_examples=10))
++
++            for split in builder.info.splits:
++                with ArrowWriter(
++                    path=os.path.join(builder.cache_dir, f"{builder.dataset_name}-{split}.arrow"),
++                    features=Features({"text": Value("string")}),
++                ) as writer:
++                    writer.write_batch({"text": ["foo"] * 10})
++                    writer.finalize()
++
++                with ArrowWriter(
++                    path=os.path.join(builder.cache_dir, f"small_dataset-{split}.arrow"),
++                    features=Features({"text": Value("string")}),
++                ) as writer:
++                    writer.write_batch({"text": ["foo"] * 2})
++                    writer.finalize()
++
++            dsets = builder.as_dataset()
++            self.assertIsInstance(dsets, DatasetDict)
++            self.assertListEqual(list(dsets.keys()), ["train", "test"])
++            self.assertEqual(len(dsets["train"]), 2)
++            self.assertEqual(len(dsets["test"]), 2)
++            self.assertDictEqual(dsets["train"].features, Features({"text": Value("string")}))
++            self.assertDictEqual(dsets["test"].features, Features({"text": Value("string")}))
++            self.assertListEqual(dsets["train"].column_names, ["text"])
++            self.assertListEqual(dsets["test"].column_names, ["text"])
++            del dsets
++
++            dset = builder.as_dataset("train")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train")
++            self.assertEqual(len(dset), 2)
++            self.assertDictEqual(dset.features, Features({"text": Value("string")}))
++            self.assertListEqual(dset.column_names, ["text"])
++            del dset
++
++            dset = builder.as_dataset("train+test[:30%]")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train+test[:30%]")
++            self.assertEqual(len(dset), 2)
++            self.assertDictEqual(dset.features, Features({"text": Value("string")}))
++            self.assertListEqual(dset.column_names, ["text"])
++            del dset
++
++    @require_faiss
++    def test_as_dataset_with_post_process_with_index(self):
++        def _post_process(self, dataset, resources_paths):
++            if os.path.exists(resources_paths["index"]):
++                dataset.load_faiss_index("my_index", resources_paths["index"])
++                return dataset
++            else:
++                dataset.add_faiss_index_from_external_arrays(
++                    external_arrays=np.ones((len(dataset), 8)), string_factory="Flat", index_name="my_index"
++                )
++                dataset.save_faiss_index("my_index", resources_paths["index"])
++                return dataset
++
++        def _post_processing_resources(self, split):
++            return {"index": f"Flat-{split}.faiss"}
++
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            builder = DummyBuilder(cache_dir=tmp_dir)
++            builder._post_process = types.MethodType(_post_process, builder)
++            builder._post_processing_resources = types.MethodType(_post_processing_resources, builder)
++            os.makedirs(builder.cache_dir)
++
++            builder.info.splits = SplitDict()
++            builder.info.splits.add(SplitInfo("train", num_examples=10))
++            builder.info.splits.add(SplitInfo("test", num_examples=10))
++
++            for split in builder.info.splits:
++                with ArrowWriter(
++                    path=os.path.join(builder.cache_dir, f"{builder.dataset_name}-{split}.arrow"),
++                    features=Features({"text": Value("string")}),
++                ) as writer:
++                    writer.write_batch({"text": ["foo"] * 10})
++                    writer.finalize()
++
++                with ArrowWriter(
++                    path=os.path.join(builder.cache_dir, f"small_dataset-{split}.arrow"),
++                    features=Features({"text": Value("string")}),
++                ) as writer:
++                    writer.write_batch({"text": ["foo"] * 2})
++                    writer.finalize()
++
++            dsets = builder.as_dataset()
++            self.assertIsInstance(dsets, DatasetDict)
++            self.assertListEqual(list(dsets.keys()), ["train", "test"])
++            self.assertEqual(len(dsets["train"]), 10)
++            self.assertEqual(len(dsets["test"]), 10)
++            self.assertDictEqual(dsets["train"].features, Features({"text": Value("string")}))
++            self.assertDictEqual(dsets["test"].features, Features({"text": Value("string")}))
++            self.assertListEqual(dsets["train"].column_names, ["text"])
++            self.assertListEqual(dsets["test"].column_names, ["text"])
++            self.assertListEqual(dsets["train"].list_indexes(), ["my_index"])
++            self.assertListEqual(dsets["test"].list_indexes(), ["my_index"])
++            self.assertGreater(builder.info.post_processing_size, 0)
++            self.assertGreater(builder.info.post_processed.resources_checksums["train"]["index"]["num_bytes"], 0)
++            del dsets
++
++            dset = builder.as_dataset("train")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train")
++            self.assertEqual(len(dset), 10)
++            self.assertDictEqual(dset.features, Features({"text": Value("string")}))
++            self.assertListEqual(dset.column_names, ["text"])
++            self.assertListEqual(dset.list_indexes(), ["my_index"])
++            del dset
++
++            dset = builder.as_dataset("train+test[:30%]")
++            self.assertIsInstance(dset, Dataset)
++            self.assertEqual(dset.split, "train+test[:30%]")
++            self.assertEqual(len(dset), 13)
++            self.assertDictEqual(dset.features, Features({"text": Value("string")}))
++            self.assertListEqual(dset.column_names, ["text"])
++            self.assertListEqual(dset.list_indexes(), ["my_index"])
++            del dset
++
++    def test_download_and_prepare_with_post_process(self):
++        def _post_process(self, dataset, resources_paths):
++            def char_tokenize(example):
++                return {"tokens": list(example["text"])}
++
++            return dataset.map(char_tokenize, cache_file_name=resources_paths["tokenized_dataset"])
++
++        def _post_processing_resources(self, split):
++            return {"tokenized_dataset": f"tokenized_dataset-{split}.arrow"}
++
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            builder = DummyBuilder(cache_dir=tmp_dir)
++            builder.info.post_processed = PostProcessedInfo(
++                features=Features({"text": Value("string"), "tokens": List(Value("string"))})
++            )
++            builder._post_process = types.MethodType(_post_process, builder)
++            builder._post_processing_resources = types.MethodType(_post_processing_resources, builder)
++            builder.download_and_prepare(download_mode=DownloadMode.FORCE_REDOWNLOAD)
++            self.assertTrue(
++                os.path.exists(
++                    os.path.join(
++                        tmp_dir, builder.dataset_name, "default", "0.0.0", f"{builder.dataset_name}-train.arrow"
++                    )
++                )
++            )
++            self.assertDictEqual(builder.info.features, Features({"text": Value("string")}))
++            self.assertDictEqual(
++                builder.info.post_processed.features,
++                Features({"text": Value("string"), "tokens": List(Value("string"))}),
++            )
++            self.assertEqual(builder.info.splits["train"].num_examples, 100)
++            self.assertTrue(
++                os.path.exists(os.path.join(tmp_dir, builder.dataset_name, "default", "0.0.0", "dataset_info.json"))
++            )
++
++        def _post_process(self, dataset, resources_paths):
++            return dataset.select([0, 1], keep_in_memory=True)
++
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            builder = DummyBuilder(cache_dir=tmp_dir)
++            builder._post_process = types.MethodType(_post_process, builder)
++            builder.download_and_prepare(download_mode=DownloadMode.FORCE_REDOWNLOAD)
++            self.assertTrue(
++                os.path.exists(
++                    os.path.join(
++                        tmp_dir, builder.dataset_name, "default", "0.0.0", f"{builder.dataset_name}-train.arrow"
++                    )
++                )
++            )
++            self.assertDictEqual(builder.info.features, Features({"text": Value("string")}))
++            self.assertIsNone(builder.info.post_processed)
++            self.assertEqual(builder.info.splits["train"].num_examples, 100)
++            self.assertTrue(
++                os.path.exists(os.path.join(tmp_dir, builder.dataset_name, "default", "0.0.0", "dataset_info.json"))
++            )
++
++        def _post_process(self, dataset, resources_paths):
++            if os.path.exists(resources_paths["index"]):
++                dataset.load_faiss_index("my_index", resources_paths["index"])
++                return dataset
++            else:
++                dataset = dataset.add_faiss_index_from_external_arrays(
++                    external_arrays=np.ones((len(dataset), 8)), string_factory="Flat", index_name="my_index"
++                )
++                dataset.save_faiss_index("my_index", resources_paths["index"])
++                return dataset
++
++        def _post_processing_resources(self, split):
++            return {"index": f"Flat-{split}.faiss"}
++
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            builder = DummyBuilder(cache_dir=tmp_dir)
++            builder._post_process = types.MethodType(_post_process, builder)
++            builder._post_processing_resources = types.MethodType(_post_processing_resources, builder)
++            builder.download_and_prepare(download_mode=DownloadMode.FORCE_REDOWNLOAD)
++            self.assertTrue(
++                os.path.exists(
++                    os.path.join(
++                        tmp_dir, builder.dataset_name, "default", "0.0.0", f"{builder.dataset_name}-train.arrow"
++                    )
++                )
++            )
++            self.assertDictEqual(builder.info.features, Features({"text": Value("string")}))
++            self.assertIsNone(builder.info.post_processed)
++            self.assertEqual(builder.info.splits["train"].num_examples, 100)
++            self.assertTrue(
++                os.path.exists(os.path.join(tmp_dir, builder.dataset_name, "default", "0.0.0", "dataset_info.json"))
++            )
++
+     def test_error_download_and_prepare(self):
+         def _prepare_split(self, split_generator, **kwargs):
+             raise ValueError()
+diff --git a/tests/test_iterable_dataset.py b/tests/test_iterable_dataset.py
+index dff0cda34..3b9dd6314 100644
+--- a/tests/test_iterable_dataset.py
++++ b/tests/test_iterable_dataset.py
+@@ -1,6 +1,5 @@
+ import asyncio
+ import pickle
+-import sys
+ import time
+ from copy import deepcopy
+ from dataclasses import dataclass
+@@ -83,28 +82,6 @@ DEFAULT_BATCH_SIZE = 4
+ DEFAULT_FILEPATH = "file.txt"
+ 
+ 
+-def _normalize_batched_output(batch):
+-    def to_python(value):
+-        if isinstance(value, np.ndarray):
+-            return [to_python(item) for item in value.tolist()]
+-        if isinstance(value, list):
+-            return [to_python(item) for item in value]
+-        if isinstance(value, tuple):
+-            return [to_python(item) for item in value]
+-        return value
+-
+-    if isinstance(batch, pa.Table):
+-        return {column: to_python(values) for column, values in batch.to_pydict().items()}
+-    if isinstance(batch, pd.DataFrame):
+-        return {column: to_python(batch[column].tolist()) for column in batch.columns}
+-    if config.POLARS_AVAILABLE and "polars" in sys.modules:
+-        import polars as pl
+-
+-        if isinstance(batch, pl.DataFrame):
+-            return {column: to_python(values) for column, values in batch.to_dict(as_series=False).items()}
+-    return to_python(batch)
+-
+-
+ def generate_examples_fn(**kwargs):
+     kwargs = kwargs.copy()
+     n = kwargs.pop("n", DEFAULT_N_EXAMPLES)
+@@ -2853,33 +2830,6 @@ def test_iterable_dataset_batch():
+         assert batch["text"] == [f"Text {3 * i}", f"Text {3 * i + 1}", f"Text {3 * i + 2}"]
+ 
+ 
+-@pytest.mark.parametrize("format_type", ["pyarrow", "pandas"])
+-def test_iterable_dataset_batch_with_table_format(format_type):
+-    ds = IterableDataset.from_dict({"a": [1, 2, 3, 4]})
+-
+-    left = list(ds.with_format(format_type).batch(2))
+-    right = list(ds.batch(2).with_format(format_type))
+-
+-    assert len(left) == len(right) == 2
+-    assert all(type(lhs) is type(rhs) for lhs, rhs in zip(left, right))
+-    assert [_normalize_batched_output(batch) for batch in left] == [
+-        _normalize_batched_output(batch) for batch in right
+-    ]
+-
+-
+-@require_polars
+-def test_iterable_dataset_batch_with_polars_format():
+-    ds = IterableDataset.from_dict({"a": [1, 2, 3, 4]})
+-
+-    left = list(ds.with_format("polars").batch(2))
+-    right = list(ds.batch(2).with_format("polars"))
+-
+-    assert len(left) == len(right) == 2
+-    assert [_normalize_batched_output(batch) for batch in left] == [
+-        _normalize_batched_output(batch) for batch in right
+-    ]
+-
+-
+ @dataclass
+ class DecodableFeature:
+     decode_example_num_calls = 0
+diff --git a/tests/test_load.py b/tests/test_load.py
+index dba83bfc5..051f94a7d 100644
+--- a/tests/test_load.py
++++ b/tests/test_load.py
+@@ -14,7 +14,7 @@ import pyarrow as pa
+ import pytest
+ 
+ import datasets
+-from datasets import load_dataset
++from datasets import config, load_dataset
+ from datasets.arrow_dataset import Dataset
+ from datasets.arrow_writer import ArrowWriter
+ from datasets.builder import DatasetBuilder
+@@ -517,7 +517,7 @@ class ModuleFactoryTest(TestCase):
+         )
+         module_factory_result = factory.get_module()
+         assert importlib.import_module(module_factory_result.module_path) is not None
+-        assert module_factory_result.builder_kwargs["base_path"].startswith("hf://")
++        assert module_factory_result.builder_kwargs["base_path"].startswith(config.HF_ENDPOINT)
+ 
+     @pytest.mark.integration
+     def test_HubDatasetModuleFactory_with_data_dir(self):
+@@ -531,7 +531,7 @@ class ModuleFactoryTest(TestCase):
+         module_factory_result = factory.get_module()
+         assert importlib.import_module(module_factory_result.module_path) is not None
+         builder_config = module_factory_result.builder_configs_parameters.builder_configs[0]
+-        assert module_factory_result.builder_kwargs["base_path"].startswith("hf://")
++        assert module_factory_result.builder_kwargs["base_path"].startswith(config.HF_ENDPOINT)
+         assert (
+             builder_config.data_files is not None
+             and len(builder_config.data_files["train"]) == 1
+@@ -550,7 +550,7 @@ class ModuleFactoryTest(TestCase):
+         module_factory_result = factory.get_module()
+         assert importlib.import_module(module_factory_result.module_path) is not None
+         builder_config = module_factory_result.builder_configs_parameters.builder_configs[0]
+-        assert module_factory_result.builder_kwargs["base_path"].startswith("hf://")
++        assert module_factory_result.builder_kwargs["base_path"].startswith(config.HF_ENDPOINT)
+         assert (
+             builder_config.data_files is not None
+             and len(builder_config.data_files["train"]) > 0
+@@ -565,7 +565,7 @@ class ModuleFactoryTest(TestCase):
+         module_factory_result = factory.get_module()
+         assert importlib.import_module(module_factory_result.module_path) is not None
+         builder_config = module_factory_result.builder_configs_parameters.builder_configs[0]
+-        assert module_factory_result.builder_kwargs["base_path"].startswith("hf://")
++        assert module_factory_result.builder_kwargs["base_path"].startswith(config.HF_ENDPOINT)
+         assert (
+             builder_config.data_files is not None
+             and len(builder_config.data_files) == 1
+@@ -582,7 +582,7 @@ class ModuleFactoryTest(TestCase):
+         )
+         module_factory_result = factory.get_module()
+         assert importlib.import_module(module_factory_result.module_path) is not None
+-        assert module_factory_result.builder_kwargs["base_path"].startswith("hf://")
++        assert module_factory_result.builder_kwargs["base_path"].startswith(config.HF_ENDPOINT)
+ 
+         module_metadata_configs = module_factory_result.builder_configs_parameters.metadata_configs
+         assert module_metadata_configs is not None
+diff --git a/tests/test_tqdm.py b/tests/test_tqdm.py
+index b6bfb3742..e6ddb86de 100644
+--- a/tests/test_tqdm.py
++++ b/tests/test_tqdm.py
+@@ -54,7 +54,7 @@ class TestTqdmUtils(unittest.TestCase):
+         disable_progress_bars()
+         self.assertTrue(are_progress_bars_disabled())
+ 
+-        with pytest.warns(UserWarning):
++        with self.assertWarns(UserWarning):
+             enable_progress_bars()
+         self.assertTrue(are_progress_bars_disabled())  # Still disabled !
+ 
+@@ -67,7 +67,7 @@ class TestTqdmUtils(unittest.TestCase):
+         enable_progress_bars()
+         self.assertFalse(are_progress_bars_disabled())
+ 
+-        with pytest.warns(UserWarning):
++        with self.assertWarns(UserWarning):
+             disable_progress_bars()
+         self.assertFalse(are_progress_bars_disabled())  # Still enabled !

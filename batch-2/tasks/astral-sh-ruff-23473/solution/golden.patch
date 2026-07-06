@@ -1,0 +1,591 @@
+diff --git a/crates/ruff_linter/src/checkers/ast/analyze/deferred_comprehensions.rs b/crates/ruff_linter/src/checkers/ast/analyze/deferred_comprehensions.rs
+new file mode 100644
+index 0000000000..754692d9ac
+--- /dev/null
++++ b/crates/ruff_linter/src/checkers/ast/analyze/deferred_comprehensions.rs
+@@ -0,0 +1,37 @@
++use ruff_python_ast::Expr;
++
++use crate::checkers::ast::Checker;
++use crate::codes::Rule;
++use crate::rules::perflint;
++
++/// Run lint rules over all deferred comprehensions in the [`SemanticModel`].
++pub(crate) fn deferred_comprehensions(checker: &mut Checker) {
++    while !checker.analyze.comprehensions.is_empty() {
++        let comprehensions = std::mem::take(&mut checker.analyze.comprehensions);
++        for snapshot in comprehensions {
++            checker.semantic.restore(snapshot);
++
++            let Some(generators) =
++                checker
++                    .semantic
++                    .current_expression()
++                    .and_then(|expr| match expr {
++                        Expr::ListComp(comp) => Some(comp.generators.as_slice()),
++                        Expr::SetComp(comp) => Some(comp.generators.as_slice()),
++                        Expr::DictComp(comp) => Some(comp.generators.as_slice()),
++                        Expr::Generator(generator) => Some(generator.generators.as_slice()),
++                        _ => None,
++                    })
++            else {
++                debug_assert!(false, "Expected a comprehension");
++                continue;
++            };
++
++            for generator in generators {
++                if checker.is_rule_enabled(Rule::IncorrectDictIterator) {
++                    perflint::rules::incorrect_dict_iterator_comprehension(checker, generator);
++                }
++            }
++        }
++    }
++}
+diff --git a/crates/ruff_linter/src/checkers/ast/analyze/mod.rs b/crates/ruff_linter/src/checkers/ast/analyze/mod.rs
+index deeb55864b..ce1d2f08ae 100644
+--- a/crates/ruff_linter/src/checkers/ast/analyze/mod.rs
++++ b/crates/ruff_linter/src/checkers/ast/analyze/mod.rs
+@@ -1,5 +1,6 @@
+ pub(super) use bindings::bindings;
+ pub(super) use comprehension::comprehension;
++pub(super) use deferred_comprehensions::deferred_comprehensions;
+ pub(super) use deferred_for_loops::deferred_for_loops;
+ pub(super) use deferred_lambdas::deferred_lambdas;
+ pub(super) use deferred_scopes::deferred_scopes;
+@@ -16,6 +17,7 @@ pub(super) use unresolved_references::unresolved_references;
+ 
+ mod bindings;
+ mod comprehension;
++mod deferred_comprehensions;
+ mod deferred_for_loops;
+ mod deferred_lambdas;
+ mod deferred_scopes;
+diff --git a/crates/ruff_linter/src/checkers/ast/deferred.rs b/crates/ruff_linter/src/checkers/ast/deferred.rs
+index 01043e77d4..aa4ec80094 100644
+--- a/crates/ruff_linter/src/checkers/ast/deferred.rs
++++ b/crates/ruff_linter/src/checkers/ast/deferred.rs
+@@ -34,4 +34,5 @@ pub(crate) struct Analyze {
+     pub(crate) scopes: Vec<ScopeId>,
+     pub(crate) lambdas: Vec<Snapshot>,
+     pub(crate) for_loops: Vec<Snapshot>,
++    pub(crate) comprehensions: Vec<Snapshot>,
+ }
+diff --git a/crates/ruff_linter/src/checkers/ast/mod.rs b/crates/ruff_linter/src/checkers/ast/mod.rs
+index be0b789b6e..cee5ce35bd 100644
+--- a/crates/ruff_linter/src/checkers/ast/mod.rs
++++ b/crates/ruff_linter/src/checkers/ast/mod.rs
+@@ -68,7 +68,9 @@ use crate::docstrings::extraction::ExtractionTarget;
+ use crate::importer::{ImportRequest, Importer, ResolutionError};
+ use crate::noqa::NoqaMapping;
+ use crate::package::PackageRoot;
+-use crate::preview::is_undefined_export_in_dunder_init_enabled;
++use crate::preview::{
++    is_incorrect_dict_iterator_comprehension_enabled, is_undefined_export_in_dunder_init_enabled,
++};
+ use crate::registry::Rule;
+ use crate::rules::flake8_bugbear::rules::ReturnInGenerator;
+ use crate::rules::pyflakes::rules::{
+@@ -2465,6 +2467,12 @@ impl<'a> Checker<'a> {
+         for generator in generators {
+             analyze::comprehension(generator, self);
+         }
++
++        if self.is_rule_enabled(Rule::IncorrectDictIterator)
++            && is_incorrect_dict_iterator_comprehension_enabled(self.settings())
++        {
++            self.analyze.comprehensions.push(self.semantic.snapshot());
++        }
+     }
+ 
+     /// Visit a body of [`Stmt`] nodes within a type-checking block.
+@@ -3309,6 +3317,7 @@ pub(crate) fn check_ast(
+     // Check docstrings, bindings, and unresolved references.
+     analyze::deferred_lambdas(&mut checker);
+     analyze::deferred_for_loops(&mut checker);
++    analyze::deferred_comprehensions(&mut checker);
+     analyze::definitions(&mut checker);
+     analyze::bindings(&checker);
+     analyze::unresolved_references(&checker);
+diff --git a/crates/ruff_linter/src/preview.rs b/crates/ruff_linter/src/preview.rs
+index d7531160c0..0a4afc6bae 100644
+--- a/crates/ruff_linter/src/preview.rs
++++ b/crates/ruff_linter/src/preview.rs
+@@ -307,3 +307,10 @@ pub(crate) const fn is_expanded_import_conventions_enabled(preview: PreviewMode)
+ pub(crate) const fn is_file_level_invalid_rule_code_enabled(settings: &LinterSettings) -> bool {
+     settings.preview.is_enabled()
+ }
++
++// https://github.com/astral-sh/ruff/pull/23473
++pub(crate) const fn is_incorrect_dict_iterator_comprehension_enabled(
++    settings: &LinterSettings,
++) -> bool {
++    settings.preview.is_enabled()
++}
+diff --git a/crates/ruff_linter/src/rules/perflint/mod.rs b/crates/ruff_linter/src/rules/perflint/mod.rs
+index 35a7d31f62..6f4ae7201f 100644
+--- a/crates/ruff_linter/src/rules/perflint/mod.rs
++++ b/crates/ruff_linter/src/rules/perflint/mod.rs
+@@ -31,6 +31,7 @@ mod tests {
+         Ok(())
+     }
+ 
++    #[test_case(Rule::IncorrectDictIterator, Path::new("PERF102.py"))]
+     // TODO: remove this test case when the fixes for `perf401` and `perf403` are stabilized
+     #[test_case(Rule::ManualDictComprehension, Path::new("PERF403.py"))]
+     #[test_case(Rule::ManualListComprehension, Path::new("PERF401.py"))]
+diff --git a/crates/ruff_linter/src/rules/perflint/rules/incorrect_dict_iterator.rs b/crates/ruff_linter/src/rules/perflint/rules/incorrect_dict_iterator.rs
+index b24e8fa793..3a1bbfeb61 100644
+--- a/crates/ruff_linter/src/rules/perflint/rules/incorrect_dict_iterator.rs
++++ b/crates/ruff_linter/src/rules/perflint/rules/incorrect_dict_iterator.rs
+@@ -62,9 +62,21 @@ impl AlwaysFixableViolation for IncorrectDictIterator {
+     }
+ }
+ 
+-/// PERF102
++/// PERF102 for `for` loops.
+ pub(crate) fn incorrect_dict_iterator(checker: &Checker, stmt_for: &ast::StmtFor) {
+-    let Expr::Tuple(ast::ExprTuple { elts, .. }) = stmt_for.target.as_ref() else {
++    check_dict_items_usage(checker, stmt_for.target.as_ref(), stmt_for.iter.as_ref());
++}
++
++/// PERF102 for comprehensions and generators.
++pub(crate) fn incorrect_dict_iterator_comprehension(
++    checker: &Checker,
++    comprehension: &ast::Comprehension,
++) {
++    check_dict_items_usage(checker, &comprehension.target, &comprehension.iter);
++}
++
++fn check_dict_items_usage(checker: &Checker, target: &Expr, iter: &Expr) {
++    let Expr::Tuple(ast::ExprTuple { elts, .. }) = target else {
+         return;
+     };
+     let [key, value] = elts.as_slice() else {
+@@ -74,7 +86,7 @@ pub(crate) fn incorrect_dict_iterator(checker: &Checker, stmt_for: &ast::StmtFor
+         func,
+         arguments: Arguments { args, .. },
+         ..
+-    }) = stmt_for.iter.as_ref()
++    }) = iter
+     else {
+         return;
+     };
+@@ -110,10 +122,10 @@ pub(crate) fn incorrect_dict_iterator(checker: &Checker, stmt_for: &ast::StmtFor
+             let replace_target = Edit::range_replacement(
+                 pad(
+                     checker.locator().slice(value).to_string(),
+-                    stmt_for.target.range(),
++                    target.range(),
+                     checker.locator(),
+                 ),
+-                stmt_for.target.range(),
++                target.range(),
+             );
+             diagnostic.set_fix(Fix::unsafe_edits(replace_attribute, [replace_target]));
+         }
+@@ -129,10 +141,10 @@ pub(crate) fn incorrect_dict_iterator(checker: &Checker, stmt_for: &ast::StmtFor
+             let replace_target = Edit::range_replacement(
+                 pad(
+                     checker.locator().slice(key).to_string(),
+-                    stmt_for.target.range(),
++                    target.range(),
+                     checker.locator(),
+                 ),
+-                stmt_for.target.range(),
++                target.range(),
+             );
+             diagnostic.set_fix(Fix::unsafe_edits(replace_attribute, [replace_target]));
+         }
+diff --git a/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__PERF102_PERF102.py.snap b/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__PERF102_PERF102.py.snap
+index 587b67ccd0..913279a307 100644
+--- a/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__PERF102_PERF102.py.snap
++++ b/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__PERF102_PERF102.py.snap
+@@ -226,4 +226,6 @@ help: Replace `.items()` with `.keys()`
+     -     for(B,D)in A.items():
+ 106 +     for B in A.keys():
+ 107 |         if(C:=name_to_value.get(B.name)):A.run(B.set,C)
++108 | 
++109 | 
+ note: This is an unsafe fix and may change runtime behavior
+diff --git a/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__preview__PERF102_PERF102.py.snap b/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__preview__PERF102_PERF102.py.snap
+new file mode 100644
+index 0000000000..3722752924
+--- /dev/null
++++ b/crates/ruff_linter/src/rules/perflint/snapshots/ruff_linter__rules__perflint__tests__preview__PERF102_PERF102.py.snap
+@@ -0,0 +1,376 @@
++---
++source: crates/ruff_linter/src/rules/perflint/mod.rs
++---
++PERF102 [*] When using only the values of a dict use the `values()` method
++ --> PERF102.py:5:21
++  |
++4 | def f():
++5 |     for _, value in some_dict.items():  # PERF102
++  |                     ^^^^^^^^^^^^^^^
++6 |         print(value)
++  |
++help: Replace `.items()` with `.values()`
++2 | 
++3 | 
++4 | def f():
++  -     for _, value in some_dict.items():  # PERF102
++5 +     for value in some_dict.values():  # PERF102
++6 |         print(value)
++7 | 
++8 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:10:19
++   |
++ 9 | def f():
++10 |     for key, _ in some_dict.items():  # PERF102
++   |                   ^^^^^^^^^^^^^^^
++11 |         print(key)
++   |
++help: Replace `.items()` with `.keys()`
++7  | 
++8  | 
++9  | def f():
++   -     for key, _ in some_dict.items():  # PERF102
++10 +     for key in some_dict.keys():  # PERF102
++11 |         print(key)
++12 | 
++13 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:15:30
++   |
++14 | def f():
++15 |     for weird_arg_name, _ in some_dict.items():  # PERF102
++   |                              ^^^^^^^^^^^^^^^
++16 |         print(weird_arg_name)
++   |
++help: Replace `.items()` with `.keys()`
++12 | 
++13 | 
++14 | def f():
++   -     for weird_arg_name, _ in some_dict.items():  # PERF102
++15 +     for weird_arg_name in some_dict.keys():  # PERF102
++16 |         print(weird_arg_name)
++17 | 
++18 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:20:25
++   |
++19 | def f():
++20 |     for name, (_, _) in some_dict.items():  # PERF102
++   |                         ^^^^^^^^^^^^^^^
++21 |         print(name)
++   |
++help: Replace `.items()` with `.keys()`
++17 | 
++18 | 
++19 | def f():
++   -     for name, (_, _) in some_dict.items():  # PERF102
++20 +     for name in some_dict.keys():  # PERF102
++21 |         print(name)
++22 | 
++23 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:30:30
++   |
++29 | def f():
++30 |     for (key1, _), (_, _) in some_dict.items():  # PERF102
++   |                              ^^^^^^^^^^^^^^^
++31 |         print(key1)
++   |
++help: Replace `.items()` with `.keys()`
++27 | 
++28 | 
++29 | def f():
++   -     for (key1, _), (_, _) in some_dict.items():  # PERF102
++30 +     for (key1, _) in some_dict.keys():  # PERF102
++31 |         print(key1)
++32 | 
++33 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the values of a dict use the `values()` method
++  --> PERF102.py:35:36
++   |
++34 | def f():
++35 |     for (_, (_, _)), (value, _) in some_dict.items():  # PERF102
++   |                                    ^^^^^^^^^^^^^^^
++36 |         print(value)
++   |
++help: Replace `.items()` with `.values()`
++32 | 
++33 | 
++34 | def f():
++   -     for (_, (_, _)), (value, _) in some_dict.items():  # PERF102
++35 +     for (value, _) in some_dict.values():  # PERF102
++36 |         print(value)
++37 | 
++38 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:50:32
++   |
++49 | def f():
++50 |     for ((_, key2), (_, _)) in some_dict.items():  # PERF102
++   |                                ^^^^^^^^^^^^^^^
++51 |         print(key2)
++   |
++help: Replace `.items()` with `.keys()`
++47 | 
++48 | 
++49 | def f():
++   -     for ((_, key2), (_, _)) in some_dict.items():  # PERF102
++50 +     for (_, key2) in some_dict.keys():  # PERF102
++51 |         print(key2)
++52 | 
++53 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:85:25
++   |
++84 | def f():
++85 |     for name, (_, _) in (some_function()).items():  # PERF102
++   |                         ^^^^^^^^^^^^^^^^^^^^^^^
++86 |         print(name)
++   |
++help: Replace `.items()` with `.keys()`
++82 | 
++83 | 
++84 | def f():
++   -     for name, (_, _) in (some_function()).items():  # PERF102
++85 +     for name in (some_function()).keys():  # PERF102
++86 |         print(name)
++87 | 
++88 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:90:25
++   |
++89 | def f():
++90 |     for name, (_, _) in (some_function().some_attribute).items():  # PERF102
++   |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++91 |         print(name)
++   |
++help: Replace `.items()` with `.keys()`
++87 | 
++88 | 
++89 | def f():
++   -     for name, (_, _) in (some_function().some_attribute).items():  # PERF102
++90 +     for name in (some_function().some_attribute).keys():  # PERF102
++91 |         print(name)
++92 | 
++93 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++  --> PERF102.py:95:31
++   |
++94 | def f():
++95 |     for name, unused_value in some_dict.items():  # PERF102
++   |                               ^^^^^^^^^^^^^^^
++96 |         print(name)
++   |
++help: Replace `.items()` with `.keys()`
++92 | 
++93 | 
++94 | def f():
++   -     for name, unused_value in some_dict.items():  # PERF102
++95 +     for name in some_dict.keys():  # PERF102
++96 |         print(name)
++97 | 
++98 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the values of a dict use the `values()` method
++   --> PERF102.py:100:31
++    |
++ 99 | def f():
++100 |     for unused_name, value in some_dict.items():  # PERF102
++    |                               ^^^^^^^^^^^^^^^
++101 |         print(value)
++    |
++help: Replace `.items()` with `.values()`
++97  | 
++98  | 
++99  | def f():
++    -     for unused_name, value in some_dict.items():  # PERF102
++100 +     for value in some_dict.values():  # PERF102
++101 |         print(value)
++102 | 
++103 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++   --> PERF102.py:106:16
++    |
++104 | # Regression test for: https://github.com/astral-sh/ruff/issues/7097
++105 | def _create_context(name_to_value):
++106 |     for(B,D)in A.items():
++    |                ^^^^^^^
++107 |         if(C:=name_to_value.get(B.name)):A.run(B.set,C)
++    |
++help: Replace `.items()` with `.keys()`
++103 | 
++104 | # Regression test for: https://github.com/astral-sh/ruff/issues/7097
++105 | def _create_context(name_to_value):
++    -     for(B,D)in A.items():
++106 +     for B in A.keys():
++107 |         if(C:=name_to_value.get(B.name)):A.run(B.set,C)
++108 | 
++109 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++   --> PERF102.py:111:20
++    |
++110 | # Comprehensions and generators — errors (https://github.com/astral-sh/ruff/issues/6638)
++111 | _ = [k for k, _ in some_dict.items()]  # PERF102
++    |                    ^^^^^^^^^^^^^^^
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++    |
++help: Replace `.items()` with `.keys()`
++108 | 
++109 | 
++110 | # Comprehensions and generators — errors (https://github.com/astral-sh/ruff/issues/6638)
++    - _ = [k for k, _ in some_dict.items()]  # PERF102
++111 + _ = [k for k in some_dict.keys()]  # PERF102
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++   --> PERF102.py:112:20
++    |
++110 | # Comprehensions and generators — errors (https://github.com/astral-sh/ruff/issues/6638)
++111 | _ = [k for k, _ in some_dict.items()]  # PERF102
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++    |                    ^^^^^^^^^^^^^^^
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++    |
++help: Replace `.items()` with `.keys()`
++109 | 
++110 | # Comprehensions and generators — errors (https://github.com/astral-sh/ruff/issues/6638)
++111 | _ = [k for k, _ in some_dict.items()]  # PERF102
++    - _ = {k for k, _ in some_dict.items()}  # PERF102
++112 + _ = {k for k in some_dict.keys()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++   --> PERF102.py:113:25
++    |
++111 | _ = [k for k, _ in some_dict.items()]  # PERF102
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++    |                         ^^^^^^^^^^^^^^^
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++    |
++help: Replace `.items()` with `.keys()`
++110 | # Comprehensions and generators — errors (https://github.com/astral-sh/ruff/issues/6638)
++111 | _ = [k for k, _ in some_dict.items()]  # PERF102
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++    - _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++113 + _ = {k: "v" for k in some_dict.keys()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++   --> PERF102.py:114:20
++    |
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++    |                    ^^^^^^^^^^^^^^^
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++    |
++help: Replace `.items()` with `.keys()`
++111 | _ = [k for k, _ in some_dict.items()]  # PERF102
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++    - _ = (k for k, _ in some_dict.items())  # PERF102
++114 + _ = (k for k in some_dict.keys())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++117 | _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the values of a dict use the `values()` method
++   --> PERF102.py:115:20
++    |
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++    |                    ^^^^^^^^^^^^^^^
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++117 | _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++    |
++help: Replace `.items()` with `.values()`
++112 | _ = {k for k, _ in some_dict.items()}  # PERF102
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++    - _ = [v for _, v in some_dict.items()]  # PERF102
++115 + _ = [v for v in some_dict.values()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++117 | _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++118 | 
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the keys of a dict use the `keys()` method
++   --> PERF102.py:116:20
++    |
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++    |                    ^^^^^^^^^^^^^^^
++117 | _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++    |
++help: Replace `.items()` with `.keys()`
++113 | _ = {k: "v" for k, _ in some_dict.items()}  # PERF102
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++    - _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++116 + _ = [k for k in some_dict.keys()]  # PERF102 (v unused)
++117 | _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++118 | 
++119 | # Comprehensions — no errors
++note: This is an unsafe fix and may change runtime behavior
++
++PERF102 [*] When using only the values of a dict use the `values()` method
++   --> PERF102.py:117:38
++    |
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++117 | _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++    |                                      ^^^^^^^^^^^^^^^
++118 |
++119 | # Comprehensions — no errors
++    |
++help: Replace `.items()` with `.values()`
++114 | _ = (k for k, _ in some_dict.items())  # PERF102
++115 | _ = [v for _, v in some_dict.items()]  # PERF102
++116 | _ = [k for k, v in some_dict.items()]  # PERF102 (v unused)
++    - _ = [v for x in range(1) for _, v in some_dict.items()]  # PERF102
++117 + _ = [v for x in range(1) for v in some_dict.values()]  # PERF102
++118 | 
++119 | # Comprehensions — no errors
++120 | _ = [(k, v) for k, v in some_dict.items()]  # OK (both used)
++note: This is an unsafe fix and may change runtime behavior

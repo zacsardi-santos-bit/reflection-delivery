@@ -1,0 +1,15 @@
+patching file integration/client/container_linux_test.go
+patching file internal/userns/idmap_test.go
+{"Time":"2026-06-29T15:26:22.75045813Z","Action":"start","Package":"github.com/containerd/containerd/v2/internal/userns"}
+{"Time":"2026-06-29T15:26:22.756033638Z","Action":"run","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHost"}
+{"Time":"2026-06-29T15:26:22.756092318Z","Action":"output","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHost","Output":"=== RUN   TestToHost\n"}
+{"Time":"2026-06-29T15:26:22.756181599Z","Action":"output","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHost","Output":"--- PASS: TestToHost (0.00s)\n"}
+{"Time":"2026-06-29T15:26:22.756204929Z","Action":"pass","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHost","Elapsed":0}
+{"Time":"2026-06-29T15:26:22.756281089Z","Action":"run","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHostOverflow"}
+{"Time":"2026-06-29T15:26:22.756317299Z","Action":"output","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHostOverflow","Output":"=== RUN   TestToHostOverflow\n"}
+{"Time":"2026-06-29T15:26:22.756346319Z","Action":"output","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHostOverflow","Output":"--- PASS: TestToHostOverflow (0.00s)\n"}
+{"Time":"2026-06-29T15:26:22.756422339Z","Action":"pass","Package":"github.com/containerd/containerd/v2/internal/userns","Test":"TestToHostOverflow","Elapsed":0}
+{"Time":"2026-06-29T15:26:22.756449859Z","Action":"output","Package":"github.com/containerd/containerd/v2/internal/userns","Output":"PASS\n"}
+{"Time":"2026-06-29T15:26:22.756522829Z","Action":"output","Package":"github.com/containerd/containerd/v2/internal/userns","Output":"ok  \tgithub.com/containerd/containerd/v2/internal/userns\t0.006s\n"}
+{"Time":"2026-06-29T15:26:22.756565869Z","Action":"pass","Package":"github.com/containerd/containerd/v2/internal/userns","Elapsed":0.006}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

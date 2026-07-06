@@ -1,0 +1,239 @@
+patching file crates/rolldown/tests/common/case.rs
+patching file crates/rolldown/tests/common/fixture.rs
+patching file crates/rolldown/tests/fixtures/basic/artifacts.snap
+patching file crates/rolldown/tests/fixtures/basic/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/basic_scoped/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/basic_scoped/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/default_function/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/default_function/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/issue_364/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/issue_364/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/reserved_names/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/test.config.json
+patching file crates/rolldown/tests/fixtures/mix-cjs-esm/artifacts.snap
+patching file crates/rolldown/tests/fixtures/mix-cjs-esm/test.config.json
+patching file crates/rolldown/tests/fixtures/object_shorthand_property/artifacts.snap
+patching file crates/rolldown/tests/fixtures/object_shorthand_property/test.config.json
+patching file crates/rolldown/tests/fixtures/require/require_cjs/artifacts.snap
+patching file crates/rolldown/tests/fixtures/require/require_cjs/test.config.json
+patching file crates/rolldown/tests/fixtures/require/require_esm/artifacts.snap
+patching file crates/rolldown/tests/fixtures/require/require_esm/test.config.json
+patching file crates/rolldown/tests/fixtures/wrapped_esm/artifacts.snap
+patching file crates/rolldown/tests/fixtures/wrapped_esm/test.config.json
+   Compiling proc-macro2 v1.0.78
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.1.0
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.153
+   Compiling once_cell v1.19.0
+   Compiling serde v1.0.197
+   Compiling smallvec v1.13.1
+   Compiling hashbrown v0.14.3
+   Compiling equivalent v1.0.1
+   Compiling ryu v1.0.17
+   Compiling itoa v1.0.10
+   Compiling parking_lot_core v0.9.9
+   Compiling scopeguard v1.2.0
+   Compiling memchr v2.7.1
+   Compiling thiserror v1.0.58
+   Compiling serde_json v1.0.115
+   Compiling rustversion v1.0.14
+   Compiling pin-project-lite v0.2.13
+   Compiling unicode-width v0.1.11
+   Compiling siphasher v0.3.11
+   Compiling rustc-hash v1.1.0
+   Compiling rand_core v0.6.4
+   Compiling unicode-linebreak v0.1.5
+   Compiling smawk v0.3.2
+   Compiling static_assertions v1.1.0
+   Compiling crossbeam-utils v0.8.19
+   Compiling phf_shared v0.11.2
+   Compiling owo-colors v4.0.0
+   Compiling lock_api v0.4.11
+   Compiling rand v0.8.5
+   Compiling num-traits v0.2.18
+   Compiling num-bigint v0.4.4
+   Compiling textwrap v0.16.1
+   Compiling bitflags v2.5.0
+   Compiling index_vec v0.1.3
+   Compiling unicode-id-start v1.1.2
+   Compiling rayon-core v1.12.1
+   Compiling bumpalo v3.15.4
+   Compiling outref v0.1.0
+   Compiling phf_generator v0.11.2
+   Compiling oxc_index v0.11.0
+   Compiling simd-abstraction v0.7.1
+   Compiling either v1.10.0
+   Compiling fixedbitset v0.4.2
+   Compiling assert-unchecked v0.1.2
+   Compiling seq-macro v0.3.5
+   Compiling bytes v1.5.0
+   Compiling tracing-core v0.1.32
+   Compiling base64-simd v0.7.0
+   Compiling regex-syntax v0.8.2
+   Compiling napi-sys v2.3.0
+   Compiling yansi v0.5.1
+   Compiling sugar_path v0.0.12
+   Compiling json-strip-comments v1.0.2
+   Compiling dunce v1.0.4
+   Compiling quote v1.0.35
+   Compiling slab v0.4.9
+   Compiling ariadne v0.4.0
+   Compiling vfs v0.11.0
+   Compiling aho-corasick v1.1.2
+   Compiling num_cpus v1.16.0
+   Compiling socket2 v0.5.6
+   Compiling syn v2.0.52
+   Compiling crossbeam-epoch v0.9.18
+   Compiling mio v0.8.11
+   Compiling signal-hook-registry v1.4.1
+   Compiling dashmap v5.5.3
+   Compiling parking_lot v0.12.1
+   Compiling futures-sink v0.3.30
+   Compiling crossbeam-deque v0.8.5
+   Compiling futures-core v0.3.30
+   Compiling futures-io v0.3.30
+   Compiling pin-utils v0.1.0
+   Compiling futures-task v0.3.30
+   Compiling futures-channel v0.3.30
+   Compiling async-trait v0.1.77
+   Compiling syn v1.0.109
+   Compiling lazy_static v1.4.0
+   Compiling regex-syntax v0.6.29
+   Compiling overload v0.1.1
+   Compiling log v0.4.21
+   Compiling sharded-slab v0.1.7
+   Compiling nu-ansi-term v0.46.0
+   Compiling thread_local v1.1.8
+   Compiling anyhow v1.0.81
+   Compiling schemars v0.8.16
+   Compiling dyn-clone v1.0.17
+   Compiling castaway v0.2.2
+   Compiling rayon v1.10.0
+   Compiling regex-automata v0.4.6
+   Compiling tracing-log v0.2.0
+   Compiling compact_str v0.7.1
+   Compiling wasm-bindgen-shared v0.2.92
+   Compiling linked-hash-map v0.5.6
+   Compiling num-integer v0.1.46
+   Compiling yaml-rust v0.4.5
+   Compiling console v0.15.8
+   Compiling relative-path v1.9.2
+   Compiling similar v2.4.0
+   Compiling glob v0.3.1
+   Compiling semver v1.0.22
+   Compiling cc v1.0.89
+   Compiling unicode-segmentation v1.11.0
+   Compiling wasm-bindgen v0.2.92
+   Compiling regex-automata v0.1.10
+   Compiling insta v1.36.1
+   Compiling convert_case v0.6.0
+   Compiling napi-build v2.1.2
+   Compiling scoped-tls v1.0.1
+   Compiling wasm-bindgen-backend v0.2.92
+   Compiling rolldown_binding v0.0.1 (/workspace/repo/crates/rolldown_binding)
+   Compiling matchers v0.1.0
+   Compiling regex v1.10.3
+   Compiling libmimalloc-sys v0.1.35
+   Compiling serde_derive_internals v0.26.0
+   Compiling wasm-bindgen-macro-support v0.2.92
+   Compiling serde_derive v1.0.197
+   Compiling thiserror-impl v1.0.58
+   Compiling miette-derive v7.2.0
+   Compiling phf_macros v0.11.2
+   Compiling tokio-macros v2.2.0
+   Compiling tracing-attributes v0.1.27
+   Compiling ctor v0.2.7
+   Compiling futures-macro v0.3.30
+   Compiling pin-project-internal v1.1.4
+   Compiling schemars_derive v0.8.16
+   Compiling derivative v2.2.0
+   Compiling wasm-bindgen-macro v0.2.92
+   Compiling napi-derive-backend v2.0.0-alpha.0
+   Compiling mimalloc v0.1.39
+   Compiling testing_macros v0.2.12
+   Compiling napi-derive v3.0.0-alpha.0
+   Compiling tokio v1.36.0
+   Compiling phf v0.11.2
+   Compiling futures-util v0.3.30
+   Compiling miette v7.2.0
+   Compiling pin-project v1.1.4
+   Compiling tracing v0.1.40
+   Compiling tracing-subscriber v0.3.18
+   Compiling oxc_span v0.11.0
+   Compiling oxc_diagnostics v0.11.0
+   Compiling console_error_panic_hook v0.1.7
+   Compiling futures-executor v0.3.30
+   Compiling futures v0.3.30
+   Compiling indexmap v2.2.6
+   Compiling oxc_allocator v0.11.0
+   Compiling napi v3.0.0-alpha.0
+   Compiling async-scoped v0.9.0
+   Compiling rolldown_utils v0.1.0 (/workspace/repo/crates/rolldown_utils)
+   Compiling oxc_syntax v0.11.0
+   Compiling petgraph v0.6.4
+   Compiling oxc_ast v0.11.0
+   Compiling oxc_sourcemap v0.11.0
+   Compiling oxc_resolver v1.5.4
+   Compiling tracing-chrome v0.7.1
+   Compiling rolldown_tracing v0.0.1 (/workspace/repo/crates/rolldown_tracing)
+   Compiling rolldown_fs v0.1.0 (/workspace/repo/crates/rolldown_fs)
+   Compiling rolldown_testing v0.0.1 (/workspace/repo/crates/rolldown_testing)
+   Compiling oxc_semantic v0.11.0
+   Compiling oxc_parser v0.11.0
+   Compiling oxc_codegen v0.11.0
+   Compiling oxc v0.11.0
+   Compiling rolldown_error v0.0.1 (/workspace/repo/crates/rolldown_error)
+   Compiling rolldown_rstr v0.0.1 (/workspace/repo/crates/rolldown_rstr)
+   Compiling rolldown_oxc_utils v0.1.0 (/workspace/repo/crates/rolldown_oxc_utils)
+   Compiling rolldown_resolver v0.0.1 (/workspace/repo/crates/rolldown_resolver)
+   Compiling rolldown_sourcemap v0.1.0 (/workspace/repo/crates/rolldown_sourcemap)
+   Compiling rolldown_common v0.0.1 (/workspace/repo/crates/rolldown_common)
+   Compiling rolldown_plugin v0.1.0 (/workspace/repo/crates/rolldown_plugin)
+   Compiling rolldown v0.1.0 (/workspace/repo/crates/rolldown)
+   Compiling rolldown_plugin_hello v0.1.0 (/workspace/repo/crates/rolldown_plugin_hello)
+   Compiling rolldown_plugin_vite_scanner v0.1.0 (/workspace/repo/crates/rolldown_plugin_vite_scanner)
+   Compiling rolldown_wasm_binding v0.1.0 (/workspace/repo/crates/rolldown_binding_wasm)
+error[E0432]: unresolved import `rolldown_sourcemap::SourcemapVisualizer`
+ --> crates/rolldown/tests/common/case.rs:7:5
+  |
+7 | use rolldown_sourcemap::SourcemapVisualizer;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `SourcemapVisualizer` in the root
+  |
+help: consider importing this struct instead
+  |
+7 | use oxc::sourcemap::SourcemapVisualizer;
+  |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0609]: no field `sourcemap` on type `TestConfig`
+   --> crates/rolldown/tests/common/fixture.rs:130:32
+    |
+130 |         sourcemap: test_config.sourcemap.then_some(SourceMapType::File),
+    |                                ^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `input`, `output`, `expect_executed`, `expect_error`, `_comment`, `snapshot_output_stats`
+
+error[E0609]: no field `sourcemap` on type `TestConfig`
+  --> crates/rolldown/tests/common/case.rs:89:35
+   |
+89 |     if self.fixture.test_config().sourcemap {
+   |                                   ^^^^^^^^^ unknown field
+   |
+   = note: available fields are: `input`, `output`, `expect_executed`, `expect_error`, `_comment`, `snapshot_output_stats`
+
+Some errors have detailed explanations: E0432, E0609.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `rolldown` (test "fixtures") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `rolldown` (test "esbuild") due to 3 previous errors
+error: command `/usr/local/rustup/toolchains/1.76.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=188 found=0 failed=0 parsed=0 framework=cargo exit_code=101

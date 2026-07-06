@@ -1,0 +1,13 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && sh -c 'mkdir -p /workspace/test-results; tsc_out=$(npx tsc --noEmit 2>&1); if echo \"$tsc_out\" | grep -qF populate.test.ts; then echo aW1wb3J0IGpzb247IHQ9eyJ0aXRsZSI6InBvcHVsYXRlIHR5cGUgdGVzdCIsImZ1bGxUaXRsZSI6IlR5cGVTY3JpcHQgVHlwZXMgcG9wdWxhdGUgdHlwZSB0ZXN0IiwiZHVyYXRpb24iOjAsImVyciI6eyJtZXNzYWdlIjoiVHlwZVNjcmlwdCB0eXBlIGVycm9yIn19OyBmPW9wZW4oIi93b3Jrc3BhY2UvdGVzdC1yZXN1bHRzL291dHB1dC5qc29uIiwidyIpOyBqc29uLmR1bXAoeyJzdGF0cyI6eyJwYXNzZXMiOjAsImZhaWx1cmVzIjoxfSwicGFzc2VzIjpbXSwiZmFpbHVyZXMiOlt0XSwidGVzdHMiOlt0XX0sZik= | base64 -d | python3; exit 1; else echo aW1wb3J0IGpzb247IHQ9eyJ0aXRsZSI6InBvcHVsYXRlIHR5cGUgdGVzdCIsImZ1bGxUaXRsZSI6IlR5cGVTY3JpcHQgVHlwZXMgcG9wdWxhdGUgdHlwZSB0ZXN0IiwiZHVyYXRpb24iOjF9OyBmPW9wZW4oIi93b3Jrc3BhY2UvdGVzdC1yZXN1bHRzL291dHB1dC5qc29uIiwidyIpOyBqc29uLmR1bXAoeyJzdGF0cyI6eyJwYXNzZXMiOjEsImZhaWx1cmVzIjowfSwicGFzc2VzIjpbdF0sImZhaWx1cmVzIjpbXSwidGVzdHMiOlt0XX0sZik= | base64 -d | python3; exit 0; fi'",
+  "test_files": [
+    "test/types/populate.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "::TypeScript Types populate type test"
+  ],
+  "PASS_TO_PASS": []
+}

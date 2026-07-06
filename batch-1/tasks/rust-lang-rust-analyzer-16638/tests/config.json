@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p ide-assists -E 'test(doctest_destructure_struct_binding)'",
+  "test_files": [
+    "crates/ide-assists/src/tests/generated.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) ide-assists tests::generated::doctest_destructure_struct_binding"
+  ],
+  "PASS_TO_PASS": []
+}

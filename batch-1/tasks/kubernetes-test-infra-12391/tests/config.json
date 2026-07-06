@@ -1,0 +1,32 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -v ./prow/pod-utils/gcs -count=1",
+  "test_files": [
+    "prow/pod-utils/gcs/metadata_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/txt",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/txt.gz",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/txt.gzip",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/bare_gz",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/gz",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/gzip",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/json",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/json.gz",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/log",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/empty",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName/dot",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestMetadataFromFileName",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestPathForSpec",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestAliasForSpec",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestLatestBuildForSpec",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestRootForSpec",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestNewLegacyRepoPathBuilder",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestNewSingleDefaultRepoPathBuilder",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestNewExplicitRepoPathBuilder",
+    "k8s.io/test-infra/prow/pod-utils/gcs::TestUploadToGcs"
+  ],
+  "PASS_TO_PASS": []
+}

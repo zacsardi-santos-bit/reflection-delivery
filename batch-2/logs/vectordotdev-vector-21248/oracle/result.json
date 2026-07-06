@@ -1,0 +1,29 @@
+{
+    "id": "28cc4592-f8b3-4a3d-80fb-e10e8bd7d3e8",
+    "started_at": "2026-07-04T15:37:51.290937",
+    "finished_at": "2026-07-04T15:40:44.084168",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__vectordotdev-vector-21248": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "vectordotdev-vector-21248__ngdLwJu"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

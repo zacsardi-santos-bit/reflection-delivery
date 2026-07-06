@@ -1,0 +1,17 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo/spring-security-modules/spring-security-compromised-password && mvn test -Dtest=CompromisedPasswordIntegrationTest -Dmaven.compiler.parameters=true",
+  "test_files": [
+    "spring-security-modules/spring-security-compromised-password/src/test/java/com/baeldung/security/CompromisedPasswordIntegrationTest.java",
+    "spring-security-modules/spring-security-compromised-password/src/test/java/com/baeldung/security/PasswordCheckerSimulator.java",
+    "spring-security-modules/spring-security-compromised-password/src/test/java/com/baeldung/security/TestSecurityConfiguration.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "spring-security-compromised-password::test_1",
+    "spring-security-compromised-password::test_2",
+    "spring-security-compromised-password::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

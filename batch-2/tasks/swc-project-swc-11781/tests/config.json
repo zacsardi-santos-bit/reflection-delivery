@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "touch /workspace/repo/crates/swc_ecma_transforms_proposal/tests/decorators.rs && cd /workspace/repo && cargo nextest run -p swc_ecma_transforms_proposal --test decorators -E 'test(fixture_tests__decorators__issue_11780__input_js)'",
+  "test_files": [
+    "crates/swc_ecma_transforms_proposal/tests/decorators/issue-11780/exec.js",
+    "crates/swc_ecma_transforms_proposal/tests/decorators/issue-11780/input.js",
+    "crates/swc_ecma_transforms_proposal/tests/decorators/issue-11780/options.json",
+    "crates/swc_ecma_transforms_proposal/tests/decorators/issue-11780/output.js"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) swc_ecma_transforms_proposal::decorators fixture_tests__decorators__issue_11780__input_js"
+  ],
+  "PASS_TO_PASS": []
+}

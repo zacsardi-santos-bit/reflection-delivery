@@ -1,7 +1,0 @@
-patching file .changeset/silver-plums-brake.md
-patching file fixtures/import-npm/package-lock.json
-patching file packages/wrangler/package.json
-patching file packages/wrangler/src/pages/secret/index.ts
-patching file packages/wrangler/src/secret/index.ts
-patching file packages/wrangler/src/versions/secrets/bulk.ts
-patching file pnpm-lock.yaml

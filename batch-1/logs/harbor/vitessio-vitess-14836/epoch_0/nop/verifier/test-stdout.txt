@@ -1,0 +1,16 @@
+patching file go/vt/vttablet/tabletmanager/rpc_query_test.go
+patching file go/vt/vttablet/tabletmanager/rpc_replication_test.go
+patching file go/vt/vttablet/tabletmanager/tm_init_test.go
+patching file go/vt/vttablet/tabletserver/tabletserver_test.go
+# vitess.io/vitess/go/vt/vttablet/tabletmanager [vitess.io/vitess/go/vt/vttablet/tabletmanager.test]
+go/vt/vttablet/tabletmanager/rpc_query_test.go:48:3: unknown field _waitForGrantsComplete in struct literal of type TabletManager
+go/vt/vttablet/tabletmanager/rpc_query_test.go:50:11: tm._waitForGrantsComplete undefined (type *TabletManager has no field or method _waitForGrantsComplete)
+go/vt/vttablet/tabletmanager/rpc_replication_test.go:30:3: unknown field _waitForGrantsComplete in struct literal of type TabletManager
+go/vt/vttablet/tabletmanager/rpc_replication_test.go:34:12: tm.waitForGrantsToHaveApplied undefined (type *TabletManager has no field or method waitForGrantsToHaveApplied)
+go/vt/vttablet/tabletmanager/rpc_replication_test.go:37:11: tm.waitForDBAGrants undefined (type *TabletManager has no field or method waitForDBAGrants)
+go/vt/vttablet/tabletmanager/rpc_replication_test.go:42:11: tm.waitForGrantsToHaveApplied undefined (type *TabletManager has no field or method waitForGrantsToHaveApplied)
+go/vt/vttablet/tabletmanager/tm_init_test.go:863:5: unknown field _waitForGrantsComplete in struct literal of type TabletManager
+go/vt/vttablet/tabletmanager/tm_init_test.go:865:14: tm.waitForDBAGrants undefined (type TabletManager has no field or method waitForDBAGrants)
+go/vt/vttablet/tabletmanager/tm_init_test.go:869:23: tm._waitForGrantsComplete undefined (type TabletManager has no field or method _waitForGrantsComplete)
+FAIL	vitess.io/vitess/go/vt/vttablet/tabletmanager [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

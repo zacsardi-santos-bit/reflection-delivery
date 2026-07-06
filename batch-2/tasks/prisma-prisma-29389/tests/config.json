@@ -1,0 +1,31 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run src/__tests__/Studio.vitest.ts src/__tests__/studio-server.vitest.ts",
+  "test_files": [
+    "packages/cli/src/__tests__/Studio.vitest.ts",
+    "packages/cli/src/__tests__/studio-server.vitest.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF routes sql-lint requests to executor.lintSql",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF unwraps RPC-serialized sql-lint errors",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF passes through top-level serialized sql-lint errors",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF unwraps nested serialized sql-lint errors",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF falls back to serializeError for unknown sql-lint error shapes",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF routes transaction requests to executor.executeTransaction",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF serves the Prisma logo as the favicon",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF serves the bundled Studio HTML shell without CDN dependencies",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF serves the bundled Studio JavaScript and CSS assets",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF responds to OPTIONS requests with CORS preflight headers",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio BFF no longer serves adapter.js",
+    "/workspace/repo/packages/cli/src/__tests__/studio-server.vitest.ts::streams GET response bodies from the Node Studio server",
+    "/workspace/repo/packages/cli/src/__tests__/studio-server.vitest.ts::preserves HEAD semantics without dropping GET bodies",
+    "/workspace/repo/packages/cli/src/__tests__/studio-server.vitest.ts::logs server errors and returns the error message in the response body"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio MySQL URL compatibility converts sslaccept=strict to mysql2 ssl JSON",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio MySQL URL compatibility maps connection_limit to mysql2 connectionLimit",
+    "/workspace/repo/packages/cli/src/__tests__/Studio.vitest.ts::Studio MySQL URL compatibility converts sslaccept=accept_invalid_certs to mysql2 ssl JSON"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python3 -c \"import os, sys; f = 'tests/queries/0_stateless/04319_array_norm_bfloat16.sql'; absent = not os.path.exists(f); tname = f + '::test_bfloat16_array_norm_removed'; print(tname + (' PASSED' if absent else ' FAILED')); sys.exit(0 if absent else 1)\"",
+  "test_files": [
+    "tests/integration/test_profile_max_sessions_for_user/test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests/queries/0_stateless/04319_array_norm_bfloat16.sql::test_bfloat16_array_norm_removed"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,27 @@
+{
+    "id": "3e28e3bd-859e-415e-b25d-c493bac94a68",
+    "started_at": "2026-07-04T15:37:29.004312",
+    "finished_at": "2026-07-04T15:39:53.129009",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 1,
+        "evals": {
+            "nop__awslabs-aws-c-common-130": {
+                "n_trials": 0,
+                "n_errors": 1,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {},
+                "exception_stats": {
+                    "FilesystemExecutionError": [
+                        "awslabs-aws-c-common-130__YK2u8SS"
+                    ]
+                }
+            }
+        }
+    }
+}

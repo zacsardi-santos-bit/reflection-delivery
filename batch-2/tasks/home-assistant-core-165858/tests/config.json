@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest tests/components/growatt_server/test_sensor.py -v",
+  "test_files": [
+    "tests/components/growatt_server/snapshots/test_sensor.ambr"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.growatt_server.test_sensor::test_min_sensors_v1_api",
+    "tests.components.growatt_server.test_sensor::test_sensors_classic_api[tlx]",
+    "tests.components.growatt_server.test_sensor::test_sensors_classic_api[inverter]",
+    "tests.components.growatt_server.test_sensor::test_sensors_classic_api[storage]",
+    "tests.components.growatt_server.test_sensor::test_total_sensors_classic_api"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.growatt_server.test_sensor::test_sph_sensors_v1_api",
+    "tests.components.growatt_server.test_sensor::test_sph_sensor_unavailable_on_coordinator_error",
+    "tests.components.growatt_server.test_sensor::test_sensors_classic_api[mix]",
+    "tests.components.growatt_server.test_sensor::test_sensor_coordinator_updates",
+    "tests.components.growatt_server.test_sensor::test_sensor_unavailable_on_coordinator_error",
+    "tests.components.growatt_server.test_sensor::test_midnight_bounce_suppression",
+    "tests.components.growatt_server.test_sensor::test_normal_reset_no_bounce",
+    "tests.components.growatt_server.test_sensor::test_midnight_bounce_repeated",
+    "tests.components.growatt_server.test_sensor::test_non_total_increasing_sensor_unaffected_by_bounce_suppression"
+  ]
+}

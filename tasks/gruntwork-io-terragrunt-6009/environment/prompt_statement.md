@@ -1,5 +1,0 @@
-I have a Terragrunt setup where I define exclusion rules in a shared parent configuration file — the idea being that any unit which includes that parent will automatically inherit those rules and skip certain operations. However, I'm finding that the exclusion rules defined in the parent are completely ignored in the child units. When I parse a child config that includes the parent, the exclusion settings from the parent simply aren't there in the result.
-
-Strangely, other top-level blocks in the parent — like retry error settings, engine configuration, and feature flags — do seem to get inherited correctly. It's only the exclusion block that gets silently dropped. This happens whether I use default merge, shallow merge, or deep merge.
-
-I'd expect the child unit's parsed configuration to carry over the parent's exclusion settings whenever the child doesn't define its own. And if the child does define its own exclusion block, the child's settings should win. Can you fix the include/merge logic so that exclusion blocks are properly inherited from parent configs?

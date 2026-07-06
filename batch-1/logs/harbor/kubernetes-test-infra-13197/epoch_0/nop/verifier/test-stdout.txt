@@ -1,0 +1,14 @@
+patching file prow/cmd/deck/main_test.go
+patching file prow/githuboauth/githuboauth_test.go
+# k8s.io/test-infra/prow/githuboauth [k8s.io/test-infra/prow/githuboauth.test]
+prow/githuboauth/githuboauth_test.go:268:26: mockAgent.GetLogin undefined (type *Agent has no field or method GetLogin)
+# k8s.io/test-infra/prow/cmd/deck [k8s.io/test-infra/prow/cmd/deck.test]
+prow/cmd/deck/main_test.go:392:96: too many arguments in call to handleRerun
+	have ("k8s.io/test-infra/prow/client/clientset/versioned/typed/prowjobs/v1".ProwJobInterface, bool, func() *"k8s.io/test-infra/prow/config".RerunAuthConfig, *githuboauth.Agent, mockGitHubConfigGetter)
+	want ("k8s.io/test-infra/prow/client/clientset/versioned/typed/prowjobs/v1".ProwJobInterface, bool)
+FAIL	k8s.io/test-infra/prow/cmd/deck [build failed]
+FAIL	k8s.io/test-infra/prow/githuboauth [build failed]
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

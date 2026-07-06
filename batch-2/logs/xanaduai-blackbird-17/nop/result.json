@@ -1,0 +1,29 @@
+{
+    "id": "b5180d4c-9e9c-41f4-abfb-94443d675df1",
+    "started_at": "2026-07-04T15:37:26.542568",
+    "finished_at": "2026-07-04T15:39:14.560121",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__xanaduai-blackbird-17": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "xanaduai-blackbird-17__QN3xbCi"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "079b0ac5-9fd8-4187-a645-cd30e61adbd9",
+    "started_at": "2026-07-06T12:17:05.598283",
+    "finished_at": "2026-07-06T12:18:31.685096",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__pola-rs-polars-26968": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "pola-rs-polars-26968__CmYqSdx"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

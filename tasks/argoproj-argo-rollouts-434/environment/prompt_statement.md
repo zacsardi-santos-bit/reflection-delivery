@@ -1,7 +1,0 @@
-I'm working on the argo-rollouts controller and I want to improve how failure messages are surfaced when an analysis run aborts a rollout. Right now, when a rollout gets aborted because an analysis metric exceeded its failure limit, inconclusive limit, or consecutive error limit, the rollout status just says it was aborted — there's no detail about which metric failed or why. Operators have to dig into the underlying analysis run objects to find that information.
-
-I'd like the system to generate a descriptive message for each metric assessment that explains exactly what threshold was crossed (for example, indicating how many failures occurred compared to the allowed failure limit, or how many consecutive errors exceeded the configured limit). This message should be stored on the analysis run status when the run completes, and when a rollout is aborted as a result, that message should be propagated into the rollout's own status condition so it's immediately visible.
-
-There's also a related utility function needed to retrieve the consecutive error limit for a metric, falling back to a default value of 4 if none is configured, and that default should be centralized in a shared utility so it is accessible beyond the analysis logic alone.
-
-When multiple metrics fail, the message from the first worst-status metric encountered should be used. If the provider attached its own error message to the metric result, that should be appended to the failure reason in the rollout condition message as well.

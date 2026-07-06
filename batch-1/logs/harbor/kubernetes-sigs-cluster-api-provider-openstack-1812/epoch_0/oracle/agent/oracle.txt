@@ -1,0 +1,3 @@
+patching file kustomize/v1alpha8/flatcar-sysext/kustomization.yaml
+patching file kustomize/v1alpha8/flatcar-sysext/patch-flatcar.yaml
+patching file templates/cluster-template-flatcar-sysext.yaml

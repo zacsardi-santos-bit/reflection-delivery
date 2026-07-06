@@ -1,0 +1,579 @@
+diff --git a/packages/cli/src/utils/agentSettings.ts b/packages/cli/src/utils/agentSettings.ts
+index e063e9653..661b065d1 100644
+--- a/packages/cli/src/utils/agentSettings.ts
++++ b/packages/cli/src/utils/agentSettings.ts
+@@ -4,30 +4,41 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import type { SettingScope, LoadedSettings } from '../config/settings.js';
+ import {
+-  SettingScope,
+-  isLoadableSettingScope,
+-  type LoadedSettings,
+-} from '../config/settings.js';
+-import type { ModifiedScope } from './skillSettings.js';
++  type FeatureActionResult,
++  type FeatureToggleStrategy,
++  enableFeature,
++  disableFeature,
++} from './featureToggleUtils.js';
+ 
+ export type AgentActionStatus = 'success' | 'no-op' | 'error';
+ 
+ /**
+  * Metadata representing the result of an agent settings operation.
+  */
+-export interface AgentActionResult {
+-  status: AgentActionStatus;
++export interface AgentActionResult
++  extends Omit<FeatureActionResult, 'featureName'> {
+   agentName: string;
+-  action: 'enable' | 'disable';
+-  /** Scopes where the agent's state was actually changed. */
+-  modifiedScopes: ModifiedScope[];
+-  /** Scopes where the agent was already in the desired state. */
+-  alreadyInStateScopes: ModifiedScope[];
+-  /** Error message if status is 'error'. */
+-  error?: string;
+ }
+ 
++const agentStrategy: FeatureToggleStrategy = {
++  needsEnabling: (settings, scope, agentName) => {
++    const agentOverrides = settings.forScope(scope).settings.agents?.overrides;
++    return agentOverrides?.[agentName]?.enabled !== true;
++  },
++  enable: (settings, scope, agentName) => {
++    settings.setValue(scope, `agents.overrides.${agentName}.enabled`, true);
++  },
++  isExplicitlyDisabled: (settings, scope, agentName) => {
++    const agentOverrides = settings.forScope(scope).settings.agents?.overrides;
++    return agentOverrides?.[agentName]?.enabled === false;
++  },
++  disable: (settings, scope, agentName) => {
++    settings.setValue(scope, `agents.overrides.${agentName}.enabled`, false);
++  },
++};
++
+ /**
+  * Enables an agent by ensuring it is enabled in any writable scope (User and Workspace).
+  * It sets `agents.overrides.<agentName>.enabled` to `true`.
+@@ -36,50 +47,14 @@ export function enableAgent(
+   settings: LoadedSettings,
+   agentName: string,
+ ): AgentActionResult {
+-  const writableScopes = [SettingScope.Workspace, SettingScope.User];
+-  const foundInDisabledScopes: ModifiedScope[] = [];
+-  const alreadyEnabledScopes: ModifiedScope[] = [];
+-
+-  for (const scope of writableScopes) {
+-    if (isLoadableSettingScope(scope)) {
+-      const scopePath = settings.forScope(scope).path;
+-      const agentOverrides =
+-        settings.forScope(scope).settings.agents?.overrides;
+-      const isEnabled = agentOverrides?.[agentName]?.enabled === true;
+-
+-      if (!isEnabled) {
+-        foundInDisabledScopes.push({ scope, path: scopePath });
+-      } else {
+-        alreadyEnabledScopes.push({ scope, path: scopePath });
+-      }
+-    }
+-  }
+-
+-  if (foundInDisabledScopes.length === 0) {
+-    return {
+-      status: 'no-op',
+-      agentName,
+-      action: 'enable',
+-      modifiedScopes: [],
+-      alreadyInStateScopes: alreadyEnabledScopes,
+-    };
+-  }
+-
+-  const modifiedScopes: ModifiedScope[] = [];
+-  for (const { scope, path } of foundInDisabledScopes) {
+-    if (isLoadableSettingScope(scope)) {
+-      // Explicitly enable it.
+-      settings.setValue(scope, `agents.overrides.${agentName}.enabled`, true);
+-      modifiedScopes.push({ scope, path });
+-    }
+-  }
+-
+-  return {
+-    status: 'success',
++  const { featureName, ...rest } = enableFeature(
++    settings,
+     agentName,
+-    action: 'enable',
+-    modifiedScopes,
+-    alreadyInStateScopes: alreadyEnabledScopes,
++    agentStrategy,
++  );
++  return {
++    ...rest,
++    agentName: featureName,
+   };
+ }
+ 
+@@ -91,56 +66,14 @@ export function disableAgent(
+   agentName: string,
+   scope: SettingScope,
+ ): AgentActionResult {
+-  if (!isLoadableSettingScope(scope)) {
+-    return {
+-      status: 'error',
+-      agentName,
+-      action: 'disable',
+-      modifiedScopes: [],
+-      alreadyInStateScopes: [],
+-      error: `Invalid settings scope: ${scope}`,
+-    };
+-  }
+-
+-  const scopePath = settings.forScope(scope).path;
+-  const agentOverrides = settings.forScope(scope).settings.agents?.overrides;
+-  const isEnabled = agentOverrides?.[agentName]?.enabled !== false;
+-
+-  if (!isEnabled) {
+-    return {
+-      status: 'no-op',
+-      agentName,
+-      action: 'disable',
+-      modifiedScopes: [],
+-      alreadyInStateScopes: [{ scope, path: scopePath }],
+-    };
+-  }
+-
+-  // Check if it's already disabled in the other writable scope
+-  const otherScope =
+-    scope === SettingScope.Workspace
+-      ? SettingScope.User
+-      : SettingScope.Workspace;
+-  const alreadyDisabledInOther: ModifiedScope[] = [];
+-
+-  if (isLoadableSettingScope(otherScope)) {
+-    const otherOverrides =
+-      settings.forScope(otherScope).settings.agents?.overrides;
+-    if (otherOverrides?.[agentName]?.enabled === false) {
+-      alreadyDisabledInOther.push({
+-        scope: otherScope,
+-        path: settings.forScope(otherScope).path,
+-      });
+-    }
+-  }
+-
+-  settings.setValue(scope, `agents.overrides.${agentName}.enabled`, false);
+-
+-  return {
+-    status: 'success',
++  const { featureName, ...rest } = disableFeature(
++    settings,
+     agentName,
+-    action: 'disable',
+-    modifiedScopes: [{ scope, path: scopePath }],
+-    alreadyInStateScopes: alreadyDisabledInOther,
++    scope,
++    agentStrategy,
++  );
++  return {
++    ...rest,
++    agentName: featureName,
+   };
+ }
+diff --git a/packages/cli/src/utils/featureToggleUtils.ts b/packages/cli/src/utils/featureToggleUtils.ts
+new file mode 100644
+index 000000000..9b3df0e5d
+--- /dev/null
++++ b/packages/cli/src/utils/featureToggleUtils.ts
+@@ -0,0 +1,185 @@
++/**
++ * @license
++ * Copyright 2026 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import {
++  SettingScope,
++  isLoadableSettingScope,
++  type LoadableSettingScope,
++  type LoadedSettings,
++} from '../config/settings.js';
++
++export interface ModifiedScope {
++  scope: SettingScope;
++  path: string;
++}
++
++export type FeatureActionStatus = 'success' | 'no-op' | 'error';
++
++export interface FeatureActionResult {
++  status: FeatureActionStatus;
++  featureName: string;
++  action: 'enable' | 'disable';
++  /** Scopes where the feature's state was actually changed. */
++  modifiedScopes: ModifiedScope[];
++  /** Scopes where the feature was already in the desired state. */
++  alreadyInStateScopes: ModifiedScope[];
++  /** Error message if status is 'error'. */
++  error?: string;
++}
++
++/**
++ * Strategy pattern to handle differences between feature types (e.g. skills vs agents).
++ */
++export interface FeatureToggleStrategy {
++  /**
++   * Checks if the feature needs to be enabled in the given scope.
++   * For skills (blacklist): returns true if in disabled list.
++   * For agents (whitelist): returns true if NOT explicitly enabled (false or undefined).
++   */
++  needsEnabling(
++    settings: LoadedSettings,
++    scope: LoadableSettingScope,
++    featureName: string,
++  ): boolean;
++
++  /**
++   * Applies the enable change to the settings object.
++   */
++  enable(
++    settings: LoadedSettings,
++    scope: LoadableSettingScope,
++    featureName: string,
++  ): void;
++
++  /**
++   * Checks if the feature is explicitly disabled in the given scope.
++   * For skills (blacklist): returns true if in disabled list.
++   * For agents (whitelist): returns true if explicitly set to false.
++   */
++  isExplicitlyDisabled(
++    settings: LoadedSettings,
++    scope: LoadableSettingScope,
++    featureName: string,
++  ): boolean;
++
++  /**
++   * Applies the disable change to the settings object.
++   */
++  disable(
++    settings: LoadedSettings,
++    scope: LoadableSettingScope,
++    featureName: string,
++  ): void;
++}
++
++/**
++ * Enables a feature by ensuring it is enabled in all writable scopes.
++ */
++export function enableFeature(
++  settings: LoadedSettings,
++  featureName: string,
++  strategy: FeatureToggleStrategy,
++): FeatureActionResult {
++  const writableScopes = [SettingScope.Workspace, SettingScope.User];
++  const foundInDisabledScopes: ModifiedScope[] = [];
++  const alreadyEnabledScopes: ModifiedScope[] = [];
++
++  for (const scope of writableScopes) {
++    if (isLoadableSettingScope(scope)) {
++      const scopePath = settings.forScope(scope).path;
++      if (strategy.needsEnabling(settings, scope, featureName)) {
++        foundInDisabledScopes.push({ scope, path: scopePath });
++      } else {
++        alreadyEnabledScopes.push({ scope, path: scopePath });
++      }
++    }
++  }
++
++  if (foundInDisabledScopes.length === 0) {
++    return {
++      status: 'no-op',
++      featureName,
++      action: 'enable',
++      modifiedScopes: [],
++      alreadyInStateScopes: alreadyEnabledScopes,
++    };
++  }
++
++  const modifiedScopes: ModifiedScope[] = [];
++  for (const { scope, path } of foundInDisabledScopes) {
++    if (isLoadableSettingScope(scope)) {
++      strategy.enable(settings, scope, featureName);
++      modifiedScopes.push({ scope, path });
++    }
++  }
++
++  return {
++    status: 'success',
++    featureName,
++    action: 'enable',
++    modifiedScopes,
++    alreadyInStateScopes: alreadyEnabledScopes,
++  };
++}
++
++/**
++ * Disables a feature in the specified scope.
++ */
++export function disableFeature(
++  settings: LoadedSettings,
++  featureName: string,
++  scope: SettingScope,
++  strategy: FeatureToggleStrategy,
++): FeatureActionResult {
++  if (!isLoadableSettingScope(scope)) {
++    return {
++      status: 'error',
++      featureName,
++      action: 'disable',
++      modifiedScopes: [],
++      alreadyInStateScopes: [],
++      error: `Invalid settings scope: ${scope}`,
++    };
++  }
++
++  const scopePath = settings.forScope(scope).path;
++
++  if (strategy.isExplicitlyDisabled(settings, scope, featureName)) {
++    return {
++      status: 'no-op',
++      featureName,
++      action: 'disable',
++      modifiedScopes: [],
++      alreadyInStateScopes: [{ scope, path: scopePath }],
++    };
++  }
++
++  // Check if it's already disabled in the other writable scope
++  const otherScope =
++    scope === SettingScope.Workspace
++      ? SettingScope.User
++      : SettingScope.Workspace;
++  const alreadyDisabledInOther: ModifiedScope[] = [];
++
++  if (isLoadableSettingScope(otherScope)) {
++    if (strategy.isExplicitlyDisabled(settings, otherScope, featureName)) {
++      alreadyDisabledInOther.push({
++        scope: otherScope,
++        path: settings.forScope(otherScope).path,
++      });
++    }
++  }
++
++  strategy.disable(settings, scope, featureName);
++
++  return {
++    status: 'success',
++    featureName,
++    action: 'disable',
++    modifiedScopes: [{ scope, path: scopePath }],
++    alreadyInStateScopes: alreadyDisabledInOther,
++  };
++}
+diff --git a/packages/cli/src/utils/skillSettings.ts b/packages/cli/src/utils/skillSettings.ts
+index 78921b721..4d1eb38b2 100644
+--- a/packages/cli/src/utils/skillSettings.ts
++++ b/packages/cli/src/utils/skillSettings.ts
+@@ -4,34 +4,58 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import type { SettingScope, LoadedSettings } from '../config/settings.js';
++
+ import {
+-  SettingScope,
+-  isLoadableSettingScope,
+-  type LoadedSettings,
+-} from '../config/settings.js';
++  type FeatureActionResult,
++  type FeatureToggleStrategy,
++  enableFeature,
++  disableFeature,
++} from './featureToggleUtils.js';
+ 
+-export interface ModifiedScope {
+-  scope: SettingScope;
+-  path: string;
+-}
++export type { ModifiedScope } from './featureToggleUtils.js';
+ 
+ export type SkillActionStatus = 'success' | 'no-op' | 'error';
+ 
+ /**
+  * Metadata representing the result of a skill settings operation.
+  */
+-export interface SkillActionResult {
+-  status: SkillActionStatus;
++export interface SkillActionResult
++  extends Omit<FeatureActionResult, 'featureName'> {
+   skillName: string;
+-  action: 'enable' | 'disable';
+-  /** Scopes where the skill's state was actually changed. */
+-  modifiedScopes: ModifiedScope[];
+-  /** Scopes where the skill was already in the desired state. */
+-  alreadyInStateScopes: ModifiedScope[];
+-  /** Error message if status is 'error'. */
+-  error?: string;
+ }
+ 
++const skillStrategy: FeatureToggleStrategy = {
++  needsEnabling: (settings, scope, skillName) => {
++    const scopeDisabled = settings.forScope(scope).settings.skills?.disabled;
++    return !!scopeDisabled?.includes(skillName);
++  },
++  enable: (settings, scope, skillName) => {
++    const currentScopeDisabled =
++      settings.forScope(scope).settings.skills?.disabled ?? [];
++    const newDisabled = currentScopeDisabled.filter(
++      (name) => name !== skillName,
++    );
++    settings.setValue(scope, 'skills.disabled', newDisabled);
++  },
++  isExplicitlyDisabled: (settings, scope, skillName) => {
++    const currentScopeDisabled =
++      settings.forScope(scope).settings.skills?.disabled ?? [];
++    return currentScopeDisabled.includes(skillName);
++  },
++  disable: (settings, scope, skillName) => {
++    const currentScopeDisabled =
++      settings.forScope(scope).settings.skills?.disabled ?? [];
++    // The generic utility checks isExplicitlyDisabled before calling this,
++    // but just to be safe and idempotent, we check or we assume the utility did its job.
++    // The utility does check isExplicitlyDisabled first.
++    // So we can blindly add it, but since we are modifying an array, pushing is fine.
++    // However, if we assume purely that we must disable it:
++    const newDisabled = [...currentScopeDisabled, skillName];
++    settings.setValue(scope, 'skills.disabled', newDisabled);
++  },
++};
++
+ /**
+  * Enables a skill by removing it from all writable disabled lists (User and Workspace).
+  */
+@@ -39,51 +63,14 @@ export function enableSkill(
+   settings: LoadedSettings,
+   skillName: string,
+ ): SkillActionResult {
+-  const writableScopes = [SettingScope.Workspace, SettingScope.User];
+-  const foundInDisabledScopes: ModifiedScope[] = [];
+-  const alreadyEnabledScopes: ModifiedScope[] = [];
+-
+-  for (const scope of writableScopes) {
+-    if (isLoadableSettingScope(scope)) {
+-      const scopePath = settings.forScope(scope).path;
+-      const scopeDisabled = settings.forScope(scope).settings.skills?.disabled;
+-      if (scopeDisabled?.includes(skillName)) {
+-        foundInDisabledScopes.push({ scope, path: scopePath });
+-      } else {
+-        alreadyEnabledScopes.push({ scope, path: scopePath });
+-      }
+-    }
+-  }
+-
+-  if (foundInDisabledScopes.length === 0) {
+-    return {
+-      status: 'no-op',
+-      skillName,
+-      action: 'enable',
+-      modifiedScopes: [],
+-      alreadyInStateScopes: alreadyEnabledScopes,
+-    };
+-  }
+-
+-  const modifiedScopes: ModifiedScope[] = [];
+-  for (const { scope, path } of foundInDisabledScopes) {
+-    if (isLoadableSettingScope(scope)) {
+-      const currentScopeDisabled =
+-        settings.forScope(scope).settings.skills?.disabled ?? [];
+-      const newDisabled = currentScopeDisabled.filter(
+-        (name) => name !== skillName,
+-      );
+-      settings.setValue(scope, 'skills.disabled', newDisabled);
+-      modifiedScopes.push({ scope, path });
+-    }
+-  }
+-
+-  return {
+-    status: 'success',
++  const { featureName, ...rest } = enableFeature(
++    settings,
+     skillName,
+-    action: 'enable',
+-    modifiedScopes,
+-    alreadyInStateScopes: alreadyEnabledScopes,
++    skillStrategy,
++  );
++  return {
++    ...rest,
++    skillName: featureName,
+   };
+ }
+ 
+@@ -95,57 +82,14 @@ export function disableSkill(
+   skillName: string,
+   scope: SettingScope,
+ ): SkillActionResult {
+-  if (!isLoadableSettingScope(scope)) {
+-    return {
+-      status: 'error',
+-      skillName,
+-      action: 'disable',
+-      modifiedScopes: [],
+-      alreadyInStateScopes: [],
+-      error: `Invalid settings scope: ${scope}`,
+-    };
+-  }
+-
+-  const scopePath = settings.forScope(scope).path;
+-  const currentScopeDisabled =
+-    settings.forScope(scope).settings.skills?.disabled ?? [];
+-
+-  if (currentScopeDisabled.includes(skillName)) {
+-    return {
+-      status: 'no-op',
+-      skillName,
+-      action: 'disable',
+-      modifiedScopes: [],
+-      alreadyInStateScopes: [{ scope, path: scopePath }],
+-    };
+-  }
+-
+-  // Check if it's already disabled in the other writable scope
+-  const otherScope =
+-    scope === SettingScope.Workspace
+-      ? SettingScope.User
+-      : SettingScope.Workspace;
+-  const alreadyDisabledInOther: ModifiedScope[] = [];
+-
+-  if (isLoadableSettingScope(otherScope)) {
+-    const otherScopeDisabled =
+-      settings.forScope(otherScope).settings.skills?.disabled;
+-    if (otherScopeDisabled?.includes(skillName)) {
+-      alreadyDisabledInOther.push({
+-        scope: otherScope,
+-        path: settings.forScope(otherScope).path,
+-      });
+-    }
+-  }
+-
+-  const newDisabled = [...currentScopeDisabled, skillName];
+-  settings.setValue(scope, 'skills.disabled', newDisabled);
+-
+-  return {
+-    status: 'success',
++  const { featureName, ...rest } = disableFeature(
++    settings,
+     skillName,
+-    action: 'disable',
+-    modifiedScopes: [{ scope, path: scopePath }],
+-    alreadyInStateScopes: alreadyDisabledInOther,
++    scope,
++    skillStrategy,
++  );
++  return {
++    ...rest,
++    skillName: featureName,
+   };
+ }

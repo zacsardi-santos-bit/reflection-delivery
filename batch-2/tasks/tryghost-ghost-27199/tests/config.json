@@ -1,0 +1,39 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/ghost/core && yarn mocha --reporter spec --node-option import=tsx --require ./test/utils/overrides.js --exit --trace-warnings test/unit/server/services/members/members-api/repositories/event-repository.test.js --timeout=10000",
+  "test_files": [
+    "ghost/admin/tests/unit/utils/member-event-types-test.js",
+    "ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getGiftPurchaseEvents queries with correct options",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getGiftPurchaseEvents returns correctly formatted gift_event",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getGiftPurchaseEvents excludes internal fields from event data",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getGiftPurchaseEvents sets member to null when buyer is not present"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNQLSubset throws when using invalid filter",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNQLSubset throws when using properties that aren't in the allowlist",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNQLSubset throws when using an OR",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNQLSubset passes when using it correctly with one filter",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNQLSubset passes when using it correctly with multiple filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNQLSubset passes when using it correctly with multiple filters used several times",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getPostIdFromFilter returns ObjectID for valid hex string",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getPostIdFromFilter extracts post_id from $and condition",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getPostIdFromFilter returns null for invalid ObjectID string",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getPostIdFromFilter rejects SQL injection attempts",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getPostIdFromFilter returns null when filter is missing or undefined",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNewsletterSubscriptionEvents works when setting no filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNewsletterSubscriptionEvents works when setting a created_at filter",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getNewsletterSubscriptionEvents works when setting a combination of filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getEmailFailedEvents works when setting no filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getEmailFailedEvents works when setting a created_at filter",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getEmailFailedEvents works when setting a combination of filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getAutomatedEmailSentEvents works when setting no filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getAutomatedEmailSentEvents works when setting a created_at filter",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getAutomatedEmailSentEvents works when setting a combination of filters",
+    "/workspace/repo/ghost/core/test/unit/server/services/members/members-api/repositories/event-repository.test.js::EventRepository getAutomatedEmailSentEvents returns correctly formatted automated_email_sent_event"
+  ]
+}

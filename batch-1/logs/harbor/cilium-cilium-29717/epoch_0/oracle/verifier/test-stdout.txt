@@ -1,0 +1,461 @@
+patching file pkg/container/bitlpm/cidr_test.go
+patching file pkg/container/bitlpm/unsigned_test.go
+{"Time":"2026-06-29T15:29:44.99501949Z","Action":"start","Package":"github.com/cilium/cilium/pkg/container/bitlpm"}
+{"Time":"2026-06-29T15:29:45.017928578Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCIDRTrie"}
+{"Time":"2026-06-29T15:29:45.017988672Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCIDRTrie","Output":"=== RUN   TestCIDRTrie\n"}
+{"Time":"2026-06-29T15:29:45.018577593Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCIDRTrie","Output":"    cidr_test.go:71: [0 1 2a 3a 4b last]\n"}
+{"Time":"2026-06-29T15:29:45.01866985Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCIDRTrie","Output":"--- PASS: TestCIDRTrie (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.01895956Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCIDRTrie","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.019226738Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestDescendants"}
+{"Time":"2026-06-29T15:29:45.019374188Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestDescendants","Output":"=== RUN   TestDescendants\n"}
+{"Time":"2026-06-29T15:29:45.01953377Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestDescendants","Output":"    cidr_test.go:152: Running test case 'all'\n"}
+{"Time":"2026-06-29T15:29:45.019647668Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestDescendants","Output":"    cidr_test.go:152: Running test case 'sparse'\n"}
+{"Time":"2026-06-29T15:29:45.01967643Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestDescendants","Output":"--- PASS: TestDescendants (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.019694831Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestDescendants","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.019716532Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt"}
+{"Time":"2026-06-29T15:29:45.019733373Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt","Output":"=== RUN   TestBitValueAt\n"}
+{"Time":"2026-06-29T15:29:45.019760235Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/0"}
+{"Time":"2026-06-29T15:29:45.019850982Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/0","Output":"=== RUN   TestBitValueAt/0\n"}
+{"Time":"2026-06-29T15:29:45.020502487Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/0","Output":"--- PASS: TestBitValueAt/0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.02054568Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/0","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.020562942Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/1"}
+{"Time":"2026-06-29T15:29:45.020591924Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/1","Output":"=== RUN   TestBitValueAt/1\n"}
+{"Time":"2026-06-29T15:29:45.020607645Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/1","Output":"--- PASS: TestBitValueAt/1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.020626476Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.020641667Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/2"}
+{"Time":"2026-06-29T15:29:45.020663158Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/2","Output":"=== RUN   TestBitValueAt/2\n"}
+{"Time":"2026-06-29T15:29:45.020697651Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/2","Output":"--- PASS: TestBitValueAt/2 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.020747504Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/2","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.020759355Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/3"}
+{"Time":"2026-06-29T15:29:45.020775666Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/3","Output":"=== RUN   TestBitValueAt/3\n"}
+{"Time":"2026-06-29T15:29:45.020795958Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/3","Output":"--- PASS: TestBitValueAt/3 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.021141272Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/3","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.021154193Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/4"}
+{"Time":"2026-06-29T15:29:45.021179894Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/4","Output":"=== RUN   TestBitValueAt/4\n"}
+{"Time":"2026-06-29T15:29:45.021223788Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/4","Output":"--- PASS: TestBitValueAt/4 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.021237498Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/4","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.021379738Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/5"}
+{"Time":"2026-06-29T15:29:45.021603954Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/5","Output":"=== RUN   TestBitValueAt/5\n"}
+{"Time":"2026-06-29T15:29:45.02169388Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/5","Output":"--- PASS: TestBitValueAt/5 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.021808938Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/5","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.021843631Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/6"}
+{"Time":"2026-06-29T15:29:45.021854672Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/6","Output":"=== RUN   TestBitValueAt/6\n"}
+{"Time":"2026-06-29T15:29:45.022154773Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/6","Output":"--- PASS: TestBitValueAt/6 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.022244739Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/6","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.022306753Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/7"}
+{"Time":"2026-06-29T15:29:45.022421741Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/7","Output":"=== RUN   TestBitValueAt/7\n"}
+{"Time":"2026-06-29T15:29:45.022448363Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/7","Output":"--- PASS: TestBitValueAt/7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.022603434Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.022882163Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/8"}
+{"Time":"2026-06-29T15:29:45.022956998Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/8","Output":"=== RUN   TestBitValueAt/8\n"}
+{"Time":"2026-06-29T15:29:45.023104629Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/8","Output":"--- PASS: TestBitValueAt/8 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.023192045Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/8","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.023473004Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/9"}
+{"Time":"2026-06-29T15:29:45.023577012Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/9","Output":"=== RUN   TestBitValueAt/9\n"}
+{"Time":"2026-06-29T15:29:45.023623405Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/9","Output":"--- PASS: TestBitValueAt/9 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.023642986Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/9","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.023738133Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/10"}
+{"Time":"2026-06-29T15:29:45.023757664Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/10","Output":"=== RUN   TestBitValueAt/10\n"}
+{"Time":"2026-06-29T15:29:45.023778356Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/10","Output":"--- PASS: TestBitValueAt/10 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.023794567Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/10","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.023817878Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/11"}
+{"Time":"2026-06-29T15:29:45.023831769Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/11","Output":"=== RUN   TestBitValueAt/11\n"}
+{"Time":"2026-06-29T15:29:45.02384164Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/11","Output":"--- PASS: TestBitValueAt/11 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.023874742Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt/11","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.023887883Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt","Output":"--- PASS: TestBitValueAt (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.023897964Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestBitValueAt","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.023914225Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix"}
+{"Time":"2026-06-29T15:29:45.023928356Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix","Output":"=== RUN   TestCommonPrefix\n"}
+{"Time":"2026-06-29T15:29:45.023937747Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/0"}
+{"Time":"2026-06-29T15:29:45.023947247Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/0","Output":"=== RUN   TestCommonPrefix/0\n"}
+{"Time":"2026-06-29T15:29:45.023960088Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/0","Output":"--- PASS: TestCommonPrefix/0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.023969539Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/0","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.02397964Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/1"}
+{"Time":"2026-06-29T15:29:45.02398906Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/1","Output":"=== RUN   TestCommonPrefix/1\n"}
+{"Time":"2026-06-29T15:29:45.023999191Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/1","Output":"--- PASS: TestCommonPrefix/1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.024008032Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.024024453Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/2"}
+{"Time":"2026-06-29T15:29:45.024033513Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/2","Output":"=== RUN   TestCommonPrefix/2\n"}
+{"Time":"2026-06-29T15:29:45.024044144Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/2","Output":"--- PASS: TestCommonPrefix/2 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.024053065Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/2","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.024061995Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/3"}
+{"Time":"2026-06-29T15:29:45.024070366Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/3","Output":"=== RUN   TestCommonPrefix/3\n"}
+{"Time":"2026-06-29T15:29:45.024079547Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/3","Output":"--- PASS: TestCommonPrefix/3 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.024088507Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/3","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.024097478Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/4"}
+{"Time":"2026-06-29T15:29:45.024105778Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/4","Output":"=== RUN   TestCommonPrefix/4\n"}
+{"Time":"2026-06-29T15:29:45.024114639Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/4","Output":"--- PASS: TestCommonPrefix/4 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.02412334Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/4","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.02413217Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/5"}
+{"Time":"2026-06-29T15:29:45.024724102Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/5","Output":"=== RUN   TestCommonPrefix/5\n"}
+{"Time":"2026-06-29T15:29:45.024765084Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/5","Output":"--- PASS: TestCommonPrefix/5 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.024775905Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix/5","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.024859271Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix","Output":"--- PASS: TestCommonPrefix (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.024889793Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestCommonPrefix","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.024899734Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert"}
+{"Time":"2026-06-29T15:29:45.024908654Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert","Output":"=== RUN   TestUnsignedUpsert\n"}
+{"Time":"2026-06-29T15:29:45.024917575Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/65535_65535"}
+{"Time":"2026-06-29T15:29:45.024926446Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/65535_65535","Output":"=== RUN   TestUnsignedUpsert/65535_65535\n"}
+{"Time":"2026-06-29T15:29:45.025046124Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/65535_65535","Output":"--- PASS: TestUnsignedUpsert/65535_65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025065505Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/65535_65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025075476Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_65535_least_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.025084167Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_65535_least_entries_for_largest_range","Output":"=== RUN   TestUnsignedUpsert/0_65535_least_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.025096518Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_65535_least_entries_for_largest_range","Output":"--- PASS: TestUnsignedUpsert/0_65535_least_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025105598Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_65535_least_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025114739Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_65534_most_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.02512322Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_65534_most_entries_for_largest_range","Output":"=== RUN   TestUnsignedUpsert/1_65534_most_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.02513242Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_65534_most_entries_for_largest_range","Output":"--- PASS: TestUnsignedUpsert/1_65534_most_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025141451Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_65534_most_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025309573Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1023"}
+{"Time":"2026-06-29T15:29:45.025340055Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1023","Output":"=== RUN   TestUnsignedUpsert/0_1023\n"}
+{"Time":"2026-06-29T15:29:45.025361196Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1023","Output":"--- PASS: TestUnsignedUpsert/0_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025371877Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025381198Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1023"}
+{"Time":"2026-06-29T15:29:45.025428421Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1023","Output":"=== RUN   TestUnsignedUpsert/1_1023\n"}
+{"Time":"2026-06-29T15:29:45.025460703Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1023","Output":"--- PASS: TestUnsignedUpsert/1_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025470354Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025479184Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_7"}
+{"Time":"2026-06-29T15:29:45.025514457Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_7","Output":"=== RUN   TestUnsignedUpsert/0_7\n"}
+{"Time":"2026-06-29T15:29:45.02556717Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_7","Output":"--- PASS: TestUnsignedUpsert/0_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025594642Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025611583Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_7"}
+{"Time":"2026-06-29T15:29:45.025621764Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_7","Output":"=== RUN   TestUnsignedUpsert/1_7\n"}
+{"Time":"2026-06-29T15:29:45.025633345Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_7","Output":"--- PASS: TestUnsignedUpsert/1_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025643376Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025653777Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1"}
+{"Time":"2026-06-29T15:29:45.025664097Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1","Output":"=== RUN   TestUnsignedUpsert/0_1\n"}
+{"Time":"2026-06-29T15:29:45.025674468Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1","Output":"--- PASS: TestUnsignedUpsert/0_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025766164Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/0_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025815158Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1"}
+{"Time":"2026-06-29T15:29:45.025835889Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1","Output":"=== RUN   TestUnsignedUpsert/1_1\n"}
+{"Time":"2026-06-29T15:29:45.02584984Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1","Output":"--- PASS: TestUnsignedUpsert/1_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025860621Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert/1_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.025871712Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert","Output":"--- PASS: TestUnsignedUpsert (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.025903824Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedUpsert","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.026047984Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup"}
+{"Time":"2026-06-29T15:29:45.026087477Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup","Output":"=== RUN   TestUnsignedLookup\n"}
+{"Time":"2026-06-29T15:29:45.026099948Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/65535_65535"}
+{"Time":"2026-06-29T15:29:45.026110028Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/65535_65535","Output":"=== RUN   TestUnsignedLookup/65535_65535\n"}
+{"Time":"2026-06-29T15:29:45.02612919Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/65535_65535","Output":"--- PASS: TestUnsignedLookup/65535_65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.02613944Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/65535_65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.026216956Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_65535_least_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.026249478Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_65535_least_entries_for_largest_range","Output":"=== RUN   TestUnsignedLookup/0_65535_least_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.027898953Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_65535_least_entries_for_largest_range","Output":"--- PASS: TestUnsignedLookup/0_65535_least_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.02799781Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_65535_least_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.028043863Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_65534_most_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.028055684Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_65534_most_entries_for_largest_range","Output":"=== RUN   TestUnsignedLookup/1_65534_most_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.032202373Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_65534_most_entries_for_largest_range","Output":"--- PASS: TestUnsignedLookup/1_65534_most_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.032597001Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_65534_most_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.032638173Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1023"}
+{"Time":"2026-06-29T15:29:45.032650374Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1023","Output":"=== RUN   TestUnsignedLookup/0_1023\n"}
+{"Time":"2026-06-29T15:29:45.034493483Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1023","Output":"--- PASS: TestUnsignedLookup/0_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.034679826Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.034815075Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1023"}
+{"Time":"2026-06-29T15:29:45.034860488Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1023","Output":"=== RUN   TestUnsignedLookup/1_1023\n"}
+{"Time":"2026-06-29T15:29:45.037857608Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1023","Output":"--- PASS: TestUnsignedLookup/1_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.037937283Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.037997627Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_7"}
+{"Time":"2026-06-29T15:29:45.038015568Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_7","Output":"=== RUN   TestUnsignedLookup/0_7\n"}
+{"Time":"2026-06-29T15:29:45.040226413Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_7","Output":"--- PASS: TestUnsignedLookup/0_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.040602309Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.040681374Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_7"}
+{"Time":"2026-06-29T15:29:45.040728848Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_7","Output":"=== RUN   TestUnsignedLookup/1_7\n"}
+{"Time":"2026-06-29T15:29:45.042355371Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_7","Output":"--- PASS: TestUnsignedLookup/1_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.042561456Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.042780011Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1"}
+{"Time":"2026-06-29T15:29:45.042850776Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1","Output":"=== RUN   TestUnsignedLookup/0_1\n"}
+{"Time":"2026-06-29T15:29:45.044145926Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1","Output":"--- PASS: TestUnsignedLookup/0_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.044235952Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/0_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.044381343Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1"}
+{"Time":"2026-06-29T15:29:45.04449265Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1","Output":"=== RUN   TestUnsignedLookup/1_1\n"}
+{"Time":"2026-06-29T15:29:45.045914689Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1","Output":"--- PASS: TestUnsignedLookup/1_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.045970213Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup/1_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.04620935Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup","Output":"--- PASS: TestUnsignedLookup (0.02s)\n"}
+{"Time":"2026-06-29T15:29:45.046256883Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedLookup","Elapsed":0.02}
+{"Time":"2026-06-29T15:29:45.046282895Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange"}
+{"Time":"2026-06-29T15:29:45.046323518Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange","Output":"=== RUN   TestUnsignedAncestorsRange\n"}
+{"Time":"2026-06-29T15:29:45.046721826Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/65535_65535"}
+{"Time":"2026-06-29T15:29:45.046777059Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/65535_65535","Output":"=== RUN   TestUnsignedAncestorsRange/65535_65535\n"}
+{"Time":"2026-06-29T15:29:45.04707602Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/65535_65535","Output":"--- PASS: TestUnsignedAncestorsRange/65535_65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.047160176Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/65535_65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.047177758Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_65535"}
+{"Time":"2026-06-29T15:29:45.047190168Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_65535","Output":"=== RUN   TestUnsignedAncestorsRange/0_65535\n"}
+{"Time":"2026-06-29T15:29:45.047202789Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_65535","Output":"--- PASS: TestUnsignedAncestorsRange/0_65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.047307147Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.047377411Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_65534"}
+{"Time":"2026-06-29T15:29:45.047467428Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_65534","Output":"=== RUN   TestUnsignedAncestorsRange/1_65534\n"}
+{"Time":"2026-06-29T15:29:45.047539483Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_65534","Output":"--- PASS: TestUnsignedAncestorsRange/1_65534 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.04764049Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_65534","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.047731806Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1023"}
+{"Time":"2026-06-29T15:29:45.047845954Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1023","Output":"=== RUN   TestUnsignedAncestorsRange/0_1023\n"}
+{"Time":"2026-06-29T15:29:45.047986544Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1023","Output":"--- PASS: TestUnsignedAncestorsRange/0_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.048182348Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.04822338Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1023"}
+{"Time":"2026-06-29T15:29:45.048290615Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1023","Output":"=== RUN   TestUnsignedAncestorsRange/1_1023\n"}
+{"Time":"2026-06-29T15:29:45.048317307Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1023","Output":"--- PASS: TestUnsignedAncestorsRange/1_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.048338478Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.048352739Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_7"}
+{"Time":"2026-06-29T15:29:45.0483669Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_7","Output":"=== RUN   TestUnsignedAncestorsRange/0_7\n"}
+{"Time":"2026-06-29T15:29:45.048379751Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_7","Output":"--- PASS: TestUnsignedAncestorsRange/0_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.048455636Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.048538002Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_7"}
+{"Time":"2026-06-29T15:29:45.048594316Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_7","Output":"=== RUN   TestUnsignedAncestorsRange/1_7\n"}
+{"Time":"2026-06-29T15:29:45.048619228Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_7","Output":"--- PASS: TestUnsignedAncestorsRange/1_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.048634709Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.04864647Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1"}
+{"Time":"2026-06-29T15:29:45.048671131Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1","Output":"=== RUN   TestUnsignedAncestorsRange/0_1\n"}
+{"Time":"2026-06-29T15:29:45.048816242Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1","Output":"--- PASS: TestUnsignedAncestorsRange/0_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.048900098Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/0_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.048924909Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1"}
+{"Time":"2026-06-29T15:29:45.04893614Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1","Output":"=== RUN   TestUnsignedAncestorsRange/1_1\n"}
+{"Time":"2026-06-29T15:29:45.048950911Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1","Output":"--- PASS: TestUnsignedAncestorsRange/1_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.048961792Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange/1_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.048979723Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange","Output":"--- PASS: TestUnsignedAncestorsRange (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.049172397Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestorsRange","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.049193908Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors"}
+{"Time":"2026-06-29T15:29:45.049204439Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors","Output":"=== RUN   TestUnsignedAncestors\n"}
+{"Time":"2026-06-29T15:29:45.04921649Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-65535"}
+{"Time":"2026-06-29T15:29:45.04922677Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-65535","Output":"=== RUN   TestUnsignedAncestors/0-65535\n"}
+{"Time":"2026-06-29T15:29:45.049239901Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-65535","Output":"--- PASS: TestUnsignedAncestors/0-65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.049250082Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.049260443Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-32767"}
+{"Time":"2026-06-29T15:29:45.049271284Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-32767","Output":"=== RUN   TestUnsignedAncestors/0-32767\n"}
+{"Time":"2026-06-29T15:29:45.049498979Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-32767","Output":"--- PASS: TestUnsignedAncestors/0-32767 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.049601027Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-32767","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.049673221Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-16383"}
+{"Time":"2026-06-29T15:29:45.049694383Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-16383","Output":"=== RUN   TestUnsignedAncestors/0-16383\n"}
+{"Time":"2026-06-29T15:29:45.049711164Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-16383","Output":"--- PASS: TestUnsignedAncestors/0-16383 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.049720785Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-16383","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.049733006Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-8191"}
+{"Time":"2026-06-29T15:29:45.049749687Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-8191","Output":"=== RUN   TestUnsignedAncestors/0-8191\n"}
+{"Time":"2026-06-29T15:29:45.049764398Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-8191","Output":"--- PASS: TestUnsignedAncestors/0-8191 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.049774108Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-8191","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.0497926Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-4095"}
+{"Time":"2026-06-29T15:29:45.049801901Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-4095","Output":"=== RUN   TestUnsignedAncestors/0-4095\n"}
+{"Time":"2026-06-29T15:29:45.049816291Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-4095","Output":"--- PASS: TestUnsignedAncestors/0-4095 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.049896447Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-4095","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.049908728Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-2047"}
+{"Time":"2026-06-29T15:29:45.049917938Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-2047","Output":"=== RUN   TestUnsignedAncestors/0-2047\n"}
+{"Time":"2026-06-29T15:29:45.049930039Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-2047","Output":"--- PASS: TestUnsignedAncestors/0-2047 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.04993816Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-2047","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.049947291Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1023"}
+{"Time":"2026-06-29T15:29:45.050010035Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1023","Output":"=== RUN   TestUnsignedAncestors/0-1023\n"}
+{"Time":"2026-06-29T15:29:45.050069089Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1023","Output":"--- PASS: TestUnsignedAncestors/0-1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05008286Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.050093181Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-511"}
+{"Time":"2026-06-29T15:29:45.050104831Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-511","Output":"=== RUN   TestUnsignedAncestors/0-511\n"}
+{"Time":"2026-06-29T15:29:45.050116632Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-511","Output":"--- PASS: TestUnsignedAncestors/0-511 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.050133453Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-511","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.050143754Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-255"}
+{"Time":"2026-06-29T15:29:45.050155055Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-255","Output":"=== RUN   TestUnsignedAncestors/0-255\n"}
+{"Time":"2026-06-29T15:29:45.050164096Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-255","Output":"--- PASS: TestUnsignedAncestors/0-255 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.050180187Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-255","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.050212459Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-127"}
+{"Time":"2026-06-29T15:29:45.05022599Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-127","Output":"=== RUN   TestUnsignedAncestors/0-127\n"}
+{"Time":"2026-06-29T15:29:45.050238451Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-127","Output":"--- PASS: TestUnsignedAncestors/0-127 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.050249942Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-127","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.050258712Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-63"}
+{"Time":"2026-06-29T15:29:45.050477628Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-63","Output":"=== RUN   TestUnsignedAncestors/0-63\n"}
+{"Time":"2026-06-29T15:29:45.050586725Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-63","Output":"--- PASS: TestUnsignedAncestors/0-63 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.050704233Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-63","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.050781839Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-31"}
+{"Time":"2026-06-29T15:29:45.05080564Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-31","Output":"=== RUN   TestUnsignedAncestors/0-31\n"}
+{"Time":"2026-06-29T15:29:45.050818951Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-31","Output":"--- PASS: TestUnsignedAncestors/0-31 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.050840073Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-31","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.050871195Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-15"}
+{"Time":"2026-06-29T15:29:45.050881876Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-15","Output":"=== RUN   TestUnsignedAncestors/0-15\n"}
+{"Time":"2026-06-29T15:29:45.050891437Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-15","Output":"--- PASS: TestUnsignedAncestors/0-15 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.050900807Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-15","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051035796Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-7"}
+{"Time":"2026-06-29T15:29:45.051070379Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-7","Output":"=== RUN   TestUnsignedAncestors/0-7\n"}
+{"Time":"2026-06-29T15:29:45.05109067Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-7","Output":"--- PASS: TestUnsignedAncestors/0-7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.051115162Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051132393Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-3"}
+{"Time":"2026-06-29T15:29:45.051147404Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-3","Output":"=== RUN   TestUnsignedAncestors/0-3\n"}
+{"Time":"2026-06-29T15:29:45.051241291Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-3","Output":"--- PASS: TestUnsignedAncestors/0-3 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.051286734Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-3","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051306885Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1"}
+{"Time":"2026-06-29T15:29:45.051331897Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1","Output":"=== RUN   TestUnsignedAncestors/0-1\n"}
+{"Time":"2026-06-29T15:29:45.051343848Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1","Output":"--- PASS: TestUnsignedAncestors/0-1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.051354249Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors/0-1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051363569Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors","Output":"--- PASS: TestUnsignedAncestors (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.051455696Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedAncestors","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051495208Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants"}
+{"Time":"2026-06-29T15:29:45.05151515Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants","Output":"=== RUN   TestUnsignedDescendants\n"}
+{"Time":"2026-06-29T15:29:45.051542892Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-65535"}
+{"Time":"2026-06-29T15:29:45.051574824Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-65535","Output":"=== RUN   TestUnsignedDescendants/0-65535\n"}
+{"Time":"2026-06-29T15:29:45.051590665Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-65535","Output":"--- PASS: TestUnsignedDescendants/0-65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.051601736Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051617777Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-32767"}
+{"Time":"2026-06-29T15:29:45.051627878Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-32767","Output":"=== RUN   TestUnsignedDescendants/0-32767\n"}
+{"Time":"2026-06-29T15:29:45.051652679Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-32767","Output":"--- PASS: TestUnsignedDescendants/0-32767 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05166327Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-32767","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051673111Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-16383"}
+{"Time":"2026-06-29T15:29:45.051690052Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-16383","Output":"=== RUN   TestUnsignedDescendants/0-16383\n"}
+{"Time":"2026-06-29T15:29:45.051700483Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-16383","Output":"--- PASS: TestUnsignedDescendants/0-16383 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.051710683Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-16383","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.051733115Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-8191"}
+{"Time":"2026-06-29T15:29:45.051750716Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-8191","Output":"=== RUN   TestUnsignedDescendants/0-8191\n"}
+{"Time":"2026-06-29T15:29:45.051971112Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-8191","Output":"--- PASS: TestUnsignedDescendants/0-8191 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.052018795Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-8191","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052031716Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-4095"}
+{"Time":"2026-06-29T15:29:45.052042207Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-4095","Output":"=== RUN   TestUnsignedDescendants/0-4095\n"}
+{"Time":"2026-06-29T15:29:45.052054838Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-4095","Output":"--- PASS: TestUnsignedDescendants/0-4095 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.052065458Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-4095","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052083549Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-2047"}
+{"Time":"2026-06-29T15:29:45.0520945Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-2047","Output":"=== RUN   TestUnsignedDescendants/0-2047\n"}
+{"Time":"2026-06-29T15:29:45.052112622Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-2047","Output":"--- PASS: TestUnsignedDescendants/0-2047 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.052136063Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-2047","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052145234Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1023"}
+{"Time":"2026-06-29T15:29:45.052153645Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1023","Output":"=== RUN   TestUnsignedDescendants/0-1023\n"}
+{"Time":"2026-06-29T15:29:45.052175856Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1023","Output":"--- PASS: TestUnsignedDescendants/0-1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.052251331Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052326766Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-511"}
+{"Time":"2026-06-29T15:29:45.052356689Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-511","Output":"=== RUN   TestUnsignedDescendants/0-511\n"}
+{"Time":"2026-06-29T15:29:45.052369629Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-511","Output":"--- PASS: TestUnsignedDescendants/0-511 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05238035Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-511","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052428464Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-255"}
+{"Time":"2026-06-29T15:29:45.052443985Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-255","Output":"=== RUN   TestUnsignedDescendants/0-255\n"}
+{"Time":"2026-06-29T15:29:45.052462676Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-255","Output":"--- PASS: TestUnsignedDescendants/0-255 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.052570234Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-255","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052588645Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-127"}
+{"Time":"2026-06-29T15:29:45.052601206Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-127","Output":"=== RUN   TestUnsignedDescendants/0-127\n"}
+{"Time":"2026-06-29T15:29:45.052613806Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-127","Output":"--- PASS: TestUnsignedDescendants/0-127 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05266791Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-127","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052704143Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-63"}
+{"Time":"2026-06-29T15:29:45.052725844Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-63","Output":"=== RUN   TestUnsignedDescendants/0-63\n"}
+{"Time":"2026-06-29T15:29:45.052737705Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-63","Output":"--- PASS: TestUnsignedDescendants/0-63 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.052748166Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-63","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.052758067Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-31"}
+{"Time":"2026-06-29T15:29:45.052767717Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-31","Output":"=== RUN   TestUnsignedDescendants/0-31\n"}
+{"Time":"2026-06-29T15:29:45.052786318Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-31","Output":"--- PASS: TestUnsignedDescendants/0-31 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.053117312Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-31","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.05324377Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-15"}
+{"Time":"2026-06-29T15:29:45.053501859Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-15","Output":"=== RUN   TestUnsignedDescendants/0-15\n"}
+{"Time":"2026-06-29T15:29:45.053553932Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-15","Output":"--- PASS: TestUnsignedDescendants/0-15 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.053565433Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-15","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.053583764Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-7"}
+{"Time":"2026-06-29T15:29:45.053616336Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-7","Output":"=== RUN   TestUnsignedDescendants/0-7\n"}
+{"Time":"2026-06-29T15:29:45.053631008Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-7","Output":"--- PASS: TestUnsignedDescendants/0-7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.053649959Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.053660519Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-3"}
+{"Time":"2026-06-29T15:29:45.05367043Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-3","Output":"=== RUN   TestUnsignedDescendants/0-3\n"}
+{"Time":"2026-06-29T15:29:45.053680581Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-3","Output":"--- PASS: TestUnsignedDescendants/0-3 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.053690772Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-3","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.053700482Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1"}
+{"Time":"2026-06-29T15:29:45.053709823Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1","Output":"=== RUN   TestUnsignedDescendants/0-1\n"}
+{"Time":"2026-06-29T15:29:45.053743435Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1","Output":"--- PASS: TestUnsignedDescendants/0-1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.053764077Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants/0-1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.053774858Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants","Output":"--- PASS: TestUnsignedDescendants (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.053785718Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDescendants","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.053796559Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete"}
+{"Time":"2026-06-29T15:29:45.05380575Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete","Output":"=== RUN   TestUnsignedDelete\n"}
+{"Time":"2026-06-29T15:29:45.05394829Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/65535_65535"}
+{"Time":"2026-06-29T15:29:45.053981962Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/65535_65535","Output":"=== RUN   TestUnsignedDelete/65535_65535\n"}
+{"Time":"2026-06-29T15:29:45.054081729Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/65535_65535","Output":"--- PASS: TestUnsignedDelete/65535_65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.054130692Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/65535_65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.054160324Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_65535_65535"}
+{"Time":"2026-06-29T15:29:45.054171175Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_65535_65535","Output":"=== RUN   TestUnsignedDelete/In_Reverse_65535_65535\n"}
+{"Time":"2026-06-29T15:29:45.054196087Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_65535_65535","Output":"--- PASS: TestUnsignedDelete/In_Reverse_65535_65535 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.054252161Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_65535_65535","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.054264602Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_65535_least_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.054281493Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_65535_least_entries_for_largest_range","Output":"=== RUN   TestUnsignedDelete/0_65535_least_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.054694722Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_65535_least_entries_for_largest_range","Output":"--- PASS: TestUnsignedDelete/0_65535_least_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.054783508Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_65535_least_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.054824971Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_65535_least_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.055038556Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_65535_least_entries_for_largest_range","Output":"=== RUN   TestUnsignedDelete/In_Reverse_0_65535_least_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.055135522Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_65535_least_entries_for_largest_range","Output":"--- PASS: TestUnsignedDelete/In_Reverse_0_65535_least_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.055158004Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_65535_least_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.055174975Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_65534_most_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.055185116Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_65534_most_entries_for_largest_range","Output":"=== RUN   TestUnsignedDelete/1_65534_most_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.055219838Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_65534_most_entries_for_largest_range","Output":"--- PASS: TestUnsignedDelete/1_65534_most_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.055229209Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_65534_most_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.05524223Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_65534_most_entries_for_largest_range"}
+{"Time":"2026-06-29T15:29:45.055251941Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_65534_most_entries_for_largest_range","Output":"=== RUN   TestUnsignedDelete/In_Reverse_1_65534_most_entries_for_largest_range\n"}
+{"Time":"2026-06-29T15:29:45.055424102Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_65534_most_entries_for_largest_range","Output":"--- PASS: TestUnsignedDelete/In_Reverse_1_65534_most_entries_for_largest_range (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05553322Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_65534_most_entries_for_largest_range","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.055572133Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1023"}
+{"Time":"2026-06-29T15:29:45.055650278Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1023","Output":"=== RUN   TestUnsignedDelete/0_1023\n"}
+{"Time":"2026-06-29T15:29:45.05566861Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1023","Output":"--- PASS: TestUnsignedDelete/0_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05582225Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.055859673Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1023"}
+{"Time":"2026-06-29T15:29:45.055872124Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1023","Output":"=== RUN   TestUnsignedDelete/In_Reverse_0_1023\n"}
+{"Time":"2026-06-29T15:29:45.055894665Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1023","Output":"--- PASS: TestUnsignedDelete/In_Reverse_0_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.056048416Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.056087089Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1023"}
+{"Time":"2026-06-29T15:29:45.05609961Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1023","Output":"=== RUN   TestUnsignedDelete/1_1023\n"}
+{"Time":"2026-06-29T15:29:45.056119971Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1023","Output":"--- PASS: TestUnsignedDelete/1_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.056132462Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.056143633Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1023"}
+{"Time":"2026-06-29T15:29:45.056156613Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1023","Output":"=== RUN   TestUnsignedDelete/In_Reverse_1_1023\n"}
+{"Time":"2026-06-29T15:29:45.056444024Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1023","Output":"--- PASS: TestUnsignedDelete/In_Reverse_1_1023 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.056489977Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1023","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.056502818Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_7"}
+{"Time":"2026-06-29T15:29:45.056638227Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_7","Output":"=== RUN   TestUnsignedDelete/0_7\n"}
+{"Time":"2026-06-29T15:29:45.056650498Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_7","Output":"--- PASS: TestUnsignedDelete/0_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.056720933Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.056754115Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_7"}
+{"Time":"2026-06-29T15:29:45.056764936Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_7","Output":"=== RUN   TestUnsignedDelete/In_Reverse_0_7\n"}
+{"Time":"2026-06-29T15:29:45.056775927Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_7","Output":"--- PASS: TestUnsignedDelete/In_Reverse_0_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.056794068Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.056804919Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_7"}
+{"Time":"2026-06-29T15:29:45.056864273Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_7","Output":"=== RUN   TestUnsignedDelete/1_7\n"}
+{"Time":"2026-06-29T15:29:45.0569636Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_7","Output":"--- PASS: TestUnsignedDelete/1_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05711123Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.057273911Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_7"}
+{"Time":"2026-06-29T15:29:45.057305254Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_7","Output":"=== RUN   TestUnsignedDelete/In_Reverse_1_7\n"}
+{"Time":"2026-06-29T15:29:45.057322995Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_7","Output":"--- PASS: TestUnsignedDelete/In_Reverse_1_7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.057334766Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_7","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.057345887Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1"}
+{"Time":"2026-06-29T15:29:45.05753202Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1","Output":"=== RUN   TestUnsignedDelete/0_1\n"}
+{"Time":"2026-06-29T15:29:45.057574672Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1","Output":"--- PASS: TestUnsignedDelete/0_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.057723313Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/0_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.057754685Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1"}
+{"Time":"2026-06-29T15:29:45.057770736Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1","Output":"=== RUN   TestUnsignedDelete/In_Reverse_0_1\n"}
+{"Time":"2026-06-29T15:29:45.057800878Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1","Output":"--- PASS: TestUnsignedDelete/In_Reverse_0_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.057812099Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_0_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.05782254Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1"}
+{"Time":"2026-06-29T15:29:45.05783371Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1","Output":"=== RUN   TestUnsignedDelete/1_1\n"}
+{"Time":"2026-06-29T15:29:45.057844601Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1","Output":"--- PASS: TestUnsignedDelete/1_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.057860763Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/1_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.057876744Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1"}
+{"Time":"2026-06-29T15:29:45.057887904Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1","Output":"=== RUN   TestUnsignedDelete/In_Reverse_1_1\n"}
+{"Time":"2026-06-29T15:29:45.057905815Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1","Output":"--- PASS: TestUnsignedDelete/In_Reverse_1_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.057940898Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete/In_Reverse_1_1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.057953099Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete","Output":"--- PASS: TestUnsignedDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.0579647Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"TestUnsignedDelete","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.057983371Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8"}
+{"Time":"2026-06-29T15:29:45.058008053Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8","Output":"=== RUN   FuzzUint8\n"}
+{"Time":"2026-06-29T15:29:45.058025484Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/seed#0"}
+{"Time":"2026-06-29T15:29:45.058044985Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/seed#0","Output":"=== RUN   FuzzUint8/seed#0\n"}
+{"Time":"2026-06-29T15:29:45.058056376Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/seed#0","Output":"    unsigned_test.go:803: Deleting key 0b11110000/4\n"}
+{"Time":"2026-06-29T15:29:45.058074177Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/seed#0","Output":"--- PASS: FuzzUint8/seed#0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.058090588Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/seed#0","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.058100799Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/0b6e97f5d6080cd1"}
+{"Time":"2026-06-29T15:29:45.05811053Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/0b6e97f5d6080cd1","Output":"=== RUN   FuzzUint8/0b6e97f5d6080cd1\n"}
+{"Time":"2026-06-29T15:29:45.058120401Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/0b6e97f5d6080cd1","Output":"    unsigned_test.go:803: Deleting key 0b0/0\n"}
+{"Time":"2026-06-29T15:29:45.058130371Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/0b6e97f5d6080cd1","Output":"    unsigned_test.go:803: Deleting key 0b10000000/1\n"}
+{"Time":"2026-06-29T15:29:45.058142372Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/0b6e97f5d6080cd1","Output":"--- PASS: FuzzUint8/0b6e97f5d6080cd1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.058152483Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/0b6e97f5d6080cd1","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.058162424Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/12fa21fe54e87f30"}
+{"Time":"2026-06-29T15:29:45.058305603Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/12fa21fe54e87f30","Output":"=== RUN   FuzzUint8/12fa21fe54e87f30\n"}
+{"Time":"2026-06-29T15:29:45.058479816Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/12fa21fe54e87f30","Output":"    unsigned_test.go:803: Deleting key 0b10000000/1\n"}
+{"Time":"2026-06-29T15:29:45.058606924Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/12fa21fe54e87f30","Output":"    unsigned_test.go:803: Deleting key 0b0/0\n"}
+{"Time":"2026-06-29T15:29:45.058644317Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/12fa21fe54e87f30","Output":"--- PASS: FuzzUint8/12fa21fe54e87f30 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.058655308Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/12fa21fe54e87f30","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.058671219Z","Action":"run","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b"}
+{"Time":"2026-06-29T15:29:45.05868087Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"=== RUN   FuzzUint8/155aa7583fcdf31b\n"}
+{"Time":"2026-06-29T15:29:45.058699861Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"    unsigned_test.go:803: Deleting key 0b110000/7\n"}
+{"Time":"2026-06-29T15:29:45.058709472Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"    unsigned_test.go:803: Deleting key 0b100000/7\n"}
+{"Time":"2026-06-29T15:29:45.058718232Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"    unsigned_test.go:803: Deleting key 0b10000000/1\n"}
+{"Time":"2026-06-29T15:29:45.059319784Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"    unsigned_test.go:803: Deleting key 0b0/0\n"}
+{"Time":"2026-06-29T15:29:45.059450473Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"    unsigned_test.go:803: Deleting key 0b0/2\n"}
+{"Time":"2026-06-29T15:29:45.059478145Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"    unsigned_test.go:803: Deleting key 0b1000000/2\n"}
+{"Time":"2026-06-29T15:29:45.059499667Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Output":"--- PASS: FuzzUint8/155aa7583fcdf31b (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.059520468Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8/155aa7583fcdf31b","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.05954006Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8","Output":"--- PASS: FuzzUint8 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.05954971Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Test":"FuzzUint8","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.059561701Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Output":"PASS\n"}
+{"Time":"2026-06-29T15:29:45.059619145Z","Action":"output","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Output":"ok  \tgithub.com/cilium/cilium/pkg/container/bitlpm\t0.064s\n"}
+{"Time":"2026-06-29T15:29:45.059675659Z","Action":"pass","Package":"github.com/cilium/cilium/pkg/container/bitlpm","Elapsed":0.065}
+reward=1 graded=110 found=110 failed=0 parsed=110 framework=go exit_code=0

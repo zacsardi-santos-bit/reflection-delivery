@@ -1,3 +1,0 @@
-patching file warehouse/forklift/forms.py
-patching file warehouse/forklift/legacy.py
-patching file warehouse/forklift/metadata.py

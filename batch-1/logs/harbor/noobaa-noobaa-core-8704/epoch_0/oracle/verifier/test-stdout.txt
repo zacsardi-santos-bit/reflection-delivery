@@ -1,0 +1,201 @@
+patching file src/test/lifecycle/common.js
+patching file src/test/system_tests/test_lifecycle.js
+patching file src/test/system_tests/test_utils.js
+patching file src/test/unit_tests/jest_tests/test_nc_online_upgrade_cli_integrations.js
+patching file src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js
+patching file src/test/unit_tests/nc_index.js
+patching file src/test/unit_tests/test_nc_online_upgrade_s3_integrations.js
+patching file src/test/unit_tests/test_nc_with_a_couple_of_forks.js
+patching file src/test/unit_tests/test_s3_bucket_policy.js
+  console.warn
+    Error accrued while getting the data from /etc/noobaa.conf.d/config_dir_redirect: Error: ENOENT: no such file or directory, open '/etc/noobaa.conf.d/config_dir_redirect'
+
+      1081 |         data = fs.readFileSync(file_name).toString();
+      1082 |     } catch (e) {
+    > 1083 |         console.warn(`Error accrued while getting the data from ${file_name}: ${e}`);
+           |                 ^
+      1084 |         return;
+      1085 |     }
+      1086 |     return data;
+
+      at warn (config.js:1083:17)
+      at _get_data_from_file (config.js:1096:22)
+      at _get_config_root (config.js:1140:39)
+      at Object.load_nsfs_nc_config (config.js:1217:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js:13:18)
+
+  console.warn
+    config.get_config_root - could not find custom config_root, will use the default config_root  /etc/noobaa.conf.d
+
+      1097 |         config_root = data.toString().trim();
+      1098 |     } catch (err) {
+    > 1099 |         console.warn('config.get_config_root - could not find custom config_root, will use the default config_root ', config_root);
+           |                 ^
+      1100 |     }
+      1101 |     return config_root;
+      1102 | }
+
+      at warn (config.js:1099:17)
+      at _get_config_root (config.js:1140:39)
+      at Object.load_nsfs_nc_config (config.js:1217:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js:13:18)
+
+  console.warn
+    load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR /etc/noobaa.conf.d
+
+      1139 |         if (!config.NSFS_NC_CONF_DIR) {
+      1140 |             config.NSFS_NC_CONF_DIR = _get_config_root();
+    > 1141 |             console.warn('load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR', config.NSFS_NC_CONF_DIR);
+           |                     ^
+      1142 |         }
+      1143 |         const config_path = path.join(config.NSFS_NC_CONF_DIR, 'config.json');
+      1144 |         const config_data = require(config_path);
+
+      at warn (config.js:1141:21)
+      at Object.load_nsfs_nc_config (config.js:1217:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js:13:18)
+
+  console.warn
+    config.load_nsfs_nc_config could not find config.json... skipping
+
+      1165 |     } catch (err) {
+      1166 |         if (err.code !== 'MODULE_NOT_FOUND' && err.code !== 'ENOENT') throw err;
+    > 1167 |         console.warn('config.load_nsfs_nc_config could not find config.json... skipping');
+           |                 ^
+      1168 |     }
+      1169 | }
+      1170 | /**
+
+      at warn (config.js:1167:17)
+      at Object.load_nsfs_nc_config (config.js:1217:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/util/semaphore.js:5:13)
+      at Object.require (src/util/promise.js:6:19)
+      at Object.require (src/util/fs_utils.js:10:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js:13:18)
+
+(node:60) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
+ SDK releases are limited to address critical bug fixes and security issues only.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check the blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32mJun-29 15:27:06.337[35m [/60] [33m [WARN][39m CONSOLE:: config.load_nsfs_nc_config could not find config.json... skipping
+[32mJun-29 15:27:06.353[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: the versions of the new_version and the current_version match. no need to upgrade
+[32mJun-29 15:27:06.364[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: the versions of the new_version and the current_version match. no need to upgrade
+[32mJun-29 15:27:06.371[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: new_version is 5.18.0 and current server version is 5.17.0. will upgrade
+[32mJun-29 15:27:06.382[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: new_version is 5.18.0 and current server version is 5.17.0. will upgrade
+[32mJun-29 15:27:06.403[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started missing hosts_data hosts_data={}
+[32mJun-29 15:27:06.408[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started until all expected hosts have the expected version=5.18.0, host=modal host's current_version=undefined
+[32mJun-29 15:27:06.410[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started until all expected hosts have the expected version=5.18.0, host=modal host's current_version=5.16.0
+[32mJun-29 15:27:06.413[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started until all expected hosts have the expected version=5.18.0, host=modal host's current_version=5.18.0.1
+[32mJun-29 15:27:06.417[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started - the host's package version=5.18.0 does not match the user's expected version=5.18.0.1
+[32mJun-29 15:27:06.420[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started - there is already an ongoing upgrade system_data.config_directory.in_progess_upgrade={ from_version: [32m'mock-version'[39m }
+[32mJun-29 15:27:06.423[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'0.0.9-test-nc-upgrade-manager'[39m ]
+[32mJun-29 15:27:06.427[35m [/60] [33m [WARN][39m core.upgrade.upgrade_utils:: upgrade scripts directory "/tmp/custom_upgrade_scripts_dir" was not found. treating it as empty
+[32mJun-29 15:27:06.427[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): []
+[32mJun-29 15:27:06.430[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'0.0.9-test-nc-upgrade-manager'[39m ]
+[32mJun-29 15:27:06.436[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /tmp/custom_upgrade_scripts_dir/0.0.9-test-nc-upgrade-manager/dummy_upgrade_script_1.js: dummy upgrade script file 1
+[32mJun-29 15:27:06.436[35m [/60] [36m  [LOG][39m CONSOLE:: script number 1
+[32mJun-29 15:27:06.436[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /tmp/custom_upgrade_scripts_dir/0.0.9-test-nc-upgrade-manager/dummy_upgrade_script_2.js: dummy upgrade script file 2
+[32mJun-29 15:27:06.436[35m [/60] [36m  [LOG][39m CONSOLE:: script number 2
+[32mJun-29 15:27:06.441[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'0.0.9-test-nc-upgrade-manager'[39m ]
+[32mJun-29 15:27:06.443[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /tmp/custom_upgrade_scripts_dir/0.0.9-test-nc-upgrade-manager/dummy_failing_upgrade_script_3.js: dummy upgrade script file 1
+[32mJun-29 15:27:06.443[35m [/60] [36m  [LOG][39m CONSOLE:: script number 3
+[32mJun-29 15:27:06.445[35m [/60] [31m[ERROR][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: failed running upgrade script /tmp/custom_upgrade_scripts_dir/0.0.9-test-nc-upgrade-manager/dummy_failing_upgrade_script_3.js Error: script number 3 failed
+    at Object.run (/tmp/custom_upgrade_scripts_dir/0.0.9-test-nc-upgrade-manager/dummy_failing_upgrade_script_3.js:5:11)
+    at run [90m(/workspace/repo/[39msrc/upgrade/upgrade_utils.js:128:26[90m)[39m
+    at NCUpgradeManager._run_nc_upgrade_scripts [90m(/workspace/repo/[39msrc/upgrade/nc_upgrade_manager.js:254:13[90m)[39m
+    at Object.<anonymous> [90m(/workspace/repo/[39msrc/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js:468:13[90m)[39m
+[32mJun-29 15:27:06.445[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _run_nc_upgrade_scripts: nc upgrade manager failed!!!, Error: script number 3 failed
+[32mJun-29 15:27:06.453[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'0.0.9-test-nc-upgrade-manager'[39m ]
+[32mJun-29 15:27:06.462[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /workspace/repo/src/upgrade/nc_upgrade_scripts/0.0.9-test-nc-upgrade-manager/dummy_upgrade_script_1.js: dummy upgrade script file 1
+[32mJun-29 15:27:06.462[35m [/60] [36m  [LOG][39m CONSOLE:: script number 1
+[32mJun-29 15:27:06.462[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /workspace/repo/src/upgrade/nc_upgrade_scripts/0.0.9-test-nc-upgrade-manager/dummy_upgrade_script_2.js: dummy upgrade script file 2
+[32mJun-29 15:27:06.462[35m [/60] [36m  [LOG][39m CONSOLE:: script number 2
+[32mJun-29 15:27:06.468[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'0.0.9-test-nc-upgrade-manager'[39m ]
+[32mJun-29 15:27:06.472[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /workspace/repo/src/upgrade/nc_upgrade_scripts/0.0.9-test-nc-upgrade-manager/dummy_failing_upgrade_script_3.js: dummy upgrade script file 1
+[32mJun-29 15:27:06.472[35m [/60] [36m  [LOG][39m CONSOLE:: script number 3
+[32mJun-29 15:27:06.472[35m [/60] [31m[ERROR][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: failed running upgrade script /workspace/repo/src/upgrade/nc_upgrade_scripts/0.0.9-test-nc-upgrade-manager/dummy_failing_upgrade_script_3.js Error: script number 3 failed
+    at Object.run [90m(/workspace/repo/[39msrc/upgrade/nc_upgrade_scripts/0.0.9-test-nc-upgrade-manager/dummy_failing_upgrade_script_3.js:5:11[90m)[39m
+    at run [90m(/workspace/repo/[39msrc/upgrade/upgrade_utils.js:128:26[90m)[39m
+    at NCUpgradeManager._run_nc_upgrade_scripts [90m(/workspace/repo/[39msrc/upgrade/nc_upgrade_manager.js:254:13[90m)[39m
+    at Object.<anonymous> [90m(/workspace/repo/[39msrc/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js:485:13[90m)[39m
+[32mJun-29 15:27:06.472[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _run_nc_upgrade_scripts: nc upgrade manager failed!!!, Error: script number 3 failed
+[32mJun-29 15:27:06.549[35m [/60] [33m [WARN][39m core.sdk.config_fs:: get_config_data: with config_file_path /tmp/config_root_nc_upgrade_manager_test/system.json got an error [Error: No such file or directory] { code: [32m'ENOENT'[39m, context: [32m'Readfile _path=/tmp/config_root_nc_upgrade_manager_test/system.json '[39m }
+[32mJun-29 15:27:06.559[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: new_version is 1.0.0 and current server version is 0.0.0. will upgrade
+[32mJun-29 15:27:06.562[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'1.0.0'[39m ]
+[32mJun-29 15:27:06.571[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /workspace/repo/src/upgrade/nc_upgrade_scripts/1.0.0/config_dir_restructure.js: Config directory resturcture
+[32mJun-29 15:27:06.574[35m [/60] [33m [WARN][39m core.upgrade.nc_upgrade_manager:: config_dir_restructure.move_old_accounts_dir old accounts dir does not exist /etc/noobaa.conf.d/accounts/.noobaa-config-nsfs, skipping
+[32mJun-29 15:27:06.587[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: the versions of the new_version and the current_version match. no need to upgrade
+[32mJun-29 15:27:06.596[35m [/60] [31m[ERROR][39m core.upgrade.upgrade_utils:: the new_version (1.0.0) appears to be older than the current_version (server)  (1.0.0.1). cannot downgrade
+[32mJun-29 15:27:06.605[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: new_version is 1.0.0 and current server version is 0.0.0. will upgrade
+[32mJun-29 15:27:06.605[35m [/60] [31m[ERROR][39m core.upgrade.nc_upgrade_manager:: _verify_config_dir_upgrade: config dir upgrade can not be started until all expected hosts have the expected version=5.18.0, host=modal host's current_version=5.17.0
+[32mJun-29 15:27:06.611[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: new_version is 1.0.0 and current server version is 0.0.0. will upgrade
+[32mJun-29 15:27:06.615[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: found the following versions with upgrade scripts which are newer than server version (0.0.0): [ [32m'1.0.0'[39m ]
+[32mJun-29 15:27:06.615[35m [/60] [36m   [L0][39m core.upgrade.upgrade_utils:: upgrade_utils.run_upgrade_scripts: running upgrade script /workspace/repo/src/upgrade/nc_upgrade_scripts/1.0.0/config_dir_restructure.js: Config directory resturcture
+[32mJun-29 15:27:06.617[35m [/60] [33m [WARN][39m core.upgrade.nc_upgrade_manager:: config_dir_restructure.move_old_accounts_dir old accounts dir does not exist /etc/noobaa.conf.d/accounts/.noobaa-config-nsfs, skipping
+PASS src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js
+  nc upgrade manager - upgrade RPM
+    ✓ upgrade rpm - nothing to upgrade - no changes in system.json (21 ms)
+    ✓ upgrade rpm - nothing to upgrade - no changes in system.json - no successful upgrades (8 ms)
+    ✓ upgrade status - RPM was upgraded, should update system.json (11 ms)
+    ✓ upgrade status - RPM was upgraded, should update system.json (10 ms)
+  nc upgrade manager - upgrade config directory
+    nc upgrade manager - config_directory_defaults
+      ✓ config_directory_defaults - hostname from_version exists - 5.16.0 (2 ms)
+      ✓ config_directory_defaults - hostname from_version exists - 5.17.0 (3 ms)
+      ✓ config_directory_defaults - missing hostname successful_upgrades (2 ms)
+      ✓ config_directory_defaults - missing hostname upgrade_history (3 ms)
+      ✓ config_directory_defaults - missing hostname (2 ms)
+    nc upgrade manager - _verify_config_dir_upgrade
+      ✓ _verify_config_dir_upgrade - empty hosts system_data (6 ms)
+      ✓ _verify_config_dir_upgrade - empty host current_version (2 ms)
+      ✓ _verify_config_dir_upgrade - host current_version < new_version should upgrade RPM (3 ms)
+      ✓ _verify_config_dir_upgrade - host current_version > new_version should upgrade RPM (2 ms)
+      ✓ _verify_config_dir_upgrade - should upgrade config dir (2 ms)
+      ✓ _verify_config_dir_upgrade - fail on mismatch expected_version (3 ms)
+      ✓ fail on already in progress upgrade (2 ms)
+    nc upgrade manager - _run_nc_upgrade_scripts
+      ✓ _run_nc_upgrade_scripts - no scripts (5 ms)
+      ✓ _run_nc_upgrade_scripts - custom_upgrade_scripts_dir - no upgrade scripts dir (2 ms)
+      ✓ _run_nc_upgrade_scripts - custom_upgrade_scripts_dir - successful scripts (10 ms)
+      ✓ _run_nc_upgrade_scripts - custom_upgrade_scripts_dir - failing scripts (13 ms)
+      ✓ _run_nc_upgrade_scripts - default upgrade scripts dir - successful scripts (14 ms)
+      ✓ _run_nc_upgrade_scripts - default upgrade scripts dir - failing scripts (9 ms)
+    nc upgrade manager - _update_config_dir_upgrade_start
+      ✓ _update_config_dir_upgrade_start - system_data doesn't contain old config_directory data (12 ms)
+      ✓ _update_config_dir_upgrade_start - system_data contains old config_directory data (12 ms)
+    nc upgrade manager - _update_config_dir_upgrade_finish
+      ✓ _update_config_dir_upgrade_finish - system_data doesn't contain old successful_upgrades data (12 ms)
+      ✓ _update_config_dir_upgrade_finish - system_data contains old successful_upgrades and last_failure data (12 ms)
+    nc upgrade manager - _update_config_dir_upgrade_failed
+      ✓ _update_config_dir_upgrade_failed - system_data doesn't contain old upgrade_history data (11 ms)
+      ✓ _update_config_dir_upgrade_failed - system_data contains old successful_upgrades and last_failure data (12 ms)
+    nc upgrade manager - upgrade_config_dir
+      ✓ upgrade_config_dir - empty system_data - should fail (5 ms)
+      ✓ upgrade_config_dir - config_directory property is missing in system.json (30 ms)
+      ✓ upgrade_config_dir - system.json and package.json have the same version (9 ms)
+      ✓ upgrade_config_dir - config_dir_version in system.json is newer than the hosts current config_dir_version (9 ms)
+      ✓ upgrade_config_dir - host RPM is not upgraded to the expectced version (6 ms)
+      ✓ upgrade_config_dir - old successful upgrades is not empty (18 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       34 passed, 34 total
+Snapshots:   0 total
+Time:        3.44 s
+Ran all test suites matching /src\/test\/unit_tests\/jest_tests\/test_nc_upgrade_manager.test.js|src\/test\/unit_tests\/jest_tests\/test_nc_online_upgrade_cli_integrations.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":34,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":34,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746823191,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["nc upgrade manager - upgrade RPM"],"duration":21,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade RPM upgrade rpm - nothing to upgrade - no changes in system.json","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"upgrade rpm - nothing to upgrade - no changes in system.json"},{"ancestorTitles":["nc upgrade manager - upgrade RPM"],"duration":8,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade RPM upgrade rpm - nothing to upgrade - no changes in system.json - no successful upgrades","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"upgrade rpm - nothing to upgrade - no changes in system.json - no successful upgrades"},{"ancestorTitles":["nc upgrade manager - upgrade RPM"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade RPM upgrade status - RPM was upgraded, should update system.json","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"upgrade status - RPM was upgraded, should update system.json"},{"ancestorTitles":["nc upgrade manager - upgrade RPM"],"duration":10,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade RPM upgrade status - RPM was upgraded, should update system.json","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"upgrade status - RPM was upgraded, should update system.json"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - config_directory_defaults"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - config_directory_defaults config_directory_defaults - hostname from_version exists - 5.16.0","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"config_directory_defaults - hostname from_version exists - 5.16.0"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - config_directory_defaults"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - config_directory_defaults config_directory_defaults - hostname from_version exists - 5.17.0","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"config_directory_defaults - hostname from_version exists - 5.17.0"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - config_directory_defaults"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - config_directory_defaults config_directory_defaults - missing hostname successful_upgrades","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"config_directory_defaults - missing hostname successful_upgrades"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - config_directory_defaults"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - config_directory_defaults config_directory_defaults - missing hostname upgrade_history","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"config_directory_defaults - missing hostname upgrade_history"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - config_directory_defaults"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - config_directory_defaults config_directory_defaults - missing hostname","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"config_directory_defaults - missing hostname"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade _verify_config_dir_upgrade - empty hosts system_data","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_verify_config_dir_upgrade - empty hosts system_data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade _verify_config_dir_upgrade - empty host current_version","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_verify_config_dir_upgrade - empty host current_version"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade _verify_config_dir_upgrade - host current_version < new_version should upgrade RPM","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_verify_config_dir_upgrade - host current_version < new_version should upgrade RPM"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade _verify_config_dir_upgrade - host current_version > new_version should upgrade RPM","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_verify_config_dir_upgrade - host current_version > new_version should upgrade RPM"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade _verify_config_dir_upgrade - should upgrade config dir","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"passed","title":"_verify_config_dir_upgrade - should upgrade config dir"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade _verify_config_dir_upgrade - fail on mismatch expected_version","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_verify_config_dir_upgrade - fail on mismatch expected_version"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _verify_config_dir_upgrade"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _verify_config_dir_upgrade fail on already in progress upgrade","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"fail on already in progress upgrade"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _run_nc_upgrade_scripts"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _run_nc_upgrade_scripts _run_nc_upgrade_scripts - no scripts","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_run_nc_upgrade_scripts - no scripts"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _run_nc_upgrade_scripts"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _run_nc_upgrade_scripts _run_nc_upgrade_scripts - custom_upgrade_scripts_dir - no upgrade scripts dir","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_run_nc_upgrade_scripts - custom_upgrade_scripts_dir - no upgrade scripts dir"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _run_nc_upgrade_scripts"],"duration":10,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _run_nc_upgrade_scripts _run_nc_upgrade_scripts - custom_upgrade_scripts_dir - successful scripts","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_run_nc_upgrade_scripts - custom_upgrade_scripts_dir - successful scripts"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _run_nc_upgrade_scripts"],"duration":13,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _run_nc_upgrade_scripts _run_nc_upgrade_scripts - custom_upgrade_scripts_dir - failing scripts","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"_run_nc_upgrade_scripts - custom_upgrade_scripts_dir - failing scripts"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _run_nc_upgrade_scripts"],"duration":14,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _run_nc_upgrade_scripts _run_nc_upgrade_scripts - default upgrade scripts dir - successful scripts","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"_run_nc_upgrade_scripts - default upgrade scripts dir - successful scripts"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _run_nc_upgrade_scripts"],"duration":9,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _run_nc_upgrade_scripts _run_nc_upgrade_scripts - default upgrade scripts dir - failing scripts","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"_run_nc_upgrade_scripts - default upgrade scripts dir - failing scripts"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _update_config_dir_upgrade_start"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _update_config_dir_upgrade_start _update_config_dir_upgrade_start - system_data doesn't contain old config_directory data","invocations":1,"location":null,"numPassingAsserts":24,"retryReasons":[],"status":"passed","title":"_update_config_dir_upgrade_start - system_data doesn't contain old config_directory data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _update_config_dir_upgrade_start"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _update_config_dir_upgrade_start _update_config_dir_upgrade_start - system_data contains old config_directory data","invocations":1,"location":null,"numPassingAsserts":24,"retryReasons":[],"status":"passed","title":"_update_config_dir_upgrade_start - system_data contains old config_directory data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _update_config_dir_upgrade_finish"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _update_config_dir_upgrade_finish _update_config_dir_upgrade_finish - system_data doesn't contain old successful_upgrades data","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"_update_config_dir_upgrade_finish - system_data doesn't contain old successful_upgrades data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _update_config_dir_upgrade_finish"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _update_config_dir_upgrade_finish _update_config_dir_upgrade_finish - system_data contains old successful_upgrades and last_failure data","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"_update_config_dir_upgrade_finish - system_data contains old successful_upgrades and last_failure data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _update_config_dir_upgrade_failed"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _update_config_dir_upgrade_failed _update_config_dir_upgrade_failed - system_data doesn't contain old upgrade_history data","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"_update_config_dir_upgrade_failed - system_data doesn't contain old upgrade_history data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - _update_config_dir_upgrade_failed"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - _update_config_dir_upgrade_failed _update_config_dir_upgrade_failed - system_data contains old successful_upgrades and last_failure data","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"_update_config_dir_upgrade_failed - system_data contains old successful_upgrades and last_failure data"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - upgrade_config_dir"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - upgrade_config_dir upgrade_config_dir - empty system_data - should fail","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"upgrade_config_dir - empty system_data - should fail"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - upgrade_config_dir"],"duration":30,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - upgrade_config_dir upgrade_config_dir - config_directory property is missing in system.json","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"upgrade_config_dir - config_directory property is missing in system.json"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - upgrade_config_dir"],"duration":9,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - upgrade_config_dir upgrade_config_dir - system.json and package.json have the same version","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"upgrade_config_dir - system.json and package.json have the same version"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - upgrade_config_dir"],"duration":9,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - upgrade_config_dir upgrade_config_dir - config_dir_version in system.json is newer than the hosts current config_dir_version","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"upgrade_config_dir - config_dir_version in system.json is newer than the hosts current config_dir_version"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - upgrade_config_dir"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - upgrade_config_dir upgrade_config_dir - host RPM is not upgraded to the expectced version","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"upgrade_config_dir - host RPM is not upgraded to the expectced version"},{"ancestorTitles":["nc upgrade manager - upgrade config directory","nc upgrade manager - upgrade_config_dir"],"duration":18,"failureDetails":[],"failureMessages":[],"fullName":"nc upgrade manager - upgrade config directory nc upgrade manager - upgrade_config_dir upgrade_config_dir - old successful upgrades is not empty","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"upgrade_config_dir - old successful upgrades is not empty"}],"endTime":1782746826627,"message":"","name":"/workspace/repo/src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js","startTime":1782746823239,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=33 found=33 failed=0 parsed=33 framework=jest exit_code=0

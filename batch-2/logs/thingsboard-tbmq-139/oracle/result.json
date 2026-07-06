@@ -1,0 +1,29 @@
+{
+    "id": "6f2f2c10-bd3b-4f88-b083-dfb9762d2a87",
+    "started_at": "2026-07-04T15:41:09.729632",
+    "finished_at": "2026-07-04T15:42:19.999749",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__thingsboard-tbmq-139": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "thingsboard-tbmq-139__foVe432"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

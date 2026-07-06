@@ -1,0 +1,44 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --pool=threads --coverage.enabled=false src/tools/mcp-client-manager.test.ts",
+  "test_files": [
+    "packages/core/src/tools/mcp-client-manager.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should merge extension configuration with an existing user-configured server",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should securely merge tool lists and env variables regardless of load order",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should result in empty includeTools if intersection is empty",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should respect a single allowlist if only one is provided",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should allow partial overrides of connection properties"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should discover tools from all configured",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should batch context refresh when starting multiple servers",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should update global discovery state",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should mark discovery completed when all configured servers are user-disabled",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should mark discovery completed when all configured servers are blocked",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should not discover tools if folder is not trusted",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should not start blocked servers",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should only start allowed servers if allow list is not empty",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should start servers from extensions",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should not start servers from disabled extensions",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager should add blocked servers to the blockedMcpServers list",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager restart should restart all running servers",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager restartServer should restart the specified server",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager restartServer should throw an error if the server does not exist",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager restartServer should create a new McpClient with updated config on restart",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager getMcpInstructions should not return instructions for servers that do not have instructions",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Promise rejection handling should handle errors thrown during client initialization",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Promise rejection handling should handle errors thrown in the async IIFE before try block",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should remove mcp servers from allServerConfigs when stopExtension is called",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager Extension handling should remove servers from blockedMcpServers when stopExtension is called",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager diagnostic reporting should emit hint instead of full error when user has not interacted with MCP",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager diagnostic reporting should emit full error when user has interacted with MCP",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager diagnostic reporting should still deduplicate diagnostic messages after user interaction",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager diagnostic reporting should only show hint once per session",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager diagnostic reporting should capture last error for a server even when silenced",
+    "/workspace/repo/packages/core/src/tools/mcp-client-manager.test.ts::McpClientManager diagnostic reporting should show previously deduplicated errors after interaction clears state"
+  ]
+}

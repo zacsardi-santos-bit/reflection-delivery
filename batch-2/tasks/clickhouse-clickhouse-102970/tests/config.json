@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -m pytest /workspace/run_sql_test.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04093_best_effort_datetime_timezone_boundary_range_check.reference",
+    "tests/queries/0_stateless/04093_best_effort_datetime_timezone_boundary_range_check.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "run_sql_test::test_04093_best_effort_datetime_timezone_boundary_range_check"
+  ],
+  "PASS_TO_PASS": []
+}

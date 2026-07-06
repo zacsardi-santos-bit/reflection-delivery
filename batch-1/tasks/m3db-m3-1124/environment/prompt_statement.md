@@ -1,0 +1,5 @@
+I'm working on a time-series query service and I need to add a configurable limit to prevent queries from computing too many datapoints at once. Right now, someone can accidentally query a year-long window with a one-second step and the system will try to compute millions of datapoints, which is bad for performance and stability.
+
+What I need is a configuration option that sets a maximum number of computed datapoints per query. The number of datapoints is computed as the query time range divided by the step size. If a query would exceed this maximum, it should be rejected with an HTTP 400 response and a structured error response explaining the time range, step size, the configured limit, and suggestions on how to fix the problem. If the limit is set to zero or a negative value, enforcement should be disabled so operators can easily opt out.
+
+I also need to make sure the query handler constructor is updated to accept this limits configuration, and that a sample configuration file demonstrates how to set this limit. Any existing example configuration files in the config directory should continue to load and validate without errors.

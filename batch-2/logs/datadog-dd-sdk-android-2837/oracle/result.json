@@ -1,0 +1,29 @@
+{
+    "id": "994378a2-d884-4aa1-966b-f8bf1fcd4a8f",
+    "started_at": "2026-07-04T15:53:04.276779",
+    "finished_at": "2026-07-04T15:54:33.623297",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__datadog-dd-sdk-android-2837": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "datadog-dd-sdk-android-2837__Nuvyhsb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

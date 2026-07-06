@@ -1,0 +1,29 @@
+{
+    "id": "9995ae58-33b5-4111-9cc5-e5755d0f4395",
+    "started_at": "2026-07-06T12:18:48.672795",
+    "finished_at": "2026-07-06T12:19:23.909871",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pypi-warehouse-19584": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pypi-warehouse-19584__xn3Uu7u"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

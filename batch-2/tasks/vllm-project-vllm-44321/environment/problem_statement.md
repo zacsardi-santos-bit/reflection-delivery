@@ -1,0 +1,7 @@
+I'm working on the vllm Rust frontend server and I need to add API key auth because right now there's zero access control, anyone who can reach the box can hit the inference and model-listing endpoints and that's not gonna fly for anything production facing. I want operators to be able to configure one or more API keys so the server requires a valid bearer token on the protected routes.
+
+So the serve command should take a repeatable flag for API keys (pass it multiple times for multiple keys), and the JSON-based arguments path (the one used when the Python side supervises the frontend) should also accept API keys, either as a single string or as a list of strings. Either way they need to land in the server's runtime config.
+
+For the protected routes (model listing, inference, that stuff), when at least one key is configured a request has to carry a matching bearer token in the authorization header. If it's missing or wrong, reject it with a 401 and a JSON error body saying unauthorized. But the health check endpoint and the other auxiliary routes should stay open without a token so monitoring keeps working, and OPTIONS requests should never get blocked by auth (CORS preflight needs to pass through).
+
+One thing I really care about: the key values can't ever show up in logs or debug output. When the config gets printed for diagnostics the keys field should be a redacted placeholder that only shows the count of configured keys, not the actual values, and an empty key list should just print as empty. So the Debug/display impl needs custom handling there.

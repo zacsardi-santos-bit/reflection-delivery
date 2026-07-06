@@ -1,0 +1,1523 @@
+diff --git a/agent/Dockerfile b/agent/Dockerfile
+index 69b6c8a16..a127a632e 100644
+--- a/agent/Dockerfile
++++ b/agent/Dockerfile
+@@ -41,9 +41,6 @@ WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/agent
+ 
+ RUN go build -tags docker -ldflags "-X main.AgentVersion=${SHELLHUB_VERSION}"
+ 
+-# To avoid use $GOPATH on the `production` stage, we copy whe agent binary to /app on the root.
+-COPY ./agent /app/
+-
+ # development stage
+ FROM base AS development
+ 
+@@ -67,12 +64,9 @@ WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/agent
+ ENTRYPOINT ["/entrypoint.sh"]
+ 
+ # production stage
+-FROM alpine:3.16 AS production
+-
+-# Copy the libcrypt from builder stage to avoid rebuild it.
+-COPY --from=builder /usr/lib/libcrypt.so.* /usr/lib/
++FROM alpine:3.19.1 AS production
+ 
+ WORKDIR /app
+-COPY --from=builder /app/ /app/
++COPY --from=builder /agent /app/
+ 
+ ENTRYPOINT ./agent
+diff --git a/api/services/namespace.go b/api/services/namespace.go
+index 0b7dd6f7f..06b7b7b38 100644
+--- a/api/services/namespace.go
++++ b/api/services/namespace.go
+@@ -79,7 +79,10 @@ func (s *service) CreateNamespace(ctx context.Context, namespace requests.Namesp
+ 				Role: guard.RoleOwner,
+ 			},
+ 		},
+-		Settings: &models.NamespaceSettings{SessionRecord: true},
++		Settings: &models.NamespaceSettings{
++			SessionRecord:          true,
++			ConnectionAnnouncement: "",
++		},
+ 		TenantID: namespace.TenantID,
+ 	}
+ 
+@@ -187,8 +190,9 @@ func (s *service) fillMembersData(ctx context.Context, members []models.Member)
+ 
+ func (s *service) EditNamespace(ctx context.Context, req *requests.NamespaceEdit) (*models.Namespace, error) {
+ 	changes := &models.NamespaceChanges{
+-		Name:          strings.ToLower(req.Name),
+-		SessionRecord: req.Settings.SessionRecord,
++		Name:                   strings.ToLower(req.Name),
++		SessionRecord:          req.Settings.SessionRecord,
++		ConnectionAnnouncement: req.Settings.ConnectionAnnouncement,
+ 	}
+ 
+ 	if err := s.store.NamespaceEdit(ctx, req.Tenant, changes); err != nil {
+diff --git a/api/services/setup.go b/api/services/setup.go
+index 6b68a97c5..6c6e4bd3e 100644
+--- a/api/services/setup.go
++++ b/api/services/setup.go
+@@ -54,6 +54,10 @@ func (s *service) Setup(ctx context.Context, req requests.Setup) error {
+ 			},
+ 		},
+ 		CreatedAt: clock.Now(),
++		Settings: &models.NamespaceSettings{
++			SessionRecord:          false,
++			ConnectionAnnouncement: "",
++		},
+ 	}
+ 
+ 	if _, err = s.store.NamespaceCreate(ctx, namespace); err != nil {
+diff --git a/api/store/mongo/migrations/main.go b/api/store/mongo/migrations/main.go
+index 47a4d74ef..c12f65112 100644
+--- a/api/store/mongo/migrations/main.go
++++ b/api/store/mongo/migrations/main.go
+@@ -73,6 +73,7 @@ func GenerateMigrations() []migrate.Migration {
+ 		migration61,
+ 		migration62,
+ 		migration63,
++		migration64,
+ 	}
+ }
+ 
+diff --git a/api/store/mongo/migrations/migration_64.go b/api/store/mongo/migrations/migration_64.go
+new file mode 100644
+index 000000000..5b9fa247f
+--- /dev/null
++++ b/api/store/mongo/migrations/migration_64.go
+@@ -0,0 +1,61 @@
++package migrations
++
++import (
++	"context"
++
++	"github.com/sirupsen/logrus"
++	migrate "github.com/xakep666/mongo-migrate"
++	"go.mongodb.org/mongo-driver/bson"
++	"go.mongodb.org/mongo-driver/mongo"
++)
++
++var migration64 = migrate.Migration{
++	Version:     64,
++	Description: "Adding the 'settings.connection_announcement' attribute to the namespace if it does not already exist.",
++	Up: func(db *mongo.Database) error {
++		logrus.WithFields(logrus.Fields{
++			"component": "migration",
++			"version":   64,
++			"action":    "Up",
++		}).Info("Applying migration")
++
++		filter := bson.M{
++			"settings.connection_announcement": bson.M{"$in": []interface{}{nil, ""}},
++		}
++
++		update := bson.M{
++			"$set": bson.M{
++				"settings.connection_announcement": "",
++			},
++		}
++
++		_, err := db.
++			Collection("namespaces").
++			UpdateMany(context.TODO(), filter, update)
++
++		return err
++	},
++	Down: func(db *mongo.Database) error {
++		logrus.WithFields(logrus.Fields{
++			"component": "migration",
++			"version":   64,
++			"action":    "Down",
++		}).Info("Reverting migration")
++
++		filter := bson.M{
++			"settings.connection_announcement": bson.M{"$in": []interface{}{nil, ""}},
++		}
++
++		update := bson.M{
++			"$unset": bson.M{
++				"settings.connection_announcement": "",
++			},
++		}
++
++		_, err := db.
++			Collection("namespaces").
++			UpdateMany(context.TODO(), filter, update)
++
++		return err
++	},
++}
+diff --git a/cli/services/namespaces.go b/cli/services/namespaces.go
+index 5fe722812..01bb42413 100644
+--- a/cli/services/namespaces.go
++++ b/cli/services/namespaces.go
+@@ -47,7 +47,8 @@ func (s *service) NamespaceCreate(ctx context.Context, input *inputs.NamespaceCr
+ 			},
+ 		},
+ 		Settings: &models.NamespaceSettings{
+-			SessionRecord: true,
++			SessionRecord:          true,
++			ConnectionAnnouncement: "",
+ 		},
+ 		CreatedAt: clock.Now(),
+ 	}
+diff --git a/pkg/api/internalclient/client_internal.go b/pkg/api/internalclient/client_internal.go
+index 033d96146..f13229c25 100644
+--- a/pkg/api/internalclient/client_internal.go
++++ b/pkg/api/internalclient/client_internal.go
+@@ -39,6 +39,7 @@ type internalAPI interface {
+ 	DeviceLookup(lookup map[string]string) (*models.Device, []error)
+ 	BillingReport(tenant string, action string) (int, error)
+ 	BillingEvaluate(tenantID string) (*models.BillingEvaluation, int, error)
++	NamespaceLookup(tenant string) (*models.Namespace, []error)
+ }
+ 
+ func (c *client) LookupDevice() {
+@@ -239,3 +240,22 @@ func (c *client) DeviceLookup(lookup map[string]string) (*models.Device, []error
+ 
+ 	return device, nil
+ }
++
++func (c *client) NamespaceLookup(tenant string) (*models.Namespace, []error) {
++	namespace := new(models.Namespace)
++
++	res, err := c.
++		http.
++		R().
++		SetResult(namespace).
++		Get(buildURL(c, fmt.Sprintf("/api/namespaces/%s", tenant)))
++	if err != nil {
++		return nil, []error{err}
++	}
++
++	if res.StatusCode() != http.StatusOK {
++		return nil, []error{err}
++	}
++
++	return namespace, nil
++}
+diff --git a/pkg/api/internalclient/mocks/internalclient.go b/pkg/api/internalclient/mocks/internalclient.go
+index c6f0eda0d..2e71e149f 100644
+--- a/pkg/api/internalclient/mocks/internalclient.go
++++ b/pkg/api/internalclient/mocks/internalclient.go
+@@ -1,4 +1,4 @@
+-// Code generated by mockery v2.20.0. DO NOT EDIT.
++// Code generated by mockery v2.39.2. DO NOT EDIT.
+ 
+ package mocks
+ 
+@@ -16,6 +16,10 @@ type Client struct {
+ func (_m *Client) BillingEvaluate(tenantID string) (*models.BillingEvaluation, int, error) {
+ 	ret := _m.Called(tenantID)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for BillingEvaluate")
++	}
++
+ 	var r0 *models.BillingEvaluation
+ 	var r1 int
+ 	var r2 error
+@@ -49,6 +53,10 @@ func (_m *Client) BillingEvaluate(tenantID string) (*models.BillingEvaluation, i
+ func (_m *Client) BillingReport(tenant string, action string) (int, error) {
+ 	ret := _m.Called(tenant, action)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for BillingReport")
++	}
++
+ 	var r0 int
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func(string, string) (int, error)); ok {
+@@ -73,6 +81,10 @@ func (_m *Client) BillingReport(tenant string, action string) (int, error) {
+ func (_m *Client) CreatePrivateKey() (*models.PrivateKey, error) {
+ 	ret := _m.Called()
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for CreatePrivateKey")
++	}
++
+ 	var r0 *models.PrivateKey
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func() (*models.PrivateKey, error)); ok {
+@@ -99,6 +111,10 @@ func (_m *Client) CreatePrivateKey() (*models.PrivateKey, error) {
+ func (_m *Client) DeviceLookup(lookup map[string]string) (*models.Device, []error) {
+ 	ret := _m.Called(lookup)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for DeviceLookup")
++	}
++
+ 	var r0 *models.Device
+ 	var r1 []error
+ 	if rf, ok := ret.Get(0).(func(map[string]string) (*models.Device, []error)); ok {
+@@ -127,6 +143,10 @@ func (_m *Client) DeviceLookup(lookup map[string]string) (*models.Device, []erro
+ func (_m *Client) DevicesHeartbeat(id string) error {
+ 	ret := _m.Called(id)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for DevicesHeartbeat")
++	}
++
+ 	var r0 error
+ 	if rf, ok := ret.Get(0).(func(string) error); ok {
+ 		r0 = rf(id)
+@@ -141,6 +161,10 @@ func (_m *Client) DevicesHeartbeat(id string) error {
+ func (_m *Client) DevicesOffline(id string) error {
+ 	ret := _m.Called(id)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for DevicesOffline")
++	}
++
+ 	var r0 error
+ 	if rf, ok := ret.Get(0).(func(string) error); ok {
+ 		r0 = rf(id)
+@@ -155,6 +179,10 @@ func (_m *Client) DevicesOffline(id string) error {
+ func (_m *Client) EvaluateKey(fingerprint string, dev *models.Device, username string) (bool, error) {
+ 	ret := _m.Called(fingerprint, dev, username)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for EvaluateKey")
++	}
++
+ 	var r0 bool
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func(string, *models.Device, string) (bool, error)); ok {
+@@ -179,6 +207,10 @@ func (_m *Client) EvaluateKey(fingerprint string, dev *models.Device, username s
+ func (_m *Client) FinishSession(uid string) []error {
+ 	ret := _m.Called(uid)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for FinishSession")
++	}
++
+ 	var r0 []error
+ 	if rf, ok := ret.Get(0).(func(string) []error); ok {
+ 		r0 = rf(uid)
+@@ -195,6 +227,10 @@ func (_m *Client) FinishSession(uid string) []error {
+ func (_m *Client) FirewallEvaluate(lookup map[string]string) error {
+ 	ret := _m.Called(lookup)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for FirewallEvaluate")
++	}
++
+ 	var r0 error
+ 	if rf, ok := ret.Get(0).(func(map[string]string) error); ok {
+ 		r0 = rf(lookup)
+@@ -209,6 +245,10 @@ func (_m *Client) FirewallEvaluate(lookup map[string]string) error {
+ func (_m *Client) GetDevice(uid string) (*models.Device, error) {
+ 	ret := _m.Called(uid)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for GetDevice")
++	}
++
+ 	var r0 *models.Device
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func(string) (*models.Device, error)); ok {
+@@ -235,6 +275,10 @@ func (_m *Client) GetDevice(uid string) (*models.Device, error) {
+ func (_m *Client) GetDeviceByPublicURLAddress(address string) (*models.Device, error) {
+ 	ret := _m.Called(address)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for GetDeviceByPublicURLAddress")
++	}
++
+ 	var r0 *models.Device
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func(string) (*models.Device, error)); ok {
+@@ -261,6 +305,10 @@ func (_m *Client) GetDeviceByPublicURLAddress(address string) (*models.Device, e
+ func (_m *Client) GetPublicKey(fingerprint string, tenant string) (*models.PublicKey, error) {
+ 	ret := _m.Called(fingerprint, tenant)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for GetPublicKey")
++	}
++
+ 	var r0 *models.PublicKey
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func(string, string) (*models.PublicKey, error)); ok {
+@@ -287,6 +335,10 @@ func (_m *Client) GetPublicKey(fingerprint string, tenant string) (*models.Publi
+ func (_m *Client) KeepAliveSession(uid string) []error {
+ 	ret := _m.Called(uid)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for KeepAliveSession")
++	}
++
+ 	var r0 []error
+ 	if rf, ok := ret.Get(0).(func(string) []error); ok {
+ 		r0 = rf(uid)
+@@ -303,6 +355,10 @@ func (_m *Client) KeepAliveSession(uid string) []error {
+ func (_m *Client) ListDevices() ([]models.Device, error) {
+ 	ret := _m.Called()
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for ListDevices")
++	}
++
+ 	var r0 []models.Device
+ 	var r1 error
+ 	if rf, ok := ret.Get(0).(func() ([]models.Device, error)); ok {
+@@ -329,6 +385,10 @@ func (_m *Client) ListDevices() ([]models.Device, error) {
+ func (_m *Client) Lookup(lookup map[string]string) (string, []error) {
+ 	ret := _m.Called(lookup)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for Lookup")
++	}
++
+ 	var r0 string
+ 	var r1 []error
+ 	if rf, ok := ret.Get(0).(func(map[string]string) (string, []error)); ok {
+@@ -356,6 +416,38 @@ func (_m *Client) LookupDevice() {
+ 	_m.Called()
+ }
+ 
++// NamespaceLookup provides a mock function with given fields: tenant
++func (_m *Client) NamespaceLookup(tenant string) (*models.Namespace, []error) {
++	ret := _m.Called(tenant)
++
++	if len(ret) == 0 {
++		panic("no return value specified for NamespaceLookup")
++	}
++
++	var r0 *models.Namespace
++	var r1 []error
++	if rf, ok := ret.Get(0).(func(string) (*models.Namespace, []error)); ok {
++		return rf(tenant)
++	}
++	if rf, ok := ret.Get(0).(func(string) *models.Namespace); ok {
++		r0 = rf(tenant)
++	} else {
++		if ret.Get(0) != nil {
++			r0 = ret.Get(0).(*models.Namespace)
++		}
++	}
++
++	if rf, ok := ret.Get(1).(func(string) []error); ok {
++		r1 = rf(tenant)
++	} else {
++		if ret.Get(1) != nil {
++			r1 = ret.Get(1).([]error)
++		}
++	}
++
++	return r0, r1
++}
++
+ // RecordSession provides a mock function with given fields: session, recordURL
+ func (_m *Client) RecordSession(session *models.SessionRecorded, recordURL string) {
+ 	_m.Called(session, recordURL)
+@@ -365,6 +457,10 @@ func (_m *Client) RecordSession(session *models.SessionRecorded, recordURL strin
+ func (_m *Client) SessionAsAuthenticated(uid string) []error {
+ 	ret := _m.Called(uid)
+ 
++	if len(ret) == 0 {
++		panic("no return value specified for SessionAsAuthenticated")
++	}
++
+ 	var r0 []error
+ 	if rf, ok := ret.Get(0).(func(string) []error); ok {
+ 		r0 = rf(uid)
+@@ -377,13 +473,12 @@ func (_m *Client) SessionAsAuthenticated(uid string) []error {
+ 	return r0
+ }
+ 
+-type mockConstructorTestingTNewClient interface {
++// NewClient creates a new instance of Client. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
++// The first argument is typically a *testing.T value.
++func NewClient(t interface {
+ 	mock.TestingT
+ 	Cleanup(func())
+-}
+-
+-// NewClient creates a new instance of Client. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
+-func NewClient(t mockConstructorTestingTNewClient) *Client {
++}) *Client {
+ 	mock := &Client{}
+ 	mock.Mock.Test(t)
+ 
+diff --git a/pkg/api/requests/namespace.go b/pkg/api/requests/namespace.go
+index 0414ba0a3..aa76a0cc8 100644
+--- a/pkg/api/requests/namespace.go
++++ b/pkg/api/requests/namespace.go
+@@ -34,9 +34,10 @@ type NamespaceDelete struct {
+ // NamespaceEdit is the structure to represent the request data for edit namespace endpoint.
+ type NamespaceEdit struct {
+ 	TenantParam
+-	Name     string `json:"name"  validate:"omitempty,hostname_rfc1123,excludes=."`
++	Name     string `json:"name" validate:"omitempty,hostname_rfc1123,excludes=."`
+ 	Settings struct {
+-		SessionRecord *bool `json:"session_record,omitempty"`
++		SessionRecord          *bool   `json:"session_record" validate:"omitempty"`
++		ConnectionAnnouncement *string `json:"connection_announcement" validate:"omitempty,min=0,max=127"`
+ 	} `json:"settings"`
+ }
+ 
+diff --git a/pkg/models/namespace.go b/pkg/models/namespace.go
+index 2accc2137..3c4ab8c7d 100644
+--- a/pkg/models/namespace.go
++++ b/pkg/models/namespace.go
+@@ -43,7 +43,8 @@ func (n *Namespace) FindMember(id string) (*Member, bool) {
+ }
+ 
+ type NamespaceSettings struct {
+-	SessionRecord bool `json:"session_record" bson:"session_record,omitempty"`
++	SessionRecord          bool   `json:"session_record" bson:"session_record,omitempty"`
++	ConnectionAnnouncement string `json:"connection_announcement" bson:"connection_announcement"`
+ }
+ 
+ type Member struct {
+@@ -53,6 +54,7 @@ type Member struct {
+ }
+ 
+ type NamespaceChanges struct {
+-	Name          string `bson:"name,omitempty"`
+-	SessionRecord *bool  `bson:"settings.session_record,omitempty"`
++	Name                   string  `bson:"name,omitempty"`
++	SessionRecord          *bool   `bson:"settings.session_record,omitempty"`
++	ConnectionAnnouncement *string `bson:"settings.connection_announcement,omitempty"`
+ }
+diff --git a/ssh/server/handler/ssh.go b/ssh/server/handler/ssh.go
+index 0a48f692f..f2ec1045f 100644
+--- a/ssh/server/handler/ssh.go
++++ b/ssh/server/handler/ssh.go
+@@ -5,6 +5,7 @@ import (
+ 	"context"
+ 	"fmt"
+ 	"io"
++	"strings"
+ 
+ 	"github.com/Masterminds/semver"
+ 	gliderssh "github.com/gliderlabs/ssh"
+@@ -315,6 +316,28 @@ func shell(api internalclient.Client, sess *session.Session, agent *gossh.Sessio
+ 		return err
+ 	}
+ 
++	// Writes the welcome message. The message consists of a static string about the device
++	// and an optional custom string provided by the user.
++	if target := metadata.RestoreTarget(sess.Client.Context()); target != nil {
++		sess.Client.Write([]byte( // nolint: errcheck
++			"Connected to " + target.Username + "@" + target.Data + " via ShellHub.\n",
++		))
++	}
++
++	announcement, err := sess.ConnectionAnnouncement()
++	if err != nil {
++		log.WithError(err).Warn("unable to retrieve the namespace's connection announcement")
++	} else if announcement != "" {
++		sess.Client.Write([]byte("Announcement:\n")) // nolint: errcheck
++
++		// Remove whitespaces and new lines at end
++		announcement = strings.TrimRightFunc(announcement, func(r rune) bool {
++			return r == ' ' || r == '\n' || r == '\t'
++		})
++
++		sess.Client.Write([]byte("    " + strings.ReplaceAll(announcement, "\n", "\n    ") + "\n")) // nolint: errcheck
++	}
++
+ 	if err := agent.Wait(); isUnknownExitError(err) {
+ 		log.WithError(err).
+ 			WithFields(log.Fields{"session": sess.UID, "sshid": client.User()}).
+diff --git a/ssh/session/session.go b/ssh/session/session.go
+index c399d3407..dc90febe2 100644
+--- a/ssh/session/session.go
++++ b/ssh/session/session.go
+@@ -271,6 +271,27 @@ func (s *Session) Register(_ gliderssh.Session) error {
+ 	return nil
+ }
+ 
++// ConnectionAnnouncement retrieves the connection announcement of the device's namespace.
++// A connection announcement is a custom message provided by the end user that can be printed
++// when a new connection within the namespace is established.
++//
++// Returns the announcement or an error, if any. If no announcement is set, it returns an empty string.
++func (s *Session) ConnectionAnnouncement() (string, error) {
++	device := metadata.RestoreDevice(s.Client.Context())
++	if device == nil {
++		return "", nil
++	}
++
++	namespace, errs := internalclient.
++		NewClient().
++		NamespaceLookup(device.TenantID)
++	if len(errs) > 0 {
++		return "", errs[0]
++	}
++
++	return namespace.Settings.ConnectionAnnouncement, nil
++}
++
+ func (s *Session) Finish() error {
+ 	if s.Dialed != nil {
+ 		request, _ := http.NewRequest(http.MethodDelete, fmt.Sprintf("/ssh/close/%s", s.UID), nil)
+diff --git a/ui/src/api/client/api.ts b/ui/src/api/client/api.ts
+index 549e54ad7..a15f5a75b 100644
+--- a/ui/src/api/client/api.ts
++++ b/ui/src/api/client/api.ts
+@@ -4,7 +4,7 @@
+  * ShellHub Cloud OpenAPI
+  * > NOTICE: THE API IS NOT STABLE YET; ERROR AND INCONSISTENCIES MAY OCCUR.  ShellHub Cloud OpenAPI specification.  It documents all routes provided by ShellHub Cloud. 
+  *
+- * The version of the OpenAPI document: 1.0.0-alpha.3
++ * The version of the OpenAPI document: 1.0.0-alpha.4
+  * Contact: contato@ossystems.com.br
+  *
+  * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+@@ -526,6 +526,25 @@ export const DeviceStatus = {
+ export type DeviceStatus = typeof DeviceStatus[keyof typeof DeviceStatus];
+ 
+ 
++/**
++ * 
++ * @export
++ * @interface EditNamespaceRequest
++ */
++export interface EditNamespaceRequest {
++    /**
++     * Namespace\'s name
++     * @type {string}
++     * @memberof EditNamespaceRequest
++     */
++    'name'?: string;
++    /**
++     * 
++     * @type {NamespaceSettings}
++     * @memberof EditNamespaceRequest
++     */
++    'settings'?: NamespaceSettings;
++}
+ /**
+  * Enable a MFA
+  * @export
+@@ -1197,17 +1216,23 @@ export interface NamespaceMembersInner {
+     'role'?: NamespaceMemberRole;
+ }
+ /**
+- * Namespace\'s settings
++ * Namespace\'s settings.
+  * @export
+  * @interface NamespaceSettings
+  */
+ export interface NamespaceSettings {
+     /**
+-     * Namespace\'s session record status
++     * The session records define when the namespace should save or not record a session. This can be used to check logged activity when connecting to a device.
+      * @type {boolean}
+      * @memberof NamespaceSettings
+      */
+     'session_record'?: boolean;
++    /**
++     * A connection announcement is a custom string written during a session when a connection is established on a device within the namespace.
++     * @type {string}
++     * @memberof NamespaceSettings
++     */
++    'connection_announcement'?: string;
+ }
+ /**
+  * OTP Code MFA
+@@ -1932,8 +1957,8 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
+         /**
+          * List the announcements posted by ShellHub Cloud.
+          * @summary List announcements
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {'asc' | 'desc'} [orderBy] 
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+@@ -1998,8 +2023,8 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
+         /**
+          * List the announcements posted by ShellHub Cloud.
+          * @summary List announcements
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {'asc' | 'desc'} [orderBy] 
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+@@ -2031,8 +2056,8 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration,
+         /**
+          * List the announcements posted by ShellHub Cloud.
+          * @summary List announcements
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {'asc' | 'desc'} [orderBy] 
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+@@ -2065,8 +2090,8 @@ export class AnnouncementsApi extends BaseAPI {
+     /**
+      * List the announcements posted by ShellHub Cloud.
+      * @summary List announcements
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {'asc' | 'desc'} [orderBy] 
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+@@ -3451,8 +3476,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
+         /**
+          * Get a list of firewall rules.
+          * @summary Get firewall rules
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -4258,8 +4283,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
+         /**
+          * Get a list of firewall rules.
+          * @summary Get firewall rules
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -4605,8 +4630,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
+         /**
+          * Get a list of firewall rules.
+          * @summary Get firewall rules
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -4968,8 +4993,8 @@ export class CloudApi extends BaseAPI {
+     /**
+      * Get a list of firewall rules.
+      * @summary Get firewall rules
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+      * @memberof CloudApi
+@@ -5566,8 +5591,8 @@ export const DevicesApiAxiosParamCreator = function (configuration?: Configurati
+          * Get a list of devices.
+          * @summary Get devices
+          * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {DeviceStatus} [status] Device\&#39;s status
+          * @param {string} [sortBy] Device\&#39;s property to sort of
+          * @param {'asc' | 'desc'} [orderBy] 
+@@ -5919,8 +5944,8 @@ export const DevicesApiFp = function(configuration?: Configuration) {
+          * Get a list of devices.
+          * @summary Get devices
+          * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {DeviceStatus} [status] Device\&#39;s status
+          * @param {string} [sortBy] Device\&#39;s property to sort of
+          * @param {'asc' | 'desc'} [orderBy] 
+@@ -6076,8 +6101,8 @@ export const DevicesApiFactory = function (configuration?: Configuration, basePa
+          * Get a list of devices.
+          * @summary Get devices
+          * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {DeviceStatus} [status] Device\&#39;s status
+          * @param {string} [sortBy] Device\&#39;s property to sort of
+          * @param {'asc' | 'desc'} [orderBy] 
+@@ -6241,8 +6266,8 @@ export class DevicesApi extends BaseAPI {
+      * Get a list of devices.
+      * @summary Get devices
+      * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {DeviceStatus} [status] Device\&#39;s status
+      * @param {string} [sortBy] Device\&#39;s property to sort of
+      * @param {'asc' | 'desc'} [orderBy] 
+@@ -7335,11 +7360,11 @@ export const NamespacesApiAxiosParamCreator = function (configuration?: Configur
+          * Edit a namespace.
+          * @summary Edit namespace
+          * @param {string} tenant Namespace\&#39;s tenant ID
+-         * @param {CreateNamespaceRequest} [createNamespaceRequest] 
++         * @param {EditNamespaceRequest} [editNamespaceRequest] 
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+-        editNamespace: async (tenant: string, createNamespaceRequest?: CreateNamespaceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
++        editNamespace: async (tenant: string, editNamespaceRequest?: EditNamespaceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+             // verify required parameter 'tenant' is not null or undefined
+             assertParamExists('editNamespace', 'tenant', tenant)
+             const localVarPath = `/api/namespaces/{tenant}`
+@@ -7366,7 +7391,7 @@ export const NamespacesApiAxiosParamCreator = function (configuration?: Configur
+             setSearchParams(localVarUrlObj, localVarQueryParameter);
+             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+-            localVarRequestOptions.data = serializeDataIfNeeded(createNamespaceRequest, localVarRequestOptions, configuration)
++            localVarRequestOptions.data = serializeDataIfNeeded(editNamespaceRequest, localVarRequestOptions, configuration)
+ 
+             return {
+                 url: toPathString(localVarUrlObj),
+@@ -7453,8 +7478,8 @@ export const NamespacesApiAxiosParamCreator = function (configuration?: Configur
+          * Returns a list of namespaces.
+          * @summary Get namespaces list
+          * @param {string} [filter] Namespaces\&#39;s filter.   Filter field receives a base64 enconded JSON object for limit a search. The JSON object should have a property called &#x60;type&#x60;, it will filter by a &#x60;property&#x60; called &#x60;name&#x60; where the value should &#x60;contains&#x60; &#x60;examplespace&#x60;.  If you want get only Namespaces name as &#x60;examplespace&#x60;, the JSON object will looks like this   &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;:\&quot;property\&quot;,     \&quot;params\&quot;:{       \&quot;name\&quot;:\&quot;name\&quot;,       \&quot;operator\&quot;:\&quot;contains\&quot;,       \&quot;value\&quot;:\&quot;examplespace\&quot;     }   } ] &#x60;&#x60;&#x60;  So, the output encoded string will result on: &#x60;W3sidHlwZSI6InByb3BlcnR5IiwicGFyYW1zIjp7Im5hbWUiOiJuYW1lIiwib3BlcmF0b3IiOiJjb250YWlucyIsInZhbHVlIjoiZXhhbXBsZXNwYWNlIn19XQ&#x3D;&#x3D;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -7634,12 +7659,12 @@ export const NamespacesApiFp = function(configuration?: Configuration) {
+          * Edit a namespace.
+          * @summary Edit namespace
+          * @param {string} tenant Namespace\&#39;s tenant ID
+-         * @param {CreateNamespaceRequest} [createNamespaceRequest] 
++         * @param {EditNamespaceRequest} [editNamespaceRequest] 
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+-        async editNamespace(tenant: string, createNamespaceRequest?: CreateNamespaceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Namespace>> {
+-            const localVarAxiosArgs = await localVarAxiosParamCreator.editNamespace(tenant, createNamespaceRequest, options);
++        async editNamespace(tenant: string, editNamespaceRequest?: EditNamespaceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Namespace>> {
++            const localVarAxiosArgs = await localVarAxiosParamCreator.editNamespace(tenant, editNamespaceRequest, options);
+             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+         },
+         /**
+@@ -7668,8 +7693,8 @@ export const NamespacesApiFp = function(configuration?: Configuration) {
+          * Returns a list of namespaces.
+          * @summary Get namespaces list
+          * @param {string} [filter] Namespaces\&#39;s filter.   Filter field receives a base64 enconded JSON object for limit a search. The JSON object should have a property called &#x60;type&#x60;, it will filter by a &#x60;property&#x60; called &#x60;name&#x60; where the value should &#x60;contains&#x60; &#x60;examplespace&#x60;.  If you want get only Namespaces name as &#x60;examplespace&#x60;, the JSON object will looks like this   &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;:\&quot;property\&quot;,     \&quot;params\&quot;:{       \&quot;name\&quot;:\&quot;name\&quot;,       \&quot;operator\&quot;:\&quot;contains\&quot;,       \&quot;value\&quot;:\&quot;examplespace\&quot;     }   } ] &#x60;&#x60;&#x60;  So, the output encoded string will result on: &#x60;W3sidHlwZSI6InByb3BlcnR5IiwicGFyYW1zIjp7Im5hbWUiOiJuYW1lIiwib3BlcmF0b3IiOiJjb250YWlucyIsInZhbHVlIjoiZXhhbXBsZXNwYWNlIn19XQ&#x3D;&#x3D;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -7747,12 +7772,12 @@ export const NamespacesApiFactory = function (configuration?: Configuration, bas
+          * Edit a namespace.
+          * @summary Edit namespace
+          * @param {string} tenant Namespace\&#39;s tenant ID
+-         * @param {CreateNamespaceRequest} [createNamespaceRequest] 
++         * @param {EditNamespaceRequest} [editNamespaceRequest] 
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+-        editNamespace(tenant: string, createNamespaceRequest?: CreateNamespaceRequest, options?: any): AxiosPromise<Namespace> {
+-            return localVarFp.editNamespace(tenant, createNamespaceRequest, options).then((request) => request(axios, basePath));
++        editNamespace(tenant: string, editNamespaceRequest?: EditNamespaceRequest, options?: any): AxiosPromise<Namespace> {
++            return localVarFp.editNamespace(tenant, editNamespaceRequest, options).then((request) => request(axios, basePath));
+         },
+         /**
+          * Get a namespace.
+@@ -7778,8 +7803,8 @@ export const NamespacesApiFactory = function (configuration?: Configuration, bas
+          * Returns a list of namespaces.
+          * @summary Get namespaces list
+          * @param {string} [filter] Namespaces\&#39;s filter.   Filter field receives a base64 enconded JSON object for limit a search. The JSON object should have a property called &#x60;type&#x60;, it will filter by a &#x60;property&#x60; called &#x60;name&#x60; where the value should &#x60;contains&#x60; &#x60;examplespace&#x60;.  If you want get only Namespaces name as &#x60;examplespace&#x60;, the JSON object will looks like this   &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;:\&quot;property\&quot;,     \&quot;params\&quot;:{       \&quot;name\&quot;:\&quot;name\&quot;,       \&quot;operator\&quot;:\&quot;contains\&quot;,       \&quot;value\&quot;:\&quot;examplespace\&quot;     }   } ] &#x60;&#x60;&#x60;  So, the output encoded string will result on: &#x60;W3sidHlwZSI6InByb3BlcnR5IiwicGFyYW1zIjp7Im5hbWUiOiJuYW1lIiwib3BlcmF0b3IiOiJjb250YWlucyIsInZhbHVlIjoiZXhhbXBsZXNwYWNlIn19XQ&#x3D;&#x3D;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -7860,13 +7885,13 @@ export class NamespacesApi extends BaseAPI {
+      * Edit a namespace.
+      * @summary Edit namespace
+      * @param {string} tenant Namespace\&#39;s tenant ID
+-     * @param {CreateNamespaceRequest} [createNamespaceRequest] 
++     * @param {EditNamespaceRequest} [editNamespaceRequest] 
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+      * @memberof NamespacesApi
+      */
+-    public editNamespace(tenant: string, createNamespaceRequest?: CreateNamespaceRequest, options?: AxiosRequestConfig) {
+-        return NamespacesApiFp(this.configuration).editNamespace(tenant, createNamespaceRequest, options).then((request) => request(this.axios, this.basePath));
++    public editNamespace(tenant: string, editNamespaceRequest?: EditNamespaceRequest, options?: AxiosRequestConfig) {
++        return NamespacesApiFp(this.configuration).editNamespace(tenant, editNamespaceRequest, options).then((request) => request(this.axios, this.basePath));
+     }
+ 
+     /**
+@@ -7897,8 +7922,8 @@ export class NamespacesApi extends BaseAPI {
+      * Returns a list of namespaces.
+      * @summary Get namespaces list
+      * @param {string} [filter] Namespaces\&#39;s filter.   Filter field receives a base64 enconded JSON object for limit a search. The JSON object should have a property called &#x60;type&#x60;, it will filter by a &#x60;property&#x60; called &#x60;name&#x60; where the value should &#x60;contains&#x60; &#x60;examplespace&#x60;.  If you want get only Namespaces name as &#x60;examplespace&#x60;, the JSON object will looks like this   &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;:\&quot;property\&quot;,     \&quot;params\&quot;:{       \&quot;name\&quot;:\&quot;name\&quot;,       \&quot;operator\&quot;:\&quot;contains\&quot;,       \&quot;value\&quot;:\&quot;examplespace\&quot;     }   } ] &#x60;&#x60;&#x60;  So, the output encoded string will result on: &#x60;W3sidHlwZSI6InByb3BlcnR5IiwicGFyYW1zIjp7Im5hbWUiOiJuYW1lIiwib3BlcmF0b3IiOiJjb250YWlucyIsInZhbHVlIjoiZXhhbXBsZXNwYWNlIn19XQ&#x3D;&#x3D;&#x60; 
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+      * @memberof NamespacesApi
+@@ -8059,8 +8084,8 @@ export const RulesApiAxiosParamCreator = function (configuration?: Configuration
+         /**
+          * Get a list of firewall rules.
+          * @summary Get firewall rules
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -8314,8 +8339,8 @@ export const RulesApiFp = function(configuration?: Configuration) {
+         /**
+          * Get a list of firewall rules.
+          * @summary Get firewall rules
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -8414,8 +8439,8 @@ export const RulesApiFactory = function (configuration?: Configuration, basePath
+         /**
+          * Get a list of firewall rules.
+          * @summary Get firewall rules
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -8515,8 +8540,8 @@ export class RulesApi extends BaseAPI {
+     /**
+      * Get a list of firewall rules.
+      * @summary Get firewall rules
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+      * @memberof RulesApi
+@@ -8740,8 +8765,8 @@ export const SessionsApiAxiosParamCreator = function (configuration?: Configurat
+         /**
+          * Get a list sessions.
+          * @summary Get sessions
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -8964,8 +8989,8 @@ export const SessionsApiFp = function(configuration?: Configuration) {
+         /**
+          * Get a list sessions.
+          * @summary Get sessions
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -9062,8 +9087,8 @@ export const SessionsApiFactory = function (configuration?: Configuration, baseP
+         /**
+          * Get a list sessions.
+          * @summary Get sessions
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -9164,8 +9189,8 @@ export class SessionsApi extends BaseAPI {
+     /**
+      * Get a list sessions.
+      * @summary Get sessions
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+      * @memberof SessionsApi
+@@ -9381,8 +9406,8 @@ export const SshApiAxiosParamCreator = function (configuration?: Configuration)
+          * Get a list from all public keys.
+          * @summary Get public keys
+          * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -9611,8 +9636,8 @@ export const SshApiFp = function(configuration?: Configuration) {
+          * Get a list from all public keys.
+          * @summary Get public keys
+          * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -9711,8 +9736,8 @@ export const SshApiFactory = function (configuration?: Configuration, basePath?:
+          * Get a list from all public keys.
+          * @summary Get public keys
+          * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-         * @param {number} [page] Pagination page number
+-         * @param {number} [perPage] Pagination items per page
++         * @param {number} [page] Page number
++         * @param {number} [perPage] Items per page
+          * @param {*} [options] Override http request option.
+          * @throws {RequiredError}
+          */
+@@ -9815,8 +9840,8 @@ export class SshApi extends BaseAPI {
+      * Get a list from all public keys.
+      * @summary Get public keys
+      * @param {string} [filter] Filter field receives a JSON object enconded as base64 string for limit a search.  The JSON enconded must follow these interafaces: &#x60;&#x60;&#x60;typescript interface ParamProperty {   name: string;   operator: \&quot;contains\&quot; | \&quot;eq\&quot; | \&quot;bool\&quot; | \&quot;gt\&quot; | \&quot;lt\&quot;;   value: string; }  interface ParamOperator {   name: \&quot;and\&quot; | \&quot;or\&quot;; }  interface Filter {   type: \&quot;property\&quot; | \&quot;operator\&quot;;   param: ParamOperator | ParamProperty; }  interface FilterList {   Filters: Array&lt;Filter&gt;; }  &#x60;&#x60;&#x60;  ## Examples  This is a example to filter and get only the resource what property \&quot;confirmed\&quot; is \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {   \&quot;type\&quot;: \&quot;property\&quot;,   \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;confirmed\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;       }   } ] &#x60;&#x60;&#x60;  This one, filter resource by the property \&quot;id\&quot; inside \&quot;info\&quot; structure when it is equal to \&quot;manjaro\&quot; and online property is set to \&quot;true\&quot; &#x60;&#x60;&#x60;json [   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;info.id\&quot;,       \&quot;operator\&quot;: \&quot;eq\&quot;,       \&quot;value\&quot;: \&quot;manjaro\&quot;     }   },   {     \&quot;type\&quot;: \&quot;property\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;online\&quot;,       \&quot;operator\&quot;: \&quot;bool\&quot;,       \&quot;value\&quot;: \&quot;true\&quot;     }   },   {     \&quot;type\&quot;: \&quot;operator\&quot;,     \&quot;params\&quot;: {       \&quot;name\&quot;: \&quot;and\&quot;     }   } ] &#x60;&#x60;&#x60; 
+-     * @param {number} [page] Pagination page number
+-     * @param {number} [perPage] Pagination items per page
++     * @param {number} [page] Page number
++     * @param {number} [perPage] Items per page
+      * @param {*} [options] Override http request option.
+      * @throws {RequiredError}
+      * @memberof SshApi
+diff --git a/ui/src/api/client/base.ts b/ui/src/api/client/base.ts
+index ee074ac73..4ac23896e 100644
+--- a/ui/src/api/client/base.ts
++++ b/ui/src/api/client/base.ts
+@@ -4,7 +4,7 @@
+  * ShellHub Cloud OpenAPI
+  * > NOTICE: THE API IS NOT STABLE YET; ERROR AND INCONSISTENCIES MAY OCCUR.  ShellHub Cloud OpenAPI specification.  It documents all routes provided by ShellHub Cloud. 
+  *
+- * The version of the OpenAPI document: 1.0.0-alpha.3
++ * The version of the OpenAPI document: 1.0.0-alpha.4
+  * Contact: contato@ossystems.com.br
+  *
+  * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+diff --git a/ui/src/api/client/common.ts b/ui/src/api/client/common.ts
+index 916fa39cd..2244537a6 100644
+--- a/ui/src/api/client/common.ts
++++ b/ui/src/api/client/common.ts
+@@ -4,7 +4,7 @@
+  * ShellHub Cloud OpenAPI
+  * > NOTICE: THE API IS NOT STABLE YET; ERROR AND INCONSISTENCIES MAY OCCUR.  ShellHub Cloud OpenAPI specification.  It documents all routes provided by ShellHub Cloud. 
+  *
+- * The version of the OpenAPI document: 1.0.0-alpha.3
++ * The version of the OpenAPI document: 1.0.0-alpha.4
+  * Contact: contato@ossystems.com.br
+  *
+  * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+diff --git a/ui/src/api/client/configuration.ts b/ui/src/api/client/configuration.ts
+index d6ee95e5d..524840316 100644
+--- a/ui/src/api/client/configuration.ts
++++ b/ui/src/api/client/configuration.ts
+@@ -4,7 +4,7 @@
+  * ShellHub Cloud OpenAPI
+  * > NOTICE: THE API IS NOT STABLE YET; ERROR AND INCONSISTENCIES MAY OCCUR.  ShellHub Cloud OpenAPI specification.  It documents all routes provided by ShellHub Cloud. 
+  *
+- * The version of the OpenAPI document: 1.0.0-alpha.3
++ * The version of the OpenAPI document: 1.0.0-alpha.4
+  * Contact: contato@ossystems.com.br
+  *
+  * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+diff --git a/ui/src/api/client/index.ts b/ui/src/api/client/index.ts
+index fc9a48da9..02e1d6872 100644
+--- a/ui/src/api/client/index.ts
++++ b/ui/src/api/client/index.ts
+@@ -4,7 +4,7 @@
+  * ShellHub Cloud OpenAPI
+  * > NOTICE: THE API IS NOT STABLE YET; ERROR AND INCONSISTENCIES MAY OCCUR.  ShellHub Cloud OpenAPI specification.  It documents all routes provided by ShellHub Cloud. 
+  *
+- * The version of the OpenAPI document: 1.0.0-alpha.3
++ * The version of the OpenAPI document: 1.0.0-alpha.4
+  * Contact: contato@ossystems.com.br
+  *
+  * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+diff --git a/ui/src/authorizer.ts b/ui/src/authorizer.ts
+index 92e4b3d67..106d9216d 100644
+--- a/ui/src/authorizer.ts
++++ b/ui/src/authorizer.ts
+@@ -46,7 +46,7 @@ const {
+   publicKeyRemove,
+   // Namespace
+   namespaceCreate,
+-  namespaceRename,
++  NamespaceEdit,
+   namespaceAddMember,
+   namespaceEditMember,
+   namespaceRemoveMember,
+@@ -94,7 +94,7 @@ export const actions: { [key: string]: any } = {
+   },
+   namespace: {
+     create: namespaceCreate,
+-    rename: namespaceRename,
++    rename: NamespaceEdit,
+     addMember: namespaceAddMember,
+     editMember: namespaceEditMember,
+     removeMember: namespaceRemoveMember,
+diff --git a/ui/src/components/Namespace/NamespaceEdit.vue b/ui/src/components/Namespace/NamespaceEdit.vue
+new file mode 100644
+index 000000000..7e30e33c3
+--- /dev/null
++++ b/ui/src/components/Namespace/NamespaceEdit.vue
+@@ -0,0 +1,188 @@
++<template>
++  <v-row v-bind="$attrs">
++    <v-col data-test="namespace-title">
++      <h3>Namespace</h3>
++    </v-col>
++
++    <v-spacer />
++
++    <v-col md="auto" class="ml-auto">
++      <v-tooltip
++        location="bottom"
++        class="text-center"
++        :disabled="hasAuthorizationRenameNamespace()"
++      >
++        <template v-slot:activator="{ props }">
++          <div v-bind="props">
++            <v-btn
++              v-if="editBtn"
++              :disabled="!hasAuthorizationRenameNamespace() || (!!nameError || !!connectionAnnouncementError)"
++              color="primary"
++              @click="editBtn = false;"
++              data-test="edit-btn"
++            >
++              Edit Namespace
++            </v-btn>
++            <v-btn
++              v-else
++              :disabled="!!nameError || !!connectionAnnouncementError"
++              color="primary"
++              @click="editNamespace"
++              data-test="save-btn"
++            >
++              Save Namespace
++            </v-btn>
++          </div>
++        </template>
++        <span> You don't have this kind of authorization. </span>
++      </v-tooltip>
++    </v-col>
++  </v-row>
++
++  <div class="mt-4 mb-2">
++    <v-text-field
++      :disabled="validateInput"
++      v-model="name"
++      class="ml-3"
++      label="Name"
++      :error-messages="nameError"
++      variant="underlined"
++      required
++      data-test="name-text"
++    />
++  </div>
++
++  <div class="mb-2">
++    <v-textarea
++      :disabled="validateInput"
++      v-model="connectionAnnouncement"
++      label="Connection Announcement"
++      :error-messages="connectionAnnouncementError"
++      data-test="connectionAnnouncement-text"
++      variant="underlined"
++      hint="A connection announcement is a custom message written
++      during a session when a connection is established on a device
++      within the namespace."
++      persistent-hint
++      required
++    />
++  </div>
++
++</template>
++
++<script setup lang="ts">
++import { computed, onMounted, ref, watch } from "vue";
++import { useField } from "vee-validate";
++import axios, { AxiosError } from "axios";
++import * as yup from "yup";
++import { useStore } from "../../store";
++import hasPermission from "../../utils/permission";
++import { actions, authorizer } from "../../authorizer";
++import {
++  INotificationsError,
++  INotificationsSuccess,
++} from "../../interfaces/INotifications";
++import handleError from "@/utils/handleError";
++
++const store = useStore();
++const namespace = computed(() => store.getters["namespaces/get"]);
++const tenant = computed(() => store.getters["auth/tenant"]);
++const editBtn = ref(true);
++const validateInput = computed(() => editBtn.value === true);
++const {
++  value: name,
++  errorMessage: nameError,
++  setErrors: setNameError,
++} = useField<string>(
++  "name",
++  yup
++    .string()
++    .min(3, "Your namespace should be 3-30 characters long")
++    .max(30, "Your namespace should be 3-30 characters long")
++    .required()
++    .matches(/^[^.]*$/, "The name must not contain dots"),
++  {
++    initialValue: "",
++  },
++);
++
++const {
++  value: connectionAnnouncement,
++  errorMessage: connectionAnnouncementError,
++  setErrors: setConnectionAnnouncementError,
++} = useField<string>(
++  "Connection Announcement",
++  yup
++    .string()
++    .max(127, "Your message should be 1-127 characters long"),
++  {
++    initialValue: "",
++  },
++);
++
++watch(namespace, (ns) => {
++  name.value = ns.name;
++  connectionAnnouncement.value = ns.settings.connection_announcement;
++});
++
++onMounted(() => {
++  if (!store.getters["auth/isLoggedIn"]) return;
++  store.dispatch("namespaces/get", tenant.value);
++});
++
++const hasAuthorizationRenameNamespace = () => {
++  const role = store.getters["auth/role"];
++  if (role !== "") {
++    return hasPermission(authorizer.role[role], actions.namespace.rename);
++  }
++
++  return false;
++};
++
++const editNamespace = async () => {
++  if (!nameError.value) {
++    try {
++      await store.dispatch("namespaces/put", {
++        id: tenant.value,
++        name: name.value,
++        settings: {
++          connection_announcement: connectionAnnouncement.value,
++        },
++      });
++      await store.dispatch("namespaces/fetch", {
++        page: 1,
++        perPage: 10,
++        filter: "",
++      });
++      await store.dispatch("namespaces/get", tenant.value);
++      store.dispatch(
++        "snackbar/showSnackbarSuccessAction",
++        INotificationsSuccess.namespaceEdit,
++      );
++      editBtn.value = true;
++    } catch (error: unknown) {
++      if (axios.isAxiosError(error)) {
++        const axiosError = error as AxiosError;
++        if (axiosError.response?.status === 400) {
++          setNameError("This name is not valid");
++          setConnectionAnnouncementError("This message is not valid");
++        } else if (axiosError.response?.status === 409) {
++          setNameError("name used already");
++        } else {
++          store.dispatch(
++            "snackbar/showSnackbarErrorAction",
++            INotificationsError.namespaceEdit,
++          );
++          handleError(error);
++        }
++      } else {
++        store.dispatch(
++          "snackbar/showSnackbarErrorAction",
++          INotificationsError.namespaceEdit,
++        );
++        handleError(error);
++      }
++    }
++  }
++};
++</script>
+diff --git a/ui/src/components/Namespace/NamespaceRename.vue b/ui/src/components/Namespace/NamespaceRename.vue
+deleted file mode 100644
+index d994914cd..000000000
+--- a/ui/src/components/Namespace/NamespaceRename.vue
++++ /dev/null
+@@ -1,153 +0,0 @@
+-<template>
+-  <v-row v-bind="$attrs">
+-    <v-col>
+-      <h3>Namespace</h3>
+-    </v-col>
+-
+-    <v-spacer />
+-
+-    <v-col md="auto" class="ml-auto">
+-      <v-tooltip
+-        location="bottom"
+-        class="text-center"
+-        :disabled="hasAuthorizationRenameNamespace()"
+-      >
+-        <template v-slot:activator="{ props }">
+-          <div v-bind="props">
+-            <v-btn
+-              :disabled="!hasAuthorizationRenameNamespace()"
+-              color="primary"
+-              @click="editNamespace"
+-            >
+-              Rename Namespace
+-            </v-btn>
+-          </div>
+-        </template>
+-        <span> You don't have this kind of authorization. </span>
+-      </v-tooltip>
+-    </v-col>
+-  </v-row>
+-
+-  <div class="mt-4 mb-2">
+-    <v-text-field
+-      v-model="name"
+-      class="ml-3"
+-      label="Name"
+-      :error-messages="nameError"
+-      variant="underlined"
+-      required
+-      data-test="name-text"
+-    />
+-  </div>
+-</template>
+-
+-<script lang="ts">
+-import { computed, defineComponent, onMounted, watch } from "vue";
+-import { useField } from "vee-validate";
+-import axios, { AxiosError } from "axios";
+-import * as yup from "yup";
+-import { useStore } from "../../store";
+-import hasPermission from "../../utils/permission";
+-import { actions, authorizer } from "../../authorizer";
+-import {
+-  INotificationsError,
+-  INotificationsSuccess,
+-} from "../../interfaces/INotifications";
+-import handleError from "@/utils/handleError";
+-
+-export default defineComponent({
+-  setup() {
+-    const store = useStore();
+-
+-    const namespace = computed(() => store.getters["namespaces/get"]);
+-    const tenant = computed(() => store.getters["auth/tenant"]);
+-
+-    const {
+-      value: name,
+-      errorMessage: nameError,
+-      setErrors: setNameError,
+-    } = useField<string>(
+-      "name",
+-      yup
+-        .string()
+-        .min(3, "Your namespace should be 3-30 characters long")
+-        .max(30, "Your namespace should be 3-30 characters long")
+-        .required()
+-        .matches(/^[^.]*$/, "The name must not contain dots"),
+-      {
+-        initialValue: "",
+-      },
+-    );
+-
+-    watch(namespace, (ns) => {
+-      name.value = ns.name;
+-    });
+-
+-    onMounted(() => {
+-      if (!store.getters["auth/isLoggedIn"]) return;
+-      store.dispatch("namespaces/get", tenant.value);
+-    });
+-
+-    const hasAuthorizationRenameNamespace = () => {
+-      const role = store.getters["auth/role"];
+-      if (role !== "") {
+-        return hasPermission(authorizer.role[role], actions.namespace.rename);
+-      }
+-
+-      return false;
+-    };
+-
+-    const editNamespace = async () => {
+-      if (!nameError.value) {
+-        try {
+-          await store.dispatch("namespaces/put", {
+-            id: tenant.value,
+-            name: name.value,
+-          });
+-          await store.dispatch("namespaces/fetch", {
+-            page: 1,
+-            perPage: 10,
+-            filter: "",
+-          });
+-          await store.dispatch("namespaces/get", tenant.value);
+-          store.dispatch(
+-            "snackbar/showSnackbarSuccessAction",
+-            INotificationsSuccess.namespaceEdit,
+-          );
+-        } catch (error: unknown) {
+-          if (axios.isAxiosError(error)) {
+-            const axiosError = error as AxiosError;
+-            if (axiosError.response?.status === 400) {
+-              setNameError("This name is not valid");
+-            } else if (axiosError.response?.status === 409) {
+-              setNameError("name used already");
+-            } else {
+-              store.dispatch(
+-                "snackbar/showSnackbarErrorAction",
+-                INotificationsError.namespaceEdit,
+-              );
+-              handleError(error);
+-            }
+-          } else {
+-            store.dispatch(
+-              "snackbar/showSnackbarErrorAction",
+-              INotificationsError.namespaceEdit,
+-            );
+-            handleError(error);
+-          }
+-        }
+-      }
+-    };
+-
+-    return {
+-      name,
+-      nameError,
+-      namespace,
+-      tenant,
+-      setNameError,
+-      hasAuthorizationRenameNamespace,
+-      editNamespace,
+-    };
+-  },
+-});
+-</script>
+diff --git a/ui/src/components/Setting/SettingNamespace.vue b/ui/src/components/Setting/SettingNamespace.vue
+index 65eab394c..d430941dc 100644
+--- a/ui/src/components/Setting/SettingNamespace.vue
++++ b/ui/src/components/Setting/SettingNamespace.vue
+@@ -33,10 +33,10 @@
+         <v-divider class="mb-6" />
+ 
+         <div class="mt-6" data-test="editOperation-div">
+-          <NamespaceRename data-test="namespaceRename-component" />
++          <NamespaceEdit data-test="NamespaceEdit-component" />
+ 
+-          <v-divider />
+-          <v-divider />
++          <v-divider class="mt-6" />
++          <v-divider class="mb-6" />
+         </div>
+ 
+         <div class="mt-6" data-test="userOperation-div">
+@@ -98,7 +98,7 @@ import { defineComponent, onMounted, computed, ref } from "vue";
+ import axios, { AxiosError } from "axios";
+ import { envVariables } from "../../envVariables";
+ import { useStore } from "../../store";
+-import NamespaceRename from "../Namespace/NamespaceRename.vue";
++import NamespaceEdit from "../Namespace/NamespaceEdit.vue";
+ import NamespaceMemberAdd from "../Namespace/NamespaceMemberAdd.vue";
+ import NamespaceMemberList from "../Namespace/NamespaceMemberList.vue";
+ import SettingSecurity from "./SettingSecurity.vue";
+@@ -169,7 +169,7 @@ export default defineComponent({
+     };
+   },
+   components: {
+-    NamespaceRename,
++    NamespaceEdit,
+     NamespaceMemberAdd,
+     NamespaceMemberList,
+     SettingSecurity,
+diff --git a/ui/src/interfaces/INamespace.ts b/ui/src/interfaces/INamespace.ts
+index 35af20b79..585619137 100644
+--- a/ui/src/interfaces/INamespace.ts
++++ b/ui/src/interfaces/INamespace.ts
+@@ -8,6 +8,7 @@ export interface INamespaceMember {
+ 
+ export interface settings {
+   session_record: boolean;
++  connection_announcement: string;
+ }
+ 
+ export interface INamespace {
+diff --git a/ui/src/store/api/namespaces.ts b/ui/src/store/api/namespaces.ts
+index 0b418550b..93b4e998f 100755
+--- a/ui/src/store/api/namespaces.ts
++++ b/ui/src/store/api/namespaces.ts
+@@ -1,7 +1,12 @@
+ import { INamespace } from "@/interfaces/INamespace";
+ import { namespacesApi } from "../../api/http";
+ 
++interface INamespaceSettings {
++  connection_announcement: string;
++  session_record: boolean;
++}
+ interface INamespaceResponse {
++  settings: INamespaceSettings;
+   id: string;
+   tenant_id: string;
+   name: string;
+@@ -22,7 +27,13 @@ export const getNamespace = async (id: string) => namespacesApi.getNamespace(id)
+ 
+ export const removeNamespace = async (id: string) => namespacesApi.deleteNamespace(id);
+ 
+-export const putNamespace = async (data: INamespaceResponse) => namespacesApi.editNamespace(data.id, { name: data.name });
++export const putNamespace = async (data: INamespaceResponse) => namespacesApi.editNamespace(data.id, {
++  name: data.name,
++  settings: {
++    connection_announcement: data.settings.connection_announcement,
++    session_record: data.settings.session_record,
++  },
++});
+ 
+ export const addUserToNamespace = async (data: INamespaceResponse) => namespacesApi.addNamespaceMember(data.tenant_id, {
+   username: data.username,
+diff --git a/ui/src/store/modules/namespaces.ts b/ui/src/store/modules/namespaces.ts
+index 84660100b..bf484634f 100755
+--- a/ui/src/store/modules/namespaces.ts
++++ b/ui/src/store/modules/namespaces.ts
+@@ -114,7 +114,8 @@ export const namespaces: Module<NamespacesState, State> = {
+ 
+     put: async (context, data) => {
+       try {
+-        await apiNamespace.putNamespace(data);
++        const res = await apiNamespace.putNamespace(data);
++        context.commit("setNamespace", res);
+       } catch (error) {
+         console.error(error);
+         throw error;

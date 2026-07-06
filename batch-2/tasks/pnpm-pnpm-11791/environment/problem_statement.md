@@ -1,0 +1,7 @@
+I'm wiring patch awareness into the dependency resolution phase of our package manager and right now the resolver totally ignores configured dependency patches when it builds the resolved dependency tree. The annoying result is that patched and unpatched versions of the same package end up with identical identities in the tree, so we can't dedupe them properly and there's no record of which patches actually got applied during resolution.
+
+What I want is for the dependency tree resolver to take a map of configured patches and, as it resolves, check each resolved package against that map. If a package matches a configured patch, either by exact version or because its resolved version satisfies a range-based patch entry, then that package's identity in the tree should get updated to include a fingerprint of the patch. Also the resolver needs to record which configured patch keys were actually matched so downstream steps can flag patches that were set up but never used.
+
+Couple edge cases: if two range-based patch configs both match the same resolved version of a package, don't silently pick one, fail with a clear conflict error instead. And if the patch map is provided but nothing matches any resolved package, leave everything unchanged with no patches recorded as applied.
+
+Oh and after resolution, those patched identities (fingerprint included) have to carry through consistently into the final dependency paths that the install step reads, so the whole pipeline stays coherent end to end.

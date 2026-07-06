@@ -1,0 +1,5 @@
+I'm hitting an annoying flicker with our dashboard cells. When I open a cell's config editor and then back out to the dashboard, the cell briefly drops into a loading state and re-fetches its view from the server even though that same data was already loaded before I ever opened the editor. So the content vanishes, shows a spinner, then comes right back with identical data. It's disruptive and pointless.
+
+What I want is for the exit-from-editor path to check whether the cell's view data is already sitting in the app state, and if it is, just use it directly, no loading indicator, no network round trip. The only time we should actually fetch from the server and flip into a loading state is when the data genuinely isn't there locally. Right now the code sets the loading state unconditionally, before it even checks whether a fetch is needed at all, which is the root of the problem, so the loading flag ends up being a default step every single time the editor closes regardless of whether anything's cached.
+
+So basically: reuse the already-loaded view when it's present, only fetch (and only show loading) when the view data is missing.

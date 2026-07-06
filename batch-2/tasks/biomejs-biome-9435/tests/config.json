@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_cli --no-fail-fast -E 'test(use_import_type_not_triggered_for_components_in_template)'",
+  "test_files": [
+    "crates/biome_cli/tests/cases/handle_astro_files.rs",
+    "crates/biome_cli/tests/snapshots/main_cases_handle_astro_files/use_import_type_not_triggered_for_components_in_template.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_cli::main cases::handle_astro_files::use_import_type_not_triggered_for_components_in_template"
+  ],
+  "PASS_TO_PASS": []
+}

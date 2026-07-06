@@ -1,0 +1,29 @@
+{
+    "id": "d9d6f0a1-b845-48ea-b7a2-63e48c7e9e19",
+    "started_at": "2026-07-04T15:39:08.065116",
+    "finished_at": "2026-07-04T15:39:38.500418",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__envoyproxy-envoy-40864": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "envoyproxy-envoy-40864__WiFQqVe"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

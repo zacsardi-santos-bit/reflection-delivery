@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /test_runner.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04033_except_transformer_with_alias.reference",
+    "tests/queries/0_stateless/04033_except_transformer_with_alias.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_runner::test_04033_except_transformer_with_alias"
+  ],
+  "PASS_TO_PASS": []
+}

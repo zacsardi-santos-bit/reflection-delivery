@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --package ruff --test cli -E 'test(markdown_formatting_quarto_cell_option)'",
+  "test_files": [
+    "crates/ruff/tests/cli/format.rs",
+    "crates/ruff_python_formatter/resources/test/fixtures/ruff/comment_prefixes.py",
+    "crates/ruff_python_formatter/tests/snapshots/format@comment_prefixes.py.snap"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) ruff::cli format::markdown_formatting_quarto_cell_option"
+  ],
+  "PASS_TO_PASS": []
+}

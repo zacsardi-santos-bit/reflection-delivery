@@ -1,0 +1,36 @@
+patching file tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py
+patching file tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Using --randomly-seed=941285944
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.6.2.post1, dash-2.18.2, cov-6.0.0, randomly-3.16.0, env-1.1.5, xdist-3.6.1
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+_ ERROR collecting tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py _
+ImportError while importing test module '/workspace/repo/tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py:10: in <module>
+    from prowler.providers.aws.services.stepfunctions.stepfunctions_service import (
+E   ModuleNotFoundError: No module named 'prowler.providers.aws.services.stepfunctions'
+_ ERROR collecting tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py _
+ImportError while importing test module '/workspace/repo/tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py:7: in <module>
+    from prowler.providers.aws.services.stepfunctions.stepfunctions_service import (
+E   ModuleNotFoundError: No module named 'prowler.providers.aws.services.stepfunctions'
+=========================== short test summary info ============================
+ERROR tests/providers/aws/services/stepfunctions/stepfunctions_service_test.py
+ERROR tests/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled_test.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.86s ===============================
+reward=0 graded=11 found=0 failed=0 parsed=0 framework=pytest exit_code=2

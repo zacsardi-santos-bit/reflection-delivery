@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p wasmtime-wasi -E 'test(file_truncation_readonly)'",
+  "test_files": [
+    "crates/wasi-common/tests/all/async_.rs",
+    "crates/wasi-common/tests/all/sync.rs",
+    "crates/wasi/tests/all/async_.rs",
+    "crates/wasi/tests/all/preview1.rs",
+    "crates/wasi/tests/all/sync.rs"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) wasmtime-wasi::all preview1::preview1_file_truncation_readonly",
+    "(2/5) wasmtime-wasi::all sync::preview2_file_truncation_readonly",
+    "(3/5) wasmtime-wasi::all async_::preview2_file_truncation_readonly",
+    "(4/5) wasmtime-wasi::all async_::preview1_file_truncation_readonly",
+    "(5/5) wasmtime-wasi::all sync::preview1_file_truncation_readonly"
+  ],
+  "PASS_TO_PASS": []
+}

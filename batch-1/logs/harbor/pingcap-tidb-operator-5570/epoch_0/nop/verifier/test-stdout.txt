@@ -1,0 +1,8 @@
+patching file pkg/manager/member/tidb_scaler_test.go
+patching file tests/e2e/e2e_test.go
+patching file tests/e2e/tidb/tidb.go
+# github.com/pingcap/tidb-operator/pkg/manager/member [github.com/pingcap/tidb-operator/pkg/manager/member.test]
+pkg/manager/member/tidb_scaler_test.go:171:16: tc.Spec.TiDB.ScalePolicy undefined (type *"github.com/pingcap/tidb-operator/pkg/apis/pingcap/v1alpha1".TiDBSpec has no field or method ScalePolicy)
+pkg/manager/member/tidb_scaler_test.go:317:16: tc.Spec.TiDB.ScalePolicy undefined (type *"github.com/pingcap/tidb-operator/pkg/apis/pingcap/v1alpha1".TiDBSpec has no field or method ScalePolicy)
+FAIL	github.com/pingcap/tidb-operator/pkg/manager/member [build failed]
+reward=0 graded=843 found=843 failed=843 parsed=1 framework=go exit_code=1

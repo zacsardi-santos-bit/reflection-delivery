@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./go-sdk/dashboard -count=1",
+  "test_files": [
+    "go-sdk/dashboard/dashboard_test.go",
+    "internal/test/dac/expected_output.json",
+    "internal/test/dac/input.cue"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/perses/perses/go-sdk/dashboard::TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables",
+    "github.com/perses/perses/go-sdk/dashboard::TestDashboardBuilderWithGroupedVariables"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/perses/perses/go-sdk/dashboard::TestDashboardBuilder/classic_dashboard",
+    "github.com/perses/perses/go-sdk/dashboard::TestDashboardBuilder"
+  ]
+}

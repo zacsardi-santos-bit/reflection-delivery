@@ -1,0 +1,11 @@
+patching file integration-tests/bats/log.bats
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites time="5.647">
+<testsuite name="log.bats" tests="3" failures="0" errors="0" skipped="0" time="5.647" timestamp="2026-06-29T15:24:22" hostname="modal">
+    <testcase classname="log.bats" name="log: --stat shows diffstat" time="2.638" />
+    <testcase classname="log.bats" name="log: --stat works with --oneline" time="1.151" />
+    <testcase classname="log.bats" name="log: --stat doesn&#39;t print diffstat for merge commits" time="1.858" />
+
+</testsuite>
+</testsuites>
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=junit exit_code=0

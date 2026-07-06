@@ -1,0 +1,45 @@
+patching file pkg/virt-config/config_test.go
+patching file pkg/virt-handler/vm_test.go
+patching file pkg/virt-launcher/virtwrap/manager_test.go
+patching file tests/datavolume_test.go
+patching file tests/migration_test.go
+patching file tests/storage_test.go
+patching file tests/utils.go
+=== RUN   TestConfig
+Running Suite: Config Suite
+===========================
+Random Seed: [1m1782747105[0m
+Will run [1m22[0m of [1m22[0m specs
+
+[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m
+[1m[32mRan 22 of 22 Specs in 2.519 seconds[0m
+[1m[32mSUCCESS![0m -- [32m[1m22 Passed[0m | [91m[1m0 Failed[0m | [33m[1m0 Pending[0m | [36m[1m0 Skipped[0m
+--- PASS: TestConfig (2.52s)
+PASS
+ok  	kubevirt.io/kubevirt/pkg/virt-config	2.566s
+=== RUN   TestVirtHandler
+Running Suite: VirtHandler Suite
+================================
+Random Seed: [1m1782747106[0m
+Will run [1m38[0m of [1m38[0m specs
+
+[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0mdestSrcPorts:  map[41842:0 64373:49152]
+[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m
+[1m[32mRan 38 of 38 Specs in 9.965 seconds[0m
+[1m[32mSUCCESS![0m -- [32m[1m38 Passed[0m | [91m[1m0 Failed[0m | [33m[1m0 Pending[0m | [36m[1m0 Skipped[0m
+--- PASS: TestVirtHandler (9.96s)
+PASS
+ok  	kubevirt.io/kubevirt/pkg/virt-handler	10.014s
+=== RUN   TestVirtwrap
+Running Suite: Virtwrap Suite
+=============================
+Random Seed: [1m1782747120[0m
+Will run [1m37[0m of [1m37[0m specs
+
+[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m
+[1m[32mRan 37 of 37 Specs in 6.420 seconds[0m
+[1m[32mSUCCESS![0m -- [32m[1m37 Passed[0m | [91m[1m0 Failed[0m | [33m[1m0 Pending[0m | [36m[1m0 Skipped[0m
+--- PASS: TestVirtwrap (6.42s)
+PASS
+ok  	kubevirt.io/kubevirt/pkg/virt-launcher/virtwrap	6.569s
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=go exit_code=0

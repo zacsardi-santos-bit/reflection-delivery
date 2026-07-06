@@ -1,0 +1,9 @@
+patching file CHANGELOG.md
+patching file src/vmm/src/devices/virtio/balloon/device.rs
+patching file src/vmm/src/devices/virtio/block/virtio/device.rs
+patching file src/vmm/src/devices/virtio/mmio.rs
+patching file src/vmm/src/devices/virtio/net/device.rs
+patching file src/vmm/src/devices/virtio/queue.rs
+patching file src/vmm/src/devices/virtio/rng/device.rs
+patching file src/vmm/src/devices/virtio/vhost_user.rs
+patching file src/vmm/src/devices/virtio/vsock/device.rs

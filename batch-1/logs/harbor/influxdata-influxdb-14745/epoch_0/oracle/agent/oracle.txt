@@ -1,0 +1,5 @@
+patching file http/check_service.go
+patching file http/swagger.yml
+patching file storage/metrics.go
+patching file storage/retention.go
+patching file storage/retention_test.go

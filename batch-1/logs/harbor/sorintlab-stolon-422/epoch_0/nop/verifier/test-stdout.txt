@@ -1,0 +1,7 @@
+patching file tests/integration/ha_test.go
+patching file tests/integration/proxy_test.go
+patching file tests/integration/utils.go
+# github.com/sorintlab/stolon/tests/integration [github.com/sorintlab/stolon/tests/integration.test]
+tests/integration/utils.go:110:24: undefined: pg.PGLsnToInt
+FAIL	github.com/sorintlab/stolon/tests/integration [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

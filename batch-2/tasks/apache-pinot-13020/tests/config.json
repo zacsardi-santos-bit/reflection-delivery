@@ -1,0 +1,39 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-spi install -DskipTests -B -ntp -q && mvn -pl pinot-segment-local,pinot-core test -Dtest=\"DistinctCountCPCSketchStarTreeV2Test,DistinctCountIntegerSumTupleSketchStarTreeV2Test,DistinctCountThetaSketchStarTreeV2Test,DistinctCountCPCSketchValueAggregatorTest,DistinctCountThetaSketchValueAggregatorTest,IntegerTupleSketchValueAggregatorTest\" -DfailIfNoTests=false -B -ntp",
+  "test_files": [
+    "pinot-core/src/test/java/org/apache/pinot/core/startree/v2/DistinctCountCPCSketchStarTreeV2Test.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/startree/v2/DistinctCountIntegerSumTupleSketchStarTreeV2Test.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/startree/v2/DistinctCountThetaSketchStarTreeV2Test.java",
+    "pinot-segment-local/src/test/java/org/apache/pinot/segment/local/aggregator/DistinctCountCPCSketchValueAggregatorTest.java",
+    "pinot-segment-local/src/test/java/org/apache/pinot/segment/local/aggregator/DistinctCountThetaSketchValueAggregatorTest.java",
+    "pinot-segment-local/src/test/java/org/apache/pinot/segment/local/aggregator/IntegerTupleSketchValueAggregatorTest.java"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7",
+    "Pinot::test_8",
+    "Pinot::test_9",
+    "Pinot::test_10",
+    "Pinot::test_11",
+    "Pinot::test_12",
+    "Pinot::test_13",
+    "Pinot::test_14",
+    "Pinot::test_15",
+    "Pinot::test_16",
+    "Pinot::test_17",
+    "Pinot::test_18",
+    "Pinot::test_19",
+    "Pinot::test_20",
+    "Pinot::test_21",
+    "Pinot::test_22"
+  ],
+  "PASS_TO_PASS": []
+}

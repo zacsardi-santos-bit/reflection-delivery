@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p biome_js_analyze -E 'test(/no_misplaced_assertion/)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedBun.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedBun.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedChai.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedChai.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedDeno.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedDeno.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedNode.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/invalidImportedNode.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/valid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/validBun.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/validBun.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/validDeno.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noMisplacedAssertion/validDeno.js.snap"
+  ],
+  "num_test_files": 16,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(8/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::invalid_js",
+    "(1/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::valid_js",
+    "(2/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::invalid_imported_bun_js",
+    "(3/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::invalid_imported_chai_js",
+    "(4/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::invalid_imported_node_js",
+    "(5/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::valid_deno_js",
+    "(6/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::invalid_imported_deno_js",
+    "(7/8) biome_js_analyze::spec_tests specs::nursery::no_misplaced_assertion::valid_bun_js"
+  ],
+  "PASS_TO_PASS": []
+}

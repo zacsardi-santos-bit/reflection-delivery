@@ -1,0 +1,1654 @@
+diff --git a/docling/datamodel/pipeline_options.py b/docling/datamodel/pipeline_options.py
+index 024b982b..eb3f135c 100644
+--- a/docling/datamodel/pipeline_options.py
++++ b/docling/datamodel/pipeline_options.py
+@@ -967,6 +967,9 @@ VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_DOLPHIN)
+ VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_GLMOCR)
+ VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_LIGHTONOCR)
+ VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_FALCON_OCR)
++VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_CHANDRA_OCR2)
++VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_DOTS_OCR)
++VlmConvertOptions.register_preset(stage_model_specs.VLM_CONVERT_DOTS_MOCR)
+ 
+ # Register PictureDescription presets (for new runtime-based implementation)
+ PictureDescriptionVlmEngineOptions.register_preset(
+diff --git a/docling/datamodel/pipeline_options_vlm_model.py b/docling/datamodel/pipeline_options_vlm_model.py
+index cf323e43..c0e93f35 100644
+--- a/docling/datamodel/pipeline_options_vlm_model.py
++++ b/docling/datamodel/pipeline_options_vlm_model.py
+@@ -106,6 +106,8 @@ class ResponseFormat(str, Enum):
+     HTML = "html"
+     OTSL = "otsl"
+     PLAINTEXT = "plaintext"
++    CHANDRA_HTML = "chandra_html"
++    DOTS_JSON = "dots_json"
+ 
+ 
+ class InferenceFramework(str, Enum):
+diff --git a/docling/datamodel/stage_model_specs.py b/docling/datamodel/stage_model_specs.py
+index c27b77a2..1aea0674 100644
+--- a/docling/datamodel/stage_model_specs.py
++++ b/docling/datamodel/stage_model_specs.py
+@@ -19,6 +19,10 @@ from docling.datamodel.pipeline_options_vlm_model import (
+     TransformersPromptStyle,
+ )
+ from docling.datamodel.vlm_engine_options import BaseVlmEngineOptions
++from docling.datamodel.vlm_prompts import (
++    CHANDRA_OCR_LAYOUT_PROMPT,
++    DOTS_LAYOUT_PROMPT,
++)
+ from docling.models.inference_engines.image_classification.base import (
+     ImageClassificationEngineType,
+ )
+@@ -163,6 +167,11 @@ class VlmModelSpec(BaseModel):
+         default=4096, description="Maximum number of new tokens to generate"
+     )
+ 
++    temperature: float = Field(
++        default=0.0,
++        description="Sampling temperature for generation. 0.0 uses greedy decoding.",
++    )
++
+     def get_repo_id(self, engine_type: VlmEngineType) -> str:
+         """Get the repository ID for a specific engine.
+ 
+@@ -237,14 +246,17 @@ class VlmModelSpec(BaseModel):
+         repo_id = self.get_repo_id(engine_type)
+         revision = self.get_revision(engine_type)
+ 
+-        # Get engine-specific extra_config
++        # Get engine-specific extra_config and torch_dtype
+         extra_config = {}
++        torch_dtype = None
+         if engine_type in self.engine_overrides:
+             extra_config = self.engine_overrides[engine_type].extra_config.copy()
++            torch_dtype = self.engine_overrides[engine_type].torch_dtype
+ 
+         return EngineModelConfig(
+             repo_id=repo_id,
+             revision=revision,
++            torch_dtype=torch_dtype,
+             extra_config=extra_config,
+         )
+ 
+@@ -1259,8 +1271,11 @@ VLM_CONVERT_GLMOCR = StageModelPreset(
+     model_spec=VlmModelSpec(
+         name="GLM-OCR-0.9B",
+         default_repo_id="zai-org/GLM-OCR",
++        # GLM-OCR supports three prompts: "Text Recognition:", "Formula Recognition:",
++        # "Table Recognition:". We use text-only for full-page document conversion.
+         prompt="Text Recognition:",
+         response_format=ResponseFormat.MARKDOWN,
++        stop_strings=["<|user|>", "<|endoftext|>"],
+         engine_overrides={
+             # Native GLM-OCR support was added to mlx-vlm in v0.3.11.
+             VlmEngineType.MLX: EngineModelConfig(repo_id="mlx-community/GLM-OCR-bf16"),
+@@ -1269,9 +1284,15 @@ VLM_CONVERT_GLMOCR = StageModelPreset(
+                 extra_config={
+                     "transformers_model_type": TransformersModelType.AUTOMODEL_IMAGETEXTTOTEXT,
+                     "transformers_prompt_style": TransformersPromptStyle.CHAT,
++                    "transformers_strip_stop_strings": True,
+                     "torch_dtype": "bfloat16",
+                 },
+             ),
++            VlmEngineType.VLLM: EngineModelConfig(
++                extra_config={
++                    "enforce_eager": True,
++                },
++            ),
+         },
+         api_overrides={
+             VlmEngineType.API: ApiModelConfig(
+@@ -1280,6 +1301,12 @@ VLM_CONVERT_GLMOCR = StageModelPreset(
+             VlmEngineType.API_OPENAI: ApiModelConfig(
+                 params={"model": "glm-ocr", "max_tokens": 4096}
+             ),
++            VlmEngineType.API_OLLAMA: ApiModelConfig(
++                params={"model": "glm-ocr", "max_tokens": 4096}
++            ),
++            VlmEngineType.API_LMSTUDIO: ApiModelConfig(
++                params={"model": "glm-ocr", "max_tokens": 4096}
++            ),
+         },
+     ),
+     scale=2.0,
+@@ -1498,3 +1525,135 @@ CODE_FORMULA_GRANITE_DOCLING = StageModelPreset(
+     scale=2.0,
+     default_engine_type=VlmEngineType.AUTO_INLINE,
+ )
++
++# -----------------------------------------------------------------------------
++# CHANDRA / DOTS VLM_CONVERT PRESETS
++# -----------------------------------------------------------------------------
++
++VLM_CONVERT_CHANDRA_OCR2 = StageModelPreset(
++    preset_id="chandra_ocr2",
++    name="Chandra-OCR-2",
++    description="Chandra OCR 2 model for document layout parsing with bounding boxes (5.3B parameters)",
++    model_spec=VlmModelSpec(
++        name="Chandra-OCR-2-5.3B",
++        default_repo_id="datalab-to/chandra-ocr-2",
++        prompt=CHANDRA_OCR_LAYOUT_PROMPT,
++        response_format=ResponseFormat.CHANDRA_HTML,
++        max_new_tokens=12384,
++        trust_remote_code=True,
++        stop_strings=["<|im_end|>", "<|endoftext|>"],
++        engine_overrides={
++            VlmEngineType.TRANSFORMERS: EngineModelConfig(
++                torch_dtype="bfloat16",
++                extra_config={
++                    "transformers_model_type": TransformersModelType.AUTOMODEL_IMAGETEXTTOTEXT,
++                    "transformers_prompt_style": TransformersPromptStyle.CHAT,
++                    "transformers_strip_stop_strings": True,
++                },
++            ),
++            VlmEngineType.VLLM: EngineModelConfig(
++                extra_config={
++                    "enforce_eager": True,
++                },
++            ),
++        },
++        api_overrides={
++            VlmEngineType.API_OPENAI: ApiModelConfig(
++                params={"model": "datalab-to/chandra-ocr-2", "max_tokens": 12384}
++            ),
++            VlmEngineType.API_OLLAMA: ApiModelConfig(
++                params={"model": "chandra-ocr-2", "max_tokens": 12384}
++            ),
++            VlmEngineType.API_LMSTUDIO: ApiModelConfig(
++                params={"model": "chandra-ocr-2", "max_tokens": 12384}
++            ),
++        },
++    ),
++    scale=2.0,
++    default_engine_type=VlmEngineType.AUTO_INLINE,
++)
++
++# NOTE: dots.ocr/mocr require transformers<=4.57.x for the transformers engine.
++# Under transformers 5.x, generation produces incorrect coordinates (single fullpage
++# bbox). The vllm engine path is unaffected.
++VLM_CONVERT_DOTS_OCR = StageModelPreset(
++    preset_id="dots_ocr",
++    name="Dots-OCR",
++    description="dots.ocr model for multilingual document layout parsing with bounding boxes (3B parameters)",
++    model_spec=VlmModelSpec(
++        name="dots.ocr-3B",
++        default_repo_id="rednote-hilab/dots.ocr",
++        prompt=DOTS_LAYOUT_PROMPT,
++        response_format=ResponseFormat.DOTS_JSON,
++        max_new_tokens=24000,
++        trust_remote_code=True,
++        engine_overrides={
++            VlmEngineType.TRANSFORMERS: EngineModelConfig(
++                torch_dtype="bfloat16",
++                extra_config={
++                    "transformers_model_type": TransformersModelType.AUTOMODEL_CAUSALLM,
++                    "transformers_prompt_style": TransformersPromptStyle.CHAT,
++                },
++            ),
++            VlmEngineType.VLLM: EngineModelConfig(
++                extra_config={
++                    "enforce_eager": True,
++                },
++            ),
++        },
++        api_overrides={
++            VlmEngineType.API_OPENAI: ApiModelConfig(
++                params={"model": "rednote-hilab/dots.ocr", "max_tokens": 24000}
++            ),
++            VlmEngineType.API_OLLAMA: ApiModelConfig(
++                params={"model": "dots.ocr", "max_tokens": 24000}
++            ),
++            VlmEngineType.API_LMSTUDIO: ApiModelConfig(
++                params={"model": "dots.ocr", "max_tokens": 24000}
++            ),
++        },
++    ),
++    scale=2.0,
++    default_engine_type=VlmEngineType.VLLM,
++)
++
++VLM_CONVERT_DOTS_MOCR = StageModelPreset(
++    preset_id="dots_mocr",
++    name="Dots-MOCR",
++    description="dots.mocr multimodal OCR model for document layout parsing with bounding boxes (3B parameters)",
++    model_spec=VlmModelSpec(
++        name="dots.mocr-3B",
++        default_repo_id="rednote-hilab/dots.mocr",
++        prompt=DOTS_LAYOUT_PROMPT,
++        response_format=ResponseFormat.DOTS_JSON,
++        max_new_tokens=24000,
++        trust_remote_code=True,
++        engine_overrides={
++            VlmEngineType.TRANSFORMERS: EngineModelConfig(
++                torch_dtype="bfloat16",
++                extra_config={
++                    "transformers_model_type": TransformersModelType.AUTOMODEL_CAUSALLM,
++                    "transformers_prompt_style": TransformersPromptStyle.CHAT,
++                },
++            ),
++            VlmEngineType.VLLM: EngineModelConfig(
++                extra_config={
++                    "enforce_eager": True,
++                },
++            ),
++        },
++        api_overrides={
++            VlmEngineType.API_OPENAI: ApiModelConfig(
++                params={"model": "rednote-hilab/dots.mocr", "max_tokens": 24000}
++            ),
++            VlmEngineType.API_OLLAMA: ApiModelConfig(
++                params={"model": "dots.mocr", "max_tokens": 24000}
++            ),
++            VlmEngineType.API_LMSTUDIO: ApiModelConfig(
++                params={"model": "dots.mocr", "max_tokens": 24000}
++            ),
++        },
++    ),
++    scale=2.0,
++    default_engine_type=VlmEngineType.VLLM,
++)
+diff --git a/docling/datamodel/vlm_model_specs.py b/docling/datamodel/vlm_model_specs.py
+index 0ad2e068..a72cb148 100644
+--- a/docling/datamodel/vlm_model_specs.py
++++ b/docling/datamodel/vlm_model_specs.py
+@@ -429,6 +429,7 @@ GLMOCR_TRANSFORMERS = InlineVlmOptions(
+     torch_dtype="bfloat16",
+     scale=2.0,
+     temperature=0.0,
++    stop_strings=["<|user|>", "<|endoftext|>"],
+ )
+ 
+ # Requires mlx-vlm >=0.3.11.
+diff --git a/docling/datamodel/vlm_prompts.py b/docling/datamodel/vlm_prompts.py
+new file mode 100644
+index 00000000..2ce22e74
+--- /dev/null
++++ b/docling/datamodel/vlm_prompts.py
+@@ -0,0 +1,64 @@
++"""Shared VLM prompt constants owned by the datamodel layer."""
++
++CHANDRA_ALLOWED_TAGS = (
++    "['math', 'br', 'i', 'b', 'u', 'del', 'sup', 'sub', 'table', 'tr', 'td', "
++    "'p', 'th', 'div', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'ul', 'ol', 'li', "
++    "'input', 'a', 'span', 'img', 'hr', 'tbody', 'small', 'caption', 'strong', "
++    "'thead', 'big', 'code', 'chem']"
++)
++CHANDRA_ALLOWED_ATTRS = (
++    "['class', 'colspan', 'rowspan', 'display', 'checked', 'type', 'border', "
++    "'value', 'style', 'href', 'alt', 'align', 'data-bbox', 'data-label']"
++)
++CHANDRA_PROMPT_ENDING = (
++    f"Only use these tags {CHANDRA_ALLOWED_TAGS}, "
++    f"and these attributes {CHANDRA_ALLOWED_ATTRS}.\n\n"
++    "Guidelines:\n"
++    "* Inline math: Surround math with <math>...</math> tags. Math expressions "
++    "should be rendered in KaTeX-compatible LaTeX. Use display for block math.\n"
++    "* Tables: Use colspan and rowspan attributes to match table structure.\n"
++    "* Formatting: Maintain consistent formatting with the image, including spacing, "
++    "indentation, subscripts/superscripts, and special characters.\n"
++    "* Images: Include a description of any images in the alt attribute of an <img> tag. "
++    "Do not fill out the src property. Describe in detail inside the div tag. "
++    "Also convert charts to high fidelity data, and convert diagrams to mermaid.\n"
++    "* Forms: Mark checkboxes and radio buttons properly.\n"
++    "* Text: join lines together properly into paragraphs using <p>...</p> tags. "
++    "Use <br> tags for line breaks within paragraphs, but only when absolutely "
++    "necessary to maintain meaning.\n"
++    "* Chemistry: Use <chem>...</chem> tags for chemical formulas with reactive SMILES.\n"
++    "* Lists: Preserve indents and proper list markers.\n"
++    "* Use the simplest possible HTML structure that accurately represents the content "
++    "of the block.\n"
++    "* Make sure the text is accurate and easy for a human to read and interpret. "
++    "Reading order should be correct and natural."
++)
++CHANDRA_OCR_LAYOUT_PROMPT = (
++    "OCR this image to HTML, arranged as layout blocks. Each layout block should be "
++    "a div with the data-bbox attribute representing the bounding box of the block in "
++    "x0 y0 x1 y1 format. Bboxes are normalized 0-1000. The data-label attribute is "
++    "the label for the block.\n\n"
++    "Use the following labels:\n"
++    "- Caption\n- Footnote\n- Equation-Block\n- List-Group\n- Page-Header\n"
++    "- Page-Footer\n- Image\n- Section-Header\n- Table\n- Text\n- Complex-Block\n"
++    "- Code-Block\n- Form\n- Table-Of-Contents\n- Figure\n- Chemical-Block\n"
++    "- Diagram\n- Bibliography\n- Blank-Page\n\n" + CHANDRA_PROMPT_ENDING
++)
++
++DOTS_LAYOUT_PROMPT = (
++    "Please output the layout information from the PDF image, including each layout "
++    "element's bbox, its category, and the corresponding text content within the bbox.\n\n"
++    "1. Bbox format: [x1, y1, x2, y2]\n\n"
++    "2. Layout Categories: The possible categories are ['Caption', 'Footnote', 'Formula', "
++    "'List-item', 'Page-footer', 'Page-header', 'Picture', 'Section-header', 'Table', "
++    "'Text', 'Title'].\n\n"
++    "3. Text Extraction & Formatting Rules:\n"
++    "    - Picture: For the 'Picture' category, the text field should be omitted.\n"
++    "    - Formula: Format its text as LaTeX.\n"
++    "    - Table: Format its text as HTML.\n"
++    "    - All Others (Text, Title, etc.): Format their text as Markdown.\n\n"
++    "4. Constraints:\n"
++    "    - The output text must be the original text from the image, with no translation.\n"
++    "    - All layout elements must be sorted according to human reading order.\n\n"
++    "5. Final Output: The entire output must be a single JSON object."
++)
+diff --git a/docling/models/inference_engines/vlm/base.py b/docling/models/inference_engines/vlm/base.py
+index c34101f5..ed9fc906 100644
+--- a/docling/models/inference_engines/vlm/base.py
++++ b/docling/models/inference_engines/vlm/base.py
+@@ -166,7 +166,7 @@ class VlmEngineOutput(BaseModel):
+     """
+ 
+     text: str = Field(description="Generated text from the model")
+-    stop_reason: Optional[str] = Field(
++    stop_reason: str | None = Field(
+         default=None, description="Reason why generation stopped"
+     )
+     metadata: Dict[str, Any] = Field(
+@@ -204,7 +204,7 @@ class BaseVlmEngine(ABC):
+         """
+         self.options = options
+         self.model_config = model_config
+-        self._initialized = False
++        self._initialized: bool = False
+ 
+     @abstractmethod
+     def initialize(self) -> None:
+diff --git a/docling/models/inference_engines/vlm/transformers_engine.py b/docling/models/inference_engines/vlm/transformers_engine.py
+index 83f2dbf8..9040c93a 100644
+--- a/docling/models/inference_engines/vlm/transformers_engine.py
++++ b/docling/models/inference_engines/vlm/transformers_engine.py
+@@ -1,5 +1,6 @@
+ """Transformers-based VLM inference engine."""
+ 
++import importlib
+ import importlib.metadata
+ import logging
+ import sys
+@@ -18,7 +19,6 @@ from transformers import (
+     BitsAndBytesConfig,
+     GenerationConfig,
+     PreTrainedModel,
+-    ProcessorMixin,
+     StoppingCriteriaList,
+     StopStringCriteria,
+ )
+@@ -49,6 +49,9 @@ if TYPE_CHECKING:
+ 
+ _log = logging.getLogger(__name__)
+ 
++_DOTS_REPO_IDS = {"rednote-hilab/dots.ocr", "rednote-hilab/dots.mocr"}
++_DOTS_FLASH_ATTN_REQUIRED_REPO_IDS = {"rednote-hilab/dots.mocr"}
++
+ 
+ def _coerce_transformers_model_type(value: Any) -> TransformersModelType:
+     if isinstance(value, TransformersModelType):
+@@ -56,6 +59,17 @@ def _coerce_transformers_model_type(value: Any) -> TransformersModelType:
+     return TransformersModelType(value)
+ 
+ 
++def _ensure_dots_flash_attn_import() -> None:
++    try:
++        importlib.import_module("flash_attn")
++    except ImportError as exc:
++        raise ImportError(
++            "rednote-hilab/dots.mocr requires flash-attn with the Transformers "
++            "engine. Install flash-attn in the transformers-v4 environment "
++            "before using this model."
++        ) from exc
++
++
+ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+     """HuggingFace Transformers engine for VLM inference.
+ 
+@@ -67,7 +81,7 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+         self,
+         options: TransformersVlmEngineOptions,
+         accelerator_options: AcceleratorOptions,
+-        artifacts_path: Optional[Union[Path, str]],
++        artifacts_path: Union[Path, str] | None,
+         model_config: Optional["EngineModelConfig"] = None,
+     ):
+         """Initialize the Transformers engine.
+@@ -84,10 +98,17 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+         self.artifacts_path = artifacts_path
+ 
+         # These will be set during initialization
+-        self.device: Optional[str] = None
+-        self.processor: Optional[ProcessorMixin] = None
+-        self.vlm_model: Optional[PreTrainedModel] = None
+-        self.generation_config: Optional[GenerationConfig] = None
++        self.device: str | None = None
++        self.processor: Any | None = None
++        self.vlm_model: PreTrainedModel | None = None
++        self.generation_config: GenerationConfig | None = None
++        self.strip_stop_strings = (
++            bool(
++                model_config.extra_config.get("transformers_strip_stop_strings", False)
++            )
++            if model_config is not None
++            else False
++        )
+ 
+         # Initialize immediately if model_config is provided
+         if self.model_config is not None:
+@@ -145,16 +166,27 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+             revision: Model revision
+             model_type: Type of model architecture
+         """
+-        # Check for Phi-4 compatibility
+         transformers_version = importlib.metadata.version("transformers")
++        parsed_transformers_version = version.parse(transformers_version)
++
++        # Check for Phi-4 compatibility
+         if (
+             repo_id == "microsoft/Phi-4-multimodal-instruct"
+-            and transformers_version >= "4.52.0"
++            and parsed_transformers_version >= version.parse("4.52.0")
+         ):
+             raise NotImplementedError(
+                 f"Phi 4 only works with transformers<4.52.0 but you have {transformers_version=}. "
+                 f"Please downgrade by running: pip install -U 'transformers<4.52.0'"
+             )
++        is_dots_model = repo_id in _DOTS_REPO_IDS
++        if is_dots_model and parsed_transformers_version.major >= 5:
++            raise NotImplementedError(
++                f"{repo_id} is supported by the Transformers engine only with "
++                f"transformers<5, but you have {transformers_version=}. "
++                "Use a transformers-v4 environment, or use the vLLM engine."
++            )
++        if repo_id in _DOTS_FLASH_ATTN_REQUIRED_REPO_IDS:
++            _ensure_dots_flash_attn_import()
+ 
+         # Download or locate model artifacts using shared utility
+         def download_wrapper(repo_id: str, revision: str) -> Path:
+@@ -168,7 +200,7 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+         )
+ 
+         # Setup quantization if needed
+-        quantization_config: Optional[BitsAndBytesConfig] = None
++        quantization_config: BitsAndBytesConfig | None = None
+         if self.options.quantized:
+             quantization_config = BitsAndBytesConfig(
+                 load_in_8bit=self.options.load_in_8bit,
+@@ -188,7 +220,6 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+         elif model_type == TransformersModelType.AUTOMODEL_IMAGETEXTTOTEXT:
+             model_cls = AutoModelForImageTextToText  # type: ignore[assignment]
+ 
+-        # Load processor
+         self.processor = AutoProcessor.from_pretrained(
+             artifacts_path,
+             trust_remote_code=self.options.trust_remote_code,
+@@ -198,22 +229,33 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+         if tokenizer is not None and hasattr(tokenizer, "padding_side"):
+             tokenizer.padding_side = "left"
+ 
+-        # Resolve torch_dtype: options override > extra_config > None
++        # Resolve torch_dtype: options override > model_config field > extra_config > None
+         torch_dtype = self.options.torch_dtype
+         if torch_dtype is None and self.model_config is not None:
+-            torch_dtype = self.model_config.extra_config.get("torch_dtype")
++            torch_dtype = (
++                self.model_config.torch_dtype
++                or self.model_config.extra_config.get("torch_dtype")
++            )
+ 
+         # Load model
++        attn_implementation = (
++            "flash_attention_2"
++            if self.device.startswith("cuda")  # type: ignore[union-attr]
++            and self.accelerator_options.cuda_use_flash_attention2
++            else "sdpa"
++        )
++        if is_dots_model:
++            attn_implementation = "sdpa"
++
++        dtype_arg_name = (
++            "dtype" if parsed_transformers_version.major >= 5 else "torch_dtype"
++        )
++
+         self.vlm_model = model_cls.from_pretrained(
+             artifacts_path,
+             device_map=self.device,
+-            dtype=torch_dtype,
+-            _attn_implementation=(
+-                "flash_attention_2"
+-                if self.device.startswith("cuda")  # type: ignore[union-attr]
+-                and self.accelerator_options.cuda_use_flash_attention2
+-                else "sdpa"
+-            ),
++            **{dtype_arg_name: torch_dtype},
++            _attn_implementation=attn_implementation,
+             trust_remote_code=self.options.trust_remote_code,
+             revision=revision,
+             quantization_config=quantization_config,
+@@ -440,6 +482,11 @@ class TransformersVlmEngine(BaseVlmEngine, HuggingFaceModelDownloadMixin):
+         if pad_token:
+             decoded_texts = [text.rstrip(pad_token) for text in decoded_texts]
+ 
++        if self.strip_stop_strings and first_input.stop_strings:
++            from docling.utils.vlm_utils import strip_stop_strings
++
++            decoded_texts = strip_stop_strings(decoded_texts, first_input.stop_strings)
++
+         # Create outputs
+         outputs = []
+         for i, text in enumerate(decoded_texts):
+diff --git a/docling/models/inference_engines/vlm/vllm_engine.py b/docling/models/inference_engines/vlm/vllm_engine.py
+index 56eb375f..852e97e4 100644
+--- a/docling/models/inference_engines/vlm/vllm_engine.py
++++ b/docling/models/inference_engines/vlm/vllm_engine.py
+@@ -90,7 +90,7 @@ class VllmVlmEngine(BaseVlmEngine):
+         self,
+         options: VllmVlmEngineOptions,
+         accelerator_options: AcceleratorOptions,
+-        artifacts_path: Optional[Union[Path, str]],
++        artifacts_path: Union[Path, str] | None,
+         model_config: Optional["EngineModelConfig"] = None,
+     ):
+         """Initialize the vLLM engine.
+@@ -107,7 +107,7 @@ class VllmVlmEngine(BaseVlmEngine):
+         self.artifacts_path = artifacts_path
+ 
+         # These will be set during initialization
+-        self.device: Optional[str] = None
++        self.device: str | None = None
+         self.llm: Any = None
+         self.sampling_params: Any = None
+         self.processor: Any = None
+@@ -286,7 +286,7 @@ class VllmVlmEngine(BaseVlmEngine):
+         )
+ 
+         # Format prompts
+-        prompts: List[Optional[str]] = []
++        prompts: List[str | None] = []
+         for input_data in input_batch:
+             formatted_prompt = format_prompt_for_vlm(
+                 prompt=input_data.prompt,
+diff --git a/docling/models/stages/vlm_convert/vlm_convert_model.py b/docling/models/stages/vlm_convert/vlm_convert_model.py
+index 1f28745d..ba6c3401 100644
+--- a/docling/models/stages/vlm_convert/vlm_convert_model.py
++++ b/docling/models/stages/vlm_convert/vlm_convert_model.py
+@@ -42,7 +42,7 @@ class VlmConvertModel(BasePageModel):
+         self,
+         enabled: bool,
+         enable_remote_services: bool,
+-        artifacts_path: Optional[Union[Path, str]],
++        artifacts_path: Union[Path, str] | None,
+         options: VlmConvertOptions,
+         accelerator_options: AcceleratorOptions,
+     ):
+@@ -108,32 +108,16 @@ class VlmConvertModel(BasePageModel):
+             valid_pages = []
+ 
+             for page in page_list:
+-                if page.image is None:
++                image = page.get_image(
++                    scale=self.options.scale,
++                    max_size=self.options.max_size,
++                )
++                if image is None:
+                     _log.warning(
+                         f"Page {page.page_no} has no image, skipping VLM conversion"
+                     )
+                     continue
+ 
+-                # Scale image if needed
+-                image = page.image
+-                if self.options.scale != 1.0:
+-                    new_size = (
+-                        int(image.width * self.options.scale),
+-                        int(image.height * self.options.scale),
+-                    )
+-                    image = image.resize(new_size, PILImage.Resampling.LANCZOS)
+-
+-                # Apply max_size constraint if specified
+-                if self.options.max_size is not None:
+-                    max_dim = max(image.width, image.height)
+-                    if max_dim > self.options.max_size:
+-                        scale_factor = self.options.max_size / max_dim
+-                        new_size = (
+-                            int(image.width * scale_factor),
+-                            int(image.height * scale_factor),
+-                        )
+-                        image = image.resize(new_size, PILImage.Resampling.LANCZOS)
+-
+                 images.append(image)
+                 prompts.append(self.options.model_spec.prompt)
+                 valid_pages.append(page)
+@@ -151,8 +135,9 @@ class VlmConvertModel(BasePageModel):
+                     VlmEngineInput(
+                         image=img,
+                         prompt=prompt,
+-                        temperature=0.0,  # Use from options if needed
+-                        max_new_tokens=4096,  # Use from options if needed
++                        temperature=self.options.model_spec.temperature,
++                        max_new_tokens=self.options.model_spec.max_new_tokens,
++                        stop_strings=self.options.model_spec.stop_strings,
+                     )
+                     for img, prompt in zip(images, prompts)
+                 ]
+@@ -229,8 +214,9 @@ class VlmConvertModel(BasePageModel):
+             VlmEngineInput(
+                 image=img,
+                 prompt=p,
+-                temperature=0.0,
+-                max_new_tokens=4096,
++                temperature=self.options.model_spec.temperature,
++                max_new_tokens=self.options.model_spec.max_new_tokens,
++                stop_strings=self.options.model_spec.stop_strings,
+             )
+             for img, p in zip(images, prompts)
+         ]
+diff --git a/docling/models/vlm_pipeline_models/hf_transformers_model.py b/docling/models/vlm_pipeline_models/hf_transformers_model.py
+index c6e94e80..9c352219 100644
+--- a/docling/models/vlm_pipeline_models/hf_transformers_model.py
++++ b/docling/models/vlm_pipeline_models/hf_transformers_model.py
+@@ -1,3 +1,4 @@
++import importlib
+ import importlib.metadata
+ import logging
+ import sys
+@@ -7,6 +8,7 @@ from pathlib import Path
+ from typing import Any, Optional, Union
+ 
+ import numpy as np
++from packaging import version
+ from PIL.Image import Image
+ from transformers import StoppingCriteria, StoppingCriteriaList, StopStringCriteria
+ 
+@@ -31,12 +33,26 @@ from docling.utils.profiling import TimeRecorder
+ 
+ _log = logging.getLogger(__name__)
+ 
++_DOTS_REPO_IDS = {"rednote-hilab/dots.ocr", "rednote-hilab/dots.mocr"}
++_DOTS_FLASH_ATTN_REQUIRED_REPO_IDS = {"rednote-hilab/dots.mocr"}
++
++
++def _ensure_dots_flash_attn_import() -> None:
++    try:
++        importlib.import_module("flash_attn")
++    except ImportError as exc:
++        raise ImportError(
++            "rednote-hilab/dots.mocr requires flash-attn with the Transformers "
++            "engine. Install flash-attn in the transformers-v4 environment "
++            "before using this model."
++        ) from exc
++
+ 
+ class HuggingFaceTransformersVlmModel(BaseVlmPageModel, HuggingFaceModelDownloadMixin):
+     def __init__(
+         self,
+         enabled: bool,
+-        artifacts_path: Optional[Path],
++        artifacts_path: Path | None,
+         accelerator_options: AcceleratorOptions,
+         vlm_options: InlineVlmOptions,
+     ):
+@@ -56,13 +72,26 @@ class HuggingFaceTransformersVlmModel(BaseVlmPageModel, HuggingFaceModelDownload
+             )
+ 
+             transformers_version = importlib.metadata.version("transformers")
++            parsed_transformers_version = version.parse(transformers_version)
+             if (
+                 self.vlm_options.repo_id == "microsoft/Phi-4-multimodal-instruct"
+-                and transformers_version >= "4.52.0"
++                and parsed_transformers_version >= version.parse("4.52.0")
+             ):
+                 raise NotImplementedError(
+-                    f"Phi 4 only works with transformers<4.52.0 but you have {transformers_version=}. Please downgrage running pip install -U 'transformers<4.52.0'."
++                    f"Phi 4 only works with transformers<4.52.0 but you have "
++                    f"{transformers_version=}. Please downgrade by running: "
++                    "pip install -U 'transformers<4.52.0'"
++                )
++            is_dots_model = self.vlm_options.repo_id in _DOTS_REPO_IDS
++            if is_dots_model and parsed_transformers_version.major >= 5:
++                raise NotImplementedError(
++                    f"{self.vlm_options.repo_id} is supported by the Transformers "
++                    f"engine only with transformers<5, but you have "
++                    f"{transformers_version=}. Use a transformers-v4 environment, "
++                    "or use the vLLM engine."
+                 )
++            if self.vlm_options.repo_id in _DOTS_FLASH_ATTN_REQUIRED_REPO_IDS:
++                _ensure_dots_flash_attn_import()
+ 
+             self.device = decide_device(
+                 accelerator_options.device,
+@@ -101,7 +130,7 @@ class HuggingFaceTransformersVlmModel(BaseVlmPageModel, HuggingFaceModelDownload
+                     f"  3. Or use a different model that exists in your artifacts_path"
+                 )
+ 
+-            self.param_quantization_config: Optional[BitsAndBytesConfig] = None
++            self.param_quantization_config: BitsAndBytesConfig | None = None
+             if vlm_options.quantized:
+                 self.param_quantization_config = BitsAndBytesConfig(
+                     load_in_8bit=vlm_options.load_in_8bit,
+@@ -127,16 +156,20 @@ class HuggingFaceTransformersVlmModel(BaseVlmPageModel, HuggingFaceModelDownload
+             )
+             self.processor.tokenizer.padding_side = "left"
+ 
++            attn_implementation = (
++                "flash_attention_2"
++                if self.device.startswith("cuda")
++                and accelerator_options.cuda_use_flash_attention2
++                else "sdpa"
++            )
++            if is_dots_model:
++                attn_implementation = "sdpa"
++
+             self.vlm_model = model_cls.from_pretrained(
+                 artifacts_path,
+                 device_map=self.device,
+                 dtype=self.vlm_options.torch_dtype,
+-                _attn_implementation=(
+-                    "flash_attention_2"
+-                    if self.device.startswith("cuda")
+-                    and accelerator_options.cuda_use_flash_attention2
+-                    else "sdpa"
+-                ),
++                _attn_implementation=attn_implementation,
+                 trust_remote_code=vlm_options.trust_remote_code,
+                 revision=vlm_options.revision,
+             )
+@@ -325,7 +358,7 @@ class HuggingFaceTransformersVlmModel(BaseVlmPageModel, HuggingFaceModelDownload
+         generation_config = {
+             k: v
+             for k, v in self.vlm_options.extra_generation_config.items()
+-            if k not in decoder_keys
++            if k not in decoder_keys and k != "strip_stop_strings"
+         }
+         decoder_config = {
+             k: v
+@@ -377,6 +410,16 @@ class HuggingFaceTransformersVlmModel(BaseVlmPageModel, HuggingFaceModelDownload
+         if pad_token:
+             decoded_texts = [text.rstrip(pad_token) for text in decoded_texts]
+ 
++        if (
++            self.vlm_options.extra_generation_config.get("strip_stop_strings", False)
++            and self.vlm_options.stop_strings
++        ):
++            from docling.utils.vlm_utils import strip_stop_strings
++
++            decoded_texts = strip_stop_strings(
++                decoded_texts, self.vlm_options.stop_strings
++            )
++
+         # -- Optional logging
+         num_tokens = None
+         if generated_ids.shape[0] > 0:
+diff --git a/docling/pipeline/vlm_pipeline.py b/docling/pipeline/vlm_pipeline.py
+index ac607d46..8213a39e 100644
+--- a/docling/pipeline/vlm_pipeline.py
++++ b/docling/pipeline/vlm_pipeline.py
+@@ -46,6 +46,7 @@ from docling.datamodel.pipeline_options import (
+ )
+ from docling.datamodel.pipeline_options_vlm_model import (
+     ApiVlmOptions,
++    BaseVlmOptions,
+     InferenceFramework,
+     InlineVlmOptions,
+     ResponseFormat,
+@@ -91,7 +92,7 @@ class VlmPipeline(PaginatedPipeline):
+         else:
+             self._initialize_legacy_vlm_models(pipeline_options)
+ 
+-        self.enrichment_pipe = [
++        self.enrichment_pipe: list = [
+             # Other models working on `NodeItem` elements in the DoclingDocument
+         ]
+ 
+@@ -302,6 +303,12 @@ class VlmPipeline(PaginatedPipeline):
+                     conv_res, InputFormat.HTML, HTMLDocumentBackend
+                 )
+ 
++            elif response_format_legacy == ResponseFormat.CHANDRA_HTML:
++                conv_res.document = self._parse_chandra_html(conv_res)
++
++            elif response_format_legacy == ResponseFormat.DOTS_JSON:
++                conv_res.document = self._parse_dots_json(conv_res)
++
+             else:
+                 raise RuntimeError(
+                     f"Unsupported VLM response format {response_format_legacy}"
+@@ -510,6 +517,77 @@ class VlmPipeline(PaginatedPipeline):
+         # Add page metadata and concatenate
+         return self._add_page_metadata_and_concatenate(page_docs, conv_res)
+ 
++    def _parse_chandra_html(self, conv_res: ConversionResult) -> DoclingDocument:
++        """Parse chandra-ocr-2 HTML output into a DoclingDocument."""
++        from docling.utils.chandra_utils import parse_chandra_html
++
++        page_docs = []
++
++        for pg_idx, page in enumerate(conv_res.pages):
++            predicted_text = ""
++            if page.predictions.vlm_response:
++                predicted_text = page.predictions.vlm_response.text
++
++            assert page.size is not None
++
++            page_doc = parse_chandra_html(
++                content=predicted_text,
++                original_page_size=page.size,
++                page_no=pg_idx + 1,
++                filename=conv_res.input.file.name or "file",
++                page_image=page.image,
++            )
++            page_docs.append(page_doc)
++
++        return self._add_page_metadata_and_concatenate(page_docs, conv_res)
++
++    def _parse_dots_json(self, conv_res: ConversionResult) -> DoclingDocument:
++        """Parse dots.ocr / dots.mocr JSON output into a DoclingDocument."""
++        from docling.utils.dots_utils import parse_dots_json
++        from docling.utils.vlm_utils import compute_qwen2vl_image_size
++
++        vlm_options = self.pipeline_options.vlm_options
++        if isinstance(vlm_options, (VlmConvertOptions, BaseVlmOptions)):
++            vlm_scale = vlm_options.scale
++            vlm_max_size = vlm_options.max_size
++        else:
++            raise TypeError(
++                "DOTS JSON parsing requires VlmConvertOptions or BaseVlmOptions, "
++                f"got {type(vlm_options).__name__}."
++            )
++
++        page_docs = []
++
++        for pg_idx, page in enumerate(conv_res.pages):
++            predicted_text = ""
++            if page.predictions.vlm_response:
++                predicted_text = page.predictions.vlm_response.text
++
++            assert page.size is not None
++
++            inference_image = page.get_image(scale=vlm_scale, max_size=vlm_max_size)
++
++            model_image_size = None
++            if inference_image is not None:
++                model_image_size = compute_qwen2vl_image_size(
++                    width=inference_image.width,
++                    height=inference_image.height,
++                    scale=1.0,
++                    max_size=None,
++                )
++
++            page_doc = parse_dots_json(
++                content=predicted_text,
++                original_page_size=page.size,
++                page_no=pg_idx + 1,
++                filename=conv_res.input.file.name or "file",
++                page_image=page.image,
++                model_image_size=model_image_size,
++            )
++            page_docs.append(page_doc)
++
++        return self._add_page_metadata_and_concatenate(page_docs, conv_res)
++
+     def _extract_code_block(self, text: str) -> str:
+         """
+         Extracts text from markdown code blocks (enclosed in triple backticks).
+@@ -559,13 +637,15 @@ class VlmPipeline(PaginatedPipeline):
+                 pg_width = 1
+                 pg_height = 1
+ 
+-            page_doc.add_page(
+-                page_no=pg_idx + 1,
+-                size=Size(width=pg_width, height=pg_height),
+-                image=ImageRef.from_pil(image=page.image, dpi=72)
+-                if page.image
+-                else None,
+-            )
++            page_no = pg_idx + 1
++            if page_no not in page_doc.pages:
++                page_doc.add_page(
++                    page_no=page_no,
++                    size=Size(width=pg_width, height=pg_height),
++                    image=ImageRef.from_pil(image=page.image, dpi=72)
++                    if page.image
++                    else None,
++                )
+ 
+         # Concatenate all page documents to preserve hierarchy
+         return DoclingDocument.concatenate(docs=page_docs)
+diff --git a/docling/utils/chandra_utils.py b/docling/utils/chandra_utils.py
+new file mode 100644
+index 00000000..da62c3f7
+--- /dev/null
++++ b/docling/utils/chandra_utils.py
+@@ -0,0 +1,322 @@
++"""Utilities for parsing chandra-ocr-2 HTML-with-bbox format.
++
++chandra-ocr-2 produces HTML where each layout element is a top-level
++``<div data-bbox="x0 y0 x1 y1" data-label="Label">content</div>``.
++Bboxes are in 0-1000 normalized coordinate space.
++"""
++
++from __future__ import annotations
++
++import logging
++import re
++from html.parser import HTMLParser
++from typing import Optional, Union
++
++from docling_core.types.doc import (
++    BoundingBox,
++    CoordOrigin,
++    DocItemLabel,
++    DoclingDocument,
++    DocumentOrigin,
++    ImageRef,
++    ProvenanceItem,
++    Size,
++    TableCell,
++    TableData,
++)
++from PIL import Image as PILImage
++
++_log = logging.getLogger(__name__)
++
++# Mapping from chandra-ocr-2 layout labels to DocItemLabel.
++# Labels not present in DocItemLabel fall back to TEXT.
++_LABEL_MAP: dict[str, DocItemLabel] = {
++    "Text": DocItemLabel.TEXT,
++    "Title": DocItemLabel.TITLE,
++    "Section-Header": DocItemLabel.SECTION_HEADER,
++    "Table": DocItemLabel.TABLE,
++    "Figure": DocItemLabel.PICTURE,
++    "Image": DocItemLabel.PICTURE,
++    "Caption": DocItemLabel.CAPTION,
++    "Footnote": DocItemLabel.FOOTNOTE,
++    "Page-Header": DocItemLabel.PAGE_HEADER,
++    "Page-Footer": DocItemLabel.PAGE_FOOTER,
++    "List-Group": DocItemLabel.LIST_ITEM,
++    "Equation-Block": DocItemLabel.FORMULA,
++    "Code-Block": DocItemLabel.CODE,
++    "Form": DocItemLabel.FORM,
++    "Table-Of-Contents": DocItemLabel.TEXT,
++    "Complex-Block": DocItemLabel.TEXT,
++    "Chemical-Block": DocItemLabel.FORMULA,
++    "Diagram": DocItemLabel.PICTURE,
++    "Bibliography": DocItemLabel.REFERENCE,
++    "Blank-Page": DocItemLabel.TEXT,
++}
++
++# Regex to match top-level divs with data-bbox and data-label (either order).
++# Captures: (all attributes string), (inner content).
++_DIV_PATTERN = re.compile(
++    r"<div\s+([^>]*?)>(.*?)</div>",
++    re.DOTALL,
++)
++
++_BBOX_ATTR = re.compile(r'data-bbox="(\d+\s+\d+\s+\d+\s+\d+)"')
++_LABEL_ATTR = re.compile(r'data-label="([^"]+)"')
++
++# Strip HTML tags from inner content.
++_TAG_RE = re.compile(r"<[^>]+>")
++
++
++def _strip_tags(html: str) -> str:
++    """Remove HTML tags and collapse whitespace."""
++    text = _TAG_RE.sub("", html)
++    text = re.sub(r"\s+", " ", text).strip()
++    return text
++
++
++class _TableHTMLParser(HTMLParser):
++    """Lightweight HTML table parser using stdlib html.parser."""
++
++    def __init__(self) -> None:
++        super().__init__()
++        self.rows: list[list[dict]] = []  # list of rows, each row is list of cell dicts
++        self._in_row = False
++        self._in_cell = False
++        self._current_cell: dict = {}
++        self._current_row: list[dict] = []
++        self._cell_text_parts: list[str] = []
++
++    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
++        tag_lower = tag.lower()
++        if tag_lower == "tr":
++            self._in_row = True
++            self._current_row = []
++        elif tag_lower in ("td", "th"):
++            self._in_cell = True
++            attr_dict = dict(attrs)
++            self._current_cell = {
++                "tag": tag_lower,
++                "colspan": int(attr_dict.get("colspan") or "1"),
++                "rowspan": int(attr_dict.get("rowspan") or "1"),
++            }
++            self._cell_text_parts = []
++
++    def handle_endtag(self, tag: str) -> None:
++        tag_lower = tag.lower()
++        if tag_lower in ("td", "th") and self._in_cell:
++            self._current_cell["text"] = " ".join(
++                "".join(self._cell_text_parts).split()
++            ).strip()
++            self._current_row.append(self._current_cell)
++            self._in_cell = False
++        elif tag_lower == "tr" and self._in_row:
++            self.rows.append(self._current_row)
++            self._in_row = False
++
++    def handle_data(self, data: str) -> None:
++        if self._in_cell:
++            self._cell_text_parts.append(data)
++
++
++class _ListHTMLParser(HTMLParser):
++    """Lightweight HTML list parser using stdlib html.parser."""
++
++    def __init__(self) -> None:
++        super().__init__()
++        self.items: list[str] = []
++        self._item_stack: list[list[str]] = []
++
++    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
++        if tag.lower() == "li":
++            self._item_stack.append([])
++
++    def handle_endtag(self, tag: str) -> None:
++        if tag.lower() == "li" and self._item_stack:
++            parts = self._item_stack.pop()
++            text = " ".join("".join(parts).split()).strip()
++            if text:
++                self.items.append(text)
++
++    def handle_data(self, data: str) -> None:
++        if self._item_stack:
++            self._item_stack[-1].append(data)
++
++
++def _parse_table_html(html_content: str) -> TableData:
++    """Parse HTML table content and create TableData structure."""
++    table_match = re.search(
++        r"<table[^>]*>.*?</table>", html_content, re.DOTALL | re.IGNORECASE
++    )
++    if not table_match:
++        return TableData(num_rows=0, num_cols=0, table_cells=[])
++
++    try:
++        parser = _TableHTMLParser()
++        parser.feed(table_match.group(0))
++
++        rows = parser.rows
++        if not rows:
++            return TableData(num_rows=0, num_cols=0, table_cells=[])
++
++        num_rows = len(rows)
++        num_cols = 0
++        for row in rows:
++            col_count = sum(cell["colspan"] for cell in row)
++            num_cols = max(num_cols, col_count)
++
++        grid: list[list[Union[None, str]]] = [
++            [None for _ in range(num_cols)] for _ in range(num_rows)
++        ]
++        table_data = TableData(num_rows=num_rows, num_cols=num_cols, table_cells=[])
++
++        for row_idx, row in enumerate(rows):
++            col_idx = 0
++            for cell in row:
++                while col_idx < num_cols and grid[row_idx][col_idx] is not None:
++                    col_idx += 1
++                if col_idx >= num_cols:
++                    break
++
++                text = cell["text"]
++                colspan = cell["colspan"]
++                rowspan = cell["rowspan"]
++                is_header = cell["tag"] == "th"
++
++                for r in range(row_idx, min(row_idx + rowspan, num_rows)):
++                    for c in range(col_idx, min(col_idx + colspan, num_cols)):
++                        grid[r][c] = text
++
++                table_data.table_cells.append(
++                    TableCell(
++                        text=text,
++                        row_span=rowspan,
++                        col_span=colspan,
++                        start_row_offset_idx=row_idx,
++                        end_row_offset_idx=row_idx + rowspan,
++                        start_col_offset_idx=col_idx,
++                        end_col_offset_idx=col_idx + colspan,
++                        column_header=is_header and row_idx == 0,
++                        row_header=is_header and col_idx == 0,
++                    )
++                )
++                col_idx += colspan
++
++        return table_data
++
++    except Exception as e:
++        _log.warning(f"Failed to parse table HTML: {e}")
++        return TableData(num_rows=0, num_cols=0, table_cells=[])
++
++
++def _parse_list_html(html_content: str) -> list[str]:
++    """Parse HTML list content and return list item texts."""
++    try:
++        parser = _ListHTMLParser()
++        parser.feed(html_content)
++        return parser.items
++    except Exception as e:
++        _log.warning(f"Failed to parse list HTML: {e}")
++        return []
++
++
++def parse_chandra_html(
++    content: str,
++    original_page_size: Size,
++    page_no: int,
++    filename: str = "file",
++    page_image: PILImage.Image | None = None,
++) -> DoclingDocument:
++    """Parse chandra-ocr-2 HTML output into a DoclingDocument.
++
++    This parser intentionally covers the common block, list, table, and picture
++    cases first. Some semantic relationships implied by Chandra labels, such as
++    assigning captions to figures/tables and reconstructing nested list
++    hierarchy, are not reconstructed yet.
++
++    Args:
++        content: Raw HTML string from chandra-ocr-2.
++        original_page_size: Physical page dimensions (points).
++        page_no: Page number (1-based).
++        filename: Source filename.
++        page_image: Optional PIL image of the page.
++
++    Returns:
++        DoclingDocument populated with parsed elements.
++    """
++    origin = DocumentOrigin(
++        filename=filename,
++        mimetype="text/html",
++        binary_hash=0,
++    )
++    doc = DoclingDocument(name=filename.rsplit(".", 1)[0], origin=origin)
++
++    pg_width = original_page_size.width
++    pg_height = original_page_size.height
++
++    scale_x = pg_width / 1000
++    scale_y = pg_height / 1000
++
++    image_dpi = 72
++    if page_image is not None:
++        image_dpi = int(72 * page_image.width / pg_width)
++
++    doc.add_page(
++        page_no=page_no,
++        size=Size(width=pg_width, height=pg_height),
++        image=ImageRef.from_pil(image=page_image, dpi=image_dpi)
++        if page_image
++        else None,
++    )
++
++    if not content or not content.strip():
++        return doc
++
++    for m in _DIV_PATTERN.finditer(content):
++        attrs_str = m.group(1)
++        inner_html = m.group(2)
++
++        bbox_m = _BBOX_ATTR.search(attrs_str)
++        label_m = _LABEL_ATTR.search(attrs_str)
++        if not bbox_m or not label_m:
++            continue
++
++        coords = bbox_m.group(1).split()
++        if len(coords) != 4:
++            continue
++
++        try:
++            x0, y0, x1, y1 = (int(c) for c in coords)
++        except ValueError:
++            continue
++
++        label_str = label_m.group(1)
++
++        bbox = BoundingBox(
++            l=x0 * scale_x,
++            t=y0 * scale_y,
++            r=x1 * scale_x,
++            b=y1 * scale_y,
++            coord_origin=CoordOrigin.TOPLEFT,
++        )
++        prov = ProvenanceItem(page_no=page_no, bbox=bbox, charspan=[0, 0])
++
++        doc_label = _LABEL_MAP.get(label_str, DocItemLabel.TEXT)
++
++        if label_str == "Table":
++            table_data = _parse_table_html(inner_html)
++            doc.add_table(data=table_data, prov=prov)
++        elif label_str == "List-Group":
++            list_group = doc.add_list_group()
++            list_items = _parse_list_html(inner_html) or [_strip_tags(inner_html)]
++            for item_text in list_items:
++                doc.add_list_item(text=item_text, parent=list_group, prov=prov)
++        elif label_str in ("Figure", "Image", "Diagram"):
++            doc.add_picture(prov=prov)
++        elif label_str == "Title":
++            doc.add_title(text=_strip_tags(inner_html), prov=prov)
++        elif label_str == "Section-Header":
++            doc.add_heading(text=_strip_tags(inner_html), prov=prov)
++        else:
++            doc.add_text(label=doc_label, text=_strip_tags(inner_html), prov=prov)
++
++    return doc
+diff --git a/docling/utils/dots_utils.py b/docling/utils/dots_utils.py
+new file mode 100644
+index 00000000..a12268af
+--- /dev/null
++++ b/docling/utils/dots_utils.py
+@@ -0,0 +1,197 @@
++"""Utilities for parsing dots.ocr / dots.mocr JSON layout format.
++
++dots.ocr (3B, Qwen2.5-VL based) and dots.mocr produce a JSON array of
++layout elements::
++
++    [{"bbox": [x1, y1, x2, y2], "category": "Label", "text": "content"}, ...]
++
++Bboxes are pixel coordinates relative to the model input resolution.
++If ``model_image_size`` is provided the coords are rescaled to the
++original page coordinate space.
++
++11 categories: Caption, Footnote, Formula, List-item, Page-footer,
++Page-header, Picture, Section-header, Table, Text, Title.
++
++Tables arrive as HTML ``<table>``; formulas as LaTeX; Pictures have no
++``text`` field.  The model sometimes truncates output, so the parser
++is tolerant of malformed JSON.
++"""
++
++from __future__ import annotations
++
++import json
++import logging
++from typing import Optional
++
++from docling_core.types.doc import (
++    BoundingBox,
++    CoordOrigin,
++    DocItemLabel,
++    DoclingDocument,
++    DocumentOrigin,
++    ImageRef,
++    ProvenanceItem,
++    Size,
++)
++from PIL import Image as PILImage
++
++from docling.utils.chandra_utils import _parse_table_html
++
++_log = logging.getLogger(__name__)
++
++# Mapping from dots.ocr/dots.mocr category strings to DocItemLabel.
++_LABEL_MAP: dict[str, DocItemLabel] = {
++    "Text": DocItemLabel.TEXT,
++    "Title": DocItemLabel.TITLE,
++    "Section-header": DocItemLabel.SECTION_HEADER,
++    "Table": DocItemLabel.TABLE,
++    "Picture": DocItemLabel.PICTURE,
++    "Caption": DocItemLabel.CAPTION,
++    "Footnote": DocItemLabel.FOOTNOTE,
++    "Page-header": DocItemLabel.PAGE_HEADER,
++    "Page-footer": DocItemLabel.PAGE_FOOTER,
++    "List-item": DocItemLabel.LIST_ITEM,
++    "Formula": DocItemLabel.FORMULA,
++}
++
++
++def _clean_json(raw: str) -> str:
++    """Best-effort cleanup of potentially truncated JSON arrays.
++
++    1. Strip leading text before the first ``[``.
++    2. If the array does not end with ``]``, find the last ``}`` and append ``]``.
++    3. Return ``"[]"`` if no valid JSON structure found.
++    """
++    idx = raw.find("[")
++    if idx == -1:
++        return "[]"
++    raw = raw[idx:]
++
++    stripped = raw.rstrip()
++    if not stripped.endswith("]"):
++        last_brace = stripped.rfind("}")
++        if last_brace == -1:
++            return "[]"
++        raw = stripped[: last_brace + 1] + "]"
++
++    return raw
++
++
++def parse_dots_json(
++    content: str,
++    original_page_size: Size,
++    page_no: int,
++    filename: str = "file",
++    page_image: PILImage.Image | None = None,
++    model_image_size: Size | None = None,
++) -> DoclingDocument:
++    """Parse dots.ocr / dots.mocr JSON output into a DoclingDocument.
++
++    Args:
++        content: Raw JSON string (array of element dicts).
++        original_page_size: Physical page dimensions (points).
++        page_no: Page number (1-based).
++        filename: Source filename.
++        page_image: Optional PIL image of the page.
++        model_image_size: If provided, bbox pixel coords are rescaled from
++            this resolution to *original_page_size*.
++
++    Returns:
++        DoclingDocument populated with parsed elements.
++    """
++    origin = DocumentOrigin(
++        filename=filename,
++        mimetype="application/json",
++        binary_hash=0,
++    )
++    doc = DoclingDocument(name=filename.rsplit(".", 1)[0], origin=origin)
++
++    pg_width = original_page_size.width
++    pg_height = original_page_size.height
++
++    # Compute rescaling factors
++    if model_image_size is not None:
++        scale_x = pg_width / model_image_size.width
++        scale_y = pg_height / model_image_size.height
++    else:
++        # No rescaling — assume pixel coords already match page coords
++        scale_x = 1.0
++        scale_y = 1.0
++
++    image_dpi = 72
++    if page_image is not None:
++        image_dpi = int(72 * page_image.width / pg_width)
++
++    doc.add_page(
++        page_no=page_no,
++        size=Size(width=pg_width, height=pg_height),
++        image=ImageRef.from_pil(image=page_image, dpi=image_dpi)
++        if page_image
++        else None,
++    )
++
++    if not content or not content.strip():
++        return doc
++
++    cleaned = _clean_json(content)
++    try:
++        elements = json.loads(cleaned)
++    except json.JSONDecodeError as exc:
++        _log.warning("Failed to parse dots JSON after cleanup: %s", exc)
++        return doc
++
++    if not isinstance(elements, list):
++        _log.warning("Expected JSON array, got %s", type(elements).__name__)
++        return doc
++
++    current_list_group = None
++
++    for elem in elements:
++        if not isinstance(elem, dict):
++            continue
++
++        category = elem.get("category", "")
++        raw_bbox = elem.get("bbox")
++        text = elem.get("text", "")
++
++        if not raw_bbox or not isinstance(raw_bbox, list) or len(raw_bbox) != 4:
++            continue
++
++        try:
++            x1, y1, x2, y2 = (float(v) for v in raw_bbox)
++        except (ValueError, TypeError):
++            continue
++
++        bbox = BoundingBox(
++            l=x1 * scale_x,
++            t=y1 * scale_y,
++            r=x2 * scale_x,
++            b=y2 * scale_y,
++            coord_origin=CoordOrigin.TOPLEFT,
++        )
++        prov = ProvenanceItem(page_no=page_no, bbox=bbox, charspan=[0, 0])
++
++        doc_label = _LABEL_MAP.get(category, DocItemLabel.TEXT)
++
++        if category == "Table":
++            current_list_group = None
++            table_data = _parse_table_html(text)
++            doc.add_table(data=table_data, prov=prov)
++        elif category == "Picture":
++            current_list_group = None
++            doc.add_picture(prov=prov)
++        elif category == "Title":
++            current_list_group = None
++            doc.add_title(text=text, prov=prov)
++        elif category == "Section-header":
++            current_list_group = None
++            doc.add_heading(text=text, prov=prov)
++        elif category == "List-item":
++            if current_list_group is None:
++                current_list_group = doc.add_list_group()
++            doc.add_list_item(text=text, parent=current_list_group, prov=prov)
++        else:
++            current_list_group = None
++            doc.add_text(label=doc_label, text=text, prov=prov)
++
++    return doc
+diff --git a/docling/utils/vlm_utils.py b/docling/utils/vlm_utils.py
+new file mode 100644
+index 00000000..b027de9e
+--- /dev/null
++++ b/docling/utils/vlm_utils.py
+@@ -0,0 +1,75 @@
++"""Shared VLM utility functions for output post-processing and image sizing."""
++
++from __future__ import annotations
++
++import math
++
++from docling_core.types.doc import Size
++
++
++def strip_stop_strings(texts: list[str], stop_strings: list[str]) -> list[str]:
++    """Strip stop strings from decoded texts.
++
++    For each text, removes the first occurrence of any full stop string and
++    everything after it.
++    """
++    cleaned = []
++    for text in texts:
++        for ss in stop_strings:
++            idx = text.find(ss)
++            if idx != -1:
++                text = text[:idx]
++        cleaned.append(text)
++    return cleaned
++
++
++def compute_qwen2vl_image_size(
++    width: int,
++    height: int,
++    scale: float = 1.0,
++    max_size: int | None = None,
++    factor: int = 28,
++    min_pixels: int = 200704,
++    max_pixels: int = 2_500_000,
++) -> Size:
++    """Compute the actual image resolution after Qwen2.5-VL smart_resize.
++
++    Replicates the Qwen2VL preprocessor logic: scale the image, optionally
++    clamp to max_size, then round dimensions to factor and clamp total pixels
++    to [min_pixels, max_pixels].
++
++    Args:
++        width: Original image width in pixels.
++        height: Original image height in pixels.
++        scale: Scale factor applied before resize.
++        max_size: Optional max dimension (longest side) clamp.
++        factor: Patch size * merge size (default 28 for Qwen2.5-VL).
++        min_pixels: Minimum total pixel budget.
++        max_pixels: Maximum total pixel budget.
++
++    Returns:
++        Size with the computed width and height.
++    """
++    mw = int(width * scale)
++    mh = int(height * scale)
++
++    if max_size is not None:
++        max_dim = max(mw, mh)
++        if max_dim > max_size:
++            sf = max_size / max_dim
++            mw = int(mw * sf)
++            mh = int(mh * sf)
++
++    h_bar = round(mh / factor) * factor
++    w_bar = round(mw / factor) * factor
++
++    if h_bar * w_bar > max_pixels:
++        beta = math.sqrt((mh * mw) / max_pixels)
++        h_bar = max(factor, math.floor(mh / beta / factor) * factor)
++        w_bar = max(factor, math.floor(mw / beta / factor) * factor)
++    elif h_bar * w_bar < min_pixels:
++        beta = math.sqrt(min_pixels / (mh * mw))
++        h_bar = math.ceil(mh * beta / factor) * factor
++        w_bar = math.ceil(mw * beta / factor) * factor
++
++    return Size(width=w_bar, height=h_bar)
+diff --git a/pyproject.toml b/pyproject.toml
+index 3d3c22c8..dd483800 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -342,6 +342,10 @@ docling = { workspace = true }
+ package = true
+ default-groups = "all"
+ 
++override-dependencies = [
++  "grpcio>=1.75.1"
++]
++
+ [tool.hatch.build.targets.wheel]
+ packages = ["docling"]
+ 
+diff --git a/uv.lock b/uv.lock
+index 8aea9b41..4707b2f4 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -23,6 +23,7 @@ members = [
+     "docling",
+     "docling-slim",
+ ]
++overrides = [{ name = "grpcio", specifier = ">=1.75.1" }]
+ 
+ [[package]]
+ name = "accelerate"
+@@ -2408,46 +2409,63 @@ wheels = [
+ 
+ [[package]]
+ name = "grpcio"
+-version = "1.67.1"
+-source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/20/53/d9282a66a5db45981499190b77790570617a604a38f3d103d0400974aeb5/grpcio-1.67.1.tar.gz", hash = "sha256:3dc2ed4cabea4dc14d5e708c2b426205956077cc5de419b4d4079315017e9732", size = 12580022, upload-time = "2024-10-29T06:30:07.787Z" }
+-wheels = [
+-    { url = "https://files.pythonhosted.org/packages/4e/cd/f6ca5c49aa0ae7bc6d0757f7dae6f789569e9490a635eaabe02bc02de7dc/grpcio-1.67.1-cp310-cp310-linux_armv7l.whl", hash = "sha256:8b0341d66a57f8a3119b77ab32207072be60c9bf79760fa609c5609f2deb1f3f", size = 5112450, upload-time = "2024-10-29T06:23:38.202Z" },
+-    { url = "https://files.pythonhosted.org/packages/d4/f0/d9bbb4a83cbee22f738ee7a74aa41e09ccfb2dcea2cc30ebe8dab5b21771/grpcio-1.67.1-cp310-cp310-macosx_12_0_universal2.whl", hash = "sha256:f5a27dddefe0e2357d3e617b9079b4bfdc91341a91565111a21ed6ebbc51b22d", size = 10937518, upload-time = "2024-10-29T06:23:43.535Z" },
+-    { url = "https://files.pythonhosted.org/packages/5b/17/0c5dbae3af548eb76669887642b5f24b232b021afe77eb42e22bc8951d9c/grpcio-1.67.1-cp310-cp310-manylinux_2_17_aarch64.whl", hash = "sha256:43112046864317498a33bdc4797ae6a268c36345a910de9b9c17159d8346602f", size = 5633610, upload-time = "2024-10-29T06:23:47.168Z" },
+-    { url = "https://files.pythonhosted.org/packages/17/48/e000614e00153d7b2760dcd9526b95d72f5cfe473b988e78f0ff3b472f6c/grpcio-1.67.1-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:c9b929f13677b10f63124c1a410994a401cdd85214ad83ab67cc077fc7e480f0", size = 6240678, upload-time = "2024-10-29T06:23:49.352Z" },
+-    { url = "https://files.pythonhosted.org/packages/64/19/a16762a70eeb8ddfe43283ce434d1499c1c409ceec0c646f783883084478/grpcio-1.67.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e7d1797a8a3845437d327145959a2c0c47c05947c9eef5ff1a4c80e499dcc6fa", size = 5884528, upload-time = "2024-10-29T06:23:52.345Z" },
+-    { url = "https://files.pythonhosted.org/packages/6b/dc/bd016aa3684914acd2c0c7fa4953b2a11583c2b844f3d7bae91fa9b98fbb/grpcio-1.67.1-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:0489063974d1452436139501bf6b180f63d4977223ee87488fe36858c5725292", size = 6583680, upload-time = "2024-10-29T06:23:55.074Z" },
+-    { url = "https://files.pythonhosted.org/packages/1a/93/1441cb14c874f11aa798a816d582f9da82194b6677f0f134ea53d2d5dbeb/grpcio-1.67.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:9fd042de4a82e3e7aca44008ee2fb5da01b3e5adb316348c21980f7f58adc311", size = 6162967, upload-time = "2024-10-29T06:23:57.286Z" },
+-    { url = "https://files.pythonhosted.org/packages/29/e9/9295090380fb4339b7e935b9d005fa9936dd573a22d147c9e5bb2df1b8d4/grpcio-1.67.1-cp310-cp310-win32.whl", hash = "sha256:638354e698fd0c6c76b04540a850bf1db27b4d2515a19fcd5cf645c48d3eb1ed", size = 3616336, upload-time = "2024-10-29T06:23:59.69Z" },
+-    { url = "https://files.pythonhosted.org/packages/ce/de/7c783b8cb8f02c667ca075c49680c4aeb8b054bc69784bcb3e7c1bbf4985/grpcio-1.67.1-cp310-cp310-win_amd64.whl", hash = "sha256:608d87d1bdabf9e2868b12338cd38a79969eaf920c89d698ead08f48de9c0f9e", size = 4352071, upload-time = "2024-10-29T06:24:02.477Z" },
+-    { url = "https://files.pythonhosted.org/packages/59/2c/b60d6ea1f63a20a8d09c6db95c4f9a16497913fb3048ce0990ed81aeeca0/grpcio-1.67.1-cp311-cp311-linux_armv7l.whl", hash = "sha256:7818c0454027ae3384235a65210bbf5464bd715450e30a3d40385453a85a70cb", size = 5119075, upload-time = "2024-10-29T06:24:04.696Z" },
+-    { url = "https://files.pythonhosted.org/packages/b3/9a/e1956f7ca582a22dd1f17b9e26fcb8229051b0ce6d33b47227824772feec/grpcio-1.67.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:ea33986b70f83844cd00814cee4451055cd8cab36f00ac64a31f5bb09b31919e", size = 11009159, upload-time = "2024-10-29T06:24:07.781Z" },
+-    { url = "https://files.pythonhosted.org/packages/43/a8/35fbbba580c4adb1d40d12e244cf9f7c74a379073c0a0ca9d1b5338675a1/grpcio-1.67.1-cp311-cp311-manylinux_2_17_aarch64.whl", hash = "sha256:c7a01337407dd89005527623a4a72c5c8e2894d22bead0895306b23c6695698f", size = 5629476, upload-time = "2024-10-29T06:24:11.444Z" },
+-    { url = "https://files.pythonhosted.org/packages/77/c9/864d336e167263d14dfccb4dbfa7fce634d45775609895287189a03f1fc3/grpcio-1.67.1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:80b866f73224b0634f4312a4674c1be21b2b4afa73cb20953cbbb73a6b36c3cc", size = 6239901, upload-time = "2024-10-29T06:24:14.2Z" },
+-    { url = "https://files.pythonhosted.org/packages/f7/1e/0011408ebabf9bd69f4f87cc1515cbfe2094e5a32316f8714a75fd8ddfcb/grpcio-1.67.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f9fff78ba10d4250bfc07a01bd6254a6d87dc67f9627adece85c0b2ed754fa96", size = 5881010, upload-time = "2024-10-29T06:24:17.451Z" },
+-    { url = "https://files.pythonhosted.org/packages/b4/7d/fbca85ee9123fb296d4eff8df566f458d738186d0067dec6f0aa2fd79d71/grpcio-1.67.1-cp311-cp311-musllinux_1_1_i686.whl", hash = "sha256:8a23cbcc5bb11ea7dc6163078be36c065db68d915c24f5faa4f872c573bb400f", size = 6580706, upload-time = "2024-10-29T06:24:20.038Z" },
+-    { url = "https://files.pythonhosted.org/packages/75/7a/766149dcfa2dfa81835bf7df623944c1f636a15fcb9b6138ebe29baf0bc6/grpcio-1.67.1-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:1a65b503d008f066e994f34f456e0647e5ceb34cfcec5ad180b1b44020ad4970", size = 6161799, upload-time = "2024-10-29T06:24:22.604Z" },
+-    { url = "https://files.pythonhosted.org/packages/09/13/5b75ae88810aaea19e846f5380611837de411181df51fd7a7d10cb178dcb/grpcio-1.67.1-cp311-cp311-win32.whl", hash = "sha256:e29ca27bec8e163dca0c98084040edec3bc49afd10f18b412f483cc68c712744", size = 3616330, upload-time = "2024-10-29T06:24:25.775Z" },
+-    { url = "https://files.pythonhosted.org/packages/aa/39/38117259613f68f072778c9638a61579c0cfa5678c2558706b10dd1d11d3/grpcio-1.67.1-cp311-cp311-win_amd64.whl", hash = "sha256:786a5b18544622bfb1e25cc08402bd44ea83edfb04b93798d85dca4d1a0b5be5", size = 4354535, upload-time = "2024-10-29T06:24:28.614Z" },
+-    { url = "https://files.pythonhosted.org/packages/6e/25/6f95bd18d5f506364379eabc0d5874873cc7dbdaf0757df8d1e82bc07a88/grpcio-1.67.1-cp312-cp312-linux_armv7l.whl", hash = "sha256:267d1745894200e4c604958da5f856da6293f063327cb049a51fe67348e4f953", size = 5089809, upload-time = "2024-10-29T06:24:31.24Z" },
+-    { url = "https://files.pythonhosted.org/packages/10/3f/d79e32e5d0354be33a12db2267c66d3cfeff700dd5ccdd09fd44a3ff4fb6/grpcio-1.67.1-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:85f69fdc1d28ce7cff8de3f9c67db2b0ca9ba4449644488c1e0303c146135ddb", size = 10981985, upload-time = "2024-10-29T06:24:34.942Z" },
+-    { url = "https://files.pythonhosted.org/packages/21/f2/36fbc14b3542e3a1c20fb98bd60c4732c55a44e374a4eb68f91f28f14aab/grpcio-1.67.1-cp312-cp312-manylinux_2_17_aarch64.whl", hash = "sha256:f26b0b547eb8d00e195274cdfc63ce64c8fc2d3e2d00b12bf468ece41a0423a0", size = 5588770, upload-time = "2024-10-29T06:24:38.145Z" },
+-    { url = "https://files.pythonhosted.org/packages/0d/af/bbc1305df60c4e65de8c12820a942b5e37f9cf684ef5e49a63fbb1476a73/grpcio-1.67.1-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:4422581cdc628f77302270ff839a44f4c24fdc57887dc2a45b7e53d8fc2376af", size = 6214476, upload-time = "2024-10-29T06:24:41.006Z" },
+-    { url = "https://files.pythonhosted.org/packages/92/cf/1d4c3e93efa93223e06a5c83ac27e32935f998bc368e276ef858b8883154/grpcio-1.67.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1d7616d2ded471231c701489190379e0c311ee0a6c756f3c03e6a62b95a7146e", size = 5850129, upload-time = "2024-10-29T06:24:43.553Z" },
+-    { url = "https://files.pythonhosted.org/packages/ae/ca/26195b66cb253ac4d5ef59846e354d335c9581dba891624011da0e95d67b/grpcio-1.67.1-cp312-cp312-musllinux_1_1_i686.whl", hash = "sha256:8a00efecde9d6fcc3ab00c13f816313c040a28450e5e25739c24f432fc6d3c75", size = 6568489, upload-time = "2024-10-29T06:24:46.453Z" },
+-    { url = "https://files.pythonhosted.org/packages/d1/94/16550ad6b3f13b96f0856ee5dfc2554efac28539ee84a51d7b14526da985/grpcio-1.67.1-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:699e964923b70f3101393710793289e42845791ea07565654ada0969522d0a38", size = 6149369, upload-time = "2024-10-29T06:24:49.112Z" },
+-    { url = "https://files.pythonhosted.org/packages/33/0d/4c3b2587e8ad7f121b597329e6c2620374fccbc2e4e1aa3c73ccc670fde4/grpcio-1.67.1-cp312-cp312-win32.whl", hash = "sha256:4e7b904484a634a0fff132958dabdb10d63e0927398273917da3ee103e8d1f78", size = 3599176, upload-time = "2024-10-29T06:24:51.443Z" },
+-    { url = "https://files.pythonhosted.org/packages/7d/36/0c03e2d80db69e2472cf81c6123aa7d14741de7cf790117291a703ae6ae1/grpcio-1.67.1-cp312-cp312-win_amd64.whl", hash = "sha256:5721e66a594a6c4204458004852719b38f3d5522082be9061d6510b455c90afc", size = 4346574, upload-time = "2024-10-29T06:24:54.587Z" },
+-    { url = "https://files.pythonhosted.org/packages/12/d2/2f032b7a153c7723ea3dea08bffa4bcaca9e0e5bdf643ce565b76da87461/grpcio-1.67.1-cp313-cp313-linux_armv7l.whl", hash = "sha256:aa0162e56fd10a5547fac8774c4899fc3e18c1aa4a4759d0ce2cd00d3696ea6b", size = 5091487, upload-time = "2024-10-29T06:24:57.416Z" },
+-    { url = "https://files.pythonhosted.org/packages/d0/ae/ea2ff6bd2475a082eb97db1104a903cf5fc57c88c87c10b3c3f41a184fc0/grpcio-1.67.1-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:beee96c8c0b1a75d556fe57b92b58b4347c77a65781ee2ac749d550f2a365dc1", size = 10943530, upload-time = "2024-10-29T06:25:01.062Z" },
+-    { url = "https://files.pythonhosted.org/packages/07/62/646be83d1a78edf8d69b56647327c9afc223e3140a744c59b25fbb279c3b/grpcio-1.67.1-cp313-cp313-manylinux_2_17_aarch64.whl", hash = "sha256:a93deda571a1bf94ec1f6fcda2872dad3ae538700d94dc283c672a3b508ba3af", size = 5589079, upload-time = "2024-10-29T06:25:04.254Z" },
+-    { url = "https://files.pythonhosted.org/packages/d0/25/71513d0a1b2072ce80d7f5909a93596b7ed10348b2ea4fdcbad23f6017bf/grpcio-1.67.1-cp313-cp313-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:0e6f255980afef598a9e64a24efce87b625e3e3c80a45162d111a461a9f92955", size = 6213542, upload-time = "2024-10-29T06:25:06.824Z" },
+-    { url = "https://files.pythonhosted.org/packages/76/9a/d21236297111052dcb5dc85cd77dc7bf25ba67a0f55ae028b2af19a704bc/grpcio-1.67.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9e838cad2176ebd5d4a8bb03955138d6589ce9e2ce5d51c3ada34396dbd2dba8", size = 5850211, upload-time = "2024-10-29T06:25:10.149Z" },
+-    { url = "https://files.pythonhosted.org/packages/2d/fe/70b1da9037f5055be14f359026c238821b9bcf6ca38a8d760f59a589aacd/grpcio-1.67.1-cp313-cp313-musllinux_1_1_i686.whl", hash = "sha256:a6703916c43b1d468d0756c8077b12017a9fcb6a1ef13faf49e67d20d7ebda62", size = 6572129, upload-time = "2024-10-29T06:25:12.853Z" },
+-    { url = "https://files.pythonhosted.org/packages/74/0d/7df509a2cd2a54814598caf2fb759f3e0b93764431ff410f2175a6efb9e4/grpcio-1.67.1-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:917e8d8994eed1d86b907ba2a61b9f0aef27a2155bca6cbb322430fc7135b7bb", size = 6149819, upload-time = "2024-10-29T06:25:15.803Z" },
+-    { url = "https://files.pythonhosted.org/packages/0a/08/bc3b0155600898fd10f16b79054e1cca6cb644fa3c250c0fe59385df5e6f/grpcio-1.67.1-cp313-cp313-win32.whl", hash = "sha256:e279330bef1744040db8fc432becc8a727b84f456ab62b744d3fdb83f327e121", size = 3596561, upload-time = "2024-10-29T06:25:19.348Z" },
+-    { url = "https://files.pythonhosted.org/packages/5a/96/44759eca966720d0f3e1b105c43f8ad4590c97bf8eb3cd489656e9590baa/grpcio-1.67.1-cp313-cp313-win_amd64.whl", hash = "sha256:fa0c739ad8b1996bd24823950e3cb5152ae91fca1c09cc791190bf1627ffefba", size = 4346042, upload-time = "2024-10-29T06:25:21.939Z" },
++version = "1.81.1"
++source = { registry = "https://pypi.org/simple" }
++dependencies = [
++    { name = "typing-extensions" },
++]
++sdist = { url = "https://files.pythonhosted.org/packages/b0/b5/1ff353970a87eda4c98251e34d2dfd214abd4982dc89119c9252a2a482d2/grpcio-1.81.1.tar.gz", hash = "sha256:6fa10a767143a5e82e8eaab53918af0cd8909a57a27f8cb2288b80a613ac671b", size = 13026582, upload-time = "2026-06-11T12:46:51.673Z" }
++wheels = [
++    { url = "https://files.pythonhosted.org/packages/9a/d5/f2b159d8eec08be2a855ef698f5b6f7f9fdda022e4dd9e4f5d968affd678/grpcio-1.81.1-cp310-cp310-linux_armv7l.whl", hash = "sha256:6f9a0c9c1cc15c112d1c053064fd032b64917062292c3d70aea280e02ae10b77", size = 6086868, upload-time = "2026-06-11T12:44:19.364Z" },
++    { url = "https://files.pythonhosted.org/packages/80/41/9c95232b94b219ed8b14029d9cd000e0381cafba869c451dda60af84f4ba/grpcio-1.81.1-cp310-cp310-macosx_11_0_universal2.whl", hash = "sha256:69ef28e54fc85397f91b8c19592b8ef3d81952080366914823bd8572a2958120", size = 12062291, upload-time = "2026-06-11T12:44:27.142Z" },
++    { url = "https://files.pythonhosted.org/packages/83/8b/bd9284bdd665ddf877a3e8bc2930d1bcf6ebdbae7b0da5c783dc26bd6e33/grpcio-1.81.1-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:15641444eca4a29358107b3dceb74c1c6305c55c822fd199b458aaea4068a7fb", size = 6635242, upload-time = "2026-06-11T12:44:30.741Z" },
++    { url = "https://files.pythonhosted.org/packages/60/24/78fa025517a925f1a17da71c4ef9d5f1c6f9fa65af22dfb523c5c6317a21/grpcio-1.81.1-cp310-cp310-manylinux2014_i686.manylinux_2_17_i686.whl", hash = "sha256:d4b2dddfc219f54f956ccd53cf76a1d338ffe68fc7f2849ec9c7feb9927ff692", size = 7332974, upload-time = "2026-06-11T12:44:33.72Z" },
++    { url = "https://files.pythonhosted.org/packages/f7/11/402295b388dd35861007f8a26a37c2e2f284212d57bdf407c31f36043746/grpcio-1.81.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:ca1cc11d82677b9662082e5478b7528e2b7db7beaa6bdff42bd62789d81be399", size = 6836597, upload-time = "2026-06-11T12:44:36.108Z" },
++    { url = "https://files.pythonhosted.org/packages/4d/71/37b10fd4fd579ffade6e695c14e9df5e8cba9e2365b81c131da438b67c34/grpcio-1.81.1-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:aa2ba7d2ad6df4d80127cea65e5b8d5e2c3adbf153ff4804452836328aca7c54", size = 7440660, upload-time = "2026-06-11T12:44:38.664Z" },
++    { url = "https://files.pythonhosted.org/packages/4a/d5/40203f828abc83d458b634666df6df13778032f178c03845ad5a93682388/grpcio-1.81.1-cp310-cp310-musllinux_1_2_i686.whl", hash = "sha256:592b5fee597faa91cce2dd294dd7d9a1c83d76c4dbf877e33ec1adb866b2fbed", size = 8443171, upload-time = "2026-06-11T12:44:41.678Z" },
++    { url = "https://files.pythonhosted.org/packages/eb/2c/0ed82ea35b5ec595e10444940c1db8c0e0ef57aa46bc8797d5ff838a219e/grpcio-1.81.1-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:62481553b1793a27e9b9c3cf9e5bd483ef045ca72462592074b46d42b0c4d9b9", size = 7868905, upload-time = "2026-06-11T12:44:44.854Z" },
++    { url = "https://files.pythonhosted.org/packages/9e/1f/dcbdc1a68a07cc2b631c3098953794f17d75f93426a019240b90ce5423d6/grpcio-1.81.1-cp310-cp310-win32.whl", hash = "sha256:bb693b1e3d9a2f3fd228e2110daf4b5aeedb36761ca1e4282f74725f6d89f611", size = 4202215, upload-time = "2026-06-11T12:44:47.165Z" },
++    { url = "https://files.pythonhosted.org/packages/75/a1/d7ab9f1f42efcb7d9e6111d38be6b367737a72ea2c534e1f55c81e1b6436/grpcio-1.81.1-cp310-cp310-win_amd64.whl", hash = "sha256:88268ca418cacea64cecb0d1d600d3c6b3a8038fcba02e1e205178c5b1f47661", size = 4936582, upload-time = "2026-06-11T12:44:49.479Z" },
++    { url = "https://files.pythonhosted.org/packages/52/ea/1c2fa386b718ff493225e61cfc052ef400b4d6ffc54cbe261026432624b5/grpcio-1.81.1-cp311-cp311-linux_armv7l.whl", hash = "sha256:d71d30f2d92f67d944631c523713934fee37292469e182ebcd2c1dd8a64ce53f", size = 6093112, upload-time = "2026-06-11T12:44:52.131Z" },
++    { url = "https://files.pythonhosted.org/packages/2b/18/acf45fa8bd1bc5d7b0c2fd3dc4c209379fbd5bb396b440b68a83342226b7/grpcio-1.81.1-cp311-cp311-macosx_11_0_universal2.whl", hash = "sha256:b137f4bf3ada9dc44d411478decc6ff09a79ed30b306cd2abaa98408c3588137", size = 12074277, upload-time = "2026-06-11T12:44:55.354Z" },
++    { url = "https://files.pythonhosted.org/packages/48/d7/ee86a60699b7db039f772a2c4a7e4facc7138984ff42c0130933a0063884/grpcio-1.81.1-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:a3acb384427816dd5d470f47e62137b87f74da694faa8a50147012cf40df276a", size = 6640348, upload-time = "2026-06-11T12:44:59.223Z" },
++    { url = "https://files.pythonhosted.org/packages/26/ee/d2de5e47378ffc207d476c230fea3be4d2601edbce9995f4fe45535d4896/grpcio-1.81.1-cp311-cp311-manylinux2014_i686.manylinux_2_17_i686.whl", hash = "sha256:f9a0ebbe45c29b5e5866593c12b78bd9035f0f0f0d4bc8361680cd580d99db49", size = 7331842, upload-time = "2026-06-11T12:45:02.001Z" },
++    { url = "https://files.pythonhosted.org/packages/23/d6/abeda5c2b896a0b341584fe5ac411bbf72e197a9a374c355fb90965e08d2/grpcio-1.81.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:0a37165cc80b1a368384b383e63a4c38116a10467ae44c904d2d7468c4470ec2", size = 6842229, upload-time = "2026-06-11T12:45:04.76Z" },
++    { url = "https://files.pythonhosted.org/packages/10/1c/1f0da7d590b4aeee006826ba568d0e419ca14b23e18f901a3da3e9fba613/grpcio-1.81.1-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:6282caffb41ec326d4cb67ca9cf53b739d1b2f975a2acb498c7418e9f7d9a416", size = 7446096, upload-time = "2026-06-11T12:45:07.499Z" },
++    { url = "https://files.pythonhosted.org/packages/6a/81/5c505d508f7c887aa7982d21443a4126597c80d34b0bcf40f9cec576d7f3/grpcio-1.81.1-cp311-cp311-musllinux_1_2_i686.whl", hash = "sha256:a35009284d0d3d5c2c9601c164a911b8b4331608d98a9a66d47d97bb2f522b70", size = 8445238, upload-time = "2026-06-11T12:45:10.243Z" },
++    { url = "https://files.pythonhosted.org/packages/f7/b2/524847365122ee509ca17bcc4e092198b700e94af7bfd5bb5e6dd9f3ee66/grpcio-1.81.1-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:1b22c80559854b789a01fd89e8929b3798a156c0829b5282a8939f33ad4115ad", size = 7873989, upload-time = "2026-06-11T12:45:13.102Z" },
++    { url = "https://files.pythonhosted.org/packages/18/fa/07c037c50b006909d1d13a5848774f8aa7b242f70dc03a035c64eea0e6db/grpcio-1.81.1-cp311-cp311-win32.whl", hash = "sha256:428bec0161b48d8cf583c068591bc0016d0d9cfff52462b72b3884861ea768c5", size = 4202223, upload-time = "2026-06-11T12:45:16.166Z" },
++    { url = "https://files.pythonhosted.org/packages/41/ed/6bff15376920942fac6b95b9802752b837437172c9e8fc2d3170546b89cc/grpcio-1.81.1-cp311-cp311-win_amd64.whl", hash = "sha256:30e825f6848d9f18bba350ed6c75c1b02a0b5184474a31db9a32b1fa66fd8c79", size = 4941303, upload-time = "2026-06-11T12:45:18.724Z" },
++    { url = "https://files.pythonhosted.org/packages/85/07/9a979c81738863a738dc23d65177056e71fbb2db817740ed870b33434e7a/grpcio-1.81.1-cp312-cp312-linux_armv7l.whl", hash = "sha256:8b39472beafc0bdcafc4c8c73ad082ebfdb449d566897a61e7acb4fa88089115", size = 6053264, upload-time = "2026-06-11T12:45:21.017Z" },
++    { url = "https://files.pythonhosted.org/packages/75/95/539706ca0d3bd40dbad583dc56fd883da941f37556b629132da5762781b9/grpcio-1.81.1-cp312-cp312-macosx_11_0_universal2.whl", hash = "sha256:12b7524c88d4026d3dcb7b0ebe16b6714f3b4af402ddd0f0639ab064a00c87c3", size = 12052560, upload-time = "2026-06-11T12:45:23.652Z" },
++    { url = "https://files.pythonhosted.org/packages/e0/44/f257b7e0bd69c93b06c6cb8ac8d1b901ccb42bedabd83c1a4c77a71f8810/grpcio-1.81.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:1e123f9b37edb8375fd74130d1f69c944bbf0a7b06761ae7211154b8759e94d2", size = 6595983, upload-time = "2026-06-11T12:45:26.963Z" },
++    { url = "https://files.pythonhosted.org/packages/b9/f3/19782aa04c960968bef8c5539329d8e3bbc3364e2e46d19eb5e5cc5e43b7/grpcio-1.81.1-cp312-cp312-manylinux2014_i686.manylinux_2_17_i686.whl", hash = "sha256:2c2e2ae6867c2966b8daccc836d54a13218e0007e9a490aeb81dd05be64d22d7", size = 7303455, upload-time = "2026-06-11T12:45:29.707Z" },
++    { url = "https://files.pythonhosted.org/packages/eb/8c/dea020b6d91508cd84463917a63149ec196ee7db505d032ae43fcb3303b9/grpcio-1.81.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:766bc7c9a9c340342f4c864ccbda8e78111e4751f13b895812b9c148fb79e9d0", size = 6809167, upload-time = "2026-06-11T12:45:32.52Z" },
++    { url = "https://files.pythonhosted.org/packages/1c/c7/3030dd940408083bd32cd95d634777a71605ade4887154d93e8a89244946/grpcio-1.81.1-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:b259a04a737cb3496be0901328eb8b7552ed8df4865d8c8f1cf1bffcfc0776a3", size = 7412536, upload-time = "2026-06-11T12:45:35.403Z" },
++    { url = "https://files.pythonhosted.org/packages/e0/dd/1172a9e42b168edcafefad6115346ef619a3fc02158bb170e66ced24bcdd/grpcio-1.81.1-cp312-cp312-musllinux_1_2_i686.whl", hash = "sha256:85b10a45b8993d195c4f3ff57025b8d1e11834909ee475c403bfa60cb4caefaf", size = 8408276, upload-time = "2026-06-11T12:45:37.78Z" },
++    { url = "https://files.pythonhosted.org/packages/25/7a/71437c7f3596e5246155c515852795a85a1a8d228190212432b13b97a95d/grpcio-1.81.1-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:8ea1936c26b99999b27479853039a7f34713f56c49375ad52b38535ec93a796c", size = 7849660, upload-time = "2026-06-11T12:45:40.627Z" },
++    { url = "https://files.pythonhosted.org/packages/65/40/7debc0da45d2efebafb82da75644be347497fe4ee250514b8cd3b86ae8bf/grpcio-1.81.1-cp312-cp312-win32.whl", hash = "sha256:a185a04039df6cae8648bc8ab6d6fde7bf94f7188ecf7828e76ac52eef1e41d6", size = 4185819, upload-time = "2026-06-11T12:45:43.027Z" },
++    { url = "https://files.pythonhosted.org/packages/2e/b9/8fe3ba5ed462067774ebc1f9c7f26aa7ebcc280ddd476be107153de1339e/grpcio-1.81.1-cp312-cp312-win_amd64.whl", hash = "sha256:3ad74f8bb1a18963914c5452d289422830b39459e8776ebbcd207be1fbfb1d94", size = 4930461, upload-time = "2026-06-11T12:45:45.775Z" },
++    { url = "https://files.pythonhosted.org/packages/7a/42/dcc2e4b600538ef18327c0839d56b7d3c3812337c5d710df5877dbb39b1e/grpcio-1.81.1-cp313-cp313-linux_armv7l.whl", hash = "sha256:b10e1ff4756ed27d5a29d7fc79cfce7ef1ff56ad20025b89bac7cf79e09abbbe", size = 6054466, upload-time = "2026-06-11T12:45:48.43Z" },
++    { url = "https://files.pythonhosted.org/packages/7b/4a/a36e03210183a8a7d4c80c3936acee679f4bd77d5861f369db47b2cc5f05/grpcio-1.81.1-cp313-cp313-macosx_11_0_universal2.whl", hash = "sha256:819edbdcb42ab8598b494bcf0222684bbb7a3c772bd1b1f0be7e029a6063c28e", size = 12048795, upload-time = "2026-06-11T12:45:54.011Z" },
++    { url = "https://files.pythonhosted.org/packages/b0/d5/d68e30b29098f63beab6fe501100fe82674ff142b32c672532da86a99b3a/grpcio-1.81.1-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:c5bf2dc311127d91230cc79b92188c082634a06cf66c5234db49a43b910183b0", size = 6599094, upload-time = "2026-06-11T12:45:57.799Z" },
++    { url = "https://files.pythonhosted.org/packages/3d/b3/e837954d279754f638a11cca5dcf6b24a005efb398984cefaf7735945a54/grpcio-1.81.1-cp313-cp313-manylinux2014_i686.manylinux_2_17_i686.whl", hash = "sha256:e8ca6a1fcdb2943c9cbc1804a1baf3acb6071d72a471591678ded84218006e14", size = 7307182, upload-time = "2026-06-11T12:46:00.568Z" },
++    { url = "https://files.pythonhosted.org/packages/0d/1e/b47957057e729adc6cdf519a47f8be2562b7140e280f1418443eb4022192/grpcio-1.81.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:e64dd101d380a115cc5a0c7856788adb535f1a4e21fc543775602f8be95180ae", size = 6810962, upload-time = "2026-06-11T12:46:03.312Z" },
++    { url = "https://files.pythonhosted.org/packages/40/26/569868e364e05b19ec8f969da53d230bcd89c962cd198f7c29943155c4d3/grpcio-1.81.1-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:98a07f9bf591e3a8919797bee1c53f026ba4acd587e5a4404c8e57c9ec36b2a5", size = 7415698, upload-time = "2026-06-11T12:46:06.005Z" },
++    { url = "https://files.pythonhosted.org/packages/36/0c/5440a0582cb5653fc42a6e262eeb22700943313f8076f9dc927491b20a59/grpcio-1.81.1-cp313-cp313-musllinux_1_2_i686.whl", hash = "sha256:c261d74b1a945cf895a9d6eccd1685a8e837531beaab782da4d630a8d12deffb", size = 8407779, upload-time = "2026-06-11T12:46:08.84Z" },
++    { url = "https://files.pythonhosted.org/packages/ff/aa/66fe9f39871d766987d869a03ee0842a026f499c7b1e62decb9e78a8088e/grpcio-1.81.1-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:58ad1131c300d3c9b933802b3cc4dc69d380822935ba50b28703156ea826fbf7", size = 7844521, upload-time = "2026-06-11T12:46:12.171Z" },
++    { url = "https://files.pythonhosted.org/packages/f0/9e/69bb7194861bcd28fb3193261d4f9c3831b4446993f002cf59068943e7ab/grpcio-1.81.1-cp313-cp313-win32.whl", hash = "sha256:78e29211f26da2fdd0e9c6d2b79f489476140cf7029b6a64808ade7ca4156a42", size = 4182786, upload-time = "2026-06-11T12:46:15.192Z" },
++    { url = "https://files.pythonhosted.org/packages/0d/20/3da8bb0d637feccdc3e1e419bb511ce93651ce7d54164f95de22cc0b8b34/grpcio-1.81.1-cp313-cp313-win_amd64.whl", hash = "sha256:edb59506291b647a30884b1d51a599d605f40b20af4a7dc3d33786a47a31de60", size = 4928648, upload-time = "2026-06-11T12:46:17.823Z" },
++    { url = "https://files.pythonhosted.org/packages/b6/58/19414622b1bf6981bc9c05a365bd548e71876c89000083b3af489251e9c0/grpcio-1.81.1-cp314-cp314-linux_armv7l.whl", hash = "sha256:506f48f2f9c29b143fca3dad7b0d518c188b6c9648c75a2ae6e2d9f2c13a060b", size = 6055336, upload-time = "2026-06-11T12:46:20.557Z" },
++    { url = "https://files.pythonhosted.org/packages/32/f1/2ec88adb92b0eba970dd0e0e7dd086341daa3c75eba4f735f9e44bf684b0/grpcio-1.81.1-cp314-cp314-macosx_11_0_universal2.whl", hash = "sha256:d865db4a6318e1c1bea83292e0ed231090538fc4ca45425b0f0480eb338bbc6e", size = 12056279, upload-time = "2026-06-11T12:46:24.255Z" },
++    { url = "https://files.pythonhosted.org/packages/41/36/e8c5f8c6ec71de73733695ebc809e98b178b534ec6d8eaa31a7ebab4ad4c/grpcio-1.81.1-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:e2aa72e3ce1770317ef534f63d397b55e130725f5149bd36077c3b539019db27", size = 6608225, upload-time = "2026-06-11T12:46:27.601Z" },
++    { url = "https://files.pythonhosted.org/packages/30/22/96fc577a845ab093326d9ab1adb874bd4936c8cf98ac8ed2f3db13a0a2fb/grpcio-1.81.1-cp314-cp314-manylinux2014_i686.manylinux_2_17_i686.whl", hash = "sha256:0490c30c261eded63f3f354979f9dc4502a9fb944cccb60cd9dc85f5a7349854", size = 7306576, upload-time = "2026-06-11T12:46:30.514Z" },
++    { url = "https://files.pythonhosted.org/packages/76/7b/61dab5d5969f28d97fb1009cead1df0a5cd987d3315e1b37f18a4449f8bc/grpcio-1.81.1-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:410482da976329fe5f4067270401b12cf2bd552ff8020f054ecfaddb5475f9d6", size = 6812165, upload-time = "2026-06-11T12:46:33.699Z" },
++    { url = "https://files.pythonhosted.org/packages/82/78/6e501929d4f5f96462fd82fd9f0f06e5f9612207582b862868d68757b27d/grpcio-1.81.1-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:e3657301562ac3cb8018d30d0d3ebfa39932239f7b5703422057ef14b69949f5", size = 7422962, upload-time = "2026-06-11T12:46:36.511Z" },
++    { url = "https://files.pythonhosted.org/packages/2a/7e/f2157589e66daa78ebb3165942d05a08bdea93b9d11c2bc1e172aef89685/grpcio-1.81.1-cp314-cp314-musllinux_1_2_i686.whl", hash = "sha256:24c8e57504c8f45b237e40b99262d181071e5099a07053695b75d97bb53053a0", size = 8408176, upload-time = "2026-06-11T12:46:39.803Z" },
++    { url = "https://files.pythonhosted.org/packages/da/df/c6717fef716e00d235ffb96123baf6dce76d6004f6233fa767c502861460/grpcio-1.81.1-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:b427c19380991a4eaab2f6144b64b99b412043314c6bf4ab544f97bb31ee4190", size = 7846681, upload-time = "2026-06-11T12:46:43.013Z" },
++    { url = "https://files.pythonhosted.org/packages/36/84/3502e9f210a6a5c4438c8aca3f88edd2e04f6a27f3d41b26cf0a0024b096/grpcio-1.81.1-cp314-cp314-win32.whl", hash = "sha256:61233fe8951e5c85dff81c2458b6528624760166946b5b47ea150a589168411f", size = 4264615, upload-time = "2026-06-11T12:46:45.741Z" },
++    { url = "https://files.pythonhosted.org/packages/ff/b0/4af731ff7492c68a96e4c71bfd0f4590acde92b31c6fe4894e6465c10ff6/grpcio-1.81.1-cp314-cp314-win_amd64.whl", hash = "sha256:3768a5ff1b2125e6f552e561b6b2dca0e64982d8949689b4df145cf8b98d7821", size = 5070275, upload-time = "2026-06-11T12:46:48.486Z" },
+ ]
+ 
+ [[package]]

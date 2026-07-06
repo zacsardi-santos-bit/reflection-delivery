@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p oxlint --lib -E 'test(test_code_action_context)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) oxlint lsp::server_linter::test::test_code_action_context_trigger_kind_invoked",
+    "(2/3) oxlint lsp::server_linter::test::test_code_action_context_only",
+    "(3/3) oxlint lsp::server_linter::test::test_code_action_context_trigger_kind_default"
+  ],
+  "PASS_TO_PASS": []
+}

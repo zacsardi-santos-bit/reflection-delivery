@@ -1,5 +1,0 @@
-I'm working on the ECS agent's service connect integration and need to make the proxy communication endpoints configurable. Right now, the URLs used to fetch stats and drain connections from the service connect proxy are hardcoded inside the agent, which causes problems when different proxy versions expose their API at different paths.
-
-I'd like the task runtime configuration to support specifying the stats and drain request URLs so the agent uses whatever endpoint is configured for a given task rather than a fixed hardcoded one. The service connect manager should store these URLs as part of the runtime configuration when it sets up an agent container, and retrieving the runtime config for a task should reflect those values.
-
-On top of that, I noticed two other things that need to be fixed: service connect containers should be started with an environment variable that explicitly disables IAM authentication for XDS, and the relay socket path that gets set in the container's environment should use the proper Unix socket URI format with the right scheme prefix instead of a bare file path.

@@ -1,0 +1,37 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && SOURCE_DATE_EPOCH= npx vitest run scripts/tests/eval-inventory.test.ts",
+  "test_files": [
+    "scripts/tests/eval-inventory.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory collectInventory discovers eval files from the real evals directory",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory collectInventory returns zero file counts for an evals directory with no matching files",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory collectInventory throws a helpful error when evals directory does not exist",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport renders cases with policies not listed in POLICY_ORDER",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson snapshot: minimal inventory",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson snapshot: mixed policies with diagnostics",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson snapshot: empty inventory",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson produces valid JSON with version field",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson includes correct summary counts",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson maps case fields correctly with nulls for missing optionals",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson uses relative paths not absolute paths",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson relativizes absolute diagnostic path not in file lookup using repoRoot",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson includes policies not listed in POLICY_ORDER in byPolicy",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson emits deterministic output",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson generated field is valid ISO-8601",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson environment overrides for timestamp uses SOURCE_DATE_EPOCH if set",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson environment overrides for timestamp uses epoch 0 if EVAL_INVENTORY_STABLE_DATE is set",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryJson environment overrides for timestamp uses epoch 0 if EVAL_INVENTORY_DETERMINISTIC is set"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport includes summary line with correct counts",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport groups cases by policy in canonical order",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport groups cases by suite name",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport shows diagnostics section when diagnostics exist",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport omits diagnostics section when there are none",
+    "/workspace/repo/scripts/tests/eval-inventory.test.ts::eval-inventory formatInventoryReport includes helper name in case listing"
+  ]
+}

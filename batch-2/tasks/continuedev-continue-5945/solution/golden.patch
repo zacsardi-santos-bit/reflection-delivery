@@ -1,0 +1,357 @@
+diff --git a/core/config/markdown/createMarkdownRule.ts b/core/config/markdown/createMarkdownRule.ts
+new file mode 100644
+index 000000000..8d7b8efe5
+--- /dev/null
++++ b/core/config/markdown/createMarkdownRule.ts
+@@ -0,0 +1,75 @@
++import * as YAML from "yaml";
++import { joinPathsToUri } from "../../util/uri";
++import { RuleFrontmatter } from "./parseMarkdownRule";
++
++export const RULE_FILE_EXTENSION = "md";
++
++/**
++ * Sanitizes a rule name for use in filenames (removes special chars, replaces spaces with dashes)
++ */
++export function sanitizeRuleName(name: string): string {
++  return name
++    .toLowerCase()
++    .replace(/[^a-z0-9\s-]/g, "")
++    .replace(/\s+/g, "-")
++    .replace(/^-+|-+$/g, ""); // Remove leading/trailing dashes
++}
++
++/**
++ * Creates the file path for a rule in the workspace .continue/rules directory
++ */
++export function createRuleFilePath(
++  workspaceDir: string,
++  ruleName: string,
++): string {
++  const safeRuleName = sanitizeRuleName(ruleName);
++  return joinPathsToUri(
++    workspaceDir,
++    ".continue",
++    "rules",
++    `${safeRuleName}.${RULE_FILE_EXTENSION}`,
++  );
++}
++
++/**
++ * Creates markdown content with YAML frontmatter in the format expected by parseMarkdownRule
++ */
++export function createMarkdownWithFrontmatter(
++  frontmatter: RuleFrontmatter,
++  markdown: string,
++): string {
++  const frontmatterStr = YAML.stringify(frontmatter).trim();
++  return `---\n${frontmatterStr}\n---\n\n${markdown}`;
++}
++
++/**
++ * Creates a rule markdown file content from rule components
++ */
++export function createRuleMarkdown(
++  name: string,
++  ruleContent: string,
++  options: {
++    description?: string;
++    globs?: string | string[];
++    alwaysApply?: boolean;
++  } = {},
++): string {
++  const frontmatter: RuleFrontmatter = {};
++
++  if (options.globs) {
++    frontmatter.globs =
++      typeof options.globs === "string" ? options.globs.trim() : options.globs;
++  }
++
++  if (options.description) {
++    frontmatter.description = options.description.trim();
++  }
++
++  if (options.alwaysApply !== undefined) {
++    frontmatter.alwaysApply = options.alwaysApply;
++  }
++
++  const markdownBody = `# ${name}\n\n${ruleContent}`;
++
++  return createMarkdownWithFrontmatter(frontmatter, markdownBody);
++}
+diff --git a/core/config/markdown/index.ts b/core/config/markdown/index.ts
+new file mode 100644
+index 000000000..feb841e75
+--- /dev/null
++++ b/core/config/markdown/index.ts
+@@ -0,0 +1,3 @@
++export * from "./createMarkdownRule";
++export * from "./loadMarkdownRules";
++export * from "./parseMarkdownRule";
+diff --git a/core/config/workspace/workspaceBlocks.ts b/core/config/workspace/workspaceBlocks.ts
+index 009e3cdff..322d8a99e 100644
+--- a/core/config/workspace/workspaceBlocks.ts
++++ b/core/config/workspace/workspaceBlocks.ts
+@@ -2,10 +2,24 @@ import { BlockType, ConfigYaml } from "@continuedev/config-yaml";
+ import * as YAML from "yaml";
+ import { IDE } from "../..";
+ import { joinPathsToUri } from "../../util/uri";
++import { RULE_FILE_EXTENSION, createRuleMarkdown } from "../markdown";
++
++const BLOCK_TYPE_CONFIG: Record<
++  BlockType,
++  { singular: string; filename: string }
++> = {
++  context: { singular: "context", filename: "context" },
++  models: { singular: "model", filename: "model" },
++  rules: { singular: "rule", filename: "rule" },
++  docs: { singular: "doc", filename: "doc" },
++  prompts: { singular: "prompt", filename: "prompt" },
++  mcpServers: { singular: "MCP server", filename: "mcp-server" },
++  data: { singular: "data", filename: "data" },
++};
+ 
+ function getContentsForNewBlock(blockType: BlockType): ConfigYaml {
+   const configYaml: ConfigYaml = {
+-    name: `New ${blockType.slice(0, -1)}`,
++    name: `New ${BLOCK_TYPE_CONFIG[blockType]?.singular}`,
+     version: "0.0.1",
+     schema: "v1",
+   };
+@@ -64,6 +78,43 @@ function getContentsForNewBlock(blockType: BlockType): ConfigYaml {
+   return configYaml;
+ }
+ 
++function getFileExtension(blockType: BlockType): string {
++  return blockType === "rules" ? RULE_FILE_EXTENSION : "yaml";
++}
++
++export function getFileContent(blockType: BlockType): string {
++  if (blockType === "rules") {
++    return createRuleMarkdown("New Rule", "Your rule content", {
++      description: "A description of your rule",
++    });
++  } else {
++    return YAML.stringify(getContentsForNewBlock(blockType));
++  }
++}
++
++export async function findAvailableFilename(
++  baseDirUri: string,
++  blockType: BlockType,
++  fileExists: (uri: string) => Promise<boolean>,
++  extension?: string,
++): Promise<string> {
++  const baseFilename = `new-${BLOCK_TYPE_CONFIG[blockType]?.filename}`;
++  const fileExtension = extension ?? getFileExtension(blockType);
++  let counter = 0;
++  let fileUri: string;
++
++  do {
++    const suffix = counter === 0 ? "" : `-${counter}`;
++    fileUri = joinPathsToUri(
++      baseDirUri,
++      `${baseFilename}${suffix}.${fileExtension}`,
++    );
++    counter++;
++  } while (await fileExists(fileUri));
++
++  return fileUri;
++}
++
+ export async function createNewWorkspaceBlockFile(
+   ide: IDE,
+   blockType: BlockType,
+@@ -77,21 +128,14 @@ export async function createNewWorkspaceBlockFile(
+ 
+   const baseDirUri = joinPathsToUri(workspaceDirs[0], `.continue/${blockType}`);
+ 
+-  // Find the first available filename
+-  let counter = 0;
+-  let fileUri: string;
+-  do {
+-    const suffix = counter === 0 ? "" : `-${counter}`;
+-    fileUri = joinPathsToUri(
+-      baseDirUri,
+-      `new-${blockType.slice(0, -1)}${suffix}.yaml`,
+-    );
+-    counter++;
+-  } while (await ide.fileExists(fileUri));
+-
+-  await ide.writeFile(
+-    fileUri,
+-    YAML.stringify(getContentsForNewBlock(blockType)),
++  const fileUri = await findAvailableFilename(
++    baseDirUri,
++    blockType,
++    ide.fileExists.bind(ide),
+   );
++
++  const fileContent = getFileContent(blockType);
++
++  await ide.writeFile(fileUri, fileContent);
+   await ide.openFile(fileUri);
+ }
+diff --git a/core/tools/definitions/createRuleBlock.ts b/core/tools/definitions/createRuleBlock.ts
+index 011ab4985..ace3bc6b2 100644
+--- a/core/tools/definitions/createRuleBlock.ts
++++ b/core/tools/definitions/createRuleBlock.ts
+@@ -37,11 +37,6 @@ export const createRuleBlock: Tool = {
+           description:
+             "Optional file patterns to which this rule applies (e.g. ['**/*.{ts,tsx}'] or ['src/**/*.ts', 'tests/**/*.ts'])",
+         },
+-        alwaysApply: {
+-          type: "boolean",
+-          description:
+-            "Whether this rule should always be applied regardless of file pattern matching",
+-        },
+       },
+     },
+   },
+diff --git a/core/tools/implementations/createRuleBlock.ts b/core/tools/implementations/createRuleBlock.ts
+index 0d2d58f68..da0f0303b 100644
+--- a/core/tools/implementations/createRuleBlock.ts
++++ b/core/tools/implementations/createRuleBlock.ts
+@@ -1,8 +1,6 @@
+-import * as YAML from "yaml";
+ import { ToolImpl } from ".";
+ import { RuleWithSource } from "../..";
+-import { RuleFrontmatter } from "../../config/markdown/parseMarkdownRule";
+-import { joinPathsToUri } from "../../util/uri";
++import { createRuleFilePath, createRuleMarkdown } from "../../config/markdown";
+ 
+ export type CreateRuleBlockArgs = Pick<
+   Required<RuleWithSource>,
+@@ -14,48 +12,16 @@ export const createRuleBlockImpl: ToolImpl = async (
+   args: CreateRuleBlockArgs,
+   extras,
+ ) => {
+-  // Sanitize rule name for use in filename (remove special chars, replace spaces with dashes)
+-  const safeRuleName = args.name
+-    .toLowerCase()
+-    .replace(/[^a-z0-9\s-]/g, "")
+-    .replace(/\s+/g, "-");
++  const fileContent = createRuleMarkdown(args.name, args.rule, {
++    description: args.description,
++    globs: args.globs,
++  });
+ 
+-  const fileExtension = "md";
+-
+-  const frontmatter: RuleFrontmatter = {};
+-
+-  if (args.globs) {
+-    frontmatter.globs =
+-      typeof args.globs === "string" ? args.globs.trim() : args.globs;
+-  }
+-
+-  if (args.description) {
+-    frontmatter.description = args.description.trim();
+-  }
+-
+-  if (args.alwaysApply !== undefined) {
+-    frontmatter.alwaysApply = args.alwaysApply;
+-  }
+-
+-  const frontmatterYaml = YAML.stringify(frontmatter).trim();
+-  let fileContent = `---
+-${frontmatterYaml}
+----
+-
+-# ${args.name}
+-
+-${args.rule}
+-`;
+   const [localContinueDir] = await extras.ide.getWorkspaceDirs();
+-  const rulesDirUri = joinPathsToUri(
+-    localContinueDir,
+-    ".continue",
+-    "rules",
+-    `${safeRuleName}.${fileExtension}`,
+-  );
++  const ruleFilePath = createRuleFilePath(localContinueDir, args.name);
+ 
+-  await extras.ide.writeFile(rulesDirUri, fileContent);
+-  await extras.ide.openFile(rulesDirUri);
++  await extras.ide.writeFile(ruleFilePath, fileContent);
++  await extras.ide.openFile(ruleFilePath);
+ 
+   return [
+     {
+@@ -63,7 +29,7 @@ ${args.rule}
+       description: args.description || "",
+       uri: {
+         type: "file",
+-        value: rulesDirUri,
++        value: ruleFilePath,
+       },
+       content: `Rule created successfully`,
+     },
+diff --git a/gui/src/components/mainInput/Lump/sections/ExploreBlocksButton.tsx b/gui/src/components/mainInput/Lump/sections/ExploreBlocksButton.tsx
+index 0a24e8fcf..532fc030b 100644
+--- a/gui/src/components/mainInput/Lump/sections/ExploreBlocksButton.tsx
++++ b/gui/src/components/mainInput/Lump/sections/ExploreBlocksButton.tsx
+@@ -7,13 +7,11 @@ import { useContext } from "react";
+ import { GhostButton } from "../../..";
+ import { useAuth } from "../../../../context/Auth";
+ import { IdeMessengerContext } from "../../../../context/IdeMessenger";
+-import { useAppDispatch } from "../../../../redux/hooks";
+ import { fontSize } from "../../../../util";
+ 
+ export function ExploreBlocksButton(props: { blockType: string }) {
+   const { selectedProfile } = useAuth();
+   const ideMessenger = useContext(IdeMessengerContext);
+-  const dispatch = useAppDispatch();
+ 
+   const isLocal = selectedProfile?.profileType === "local";
+ 
+@@ -26,21 +24,11 @@ export function ExploreBlocksButton(props: { blockType: string }) {
+ 
+   const handleClick = () => {
+     if (isLocal) {
+-      ideMessenger.request("config/addLocalWorkspaceBlock", {
++      void ideMessenger.request("config/addLocalWorkspaceBlock", {
+         blockType: props.blockType as BlockType,
+       });
+-      // switch (props.blockType) {
+-      //   case "docs":
+-      //     dispatch(setShowDialog(true));
+-      //     dispatch(setDialogMessage(<AddDocsDialog />));
+-      //     break;
+-      //   default:
+-      //     ideMessenger.request("config/openProfile", {
+-      //       profileId: selectedProfile.id,
+-      //     });
+-      // }
+     } else {
+-      ideMessenger.request("controlPlane/openUrl", {
++      void ideMessenger.request("controlPlane/openUrl", {
+         path: `new?type=block&blockType=${props.blockType}`,
+         orgSlug: undefined,
+       });
+diff --git a/gui/src/components/mainInput/Lump/sections/RulesSection.tsx b/gui/src/components/mainInput/Lump/sections/RulesSection.tsx
+index 00876e845..375bcde29 100644
+--- a/gui/src/components/mainInput/Lump/sections/RulesSection.tsx
++++ b/gui/src/components/mainInput/Lump/sections/RulesSection.tsx
+@@ -6,10 +6,10 @@ import {
+ } from "@heroicons/react/24/outline";
+ import { RuleWithSource } from "core";
+ import {
+-  DEFAULT_CHAT_SYSTEM_MESSAGE,
+-  DEFAULT_CHAT_SYSTEM_MESSAGE_URL,
+   DEFAULT_AGENT_SYSTEM_MESSAGE,
+   DEFAULT_AGENT_SYSTEM_MESSAGE_URL,
++  DEFAULT_CHAT_SYSTEM_MESSAGE,
++  DEFAULT_CHAT_SYSTEM_MESSAGE_URL,
+ } from "core/llm/constructMessages";
+ import { useContext, useMemo } from "react";
+ import { defaultBorderRadius, vscCommandCenterActiveBorder } from "../../..";
+@@ -35,7 +35,7 @@ const RuleCard: React.FC<RuleCardProps> = ({ rule }) => {
+ 
+   const handleOpen = async () => {
+     if (rule.slug) {
+-      ideMessenger.request("controlPlane/openUrl", {
++      void ideMessenger.request("controlPlane/openUrl", {
+         path: `${rule.slug}/new-version`,
+         orgSlug: undefined,
+       });

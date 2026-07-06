@@ -1,0 +1,2139 @@
+diff --git a/.github/workflows/link_check.yml b/.github/workflows/link_check.yml
+index c560293a0..de297c200 100644
+--- a/.github/workflows/link_check.yml
++++ b/.github/workflows/link_check.yml
+@@ -49,11 +49,5 @@ jobs:
+       - name: Check links in notebooks
+         env:
+           LANGCHAIN_API_KEY: test
+-        shell: bash
+-        run: |
+-          if [ "${{ github.event_name }}" != "schedule" ]; then
+-            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '\.ipynb$')
+-            poetry run pytest -o python_files=non_python_only --check-links $CHANGED_FILES --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" --check-links-ignore "https://x.com/.*"
+-          else
+-            poetry run pytest -o python_files=non_python_only --check-links --ignore="*.py" -k .ipynb --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" --check-links-ignore "https://x.com/.*"  ./examples
+-  
++          shell: bash
++        run: poetry run pytest -o python_files=non_python_only --check-links --ignore="*.py" -k .ipynb --check-links-ignore "https://(api|web)\.smith\.langchain\.com/.*" --check-links-ignore "https://x.com/.*" ./examples
+diff --git a/.markdown-link-check.config.json b/.markdown-link-check.config.json
+index 030951e49..ea411bc52 100644
+--- a/.markdown-link-check.config.json
++++ b/.markdown-link-check.config.json
+@@ -1,4 +1,3 @@
+ {
+-  "aliveStatusCodes": [200, 206, 402],
+-  "ignorePatterns": ["*dcbadge.vercel.app*"]
++  "aliveStatusCodes": [200, 206, 402]
+ }
+diff --git a/docs/docs/concepts/.meta.yml b/docs/docs/concepts/.meta.yml
+deleted file mode 100644
+index c630a736f..000000000
+--- a/docs/docs/concepts/.meta.yml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-tags:
+-  - concepts
+-  - conceptual guide
+-  - explanation
+\ No newline at end of file
+diff --git a/docs/docs/how-tos/.meta.yml b/docs/docs/how-tos/.meta.yml
+deleted file mode 100644
+index 5c2f070e5..000000000
+--- a/docs/docs/how-tos/.meta.yml
++++ /dev/null
+@@ -1,5 +0,0 @@
+-tags:
+-  - how-tos
+-  - how-to
+-  - howto
+-  - how to
+\ No newline at end of file
+diff --git a/docs/docs/reference/.meta.yml b/docs/docs/reference/.meta.yml
+deleted file mode 100644
+index ab6e9c382..000000000
+--- a/docs/docs/reference/.meta.yml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-tags:
+-  - reference
+-  - api
+-  - api-reference
+diff --git a/docs/docs/tutorials/.meta.yml b/docs/docs/tutorials/.meta.yml
+deleted file mode 100644
+index cb5179196..000000000
+--- a/docs/docs/tutorials/.meta.yml
++++ /dev/null
+@@ -1,2 +0,0 @@
+-tags:
+-  - tutorials
+\ No newline at end of file
+diff --git a/examples/agent_executor/high-level.ipynb b/examples/agent_executor/high-level.ipynb
+index 17b9207ca..d8422acac 100644
+--- a/examples/agent_executor/high-level.ipynb
++++ b/examples/agent_executor/high-level.ipynb
+@@ -7,15 +7,9 @@
+    "source": [
+     "# (Deprecated) Agent Executor\n",
+     "\n",
+-    "The `create_agent_executor` function is deprecated in favor of [create_react_agent](../chat_agent_executor_with_function_calling/high-level-tools.ipynb).\n",
++    "The `create_agent_executor` function is deprecated in favor of [create_tool_calling_executor](../chat_agent_executor_with_function_calling/high-level-tools.ipynb).\n",
+     "This was done to better align with the underlying model providers' migration from \"function calling\" to \"tool calling\", which typically supports parallel tool usage."
+    ]
+-  },
+-  {
+-   "cell_type": "markdown",
+-   "id": "8aa31ac5",
+-   "metadata": {},
+-   "source": []
+   }
+  ],
+  "metadata": {
+diff --git a/examples/chat_agent_executor_with_function_calling/high-level-tools.ipynb b/examples/chat_agent_executor_with_function_calling/high-level-tools.ipynb
+index d97a49c4d..358ce2447 100644
+--- a/examples/chat_agent_executor_with_function_calling/high-level-tools.ipynb
++++ b/examples/chat_agent_executor_with_function_calling/high-level-tools.ipynb
+@@ -5,7 +5,7 @@
+    "id": "8bcd1a3d-7c50-4f58-be4e-1ed654aa33be",
+    "metadata": {},
+    "source": [
+-    "# ReAct agent with tool calling\n",
++    "# Chat Executor: with tool calling\n",
+     "\n",
+     "This notebook walks through an example creating a ReAct Agent that uses tool calling.\n",
+     "This is useful for getting started quickly.\n",
+@@ -32,7 +32,7 @@
+    "source": [
+     "from langchain_openai import ChatOpenAI\n",
+     "from langchain_community.tools.tavily_search import TavilySearchResults\n",
+-    "from langgraph.prebuilt import create_react_agent\n",
++    "from langgraph.prebuilt import chat_agent_executor\n",
+     "from langchain_core.messages import HumanMessage"
+    ]
+   },
+@@ -64,7 +64,7 @@
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "app = create_react_agent(model, tools=tools)"
++    "app = chat_agent_executor.create_tool_calling_executor(model, tools)"
+    ]
+   },
+   {
+diff --git a/examples/chat_agent_executor_with_function_calling/high-level.ipynb b/examples/chat_agent_executor_with_function_calling/high-level.ipynb
+index 7dc9c4ac2..55d985dda 100644
+--- a/examples/chat_agent_executor_with_function_calling/high-level.ipynb
++++ b/examples/chat_agent_executor_with_function_calling/high-level.ipynb
+@@ -7,15 +7,9 @@
+    "source": [
+     "# (Deprecated) Chat Executor: with function calling\n",
+     "\n",
+-    "The function calling executor is deprecated in favor of [create_react_agent](../chat_agent_executor_with_function_calling/high-level-tools.ipynb).\n",
++    "The function calling executor is deprecated in favor of [create_tool_calling_executor](../chat_agent_executor_with_function_calling/high-level-tools.ipynb).\n",
+     "This was done to better align with the underlying model providers' migration from \"function calling\" to \"tool calling\", which typically supports parallel tool usage."
+    ]
+-  },
+-  {
+-   "cell_type": "markdown",
+-   "id": "0a96f735",
+-   "metadata": {},
+-   "source": []
+   }
+  ],
+  "metadata": {
+diff --git a/examples/customer-support/customer-support.ipynb b/examples/customer-support/customer-support.ipynb
+index de56f7c9c..b00dff705 100644
+--- a/examples/customer-support/customer-support.ipynb
++++ b/examples/customer-support/customer-support.ipynb
+@@ -236,7 +236,7 @@
+    "outputs": [],
+    "source": [
+     "import sqlite3\n",
+-    "from datetime import date, datetime\n",
++    "from datetime import date, datetime, timedelta\n",
+     "from typing import Optional\n",
+     "\n",
+     "import pytz\n",
+@@ -904,7 +904,6 @@
+    "outputs": [],
+    "source": [
+     "from langchain_core.runnables import RunnableLambda\n",
+-    "from langchain_core.messages import ToolMessage\n",
+     "\n",
+     "from langgraph.prebuilt import ToolNode\n",
+     "\n",
+@@ -2323,9 +2322,9 @@
+     "        _print_event(event, _printed)\n",
+     "    snapshot = part_2_graph.get_state(config)\n",
+     "    while snapshot.next:\n",
+-    "        # We have an interrupt! The agent is trying to use a tool, and the user can approve or deny it\n",
+-    "        # Note: This code is all outside of your graph. Typically, you would stream the output to a UI.\n",
+-    "        # Then, you would have the frontend trigger a new run via an API call when the user has provided input.\n",
++    "        # We have an interrupt! The agent is\n",
++    "        # trying to use a tool.\n",
++    "        # The user can approve or deny it\n",
+     "        user_input = input(\n",
+     "            \"Do you approve of the above actions? Type 'y' to continue;\"\n",
+     "            \" otherwise, explain your requested changed.\\n\\n\"\n",
+@@ -2419,6 +2418,7 @@
+     "\n",
+     "    def __call__(self, state: State, config: RunnableConfig):\n",
+     "        while True:\n",
++    "            passenger_id = config.get(\"passenger_id\", None)\n",
+     "            result = self.runnable.invoke(state)\n",
+     "            # If the LLM happens to return an empty response, we will re-prompt it\n",
+     "            # for an actual response.\n",
+@@ -2514,7 +2514,7 @@
+     "\n",
+     "from langgraph.checkpoint.sqlite import SqliteSaver\n",
+     "from langgraph.graph import END, StateGraph\n",
+-    "from langgraph.prebuilt import tools_condition\n",
++    "from langgraph.prebuilt import ToolNode, tools_condition\n",
+     "\n",
+     "builder = StateGraph(State)\n",
+     "\n",
+@@ -2944,9 +2944,9 @@
+     "        _print_event(event, _printed)\n",
+     "    snapshot = part_3_graph.get_state(config)\n",
+     "    while snapshot.next:\n",
+-    "        # We have an interrupt! The agent is trying to use a tool, and the user can approve or deny it\n",
+-    "        # Note: This code is all outside of your graph. Typically, you would stream the output to a UI.\n",
+-    "        # Then, you would have the frontend trigger a new run via an API call when the user has provided input.\n",
++    "        # We have an interrupt! The agent is\n",
++    "        # trying to use a tool.\n",
++    "        # The user can approve or deny it\n",
+     "        user_input = input(\n",
+     "            \"Do you approve of the above actions? Type 'y' to continue;\"\n",
+     "            \" otherwise, explain your requested changed.\\n\\n\"\n",
+@@ -4352,9 +4352,9 @@
+     "        _print_event(event, _printed)\n",
+     "    snapshot = part_4_graph.get_state(config)\n",
+     "    while snapshot.next:\n",
+-    "        # We have an interrupt! The agent is trying to use a tool, and the user can approve or deny it\n",
+-    "        # Note: This code is all outside of your graph. Typically, you would stream the output to a UI.\n",
+-    "        # Then, you would have the frontend trigger a new run via an API call when the user has provided input.\n",
++    "        # We have an interrupt! The agent is\n",
++    "        # trying to use a tool.\n",
++    "        # The user can approve or deny it\n",
+     "        user_input = input(\n",
+     "            \"Do you approve of the above actions? Type 'y' to continue;\"\n",
+     "            \" otherwise, explain your requested changed.\\n\\n\"\n",
+diff --git a/examples/learning.ipynb b/examples/learning.ipynb
+new file mode 100644
+index 000000000..62313b61e
+--- /dev/null
++++ b/examples/learning.ipynb
+@@ -0,0 +1,648 @@
++{
++ "cells": [
++  {
++   "cell_type": "markdown",
++   "id": "51466c8d-8ce4-4b3d-be4e-18fdbeda5f53",
++   "metadata": {},
++   "source": [
++    "# Get/Update State\n",
++    "\n",
++    "When running LangGraph agents, you can easily save good threads and use them in the future.\n",
++    "\n",
++    "**Note:** this requires passing in a checkpointer."
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "7cbd446a-808f-4394-be92-d45ab818953c",
++   "metadata": {},
++   "source": [
++    "## Setup\n",
++    "\n",
++    "First we need to install the packages required"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 1,
++   "id": "af4ce0ba-7596-4e5f-8bf8-0b0bd6e62833",
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "\n",
++      "\u001b[1m[\u001b[0m\u001b[34;49mnotice\u001b[0m\u001b[1;39;49m]\u001b[0m\u001b[39;49m A new release of pip is available: \u001b[0m\u001b[31;49m23.3.1\u001b[0m\u001b[39;49m -> \u001b[0m\u001b[32;49m23.3.2\u001b[0m\n",
++      "\u001b[1m[\u001b[0m\u001b[34;49mnotice\u001b[0m\u001b[1;39;49m]\u001b[0m\u001b[39;49m To update, run: \u001b[0m\u001b[32;49mpip install --upgrade pip\u001b[0m\n"
++     ]
++    }
++   ],
++   "source": [
++    "!pip install --quiet -U langchain langchain_openai tavily-python"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "0abe11f4-62ed-4dc4-8875-3db21e260d1d",
++   "metadata": {},
++   "source": [
++    "Next, we need to set API keys for OpenAI (the LLM we will use) and Tavily (the search tool we will use)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 2,
++   "id": "c903a1cf-2977-4e2d-ad7d-8b3946821d89",
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "OpenAI API Key: ········\n",
++      "Tavily API Key: ········\n"
++     ]
++    }
++   ],
++   "source": [
++    "import os\n",
++    "import getpass\n",
++    "\n",
++    "os.environ[\"OPENAI_API_KEY\"] = getpass.getpass(\"OpenAI API Key:\")\n",
++    "os.environ[\"TAVILY_API_KEY\"] = getpass.getpass(\"Tavily API Key:\")"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "f0ed46a8-effe-4596-b0e1-a6a29ee16f5c",
++   "metadata": {},
++   "source": [
++    "Optionally, we can set API key for [LangSmith tracing](https://smith.langchain.com/), which will give us best-in-class observability."
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "id": "95e25aec-7c9f-4a63-b143-225d0e9a79c3",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "os.environ[\"LANGCHAIN_TRACING_V2\"] = \"true\"\n",
++    "os.environ[\"LANGCHAIN_API_KEY\"] = getpass.getpass(\"LangSmith API Key:\")"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "21ac643b-cb06-4724-a80c-2862ba4773f1",
++   "metadata": {},
++   "source": [
++    "## Set up the tools\n",
++    "\n",
++    "We will first define the tools we want to use.\n",
++    "For this simple example, we will use a built-in search tool via Tavily.\n",
++    "However, it is really easy to create your own tools - see documentation [here](https://python.langchain.com/docs/modules/agents/tools/custom_tools) on how to do that.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 1,
++   "id": "d7ef57dd-5d6e-4ad3-9377-a92201c1310e",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from langchain_community.tools.tavily_search import TavilySearchResults\n",
++    "\n",
++    "tools = [TavilySearchResults(max_results=1)]"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "01885785-b71a-44d1-b1d6-7b5b14d53b58",
++   "metadata": {},
++   "source": [
++    "We can now wrap these tools in a simple ToolNode.\n",
++    "This is a prebuilt node that extracts tool calls from the most recent AIMessage, executes them, and returns a ToolMessage with the results.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 2,
++   "id": "5cf3331e-ccb3-41c8-aeb9-a840a94d41e7",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from langgraph.prebuilt import ToolNode\n",
++    "\n",
++    "tool_node = ToolNode(tools)"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "5497ed70-fce3-47f1-9cad-46f912bad6a5",
++   "metadata": {},
++   "source": [
++    "## Set up the model\n",
++    "\n",
++    "Now we need to load the chat model we want to use.\n",
++    "Importantly, this should satisfy two criteria:\n",
++    "\n",
++    "1. It should work with messages. We will represent all agent state in the form of messages, so it needs to be able to work well with them.\n",
++    "2. It should work with OpenAI function calling. This means it should either be an OpenAI model or a model that exposes a similar interface.\n",
++    "\n",
++    "Note: these model requirements are not requirements for using LangGraph - they are just requirements for this one example."
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 3,
++   "id": "892b54b9-75f0-4804-9ed0-88b5e5532989",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from langchain_openai import ChatOpenAI\n",
++    "\n",
++    "model = ChatOpenAI(temperature=0)"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "a77995c0-bae2-4cee-a036-8688a90f05b9",
++   "metadata": {},
++   "source": [
++    "\n",
++    "After we've done this, we should make sure the model knows that it has these tools available to call.\n",
++    "We can do this using the `.bind_tools()` method, common to many of LangChain's chat models.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 4,
++   "id": "cd3cbae5-d92c-4559-a4aa-44721b80d107",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "model = model.bind_tools(tools)"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "e03c5094-9297-4d19-a04e-3eedc75cefb4",
++   "metadata": {},
++   "source": [
++    "## Define the nodes\n",
++    "\n",
++    "We now need to define a few different nodes in our graph.\n",
++    "In `langgraph`, a node can be either a function or a [runnable](https://python.langchain.com/docs/expression_language/).\n",
++    "There are two main nodes we need for this:\n",
++    "\n",
++    "1. The agent: responsible for deciding what (if any) actions to take.\n",
++    "2. A function to invoke tools: if the agent decides to take an action, this node will then execute that action.\n",
++    "\n",
++    "We will also need to define some edges.\n",
++    "Some of these edges may be conditional.\n",
++    "The reason they are conditional is that based on the output of a node, one of several paths may be taken.\n",
++    "The path that is taken is not known until that node is run (the LLM decides).\n",
++    "\n",
++    "1. Conditional Edge: after the agent is called, we should either:\n",
++    "   a. If the agent said to take an action, then the function to invoke tools should be called\n",
++    "   b. If the agent said that it was finished, then it should finish\n",
++    "2. Normal Edge: after the tools are invoked, it should always go back to the agent to decide what to do next\n",
++    "\n",
++    "Let's define the nodes, as well as a function to decide how what conditional edge to take."
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 77,
++   "id": "3b541bb9-900c-40d0-964d-7b5dfee30667",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "# Define the function that determines whether to continue or not\n",
++    "def should_continue(state):\n",
++    "    last_message = state['messages'][-1]\n",
++    "    # If there is no function call, then we finish\n",
++    "    if not last_message.tool_calls:\n",
++    "        return \"end\"\n",
++    "    # Otherwise if there is, we continue\n",
++    "    else:\n",
++    "        return \"continue\""
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "ffd6e892-946c-4899-8cc0-7c9291c1f73b",
++   "metadata": {},
++   "source": [
++    "## Define the graph\n",
++    "\n",
++    "We can now put it all together and define the graph!"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 154,
++   "id": "812b4e70-4956-4415-8880-db48b3dcbad2",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from langgraph.graph import StateGraph, END\n",
++    "from langgraph.graph.message import add_messages\n",
++    "from langgraph.managed.few_shot import FewShotExamples\n",
++    "from typing import TypedDict, Annotated\n",
++    "from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage\n",
++    "\n",
++    "class BaseState(TypedDict):\n",
++    "    messages: Annotated[list[AnyMessage], add_messages]\n",
++    "    examples: Annotated[list, FewShotExamples]\n",
++    "\n",
++    "\n",
++    "from langchain_core.messages import AIMessage, ToolMessage\n",
++    "def _render_message(m):\n",
++    "    if isinstance(m, HumanMessage):\n",
++    "        return \"Human: \" + m.content\n",
++    "    elif isinstance(m, AIMessage):\n",
++    "        _m = \"AI: \" + m.content\n",
++    "        if len(m.tool_calls) > 0:\n",
++    "            _m += f\" Tools: {m.tool_calls}\"\n",
++    "        return _m\n",
++    "    elif isinstance(m, ToolMessage):\n",
++    "        return \"Tool Result: ...\"\n",
++    "    else:\n",
++    "        raise ValueError\n",
++    "def _render_messages(ms):\n",
++    "    m_string = [_render_message(m) for m in ms]\n",
++    "    return \"\\n\".join(m_string)\n",
++    "\n",
++    "# Define a new graph\n",
++    "workflow = StateGraph(BaseState)\n",
++    "\n",
++    "def _agent(state: BaseState):\n",
++    "    if len(state['examples']) > 0:\n",
++    "        _examples = \"\\n\\n\".join([f\"Example {i}: \" + _render_messages(e['messages']) for i, e in enumerate(state['examples'])])\n",
++    "        system_message = \"\"\"You are a helpful assistant. Below are some examples of interactions you had with users. \\\n",
++    "These were good interactions where the final result they got was the desired one. As much as possible, you should learn from these interactions and mimic them in the future. \\\n",
++    "Pay particularly close attention to when tools are called, and what the inputs are.!\n",
++    "\n",
++    "{examples}\n",
++    "\n",
++    "Assist the user as they require!\"\"\".format(examples=_examples)\n",
++    "\n",
++    "    else:\n",
++    "        system_message = \"\"\"You are a helpful assistant\"\"\"\n",
++    "    output = model.invoke([SystemMessage(content=system_message)] + state['messages'])\n",
++    "    return {\"messages\": [output]}\n",
++    "\n",
++    "# Define the two nodes we will cycle between\n",
++    "workflow.add_node(\"agent\", _agent)\n",
++    "workflow.add_node(\"action\", tool_node)\n",
++    "\n",
++    "# Set the entrypoint as `agent`\n",
++    "# This means that this node is the first one called\n",
++    "workflow.set_entry_point(\"agent\")\n",
++    "\n",
++    "# We now add a conditional edge\n",
++    "workflow.add_conditional_edges(\n",
++    "    # First, we define the start node. We use `agent`.\n",
++    "    # This means these are the edges taken after the `agent` node is called.\n",
++    "    \"agent\",\n",
++    "    # Next, we pass in the function that will determine which node is called next.\n",
++    "    should_continue,\n",
++    "    # Finally we pass in a mapping.\n",
++    "    # The keys are strings, and the values are other nodes.\n",
++    "    # END is a special node marking that the graph should finish.\n",
++    "    # What will happen is we will call `should_continue`, and then the output of that\n",
++    "    # will be matched against the keys in this mapping.\n",
++    "    # Based on which one it matches, that node will then be called.\n",
++    "    {\n",
++    "        # If `tools`, then we call the tool node.\n",
++    "        \"continue\": \"action\",\n",
++    "        # Otherwise we finish.\n",
++    "        \"end\": END,\n",
++    "    },\n",
++    ")\n",
++    "\n",
++    "# We now add a normal edge from `tools` to `agent`.\n",
++    "# This means that after `tools` is called, `agent` node is called next.\n",
++    "workflow.add_edge(\"action\", \"agent\")"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "bc9c8536-f90b-44fa-958d-5df016c66d8f",
++   "metadata": {},
++   "source": [
++    "**Persistence**\n",
++    "\n",
++    "To add in persistence, we pass in a checkpoint when compiling the graph"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 115,
++   "id": "6845ed6a-d155-4105-9160-28849877248b",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from langgraph.checkpoint.sqlite import SqliteSaver\n",
++    "\n",
++    "memory = SqliteSaver.from_conn_string(\":memory:\")"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 155,
++   "id": "79d29875-8aa8-434c-9f20-1c58346a6249",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "# Finally, we compile it!\n",
++    "# This compiles it into a LangChain Runnable,\n",
++    "# meaning you can use it as you would any other runnable\n",
++    "app = workflow.compile(checkpointer=memory, interrupt_before=['action'])"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "e8aff75b-563e-42b1-969b-742201514fc3",
++   "metadata": {},
++   "source": [
++    "## Preview the graph"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 156,
++   "id": "c9ab60eb-679b-4eef-9e64-5ffbf3dffc70",
++   "metadata": {},
++   "outputs": [
++    {
++     "data": {
++      "image/png": "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",
++      "text/plain": [
++       "<IPython.core.display.Image object>"
++      ]
++     },
++     "execution_count": 156,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "from IPython.display import Image\n",
++    "\n",
++    "Image(app.get_graph().draw_png())"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "2a1b56c5-bd61-4192-8bdb-458a1e9f0159",
++   "metadata": {},
++   "source": [
++    "## Interacting with the Agent\n",
++    "\n",
++    "We can now interact with the agent. Between interactions you can get and update state.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 118,
++   "id": "cfd140f0-a5a6-4697-8115-322242f197b5",
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "{'messages': [AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h', 'function': {'arguments': '{\"query\":\"weather in San Francisco\"}', 'name': 'tavily_search_results_json'}, 'type': 'function'}]}, response_metadata={'token_usage': {'completion_tokens': 21, 'prompt_tokens': 94, 'total_tokens': 115}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-3764f79e-17b4-4aa3-bbe4-4f92b11ca52c-0', tool_calls=[{'name': 'tavily_search_results_json', 'args': {'query': 'weather in San Francisco'}, 'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h'}])]}\n"
++     ]
++    }
++   ],
++   "source": [
++    "from langchain_core.messages import HumanMessage\n",
++    "\n",
++    "thread = {\"configurable\": {\"thread_id\": '1'}}\n",
++    "for event in app.stream({\"messages\": [HumanMessage(content=\"whats the weather in sf?\")]}, thread):\n",
++    "    for v in event.values():\n",
++    "        print(v)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 120,
++   "id": "4479f8ae-7c46-4117-8ca2-0a9c2ef9785b",
++   "metadata": {},
++   "outputs": [
++    {
++     "data": {
++      "text/plain": [
++       "{'messages': [HumanMessage(content='whats the weather in sf?', id='1cfd0c2f-9b60-48da-8938-408fd6aeda13'),\n",
++       "  AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h', 'function': {'arguments': '{\"query\":\"weather in San Francisco\"}', 'name': 'tavily_search_results_json'}, 'type': 'function'}]}, response_metadata={'token_usage': {'completion_tokens': 21, 'prompt_tokens': 94, 'total_tokens': 115}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-3764f79e-17b4-4aa3-bbe4-4f92b11ca52c-0', tool_calls=[{'name': 'tavily_search_results_json', 'args': {'query': 'weather in San Francisco'}, 'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h'}])]}"
++      ]
++     },
++     "execution_count": 120,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "current_values = app.get_state(thread)\n",
++    "current_values.values"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 122,
++   "id": "1a0cdb78-40c6-4550-8c27-8f1b02d9e678",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "current_values.values['messages'][-1].tool_calls[0]['args']['query'] = \"weather in San Francisco, Accuweather\""
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 126,
++   "id": "652f699a-89bc-4277-b37a-c3d94b835df5",
++   "metadata": {},
++   "outputs": [
++    {
++     "data": {
++      "text/plain": [
++       "{'configurable': {'thread_id': '1',\n",
++       "  'thread_ts': '2024-04-20T01:13:15.108790+00:00'}}"
++      ]
++     },
++     "execution_count": 126,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "app.update_state(thread, current_values.values)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 127,
++   "id": "e2b29825-a108-4d40-b377-22e8f4629d64",
++   "metadata": {},
++   "outputs": [
++    {
++     "data": {
++      "text/plain": [
++       "StateSnapshot(values={'messages': [HumanMessage(content='whats the weather in sf?', id='1cfd0c2f-9b60-48da-8938-408fd6aeda13'), AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h', 'function': {'arguments': '{\"query\":\"weather in San Francisco\"}', 'name': 'tavily_search_results_json'}, 'type': 'function'}]}, response_metadata={'token_usage': {'completion_tokens': 21, 'prompt_tokens': 94, 'total_tokens': 115}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-3764f79e-17b4-4aa3-bbe4-4f92b11ca52c-0', tool_calls=[{'name': 'tavily_search_results_json', 'args': {'query': 'weather in San Francisco, Accuweather'}, 'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h'}])]}, next=('action',), config={'configurable': {'thread_id': '1', 'thread_ts': '2024-04-20T01:13:15.108790+00:00'}}, parent_config=None)"
++      ]
++     },
++     "execution_count": 127,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "app.get_state(thread)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 128,
++   "id": "f0aad8a6-056e-42ca-bbc2-b45f768da75f",
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "{'messages': [ToolMessage(content='[{\"url\": \"https://www.weatherapi.com/\", \"content\": \"{\\'location\\': {\\'name\\': \\'San Francisco\\', \\'region\\': \\'California\\', \\'country\\': \\'United States of America\\', \\'lat\\': 37.78, \\'lon\\': -122.42, \\'tz_id\\': \\'America/Los_Angeles\\', \\'localtime_epoch\\': 1713575495, \\'localtime\\': \\'2024-04-19 18:11\\'}, \\'current\\': {\\'last_updated_epoch\\': 1713574800, \\'last_updated\\': \\'2024-04-19 18:00\\', \\'temp_c\\': 16.1, \\'temp_f\\': 61.0, \\'is_day\\': 1, \\'condition\\': {\\'text\\': \\'Sunny\\', \\'icon\\': \\'//cdn.weatherapi.com/weather/64x64/day/113.png\\', \\'code\\': 1000}, \\'wind_mph\\': 16.1, \\'wind_kph\\': 25.9, \\'wind_degree\\': 300, \\'wind_dir\\': \\'WNW\\', \\'pressure_mb\\': 1015.0, \\'pressure_in\\': 29.97, \\'precip_mm\\': 0.0, \\'precip_in\\': 0.0, \\'humidity\\': 67, \\'cloud\\': 0, \\'feelslike_c\\': 16.1, \\'feelslike_f\\': 61.0, \\'vis_km\\': 16.0, \\'vis_miles\\': 9.0, \\'uv\\': 4.0, \\'gust_mph\\': 20.6, \\'gust_kph\\': 33.1}}\"}]', name='tavily_search_results_json', id='8c7e9af3-6569-4982-a83d-be1ec02f828a', tool_call_id='call_yQrJa8CEOfKBdpVl80jzWf5h')]}\n",
++      "{'messages': [AIMessage(content='The current weather in San Francisco is sunny with a temperature of 61.0°F (16.1°C). The wind speed is 25.9 km/h coming from the west-northwest direction. The humidity is at 67%, and there is no precipitation at the moment.', response_metadata={'token_usage': {'completion_tokens': 59, 'prompt_tokens': 476, 'total_tokens': 535}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'stop', 'logprobs': None}, id='run-7d652a0d-cb00-4857-b9fb-d3e37b0a6d23-0')]}\n"
++     ]
++    }
++   ],
++   "source": [
++    "for event in app.stream(None, thread):\n",
++    "    for v in event.values():\n",
++    "        print(v)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 129,
++   "id": "84748206-975e-4a33-a178-d43df683298c",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "chkpnt_tuple = memory.get_tuple({\"configurable\": {\"thread_id\": \"1\"}})\n",
++    "config = chkpnt_tuple.config\n",
++    "checkpoint = chkpnt_tuple.checkpoint\n",
++    "metadata = chkpnt_tuple.metadata\n",
++    "\n",
++    "# mark as \"good\"\n",
++    "metadata[\"score\"] = 1\n",
++    "memory.put(config, checkpoint, metadata)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 130,
++   "id": "ce7fa228-8c37-4001-afd4-0001b268e1db",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "examples = list(memory.search({\"score\": 1}))"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 131,
++   "id": "0543a501-b4cb-4890-8236-3350ebee5af9",
++   "metadata": {},
++   "outputs": [
++    {
++     "data": {
++      "text/plain": [
++       "[CheckpointTuple(config={'configurable': {'thread_id': '1', 'thread_ts': '2024-04-20T01:13:36.933600+00:00'}}, checkpoint={'v': 1, 'ts': '2024-04-20T01:13:36.933600+00:00', 'channel_values': {'messages': [HumanMessage(content='whats the weather in sf?', id='1cfd0c2f-9b60-48da-8938-408fd6aeda13'), AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h', 'function': {'arguments': '{\"query\":\"weather in San Francisco\"}', 'name': 'tavily_search_results_json'}, 'type': 'function'}]}, response_metadata={'token_usage': {'completion_tokens': 21, 'prompt_tokens': 94, 'total_tokens': 115}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-3764f79e-17b4-4aa3-bbe4-4f92b11ca52c-0', tool_calls=[{'name': 'tavily_search_results_json', 'args': {'query': 'weather in San Francisco, Accuweather'}, 'id': 'call_yQrJa8CEOfKBdpVl80jzWf5h'}]), ToolMessage(content='[{\"url\": \"https://www.weatherapi.com/\", \"content\": \"{\\'location\\': {\\'name\\': \\'San Francisco\\', \\'region\\': \\'California\\', \\'country\\': \\'United States of America\\', \\'lat\\': 37.78, \\'lon\\': -122.42, \\'tz_id\\': \\'America/Los_Angeles\\', \\'localtime_epoch\\': 1713575495, \\'localtime\\': \\'2024-04-19 18:11\\'}, \\'current\\': {\\'last_updated_epoch\\': 1713574800, \\'last_updated\\': \\'2024-04-19 18:00\\', \\'temp_c\\': 16.1, \\'temp_f\\': 61.0, \\'is_day\\': 1, \\'condition\\': {\\'text\\': \\'Sunny\\', \\'icon\\': \\'//cdn.weatherapi.com/weather/64x64/day/113.png\\', \\'code\\': 1000}, \\'wind_mph\\': 16.1, \\'wind_kph\\': 25.9, \\'wind_degree\\': 300, \\'wind_dir\\': \\'WNW\\', \\'pressure_mb\\': 1015.0, \\'pressure_in\\': 29.97, \\'precip_mm\\': 0.0, \\'precip_in\\': 0.0, \\'humidity\\': 67, \\'cloud\\': 0, \\'feelslike_c\\': 16.1, \\'feelslike_f\\': 61.0, \\'vis_km\\': 16.0, \\'vis_miles\\': 9.0, \\'uv\\': 4.0, \\'gust_mph\\': 20.6, \\'gust_kph\\': 33.1}}\"}]', name='tavily_search_results_json', id='8c7e9af3-6569-4982-a83d-be1ec02f828a', tool_call_id='call_yQrJa8CEOfKBdpVl80jzWf5h'), AIMessage(content='The current weather in San Francisco is sunny with a temperature of 61.0°F (16.1°C). The wind speed is 25.9 km/h coming from the west-northwest direction. The humidity is at 67%, and there is no precipitation at the moment.', response_metadata={'token_usage': {'completion_tokens': 59, 'prompt_tokens': 476, 'total_tokens': 535}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'stop', 'logprobs': None}, id='run-7d652a0d-cb00-4857-b9fb-d3e37b0a6d23-0')], 'agent': {'messages': [AIMessage(content='The current weather in San Francisco is sunny with a temperature of 61.0°F (16.1°C). The wind speed is 25.9 km/h coming from the west-northwest direction. The humidity is at 67%, and there is no precipitation at the moment.', response_metadata={'token_usage': {'completion_tokens': 59, 'prompt_tokens': 476, 'total_tokens': 535}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'stop', 'logprobs': None}, id='run-7d652a0d-cb00-4857-b9fb-d3e37b0a6d23-0')]}}, 'channel_versions': defaultdict(<class 'int'>, {'__start__': 1, 'messages': 6, 'start:agent': 2, 'action': 5, 'agent': 6, 'branch:agent:should_continue:action': 4}), 'versions_seen': defaultdict(<function _seen_dict at 0x10832bce0>, {'__start__': defaultdict(<class 'int'>, {'__start__': 1}), 'agent': defaultdict(<class 'int'>, {'start:agent': 2, 'action': 5}), 'action': defaultdict(<class 'int'>, {'branch:agent:should_continue:action': 4}), '__interrupt__': defaultdict(<class 'int'>, {'messages': 4})})}, parent_config={'configurable': {'thread_id': '1', 'thread_ts': '2024-04-20T01:13:35.392072+00:00'}})]"
++      ]
++     },
++     "execution_count": 131,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "examples"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 157,
++   "id": "336a70d3-d8c7-4310-a373-df2be3320030",
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "{'messages': [AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_amNrYLgitup6hCDiHUYKwodH', 'function': {'arguments': '{\"query\":\"weather in Los Angeles, Accuweather\"}', 'name': 'tavily_search_results_json'}, 'type': 'function'}]}, response_metadata={'token_usage': {'completion_tokens': 25, 'prompt_tokens': 296, 'total_tokens': 321}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-6b852685-e84f-48e7-b8d0-5b0a44ac9776-0', tool_calls=[{'name': 'tavily_search_results_json', 'args': {'query': 'weather in Los Angeles, Accuweather'}, 'id': 'call_amNrYLgitup6hCDiHUYKwodH'}])]}\n"
++     ]
++    }
++   ],
++   "source": [
++    "thread = {\"configurable\": {\"thread_id\": '7'}}\n",
++    "for event in app.stream({\"messages\": [HumanMessage(content=\"whats the weather in la?\")]}, thread):\n",
++    "    for v in event.values():\n",
++    "        print(v)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 158,
++   "id": "ab245e7c-e47d-45e4-8b79-361fab359e76",
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "{'messages': [ToolMessage(content='[{\"url\": \"https://www.weatherapi.com/\", \"content\": \"{\\'location\\': {\\'name\\': \\'Los Angeles\\', \\'region\\': \\'California\\', \\'country\\': \\'United States of America\\', \\'lat\\': 34.05, \\'lon\\': -118.24, \\'tz_id\\': \\'America/Los_Angeles\\', \\'localtime_epoch\\': 1713576177, \\'localtime\\': \\'2024-04-19 18:22\\'}, \\'current\\': {\\'last_updated_epoch\\': 1713575700, \\'last_updated\\': \\'2024-04-19 18:15\\', \\'temp_c\\': 17.8, \\'temp_f\\': 64.0, \\'is_day\\': 1, \\'condition\\': {\\'text\\': \\'Partly cloudy\\', \\'icon\\': \\'//cdn.weatherapi.com/weather/64x64/day/116.png\\', \\'code\\': 1003}, \\'wind_mph\\': 4.3, \\'wind_kph\\': 6.8, \\'wind_degree\\': 250, \\'wind_dir\\': \\'WSW\\', \\'pressure_mb\\': 1014.0, \\'pressure_in\\': 29.94, \\'precip_mm\\': 0.0, \\'precip_in\\': 0.0, \\'humidity\\': 65, \\'cloud\\': 50, \\'feelslike_c\\': 17.8, \\'feelslike_f\\': 64.0, \\'vis_km\\': 16.0, \\'vis_miles\\': 9.0, \\'uv\\': 5.0, \\'gust_mph\\': 10.3, \\'gust_kph\\': 16.6}}\"}]', name='tavily_search_results_json', id='6477bd73-bdf1-46c5-ab0a-cc808b1a183e', tool_call_id='call_amNrYLgitup6hCDiHUYKwodH')]}\n",
++      "{'messages': [AIMessage(content='The current weather in Los Angeles is partly cloudy with a temperature of 64.0°F (17.8°C). The wind speed is 6.8 km/h coming from the west-southwest direction. The humidity is at 65%, and there is no precipitation at the moment.', response_metadata={'token_usage': {'completion_tokens': 60, 'prompt_tokens': 679, 'total_tokens': 739}, 'model_name': 'gpt-3.5-turbo', 'system_fingerprint': 'fp_c2295e73ad', 'finish_reason': 'stop', 'logprobs': None}, id='run-a604c04e-c3c3-4545-804f-a89aee6bf516-0')]}\n"
++     ]
++    }
++   ],
++   "source": [
++    "for event in app.stream(None, thread):\n",
++    "    for v in event.values():\n",
++    "        print(v)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "id": "9ab115de-9b11-4e8b-8ace-c23e1369300b",
++   "metadata": {},
++   "outputs": [],
++   "source": []
++  }
++ ],
++ "metadata": {
++  "kernelspec": {
++   "display_name": "Python 3 (ipykernel)",
++   "language": "python",
++   "name": "python3"
++  },
++  "language_info": {
++   "codemirror_mode": {
++    "name": "ipython",
++    "version": 3
++   },
++   "file_extension": ".py",
++   "mimetype": "text/x-python",
++   "name": "python",
++   "nbconvert_exporter": "python",
++   "pygments_lexer": "ipython3",
++   "version": "3.11.9"
++  }
++ },
++ "nbformat": 4,
++ "nbformat_minor": 5
++}
+diff --git a/examples/plan-and-execute/plan-and-execute.ipynb b/examples/plan-and-execute/plan-and-execute.ipynb
+index cbd691966..89c2f188d 100644
+--- a/examples/plan-and-execute/plan-and-execute.ipynb
++++ b/examples/plan-and-execute/plan-and-execute.ipynb
+@@ -44,10 +44,20 @@
+    "execution_count": 1,
+    "id": "b451b58a-89bd-424f-8c06-0d9fe325e01b",
+    "metadata": {},
+-   "outputs": [],
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "\n",
++      "\u001b[1m[\u001b[0m\u001b[34;49mnotice\u001b[0m\u001b[1;39;49m]\u001b[0m\u001b[39;49m A new release of pip is available: \u001b[0m\u001b[31;49m23.3.2\u001b[0m\u001b[39;49m -> \u001b[0m\u001b[32;49m24.0\u001b[0m\n",
++      "\u001b[1m[\u001b[0m\u001b[34;49mnotice\u001b[0m\u001b[1;39;49m]\u001b[0m\u001b[39;49m To update, run: \u001b[0m\u001b[32;49mpython3.11 -m pip install --upgrade pip\u001b[0m\n"
++     ]
++    }
++   ],
+    "source": [
+     "%%capture --no-stderr\n",
+-    "%pip install --quiet -U langchain-community langchain-openai tavily-python"
++    "%pip install --quiet -U langchain langchain_openai tavily-python"
+    ]
+   },
+   {
+@@ -60,7 +70,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 1,
++   "execution_count": 3,
+    "id": "ce438281-08d5-4804-afe7-e4089f7b016b",
+    "metadata": {},
+    "outputs": [],
+@@ -68,14 +78,8 @@
+     "import os\n",
+     "import getpass\n",
+     "\n",
+-    "\n",
+-    "def _set_env(var: str):\n",
+-    "    if not os.environ.get(var):\n",
+-    "        os.environ[var] = getpass.getpass(f\"{var}: \")\n",
+-    "\n",
+-    "\n",
+-    "_set_env(\"OPENAI_API_KEY\")\n",
+-    "_set_env(\"TAVILY_API_KEY\")"
++    "os.environ[\"OPENAI_API_KEY\"] = getpass.getpass(\"OpenAI API Key:\")\n",
++    "os.environ[\"TAVILY_API_KEY\"] = getpass.getpass(\"Tavily API Key:\")"
+    ]
+   },
+   {
+@@ -88,13 +92,13 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 2,
++   "execution_count": 4,
+    "id": "01f460d1-f26f-47d1-ae76-de74d5d851de",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+     "os.environ[\"LANGCHAIN_TRACING_V2\"] = \"true\"\n",
+-    "_set_env(\"LANGCHAIN_API_KEY\")\n",
++    "os.environ[\"LANGCHAIN_API_KEY\"] = getpass.getpass(\"LangSmith API Key:\")\n",
+     "os.environ[\"LANGCHAIN_PROJECT\"] = \"Plan-and-execute\""
+    ]
+   },
+@@ -110,7 +114,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 3,
++   "execution_count": 5,
+    "id": "25b9ec62-0675-4715-811c-9b32c635b22f",
+    "metadata": {},
+    "outputs": [],
+@@ -133,61 +137,67 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 5,
++   "execution_count": 6,
+    "id": "72d233ca-1dbf-4b43-b680-b3bf39e3691f",
+    "metadata": {},
+-   "outputs": [
+-    {
+-     "name": "stdout",
+-     "output_type": "stream",
+-     "text": [
+-      "================================\u001b[1m System Message \u001b[0m================================\n",
+-      "\n",
+-      "You are a helpful assistant.\n",
+-      "\n",
+-      "=============================\u001b[1m Messages Placeholder \u001b[0m=============================\n",
+-      "\n",
+-      "\u001b[33;1m\u001b[1;3m{{messages}}\u001b[0m\n"
+-     ]
+-    }
+-   ],
++   "outputs": [],
+    "source": [
+     "from langchain import hub\n",
++    "from langchain.agents import create_openai_functions_agent\n",
+     "from langchain_openai import ChatOpenAI\n",
+-    "from langgraph.prebuilt import create_react_agent\n",
+     "\n",
+     "# Get the prompt to use - you can modify this!\n",
+-    "prompt = hub.pull(\"wfh/react-agent-executor\")\n",
+-    "prompt.pretty_print()\n",
+-    "\n",
++    "prompt = hub.pull(\"hwchase17/openai-functions-agent\")\n",
+     "# Choose the LLM that will drive the agent\n",
+     "llm = ChatOpenAI(model=\"gpt-4-turbo-preview\")\n",
+-    "agent_executor = create_react_agent(llm, tools, messages_modifier=prompt)"
++    "# Construct the OpenAI Functions agent\n",
++    "agent_runnable = create_openai_functions_agent(llm, tools, prompt)"
+    ]
+   },
+   {
+    "cell_type": "code",
+    "execution_count": 7,
++   "id": "a3ea9bd3-87d9-4a78-aec6-8ab4bf34479b",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from langgraph.prebuilt import create_agent_executor"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 8,
++   "id": "998aebde-c204-494f-930c-14747ed34861",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "agent_executor = create_agent_executor(agent_runnable, tools)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 9,
+    "id": "746e697a-dec4-4342-a814-9b3456828169",
+    "metadata": {},
+    "outputs": [
+     {
+      "data": {
+       "text/plain": [
+-       "{'messages': [HumanMessage(content='who is the winnner of the us open', id='7c491c9f-cdbe-4761-b93b-3e4eeb526c97'),\n",
+-       "  AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_MMmwmxwxRH2hrmMbuBeMGsXW', 'function': {'arguments': '{\"query\":\"US Open 2023 winner\"}', 'name': 'tavily_search_results_json'}, 'type': 'function'}]}, response_metadata={'token_usage': {'completion_tokens': 23, 'prompt_tokens': 97, 'total_tokens': 120}, 'model_name': 'gpt-4-turbo-preview', 'system_fingerprint': None, 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-855f7cff-62a2-4dd8-b71b-707b507b00a4-0', tool_calls=[{'name': 'tavily_search_results_json', 'args': {'query': 'US Open 2023 winner'}, 'id': 'call_MMmwmxwxRH2hrmMbuBeMGsXW'}]),\n",
+-       "  ToolMessage(content='[{\"url\": \"https://www.bbc.com/sport/tennis/66766337\", \"content\": \": Stephen Nolan goes in to find out\\\\nRelated Topics\\\\nTop Stories\\\\nTen Hag on Rashford plus transfer news, WSL deadline day\\\\nSpinner Leach doubtful for second Test in India\\\\nMcIlroy \\'changes tune\\' on LIV players\\' punishment\\\\nElsewhere on the BBC\\\\nDiscover the tropical paradise of Thailand\\\\nFrom the secrets of the South to the mysterious North...\\\\n Djokovic offered to help up Medvedev when the Russian fell to the court in the third set\\\\nDjokovic\\'s relentless returning continued to draw mistakes out of Medvedev, who was serving poorly and making loose errors, at the start of the second set.\\\\n It was clear to see Medvedev had needed to level by taking that second set to stand any real chance of victory and the feeling of the inevitable was heightened by the Russian needing treatment on a shoulder injury before the third set.\\\\n Djokovic shows again why he can never be written off\\\\nWhen Djokovic lost to 20-year-old Carlos Alcaraz in the Wimbledon final it felt like a changing-of-the-guard moment in the men\\'s game.\\\\n The inside story of Putin\\\\u2019s invasion of Ukraine\\\\nTold by the Presidents and Prime Ministers tasked with making the critical decisions\\\\nSurvival of the wittiest!\\\\n\"}, {\"url\": \"https://www.usopen.org/en_US/news/articles/2023-09-10/novak_djokovic_wins_24th_grand_slam_singles_title_at_2023_us_open.html\", \"content\": \"WHAT HAPPENED: Novak Djokovic handled the weight of history to defeat Daniil Medvedev on Sunday in the 2023 US Open men\\'s singles final. With a 6-3, 7-6(5), 6-3 victory, the 36-year-old won his 24th Grand Slam singles title, tying Margaret Court\\'s record and bolstering his case to be considered the greatest tennis player of all time.\"}, {\"url\": \"https://apnews.com/article/us-open-final-live-updates-djokovic-medvedev-8a4a26f8d77ef9ab2fb3efe1096dce7e\", \"content\": \"Novak Djokovic wins the US Open for his 24th Grand Slam title by beating Daniil Medvedev\\\\nNovak Djokovic, of Serbia, holds up the championship trophy after defeating Daniil Medvedev, of Russia, in the men\\\\u2019s singles final of the U.S. Open tennis championships, Sunday, Sept. 10, 2023, in New York. (AP Photo/Manu Fernandez)\\\\nDaniil Medvedev, of Russia, sits on the court after a rally against Novak Djokovic, of Serbia, during the men\\\\u2019s singles final of the U.S. Open tennis championships, Sunday, Sept. 10, 2023, in New York. (AP Photo/Manu Fernandez)\\\\nDaniil Medvedev, of Russia, sits on the court after a rally against Novak Djokovic, of Serbia, during the men\\\\u2019s singles final of the U.S. Open tennis championships, Sunday, Sept. 10, 2023, in New York. (AP Photo/Manu Fernandez)\\\\nDaniil Medvedev, of Russia, sits on the court after a rally against Novak Djokovic, of Serbia, during the men\\\\u2019s singles final of the U.S. Open tennis championships, Sunday, Sept. 10, 2023, in New York. Novak Djokovic, of Serbia, reveals a t-shirt honoring the number 24 and Kobe Bryant after defeating Daniil Medvedev, of Russia, in the men\\\\u2019s singles final of the U.S. Open tennis championships, Sunday, Sept. 10, 2023, in New York.\"}]', name='tavily_search_results_json', id='ca0ff812-6c7f-43c1-9d0e-427cfe8da332', tool_call_id='call_MMmwmxwxRH2hrmMbuBeMGsXW'),\n",
+-       "  AIMessage(content=\"The winner of the 2023 US Open men's singles was Novak Djokovic. He defeated Daniil Medvedev with a score of 6-3, 7-6(5), 6-3 in the final, winning his 24th Grand Slam singles title. This victory tied Margaret Court's record and bolstered Djokovic's claim to be considered one of the greatest tennis players of all time.\", response_metadata={'token_usage': {'completion_tokens': 89, 'prompt_tokens': 972, 'total_tokens': 1061}, 'model_name': 'gpt-4-turbo-preview', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None}, id='run-ef37a655-1ea6-470e-a310-8f125ca48015-0')]}"
++       "{'input': 'who is the winnner of the us open',\n",
++       " 'chat_history': [],\n",
++       " 'agent_outcome': AgentFinish(return_values={'output': 'The winners of the US Open in 2023 are as follows:\\n\\n- **Golf:** Wyndham Clark won the 2023 US Open in golf, holding his nerve against Rory McIlroy.\\n  \\n- **Tennis:** The 2023 US Open tennis tournament details include information about the event and its prize money, but the winner has not been specified in the provided information. As of the last update, Carlos Alcaraz won the 2022 US Open tennis title.'}, log='The winners of the US Open in 2023 are as follows:\\n\\n- **Golf:** Wyndham Clark won the 2023 US Open in golf, holding his nerve against Rory McIlroy.\\n  \\n- **Tennis:** The 2023 US Open tennis tournament details include information about the event and its prize money, but the winner has not been specified in the provided information. As of the last update, Carlos Alcaraz won the 2022 US Open tennis title.'),\n",
++       " 'intermediate_steps': [(AgentActionMessageLog(tool='tavily_search_results_json', tool_input={'query': 'US Open winner 2023'}, log=\"\\nInvoking: `tavily_search_results_json` with `{'query': 'US Open winner 2023'}`\\n\\n\\n\", message_log=[AIMessage(content='', additional_kwargs={'function_call': {'arguments': '{\"query\":\"US Open winner 2023\"}', 'name': 'tavily_search_results_json'}})]),\n",
++       "   '[{\\'url\\': \\'https://en.wikipedia.org/wiki/2023_U.S._Open_(golf)\\', \\'content\\': \\'Contents 2023 U.S. Open (golf)  was selected to host the 123rd U.S. Open in June 2023. The USGA had made overtures to the club for at least 26 years.  Final round[edit] Sunday, June 18, 2023  Third round[edit] Saturday, June 17, 2023Rory McIlroy falls short as Wyndham Clark holds nerve to win 2023 US Open. The Guardian. Archived from the original on June 19, 2023. Retrieved June 20, 2023.\\'}, {\\'url\\': \\'https://en.wikipedia.org/wiki/2023_US_Open_(tennis)\\', \\'content\\': \"The 2023 US Open is the 143rd consecutive edition of the tournament and will take place at the USTA Billie Jean King  The total overall prize money for the 2023 US Open totals $65 million, 8% more than the 2022 edition.[4]  Contents 2023 US Open (tennis) Wheelchair boys\\' singles Dahnon Ward Wheelchair girls\\' singles Ksénia Chasteau  contract with ESPN, in which the broadcaster holds exclusive rights to the entire tournament and the US Open Series.Carlos Alcaraz defeats Casper Ruud for 2022 US Open title, world No. 1 ranking. US Open. Archived from the original on September 12, 2022. Retrieved September\\\\xa0...\"}]')]}"
+       ]
+      },
+-     "execution_count": 7,
++     "execution_count": 9,
+      "metadata": {},
+      "output_type": "execute_result"
+     }
+    ],
+    "source": [
+     "agent_executor.invoke(\n",
+-    "    {\"messages\": [(\"user\", \"who is the winnner of the us open\")]}\n",
++    "    {\"input\": \"who is the winnner of the us open\", \"chat_history\": []}\n",
+     ")"
+    ]
+   },
+@@ -209,11 +219,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 8,
++   "execution_count": 10,
+    "id": "8eeeaeea-8f10-4fbe-8e24-4e1a2381a009",
+    "metadata": {},
+    "outputs": [],
+    "source": [
++    "from langchain_core.pydantic_v1 import BaseModel, Field\n",
+     "from typing import List, Tuple, Annotated, TypedDict\n",
+     "import operator\n",
+     "\n",
+@@ -237,12 +248,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 10,
++   "execution_count": 11,
+    "id": "4a88626d-6dfd-4488-87f0-a9a0dd6da44c",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "from langchain_core.pydantic_v1 import BaseModel, Field\n",
++    "from langchain_core.pydantic_v1 import BaseModel\n",
+     "\n",
+     "\n",
+     "class Plan(BaseModel):\n",
+@@ -255,49 +266,46 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 36,
++   "execution_count": 12,
+    "id": "ec7b1867-1ea3-4df3-9a98-992a1c32ec49",
+    "metadata": {},
+    "outputs": [],
+    "source": [
++    "from langchain.chains.openai_functions import create_structured_output_runnable\n",
+     "from langchain_core.prompts import ChatPromptTemplate\n",
+     "\n",
+-    "planner_prompt = ChatPromptTemplate.from_messages(\n",
+-    "    [\n",
+-    "        (\n",
+-    "            \"system\",\n",
+-    "            \"\"\"For the given objective, come up with a simple step by step plan. \\\n",
++    "planner_prompt = ChatPromptTemplate.from_template(\n",
++    "    \"\"\"For the given objective, come up with a simple step by step plan. \\\n",
+     "This plan should involve individual tasks, that if executed correctly will yield the correct answer. Do not add any superfluous steps. \\\n",
+-    "The result of the final step should be the final answer. Make sure that each step has all the information needed - do not skip steps.\"\"\",\n",
+-    "        ),\n",
+-    "        (\"placeholder\", \"{messages}\"),\n",
+-    "    ]\n",
++    "The result of the final step should be the final answer. Make sure that each step has all the information needed - do not skip steps.\n",
++    "\n",
++    "{objective}\"\"\"\n",
+     ")\n",
+-    "planner = planner_prompt | ChatOpenAI(\n",
+-    "    model=\"gpt-4o\", temperature=0\n",
+-    ").with_structured_output(Plan)"
++    "planner = create_structured_output_runnable(\n",
++    "    Plan, ChatOpenAI(model=\"gpt-4-turbo-preview\", temperature=0), planner_prompt\n",
++    ")"
+    ]
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 37,
++   "execution_count": 13,
+    "id": "67ce37b7-e089-479b-bcb8-c3f5d9874613",
+    "metadata": {},
+    "outputs": [
+     {
+      "data": {
+       "text/plain": [
+-       "Plan(steps=['Identify the current winner of the Australian Open.', 'Determine the hometown of the identified winner.'])"
++       "Plan(steps=['Identify the current year.', 'Search for the Australia Open winner of the current year.', 'Find the hometown of the identified winner.'])"
+       ]
+      },
+-     "execution_count": 37,
++     "execution_count": 13,
+      "metadata": {},
+      "output_type": "execute_result"
+     }
+    ],
+    "source": [
+     "planner.invoke(\n",
+-    "    {\"messages\": [(\"user\", \"what is the hometown of the current Australia open winner?\")]}\n",
++    "    {\"objective\": \"what is the hometown of the current Australia open winner?\"}\n",
+     ")"
+    ]
+   },
+@@ -313,12 +321,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 19,
++   "execution_count": 14,
+    "id": "ec2d12cc-016a-44d1-aa08-4c5ce1e8fe2a",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "from typing import Union\n",
++    "from langchain.chains.openai_functions import create_openai_fn_runnable\n",
+     "\n",
+     "\n",
+     "class Response(BaseModel):\n",
+@@ -327,15 +335,6 @@
+     "    response: str\n",
+     "\n",
+     "\n",
+-    "class Act(BaseModel):\n",
+-    "    \"\"\"Action to perform.\"\"\"\n",
+-    "\n",
+-    "    action: Union[Response, Plan] = Field(\n",
+-    "        description=\"Action to perform. If you want to respond to user, use Response. \"\n",
+-    "        \"If you need to further use tools to get the answer, use Plan.\"\n",
+-    "    )\n",
+-    "\n",
+-    "\n",
+     "replanner_prompt = ChatPromptTemplate.from_template(\n",
+     "    \"\"\"For the given objective, come up with a simple step by step plan. \\\n",
+     "This plan should involve individual tasks, that if executed correctly will yield the correct answer. Do not add any superfluous steps. \\\n",
+@@ -354,7 +353,11 @@
+     ")\n",
+     "\n",
+     "\n",
+-    "replanner = replanner_prompt | ChatOpenAI(model=\"gpt-4o\", temperature=0).with_structured_output(Act)"
++    "replanner = create_openai_fn_runnable(\n",
++    "    [Plan, Response],\n",
++    "    ChatOpenAI(model=\"gpt-4-turbo-preview\", temperature=0),\n",
++    "    replanner_prompt,\n",
++    ")"
+    ]
+   },
+   {
+@@ -369,54 +372,47 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 54,
++   "execution_count": 15,
+    "id": "6c8e0dad-bcea-4c9a-8922-0d820892e2d0",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "from typing import Literal\n",
+-    "\n",
+-    "\n",
+     "async def execute_step(state: PlanExecute):\n",
+-    "    plan = state[\"plan\"]\n",
+-    "    plan_str = \"\\n\".join(f\"{i+1}. {step}\" for i, step in enumerate(plan))\n",
+-    "    task = plan[0]\n",
+-    "    task_formatted = f\"\"\"For the following plan:\n",
+-    "{plan_str}\\n\\nYou are tasked with executing step {1}, {task}.\"\"\"\n",
+-    "    agent_response = await agent_executor.ainvoke({\"messages\": [(\"user\", task_formatted)]})\n",
++    "    task = state[\"plan\"][0]\n",
++    "    agent_response = await agent_executor.ainvoke({\"input\": task, \"chat_history\": []})\n",
+     "    return {\n",
+-    "        \"past_steps\": (task, agent_response[\"messages\"][-1].content),\n",
++    "        \"past_steps\": (task, agent_response[\"agent_outcome\"].return_values[\"output\"])\n",
+     "    }\n",
+     "\n",
+     "\n",
+     "async def plan_step(state: PlanExecute):\n",
+-    "    plan = await planner.ainvoke({\"messages\": [(\"user\", state[\"input\"])]})\n",
++    "    plan = await planner.ainvoke({\"objective\": state[\"input\"]})\n",
+     "    return {\"plan\": plan.steps}\n",
+     "\n",
+     "\n",
+     "async def replan_step(state: PlanExecute):\n",
+     "    output = await replanner.ainvoke(state)\n",
+-    "    if isinstance(output.action, Response):\n",
+-    "        return {\"response\": output.action.response}\n",
++    "    if isinstance(output, Response):\n",
++    "        return {\"response\": output.response}\n",
+     "    else:\n",
+-    "        return {\"plan\": output.action.steps}\n",
++    "        return {\"plan\": output.steps}\n",
+     "\n",
+     "\n",
+-    "def should_end(state: PlanExecute) -> Literal[\"agent\", \"__end__\"]:\n",
++    "def should_end(state: PlanExecute):\n",
+     "    if \"response\" in state and state[\"response\"]:\n",
+-    "        return \"__end__\"\n",
++    "        return \"True\"\n",
+     "    else:\n",
+-    "        return \"agent\""
++    "        return \"False\""
+    ]
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 55,
++   "execution_count": 16,
+    "id": "e954cea0-5ccc-46c2-a27b-f5b7185b597d",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "from langgraph.graph import StateGraph\n",
++    "from langgraph.graph import StateGraph, END\n",
+     "\n",
+     "workflow = StateGraph(PlanExecute)\n",
+     "\n",
+@@ -441,6 +437,11 @@
+     "    \"replan\",\n",
+     "    # Next, we pass in the function that will determine which node is called next.\n",
+     "    should_end,\n",
++    "    {\n",
++    "        # If `tools`, then we call the tool node.\n",
++    "        \"True\": END,\n",
++    "        \"False\": \"agent\",\n",
++    "    },\n",
+     ")\n",
+     "\n",
+     "# Finally, we compile it!\n",
+@@ -451,30 +452,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 56,
+-   "id": "7363e528",
+-   "metadata": {},
+-   "outputs": [
+-    {
+-     "data": {
+-      "image/jpeg": "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",
+-      "text/plain": [
+-       "<IPython.core.display.Image object>"
+-      ]
+-     },
+-     "metadata": {},
+-     "output_type": "display_data"
+-    }
+-   ],
+-   "source": [
+-    "from IPython.display import Image, display\n",
+-    "\n",
+-    "display(Image(app.get_graph(xray=True).draw_mermaid_png()))"
+-   ]
+-  },
+-  {
+-   "cell_type": "code",
+-   "execution_count": 57,
++   "execution_count": 17,
+    "id": "b8ac1f67-e87a-427c-b4f7-44351295b788",
+    "metadata": {},
+    "outputs": [
+@@ -482,23 +460,21 @@
+      "name": "stdout",
+      "output_type": "stream",
+      "text": [
+-      "{'plan': ['Identify the winner of the 2024 Australian Open.', 'Determine the hometown of the identified winner.']}\n",
+-      "{'past_steps': ('Identify the winner of the 2024 Australian Open.', 'The winner of the 2024 Australian Open is Jannik Sinner. He claimed his first Grand Slam title in an epic comeback win over Daniil Medvedev.')}\n",
+-      "{'plan': ['Determine the hometown of Jannik Sinner.']}\n",
+-      "{'past_steps': ('Determine the hometown of Jannik Sinner.', \"Jannik Sinner's hometown is not directly mentioned in the provided excerpts. To ensure accurate information, it's advisable to check a reliable source like his official ATP profile or a detailed biography which often includes personal background details such as hometown.\")}\n",
+-      "{'plan': [\"Check Jannik Sinner's official ATP profile or a detailed biography to find his hometown.\", 'Return the hometown of Jannik Sinner.']}\n",
+-      "{'past_steps': (\"Check Jannik Sinner's official ATP profile or a detailed biography to find his hometown.\", \"Jannik Sinner's official ATP profile can be found at this URL: [ATP Tour - Jannik Sinner](https://www.atptour.com/en/players/jannik-sinner/s0ag/overview). This profile will contain detailed information including his biography, rankings, playing activity, and potentially his hometown.\")}\n",
+-      "{'plan': [\"Visit Jannik Sinner's official ATP profile or a detailed biography to find his hometown.\", 'Return the hometown of Jannik Sinner.']}\n",
+-      "{'past_steps': (\"Visit Jannik Sinner's official ATP profile or a detailed biography to find his hometown.\", \"Jannik Sinner's official ATP profile and other reliable sources do not explicitly mention his hometown in the search results provided. For detailed information, visiting his ATP profile directly or consulting a comprehensive biography would be recommended to find this specific information.\")}\n",
+-      "{'plan': [\"Visit Jannik Sinner's official ATP profile or a detailed biography to find his hometown.\", 'Return the hometown of Jannik Sinner.']}\n",
+-      "{'past_steps': (\"Visit Jannik Sinner's official ATP profile or a detailed biography to find his hometown.\", \"Jannik Sinner's official ATP profile can be accessed [here](https://www.atptour.com/en/players/jannik-sinner/s0ag/overview), although it does not directly provide his hometown in the snippet. For detailed information, such as his hometown, it might be necessary to visit the profile directly or consult other detailed biographies like the one available on [Wikipedia](https://en.wikipedia.org/wiki/Jannik_Sinner), which often include personal details such as hometowns.\")}\n",
+-      "{'plan': [\"Visit Jannik Sinner's official ATP profile or his Wikipedia page to find his hometown.\", 'Return the hometown of Jannik Sinner.']}\n",
+-      "{'past_steps': (\"Visit Jannik Sinner's official ATP profile or his Wikipedia page to find his hometown.\", \"Jannik Sinner's official ATP profile and Wikipedia page did not directly mention his hometown in the provided excerpts. However, further information can typically be found by visiting the full pages directly through the provided links:\\n\\n- [Jannik Sinner's ATP Tour Profile](https://www.atptour.com/en/players/jannik-sinner/s0ag/overview)\\n- [Jannik Sinner's Wikipedia Page](https://en.wikipedia.org/wiki/Jannik_Sinner)\\n\\nFor detailed information, including his hometown, I recommend checking these sources.\")}\n",
+-      "{'response': 'The necessary steps to find the hometown of the 2024 Australian Open winner, Jannik Sinner, have already been completed. His hometown is Innichen, Italy.'}\n"
++      "{'plan': ['Wait until the 2024 Australian Open concludes.', 'Identify the winner of the 2024 Australian Open.', \"Research the winner's biography to find their hometown.\", 'The hometown of the 2024 Australian Open winner is the result found in the previous step.']}\n",
++      "{'past_steps': ('Wait until the 2024 Australian Open concludes.', \"I can't wait for real-time events. However, I can help you find out the schedule, expected dates, or any other information regarding the 2024 Australian Open. How can I assist you further?\")}\n",
++      "{'plan': ['Identify the winner of the 2024 Australian Open.', \"Research the winner's biography to find their hometown.\", 'The hometown of the 2024 Australian Open winner is the result found in the previous step.']}\n",
++      "{'past_steps': ('Identify the winner of the 2024 Australian Open.', \"The winners of the 2024 Australian Open were Jannik Sinner in the men's singles and Aryna Sabalenka in the women's singles. Jannik Sinner defeated Daniil Medvedev in the final, while specific details about Aryna Sabalenka's match are not provided in the information retrieved.\")}\n",
++      "{'plan': [\"Research Jannik Sinner's biography to find his hometown.\", \"Research Aryna Sabalenka's biography to find her hometown.\", 'The hometowns of the 2024 Australian Open winners are the results found in the previous steps.']}\n",
++      "{'past_steps': (\"Research Jannik Sinner's biography to find his hometown.\", 'Jannik Sinner was born in San Candido (Innichen), Italy, on August 16, 2001. This is considered his hometown.')}\n",
++      "{'plan': [\"Research Aryna Sabalenka's biography to find her hometown.\", 'The hometowns of the 2024 Australian Open winners are the results found in the previous steps.']}\n",
++      "{'past_steps': (\"Research Aryna Sabalenka's biography to find her hometown.\", 'Aryna Sabalenka was born in Minsk, the capital of Belarus.')}\n",
++      "{'response': 'The hometowns of the 2024 Australian Open winners are San Candido (Innichen), Italy for Jannik Sinner, and Minsk, Belarus for Aryna Sabalenka. No further steps are needed as the final answer has been reached.'}\n"
+      ]
+     }
+    ],
+    "source": [
++    "from langchain_core.messages import HumanMessage\n",
++    "\n",
+     "config = {\"recursion_limit\": 50}\n",
+     "inputs = {\"input\": \"what is the hometown of the 2024 Australia open winner?\"}\n",
+     "async for event in app.astream(inputs, config=config):\n",
+diff --git a/langgraph/checkpoint/aiosqlite.py b/langgraph/checkpoint/aiosqlite.py
+index 38fb1eb67..39e4e467e 100644
+--- a/langgraph/checkpoint/aiosqlite.py
++++ b/langgraph/checkpoint/aiosqlite.py
+@@ -14,7 +14,7 @@ from langgraph.checkpoint.base import (
+     CheckpointTuple,
+     SerializerProtocol,
+ )
+-from langgraph.checkpoint.sqlite import JsonPlusSerializerCompat
++from langgraph.checkpoint.sqlite import JsonPlusSerializerCompat, search_where
+ 
+ 
+ class AsyncSqliteSaver(BaseCheckpointSaver, AbstractAsyncContextManager):
+@@ -255,6 +255,50 @@ class AsyncSqliteSaver(BaseCheckpointSaver, AbstractAsyncContextManager):
+                     else None,
+                 )
+ 
++    async def asearch(
++        self,
++        metadata_filter: CheckpointMetadata,
++        *,
++        before: Optional[RunnableConfig] = None,
++        limit: Optional[int] = None,
++    ) -> AsyncIterator[CheckpointTuple]:
++        """Search for checkpoints by metadata asynchronously.
++
++        This method retrieves a list of checkpoint tuples from the SQLite
++        database based on the provided metadata filter. The metadata filter does
++        not need to contain all keys defined in the CheckpointMetadata class.
++        The checkpoints are ordered by timestamp in descending order.
++
++        Args:
++            metadata_filter (CheckpointMetadata): The metadata filter to use for searching the checkpoints.
++            before (Optional[RunnableConfig]): If provided, only checkpoints before the specified timestamp are returned. Defaults to None.
++            limit (Optional[int]): The maximum number of checkpoints to return. Defaults to None.
++
++        Yields:
++            Iterator[CheckpointTuple]: An iterator of checkpoint tuples.
++        """
++        await self.setup()
++
++        # construct query
++        SELECT = "SELECT thread_id, thread_ts, parent_ts, checkpoint, metadata FROM checkpoints "
++        WHERE, params = search_where(metadata_filter, before)
++        ORDER_BY = "ORDER BY thread_ts DESC "
++        LIMIT = f"LIMIT {limit}" if limit else ""
++
++        query = f"{SELECT}{WHERE}{ORDER_BY}{LIMIT}"
++
++        # execute query
++        async with self.conn.execute(query, params) as cursor:
++            async for thread_id, thread_ts, parent_ts, value, metadata in cursor:
++                yield CheckpointTuple(
++                    {"configurable": {"thread_id": thread_id, "thread_ts": thread_ts}},
++                    self.serde.loads(value),
++                    self.serde.loads(metadata) if metadata is not None else {},
++                    {"configurable": {"thread_id": thread_id, "thread_ts": parent_ts}}
++                    if parent_ts
++                    else None,
++                )
++
+     async def aput(
+         self,
+         config: RunnableConfig,
+diff --git a/langgraph/checkpoint/base.py b/langgraph/checkpoint/base.py
+index 695eb3d96..5a9dc99ce 100644
+--- a/langgraph/checkpoint/base.py
++++ b/langgraph/checkpoint/base.py
+@@ -36,6 +36,11 @@ class CheckpointMetadata(TypedDict, total=False):
+ 
+     Mapping from node name to writes emitted by that node.
+     """
++    score: Optional[int]
++    """The score of the checkpoint.
++    
++    The score can be used to mark a checkpoint as "good".
++    """
+ 
+ 
+ class Checkpoint(TypedDict):
+@@ -148,6 +153,15 @@ class BaseCheckpointSaver(ABC):
+     ) -> Iterator[CheckpointTuple]:
+         raise NotImplementedError
+ 
++    def search(
++        self,
++        metadata_filter: CheckpointMetadata,
++        *,
++        before: Optional[RunnableConfig] = None,
++        limit: Optional[int] = None,
++    ) -> Iterator[CheckpointTuple]:
++        raise NotImplementedError
++
+     def put(
+         self,
+         config: RunnableConfig,
+@@ -173,6 +187,16 @@ class BaseCheckpointSaver(ABC):
+         raise NotImplementedError
+         yield
+ 
++    def asearch(
++        self,
++        metadata_filter: CheckpointMetadata,
++        *,
++        before: Optional[RunnableConfig] = None,
++        limit: Optional[int] = None,
++    ) -> AsyncIterator[CheckpointTuple]:
++        raise NotImplementedError
++        yield
++
+     async def aput(
+         self,
+         config: RunnableConfig,
+diff --git a/langgraph/checkpoint/memory.py b/langgraph/checkpoint/memory.py
+index 04f94afd5..57217f6ad 100644
+--- a/langgraph/checkpoint/memory.py
++++ b/langgraph/checkpoint/memory.py
+@@ -1,5 +1,6 @@
+ import asyncio
+ from collections import defaultdict
++from functools import partial
+ from typing import AsyncIterator, Iterator, Optional
+ 
+ from langchain_core.runnables import RunnableConfig
+@@ -119,6 +120,57 @@ class MemorySaver(BaseCheckpointSaver):
+                 metadata=self.serde.loads(metadata),
+             )
+ 
++    def search(
++        self,
++        metadata_filter: CheckpointMetadata,
++        *,
++        before: Optional[RunnableConfig] = None,
++        limit: Optional[int] = None,
++    ) -> Iterator[CheckpointTuple]:
++        """Search for checkpoints by metadata.
++
++        This method retrieves a list of checkpoint tuples from the in-memory
++        storage based on the provided metadata filter. The metadata filter does
++        not need to contain all keys defined in the CheckpointMetadata class.
++        The checkpoints are ordered by timestamp in descending order.
++
++        Args:
++            metadata_filter (CheckpointMetadata): The metadata filter to use for searching the checkpoints.
++            before (Optional[RunnableConfig]): If provided, only checkpoints before the specified timestamp are returned. Defaults to None.
++            limit (Optional[int]): The maximum number of checkpoints to return. Defaults to None.
++
++        Yields:
++            Iterator[CheckpointTuple]: An iterator of checkpoint tuples.
++        """
++        for thread_id, checkpoints in self.storage.items():
++            for ts, (checkpoint_bytes, metadata_bytes) in checkpoints.items():
++                # filter by thread_ts
++                if before and ts >= before["configurable"]["thread_ts"]:
++                    continue
++
++                # check if all query key/value pairs match the metadata
++                metadata = self.serde.loads(metadata_bytes)
++                all_keys_match = all(
++                    query_value == metadata[query_key]
++                    for query_key, query_value in metadata_filter.items()
++                )
++
++                # if all query key/value pairs match, yield the checkpoint
++                if all_keys_match:
++                    # limit search results
++                    if limit is not None:
++                        if limit <= 0:
++                            break
++                        limit -= 1
++
++                    yield CheckpointTuple(
++                        config={
++                            "configurable": {"thread_id": thread_id, "thread_ts": ts}
++                        },
++                        checkpoint=self.serde.loads(checkpoint_bytes),
++                        metadata=metadata,
++                    )
++
+     def put(
+         self,
+         config: RunnableConfig,
+@@ -188,6 +240,29 @@ class MemorySaver(BaseCheckpointSaver):
+             except StopIteration:
+                 return
+ 
++    async def asearch(
++        self,
++        metadata_filter: CheckpointMetadata,
++        *,
++        before: Optional[RunnableConfig] = None,
++        limit: Optional[int] = None,
++    ) -> AsyncIterator[CheckpointTuple]:
++        """Asynchronous version of search.
++
++        This method is an asynchronous wrapper around search that runs the synchronous
++        method in a separate thread using asyncio.
++        """
++        loop = asyncio.get_running_loop()
++        iter = await loop.run_in_executor(
++            None, partial(self.search, before=before, limit=limit), metadata_filter
++        )
++
++        while True:
++            if item := await loop.run_in_executor(None, next, iter, None):
++                yield item
++            else:
++                break
++
+     async def aput(
+         self,
+         config: RunnableConfig,
+diff --git a/langgraph/checkpoint/sqlite.py b/langgraph/checkpoint/sqlite.py
+index 84dd96a82..bceb5dddd 100644
+--- a/langgraph/checkpoint/sqlite.py
++++ b/langgraph/checkpoint/sqlite.py
+@@ -1,9 +1,10 @@
++import json
+ import pickle
+ import sqlite3
+ import threading
+ from contextlib import AbstractContextManager, contextmanager
+ from types import TracebackType
+-from typing import Any, Iterator, Optional
++from typing import Any, Iterator, Optional, Tuple
+ 
+ from langchain_core.runnables import RunnableConfig
+ from typing_extensions import Self
+@@ -337,6 +338,57 @@ class SqliteSaver(BaseCheckpointSaver, AbstractContextManager):
+                     ),
+                 )
+ 
++    def search(
++        self,
++        metadata_filter: CheckpointMetadata,
++        *,
++        before: Optional[RunnableConfig] = None,
++        limit: Optional[int] = None,
++    ) -> Iterator[CheckpointTuple]:
++        """Search for checkpoints by metadata.
++
++        This method retrieves a list of checkpoint tuples from the SQLite
++        database based on the provided metadata filter. The metadata filter does
++        not need to contain all keys defined in the CheckpointMetadata class.
++        The checkpoints are ordered by timestamp in descending order.
++
++        Args:
++            metadata_filter (CheckpointMetadata): The metadata filter to use for searching the checkpoints.
++            before (Optional[RunnableConfig]): If provided, only checkpoints before the specified timestamp are returned. Defaults to None.
++            limit (Optional[int]): The maximum number of checkpoints to return. Defaults to None.
++
++        Yields:
++            Iterator[CheckpointTuple]: An iterator of checkpoint tuples.
++        """
++        # construct query
++        SELECT = "SELECT thread_id, thread_ts, parent_ts, checkpoint, metadata FROM checkpoints "
++        WHERE, params = search_where(metadata_filter, before)
++        ORDER_BY = "ORDER BY thread_ts DESC "
++        LIMIT = f"LIMIT {limit}" if limit else ""
++
++        query = f"{SELECT}{WHERE}{ORDER_BY}{LIMIT}"
++
++        # execute query
++        with self.cursor(transaction=False) as cur:
++            cur.execute(query, params)
++
++            for thread_id, thread_ts, parent_ts, value, metadata in cur:
++                yield CheckpointTuple(
++                    {"configurable": {"thread_id": thread_id, "thread_ts": thread_ts}},
++                    self.serde.loads(value),
++                    self.serde.loads(metadata) if metadata is not None else {},
++                    (
++                        {
++                            "configurable": {
++                                "thread_id": thread_id,
++                                "thread_ts": parent_ts,
++                            }
++                        }
++                        if parent_ts
++                        else None
++                    ),
++                )
++
+     def put(
+         self,
+         config: RunnableConfig,
+@@ -382,3 +434,89 @@ class SqliteSaver(BaseCheckpointSaver, AbstractContextManager):
+                 "thread_ts": checkpoint["ts"],
+             }
+         }
++
++
++def search_where(
++    metadata_filter: CheckpointMetadata,
++    before: Optional[RunnableConfig] = None,
++) -> Tuple[str, Tuple[Any, ...]]:
++    """Return WHERE clause predicates for (a)search() given metadata filter
++    and `before` config.
++
++    This method returns a tuple of a string and a tuple of values. The string
++    is the parametered WHERE clause predicate (including the WHERE keyword):
++    "WHERE column1 = ? AND column2 IS ?". The tuple of values contains the
++    values for each of the corresponding parameters.
++    """
++    where = "WHERE "
++    param_values = ()
++
++    # construct predicate for metadata filter
++    metadata_predicate, metadata_values = _metadata_predicate(metadata_filter)
++    if metadata_predicate != "":
++        where += metadata_predicate
++        param_values += metadata_values
++
++    # construct predicate for `before`
++    if before is not None:
++        if metadata_predicate != "":
++            where += "AND thread_ts < ? "
++        else:
++            where += "thread_ts < ? "
++
++        param_values += (before["configurable"]["thread_ts"],)
++
++    if where == "WHERE ":
++        # no predicates, return an empty WHERE clause string
++        return ("", ())
++    else:
++        return (where, param_values)
++
++
++def _metadata_predicate(
++    metadata_filter: CheckpointMetadata,
++) -> Tuple[str, Tuple[Any, ...]]:
++    """Return WHERE clause predicates for (a)search() given metadata filter.
++
++    This method returns a tuple of a string and a tuple of values. The string
++    is the parametered WHERE clause predicate (excluding the WHERE keyword):
++    "column1 = ? AND column2 IS ?". The tuple of values contains the values
++    for each of the corresponding parameters.
++    """
++
++    def _where_value(query_value: Any) -> Tuple[str, Any]:
++        """Return tuple of operator and value for WHERE clause predicate."""
++        if query_value is None:
++            return ("IS ?", None)
++        elif (
++            isinstance(query_value, str)
++            or isinstance(query_value, int)
++            or isinstance(query_value, float)
++        ):
++            return ("= ?", query_value)
++        elif isinstance(query_value, bool):
++            return ("= ?", 1 if query_value else 0)
++        elif isinstance(query_value, dict) or isinstance(query_value, list):
++            # query value for JSON object cannot have trailing space after separators (, :)
++            # SQLite json_extract() returns JSON string without whitespace
++            return ("= ?", json.dumps(query_value, separators=(",", ":")))
++        else:
++            return ("= ?", str(query_value))
++
++    predicate = ""
++    param_values = ()
++
++    # process metadata query
++    for query_key, query_value in metadata_filter.items():
++        operator, param_value = _where_value(query_value)
++        predicate += (
++            f"json_extract(CAST(metadata AS TEXT), '$.{query_key}') {operator} AND "
++        )
++        param_values += (param_value,)
++
++    if predicate != "":
++        # remove trailing AND
++        predicate = predicate[:-4]
++
++    # predicate contains an extra trailing space
++    return (predicate, param_values)
+diff --git a/langgraph/graph/__init__.py b/langgraph/graph/__init__.py
+index 1365f97ac..1c0ef3262 100644
+--- a/langgraph/graph/__init__.py
++++ b/langgraph/graph/__init__.py
+@@ -1,12 +1,5 @@
+ from langgraph.graph.graph import END, Graph
+-from langgraph.graph.message import MessageGraph, MessagesState, add_messages
++from langgraph.graph.message import MessageGraph, add_messages
+ from langgraph.graph.state import StateGraph
+ 
+-__all__ = [
+-    "END",
+-    "Graph",
+-    "StateGraph",
+-    "MessageGraph",
+-    "add_messages",
+-    "MessagesState",
+-]
++__all__ = ["END", "Graph", "StateGraph", "MessageGraph", "add_messages"]
+diff --git a/langgraph/graph/message.py b/langgraph/graph/message.py
+index 0b4db9152..62fc39f2c 100644
+--- a/langgraph/graph/message.py
++++ b/langgraph/graph/message.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Annotated, TypedDict, Union
++from typing import Annotated, Union
+ 
+ from langchain_core.messages import (
+     AnyMessage,
+@@ -136,7 +136,3 @@ class MessageGraph(StateGraph):
+ 
+     def __init__(self) -> None:
+         super().__init__(Annotated[list[AnyMessage], add_messages])
+-
+-
+-class MessagesState(TypedDict):
+-    messages: Annotated[list[AnyMessage], add_messages]
+diff --git a/langgraph/managed/base.py b/langgraph/managed/base.py
+index 15b47070b..b06f6a7c7 100644
+--- a/langgraph/managed/base.py
++++ b/langgraph/managed/base.py
+@@ -8,9 +8,10 @@ from typing import (
+     AsyncGenerator,
+     Generator,
+     Generic,
+-    Sequence,
++    NamedTuple,
+     Type,
+     TypeVar,
++    Union,
+ )
+ 
+ from langchain_core.runnables import RunnableConfig
+@@ -32,10 +33,10 @@ class ManagedValue(ABC, Generic[V]):
+     @classmethod
+     @contextmanager
+     def enter(
+-        cls, config: RunnableConfig, graph: "Pregel"
++        cls, config: RunnableConfig, graph: "Pregel", **kwargs: Any
+     ) -> Generator[Self, None, None]:
+         try:
+-            value = cls(config, graph)
++            value = cls(config, graph, **kwargs)
+             yield value
+         finally:
+             # because managed value and Pregel have reference to each other
+@@ -48,10 +49,10 @@ class ManagedValue(ABC, Generic[V]):
+     @classmethod
+     @asynccontextmanager
+     async def aenter(
+-        cls, config: RunnableConfig, graph: "Pregel"
++        cls, config: RunnableConfig, graph: "Pregel", **kwargs: Any
+     ) -> AsyncGenerator[Self, None]:
+         try:
+-            value = cls(config, graph)
++            value = cls(config, graph, **kwargs)
+             yield value
+         finally:
+             # because managed value and Pregel have reference to each other
+@@ -66,40 +67,64 @@ class ManagedValue(ABC, Generic[V]):
+         ...
+ 
+ 
+-def is_managed_value(value: Any) -> TypeGuard[Type[ManagedValue]]:
+-    return isclass(value) and issubclass(value, ManagedValue)
++class ConfiguredManagedValue(NamedTuple):
++    cls: Type[ManagedValue]
++    kwargs: dict[str, Any]
++
++
++ManagedValueSpec = Union[Type[ManagedValue], ConfiguredManagedValue]
++
++ManagedValueMapping = dict[str, ManagedValue]
++
++
++def is_managed_value(value: Any) -> TypeGuard[ManagedValueSpec]:
++    return (isclass(value) and issubclass(value, ManagedValue)) or isinstance(
++        value, ConfiguredManagedValue
++    )
+ 
+ 
+ @contextmanager
+ def ManagedValuesManager(
+-    values: Sequence[Type[ManagedValue]],
++    values: dict[str, ManagedValueSpec],
+     config: RunnableConfig,
+     graph: "Pregel",
+-) -> Generator[Sequence[ManagedValue], None, None]:
+-    with ExitStack() as stack:
+-        unique: list[Type[ManagedValue]] = []
+-        for value in values:
+-            if value not in unique:
+-                unique.append(value)
+-
+-        yield [stack.enter_context(value.enter(config, graph)) for value in unique]
++) -> Generator[ManagedValueMapping, None, None]:
++    if values:
++        with ExitStack() as stack:
++            yield {
++                key: stack.enter_context(
++                    value.cls.enter(config, graph, **value.kwargs)
++                    if isinstance(value, ConfiguredManagedValue)
++                    else value.enter(config, graph)
++                )
++                for key, value in values.items()
++            }
++    else:
++        yield {}
+ 
+ 
+ @asynccontextmanager
+ async def AsyncManagedValuesManager(
+-    values: Sequence[Type[ManagedValue]],
++    values: dict[str, ManagedValueSpec],
+     config: RunnableConfig,
+     graph: "Pregel",
+-) -> AsyncGenerator[Sequence[ManagedValue], None]:
+-    async with AsyncExitStack() as stack:
+-        unique: list[Type[ManagedValue]] = []
+-        for value in values:
+-            if value not in unique:
+-                unique.append(value)
+-
+-        yield await asyncio.gather(
+-            *(
+-                stack.enter_async_context(value.aenter(config, graph))
+-                for value in unique
+-            )
+-        )
++) -> AsyncGenerator[ManagedValueMapping, None]:
++    if values:
++        async with AsyncExitStack() as stack:
++            # create enter tasks with reference to spec
++            tasks = {
++                asyncio.create_task(
++                    stack.enter_async_context(
++                        value.cls.aenter(config, graph, **value.kwargs)
++                        if isinstance(value, ConfiguredManagedValue)
++                        else value.aenter(config, graph)
++                    )
++                ): key
++                for key, value in values.items()
++            }
++            # wait for all enter tasks
++            done, _ = await asyncio.wait(tasks, return_when=asyncio.ALL_COMPLETED)
++            # build mapping from spec to result
++            yield {tasks[task]: task.result() for task in done}
++    else:
++        yield {}
+diff --git a/langgraph/managed/few_shot.py b/langgraph/managed/few_shot.py
+new file mode 100644
+index 000000000..d7cf399f4
+--- /dev/null
++++ b/langgraph/managed/few_shot.py
+@@ -0,0 +1,87 @@
++from contextlib import asynccontextmanager, contextmanager
++from typing import (
++    TYPE_CHECKING,
++    Any,
++    AsyncGenerator,
++    AsyncIterator,
++    Generator,
++    Generic,
++    Iterator,
++    Sequence,
++)
++
++from langchain_core.runnables import RunnableConfig
++from typing_extensions import Self
++
++from langgraph.channels.base import AsyncChannelsManager, ChannelsManager
++from langgraph.managed.base import ConfiguredManagedValue, ManagedValue, V
++from langgraph.pregel import Pregel
++from langgraph.pregel.io import read_channels
++from langgraph.pregel.types import PregelTaskDescription
++
++if TYPE_CHECKING:
++    from langgraph.pregel import Pregel
++
++
++class FewShotExamples(ManagedValue[Sequence[V]], Generic[V]):
++    examples: list[V]
++
++    def __init__(
++        self,
++        config: RunnableConfig,
++        graph: Pregel,
++        k: int = 5,
++        metadata_filter: dict[str, Any] = None,
++    ) -> None:
++        super().__init__(config, graph)
++        self.k = k
++        self.metadata_filter = metadata_filter or {}
++
++    @classmethod
++    def configure(
++        cls, k: int = 5, metadata_filter: dict[str, Any] = None
++    ) -> ConfiguredManagedValue:
++        return ConfiguredManagedValue(
++            cls,
++            {
++                "k": k,
++                "metadata_filter": metadata_filter,
++            },
++        )
++
++    def iter(self, score: int = 1) -> Iterator[V]:
++        for example in self.graph.checkpointer.search(
++            {"score": score, **self.metadata_filter}, limit=self.k
++        ):
++            with ChannelsManager(self.graph.channels, example.checkpoint) as channels:
++                yield read_channels(channels, self.graph.output_channels)
++
++    async def aiter(self, score: int = 1) -> AsyncIterator[V]:
++        async for example in self.graph.checkpointer.asearch(
++            {"score": score, **self.metadata_filter}, limit=self.k
++        ):
++            async with AsyncChannelsManager(
++                self.graph.channels, example.checkpoint
++            ) as channels:
++                yield read_channels(channels, self.graph.output_channels)
++
++    @classmethod
++    @contextmanager
++    def enter(
++        cls, config: RunnableConfig, graph: "Pregel", **kwargs: Any
++    ) -> Generator[Self, None, None]:
++        with super().enter(config, graph, **kwargs) as value:
++            value.examples = list(value.iter())
++            yield value
++
++    @classmethod
++    @asynccontextmanager
++    async def aenter(
++        cls, config: RunnableConfig, graph: "Pregel", **kwargs: Any
++    ) -> AsyncGenerator[Self, None]:
++        async with super().aenter(config, graph, **kwargs) as value:
++            value.examples = [e async for e in value.aiter()]
++            yield value
++
++    def __call__(self, step: int, task: PregelTaskDescription) -> Sequence[V]:
++        return self.examples
+diff --git a/langgraph/pregel/__init__.py b/langgraph/pregel/__init__.py
+index 597f617d5..d7039b734 100644
+--- a/langgraph/pregel/__init__.py
++++ b/langgraph/pregel/__init__.py
+@@ -4,7 +4,6 @@ import asyncio
+ import concurrent.futures
+ from collections import defaultdict, deque
+ from functools import partial
+-from inspect import isclass
+ from typing import (
+     Any,
+     AsyncIterator,
+@@ -70,8 +69,9 @@ from langgraph.constants import (
+ from langgraph.errors import GraphRecursionError, InvalidUpdateError
+ from langgraph.managed.base import (
+     AsyncManagedValuesManager,
+-    ManagedValue,
++    ManagedValueMapping,
+     ManagedValuesManager,
++    ManagedValueSpec,
+     is_managed_value,
+ )
+ from langgraph.pregel.debug import (
+@@ -327,14 +327,14 @@ class Pregel(
+         return self.stream_channels or [k for k in self.channels]
+ 
+     @property
+-    def managed_values_list(self) -> Sequence[Type[ManagedValue]]:
+-        return [
+-            v
++    def managed_values_dict(self) -> dict[str, ManagedValueSpec]:
++        return {
++            k: v
+             for node in self.nodes.values()
+             if isinstance(node.channels, dict)
+-            for v in node.channels.values()
++            for k, v in node.channels.items()
+             if is_managed_value(v)
+-        ]
++        }
+ 
+     def get_state(self, config: RunnableConfig) -> StateSnapshot:
+         """Get the current state of the graph."""
+@@ -347,7 +347,7 @@ class Pregel(
+         with ChannelsManager(
+             self.channels, checkpoint
+         ) as channels, ManagedValuesManager(
+-            self.managed_values_list, ensure_config(config), self
++            self.managed_values_dict, ensure_config(config), self
+         ) as managed:
+             _, next_tasks = _prepare_next_tasks(
+                 checkpoint,
+@@ -378,7 +378,7 @@ class Pregel(
+         async with AsyncChannelsManager(
+             self.channels, checkpoint
+         ) as channels, AsyncManagedValuesManager(
+-            self.managed_values_list, ensure_config(config), self
++            self.managed_values_dict, ensure_config(config), self
+         ) as managed:
+             _, next_tasks = _prepare_next_tasks(
+                 checkpoint,
+@@ -414,7 +414,7 @@ class Pregel(
+             with ChannelsManager(
+                 self.channels, checkpoint
+             ) as channels, ManagedValuesManager(
+-                self.managed_values_list, ensure_config(config), self
++                self.managed_values_dict, ensure_config(config), self
+             ) as managed:
+                 _, next_tasks = _prepare_next_tasks(
+                     checkpoint,
+@@ -453,7 +453,7 @@ class Pregel(
+             async with AsyncChannelsManager(
+                 self.channels, checkpoint
+             ) as channels, AsyncManagedValuesManager(
+-                self.managed_values_list, ensure_config(config), self
++                self.managed_values_dict, ensure_config(config), self
+             ) as managed:
+                 _, next_tasks = _prepare_next_tasks(
+                     checkpoint,
+@@ -725,7 +725,7 @@ class Pregel(
+             ) as channels, get_executor_for_config(
+                 config
+             ) as executor, ManagedValuesManager(
+-                self.managed_values_list, config, self
++                self.managed_values_dict, config, self
+             ) as managed:
+                 # map inputs to channel updates
+                 if input_writes := deque(map_input(input_keys, input)):
+@@ -1021,7 +1021,7 @@ class Pregel(
+             async with AsyncChannelsManager(
+                 self.channels, checkpoint
+             ) as channels, AsyncManagedValuesManager(
+-                self.managed_values_list, config, self
++                self.managed_values_dict, config, self
+             ) as managed:
+                 # map inputs to channel updates
+                 if input_writes := deque(map_input(input_keys, input)):
+@@ -1478,7 +1478,7 @@ def _prepare_next_tasks(
+     checkpoint: Checkpoint,
+     processes: Mapping[str, PregelNode],
+     channels: Mapping[str, BaseChannel],
+-    managed: Sequence[ManagedValue],
++    managed: ManagedValueMapping,
+     config: RunnableConfig,
+     step: int,
+     for_execution: Literal[False],
+@@ -1491,7 +1491,7 @@ def _prepare_next_tasks(
+     checkpoint: Checkpoint,
+     processes: Mapping[str, PregelNode],
+     channels: Mapping[str, BaseChannel],
+-    managed: Sequence[ManagedValue],
++    managed: ManagedValueMapping,
+     config: RunnableConfig,
+     step: int,
+     for_execution: Literal[True],
+@@ -1503,7 +1503,7 @@ def _prepare_next_tasks(
+     checkpoint: Checkpoint,
+     processes: Mapping[str, PregelNode],
+     channels: Mapping[str, BaseChannel],
+-    managed: Sequence[ManagedValue],
++    managed: ManagedValueMapping,
+     config: RunnableConfig,
+     step: int,
+     *,
+@@ -1536,11 +1536,10 @@ def _prepare_next_tasks(
+ 
+                     managed_values = {}
+                     for key, chan in proc.channels.items():
+-                        for mv in managed:
+-                            if isclass(chan) and isinstance(mv, chan):
+-                                managed_values[key] = mv(
+-                                    step, PregelTaskDescription(name, val)
+-                                )
++                        if is_managed_value(chan):
++                            managed_values[key] = managed[key](
++                                step, PregelTaskDescription(name, val)
++                            )
+ 
+                     val.update(managed_values)
+                 except EmptyChannelError:
+diff --git a/langgraph/pregel/read.py b/langgraph/pregel/read.py
+index e8576e22f..eefed2b47 100644
+--- a/langgraph/pregel/read.py
++++ b/langgraph/pregel/read.py
+@@ -1,6 +1,6 @@
+ from __future__ import annotations
+ 
+-from typing import Any, Callable, Mapping, Optional, Sequence, Type, Union
++from typing import Any, Callable, Mapping, Optional, Sequence, Union
+ 
+ from langchain_core.pydantic_v1 import Field
+ from langchain_core.runnables import (
+@@ -15,7 +15,7 @@ from langchain_core.runnables.config import merge_configs
+ from langchain_core.runnables.utils import ConfigurableFieldSpec
+ 
+ from langgraph.constants import CONFIG_KEY_READ
+-from langgraph.managed.base import ManagedValue
++from langgraph.managed.base import ManagedValueSpec
+ from langgraph.pregel.write import ChannelWrite
+ from langgraph.utils import RunnableCallable
+ 
+@@ -100,7 +100,7 @@ DEFAULT_BOUND: RunnablePassthrough = RunnablePassthrough()
+ 
+ 
+ class PregelNode(RunnableBindingBase):
+-    channels: Union[list[str], Mapping[str, Union[str, Type[ManagedValue]]]]
++    channels: Union[list[str], Mapping[str, Union[str, ManagedValueSpec]]]
+ 
+     triggers: list[str] = Field(default_factory=list)

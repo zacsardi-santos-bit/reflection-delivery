@@ -1,0 +1,29 @@
+{
+    "id": "f1d20a2c-7c7e-49b0-9639-7f8c488134f7",
+    "started_at": "2026-07-06T12:18:41.125850",
+    "finished_at": "2026-07-06T12:19:24.149392",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__nginx-kubernetes-ingress-9209": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "nginx-kubernetes-ingress-9209__q33JGHE"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest test/test_env.py -v -k TestChessEnv",
+  "test_files": [
+    ".github/unittest/linux_libs/scripts_chess/environment.yml",
+    ".github/unittest/linux_libs/scripts_chess/install.sh",
+    ".github/unittest/linux_libs/scripts_chess/post_process.sh",
+    ".github/unittest/linux_libs/scripts_chess/run-clang-format.py",
+    ".github/unittest/linux_libs/scripts_chess/run_test.sh",
+    ".github/unittest/linux_libs/scripts_chess/setup_env.sh",
+    "test/test_env.py"
+  ],
+  "num_test_files": 7,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.test_env.TestChessEnv::test_reset_white_to_move[False]",
+    "test.test_env.TestChessEnv::test_reset_white_to_move[True]",
+    "test.test_env.TestChessEnv::test_reset_black_to_move[False]",
+    "test.test_env.TestChessEnv::test_reset_black_to_move[True]",
+    "test.test_env.TestChessEnv::test_reset_done_error[False]",
+    "test.test_env.TestChessEnv::test_reset_done_error[True]",
+    "test.test_env.TestChessEnv::test_reward[white win-False-False]",
+    "test.test_env.TestChessEnv::test_reward[white win-False-True]",
+    "test.test_env.TestChessEnv::test_reward[white win-True-False]",
+    "test.test_env.TestChessEnv::test_reward[black win-False-False]",
+    "test.test_env.TestChessEnv::test_reward[black win-False-True]",
+    "test.test_env.TestChessEnv::test_reward[black win-True-False]",
+    "test.test_env.TestChessEnv::test_reward[stalemate-False-False]",
+    "test.test_env.TestChessEnv::test_reward[stalemate-False-True]",
+    "test.test_env.TestChessEnv::test_reward[stalemate-True-False]",
+    "test.test_env.TestChessEnv::test_reward[50 move-False-False]",
+    "test.test_env.TestChessEnv::test_reward[50 move-False-True]",
+    "test.test_env.TestChessEnv::test_reward[50 move-True-False]",
+    "test.test_env.TestChessEnv::test_reward[insufficient-False-False]",
+    "test.test_env.TestChessEnv::test_reward[insufficient-False-True]",
+    "test.test_env.TestChessEnv::test_reward[insufficient-True-False]"
+  ],
+  "PASS_TO_PASS": [
+    "test.test_env.TestChessEnv::test_env[False]",
+    "test.test_env.TestChessEnv::test_env[True]",
+    "test.test_env.TestChessEnv::test_rollout[False]",
+    "test.test_env.TestChessEnv::test_rollout[True]",
+    "test.test_env.TestChessEnv::test_reward[white win-True-True]",
+    "test.test_env.TestChessEnv::test_reward[black win-True-True]",
+    "test.test_env.TestChessEnv::test_reward[stalemate-True-True]",
+    "test.test_env.TestChessEnv::test_reward[50 move-True-True]",
+    "test.test_env.TestChessEnv::test_reward[insufficient-True-True]"
+  ]
+}

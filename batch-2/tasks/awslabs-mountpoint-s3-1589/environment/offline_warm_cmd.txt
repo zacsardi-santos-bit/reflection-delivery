@@ -1,0 +1,1 @@
+cargo nextest run -p mountpoint-s3-fs --test mock_s3_tests --no-fail-fast

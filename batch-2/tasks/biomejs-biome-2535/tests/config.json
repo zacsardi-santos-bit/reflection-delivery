@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_css_analyze --test spec_tests --no-fail-fast -E 'test(~no_unknown_unit)'",
+  "test_files": [
+    "crates/biome_css_analyze/tests/specs/nursery/noUnknownUnit/invalid.css",
+    "crates/biome_css_analyze/tests/specs/nursery/noUnknownUnit/invalid.css.snap",
+    "crates/biome_css_analyze/tests/specs/nursery/noUnknownUnit/valid.css",
+    "crates/biome_css_analyze/tests/specs/nursery/noUnknownUnit/valid.css.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_css_analyze::spec_tests specs::nursery::no_unknown_unit::valid_css",
+    "(2/2) biome_css_analyze::spec_tests specs::nursery::no_unknown_unit::invalid_css"
+  ],
+  "PASS_TO_PASS": []
+}

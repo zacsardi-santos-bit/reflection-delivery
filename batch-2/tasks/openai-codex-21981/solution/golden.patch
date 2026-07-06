@@ -1,0 +1,1022 @@
+diff --git a/codex-rs/app-server/src/bespoke_event_handling.rs b/codex-rs/app-server/src/bespoke_event_handling.rs
+index b4348f53bd..3fb2bc0996 100644
+--- a/codex-rs/app-server/src/bespoke_event_handling.rs
++++ b/codex-rs/app-server/src/bespoke_event_handling.rs
+@@ -2182,7 +2182,7 @@ mod tests {
+ 
+         assert_eq!(response.thread.id, thread_id.to_string());
+         assert_eq!(response.thread.path, None);
+-        assert_eq!(response.thread.preview, "before rollback");
++        assert_eq!(response.thread.preview, "fallback preview");
+         assert_eq!(response.thread.name.as_deref(), Some("Rollback thread"));
+         assert_eq!(response.thread.status, ThreadStatus::NotLoaded);
+         assert_eq!(response.thread.turns.len(), 1);
+diff --git a/codex-rs/app-server/src/request_processors/thread_processor.rs b/codex-rs/app-server/src/request_processors/thread_processor.rs
+index 132a03afde..dc0c169fab 100644
+--- a/codex-rs/app-server/src/request_processors/thread_processor.rs
++++ b/codex-rs/app-server/src/request_processors/thread_processor.rs
+@@ -3745,7 +3745,7 @@ pub(crate) fn thread_from_stored_thread(
+         id: thread_id.clone(),
+         session_id: thread_id,
+         forked_from_id: thread.forked_from_id.map(|id| id.to_string()),
+-        preview: thread.first_user_message.unwrap_or(thread.preview),
++        preview: thread.preview,
+         ephemeral: false,
+         model_provider: if thread.model_provider.is_empty() {
+             fallback_provider.to_string()
+@@ -3787,7 +3787,7 @@ fn summary_from_stored_thread(
+     ConversationSummary {
+         conversation_id: thread.thread_id,
+         path,
+-        preview: thread.first_user_message.unwrap_or(thread.preview),
++        preview: thread.preview,
+         // Preserve millisecond precision from the thread store so thread/list cursors
+         // round-trip the same ordering key used by pagination queries.
+         timestamp: Some(
+@@ -3818,6 +3818,7 @@ fn summary_from_state_db_metadata(
+     conversation_id: ThreadId,
+     path: PathBuf,
+     first_user_message: Option<String>,
++    preview: Option<String>,
+     timestamp: String,
+     updated_at: String,
+     model_provider: String,
+@@ -3831,7 +3832,7 @@ fn summary_from_state_db_metadata(
+     git_branch: Option<String>,
+     git_origin_url: Option<String>,
+ ) -> ConversationSummary {
+-    let preview = first_user_message.unwrap_or_default();
++    let preview = preview.or(first_user_message).unwrap_or_default();
+     let source = serde_json::from_str(&source)
+         .or_else(|_| serde_json::from_value(serde_json::Value::String(source.clone())))
+         .unwrap_or(codex_protocol::protocol::SessionSource::Unknown);
+@@ -3865,6 +3866,7 @@ fn summary_from_thread_metadata(metadata: &ThreadMetadata) -> ConversationSummar
+         metadata.id,
+         metadata.rollout_path.clone(),
+         metadata.first_user_message.clone(),
++        metadata.preview.clone(),
+         metadata
+             .created_at
+             .to_rfc3339_opts(SecondsFormat::Secs, true),
+diff --git a/codex-rs/app-server/src/request_processors/thread_processor_tests.rs b/codex-rs/app-server/src/request_processors/thread_processor_tests.rs
+index 5068f19963..61a31f9c4d 100644
+--- a/codex-rs/app-server/src/request_processors/thread_processor_tests.rs
++++ b/codex-rs/app-server/src/request_processors/thread_processor_tests.rs
+@@ -1086,6 +1086,7 @@ mod thread_processor_behavior_tests {
+             conversation_id,
+             PathBuf::from("/tmp/rollout.jsonl"),
+             Some("hi".to_string()),
++            /*preview*/ None,
+             "2025-09-05T16:53:11Z".to_string(),
+             "2025-09-05T16:53:12Z".to_string(),
+             "test-provider".to_string(),
+diff --git a/codex-rs/rollout/src/list.rs b/codex-rs/rollout/src/list.rs
+index 8ba63a713e..d5b353e32b 100644
+--- a/codex-rs/rollout/src/list.rs
++++ b/codex-rs/rollout/src/list.rs
+@@ -50,6 +50,8 @@ pub struct ThreadItem {
+     pub thread_id: Option<ThreadId>,
+     /// First user message captured for this thread, if any.
+     pub first_user_message: Option<String>,
++    /// Best available user-facing preview for discovery and list display.
++    pub preview: Option<String>,
+     /// Working directory from session metadata.
+     pub cwd: Option<PathBuf>,
+     /// Git branch from session metadata.
+@@ -85,9 +87,9 @@ pub type ConversationsPage = ThreadsPage;
+ #[derive(Default)]
+ struct HeadTailSummary {
+     saw_session_meta: bool,
+-    saw_user_event: bool,
+     thread_id: Option<ThreadId>,
+     first_user_message: Option<String>,
++    preview: Option<String>,
+     cwd: Option<PathBuf>,
+     git_branch: Option<String>,
+     git_sha: Option<String>,
+@@ -738,7 +740,8 @@ async fn build_thread_item(
+     cwd_filters: Option<&[PathBuf]>,
+     updated_at: Option<String>,
+ ) -> Option<ThreadItem> {
+-    // Read head and detect message events; stop once meta + user are found.
++    // Read head and detect preview-bearing events; goal previews can appear before
++    // the first normal user message.
+     let summary = read_head_summary(&path, HEAD_RECORD_LIMIT)
+         .await
+         .unwrap_or_default();
+@@ -764,11 +767,12 @@ async fn build_thread_item(
+     {
+         return None;
+     }
+-    // Apply filters: must have session meta and at least one user message event
+-    if summary.saw_session_meta && summary.saw_user_event {
++    // Apply filters: must have session meta and a discoverable preview.
++    if summary.saw_session_meta && summary.preview.is_some() {
+         let HeadTailSummary {
+             thread_id,
+             first_user_message,
++            preview,
+             cwd,
+             git_branch,
+             git_sha,
+@@ -789,6 +793,7 @@ async fn build_thread_item(
+             path,
+             thread_id,
+             first_user_message,
++            preview,
+             cwd,
+             git_branch,
+             git_sha,
+@@ -1078,7 +1083,7 @@ async fn read_head_summary(path: &Path, head_limit: usize) -> io::Result<HeadTai
+ 
+     while lines_scanned < head_limit
+         || (summary.saw_session_meta
+-            && !summary.saw_user_event
++            && (summary.preview.is_none() || summary.first_user_message.is_none())
+             && lines_scanned < head_limit + USER_EVENT_SCAN_LIMIT)
+     {
+         let line_opt = lines.next_line().await?;
+@@ -1131,19 +1136,23 @@ async fn read_head_summary(path: &Path, head_limit: usize) -> io::Result<HeadTai
+                 // Not included in `head`; skip.
+             }
+             RolloutItem::EventMsg(ev) => {
+-                if let EventMsg::UserMessage(user) = ev {
+-                    summary.saw_user_event = true;
+-                    if summary.first_user_message.is_none() {
+-                        let message = strip_user_message_prefix(user.message.as_str()).to_string();
+-                        if !message.is_empty() {
+-                            summary.first_user_message = Some(message);
+-                        }
++                if let Some(preview) = event_msg_preview(&ev) {
++                    if summary.preview.is_none() {
++                        summary.preview = Some(preview.clone());
++                    }
++                    if let EventMsg::UserMessage(_) = ev
++                        && summary.first_user_message.is_none()
++                    {
++                        summary.first_user_message = Some(preview);
+                     }
+                 }
+             }
+         }
+ 
+-        if summary.saw_session_meta && summary.saw_user_event {
++        if summary.saw_session_meta
++            && summary.preview.is_some()
++            && summary.first_user_message.is_some()
++        {
+             break;
+         }
+     }
+@@ -1198,6 +1207,31 @@ fn strip_user_message_prefix(text: &str) -> &str {
+     }
+ }
+ 
++fn event_msg_preview(event: &EventMsg) -> Option<String> {
++    match event {
++        EventMsg::UserMessage(user) => {
++            let message = strip_user_message_prefix(user.message.as_str());
++            if !message.is_empty() {
++                return Some(message.to_string());
++            }
++            if user
++                .images
++                .as_ref()
++                .is_some_and(|images| !images.is_empty())
++                || !user.local_images.is_empty()
++            {
++                return Some("[Image]".to_string());
++            }
++            None
++        }
++        EventMsg::ThreadGoalUpdated(event) => {
++            let objective = event.goal.objective.trim();
++            (!objective.is_empty()).then(|| objective.to_string())
++        }
++        _ => None,
++    }
++}
++
+ /// Read the SessionMetaLine from the head of a rollout file for reuse by
+ /// callers that need the session metadata (e.g. to derive a cwd for config).
+ pub async fn read_session_meta_line(path: &Path) -> io::Result<SessionMetaLine> {
+diff --git a/codex-rs/rollout/src/policy.rs b/codex-rs/rollout/src/policy.rs
+index 21b98b4e8d..271d8ce13a 100644
+--- a/codex-rs/rollout/src/policy.rs
++++ b/codex-rs/rollout/src/policy.rs
+@@ -98,6 +98,7 @@ fn event_msg_persistence_mode(ev: &EventMsg) -> Option<EventPersistenceMode> {
+         | EventMsg::AgentReasoningRawContent(_)
+         | EventMsg::PatchApplyEnd(_)
+         | EventMsg::TokenCount(_)
++        | EventMsg::ThreadGoalUpdated(_)
+         | EventMsg::ContextCompacted(_)
+         | EventMsg::EnteredReviewMode(_)
+         | EventMsg::ExitedReviewMode(_)
+@@ -140,7 +141,6 @@ fn event_msg_persistence_mode(ev: &EventMsg) -> Option<EventPersistenceMode> {
+         | EventMsg::AgentReasoningSectionBreak(_)
+         | EventMsg::RawResponseItem(_)
+         | EventMsg::SessionConfigured(_)
+-        | EventMsg::ThreadGoalUpdated(_)
+         | EventMsg::McpToolCallBegin(_)
+         | EventMsg::ExecCommandBegin(_)
+         | EventMsg::TerminalInteraction(_)
+diff --git a/codex-rs/rollout/src/recorder.rs b/codex-rs/rollout/src/recorder.rs
+index 6b549b745c..369c9f20a8 100644
+--- a/codex-rs/rollout/src/recorder.rs
++++ b/codex-rs/rollout/src/recorder.rs
+@@ -1065,6 +1065,7 @@ fn fill_missing_thread_item_metadata(item: &mut ThreadItem, state_item: ThreadIt
+         path: _state_path,
+         thread_id: _state_thread_id,
+         first_user_message,
++        preview,
+         cwd,
+         git_branch,
+         git_sha,
+@@ -1081,6 +1082,9 @@ fn fill_missing_thread_item_metadata(item: &mut ThreadItem, state_item: ThreadIt
+     if item.first_user_message.is_none() {
+         item.first_user_message = first_user_message;
+     }
++    if item.preview.is_none() {
++        item.preview = preview;
++    }
+     if item.cwd.is_none() {
+         item.cwd = cwd;
+     }
+@@ -1889,6 +1893,7 @@ fn thread_item_from_state_metadata(item: codex_state::ThreadMetadata) -> ThreadI
+         path: item.rollout_path,
+         thread_id: Some(item.id),
+         first_user_message: item.first_user_message,
++        preview: item.preview,
+         cwd: Some(item.cwd),
+         git_branch: item.git_branch,
+         git_sha: item.git_sha,
+diff --git a/codex-rs/rollout/src/recorder_tests.rs b/codex-rs/rollout/src/recorder_tests.rs
+index a8b946934b..2063020be2 100644
+--- a/codex-rs/rollout/src/recorder_tests.rs
++++ b/codex-rs/rollout/src/recorder_tests.rs
+@@ -822,6 +822,7 @@ async fn list_threads_db_enabled_drops_missing_rollout_paths() -> std::io::Resul
+     builder.cwd = home.path().to_path_buf();
+     let mut metadata = builder.build(config.model_provider_id.as_str());
+     metadata.first_user_message = Some("Hello from user".to_string());
++    metadata.preview = metadata.first_user_message.clone();
+     runtime
+         .upsert_thread(&metadata)
+         .await
+@@ -887,6 +888,7 @@ async fn list_threads_db_enabled_repairs_stale_rollout_paths() -> std::io::Resul
+     builder.cwd = home.path().to_path_buf();
+     let mut metadata = builder.build(config.model_provider_id.as_str());
+     metadata.first_user_message = Some("Hello from user".to_string());
++    metadata.preview = metadata.first_user_message.clone();
+     runtime
+         .upsert_thread(&metadata)
+         .await
+@@ -1050,6 +1052,7 @@ async fn list_threads_default_filter_returns_filesystem_scan_results() -> std::i
+     builder.cwd = stale_cwd.clone();
+     let mut metadata = builder.build(config.model_provider_id.as_str());
+     metadata.first_user_message = Some("Hello from user".to_string());
++    metadata.preview = metadata.first_user_message.clone();
+     runtime
+         .upsert_thread(&metadata)
+         .await
+@@ -1142,6 +1145,7 @@ async fn list_threads_metadata_filter_overlays_state_db_list_metadata() -> std::
+     builder.git_origin_url = Some("https://example.com/repo.git".to_string());
+     let mut metadata = builder.build(config.model_provider_id.as_str());
+     metadata.first_user_message = Some("Hello from user".to_string());
++    metadata.preview = metadata.first_user_message.clone();
+     runtime
+         .upsert_thread(&metadata)
+         .await
+@@ -1182,6 +1186,7 @@ fn fill_missing_thread_item_metadata_preserves_identity_and_prefers_state_git_fi
+         path: filesystem_path.clone(),
+         thread_id: Some(filesystem_thread_id),
+         first_user_message: Some("filesystem message".to_string()),
++        preview: Some("filesystem preview".to_string()),
+         cwd: None,
+         git_branch: Some("filesystem-branch".to_string()),
+         git_sha: Some("filesystem-sha".to_string()),
+@@ -1198,6 +1203,7 @@ fn fill_missing_thread_item_metadata_preserves_identity_and_prefers_state_git_fi
+         path: state_path,
+         thread_id: Some(state_thread_id),
+         first_user_message: Some("state message".to_string()),
++        preview: Some("state preview".to_string()),
+         cwd: Some(PathBuf::from("/tmp/state-cwd")),
+         git_branch: Some("state-branch".to_string()),
+         git_sha: Some("state-sha".to_string()),
+@@ -1219,6 +1225,7 @@ fn fill_missing_thread_item_metadata_preserves_identity_and_prefers_state_git_fi
+         item.first_user_message.as_deref(),
+         Some("filesystem message")
+     );
++    assert_eq!(item.preview.as_deref(), Some("filesystem preview"));
+     assert_eq!(item.cwd.as_deref(), Some(Path::new("/tmp/state-cwd")));
+     assert_eq!(item.git_branch.as_deref(), Some("state-branch"));
+     assert_eq!(item.git_sha.as_deref(), Some("state-sha"));
+@@ -1269,6 +1276,7 @@ async fn list_threads_search_repairs_stale_state_db_hits_before_returning() -> s
+     let mut metadata = builder.build(config.model_provider_id.as_str());
+     metadata.title = "needle stale title".to_string();
+     metadata.first_user_message = Some("stale first user".to_string());
++    metadata.preview = metadata.first_user_message.clone();
+     runtime
+         .upsert_thread(&metadata)
+         .await
+diff --git a/codex-rs/state/migrations/0032_threads_preview.sql b/codex-rs/state/migrations/0032_threads_preview.sql
+new file mode 100644
+index 0000000000..0c51af57e5
+--- /dev/null
++++ b/codex-rs/state/migrations/0032_threads_preview.sql
+@@ -0,0 +1,19 @@
++ALTER TABLE threads ADD COLUMN preview TEXT NOT NULL DEFAULT '';
++
++UPDATE threads
++SET preview = first_user_message
++WHERE preview = '' AND first_user_message <> '';
++
++UPDATE threads
++SET preview = (
++    SELECT thread_goals.objective
++    FROM thread_goals
++    WHERE thread_goals.thread_id = threads.id
++)
++WHERE preview = ''
++    AND EXISTS (
++        SELECT 1
++        FROM thread_goals
++        WHERE thread_goals.thread_id = threads.id
++            AND thread_goals.objective <> ''
++    );
+diff --git a/codex-rs/state/src/extract.rs b/codex-rs/state/src/extract.rs
+index 723c5084eb..d815d444ce 100644
+--- a/codex-rs/state/src/extract.rs
++++ b/codex-rs/state/src/extract.rs
+@@ -33,7 +33,9 @@ pub fn apply_rollout_item(
+ pub fn rollout_item_affects_thread_metadata(item: &RolloutItem) -> bool {
+     match item {
+         RolloutItem::SessionMeta(_) | RolloutItem::TurnContext(_) => true,
+-        RolloutItem::EventMsg(EventMsg::TokenCount(_) | EventMsg::UserMessage(_)) => true,
++        RolloutItem::EventMsg(
++            EventMsg::TokenCount(_) | EventMsg::UserMessage(_) | EventMsg::ThreadGoalUpdated(_),
++        ) => true,
+         RolloutItem::EventMsg(_) | RolloutItem::ResponseItem(_) | RolloutItem::Compacted(_) => {
+             false
+         }
+@@ -86,9 +88,11 @@ fn apply_event_msg(metadata: &mut ThreadMetadata, event: &EventMsg) {
+             }
+         }
+         EventMsg::UserMessage(user) => {
++            let preview = user_message_preview(user);
+             if metadata.first_user_message.is_none() {
+-                metadata.first_user_message = user_message_preview(user);
++                metadata.first_user_message = preview.clone();
+             }
++            set_preview_if_empty(metadata, preview);
+             if metadata.title.is_empty() {
+                 let title = strip_user_message_prefix(user.message.as_str());
+                 if !title.is_empty() {
+@@ -96,12 +100,24 @@ fn apply_event_msg(metadata: &mut ThreadMetadata, event: &EventMsg) {
+                 }
+             }
+         }
++        EventMsg::ThreadGoalUpdated(event) => {
++            let objective = event.goal.objective.trim();
++            if !objective.is_empty() {
++                set_preview_if_empty(metadata, Some(objective.to_string()));
++            }
++        }
+         _ => {}
+     }
+ }
+ 
+ fn apply_response_item(_metadata: &mut ThreadMetadata, _item: &ResponseItem) {}
+ 
++fn set_preview_if_empty(metadata: &mut ThreadMetadata, preview: Option<String>) {
++    if metadata.preview.is_none() {
++        metadata.preview = preview;
++    }
++}
++
+ fn strip_user_message_prefix(text: &str) -> &str {
+     match text.find(USER_MESSAGE_BEGIN) {
+         Some(idx) => text[idx + USER_MESSAGE_BEGIN.len()..].trim(),
+@@ -151,6 +167,9 @@ mod tests {
+     use codex_protocol::protocol::SessionMeta;
+     use codex_protocol::protocol::SessionMetaLine;
+     use codex_protocol::protocol::SessionSource;
++    use codex_protocol::protocol::ThreadGoal;
++    use codex_protocol::protocol::ThreadGoalStatus;
++    use codex_protocol::protocol::ThreadGoalUpdatedEvent;
+     use codex_protocol::protocol::TurnContextItem;
+     use codex_protocol::protocol::USER_MESSAGE_BEGIN;
+     use codex_protocol::protocol::UserMessageEvent;
+@@ -174,6 +193,7 @@ mod tests {
+         apply_rollout_item(&mut metadata, &item, "test-provider");
+ 
+         assert_eq!(metadata.first_user_message, None);
++        assert_eq!(metadata.preview, None);
+         assert_eq!(metadata.title, "");
+     }
+ 
+@@ -193,6 +213,7 @@ mod tests {
+             metadata.first_user_message.as_deref(),
+             Some("actual user request")
+         );
++        assert_eq!(metadata.preview.as_deref(), Some("actual user request"));
+         assert_eq!(metadata.title, "actual user request");
+     }
+ 
+@@ -212,6 +233,10 @@ mod tests {
+             metadata.first_user_message.as_deref(),
+             Some(super::IMAGE_ONLY_USER_MESSAGE_PLACEHOLDER)
+         );
++        assert_eq!(
++            metadata.preview.as_deref(),
++            Some(super::IMAGE_ONLY_USER_MESSAGE_PLACEHOLDER)
++        );
+         assert_eq!(metadata.title, "");
+     }
+ 
+@@ -228,9 +253,52 @@ mod tests {
+         apply_rollout_item(&mut metadata, &item, "test-provider");
+ 
+         assert_eq!(metadata.first_user_message, None);
++        assert_eq!(metadata.preview, None);
+         assert_eq!(metadata.title, "");
+     }
+ 
++    #[test]
++    fn event_msg_thread_goal_sets_preview_only_and_later_user_sets_message_title() {
++        let mut metadata = metadata_for_test();
++        let goal_item =
++            RolloutItem::EventMsg(EventMsg::ThreadGoalUpdated(ThreadGoalUpdatedEvent {
++                thread_id: metadata.id,
++                turn_id: None,
++                goal: ThreadGoal {
++                    thread_id: metadata.id,
++                    objective: "optimize the benchmark".to_string(),
++                    status: ThreadGoalStatus::Active,
++                    token_budget: None,
++                    tokens_used: 0,
++                    time_used_seconds: 0,
++                    created_at: 1,
++                    updated_at: 1,
++                },
++            }));
++
++        apply_rollout_item(&mut metadata, &goal_item, "test-provider");
++
++        assert_eq!(metadata.preview.as_deref(), Some("optimize the benchmark"));
++        assert_eq!(metadata.first_user_message, None);
++        assert_eq!(metadata.title, "");
++
++        let user_item = RolloutItem::EventMsg(EventMsg::UserMessage(UserMessageEvent {
++            message: format!("{USER_MESSAGE_BEGIN} next normal prompt"),
++            images: Some(vec![]),
++            local_images: vec![],
++            text_elements: vec![],
++        }));
++
++        apply_rollout_item(&mut metadata, &user_item, "test-provider");
++
++        assert_eq!(metadata.preview.as_deref(), Some("optimize the benchmark"));
++        assert_eq!(
++            metadata.first_user_message.as_deref(),
++            Some("next normal prompt")
++        );
++        assert_eq!(metadata.title, "next normal prompt");
++    }
++
+     #[test]
+     fn turn_context_does_not_override_session_cwd() {
+         let mut metadata = metadata_for_test();
+@@ -421,6 +489,7 @@ mod tests {
+             cwd: PathBuf::from("/tmp"),
+             cli_version: "0.0.0".to_string(),
+             title: String::new(),
++            preview: None,
+             sandbox_policy: "read-only".to_string(),
+             approval_mode: "on-request".to_string(),
+             tokens_used: 1,
+diff --git a/codex-rs/state/src/model/thread_metadata.rs b/codex-rs/state/src/model/thread_metadata.rs
+index e5e2d1d1f8..f0b8d315e5 100644
+--- a/codex-rs/state/src/model/thread_metadata.rs
++++ b/codex-rs/state/src/model/thread_metadata.rs
+@@ -89,6 +89,8 @@ pub struct ThreadMetadata {
+     pub cli_version: String,
+     /// A best-effort thread title.
+     pub title: String,
++    /// Best available user-facing preview for discovery and list display.
++    pub preview: Option<String>,
+     /// The sandbox policy (stringified enum).
+     pub sandbox_policy: String,
+     /// The approval mode (stringified enum).
+@@ -210,6 +212,7 @@ impl ThreadMetadataBuilder {
+             cwd: self.cwd.clone(),
+             cli_version: self.cli_version.clone().unwrap_or_default(),
+             title: String::new(),
++            preview: None,
+             sandbox_policy,
+             approval_mode,
+             tokens_used: 0,
+@@ -281,6 +284,9 @@ impl ThreadMetadata {
+         if self.title != other.title {
+             diffs.push("title");
+         }
++        if self.preview != other.preview {
++            diffs.push("preview");
++        }
+         if self.sandbox_policy != other.sandbox_policy {
+             diffs.push("sandbox_policy");
+         }
+@@ -330,6 +336,7 @@ pub(crate) struct ThreadRow {
+     cwd: String,
+     cli_version: String,
+     title: String,
++    preview: String,
+     sandbox_policy: String,
+     approval_mode: String,
+     tokens_used: i64,
+@@ -358,6 +365,7 @@ impl ThreadRow {
+             cwd: row.try_get("cwd")?,
+             cli_version: row.try_get("cli_version")?,
+             title: row.try_get("title")?,
++            preview: row.try_get("preview")?,
+             sandbox_policy: row.try_get("sandbox_policy")?,
+             approval_mode: row.try_get("approval_mode")?,
+             tokens_used: row.try_get("tokens_used")?,
+@@ -390,6 +398,7 @@ impl TryFrom<ThreadRow> for ThreadMetadata {
+             cwd,
+             cli_version,
+             title,
++            preview,
+             sandbox_policy,
+             approval_mode,
+             tokens_used,
+@@ -420,6 +429,7 @@ impl TryFrom<ThreadRow> for ThreadMetadata {
+             cwd: PathBuf::from(cwd),
+             cli_version,
+             title,
++            preview: (!preview.is_empty()).then_some(preview),
+             sandbox_policy,
+             approval_mode,
+             tokens_used,
+@@ -505,6 +515,7 @@ mod tests {
+             cwd: "/tmp/workspace".to_string(),
+             cli_version: "0.0.0".to_string(),
+             title: String::new(),
++            preview: String::new(),
+             sandbox_policy: "read-only".to_string(),
+             approval_mode: "on-request".to_string(),
+             tokens_used: 1,
+@@ -534,6 +545,7 @@ mod tests {
+             cwd: PathBuf::from("/tmp/workspace"),
+             cli_version: "0.0.0".to_string(),
+             title: String::new(),
++            preview: None,
+             sandbox_policy: "read-only".to_string(),
+             approval_mode: "on-request".to_string(),
+             tokens_used: 1,
+diff --git a/codex-rs/state/src/runtime/goals.rs b/codex-rs/state/src/runtime/goals.rs
+index 56613b7d92..6e8f3ce6b0 100644
+--- a/codex-rs/state/src/runtime/goals.rs
++++ b/codex-rs/state/src/runtime/goals.rs
+@@ -102,6 +102,8 @@ RETURNING
+         .fetch_one(self.pool.as_ref())
+         .await?;
+ 
++        self.set_thread_preview_if_empty(thread_id, objective)
++            .await?;
+         thread_goal_from_row(&row)
+     }
+ 
+@@ -151,6 +153,10 @@ RETURNING
+         .fetch_optional(self.pool.as_ref())
+         .await?;
+ 
++        if row.is_some() {
++            self.set_thread_preview_if_empty(thread_id, objective)
++                .await?;
++        }
+         row.map(|row| thread_goal_from_row(&row)).transpose()
+     }
+ 
+@@ -271,6 +277,29 @@ WHERE thread_id = ?
+         self.get_thread_goal(thread_id).await
+     }
+ 
++    async fn set_thread_preview_if_empty(
++        &self,
++        thread_id: ThreadId,
++        preview: &str,
++    ) -> anyhow::Result<()> {
++        let preview = preview.trim();
++        if preview.is_empty() {
++            return Ok(());
++        }
++        sqlx::query(
++            r#"
++UPDATE threads
++SET preview = ?
++WHERE id = ? AND preview = ''
++            "#,
++        )
++        .bind(preview)
++        .bind(thread_id.to_string())
++        .execute(self.pool.as_ref())
++        .await?;
++        Ok(())
++    }
++
+     pub async fn pause_active_thread_goal(
+         &self,
+         thread_id: ThreadId,
+@@ -471,6 +500,12 @@ mod tests {
+             Some(goal.clone()),
+             runtime.get_thread_goal(thread_id).await.unwrap()
+         );
++        let metadata = runtime
++            .get_thread(thread_id)
++            .await
++            .expect("thread metadata should load")
++            .expect("thread should exist");
++        assert_eq!(metadata.preview.as_deref(), Some("hello"));
+ 
+         let updated = runtime
+             .update_thread_goal(
+@@ -512,6 +547,41 @@ mod tests {
+         assert!(!runtime.delete_thread_goal(thread_id).await.unwrap());
+     }
+ 
++    #[tokio::test]
++    async fn replace_thread_goal_sets_preview_when_empty() {
++        let runtime = test_runtime().await;
++        let thread_id = test_thread_id();
++        let mut metadata = test_thread_metadata(
++            runtime.codex_home(),
++            thread_id,
++            runtime.codex_home().join("workspace"),
++        );
++        metadata.preview = None;
++        metadata.first_user_message = None;
++        runtime
++            .upsert_thread(&metadata)
++            .await
++            .expect("test thread should be upserted");
++
++        runtime
++            .replace_thread_goal(
++                thread_id,
++                "optimize the benchmark",
++                crate::ThreadGoalStatus::Active,
++                /*token_budget*/ None,
++            )
++            .await
++            .expect("goal replacement should succeed");
++
++        let metadata = runtime
++            .get_thread(thread_id)
++            .await
++            .expect("thread metadata should load")
++            .expect("thread should exist");
++        assert_eq!(metadata.preview.as_deref(), Some("optimize the benchmark"));
++        assert_eq!(metadata.first_user_message, None);
++    }
++
+     #[tokio::test]
+     async fn replace_thread_goal_applies_budget_limit_immediately() {
+         let runtime = test_runtime().await;
+diff --git a/codex-rs/state/src/runtime/memories.rs b/codex-rs/state/src/runtime/memories.rs
+index 186f2dd341..aeafe62a77 100644
+--- a/codex-rs/state/src/runtime/memories.rs
++++ b/codex-rs/state/src/runtime/memories.rs
+@@ -147,6 +147,7 @@ SELECT
+     threads.cwd,
+     threads.cli_version,
+     threads.title,
++    threads.preview,
+     threads.sandbox_policy,
+     threads.approval_mode,
+     threads.tokens_used,
+diff --git a/codex-rs/state/src/runtime/test_support.rs b/codex-rs/state/src/runtime/test_support.rs
+index aa1785ba7d..848a193335 100644
+--- a/codex-rs/state/src/runtime/test_support.rs
++++ b/codex-rs/state/src/runtime/test_support.rs
+@@ -58,6 +58,7 @@ pub(super) fn test_thread_metadata(
+         cwd,
+         cli_version: "0.0.0".to_string(),
+         title: String::new(),
++        preview: Some("hello".to_string()),
+         sandbox_policy: crate::extract::enum_to_string(&SandboxPolicy::new_read_only_policy()),
+         approval_mode: crate::extract::enum_to_string(&AskForApproval::OnRequest),
+         tokens_used: 0,
+diff --git a/codex-rs/state/src/runtime/threads.rs b/codex-rs/state/src/runtime/threads.rs
+index 1795a864d8..925fb45288 100644
+--- a/codex-rs/state/src/runtime/threads.rs
++++ b/codex-rs/state/src/runtime/threads.rs
+@@ -23,6 +23,7 @@ SELECT
+     threads.cwd,
+     threads.cli_version,
+     threads.title,
++    threads.preview,
+     threads.sandbox_policy,
+     threads.approval_mode,
+     threads.tokens_used,
+@@ -477,6 +478,7 @@ ON CONFLICT(child_thread_id) DO NOTHING
+         metadata: &crate::ThreadMetadata,
+     ) -> anyhow::Result<bool> {
+         let updated_at = self.allocate_thread_updated_at(metadata.updated_at)?;
++        let preview = metadata_preview(metadata);
+         let result = sqlx::query(
+             r#"
+ INSERT INTO threads (
+@@ -497,6 +499,7 @@ INSERT INTO threads (
+     cwd,
+     cli_version,
+     title,
++    preview,
+     sandbox_policy,
+     approval_mode,
+     tokens_used,
+@@ -507,7 +510,7 @@ INSERT INTO threads (
+     git_branch,
+     git_origin_url,
+     memory_mode
+-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
++) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+ ON CONFLICT(id) DO NOTHING
+             "#,
+         )
+@@ -537,6 +540,7 @@ ON CONFLICT(id) DO NOTHING
+         .bind(metadata.cwd.display().to_string())
+         .bind(metadata.cli_version.as_str())
+         .bind(metadata.title.as_str())
++        .bind(preview)
+         .bind(metadata.sandbox_policy.as_str())
+         .bind(metadata.approval_mode.as_str())
+         .bind(metadata.tokens_used)
+@@ -677,6 +681,7 @@ WHERE id = ?
+         creation_memory_mode: Option<&str>,
+     ) -> anyhow::Result<()> {
+         let updated_at = self.allocate_thread_updated_at(metadata.updated_at)?;
++        let preview = metadata_preview(metadata);
+         // Backfill/reconcile callers merge existing git info before upserting, but that
+         // read/modify/write is not atomic. Preserve non-null SQLite git fields here so
+         // an explicit metadata update cannot be lost if a stale rollout upsert lands later.
+@@ -700,6 +705,7 @@ INSERT INTO threads (
+     cwd,
+     cli_version,
+     title,
++    preview,
+     sandbox_policy,
+     approval_mode,
+     tokens_used,
+@@ -710,7 +716,7 @@ INSERT INTO threads (
+     git_branch,
+     git_origin_url,
+     memory_mode
+-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
++) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+ ON CONFLICT(id) DO UPDATE SET
+     rollout_path = excluded.rollout_path,
+     created_at = excluded.created_at,
+@@ -728,6 +734,7 @@ ON CONFLICT(id) DO UPDATE SET
+     cwd = excluded.cwd,
+     cli_version = excluded.cli_version,
+     title = excluded.title,
++    preview = COALESCE(NULLIF(excluded.preview, ''), threads.preview),
+     sandbox_policy = excluded.sandbox_policy,
+     approval_mode = excluded.approval_mode,
+     tokens_used = excluded.tokens_used,
+@@ -765,6 +772,7 @@ ON CONFLICT(id) DO UPDATE SET
+         .bind(metadata.cwd.display().to_string())
+         .bind(metadata.cli_version.as_str())
+         .bind(metadata.title.as_str())
++        .bind(preview)
+         .bind(metadata.sandbox_policy.as_str())
+         .bind(metadata.approval_mode.as_str())
+         .bind(metadata.tokens_used)
+@@ -982,6 +990,7 @@ SELECT
+     threads.cwd,
+     threads.cli_version,
+     threads.title,
++    threads.preview,
+     threads.sandbox_policy,
+     threads.approval_mode,
+     threads.tokens_used,
+@@ -1058,7 +1067,7 @@ pub(super) fn push_thread_filters<'a>(
+     } else {
+         builder.push(" AND threads.archived = 0");
+     }
+-    builder.push(" AND threads.first_user_message <> ''");
++    builder.push(" AND threads.preview <> ''");
+     if !allowed_sources.is_empty() {
+         builder.push(" AND threads.source IN (");
+         let mut separated = builder.separated(", ");
+@@ -1092,9 +1101,11 @@ pub(super) fn push_thread_filters<'a>(
+         None => {}
+     }
+     if let Some(search_term) = search_term {
+-        builder.push(" AND instr(threads.title, ");
++        builder.push(" AND (instr(threads.title, ");
+         builder.push_bind(search_term);
+-        builder.push(") > 0");
++        builder.push(") > 0 OR instr(threads.preview, ");
++        builder.push_bind(search_term);
++        builder.push(") > 0)");
+     }
+     if let Some(anchor) = anchor {
+         let anchor_ts = datetime_to_epoch_millis(anchor.ts);
+@@ -1138,6 +1149,14 @@ pub(super) fn push_thread_order_and_limit(
+     builder.push_bind(limit as i64);
+ }
+ 
++fn metadata_preview(metadata: &crate::ThreadMetadata) -> &str {
++    metadata
++        .preview
++        .as_deref()
++        .or(metadata.first_user_message.as_deref())
++        .unwrap_or_default()
++}
++
+ #[cfg(test)]
+ mod tests {
+     use super::*;
+@@ -1513,6 +1532,39 @@ mod tests {
+         );
+     }
+ 
++    #[tokio::test]
++    async fn upsert_thread_preserves_existing_preview_when_incoming_preview_is_empty() {
++        let codex_home = unique_temp_dir();
++        let runtime = StateRuntime::init(codex_home.clone(), "test-provider".to_string())
++            .await
++            .expect("state db should initialize");
++        let thread_id =
++            ThreadId::from_string("00000000-0000-0000-0000-000000000459").expect("valid thread id");
++        let mut metadata = test_thread_metadata(&codex_home, thread_id, codex_home.clone());
++        metadata.first_user_message = None;
++        metadata.preview = Some("migrated goal preview".to_string());
++
++        runtime
++            .upsert_thread(&metadata)
++            .await
++            .expect("initial upsert should succeed");
++
++        let mut rollout_metadata = metadata.clone();
++        rollout_metadata.preview = None;
++
++        runtime
++            .upsert_thread(&rollout_metadata)
++            .await
++            .expect("rollout upsert should succeed");
++
++        let persisted = runtime
++            .get_thread(thread_id)
++            .await
++            .expect("thread should load")
++            .expect("thread should exist");
++        assert_eq!(persisted.preview.as_deref(), Some("migrated goal preview"));
++    }
++
+     #[tokio::test]
+     async fn update_thread_git_info_preserves_newer_non_git_metadata() {
+         let codex_home = unique_temp_dir();
+@@ -1532,12 +1584,13 @@ mod tests {
+             DateTime::<Utc>::from_timestamp(1_700_000_100, 0).expect("timestamp"),
+         );
+         sqlx::query(
+-            "UPDATE threads SET updated_at = ?, updated_at_ms = ?, tokens_used = ?, first_user_message = ? WHERE id = ?",
++            "UPDATE threads SET updated_at = ?, updated_at_ms = ?, tokens_used = ?, first_user_message = ?, preview = ? WHERE id = ?",
+         )
+         .bind(updated_at / 1000)
+         .bind(updated_at)
+         .bind(123_i64)
+         .bind("newer preview")
++        .bind("newer preview")
+         .bind(thread_id.to_string())
+         .execute(runtime.pool.as_ref())
+         .await
+@@ -1564,6 +1617,7 @@ mod tests {
+             persisted.first_user_message.as_deref(),
+             Some("newer preview")
+         );
++        assert_eq!(persisted.preview.as_deref(), Some("newer preview"));
+         assert_eq!(datetime_to_epoch_millis(persisted.updated_at), updated_at);
+         assert_eq!(persisted.git_sha.as_deref(), Some("abc123"));
+         assert_eq!(persisted.git_branch.as_deref(), Some("feature/branch"));
+@@ -1585,6 +1639,7 @@ mod tests {
+         let mut existing = test_thread_metadata(&codex_home, thread_id, codex_home.clone());
+         existing.tokens_used = 123;
+         existing.first_user_message = Some("newer preview".to_string());
++        existing.preview = Some("newer preview".to_string());
+         existing.updated_at = DateTime::<Utc>::from_timestamp(1_700_000_100, 0).expect("timestamp");
+         runtime
+             .upsert_thread(&existing)
+@@ -1594,6 +1649,7 @@ mod tests {
+         let mut fallback = test_thread_metadata(&codex_home, thread_id, codex_home.clone());
+         fallback.tokens_used = 0;
+         fallback.first_user_message = None;
++        fallback.preview = None;
+         fallback.updated_at = DateTime::<Utc>::from_timestamp(1_700_000_000, 0).expect("timestamp");
+ 
+         let inserted = runtime
+@@ -1612,6 +1668,7 @@ mod tests {
+             persisted.first_user_message.as_deref(),
+             Some("newer preview")
+         );
++        assert_eq!(persisted.preview.as_deref(), Some("newer preview"));
+         assert_eq!(
+             datetime_to_epoch_millis(persisted.updated_at),
+             datetime_to_epoch_millis(existing.updated_at)
+@@ -1663,6 +1720,7 @@ mod tests {
+         let mut metadata = test_thread_metadata(&codex_home, thread_id, codex_home.clone());
+         metadata.title = "original title".to_string();
+         metadata.first_user_message = Some("first-user-message".to_string());
++        metadata.preview = None;
+ 
+         runtime
+             .upsert_thread(&metadata)
+@@ -1687,6 +1745,7 @@ mod tests {
+             persisted.first_user_message.as_deref(),
+             Some("first-user-message")
+         );
++        assert_eq!(persisted.preview.as_deref(), Some("first-user-message"));
+     }
+ 
+     #[tokio::test]
+diff --git a/codex-rs/thread-store/src/local/helpers.rs b/codex-rs/thread-store/src/local/helpers.rs
+index bb46287123..bfdc94fbf0 100644
+--- a/codex-rs/thread-store/src/local/helpers.rs
++++ b/codex-rs/thread-store/src/local/helpers.rs
+@@ -110,7 +110,11 @@ pub(super) fn stored_thread_from_rollout_item(
+         item.git_origin_url.clone(),
+     );
+     let source = item.source.unwrap_or(SessionSource::Unknown);
+-    let preview = item.first_user_message.clone().unwrap_or_default();
++    let preview = item
++        .preview
++        .clone()
++        .or_else(|| item.first_user_message.clone())
++        .unwrap_or_default();
+ 
+     Some(StoredThread {
+         thread_id,
+diff --git a/codex-rs/thread-store/src/local/list_threads.rs b/codex-rs/thread-store/src/local/list_threads.rs
+index e470ad2be9..ede9e9e9c8 100644
+--- a/codex-rs/thread-store/src/local/list_threads.rs
++++ b/codex-rs/thread-store/src/local/list_threads.rs
+@@ -267,6 +267,7 @@ mod tests {
+         let mut metadata = builder.build(config.default_model_provider_id.as_str());
+         metadata.title = "needle title".to_string();
+         metadata.first_user_message = Some("plain preview".to_string());
++        metadata.preview = metadata.first_user_message.clone();
+         runtime
+             .upsert_thread(&metadata)
+             .await
+diff --git a/codex-rs/thread-store/src/local/read_thread.rs b/codex-rs/thread-store/src/local/read_thread.rs
+index 9d685aace6..8e93d25ae1 100644
+--- a/codex-rs/thread-store/src/local/read_thread.rs
++++ b/codex-rs/thread-store/src/local/read_thread.rs
+@@ -280,11 +280,16 @@ async fn stored_thread_from_sqlite_metadata(
+         .ok()
+         .map(|meta_line| meta_line.meta);
+     let forked_from_id = session_meta.as_ref().and_then(|meta| meta.forked_from_id);
++    let preview = metadata
++        .preview
++        .clone()
++        .or_else(|| metadata.first_user_message.clone())
++        .unwrap_or_default();
+     StoredThread {
+         thread_id: metadata.id,
+         rollout_path: Some(metadata.rollout_path),
+         forked_from_id,
+-        preview: metadata.first_user_message.clone().unwrap_or_default(),
++        preview,
+         name,
+         model_provider: if metadata.model_provider.is_empty() {
+             store.config.default_model_provider_id.clone()
+@@ -1009,8 +1014,9 @@ mod tests {
+         builder.cwd = external.path().join("workspace");
+         builder.cli_version = Some("sqlite-cli".to_string());
+         let mut metadata = builder.build(config.default_model_provider_id.as_str());
+-        metadata.title = "SQLite title".to_string();
+-        metadata.first_user_message = Some("SQLite preview".to_string());
++        metadata.preview = Some("optimize the benchmark".to_string());
++        metadata.first_user_message = Some("next normal prompt".to_string());
++        metadata.title = "next normal prompt".to_string();
+         metadata.model = Some("sqlite-model".to_string());
+         runtime
+             .upsert_thread(&metadata)
+@@ -1028,9 +1034,12 @@ mod tests {
+ 
+         assert_eq!(thread.thread_id, thread_id);
+         assert_eq!(thread.rollout_path, Some(rollout_path));
+-        assert_eq!(thread.preview, "SQLite preview");
+-        assert_eq!(thread.first_user_message.as_deref(), Some("SQLite preview"));
+-        assert_eq!(thread.name.as_deref(), Some("SQLite title"));
++        assert_eq!(thread.preview, "optimize the benchmark");
++        assert_eq!(
++            thread.first_user_message.as_deref(),
++            Some("next normal prompt")
++        );
++        assert_eq!(thread.name, None);
+         assert_eq!(thread.model_provider, "sqlite-provider");
+         assert_eq!(thread.model.as_deref(), Some("sqlite-model"));
+         assert_eq!(thread.cwd, external.path().join("workspace"));

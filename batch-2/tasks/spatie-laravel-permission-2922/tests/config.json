@@ -1,0 +1,32 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && mkdir -p /workspace/test-results && vendor/bin/pest tests/Traits/HasAssignedModelsTest.php --log-junit=/workspace/test-results/output.xml; cat /workspace/test-results/output.xml 2>/dev/null",
+  "test_files": [
+    "tests/Traits/HasAssignedModelsTest.php"
+  ],
+  "num_test_files": 1,
+  "language": "php",
+  "FAIL_TO_PASS": [
+    "Tests.Traits.HasAssignedModelsTest::it can sync models to a role",
+    "Tests.Traits.HasAssignedModelsTest::it removes previous models when syncing",
+    "Tests.Traits.HasAssignedModelsTest::it removes all models when syncing with an empty array",
+    "Tests.Traits.HasAssignedModelsTest::it does not add duplicate models when syncing",
+    "Tests.Traits.HasAssignedModelsTest::it can sync models using a single model instance",
+    "Tests.Traits.HasAssignedModelsTest::it can sync models using IDs",
+    "Tests.Traits.HasAssignedModelsTest::it can assign a role to models",
+    "Tests.Traits.HasAssignedModelsTest::it can assign a role to a single model instance",
+    "Tests.Traits.HasAssignedModelsTest::it can assign a role to models using IDs",
+    "Tests.Traits.HasAssignedModelsTest::it does not assign duplicate models",
+    "Tests.Traits.HasAssignedModelsTest::it does not re-assign models already assigned",
+    "Tests.Traits.HasAssignedModelsTest::it can assign additional models without removing existing ones",
+    "Tests.Traits.HasAssignedModelsTest::it can remove a role from models",
+    "Tests.Traits.HasAssignedModelsTest::it can remove a role from a single model instance",
+    "Tests.Traits.HasAssignedModelsTest::it can remove a role from models using IDs",
+    "Tests.Traits.HasAssignedModelsTest::it does nothing when removing the role from models that do not have it",
+    "Tests.Traits.HasAssignedModelsTest::it can sync models using IDs with explicit model class",
+    "Tests.Traits.HasAssignedModelsTest::it can assign a role to models using IDs with explicit model class",
+    "Tests.Traits.HasAssignedModelsTest::it can remove a role from models using IDs with explicit model class",
+    "Tests.Traits.HasAssignedModelsTest::it uses config default_model when resolving IDs"
+  ],
+  "PASS_TO_PASS": []
+}

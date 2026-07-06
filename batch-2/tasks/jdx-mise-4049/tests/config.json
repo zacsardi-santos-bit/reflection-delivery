@@ -1,0 +1,11 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo test test_usage_kdl_format 2>/dev/null | sed -E 's/^test (.*) \\.\\.\\. ok$/PASS [   0.000s] \\1/; s/^test (.*) \\.\\.\\. FAILED$/FAIL [   0.000s] \\1/'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "cli::usage::tests::test_usage_kdl_format"
+  ],
+  "PASS_TO_PASS": []
+}

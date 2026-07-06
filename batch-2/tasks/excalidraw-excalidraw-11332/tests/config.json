@@ -1,0 +1,19 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run packages/excalidraw/tests/image.test.tsx",
+  "test_files": [
+    "packages/excalidraw/tests/image.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/excalidraw/tests/image.test.tsx::resizeImageFile returns the original file when it already fits the max dimensions",
+    "/workspace/repo/packages/excalidraw/tests/image.test.tsx::image insertion passes host-configured max image dimensions to the resize helper",
+    "/workspace/repo/packages/excalidraw/tests/image.test.tsx::image insertion enforces host-configured max image file size"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/excalidraw/tests/image.test.tsx::image insertion should eventually initialize all dropped images",
+    "/workspace/repo/packages/excalidraw/tests/image.test.tsx::image insertion should eventually initialize all pasted images",
+    "/workspace/repo/packages/excalidraw/tests/image.test.tsx::image insertion should eventually initialize all images added through image tool"
+  ]
+}

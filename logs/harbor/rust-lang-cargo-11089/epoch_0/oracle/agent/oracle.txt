@@ -1,4 +1,0 @@
-patching file crates/cargo-test-support/src/registry.rs
-patching file src/cargo/sources/registry/mod.rs
-patching file src/cargo/util/io.rs
-patching file src/cargo/util/mod.rs

@@ -1,0 +1,5 @@
+I'm working on Beyla's SQL detection pipeline and noticed that some legitimate database queries are being silently dropped even when Beyla has already determined that the connection is talking to a PostgreSQL server. The current SQL validation logic requires both the operation and the table name to be extracted from the raw bytes before accepting a span, but many valid queries — especially ones with complex join syntax or quoted identifier names — make table extraction fail even though the SQL operation is clearly identifiable.
+
+The fix should make the validator smarter about context: when the database type is already known to be PostgreSQL, finding the SQL operation alone should be sufficient to accept the traffic. For generic or unknown connections, the stricter requirement should stay to avoid false positives.
+
+There's also a related issue with the PostgreSQL query parser: queries that use double-quoted identifiers for table and column names should have all their participating tables correctly extracted and joined as a comma-separated string — covering both the primary table from the FROM clause and any tables referenced in JOIN clauses.

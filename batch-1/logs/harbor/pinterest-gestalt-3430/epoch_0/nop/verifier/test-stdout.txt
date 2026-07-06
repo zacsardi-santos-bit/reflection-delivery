@@ -1,0 +1,217 @@
+patching file packages/gestalt/src/ComboBox.jsdom.test.js
+patching file packages/gestalt/src/Dropdown.jsdom.test.js
+patching file packages/gestalt/src/HelpButton.jsdom.test.js
+patching file packages/gestalt/src/HelpButton.test.js
+patching file packages/gestalt/src/OverlayPanel.jsdom.test.js
+patching file packages/gestalt/src/Popover.jsdom.test.js
+patching file packages/gestalt/src/PopoverEducational.jsdom.test.js
+patching file packages/gestalt/src/SideNavigation.jsdom.test.js
+patching file packages/gestalt/src/Tooltip.jsdom.test.js
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL jsdom packages/gestalt/src/PopoverEducational.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/PopoverEducational.jsdom.test.js'
+
+      1 | // @flow strict
+      2 | import PopoverEducational from './PopoverEducational';
+    > 3 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+        | ^
+      4 |
+      5 | test('PopoverEducational renders', () => {
+      6 |   const element = document.createElement('div');
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/PopoverEducational.jsdom.test.js:3:1)
+
+FAIL jsdom packages/gestalt/src/Popover.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/Popover.jsdom.test.js'
+
+      2 | import PopoverEducational from './PopoverEducational';
+      3 | import Text from './Text';
+    > 4 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+        | ^
+      5 |
+      6 | describe('PopoverEducational', () => {
+      7 |   it('renders correctly', () => {
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/Popover.jsdom.test.js:4:1)
+
+FAIL jsdom packages/gestalt/src/Tooltip.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/Tooltip.jsdom.test.js'
+
+       5 | import Text from './Text';
+       6 | import Tooltip from './Tooltip';
+    >  7 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+         | ^
+       8 | import { FixedZIndex } from './zIndex';
+       9 |
+      10 | // Remove experiment after Dropdown v2 is fully released
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/Tooltip.jsdom.test.js:7:1)
+
+FAIL jsdom packages/gestalt/src/HelpButton.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/HelpButton.jsdom.test.js'
+
+      2 | import { act, screen } from '@testing-library/react';
+      3 | import HelpButton from './HelpButton';
+    > 4 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+        | ^
+      5 |
+      6 | // Remove experiment after HelpButton v2 is fully released
+      7 | const render = (children: React$Element<React$ElementType>) =>
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/HelpButton.jsdom.test.js:4:1)
+
+FAIL jsdom packages/gestalt/src/OverlayPanel.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/OverlayPanel.jsdom.test.js'
+
+       5 | import OverlayPanel from './OverlayPanel';
+       6 | import * as useReducedMotionHook from './useReducedMotion';
+    >  7 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+         | ^
+       8 |
+       9 | jest.mock('./useReducedMotion.js');
+      10 |
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/OverlayPanel.jsdom.test.js:7:1)
+
+PASS jsdom packages/gestalt/src/HelpButton.test.js
+  HelpButton
+    ✓ renders correctly (17 ms)
+    ✓ renders with default link and no accessibility label (6 ms)
+    ✓ renders with default link and accessibility link label (3 ms)
+    ✓ renders with changing direction to show the popover (2 ms)
+    ✓ renders with link and no default link label (2 ms)
+    ✓ accessibilityControls (2 ms)
+    ✓ accessibilityExpanded (2 ms)
+    ✓ accessibilityLabel="Click to learn more about Pinterest" accessibilityPopoverLabel (2 ms)
+
+FAIL jsdom packages/gestalt/src/Dropdown.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/Dropdown.jsdom.test.js'
+
+      4 | import Dropdown from './Dropdown';
+      5 | import { DOWN_ARROW, ENTER, ESCAPE, TAB, UP_ARROW } from './keyCodes';
+    > 6 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+        | ^
+      7 |
+      8 | // Remove experiment after Dropdown v2 is fully released
+      9 | const render = (children: React$Element<React$ElementType>) =>
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/Dropdown.jsdom.test.js:6:1)
+
+FAIL jsdom packages/gestalt/src/ComboBox.jsdom.test.js
+  ● Test suite failed to run
+
+    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/ComboBox.jsdom.test.js'
+
+      4 | import ComboBox from './ComboBox';
+      5 | import Tag from './Tag';
+    > 6 | import renderWithExperiment from './utils/testing/renderWithExperiment';
+        | ^
+      7 |
+      8 | describe('ComboBox', () => {
+      9 |   const PRONOUNS = [
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)
+      at Object.<anonymous> (packages/gestalt/src/ComboBox.jsdom.test.js:6:1)
+
+PASS node packages/gestalt/src/HelpButton.test.js (6.092 s)
+  HelpButton
+    ✓ renders correctly (15 ms)
+    ✓ renders with default link and no accessibility label (4 ms)
+    ✓ renders with default link and accessibility link label (3 ms)
+    ✓ renders with changing direction to show the popover (2 ms)
+    ✓ renders with link and no default link label (2 ms)
+    ✓ accessibilityControls (2 ms)
+    ✓ accessibilityExpanded (2 ms)
+    ✓ accessibilityLabel="Click to learn more about Pinterest" accessibilityPopoverLabel (1 ms)
+
+PASS jsdom packages/gestalt/src/SideNavigation.jsdom.test.js (6.66 s)
+  SideNavigation desktop
+    ✓ renders correctly on hover (262 ms)
+    ✓ renders correctly on focus (170 ms)
+    ✓ renders display static correctly (25 ms)
+    ✓ renders display expandable correctly (9 ms)
+    ✓ renders display expandableExpanded correctly (29 ms)
+    ✓ renders primaryAction dropdown correctly on click (39 ms)
+    ✓ renders primaryAction dropdown correctly on enter (83 ms)
+  SideNavigation mobile
+    ✓ renders correctly on hover (133 ms)
+    ✓ renders correctly on focus (158 ms)
+    ✓ renders primaryAction dropdown correctly on click (97 ms)
+    ✓ renders primaryAction dropdown correctly on enter (141 ms)
+
+Test Suites: 7 failed, 3 passed, 10 total
+Tests:       27 passed, 27 total
+Snapshots:   10 passed, 10 total
+Time:        7.934 s
+Ran all test suites matching /packages\/gestalt\/src\/ComboBox.jsdom.test.js|packages\/gestalt\/src\/Dropdown.jsdom.test.js|packages\/gestalt\/src\/HelpButton.jsdom.test.js|packages\/gestalt\/src\/HelpButton.test.js|packages\/gestalt\/src\/OverlayPanel.jsdom.test.js|packages\/gestalt\/src\/Popover.jsdom.test.js|packages\/gestalt\/src\/PopoverEducational.jsdom.test.js|packages\/gestalt\/src\/SideNavigation.jsdom.test.js|packages\/gestalt\/src\/Tooltip.jsdom.test.js/i in 2 projects.
+{"numFailedTestSuites":7,"numFailedTests":0,"numPassedTestSuites":3,"numPassedTests":27,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":7,"numTodoTests":0,"numTotalTestSuites":10,"numTotalTests":27,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":10,"total":10,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746788162,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/PopoverEducational.jsdom.test.js'\n\n      1 | // @flow strict\n      2 | import PopoverEducational from './PopoverEducational';\n    > 3 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n        | ^\n      4 |\n      5 | test('PopoverEducational renders', () => {\n      6 |   const element = document.createElement('div');\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/PopoverEducational.jsdom.test.js:3:1)\n","name":"/workspace/repo/packages/gestalt/src/PopoverEducational.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/Popover.jsdom.test.js'\n\n      2 | import PopoverEducational from './PopoverEducational';\n      3 | import Text from './Text';\n    > 4 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n        | ^\n      5 |\n      6 | describe('PopoverEducational', () => {\n      7 |   it('renders correctly', () => {\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/Popover.jsdom.test.js:4:1)\n","name":"/workspace/repo/packages/gestalt/src/Popover.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/Tooltip.jsdom.test.js'\n\n       5 | import Text from './Text';\n       6 | import Tooltip from './Tooltip';\n    >  7 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n         | ^\n       8 | import { FixedZIndex } from './zIndex';\n       9 |\n      10 | // Remove experiment after Dropdown v2 is fully released\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/Tooltip.jsdom.test.js:7:1)\n","name":"/workspace/repo/packages/gestalt/src/Tooltip.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/HelpButton.jsdom.test.js'\n\n      2 | import { act, screen } from '@testing-library/react';\n      3 | import HelpButton from './HelpButton';\n    > 4 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n        | ^\n      5 |\n      6 | // Remove experiment after HelpButton v2 is fully released\n      7 | const render = (children: React$Element<React$ElementType>) =>\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/HelpButton.jsdom.test.js:4:1)\n","name":"/workspace/repo/packages/gestalt/src/HelpButton.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/OverlayPanel.jsdom.test.js'\n\n       5 | import OverlayPanel from './OverlayPanel';\n       6 | import * as useReducedMotionHook from './useReducedMotion';\n    >  7 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n         | ^\n       8 |\n       9 | jest.mock('./useReducedMotion.js');\n      10 |\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/OverlayPanel.jsdom.test.js:7:1)\n","name":"/workspace/repo/packages/gestalt/src/OverlayPanel.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["HelpButton"],"duration":17,"failureMessages":[],"fullName":"HelpButton renders correctly","location":null,"status":"passed","title":"renders correctly"},{"ancestorTitles":["HelpButton"],"duration":6,"failureMessages":[],"fullName":"HelpButton renders with default link and no accessibility label","location":null,"status":"passed","title":"renders with default link and no accessibility label"},{"ancestorTitles":["HelpButton"],"duration":3,"failureMessages":[],"fullName":"HelpButton renders with default link and accessibility link label","location":null,"status":"passed","title":"renders with default link and accessibility link label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton renders with changing direction to show the popover","location":null,"status":"passed","title":"renders with changing direction to show the popover"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton renders with link and no default link label","location":null,"status":"passed","title":"renders with link and no default link label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityControls","location":null,"status":"passed","title":"accessibilityControls"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityExpanded","location":null,"status":"passed","title":"accessibilityExpanded"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel","location":null,"status":"passed","title":"accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel"}],"endTime":1782746794190,"message":"","name":"/workspace/repo/packages/gestalt/src/HelpButton.test.js","startTime":1782746789303,"status":"passed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/Dropdown.jsdom.test.js'\n\n      4 | import Dropdown from './Dropdown';\n      5 | import { DOWN_ARROW, ENTER, ESCAPE, TAB, UP_ARROW } from './keyCodes';\n    > 6 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n        | ^\n      7 |\n      8 | // Remove experiment after Dropdown v2 is fully released\n      9 | const render = (children: React$Element<React$ElementType>) =>\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/Dropdown.jsdom.test.js:6:1)\n","name":"/workspace/repo/packages/gestalt/src/Dropdown.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746796098,"message":"  ● Test suite failed to run\n\n    Cannot find module './utils/testing/renderWithExperiment' from 'packages/gestalt/src/ComboBox.jsdom.test.js'\n\n      4 | import ComboBox from './ComboBox';\n      5 | import Tag from './Tag';\n    > 6 | import renderWithExperiment from './utils/testing/renderWithExperiment';\n        | ^\n      7 |\n      8 | describe('ComboBox', () => {\n      9 |   const PRONOUNS = [\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:491:11)\n      at Object.<anonymous> (packages/gestalt/src/ComboBox.jsdom.test.js:6:1)\n","name":"/workspace/repo/packages/gestalt/src/ComboBox.jsdom.test.js","startTime":1782746796098,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["HelpButton"],"duration":15,"failureMessages":[],"fullName":"HelpButton renders correctly","location":null,"status":"passed","title":"renders correctly"},{"ancestorTitles":["HelpButton"],"duration":4,"failureMessages":[],"fullName":"HelpButton renders with default link and no accessibility label","location":null,"status":"passed","title":"renders with default link and no accessibility label"},{"ancestorTitles":["HelpButton"],"duration":3,"failureMessages":[],"fullName":"HelpButton renders with default link and accessibility link label","location":null,"status":"passed","title":"renders with default link and accessibility link label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton renders with changing direction to show the popover","location":null,"status":"passed","title":"renders with changing direction to show the popover"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton renders with link and no default link label","location":null,"status":"passed","title":"renders with link and no default link label"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityControls","location":null,"status":"passed","title":"accessibilityControls"},{"ancestorTitles":["HelpButton"],"duration":2,"failureMessages":[],"fullName":"HelpButton accessibilityExpanded","location":null,"status":"passed","title":"accessibilityExpanded"},{"ancestorTitles":["HelpButton"],"duration":1,"failureMessages":[],"fullName":"HelpButton accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel","location":null,"status":"passed","title":"accessibilityLabel=\"Click to learn more about Pinterest\" accessibilityPopoverLabel"}],"endTime":1782746794678,"message":"","name":"/workspace/repo/packages/gestalt/src/HelpButton.test.js","startTime":1782746788586,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["SideNavigation desktop"],"duration":262,"failureMessages":[],"fullName":"SideNavigation desktop renders correctly on hover","location":null,"status":"passed","title":"renders correctly on hover"},{"ancestorTitles":["SideNavigation desktop"],"duration":170,"failureMessages":[],"fullName":"SideNavigation desktop renders correctly on focus","location":null,"status":"passed","title":"renders correctly on focus"},{"ancestorTitles":["SideNavigation desktop"],"duration":25,"failureMessages":[],"fullName":"SideNavigation desktop renders display static correctly","location":null,"status":"passed","title":"renders display static correctly"},{"ancestorTitles":["SideNavigation desktop"],"duration":9,"failureMessages":[],"fullName":"SideNavigation desktop renders display expandable correctly","location":null,"status":"passed","title":"renders display expandable correctly"},{"ancestorTitles":["SideNavigation desktop"],"duration":29,"failureMessages":[],"fullName":"SideNavigation desktop renders display expandableExpanded correctly","location":null,"status":"passed","title":"renders display expandableExpanded correctly"},{"ancestorTitles":["SideNavigation desktop"],"duration":39,"failureMessages":[],"fullName":"SideNavigation desktop renders primaryAction dropdown correctly on click","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on click"},{"ancestorTitles":["SideNavigation desktop"],"duration":83,"failureMessages":[],"fullName":"SideNavigation desktop renders primaryAction dropdown correctly on enter","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on enter"},{"ancestorTitles":["SideNavigation mobile"],"duration":133,"failureMessages":[],"fullName":"SideNavigation mobile renders correctly on hover","location":null,"status":"passed","title":"renders correctly on hover"},{"ancestorTitles":["SideNavigation mobile"],"duration":158,"failureMessages":[],"fullName":"SideNavigation mobile renders correctly on focus","location":null,"status":"passed","title":"renders correctly on focus"},{"ancestorTitles":["SideNavigation mobile"],"duration":97,"failureMessages":[],"fullName":"SideNavigation mobile renders primaryAction dropdown correctly on click","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on click"},{"ancestorTitles":["SideNavigation mobile"],"duration":141,"failureMessages":[],"fullName":"SideNavigation mobile renders primaryAction dropdown correctly on enter","location":null,"status":"passed","title":"renders primaryAction dropdown correctly on enter"}],"endTime":1782746795960,"message":"","name":"/workspace/repo/packages/gestalt/src/SideNavigation.jsdom.test.js","startTime":1782746789300,"status":"passed","summary":""}],"wasInterrupted":false}  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

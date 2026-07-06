@@ -1,0 +1,467 @@
+diff --git a/code/core/src/shared/open-service/README.md b/code/core/src/shared/open-service/README.md
+index a03490b285d..bb11f0df2ff 100644
+--- a/code/core/src/shared/open-service/README.md
++++ b/code/core/src/shared/open-service/README.md
+@@ -152,6 +152,29 @@ not throw when the command is called; it requests **remote command execution** f
+ implement it (see [Remote Command Execution](#remote-command-execution)). Queries stay local-only and
+ still throw `OpenServiceUnimplementedOperationError` when no handler exists.
+ 
++### Discovery visibility
++
++Services and operations can be hidden from discovery APIs without disabling them at runtime:
++
++- Set `internal: true` on a **service** to omit it from `listServices()`. `describeService(id)` and
++  `getService(id)` still work when the id is known.
++- Set `internal: true` on a **query or command** to omit it from `describeService()` output (and
++  therefore from `queryNames` / `commandNames` in `listServices()` summaries). Runtime callers can
++  still invoke the operation through a service handle, and TypeScript types remain available.
++
++`internal` defaults to `false` when omitted. It is part of the definition contract only — it cannot
++be overridden at `registerService()` time. Static snapshot building is unaffected.
++
++### Internal operation naming
++
++Internal queries and commands must use a `_` prefix (for example `_debugState`). `defineService()`
++enforces this bidirectionally at compile time:
++
++- `internal: true` requires a `_`-prefixed name
++- a `_`-prefixed name requires `internal: true`
++
++Public operations must not use a `_` prefix unless they are internal.
++
+ ### Cross-service composition
+ 
+ Handlers resolve other registered services through `ctx.getService(serviceId)`. Without a type
+diff --git a/code/core/src/shared/open-service/fixtures.ts b/code/core/src/shared/open-service/fixtures.ts
+index 79ec7378c9f..a1d28d5b50c 100644
+--- a/code/core/src/shared/open-service/fixtures.ts
++++ b/code/core/src/shared/open-service/fixtures.ts
+@@ -342,3 +342,176 @@ export function createInvalidStaticInputServiceDef() {
+     commands: {},
+   });
+ }
++
++/** Leaves handlers undefined so registration tests can supply them later. */
++export const unimplementedOperationsServiceDef = defineService({
++  id: 'internal-fixture/unimplemented-operations',
++  description: 'Leaves handlers undefined so registration can supply them later.',
++  initialState: {} as Record<string, never>,
++  queries: {
++    getValue: {
++      description: 'Reads a value that is not implemented in this environment.',
++      input: v.undefined(),
++      output: v.string(),
++    },
++  },
++  commands: {
++    run: {
++      description: 'Runs a command that is not implemented in this environment.',
++      input: v.undefined(),
++      output: voidOutputSchema,
++    },
++  },
++});
++
++export type RegisteredCommandOverrideState = { count: number };
++
++/** Provides commands whose handlers are supplied at registration time. */
++export const registeredCommandOverrideServiceDef = defineService({
++  id: 'internal-fixture/registered-command-override',
++  description: 'Provides a command handler at registration time.',
++  initialState: { count: 0 } satisfies RegisteredCommandOverrideState,
++  queries: {
++    getCount: {
++      description: 'Reads the current count.',
++      input: v.undefined(),
++      output: v.number(),
++      handler: (_input, ctx) => ctx.self.state.count,
++    },
++  },
++  commands: {
++    increment: {
++      description: 'Increments the current count.',
++      input: v.undefined(),
++      output: voidOutputSchema,
++    },
++    assignFromLookup: {
++      description: 'Reads another service and mirrors whether a marker exists.',
++      input: assignEntryFieldInputSchema,
++      output: voidOutputSchema,
++    },
++  },
++});
++
++export type RegistrationOnlyStaticBuildState = { value: string | null };
++
++/** Declares staticPath in the definition; load and handlers may be supplied at registration. */
++export const registrationOnlyStaticBuildServiceDef = defineService({
++  id: 'internal-fixture/registration-only-static-build',
++  description: 'Declares staticPath in the definition and load at registration.',
++  initialState: { value: null } as RegistrationOnlyStaticBuildState,
++  queries: {
++    getValue: {
++      description: 'Returns one statically built value.',
++      input: v.object({ build: v.literal('once') }),
++      output: v.nullable(v.string()),
++      handler: (_input, ctx) => ctx.self.state.value,
++      staticPath: () => 'state.json',
++      staticInputs: async () => [{ build: 'once' as const }],
++    },
++  },
++  commands: {
++    setValue: {
++      description: 'Stores one value during static load.',
++      input: v.undefined(),
++      output: voidOutputSchema,
++    },
++  },
++});
++
++export type MixedVisibilityState = { value: number };
++
++/** Exposes one public and one internal operation per family for discovery tests. */
++export const mixedVisibilityServiceDef = defineService({
++  id: 'internal-fixture/mixed-visibility',
++  description: 'Exposes one public and one internal operation per family.',
++  initialState: { value: 0 } satisfies MixedVisibilityState,
++  queries: {
++    getValue: {
++      description: 'Public query.',
++      input: v.undefined(),
++      output: v.number(),
++      handler: (_input, ctx) => ctx.self.state.value,
++    },
++    _getInternalValue: {
++      internal: true,
++      description: 'Internal query.',
++      input: v.undefined(),
++      output: v.number(),
++      handler: (_input, ctx) => ctx.self.state.value,
++    },
++  },
++  commands: {
++    setValue: {
++      description: 'Public command.',
++      input: v.number(),
++      output: voidOutputSchema,
++      handler: (input, ctx) => {
++        ctx.self.setState((draft) => {
++          draft.value = input;
++        });
++      },
++    },
++    _reset: {
++      internal: true,
++      description: 'Internal command.',
++      input: v.undefined(),
++      output: voidOutputSchema,
++      handler: (_input, ctx) => {
++        ctx.self.setState((draft) => {
++          draft.value = 0;
++        });
++      },
++    },
++  },
++});
++
++export type HiddenServiceState = { secret: boolean };
++
++/** Hidden from listServices while remaining reachable through getService. */
++export const hiddenServiceDef = defineService({
++  id: 'internal-fixture/hidden-service',
++  internal: true,
++  description: 'Hidden from listServices.',
++  initialState: { secret: true } satisfies HiddenServiceState,
++  queries: {
++    getSecret: {
++      description: 'Returns the secret flag.',
++      input: v.undefined(),
++      output: v.boolean(),
++      handler: (_input, ctx) => ctx.self.state.secret,
++    },
++  },
++  commands: {},
++});
++
++export type InternalStaticBuildState = { value: string | null };
++
++/** Internal query participates in static builds. */
++export const internalStaticBuildServiceDef = defineService({
++  id: 'internal-fixture/internal-static-build',
++  description: 'Internal query participates in static builds.',
++  initialState: { value: null } as InternalStaticBuildState,
++  queries: {
++    _getValue: {
++      internal: true,
++      description: 'Internal statically built query.',
++      input: v.object({ build: v.literal('once') }),
++      output: v.nullable(v.string()),
++      handler: (_input, ctx) => ctx.self.state.value,
++      load: async (_input, ctx) => {
++        await ctx.self.commands._setValue(undefined);
++      },
++      staticPath: () => 'state.json',
++      staticInputs: async () => [{ build: 'once' as const }],
++    },
++  },
++  commands: {
++    _setValue: {
++      internal: true,
++      description: 'Internal command used during static load.',
++      input: v.undefined(),
++      output: voidOutputSchema,
++    },
++  },
++});
+diff --git a/code/core/src/shared/open-service/index.test-d.ts b/code/core/src/shared/open-service/index.test-d.ts
+index c566f48023c..dce92a3f2bb 100644
+--- a/code/core/src/shared/open-service/index.test-d.ts
++++ b/code/core/src/shared/open-service/index.test-d.ts
+@@ -173,6 +173,51 @@ describe('open-service type inference', () => {
+     });
+   });
+ 
++  it('accepts internal operations prefixed with _', () => {
++    defineService({
++      id: 'internal-fixture/valid-internal-naming',
++      initialState: {} as Record<string, never>,
++      queries: {
++        getValue: {
++          input: v.undefined(),
++          output: v.number(),
++          handler: () => 0,
++        },
++        _getInternalValue: {
++          internal: true,
++          input: v.undefined(),
++          output: v.number(),
++          handler: () => 0,
++        },
++      },
++      commands: {
++        _reset: {
++          internal: true,
++          input: v.undefined(),
++          output: v.void(),
++          handler: async () => {},
++        },
++      },
++    });
++  });
++
++  it('rejects internal: true without a _ prefix', () => {
++    defineService({
++      id: 'internal-fixture/invalid-internal-without-prefix',
++      initialState: {} as Record<string, never>,
++      queries: {
++        // @ts-expect-error internal operations must be prefixed with "_"
++        debugQuery: {
++          internal: true,
++          input: v.undefined(),
++          output: v.number(),
++          handler: () => 0,
++        },
++      },
++      commands: {},
++    });
++  });
++
+   it('accepts both interface and type-alias object state', () => {
+     interface InterfaceState {
+       color: string;
+@@ -196,6 +241,22 @@ describe('open-service type inference', () => {
+     });
+   });
+ 
++  it('rejects _ prefix without internal: true', () => {
++    defineService({
++      id: 'internal-fixture/invalid-prefix-without-internal',
++      initialState: {} as Record<string, never>,
++      queries: {
++        // @ts-expect-error operations prefixed with "_" must set internal: true
++        _debugQuery: {
++          input: v.undefined(),
++          output: v.number(),
++          handler: () => 0,
++        },
++      },
++      commands: {},
++    });
++  });
++
+   it('rejects non-object state (primitive, null, or array)', () => {
+     const base = { queries: {}, commands: {} } as const;
+ 
+diff --git a/code/core/src/shared/open-service/service-definition.ts b/code/core/src/shared/open-service/service-definition.ts
+index 7854fe2db71..08185f92818 100644
+--- a/code/core/src/shared/open-service/service-definition.ts
++++ b/code/core/src/shared/open-service/service-definition.ts
+@@ -8,6 +8,20 @@ import type {
+   ServiceState,
+ } from './types.ts';
+ 
++type InvalidInternalOperationName<TName extends string> = {
++  __internal_naming_error: `Operation "${TName}" has internal: true but must be prefixed with "_"`;
++};
++
++type InvalidUnderscoreWithoutInternal<TName extends string> = {
++  __internal_naming_error: `Operation "${TName}" is prefixed with "_" and must set internal: true`;
++};
++
++type InternalOperationNaming<TKey> = TKey extends string
++  ? TKey extends `_${string}`
++    ? { internal: true } | InvalidUnderscoreWithoutInternal<TKey>
++    : { internal?: false } | InvalidInternalOperationName<TKey>
++  : {};
++
+ /**
+  * Authoring-side query map derived from separate query input/output schema maps.
+  *
+@@ -30,7 +44,8 @@ type DefinedQueries<
+     TQueryOutputSchemas[TKey],
+     TCommandInputSchemas,
+     TCommandOutputSchemas
+-  >;
++  > &
++    InternalOperationNaming<TKey>;
+ } & {
+   [TKey in keyof TQueryOutputSchemas]: {
+     output: TQueryOutputSchemas[TKey];
+@@ -53,7 +68,8 @@ type DefinedCommands<
+     TState,
+     TCommandInputSchemas[TKey],
+     TCommandOutputSchemas[TKey]
+-  >;
++  > &
++    InternalOperationNaming<TKey>;
+ } & {
+   [TKey in keyof TCommandOutputSchemas]: {
+     output: TCommandOutputSchemas[TKey];
+@@ -80,6 +96,7 @@ export const defineService = <
+ >(def: {
+   id: ServiceId;
+   description?: string;
++  internal?: boolean;
+   initialState: ServiceState<TState>;
+   queries: DefinedQueries<
+     TState,
+diff --git a/code/core/src/shared/open-service/service-registry.ts b/code/core/src/shared/open-service/service-registry.ts
+index f92458fae47..920d17b73d3 100644
+--- a/code/core/src/shared/open-service/service-registry.ts
++++ b/code/core/src/shared/open-service/service-registry.ts
+@@ -81,27 +81,31 @@ function describeDefinition(definition: AnyServiceDefinition): ServiceDescriptor
+     id: definition.id,
+     description: definition.description,
+     queries: Object.fromEntries(
+-      Object.entries(definition.queries).map(([name, query]) => [
+-        name,
+-        {
++      Object.entries(definition.queries)
++        .filter(([, query]) => !query.internal)
++        .map(([name, query]) => [
+           name,
+-          description: query.description,
+-          input: query.input,
+-          output: query.output,
+-          ...(query.staticPath ? { staticPath: true as const } : {}),
+-        },
+-      ])
++          {
++            name,
++            description: query.description,
++            input: query.input,
++            output: query.output,
++            ...(query.staticPath ? { staticPath: true as const } : {}),
++          },
++        ])
+     ),
+     commands: Object.fromEntries(
+-      Object.entries(definition.commands).map(([name, command]) => [
+-        name,
+-        {
++      Object.entries(definition.commands)
++        .filter(([, command]) => !command.internal)
++        .map(([name, command]) => [
+           name,
+-          description: command.description,
+-          input: command.input,
+-          output: command.output,
+-        },
+-      ])
++          {
++            name,
++            description: command.description,
++            input: command.input,
++            output: command.output,
++          },
++        ])
+     ),
+   };
+ }
+@@ -291,7 +295,9 @@ export function getRegisteredServices(): AnyServiceDefinition[] {
+ 
+ /** Returns one summary entry per registered service — the lowest-cost discovery endpoint. */
+ export async function listServices(): Promise<ServiceSummary[]> {
+-  return Array.from(getRegistry().values(), ({ summary }) => summary);
++  return Array.from(getRegistry().values())
++    .filter(({ definition }) => !definition.internal)
++    .map(({ summary }) => summary);
+ }
+ 
+ /** Returns the schema-backed descriptor for one registered service. */
+diff --git a/code/core/src/shared/open-service/types.ts b/code/core/src/shared/open-service/types.ts
+index 42da04f7440..910d4363e34 100644
+--- a/code/core/src/shared/open-service/types.ts
++++ b/code/core/src/shared/open-service/types.ts
+@@ -250,6 +250,11 @@ export type QueryDefinition<
+     MatchingOutputSchemas<TCommandInputSchemas>,
+ > = {
+   description?: string;
++  /**
++   * When true, hides this query from `describeService()` output. Defaults to false. Does not disable
++   * the query at runtime — callers with a service handle can still invoke it.
++   */
++  internal?: boolean;
+   input: TInputSchema;
+   output: TOutputSchema;
+   /** Logical path for the serialized state snapshot, relative to this service's output folder. */
+@@ -283,6 +288,11 @@ export type CommandDefinition<
+   TOutputSchema extends AnySchema,
+ > = {
+   description?: string;
++  /**
++   * When true, hides this command from `describeService()` output. Defaults to false. Does not
++   * disable the command at runtime — callers with a service handle can still invoke it.
++   */
++  internal?: boolean;
+   input: TInputSchema;
+   output: TOutputSchema;
+   handler?: BivariantCallback<
+@@ -294,6 +304,7 @@ export type CommandDefinition<
+ /** Internal structural constraint used to store any query definition in a record. */
+ export type AnyQueryDefinition<TState> = {
+   description?: string;
++  internal?: boolean;
+   input: AnySchema;
+   output: AnySchema;
+   staticPath?: BivariantCallback<[input: unknown], string>;
+@@ -305,6 +316,7 @@ export type AnyQueryDefinition<TState> = {
+ /** Internal structural constraint used to store any command definition in a record. */
+ export type AnyCommandDefinition<TState> = {
+   description?: string;
++  internal?: boolean;
+   input: AnySchema;
+   output: AnySchema;
+   handler?: BivariantCallback<
+@@ -326,6 +338,11 @@ export type ServiceDefinition<
+ > = {
+   id: ServiceId;
+   description?: string;
++  /**
++   * When true, hides this service from `listServices()` output. Defaults to false. Does not disable
++   * the service at runtime — callers can still resolve it through `getService()`.
++   */
++  internal?: boolean;
+   /**
+    * Initial state for the service. Must be a plain object (not a primitive, `null`, or array) — see
+    * {@link ServiceState} for why. The authoring boundary (`defineService`) enforces this; the runtime

@@ -1,5 +1,0 @@
-patching file .gitfiles
-patching file .github/e2e/index_correction.yaml
-patching file .github/workflows/e2e.v2.yaml
-patching file Makefile
-patching file internal/jsonpath/jsonpath.go

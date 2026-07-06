@@ -1,0 +1,14 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run test/database/isolation.test.ts",
+  "test_files": [
+    "test/database/isolation.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/database/isolation.test.ts::database test isolation does not share the testing database between isolated module instances",
+    "/workspace/repo/test/database/isolation.test.ts::database test isolation drops supported schema objects while escaping their identifiers"
+  ],
+  "PASS_TO_PASS": []
+}

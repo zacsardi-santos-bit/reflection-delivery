@@ -1,0 +1,25 @@
+patching file src/internal/clusterstate/v2.10.0/pipelines_test.go
+patching file src/internal/clusterstate/v2.8.0_test.go
+Starting PostgreSQL 15 database server: main.
+# github.com/pachyderm/pachyderm/v2/src/internal/clusterstate [github.com/pachyderm/pachyderm/v2/src/internal/clusterstate.test]
+src/internal/clusterstate/v2.8.0_test.go:31:71: undefined: State_2_8_0
+src/internal/clusterstate/v2.8.0_test.go:32:52: undefined: State_2_8_0
+{"Time":"2026-06-29T15:22:49.370785349Z","Action":"start","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate"}
+{"Time":"2026-06-29T15:22:49.370895935Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate","Output":"FAIL\tgithub.com/pachyderm/pachyderm/v2/src/internal/clusterstate [build failed]\n"}
+{"Time":"2026-06-29T15:22:49.370942365Z","Action":"fail","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate","Elapsed":0}
+# github.com/pachyderm/pachyderm/v2/src/internal/clusterstate/v2.10.0_test [github.com/pachyderm/pachyderm/v2/src/internal/clusterstate/v2.10.0.test]
+src/internal/clusterstate/v2.10.0/pipelines_test.go:32:10: undefined: v2_10_0.UpdatesBatchSize
+src/internal/clusterstate/v2.10.0/pipelines_test.go:74:3: unknown field MutateFullOption in struct literal of type pachd.TestPachdOption
+src/internal/clusterstate/v2.10.0/pipelines_test.go:74:44: undefined: pachd.FullOption
+src/internal/clusterstate/v2.10.0/pipelines_test.go:76:17: undefined: v2_10_0.Migrate_v2_10_BeforeDuplicates
+src/internal/clusterstate/v2.10.0/pipelines_test.go:76:61: undefined: clusterstate.State_2_8_0
+src/internal/clusterstate/v2.10.0/pipelines_test.go:110:29: undefined: v2_10_0.PipUpdateRow
+src/internal/clusterstate/v2.10.0/pipelines_test.go:121:21: undefined: v2_10_0.VersionKey
+src/internal/clusterstate/v2.10.0/pipelines_test.go:122:24: undefined: v2_10_0.PipUpdateRow
+src/internal/clusterstate/v2.10.0/pipelines_test.go:128:30: undefined: v2_10_0.UpdatePipelineRows
+src/internal/clusterstate/v2.10.0/pipelines_test.go:129:30: undefined: v2_10_0.UpdateJobPipelineVersions
+src/internal/clusterstate/v2.10.0/pipelines_test.go:129:30: too many errors
+{"Time":"2026-06-29T15:22:52.460254113Z","Action":"start","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate/v2.10.0"}
+{"Time":"2026-06-29T15:22:52.460306522Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate/v2.10.0","Output":"FAIL\tgithub.com/pachyderm/pachyderm/v2/src/internal/clusterstate/v2.10.0 [build failed]\n"}
+{"Time":"2026-06-29T15:22:52.460335476Z","Action":"fail","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate/v2.10.0","Elapsed":0}
+reward=0 graded=2 found=0 failed=0 parsed=2 framework=go exit_code=1

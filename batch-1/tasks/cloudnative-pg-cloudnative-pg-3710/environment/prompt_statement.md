@@ -1,0 +1,7 @@
+I'm working on the CloudNativePG operator and I need to add support for synchronizing user-created physical replication slots from the primary to standby instances. Right now the operator only manages the replication slots it creates for high-availability — if I manually create a replication slot on the primary, it never gets replicated to the standbys, and it disappears after a failover.
+
+I'd like the operator to automatically detect and replicate any physical replication slot found on the primary to all standbys, regardless of whether the operator created it. The operator also needs a way to tell its own HA slots apart from user-created ones so it can handle them with different lifecycle rules.
+
+The feature should also support an optional list of regular expression patterns so that specific slots can be excluded from synchronization — and any invalid pattern should be caught and rejected at the cluster configuration level, before it reaches runtime. The feature should be independently toggleable from the HA replication slots feature, and when disabled, the operator should clean up synchronized copies from standbys while preserving user-created slots on the primary.
+
+Existing helper functions and assertions in the test utilities and end-to-end tests that referenced only HA slots need to be updated to reflect this distinction — some need to be renamed to clarify they apply specifically to HA slots, and new helpers are needed to toggle the user-defined slot synchronization feature on and off in tests.

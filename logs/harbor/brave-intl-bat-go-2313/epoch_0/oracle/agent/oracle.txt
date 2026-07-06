@@ -1,9 +1,0 @@
-patching file libs/handlers/handlers.go
-patching file services/skus/controllers.go
-patching file services/skus/input.go
-patching file services/skus/model/model.go
-patching file services/skus/receipt.go
-patching file services/skus/response.go
-patching file services/skus/service.go
-patching file services/skus/skus.go
-patching file services/skus/storage/repository/mock.go

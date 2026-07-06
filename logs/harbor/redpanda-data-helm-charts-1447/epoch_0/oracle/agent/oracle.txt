@@ -1,6 +1,0 @@
-patching file charts/connectors/service.go
-patching file charts/connectors/templates/_service.go.tpl
-patching file charts/connectors/templates/service.yaml
-patching file charts/connectors/testdata/template-cases.golden.txtar
-patching file charts/connectors/values.go
-patching file charts/connectors/values_partial.gen.go

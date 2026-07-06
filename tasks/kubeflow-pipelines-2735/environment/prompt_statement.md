@@ -1,5 +1,0 @@
-I'm working on the multi-user authorization support in a pipeline server. Right now, we check whether a user is allowed to create a run in a given namespace, but we don't enforce any access control when the user tries to archive, delete, terminate, or retry an existing run. That means users can modify runs in namespaces they have no business touching.
-
-The core issue is that once a run is stored in the database, its namespace information lives in a different data structure than the API layer uses. There's already a helper that extracts the namespace from API-level resource references, but there's nothing equivalent for the model objects we get back from the database.
-
-I need to add a way to look up a run by ID, find its namespace from the stored model records, and verify that the requesting user has permission to access that namespace — returning an error if they don't. This check should be applied consistently before any mutation of an existing run. The existing API-layer authorization helper should also be renamed to make it clear it operates on API objects, not stored model objects. In single-user deployments, all these checks should be no-ops.

@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python3 -m pytest /workspace/tests/test_ch.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04009_dict_get_or_default_nullable_key_short_circuit.reference",
+    "tests/queries/0_stateless/04009_dict_get_or_default_nullable_key_short_circuit.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_ch::test_04009_dict_get_or_default_nullable_key_short_circuit"
+  ],
+  "PASS_TO_PASS": []
+}

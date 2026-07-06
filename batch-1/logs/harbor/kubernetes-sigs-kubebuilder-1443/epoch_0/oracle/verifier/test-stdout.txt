@@ -1,0 +1,19 @@
+patching file internal/config/config_test.go
+patching file pkg/model/config/config_test.go
+{"Time":"2026-06-29T15:23:03.410577817Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/internal/config"}
+{"Time":"2026-06-29T15:23:03.410741217Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/pkg/model/config"}
+{"Time":"2026-06-29T15:23:03.413980926Z","Action":"run","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Test":"TestEncodeDecodeExtraFields"}
+{"Time":"2026-06-29T15:23:03.414038087Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Test":"TestEncodeDecodeExtraFields","Output":"=== RUN   TestEncodeDecodeExtraFields\n"}
+{"Time":"2026-06-29T15:23:03.414213167Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Test":"TestEncodeDecodeExtraFields","Output":"--- PASS: TestEncodeDecodeExtraFields (0.00s)\n"}
+{"Time":"2026-06-29T15:23:03.414246437Z","Action":"pass","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Test":"TestEncodeDecodeExtraFields","Elapsed":0}
+{"Time":"2026-06-29T15:23:03.414280157Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:03.414475218Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Output":"ok  \tsigs.k8s.io/kubebuilder/pkg/model/config\t0.004s\n"}
+{"Time":"2026-06-29T15:23:03.414518708Z","Action":"pass","Package":"sigs.k8s.io/kubebuilder/pkg/model/config","Elapsed":0.004}
+{"Time":"2026-06-29T15:23:03.418393949Z","Action":"run","Package":"sigs.k8s.io/kubebuilder/internal/config","Test":"TestSaveReadFrom"}
+{"Time":"2026-06-29T15:23:03.420062924Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/internal/config","Test":"TestSaveReadFrom","Output":"=== RUN   TestSaveReadFrom\n"}
+{"Time":"2026-06-29T15:23:03.420226254Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/internal/config","Test":"TestSaveReadFrom","Output":"--- PASS: TestSaveReadFrom (0.00s)\n"}
+{"Time":"2026-06-29T15:23:03.420251894Z","Action":"pass","Package":"sigs.k8s.io/kubebuilder/internal/config","Test":"TestSaveReadFrom","Elapsed":0}
+{"Time":"2026-06-29T15:23:03.420277045Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/internal/config","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:03.420339885Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/internal/config","Output":"ok  \tsigs.k8s.io/kubebuilder/internal/config\t0.009s\n"}
+{"Time":"2026-06-29T15:23:03.420373495Z","Action":"pass","Package":"sigs.k8s.io/kubebuilder/internal/config","Elapsed":0.01}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

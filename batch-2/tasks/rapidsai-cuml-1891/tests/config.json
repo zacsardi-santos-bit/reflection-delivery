@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/cuml/test/dask/test_func.py -v",
+  "test_files": [
+    "python/cuml/test/dask/conftest.py",
+    "python/cuml/test/dask/test_base.py",
+    "python/cuml/test/dask/test_dask_utils.py",
+    "python/cuml/test/dask/test_func.py",
+    "python/cuml/test/dask/test_kmeans.py",
+    "python/cuml/test/dask/test_label_binarizer.py",
+    "python/cuml/test/dask/test_pca.py",
+    "python/cuml/test/dask/test_random_forest.py",
+    "python/cuml/test/dask/test_tsvd.py",
+    "python/cuml/test/test_umap.py"
+  ],
+  "num_test_files": 10,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "cuml.test.dask.test_func::test_tree_reduce_delayed[1]",
+    "cuml.test.dask.test_func::test_tree_reduce_delayed[2]",
+    "cuml.test.dask.test_func::test_tree_reduce_delayed[10]",
+    "cuml.test.dask.test_func::test_tree_reduce_delayed[15]",
+    "cuml.test.dask.test_func::test_tree_reduce_futures[1]",
+    "cuml.test.dask.test_func::test_tree_reduce_futures[2]",
+    "cuml.test.dask.test_func::test_tree_reduce_futures[10]",
+    "cuml.test.dask.test_func::test_tree_reduce_futures[15]",
+    "cuml.test.dask.test_func::test_reduce_futures[1]",
+    "cuml.test.dask.test_func::test_reduce_futures[2]",
+    "cuml.test.dask.test_func::test_reduce_futures[10]",
+    "cuml.test.dask.test_func::test_reduce_futures[15]"
+  ],
+  "PASS_TO_PASS": []
+}

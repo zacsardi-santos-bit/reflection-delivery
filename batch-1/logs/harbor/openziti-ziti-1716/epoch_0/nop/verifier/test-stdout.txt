@@ -1,0 +1,16 @@
+patching file controller/command/rate_limiter_test.go
+patching file controller/raft/mesh/mesh_test.go
+patching file zititest/models/links-test/main.go
+patching file zititest/models/links-test/validation.go
+patching file zititest/zitilab/actions/edge/init_routers.go
+patching file zititest/zitilab/chaos/chaos.go
+patching file zititest/zitilab/component_common.go
+patching file zititest/zitilab/component_router.go
+# github.com/openziti/ziti/controller/raft/mesh [github.com/openziti/ziti/controller/raft/mesh.test]
+controller/raft/mesh/mesh_test.go:62:20: m.PeerConnected(p) (no value) used as value
+controller/raft/mesh/mesh_test.go:75:20: m.PeerConnected(p) (no value) used as value
+{"Time":"2026-06-29T15:20:36.179764591Z","Action":"start","Package":"github.com/openziti/ziti/controller/command"}
+{"Time":"2026-06-29T15:20:36.179979231Z","Action":"output","Package":"github.com/openziti/ziti/controller/command","Output":"?   \tgithub.com/openziti/ziti/controller/command\t[no test files]\n"}
+{"Time":"2026-06-29T15:20:36.180028034Z","Action":"skip","Package":"github.com/openziti/ziti/controller/command","Elapsed":0}
+FAIL	github.com/openziti/ziti/controller/raft/mesh [build failed]
+reward=0 graded=8 found=8 failed=8 parsed=1 framework=go exit_code=1

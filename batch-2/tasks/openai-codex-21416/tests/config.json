@@ -1,0 +1,23 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-core --lib -E 'test(matches_expected_spec)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/13) codex-core tools::handlers::shell_spec::tests::shell_command_tool_matches_expected_spec",
+    "( 2/13) codex-core tools::hosted_spec::tests::image_generation_tool_matches_expected_spec",
+    "( 3/13) codex-core tools::handlers::mcp_resource_spec::tests::read_mcp_resource_tool_matches_expected_spec",
+    "( 4/13) codex-core tools::handlers::shell_spec::tests::exec_command_tool_matches_expected_spec",
+    "( 5/13) codex-core tools::code_mode::execute_spec::tests::create_code_mode_tool_matches_expected_spec",
+    "( 6/13) codex-core tools::handlers::mcp_resource_spec::tests::list_mcp_resource_templates_tool_matches_expected_spec",
+    "( 7/13) codex-core tools::handlers::test_sync_spec::tests::test_sync_tool_matches_expected_spec",
+    "( 8/13) codex-core tools::code_mode::wait_spec::tests::create_wait_tool_matches_expected_spec",
+    "( 9/13) codex-core tools::handlers::apply_patch_spec::tests::create_apply_patch_freeform_tool_matches_expected_spec",
+    "(10/13) codex-core tools::handlers::shell_spec::tests::shell_tool_matches_expected_spec",
+    "(11/13) codex-core tools::handlers::apply_patch_spec::tests::create_apply_patch_json_tool_matches_expected_spec",
+    "(12/13) codex-core tools::handlers::mcp_resource_spec::tests::list_mcp_resources_tool_matches_expected_spec",
+    "(13/13) codex-core tools::handlers::shell_spec::tests::write_stdin_tool_matches_expected_spec"
+  ],
+  "PASS_TO_PASS": []
+}

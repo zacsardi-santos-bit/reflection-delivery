@@ -1,0 +1,174 @@
+diff --git a/src/commands/auth.ts b/src/commands/auth.ts
+index 85dea90f2..b7ff429a8 100644
+--- a/src/commands/auth.ts
++++ b/src/commands/auth.ts
+@@ -286,7 +286,9 @@ export function authCommand(program: Command) {
+       'The team to use (name, slug, or ID). Required in CI when multiple teams exist.',
+     )
+     .action(async (cmdObj: LoginCommandOptions) => {
+-      const apiHost = cmdObj.host || cloudConfig.getApiHost();
++      // Strip a trailing slash from the --host flag so the login-time validate /
++      // team-fetch requests don't hit `//api/v1/...` (which some on-prem ingresses 404).
++      const apiHost = (cmdObj.host || cloudConfig.getApiHost())?.replace(/\/+$/, '');
+ 
+       try {
+         if (cmdObj.apiKey) {
+diff --git a/src/globalConfig/accounts.ts b/src/globalConfig/accounts.ts
+index 471e0fc00..075285cd4 100644
+--- a/src/globalConfig/accounts.ts
++++ b/src/globalConfig/accounts.ts
+@@ -195,7 +195,7 @@ export async function checkEmailStatus(options?: {
+ 
+     const host = cloudConfig.isEnabled()
+       ? cloudConfig.getApiHost()
+-      : getEnvString('PROMPTFOO_CLOUD_API_URL', 'https://api.promptfoo.app');
++      : getEnvString('PROMPTFOO_CLOUD_API_URL', 'https://api.promptfoo.app')?.replace(/\/+$/, '');
+ 
+     const resp = await fetchWithTimeout(
+       `${host}/api/users/status?email=${encodeURIComponent(userEmail)}${validateParam}`,
+diff --git a/src/globalConfig/cloud.ts b/src/globalConfig/cloud.ts
+index def1b702e..24ba45d93 100644
+--- a/src/globalConfig/cloud.ts
++++ b/src/globalConfig/cloud.ts
+@@ -90,9 +90,14 @@ export class CloudConfig {
+    * Returns the API host from config file, PROMPTFOO_CLOUD_API_URL environment variable,
+    * or defaults to the standard cloud API host.
+    * Config file takes precedence over environment variable.
++   *
++   * Trailing slashes are stripped so callers that append a path (e.g.
++   * `${getApiHost()}/api/v1/...`) never produce a double slash. On-prem hosts
++   * entered via `promptfoo auth login --api-host https://host/` commonly include one.
+    */
+   private resolveApiHost(): string {
+-    return this.config.apiHost || process.env.PROMPTFOO_CLOUD_API_URL || API_HOST;
++    const host = this.config.apiHost || process.env.PROMPTFOO_CLOUD_API_URL || API_HOST;
++    return host.replace(/\/+$/, '');
+   }
+ 
+   isEnabled(): boolean {
+@@ -100,7 +105,9 @@ export class CloudConfig {
+   }
+ 
+   setApiHost(apiHost: string): void {
+-    this.config.apiHost = apiHost;
++    // Persist without a trailing slash so the stored host stays clean regardless of
++    // caller (defense in depth alongside the strip in resolveApiHost()).
++    this.config.apiHost = apiHost.replace(/\/+$/, '');
+     this.saveConfig();
+   }
+ 
+diff --git a/src/guardrails.ts b/src/guardrails.ts
+index ba33008f6..721ce98e2 100644
+--- a/src/guardrails.ts
++++ b/src/guardrails.ts
+@@ -1,8 +1,37 @@
+ import { fetchWithCache } from './cache';
+ import { getShareApiBaseUrl } from './constants';
++import { getEnvString } from './envars';
++import { cloudConfig } from './globalConfig/cloud';
+ import logger from './logger';
+ 
+-const API_BASE_URL = `${getShareApiBaseUrl()}/v1`;
++function resolveGuardrailsApi(): { baseUrl: string; headers: Record<string, string> } {
++  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
++
++  // An explicit PROMPTFOO_REMOTE_API_BASE_URL override always wins, so users who
++  // point guardrails at a private endpoint keep that behavior even when logged in.
++  // Otherwise prefer the configured cloud host (incl. on-prem), falling back to the
++  // public share host.
++  let base: string;
++  const override = getEnvString('PROMPTFOO_REMOTE_API_BASE_URL');
++  if (override) {
++    base = override;
++  } else if (cloudConfig.isEnabled()) {
++    base = cloudConfig.getApiHost();
++    // The global fetch auth-injection only adds the bearer token for the public
++    // cloud origin, so send it explicitly to authenticate against on-prem hosts.
++    const apiKey = cloudConfig.getApiKey();
++    if (apiKey) {
++      headers.Authorization = `Bearer ${apiKey}`;
++    }
++  } else {
++    base = getShareApiBaseUrl();
++  }
++
++  // The guardrails service uses a `/v1` prefix (not `/api/v1` like most cloud
++  // endpoints); this preserves the existing public-cloud routing. Strip any
++  // trailing slash on the base so we never produce `//v1/...`.
++  return { baseUrl: `${base.replace(/\/+$/, '')}/v1`, headers };
++}
+ 
+ export interface GuardResult {
+   model: string;
+@@ -39,13 +68,12 @@ export interface AdaptiveResult {
+ 
+ async function makeRequest(endpoint: string, input: string): Promise<GuardResult> {
+   try {
++    const { baseUrl, headers } = resolveGuardrailsApi();
+     const response = await fetchWithCache(
+-      `${API_BASE_URL}${endpoint}`,
++      `${baseUrl}${endpoint}`,
+       {
+         method: 'POST',
+-        headers: {
+-          'Content-Type': 'application/json',
+-        },
++        headers,
+         body: JSON.stringify({ input }),
+       },
+       undefined,
+@@ -65,13 +93,12 @@ async function makeRequest(endpoint: string, input: string): Promise<GuardResult
+ 
+ async function makeAdaptiveRequest(request: AdaptiveRequest): Promise<AdaptiveResult> {
+   try {
++    const { baseUrl, headers } = resolveGuardrailsApi();
+     const response = await fetchWithCache(
+-      `${API_BASE_URL}/adaptive`,
++      `${baseUrl}/adaptive`,
+       {
+         method: 'POST',
+-        headers: {
+-          'Content-Type': 'application/json',
+-        },
++        headers,
+         body: JSON.stringify({
+           prompt: request.prompt,
+           policies: request.policies || [],
+diff --git a/src/server/routes/providers.ts b/src/server/routes/providers.ts
+index 33d414704..7d8879be9 100644
+--- a/src/server/routes/providers.ts
++++ b/src/server/routes/providers.ts
+@@ -1,6 +1,7 @@
+ import { Router } from 'express';
+ import { z } from 'zod';
+ import { getEnvString } from '../../envars';
++import { cloudConfig } from '../../globalConfig/cloud';
+ import logger from '../../logger';
+ import { createTransformRequest, createTransformResponse } from '../../providers/httpTransforms';
+ import { loadApiProvider } from '../../providers/index';
+@@ -146,7 +147,16 @@ providersRouter.post('/http-generator', async (req: Request, res: Response): Pro
+     return;
+   }
+ 
+-  const HOST = getEnvString('PROMPTFOO_CLOUD_API_URL', 'https://api.promptfoo.app');
++  // Strip any trailing slash so we never produce `//api/v1/...`.
++  const HOST = (
++    cloudConfig.isEnabled()
++      ? cloudConfig.getApiHost()
++      : getEnvString('PROMPTFOO_CLOUD_API_URL', 'https://api.promptfoo.app')
++  ).replace(/\/+$/, '');
++
++  // The global fetch auth-injection only adds the bearer token for the public cloud
++  // origin, so send it explicitly to authenticate against on-prem cloud hosts.
++  const apiKey = cloudConfig.isEnabled() ? cloudConfig.getApiKey() : undefined;
+ 
+   try {
+     logger.debug('[POST /providers/http-generator] Calling HTTP provider generator API', {
+@@ -158,6 +168,7 @@ providersRouter.post('/http-generator', async (req: Request, res: Response): Pro
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
++        ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
+       },
+       body: JSON.stringify({
+         requestExample,

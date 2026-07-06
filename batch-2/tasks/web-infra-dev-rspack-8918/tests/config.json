@@ -1,0 +1,15 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm install && cd tests/plugin-test && NO_COLOR=1 node --expose-gc --max-old-space-size=8192 --experimental-vm-modules ../../node_modules/jest-cli/bin/jest --logHeapUsage --testPathPattern=css-extract/TestCases --testNamePattern=pathinfo --forceExit",
+  "test_files": [
+    "tests/plugin-test/css-extract/cases/pathinfo-devtool-source-map/expected/main.css",
+    "tests/plugin-test/css-extract/cases/pathinfo/expected/main.css"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/plugin-test/css-extract/TestCases.test.js::TestCases pathinfo should compile to the expected result",
+    "/workspace/repo/tests/plugin-test/css-extract/TestCases.test.js::TestCases pathinfo-devtool-source-map should compile to the expected result"
+  ],
+  "PASS_TO_PASS": []
+}

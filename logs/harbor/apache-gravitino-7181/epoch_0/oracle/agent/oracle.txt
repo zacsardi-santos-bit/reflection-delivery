@@ -1,4 +1,0 @@
-patching file core/src/main/java/org/apache/gravitino/cache/EntityCache.java
-patching file core/src/main/java/org/apache/gravitino/cache/EntityCacheKey.java
-patching file core/src/main/java/org/apache/gravitino/cache/SupportsEntityStoreCache.java
-patching file core/src/main/java/org/apache/gravitino/cache/SupportsRelationEntityCache.java

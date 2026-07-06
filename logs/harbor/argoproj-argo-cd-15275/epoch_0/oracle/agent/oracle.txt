@@ -1,3 +1,0 @@
-patching file go.mod
-patching file util/cache/redis.go
-patching file util/cache/redis_hook.go

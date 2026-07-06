@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -tags integration ./tests/integration -count=1 -run \"Test_Integration/(placement|scheduler)/helm/podAntiAffinity\"",
+  "test_files": [
+    "tests/integration/framework/process/helm/options.go",
+    "tests/integration/suite/placement/helm/podantiaffinity.go",
+    "tests/integration/suite/placement/placement.go",
+    "tests/integration/suite/scheduler/helm/podantiaffinity.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/dapr/dapr/tests/integration::Test_Integration/scheduler/helm/podAntiAffinity/run/required_policy",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/scheduler/helm/podAntiAffinity/run",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity/run/required_policy_when_ha_enabled",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity/run/preferred_is_rendered_when_local_ha_enabled",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity/run",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/scheduler/helm/podAntiAffinity",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity",
+    "github.com/dapr/dapr/tests/integration::Test_Integration"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/dapr/dapr/tests/integration::Test_Integration/scheduler/helm/podAntiAffinity/run/preferred_is_default",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity/run/preferred_is_default_when_ha_enabled",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/scheduler/helm/podAntiAffinity/run/custom_topology_key",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity/run/custom_topology_key_when_ha_enabled",
+    "github.com/dapr/dapr/tests/integration::Test_Integration/placement/helm/podAntiAffinity/run/no_pod_anti_affinity_when_ha_disabled"
+  ]
+}

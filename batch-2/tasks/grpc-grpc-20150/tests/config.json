@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "grep -q is_in_virtual_imports /workspace/repo/bazel/protobuf.bzl && cd /workspace/repo/bazel/test/python_test_repo && python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. helloworld.proto && PYTHONPATH=/workspace/repo/bazel/test/python_test_repo pytest /workspace/repo/bazel/test/python_test_repo/helloworld.py -v",
+  "test_files": [
+    "bazel/test/python_test_repo/BUILD",
+    "bazel/test/python_test_repo/helloworld.py",
+    "bazel/test/python_test_repo/helloworld_moved.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "bazel.test.python_test_repo.helloworld.ImportTest::test_import"
+  ],
+  "PASS_TO_PASS": []
+}

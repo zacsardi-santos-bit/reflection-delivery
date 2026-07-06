@@ -1,0 +1,37 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/xarray/tests/test_backends.py /workspace/repo/xarray/tests/test_backends_chunks.py -v -k \"test_chunk_encoding_with_dask or test_dataarray_to_zarr_align_chunks_true or test_zarr_append_chunk_partial or test_build_grid_chunks or test_align_nd_chunks or test_grid_rechunk\" --override-ini=\"addopts=\"",
+  "test_files": [
+    "xarray/tests/test_backends.py",
+    "xarray/tests/test_backends_chunks.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "xarray.tests.test_backends.TestZarrDictStore::test_chunk_encoding_with_dask[2]",
+    "xarray.tests.test_backends.TestZarrDirectoryStore::test_chunk_encoding_with_dask[2]",
+    "xarray.tests.test_backends.TestZarrWriteEmpty::test_chunk_encoding_with_dask[2]",
+    "xarray.tests.test_backends.TestZarrRegionAuto::test_zarr_append_chunk_partial[2]",
+    "xarray.tests.test_backends.TestZarrDictStore::test_chunk_encoding_with_dask[3]",
+    "xarray.tests.test_backends.TestZarrDirectoryStore::test_chunk_encoding_with_dask[3]",
+    "xarray.tests.test_backends.TestZarrWriteEmpty::test_chunk_encoding_with_dask[3]",
+    "xarray.tests.test_backends.TestZarrRegionAuto::test_zarr_append_chunk_partial[3]",
+    "xarray.tests.test_backends_chunks::test_build_grid_chunks[10-3-region0-expected_chunks0]",
+    "xarray.tests.test_backends_chunks::test_build_grid_chunks[10-3-region1-expected_chunks1]",
+    "xarray.tests.test_backends_chunks::test_build_grid_chunks[10-3-None-expected_chunks2]",
+    "xarray.tests.test_backends_chunks::test_build_grid_chunks[10-3-region3-expected_chunks3]",
+    "xarray.tests.test_backends_chunks::test_build_grid_chunks[10-3-region4-expected_chunks4]",
+    "xarray.tests.test_backends_chunks::test_align_nd_chunks[nd_var_chunks0-nd_backend_chunks0-expected_chunks0]",
+    "xarray.tests.test_backends_chunks::test_align_nd_chunks[nd_var_chunks1-nd_backend_chunks1-expected_chunks1]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks0-region0-nd_var_chunks0-expected_chunks0]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks1-region1-nd_var_chunks1-expected_chunks1]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks2-region2-nd_var_chunks2-expected_chunks2]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks3-region3-nd_var_chunks3-expected_chunks3]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks4-region4-nd_var_chunks4-expected_chunks4]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks5-region5-nd_var_chunks5-expected_chunks5]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks6-region6-nd_var_chunks6-expected_chunks6]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks7-region7-nd_var_chunks7-expected_chunks7]",
+    "xarray.tests.test_backends_chunks::test_grid_rechunk[enc_chunks8-region8-nd_var_chunks8-expected_chunks8]"
+  ],
+  "PASS_TO_PASS": []
+}

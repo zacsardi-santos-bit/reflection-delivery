@@ -1,0 +1,29 @@
+{
+    "id": "dba93462-94e2-459c-aeab-672160a88655",
+    "started_at": "2026-07-04T15:50:05.616896",
+    "finished_at": "2026-07-04T15:50:21.522720",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__project-chip-connectedhomeip-37446": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "project-chip-connectedhomeip-374__JprnZtW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

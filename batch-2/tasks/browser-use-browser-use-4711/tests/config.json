@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/ci/browser/test_cdp_headers.py /workspace/repo/tests/ci/test_action_timeout.py /workspace/repo/tests/ci/test_cdp_timeout.py -v",
+  "test_files": [
+    "tests/ci/browser/test_cdp_headers.py",
+    "tests/ci/test_action_timeout.py",
+    "tests/ci/test_cdp_timeout.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.browser.test_cdp_headers::test_browser_profile_headers_attribute",
+    "tests.ci.browser.test_cdp_headers::test_browser_profile_headers_inherited",
+    "tests.ci.browser.test_cdp_headers::test_cdp_client_headers_passed_on_connect",
+    "tests.ci.browser.test_cdp_headers::test_cdp_client_no_headers_when_none",
+    "tests.ci.browser.test_cdp_headers::test_headers_used_for_json_version_endpoint",
+    "tests.ci.test_action_timeout::test_act_enforces_per_action_timeout_on_hung_handler",
+    "tests.ci.test_action_timeout::test_act_passes_through_fast_handler",
+    "tests.ci.test_action_timeout::test_act_rejects_invalid_action_timeout_override",
+    "tests.ci.test_action_timeout::test_default_action_timeout_accommodates_extract_action",
+    "tests.ci.test_action_timeout::test_malformed_env_timeout_does_not_break_import",
+    "tests.ci.test_cdp_timeout::test_send_raw_times_out_on_silent_server",
+    "tests.ci.test_cdp_timeout::test_send_raw_passes_through_when_fast",
+    "tests.ci.test_cdp_timeout::test_constructor_rejects_invalid_timeout",
+    "tests.ci.test_cdp_timeout::test_default_cdp_timeout_is_reasonable",
+    "tests.ci.test_cdp_timeout::test_parse_env_rejects_malformed_values"
+  ],
+  "PASS_TO_PASS": []
+}

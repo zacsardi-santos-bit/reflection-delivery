@@ -1,9 +1,0 @@
-patching file contrib/test/ci/integration.yml
-patching file contrib/test/ci/vars.yml
-patching file test/reload_config.bats
-=== RUN   TestReloadPinnedImagesEmpty
-time="2026-06-29T15:24:09Z" level=info msg="Set config pinned_images to \"[]\""
---- PASS: TestReloadPinnedImagesEmpty (0.00s)
-PASS
-ok  	github.com/cri-o/cri-o/pkg/config	0.065s
-reward=1 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=0

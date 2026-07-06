@@ -1,0 +1,38 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/loadbalancer/writer -count=1",
+  "test_files": [
+    "pkg/loadbalancer/writer/writer_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SelectBackends_PreferCloseFallsBackFromUnhealthySameZone"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_Service_UpsertDelete",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_Backend_UpsertDelete",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_UpdateBackendHealth_AllSources",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_Initializers",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/create_two_services_and_frontends",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/add_all_backends_to_first_service",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/add_all_backends_to_second_service",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/delete_third_backend_from_first_service",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/delete_first_backend_from_both_services",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/delete_remaining_two_backends_from_second_service",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/delete_remaining_backend_from_first_service",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/add_backend_from_other_clusters",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends/delete_backend2_from_first_cluster",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetBackends",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/create_services_and_frontends",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/add_backends_for_two_services",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/update_backend_from_higher_priority_source",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/update_backend_from_lower_priority_source",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/delete_backends",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/add_deleted_backends_back",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/delete_via_SetBackends",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources/add_it_back_via_SetBackends",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_WithConflictingSources",
+    "github.com/cilium/cilium/pkg/loadbalancer/writer::TestWriter_SetSelectBackends"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/wrangler && npx vitest run src/__tests__/r2/bulk.test.ts src/__tests__/r2/catalog-force.test.ts src/__tests__/r2/object.test.ts",
+  "test_files": [
+    "packages/wrangler/src/__tests__/r2/bulk.test.ts",
+    "packages/wrangler/src/__tests__/r2/catalog-force.test.ts",
+    "packages/wrangler/src/__tests__/r2/object.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should bulk upload R2 objects to bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should bulk upload R2 with storage class to bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should pass all fetch option flags into requestInit & check request inputs",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag object put should send catalog check header when force is NOT provided and NOT send header when flags are provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag object put should prompt on 409 and retry without header when user confirms",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag object put should prompt on 409 and cancel when user declines",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag object delete should send catalog check header when force is NOT provided and NOT send header when flags are provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag object delete should prompt on 409 and retry without header when user confirms",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag object delete should prompt on 409 and cancel when user declines",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag bulk put should cancel bulk upload when user declines prompt",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag bulk put should NOT prompt and NOT send catalog header with --force",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle add should send catalog check header when force is NOT provided and NOT send header when flags are provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle add should prompt on 409 and retry without header when user confirms",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle add should prompt on 409 and cancel when user declines",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle set should send catalog check header when force is NOT provided and NOT send header when flags are provided",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle set should prompt on 409 and retry without header when user confirms",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle set should prompt on 409 and cancel when user declines",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should pass all fetch option flags into requestInit & check request inputs"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk should show help when the bulk command is passed",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should fail to bulk upload R2 objects if the list doesn't exist",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should fail to bulk upload R2 objects if the list format is invalid",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should fail to bulk upload R2 objects if the list contain invalid entries",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should fail to bulk upload R2 objects if the list contain a non existent file",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should fail to bulk upload R2 objects if too large",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should fail to bulk upload R2 objects if the name is invalid",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/bulk.test.ts::r2 bulk remote should allow --env and --expires to be used together without conflict",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag bulk put should prompt before bulk upload and send all objects without catalog header when confirmed",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/catalog-force.test.ts::r2 data catalog force flag lifecycle remove should NOT send catalog check header (removes not relevant to catalog)",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object should show help when the object command is passed",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should download R2 object from bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should download R2 object from bucket into directory",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should upload R2 object to bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should upload R2 object with storage class to bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should fail to upload R2 object to bucket if too large",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should fail to upload R2 object to bucket if the name is invalid",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should delete R2 object from bucket",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should not allow `--pipe` & `--file` to run together",
+    "/workspace/repo/packages/wrangler/src/__tests__/r2/object.test.ts::r2 object remote should allow --env and --expires to be used together without conflict"
+  ]
+}

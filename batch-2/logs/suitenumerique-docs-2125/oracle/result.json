@@ -1,0 +1,29 @@
+{
+    "id": "b518cda9-16fa-428d-b5da-7fe4bbcf0e40",
+    "started_at": "2026-07-06T12:18:39.305441",
+    "finished_at": "2026-07-06T12:19:04.510484",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__suitenumerique-docs-2125": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "suitenumerique-docs-2125__EHX4PfA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

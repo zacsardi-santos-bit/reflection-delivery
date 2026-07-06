@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install && cd tests/plugin-test && NO_COLOR=1 node --expose-gc --max-old-space-size=8192 --experimental-vm-modules ../../node_modules/jest-cli/bin/jest --logHeapUsage --testPathPattern=css-extract/TestCases --testNamePattern=pathinfo --forceExit

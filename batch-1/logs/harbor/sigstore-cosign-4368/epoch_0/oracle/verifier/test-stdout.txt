@@ -1,0 +1,61 @@
+patching file cmd/cosign/cli/attest/attest.go
+patching file cmd/cosign/cli/attest/attest_blob.go
+patching file internal/key/svkeypair_test.go
+patching file test/e2e_test.go
+{"Time":"2026-06-29T15:24:50.732228264Z","Action":"start","Package":"github.com/sigstore/cosign/v2/internal/key"}
+{"Time":"2026-06-29T15:24:50.769800996Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair"}
+{"Time":"2026-06-29T15:24:50.769852223Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair","Output":"=== RUN   TestNewKMSKeypair\n"}
+{"Time":"2026-06-29T15:24:50.984704803Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ECDSA_key"}
+{"Time":"2026-06-29T15:24:50.984808059Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ECDSA_key","Output":"=== RUN   TestNewKMSKeypair/ECDSA_key\n"}
+{"Time":"2026-06-29T15:24:50.985276765Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ECDSA_key","Output":"--- PASS: TestNewKMSKeypair/ECDSA_key (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.985335524Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ECDSA_key","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.985415574Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/RSA_key"}
+{"Time":"2026-06-29T15:24:50.985438539Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/RSA_key","Output":"=== RUN   TestNewKMSKeypair/RSA_key\n"}
+{"Time":"2026-06-29T15:24:50.985456646Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/RSA_key","Output":"--- PASS: TestNewKMSKeypair/RSA_key (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.985473982Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/RSA_key","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.985481714Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ED25519_key"}
+{"Time":"2026-06-29T15:24:50.985488404Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ED25519_key","Output":"=== RUN   TestNewKMSKeypair/ED25519_key\n"}
+{"Time":"2026-06-29T15:24:50.985535365Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ED25519_key","Output":"--- PASS: TestNewKMSKeypair/ED25519_key (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.985547653Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/ED25519_key","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.9855718Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/Unsupported_key_type"}
+{"Time":"2026-06-29T15:24:50.985581204Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/Unsupported_key_type","Output":"=== RUN   TestNewKMSKeypair/Unsupported_key_type\n"}
+{"Time":"2026-06-29T15:24:50.985614324Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/Unsupported_key_type","Output":"--- PASS: TestNewKMSKeypair/Unsupported_key_type (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.985647604Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/Unsupported_key_type","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.985669377Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/PublicKey_returns_error"}
+{"Time":"2026-06-29T15:24:50.985676407Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/PublicKey_returns_error","Output":"=== RUN   TestNewKMSKeypair/PublicKey_returns_error\n"}
+{"Time":"2026-06-29T15:24:50.985686543Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/PublicKey_returns_error","Output":"--- PASS: TestNewKMSKeypair/PublicKey_returns_error (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.985700193Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair/PublicKey_returns_error","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.985716958Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair","Output":"--- PASS: TestNewKMSKeypair (0.22s)\n"}
+{"Time":"2026-06-29T15:24:50.985745381Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestNewKMSKeypair","Elapsed":0.22}
+{"Time":"2026-06-29T15:24:50.985779933Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods"}
+{"Time":"2026-06-29T15:24:50.985788226Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods","Output":"=== RUN   TestKMSKeypair_Methods\n"}
+{"Time":"2026-06-29T15:24:50.986001567Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHashAlgorithm"}
+{"Time":"2026-06-29T15:24:50.986044742Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHashAlgorithm","Output":"=== RUN   TestKMSKeypair_Methods/GetHashAlgorithm\n"}
+{"Time":"2026-06-29T15:24:50.986063861Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHashAlgorithm","Output":"--- PASS: TestKMSKeypair_Methods/GetHashAlgorithm (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986072194Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHashAlgorithm","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.986095509Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHint"}
+{"Time":"2026-06-29T15:24:50.986117963Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHint","Output":"=== RUN   TestKMSKeypair_Methods/GetHint\n"}
+{"Time":"2026-06-29T15:24:50.986131133Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHint","Output":"--- PASS: TestKMSKeypair_Methods/GetHint (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986150522Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetHint","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.986160367Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetKeyAlgorithm"}
+{"Time":"2026-06-29T15:24:50.986166486Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetKeyAlgorithm","Output":"=== RUN   TestKMSKeypair_Methods/GetKeyAlgorithm\n"}
+{"Time":"2026-06-29T15:24:50.986181208Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetKeyAlgorithm","Output":"--- PASS: TestKMSKeypair_Methods/GetKeyAlgorithm (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986192064Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetKeyAlgorithm","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.98620266Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetPublicKeyPem"}
+{"Time":"2026-06-29T15:24:50.986220567Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetPublicKeyPem","Output":"=== RUN   TestKMSKeypair_Methods/GetPublicKeyPem\n"}
+{"Time":"2026-06-29T15:24:50.986470083Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetPublicKeyPem","Output":"--- PASS: TestKMSKeypair_Methods/GetPublicKeyPem (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986503404Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/GetPublicKeyPem","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.98653405Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData"}
+{"Time":"2026-06-29T15:24:50.986544806Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData","Output":"=== RUN   TestKMSKeypair_Methods/SignData\n"}
+{"Time":"2026-06-29T15:24:50.98656092Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData","Output":"--- PASS: TestKMSKeypair_Methods/SignData (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986584386Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.98659376Z","Action":"run","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData_with_error"}
+{"Time":"2026-06-29T15:24:50.98660067Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData_with_error","Output":"=== RUN   TestKMSKeypair_Methods/SignData_with_error\n"}
+{"Time":"2026-06-29T15:24:50.98664056Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData_with_error","Output":"--- PASS: TestKMSKeypair_Methods/SignData_with_error (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986652909Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods/SignData_with_error","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.986676004Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods","Output":"--- PASS: TestKMSKeypair_Methods (0.00s)\n"}
+{"Time":"2026-06-29T15:24:50.986683455Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Test":"TestKMSKeypair_Methods","Elapsed":0}
+{"Time":"2026-06-29T15:24:50.986714061Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Output":"PASS\n"}
+{"Time":"2026-06-29T15:24:50.988457168Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Output":"ok  \tgithub.com/sigstore/cosign/v2/internal/key\t0.256s\n"}
+{"Time":"2026-06-29T15:24:50.988525501Z","Action":"pass","Package":"github.com/sigstore/cosign/v2/internal/key","Elapsed":0.256}
+reward=1 graded=13 found=13 failed=0 parsed=13 framework=go exit_code=0

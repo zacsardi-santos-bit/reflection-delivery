@@ -1,0 +1,51 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/ir/test_op.py -v",
+  "test_files": [
+    "tests/conftest.py",
+    "tests/ir/test_op.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ir.test_op::test_registration_overloads",
+    "tests.ir.test_op::test_no_kw_only_args",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_decorated_object",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_torch_op_is_registered",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_semantics_match_native",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_register_impl_is_non_intrusive",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_schema_contains_tensor_signature",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[default-True-True]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[default-True-False]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[default-False-True]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[default-False-False]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[maybe_inplace-True-True]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[maybe_inplace-True-False]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[maybe_inplace-False-True]",
+    "tests.ir.test_op.TestIrOpCustomAdd::test_trace_sees_single_custom_op[maybe_inplace-False-False]",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_register_impl",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_reserved_provider_rejected",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_set_priority_scoped",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_dispatch_priority_order[default]",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_dispatch_priority_order[maybe_inplace]",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_unsupported_impl_filtered",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_supports_args_runtime_dispatch_and_warning",
+    "tests.ir.test_op.TestIrOpImplDispatch::test_default_priority",
+    "tests.ir.test_op::test_default_args",
+    "tests.ir.test_op::test_bad_impl_registrations",
+    "tests.ir.test_op::test_uuid_and_oot",
+    "tests.ir.test_op::test_naming_validation",
+    "tests.ir.test_op::test_registration_stack_traces",
+    "tests.ir.test_op::test_op_repr_uses_docstring",
+    "tests.ir.test_op::test_vllm_ir_fixture"
+  ],
+  "PASS_TO_PASS": [
+    "tests.ir.test_op.TestInputGenerator::test_no_input_generator_by_default",
+    "tests.ir.test_op.TestInputGenerator::test_register_input_generator",
+    "tests.ir.test_op.TestInputGenerator::test_generate_inputs_returns_tuple",
+    "tests.ir.test_op.TestInputGenerator::test_generate_inputs_default_kwargs",
+    "tests.ir.test_op.TestInputGenerator::test_generate_inputs_without_registration_raises",
+    "tests.ir.test_op.TestTolerance::test_override_and_get_tolerance",
+    "tests.ir.test_op.TestTolerance::test_get_tolerance_raises_for_unknown_dtype"
+  ]
+}

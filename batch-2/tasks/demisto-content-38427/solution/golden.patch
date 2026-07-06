@@ -1,0 +1,2677 @@
+diff --git a/Packs/Absolute/Integrations/Absolute/Absolute.py b/Packs/Absolute/Integrations/Absolute/Absolute.py
+index 4ba8a24a0f..1c383320f7 100644
+--- a/Packs/Absolute/Integrations/Absolute/Absolute.py
++++ b/Packs/Absolute/Integrations/Absolute/Absolute.py
+@@ -5,7 +5,6 @@ import hashlib
+ 
+ from CommonServerUserPython import *  # noqa
+ import urllib.parse
+-import requests
+ import urllib3
+ from typing import Any
+ import hmac
+@@ -38,18 +37,20 @@ STRING_TO_SIGN_ALGORITHM = "ABS1-HMAC-SHA-256"
+ STRING_TO_SIGN_SIGNATURE_VERSION = "abs1"
+ DATE_FORMAT = '%Y%m%dT%H%M%SZ'
+ DATE_FORMAT_CREDENTIAL_SCOPE = '%Y%m%d'
++DEFAULT_API_PAGE_SIZE = 100
++DEFAULT_LIMIT = 50
+ 
+ DEVICE_LIST_RETURN_FIELDS = [
+-    "id",
++    "deviceUid",
+     "esn",
+-    "lastConnectedUtc",
+-    "systemName",
++    "lastConnectedDateTimeUtc",
++    "deviceName",
+     "systemModel",
+     "fullSystemName",
+     "agentStatus",
+-    "os.name",
++    "operatingSystem.name",
+     "systemManufacturer",
+-    "serial",
++    "serialNumber",
+     "systemType",
+     "localIp",
+     "publicIp",
+@@ -57,25 +58,26 @@ DEVICE_LIST_RETURN_FIELDS = [
+ ]
+ 
+ DEVICE_GET_COMMAND_RETURN_FIELDS = [
+-    "id",
++    "deviceUid",
+     "esn",
+     "domain",
+-    "lastConnectedUtc",
+-    "systemName",
++    "lastConnectedDateTimeUtc",
++    "deviceName",
+     "systemModel",
+     "systemType",
+     "fullSystemName",
+     "agentStatus",
+-    "os.name",
+-    "os.version",
+-    "os.currentBuild",
+-    "os.architecture",
+-    "os.installDate",
+-    "os.productKey",
+-    "os.serialNumber",
+-    "os.lastBootTime",
++    "operatingSystem.name",
++    "operatingSystem.version",
++    "operatingSystem.currentBuild",
++    "operatingSystem.architecture",
++    "operatingSystem.installDate",
++    "operatingSystem.productKey",
++    "operatingSystem.serialNumber",
++    "operatingSystem.lastBootTime",
+     "systemManufacturer",
+     "serial",
++    "serialNumber",
+     "localIp",
+     "publicIp",
+     "username",
+@@ -90,7 +92,7 @@ DEVICE_GET_COMMAND_RETURN_FIELDS = [
+     "isStolen",
+     "deviceStatus.type",
+     "deviceStatus.reported",
+-    "networkAdapters.networkSSID"
++    "networkSSID"
+ ]
+ 
+ DEVICE_GET_LOCATION_COMMAND_RETURN_FIELDS = [
+@@ -104,6 +106,18 @@ DEVICE_GET_LOCATION_COMMAND_RETURN_FIELDS = [
+     "geoData.location.lastUpdateDateTimeUtc",
+ ]
+ 
++
++DEVICE_OUTPUT_TO_XSOAR_CONTEXT_PATH = {
++    "installDateTimeUtc": 'InstallDate',
++    "firstDetectDateTimeUtc": 'FirstDetectUtc',
++    "lastScanDateTimeUtc": 'LastScanTimeUtc',
++    "deviceUid": "Id",
++    "lastConnectedDateTimeUtc": "LastConnectedUtc",
++    "serialNumber": "Serial",
++    "publicIp": 'PublicIp',
++    "localIp": 'LocalIp',
++    "username": "Username"}
++
+ SEIM_EVENTS_PAGE_SIZE = 1000
+ CLIENT_V3_JWS_VALIDATION_URL = "https://api.absolute.com/jws/validate"
+ VENDOR = 'Absolute'
+@@ -111,62 +125,51 @@ PRODUCT = 'Secure Endpoint'
+ HEADERS_V3: dict = {"content-type": "text/plain"}
+ 
+ 
+-class Client(BaseClient):
+-    def __init__(self, base_url: str, token_id: str, secret_key: str, verify: bool, headers: dict, proxy: bool,
+-                 x_abs_date: str):
++class ClientV3(BaseClient):
++    def __init__(self, base_url: str, token_id: str, secret_key: str, verify: bool, proxy: bool, headers: dict = HEADERS_V3):
+         """
+-        Client to use in the Absolute integration. Overrides BaseClient.
+-
++        Client to use in the Absolute integration for API v3. Overrides BaseClient.
+         Args:
+             base_url (str): URL to access when doing a http request.
+             token_id (str): The Absolute token id
+             secret_key (str): User's Absolute secret key
+             verify (bool): Whether to check for SSL certificate validity.
+             proxy (bool): Whether the client should use proxies.
+-            headers (dict): Headers to set when doing a http request.
+-            x_abs_date (str): The automatically generated header that indicates the time (in UTC) the request was made.
++            headers (dict): Dictionary of HTTP headers to send with the Request.
+         """
+         super().__init__(base_url=base_url, verify=verify, proxy=proxy)
+-        self._payload = None
+-        self._base_url = base_url
+         self._token_id = token_id
+-        self._secret_key = secret_key
+         self._headers = headers
+-        self._x_abs_date = x_abs_date
++        self._secret_key = secret_key
+ 
+-    def prepare_request_for_api(self, method: str, canonical_uri: str, query_string: str, payload: str):
++    def prepare_request(self, method: str, url_suffix: str, query_string: str, payload: dict = {}) -> str:
+         """
+-        The Absolute v2 API requires following 5 steps in order to properly authorize the API request.
+-        We must follow the steps:
+-        1. Create a canonical request
+-        2. Create a signing string
+-        3. Create a signing key
+-        4. Create a signature
+-        5. Add the authorization header
+-
+-        For more info https://www.absolute.com/media/2221/abt-api-working-with-absolute.pdf
++        Prepares the signed HTTP request data for making an API call.
++        Args:
++            method (str): The HTTP method to be used for the request.
++            url_suffix (str): The endpoint URL suffix for the API call.
++            query_string (str): The query string parameters for the API call.
++        Returns:
++            bytes: The prepared signed HTTP request data.
+         """
+-        canonical_req = self.create_canonical_request(method, canonical_uri, query_string, payload)
+-        signing_string = self.create_signing_string(canonical_req)
+-        signing_key = self.create_signing_key()
+-        signing_signature = self.create_signature(signing_string, signing_key)
+-        self._headers['Authorization'] = self.add_authorization_header(signing_signature)
++        if payload:
++            request_payload_data = {"data": payload}
++        else:
++            request_payload_data = {}
+ 
+-    def create_canonical_request(self, method: str, canonical_uri: str, query_string: str, payload: str) -> str:
+-        """
+-        The canonical request should look like (for example):
+-
+-        GET
+-        /v2/reporting/devices
+-        %24filter=substringof%28%2760001%27%2C%20esn%29%20eq%20true
+-        host:api.absolute.com
+-        content-type:application/json
+-        x-abs-date:20170926T172213Z
+-        e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+-        """
+-        canonical_request = [method, canonical_uri, self.prepare_query_string_for_canonical_request(query_string),
+-                             self.prepare_canonical_headers(), self.prepare_canonical_hash_payload(payload)]
+-        return "\n".join(canonical_request).rstrip()
++        headers = {
++            "alg": "HS256",
++            "kid": self._token_id,
++            "method": method,
++            "content-type": "application/json",
++            "uri": url_suffix,
++            "query-string": query_string,
++            "issuedAt": round(time.time() * 1000)
++        }
++
++        demisto.debug(f'ABS: Making JWS token with headers: {headers}, request_payload_data: {request_payload_data}')
++
++        return jwt.encode(request_payload_data, self._secret_key, algorithm='HS256', headers=headers)
+ 
+     def prepare_query_string_for_canonical_request(self, query_string: str) -> str:
+         """
+@@ -181,214 +184,132 @@ class Client(BaseClient):
+             return ""
+         return urllib.parse.quote(query_string, safe='=&')
+ 
+-    def prepare_canonical_headers(self) -> str:
+-        """
+-        Create the canonical headers and signed headers. Header names must be trimmed and lowercase,
+-        and sorted in code point order from low to high. Note that there is a trailing \n.
+-        """
+-        canonical_headers = ""
+-        for header, value in self._headers.items():
+-            canonical_headers += f'{header.lower()}:{value.strip()}\n'
+-        return canonical_headers.rstrip()
+-
+-    def prepare_canonical_hash_payload(self, payload: str) -> str:
+-        """
+-        According to the API we should do:
+-        Hash the entire body using SHA-256 algorithm, HexEncode.
+-        Create payload hash (hash of the request body content).
+-        For GET requests, the payload is an empty string ("").
+-        """
+-        return hashlib.sha256(payload.encode('utf-8')).hexdigest()
+-
+-    def create_signing_string(self, canonical_req: str) -> str:
+-        """
+-        The signing string should look like (for example):
+-
+-        ABS1-HMAC-SHA-256
+-        20170926T172032Z
+-        20170926/cadc/abs1
+-        63f83d2c7139b6119d4954e6766ce90871e41334c3f29b6d64201639d273fa19
++    def send_request_to_api(self, method: str, url_suffix: str, query_string: str, ok_codes: tuple, payload: dict = {},
++                            resp_type: str = "json"):  # pragma: no cover
++        """Sends the request to Absolute
+ 
+-        Algorithm: The string used to identify the algorithm. For example, ABS1-HMAC-SHA-256
+-
+-        RequestedDateTime: The date and time (in UTC) from XAbs-Date. Format: <YYYY><MM><DD>T<HH><MM><SS>Z
+-
+-        CredentialScope: The CredentialScope is defined in three parts:
+-                        1. The date (in UTC) of the request. Format: YYYYMMDD
+-                        2. Region or data center (must be in lowercase) Possible values: cadc, usdc, eudc
+-                        3. Version or type of signature. Always abs1
+-
+-        HashedCanonicalRequest: The hashed, hex-converted, and lowercase value of the canonical request.
++        Args:
++            method (str): HTTP request method (GET/PUT/POST/DELETE).
++            url_suffix (str): The API endpoint.
++            query_string (str): The query to filter results by.
++            ok_codes (tuple): An HTTP status code of success
++            payload (dict, optional): The payload to send. Defaults to {}.
++            resp_type (str, optional): The response type of the request. Defaults to "json".
+         """
+-        credential_scope = self.create_credential_scope()
+-        canonical_req_hashed = hashlib.sha256(canonical_req.encode('utf-8')).hexdigest()
+-        return "\n".join([STRING_TO_SIGN_ALGORITHM, self._x_abs_date, credential_scope, canonical_req_hashed])
++        signed = self.prepare_request(method=method, url_suffix=url_suffix, query_string=query_string, payload=payload)
++        return self._http_request(method="POST", data=signed, full_url=CLIENT_V3_JWS_VALIDATION_URL,
++                                  return_empty_response=True, ok_codes=ok_codes, resp_type=resp_type)
+ 
+-    def create_credential_scope(self) -> str:
+-        """
+-        CredentialScope: The CredentialScope is defined in three parts:
+-                1. The date (in UTC) of the request. Format: YYYYMMDD
+-                2. Region or data center (must be in lowercase) Possible values: cadc, usdc, eudc
+-                3. Version or type of signature. Always abs1
++    def add_pagination(self, next_page: str, page_size: int) -> str:
+         """
+-        credential_scope_date = datetime.utcnow().date().strftime(DATE_FORMAT_CREDENTIAL_SCOPE)
+-        region = ABSOLUTE_URL_REGION[self._base_url]
+-        return f'{credential_scope_date}/{region}/{STRING_TO_SIGN_SIGNATURE_VERSION}'
+-
+-    def create_signing_key(self):
++        Add pagination query format
+         """
+-        HMAC-SHA256 is used for authentication.
+-        The signing key should be created by:
+-
+-        kSecret: The kSecret value is calculated by concatenating the static string “ABS1” with the value of the
+-                secret key from your API token and then encoding the resulting string using UTF8.
+-                The secret is the secret key value from the token that you created in the Absolute console.
+-
+-        kDate: The date (in UTC) of the request. Format: <YYYY><MM><DD>. The result is a byte array.
++        query = ''
++        if next_page:
++            query += f"&nextPage={next_page}"
++        if page_size:
++            query += f"&pageSize={page_size}"
++        return query
+ 
+-        kSigning: Use the binary hash to get a pure binary kSigning key. The result is a byte array.
+-                    Note:Do not use a hex digest method.
++    def get_specific_page_data(self, url_suffix: str, page_to_return: int, page_size: int,
++                               query_string: str, ok_codes: tuple) -> dict:
++        """Return a specific page data
+ 
++        Args:
++            url_suffix (str): The url suffix to fetch from.
++            page_to_return (int): The page number to return.
++            page_size (int): The pga size to return.
++            query_string (str): The query to filter results by.
++            ok_codes (tuple): An HTTP status code of success.
+         """
+-        credential_scope_date = datetime.now().date().strftime(DATE_FORMAT_CREDENTIAL_SCOPE)
+-        k_date = sign((STRING_TO_SIGN_SIGNATURE_VERSION.upper() + self._secret_key).encode('utf-8'),
+-                      credential_scope_date)
+-        return sign(k_date, 'abs1_request')
++        current_page = 0  # the first page number to fetch
++        next_page = ''
++        while current_page <= page_to_return:
++            response = self.send_request_to_api('GET', url_suffix, query_string + self.add_pagination(next_page, page_size),
++                                                ok_codes=ok_codes)
++            data = response.get('data', {})
++
++            current_page += 1
++            next_page = response.get('metadata', {}).get('pagination', {}).get('nextPage', '')
++            if not next_page:
++                break
+ 
+-    def create_signature(self, signing_string, signing_key):
+-        """
+-        As a result of creating a signing key, kSigning is used as the key for hashing.
+-        The StringToSign is the string  data to be hashed.
++        if current_page <= page_to_return and not next_page:
++            demisto.debug('ABS: Returning empty data, as next_page is empty, and '
++                          f'current_page ({current_page}) <= page_to_return ({page_to_return})')
++            # no more results in the API
++            return {}
+ 
+-        The signature should look like this:
++        return data
+ 
+-        signature = lowercase(hexencode(HMAC(kSigning, StringToSign)))
+-        """
+-        return hmac.new(signing_key, signing_string.encode('utf-8'), hashlib.sha256).hexdigest()
++    def get_all_results(self, url_suffix: str, page_size: int, query_string: str, ok_codes: tuple) -> dict:
++        """Return all the results from the API
+ 
+-    def add_authorization_header(self, signing_signature: str) -> str:
++        Args:
++            url_suffix (str): The url suffix to fetch from.
++            page_size (int): The pga size to return.
++            query_string (str): The query to filter results by.
++            ok_codes (tuple): An HTTP status code of success.
+         """
+-        Use the standard HTTP Authorization header. Should look like this:
+-        Authorization: <algorithm> Credential=<token id>/<CredentialScope>,
+-        SignedHeaders=<SignedHeaders>, Signature=<signature>
+-
+-        Authorization: The string used to identify the algorithm
++        next_page = ''
++        response = self.send_request_to_api('GET', url_suffix, query_string + self.add_pagination(next_page, page_size),
++                                            ok_codes=tuple(ok_codes))
++        data = response.get('data')
+ 
+-        Credential: The token ID
++        while next_page := response.get('metadata', {}).get('pagination', {}).get('nextPage', ''):
++            response = self.send_request_to_api('GET', url_suffix, query_string + self.add_pagination(next_page, page_size),
++                                                ok_codes=tuple(ok_codes))
++            data += response.get('data')
+ 
+-        CredentialScope: the same as described in the create_credential_scope func.
++        return data
+ 
+-        SignedHeaders: Semi-colon ; delimited list of lowercase headers used in CanonicalHeaders
++    def api_request_absolute(self, method: str, url_suffix: str, body: dict = {}, success_status_code=(),
++                             query_string: str = '', page: int = 0, page_size: int = 0,
++                             specific_page: bool = False, resp_type: str = "json"):
++        """Makes an HTTP request to the Absolute API.
+ 
+-        Signature: The fully calculated resulting signature from the signing key and the signature
+-        """
+-        credential_scope = self.create_credential_scope()
+-        canonical_headers = ";".join([header.lower() for header in self._headers])
+-        # There is a space after each comma in the authorization header
+-        return f'{STRING_TO_SIGN_ALGORITHM} Credential={self._token_id}/{credential_scope}, ' \
+-               f'SignedHeaders={canonical_headers}, Signature={signing_signature}'
+-
+-    def api_request_absolute(self, method: str, url_suffix: str, body: str = "", success_status_code=None,
+-                             query_string: str = ''):
+-        """
+-        Makes an HTTP request to the Absolute API.
+         Args:
+             method (str): HTTP request method (GET/PUT/POST/DELETE).
+             url_suffix (str): The API endpoint.
+-            body (str): The body to set.
+-            success_status_code (int): an HTTP status code of success.
+-            query_string (str): The query to filter results by.
++            body (dict, optional): The body to set. Defaults to {}.
++            success_status_code (tuple, optional): An HTTP status code of success. Defaults to None.
++            query_string (str): The query to filter results by. Defaults to ''.
++            page (int): The specific page number to return. Defaults to 0.
++            page_size (int): The page size of the response. Defaults to DEFAULT_API_PAGE_SIZE.
++            specific_page (bool): Wether to return a specific page or not. Defaults to False.
++            resp_type (str): The response type of the request. Defaults to "json".
+ 
+-        Note: As on the put and post requests we should pass a body from type str, we couldn't use the _http_request
+-              function in CSP (as it does not receive body from type str).
+         """
+         demisto.debug(f'current request is: method={method}, url suffix={url_suffix}, body={body}')
+-        full_url = urljoin(self._base_url, url_suffix)
+ 
+-        if success_status_code is None:
++        if not success_status_code:
+             success_status_code = [200]
+-
+-        self.prepare_request_for_api(method=method, canonical_uri=url_suffix, query_string=query_string, payload=body)
++        query_string = self.prepare_query_string_for_canonical_request(query_string)
+ 
+         if method == 'GET':
+-            if query_string:
+-                url_suffix = f'{url_suffix}?{self.prepare_query_string_for_canonical_request(query_string)}'
+-            return self._http_request(method=method, url_suffix=url_suffix, headers=self._headers,
+-                                      return_empty_response=True)
++            if specific_page:
++                data = self.get_specific_page_data(url_suffix, page, page_size, query_string, ok_codes=tuple(success_status_code))
++            else:
++                data = self.get_all_results(url_suffix, page_size, query_string, ok_codes=tuple(success_status_code))
++            return data
+ 
+         elif method == 'DELETE':
+-            return self._http_request(method=method, url_suffix=url_suffix, headers=self._headers,
+-                                      ok_codes=tuple(success_status_code), resp_type='response')
++            response = self.send_request_to_api('DELETE', url_suffix, query_string, ok_codes=tuple(success_status_code))
++            return response
+ 
+         elif method == 'PUT':
+-            res = requests.put(full_url, data=body, headers=self._headers, verify=self._verify)
+-            if res.status_code not in success_status_code:
+-                raise DemistoException(f'{INTEGRATION} error: the operation was failed due to: {res.json()}')
+-            return None
++            response = self.send_request_to_api('PUT', url_suffix, query_string,
++                                                payload=body, ok_codes=tuple(success_status_code), resp_type=resp_type)
++            return response
+ 
+         elif method == 'POST':
+-            res = requests.post(full_url, data=body, headers=self._headers, verify=self._verify)
+-            if res.status_code not in success_status_code:
+-                raise DemistoException(f'{INTEGRATION} error: the operation was failed due to: {res.json()}')
+-            return res.json()
++            response = self.send_request_to_api('POST', url_suffix, query_string,
++                                                payload=body, ok_codes=tuple(success_status_code), resp_type=resp_type)
++            if isinstance(response, dict):
++                # response is not empty
++                return response.get('data')
+         return None
+ 
+-
+-class ClientV3(BaseClient):
+-    def __init__(self, base_url: str, token_id: str, secret_key: str, verify: bool, proxy: bool, headers: dict = HEADERS_V3):
+-        """
+-        Client to use in the Absolute integration for API v3. Overrides BaseClient.
+-
+-        Args:
+-            base_url (str): URL to access when doing a http request.
+-            token_id (str): The Absolute token id
+-            secret_key (str): User's Absolute secret key
+-            verify (bool): Whether to check for SSL certificate validity.
+-            proxy (bool): Whether the client should use proxies.
+-            headers (dict): Dictionary of HTTP headers to send with the Request.
+-        """
+-        super().__init__(base_url=base_url, verify=verify, proxy=proxy)
+-        self._token_id = token_id
+-        self._headers = headers
+-        self._secret_key = secret_key
+-
+-    def prepare_request(self, method: str, url_suffix: str, query_string: str) -> str:
+-        """
+-        Prepares the signed HTTP request data for making an API call.
+-
+-        Args:
+-            method (str): The HTTP method to be used for the request.
+-            url_suffix (str): The endpoint URL suffix for the API call.
+-            query_string (str): The query string parameters for the API call.
+-
+-        Returns:
+-            str: The prepared signed HTTP request data.
+-        """
+-        headers = {
+-            "alg": "HS256",
+-            "kid": self._token_id,
+-            "method": method,
+-            "content-type": "application/json",
+-            "uri": url_suffix,
+-            "query-string": query_string,
+-            "issuedAt": round(time.time() * 1000)
+-        }
+-
+-        return jwt.encode({"data": {}}, self._secret_key, algorithm='HS256', headers=headers)
+-
+-    def fetch_events_request(self, query_string: str) -> dict[str, Any]:
+-        """
+-        Performs the HTTP request using the signed request data.
+-
+-        Args:
+-            query_string (str): The query string parameters for the events to be fetched.
+-
+-        Returns:
+-            dict: A dictionary containing the response object from the HTTP request.
+-        """
+-        signed = self.prepare_request(method='GET', url_suffix='/v3/reporting/siem-events', query_string=query_string)
+-        return self._http_request(method='POST', data=signed, full_url=CLIENT_V3_JWS_VALIDATION_URL)
+-
+     def fetch_events_between_dates(self, fetch_limit: int, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
+         """
+         Helper function to fetch events with time window from the API based on the provided parameters.
+@@ -402,11 +323,12 @@ class ClientV3(BaseClient):
+         """
+         all_events: List[Dict[str, Any]] = []
+         next_page_token = ''
++        ok_codes = [200]
+         while len(all_events) < fetch_limit:
+             page_size = min(SEIM_EVENTS_PAGE_SIZE, fetch_limit - len(all_events))
+             query_string = self.prepare_query_string_for_fetch_events(page_size=page_size, start_date=start_date,
+                                                                       end_date=end_date, next_page=next_page_token)
+-            response = self.fetch_events_request(query_string=query_string)
++            response = self.send_request_to_api('GET', '/v3/reporting/siem-events', query_string, tuple(ok_codes))
+             all_events.extend(response.get('data', []))
+             next_page_token = response.get('metadata', {}).get('pagination', {}).get('nextPage', '')
+             if not next_page_token:
+@@ -445,18 +367,25 @@ def sign(key, msg):
+     return hmac.new(key, msg.encode('utf-8'), hashlib.sha256).digest()
+ 
+ 
+-def validate_absolute_api_url(base_url):
+-    if base_url not in ABSOLUTE_URL_TO_API_URL.keys():
++def validate_absolute_api_url(base_url: str) -> str:
++    """Validate the base url, and return the respective api url
++
++    Args:
++        base_url (str): The base url to validate
++
++    """
++    if base_url not in ABSOLUTE_URL_TO_API_URL:
+         raise_demisto_exception(
+             f"The Absolute server url {base_url} in not a valid url. "
+             f"Possible options: {list(ABSOLUTE_URL_TO_API_URL.keys())}")
+     return ABSOLUTE_URL_TO_API_URL[base_url]
+ 
+ 
+-def test_module(client: Client) -> str:
++def test_module(client: ClientV3) -> str:  # pragma: no cover
+     """Tests API connectivity to Absolute """
+     try:
+-        client.api_request_absolute('GET', '/v2/device-freeze/messages', success_status_code=(200, 204))
++        client.api_request_absolute('GET', '/v3/reporting/devices', query_string='',
++                                    page=0, page_size=1, specific_page=True)
+         message = 'ok'
+     except DemistoException as e:
+         if 'Forbidden' in str(e) or 'Authorization' in str(e):
+@@ -466,35 +395,45 @@ def test_module(client: Client) -> str:
+     return message
+ 
+ 
+-def parse_device_field_list_response(response: dict) -> dict[str, Any]:
+-    parsed_data = {'DeviceUID': response.get('deviceUid'), 'ESN': response.get('esn'), 'CDFValues': []}  # type: ignore
+-    for cdf_item in response.get('cdfValues', []):
++def parse_device_field_list_response(response: dict, device_id: str, limit: Optional[int],
++                                     all_results: bool) -> dict[str, Any]:
++    """Parse the device field list response"""
++    parsed_data = {'DeviceUID': device_id, 'CDFValues': []}  # type: ignore
++    for cdf_item in response:
+         parsed_data['CDFValues'].append({  # type: ignore
+             'CDFUID': cdf_item.get('cdfUid'),
+-            'FieldKey': cdf_item.get('fieldKey'),
+-            'FieldName': cdf_item.get('fieldName'),
++            'FieldKey': cdf_item.get('cdfFieldKey'),
++            'FieldName': cdf_item.get('cdfFieldName'),
+             'CategoryCode': cdf_item.get('categoryCode'),
+-            'FieldValue': cdf_item.get('fieldValue'),
++            'FieldValue': cdf_item.get('cdfFieldValue'),
+             'Type': cdf_item.get('type'),
+         })
++
++    if not all_results:
++        parsed_data['CDFValues'] = parsed_data['CDFValues'][:limit]
+     return parsed_data
+ 
+ 
+-def parse_device_field_list_response_human_readable(outputs):
++def parse_device_field_list_response_human_readable(outputs: dict) -> list:
++    """Parse the device field list response for the HR"""
+     human_readable = []
+     for cdf_values in outputs.get('CDFValues', []):
+         human_readable.append({
+-            'Filed Name': cdf_values.get('FieldName'),
++            'Field Name': cdf_values.get('FieldName'),
+             'CDF ID': cdf_values.get('CDFUID'),
+-            'Field Value': cdf_values.get('FieldName'),
++            'Field Value': cdf_values.get('FieldValue'),
+         })
+     return human_readable
+ 
+ 
+ def get_custom_device_field_list_command(args, client) -> CommandResults:
++    """Gets custom device field
++    """
+     device_id = args.get('device_id')
+-    res = client.api_request_absolute('GET', f'/v2/devices/{device_id}/cdf')
+-    outputs = parse_device_field_list_response(res)
++    limit = arg_to_number(args.get('limit', DEFAULT_LIMIT))
++    all_results = argToBoolean(args.get('all_results', False))
++    res = client.api_request_absolute('GET', f'/v3/configurations/customfields/devices/{device_id}')
++    outputs = parse_device_field_list_response(res, device_id, limit, all_results)
+     human_readable = tableToMarkdown(f'{INTEGRATION} Custom device field list',
+                                      parse_device_field_list_response_human_readable(outputs),
+                                      removeNull=True)
+@@ -505,16 +444,21 @@ def get_custom_device_field_list_command(args, client) -> CommandResults:
+ 
+ 
+ def update_custom_device_field_command(args, client) -> CommandResults:
++    """Updates custom device field
++    """
+     device_id = args.get('device_id')
+     cdf_uid = args.get('cdf_uid')
+     field_value = args.get('value')
+ 
+-    payload = json.dumps({"cdfValues": [{'cdfUid': cdf_uid, 'fieldValue': field_value}]})
+-    client.api_request_absolute('PUT', f'/v2/devices/{device_id}/cdf', body=payload)
++    payload = [{'cdfUid': cdf_uid, 'cdfFieldValue': field_value}]
++    client.api_request_absolute('PUT', f'/v3/configurations/customfields/devices/{device_id}',
++                                body=payload, success_status_code=[202], resp_type="response")
+     return CommandResults(readable_output=f"Device {device_id} with value {field_value} was updated successfully.")
+ 
+ 
+-def validate_device_freeze_type_offline(offline_time_seconds):
++def validate_device_freeze_type_offline(offline_time_seconds: Optional[int]) -> int:
++    """Validate the Offline type arg
++    """
+     if not offline_time_seconds:
+         # the default is 30 days
+         offline_time_seconds = 22592000
+@@ -531,20 +475,29 @@ def raise_demisto_exception(msg):
+     raise DemistoException(f'{INTEGRATION} error: {msg}')
+ 
+ 
+-def validate_device_freeze_type_scheduled(scheduled_freeze_date):
++def validate_device_freeze_type_scheduled(scheduled_freeze_date: str) -> str:
++    """Validate the scheduled type arg
++    """
+     if not scheduled_freeze_date:
+         raise_demisto_exception('When setting device_freeze_type to be Scheduled, you must specify the scheduled_'
+                                 'freeze_date arg.')
+     return scheduled_freeze_date
+ 
+ 
+-def validate_passcode_type_args(passcode_type, passcode, passcode_length, payload):
++def validate_passcode_type_args(passcode_type: str, passcode: str, passcode_length: Optional[int], payload: dict) -> dict:
++    """Validate the passcode type arguments, and return the payload
++
++    Args:
++        passcode_type (str): The passcode type
++        passcode (str): The passcode
++        passcode_length (int): The passcode length
++        payload (dict): The payload
++    """
+     if passcode_type == "UserDefined":
+         if not passcode:
+             raise_demisto_exception(
+                 'when setting passcode_type to be UserDefined, you must specify the passcode arg.')
+         payload["passcodeDefinition"].update({"passcode": passcode})
+-
+     elif passcode_type == "RandomForEach" or passcode_type == "RandomForAll":
+         not_valid_passcode_length = not passcode_length or passcode_length > 8 or passcode_length < 4
+         if not_valid_passcode_length:
+@@ -555,8 +508,14 @@ def validate_passcode_type_args(passcode_type, passcode, passcode_length, payloa
+     return payload
+ 
+ 
+-def parse_freeze_device_response(response: dict):
+-    outputs = {'RequestUID': response.get('requestUid'), 'SucceededDeviceUIDs': response.get('deviceUids')}
++def parse_freeze_device_response(response: dict, device_ids: str) -> dict:
++    """Parse the device freeze response
++
++    Args:
++        response (dict): The response to parse
++        device_ids (str): The device ids in the request
++    """
++    outputs = {'RequestUID': response.get('requestUid'), 'SucceededDeviceUIDs': device_ids}
+     errors = response.get('errors', [])
+     human_readable_errors = []
+     if errors:
+@@ -569,10 +528,11 @@ def parse_freeze_device_response(response: dict):
+ 
+ 
+ def device_freeze_request_command(args, client) -> CommandResults:
++    """Requests to freeze devices
++    """
+     payload = prepare_payload_to_freeze_request(args)
+-    res = client.api_request_absolute('POST', '/v2/device-freeze/requests', body=json.dumps(payload),
+-                                      success_status_code=[201])
+-    outputs = parse_freeze_device_response(res)
++    res = client.api_request_absolute('POST', '/v3/actions/requests/freeze', body=payload)
++    outputs = parse_freeze_device_response(res, args.get('device_ids'))
+     human_readable = tableToMarkdown(f'{INTEGRATION} device freeze requests results', outputs,
+                                      headers=['FailedDeviceUIDs', 'RequestUID', 'SucceededDeviceUIDs'], removeNull=True,
+                                      json_transform_mapping={'FailedDeviceUIDs': JsonTransformer()}, )
+@@ -582,7 +542,9 @@ def device_freeze_request_command(args, client) -> CommandResults:
+                           outputs_key_field="RequestUID", raw_response=res)
+ 
+ 
+-def prepare_payload_to_freeze_request(args):
++def prepare_payload_to_freeze_request(args) -> dict:
++    """prepares the pyload for the freeze request
++    """
+     request_name = args.get('request_name')
+     html_message = args.get('html_message')
+     message_name = args.get('message_name')
+@@ -592,7 +554,7 @@ def prepare_payload_to_freeze_request(args):
+     passcode_type = args.get('passcode_type')
+ 
+     payload = {
+-        "name": request_name,
++        "requestTitle": request_name,
+         "message": html_message,
+         "messageName": message_name,
+         "freezeDefinition":
+@@ -611,54 +573,58 @@ def prepare_payload_to_freeze_request(args):
+     offline_time_seconds = arg_to_number(args.get('offline_time_seconds'), required=False)
+     if device_freeze_type == "Scheduled":
+         scheduled_freeze_date = validate_device_freeze_type_scheduled(scheduled_freeze_date)
+-        payload["freezeDefinition"].update({"scheduledFreezeDate": scheduled_freeze_date})
++        payload["freezeDefinition"].update({"scheduledFreezeDateTimeUtc": scheduled_freeze_date})
+ 
+-    elif device_freeze_type == "Offline":
++    elif device_freeze_type == "OffLine":
+         offline_time_seconds = validate_device_freeze_type_offline(offline_time_seconds)
+         payload["freezeDefinition"].update({"offlineTimeSeconds": offline_time_seconds})
+     passcode = args.get('passcode')
+     passcode_length = arg_to_number(args.get('passcode_length'), required=False)
+     payload = validate_passcode_type_args(passcode_type, passcode, passcode_length, payload)
++    remove_nulls_from_dictionary(payload)
+     return payload
+ 
+ 
+ def remove_device_freeze_request_command(args, client) -> CommandResults:
++    """Removes device freeze request
++    """
+     device_ids = argToList(args.get('device_ids'))
+-    remove_scheduled = args.get('remove_scheduled')
+-    remove_offline = args.get('remove_offline')
++    remove_scheduled = argToBoolean(args.get('remove_scheduled', False))
++    remove_offline = argToBoolean(args.get('remove_offline', False))
+ 
+-    # from the API docs: unfreeze - Make frozen devices usable immediately, Applies to all Freeze types.
+-    # Always set to true
+-    payload = {"deviceUids": device_ids, "unfreeze": "true", "removeScheduled": remove_scheduled,
++    payload = {"deviceUids": device_ids, "removeScheduled": remove_scheduled,
+                "removeOffline": remove_offline}
+ 
+-    client.api_request_absolute('PUT', '/v2/device-freeze/requests', body=json.dumps(payload),
+-                                success_status_code=[204])
++    client.api_request_absolute('POST', '/v3/actions/freeze/remove-freeze', body=payload,
++                                success_status_code=[202], resp_type="response")
+     return CommandResults(
+         readable_output=f"Successfully removed freeze request for devices ids: {args.get('device_ids')}.")
+ 
+ 
+-def parse_get_device_freeze_response(response: List):
++def parse_get_device_freeze_response(response: list) -> list:
++    """Parse the device freeze response
++
++    Args:
++        response (list): The response to parse
++    """
+     parsed_data = []
+     for freeze_request in response:
+         parsed_data.append({
+             'ID': freeze_request.get('id'),
+-            'AccountUid': freeze_request.get('accountUid'),
+-            'ActionRequestUid': freeze_request.get('actionRequestUid'),
++            'ActionRequestUid': freeze_request.get('requestUid'),
+             'DeviceUid': freeze_request.get('deviceUid'),
+-            'Name': freeze_request.get('name'),
++            'Name': freeze_request.get('requestTitle'),
+             'Statuses': freeze_request.get('statuses', []),
+             'Configuration': freeze_request.get('configuration', {}),
+             'Requester': freeze_request.get('requester'),
+-            'RequesterUid': freeze_request.get('requesterUid'),
+-            'CreatedUTC': freeze_request.get('createdUTC'),
+-            'ChangedUTC': freeze_request.get('changedUTC'),
++            'CreatedUTC': freeze_request.get('createdDateTimeUtc'),
++            'ChangedUTC': freeze_request.get('changedDateTimeUtc'),
+             'NotificationEmails': freeze_request.get('notificationEmails'),
+             'EventHistoryId': freeze_request.get('eventHistoryId'),
+             'PolicyGroupUid': freeze_request.get('policyGroupUid'),
+             'PolicyConfigurationVersion': freeze_request.get('policyConfigurationVersion'),
+             'FreezePolicyUid': freeze_request.get('freezePolicyUid'),
+-            'Downloaded': freeze_request.get('downloaded'),
++            'Downloaded': freeze_request.get('isDownloaded'),
+             'IsCurrent': freeze_request.get('isCurrent'),
+             # for the freeze message command
+             'Content': freeze_request.get('content'),
+@@ -668,17 +634,21 @@ def parse_get_device_freeze_response(response: List):
+     return parsed_data
+ 
+ 
+-def parse_device_freeze_message_response(response):
++def parse_device_freeze_message_response(response: list) -> list:
++    """Parse the device freeze message response
++
++    Args:
++        response (list): The response to parse
++    """
+     if not isinstance(response, list):
+-        # in case we got here from the f'/v2/device-freeze/messages/{message_id}' url, the response is a json
+         response = [response]
+     parsed_data = []
+     for freeze_request in response:
+         parsed_data.append({
+-            'ID': freeze_request.get('id'),
++            'ID': freeze_request.get('messageUid'),
+             'Name': freeze_request.get('name'),
+-            'CreatedUTC': freeze_request.get('createdUTC'),
+-            'ChangedUTC': freeze_request.get('changedUTC'),
++            'CreatedUTC': freeze_request.get('createdDateTimeUtc'),
++            'ChangedUTC': freeze_request.get('changedDateTimeUtc'),
+             'Content': freeze_request.get('content'),
+             'CreatedBy': freeze_request.get('createdBy'),
+             'ChangedBy': freeze_request.get('changedBy'),
+@@ -687,90 +657,159 @@ def parse_device_freeze_message_response(response):
+ 
+ 
+ def get_device_freeze_request_command(args, client) -> CommandResults:
++    """Gets a device freeze request
++    """
+     request_uid = args.get('request_uid')
+-    res = client.api_request_absolute('GET', f'/v2/device-freeze/requests/{request_uid}')
++    res = client.api_request_absolute('GET', f'/v3/actions/freeze/requests/{request_uid}')
+     outputs = parse_get_device_freeze_response(res)
+ 
+     human_readable = tableToMarkdown(f'{INTEGRATION} Freeze request details for: {request_uid}', outputs,
+-                                     headers=['ID', 'Name', 'AccountUid', 'ActionRequestUid', 'EventHistoryId',
+-                                              'FreezePolicyUid', 'CreatedUTC', 'ChangedUTC', 'Requester'],
++                                     headers=['ID', 'Name', 'ActionRequestUid', 'EventHistoryId',
++                                              'CreatedUTC', 'ChangedUTC', 'Requester'],
+                                      removeNull=True)
+     return CommandResults(outputs=outputs, outputs_prefix="Absolute.FreezeRequestDetail", outputs_key_field='ID',
+                           readable_output=human_readable, raw_response=res)
+ 
+ 
+ def list_device_freeze_message_command(args, client) -> CommandResults:
++    """Lists device freeze messages
++    """
+     message_id = args.get('message_id')
+     if message_id:
+-        res = client.api_request_absolute('GET', f'/v2/device-freeze/messages/{message_id}')
++        res = client.api_request_absolute('GET', f'/v3/actions/freeze/messages/{message_id}')
+     else:
+-        res = client.api_request_absolute('GET', '/v2/device-freeze/messages', success_status_code=(200, 204))
++        page = arg_to_number(args.get('page', 0))
++        limit = arg_to_number(args.get('limit', DEFAULT_LIMIT))
+ 
+-    if isinstance(res, list):
+-        outputs = parse_device_freeze_message_response(res)
+-        human_readable = tableToMarkdown(f'{INTEGRATION} Device freeze message details:', outputs,
+-                                         headers=['ID', 'Name', 'CreatedUTC', 'ChangedUTC', 'ChangedBy', 'CreatedBy'],
+-                                         removeNull=True)
+-        return CommandResults(outputs=outputs, outputs_prefix="Absolute.FreezeMessage", outputs_key_field='ID',
+-                              readable_output=human_readable, raw_response=res)
+-    else:
+-        # in this case the response is empty, no content in response, no messages found
+-        return CommandResults(readable_output=f'{INTEGRATION}: your account has no existing Freeze messages.')
++        res = client.api_request_absolute('GET', '/v3/actions/freeze/messages',
++                                          page=page, page_size=limit, specific_page=True, success_status_code=(200, 204))
++
++    outputs = parse_device_freeze_message_response(res)
++    human_readable = tableToMarkdown(f'{INTEGRATION} Device freeze message details:', outputs,
++                                     headers=['ID', 'Name', 'CreatedUTC', 'ChangedUTC', 'ChangedBy', 'CreatedBy'],
++                                     removeNull=True)
++    return CommandResults(outputs=outputs, outputs_prefix="Absolute.FreezeMessage", outputs_key_field='ID',
++                          readable_output=human_readable, raw_response=res)
+ 
+ 
+ def create_device_freeze_message_command(args, client) -> CommandResults:
++    """Creates device freeze message
++    """
+     html_message = args.get('html_message')
+     message_name = args.get('message_name')
+ 
+     payload = {"name": message_name, "content": html_message}
+ 
+-    res = client.api_request_absolute('POST', '/v2/device-freeze/messages', body=json.dumps(payload),
++    res = client.api_request_absolute('POST', '/v3/actions/freeze/messages', body=payload,
+                                       success_status_code=(200, 201))
+-    human_readable = f"{INTEGRATION} New freeze message was created with ID: {res.get('id')}"
+-    return CommandResults(outputs={'ID': res.get('id')}, outputs_prefix="Absolute.FreezeMessage",
++    message_id = res.get('messageUid', '')
++    human_readable = f"{INTEGRATION} New freeze message was created with ID: {message_id}"
++    return CommandResults(outputs={'ID': message_id}, outputs_prefix="Absolute.FreezeMessage",
+                           outputs_key_field='ID',
+                           readable_output=human_readable, raw_response=res)
+ 
+ 
+ def update_device_freeze_message_command(args, client) -> CommandResults:
++    """Updates device freeze message
++    """
+     message_id = args.get('message_id')
+     html_message = args.get('html_message')
+     message_name = args.get('message_name')
+     payload = {"name": message_name, "content": html_message}
+-    client.api_request_absolute('PUT', f'/v2/device-freeze/messages/{message_id}', body=json.dumps(payload))
++    client.api_request_absolute('PUT', f'/v3/actions/freeze/messages/{message_id}', body=payload, success_status_code=(200, 204))
+     return CommandResults(readable_output=f'{INTEGRATION} Freeze message: {message_id} was updated successfully')
+ 
+ 
+ def delete_device_freeze_message_command(args, client) -> CommandResults:
++    """Deletes device freeze request
++    """
+     message_id = args.get('message_id')
+-    client.api_request_absolute('DELETE', f'/v2/device-freeze/messages/{message_id}', success_status_code=[204])
++    client.api_request_absolute('DELETE', f'/v3/actions/freeze/messages/{message_id}', success_status_code=[204])
+     return CommandResults(readable_output=f'{INTEGRATION} Freeze message: {message_id} was deleted successfully')
+ 
+ 
+-def parse_device_unenroll_response(response):
+-    parsed_data = []
+-    for device in response:
+-        parsed_data.append({
+-            'DeviceUid': device.get('deviceUid'),
+-            'SystemName': device.get('systemName'),
+-            'Username': device.get('username'),
+-            'EligibleStatus': device.get('eligibleStatus'),
+-            'Serial': device.get('serial'),
+-            'ESN': device.get('esn'),
+-        })
++def parse_device_unenroll_request_data_response(response: dict) -> dict:
++    """Parse the unenroll response
++
++    Args:
++        response (dict): The response to parse
++    """
++    parsed_data = {
++        'TotalDevices': response.get('totalDevices'),
++        'Pending': response.get('pending'),
++        'Processing': response.get('processing'),
++        'Completed': response.get('completed'),
++        'Canceled': response.get('canceled'),
++        'Failed': response.get('failed'),
++        'RequestId': response.get('requestId'),
++        'RequestUid': response.get('requestUid'),
++        'RequestStatus': response.get('requestStatus'),
++        'CreatedDateTimeUtc': response.get('createdDateTimeUtc'),
++        'UpdatedDateTimeUtc': response.get('updatedDateTimeUtc'),
++        'Requester': response.get('requester'),
++        'ExcludeMissingDevices': response.get('excludeMissingDevices'),
++    }
+     return parsed_data
+ 
+ 
++def parse_device_unenroll_response(response: list, request_uid: str) -> list:
++    """Parse the unenroll response
++
++    Args:
++        response (list): The response to parse.
++        request_uid (str): The request uid if the current request
++    """
++    parsed_devices_data = []
++    for device in response:
++        if device.get('requestUid') == request_uid:
++            # only returning device data from the current unenroll request
++            parsed_devices_data.append({
++                'DeviceUid': device.get('deviceUid'),
++                'ActionUid': device.get('actionUid'),
++                'RequestUid': device.get('requestUid'),
++                'DeviceName': device.get('deviceName'),
++                'ActionStatus': device.get('actionStatus'),
++                'ESN': device.get('esn'),
++                'CreatedDateTimeUtc': device.get('createdDateTimeUtc'),
++                'UpdatedDateTimeUtc': device.get('updatedDateTimeUtc'),
++            })
++    return parsed_devices_data
++
++
+ def device_unenroll_command(args, client) -> CommandResults:
++    """Unenroll devices
++    """
+     device_ids = argToList(args.get('device_ids'))
+-    payload = [{'deviceUid': device_id} for device_id in device_ids]
+-    res = client.api_request_absolute('POST', '/v2/device-unenrollment/unenroll', body=json.dumps(payload))
+-    outputs = parse_device_unenroll_response(res)
+-    human_readable = tableToMarkdown(f'{INTEGRATION} unenroll devices:', outputs, removeNull=True)
++    exclude_missing_devices = args.get('exclude_missing_devices', 'false')
++    payload = {'deviceUids': device_ids, 'excludeMissingDevices': exclude_missing_devices}
++
++    # getting the requestUid from API 1
++    res_1 = client.api_request_absolute('POST', '/v3/actions/requests/unenroll', body=payload)
++    request_uid = res_1.get('requestUid', '')
++
++    # getting data from API 2
++    res_2 = client.api_request_absolute('GET', f'/v3/actions/requests/unenroll/{request_uid}')
++    request_data_outputs = parse_device_unenroll_request_data_response(res_2)
++
++    # getting data from API 3
++    payload = {'deviceUids': device_ids}
++    res_3 = client.api_request_absolute('POST', '/v3/actions/unenroll/get-actions', body=payload)
++
++    devices_data_outputs = parse_device_unenroll_response(res_3, request_uid)
++    human_readable = tableToMarkdown(f'{INTEGRATION} Unenroll request data:', request_data_outputs,
++                                     headers=['RequestUid', 'RequestStatus'],
++                                     removeNull=True)
++
++    human_readable += tableToMarkdown(f'{INTEGRATION} unenrolled devices:', devices_data_outputs,
++                                      headers=['DeviceUid', 'DeviceName', 'ESN'],
++                                      removeNull=True)
++
++    outputs = request_data_outputs
++    outputs['Devices'] = devices_data_outputs
+     return CommandResults(outputs_prefix='Absolute.DeviceUnenroll',
+                           outputs=outputs,
+                           readable_output=human_readable,
+-                          raw_response=res)
++                          raw_response=outputs)
+ 
+ 
+ def add_list_to_filter_string(field_name, list_of_values, query):
+@@ -803,9 +842,9 @@ def create_filter_query_from_args_helper(args, arg_name, source_name, query):
+     return query
+ 
+ 
+-def create_filter_query_from_args(args: dict, change_device_name_to_system=False, change_device_id=False):
++def create_filter_query_from_args(args: dict, change_device_name_to_system: bool = False,
++                                  change_device_id: bool = False) -> str:
+     """
+-
+     Args:
+         args: args given from the user.
+         change_device_name_to_system: True if to filter by "systemName" parameter and False to filter by "deviceName".
+@@ -823,6 +862,7 @@ def create_filter_query_from_args(args: dict, change_device_name_to_system=False
+     query = create_filter_query_from_args_helper(args, 'app_names', "appName", query)
+     query = create_filter_query_from_args_helper(args, 'app_publishers', "appPublisher", query)
+     query = create_filter_query_from_args_helper(args, 'user_names', "userName", query)
++    query = create_filter_query_from_args_helper(args, 'user_names', "username", query)
+     query = create_filter_query_from_args_helper(args, 'os', "osName", query)
+     query = create_filter_query_from_args_helper(args, 'esn', "esn", query)
+     query = create_filter_query_from_args_helper(args, 'local_ips', "localIp", query)
+@@ -845,10 +885,10 @@ def create_filter_query_from_args(args: dict, change_device_name_to_system=False
+         query = add_value_to_filter_string("agentStatus", agent_status, query)
+ 
+     os_name = args.get('os_name')
+-    query = add_value_to_filter_string("osName", os_name, query)
++    query = add_value_to_filter_string("operatingSystem.name", os_name, query)
+ 
+     os_version = args.get('os_version')
+-    query = add_value_to_filter_string("osVersion", os_version, query)
++    query = add_value_to_filter_string("operatingSystem.version", os_version, query)
+ 
+     manufacturer = args.get('manufacturer')
+     query = add_value_to_filter_string("systemManufacturer", manufacturer, query)
+@@ -872,16 +912,12 @@ def parse_return_fields(return_fields: str, query: str):
+     return f"$select={return_fields}"
+ 
+ 
+-def parse_paging(page: int, limit: int, query: str) -> str:
+-    """
+-    Add pagination query format to the existing query
+-    """
+-    if query:
+-        return f'{query}&$skip={page}&$top={limit}'
+-    return f"$skip={page}&$top={limit}"
+-
++def parse_device_list_response(response: list, keep_os_in_list=True, application_list=False) -> list:
++    """Parse the device list response
+ 
+-def parse_device_list_response(response, keep_os_in_list=True):
++    Args:
++        response (list): The response to parse
++    """
+     parsed_response = []
+     for device in response:
+         parsed_device = {}
+@@ -889,14 +925,33 @@ def parse_device_list_response(response, keep_os_in_list=True):
+             if val:
+                 if key == 'os' and not keep_os_in_list:
+                     parsed_device['osName'] = val.get('name')
++                elif key == 'deviceUid' and application_list:
++                    parsed_device['DeviceUid'] = val
++                elif key in DEVICE_OUTPUT_TO_XSOAR_CONTEXT_PATH:
++                    parsed_device[DEVICE_OUTPUT_TO_XSOAR_CONTEXT_PATH[key]] = val
+                 elif key == 'espInfo':
+                     parsed_device['encryptionStatus'] = val.get('encryptionStatus')
++                elif key == 'lastConnectedDateTimeUtc':
++                    parsed_device["LastConnectedUtc"] = val
++                elif key == 'installDateTimeUtc':
++                    parsed_device["InstallDate"] = val
++                elif key == 'firstDetectDateTimeUtc':
++                    parsed_device['FirstDetectUtc'] = val
++                elif key == 'lastScanDateTimeUtc':
++                    parsed_device['LastScanTimeUtc'] = val
++                elif key == "operatingSystem":
++                    parsed_device["Os"] = {"architecture": val.get('architecture'),
++                                           "currentBuild": val.get('currentBuild'),
++                                           "installDate": val.get('installDateTimeUtc'),
++                                           "lastBootTime": val.get('lastBootDateTimeUtc'),
++                                           "name": val.get('name'),
++                                           "productKey": val.get('productKey'),
++                                           "serialNumber": val.get('serialNumber'),
++                                           "version": val.get('version')}
+                 else:
+                     parsed_device[key[0].upper() + key[1:]] = val
+         parsed_response.append(parsed_device)
+ 
+-    if len(parsed_response) == 1:
+-        return parsed_response[0]
+     return parsed_response
+ 
+ 
+@@ -913,8 +968,9 @@ def parse_geo_location_outputs(response):
+         parsed_device['State'] = geo_data.get('geoAddress', {}).get('state')
+         parsed_device['CountryCode'] = geo_data.get('geoAddress', {}).get('countryCode')
+         parsed_device['Country'] = geo_data.get('geoAddress', {}).get('country')
+-        parsed_device['ID'] = device.get('id')
++        parsed_device['ID'] = device.get('deviceUid')
+ 
++        remove_nulls_from_dictionary(parsed_device)
+         parsed_response.append(parsed_device)
+ 
+     if len(parsed_response) == 1:
+@@ -923,18 +979,27 @@ def parse_geo_location_outputs(response):
+ 
+ 
+ def get_device_application_list_command(args, client) -> CommandResults:
++    """Lists devices applications
++    """
+     page = arg_to_number(args.get('page', 0))
+-    limit = arg_to_number(args.get('limit', 50))
++    limit = arg_to_number(args.get('limit', DEFAULT_LIMIT))
+ 
+     query_string = create_filter_query_from_args(args)
+     query_string = parse_return_fields(args.get('return_fields'), query_string)
+-    query_string = parse_paging(page, limit, query_string)  # type: ignore
+ 
+-    res = client.api_request_absolute('GET', '/v2/sw/deviceapplications', query_string=query_string)
++    try:
++        res = client.api_request_absolute('GET', '/v3/reporting/applications-advanced', query_string=query_string,
++                                          page=page, page_size=limit, specific_page=True)
++    except Exception as e:
++        if 'Your request is invalid, please contact us for details.' in str(e):
++            raise Exception(f'Error in request - make sure your filter is in accordance to the Absolute documentation.\n{e}')
++        else:
++            raise e
++
+     if res:
+-        outputs = parse_device_list_response(res)
++        outputs = parse_device_list_response(res, application_list=True)
+         human_readable = tableToMarkdown(f'{INTEGRATION} device applications list:', outputs, removeNull=True)
+-        human_readable += f"Above results are with page number: {page} and with size: {limit}."
++        human_readable += f"\nAbove results are with page number: {page} and with limit: {limit}."
+         return CommandResults(outputs_prefix='Absolute.DeviceApplication',
+                               outputs=outputs,
+                               outputs_key_field='Appid',
+@@ -945,18 +1010,28 @@ def get_device_application_list_command(args, client) -> CommandResults:
+ 
+ 
+ def device_list_command(args, client) -> CommandResults:
++    """Lists devices
++    """
+     page = arg_to_number(args.get('page', 0))
+-    limit = arg_to_number(args.get('limit', 50))
++    limit = arg_to_number(args.get('limit', DEFAULT_LIMIT))
+ 
+     query_string = create_filter_query_from_args(args, change_device_name_to_system=True)
+     query_string = parse_return_fields(",".join(DEVICE_LIST_RETURN_FIELDS), query_string)
+-    query_string = parse_paging(page, limit, query_string)  # type: ignore
++    try:
++        res = client.api_request_absolute('GET', '/v3/reporting/devices', query_string=query_string,
++                                          page=page, page_size=limit, specific_page=True)
++    except Exception as e:
++        if 'Your request is invalid, please contact us for details.' in str(e):
++            raise Exception(f'Error in request - make sure your filter is in accordance to the Absolute documentation.\n{e}')
++        else:
++            raise e
+ 
+-    res = client.api_request_absolute('GET', '/v2/reporting/devices', query_string=query_string)
+     if res:
+         outputs = parse_device_list_response(copy.deepcopy(res), keep_os_in_list=False)
+-        human_readable = tableToMarkdown(f'{INTEGRATION} devices list:', outputs, removeNull=True)
+-        human_readable += f"Above results are with page number: {page} and with size: {limit}."
++        human_readable = tableToMarkdown(f'{INTEGRATION} devices list:', outputs,
++                                         headers=['Id', 'LastConnectedUtc', 'LocalIp', 'AgentStatus', 'Esn', 'FullSystemName'],
++                                         removeNull=True)
++        human_readable += f"\nAbove results are with page number: {page} and with limit: {limit}."
+         return CommandResults(outputs_prefix='Absolute.Device',
+                               outputs=outputs,
+                               outputs_key_field="Id",
+@@ -967,6 +1042,9 @@ def device_list_command(args, client) -> CommandResults:
+ 
+ 
+ def get_device_command(args, client) -> CommandResults:
++    """Gets a device
++    """
++
+     if not ('device_ids' in args or 'device_names' in args or 'local_ips' in args or 'public_ips' in args):
+         raise_demisto_exception(
+             "at least one of the commands args (device_ids, device_names, local_ips, public_ips must be provided.")
+@@ -979,7 +1057,7 @@ def get_device_command(args, client) -> CommandResults:
+     else:
+         query_string = parse_return_fields(",".join(DEVICE_GET_COMMAND_RETURN_FIELDS), query_string)
+ 
+-    res = client.api_request_absolute('GET', '/v2/reporting/devices', query_string=query_string)
++    res = client.api_request_absolute('GET', '/v3/reporting/devices', query_string=query_string)
+     if res:
+         outputs = parse_device_list_response(copy.deepcopy(res))
+         human_readable = tableToMarkdown(f'{INTEGRATION} devices list:', outputs, removeNull=True)
+@@ -996,7 +1074,7 @@ def get_device_location_command(args, client) -> CommandResults:
+     query_string = create_filter_query_from_args(args, change_device_id=True)
+     query_string = parse_return_fields(",".join(DEVICE_GET_LOCATION_COMMAND_RETURN_FIELDS), query_string)
+ 
+-    res = client.api_request_absolute('GET', '/v2/reporting/devices', query_string=query_string)
++    res = client.api_request_absolute('GET', '/v3/reporting/devices', query_string=query_string)
+     if res:
+         outputs = parse_geo_location_outputs(copy.deepcopy(res))
+         human_readable = tableToMarkdown(f'{INTEGRATION} devices location:', outputs, removeNull=True)
+@@ -1101,26 +1179,13 @@ def get_events(client, args) -> tuple[List[Dict[str, Any]], CommandResults]:
+ def main() -> None:  # pragma: no cover
+     params = demisto.params()
+     try:
+-        base_url = validate_absolute_api_url(params.get('url'))
+-        token_id = params.get('credentials').get('identifier')
+-        secret_key = params.get('credentials').get('password')
++        base_url = validate_absolute_api_url(params.get('url', ''))
++        token_id = params.get('credentials', {}).get('identifier')
++        secret_key = params.get('credentials', {}).get('password')
+         verify_certificate = not params.get('insecure', False)
+         proxy = params.get('proxy', False)
+ 
+         demisto.debug(f'Command being called is {demisto.command()}')
+-        host = base_url.split('https://')[-1]
+-        x_abs_date = datetime.utcnow().strftime(DATE_FORMAT)
+-        headers: dict = {"host": host, "content-type": "application/json", "x-abs-date": x_abs_date}
+-
+-        client = Client(
+-            base_url=base_url,
+-            verify=verify_certificate,
+-            headers=headers,
+-            proxy=proxy,
+-            token_id=token_id,
+-            secret_key=secret_key,
+-            x_abs_date=x_abs_date,
+-        )
+ 
+         client_v3 = ClientV3(
+             base_url=base_url,
+@@ -1132,49 +1197,49 @@ def main() -> None:  # pragma: no cover
+ 
+         args = demisto.args()
+         if demisto.command() == 'test-module':
+-            return_results(test_module(client))
++            return_results(test_module(client_v3))
+ 
+         elif demisto.command() == 'absolute-custom-device-field-list':
+-            return_results(get_custom_device_field_list_command(args=args, client=client))
++            return_results(get_custom_device_field_list_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-custom-device-field-update':
+-            return_results(update_custom_device_field_command(args=args, client=client))
++            return_results(update_custom_device_field_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-freeze-request':
+-            return_results(device_freeze_request_command(args=args, client=client))
++            return_results(device_freeze_request_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-remove-freeze-request':
+-            return_results(remove_device_freeze_request_command(args=args, client=client))
++            return_results(remove_device_freeze_request_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-freeze-request-get':
+-            return_results(get_device_freeze_request_command(args=args, client=client))
++            return_results(get_device_freeze_request_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-freeze-message-list':
+-            return_results(list_device_freeze_message_command(args=args, client=client))
++            return_results(list_device_freeze_message_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-freeze-message-create':
+-            return_results(create_device_freeze_message_command(args=args, client=client))
++            return_results(create_device_freeze_message_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-freeze-message-update':
+-            return_results(update_device_freeze_message_command(args=args, client=client))
++            return_results(update_device_freeze_message_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-freeze-message-delete':
+-            return_results(delete_device_freeze_message_command(args=args, client=client))
++            return_results(delete_device_freeze_message_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-unenroll':
+-            return_results(device_unenroll_command(args=args, client=client))
++            return_results(device_unenroll_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-application-list':
+-            return_results(get_device_application_list_command(args=args, client=client))
++            return_results(get_device_application_list_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-list':
+-            return_results(device_list_command(args=args, client=client))
++            return_results(device_list_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-get':
+-            return_results(get_device_command(args=args, client=client))
++            return_results(get_device_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'absolute-device-location-get':
+-            return_results(get_device_location_command(args=args, client=client))
++            return_results(get_device_location_command(args=args, client=client_v3))
+ 
+         elif demisto.command() == 'fetch-events':
+             max_events_per_fetch = arg_to_number(params.get('max_events_per_fetch', 10000)) or 10000
+diff --git a/Packs/Absolute/Integrations/Absolute/Absolute.yml b/Packs/Absolute/Integrations/Absolute/Absolute.yml
+index 0e6dd6bcaa..51f74f77ab 100644
+--- a/Packs/Absolute/Integrations/Absolute/Absolute.yml
++++ b/Packs/Absolute/Integrations/Absolute/Absolute.yml
+@@ -63,15 +63,21 @@ script:
+     - description: The system unique identifier of the device.
+       name: device_id
+       required: true
++    - description: Maximum number of results to return.
++      name: limit
++      defaultValue: '50'
++    - auto: PREDEFINED
++      description: Whether to retrieve all results or not.
++      name: all_results
++      predefined:
++      - 'true'
++      - 'false'
+     description: Returns a list of custom device fields associated with the given device_id, based on the authorization token.
+     name: absolute-custom-device-field-list
+     outputs:
+     - contextPath: Absolute.CustomDeviceField.DeviceUID
+       description: The system-defined unique identifier of the device.
+       type: String
+-    - contextPath: Absolute.CustomDeviceField.ESN
+-      description: The unique ESN (identifier) assigned to the Absolute agent that is installed on a device.
+-      type: String
+     - contextPath: Absolute.CustomDeviceField.CDFValues.CDFUID
+       description: The unique identifier of the custom device field.
+       type: String
+@@ -85,7 +91,7 @@ script:
+       description: 'The type of custom device field. Possible values are: PREDEFINED, ESNCOLUMN, UDF.'
+       type: String
+     - contextPath: Absolute.CustomDeviceField.CDFValues.FieldValue
+-      description: The current value of the custom device field.
++      description: 'The current value of the custom device field.'
+       type: String
+     - contextPath: Absolute.CustomDeviceField.CDFValues.Type
+       description: 'The data type of the field value. Possible values are: Text, Date, Dropdown.'
+@@ -122,7 +128,7 @@ script:
+       predefined:
+       - 'OnDemand'
+       - 'Scheduled'
+-      - 'Offline'
++      - 'OffLine'
+       required: true
+     - description: 'The date and time (in UTC) when the device should be frozen in ISO 8601 format: YYYY-MM-DDThh:mm:ss.SSSZ. Required if device_freeze_type is Scheduled. For example, 2022-01-01T00:00:00.000Z.'
+       name: scheduled_freeze_date
+@@ -179,7 +185,7 @@ script:
+       predefined:
+       - 'true'
+       - 'false'
+-    description: 'Creates a new Remove Freeze request for one or more devices, regardless of their Freeze status. You can submit Remove Freeze requests to perform the following actions: unfreeze frozen devices, remove newly submitted Freeze requests, or remove outstanding Scheduled and Offline Freeze requests.'
++    description: 'Creates a new Remove Freeze request for one or more devices, regardless of their Freeze status. You can submit Remove Freeze requests to perform the following actions: unfreeze frozen devices, remove newly submitted Freeze requests, or remove outstanding Scheduled and Offline Freeze requests. In case of removing from offline:  In addition to creating a Remove Freeze request for devices with a status of Frozen by Condition: Offline, removes Offline Freeze requests from devices with a status of Freeze Requested or Freeze Condition - Offline Set. In case of not removing from offline: a Remove Freeze request is created for the devices but the Conditional - Offline Freeze request is not deleted (deprecated).'
+     name: absolute-device-remove-freeze-request
+   - arguments:
+     - description: The system-defined, unique identifier of the Freeze request.
+@@ -203,9 +209,6 @@ script:
+     - contextPath: Absolute.FreezeRequestDetail.Statuses.actionUid
+       description: The system-defined, unique identifier of the Freeze action.
+       type: String
+-    - contextPath: Absolute.FreezeRequestDetail.Statuses.statusUid
+-      description: The system-defined, unique identifier of the Freeze status.
+-      type: String
+     - contextPath: Absolute.FreezeRequestDetail.Statuses.messageKey
+       description: The reference key for the error message or the info message. Error messages start with 'dds'. Info messages start with 'ddsui'.
+       type: String
+@@ -218,7 +221,7 @@ script:
+     - contextPath: Absolute.FreezeRequestDetail.Statuses.updatedBy
+       description: The last entity to update the Freeze request.
+       type: String
+-    - contextPath: Absolute.FreezeRequestDetail.Statuses.updatedUtc
++    - contextPath: Absolute.FreezeRequestDetail.Statuses.updatedDateTimeUtc
+       description: The time (in Unix epoch) when the Freeze request was last updated.
+       type: Date
+     - contextPath: Absolute.FreezeRequestDetail.Statuses.triggerActionUid
+@@ -230,13 +233,13 @@ script:
+     - contextPath: Absolute.FreezeRequestDetail.Statuses.ackClientTS
+       description: The acknowledgment timestamp (in UNIX epoch local time) when the request was downloaded on the device.
+       type: Number
+-    - contextPath: Absolute.FreezeRequestDetail.Statuses.ackClientUtc
++    - contextPath: Absolute.FreezeRequestDetail.Statuses.ackClientDateTimeUtc
+       description: The acknowledgment timestamp (in UNIX epoch UTC) when the request was downloaded to the device.
+       type: Number
+     - contextPath: Absolute.FreezeRequestDetail.Statuses.instruction
+       description: All action instructions which are sent from the device DFZ agent component.
+       type: String
+-    - contextPath: Absolute.FreezeRequestDetail.Statuses.scheduledFreezeDateUTC
++    - contextPath: Absolute.FreezeRequestDetail.Statuses.scheduledFreezeDateTimeUtc
+       description: The date and time (in Unix epoch) when a Scheduled Freeze request was scheduled to be performed.
+       type: Number
+     - contextPath: Absolute.FreezeRequestDetail.Configuration.messageName
+@@ -290,7 +293,7 @@ script:
+     - contextPath: Absolute.FreezeRequestDetail.Configuration.Conditions.scheduledFreezeDate
+       description: The date and time (in UTC) when a Scheduled Freeze request is scheduled to be performed.
+       type: Date
+-    - contextPath: Absolute.FreezeRequestDetail.Configuration.issuedUtc
++    - contextPath: Absolute.FreezeRequestDetail.Configuration.issuedDateTimeUTC
+       description: The date and time (in UNIX epoch) when the Freeze request was created.
+       type: Date
+     - contextPath: Absolute.FreezeRequestDetail.Configuration.preLoginEnabled
+@@ -305,9 +308,6 @@ script:
+     - contextPath: Absolute.FreezeRequestDetail.Requester
+       description: The user ID of the entity that created the Freeze request.
+       type: String
+-    - contextPath: Absolute.FreezeRequestDetail.RequesterUid
+-      description: The system-defined unique identifier of the user who created the Freeze request.
+-      type: String
+     - contextPath: Absolute.FreezeRequestDetail.CreatedUTC
+       description: The date and time (in UNIX epoch) when the Freeze request was created.
+       type: Date
+@@ -338,6 +338,12 @@ script:
+   - arguments:
+     - description: The system-defined, unique identifier of the Freeze message.
+       name: message_id
++    - description: Maximum number of results to return.
++      name: limit
++      defaultValue: '50'
++    - defaultValue: '0'
++      description: The page number of the results to retrieve. Minimum value is 0.
++      name: page
+     description: Gets all the Freeze messages that are configured for the account by the given message_id. If message_id is not given all the messages will be returned.
+     name: absolute-device-freeze-message-list
+     outputs:
+@@ -385,49 +391,97 @@ script:
+     - description: The system-defined, unique identifier of the Freeze message.
+       name: message_id
+       required: true
+-    description: Updates the content of an existing Freeze message.
++    description: Updates the content of an existing Freeze message. Use absolute-device-freeze-message-list in order to get the message_id.
+     name: absolute-device-freeze-message-update
+   - arguments:
+     - description: The system-defined, unique identifier of the Freeze message.
+       name: message_id
+       required: true
+-    description: Deletes an existing Freeze message for the account.
++    description: Deletes an existing Freeze message for the account. Use absolute-device-freeze-message-list in order to get the message_id.
+     name: absolute-device-freeze-message-delete
+   - arguments:
+     - description: A comma-separated list of device UIDs that should be unenrolled.
+       isArray: true
+       name: device_ids
+       required: true
++    - auto: PREDEFINED
++      description: Whether to exclude missing devices or not.
++      name: exclude_missing_devices
++      predefined:
++      - 'true'
++      - 'false'
+     description: Initiates an unenroll request on a list of eligible devices.
+     name: absolute-device-unenroll
+     outputs:
+-    - contextPath: Absolute.DeviceUnenroll.DeviceUid
++    - contextPath: Absolute.DeviceUnenroll.TotalDevices
++      description: The total number of devices in the request.
++      type: String
++    - contextPath: Absolute.DeviceUnenroll.Pending
++      description: The number of pending devices.
++      type: Number
++    - contextPath: Absolute.DeviceUnenroll.Processing
++      description: The number of processing devices.
++      type: Number
++    - contextPath: Absolute.DeviceUnenroll.Completed
++      description: 'The number of completed device unenroll.'
++      type: Number
++    - contextPath: Absolute.DeviceUnenroll.Canceled
++      description: The number of canceled device unenroll.
++      type: Number
++    - contextPath: Absolute.DeviceUnenroll.Failed
++      description: The number of failed device unenroll.
++      type: Number
++    - contextPath: Absolute.DeviceUnenroll.RequestId
++      description: The unique ID identifier of the request.
++      type: String
++    - contextPath: Absolute.DeviceUnenroll.RequestUid
++      description: The unique GUID identifier of the request.
++      type: String
++    - contextPath: Absolute.DeviceUnenroll.RequestStatus
++      description: The status of the request.
++      type: String
++    - contextPath: Absolute.DeviceUnenroll.UpdatedDateTimeUtc
++      description: The time (in Unix epoch) when the request was last updated.
++      type: Date
++    - contextPath: Absolute.DeviceUnenroll.CreatedDateTimeUtc
++      description: The time (in Unix epoch) when the request was created.
++      type: Date
++    - contextPath: Absolute.DeviceUnenroll.Requester
++      description: The requester of the request.
++      type: String
++    - contextPath: Absolute.DeviceUnenroll.ExcludeMissingDevices
++      description: Whether the request includes missing devices or not.
++      type: Boolean
++    - contextPath: Absolute.DeviceUnenroll.Devices.DeviceUid
+       description: The unique GUID identifier of the device.
+       type: String
+-    - contextPath: Absolute.DeviceUnenroll.SystemName
+-      description: The name assigned to the device.
++    - contextPath: Absolute.DeviceUnenroll.Devices.ActionUid
++      description: The unique GUID identifier of the action.
+       type: String
+-    - contextPath: Absolute.DeviceUnenroll.Username
+-      description: The unique user name of the user who was logged into the device at the time of the agent call.
++    - contextPath: Absolute.DeviceUnenroll.Devices.RequestUid
++      description: The unique GUID identifier of the request.
+       type: String
+-    - contextPath: Absolute.DeviceUnenroll.EligibleStatus
+-      description: 'The eligibility status of the device. Possible vales are: 0 for eligible, 1 for inactive or disabled, and 2 for stolen.'
+-      type: Number
+-    - contextPath: Absolute.DeviceUnenroll.Serial
+-      description: The identification number that is assigned to the device by the device manufacturer.
++    - contextPath: Absolute.DeviceUnenroll.Devices.DeviceName
++      description: The unique device name of the device.
++      type: String
++    - contextPath: Absolute.DeviceUnenroll.Devices.ActionStatus
++      description: The status of the action.
+       type: String
+-    - contextPath: Absolute.DeviceUnenroll.ESN
++    - contextPath: Absolute.DeviceUnenroll.Devices.ESN
+       description: The unique Electronic SerialNumber (ESN) that is assigned to the agent installed on the device.
+       type: String
++    - contextPath: Absolute.DeviceUnenroll.Devices.UpdatedDateTimeUtc
++      description: The time (in Unix epoch) when the request was last updated.
++      type: Date
++    - contextPath: Absolute.DeviceUnenroll.Devices.CreatedDateTimeUtc
++      description: The time (in Unix epoch) when the request was created.
++      type: Date
+   - arguments:
+     - description: The query by which to filter the device applications. If this argument is set, it overrides the others. For example, appName eq 'someName' or availableVirtualMemoryBytes lt 1073741824.
+       name: filter
+     - description: A comma-separated list of all specific values to return. If not set, all possible values will be returned.
+       isArray: true
+       name: return_fields
+-    - description: A comma-separated list of the unique IDs associated with this Absolute account.
+-      isArray: true
+-      name: account_uids
+     - description: A comma-separated list of the system-defined unique identifier of the devices.
+       isArray: true
+       name: device_ids
+@@ -449,9 +503,9 @@ script:
+     - description: A comma-separated list of the system-defined unique Electronic Serial Numbers (ESN) assigned to the Absolute agent installed on the device.
+       isArray: true
+       name: esn
+-    - defaultValue: '50'
+-      description: Maximum number of results to return.
++    - description: Maximum number of results to return.
+       name: limit
++      defaultValue: '50'
+     - defaultValue: '0'
+       description: The page number of the results to retrieve. Minimum value is 0.
+       name: page
+@@ -464,9 +518,6 @@ script:
+     - contextPath: Absolute.DeviceApplication.DeviceUid
+       description: The system-defined unique identifier of the device.
+       type: String
+-    - contextPath: Absolute.DeviceApplication.AccountUid
+-      description: The unique ID associated with this Absolute account.
+-      type: String
+     - contextPath: Absolute.DeviceApplication.AppId
+       description: The identifier of the application.
+       type: String
+diff --git a/Packs/Absolute/Integrations/Absolute/README.md b/Packs/Absolute/Integrations/Absolute/README.md
+index 3c3f26697a..213f1d2db0 100644
+--- a/Packs/Absolute/Integrations/Absolute/README.md
++++ b/Packs/Absolute/Integrations/Absolute/README.md
+@@ -1,6 +1,9 @@
+ Absolute is an adaptive endpoint security solution that delivers device security, data security, and asset management of endpoints.
+ This integration was integrated and tested with the API version 1.7 of Absolute.
+ 
++Some changes have been made that might affect your existing content. 
++If you are upgrading from a previous version of this integration, see [Breaking Changes](#breaking-changes-from-the-previous-version-of-this-integration---Absolute).
++
+ ## Configure Absolute in Cortex
+ 
+ 
+@@ -31,14 +34,14 @@ Returns a list of custom device fields associated with the given device_id, base
+ | **Argument Name** | **Description** | **Required** |
+ | --- | --- | --- |
+ | device_id | The system unique identifier of the device. | Required | 
+-
++| limit | Maximum number of results to return. Default is 50. | Optional | 
++| all_results | Whether to retrieve all results or not. Possible values are: true, false. | Optional | 
+ 
+ #### Context Output
+ 
+ | **Path** | **Type** | **Description** |
+ | --- | --- | --- |
+ | Absolute.CustomDeviceField.DeviceUID | String | The system-defined unique identifier of the device. | 
+-| Absolute.CustomDeviceField.ESN | String | The unique ESN \(identifier\) assigned to the Absolute agent that is installed on a device. | 
+ | Absolute.CustomDeviceField.CDFValues.CDFUID | String | The unique identifier of the custom device field. | 
+ | Absolute.CustomDeviceField.CDFValues.FieldKey | String | The unique identifier of the custom device field in the classic version of Absolute. | 
+ | Absolute.CustomDeviceField.CDFValues.FieldName | String | The name assigned to the custom device field. | 
+@@ -71,8 +74,7 @@ Returns a list of custom device fields associated with the given device_id, base
+                     "Type": "Text"
+                 }
+             ],
+-            "DeviceUID": "1234",
+-            "ESN": "D0004"
++            "DeviceUID": "1234"
+         }
+     }
+ }
+@@ -174,7 +176,7 @@ Creates a new Freeze request for the devices specified in the device_ids argumen
+ 
+ ### absolute-device-remove-freeze-request
+ ***
+-Creates a new Remove Freeze request for one or more devices, regardless of their Freeze status. You can submit Remove Freeze requests to perform the following actions: unfreeze frozen devices, remove newly submitted Freeze requests, or remove outstanding Scheduled and Offline Freeze requests.
++Creates a new Remove Freeze request for one or more devices, regardless of their Freeze status. You can submit Remove Freeze requests to perform the following actions: unfreeze frozen devices, remove newly submitted Freeze requests, or remove outstanding Scheduled and Offline Freeze requests. In case of removing from offline:  In addition to creating a Remove Freeze request for devices with a status of Frozen by Condition: Offline, removes Offline Freeze requests from devices with a status of Freeze Requested or Freeze Condition - Offline Set. In case of not removing from offline: a Remove Freeze request is created for the devices but the Conditional - Offline Freeze request is not deleted (deprecated).
+ 
+ 
+ #### Base Command
+@@ -186,7 +188,7 @@ Creates a new Remove Freeze request for one or more devices, regardless of their
+ | --- | --- | --- |
+ | device_ids | A comma-separated list of the unique identifiers of devices included in the request. The recommendation is to use up to 10,000 devices per request. | Required | 
+ | remove_scheduled | Whether to remove only a Scheduled Freeze request. Note: When setting to true, if the Freeze request is a Scheduled Freeze request, the Freeze request is removed. Otherwise, when setting to false, if the Freeze request is not a Scheduled Freeze request, the Freeze request is not removed. Possible values are: true, false. | Optional | 
+-| remove_offline | Whether to remove only an Offline Freeze request. Note: When setting to true, if the Freeze request is an Offline Freeze request, the Freeze request is removed. Otherwise, when setting to false, if the Freeze request is not an Offline Freeze request, the Freeze request is not removed. Possible values are: true, false. | Optional | 
++| remove_offline | Whether to remove only an Offline Freeze request. Note: When setting to true, if the Freeze request is an Offline Freeze request, the Freeze request is removed. Otherwise, when setting to false, if the Freeze request is not a Offline Freeze request, the Freeze request is not removed. Possible values are: true, false. | Optional | 
+ 
+ 
+ #### Context Output
+@@ -222,18 +224,17 @@ Gets detailed information about the Freeze request specified by request_uid.
+ | Absolute.FreezeRequestDetail.ActionRequestUid | String | The system-defined, unique identifier of the Freeze request \(the same as ID\). | 
+ | Absolute.FreezeRequestDetail.DeviceUid | String | The system-defined, unique identifier of the device. | 
+ | Absolute.FreezeRequestDetail.Statuses.actionUid | String | The system-defined, unique identifier of the Freeze action. | 
+-| Absolute.FreezeRequestDetail.Statuses.statusUid | String | The system-defined, unique identifier of the Freeze status. | 
+ | Absolute.FreezeRequestDetail.Statuses.messageKey | String | The reference key for the error message or the info message. Error messages start with 'dds'. Info messages start with 'ddsui'. | 
+ | Absolute.FreezeRequestDetail.Statuses.messageParams | Unknown | A list of strings describing the error message when the status is LaunchFailed. If the status isn't LaunchFailed, messageParams is empty. | 
+ | Absolute.FreezeRequestDetail.Statuses.message | String | The message for the status change that occurred. | 
+ | Absolute.FreezeRequestDetail.Statuses.updatedBy | String | The last entity to update the Freeze request. | 
+-| Absolute.FreezeRequestDetail.Statuses.updatedUtc | Date | The time \(in Unix epoch\) when the Freeze request was last updated. | 
++| Absolute.FreezeRequestDetail.Statuses.updatedDateTimeUtc | Date | The time \(in Unix epoch\) when the Freeze request was last updated. | 
+ | Absolute.FreezeRequestDetail.Statuses.triggerActionUid | String | The system-defined, unique identifier of a new Freeze request that replaces another Freeze request of the same type. | 
+ | Absolute.FreezeRequestDetail.Statuses.eventType | String | Device freeze type event. | 
+-| Absolute.FreezeRequestDetail.Statuses.ackClientTS | Number | The acknowledgment timestamp \(in Unix epoch local time\) when the request was downloaded on the device. | 
+-| Absolute.FreezeRequestDetail.Statuses.ackClientUtc | Number | The acknowledgment timestamp \(in Unix epoch UTC\) when the request was downloaded to the device. | 
++| Absolute.FreezeRequestDetail.Statuses.ackClientTS | Number | The acknowledgment timestamp \(in UNIX epoch local time\) when the request was downloaded on the device. | 
++| Absolute.FreezeRequestDetail.Statuses.ackClientDateTimeUtc | Number | The acknowledgment timestamp \(in UNIX epoch UTC\) when the request was downloaded to the device. | 
+ | Absolute.FreezeRequestDetail.Statuses.instruction | String | All action instructions which are sent from the device DFZ agent component. | 
+-| Absolute.FreezeRequestDetail.Statuses.scheduledFreezeDateUTC | Number | The date and time \(in Unix epoch\) when a Scheduled Freeze request was scheduled to be performed. | 
++| Absolute.FreezeRequestDetail.Statuses.scheduledFreezeDateTimeUtc | Number | The date and time \(in Unix epoch\) when a Scheduled Freeze request was scheduled to be performed. | 
+ | Absolute.FreezeRequestDetail.Configuration.messageName | String | The user-defined name for the Freeze message. | 
+ | Absolute.FreezeRequestDetail.Configuration.htmlClear | String | The user-defined, HTML coded message shown on the device when the Freeze is applied \(the same as Configuration.freezeMessage except it contains the HTML tags\). | 
+ | Absolute.FreezeRequestDetail.Configuration.passcodeClear | String | The passcode that can be used to unfreeze the device. | 
+@@ -250,15 +251,14 @@ Gets detailed information about the Freeze request specified by request_uid.
+ | Absolute.FreezeRequestDetail.Configuration.disableRemoteLogin | Boolean | Whether remote login is disabled on the device. | 
+ | Absolute.FreezeRequestDetail.Configuration.disableFileSharing | Boolean | Whether file sharing is disabled on the device. | 
+ | Absolute.FreezeRequestDetail.Configuration.Conditions.secondsUntilFreeze | Number | The amount of time \(in seconds\) a device can be offline before the device is frozen. | 
+-| Absolute.FreezeRequestDetail.Configuration.Conditions.scheduledFreezeDate | Date | The date and time \(in UTC\) that a Scheduled Freeze request is scheduled to be performed. | 
+-| Absolute.FreezeRequestDetail.Configuration.issuedUtc | Date | The date and time \(in Unix epoch\) when the Freeze request was created. | 
++| Absolute.FreezeRequestDetail.Configuration.Conditions.scheduledFreezeDate | Date | The date and time \(in UTC\) when a Scheduled Freeze request is scheduled to be performed. | 
++| Absolute.FreezeRequestDetail.Configuration.issuedDateTimeUTC | Date | The date and time \(in UNIX epoch\) when the Freeze request was created. | 
+ | Absolute.FreezeRequestDetail.Configuration.preLoginEnabled | Boolean | Whether pre-login is enabled on the device. | 
+ | Absolute.FreezeRequestDetail.Configuration.serviceControlList | String | List of service controls that the server sends to the device. | 
+ | Absolute.FreezeRequestDetail.Name | String | The user-defined name for the Freeze request. | 
+ | Absolute.FreezeRequestDetail.Requester | String | The user ID of the entity that created the Freeze request. | 
+-| Absolute.FreezeRequestDetail.RequesterUid | String | The system-defined unique identifier of the user who created the Freeze request. | 
+-| Absolute.FreezeRequestDetail.CreatedUTC | Date | The date and time \(in Unix epoch\) when the Freeze request was created. | 
+-| Absolute.FreezeRequestDetail.ChangedUTC | Date | The date and time \(in Unix epoch\) when the Freeze request was last modified. | 
++| Absolute.FreezeRequestDetail.CreatedUTC | Date | The date and time \(in UNIX epoch\) when the Freeze request was created. | 
++| Absolute.FreezeRequestDetail.ChangedUTC | Date | The date and time \(in UNIX epoch\) when the Freeze request was last modified. | 
+ | Absolute.FreezeRequestDetail.NotificationEmails | Unknown | An array of user-entered email addresses that will receive an email notification when the status of the Freeze request changes. Supports up to 10 email addresses. | 
+ | Absolute.FreezeRequestDetail.EventHistoryId | String | The user-friendly identifier of the request that is displayed in the event history in the Absolute console \(same as freezeId\). | 
+ | Absolute.FreezeRequestDetail.PolicyGroupUid | String | The system-defined unique identifier of the policy group that the device belongs to. | 
+@@ -363,7 +363,8 @@ Gets all the Freeze messages that are configured for the account by the given me
+ | **Argument Name** | **Description** | **Required** |
+ | --- | --- | --- |
+ | message_id | The system-defined, unique identifier of the Freeze message. | Optional | 
+-
++| limit | Maximum number of results to return. Default is 50. | Optional | 
++| page | The page number of the results to retrieve. Default is 0. | Optional | 
+ 
+ #### Context Output
+ 
+@@ -506,18 +507,34 @@ Initiates an unenroll request on a list of eligible devices.
+ | **Argument Name** | **Description** | **Required** |
+ | --- | --- | --- |
+ | device_ids | A comma-separated list of device UIDs that should be unenrolled. | Required | 
++| exclude_missing_devices | Whether to exclude missing devices or not. Possible values are: true, false. | Optional | 
+ 
+ 
+ #### Context Output
+ 
+ | **Path** | **Type** | **Description** |
+ | --- | --- | --- |
+-| Absolute.DeviceUnenroll.DeviceUid | String | The unique GUID identifier of the device. | 
+-| Absolute.DeviceUnenroll.SystemName | String | The name assigned to the device. | 
+-| Absolute.DeviceUnenroll.Username | String | The unique user name of the user who was logged into the device at the time of the agent call. | 
+-| Absolute.DeviceUnenroll.EligibleStatus | Number | The eligibility status of the device. Possible vales are: 0 for eligible, 1 for inactive or disabled, and 2 for stolen. | 
+-| Absolute.DeviceUnenroll.Serial | String | The identification number that is assigned to the device by the device manufacturer. | 
+-| Absolute.DeviceUnenroll.ESN | String | The unique Electronic SerialNumber \(ESN\) that is assigned to the agent installed on the device. | 
++| Absolute.DeviceUnenroll.TotalDevices | String | The total number of devices in the request. | 
++| Absolute.DeviceUnenroll.Pending | Number | The number of pending devices. | 
++| Absolute.DeviceUnenroll.Processing | Number | The number of processing devices. | 
++| Absolute.DeviceUnenroll.Completed | Number | The number of completed device unenroll. | 
++| Absolute.DeviceUnenroll.Canceled | Number | The number of canceled device unenroll. | 
++| Absolute.DeviceUnenroll.Failed | Number | The number of failed device unenroll. | 
++| Absolute.DeviceUnenroll.RequestId | String | The unique ID identifier of the request. | 
++| Absolute.DeviceUnenroll.RequestUid | String | The unique GUID identifier of the request. | 
++| Absolute.DeviceUnenroll.RequestStatus | String | The status of the request. | 
++| Absolute.DeviceUnenroll.UpdatedDateTimeUtc | Date | The time \(in Unix epoch\) when the request was last updated. | 
++| Absolute.DeviceUnenroll.CreatedDateTimeUtc | Date | The time \(in Unix epoch\) when the request was created. | 
++| Absolute.DeviceUnenroll.Requester | String | The requester of the request. | 
++| Absolute.DeviceUnenroll.ExcludeMissingDevices | Boolean | Whether the request includes missing devices or not. | 
++| Absolute.DeviceUnenroll.Devices.DeviceUid | String | The unique GUID identifier of the device. | 
++| Absolute.DeviceUnenroll.Devices.ActionUid | String | The unique GUID identifier of the action. | 
++| Absolute.DeviceUnenroll.Devices.RequestUid | String | The unique GUID identifier of the request. | 
++| Absolute.DeviceUnenroll.Devices.DeviceName | String | The unique device name of the device. | 
++| Absolute.DeviceUnenroll.Devices.ActionStatus | String | The status of the action. | 
++| Absolute.DeviceUnenroll.Devices.ESN | String | The unique Electronic SerialNumber \(ESN\) that is assigned to the agent installed on the device. | 
++| Absolute.DeviceUnenroll.Devices.UpdatedDateTimeUtc | Date | The time \(in Unix epoch\) when the request was last updated. | 
++| Absolute.DeviceUnenroll.Devices.CreatedDateTimeUtc | Date | The time \(in Unix epoch\) when the request was created. | 
+ 
+ #### Command example
+ ```!absolute-device-unenroll device_ids="1"```
+@@ -570,15 +587,14 @@ Gets a list of device records and the corresponding software application data fo
+ | --- | --- | --- |
+ | filter | The query by which to filter the device applications. If this argument is set, it overrides the others. For example, appName eq 'someName' or availableVirtualMemoryBytes lt 1073741824. | Optional | 
+ | return_fields | A comma-separated list of all specific values to return. If not set, all possible values will be returned. | Optional | 
+-| account_uids | A comma-separated list of the unique ID associated with this Absolute accounts. | Optional | 
+ | device_ids | A comma-separated list of the system-defined unique identifier of the devices. | Optional | 
+ | device_names | A comma-separated list of the devices names. | Optional | 
+-| app_names | A comma-separated list of the applications names. | Optional | 
++| app_names | A comma-separated list of the application names. | Optional | 
+ | app_publishers | A comma-separated list of the name of the software publishers of the application. | Optional | 
+ | user_names | A comma-separated list of the user names of the users logged in to the device. | Optional | 
+ | os | A comma-separated list of the operating systems that are installed on the device. | Optional | 
+ | esn | A comma-separated list of the system-defined unique Electronic Serial Numbers (ESN) assigned to the Absolute agent installed on the device. | Optional | 
+-| limit | Maximum number of results to return. The default is 50. Default is 50. | Optional | 
++| limit | Maximum number of results to return. Default is 50. | Optional | 
+ | page | The page number of the results to retrieve. Minimum value is 0. Default is 0. | Optional | 
+ 
+ 
+@@ -588,7 +604,6 @@ Gets a list of device records and the corresponding software application data fo
+ | --- | --- | --- |
+ | Absolute.DeviceApplication.DeviceAppId | String | The unique ID of the application. | 
+ | Absolute.DeviceApplication.DeviceUid | String | The system-defined unique identifier of the device. | 
+-| Absolute.DeviceApplication.AccountUid | String | The unique ID associated with this Absolute account. | 
+ | Absolute.DeviceApplication.AppId | String | The identifier of the application. | 
+ | Absolute.DeviceApplication.AppName | String | The name of the application. | 
+ | Absolute.DeviceApplication.AppPublisher | String | The name of the software publisher of the application. | 
+@@ -599,7 +614,7 @@ Gets a list of device records and the corresponding software application data fo
+ | Absolute.DeviceApplication.DeviceSerialNumber | String | The identification number that is assigned to the device by the device manufacturer. | 
+ | Absolute.DeviceApplication.UserName | String | Includes the device name and the username of the user logged in to the device at the time of the agent call. | 
+ | Absolute.DeviceApplication.InstallPath | String | The location where the application is installed. | 
+-| Absolute.DeviceApplication.InstallDate | Date | The date \(in Unix epoch time\) when the application was installed. | 
++| Absolute.DeviceApplication.InstallDate | Date | The date \(in UNIX epoch time\) when the application was installed. | 
+ | Absolute.DeviceApplication.FirstDetectUtc | Date | The date and time \(in Unix epoch time\) when the indicated version of the application was first detected on the device. | 
+ | Absolute.DeviceApplication.OsName | String | The operating system that is installed on the device. | 
+ | Absolute.DeviceApplication.LastScanTimeUtc | Date | The date and time \(in Unix epoch time\) of the most recent installed software \(SNG\) scan. | 
+@@ -995,4 +1010,44 @@ A few examples of creating a query (i.e., passing a filter argument):
+ - Using the or operator:
+    - Get a list of all devices with less than 1 GB (1073741824 bytes) of available physical ram or less than 1 GB (1073741824 bytes) of available virtual raml: availablePhysicalMemroyBytes lt 1073741824 or availableVirtualMemoryBytes lt 1073741824
+ 
+-For more examples and explanations, see the [Absolute docs](https://www.absolute.com/media/2221/abt-api-working-with-absolute.pdf) (from page 10).
+\ No newline at end of file
++For more examples and explanations, see the [Absolute docs](https://api.absolute.com/api-doc/doc.html) (from page 10).
++
++
++## Breaking changes from the previous version of this integration - Absolute
++The following sections list the changes in this version.
++
++
++### Arguments
++#### The following arguments were removed in this version:
++
++In the ***absolute-device-application-list*** command, the following argument was removed:
++* *account_uids*
++
++
++### Outputs
++- In the ***absolute-device-unenroll*** command the following outputs were replaced:
++  * *Absolute.DeviceUnenroll.DeviceUid* - replaced by *Absolute.DeviceUnenroll.Devices.DeviceUid*.
++  * *Absolute.DeviceUnenroll.ESN* - replaced by *Absolute.DeviceUnenroll.Devices.ESN*.
++
++- In the ***absolute-device-freeze-request-get*** command the following outputs were replaced:
++  * *Absolute.FreezeRequestDetail.Configuration.issuedUtc* - replaced by *Absolute.FreezeRequestDetail.Configuration.issuedDateTimeUTC*.
++  * *Absolute.FreezeRequestDetail.RequesterUid* - replaced by *Absolute.FreezeRequestDetail.Requester*.
++  * *Absolute.FreezeRequestDetail.Statuses.ackClientUtc* - replaced by *Absolute.FreezeRequestDetail.Statuses.ackClientDateTimeUtcs*.
++  * *Absolute.FreezeRequestDetail.Statuses.scheduledFreezeDateUTC* - replaced by *Absolute.FreezeRequestDetail.Statuses.scheduledFreezeDateTimeUtc*.
++  * *Absolute.FreezeRequestDetail.Statuses.updatedUtc* - replaced by *Absolute.FreezeRequestDetail.Statuses.updatedDateTimeUtc*.
++
++- In the ***absolute-device-application-list*** command the following output was removed:
++  * *Absolute.DeviceApplication.AccountUid*
++
++- In the ***absolute-custom-device-field-list*** command the following output was removed:
++  * *Absolute.CustomDeviceField.ESN*
++
++- In the ***absolute-device-freeze-request-get*** command the following outputs were removed:
++  * *Absolute.FreezeRequestDetail.Statuses.statusUid*
++  * *Absolute.FreezeRequestDetail.RequesterUid*
++
++- In the ***absolute-device-unenroll*** command the following outputs were removed:
++  * *Absolute.DeviceUnenroll.EligibleStatus*
++  * *Absolute.DeviceUnenroll.Serial*
++  * *Absolute.DeviceUnenroll.SystemName*
++  * *Absolute.DeviceUnenroll.Username*
+\ No newline at end of file
+diff --git a/Packs/Absolute/Integrations/Absolute/command_examples.txt b/Packs/Absolute/Integrations/Absolute/command_examples.txt
+index 36ae33bbec..4e53839447 100644
+--- a/Packs/Absolute/Integrations/Absolute/command_examples.txt
++++ b/Packs/Absolute/Integrations/Absolute/command_examples.txt
+@@ -1,15 +1,15 @@
+-!absolute-custom-device-field-list device_id=e93f2464-2766-4a6b-8f00-66c8fb13e23a
+-!absolute-custom-device-field-update device_id=e93f2464-2766-4a6b-8f00-66c8fb13e23a cdf_uid=4m9fUCZqTYec1bJgDSNg value="test2"
+-!absolute-device-freeze-request device_ids=c62aaac3-e698-4c0e-9ce7-31ab3fa09fea device_freeze_type=Scheduled html_message="test" message_name="new name" request_name="name1" scheduled_freeze_date=2022-04-03T13:30:00.000Z passcode_type=RandomForEach passcode_length=5
+-!absolute-device-remove-freeze-request device_ids=c62aaac3-e698-4c0e-9ce7-31ab3fa09fea remove_scheduled=true
+-!absolute-device-freeze-request-get request_uid=c638c2dc-1dd1-4cfa-8708-46f368012398
+-!absolute-device-freeze-message-list
++!absolute-custom-device-field-list device_id=71b61e4c-fbb1-43fb-9d2d-7a9d5b9ad873
++!absolute-custom-device-field-update device_id=71b61e4c-fbb1-43fb-9d2d-7a9d5b9ad873a cdf_uid=4m9fUCZqTYec1bJgDSNg value="test2"
++!absolute-device-freeze-request device_ids=71b61e4c-fbb1-43fb-9d2d-7a9d5b9ad873 device_freeze_type=Scheduled html_message="test" message_name="new name" request_name="name1" scheduled_freeze_date=2022-04-03T13:30:00.000Z passcode_type=RandomForEach passcode_length=5
++!absolute-device-remove-freeze-request device_ids=71b61e4c-fbb1-43fb-9d2d-7a9d5b9ad873 remove_scheduled=true
++!absolute-device-freeze-request-get 71b61e4c-fbb1-43fb-9d2d-7a9d5b9ad873
++!absolute-device-freeze-message-list limit=1
+ !absolute-device-freeze-message-create html_message="some text" message_name="name name"
+-!absolute-device-freeze-message-update html_message="new mesg" message_id=711b5da9-3867-473f-9d8f-9aba3de42b7a message_name="name-new"
+-!absolute-device-freeze-message-delete message_id="711b5da9-3867-473f-9d8f-9aba3de42b7a"
+-!absolute-device-unenroll device_ids="1"
+-!absolute-device-application-list device_ids=e93f2464-2766-4a6b-8f00-66c8fb13e23a filter="appName eq 'Notepad++' or appName eq 'Settings'"
+-!absolute-device-list os_name="Microsoft Windows Server 2019 Datacenter"
++!absolute-device-freeze-message-update html_message="new mesg" message_id=c9688944-070f-4a90-9618-8882ed1b15f3 message_name="name-new"
++!absolute-device-freeze-message-delete message_id="c9688944-070f-4a90-9618-8882ed1b15f3"
++!absolute-device-unenroll device_ids="71b61e4c-fbb1-43fb-9d2d-7a9d5b9ad873"
++!absolute-device-application-list device_ids=e93f2464-2766-4a6b-8f00-66c8fb13e23a filter="appName eq 'Notepad++' or appName eq 'Settings'" limit=1
++!absolute-device-list os_name="Microsoft Windows Server 2019 Datacenter" limit=1
+ !absolute-device-get device_names="ABSOLUTE-ASSET-"
+ !absolute-device-location-get device_ids=e93f2464-2766-4a6b-8f00-66c8fb13e23a
+ !absolute-device-get-events start_date="one minute ago" end_date="now" limit=10
+\ No newline at end of file
+diff --git a/Packs/Absolute/Integrations/Absolute/test_data/custom_device_field_list_response.json b/Packs/Absolute/Integrations/Absolute/test_data/custom_device_field_list_response.json
+index 6c36a75b89..45be23c392 100644
+--- a/Packs/Absolute/Integrations/Absolute/test_data/custom_device_field_list_response.json
++++ b/Packs/Absolute/Integrations/Absolute/test_data/custom_device_field_list_response.json
+@@ -1,22 +1,18 @@
+-{
+-  "deviceUid": "02b9daa4-8e60-4640-8b15-76d41ecf6a94",
+-  "esn": "2DE05RUEG0AA1V7S0003",
+-  "cdfValues": [
+-    {
+-      "cdfUid": "njazpLrEQwqeFDqk4yQCfg",
+-      "fieldKey": 1,
+-      "fieldName": "Asset Number",
+-      "categoryCode": "ESNCOLUMN",
+-      "fieldValue": "No Asset Tag",
+-      "type": "Text"
+-    },
+-    {
+-      "cdfUid": "7PwIrjEXTAqvpb5WdV2w",
+-      "fieldKey": 3,
+-      "fieldName": "Assigned Username",
+-      "categoryCode": "ESNCOLUMN",
+-      "fieldValue": "",
+-      "type": "Text"
+-    }
+-  ]
+-}
+\ No newline at end of file
++{"data": [
++      {
++        "cdfUid": "njazpLrEQwqeFDqk4yQCfg",
++        "cdfFieldKey": 1,
++        "cdfFieldName": "Asset Number",
++        "categoryCode": "ESNCOLUMN",
++        "cdfFieldValue": "No Asset Tag",
++        "type": "Text"
++      },
++      {
++        "cdfUid": "7PwIrjEXTAqvpb5WdV2w",
++        "cdfFieldKey": 3,
++        "cdfFieldName": "Assigned Username",
++        "categoryCode": "ESNCOLUMN",
++        "cdfFieldValue": "",
++        "type": "Text"
++      }
++  ]}
+\ No newline at end of file
+diff --git a/Packs/Absolute/Integrations/Absolute/test_data/custom_get_device_freeze_request_response.json b/Packs/Absolute/Integrations/Absolute/test_data/custom_get_device_freeze_request_response.json
+index e653abcaec..9ad18cd150 100644
+--- a/Packs/Absolute/Integrations/Absolute/test_data/custom_get_device_freeze_request_response.json
++++ b/Packs/Absolute/Integrations/Absolute/test_data/custom_get_device_freeze_request_response.json
+@@ -1,73 +1,16 @@
+ [
+   {
+     "id": "1",
+-    "accountUid": "e7a9fb73-44b0-4f5d-990b-39ff884425eb",
+-    "actionRequestUid": "e416f97e-dc43-4ed0-88c3-b33ea66c660f",
++    "requestUid": "e416f97e-dc43-4ed0-88c3-b33ea66c660f",
+     "deviceUid": "56be8d1f-2eb8-4e9b-bbd6-1aab032abcde",
+-    "name": "On-demand Freeze request",
+-    "statuses": [
+-      {
+-        "actionUid": null,
+-        "statusUid": "5336db35-ae66-435e-a29d-41ef2f10a86c",
+-        "status": "Launching",
+-        "messageKey": null,
+-        "messageParams": null,
+-        "message": null,
+-        "updatedBy": "example@test.com",
+-        "updatedUTC": "2021-11-03T07:33:55.966+00:00",
+-        "triggerActionUid": null,
+-        "eventType": null,
+-        "ackClientTS": 1548265912126,
+-        "ackClientUTC": 1548294712126,
+-        "instruction": "",
+-        "scheduledFreezeDateUTC": 0
+-      },
+-      {
+-        "actionUid": null,
+-        "statusUid": null,
+-        "status": "FreezeRequested",
+-        "messageKey": null,
+-        "messageParams": null,
+-        "message": null,
+-        "updatedBy": "example@test.com",
+-        "updatedUTC": 1548294707085,
+-        "triggerActionUid": null,
+-        "eventType": null,
+-        "ackClientTS": 0,
+-        "ackClientUTC": 0,
+-        "instruction": null,
+-        "scheduledFreezeDateUTC": 0
+-      }
+-    ],
+-    "configuration": {
+-      "messageName": "On-demand Freeze message",
+-      "htmlClear": "some html",
+-      "passcodeClear": "12345678",
+-      "passcodeOption": "RandomForEach",
+-      "freezeMessage": "This device has been frozen by a Company",
+-      "freezeId": "DeviceFreeze-0864",
+-      "configurationUid": "c132d6aa-03b5-483d-89ab-77f45f7346cc",
+-      "action": "DFZ",
+-      "type": "OnDemand",
+-      "passcodeLength": 8,
+-      "passcodeSalt": "P0efY",
+-      "passcodeHashed": "+AG=",
+-      "html": null,
+-      "disableRemoteLogin": true,
+-      "disableFileSharing": true,
+-      "forceReboot": false,
+-      "conditions": [
+-        {}
+-      ],
+-      "issuedUTC": "2021-11-03T07:33:55.966+00:00",
+-      "preLoginEnabled": true,
+-      "serviceControlList": null
+-    },
++    "requestTitle": "On-demand Freeze request",
++    "statuses": [],
++    "configuration": {},
+     "requester": "example@test.com",
+     "requesterUid": "1abc2de3-fa45-67b8-9cde-0f12a34bc567",
+     "customAttributes": null,
+-    "createdUTC": "2021-11-03T07:33:56.004+00:00",
+-    "changedUTC": "2021-11-03T07:33:55.966+00:00",
++    "createdDateTimeUtc": "2021-11-03T07:33:56.004+00:00",
++    "changedDateTimeUtc": "2021-11-03T07:33:55.966+00:00",
+     "notificationEmails": [
+       "example1@test.com",
+       "example2@test.com"
+@@ -76,7 +19,7 @@
+     "policyGroupUid": null,
+     "policyConfigurationVersion": 0,
+     "freezePolicyUid": null,
+-    "downloaded": false,
++    "isDownloaded": false,
+     "isCurrent": true
+   }
+ ]
+\ No newline at end of file
+diff --git a/Packs/Absolute/Integrations/Absolute/test_data/device_freeze_message_list_response.json b/Packs/Absolute/Integrations/Absolute/test_data/device_freeze_message_list_response.json
+index dfea708bd0..0ab50e7c96 100644
+--- a/Packs/Absolute/Integrations/Absolute/test_data/device_freeze_message_list_response.json
++++ b/Packs/Absolute/Integrations/Absolute/test_data/device_freeze_message_list_response.json
+@@ -1,11 +1,11 @@
+ [
+   {
+-    "id": "1",
++    "messageUid": "1",
+     "name": "On-demand Freeze message",
+     "content": "<html><body>This device has been frozen by company.</body></html>",
+     "createdBy": "example1@test.com",
+     "changedBy": "example2@test.com",
+-    "createdUTC": "2020-11-26T22:29:17.687+00:00",
+-    "changedUTC": "2020-12-14T09:14:52.148+00:00"
++    "createdDateTimeUtc": "2020-11-26T22:29:17.687+00:00",
++    "changedDateTimeUtc": "2020-12-14T09:14:52.148+00:00"
+   }
+ ]
+\ No newline at end of file
+diff --git a/Packs/Absolute/Integrations/Absolute/test_data/device_location_get.json b/Packs/Absolute/Integrations/Absolute/test_data/device_location_get.json
+index 0c5a37fc98..60979daad9 100644
+--- a/Packs/Absolute/Integrations/Absolute/test_data/device_location_get.json
++++ b/Packs/Absolute/Integrations/Absolute/test_data/device_location_get.json
+@@ -1,6 +1,6 @@
+ [
+   {
+-    "id": "1",
++    "deviceUid": "1",
+     "geoData": {
+       "location": {
+         "point": {
+@@ -25,7 +25,7 @@
+     }
+   },
+   {
+-    "id": "2",
++    "deviceUid": "2",
+     "geoData": {
+       "location": {
+         "point": {
+diff --git a/Packs/Absolute/Integrations/Absolute/test_data/unenroll_device_response.json b/Packs/Absolute/Integrations/Absolute/test_data/unenroll_device_response.json
+index 4b5e960ad3..a9969ee8f4 100644
+--- a/Packs/Absolute/Integrations/Absolute/test_data/unenroll_device_response.json
++++ b/Packs/Absolute/Integrations/Absolute/test_data/unenroll_device_response.json
+@@ -1,18 +1,19 @@
+-[
+-  {
+-    "deviceUid": "1",
+-    "systemName": "user1",
+-    "username": "example@test.com",
+-    "eligibleStatus": 0,
+-    "serial": "CNF83051BN",
+-    "esn": "2BU2PJD28VAA1UYL0008"
+-  },
+-  {
+-    "deviceUid": "2",
+-    "systemName": "user2",
+-    "username": "example2@test.com",
+-    "eligibleStatus": 1,
+-    "serial": "CNF43051BN",
+-    "esn": "2BU2PJ545L0008"
+-  }
+-]
+\ No newline at end of file
++{"data": [
++    {
++      "deviceUid": "1",
++      "systemName": "user1",
++      "username": "example@test.com",
++      "eligibleStatus": 0,
++      "serial": "CNF83051BN",
++      "esn": "2BU2PJD28VAA1UYL0008"
++    },
++    {
++      "deviceUid": "2",
++      "systemName": "user2",
++      "username": "example2@test.com",
++      "eligibleStatus": 1,
++      "serial": "CNF43051BN",
++      "esn": "2BU2PJ545L0008"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/Packs/Absolute/ReleaseNotes/2_0_0.json b/Packs/Absolute/ReleaseNotes/2_0_0.json
+new file mode 100644
+index 0000000000..12dcecc81a
+--- /dev/null
++++ b/Packs/Absolute/ReleaseNotes/2_0_0.json
+@@ -0,0 +1,4 @@
++{
++    "breakingChanges": true,
++    "breakingChangesNotes": "The integration now supports API V3. There are breaking changes in the commands: absolute-custom-device-field-list, absolute-device-freeze-request-get, absolute-device-unenroll, absolute-device-application-list . For more information, refer to the integration documentation."
++}
+\ No newline at end of file
+diff --git a/Packs/Absolute/ReleaseNotes/2_0_0.md b/Packs/Absolute/ReleaseNotes/2_0_0.md
+new file mode 100644
+index 0000000000..c446446715
+--- /dev/null
++++ b/Packs/Absolute/ReleaseNotes/2_0_0.md
+@@ -0,0 +1,10 @@
++
++#### Integrations
++
++##### Absolute
++
++- The integration now supports API V3. Refer to the integration documentation for any breaking changes.
++
++- Added support for *page* and *limit* arguments in the ***absolute-custom-device-field-list*** command. 
++- Updated the ***absolute-device-application-list*** command to not use the *account_uids* argument.
++- Added support for *exclude_missing_devices* argument in the ***absolute-device-unenroll*** command.
+\ No newline at end of file
+diff --git a/Packs/Absolute/TestPlaybooks/playbook-Absolute.yml b/Packs/Absolute/TestPlaybooks/playbook-Absolute.yml
+index 4087a8ca2c..d97563d5aa 100644
+--- a/Packs/Absolute/TestPlaybooks/playbook-Absolute.yml
++++ b/Packs/Absolute/TestPlaybooks/playbook-Absolute.yml
+@@ -1,20 +1,20 @@
+ id: Absolute_TestPlaybook
+-version: 7
++version: -1
+ fromversion: 6.0.0
+-vcShouldKeepItemLegacyProdMachine: false
+ name: Absolute_TestPlaybook
+ starttaskid: "0"
+ tasks:
+   "0":
+     id: "0"
+-    taskid: cfd192f5-710f-4ce8-83bc-fc25d2c519f1
++    taskid: 957ca09c-ca16-43ab-8173-f9bcddf6932e
+     type: start
+     task:
+-      id: cfd192f5-710f-4ce8-83bc-fc25d2c519f1
++      id: 957ca09c-ca16-43ab-8173-f9bcddf6932e
+       version: -1
+       name: ""
+       iscommand: false
+       brand: ""
++      description: ''
+     nexttasks:
+       '#none#':
+       - "1"
+@@ -24,7 +24,7 @@ tasks:
+       {
+         "position": {
+           "x": 50,
+-          "y": -140
++          "y": 70
+         }
+       }
+     note: false
+@@ -36,10 +36,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "1":
+     id: "1"
+-    taskid: fed4bf5d-4aa6-4e70-8359-3821f3756425
++    taskid: 29938bf8-1ac4-4e8e-830f-e8fc0b76fd4a
+     type: regular
+     task:
+-      id: fed4bf5d-4aa6-4e70-8359-3821f3756425
++      id: 29938bf8-1ac4-4e8e-830f-e8fc0b76fd4a
+       version: -1
+       name: DeleteContext
+       script: DeleteContext
+@@ -48,7 +48,7 @@ tasks:
+       brand: ""
+     nexttasks:
+       '#none#':
+-      - "29"
++      - "28"
+     scriptarguments:
+       all:
+         simple: "yes"
+@@ -58,7 +58,7 @@ tasks:
+       {
+         "position": {
+           "x": 50,
+-          "y": 15
++          "y": 205
+         }
+       }
+     note: false
+@@ -70,10 +70,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "2":
+     id: "2"
+-    taskid: 2fb52862-d6d1-4665-89ad-7aa9798d17d3
++    taskid: 56ffa031-8aea-40b4-8f47-f154fc28bf89
+     type: regular
+     task:
+-      id: 2fb52862-d6d1-4665-89ad-7aa9798d17d3
++      id: 56ffa031-8aea-40b4-8f47-f154fc28bf89
+       version: -1
+       name: absolute-custom-device-field-list
+       script: Absolute|||absolute-custom-device-field-list
+@@ -85,71 +85,18 @@ tasks:
+       - "4"
+     scriptarguments:
+       device_id:
+-        simple: ${Absolute.Device.[0].Id}
+-    separatecontext: false
+-    continueonerrortype: ""
+-    view: |-
+-      {
+-        "position": {
+-          "x": 50,
+-          "y": 355
+-        }
+-      }
+-    note: false
+-    timertriggers: []
+-    ignoreworker: false
+-    skipunavailable: false
+-    quietmode: 0
+-    isoversize: false
+-    isautoswitchedtoquietmode: false
+-  "3":
+-    id: "3"
+-    taskid: b2595909-6c75-4cb9-8f88-e4320b4f103b
+-    type: condition
+-    task:
+-      id: b2595909-6c75-4cb9-8f88-e4320b4f103b
+-      version: -1
+-      name: Verify Outputs
+-      type: condition
+-      iscommand: false
+-      brand: ""
+-    nexttasks:
+-      "yes":
+-      - "5"
++        simple: ${Absolute.Device.Id}
++      all_results:
++        simple: "false"
++      limit:
++        simple: "1"
+     separatecontext: false
+-    conditions:
+-    - label: "yes"
+-      condition:
+-      - - operator: isEqualString
+-          left:
+-            value:
+-              simple: Absolute.CustomDeviceField.DeviceUID
+-            iscontext: true
+-          right:
+-            value:
+-              simple: 8eabaac8-cda9-4cd4-bd86-25d769b1196b
+-      - - operator: isEqualString
+-          left:
+-            value:
+-              simple: Absolute.CustomDeviceField.ESN
+-            iscontext: true
+-          right:
+-            value:
+-              simple: 629GRW8SWDAA47GZ0005
+-      - - operator: in
+-          left:
+-            value:
+-              simple: TPB
+-          right:
+-            value:
+-              simple: Absolute.CustomDeviceField.CDFValues.FieldValue
+-            iscontext: true
+     continueonerrortype: ""
+     view: |-
+       {
+         "position": {
+           "x": 50,
+-          "y": 720
++          "y": 555
+         }
+       }
+     note: false
+@@ -161,10 +108,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "4":
+     id: "4"
+-    taskid: e2974de9-e3b5-41cc-8f06-e4339db106d5
++    taskid: cfc732f4-c5aa-4c23-81ea-00de78ec6824
+     type: regular
+     task:
+-      id: e2974de9-e3b5-41cc-8f06-e4339db106d5
++      id: cfc732f4-c5aa-4c23-81ea-00de78ec6824
+       version: -1
+       name: absolute-custom-device-field-update
+       script: Absolute|||absolute-custom-device-field-update
+@@ -173,21 +120,21 @@ tasks:
+       brand: Absolute
+     nexttasks:
+       '#none#':
+-      - "3"
++      - "5"
+     scriptarguments:
+       cdf_uid:
+-        simple: ${Absolute.CustomDeviceField.CDFValues.[1].CDFUID}
++        simple: K0ly5AiQDKsgVVcjqCqw
+       device_id:
+         simple: 1d18b639-fec9-4536-9d77-8713665a7bca
+       value:
+-        simple: TPB
++        simple: "1"
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+       {
+         "position": {
+           "x": 50,
+-          "y": 530
++          "y": 730
+         }
+       }
+     note: false
+@@ -199,10 +146,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "5":
+     id: "5"
+-    taskid: f36134dc-81a5-49be-8b44-570ede9dcc73
++    taskid: 4008d890-2cc4-4b0f-8ba4-bc294d186663
+     type: regular
+     task:
+-      id: f36134dc-81a5-49be-8b44-570ede9dcc73
++      id: 4008d890-2cc4-4b0f-8ba4-bc294d186663
+       version: -1
+       name: absolute-device-freeze-request
+       script: Absolute|||absolute-device-freeze-request
+@@ -216,7 +163,7 @@ tasks:
+       device_freeze_type:
+         simple: Scheduled
+       device_ids:
+-        simple: ${Absolute.Device.[0].Id}
++        simple: 1d18b639-fec9-4536-9d77-8713665a7bca
+       html_message:
+         simple: TPB-freeze
+       message_name:
+@@ -247,10 +194,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "7":
+     id: "7"
+-    taskid: 7d493ba5-803d-4a80-8afb-4d7fcd1261b3
++    taskid: a25a2895-18c6-4bff-8404-02182ae22ada
+     type: regular
+     task:
+-      id: 7d493ba5-803d-4a80-8afb-4d7fcd1261b3
++      id: a25a2895-18c6-4bff-8404-02182ae22ada
+       version: -1
+       name: absolute-device-remove-freeze-request
+       script: Absolute|||absolute-device-remove-freeze-request
+@@ -262,7 +209,7 @@ tasks:
+       - "8"
+     scriptarguments:
+       device_ids:
+-        simple: ${Absolute.Device.[0].Id}
++        simple: e93f2464-2766-4a6b-8f00-66c8fb13e23a
+       remove_offline:
+         simple: "false"
+       remove_scheduled:
+@@ -285,10 +232,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "8":
+     id: "8"
+-    taskid: de779de5-e70a-47a8-8bc6-43e94d884d52
++    taskid: 522a27a2-c8e0-4b0e-842c-1385cf4fba7e
+     type: regular
+     task:
+-      id: de779de5-e70a-47a8-8bc6-43e94d884d52
++      id: 522a27a2-c8e0-4b0e-842c-1385cf4fba7e
+       version: -1
+       name: absolute-device-freeze-request-get
+       script: Absolute|||absolute-device-freeze-request-get
+@@ -297,7 +244,7 @@ tasks:
+       brand: Absolute
+     nexttasks:
+       '#none#':
+-      - "10"
++      - "12"
+     scriptarguments:
+       request_uid:
+         simple: ${Absolute.FreezeRequest.RequestUID}
+@@ -319,10 +266,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "10":
+     id: "10"
+-    taskid: 4b508b59-9737-437b-8457-600fafd508aa
++    taskid: b3d49737-19ca-4a72-8ae1-4a0c915b5165
+     type: regular
+     task:
+-      id: 4b508b59-9737-437b-8457-600fafd508aa
++      id: b3d49737-19ca-4a72-8ae1-4a0c915b5165
+       version: -1
+       name: absolute-device-freeze-message-list
+       script: Absolute|||absolute-device-freeze-message-list
+@@ -331,14 +278,14 @@ tasks:
+       brand: Absolute
+     nexttasks:
+       '#none#':
+-      - "12"
++      - "18"
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+       {
+         "position": {
+           "x": 50,
+-          "y": 1595
++          "y": 2300
+         }
+       }
+     note: false
+@@ -348,12 +295,15 @@ tasks:
+     quietmode: 0
+     isoversize: false
+     isautoswitchedtoquietmode: false
++    scriptarguments:
++      limit:
++        simple: "1"
+   "12":
+     id: "12"
+-    taskid: 92ba6632-37bd-46d8-8e75-e969b0ba395f
++    taskid: 21fbc4b1-51fb-4904-8b0a-65f749180542
+     type: regular
+     task:
+-      id: 92ba6632-37bd-46d8-8e75-e969b0ba395f
++      id: 21fbc4b1-51fb-4904-8b0a-65f749180542
+       version: -1
+       name: absolute-device-freeze-message-create
+       script: Absolute|||absolute-device-freeze-message-create
+@@ -374,7 +324,7 @@ tasks:
+       {
+         "position": {
+           "x": 50,
+-          "y": 1770
++          "y": 1600
+         }
+       }
+     note: false
+@@ -386,10 +336,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "13":
+     id: "13"
+-    taskid: eb409423-3392-4987-805c-1c582b0cae3e
++    taskid: 47271bd1-974b-4650-88ab-546c49fde520
+     type: condition
+     task:
+-      id: eb409423-3392-4987-805c-1c582b0cae3e
++      id: 47271bd1-974b-4650-88ab-546c49fde520
+       version: -1
+       name: Verify Outputs
+       type: condition
+@@ -414,7 +364,7 @@ tasks:
+       {
+         "position": {
+           "x": 50,
+-          "y": 1945
++          "y": 1760
+         }
+       }
+     note: false
+@@ -426,10 +376,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "14":
+     id: "14"
+-    taskid: d2872a19-0da9-4c13-8c4e-ab5d88f3d5a4
++    taskid: b39aa441-6410-421b-8435-cf7317620553
+     type: regular
+     task:
+-      id: d2872a19-0da9-4c13-8c4e-ab5d88f3d5a4
++      id: b39aa441-6410-421b-8435-cf7317620553
+       version: -1
+       name: absolute-device-freeze-message-update
+       script: Absolute|||absolute-device-freeze-message-update
+@@ -443,7 +393,7 @@ tasks:
+       html_message:
+         simple: TPB-new
+       message_id:
+-        simple: ${Absolute.FreezeMessage.[3].ID}
++        simple: ${Absolute.FreezeMessage.ID}
+       message_name:
+         simple: TPB-new
+     separatecontext: false
+@@ -452,7 +402,7 @@ tasks:
+       {
+         "position": {
+           "x": 50,
+-          "y": 2120
++          "y": 1960
+         }
+       }
+     note: false
+@@ -464,10 +414,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "15":
+     id: "15"
+-    taskid: def3da8b-dfac-4b87-8fb2-664e0dc4dd01
++    taskid: 2eb4c808-b65f-4a74-8b2a-e1bf5ac3a3df
+     type: regular
+     task:
+-      id: def3da8b-dfac-4b87-8fb2-664e0dc4dd01
++      id: 2eb4c808-b65f-4a74-8b2a-e1bf5ac3a3df
+       version: -1
+       name: absolute-device-freeze-message-delete
+       script: Absolute|||absolute-device-freeze-message-delete
+@@ -476,17 +426,17 @@ tasks:
+       brand: Absolute
+     nexttasks:
+       '#none#':
+-      - "18"
++      - "10"
+     scriptarguments:
+       message_id:
+-        simple: ${Absolute.FreezeMessage.[3].ID}
++        simple: ${Absolute.FreezeMessage.ID}
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+       {
+         "position": {
+           "x": 50,
+-          "y": 2295
++          "y": 2135
+         }
+       }
+     note: false
+@@ -498,10 +448,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "18":
+     id: "18"
+-    taskid: d91e9161-ccb5-48d9-8600-62dffc1dea5a
++    taskid: 1e75561e-fcad-471e-895c-ed7758a85f38
+     type: regular
+     task:
+-      id: d91e9161-ccb5-48d9-8600-62dffc1dea5a
++      id: 1e75561e-fcad-471e-895c-ed7758a85f38
+       version: -1
+       name: absolute-device-application-list
+       script: Absolute|||absolute-device-application-list
+@@ -514,6 +464,8 @@ tasks:
+     scriptarguments:
+       filter:
+         simple: appName eq 'Notepad++'
++      limit:
++        simple: "1"
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+@@ -532,10 +484,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "20":
+     id: "20"
+-    taskid: 9aa5be2b-e535-40e1-8912-63c1e9728446
++    taskid: 1efd83c2-745d-4bbf-8bf0-6747339b1fbb
+     type: regular
+     task:
+-      id: 9aa5be2b-e535-40e1-8912-63c1e9728446
++      id: 1efd83c2-745d-4bbf-8bf0-6747339b1fbb
+       version: -1
+       name: absolute-device-list
+       script: Absolute|||absolute-device-list
+@@ -548,6 +500,8 @@ tasks:
+     scriptarguments:
+       agent_status:
+         simple: Active
++      limit:
++        simple: "1"
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+@@ -566,10 +520,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "22":
+     id: "22"
+-    taskid: 975a9df5-e86b-4981-814d-7c760c5a73ff
++    taskid: 633cb99a-263a-4c05-866b-421d9dbc910a
+     type: regular
+     task:
+-      id: 975a9df5-e86b-4981-814d-7c760c5a73ff
++      id: 633cb99a-263a-4c05-866b-421d9dbc910a
+       version: -1
+       name: absolute-device-get
+       script: Absolute|||absolute-device-get
+@@ -581,7 +535,7 @@ tasks:
+       - "26"
+     scriptarguments:
+       device_ids:
+-        simple: ${Absolute.Device.[0].Id}
++        simple: 1d18b639-fec9-4536-9d77-8713665a7bca
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+@@ -600,15 +554,16 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "26":
+     id: "26"
+-    taskid: a17c6bc0-be50-4cae-82b6-5e3f9695ed05
++    taskid: 65e15f0a-3b99-4f67-8158-b43538d39fae
+     type: title
+     task:
+-      id: a17c6bc0-be50-4cae-82b6-5e3f9695ed05
++      id: 65e15f0a-3b99-4f67-8158-b43538d39fae
+       version: -1
+       name: Test Done
+       type: title
+       iscommand: false
+       brand: ""
++      description: ''
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+@@ -627,10 +582,10 @@ tasks:
+     isautoswitchedtoquietmode: false
+   "27":
+     id: "27"
+-    taskid: fdf3241b-52e3-4eee-832f-73dcbc04ba58
++    taskid: 9985e113-4709-48cd-85c1-1beeee939919
+     type: condition
+     task:
+-      id: fdf3241b-52e3-4eee-832f-73dcbc04ba58
++      id: 9985e113-4709-48cd-85c1-1beeee939919
+       version: -1
+       name: Verify Outputs
+       type: condition
+@@ -646,8 +601,7 @@ tasks:
+       - - operator: in
+           left:
+             value:
+-              simple: ${Absolute.Device.[0].Id}
+-            iscontext: true
++              simple: 1d18b639-fec9-4536-9d77-8713665a7bca
+           right:
+             value:
+               simple: Absolute.FreezeRequest.SucceededDeviceUIDs
+@@ -672,31 +626,33 @@ tasks:
+     quietmode: 0
+     isoversize: false
+     isautoswitchedtoquietmode: false
+-  "29":
+-    id: "29"
+-    taskid: 43c87722-82ef-4260-88d5-37634a9c763f
++  "28":
++    id: "28"
++    taskid: 5ef04406-de7f-47e4-80d6-2dba3d62497c
+     type: regular
+     task:
+-      id: 43c87722-82ef-4260-88d5-37634a9c763f
++      id: 5ef04406-de7f-47e4-80d6-2dba3d62497c
+       version: -1
+       name: absolute-device-list
+-      description: Gets a list of device records and their corresponding data that
+-        meets the required filter for all devices in your account, based on your authorization
+-        token.
+-      script: '|||absolute-device-list'
++      script: Absolute|||absolute-device-list
+       type: regular
+       iscommand: true
+-      brand: ""
++      brand: Absolute
+     nexttasks:
+       '#none#':
+       - "2"
++    scriptarguments:
++      agent_status:
++        simple: Active
++      limit:
++        simple: "1"
+     separatecontext: false
+     continueonerrortype: ""
+     view: |-
+       {
+         "position": {
+           "x": 50,
+-          "y": 185
++          "y": 380
+         }
+       }
+     note: false
+@@ -711,13 +667,13 @@ view: |-
+     "linkLabelsPosition": {},
+     "paper": {
+       "dimensions": {
+-        "height": 3200,
++        "height": 2990,
+         "width": 380,
+         "x": 50,
+-        "y": -140
++        "y": 70
+       }
+     }
+   }
+ inputs: []
+ outputs: []
+-dirtyInputs: true
++description: ''
+diff --git a/Packs/Absolute/pack_metadata.json b/Packs/Absolute/pack_metadata.json
+index aac958547e..c8137365ad 100644
+--- a/Packs/Absolute/pack_metadata.json
++++ b/Packs/Absolute/pack_metadata.json
+@@ -2,7 +2,7 @@
+     "name": "Absolute",
+     "description": "Absolute is an adaptive endpoint security solution that delivers device security, data security and asset management of endpoints",
+     "support": "xsoar",
+-    "currentVersion": "1.0.26",
++    "currentVersion": "2.0.0",
+     "author": "Cortex XSOAR",
+     "url": "https://www.paloaltonetworks.com/cortex",
+     "email": "",

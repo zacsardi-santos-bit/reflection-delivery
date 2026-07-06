@@ -1,0 +1,29 @@
+{
+    "id": "115fb80a-9728-4d4a-82b3-960cd4c1ef6f",
+    "started_at": "2026-07-06T12:17:30.688196",
+    "finished_at": "2026-07-06T12:20:17.225289",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__sharkdp-fd-1983": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "sharkdp-fd-1983__u2JM6oc"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,3 +1,0 @@
-I'm working on a form component library and noticed that the label's text size doesn't change based on where the label is positioned. When the label sits above the field, it should use a smaller font size, and when it's placed to the left of the field, it should automatically use a slightly larger one. Right now, the label always appears at the same size no matter where it's positioned.
-
-There's also an issue with custom typography overrides — when I pass my own font-size setting directly to the label, the component ignores it if the form control is applying its own position-based sizing. The custom value should always win. Could you fix both of these so that the label adapts its size by position and respects explicit font settings when provided?

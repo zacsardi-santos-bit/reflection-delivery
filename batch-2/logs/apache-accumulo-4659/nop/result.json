@@ -1,0 +1,29 @@
+{
+    "id": "7ec9e2ef-3db3-4a26-9b06-112089693736",
+    "started_at": "2026-07-04T15:36:00.524873",
+    "finished_at": "2026-07-04T15:47:44.451830",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-accumulo-4659": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-accumulo-4659__7gg4jDt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

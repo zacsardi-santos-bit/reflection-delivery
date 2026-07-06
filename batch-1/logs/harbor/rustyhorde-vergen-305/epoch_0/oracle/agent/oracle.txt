@@ -1,0 +1,17 @@
+patching file MIGRATING_v8_to_v9.md
+patching file README.md
+patching file vergen-git2/Cargo.toml
+patching file vergen-git2/src/lib.rs
+patching file vergen-gitcl/Cargo.toml
+patching file vergen-gitcl/src/lib.rs
+patching file vergen-gix/Cargo.toml
+patching file vergen-gix/src/lib.rs
+patching file vergen-lib/Cargo.toml
+patching file vergen-lib/src/keys.rs
+patching file vergen-pretty/Cargo.toml
+patching file vergen-pretty/build.rs
+patching file vergen-pretty/src/lib.rs
+patching file vergen-pretty/src/pretty/mod.rs
+patching file vergen-pretty/src/utils.rs
+patching file vergen/Cargo.toml
+patching file vergen/src/lib.rs

@@ -1,0 +1,9 @@
+I'm working on a big Apache Hudi table and I need a way to run clustering incrementally off the table's commit history. Right now every clustering plan strategy I've got just looks at file slices without caring which commit actually wrote them, so there's no way to resume from where a previous clustering run stopped. Re-clustering everything each time is slow and wasteful, and I want to keep clustering only the newly written data as commits pile up.
+
+What I want is a new commit-aware clustering plan strategy that walks completed commits in chronological order and groups the files written in each commit. Files from different partitions have to go into separate clustering groups, and files from the same partition should get split across multiple groups once they blow past a configurable per-group size limit. Oh and it needs to skip any file groups that a later replace commit has already replaced, those must not show up in the plan at all.
+
+After it builds the plan it should record the last commit it processed as a checkpoint stored in the plan's extra metadata (some checkpoint key), so a follow-up run can read that and start from the next commit instead of reprocessing from the beginning. If no commits actually got processed, that checkpoint key should be absent, meaning null in the extra metadata. Also when the timeline has no commits at all, it just produces no plan.
+
+It's also gotta handle merge-on-read tables where some commits are delta commits writing log files rather than base files. Log-only file slices should still land in the plan, and by default treat them as big enough to form their own group.
+
+Last thing, I need a config option for an earliest commit time (exclusive) so the strategy only considers commits newer than that, which is what lets me kick off an incremental workflow from a known point in the timeline.

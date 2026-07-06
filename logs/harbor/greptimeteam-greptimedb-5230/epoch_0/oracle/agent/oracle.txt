@@ -1,9 +1,0 @@
-patching file Cargo.lock
-patching file Cargo.toml
-patching file src/common/function/Cargo.toml
-patching file src/common/function/src/scalars/aggregate.rs
-patching file src/common/function/src/scalars/vector.rs
-patching file src/common/function/src/scalars/vector/elem_sum.rs
-patching file src/common/function/src/scalars/vector/sub.rs
-patching file src/common/function/src/scalars/vector/sum.rs
-patching file src/query/Cargo.toml

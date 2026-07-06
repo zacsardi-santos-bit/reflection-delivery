@@ -1,0 +1,115 @@
+patching file pkg/datastore/datastoretest/datastore.mock.go
+?   	github.com/pipe-cd/pipecd/pkg/app/server/grpcapi/grpcapimetrics	[no test files]
+=== RUN   TestRequireAPIKey
+=== RUN   TestRequireAPIKey/ok:_using_READ_ONLY_to_read
+=== RUN   TestRequireAPIKey/ok:_using_READ_WRITE_to_read
+=== RUN   TestRequireAPIKey/ok:_using_READ_WRITE_to_write
+=== RUN   TestRequireAPIKey/invalid:_using_READ_ONLY_to_write
+=== RUN   TestRequireAPIKey/invalid:_invalid_role
+=== RUN   TestRequireAPIKey/invalid:_api_key_was_not_included
+--- PASS: TestRequireAPIKey (0.00s)
+    --- PASS: TestRequireAPIKey/ok:_using_READ_ONLY_to_read (0.00s)
+    --- PASS: TestRequireAPIKey/ok:_using_READ_WRITE_to_read (0.00s)
+    --- PASS: TestRequireAPIKey/ok:_using_READ_WRITE_to_write (0.00s)
+    --- PASS: TestRequireAPIKey/invalid:_using_READ_ONLY_to_write (0.00s)
+    --- PASS: TestRequireAPIKey/invalid:_invalid_role (0.00s)
+    --- PASS: TestRequireAPIKey/invalid:_api_key_was_not_included (0.00s)
+=== RUN   TestGRPCStoreError
+=== PAUSE TestGRPCStoreError
+=== RUN   TestValidateAppBelongsToPiped
+=== RUN   TestValidateAppBelongsToPiped/valid_with_cached_value
+=== RUN   TestValidateAppBelongsToPiped/invalid_with_cached_value
+=== RUN   TestValidateAppBelongsToPiped/valid_with_stored_value
+=== RUN   TestValidateAppBelongsToPiped/invalid_with_stored_value
+--- PASS: TestValidateAppBelongsToPiped (0.00s)
+    --- PASS: TestValidateAppBelongsToPiped/valid_with_cached_value (0.00s)
+    --- PASS: TestValidateAppBelongsToPiped/invalid_with_cached_value (0.00s)
+    --- PASS: TestValidateAppBelongsToPiped/valid_with_stored_value (0.00s)
+    --- PASS: TestValidateAppBelongsToPiped/invalid_with_stored_value (0.00s)
+=== RUN   TestValidateDeploymentBelongsToPiped
+=== RUN   TestValidateDeploymentBelongsToPiped/valid_with_cached_value
+=== RUN   TestValidateDeploymentBelongsToPiped/invalid_with_cached_value
+=== RUN   TestValidateDeploymentBelongsToPiped/valid_with_stored_value
+=== RUN   TestValidateDeploymentBelongsToPiped/invalid_with_stored_value
+--- PASS: TestValidateDeploymentBelongsToPiped (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToPiped/valid_with_cached_value (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToPiped/invalid_with_cached_value (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToPiped/valid_with_stored_value (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToPiped/invalid_with_stored_value (0.00s)
+=== RUN   TestValidateAppBelongsToProject
+=== RUN   TestValidateAppBelongsToProject/valid_with_cached_value
+=== RUN   TestValidateAppBelongsToProject/invalid_with_cached_value
+=== RUN   TestValidateAppBelongsToProject/valid_with_stored_value
+=== RUN   TestValidateAppBelongsToProject/invalid_with_stored_value
+--- PASS: TestValidateAppBelongsToProject (0.00s)
+    --- PASS: TestValidateAppBelongsToProject/valid_with_cached_value (0.00s)
+    --- PASS: TestValidateAppBelongsToProject/invalid_with_cached_value (0.00s)
+    --- PASS: TestValidateAppBelongsToProject/valid_with_stored_value (0.00s)
+    --- PASS: TestValidateAppBelongsToProject/invalid_with_stored_value (0.00s)
+=== RUN   TestValidateDeploymentBelongsToProject
+=== RUN   TestValidateDeploymentBelongsToProject/valid_with_cached_value
+=== RUN   TestValidateDeploymentBelongsToProject/invalid_with_cached_value
+=== RUN   TestValidateDeploymentBelongsToProject/valid_with_stored_value
+=== RUN   TestValidateDeploymentBelongsToProject/invalid_with_stored_value
+--- PASS: TestValidateDeploymentBelongsToProject (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToProject/valid_with_cached_value (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToProject/invalid_with_cached_value (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToProject/valid_with_stored_value (0.00s)
+    --- PASS: TestValidateDeploymentBelongsToProject/invalid_with_stored_value (0.00s)
+=== RUN   TestValidatePipedBelongsToProject
+=== RUN   TestValidatePipedBelongsToProject/valid_with_cached_value
+=== RUN   TestValidatePipedBelongsToProject/invalid_with_cached_value
+=== RUN   TestValidatePipedBelongsToProject/valid_with_stored_value
+=== RUN   TestValidatePipedBelongsToProject/invalid_with_stored_value
+--- PASS: TestValidatePipedBelongsToProject (0.00s)
+    --- PASS: TestValidatePipedBelongsToProject/valid_with_cached_value (0.00s)
+    --- PASS: TestValidatePipedBelongsToProject/invalid_with_cached_value (0.00s)
+    --- PASS: TestValidatePipedBelongsToProject/valid_with_stored_value (0.00s)
+    --- PASS: TestValidatePipedBelongsToProject/invalid_with_stored_value (0.00s)
+=== RUN   TestValidateApprover
+=== RUN   TestValidateApprover/valid_if_a_commander_is_included_in_approvers
+=== RUN   TestValidateApprover/valid_if_a_commander_match_approvers
+=== RUN   TestValidateApprover/invalid_if_a_commander_isn't_included_in_approvers
+=== RUN   TestValidateApprover/valid_if_the_Approvers_key_isn't_contained_in_metadata
+--- PASS: TestValidateApprover (0.00s)
+    --- PASS: TestValidateApprover/valid_if_a_commander_is_included_in_approvers (0.00s)
+    --- PASS: TestValidateApprover/valid_if_a_commander_match_approvers (0.00s)
+    --- PASS: TestValidateApprover/invalid_if_a_commander_isn't_included_in_approvers (0.00s)
+    --- PASS: TestValidateApprover/valid_if_the_Approvers_key_isn't_contained_in_metadata (0.00s)
+=== CONT  TestGRPCStoreError
+=== RUN   TestGRPCStoreError/datastore_not_found_error
+=== PAUSE TestGRPCStoreError/datastore_not_found_error
+=== RUN   TestGRPCStoreError/filestore_not_found_error
+=== PAUSE TestGRPCStoreError/filestore_not_found_error
+=== RUN   TestGRPCStoreError/stagelogstore_not_found_error
+=== PAUSE TestGRPCStoreError/stagelogstore_not_found_error
+=== RUN   TestGRPCStoreError/datastore_invalid_argument_error
+=== PAUSE TestGRPCStoreError/datastore_invalid_argument_error
+=== RUN   TestGRPCStoreError/datastore_already_exists_error
+=== PAUSE TestGRPCStoreError/datastore_already_exists_error
+=== RUN   TestGRPCStoreError/user_defined_error
+=== PAUSE TestGRPCStoreError/user_defined_error
+=== RUN   TestGRPCStoreError/user_defined_error_with_message
+=== PAUSE TestGRPCStoreError/user_defined_error_with_message
+=== RUN   TestGRPCStoreError/internal_error
+=== PAUSE TestGRPCStoreError/internal_error
+=== CONT  TestGRPCStoreError/datastore_not_found_error
+=== CONT  TestGRPCStoreError/internal_error
+=== CONT  TestGRPCStoreError/user_defined_error_with_message
+=== CONT  TestGRPCStoreError/user_defined_error
+=== CONT  TestGRPCStoreError/datastore_already_exists_error
+=== CONT  TestGRPCStoreError/stagelogstore_not_found_error
+=== CONT  TestGRPCStoreError/filestore_not_found_error
+=== CONT  TestGRPCStoreError/datastore_invalid_argument_error
+--- PASS: TestGRPCStoreError (0.00s)
+    --- PASS: TestGRPCStoreError/datastore_not_found_error (0.00s)
+    --- PASS: TestGRPCStoreError/internal_error (0.00s)
+    --- PASS: TestGRPCStoreError/user_defined_error_with_message (0.00s)
+    --- PASS: TestGRPCStoreError/user_defined_error (0.00s)
+    --- PASS: TestGRPCStoreError/datastore_already_exists_error (0.00s)
+    --- PASS: TestGRPCStoreError/stagelogstore_not_found_error (0.00s)
+    --- PASS: TestGRPCStoreError/filestore_not_found_error (0.00s)
+    --- PASS: TestGRPCStoreError/datastore_invalid_argument_error (0.00s)
+PASS
+ok  	github.com/pipe-cd/pipecd/pkg/app/server/grpcapi	0.012s
+reward=1 graded=46 found=0 failed=0 parsed=0 framework=go exit_code=0

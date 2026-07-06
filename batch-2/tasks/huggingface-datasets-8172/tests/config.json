@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_arrow_dataset.py::test_dataset_batch_by_column /workspace/repo/tests/test_iterable_dataset.py::test_iterable_dataset_batch_by_column -v",
+  "test_files": [
+    "tests/test_arrow_dataset.py",
+    "tests/test_iterable_dataset.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_arrow_dataset::test_dataset_batch_by_column",
+    "tests.test_iterable_dataset::test_iterable_dataset_batch_by_column[1]",
+    "tests.test_iterable_dataset::test_iterable_dataset_batch_by_column[2]",
+    "tests.test_iterable_dataset::test_iterable_dataset_batch_by_column[3]",
+    "tests.test_iterable_dataset::test_iterable_dataset_batch_by_column[7]",
+    "tests.test_iterable_dataset::test_iterable_dataset_batch_by_column[10]"
+  ],
+  "PASS_TO_PASS": []
+}

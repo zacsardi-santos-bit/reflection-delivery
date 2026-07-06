@@ -1,0 +1,1 @@
+cd /workspace/repo && yarn install 2>&1 | tail -5 && cd packages/hardhat-plugin && yarn test

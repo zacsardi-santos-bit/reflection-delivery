@@ -1,0 +1,24 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm i --filter='ledger-live-desktop...' --unsafe-perm 2>&1 | tail -5 && cd apps/ledger-live-desktop && npx jest src/internal/transportHandler.test.ts --no-coverage",
+  "test_files": [
+    "apps/ledger-live-desktop/src/internal/transportHandler.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportOpen When no transport module associated to the tested device has been registered, it should return an error",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportOpen When a transport module associated to the tested device has been registered, it should return a successful response",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportExchange When no transport associated to the device has been opened, it should return an error",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportExchange When a transport associated to the device has been opened When the exchange is successful, it should return the successful response",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportExchange When a transport associated to the device has been opened When the exchange has encountered an error, it should return an error",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportExchangeBulk When no transport associated to the device has been opened, it should return an error",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportExchangeBulk When a transport associated to the device has been opened When the exchange bulk is successful, it should emit each successful response",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportExchangeBulk When a transport associated to the device has been opened When an exchange fails during an exchange bulk, it should emit the error",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportListen When a device event is received, it should be emitted",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportListenUnsubscribe When a transport:listen:unsubscribe message is received, it should stop listening and emitting device events",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportClose When no transport associated to the device has been opened, it should return an error",
+    "/workspace/repo/apps/ledger-live-desktop/src/internal/transportHandler.test.ts::transportHandler transportClose When a transport associated to the device has been opened When it is then closed, it should not be able to run an exchange"
+  ],
+  "PASS_TO_PASS": []
+}

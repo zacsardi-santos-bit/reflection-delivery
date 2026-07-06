@@ -1,0 +1,29 @@
+{
+    "id": "36bcefd2-c9a5-4192-a12e-0f2366cdea2f",
+    "started_at": "2026-07-06T12:17:21.127561",
+    "finished_at": "2026-07-06T12:17:38.283578",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-agent-framework-5666": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-agent-framework-5666__GB4mq3t"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

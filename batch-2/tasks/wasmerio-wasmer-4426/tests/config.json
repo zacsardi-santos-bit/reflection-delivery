@@ -1,0 +1,27 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p wasmer-wasm-interface",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/17) wasmer-wasm-interface parser::test::parse_func_export",
+    "( 2/17) wasmer-wasm-interface parser::test::test_param_elision",
+    "( 3/17) wasmer-wasm-interface parser::test::top_level_test",
+    "( 4/17) wasmer-wasm-interface parser::test::parse_identifier",
+    "( 5/17) wasmer-wasm-interface parser::test::parse_global_export",
+    "( 6/17) wasmer-wasm-interface parser::test::parse_trailing_spaces_on_interface",
+    "( 7/17) wasmer-wasm-interface parser::test::test_comment_space_parsing",
+    "( 8/17) wasmer-wasm-interface parser::test::parse_global_import",
+    "( 9/17) wasmer-wasm-interface parser::test::parse_wasm_type",
+    "(10/17) wasmer-wasm-interface parser::test::parse_imports_test",
+    "(11/17) wasmer-wasm-interface parser::test::parse_func_import",
+    "(12/17) wasmer-wasm-interface interface::test::merging_works",
+    "(13/17) wasmer-wasm-interface parser::test::duplicates_not_allowed",
+    "(14/17) wasmer-wasm-interface parser::test::typo_gets_caught",
+    "(15/17) wasmer-wasm-interface validate::validation_tests::test_validate_with_new_wasmparser_api",
+    "(16/17) wasmer-wasm-interface validate::validation_tests::global_imports",
+    "(17/17) wasmer-wasm-interface validate::validation_tests::global_exports"
+  ],
+  "PASS_TO_PASS": []
+}

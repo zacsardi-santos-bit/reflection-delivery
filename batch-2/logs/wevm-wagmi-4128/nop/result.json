@@ -1,0 +1,29 @@
+{
+    "id": "ff33ed56-37ab-4917-a5d2-ffb5e3e22cf6",
+    "started_at": "2026-07-06T12:17:35.406099",
+    "finished_at": "2026-07-06T12:18:02.147961",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__wevm-wagmi-4128": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "wevm-wagmi-4128__hBvFetn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

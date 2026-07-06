@@ -1,0 +1,433 @@
+diff --git a/graphql-dgs-reactive/src/main/kotlin/com/netflix/graphql/dgs/reactive/internal/DefaultDgsReactiveQueryExecutor.kt b/graphql-dgs-reactive/src/main/kotlin/com/netflix/graphql/dgs/reactive/internal/DefaultDgsReactiveQueryExecutor.kt
+index baf3cfc6..ddd9f2d1 100644
+--- a/graphql-dgs-reactive/src/main/kotlin/com/netflix/graphql/dgs/reactive/internal/DefaultDgsReactiveQueryExecutor.kt
++++ b/graphql-dgs-reactive/src/main/kotlin/com/netflix/graphql/dgs/reactive/internal/DefaultDgsReactiveQueryExecutor.kt
+@@ -41,7 +41,6 @@ import org.springframework.http.HttpHeaders
+ import org.springframework.web.reactive.function.server.ServerRequest
+ import reactor.core.publisher.Mono
+ import reactor.kotlin.core.util.function.*
+-import java.lang.IllegalArgumentException
+ import java.util.*
+ import java.util.concurrent.atomic.AtomicReference
+ 
+@@ -70,14 +69,6 @@ class DefaultDgsReactiveQueryExecutor(
+         serverHttpRequest: ServerRequest?
+     ): Mono<ExecutionResult> {
+ 
+-        val queryOpt: Optional<String> = Optional.ofNullable(queryValueCustomizer.apply(query)).map { it as String }
+-
+-        if (!queryOpt.isPresent) {
+-            return Mono.error(
+-                IllegalArgumentException("Expected the query to have a value but none was provided.")
+-            )
+-        }
+-
+         return Mono
+             .fromCallable {
+                 if (reloadIndicator.reloadSchema())
+@@ -89,7 +80,7 @@ class DefaultDgsReactiveQueryExecutor(
+             .flatMap { (gqlSchema, dgsContext) ->
+                 Mono.fromCompletionStage(
+                     BaseDgsQueryExecutor.baseExecute(
+-                        queryOpt.orElse(""),
++                        queryValueCustomizer.apply(query),
+                         variables,
+                         extensions,
+                         operationName,
+diff --git a/graphql-dgs-spring-webflux-autoconfigure/src/main/kotlin/com/netflix/graphql/dgs/webflux/handlers/DefaultDgsWebfluxHttpHandler.kt b/graphql-dgs-spring-webflux-autoconfigure/src/main/kotlin/com/netflix/graphql/dgs/webflux/handlers/DefaultDgsWebfluxHttpHandler.kt
+index 9632a04b..20108706 100644
+--- a/graphql-dgs-spring-webflux-autoconfigure/src/main/kotlin/com/netflix/graphql/dgs/webflux/handlers/DefaultDgsWebfluxHttpHandler.kt
++++ b/graphql-dgs-spring-webflux-autoconfigure/src/main/kotlin/com/netflix/graphql/dgs/webflux/handlers/DefaultDgsWebfluxHttpHandler.kt
+@@ -16,6 +16,8 @@
+ 
+ package com.netflix.graphql.dgs.webflux.handlers
+ 
++import com.fasterxml.jackson.core.JsonParseException
++import com.fasterxml.jackson.databind.exc.MismatchedInputException
+ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+ import com.fasterxml.jackson.module.kotlin.readValue
+ import com.netflix.graphql.dgs.reactive.DgsReactiveQueryExecutor
+@@ -32,25 +34,26 @@ class DefaultDgsWebfluxHttpHandler(private val dgsQueryExecutor: DgsReactiveQuer
+         @Suppress("UNCHECKED_CAST") val executionResult: Mono<ExecutionResult> =
+ 
+             request.bodyToMono(String::class.java)
+-                .map {
++                .flatMap { body ->
+                     if ("application/graphql" == request.headers().firstHeader("Content-Type")) {
+-                        QueryInput(it)
++                        Mono.just(QueryInput(body))
+                     } else {
+-                        val readValue = mapper.readValue<Map<String, Any>>(it)
+-                        val query: String? = when (val iq = readValue["query"]) {
+-                            is String -> iq
+-                            else -> null
++                        Mono.fromCallable {
++                            val readValue = mapper.readValue<Map<String, Any>>(body)
++                            val query: String? = when (val iq = readValue["query"]) {
++                                is String -> iq
++                                else -> null
++                            }
++                            QueryInput(
++                                query,
++                                (readValue["variables"] ?: emptyMap<String, Any>()) as Map<String, Any>,
++                                (readValue["extensions"] ?: emptyMap<String, Any>()) as Map<String, Any>,
++                            )
+                         }
+-                        QueryInput(
+-                            query,
+-                            (readValue["variables"] ?: emptyMap<String, Any>()) as Map<String, Any>,
+-                            (readValue["extensions"] ?: emptyMap<String, Any>()) as Map<String, Any>,
+-                        )
+                     }
+                 }
+                 .flatMap { queryInput ->
+                     logger.debug("Parsed variables: {}", queryInput.queryVariables)
+-
+                     dgsQueryExecutor.execute(
+                         queryInput.query,
+                         queryInput.queryVariables,
+@@ -62,8 +65,21 @@ class DefaultDgsWebfluxHttpHandler(private val dgsQueryExecutor: DgsReactiveQuer
+                 }
+ 
+         return executionResult.flatMap { result ->
+-            val graphQlOutput = result.toSpecification()
+-            ServerResponse.ok().bodyValue(graphQlOutput)
++            ServerResponse
++                .ok()
++                .bodyValue(result.toSpecification())
++        }.onErrorResume { ex ->
++            when (ex) {
++                is JsonParseException ->
++                    ServerResponse.badRequest()
++                        .bodyValue("Invalid query - ${ex.message ?: "no details found in the error message"}.")
++                is MismatchedInputException ->
++                    ServerResponse.badRequest()
++                        .bodyValue("Invalid query - No content to map to input.")
++                else ->
++                    ServerResponse.badRequest()
++                        .bodyValue("Invalid query - ${ex.message ?: "no additional details found"}.")
++            }
+         }
+     }
+ 
+diff --git a/graphql-dgs-spring-webmvc/src/main/kotlin/com/netflix/graphql/dgs/mvc/DgsRestController.kt b/graphql-dgs-spring-webmvc/src/main/kotlin/com/netflix/graphql/dgs/mvc/DgsRestController.kt
+index 63d6da86..32c22ce5 100644
+--- a/graphql-dgs-spring-webmvc/src/main/kotlin/com/netflix/graphql/dgs/mvc/DgsRestController.kt
++++ b/graphql-dgs-spring-webmvc/src/main/kotlin/com/netflix/graphql/dgs/mvc/DgsRestController.kt
+@@ -18,6 +18,7 @@ package com.netflix.graphql.dgs.mvc
+ 
+ import com.fasterxml.jackson.core.JsonParseException
+ import com.fasterxml.jackson.databind.exc.InvalidDefinitionException
++import com.fasterxml.jackson.databind.exc.MismatchedInputException
+ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+ import com.fasterxml.jackson.module.kotlin.readValue
+ import com.netflix.graphql.dgs.DgsQueryExecutor
+@@ -91,11 +92,21 @@ open class DgsRestController(
+                 queryVariables = emptyMap()
+                 extensions = emptyMap()
+             } else {
++
+                 try {
+                     inputQuery = body.let { mapper.readValue(it) }
+-                } catch (ex: JsonParseException) {
+-                    return ResponseEntity.badRequest()
+-                        .body(ex.message ?: "Error parsing query - no details found in the error message")
++                } catch (ex: Exception) {
++                    return when (ex) {
++                        is JsonParseException ->
++                            ResponseEntity.badRequest()
++                                .body("Invalid query - ${ex.message ?: "no details found in the error message"}.")
++                        is MismatchedInputException ->
++                            ResponseEntity.badRequest()
++                                .body("Invalid query - No content to map to input.")
++                        else ->
++                            ResponseEntity.badRequest()
++                                .body("Invalid query - ${ex.message ?: "no additional details found"}.")
++                    }
+                 }
+ 
+                 queryVariables = if (inputQuery["variables"] != null) {
+diff --git a/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/context/DgsContext.kt b/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/context/DgsContext.kt
+index 8afa4b98..7c709166 100644
+--- a/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/context/DgsContext.kt
++++ b/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/context/DgsContext.kt
+@@ -17,6 +17,7 @@
+ package com.netflix.graphql.dgs.context
+ 
+ import com.netflix.graphql.dgs.internal.DgsRequestData
++import graphql.GraphQLContext
+ import graphql.schema.DataFetchingEnvironment
+ import org.dataloader.BatchLoaderEnvironment
+ 
+@@ -27,6 +28,14 @@ import org.dataloader.BatchLoaderEnvironment
+ open class DgsContext(val customContext: Any? = null, val requestData: DgsRequestData?) {
+ 
+     companion object {
++
++        const val GRAPHQL_CONTEXT_NAMESPACE_KEY = "netflix.graphql.dgs"
++
++        @JvmStatic
++        fun getDgsContext(graphQLContext: GraphQLContext): DgsContext {
++            return graphQLContext.get(GRAPHQL_CONTEXT_NAMESPACE_KEY)
++        }
++
+         @JvmStatic
+         fun <T> getCustomContext(dgsContext: Any): T {
+             @Suppress("UNCHECKED_CAST")
+diff --git a/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/BaseDgsQueryExecutor.kt b/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/BaseDgsQueryExecutor.kt
+new file mode 100644
+index 00000000..12e2121c
+--- /dev/null
++++ b/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/BaseDgsQueryExecutor.kt
+@@ -0,0 +1,126 @@
++/*
++ * Copyright 2022 Netflix, Inc.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *    http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.netflix.graphql.dgs.internal
++
++import com.fasterxml.jackson.databind.DeserializationFeature
++import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
++import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
++import com.jayway.jsonpath.Configuration
++import com.jayway.jsonpath.JsonPath
++import com.jayway.jsonpath.Option
++import com.jayway.jsonpath.ParseContext
++import com.jayway.jsonpath.spi.json.JacksonJsonProvider
++import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider
++import com.netflix.graphql.dgs.context.DgsContext
++import com.netflix.graphql.types.errors.ErrorType
++import com.netflix.graphql.types.errors.TypedGraphQLError
++import graphql.*
++import graphql.execution.ExecutionIdProvider
++import graphql.execution.ExecutionStrategy
++import graphql.execution.SubscriptionExecutionStrategy
++import graphql.execution.instrumentation.ChainedInstrumentation
++import graphql.execution.preparsed.PreparsedDocumentProvider
++import graphql.schema.GraphQLSchema
++import org.slf4j.LoggerFactory
++import org.springframework.util.StringUtils
++import java.util.*
++import java.util.concurrent.CompletableFuture
++
++object BaseDgsQueryExecutor {
++
++    private val logger = LoggerFactory.getLogger(BaseDgsQueryExecutor::class.java)
++
++    val objectMapper = jacksonObjectMapper()
++        .registerModule(JavaTimeModule())
++        .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
++        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)!!
++
++    val parseContext: ParseContext =
++        JsonPath.using(
++            Configuration.builder()
++                .jsonProvider(JacksonJsonProvider(jacksonObjectMapper()))
++                .mappingProvider(JacksonMappingProvider(objectMapper)).build()
++                .addOptions(Option.DEFAULT_PATH_LEAF_TO_NULL)
++        )
++
++    fun baseExecute(
++        query: String?,
++        variables: Map<String, Any>?,
++        extensions: Map<String, Any>?,
++        operationName: String?,
++        dgsContext: DgsContext,
++        graphQLSchema: GraphQLSchema,
++        dataLoaderProvider: DgsDataLoaderProvider,
++        chainedInstrumentation: ChainedInstrumentation,
++        queryExecutionStrategy: ExecutionStrategy,
++        mutationExecutionStrategy: ExecutionStrategy,
++        idProvider: Optional<ExecutionIdProvider>,
++        preparsedDocumentProvider: PreparsedDocumentProvider,
++    ): CompletableFuture<out ExecutionResult> {
++
++        if (!StringUtils.hasText(query)) {
++            return CompletableFuture.completedFuture(
++                ExecutionResultImpl
++                    .newExecutionResult()
++                    .addError(
++                        TypedGraphQLError
++                            .newBadRequestBuilder()
++                            .message("The query is null or empty.")
++                            .errorType(ErrorType.BAD_REQUEST)
++                            .build()
++                    ).build()
++            )
++        }
++
++        val graphQLBuilder =
++            GraphQL.newGraphQL(graphQLSchema)
++                .preparsedDocumentProvider(preparsedDocumentProvider)
++                .instrumentation(chainedInstrumentation)
++                .queryExecutionStrategy(queryExecutionStrategy)
++                .mutationExecutionStrategy(mutationExecutionStrategy)
++                .subscriptionExecutionStrategy(SubscriptionExecutionStrategy())
++
++        if (idProvider.isPresent) {
++            graphQLBuilder.executionIdProvider(idProvider.get())
++        }
++        val graphQL = graphQLBuilder.build()
++
++        val dataLoaderRegistry = dataLoaderProvider.buildRegistryWithContextSupplier { dgsContext }
++
++        val executionInputBuilder: ExecutionInput.Builder =
++            ExecutionInput
++                .newExecutionInput()
++                .query(query)
++                .operationName(operationName)
++                .variables(variables)
++                .dataLoaderRegistry(dataLoaderRegistry)
++                .context(dgsContext)
++                .graphQLContext { b -> b.of(DgsContext.GRAPHQL_CONTEXT_NAMESPACE_KEY, dgsContext) }
++
++        if (extensions != null) {
++            executionInputBuilder.extensions(extensions)
++        }
++
++        return try {
++            graphQL.executeAsync(executionInputBuilder.build())
++        } catch (e: Exception) {
++            logger.error("Encountered an exception while handling query $query", e)
++            val errors: List<GraphQLError> = if (e is GraphQLError) listOf<GraphQLError>(e) else emptyList()
++            CompletableFuture.completedFuture(ExecutionResultImpl(null, errors))
++        }
++    }
++}
+diff --git a/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutor.kt b/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutor.kt
+index 8a89ba7b..ce25ccf6 100644
+--- a/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutor.kt
++++ b/graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutor.kt
+@@ -16,15 +16,9 @@
+ 
+ package com.netflix.graphql.dgs.internal
+ 
+-import com.fasterxml.jackson.databind.DeserializationFeature
+-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+ import com.jayway.jsonpath.*
+-import com.jayway.jsonpath.spi.json.JacksonJsonProvider
+-import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider
+ import com.jayway.jsonpath.spi.mapper.MappingException
+ import com.netflix.graphql.dgs.DgsQueryExecutor
+-import com.netflix.graphql.dgs.context.DgsContext
+ import com.netflix.graphql.dgs.exceptions.DgsQueryExecutionDataExtractionException
+ import com.netflix.graphql.dgs.exceptions.QueryException
+ import com.netflix.graphql.dgs.internal.BaseDgsQueryExecutor.parseContext
+@@ -33,7 +27,6 @@ import graphql.*
+ import graphql.execution.ExecutionIdProvider
+ import graphql.execution.ExecutionStrategy
+ import graphql.execution.NonNullableFieldWasNullError
+-import graphql.execution.SubscriptionExecutionStrategy
+ import graphql.execution.instrumentation.ChainedInstrumentation
+ import graphql.execution.preparsed.PreparsedDocumentProvider
+ import graphql.schema.GraphQLSchema
+@@ -41,9 +34,7 @@ import org.slf4j.Logger
+ import org.slf4j.LoggerFactory
+ import org.springframework.http.HttpHeaders
+ import org.springframework.web.context.request.WebRequest
+-import java.lang.IllegalArgumentException
+ import java.util.*
+-import java.util.concurrent.CompletableFuture
+ import java.util.concurrent.atomic.AtomicReference
+ 
+ /**
+@@ -80,14 +71,9 @@ class DefaultDgsQueryExecutor(
+                 schema.get()
+         val dgsContext = contextBuilder.build(DgsWebMvcRequestData(extensions, headers, webRequest))
+ 
+-        val cQuery: String = when (val inQuery = queryValueCustomizer.apply(query)) {
+-            is String -> inQuery
+-            else -> throw IllegalArgumentException("Expecting a none null query!")
+-        }
+-
+         val executionResult =
+             BaseDgsQueryExecutor.baseExecute(
+-                cQuery,
++                queryValueCustomizer.apply(query),
+                 variables,
+                 extensions,
+                 operationName,
+@@ -189,70 +175,3 @@ class DefaultDgsQueryExecutor(
+         private val logger: Logger = LoggerFactory.getLogger(DefaultDgsQueryExecutor::class.java)
+     }
+ }
+-
+-object BaseDgsQueryExecutor {
+-    private val logger = LoggerFactory.getLogger(BaseDgsQueryExecutor::class.java)
+-
+-    val objectMapper = jacksonObjectMapper()
+-        .registerModule(JavaTimeModule())
+-        .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
+-        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)!!
+-    val parseContext: ParseContext =
+-        JsonPath.using(
+-            Configuration.builder()
+-                .jsonProvider(JacksonJsonProvider(jacksonObjectMapper()))
+-                .mappingProvider(JacksonMappingProvider(objectMapper)).build()
+-                .addOptions(Option.DEFAULT_PATH_LEAF_TO_NULL)
+-        )
+-
+-    fun baseExecute(
+-        query: String,
+-        variables: Map<String, Any>?,
+-        extensions: Map<String, Any>?,
+-        operationName: String?,
+-        dgsContext: DgsContext,
+-        graphQLSchema: GraphQLSchema,
+-        dataLoaderProvider: DgsDataLoaderProvider,
+-        chainedInstrumentation: ChainedInstrumentation,
+-        queryExecutionStrategy: ExecutionStrategy,
+-        mutationExecutionStrategy: ExecutionStrategy,
+-        idProvider: Optional<ExecutionIdProvider>,
+-        preparsedDocumentProvider: PreparsedDocumentProvider,
+-    ): CompletableFuture<out ExecutionResult> {
+-        val graphQLBuilder =
+-            GraphQL.newGraphQL(graphQLSchema)
+-                .preparsedDocumentProvider(preparsedDocumentProvider)
+-                .instrumentation(chainedInstrumentation)
+-                .queryExecutionStrategy(queryExecutionStrategy)
+-                .mutationExecutionStrategy(mutationExecutionStrategy)
+-                .subscriptionExecutionStrategy(SubscriptionExecutionStrategy())
+-        if (idProvider.isPresent) {
+-            graphQLBuilder.executionIdProvider(idProvider.get())
+-        }
+-        val graphQL = graphQLBuilder.build()
+-
+-        val dataLoaderRegistry = dataLoaderProvider.buildRegistryWithContextSupplier { dgsContext }
+-
+-        val executionInputBuilder: ExecutionInput.Builder =
+-            ExecutionInput
+-                .newExecutionInput()
+-                .query(query)
+-                .operationName(operationName)
+-                .variables(variables)
+-                .dataLoaderRegistry(dataLoaderRegistry)
+-                .context(dgsContext)
+-                .graphQLContext { b -> b.of("dgs", dgsContext) }
+-
+-        if (extensions != null) {
+-            executionInputBuilder.extensions(extensions)
+-        }
+-
+-        return try {
+-            graphQL.executeAsync(executionInputBuilder.build())
+-        } catch (e: Exception) {
+-            logger.error("Encountered an exception while handling query $query", e)
+-            val errors: List<GraphQLError> = if (e is GraphQLError) listOf<GraphQLError>(e) else emptyList()
+-            CompletableFuture.completedFuture(ExecutionResultImpl(null, errors))
+-        }
+-    }
+-}

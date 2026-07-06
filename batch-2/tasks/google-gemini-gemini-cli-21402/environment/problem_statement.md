@@ -1,0 +1,11 @@
+I'm adding some security and normalization helpers to our agent utilities module (the one that handles connecting out to external agents over the network) and I want to get these right because there's a real SSRF hole here. Right now nothing stops a malicious agent from pointing its DNS at some internal service and getting us to hammer our own infrastructure.
+
+So first thing, I need a DNS-pinning function that takes a URL plus an agent name, resolves the hostname to its actual IP, and hands back both the original hostname and a rebuilt URL with the IP swapped in. The security bit: if the resolved IP lands in a private network range it should reject the connection by throwing an error that includes the agent name. Only exception is localhost and loopback addresses, those are fine for local dev. If DNS resolution itself blows up, throw too, again with the agent name in the message. Oh and it has to cope with raw `host:port` strings that have no URL scheme (we use those for some lower-level protocols), and in that case the pinned address it returns should also leave the scheme off.
+
+Second, a small credential helper that takes a URL and returns the right connection security credentials depending on whether it's a secure or plain/insecure protocol.
+
+Third, an agent card normalizer. These cards come from all over and don't agree on conventions: sometimes one field name for protocol info, sometimes an older legacy name, sometimes URLs are bare IP:port with no scheme, sometimes fields are just missing. It should take any unknown input, throw a clear error if it isn't an object, fill safe defaults for required fields, unify the protocol field names (newer name wins if both show up), make sure non-low-level-protocol URLs get a scheme when one's absent, and write the normalized interfaces to both the current and the legacy interface list fields so whichever one downstream reads still works. If the top-level URL is missing, fall back to the first interface's URL.
+
+Last, a URL splitting helper that checks if a URL already ends with the standard agent discovery path and if so strips that suffix and returns just the base URL, otherwise (or if it can't parse) returns the URL unchanged.
+
+These all live in the agent utilities module. Thanks!

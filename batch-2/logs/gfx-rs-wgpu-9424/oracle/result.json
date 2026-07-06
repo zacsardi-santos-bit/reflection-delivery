@@ -1,0 +1,29 @@
+{
+    "id": "34ea683a-8789-451f-b39c-0e3c8415a21f",
+    "started_at": "2026-07-06T12:19:15.491789",
+    "finished_at": "2026-07-06T12:20:17.253205",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__gfx-rs-wgpu-9424": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "gfx-rs-wgpu-9424__B6bSF3s"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

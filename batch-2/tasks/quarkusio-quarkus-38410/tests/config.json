@@ -1,0 +1,16 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl independent-projects/resteasy-reactive/server/runtime install -DskipTests -q && mvn -pl extensions/csrf-reactive/deployment test -Dtest=CsrfTest -DfailIfNoTests=false",
+  "test_files": [
+    "extensions/csrf-reactive/deployment/src/test/java/io/quarkus/csrf/reactive/CsrfTest.java",
+    "extensions/csrf-reactive/deployment/src/test/resources/templates/csrfToken.html"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Quarkus::test_1",
+    "Quarkus::test_2",
+    "Quarkus::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

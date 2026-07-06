@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/events/dependencies -count=1",
+  "test_files": [
+    "pkg/events/dependencies/manager_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_AddEvent/empty_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_AddEvent/dependency_event",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_AddEvent/multi_dependency_event",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_AddEvent",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_RemoveEvent/empty_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_RemoveEvent/dependency_event",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_RemoveEvent/multi_dependency_event",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_RemoveEvent/multi_dependency_event_but_is_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_RemoveEvent/multi_dependency_event_that_share_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_RemoveEvent",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_UnselectEvent/empty_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_UnselectEvent/dependency_event",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_UnselectEvent/multi_dependency_event",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_UnselectEvent/multi_dependency_event_but_is_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_UnselectEvent/multi_dependency_event_that_share_dependency",
+    "github.com/aquasecurity/tracee/pkg/events/dependencies::TestManager_UnselectEvent"
+  ],
+  "PASS_TO_PASS": []
+}

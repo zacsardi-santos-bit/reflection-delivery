@@ -1,0 +1,15 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl redis/redis-meta test -Dtest=DefaultKeeperManagerTest -DfailIfNoTests=false",
+  "test_files": [
+    "redis/redis-meta/src/test/java/com/ctrip/xpipe/redis/meta/server/AllTests.java",
+    "redis/redis-meta/src/test/java/com/ctrip/xpipe/redis/meta/server/keeper/manager/DefaultKeeperManagerTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "com.ctrip.xpipe.redis.meta.server.keeper.manager.DefaultKeeperManagerTest::testWhenMigratingPrimaryDc",
+    "com.ctrip.xpipe.redis.meta.server.keeper.manager.DefaultKeeperManagerTest::testWhenMigratingOtherDc"
+  ],
+  "PASS_TO_PASS": []
+}

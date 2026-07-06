@@ -1,0 +1,29 @@
+{
+    "id": "f733ab68-3300-4755-948e-9deb42b27d27",
+    "started_at": "2026-07-04T15:42:11.839249",
+    "finished_at": "2026-07-04T15:42:40.549775",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-flink-16223": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-flink-16223__8BbkHjd"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && yarn install --frozen-lockfile > /dev/null 2>&1 && node --expose-gc --max-old-space-size=4096 --experimental-vm-modules node_modules/jest-cli/bin/jest test/TestCasesDevelopment.test.js --testNamePattern=\"pug-loader\" --coverage=false --forceExit --json",
+  "test_files": [
+    "test/TestCases.template.js",
+    "test/cases/loaders/context/test.filter.js",
+    "test/cases/loaders/pug-loader/index.js",
+    "test/cases/loaders/pug-loader/test.filter.js"
+  ],
+  "num_test_files": 4,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/TestCasesDevelopment.test.js::TestCases development loaders pug-loader pug-loader should compile",
+    "/workspace/repo/test/TestCasesDevelopment.test.js::TestCases development loaders pug-loader exported tests should handle the pug loader correctly"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/TestCasesDevelopment.test.js::TestCases development loaders pug-loader pug-loader should load the compiled tests",
+    "/workspace/repo/test/TestCasesDevelopment.test.js::TestCases development loaders pug-loader exported tests should run the exported tests"
+  ]
+}

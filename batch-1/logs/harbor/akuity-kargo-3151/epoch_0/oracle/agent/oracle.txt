@@ -1,0 +1,9 @@
+patching file docs/docs/35-references/10-promotion-steps.md
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 480 with fuzz 3.
+patching file internal/directives/json_updater.go
+patching file internal/directives/schemas/json-update-config.json
+patching file internal/directives/zz_config_types.go
+patching file ui/src/features/promotion-directives/registry/use-discover-registries.ts
+patching file ui/src/gen/directives/json-update-config.json

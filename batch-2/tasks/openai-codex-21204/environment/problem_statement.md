@@ -1,0 +1,7 @@
+I'm working on the memory search backend and I want to add a third matching mode for proximity search. Right now I can either match any query (too broad, matches anywhere in the file) or require all queries to land on the same line (too strict), and there's nothing in between. I keep hitting cases where I want to find sections where multiple concepts show up near each other across a few consecutive lines even if they're not on the exact same line, so I need an "all within N lines" mode where I hand it a window size and a match gets reported when all the queries appear within any consecutive block of that many lines.
+
+Couple of things I care about here. The tightest window should win, so if a larger window would be reported but it fully contains a smaller window that already satisfies the match, drop the larger one and only return the smallest matching windows. Also a window size of zero isn't a valid config, so reject that immediately with a clear error rather than silently doing something weird.
+
+Oh and while I'm in there, the existing "all on same line" mode needs a clearer name that distinguishes it from this new windowed variant, so rename it accordingly wherever it's referenced.
+
+The server layer also needs to understand the new mode when it parses tool call arguments, so wire that through, and make sure any validation error coming from an invalid (zero) window size surfaces to callers as an invalid-parameter error, not some generic failure. Basically the zero-size rejection should propagate cleanly up through the argument parsing path.

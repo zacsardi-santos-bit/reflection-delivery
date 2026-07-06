@@ -1,0 +1,7 @@
+I'm working on adding a new contrib plugin to the Sloth SLO framework to handle services with seasonal traffic patterns. The problem is that during low-traffic periods — like overnight — even a handful of errors can make the SLO burn rate look terrible and trigger false pages. I want a plugin that corrects the SLI error ratio by scaling failure impact based on traffic volume relative to the full SLO window.
+
+The plugin should only work with services that define their SLI using separate error and total queries. If someone tries to use it with a raw SLI definition, it should fail clearly. Similarly, if the query templates contain invalid syntax or reference variable names that aren't supported, the plugin should return an error rather than silently producing wrong output.
+
+For valid SLOs, the plugin should generate two sets of recording rules: corrected SLI error ratio rules (replacing the standard ones) and new metadata rules that capture the correction factor itself for each alerting window. The correction factor for a given window should be the ratio of current-window traffic to total-window traffic — so during low-traffic periods the factor scales down the error's contribution proportionally.
+
+I need this implemented as a proper contrib plugin in the existing plugin system, following the same conventions as the other contrib plugins in the codebase. It should accept an empty JSON configuration object with no required fields.

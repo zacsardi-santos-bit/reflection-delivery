@@ -1,0 +1,29 @@
+{
+    "id": "7f0a3607-cc46-4149-b2bd-1d4b617caced",
+    "started_at": "2026-07-04T15:37:02.989725",
+    "finished_at": "2026-07-04T15:38:24.354295",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tortoise-tortoise-orm-1837": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tortoise-tortoise-orm-1837__RCgWZy3"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

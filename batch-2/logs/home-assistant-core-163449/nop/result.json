@@ -1,0 +1,29 @@
+{
+    "id": "a638ab77-8535-40d9-9318-1d2fd59d26c1",
+    "started_at": "2026-07-06T12:17:22.557066",
+    "finished_at": "2026-07-06T12:18:00.359114",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__home-assistant-core-163449": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "home-assistant-core-163449__cebouAe"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

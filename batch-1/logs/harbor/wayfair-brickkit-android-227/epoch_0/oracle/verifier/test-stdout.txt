@@ -1,0 +1,210 @@
+patching file BrickKit/bricks/src/androidTest/java/com/wayfair/brickkit/brick/DataModelTest.kt
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m.[0m
+[36m+--[0m [36mJUnit Jupiter[0m [32m[OK][0m
+[36m+--[0m [36mJUnit Vintage[0m [32m[OK][0m
+[36m| '--[0m [36mDataModelTest[0m [32m[OK][0m
+[36m|   +--[0m [34mtestIsReady[0m [32m[OK][0m
+[36m|   '--[0m [34mtestNotifyChange[0m [32m[OK][0m
+[36m'--[0m [36mJUnit Platform Suite[0m [32m[OK][0m
+
+Test run finished after 78 ms
+[         4 containers found      ]
+[         0 containers skipped    ]
+[         4 containers started    ]
+[         0 containers aborted    ]
+[         4 containers successful ]
+[         0 containers failed     ]
+[         2 tests found           ]
+[         0 tests skipped         ]
+[         2 tests started         ]
+[         0 tests aborted         ]
+[         2 tests successful      ]
+[         0 tests failed          ]
+
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Jupiter" tests="0" skipped="0" failures="0" errors="0" time="0.006" hostname="&lt;unknown host&gt;" timestamp="2026-06-29T15:23:46">
+<properties>
+<property name="file.encoding" value="ANSI_X3.4-1968"/>
+<property name="file.separator" value="/"/>
+<property name="java.class.path" value="/opt/junit-console.jar"/>
+<property name="java.class.version" value="61.0"/>
+<property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
+<property name="java.io.tmpdir" value="/tmp"/>
+<property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+<property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+<property name="java.runtime.version" value="17.0.19+10-1-deb12u2-Debian"/>
+<property name="java.specification.maintenance.version" value="1"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="17"/>
+<property name="java.vendor" value="Debian"/>
+<property name="java.vendor.url" value="https://tracker.debian.org/openjdk-17"/>
+<property name="java.vendor.url.bug" value="https://bugs.debian.org/openjdk-17"/>
+<property name="java.version" value="17.0.19"/>
+<property name="java.version.date" value="2026-04-21"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="17"/>
+<property name="java.vm.vendor" value="Debian"/>
+<property name="java.vm.version" value="17.0.19+10-1-deb12u2-Debian"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="native.encoding" value="ANSI_X3.4-1968"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Linux"/>
+<property name="os.version" value="4.19.0-gvisor"/>
+<property name="path.separator" value=":"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="/opt/junit-console.jar --class-path /opt/android-stubs.jar:/opt/kotlinc/lib/kotlin-stdlib.jar:/opt/junit.jar:/opt/hamcrest.jar:/tmp/test-classes.jar --select-class=com.wayfair.brickkit.brick.DataModelTest --reports-dir=/workspace/repo/target/surefire-reports"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="ANSI_X3.4-1968"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="/workspace/repo"/>
+<property name="user.home" value="/root"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="root"/>
+<property name="user.timezone" value="Etc/UTC"/>
+</properties>
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]
+display-name: JUnit Jupiter
+]]></system-out>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Platform Suite" tests="0" skipped="0" failures="0" errors="0" time="0" hostname="&lt;unknown host&gt;" timestamp="2026-06-29T15:23:46">
+<properties>
+<property name="file.encoding" value="ANSI_X3.4-1968"/>
+<property name="file.separator" value="/"/>
+<property name="java.class.path" value="/opt/junit-console.jar"/>
+<property name="java.class.version" value="61.0"/>
+<property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
+<property name="java.io.tmpdir" value="/tmp"/>
+<property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+<property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+<property name="java.runtime.version" value="17.0.19+10-1-deb12u2-Debian"/>
+<property name="java.specification.maintenance.version" value="1"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="17"/>
+<property name="java.vendor" value="Debian"/>
+<property name="java.vendor.url" value="https://tracker.debian.org/openjdk-17"/>
+<property name="java.vendor.url.bug" value="https://bugs.debian.org/openjdk-17"/>
+<property name="java.version" value="17.0.19"/>
+<property name="java.version.date" value="2026-04-21"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="17"/>
+<property name="java.vm.vendor" value="Debian"/>
+<property name="java.vm.version" value="17.0.19+10-1-deb12u2-Debian"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="native.encoding" value="ANSI_X3.4-1968"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Linux"/>
+<property name="os.version" value="4.19.0-gvisor"/>
+<property name="path.separator" value=":"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="/opt/junit-console.jar --class-path /opt/android-stubs.jar:/opt/kotlinc/lib/kotlin-stdlib.jar:/opt/junit.jar:/opt/hamcrest.jar:/tmp/test-classes.jar --select-class=com.wayfair.brickkit.brick.DataModelTest --reports-dir=/workspace/repo/target/surefire-reports"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="ANSI_X3.4-1968"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="/workspace/repo"/>
+<property name="user.home" value="/root"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="root"/>
+<property name="user.timezone" value="Etc/UTC"/>
+</properties>
+<system-out><![CDATA[
+unique-id: [engine:junit-platform-suite]
+display-name: JUnit Platform Suite
+]]></system-out>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Vintage" tests="2" skipped="0" failures="0" errors="0" time="0.013" hostname="&lt;unknown host&gt;" timestamp="2026-06-29T15:23:46">
+<properties>
+<property name="file.encoding" value="ANSI_X3.4-1968"/>
+<property name="file.separator" value="/"/>
+<property name="java.class.path" value="/opt/junit-console.jar"/>
+<property name="java.class.version" value="61.0"/>
+<property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
+<property name="java.io.tmpdir" value="/tmp"/>
+<property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+<property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+<property name="java.runtime.version" value="17.0.19+10-1-deb12u2-Debian"/>
+<property name="java.specification.maintenance.version" value="1"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="17"/>
+<property name="java.vendor" value="Debian"/>
+<property name="java.vendor.url" value="https://tracker.debian.org/openjdk-17"/>
+<property name="java.vendor.url.bug" value="https://bugs.debian.org/openjdk-17"/>
+<property name="java.version" value="17.0.19"/>
+<property name="java.version.date" value="2026-04-21"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="17"/>
+<property name="java.vm.vendor" value="Debian"/>
+<property name="java.vm.version" value="17.0.19+10-1-deb12u2-Debian"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="native.encoding" value="ANSI_X3.4-1968"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Linux"/>
+<property name="os.version" value="4.19.0-gvisor"/>
+<property name="path.separator" value=":"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="/opt/junit-console.jar --class-path /opt/android-stubs.jar:/opt/kotlinc/lib/kotlin-stdlib.jar:/opt/junit.jar:/opt/hamcrest.jar:/tmp/test-classes.jar --select-class=com.wayfair.brickkit.brick.DataModelTest --reports-dir=/workspace/repo/target/surefire-reports"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="ANSI_X3.4-1968"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="/workspace/repo"/>
+<property name="user.home" value="/root"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="root"/>
+<property name="user.timezone" value="Etc/UTC"/>
+</properties>
+<testcase name="testNotifyChange" classname="com.wayfair.brickkit.brick.DataModelTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:com.wayfair.brickkit.brick.DataModelTest]/[test:testNotifyChange(com.wayfair.brickkit.brick.DataModelTest)]
+display-name: testNotifyChange
+]]></system-out>
+</testcase>
+<testcase name="testIsReady" classname="com.wayfair.brickkit.brick.DataModelTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:com.wayfair.brickkit.brick.DataModelTest]/[test:testIsReady(com.wayfair.brickkit.brick.DataModelTest)]
+display-name: testIsReady
+]]></system-out>
+</testcase>
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]
+display-name: JUnit Vintage
+]]></system-out>
+</testsuite>
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=junit exit_code=0

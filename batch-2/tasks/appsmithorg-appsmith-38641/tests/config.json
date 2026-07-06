@@ -1,0 +1,16 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/app/client/packages/design-system/ads && node /workspace/repo/app/client/node_modules/.bin/jest --watchAll=false --no-cache --colors src/Templates/Sidebar/SidebarButton/SidebarButton.test.tsx",
+  "test_files": [
+    "app/client/packages/design-system/ads/src/Templates/Sidebar/SidebarButton/SidebarButton.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/Sidebar/SidebarButton/SidebarButton.test.tsx::SidebarButton should render the button with the correct test id",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/Sidebar/SidebarButton/SidebarButton.test.tsx::SidebarButton should render the warning icon in case the datasource list is empty",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/Sidebar/SidebarButton/SidebarButton.test.tsx::SidebarButton should call onClick with urlSuffix",
+    "/workspace/repo/app/client/packages/design-system/ads/src/Templates/Sidebar/SidebarButton/SidebarButton.test.tsx::SidebarButton should not call onClick when button is already selected"
+  ],
+  "PASS_TO_PASS": []
+}

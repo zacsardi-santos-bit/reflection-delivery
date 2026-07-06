@@ -1,0 +1,11 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file crates/embedding/Cargo.toml
+patching file crates/embedding/src/lib.rs
+patching file crates/embedding/src/openai.rs
+patching file src/embedding/mod.rs
+patching file src/gucs/embedding.rs
+patching file src/gucs/mod.rs
+patching file src/lib.rs
+patching file src/prelude/error.rs
+patching file src/sql/finalize.sql

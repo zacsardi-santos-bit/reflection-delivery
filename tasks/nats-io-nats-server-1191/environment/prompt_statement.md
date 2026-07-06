@@ -1,9 +1,0 @@
-I'm working on a NATS server deployment that uses JWT-based authentication with account imports and signing keys, and I've hit a few related bugs that need to be fixed.
-
-First, when a client account has imports that reference activation tokens where the issuer account field points to the wrong account (it should reference the exporter account, but instead points back to the importer itself), the server just silently rejects the import. There's no log output at all, which makes debugging extremely painful. I'd expect the server to log a clear error message when it detects that the issuer account in an activation claim doesn't match the exporting account — something that names the bad issuer, the import subject, and the import type so operators know what went wrong.
-
-Second, when those imports use signing keys (the exporter account has a signing key that signs the activation tokens), connecting a client can sometimes cause the server to deadlock completely. This seems to happen when another goroutine holds the exporter account's write lock at the same time as the import validation is trying to verify the signing key. The server just hangs.
-
-Third, in a cluster with gateways, there's a race condition where an account can get registered twice — once from an optimistic message send path and again from a direct client connect. This leaves leftover entries in the server's internal temporary account tracking map even after everything is done, which can cause issues with subscription routing across the gateway.
-
-All three of these need to be addressed. The fix should ensure that activation claim validation logs errors and returns false for wrong issuer accounts, that lock ordering during import validation doesn't deadlock, and that the temporary account state is always cleaned up properly after registration completes — even under concurrent access.

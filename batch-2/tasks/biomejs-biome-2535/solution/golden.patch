@@ -1,0 +1,381 @@
+diff --git a/crates/biome_configuration/src/linter/rules.rs b/crates/biome_configuration/src/linter/rules.rs
+index ba24f89b51..b6463594cb 100644
+--- a/crates/biome_configuration/src/linter/rules.rs
++++ b/crates/biome_configuration/src/linter/rules.rs
+@@ -2699,6 +2699,9 @@ pub struct Nursery {
+     #[doc = "Disallow the use of dependencies that aren't specified in the package.json."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub no_undeclared_dependencies: Option<RuleConfiguration<NoUndeclaredDependencies>>,
++    #[doc = "Disallow unknown CSS units."]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub no_unknown_unit: Option<RuleConfiguration<NoUnknownUnit>>,
+     #[doc = "Disallows package private imports."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub use_import_restrictions: Option<RuleConfiguration<UseImportRestrictions>>,
+@@ -2740,6 +2743,7 @@ impl Nursery {
+         "noReactSpecificProps",
+         "noRestrictedImports",
+         "noUndeclaredDependencies",
++        "noUnknownUnit",
+         "useImportRestrictions",
+         "useSortedClasses",
+     ];
+@@ -2753,6 +2757,7 @@ impl Nursery {
+         "noEvolvingAny",
+         "noFlatMapIdentity",
+         "noImportantInKeyframe",
++        "noUnknownUnit",
+     ];
+     const RECOMMENDED_RULES_AS_FILTERS: &'static [RuleFilter<'static>] = &[
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[3]),
+@@ -2764,6 +2769,7 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]),
+     ];
+     const ALL_RULES_AS_FILTERS: &'static [RuleFilter<'static>] = &[
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
+@@ -2785,6 +2791,7 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
+     ];
+     #[doc = r" Retrieves the recommended rules"]
+     pub(crate) fn is_recommended_true(&self) -> bool {
+@@ -2886,16 +2893,21 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.no_unknown_unit.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
+             }
+         }
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
++            if rule.is_enabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
++            }
++        }
+         index_set
+     }
+     pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
+@@ -2985,16 +2997,21 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.no_unknown_unit.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
+             }
+         }
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
++            if rule.is_disabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
++            }
++        }
+         index_set
+     }
+     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
+@@ -3099,6 +3116,10 @@ impl Nursery {
+                 .no_undeclared_dependencies
+                 .as_ref()
+                 .map(|conf| (conf.level(), conf.get_options())),
++            "noUnknownUnit" => self
++                .no_unknown_unit
++                .as_ref()
++                .map(|conf| (conf.level(), conf.get_options())),
+             "useImportRestrictions" => self
+                 .use_import_restrictions
+                 .as_ref()
+diff --git a/crates/biome_css_analyze/src/lint/nursery.rs b/crates/biome_css_analyze/src/lint/nursery.rs
+index b3bb742361..6daa2ac339 100644
+--- a/crates/biome_css_analyze/src/lint/nursery.rs
++++ b/crates/biome_css_analyze/src/lint/nursery.rs
+@@ -7,6 +7,7 @@ pub mod no_css_empty_block;
+ pub mod no_duplicate_font_names;
+ pub mod no_duplicate_selectors_keyframe_block;
+ pub mod no_important_in_keyframe;
++pub mod no_unknown_unit;
+ 
+ declare_group! {
+     pub Nursery {
+@@ -17,6 +18,7 @@ declare_group! {
+             self :: no_duplicate_font_names :: NoDuplicateFontNames ,
+             self :: no_duplicate_selectors_keyframe_block :: NoDuplicateSelectorsKeyframeBlock ,
+             self :: no_important_in_keyframe :: NoImportantInKeyframe ,
++            self :: no_unknown_unit :: NoUnknownUnit ,
+         ]
+      }
+ }
+diff --git a/crates/biome_css_analyze/src/lint/nursery/no_unknown_unit.rs b/crates/biome_css_analyze/src/lint/nursery/no_unknown_unit.rs
+new file mode 100644
+index 0000000000..262886ce93
+--- /dev/null
++++ b/crates/biome_css_analyze/src/lint/nursery/no_unknown_unit.rs
+@@ -0,0 +1,187 @@
++use biome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic, RuleSource};
++use biome_console::markup;
++use biome_css_syntax::{
++    AnyCssDimension, CssFunction, CssGenericProperty, CssQueryFeaturePlain, CssSyntaxKind,
++};
++use biome_rowan::{SyntaxNodeCast, TextRange};
++
++const RESOLUTION_MEDIA_FEATURE_NAMES: [&str; 3] =
++    ["resolution", "min-resolution", "max-resolution"];
++
++declare_rule! {
++    /// Disallow unknown CSS units.
++    ///
++    /// For details on known CSS units, see the [MDN web docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#lengths).
++    ///
++    ///
++    /// ## Examples
++    ///
++    /// ### Invalid
++    ///
++    /// ```css,expect_diagnostic
++    /// a {
++    ///   width: 10pixels;
++    /// }
++    /// ```
++    ///
++    /// ```css,expect_diagnostic
++    /// a {
++    ///   width: calc(10px + 10pixels);
++    /// }
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```css
++    /// a {
++    ///   width: 10px;
++    /// }
++    /// ```
++    ///
++    /// ```css
++    /// a {
++    ///   width: 10Px;
++    /// }
++    /// ```
++    ///
++    /// ```css
++    /// a {
++    ///   width: 10pX;
++    /// }
++    /// ```
++    ///
++    /// ```css
++    /// a {
++    ///   width: calc(10px + 10px);
++    /// }
++    /// ```
++    ///
++    pub NoUnknownUnit {
++        version: "next",
++        name: "noUnknownUnit",
++        recommended: true,
++        sources: &[RuleSource::Stylelint("unit-no-unknown")],
++    }
++}
++
++pub struct NoUnknownUnitState {
++    unit: String,
++    span: TextRange,
++}
++
++impl Rule for NoUnknownUnit {
++    type Query = Ast<AnyCssDimension>;
++    type State = NoUnknownUnitState;
++    type Signals = Option<Self::State>;
++    type Options = ();
++
++    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
++        let node = ctx.query();
++
++        match node {
++            AnyCssDimension::CssUnknownDimension(dimension) => {
++                let unit_token = dimension.unit_token().ok()?;
++                let unit = unit_token.text_trimmed().to_string();
++
++                Some(NoUnknownUnitState {
++                    unit,
++                    span: unit_token.text_trimmed_range(),
++                })
++            }
++            AnyCssDimension::CssRegularDimension(dimension) => {
++                let unit_token = dimension.unit_token().ok()?;
++                let unit = unit_token.text_trimmed().to_string();
++
++                // The `x` unit is parsed as `CssRegularDimension`, but it is used for describing resolutions.
++                // This check is to disallow the use of the `x` unit outside this specific context.
++                if unit == "x" {
++                    let mut allow_x = false;
++
++                    for ancestor in dimension.unit_token().ok()?.ancestors() {
++                        match ancestor.kind() {
++                            CssSyntaxKind::CSS_FUNCTION => {
++                                let function_name = ancestor
++                                    .cast::<CssFunction>()?
++                                    .name()
++                                    .ok()?
++                                    .value_token()
++                                    .ok()?
++                                    .text_trimmed()
++                                    .to_lowercase();
++
++                                if function_name.ends_with("image-set") {
++                                    allow_x = true;
++                                    break;
++                                }
++                            }
++                            CssSyntaxKind::CSS_GENERIC_PROPERTY => {
++                                let property_name = ancestor
++                                    .cast::<CssGenericProperty>()?
++                                    .name()
++                                    .ok()?
++                                    .as_css_identifier()?
++                                    .value_token()
++                                    .ok()?
++                                    .text_trimmed()
++                                    .to_lowercase();
++
++                                if property_name == "image-resolution" {
++                                    allow_x = true;
++                                    break;
++                                }
++                            }
++                            CssSyntaxKind::CSS_QUERY_FEATURE_PLAIN => {
++                                let feature_name = ancestor
++                                    .cast::<CssQueryFeaturePlain>()?
++                                    .name()
++                                    .ok()?
++                                    .value_token()
++                                    .ok()?
++                                    .text_trimmed()
++                                    .to_lowercase();
++
++                                if RESOLUTION_MEDIA_FEATURE_NAMES.contains(&feature_name.as_str()) {
++                                    allow_x = true;
++                                    break;
++                                }
++                            }
++                            _ => {}
++                        }
++                    }
++
++                    if !allow_x {
++                        return Some(NoUnknownUnitState {
++                            unit,
++                            span: unit_token.text_trimmed_range(),
++                        });
++                    }
++                }
++
++                None
++            }
++            _ => None,
++        }
++    }
++
++    fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
++        Some(
++            RuleDiagnostic::new(
++                rule_category!(),
++                state.span,
++                markup! {
++                    "Unexpected unknown unit: "<Emphasis>{ state.unit }</Emphasis>
++                },
++            )
++            .note(markup! {
++                "See "<Hyperlink href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#lengths">"MDN web docs"</Hyperlink>" for more details."
++            })
++            .footer_list(
++                markup! {
++                    "Use a known unit instead, such as:"
++                },
++                &["px", "em", "rem", "etc."],
++            ),
++
++        )
++    }
++}
+diff --git a/crates/biome_css_analyze/src/options.rs b/crates/biome_css_analyze/src/options.rs
+index 0b8e9e100a..0be8ac2a7a 100644
+--- a/crates/biome_css_analyze/src/options.rs
++++ b/crates/biome_css_analyze/src/options.rs
+@@ -10,3 +10,5 @@ pub type NoDuplicateFontNames =
+     <lint::nursery::no_duplicate_font_names::NoDuplicateFontNames as biome_analyze::Rule>::Options;
+ pub type NoDuplicateSelectorsKeyframeBlock = < lint :: nursery :: no_duplicate_selectors_keyframe_block :: NoDuplicateSelectorsKeyframeBlock as biome_analyze :: Rule > :: Options ;
+ pub type NoImportantInKeyframe = < lint :: nursery :: no_important_in_keyframe :: NoImportantInKeyframe as biome_analyze :: Rule > :: Options ;
++pub type NoUnknownUnit =
++    <lint::nursery::no_unknown_unit::NoUnknownUnit as biome_analyze::Rule>::Options;
+diff --git a/crates/biome_diagnostics_categories/src/categories.rs b/crates/biome_diagnostics_categories/src/categories.rs
+index 3a19914772..187dd23936 100644
+--- a/crates/biome_diagnostics_categories/src/categories.rs
++++ b/crates/biome_diagnostics_categories/src/categories.rs
+@@ -128,6 +128,7 @@ define_categories! {
+     "lint/nursery/noRestrictedImports": "https://biomejs.dev/linter/rules/no-restricted-imports",
+     "lint/nursery/noTypeOnlyImportAttributes": "https://biomejs.dev/linter/rules/no-type-only-import-attributes",
+     "lint/nursery/noUndeclaredDependencies": "https://biomejs.dev/linter/rules/no-undeclared-dependencies",
++    "lint/nursery/noUnknownUnit": "https://biomejs.dev/linter/rules/no-unknown-unit",
+     "lint/nursery/useBiomeSuppressionComment": "https://biomejs.dev/linter/rules/use-biome-suppression-comment",
+     "lint/nursery/useImportRestrictions": "https://biomejs.dev/linter/rules/use-import-restrictions",
+     "lint/nursery/useSortedClasses": "https://biomejs.dev/linter/rules/use-sorted-classes",
+diff --git a/packages/@biomejs/backend-jsonrpc/src/workspace.ts b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+index 64e80b479d..466fcad401 100644
+--- a/packages/@biomejs/backend-jsonrpc/src/workspace.ts
++++ b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+@@ -976,6 +976,10 @@ export interface Nursery {
+ 	 * Disallow the use of dependencies that aren't specified in the package.json.
+ 	 */
+ 	noUndeclaredDependencies?: RuleConfiguration_for_Null;
++	/**
++	 * Disallow unknown CSS units.
++	 */
++	noUnknownUnit?: RuleConfiguration_for_Null;
+ 	/**
+ 	 * It enables the recommended rules for this group
+ 	 */
+@@ -1966,6 +1970,7 @@ export type Category =
+ 	| "lint/nursery/noRestrictedImports"
+ 	| "lint/nursery/noTypeOnlyImportAttributes"
+ 	| "lint/nursery/noUndeclaredDependencies"
++	| "lint/nursery/noUnknownUnit"
+ 	| "lint/nursery/useBiomeSuppressionComment"
+ 	| "lint/nursery/useImportRestrictions"
+ 	| "lint/nursery/useSortedClasses"
+diff --git a/packages/@biomejs/biome/configuration_schema.json b/packages/@biomejs/biome/configuration_schema.json
+index 0de94326fa..fa44fec07d 100644
+--- a/packages/@biomejs/biome/configuration_schema.json
++++ b/packages/@biomejs/biome/configuration_schema.json
+@@ -1552,6 +1552,13 @@
+ 						{ "type": "null" }
+ 					]
+ 				},
++				"noUnknownUnit": {
++					"description": "Disallow unknown CSS units.",
++					"anyOf": [
++						{ "$ref": "#/definitions/RuleConfiguration" },
++						{ "type": "null" }
++					]
++				},
+ 				"recommended": {
+ 					"description": "It enables the recommended rules for this group",
+ 					"type": ["boolean", "null"]

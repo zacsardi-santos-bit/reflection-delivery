@@ -1,0 +1,44 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --coverage.enabled=false --reporter=verbose src/context/processors/stateSnapshotAsyncProcessor.test.ts src/context/processors/stateSnapshotProcessor.test.ts src/context/utils/formatNodesForLlm.test.ts src/context/utils/snapshotGenerator.test.ts",
+  "test_files": [
+    "packages/core/src/context/processors/stateSnapshotAsyncProcessor.test.ts",
+    "packages/core/src/context/processors/stateSnapshotProcessor.test.ts",
+    "packages/core/src/context/system-tests/__snapshots__/lifecycle.golden.test.ts.snap",
+    "packages/core/src/context/utils/formatNodesForLlm.test.ts",
+    "packages/core/src/context/utils/snapshotGenerator.test.ts"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotAsyncProcessor.test.ts::StateSnapshotAsyncProcessor should generate a snapshot and publish it to the inbox",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotAsyncProcessor.test.ts::StateSnapshotAsyncProcessor should pull previous accumulate snapshot from inbox and append new targets",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotAsyncProcessor.test.ts::StateSnapshotAsyncProcessor should use Global Lookback to find an existing snapshot in the graph when inbox is empty",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotProcessor.test.ts::StateSnapshotProcessor should fall back to sync backstop if inbox is empty",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotProcessor.test.ts::StateSnapshotProcessor should use Global Lookback to find an existing snapshot in the graph as the baseline",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should initialize an empty state if no previous state is provided",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should merge new facts and tasks without destroying old ones",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should explicitly delete obsolete facts and constraints using array indices",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should truncate recent_arc to the configured rolling window limit",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should delete resolved tasks based on IDs",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should safely return the unmodified previous state if the LLM call throws an error",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator should safely return the unmodified previous state if the LLM returns completely garbage output",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator Structured Pruning Backstop should iteratively drop discovered_facts first when over budget",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator Structured Pruning Backstop should cascade to dropping constraints if facts are exhausted",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator Structured Pruning Backstop should cascade to dropping recent_arc if facts and constraints are exhausted",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator Structured Pruning Backstop should ultimately drop active_tasks as a last resort in a pathological scenario",
+    "/workspace/repo/packages/core/src/context/utils/snapshotGenerator.test.ts::SnapshotGenerator Structured Pruning Backstop should cleanly break the loop if the state is completely empty but still over budget",
+    "/workspace/repo/packages/core/src/context/utils/formatNodesForLlm.test.ts::formatNodesForLlm should format standard user and model text messages with relative turns",
+    "/workspace/repo/packages/core/src/context/utils/formatNodesForLlm.test.ts::formatNodesForLlm should format tool calls correctly",
+    "/workspace/repo/packages/core/src/context/utils/formatNodesForLlm.test.ts::formatNodesForLlm should format tool responses with semantic wrappers",
+    "/workspace/repo/packages/core/src/context/utils/formatNodesForLlm.test.ts::formatNodesForLlm should truncate massive tool responses and retain the semantic wrapper",
+    "/workspace/repo/packages/core/src/context/utils/formatNodesForLlm.test.ts::formatNodesForLlm should fallback to SYSTEM role if role is undefined"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotAsyncProcessor.test.ts::StateSnapshotAsyncProcessor should ignore empty targets",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotProcessor.test.ts::StateSnapshotProcessor should ignore if budget is satisfied",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotProcessor.test.ts::StateSnapshotProcessor should apply a valid snapshot from the Inbox (Fast Path)",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotProcessor.test.ts::StateSnapshotProcessor should reject a snapshot if the nodes were modified/deleted (Cache Invalidated)",
+    "/workspace/repo/packages/core/src/context/processors/stateSnapshotProcessor.test.ts::StateSnapshotProcessor should garbage collect the old baseline snapshot from the live graph when creating a new sync snapshot"
+  ]
+}

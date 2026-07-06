@@ -1,4 +1,0 @@
-patching file packages/core/src/__tests__/__snapshots__/solid.test.ts.snap
-patching file packages/core/src/__tests__/__snapshots__/svelte.test.ts.snap
-JSON report written to /workspace/test-results/output.json
-reward=1 graded=438 found=438 failed=0 parsed=442 framework=vitest exit_code=0

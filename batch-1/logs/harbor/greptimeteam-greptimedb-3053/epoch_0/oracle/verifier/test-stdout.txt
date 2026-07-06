@@ -1,0 +1,49 @@
+patching file src/datanode/src/tests.rs
+   Compiling store-api v0.5.0 (/workspace/repo/src/store-api)
+   Compiling table v0.5.0 (/workspace/repo/src/table)
+   Compiling common-grpc-expr v0.5.0 (/workspace/repo/src/common/grpc-expr)
+   Compiling sql v0.5.0 (/workspace/repo/src/sql)
+   Compiling file-engine v0.5.0 (/workspace/repo/src/file-engine)
+   Compiling common-meta v0.5.0 (/workspace/repo/src/common/meta)
+   Compiling auth v0.5.0 (/workspace/repo/src/auth)
+   Compiling session v0.5.0 (/workspace/repo/src/session)
+   Compiling meta-client v0.5.0 (/workspace/repo/src/meta-client)
+   Compiling log-store v0.5.0 (/workspace/repo/src/log-store)
+   Compiling client v0.5.0 (/workspace/repo/src/client)
+   Compiling partition v0.5.0 (/workspace/repo/src/partition)
+   Compiling mito2 v0.5.0 (/workspace/repo/src/mito2)
+   Compiling catalog v0.5.0 (/workspace/repo/src/catalog)
+   Compiling promql v0.5.0 (/workspace/repo/src/promql)
+   Compiling metric-engine v0.5.0 (/workspace/repo/src/metric-engine)
+   Compiling substrait v0.5.0 (/workspace/repo/src/common/substrait)
+   Compiling query v0.5.0 (/workspace/repo/src/query)
+   Compiling servers v0.5.0 (/workspace/repo/src/servers)
+   Compiling datanode v0.5.0 (/workspace/repo/src/datanode)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 49s
+    Starting 23 tests across 1 binary
+        PASS [   0.163s] datanode config::tests::test_secstr
+        PASS [   0.154s] datanode config::tests::test_toml
+        PASS [   0.145s] datanode datanode::tests::test_initialize_region_server
+        PASS [   0.134s] datanode heartbeat::handler::tests::test_close_region
+        PASS [   0.125s] datanode heartbeat::handler::tests::test_downgrade_region
+        PASS [   0.116s] datanode heartbeat::handler::tests::test_is_acceptable
+        PASS [   0.107s] datanode heartbeat::handler::tests::test_open_not_exists_region
+        PASS [   0.076s] datanode heartbeat::handler::upgrade_region::tests::test_region_not_exist
+        PASS [   0.082s] datanode heartbeat::task_tracker::tests::test_async_task_tracker_register
+        PASS [   0.147s] datanode heartbeat::handler::tests::test_open_region_ok
+        PASS [   0.095s] datanode heartbeat::handler::upgrade_region::tests::test_region_writable
+        PASS [   0.061s] datanode heartbeat::tests::test_resolve_addr
+        PASS [   0.151s] datanode heartbeat::handler::upgrade_region::tests::test_region_error
+        PASS [   0.066s] datanode region_server::tests::test_current_engine
+        PASS [   0.072s] datanode region_server::tests::test_region_deregistering
+        PASS [   0.155s] datanode heartbeat::handler::upgrade_region::tests::test_region_not_ready
+        PASS [   0.072s] datanode region_server::tests::test_region_not_ready
+        PASS [   0.071s] datanode region_server::tests::test_region_registering
+        PASS [   0.081s] datanode region_server::tests::test_region_request_failed
+        PASS [   0.147s] datanode heartbeat::task_tracker::tests::test_async_task_tracker_wait_timeout
+        PASS [   0.363s] datanode heartbeat::handler::upgrade_region::tests::test_region_not_ready_with_retry
+        PASS [   0.555s] datanode alive_keeper::test::countdown_task
+        PASS [   0.896s] datanode alive_keeper::test::region_alive_keeper
+------------
+     Summary [   0.911s] 23 tests run: 23 passed, 0 skipped
+reward=1 graded=23 found=23 failed=0 parsed=23 framework=cargo exit_code=0

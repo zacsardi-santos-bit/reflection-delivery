@@ -1,0 +1,29 @@
+{
+    "id": "8b4a4f39-8d8b-412b-87bd-b0688afb4ec2",
+    "started_at": "2026-07-04T15:37:18.737901",
+    "finished_at": "2026-07-04T15:40:59.401681",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__keras-team-keras-23165": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "keras-team-keras-23165__xePeuLb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

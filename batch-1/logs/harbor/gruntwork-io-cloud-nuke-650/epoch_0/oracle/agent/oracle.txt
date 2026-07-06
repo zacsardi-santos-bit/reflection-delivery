@@ -1,0 +1,9 @@
+patching file README.md
+patching file aws/resource_registry.go
+patching file aws/resources/s3_access_point.go
+patching file aws/resources/s3_access_point_types.go
+patching file aws/resources/s3_multi_region_access_point.go
+patching file aws/resources/s3_multi_region_access_point_types.go
+patching file aws/resources/s3_object_lambda_access_point.go
+patching file aws/resources/s3_object_lambda_access_point_types.go
+patching file config/config.go

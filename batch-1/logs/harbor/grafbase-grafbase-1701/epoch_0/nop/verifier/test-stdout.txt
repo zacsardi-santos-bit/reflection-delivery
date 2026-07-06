@@ -1,0 +1,83 @@
+patching file engine/crates/parser-openapi/src/tests/mod.rs
+patching file engine/crates/parser-openapi/src/tests/snapshots/parser_openapi__tests__amadeus_schema.snap
+   Compiling parser-openapi v0.1.0 (/workspace/repo/engine/crates/parser-openapi)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.20s
+────────────
+ Nextest run ID dedf5e35-8c22-4b49-8406-1093c811ae5d with nextest profile: ci
+    Starting 1 test across 1 binary (38 tests skipped)
+  TRY 1 FAIL [   0.044s] (───) parser-openapi tests::test_amadeus_schema
+  stdout ───
+
+    running 1 test
+    test tests::test_amadeus_schema ... FAILED
+
+    failures:
+
+    failures:
+        tests::test_amadeus_schema
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'tests::test_amadeus_schema' panicked at engine/crates/parser-openapi/src/tests/mod.rs:277:46:
+    called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  TRY 2 FAIL [   0.040s] (───) parser-openapi tests::test_amadeus_schema
+  stdout ───
+
+    running 1 test
+    test tests::test_amadeus_schema ... FAILED
+
+    failures:
+
+    failures:
+        tests::test_amadeus_schema
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'tests::test_amadeus_schema' panicked at engine/crates/parser-openapi/src/tests/mod.rs:277:46:
+    called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  TRY 3 FAIL [   0.041s] (1/1) parser-openapi tests::test_amadeus_schema
+  stdout ───
+
+    running 1 test
+    test tests::test_amadeus_schema ... FAILED
+
+    failures:
+
+    failures:
+        tests::test_amadeus_schema
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'tests::test_amadeus_schema' panicked at engine/crates/parser-openapi/src/tests/mod.rs:277:46:
+    called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.130s] 1 test run: 0 passed, 1 failed, 38 skipped
+  TRY 3 FAIL [   0.041s] (1/1) parser-openapi tests::test_amadeus_schema
+  stdout ───
+
+    running 1 test
+    test tests::test_amadeus_schema ... FAILED
+
+    failures:
+
+    failures:
+        tests::test_amadeus_schema
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'tests::test_amadeus_schema' panicked at engine/crates/parser-openapi/src/tests/mod.rs:277:46:
+    called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+error: test run failed
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=100

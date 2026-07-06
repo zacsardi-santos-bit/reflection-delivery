@@ -1,0 +1,320 @@
+diff --git a/Documentation/api.md b/Documentation/api.md
+index f78752da0..f01a8f035 100644
+--- a/Documentation/api.md
++++ b/Documentation/api.md
+@@ -29034,6 +29034,19 @@ int64
+ </tr>
+ <tr>
+ <td>
++<code>messageThreadID</code><br/>
++<em>
++int64
++</em>
++</td>
++<td>
++<em>(Optional)</em>
++<p>The Telegram Group Topic ID.
++It requires Alertmanager &gt;= 0.26.0.</p>
++</td>
++</tr>
++<tr>
++<td>
+ <code>message</code><br/>
+ <em>
+ string
+@@ -32756,6 +32769,19 @@ int64
+ </tr>
+ <tr>
+ <td>
++<code>messageThreadID</code><br/>
++<em>
++int64
++</em>
++</td>
++<td>
++<em>(Optional)</em>
++<p>The Telegram Group Topic ID.
++It requires Alertmanager &gt;= 0.26.0.</p>
++</td>
++</tr>
++<tr>
++<td>
+ <code>message</code><br/>
+ <em>
+ string
+diff --git a/bundle.yaml b/bundle.yaml
+index c390c9e52..f1159efb6 100644
+--- a/bundle.yaml
++++ b/bundle.yaml
+@@ -6848,6 +6848,12 @@ spec:
+                           message:
+                             description: Message template
+                             type: string
++                          messageThreadID:
++                            description: |-
++                              The Telegram Group Topic ID.
++                              It requires Alertmanager >= 0.26.0.
++                            format: int64
++                            type: integer
+                           parseMode:
+                             description: Parse mode for telegram message
+                             enum:
+diff --git a/example/prometheus-operator-crd-full/monitoring.coreos.com_alertmanagerconfigs.yaml b/example/prometheus-operator-crd-full/monitoring.coreos.com_alertmanagerconfigs.yaml
+index 560856b2e..4a73eb3e3 100644
+--- a/example/prometheus-operator-crd-full/monitoring.coreos.com_alertmanagerconfigs.yaml
++++ b/example/prometheus-operator-crd-full/monitoring.coreos.com_alertmanagerconfigs.yaml
+@@ -6847,6 +6847,12 @@ spec:
+                           message:
+                             description: Message template
+                             type: string
++                          messageThreadID:
++                            description: |-
++                              The Telegram Group Topic ID.
++                              It requires Alertmanager >= 0.26.0.
++                            format: int64
++                            type: integer
+                           parseMode:
+                             description: Parse mode for telegram message
+                             enum:
+@@ -16576,6 +16582,12 @@ spec:
+                           message:
+                             description: Message template
+                             type: string
++                          messageThreadID:
++                            description: |-
++                              The Telegram Group Topic ID.
++                              It requires Alertmanager >= 0.26.0.
++                            format: int64
++                            type: integer
+                           parseMode:
+                             description: Parse mode for telegram message
+                             enum:
+diff --git a/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml b/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+index fd8ba4ea0..eac4ffd08 100644
+--- a/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
++++ b/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+@@ -6848,6 +6848,12 @@ spec:
+                           message:
+                             description: Message template
+                             type: string
++                          messageThreadID:
++                            description: |-
++                              The Telegram Group Topic ID.
++                              It requires Alertmanager >= 0.26.0.
++                            format: int64
++                            type: integer
+                           parseMode:
+                             description: Parse mode for telegram message
+                             enum:
+diff --git a/jsonnet/prometheus-operator/alertmanagerconfigs-crd.json b/jsonnet/prometheus-operator/alertmanagerconfigs-crd.json
+index af84d9276..c38da8623 100644
+--- a/jsonnet/prometheus-operator/alertmanagerconfigs-crd.json
++++ b/jsonnet/prometheus-operator/alertmanagerconfigs-crd.json
+@@ -6418,6 +6418,11 @@
+                                 "description": "Message template",
+                                 "type": "string"
+                               },
++                              "messageThreadID": {
++                                "description": "The Telegram Group Topic ID.\nIt requires Alertmanager >= 0.26.0.",
++                                "format": "int64",
++                                "type": "integer"
++                              },
+                               "parseMode": {
+                                 "description": "Parse mode for telegram message",
+                                 "enum": [
+diff --git a/jsonnet/prometheus-operator/alertmanagerconfigs-v1beta1-crd.libsonnet b/jsonnet/prometheus-operator/alertmanagerconfigs-v1beta1-crd.libsonnet
+index f381c1b49..ae52cff50 100644
+--- a/jsonnet/prometheus-operator/alertmanagerconfigs-v1beta1-crd.libsonnet
++++ b/jsonnet/prometheus-operator/alertmanagerconfigs-v1beta1-crd.libsonnet
+@@ -6242,6 +6242,11 @@
+                             description: 'Message template',
+                             type: 'string',
+                           },
++                          messageThreadID: {
++                            description: 'The Telegram Group Topic ID.\nIt requires Alertmanager >= 0.26.0.',
++                            format: 'int64',
++                            type: 'integer',
++                          },
+                           parseMode: {
+                             description: 'Parse mode for telegram message',
+                             enum: [
+diff --git a/pkg/alertmanager/amcfg.go b/pkg/alertmanager/amcfg.go
+index 9f059e6b7..18bfb2493 100644
+--- a/pkg/alertmanager/amcfg.go
++++ b/pkg/alertmanager/amcfg.go
+@@ -1210,6 +1210,10 @@ func (cb *configBuilder) convertTelegramConfig(ctx context.Context, in monitorin
+ 	}
+ 	out.HTTPConfig = httpConfig
+ 
++	if in.MessageThreadID != nil {
++		out.MessageThreadID = int(*in.MessageThreadID)
++	}
++
+ 	if in.BotToken != nil {
+ 		botToken, err := cb.store.GetSecretKey(ctx, crKey.Namespace, *in.BotToken)
+ 		if err != nil {
+@@ -2258,6 +2262,12 @@ func (tc *telegramConfig) sanitize(amVersion semver.Version, logger *slog.Logger
+ 		tc.BotTokenFile = ""
+ 	}
+ 
++	if tc.MessageThreadID != 0 && lessThanV0_26 {
++		msg := "'message_thread_id' supported in Alertmanager >= 0.26.0 only - dropping field from provided config"
++		logger.Warn(msg, "current_version", amVersion.String())
++		tc.MessageThreadID = 0
++	}
++
+ 	return tc.HTTPConfig.sanitize(amVersion, logger)
+ }
+ 
+diff --git a/pkg/alertmanager/types.go b/pkg/alertmanager/types.go
+index d76843337..c574fc3b6 100644
+--- a/pkg/alertmanager/types.go
++++ b/pkg/alertmanager/types.go
+@@ -353,6 +353,7 @@ type telegramConfig struct {
+ 	BotToken             string            `yaml:"bot_token,omitempty" json:"bot_token,omitempty"`
+ 	BotTokenFile         string            `yaml:"bot_token_file,omitempty" json:"bot_token_file,omitempty"`
+ 	ChatID               int64             `yaml:"chat_id,omitempty" json:"chat_id,omitempty"`
++	MessageThreadID      int               `yaml:"message_thread_id,omitempty" json:"message_thread_id,omitempty"`
+ 	Message              string            `yaml:"message,omitempty" json:"message,omitempty"`
+ 	DisableNotifications bool              `yaml:"disable_notifications,omitempty" json:"disable_notifications,omitempty"`
+ 	ParseMode            string            `yaml:"parse_mode,omitempty" json:"parse_mode,omitempty"`
+diff --git a/pkg/apis/monitoring/v1alpha1/alertmanager_config_types.go b/pkg/apis/monitoring/v1alpha1/alertmanager_config_types.go
+index f5cfb00d3..ed25d8634 100644
+--- a/pkg/apis/monitoring/v1alpha1/alertmanager_config_types.go
++++ b/pkg/apis/monitoring/v1alpha1/alertmanager_config_types.go
+@@ -912,6 +912,10 @@ type TelegramConfig struct {
+ 	// The Telegram chat ID.
+ 	// +required
+ 	ChatID int64 `json:"chatID,omitempty"`
++	// The Telegram Group Topic ID.
++	// It requires Alertmanager >= 0.26.0.
++	// +optional
++	MessageThreadID *int64 `json:"messageThreadID,omitempty"`
+ 	// Message template
+ 	// +optional
+ 	Message string `json:"message,omitempty"`
+diff --git a/pkg/apis/monitoring/v1alpha1/zz_generated.deepcopy.go b/pkg/apis/monitoring/v1alpha1/zz_generated.deepcopy.go
+index 9f7a35f58..8cb50926f 100644
+--- a/pkg/apis/monitoring/v1alpha1/zz_generated.deepcopy.go
++++ b/pkg/apis/monitoring/v1alpha1/zz_generated.deepcopy.go
+@@ -2752,6 +2752,11 @@ func (in *TelegramConfig) DeepCopyInto(out *TelegramConfig) {
+ 		*out = new(string)
+ 		**out = **in
+ 	}
++	if in.MessageThreadID != nil {
++		in, out := &in.MessageThreadID, &out.MessageThreadID
++		*out = new(int64)
++		**out = **in
++	}
+ 	if in.DisableNotifications != nil {
+ 		in, out := &in.DisableNotifications, &out.DisableNotifications
+ 		*out = new(bool)
+diff --git a/pkg/apis/monitoring/v1beta1/alertmanager_config_types.go b/pkg/apis/monitoring/v1beta1/alertmanager_config_types.go
+index 907764568..31c6479fd 100644
+--- a/pkg/apis/monitoring/v1beta1/alertmanager_config_types.go
++++ b/pkg/apis/monitoring/v1beta1/alertmanager_config_types.go
+@@ -903,6 +903,10 @@ type TelegramConfig struct {
+ 	// The Telegram chat ID.
+ 	// +required
+ 	ChatID int64 `json:"chatID,omitempty"`
++	// The Telegram Group Topic ID.
++	// It requires Alertmanager >= 0.26.0.
++	// +optional
++	MessageThreadID *int64 `json:"messageThreadID,omitempty"`
+ 	// Message template
+ 	// +optional
+ 	Message string `json:"message,omitempty"`
+diff --git a/pkg/apis/monitoring/v1beta1/conversion_from.go b/pkg/apis/monitoring/v1beta1/conversion_from.go
+index 677586d9d..ec6006790 100644
+--- a/pkg/apis/monitoring/v1beta1/conversion_from.go
++++ b/pkg/apis/monitoring/v1beta1/conversion_from.go
+@@ -448,6 +448,7 @@ func convertTelegramConfigFrom(in v1alpha1.TelegramConfig) TelegramConfig {
+ 		BotToken:             convertSecretKeySelectorFrom(in.BotToken),
+ 		BotTokenFile:         in.BotTokenFile,
+ 		ChatID:               in.ChatID,
++		MessageThreadID:      in.MessageThreadID,
+ 		Message:              in.Message,
+ 		DisableNotifications: in.DisableNotifications,
+ 		ParseMode:            in.ParseMode,
+diff --git a/pkg/apis/monitoring/v1beta1/conversion_to.go b/pkg/apis/monitoring/v1beta1/conversion_to.go
+index 264644ce8..50895fdbb 100644
+--- a/pkg/apis/monitoring/v1beta1/conversion_to.go
++++ b/pkg/apis/monitoring/v1beta1/conversion_to.go
+@@ -444,6 +444,7 @@ func convertTelegramConfigTo(in TelegramConfig) v1alpha1.TelegramConfig {
+ 		BotToken:             convertSecretKeySelectorTo(in.BotToken),
+ 		BotTokenFile:         in.BotTokenFile,
+ 		ChatID:               in.ChatID,
++		MessageThreadID:      in.MessageThreadID,
+ 		Message:              in.Message,
+ 		DisableNotifications: in.DisableNotifications,
+ 		ParseMode:            in.ParseMode,
+diff --git a/pkg/apis/monitoring/v1beta1/zz_generated.deepcopy.go b/pkg/apis/monitoring/v1beta1/zz_generated.deepcopy.go
+index 9ce58cc73..e82e65d92 100644
+--- a/pkg/apis/monitoring/v1beta1/zz_generated.deepcopy.go
++++ b/pkg/apis/monitoring/v1beta1/zz_generated.deepcopy.go
+@@ -880,6 +880,11 @@ func (in *TelegramConfig) DeepCopyInto(out *TelegramConfig) {
+ 		*out = new(string)
+ 		**out = **in
+ 	}
++	if in.MessageThreadID != nil {
++		in, out := &in.MessageThreadID, &out.MessageThreadID
++		*out = new(int64)
++		**out = **in
++	}
+ 	if in.DisableNotifications != nil {
+ 		in, out := &in.DisableNotifications, &out.DisableNotifications
+ 		*out = new(bool)
+diff --git a/pkg/client/applyconfiguration/monitoring/v1alpha1/telegramconfig.go b/pkg/client/applyconfiguration/monitoring/v1alpha1/telegramconfig.go
+index d53396c48..37cb91074 100644
+--- a/pkg/client/applyconfiguration/monitoring/v1alpha1/telegramconfig.go
++++ b/pkg/client/applyconfiguration/monitoring/v1alpha1/telegramconfig.go
+@@ -28,6 +28,7 @@ type TelegramConfigApplyConfiguration struct {
+ 	BotToken             *v1.SecretKeySelector         `json:"botToken,omitempty"`
+ 	BotTokenFile         *string                       `json:"botTokenFile,omitempty"`
+ 	ChatID               *int64                        `json:"chatID,omitempty"`
++	MessageThreadID      *int64                        `json:"messageThreadID,omitempty"`
+ 	Message              *string                       `json:"message,omitempty"`
+ 	DisableNotifications *bool                         `json:"disableNotifications,omitempty"`
+ 	ParseMode            *string                       `json:"parseMode,omitempty"`
+@@ -80,6 +81,14 @@ func (b *TelegramConfigApplyConfiguration) WithChatID(value int64) *TelegramConf
+ 	return b
+ }
+ 
++// WithMessageThreadID sets the MessageThreadID field in the declarative configuration to the given value
++// and returns the receiver, so that objects can be built by chaining "With" function invocations.
++// If called multiple times, the MessageThreadID field is set to the value of the last call.
++func (b *TelegramConfigApplyConfiguration) WithMessageThreadID(value int64) *TelegramConfigApplyConfiguration {
++	b.MessageThreadID = &value
++	return b
++}
++
+ // WithMessage sets the Message field in the declarative configuration to the given value
+ // and returns the receiver, so that objects can be built by chaining "With" function invocations.
+ // If called multiple times, the Message field is set to the value of the last call.
+diff --git a/pkg/client/applyconfiguration/monitoring/v1beta1/telegramconfig.go b/pkg/client/applyconfiguration/monitoring/v1beta1/telegramconfig.go
+index aa36f84a0..1c8ea3fdd 100644
+--- a/pkg/client/applyconfiguration/monitoring/v1beta1/telegramconfig.go
++++ b/pkg/client/applyconfiguration/monitoring/v1beta1/telegramconfig.go
+@@ -24,6 +24,7 @@ type TelegramConfigApplyConfiguration struct {
+ 	BotToken             *SecretKeySelectorApplyConfiguration `json:"botToken,omitempty"`
+ 	BotTokenFile         *string                              `json:"botTokenFile,omitempty"`
+ 	ChatID               *int64                               `json:"chatID,omitempty"`
++	MessageThreadID      *int64                               `json:"messageThreadID,omitempty"`
+ 	Message              *string                              `json:"message,omitempty"`
+ 	DisableNotifications *bool                                `json:"disableNotifications,omitempty"`
+ 	ParseMode            *string                              `json:"parseMode,omitempty"`
+@@ -76,6 +77,14 @@ func (b *TelegramConfigApplyConfiguration) WithChatID(value int64) *TelegramConf
+ 	return b
+ }
+ 
++// WithMessageThreadID sets the MessageThreadID field in the declarative configuration to the given value
++// and returns the receiver, so that objects can be built by chaining "With" function invocations.
++// If called multiple times, the MessageThreadID field is set to the value of the last call.
++func (b *TelegramConfigApplyConfiguration) WithMessageThreadID(value int64) *TelegramConfigApplyConfiguration {
++	b.MessageThreadID = &value
++	return b
++}
++
+ // WithMessage sets the Message field in the declarative configuration to the given value
+ // and returns the receiver, so that objects can be built by chaining "With" function invocations.
+ // If called multiple times, the Message field is set to the value of the last call.

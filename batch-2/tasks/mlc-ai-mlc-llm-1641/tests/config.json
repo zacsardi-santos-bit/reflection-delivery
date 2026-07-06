@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python -c \"import sys; sys.argv=['t','vulkan','1']; import pytest; sys.exit(pytest.main(['/workspace/repo/tests/python/integration/test_model_compile.py', '-v', '--junitxml=/workspace/test-results/output.xml']))\"",
+  "test_files": [
+    "tests/python/integration/test_model_compile.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.python.integration.test_model_compile::test_model_compile"
+  ],
+  "PASS_TO_PASS": []
+}

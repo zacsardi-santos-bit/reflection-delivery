@@ -1,0 +1,343 @@
+diff --git a/docs/cli/plan-mode.md b/docs/cli/plan-mode.md
+index d60d5e6f6..11f7a9e52 100644
+--- a/docs/cli/plan-mode.md
++++ b/docs/cli/plan-mode.md
+@@ -181,9 +181,16 @@ As described in the
+ rule that does not explicitly specify `modes` is considered "always active" and
+ will apply to Plan Mode as well.
+ 
+-If you want a rule to apply to other modes but _not_ to Plan Mode, you must
+-explicitly specify the target modes. For example, to allow `npm test` in default
+-and Auto-Edit modes but not in Plan Mode:
++To maintain the integrity of Plan Mode as a safe research environment,
++persistent tool approvals are context-aware. Approvals granted in modes like
++Default or Auto-Edit do not apply to Plan Mode, ensuring that tools trusted for
++implementation don't automatically execute while you're researching. However,
++approvals granted while in Plan Mode are treated as intentional choices for
++global trust and apply to all modes.
++
++If you want to manually restrict a rule to other modes but _not_ to Plan Mode,
++you must explicitly specify the target modes. For example, to allow `npm test`
++in default and Auto-Edit modes but not in Plan Mode:
+ 
+ ```toml
+ [[rule]]
+diff --git a/docs/reference/policy-engine.md b/docs/reference/policy-engine.md
+index 597e74f11..b6265dbc5 100644
+--- a/docs/reference/policy-engine.md
++++ b/docs/reference/policy-engine.md
+@@ -171,6 +171,24 @@ modes specified, it is always active.
+   [Customizing Plan Mode Policies](../cli/plan-mode.md#customizing-policies).
+ - `yolo`: A mode where all tools are auto-approved (use with extreme caution).
+ 
++To maintain the integrity of Plan Mode as a safe research environment,
++persistent tool approvals are context-aware. When you select **"Allow for all
++future sessions"**, the policy engine explicitly includes the current mode and
++all more permissive modes in the hierarchy (`plan` < `default` < `autoEdit` <
++`yolo`).
++
++- **Approvals in `plan` mode**: These represent an intentional choice to trust a
++  tool globally. The resulting rule explicitly includes all modes (`plan`,
++  `default`, `autoEdit`, and `yolo`).
++- **Approvals in other modes**: These only apply to the current mode and those
++  more permissive. For example:
++  - An approval granted in **`default`** mode applies to `default`, `autoEdit`,
++    and `yolo`.
++  - An approval granted in **`autoEdit`** mode applies to `autoEdit` and `yolo`.
++  - An approval granted in **`yolo`** mode applies only to `yolo`. This ensures
++    that trust flows correctly to more permissive environments while maintaining
++    the safety of more restricted modes like `plan`.
++
+ ## Rule matching
+ 
+ When a tool call is made, the engine checks it against all active rules,
+@@ -304,7 +322,8 @@ priority = 10
+ denyMessage = "Deletion is permanent"
+ 
+ # (Optional) An array of approval modes where this rule is active.
+-modes = ["autoEdit"]
++# If omitted or empty, the rule applies to all modes.
++modes = ["default", "autoEdit", "yolo"]
+ 
+ # (Optional) A boolean to restrict the rule to interactive (true) or
+ # non-interactive (false) environments.
+diff --git a/packages/core/src/confirmation-bus/types.ts b/packages/core/src/confirmation-bus/types.ts
+index bb65fbdab..25d35436a 100644
+--- a/packages/core/src/confirmation-bus/types.ts
++++ b/packages/core/src/confirmation-bus/types.ts
+@@ -5,6 +5,7 @@
+  */
+ 
+ import { type FunctionCall } from '@google/genai';
++import { type ApprovalMode } from '../policy/types.js';
+ import type {
+   ToolConfirmationOutcome,
+   ToolConfirmationPayload,
+@@ -150,6 +151,7 @@ export interface UpdatePolicy {
+   commandPrefix?: string | string[];
+   mcpName?: string;
+   allowRedirection?: boolean;
++  modes?: ApprovalMode[];
+ }
+ 
+ export interface ToolPolicyRejection {
+diff --git a/packages/core/src/policy/config.ts b/packages/core/src/policy/config.ts
+index 38106e726..9147a66a9 100644
+--- a/packages/core/src/policy/config.ts
++++ b/packages/core/src/policy/config.ts
+@@ -533,7 +533,6 @@ export async function createPolicyEngineConfig(
+     disableAlwaysAllow: settings.disableAlwaysAllow,
+   };
+ }
+-
+ interface TomlRule {
+   toolName?: string;
+   mcpName?: string;
+@@ -542,10 +541,64 @@ interface TomlRule {
+   commandPrefix?: string | string[];
+   argsPattern?: string;
+   allowRedirection?: boolean;
++  modes?: ApprovalMode[];
+   // Index signature to satisfy Record type if needed for toml.stringify
+   [key: string]: unknown;
+ }
+ 
++/**
++ * Finds a rule in the rule array that matches the given criteria.
++ */
++function findMatchingRule(
++  rules: TomlRule[],
++  criteria: {
++    toolName: string;
++    mcpName?: string;
++    commandPrefix?: string | string[];
++    argsPattern?: string;
++  },
++): TomlRule | undefined {
++  return rules.find(
++    (r) =>
++      r.toolName === criteria.toolName &&
++      r.mcpName === criteria.mcpName &&
++      JSON.stringify(r.commandPrefix) ===
++        JSON.stringify(criteria.commandPrefix) &&
++      r.argsPattern === criteria.argsPattern,
++  );
++}
++
++/**
++ * Creates a new TOML rule object from the given tool name and message.
++ */
++function createTomlRule(toolName: string, message: UpdatePolicy): TomlRule {
++  const rule: TomlRule = {
++    decision: 'allow',
++    priority: getAlwaysAllowPriorityFraction(),
++    toolName,
++  };
++
++  if (message.mcpName) {
++    rule.mcpName = message.mcpName;
++  }
++
++  if (message.commandPrefix) {
++    rule.commandPrefix = message.commandPrefix;
++  } else if (message.argsPattern) {
++    rule.argsPattern = message.argsPattern;
++  }
++
++  if (message.allowRedirection !== undefined) {
++    rule.allowRedirection = message.allowRedirection;
++  }
++
++  if (message.modes) {
++    rule.modes = message.modes;
++  }
++
++  return rule;
++}
++
+ export function createPolicyUpdater(
+   policyEngine: PolicyEngine,
+   messageBus: MessageBus,
+@@ -585,6 +638,7 @@ export function createPolicyUpdater(
+               priority,
+               argsPattern: new RegExp(pattern),
+               mcpName: message.mcpName,
++              modes: message.modes,
+               source: 'Dynamic (Confirmed)',
+               allowRedirection: message.allowRedirection,
+             });
+@@ -622,6 +676,7 @@ export function createPolicyUpdater(
+           priority,
+           argsPattern,
+           mcpName: message.mcpName,
++          modes: message.modes,
+           source: 'Dynamic (Confirmed)',
+           allowRedirection: message.allowRedirection,
+         });
+@@ -662,39 +717,36 @@ export function createPolicyUpdater(
+               existingData.rule = [];
+             }
+ 
+-            // Create new rule object
+-            const newRule: TomlRule = {
+-              decision: 'allow',
+-              priority: getAlwaysAllowPriorityFraction(),
+-            };
+-
++            // Normalize tool name for MCP
++            let normalizedToolName = toolName;
+             if (message.mcpName) {
+-              newRule.mcpName = message.mcpName;
+-
+               const expectedPrefix = `${MCP_TOOL_PREFIX}${message.mcpName}_`;
+               if (toolName.startsWith(expectedPrefix)) {
+-                newRule.toolName = toolName.slice(expectedPrefix.length);
+-              } else {
+-                newRule.toolName = toolName;
++                normalizedToolName = toolName.slice(expectedPrefix.length);
+               }
+-            } else {
+-              newRule.toolName = toolName;
+             }
+ 
+-            if (message.commandPrefix) {
+-              newRule.commandPrefix = message.commandPrefix;
+-            } else if (message.argsPattern) {
+-              // message.argsPattern was already validated above
+-              newRule.argsPattern = message.argsPattern;
+-            }
++            // Look for an existing rule to update
++            const existingRule = findMatchingRule(existingData.rule, {
++              toolName: normalizedToolName,
++              mcpName: message.mcpName,
++              commandPrefix: message.commandPrefix,
++              argsPattern: message.argsPattern,
++            });
+ 
+-            if (message.allowRedirection !== undefined) {
+-              newRule.allowRedirection = message.allowRedirection;
++            if (existingRule) {
++              if (message.allowRedirection !== undefined) {
++                existingRule.allowRedirection = message.allowRedirection;
++              }
++              if (message.modes) {
++                existingRule.modes = message.modes;
++              }
++            } else {
++              existingData.rule.push(
++                createTomlRule(normalizedToolName, message),
++              );
+             }
+ 
+-            // Add to rules
+-            existingData.rule.push(newRule);
+-
+             // Serialize back to TOML
+             // @iarna/toml stringify might not produce beautiful output but it handles escaping correctly
+             // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+diff --git a/packages/core/src/policy/types.ts b/packages/core/src/policy/types.ts
+index 2366ec3fe..622cde0ab 100644
+--- a/packages/core/src/policy/types.ts
++++ b/packages/core/src/policy/types.ts
+@@ -52,6 +52,18 @@ export enum ApprovalMode {
+   PLAN = 'plan',
+ }
+ 
++/**
++ * The order of permissiveness for approval modes.
++ * Tools allowed in a less permissive mode should also be allowed
++ * in more permissive modes.
++ */
++export const MODES_BY_PERMISSIVENESS = [
++  ApprovalMode.PLAN,
++  ApprovalMode.DEFAULT,
++  ApprovalMode.AUTO_EDIT,
++  ApprovalMode.YOLO,
++];
++
+ /**
+  * Configuration for the built-in allowed-path checker.
+  */
+diff --git a/packages/core/src/scheduler/policy.ts b/packages/core/src/scheduler/policy.ts
+index 4faa9a209..69e2a69e6 100644
+--- a/packages/core/src/scheduler/policy.ts
++++ b/packages/core/src/scheduler/policy.ts
+@@ -7,6 +7,7 @@
+ import { ToolErrorType } from '../tools/tool-error.js';
+ import {
+   ApprovalMode,
++  MODES_BY_PERMISSIVENESS,
+   PolicyDecision,
+   type CheckResult,
+   type PolicyRule,
+@@ -126,6 +127,23 @@ export async function updatePolicy(
+ 
+   // Determine persist scope if we are persisting.
+   let persistScope: 'workspace' | 'user' | undefined;
++  let modes: ApprovalMode[] | undefined;
++  const currentMode = context.config.getApprovalMode();
++
++  // If this is an 'Always Allow' selection, we restrict it to the current mode
++  // and more permissive modes.
++  if (
++    outcome === ToolConfirmationOutcome.ProceedAlways ||
++    outcome === ToolConfirmationOutcome.ProceedAlwaysTool ||
++    outcome === ToolConfirmationOutcome.ProceedAlwaysServer ||
++    outcome === ToolConfirmationOutcome.ProceedAlwaysAndSave
++  ) {
++    const modeIndex = MODES_BY_PERMISSIVENESS.indexOf(currentMode);
++    if (modeIndex !== -1) {
++      modes = MODES_BY_PERMISSIVENESS.slice(modeIndex);
++    }
++  }
++
+   if (outcome === ToolConfirmationOutcome.ProceedAlwaysAndSave) {
+     // If folder is trusted and workspace policies are enabled, we prefer workspace scope.
+     if (
+@@ -147,6 +165,7 @@ export async function updatePolicy(
+       confirmationDetails,
+       messageBus,
+       persistScope,
++      modes,
+     );
+     return;
+   }
+@@ -160,6 +179,7 @@ export async function updatePolicy(
+     persistScope,
+     toolInvocation,
+     context.config,
++    modes,
+   );
+ }
+ 
+@@ -192,6 +212,7 @@ async function handleStandardPolicyUpdate(
+   persistScope?: 'workspace' | 'user',
+   toolInvocation?: AnyToolInvocation,
+   config?: Config,
++  modes?: ApprovalMode[],
+ ): Promise<void> {
+   if (
+     outcome === ToolConfirmationOutcome.ProceedAlways ||
+@@ -214,6 +235,7 @@ async function handleStandardPolicyUpdate(
+       toolName: tool.name,
+       persist: outcome === ToolConfirmationOutcome.ProceedAlwaysAndSave,
+       persistScope,
++      modes,
+       ...options,
+     });
+   }
+@@ -232,6 +254,7 @@ async function handleMcpPolicyUpdate(
+   >,
+   messageBus: MessageBus,
+   persistScope?: 'workspace' | 'user',
++  modes?: ApprovalMode[],
+ ): Promise<void> {
+   const isMcpAlways =
+     outcome === ToolConfirmationOutcome.ProceedAlways ||
+@@ -257,5 +280,6 @@ async function handleMcpPolicyUpdate(
+     mcpName: confirmationDetails.serverName,
+     persist,
+     persistScope,
++    modes,
+   });
+ }

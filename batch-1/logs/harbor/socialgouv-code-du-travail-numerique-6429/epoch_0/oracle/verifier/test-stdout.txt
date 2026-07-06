@@ -1,0 +1,127 @@
+patching file packages/code-du-travail-frontend/src/modules/home/__tests__/HomeSearch.test.tsx
+patching file packages/code-du-travail-frontend/src/modules/home/__tests__/__snapshots__/index.test.tsx.snap
+patching file packages/code-du-travail-frontend/src/modules/layout/header/__tests__/__snapshots__/HeaderDsfr.test.tsx.snap
+(node:49) V8: file:///workspace/repo/packages/code-du-travail-frontend/next.config.mjs:2 'assert' is deprecated in import statements and support will be removed in a future version; use 'with' instead
+(Use `node --trace-warnings ...` to show where the warning was created)
+jest-haste-map: duplicate manual mock found: service
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/questionnaire/__mocks__/service.ts
+    * <rootDir>/src/outils/__mocks__/service.ts
+
+jest-haste-map: duplicate manual mock found: @testing-library/react
+  The following files share their name; please delete one of them:
+    * <rootDir>/__mocks__/@testing-library/react.js
+    * <rootDir>/src/fiche-service-public/__mocks__/@testing-library/react.js
+
+PASS src/modules/home/__tests__/index.test.tsx
+  ● Console
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      18 |
+      19 | const customRender = (ui, options) =>
+    > 20 |   render(ui, { wrapper: AllTheProviders, ...options });
+         |         ^
+      21 |
+      22 | // re-export everything
+      23 | export * from "@testing-library/react";
+
+      at printWarning (../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at ../../node_modules/@testing-library/react/dist/pure.js:101:25
+      at act (../../node_modules/react/cjs/react.development.js:2512:16)
+      at render (../../node_modules/@testing-library/react/dist/pure.js:97:26)
+      at customRender (src/fiche-service-public/__mocks__/@testing-library/react.js:20:9)
+      at Object.<anonymous> (src/modules/home/__tests__/index.test.tsx:59:33)
+
+PASS src/modules/layout/header/__tests__/HeaderDsfr.test.tsx
+  ● Console
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      18 |
+      19 | const customRender = (ui, options) =>
+    > 20 |   render(ui, { wrapper: AllTheProviders, ...options });
+         |         ^
+      21 |
+      22 | // re-export everything
+      23 | export * from "@testing-library/react";
+
+      at printWarning (../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at ../../node_modules/@testing-library/react/dist/pure.js:101:25
+      at act (../../node_modules/react/cjs/react.development.js:2512:16)
+      at render (../../node_modules/@testing-library/react/dist/pure.js:97:26)
+      at customRender (src/fiche-service-public/__mocks__/@testing-library/react.js:20:9)
+      at Object.<anonymous> (src/modules/layout/header/__tests__/HeaderDsfr.test.tsx:8:33)
+
+PASS src/modules/home/__tests__/HomeSearch.test.tsx
+  ● Console
+
+    console.error
+      Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot
+
+      18 |
+      19 | const customRender = (ui, options) =>
+    > 20 |   render(ui, { wrapper: AllTheProviders, ...options });
+         |         ^
+      21 |
+      22 | // re-export everything
+      23 | export * from "@testing-library/react";
+
+      at printWarning (../../node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (../../node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.render (../../node_modules/react-dom/cjs/react-dom.development.js:29670:5)
+      at ../../node_modules/@testing-library/react/dist/pure.js:101:25
+      at act (../../node_modules/react/cjs/react.development.js:2512:16)
+      at render (../../node_modules/@testing-library/react/dist/pure.js:97:26)
+      at customRender (src/fiche-service-public/__mocks__/@testing-library/react.js:20:9)
+      at Object.<anonymous> (src/modules/home/__tests__/HomeSearch.test.tsx:50:33)
+
+    console.error
+      downshift: A component has changed the uncontrolled prop "selectedItem" to be controlled. This prop should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled Downshift element for the lifetime of the component. More info: https://github.com/downshift-js/downshift#control-props
+
+      4 | export class UserAction {
+      5 |   click(element: HTMLElement): UserAction {
+    > 6 |     fireEvent.click(element);
+        |               ^
+      7 |     return this;
+      8 |   }
+      9 |
+
+      at ../../node_modules/downshift/dist/downshift.cjs.js:394:17
+          at Array.forEach (<anonymous>)
+      at validateControlledUnchanged (../../node_modules/downshift/dist/downshift.cjs.js:388:24)
+      at ../../node_modules/downshift/dist/downshift.cjs.js:2007:7
+      at commitHookEffectListMount (../../node_modules/react-dom/cjs/react-dom.development.js:23150:26)
+      at commitPassiveMountOnFiber (../../node_modules/react-dom/cjs/react-dom.development.js:24931:11)
+      at commitPassiveMountEffects_complete (../../node_modules/react-dom/cjs/react-dom.development.js:24891:9)
+      at commitPassiveMountEffects_begin (../../node_modules/react-dom/cjs/react-dom.development.js:24878:7)
+      at commitPassiveMountEffects (../../node_modules/react-dom/cjs/react-dom.development.js:24866:3)
+      at flushPassiveEffectsImpl (../../node_modules/react-dom/cjs/react-dom.development.js:27039:3)
+      at flushPassiveEffects (../../node_modules/react-dom/cjs/react-dom.development.js:26984:14)
+      at performSyncWorkOnRoot (../../node_modules/react-dom/cjs/react-dom.development.js:26076:3)
+      at flushSyncCallbacks (../../node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushPassiveEffectsImpl (../../node_modules/react-dom/cjs/react-dom.development.js:27060:3)
+      at flushPassiveEffects (../../node_modules/react-dom/cjs/react-dom.development.js:26984:14)
+      at ../../node_modules/react-dom/cjs/react-dom.development.js:26769:9
+      at flushActQueue (../../node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../node_modules/react/cjs/react.development.js:2521:11)
+      at Object.eventWrapper (../../node_modules/@testing-library/react/dist/pure.js:65:28)
+      at fireEvent (../../node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/events.js:12:35)
+      at Function.fireEvent.<computed> [as click] (../../node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/events.js:110:36)
+      at Function.fireEvent.<computed> [as click] (../../node_modules/@testing-library/react/dist/fire-event.js:18:52)
+      at UserAction.click (src/common/TestHelper.ts:6:15)
+      at Object.click (src/modules/home/__tests__/HomeSearch.test.tsx:64:16)
+
+
+Test Suites: 3 passed, 3 total
+Tests:       3 passed, 3 total
+Snapshots:   2 passed, 2 total
+Time:        6.198 s
+Ran all test suites matching /src\/modules\/home\/__tests__\/(HomeSearch|index)\.test\.tsx|src\/modules\/layout\/header\/__tests__\/HeaderDsfr\.test\.tsx/i.
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=0

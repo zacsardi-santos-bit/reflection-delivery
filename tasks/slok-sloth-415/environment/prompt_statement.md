@@ -1,5 +1,0 @@
-I'm working on a Helm chart that renders Kubernetes deployment manifests. When I deploy using the default chart values without any custom security settings, the rendered deployment YAML includes empty security context sections at both the pod level and the container level. These empty sections shouldn't be there — security context blocks should only appear in the output when the user has actually provided security context values.
-
-I also need to simplify the security context configuration options. The chart currently supports some settings that should be removed, specifically supplemental group IDs and the capability dropping configuration. The remaining supported pod-level settings should be the run-as user/group/non-root and filesystem group options, and the container-level setting should be just the privilege escalation prevention flag.
-
-Can you update the Helm chart's deployment template and default values so that security context sections are only rendered when they are explicitly configured, and the default behavior produces a clean deployment manifest with no empty security context keys?

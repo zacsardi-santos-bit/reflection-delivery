@@ -1,9 +1,0 @@
-patching file pkg/recipes/terraform/module_test.go
-patching file test/functional/shared/resources/recipe_terraform_test.go
-patching file test/functional/shared/resources/testdata/corerp-resources-terraform-redis.bicep
-patching file test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/modules/main.tf (renamed from test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/main.tf)
-patching file test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/modules/variables.tf (renamed from test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/variables.tf)
-# github.com/radius-project/radius/pkg/recipes/terraform [github.com/radius-project/radius/pkg/recipes/terraform.test]
-pkg/recipes/terraform/module_test.go:105:48: cannot use tc.recipe (variable of type *recipes.EnvironmentDefinition) as string value in argument to inspectModule
-FAIL	github.com/radius-project/radius/pkg/recipes/terraform [build failed]
-reward=0 graded=5 found=5 failed=5 parsed=1 framework=go exit_code=1

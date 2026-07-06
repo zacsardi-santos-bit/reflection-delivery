@@ -1,1 +1,0 @@
-patching file src/sqlfluff/dialects/dialect_bigquery.py

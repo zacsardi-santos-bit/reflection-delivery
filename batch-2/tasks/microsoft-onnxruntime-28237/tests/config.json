@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/onnxruntime/test/python/quantization/test_symmetric_flag.py -v",
+  "test_files": [
+    "onnxruntime/test/python/quantization/test_symmetric_flag.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestSymmetricFlag::test_0",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestSymmetricFlag::test_1",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestSymmetricFlag::test_2",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestSymmetricFlag::test_3",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestRestrictedAsymmetricFlag::test_all_zero_activations_zp_is_qmin",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestRestrictedAsymmetricFlag::test_option_false_does_not_snap",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestRestrictedAsymmetricFlag::test_positive_activations_zp_is_zero",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestRestrictedAsymmetricFlag::test_signed_activations_zp_is_128",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestRestrictedAsymmetricFlag::test_snap_zero_point_uint8_min_real_range",
+    "onnxruntime.test.python.quantization.test_symmetric_flag.TestRestrictedAsymmetricFlag::test_snap_zero_point_uint8_respects_reduce_range"
+  ],
+  "PASS_TO_PASS": []
+}

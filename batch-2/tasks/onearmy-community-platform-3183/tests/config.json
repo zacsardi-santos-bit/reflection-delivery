@@ -1,0 +1,30 @@
+{
+  "test_framework": "jest",
+  "test_command": "node .yarn/releases/yarn-3.6.4.cjs install --immutable 2>&1 | tail -20 && CI=true node .yarn/releases/yarn-3.6.4.cjs build:shared 2>&1 | tail -20 && CI=true node_modules/.bin/env-cmd -e cra node_modules/.bin/craco test --env=jsdom --watchAll=false --runInBand --testPathPattern='user\\.store\\.test' --reporters=default",
+  "test_files": [
+    "packages/cypress/src/integration/SignUp.spec.ts",
+    "src/stores/User/user.store.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore login hands off to firebase auth",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore registerNewUser registers a new user"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserByUsername returns a well formed user object",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserProfile returns a well formed user object",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserProfile returns a single user object when 2 exist",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserProfile falls back to auth property for lookup when no user found",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserCreatedDocs returns documents created and collaborated on by the user, with accepted moderation status",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserCreatedDocs returns an empty object if no documents are found",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserCreatedDocs filters out documents with moderation status other than \"accepted\"",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore updateUserBadge updates the user badges in the database",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore getUserEmail fetches correct property off authUser",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore updateUserImpact throws an error if user undefined",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore updateUserImpact updates the user impact in the database",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore unsubscribeUser throws error for user not found",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore unsubscribeUser unsubscribes the user",
+    "/workspace/repo/src/stores/User/user.store.test.tsx::userStore updateUserProfile update user profile with type of member, previously was workspace"
+  ]
+}

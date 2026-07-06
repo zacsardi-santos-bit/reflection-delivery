@@ -1,7 +1,0 @@
-I'm working on a cloud storage upload utility and I need to add a function that infers HTTP metadata from a filename so uploaded artifacts are served with the right content type and encoding.
-
-The idea is straightforward: given a filename, the function should figure out the content type (and, where applicable, content encoding) to attach to the object in cloud storage. For example, a compressed text log should be recognized as plain text with gzip encoding, and the compression extension should be stripped from the stored filename. If the file ends with a compression suffix but has no recognizable inner extension, it should be treated as a raw compressed archive — again with the compression suffix stripped — but without a separate encoding header. There's a tricky edge case: if the filename has no dot at all but is just the bare word for a compression format, the filename should stay unchanged and still get the archive content type.
-
-The function also needs to handle standard extensions like JSON, plain text, and custom extensions registered at runtime via the system MIME registry. When the filename is empty or is just a dot, the function should return an empty metadata map.
-
-This function will be used at upload time to set the object metadata, so the returned filename (potentially stripped of the compression extension) becomes the storage key and the metadata map gets attached to the upload.

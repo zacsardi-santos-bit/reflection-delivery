@@ -1,0 +1,29 @@
+{
+    "id": "88685993-9b73-47eb-b495-453669f687ec",
+    "started_at": "2026-07-02T18:49:15.910329",
+    "finished_at": "2026-07-02T18:49:34.258072",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "gradio-app-gradio-13507__XR7RYNf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

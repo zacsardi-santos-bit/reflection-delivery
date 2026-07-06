@@ -1,0 +1,24 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci -p jj-lib -E 'test(/test_fix/)' --no-fail-fast",
+  "test_files": [
+    "lib/tests/runner.rs",
+    "lib/tests/test_fix.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/11) jj-lib::runner test_fix::test_fixer_fails",
+    "( 2/11) jj-lib::runner test_fix::test_fixer_does_not_change_content",
+    "( 3/11) jj-lib::runner test_fix::test_unchanged_file_is_not_fixed",
+    "( 4/11) jj-lib::runner test_fix::test_fix_multiple_revisions",
+    "( 5/11) jj-lib::runner test_fix::test_fix_one_file",
+    "( 6/11) jj-lib::runner test_fix::test_empty_commit",
+    "( 7/11) jj-lib::runner test_fix::test_unchanged_file_is_fixed",
+    "( 8/11) jj-lib::runner test_fix::test_parallel_fixer_basic",
+    "( 9/11) jj-lib::runner test_fix::test_parallel_fixer_no_changes_upon_partial_failure",
+    "(10/11) jj-lib::runner test_fix::test_parallel_fixer_does_not_change_content",
+    "(11/11) jj-lib::runner test_fix::test_parallel_fixer_fixes_files"
+  ],
+  "PASS_TO_PASS": []
+}

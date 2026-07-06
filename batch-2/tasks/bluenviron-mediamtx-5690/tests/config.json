@@ -1,0 +1,33 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/metrics -count=1",
+  "test_files": [
+    "internal/metrics/metrics_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/bluenviron/mediamtx/internal/metrics::TestMetrics",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/path",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilterByType/paths",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilterByType"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/bluenviron/mediamtx/internal/metrics::TestPreflightRequest",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestZeroMetricsFallback",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/hls_muxer",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/rtsp_conn",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/rtsp_session",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/rtsps_conn",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/rtsps_session",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/rtmp_conn",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/rtmps_conn",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/srt_conn",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilter/webrtc_session",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilterByType/rtmp_conns",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilterByType/rtmps_conns",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestFilterByType/webrtc_sessions",
+    "github.com/bluenviron/mediamtx/internal/metrics::TestAuthError"
+  ]
+}

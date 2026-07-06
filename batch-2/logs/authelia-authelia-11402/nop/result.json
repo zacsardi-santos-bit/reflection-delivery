@@ -1,0 +1,29 @@
+{
+    "id": "42f216fb-5eff-480b-aa85-38c172adb5af",
+    "started_at": "2026-07-06T12:16:31.847104",
+    "finished_at": "2026-07-06T12:17:15.007056",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__authelia-authelia-11402": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "authelia-authelia-11402__eWrG77U"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

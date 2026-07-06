@@ -1,0 +1,42 @@
+patching file dev/test-studio/schema/standard/objects.tsx
+patching file packages/sanity/package.json
+patching file packages/sanity/src/core/field/paths/helpers.ts
+patching file packages/sanity/src/core/form/inputs/ReferenceInput/ReferenceItem.tsx
+patching file packages/sanity/src/core/form/inputs/arrays/ArrayOfObjectsInput/Grid/GridItem.tsx
+patching file packages/sanity/src/core/form/inputs/arrays/ArrayOfObjectsInput/List/PreviewItem.tsx
+patching file packages/sanity/src/core/form/inputs/arrays/ArrayOfPrimitivesInput/ItemRow.tsx
+patching file packages/sanity/src/core/form/members/array/items/ArrayOfObjectsItem.tsx
+patching file packages/sanity/src/core/form/members/array/items/ArrayOfPrimitivesItem.tsx
+patching file packages/sanity/src/core/form/types/event.ts
+patching file packages/sanity/src/core/form/types/itemProps.ts
+patching file packages/sanity/src/core/i18n/bundles/copy-paste.ts
+patching file packages/sanity/src/core/i18n/bundles/studio.ts
+patching file packages/sanity/src/core/studio/components/navbar/search/datastores/useStoredSearch.ts
+patching file packages/sanity/src/core/studio/copyPaste/CopyPasteProvider.tsx
+patching file packages/sanity/src/core/studio/copyPaste/__telemetry__/copyPaste.telemetry.ts
+patching file packages/sanity/src/core/studio/copyPaste/__test__/jestClipboard.ts
+patching file packages/sanity/src/core/studio/copyPaste/__test__/mockClient.ts
+patching file packages/sanity/src/core/studio/copyPaste/__test__/schema/documents/references.ts
+patching file packages/sanity/src/core/studio/copyPaste/__test__/schema/editor.tsx
+patching file packages/sanity/src/core/studio/copyPaste/__test__/schema/index.ts
+patching file packages/sanity/src/core/studio/copyPaste/transferValue.ts
+patching file packages/sanity/src/core/studio/copyPaste/types.ts
+patching file pnpm-lock.yaml
+Hunk #2 succeeded at 1789 with fuzz 3.
+Hunk #3 succeeded at 4617 (offset 3 lines).
+Hunk #4 succeeded at 5218 (offset 3 lines).
+Hunk #5 succeeded at 5463 with fuzz 2 (offset 6 lines).
+Hunk #6 succeeded at 6161 (offset 6 lines).
+Hunk #7 succeeded at 6437 (offset 6 lines).
+Hunk #8 succeeded at 7564 (offset 6 lines).
+Hunk #9 succeeded at 8915 (offset 6 lines).
+Hunk #10 succeeded at 10348 (offset 6 lines).
+Hunk #11 succeeded at 14806 (offset 6 lines).
+Hunk #12 succeeded at 14817 (offset 6 lines).
+Hunk #13 succeeded at 15504 (offset 6 lines).
+Hunk #14 succeeded at 15822 with fuzz 2 (offset 8 lines).
+Hunk #15 succeeded at 16616 (offset 8 lines).
+Hunk #16 succeeded at 16914 (offset 8 lines).
+Hunk #17 succeeded at 18437 (offset 8 lines).
+Hunk #18 succeeded at 20191 (offset 8 lines).
+Hunk #19 succeeded at 21794 (offset 8 lines).

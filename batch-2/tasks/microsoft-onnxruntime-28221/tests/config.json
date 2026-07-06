@@ -1,0 +1,31 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/onnxruntime/test/python/quantization/test_calibration.py -v",
+  "test_files": [
+    "onnxruntime/test/python/quantization/test_calibration.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_augment_graph_config_1",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_augment_graph_config_2",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_augment_graph_config_3",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_augment_graph_with_zero_value_dimension",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_compute_data",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_compute_data_per_channel",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrateMinMaxCalibrator::test_histogram_calibrators_run",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_load_tensors_data_invalid_path",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_load_tensors_data_method_mismatch_raises",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_old_cache_without_smooth_quant_field_treated_as_false",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_quantize_static_calibration_cache_path",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_quantize_static_no_reader_no_cache_raises",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_save_load_tensors_data_entropy_roundtrip",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_save_load_tensors_data_minmax_roundtrip",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_save_tensors_data_creates_parent_dir",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_save_tensors_data_handles_scalar_bins",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_save_tensors_data_writes_smooth_quant_field",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_smooth_quant_match_produces_cache_hit",
+    "onnxruntime.test.python.quantization.test_calibration.TestCalibrationCache::test_smooth_quant_mismatch_triggers_recompute"
+  ],
+  "PASS_TO_PASS": []
+}

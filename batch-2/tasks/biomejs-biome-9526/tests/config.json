@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cargo nextest run -p biome_js_analyze -E 'test(valid_issue_9358)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/style/useImportType/valid-issue-9358.svelte",
+    "crates/biome_js_analyze/tests/specs/style/useImportType/valid-issue-9358.svelte.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_js_analyze::spec_tests specs::style::use_import_type::valid_issue_9358_svelte"
+  ],
+  "PASS_TO_PASS": []
+}

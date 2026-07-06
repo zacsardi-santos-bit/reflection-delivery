@@ -1,0 +1,204 @@
+patching file clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java
+patching file clients/cli/src/test/java/org/apache/gravitino/cli/output/TestPlainFormat.java
+patching file clients/cli/src/test/java/org/apache/gravitino/cli/output/TestTableFormat.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Skipping filesystem-fuse module since enableFuse is set to false
+
+> Configure project :
+checkDockerStatus command execution failed: Cannot run program "docker": error=2, No such file or directory
+------------------ Check Docker environment ---------------------
+Docker server status ............................................ [[31mstop[0m]
+Run test cases without `gravitino-docker-test` tag .............. [embedded test]
+-----------------------------------------------------------------
+Tip: Please make sure to start the [31mDocker server[0m before running the integration tests.
+
+> Configure project :docs
+Kotlin DSL property assignment is an incubating feature.
+
+> Task :core:processResources NO-SOURCE
+> Task :server:processResources NO-SOURCE
+> Task :catalogs:catalog-jdbc-common:processResources NO-SOURCE
+> Task :catalogs:catalog-common:processResources NO-SOURCE
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :clients:client-java:processResources NO-SOURCE
+> Task :server-common:processResources NO-SOURCE
+> Task :integration-test-common:processResources NO-SOURCE
+> Task :catalogs:catalog-jdbc-postgresql:processResources UP-TO-DATE
+> Task :api:processResources UP-TO-DATE
+> Task :clients:cli:processResources UP-TO-DATE
+> Task :common:processResources
+> Task :server-common:spotlessJava UP-TO-DATE
+> Task :server-common:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessJava UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessKotlinGradle UP-TO-DATE
+> Task :server-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessCheck UP-TO-DATE
+> Task :server-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :server-common:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessCheck UP-TO-DATE
+> Task :integration-test-common:spotlessJava UP-TO-DATE
+> Task :integration-test-common:spotlessJavaCheck UP-TO-DATE
+> Task :integration-test-common:spotlessKotlinGradle UP-TO-DATE
+> Task :integration-test-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :integration-test-common:spotlessCheck UP-TO-DATE
+> Task :integration-test-common:compileJava NO-SOURCE
+> Task :integration-test-common:classes UP-TO-DATE
+> Task :integration-test-common:processTestResources UP-TO-DATE
+> Task :server:spotlessJava UP-TO-DATE
+> Task :server:spotlessJavaCheck UP-TO-DATE
+> Task :server:spotlessKotlinGradle UP-TO-DATE
+> Task :server:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :server:spotlessCheck UP-TO-DATE
+> Task :clients:client-java:spotlessJava UP-TO-DATE
+> Task :clients:client-java:spotlessJavaCheck UP-TO-DATE
+> Task :clients:client-java:spotlessKotlinGradle UP-TO-DATE
+> Task :clients:client-java:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :clients:client-java:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-common:compileJava UP-TO-DATE
+> Task :catalogs:catalog-common:classes UP-TO-DATE
+> Task :catalogs:catalog-common:jar UP-TO-DATE
+> Task :api:spotlessJava UP-TO-DATE
+> Task :api:spotlessJavaCheck UP-TO-DATE
+> Task :api:spotlessKotlinGradle UP-TO-DATE
+> Task :api:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :api:spotlessCheck UP-TO-DATE
+> Task :common:spotlessJava UP-TO-DATE
+> Task :common:spotlessJavaCheck UP-TO-DATE
+> Task :common:spotlessKotlinGradle UP-TO-DATE
+> Task :common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :common:spotlessCheck UP-TO-DATE
+> Task :api:compileJava UP-TO-DATE
+> Task :api:classes UP-TO-DATE
+> Task :api:jar UP-TO-DATE
+> Task :common:compileJava UP-TO-DATE
+> Task :common:classes
+> Task :core:spotlessJava UP-TO-DATE
+> Task :core:spotlessJavaCheck UP-TO-DATE
+> Task :core:spotlessKotlinGradle UP-TO-DATE
+> Task :core:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :core:spotlessCheck UP-TO-DATE
+> Task :common:jar
+> Task :clients:client-java:compileJava UP-TO-DATE
+> Task :clients:client-java:classes UP-TO-DATE
+> Task :clients:client-java:jar UP-TO-DATE
+> Task :core:compileJava UP-TO-DATE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:compileJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:classes UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:jar UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:compileJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:classes UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:jar UP-TO-DATE
+> Task :server-common:compileJava UP-TO-DATE
+> Task :server-common:classes UP-TO-DATE
+> Task :server-common:jar UP-TO-DATE
+> Task :clients:cli:spotlessJava
+> Task :clients:cli:spotlessJavaCheck
+> Task :clients:cli:spotlessKotlinGradle UP-TO-DATE
+> Task :clients:cli:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :clients:cli:spotlessCheck
+> Task :server:compileJava UP-TO-DATE
+> Task :server:classes UP-TO-DATE
+> Task :server:jar UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:runtimeJars
+> Task :integration-test-common:compileTestJava UP-TO-DATE
+> Task :integration-test-common:testClasses UP-TO-DATE
+> Task :integration-test-common:testJar UP-TO-DATE
+> Task :clients:cli:compileJava
+> Task :clients:cli:classes
+> Task :clients:cli:jar
+
+> Task :clients:cli:compileTestJava
+Note: /workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/TestModelCommands.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :clients:cli:processTestResources UP-TO-DATE
+> Task :clients:cli:testClasses
+> Task :clients:cli:test
+> Task :clients:cli:jacocoTestReport
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 30s
+77 actionable tasks: 10 executed, 67 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.gravitino.cli.output.TestPlainFormat" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:22:53" hostname="modal" time="0.189">
+  <properties/>
+  <testcase name="testListColumnWithTableFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.041"/>
+  <testcase name="testListMetalakeWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.023"/>
+  <testcase name="testCatalogDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.032"/>
+  <testcase name="testTableDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.035"/>
+  <testcase name="testListSchemaWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.016"/>
+  <testcase name="testListCatalogWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.002"/>
+  <testcase name="testListTableWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.004"/>
+  <testcase name="testSchemaDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.001"/>
+  <testcase name="testAuditWithTableFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.021"/>
+  <testcase name="testOutputWithUnsupportType()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.002"/>
+  <testcase name="testMetalakeDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.001"/>
+  <testcase name="testListColumnWithTableFormatAndEmptyDefaultValues()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.003"/>
+  <testcase name="testAuditWithTableFormatWithNullValues()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.gravitino.cli.output.TestTableFormat" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:22:54" hostname="modal" time="0.055">
+  <properties/>
+  <testcase name="testListSchemaWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.016"/>
+  <testcase name="testListColumnWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.009"/>
+  <testcase name="testDataWithCenterAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testListCatalogWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testTitleWithLeftAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testListTableWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.003"/>
+  <testcase name="testSchemaDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testDataWithRightAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testCreateDefaultTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.0"/>
+  <testcase name="testMetalakeDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testAuditWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testOutputWithUnsupportType()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testTitleWithRightAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testListMetalakeWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testListColumnWithTableFormatAndEmptyDefaultValues()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.003"/>
+  <testcase name="testAuditWithTableFormatWithNullValues()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testCatalogDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testTableDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.gravitino.cli.output.TestLineUtil" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:22:53" hostname="modal" time="0.624">
+  <properties/>
+  <testcase name="testGetDefaultValueWithString()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.597"/>
+  <testcase name="testGetDefaultValueWithFunctionAndEmptyArgs()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.002"/>
+  <testcase name="testGetDefaultValueWithFunctionAndArgs()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.002"/>
+  <testcase name="testGetDefaultValueWithInteger()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.002"/>
+  <testcase name="testGetAutoIncrementWithInteger()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.002"/>
+  <testcase name="testGetDisplayWidthWithNonAscii()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.001"/>
+  <testcase name="testGetAutoIncrementWithShort()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.002"/>
+  <testcase name="testGetAutoIncrementWithNonInteger()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.002"/>
+  <testcase name="testGetDisplayWidthWithAscii()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.001"/>
+  <testcase name="testGetComment()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.001"/>
+  <testcase name="testGetDefaultValueWithNull()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.001"/>
+  <testcase name="testGetSpaces()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.004"/>
+  <testcase name="testGetAutoIncrementWithByte()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.001"/>
+  <testcase name="testGetAutoIncrementWithLong()" classname="org.apache.gravitino.cli.output.TestLineUtil" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=45 found=45 failed=0 parsed=45 framework=junit exit_code=0

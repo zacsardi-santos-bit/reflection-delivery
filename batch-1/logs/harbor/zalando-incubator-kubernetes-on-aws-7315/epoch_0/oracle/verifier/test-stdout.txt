@@ -1,0 +1,9 @@
+patching file test/e2e/stackset/go.mod
+patching file test/e2e/stackset/go.sum
+=== RUN   TestStacksetControllerVersion
+--- PASS: TestStacksetControllerVersion (0.00s)
+=== RUN   TestIngressSourceSwitchTTLRemoved
+--- PASS: TestIngressSourceSwitchTTLRemoved (0.00s)
+PASS
+ok  	github.com/zalando-incubator/kubernetes-on-aws/test/e2e/stackset	0.003s
+reward=1 graded=2 found=0 failed=0 parsed=0 framework=go exit_code=0

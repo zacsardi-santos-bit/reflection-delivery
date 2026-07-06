@@ -1,0 +1,183 @@
+diff --git a/charts/postgres-operator/crds/operatorconfigurations.yaml b/charts/postgres-operator/crds/operatorconfigurations.yaml
+index 46d135fa..f0bc45be 100644
+--- a/charts/postgres-operator/crds/operatorconfigurations.yaml
++++ b/charts/postgres-operator/crds/operatorconfigurations.yaml
+@@ -526,6 +526,8 @@ spec:
+                     type: string
+                     pattern: '^(\d+|\*)(/\d+)?(\s+(\d+|\*)(/\d+)?){4}$'
+                     default: "30 00 * * *"
++                  logical_backup_cronjob_environment_secret:
++                    type: string
+               debug:
+                 type: object
+                 properties:
+diff --git a/charts/postgres-operator/values.yaml b/charts/postgres-operator/values.yaml
+index 3032cd61..e29e6519 100644
+--- a/charts/postgres-operator/values.yaml
++++ b/charts/postgres-operator/values.yaml
+@@ -372,6 +372,8 @@ configLogicalBackup:
+   logical_backup_s3_retention_time: ""
+   # backup schedule in the cron format
+   logical_backup_schedule: "30 00 * * *"
++  # secret to be used as reference for env variables in cronjob
++  logical_backup_cronjob_environment_secret: ""
+ 
+ # automate creation of human users with teams API service
+ configTeamsApi:
+diff --git a/docs/reference/operator_parameters.md b/docs/reference/operator_parameters.md
+index 5818d817..bc68428a 100644
+--- a/docs/reference/operator_parameters.md
++++ b/docs/reference/operator_parameters.md
+@@ -825,6 +825,9 @@ grouped under the `logical_backup` key.
+   [reference schedule format](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#schedule)
+   into account. Default: "30 00 \* \* \*"
+ 
++* **logical_backup_cronjob_environment_secret**
++  Reference to a Kubernetes secret, which keys will be added as environment variables to the cronjob. Default: ""
++
+ ## Debugging the operator
+ 
+ Options to aid debugging of the operator itself. Grouped under the `debug` key.
+diff --git a/manifests/configmap.yaml b/manifests/configmap.yaml
+index 2388c22b..13dd13d8 100644
+--- a/manifests/configmap.yaml
++++ b/manifests/configmap.yaml
+@@ -94,6 +94,7 @@ data:
+   logical_backup_s3_sse: "AES256"
+   # logical_backup_s3_retention_time: ""
+   logical_backup_schedule: "30 00 * * *"
++  # logical_backup_cronjob_environment_secret: ""
+   major_version_upgrade_mode: "manual"
+   # major_version_upgrade_team_allow_list: ""
+   master_dns_name_format: "{cluster}.{namespace}.{hostedzone}"
+diff --git a/manifests/operatorconfiguration.crd.yaml b/manifests/operatorconfiguration.crd.yaml
+index f60d8426..97ab6a47 100644
+--- a/manifests/operatorconfiguration.crd.yaml
++++ b/manifests/operatorconfiguration.crd.yaml
+@@ -524,6 +524,8 @@ spec:
+                     type: string
+                     pattern: '^(\d+|\*)(/\d+)?(\s+(\d+|\*)(/\d+)?){4}$'
+                     default: "30 00 * * *"
++                  logical_backup_cronjob_environment_secret:
++                    type: string
+               debug:
+                 type: object
+                 properties:
+diff --git a/manifests/postgresql-operator-default-configuration.yaml b/manifests/postgresql-operator-default-configuration.yaml
+index ad0f99da..8cdc264a 100644
+--- a/manifests/postgresql-operator-default-configuration.yaml
++++ b/manifests/postgresql-operator-default-configuration.yaml
+@@ -172,6 +172,7 @@ configuration:
+     logical_backup_s3_sse: "AES256"
+     # logical_backup_s3_retention_time: ""
+     logical_backup_schedule: "30 00 * * *"
++    # logical_backup_cronjob_environment_secret: ""
+   debug:
+     debug_logging: true
+     enable_database_access: true
+diff --git a/pkg/apis/acid.zalan.do/v1/crds.go b/pkg/apis/acid.zalan.do/v1/crds.go
+index 558a03f0..802de738 100644
+--- a/pkg/apis/acid.zalan.do/v1/crds.go
++++ b/pkg/apis/acid.zalan.do/v1/crds.go
+@@ -1713,6 +1713,9 @@ var OperatorConfigCRDResourceValidation = apiextv1.CustomResourceValidation{
+ 								Type:    "string",
+ 								Pattern: "^(\\d+|\\*)(/\\d+)?(\\s+(\\d+|\\*)(/\\d+)?){4}$",
+ 							},
++							"logical_backup_cronjob_environment_secret": {
++								Type: "string",
++							},
+ 						},
+ 					},
+ 					"debug": {
+diff --git a/pkg/apis/acid.zalan.do/v1/operator_configuration_type.go b/pkg/apis/acid.zalan.do/v1/operator_configuration_type.go
+index d966aa1a..55502cf3 100644
+--- a/pkg/apis/acid.zalan.do/v1/operator_configuration_type.go
++++ b/pkg/apis/acid.zalan.do/v1/operator_configuration_type.go
+@@ -232,6 +232,7 @@ type OperatorLogicalBackupConfiguration struct {
+ 	RetentionTime                string `json:"logical_backup_s3_retention_time,omitempty"`
+ 	GoogleApplicationCredentials string `json:"logical_backup_google_application_credentials,omitempty"`
+ 	JobPrefix                    string `json:"logical_backup_job_prefix,omitempty"`
++	CronjobEnvironmentSecret     string `json:"logical_backup_cronjob_environment_secret,omitempty"`
+ 	CPURequest                   string `json:"logical_backup_cpu_request,omitempty"`
+ 	MemoryRequest                string `json:"logical_backup_memory_request,omitempty"`
+ 	CPULimit                     string `json:"logical_backup_cpu_limit,omitempty"`
+diff --git a/pkg/cluster/k8sres.go b/pkg/cluster/k8sres.go
+index 8be32f09..67adb6a3 100644
+--- a/pkg/cluster/k8sres.go
++++ b/pkg/cluster/k8sres.go
+@@ -1145,6 +1145,37 @@ func (c *Cluster) getPodEnvironmentSecretVariables() ([]v1.EnvVar, error) {
+ 	return secretPodEnvVarsList, nil
+ }
+ 
++// Return list of variables the cronjob received from the configured Secret
++func (c *Cluster) getCronjobEnvironmentSecretVariables() ([]v1.EnvVar, error) {
++	secretCronjobEnvVarsList := make([]v1.EnvVar, 0)
++
++	if c.OpConfig.LogicalBackupCronjobEnvironmentSecret == "" {
++		return secretCronjobEnvVarsList, nil
++	}
++
++	secret, err := c.KubeClient.Secrets(c.Namespace).Get(
++		context.TODO(),
++		c.OpConfig.LogicalBackupCronjobEnvironmentSecret,
++		metav1.GetOptions{})
++	if err != nil {
++		return nil, fmt.Errorf("could not read Secret CronjobEnvironmentSecretName: %v", err)
++	}
++
++	for k := range secret.Data {
++		secretCronjobEnvVarsList = append(secretCronjobEnvVarsList,
++			v1.EnvVar{Name: k, ValueFrom: &v1.EnvVarSource{
++				SecretKeyRef: &v1.SecretKeySelector{
++					LocalObjectReference: v1.LocalObjectReference{
++						Name: c.OpConfig.LogicalBackupCronjobEnvironmentSecret,
++					},
++					Key: k,
++				},
++			}})
++	}
++
++	return secretCronjobEnvVarsList, nil
++}
++
+ func getSidecarContainer(sidecar acidv1.Sidecar, index int, resources *v1.ResourceRequirements) *v1.Container {
+ 	name := sidecar.Name
+ 	if name == "" {
+@@ -2166,7 +2197,13 @@ func (c *Cluster) generateLogicalBackupJob() (*batchv1.CronJob, error) {
+ 		return nil, fmt.Errorf("could not generate resource requirements for logical backup pods: %v", err)
+ 	}
+ 
++	secretEnvVarsList, err := c.getCronjobEnvironmentSecretVariables()
++	if err != nil {
++		return nil, err
++	}
++
+ 	envVars := c.generateLogicalBackupPodEnvVars()
++	envVars = append(envVars, secretEnvVarsList...)
+ 	logicalBackupContainer := generateContainer(
+ 		logicalBackupContainerName,
+ 		&c.OpConfig.LogicalBackup.LogicalBackupDockerImage,
+diff --git a/pkg/controller/operator_config.go b/pkg/controller/operator_config.go
+index 8aaf8759..64ad3df7 100644
+--- a/pkg/controller/operator_config.go
++++ b/pkg/controller/operator_config.go
+@@ -188,6 +188,7 @@ func (c *Controller) importConfigurationFromCRD(fromCRD *acidv1.OperatorConfigur
+ 	result.LogicalBackupS3RetentionTime = fromCRD.LogicalBackup.RetentionTime
+ 	result.LogicalBackupGoogleApplicationCredentials = fromCRD.LogicalBackup.GoogleApplicationCredentials
+ 	result.LogicalBackupJobPrefix = util.Coalesce(fromCRD.LogicalBackup.JobPrefix, "logical-backup-")
++	result.LogicalBackupCronjobEnvironmentSecret = fromCRD.LogicalBackup.CronjobEnvironmentSecret
+ 	result.LogicalBackupCPURequest = fromCRD.LogicalBackup.CPURequest
+ 	result.LogicalBackupMemoryRequest = fromCRD.LogicalBackup.MemoryRequest
+ 	result.LogicalBackupCPULimit = fromCRD.LogicalBackup.CPULimit
+diff --git a/pkg/util/config/config.go b/pkg/util/config/config.go
+index 82b878b6..b7edb572 100644
+--- a/pkg/util/config/config.go
++++ b/pkg/util/config/config.go
+@@ -140,6 +140,7 @@ type LogicalBackup struct {
+ 	LogicalBackupS3RetentionTime              string `name:"logical_backup_s3_retention_time" default:""`
+ 	LogicalBackupGoogleApplicationCredentials string `name:"logical_backup_google_application_credentials" default:""`
+ 	LogicalBackupJobPrefix                    string `name:"logical_backup_job_prefix" default:"logical-backup-"`
++	LogicalBackupCronjobEnvironmentSecret     string `name:"logical_backup_cronjob_environment_secret" default:""`
+ 	LogicalBackupCPURequest                   string `name:"logical_backup_cpu_request"`
+ 	LogicalBackupMemoryRequest                string `name:"logical_backup_memory_request"`
+ 	LogicalBackupCPULimit                     string `name:"logical_backup_cpu_limit"`

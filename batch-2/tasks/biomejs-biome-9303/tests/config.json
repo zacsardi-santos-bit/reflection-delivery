@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_formatter switch_comment",
+  "test_files": [
+    "crates/biome_js_formatter/tests/specs/js/module/statement/switch_comment.js",
+    "crates/biome_js_formatter/tests/specs/js/module/statement/switch_comment.js.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_js_formatter::spec_tests formatter::js_module::module::statement::switch_comment_js"
+  ],
+  "PASS_TO_PASS": []
+}

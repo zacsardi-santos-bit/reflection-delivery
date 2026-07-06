@@ -1,0 +1,29 @@
+{
+    "id": "9856edae-947e-4db1-b69c-966d03c8bb06",
+    "started_at": "2026-07-06T12:17:51.101893",
+    "finished_at": "2026-07-06T12:18:17.372292",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__aws-aws-sam-cli-8661": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "aws-aws-sam-cli-8661__PEWcqik"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

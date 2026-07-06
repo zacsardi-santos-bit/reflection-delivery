@@ -1,0 +1,14 @@
+{
+  "test_framework": "ctest",
+  "test_command": "cd /workspace/repo && mkdir -p build && cd build && cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DENABLE_CRIPTS=OFF -DENABLE_EXAMPLE=OFF -DENABLE_VERIFY_PLUGINS=OFF .. && ninja test_RemapRules && ctest -R test_RemapRules",
+  "test_files": [
+    "src/proxy/http/remap/unit-tests/CMakeLists.txt",
+    "src/proxy/http/remap/unit-tests/test_RemapRules.cc"
+  ],
+  "num_test_files": 2,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "test_RemapRules::test_RemapRules"
+  ],
+  "PASS_TO_PASS": []
+}

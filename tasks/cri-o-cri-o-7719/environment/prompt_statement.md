@@ -1,7 +1,0 @@
-I'm working on adding support for seccomp profiles stored as OCI artifacts in container registries to CRI-O. Right now, the runtime can only load seccomp profiles from local disk files, but I want it to automatically pull a profile from a registry image when the pod or container is annotated with a reference to that image.
-
-The feature should work like this: when a pod or container has a specific annotation pointing to an OCI image reference, the runtime should pull that image as a security artifact and read the seccomp profile file from it. It needs to support three levels of targeting — an image-level annotation baked into the container image, a pod-wide annotation that applies to all containers in the pod, and a container-specific annotation that only applies to the named container. If the annotation key includes a container name suffix that doesn't match the current container, it should be ignored. If no matching annotation is found at all, the existing behavior should remain unchanged.
-
-If the pull fails, or if the artifact doesn't contain the expected profile file, the operation should return an error. If a higher-priority seccomp policy is already set explicitly (like a locally specified profile), the annotation-based approach should be skipped.
-
-I need to create the new component responsible for this annotation-checking and artifact-pulling logic, as well as update the main seccomp setup flow to call into it with the relevant annotation maps and container name.

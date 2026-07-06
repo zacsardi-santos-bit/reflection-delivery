@@ -1,9 +1,0 @@
-patching file commit_test.go
-patching file structure_test.go
-patching file transform_test.go
-patching file vis_config_test.go
-# github.com/qri-io/dataset [github.com/qri-io/dataset.test]
-/go/src/github.com/qri-io/dataset/structure_test.go:229:20: c.in.MarshalJSONObject undefined (type *Structure has no field or method MarshalJSONObject)
-FAIL	github.com/qri-io/dataset [build failed]
-FAIL
-reward=0 graded=5 found=5 failed=5 parsed=1 framework=go exit_code=1

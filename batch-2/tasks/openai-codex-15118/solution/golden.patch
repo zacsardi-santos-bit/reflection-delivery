@@ -1,0 +1,4792 @@
+diff --git a/codex-rs/app-server-client/src/lib.rs b/codex-rs/app-server-client/src/lib.rs
+index 1452eb590a..2b37c39014 100644
+--- a/codex-rs/app-server-client/src/lib.rs
++++ b/codex-rs/app-server-client/src/lib.rs
+@@ -1033,6 +1033,10 @@ mod tests {
+         for (session_source, expected_source) in [
+             (SessionSource::Exec, ApiSessionSource::Exec),
+             (SessionSource::Cli, ApiSessionSource::Cli),
++            (
++                SessionSource::Custom("atlas".to_string()),
++                ApiSessionSource::Custom("atlas".to_string()),
++            ),
+         ] {
+             let client = start_test_client(session_source).await;
+             let parsed: ThreadStartResponse = client
+diff --git a/codex-rs/app-server-protocol/schema/json/ClientRequest.json b/codex-rs/app-server-protocol/schema/json/ClientRequest.json
+index a6eb901a55..32b42f5177 100644
+--- a/codex-rs/app-server-protocol/schema/json/ClientRequest.json
++++ b/codex-rs/app-server-protocol/schema/json/ClientRequest.json
+@@ -2894,6 +2894,7 @@
+         "vscode",
+         "exec",
+         "appServer",
++        "custom",
+         "subAgent",
+         "subAgentReview",
+         "subAgentCompact",
+diff --git a/codex-rs/app-server-protocol/schema/json/ServerNotification.json b/codex-rs/app-server-protocol/schema/json/ServerNotification.json
+index 8bb9f25483..93557e9c1e 100644
+--- a/codex-rs/app-server-protocol/schema/json/ServerNotification.json
++++ b/codex-rs/app-server-protocol/schema/json/ServerNotification.json
+@@ -1880,6 +1880,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.schemas.json b/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.schemas.json
+index bc889ef3ca..b05076081a 100644
+--- a/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.schemas.json
++++ b/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.schemas.json
+@@ -10984,6 +10984,19 @@
+             ],
+             "type": "string"
+           },
++          {
++            "additionalProperties": false,
++            "properties": {
++              "custom": {
++                "type": "string"
++              }
++            },
++            "required": [
++              "custom"
++            ],
++            "title": "CustomSessionSource",
++            "type": "object"
++          },
+           {
+             "additionalProperties": false,
+             "properties": {
+@@ -13097,6 +13110,7 @@
+           "vscode",
+           "exec",
+           "appServer",
++          "custom",
+           "subAgent",
+           "subAgentReview",
+           "subAgentCompact",
+diff --git a/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.v2.schemas.json b/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.v2.schemas.json
+index 25155d483c..794d71999e 100644
+--- a/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.v2.schemas.json
++++ b/codex-rs/app-server-protocol/schema/json/codex_app_server_protocol.v2.schemas.json
+@@ -8744,6 +8744,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+@@ -10857,6 +10870,7 @@
+         "vscode",
+         "exec",
+         "appServer",
++        "custom",
+         "subAgent",
+         "subAgentReview",
+         "subAgentCompact",
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadForkResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadForkResponse.json
+index 04765cf484..2667415008 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadForkResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadForkResponse.json
+@@ -826,6 +826,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadListParams.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadListParams.json
+index c5cf1364c9..d6a3fddfac 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadListParams.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadListParams.json
+@@ -14,6 +14,7 @@
+         "vscode",
+         "exec",
+         "appServer",
++        "custom",
+         "subAgent",
+         "subAgentReview",
+         "subAgentCompact",
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadListResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadListResponse.json
+index 9366304000..c4410dada3 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadListResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadListResponse.json
+@@ -584,6 +584,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadMetadataUpdateResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadMetadataUpdateResponse.json
+index 57dea225e2..9e4fa363ae 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadMetadataUpdateResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadMetadataUpdateResponse.json
+@@ -584,6 +584,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadReadResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadReadResponse.json
+index 295938ba85..762c585f6a 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadReadResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadReadResponse.json
+@@ -584,6 +584,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadResumeResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadResumeResponse.json
+index 774c3cade3..5560210371 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadResumeResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadResumeResponse.json
+@@ -826,6 +826,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadRollbackResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadRollbackResponse.json
+index 518f560a27..b24218778c 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadRollbackResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadRollbackResponse.json
+@@ -584,6 +584,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadStartResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadStartResponse.json
+index a6746e1eb1..7f3f848e67 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadStartResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadStartResponse.json
+@@ -826,6 +826,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadStartedNotification.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadStartedNotification.json
+index a2307578d2..70b995b24d 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadStartedNotification.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadStartedNotification.json
+@@ -584,6 +584,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/json/v2/ThreadUnarchiveResponse.json b/codex-rs/app-server-protocol/schema/json/v2/ThreadUnarchiveResponse.json
+index 64c00271fb..ae9ebb57df 100644
+--- a/codex-rs/app-server-protocol/schema/json/v2/ThreadUnarchiveResponse.json
++++ b/codex-rs/app-server-protocol/schema/json/v2/ThreadUnarchiveResponse.json
+@@ -584,6 +584,19 @@
+           ],
+           "type": "string"
+         },
++        {
++          "additionalProperties": false,
++          "properties": {
++            "custom": {
++              "type": "string"
++            }
++          },
++          "required": [
++            "custom"
++          ],
++          "title": "CustomSessionSource",
++          "type": "object"
++        },
+         {
+           "additionalProperties": false,
+           "properties": {
+diff --git a/codex-rs/app-server-protocol/schema/typescript/SessionSource.ts b/codex-rs/app-server-protocol/schema/typescript/SessionSource.ts
+index e5e746e384..a80b013b22 100644
+--- a/codex-rs/app-server-protocol/schema/typescript/SessionSource.ts
++++ b/codex-rs/app-server-protocol/schema/typescript/SessionSource.ts
+@@ -3,4 +3,4 @@
+ // This file was generated by [ts-rs](https://github.com/Aleph-Alpha/ts-rs). Do not edit this file manually.
+ import type { SubAgentSource } from "./SubAgentSource";
+ 
+-export type SessionSource = "cli" | "vscode" | "exec" | "mcp" | { "subagent": SubAgentSource } | "unknown";
++export type SessionSource = "cli" | "vscode" | "exec" | "mcp" | { "custom": string } | { "subagent": SubAgentSource } | "unknown";
+diff --git a/codex-rs/app-server-protocol/schema/typescript/v2/SessionSource.ts b/codex-rs/app-server-protocol/schema/typescript/v2/SessionSource.ts
+index b35b421fcd..852e6ded97 100644
+--- a/codex-rs/app-server-protocol/schema/typescript/v2/SessionSource.ts
++++ b/codex-rs/app-server-protocol/schema/typescript/v2/SessionSource.ts
+@@ -3,4 +3,4 @@
+ // This file was generated by [ts-rs](https://github.com/Aleph-Alpha/ts-rs). Do not edit this file manually.
+ import type { SubAgentSource } from "../SubAgentSource";
+ 
+-export type SessionSource = "cli" | "vscode" | "exec" | "appServer" | { "subAgent": SubAgentSource } | "unknown";
++export type SessionSource = "cli" | "vscode" | "exec" | "appServer" | { "custom": string } | { "subAgent": SubAgentSource } | "unknown";
+diff --git a/codex-rs/app-server-protocol/schema/typescript/v2/ThreadSourceKind.ts b/codex-rs/app-server-protocol/schema/typescript/v2/ThreadSourceKind.ts
+index 0a464e3d8d..6ff9160e10 100644
+--- a/codex-rs/app-server-protocol/schema/typescript/v2/ThreadSourceKind.ts
++++ b/codex-rs/app-server-protocol/schema/typescript/v2/ThreadSourceKind.ts
+@@ -2,4 +2,4 @@
+ 
+ // This file was generated by [ts-rs](https://github.com/Aleph-Alpha/ts-rs). Do not edit this file manually.
+ 
+-export type ThreadSourceKind = "cli" | "vscode" | "exec" | "appServer" | "subAgent" | "subAgentReview" | "subAgentCompact" | "subAgentThreadSpawn" | "subAgentOther" | "unknown";
++export type ThreadSourceKind = "cli" | "vscode" | "exec" | "appServer" | "custom" | "subAgent" | "subAgentReview" | "subAgentCompact" | "subAgentThreadSpawn" | "subAgentOther" | "unknown";
+diff --git a/codex-rs/app-server-protocol/src/protocol/v2.rs b/codex-rs/app-server-protocol/src/protocol/v2.rs
+index 09d891c295..80c17dc5b8 100644
+--- a/codex-rs/app-server-protocol/src/protocol/v2.rs
++++ b/codex-rs/app-server-protocol/src/protocol/v2.rs
+@@ -1467,6 +1467,7 @@ pub enum SessionSource {
+     VsCode,
+     Exec,
+     AppServer,
++    Custom(String),
+     SubAgent(CoreSubAgentSource),
+     #[serde(other)]
+     Unknown,
+@@ -1479,6 +1480,7 @@ impl From<CoreSessionSource> for SessionSource {
+             CoreSessionSource::VSCode => SessionSource::VsCode,
+             CoreSessionSource::Exec => SessionSource::Exec,
+             CoreSessionSource::Mcp => SessionSource::AppServer,
++            CoreSessionSource::Custom(source) => SessionSource::Custom(source),
+             CoreSessionSource::SubAgent(sub) => SessionSource::SubAgent(sub),
+             CoreSessionSource::Unknown => SessionSource::Unknown,
+         }
+@@ -1492,6 +1494,7 @@ impl From<SessionSource> for CoreSessionSource {
+             SessionSource::VsCode => CoreSessionSource::VSCode,
+             SessionSource::Exec => CoreSessionSource::Exec,
+             SessionSource::AppServer => CoreSessionSource::Mcp,
++            SessionSource::Custom(source) => CoreSessionSource::Custom(source),
+             SessionSource::SubAgent(sub) => CoreSessionSource::SubAgent(sub),
+             SessionSource::Unknown => CoreSessionSource::Unknown,
+         }
+@@ -2951,6 +2954,7 @@ pub enum ThreadSourceKind {
+     VsCode,
+     Exec,
+     AppServer,
++    Custom,
+     SubAgent,
+     SubAgentReview,
+     SubAgentCompact,
+diff --git a/codex-rs/app-server/README.md b/codex-rs/app-server/README.md
+index 56daf910e0..14a39cfff6 100644
+--- a/codex-rs/app-server/README.md
++++ b/codex-rs/app-server/README.md
+@@ -115,7 +115,10 @@ Example with notification opt-out:
+     },
+     "capabilities": {
+       "experimentalApi": true,
+-      "optOutNotificationMethods": ["thread/started", "item/agentMessage/delta"]
++      "optOutNotificationMethods": [
++        "thread/started",
++        "item/agentMessage/delta"
++      ]
+     }
+   }
+ }
+@@ -225,11 +228,7 @@ Start a fresh thread when you need a new Codex conversation.
+ 
+ Valid `personality` values are `"friendly"`, `"pragmatic"`, and `"none"`. When `"none"` is selected, the personality placeholder is replaced with an empty string.
+ 
+-To continue a stored session, call `thread/resume` with the `thread.id` you previously recorded. The response shape matches `thread/start`, and no additional notifications are emitted. You can also pass the same configuration overrides supported by `thread/start`, including `approvalsReviewer`.
+-
+-By default, resume uses the latest persisted `model` and `reasoningEffort` values associated with the thread. Supplying any of `model`, `modelProvider`, `config.model`, or `config.model_reasoning_effort` disables that persisted fallback and uses the explicit overrides plus normal config resolution instead.
+-
+-Example:
++To continue a stored session, call `thread/resume` with the `thread.id` you previously recorded. The response shape matches `thread/start`, and no additional notifications are emitted. You can also pass the same configuration overrides supported by `thread/start`, including `approvalsReviewer`:
+ 
+ ```json
+ { "method": "thread/resume", "id": 11, "params": {
+@@ -257,7 +256,7 @@ Experimental API: `thread/start`, `thread/resume`, and `thread/fork` accept `per
+ - `limit` — server defaults to a reasonable page size if unset.
+ - `sortKey` — `created_at` (default) or `updated_at`.
+ - `modelProviders` — restrict results to specific providers; unset, null, or an empty array will include all providers.
+-- `sourceKinds` — restrict results to specific sources; omit or pass `[]` for interactive sessions only (`cli`, `vscode`).
++- `sourceKinds` — restrict results to specific sources; omit or pass `[]` for interactive sessions only (`cli`, `vscode`, and custom product sources).
+ - `archived` — when `true`, list archived threads only. When `false` or `null`, list non-archived threads (default).
+ - `cwd` — restrict results to threads whose session cwd exactly matches this path.
+ - `searchTerm` — restrict results to threads whose extracted title contains this substring (case-sensitive).
+@@ -302,13 +301,10 @@ When `nextCursor` is `null`, you’ve reached the final page.
+ - `thread/start`, `thread/fork`, and detached review threads do not emit a separate initial `thread/status/changed`; their `thread/started` notification already carries the current `thread.status`.
+ 
+ ```json
+-{
+-  "method": "thread/status/changed",
+-  "params": {
++{ "method": "thread/status/changed", "params": {
+     "threadId": "thr_123",
+     "status": { "type": "active", "activeFlags": [] }
+-  }
+-}
++} }
+ ```
+ 
+ ### Example: Unsubscribe from a loaded thread
+@@ -957,7 +953,10 @@ The built-in `request_permissions` tool sends an `item/permissions/requestApprov
+     "reason": "Select a workspace root",
+     "permissions": {
+       "fileSystem": {
+-        "write": ["/Users/me/project", "/Users/me/shared"]
++        "write": [
++          "/Users/me/project",
++          "/Users/me/shared"
++        ]
+       }
+     }
+   }
+@@ -973,7 +972,9 @@ The client responds with `result.permissions`, which should be the granted subse
+     "scope": "session",
+     "permissions": {
+       "fileSystem": {
+-        "write": ["/Users/me/project"]
++        "write": [
++          "/Users/me/project"
++        ]
+       }
+     }
+   }
+diff --git a/codex-rs/app-server/src/codex_message_processor.rs b/codex-rs/app-server/src/codex_message_processor.rs
+index 4bb91bae94..d370c8cbf3 100644
+--- a/codex-rs/app-server/src/codex_message_processor.rs
++++ b/codex-rs/app-server/src/codex_message_processor.rs
+@@ -271,7 +271,6 @@ use codex_protocol::user_input::MAX_USER_INPUT_TEXT_CHARS;
+ use codex_protocol::user_input::UserInput as CoreInputItem;
+ use codex_rmcp_client::perform_oauth_login_return_url;
+ use codex_state::StateRuntime;
+-use codex_state::ThreadMetadata;
+ use codex_state::ThreadMetadataBuilder;
+ use codex_state::log_db::LogDbLayer;
+ use codex_utils_json_to_toml::json_to_toml;
+@@ -424,7 +423,10 @@ impl CodexMessageProcessor {
+             Ok(config) => self
+                 .thread_manager
+                 .plugins_manager()
+-                .maybe_start_curated_repo_sync_for_config(&config),
++                .maybe_start_curated_repo_sync_for_config(
++                    &config,
++                    &self.thread_manager.session_source(),
++                ),
+             Err(err) => warn!("failed to load latest config for curated plugin sync: {err:?}"),
+         }
+     }
+@@ -3347,7 +3349,7 @@ impl CodexMessageProcessor {
+             approval_policy,
+             approvals_reviewer,
+             sandbox,
+-            config: mut request_overrides,
++            config: request_overrides,
+             base_instructions,
+             developer_instructions,
+             personality,
+@@ -3373,7 +3375,7 @@ impl CodexMessageProcessor {
+         };
+ 
+         let history_cwd = thread_history.session_cwd();
+-        let mut typesafe_overrides = self.build_thread_config_overrides(
++        let typesafe_overrides = self.build_thread_config_overrides(
+             model,
+             model_provider,
+             service_tier,
+@@ -3385,13 +3387,6 @@ impl CodexMessageProcessor {
+             developer_instructions,
+             personality,
+         );
+-        let persisted_resume_metadata = self
+-            .load_and_apply_persisted_resume_metadata(
+-                &thread_history,
+-                &mut request_overrides,
+-                &mut typesafe_overrides,
+-            )
+-            .await;
+ 
+         // Derive a Config using the same logic as new conversation, honoring overrides if provided.
+         let cloud_requirements = self.current_cloud_requirements();
+@@ -3455,22 +3450,18 @@ impl CodexMessageProcessor {
+                     "thread",
+                 );
+ 
+-                let mut thread = match self
++                let Some(mut thread) = self
+                     .load_thread_from_resume_source_or_send_internal(
++                        request_id.clone(),
+                         thread_id,
+                         thread.as_ref(),
+                         &response_history,
+                         rollout_path.as_path(),
+                         fallback_model_provider.as_str(),
+-                        persisted_resume_metadata.as_ref(),
+                     )
+                     .await
+-                {
+-                    Ok(thread) => thread,
+-                    Err(message) => {
+-                        self.send_internal_error(request_id, message).await;
+-                        return;
+-                    }
++                else {
++                    return;
+                 };
+ 
+                 self.thread_watch_manager
+@@ -3513,25 +3504,6 @@ impl CodexMessageProcessor {
+         }
+     }
+ 
+-    async fn load_and_apply_persisted_resume_metadata(
+-        &self,
+-        thread_history: &InitialHistory,
+-        request_overrides: &mut Option<HashMap<String, serde_json::Value>>,
+-        typesafe_overrides: &mut ConfigOverrides,
+-    ) -> Option<ThreadMetadata> {
+-        let InitialHistory::Resumed(resumed_history) = thread_history else {
+-            return None;
+-        };
+-        let state_db_ctx = get_state_db(&self.config).await?;
+-        let persisted_metadata = state_db_ctx
+-            .get_thread(resumed_history.conversation_id)
+-            .await
+-            .ok()
+-            .flatten()?;
+-        merge_persisted_resume_metadata(request_overrides, typesafe_overrides, &persisted_metadata);
+-        Some(persisted_metadata)
+-    }
+-
+     async fn resume_running_thread(
+         &mut self,
+         request_id: ConnectionRequestId,
+@@ -3648,7 +3620,6 @@ impl CodexMessageProcessor {
+                 existing_thread_id,
+                 rollout_path.as_path(),
+                 config_snapshot.model_provider_id.as_str(),
+-                /*persisted_metadata*/ None,
+             )
+             .await
+             {
+@@ -3780,13 +3751,13 @@ impl CodexMessageProcessor {
+ 
+     async fn load_thread_from_resume_source_or_send_internal(
+         &self,
++        request_id: ConnectionRequestId,
+         thread_id: ThreadId,
+         thread: &CodexThread,
+         thread_history: &InitialHistory,
+         rollout_path: &Path,
+         fallback_provider: &str,
+-        persisted_resume_metadata: Option<&ThreadMetadata>,
+-    ) -> std::result::Result<Thread, String> {
++    ) -> Option<Thread> {
+         let thread = match thread_history {
+             InitialHistory::Resumed(resumed) => {
+                 load_thread_summary_for_rollout(
+@@ -3794,7 +3765,6 @@ impl CodexMessageProcessor {
+                     resumed.conversation_id,
+                     resumed.rollout_path.as_path(),
+                     fallback_provider,
+-                    persisted_resume_metadata,
+                 )
+                 .await
+             }
+@@ -3812,18 +3782,28 @@ impl CodexMessageProcessor {
+                 "failed to build resume response for thread {thread_id}: initial history missing"
+             )),
+         };
+-        let mut thread = thread?;
++        let mut thread = match thread {
++            Ok(thread) => thread,
++            Err(message) => {
++                self.send_internal_error(request_id, message).await;
++                return None;
++            }
++        };
+         thread.id = thread_id.to_string();
+         thread.path = Some(rollout_path.to_path_buf());
+         let history_items = thread_history.get_rollout_items();
+-        populate_thread_turns(
++        if let Err(message) = populate_thread_turns(
+             &mut thread,
+             ThreadTurnSource::HistoryItems(&history_items),
+             /*active_turn*/ None,
+         )
+-        .await?;
++        .await
++        {
++            self.send_internal_error(request_id, message).await;
++            return None;
++        }
+         self.attach_thread_name(thread_id, &mut thread).await;
+-        Ok(thread)
++        Some(thread)
+     }
+ 
+     async fn attach_thread_name(&self, thread_id: ThreadId, thread: &mut Thread) {
+@@ -4842,7 +4822,6 @@ impl CodexMessageProcessor {
+             MarketplaceError::InvalidMarketplaceFile { .. }
+             | MarketplaceError::PluginNotFound { .. }
+             | MarketplaceError::PluginNotAvailable { .. }
+-            | MarketplaceError::PluginsDisabled
+             | MarketplaceError::InvalidPlugin(_) => {
+                 self.send_invalid_request_error(request_id, err.to_string())
+                     .await;
+@@ -5326,6 +5305,7 @@ impl CodexMessageProcessor {
+             force_reload,
+             per_cwd_extra_user_roots,
+         } = params;
++        let session_source = self.thread_manager.session_source();
+         let cwds = if cwds.is_empty() {
+             vec![self.config.cwd.clone()]
+         } else {
+@@ -5364,22 +5344,18 @@ impl CodexMessageProcessor {
+                 .extend(valid_extra_roots);
+         }
+ 
+-        let config = match self.load_latest_config(/*fallback_cwd*/ None).await {
+-            Ok(config) => config,
+-            Err(error) => {
+-                self.outgoing.send_error(request_id, error).await;
+-                return;
+-            }
+-        };
+         let skills_manager = self.thread_manager.skills_manager();
+         let mut data = Vec::new();
+         for cwd in cwds {
+             let extra_roots = extra_roots_by_cwd
+                 .get(&cwd)
+                 .map_or(&[][..], std::vec::Vec::as_slice);
+-            let outcome = skills_manager
+-                .skills_for_cwd_with_extra_user_roots(&cwd, &config, force_reload, extra_roots)
+-                .await;
++            let outcome = codex_core::skills::filter_skill_load_outcome_for_session_source(
++                skills_manager
++                    .skills_for_cwd_with_extra_user_roots(&cwd, force_reload, extra_roots)
++                    .await,
++                &session_source,
++            );
+             let errors = errors_to_info(&outcome.errors);
+             let skills = skills_to_info(&outcome.skills, &outcome.disabled_paths);
+             data.push(codex_app_server_protocol::SkillsListEntry {
+@@ -5395,6 +5371,7 @@ impl CodexMessageProcessor {
+ 
+     async fn plugin_list(&self, request_id: ConnectionRequestId, params: PluginListParams) {
+         let plugins_manager = self.thread_manager.plugins_manager();
++        let session_source = self.thread_manager.session_source();
+         let PluginListParams {
+             cwds,
+             force_remote_sync,
+@@ -5448,15 +5425,13 @@ impl CodexMessageProcessor {
+             Ok::<Vec<PluginMarketplaceEntry>, MarketplaceError>(
+                 marketplaces
+                     .into_iter()
+-                    .map(|marketplace| PluginMarketplaceEntry {
+-                        name: marketplace.name,
+-                        path: marketplace.path,
+-                        interface: marketplace.interface.map(|interface| MarketplaceInterface {
+-                            display_name: interface.display_name,
+-                        }),
+-                        plugins: marketplace
++                    .filter_map(|marketplace| {
++                        let plugins = marketplace
+                             .plugins
+                             .into_iter()
++                            .filter(|plugin| {
++                                session_source.matches_product_restriction(&plugin.policy.products)
++                            })
+                             .map(|plugin| PluginSummary {
+                                 id: plugin.id,
+                                 installed: plugin.installed,
+@@ -5467,7 +5442,18 @@ impl CodexMessageProcessor {
+                                 auth_policy: plugin.policy.authentication.into(),
+                                 interface: plugin.interface.map(plugin_interface_to_info),
+                             })
+-                            .collect(),
++                            .collect::<Vec<_>>();
++
++                        (!plugins.is_empty()).then_some(PluginMarketplaceEntry {
++                            name: marketplace.name,
++                            path: marketplace.path,
++                            interface: marketplace.interface.map(|interface| {
++                                MarketplaceInterface {
++                                    display_name: interface.display_name,
++                                }
++                            }),
++                            plugins,
++                        })
+                     })
+                     .collect(),
+             )
+@@ -5542,6 +5528,11 @@ impl CodexMessageProcessor {
+                 return;
+             }
+         };
++        let session_source = self.thread_manager.session_source();
++        let plugin_skills = codex_core::skills::filter_skills_for_session_source(
++            outcome.plugin.skills,
++            &session_source,
++        );
+         let app_summaries =
+             plugin_app_helpers::load_plugin_app_summaries(&config, &outcome.plugin.apps).await;
+         let plugin = PluginDetail {
+@@ -5558,7 +5549,7 @@ impl CodexMessageProcessor {
+                 interface: outcome.plugin.interface.map(plugin_interface_to_info),
+             },
+             description: outcome.plugin.description,
+-            skills: plugin_skills_to_info(&outcome.plugin.skills),
++            skills: plugin_skills_to_info(&plugin_skills),
+             apps: app_summaries,
+             mcp_servers: outcome.plugin.mcp_server_names,
+         };
+@@ -7422,36 +7413,6 @@ fn collect_resume_override_mismatches(
+     mismatch_details
+ }
+ 
+-fn merge_persisted_resume_metadata(
+-    request_overrides: &mut Option<HashMap<String, serde_json::Value>>,
+-    typesafe_overrides: &mut ConfigOverrides,
+-    persisted_metadata: &ThreadMetadata,
+-) {
+-    if has_model_resume_override(request_overrides.as_ref(), typesafe_overrides) {
+-        return;
+-    }
+-
+-    typesafe_overrides.model = persisted_metadata.model.clone();
+-
+-    if let Some(reasoning_effort) = persisted_metadata.reasoning_effort {
+-        request_overrides.get_or_insert_with(HashMap::new).insert(
+-            "model_reasoning_effort".to_string(),
+-            serde_json::Value::String(reasoning_effort.to_string()),
+-        );
+-    }
+-}
+-
+-fn has_model_resume_override(
+-    request_overrides: Option<&HashMap<String, serde_json::Value>>,
+-    typesafe_overrides: &ConfigOverrides,
+-) -> bool {
+-    typesafe_overrides.model.is_some()
+-        || typesafe_overrides.model_provider.is_some()
+-        || request_overrides.is_some_and(|overrides| overrides.contains_key("model"))
+-        || request_overrides
+-            .is_some_and(|overrides| overrides.contains_key("model_reasoning_effort"))
+-}
+-
+ fn skills_to_info(
+     skills: &[codex_core::skills::SkillMetadata],
+     disabled_paths: &std::collections::HashSet<PathBuf>,
+@@ -7766,7 +7727,26 @@ async fn read_summary_from_state_db_context_by_thread_id(
+         Ok(Some(metadata)) => metadata,
+         Ok(None) | Err(_) => return None,
+     };
+-    Some(summary_from_thread_metadata(&metadata))
++    Some(summary_from_state_db_metadata(
++        metadata.id,
++        metadata.rollout_path,
++        metadata.first_user_message,
++        metadata
++            .created_at
++            .to_rfc3339_opts(SecondsFormat::Secs, true),
++        metadata
++            .updated_at
++            .to_rfc3339_opts(SecondsFormat::Secs, true),
++        metadata.model_provider,
++        metadata.cwd,
++        metadata.cli_version,
++        metadata.source,
++        metadata.agent_nickname,
++        metadata.agent_role,
++        metadata.git_sha,
++        metadata.git_branch,
++        metadata.git_origin_url,
++    ))
+ }
+ 
+ async fn summary_from_thread_list_item(
+@@ -7877,29 +7857,6 @@ fn summary_from_state_db_metadata(
+     }
+ }
+ 
+-fn summary_from_thread_metadata(metadata: &ThreadMetadata) -> ConversationSummary {
+-    summary_from_state_db_metadata(
+-        metadata.id,
+-        metadata.rollout_path.clone(),
+-        metadata.first_user_message.clone(),
+-        metadata
+-            .created_at
+-            .to_rfc3339_opts(SecondsFormat::Secs, true),
+-        metadata
+-            .updated_at
+-            .to_rfc3339_opts(SecondsFormat::Secs, true),
+-        metadata.model_provider.clone(),
+-        metadata.cwd.clone(),
+-        metadata.cli_version.clone(),
+-        metadata.source.clone(),
+-        metadata.agent_nickname.clone(),
+-        metadata.agent_role.clone(),
+-        metadata.git_sha.clone(),
+-        metadata.git_branch.clone(),
+-        metadata.git_origin_url.clone(),
+-    )
+-}
+-
+ pub(crate) async fn read_summary_from_rollout(
+     path: &Path,
+     fallback_provider: &str,
+@@ -8047,7 +8004,6 @@ async fn load_thread_summary_for_rollout(
+     thread_id: ThreadId,
+     rollout_path: &Path,
+     fallback_provider: &str,
+-    persisted_metadata: Option<&ThreadMetadata>,
+ ) -> std::result::Result<Thread, String> {
+     let mut thread = read_summary_from_rollout(rollout_path, fallback_provider)
+         .await
+@@ -8058,12 +8014,7 @@ async fn load_thread_summary_for_rollout(
+                 rollout_path.display()
+             )
+         })?;
+-    if let Some(persisted_metadata) = persisted_metadata {
+-        merge_mutable_thread_metadata(
+-            &mut thread,
+-            summary_to_thread(summary_from_thread_metadata(persisted_metadata)),
+-        );
+-    } else if let Some(summary) = read_summary_from_state_db_by_thread_id(config, thread_id).await {
++    if let Some(summary) = read_summary_from_state_db_by_thread_id(config, thread_id).await {
+         merge_mutable_thread_metadata(&mut thread, summary_to_thread(summary));
+     }
+     Ok(thread)
+@@ -8215,7 +8166,6 @@ mod tests {
+     use anyhow::Result;
+     use codex_app_server_protocol::ServerRequestPayload;
+     use codex_app_server_protocol::ToolRequestUserInputParams;
+-    use codex_protocol::openai_models::ReasoningEffort;
+     use codex_protocol::protocol::SessionSource;
+     use codex_protocol::protocol::SubAgentSource;
+     use pretty_assertions::assert_eq;
+@@ -8347,178 +8297,6 @@ mod tests {
+         );
+     }
+ 
+-    fn test_thread_metadata(
+-        model: Option<&str>,
+-        reasoning_effort: Option<ReasoningEffort>,
+-    ) -> Result<ThreadMetadata> {
+-        let thread_id = ThreadId::from_string("3f941c35-29b3-493b-b0a4-e25800d9aeb0")?;
+-        let mut builder = ThreadMetadataBuilder::new(
+-            thread_id,
+-            PathBuf::from("/tmp/rollout.jsonl"),
+-            Utc::now(),
+-            codex_protocol::protocol::SessionSource::default(),
+-        );
+-        builder.model_provider = Some("mock_provider".to_string());
+-        let mut metadata = builder.build("mock_provider");
+-        metadata.model = model.map(ToString::to_string);
+-        metadata.reasoning_effort = reasoning_effort;
+-        Ok(metadata)
+-    }
+-
+-    #[test]
+-    fn merge_persisted_resume_metadata_prefers_persisted_model_and_reasoning_effort() -> Result<()>
+-    {
+-        let mut request_overrides = None;
+-        let mut typesafe_overrides = ConfigOverrides::default();
+-        let persisted_metadata =
+-            test_thread_metadata(Some("gpt-5.1-codex-max"), Some(ReasoningEffort::High))?;
+-
+-        merge_persisted_resume_metadata(
+-            &mut request_overrides,
+-            &mut typesafe_overrides,
+-            &persisted_metadata,
+-        );
+-
+-        assert_eq!(
+-            typesafe_overrides.model,
+-            Some("gpt-5.1-codex-max".to_string())
+-        );
+-        assert_eq!(
+-            request_overrides,
+-            Some(HashMap::from([(
+-                "model_reasoning_effort".to_string(),
+-                serde_json::Value::String("high".to_string()),
+-            )]))
+-        );
+-        Ok(())
+-    }
+-
+-    #[test]
+-    fn merge_persisted_resume_metadata_preserves_explicit_overrides() -> Result<()> {
+-        let mut request_overrides = Some(HashMap::from([(
+-            "model_reasoning_effort".to_string(),
+-            serde_json::Value::String("low".to_string()),
+-        )]));
+-        let mut typesafe_overrides = ConfigOverrides {
+-            model: Some("gpt-5.2-codex".to_string()),
+-            ..Default::default()
+-        };
+-        let persisted_metadata =
+-            test_thread_metadata(Some("gpt-5.1-codex-max"), Some(ReasoningEffort::High))?;
+-
+-        merge_persisted_resume_metadata(
+-            &mut request_overrides,
+-            &mut typesafe_overrides,
+-            &persisted_metadata,
+-        );
+-
+-        assert_eq!(typesafe_overrides.model, Some("gpt-5.2-codex".to_string()));
+-        assert_eq!(
+-            request_overrides,
+-            Some(HashMap::from([(
+-                "model_reasoning_effort".to_string(),
+-                serde_json::Value::String("low".to_string()),
+-            )]))
+-        );
+-        Ok(())
+-    }
+-
+-    #[test]
+-    fn merge_persisted_resume_metadata_skips_persisted_values_when_model_overridden() -> Result<()>
+-    {
+-        let mut request_overrides = Some(HashMap::from([(
+-            "model".to_string(),
+-            serde_json::Value::String("gpt-5.2-codex".to_string()),
+-        )]));
+-        let mut typesafe_overrides = ConfigOverrides::default();
+-        let persisted_metadata =
+-            test_thread_metadata(Some("gpt-5.1-codex-max"), Some(ReasoningEffort::High))?;
+-
+-        merge_persisted_resume_metadata(
+-            &mut request_overrides,
+-            &mut typesafe_overrides,
+-            &persisted_metadata,
+-        );
+-
+-        assert_eq!(typesafe_overrides.model, None);
+-        assert_eq!(
+-            request_overrides,
+-            Some(HashMap::from([(
+-                "model".to_string(),
+-                serde_json::Value::String("gpt-5.2-codex".to_string()),
+-            )]))
+-        );
+-        Ok(())
+-    }
+-
+-    #[test]
+-    fn merge_persisted_resume_metadata_skips_persisted_values_when_provider_overridden()
+-    -> Result<()> {
+-        let mut request_overrides = None;
+-        let mut typesafe_overrides = ConfigOverrides {
+-            model_provider: Some("oss".to_string()),
+-            ..Default::default()
+-        };
+-        let persisted_metadata =
+-            test_thread_metadata(Some("gpt-5.1-codex-max"), Some(ReasoningEffort::High))?;
+-
+-        merge_persisted_resume_metadata(
+-            &mut request_overrides,
+-            &mut typesafe_overrides,
+-            &persisted_metadata,
+-        );
+-
+-        assert_eq!(typesafe_overrides.model, None);
+-        assert_eq!(typesafe_overrides.model_provider, Some("oss".to_string()));
+-        assert_eq!(request_overrides, None);
+-        Ok(())
+-    }
+-
+-    #[test]
+-    fn merge_persisted_resume_metadata_skips_persisted_values_when_reasoning_effort_overridden()
+-    -> Result<()> {
+-        let mut request_overrides = Some(HashMap::from([(
+-            "model_reasoning_effort".to_string(),
+-            serde_json::Value::String("low".to_string()),
+-        )]));
+-        let mut typesafe_overrides = ConfigOverrides::default();
+-        let persisted_metadata =
+-            test_thread_metadata(Some("gpt-5.1-codex-max"), Some(ReasoningEffort::High))?;
+-
+-        merge_persisted_resume_metadata(
+-            &mut request_overrides,
+-            &mut typesafe_overrides,
+-            &persisted_metadata,
+-        );
+-
+-        assert_eq!(typesafe_overrides.model, None);
+-        assert_eq!(
+-            request_overrides,
+-            Some(HashMap::from([(
+-                "model_reasoning_effort".to_string(),
+-                serde_json::Value::String("low".to_string()),
+-            )]))
+-        );
+-        Ok(())
+-    }
+-
+-    #[test]
+-    fn merge_persisted_resume_metadata_skips_missing_values() -> Result<()> {
+-        let mut request_overrides = None;
+-        let mut typesafe_overrides = ConfigOverrides::default();
+-        let persisted_metadata = test_thread_metadata(None, None)?;
+-
+-        merge_persisted_resume_metadata(
+-            &mut request_overrides,
+-            &mut typesafe_overrides,
+-            &persisted_metadata,
+-        );
+-
+-        assert_eq!(typesafe_overrides.model, None);
+-        assert_eq!(request_overrides, None);
+-        Ok(())
+-    }
+-
+     #[test]
+     fn extract_conversation_summary_prefers_plain_user_messages() -> Result<()> {
+         let conversation_id = ThreadId::from_string("3f941c35-29b3-493b-b0a4-e25800d9aeb0")?;
+diff --git a/codex-rs/app-server/src/filters.rs b/codex-rs/app-server/src/filters.rs
+index a597509612..de6807ab40 100644
+--- a/codex-rs/app-server/src/filters.rs
++++ b/codex-rs/app-server/src/filters.rs
+@@ -1,17 +1,24 @@
+ use codex_app_server_protocol::ThreadSourceKind;
+-use codex_core::INTERACTIVE_SESSION_SOURCES;
+ use codex_protocol::protocol::SessionSource as CoreSessionSource;
+ use codex_protocol::protocol::SubAgentSource as CoreSubAgentSource;
+ 
++fn interactive_source_kinds() -> Vec<ThreadSourceKind> {
++    vec![
++        ThreadSourceKind::Cli,
++        ThreadSourceKind::VsCode,
++        ThreadSourceKind::Custom,
++    ]
++}
++
+ pub(crate) fn compute_source_filters(
+     source_kinds: Option<Vec<ThreadSourceKind>>,
+ ) -> (Vec<CoreSessionSource>, Option<Vec<ThreadSourceKind>>) {
+     let Some(source_kinds) = source_kinds else {
+-        return (INTERACTIVE_SESSION_SOURCES.to_vec(), None);
++        return (Vec::new(), Some(interactive_source_kinds()));
+     };
+ 
+     if source_kinds.is_empty() {
+-        return (INTERACTIVE_SESSION_SOURCES.to_vec(), None);
++        return (Vec::new(), Some(interactive_source_kinds()));
+     }
+ 
+     let requires_post_filter = source_kinds.iter().any(|kind| {
+@@ -19,6 +26,7 @@ pub(crate) fn compute_source_filters(
+             kind,
+             ThreadSourceKind::Exec
+                 | ThreadSourceKind::AppServer
++                | ThreadSourceKind::Custom
+                 | ThreadSourceKind::SubAgent
+                 | ThreadSourceKind::SubAgentReview
+                 | ThreadSourceKind::SubAgentCompact
+@@ -38,6 +46,7 @@ pub(crate) fn compute_source_filters(
+                 ThreadSourceKind::VsCode => Some(CoreSessionSource::VSCode),
+                 ThreadSourceKind::Exec
+                 | ThreadSourceKind::AppServer
++                | ThreadSourceKind::Custom
+                 | ThreadSourceKind::SubAgent
+                 | ThreadSourceKind::SubAgentReview
+                 | ThreadSourceKind::SubAgentCompact
+@@ -56,6 +65,7 @@ pub(crate) fn source_kind_matches(source: &CoreSessionSource, filter: &[ThreadSo
+         ThreadSourceKind::VsCode => matches!(source, CoreSessionSource::VSCode),
+         ThreadSourceKind::Exec => matches!(source, CoreSessionSource::Exec),
+         ThreadSourceKind::AppServer => matches!(source, CoreSessionSource::Mcp),
++        ThreadSourceKind::Custom => matches!(source, CoreSessionSource::Custom(_)),
+         ThreadSourceKind::SubAgent => matches!(source, CoreSessionSource::SubAgent(_)),
+         ThreadSourceKind::SubAgentReview => {
+             matches!(
+@@ -92,16 +102,16 @@ mod tests {
+     fn compute_source_filters_defaults_to_interactive_sources() {
+         let (allowed_sources, filter) = compute_source_filters(None);
+ 
+-        assert_eq!(allowed_sources, INTERACTIVE_SESSION_SOURCES.to_vec());
+-        assert_eq!(filter, None);
++        assert_eq!(allowed_sources, Vec::new());
++        assert_eq!(filter, Some(interactive_source_kinds()));
+     }
+ 
+     #[test]
+     fn compute_source_filters_empty_means_interactive_sources() {
+         let (allowed_sources, filter) = compute_source_filters(Some(Vec::new()));
+ 
+-        assert_eq!(allowed_sources, INTERACTIVE_SESSION_SOURCES.to_vec());
+-        assert_eq!(filter, None);
++        assert_eq!(allowed_sources, Vec::new());
++        assert_eq!(filter, Some(interactive_source_kinds()));
+     }
+ 
+     #[test]
+@@ -125,6 +135,15 @@ mod tests {
+         assert_eq!(filter, Some(source_kinds));
+     }
+ 
++    #[test]
++    fn compute_source_filters_custom_requires_post_filtering() {
++        let source_kinds = vec![ThreadSourceKind::Custom];
++        let (allowed_sources, filter) = compute_source_filters(Some(source_kinds.clone()));
++
++        assert_eq!(allowed_sources, Vec::new());
++        assert_eq!(filter, Some(source_kinds));
++    }
++
+     #[test]
+     fn source_kind_matches_distinguishes_subagent_variants() {
+         let parent_thread_id =
+@@ -154,4 +173,12 @@ mod tests {
+             &[ThreadSourceKind::SubAgentReview]
+         ));
+     }
++
++    #[test]
++    fn source_kind_matches_custom_sources() {
++        let custom = CoreSessionSource::Custom("atlas".to_string());
++
++        assert!(source_kind_matches(&custom, &[ThreadSourceKind::Custom]));
++        assert!(!source_kind_matches(&custom, &[ThreadSourceKind::Cli]));
++    }
+ }
+diff --git a/codex-rs/app-server/src/in_process.rs b/codex-rs/app-server/src/in_process.rs
+index 4288d15393..1716172f26 100644
+--- a/codex-rs/app-server/src/in_process.rs
++++ b/codex-rs/app-server/src/in_process.rs
+@@ -808,6 +808,10 @@ mod tests {
+         for (requested_source, expected_source) in [
+             (SessionSource::Cli, ApiSessionSource::Cli),
+             (SessionSource::Exec, ApiSessionSource::Exec),
++            (
++                SessionSource::Custom("atlas".to_string()),
++                ApiSessionSource::Custom("atlas".to_string()),
++            ),
+         ] {
+             let client = start_test_client(requested_source).await;
+             let response = client
+diff --git a/codex-rs/app-server/src/lib.rs b/codex-rs/app-server/src/lib.rs
+index 85804098bd..8b4afc23d0 100644
+--- a/codex-rs/app-server/src/lib.rs
++++ b/codex-rs/app-server/src/lib.rs
+@@ -336,6 +336,7 @@ pub async fn run_main(
+         loader_overrides,
+         default_analytics_enabled,
+         AppServerTransport::Stdio,
++        SessionSource::VSCode,
+     )
+     .await
+ }
+@@ -346,6 +347,7 @@ pub async fn run_main_with_transport(
+     loader_overrides: LoaderOverrides,
+     default_analytics_enabled: bool,
+     transport: AppServerTransport,
++    session_source: SessionSource,
+ ) -> IoResult<()> {
+     let (transport_event_tx, mut transport_event_rx) =
+         mpsc::channel::<TransportEvent>(CHANNEL_CAPACITY);
+@@ -621,7 +623,7 @@ pub async fn run_main_with_transport(
+             feedback: feedback.clone(),
+             log_db,
+             config_warnings,
+-            session_source: SessionSource::VSCode,
++            session_source,
+             enable_codex_api_key_env: false,
+         });
+         let mut thread_created_rx = processor.thread_created_receiver();
+diff --git a/codex-rs/app-server/src/main.rs b/codex-rs/app-server/src/main.rs
+index 11380154fb..799522d73f 100644
+--- a/codex-rs/app-server/src/main.rs
++++ b/codex-rs/app-server/src/main.rs
+@@ -4,6 +4,7 @@ use codex_app_server::run_main_with_transport;
+ use codex_arg0::Arg0DispatchPaths;
+ use codex_arg0::arg0_dispatch_or_else;
+ use codex_core::config_loader::LoaderOverrides;
++use codex_protocol::protocol::SessionSource;
+ use codex_utils_cli::CliConfigOverrides;
+ use std::path::PathBuf;
+ 
+@@ -21,6 +22,17 @@ struct AppServerArgs {
+         default_value = AppServerTransport::DEFAULT_LISTEN_URL
+     )]
+     listen: AppServerTransport,
++
++    /// Session source stamped into new threads started by this app-server.
++    ///
++    /// Known values such as `vscode`, `cli`, `exec`, and `mcp` map to built-in
++    /// sources. Any other non-empty value is recorded as a custom source.
++    #[arg(
++        long = "session-source",
++        value_name = "SOURCE",
++        default_value = "vscode"
++    )]
++    session_source: String,
+ }
+ 
+ fn main() -> anyhow::Result<()> {
+@@ -32,6 +44,8 @@ fn main() -> anyhow::Result<()> {
+             ..Default::default()
+         };
+         let transport = args.listen;
++        let session_source = SessionSource::from_startup_arg(args.session_source.as_str())
++            .map_err(|err| anyhow::anyhow!("invalid --session-source: {err}"))?;
+ 
+         run_main_with_transport(
+             arg0_paths,
+@@ -39,6 +53,7 @@ fn main() -> anyhow::Result<()> {
+             loader_overrides,
+             /*default_analytics_enabled*/ false,
+             transport,
++            session_source,
+         )
+         .await?;
+         Ok(())
+diff --git a/codex-rs/app-server/src/message_processor.rs b/codex-rs/app-server/src/message_processor.rs
+index f7ea2c7050..63a8180b87 100644
+--- a/codex-rs/app-server/src/message_processor.rs
++++ b/codex-rs/app-server/src/message_processor.rs
+@@ -231,7 +231,7 @@ impl MessageProcessor {
+         // TODO(xl): Move into PluginManager once this no longer depends on config feature gating.
+         thread_manager
+             .plugins_manager()
+-            .maybe_start_curated_repo_sync_for_config(&config);
++            .maybe_start_curated_repo_sync_for_config(&config, &thread_manager.session_source());
+         let cloud_requirements = Arc::new(RwLock::new(cloud_requirements));
+         let codex_message_processor = CodexMessageProcessor::new(CodexMessageProcessorArgs {
+             auth_manager: auth_manager.clone(),
+diff --git a/codex-rs/app-server/tests/common/mcp_process.rs b/codex-rs/app-server/tests/common/mcp_process.rs
+index 430a400a2c..32d0e5eba9 100644
+--- a/codex-rs/app-server/tests/common/mcp_process.rs
++++ b/codex-rs/app-server/tests/common/mcp_process.rs
+@@ -95,7 +95,11 @@ pub const DEFAULT_CLIENT_NAME: &str = "codex-app-server-tests";
+ 
+ impl McpProcess {
+     pub async fn new(codex_home: &Path) -> anyhow::Result<Self> {
+-        Self::new_with_env(codex_home, &[]).await
++        Self::new_with_env_and_args(codex_home, &[], &[]).await
++    }
++
++    pub async fn new_with_args(codex_home: &Path, args: &[&str]) -> anyhow::Result<Self> {
++        Self::new_with_env_and_args(codex_home, &[], args).await
+     }
+ 
+     /// Creates a new MCP process, allowing tests to override or remove
+@@ -106,6 +110,14 @@ impl McpProcess {
+     pub async fn new_with_env(
+         codex_home: &Path,
+         env_overrides: &[(&str, Option<&str>)],
++    ) -> anyhow::Result<Self> {
++        Self::new_with_env_and_args(codex_home, env_overrides, &[]).await
++    }
++
++    pub async fn new_with_env_and_args(
++        codex_home: &Path,
++        env_overrides: &[(&str, Option<&str>)],
++        args: &[&str],
+     ) -> anyhow::Result<Self> {
+         let program = codex_utils_cargo_bin::cargo_bin("codex-app-server")
+             .context("should find binary for codex-app-server")?;
+@@ -118,6 +130,7 @@ impl McpProcess {
+         cmd.env("CODEX_HOME", codex_home);
+         cmd.env("RUST_LOG", "info");
+         cmd.env_remove(CODEX_INTERNAL_ORIGINATOR_OVERRIDE_ENV_VAR);
++        cmd.args(args);
+ 
+         for (k, v) in env_overrides {
+             match v {
+diff --git a/codex-rs/app-server/tests/suite/v2/plugin_install.rs b/codex-rs/app-server/tests/suite/v2/plugin_install.rs
+index bde3564758..74baa2c301 100644
+--- a/codex-rs/app-server/tests/suite/v2/plugin_install.rs
++++ b/codex-rs/app-server/tests/suite/v2/plugin_install.rs
+@@ -25,6 +25,8 @@ use codex_app_server_protocol::PluginAuthPolicy;
+ use codex_app_server_protocol::PluginInstallParams;
+ use codex_app_server_protocol::PluginInstallResponse;
+ use codex_app_server_protocol::RequestId;
++use codex_app_server_protocol::SkillsListParams;
++use codex_app_server_protocol::SkillsListResponse;
+ use codex_core::auth::AuthCredentialsStoreMode;
+ use codex_utils_absolute_path::AbsolutePathBuf;
+ use pretty_assertions::assert_eq;
+@@ -476,6 +478,92 @@ async fn plugin_install_filters_disallowed_apps_needing_auth() -> Result<()> {
+     Ok(())
+ }
+ 
++#[tokio::test]
++async fn plugin_install_filters_product_restricted_plugin_skills() -> Result<()> {
++    let codex_home = TempDir::new()?;
++    let repo_root = TempDir::new()?;
++    write_plugins_enabled_config(codex_home.path())?;
++    write_plugin_marketplace(
++        repo_root.path(),
++        "debug",
++        "sample-plugin",
++        "./sample-plugin",
++        None,
++        None,
++    )?;
++    write_plugin_source(repo_root.path(), "sample-plugin", &[])?;
++
++    let plugin_root = repo_root.path().join("sample-plugin");
++    write_plugin_skill(
++        &plugin_root,
++        "all-products",
++        "Visible to every product",
++        &[],
++    )?;
++    write_plugin_skill(
++        &plugin_root,
++        "chatgpt-only",
++        "Visible to ChatGPT",
++        &["CHATGPT"],
++    )?;
++    write_plugin_skill(&plugin_root, "atlas-only", "Visible to Atlas", &["ATLAS"])?;
++    let marketplace_path =
++        AbsolutePathBuf::try_from(repo_root.path().join(".agents/plugins/marketplace.json"))?;
++
++    let mut mcp =
++        McpProcess::new_with_args(codex_home.path(), &["--session-source", "chatgpt"]).await?;
++    timeout(DEFAULT_TIMEOUT, mcp.initialize()).await??;
++
++    let request_id = mcp
++        .send_plugin_install_request(PluginInstallParams {
++            marketplace_path,
++            plugin_name: "sample-plugin".to_string(),
++            force_remote_sync: false,
++        })
++        .await?;
++
++    let response: JSONRPCResponse = timeout(
++        DEFAULT_TIMEOUT,
++        mcp.read_stream_until_response_message(RequestId::Integer(request_id)),
++    )
++    .await??;
++    let response: PluginInstallResponse = to_response(response)?;
++    assert_eq!(response.apps_needing_auth, Vec::<AppSummary>::new());
++
++    let request_id = mcp
++        .send_skills_list_request(SkillsListParams {
++            cwds: vec![codex_home.path().to_path_buf()],
++            force_reload: true,
++            per_cwd_extra_user_roots: None,
++        })
++        .await?;
++
++    let response: JSONRPCResponse = timeout(
++        DEFAULT_TIMEOUT,
++        mcp.read_stream_until_response_message(RequestId::Integer(request_id)),
++    )
++    .await??;
++    let response: SkillsListResponse = to_response(response)?;
++
++    let mut skills = response
++        .data
++        .into_iter()
++        .flat_map(|entry| entry.skills.into_iter())
++        .map(|skill| skill.name)
++        .filter(|name| name.starts_with("sample-plugin:"))
++        .collect::<Vec<_>>();
++    skills.sort_unstable();
++
++    assert_eq!(
++        skills,
++        vec![
++            "sample-plugin:all-products".to_string(),
++            "sample-plugin:chatgpt-only".to_string(),
++        ]
++    );
++    Ok(())
++}
++
+ #[derive(Clone)]
+ struct AppsServerState {
+     response: Arc<StdMutex<serde_json::Value>>,
+@@ -647,6 +735,16 @@ plugins = true
+     )
+ }
+ 
++fn write_plugins_enabled_config(codex_home: &std::path::Path) -> std::io::Result<()> {
++    std::fs::write(
++        codex_home.join("config.toml"),
++        r#"
++[features]
++plugins = true
++"#,
++    )
++}
++
+ fn write_plugin_marketplace(
+     repo_root: &std::path::Path,
+     marketplace_name: &str,
+@@ -716,3 +814,32 @@ fn write_plugin_source(
+     )?;
+     Ok(())
+ }
++
++fn write_plugin_skill(
++    plugin_root: &std::path::Path,
++    skill_name: &str,
++    description: &str,
++    products: &[&str],
++) -> Result<()> {
++    let skill_dir = plugin_root.join("skills").join(skill_name);
++    std::fs::create_dir_all(&skill_dir)?;
++    std::fs::write(
++        skill_dir.join("SKILL.md"),
++        format!("---\ndescription: {description}\n---\n\n# {skill_name}\n"),
++    )?;
++
++    if !products.is_empty() {
++        let products = products
++            .iter()
++            .map(|product| format!("    - {product}"))
++            .collect::<Vec<_>>()
++            .join("\n");
++        std::fs::create_dir_all(skill_dir.join("agents"))?;
++        std::fs::write(
++            skill_dir.join("agents/openai.yaml"),
++            format!("policy:\n  products:\n{products}\n"),
++        )?;
++    }
++
++    Ok(())
++}
+diff --git a/codex-rs/app-server/tests/suite/v2/plugin_list.rs b/codex-rs/app-server/tests/suite/v2/plugin_list.rs
+index 73f4602af1..278cf00ab5 100644
+--- a/codex-rs/app-server/tests/suite/v2/plugin_list.rs
++++ b/codex-rs/app-server/tests/suite/v2/plugin_list.rs
+@@ -28,22 +28,12 @@ use wiremock::matchers::path;
+ const DEFAULT_TIMEOUT: Duration = Duration::from_secs(10);
+ const TEST_CURATED_PLUGIN_SHA: &str = "0123456789abcdef0123456789abcdef01234567";
+ 
+-fn write_plugins_enabled_config(codex_home: &std::path::Path) -> std::io::Result<()> {
+-    std::fs::write(
+-        codex_home.join("config.toml"),
+-        r#"[features]
+-plugins = true
+-"#,
+-    )
+-}
+-
+ #[tokio::test]
+-async fn plugin_list_skips_invalid_marketplace_file() -> Result<()> {
++async fn plugin_list_returns_invalid_request_for_invalid_marketplace_file() -> Result<()> {
+     let codex_home = TempDir::new()?;
+     let repo_root = TempDir::new()?;
+     std::fs::create_dir_all(repo_root.path().join(".git"))?;
+     std::fs::create_dir_all(repo_root.path().join(".agents/plugins"))?;
+-    write_plugins_enabled_config(codex_home.path())?;
+     std::fs::write(
+         repo_root.path().join(".agents/plugins/marketplace.json"),
+         "{not json",
+@@ -67,23 +57,14 @@ async fn plugin_list_skips_invalid_marketplace_file() -> Result<()> {
+         })
+         .await?;
+ 
+-    let response: JSONRPCResponse = timeout(
++    let err = timeout(
+         DEFAULT_TIMEOUT,
+-        mcp.read_stream_until_response_message(RequestId::Integer(request_id)),
++        mcp.read_stream_until_error_message(RequestId::Integer(request_id)),
+     )
+     .await??;
+-    let response: PluginListResponse = to_response(response)?;
+ 
+-    assert!(
+-        response.marketplaces.iter().all(|marketplace| {
+-            marketplace.path
+-                != AbsolutePathBuf::try_from(
+-                    repo_root.path().join(".agents/plugins/marketplace.json"),
+-                )
+-                .expect("absolute marketplace path")
+-        }),
+-        "invalid marketplace should be skipped"
+-    );
++    assert_eq!(err.error.code, -32600);
++    assert!(err.error.message.contains("invalid marketplace file"));
+     Ok(())
+ }
+ 
+@@ -117,7 +98,6 @@ async fn plugin_list_rejects_relative_cwds() -> Result<()> {
+ async fn plugin_list_accepts_omitted_cwds() -> Result<()> {
+     let codex_home = TempDir::new()?;
+     std::fs::create_dir_all(codex_home.path().join(".agents/plugins"))?;
+-    write_plugins_enabled_config(codex_home.path())?;
+     std::fs::write(
+         codex_home.path().join(".agents/plugins/marketplace.json"),
+         r#"{
+@@ -397,6 +377,179 @@ enabled = false
+     Ok(())
+ }
+ 
++#[tokio::test]
++async fn plugin_list_filters_plugins_for_custom_session_source_products() -> Result<()> {
++    let codex_home = TempDir::new()?;
++    let repo_root = TempDir::new()?;
++    std::fs::create_dir_all(repo_root.path().join(".git"))?;
++    std::fs::create_dir_all(repo_root.path().join(".agents/plugins"))?;
++    std::fs::write(
++        repo_root.path().join(".agents/plugins/marketplace.json"),
++        r#"{
++  "name": "codex-curated",
++  "plugins": [
++    {
++      "name": "all-products",
++      "source": {
++        "source": "local",
++        "path": "./all-products"
++      }
++    },
++    {
++      "name": "chatgpt-only",
++      "source": {
++        "source": "local",
++        "path": "./chatgpt-only"
++      },
++      "policy": {
++        "installation": "AVAILABLE",
++        "authentication": "ON_INSTALL",
++        "products": ["CHATGPT"]
++      }
++    },
++    {
++      "name": "atlas-only",
++      "source": {
++        "source": "local",
++        "path": "./atlas-only"
++      },
++      "policy": {
++        "installation": "AVAILABLE",
++        "authentication": "ON_INSTALL",
++        "products": ["ATLAS"]
++      }
++    },
++    {
++      "name": "codex-only",
++      "source": {
++        "source": "local",
++        "path": "./codex-only"
++      },
++      "policy": {
++        "installation": "AVAILABLE",
++        "authentication": "ON_INSTALL",
++        "products": ["CODEX"]
++      }
++    }
++  ]
++}"#,
++    )?;
++
++    let mut mcp =
++        McpProcess::new_with_args(codex_home.path(), &["--session-source", "chatgpt"]).await?;
++    timeout(DEFAULT_TIMEOUT, mcp.initialize()).await??;
++
++    let request_id = mcp
++        .send_plugin_list_request(PluginListParams {
++            cwds: Some(vec![AbsolutePathBuf::try_from(repo_root.path())?]),
++            force_remote_sync: false,
++        })
++        .await?;
++
++    let response: JSONRPCResponse = timeout(
++        DEFAULT_TIMEOUT,
++        mcp.read_stream_until_response_message(RequestId::Integer(request_id)),
++    )
++    .await??;
++    let response: PluginListResponse = to_response(response)?;
++
++    let marketplace = response
++        .marketplaces
++        .into_iter()
++        .find(|marketplace| marketplace.name == "codex-curated")
++        .expect("expected marketplace entry");
++
++    assert_eq!(
++        marketplace
++            .plugins
++            .into_iter()
++            .map(|plugin| plugin.name)
++            .collect::<Vec<_>>(),
++        vec!["all-products".to_string(), "chatgpt-only".to_string()]
++    );
++    Ok(())
++}
++
++#[tokio::test]
++async fn plugin_list_defaults_non_custom_session_source_to_codex_products() -> Result<()> {
++    let codex_home = TempDir::new()?;
++    let repo_root = TempDir::new()?;
++    std::fs::create_dir_all(repo_root.path().join(".git"))?;
++    std::fs::create_dir_all(repo_root.path().join(".agents/plugins"))?;
++    std::fs::write(
++        repo_root.path().join(".agents/plugins/marketplace.json"),
++        r#"{
++  "name": "codex-curated",
++  "plugins": [
++    {
++      "name": "all-products",
++      "source": {
++        "source": "local",
++        "path": "./all-products"
++      }
++    },
++    {
++      "name": "chatgpt-only",
++      "source": {
++        "source": "local",
++        "path": "./chatgpt-only"
++      },
++      "policy": {
++        "installation": "AVAILABLE",
++        "authentication": "ON_INSTALL",
++        "products": ["CHATGPT"]
++      }
++    },
++    {
++      "name": "codex-only",
++      "source": {
++        "source": "local",
++        "path": "./codex-only"
++      },
++      "policy": {
++        "installation": "AVAILABLE",
++        "authentication": "ON_INSTALL",
++        "products": ["CODEX"]
++      }
++    }
++  ]
++}"#,
++    )?;
++
++    let mut mcp = McpProcess::new(codex_home.path()).await?;
++    timeout(DEFAULT_TIMEOUT, mcp.initialize()).await??;
++
++    let request_id = mcp
++        .send_plugin_list_request(PluginListParams {
++            cwds: Some(vec![AbsolutePathBuf::try_from(repo_root.path())?]),
++            force_remote_sync: false,
++        })
++        .await?;
++
++    let response: JSONRPCResponse = timeout(
++        DEFAULT_TIMEOUT,
++        mcp.read_stream_until_response_message(RequestId::Integer(request_id)),
++    )
++    .await??;
++    let response: PluginListResponse = to_response(response)?;
++
++    let marketplace = response
++        .marketplaces
++        .into_iter()
++        .find(|marketplace| marketplace.name == "codex-curated")
++        .expect("expected marketplace entry");
++
++    assert_eq!(
++        marketplace
++            .plugins
++            .into_iter()
++            .map(|plugin| plugin.name)
++            .collect::<Vec<_>>(),
++        vec!["all-products".to_string(), "codex-only".to_string()]
++    );
++    Ok(())
++}
++
+ #[tokio::test]
+ async fn plugin_list_returns_plugin_interface_with_absolute_asset_paths() -> Result<()> {
+     let codex_home = TempDir::new()?;
+@@ -405,7 +558,6 @@ async fn plugin_list_returns_plugin_interface_with_absolute_asset_paths() -> Res
+     std::fs::create_dir_all(repo_root.path().join(".git"))?;
+     std::fs::create_dir_all(repo_root.path().join(".agents/plugins"))?;
+     std::fs::create_dir_all(plugin_root.join(".codex-plugin"))?;
+-    write_plugins_enabled_config(codex_home.path())?;
+     std::fs::write(
+         repo_root.path().join(".agents/plugins/marketplace.json"),
+         r#"{
+@@ -539,7 +691,6 @@ async fn plugin_list_accepts_legacy_string_default_prompt() -> Result<()> {
+     std::fs::create_dir_all(repo_root.path().join(".git"))?;
+     std::fs::create_dir_all(repo_root.path().join(".agents/plugins"))?;
+     std::fs::create_dir_all(plugin_root.join(".codex-plugin"))?;
+-    write_plugins_enabled_config(codex_home.path())?;
+     std::fs::write(
+         repo_root.path().join(".agents/plugins/marketplace.json"),
+         r#"{
+diff --git a/codex-rs/app-server/tests/suite/v2/plugin_read.rs b/codex-rs/app-server/tests/suite/v2/plugin_read.rs
+index 98d0fa8f37..cbd36c37a8 100644
+--- a/codex-rs/app-server/tests/suite/v2/plugin_read.rs
++++ b/codex-rs/app-server/tests/suite/v2/plugin_read.rs
+@@ -232,7 +232,6 @@ async fn plugin_read_accepts_legacy_string_default_prompt() -> Result<()> {
+   }
+ }"##,
+     )?;
+-    write_plugins_enabled_config(&codex_home)?;
+ 
+     let mut mcp = McpProcess::new(codex_home.path()).await?;
+     timeout(DEFAULT_TIMEOUT, mcp.initialize()).await??;
+@@ -286,7 +285,6 @@ async fn plugin_read_returns_invalid_request_when_plugin_is_missing() -> Result<
+   ]
+ }"#,
+     )?;
+-    write_plugins_enabled_config(&codex_home)?;
+ 
+     let mut mcp = McpProcess::new(codex_home.path()).await?;
+     timeout(DEFAULT_TIMEOUT, mcp.initialize()).await??;
+@@ -338,7 +336,6 @@ async fn plugin_read_returns_invalid_request_when_plugin_manifest_is_missing() -
+   ]
+ }"#,
+     )?;
+-    write_plugins_enabled_config(&codex_home)?;
+ 
+     let mut mcp = McpProcess::new(codex_home.path()).await?;
+     timeout(DEFAULT_TIMEOUT, mcp.initialize()).await??;
+@@ -385,13 +382,3 @@ fn write_installed_plugin(
+     )?;
+     Ok(())
+ }
+-
+-fn write_plugins_enabled_config(codex_home: &TempDir) -> Result<()> {
+-    std::fs::write(
+-        codex_home.path().join("config.toml"),
+-        r#"[features]
+-plugins = true
+-"#,
+-    )?;
+-    Ok(())
+-}
+diff --git a/codex-rs/cli/src/main.rs b/codex-rs/cli/src/main.rs
+index 05b568b7b7..698035feaf 100644
+--- a/codex-rs/cli/src/main.rs
++++ b/codex-rs/cli/src/main.rs
+@@ -331,6 +331,17 @@ struct AppServerCommand {
+     )]
+     listen: codex_app_server::AppServerTransport,
+ 
++    /// Session source stamped into new threads started by this app-server.
++    ///
++    /// Known values such as `vscode`, `cli`, `exec`, and `mcp` map to built-in
++    /// sources. Any other non-empty value is recorded as a custom source.
++    #[arg(
++        long = "session-source",
++        value_name = "SOURCE",
++        default_value = "vscode"
++    )]
++    session_source: String,
++
+     /// Controls whether analytics are enabled by default.
+     ///
+     /// Analytics are disabled by default for app-server. Users have to explicitly opt in
+@@ -643,12 +654,17 @@ async fn cli_main(arg0_paths: Arg0DispatchPaths) -> anyhow::Result<()> {
+             None => {
+                 reject_remote_mode_for_subcommand(root_remote.as_deref(), "app-server")?;
+                 let transport = app_server_cli.listen;
++                let session_source = codex_protocol::protocol::SessionSource::from_startup_arg(
++                    app_server_cli.session_source.as_str(),
++                )
++                .map_err(|err| anyhow::anyhow!("invalid --session-source: {err}"))?;
+                 codex_app_server::run_main_with_transport(
+                     arg0_paths.clone(),
+                     root_config_overrides,
+                     codex_core::config_loader::LoaderOverrides::default(),
+                     app_server_cli.analytics_default_enabled,
+                     transport,
++                    session_source,
+                 )
+                 .await?;
+             }
+@@ -1615,6 +1631,7 @@ mod tests {
+             app_server.listen,
+             codex_app_server::AppServerTransport::Stdio
+         );
++        assert_eq!(app_server.session_source, "vscode");
+     }
+ 
+     #[test]
+@@ -1624,6 +1641,13 @@ mod tests {
+         assert!(app_server.analytics_default_enabled);
+     }
+ 
++    #[test]
++    fn app_server_session_source_accepts_custom_value() {
++        let app_server =
++            app_server_from_args(["codex", "app-server", "--session-source", "atlas"].as_ref());
++        assert_eq!(app_server.session_source, "atlas");
++    }
++
+     #[test]
+     fn remote_flag_parses_for_interactive_root() {
+         let cli = MultitoolCli::try_parse_from(["codex", "--remote", "ws://127.0.0.1:4500"])
+diff --git a/codex-rs/codex-api/src/endpoint/realtime_websocket/methods.rs b/codex-rs/codex-api/src/endpoint/realtime_websocket/methods.rs
+index 10c72d72be..fe83c751a2 100644
+--- a/codex-rs/codex-api/src/endpoint/realtime_websocket/methods.rs
++++ b/codex-rs/codex-api/src/endpoint/realtime_websocket/methods.rs
+@@ -408,9 +408,7 @@ impl RealtimeWebsocketEvents {
+                 append_transcript_delta(&mut active_transcript.entries, "assistant", delta);
+             }
+             RealtimeEvent::HandoffRequested(handoff) => {
+-                if self.event_parser == RealtimeEventParser::V1 {
+-                    handoff.active_transcript = std::mem::take(&mut active_transcript.entries);
+-                }
++                handoff.active_transcript = std::mem::take(&mut active_transcript.entries);
+             }
+             RealtimeEvent::SessionUpdated { .. }
+             | RealtimeEvent::AudioOut(_)
+@@ -1175,10 +1173,7 @@ mod tests {
+             let fourth_json: Value = serde_json::from_str(&fourth).expect("json");
+             assert_eq!(fourth_json["type"], "conversation.handoff.append");
+             assert_eq!(fourth_json["handoff_id"], "handoff_1");
+-            assert_eq!(
+-                fourth_json["output_text"],
+-                "\"Agent Final Message\":\n\nhello from codex"
+-            );
++            assert_eq!(fourth_json["output_text"], "hello from codex");
+ 
+             ws.send(Message::Text(
+                 json!({
+@@ -1509,7 +1504,7 @@ mod tests {
+             );
+             assert_eq!(
+                 third_json["item"]["output"],
+-                Value::String("\"Agent Final Message\":\n\ndelegated result".to_string())
++                Value::String("delegated result".to_string())
+             );
+         });
+ 
+diff --git a/codex-rs/codex-api/src/endpoint/realtime_websocket/methods_common.rs b/codex-rs/codex-api/src/endpoint/realtime_websocket/methods_common.rs
+index 1b79122b27..48f21964a8 100644
+--- a/codex-rs/codex-api/src/endpoint/realtime_websocket/methods_common.rs
++++ b/codex-rs/codex-api/src/endpoint/realtime_websocket/methods_common.rs
+@@ -12,7 +12,6 @@ use crate::endpoint::realtime_websocket::protocol::RealtimeSessionMode;
+ use crate::endpoint::realtime_websocket::protocol::SessionUpdateSession;
+ 
+ pub(super) const REALTIME_AUDIO_SAMPLE_RATE: u32 = 24_000;
+-const AGENT_FINAL_MESSAGE_PREFIX: &str = "\"Agent Final Message\":\n\n";
+ 
+ pub(super) fn normalized_session_mode(
+     event_parser: RealtimeEventParser,
+@@ -39,7 +38,6 @@ pub(super) fn conversation_handoff_append_message(
+     handoff_id: String,
+     output_text: String,
+ ) -> RealtimeOutboundMessage {
+-    let output_text = format!("{AGENT_FINAL_MESSAGE_PREFIX}{output_text}");
+     match event_parser {
+         RealtimeEventParser::V1 => v1_conversation_handoff_append_message(handoff_id, output_text),
+         RealtimeEventParser::RealtimeV2 => {
+diff --git a/codex-rs/config/src/state.rs b/codex-rs/config/src/state.rs
+index f6899651b1..cb9b1a5903 100644
+--- a/codex-rs/config/src/state.rs
++++ b/codex-rs/config/src/state.rs
+@@ -148,9 +148,7 @@ impl ConfigLayerStack {
+         })
+     }
+ 
+-    /// Returns the raw user config layer, if any.
+-    ///
+-    /// This does not merge other config layers or apply any requirements.
++    /// Returns the user config layer, if any.
+     pub fn get_user_layer(&self) -> Option<&ConfigLayerEntry> {
+         self.user_layer_index
+             .and_then(|index| self.layers.get(index))
+@@ -211,10 +209,6 @@ impl ConfigLayerStack {
+         }
+     }
+ 
+-    /// Returns the merged config-layer view.
+-    ///
+-    /// This only merges ordinary config layers and does not apply requirements
+-    /// such as cloud requirements.
+     pub fn effective_config(&self) -> TomlValue {
+         let mut merged = TomlValue::Table(toml::map::Map::new());
+         for layer in self.get_layers(
+@@ -226,9 +220,6 @@ impl ConfigLayerStack {
+         merged
+     }
+ 
+-    /// Returns field origins for the merged config-layer view.
+-    ///
+-    /// Requirement sources are tracked separately and are not included here.
+     pub fn origins(&self) -> HashMap<String, ConfigLayerMetadata> {
+         let mut origins = HashMap::new();
+         let mut path = Vec::new();
+@@ -243,9 +234,8 @@ impl ConfigLayerStack {
+         origins
+     }
+ 
+-    /// Returns config layers from highest precedence to lowest precedence.
+-    ///
+-    /// Requirement sources are tracked separately and are not included here.
++    /// Returns the highest-precedence to lowest-precedence layers, so
++    /// `ConfigLayerSource::SessionFlags` would be first, if present.
+     pub fn layers_high_to_low(&self) -> Vec<&ConfigLayerEntry> {
+         self.get_layers(
+             ConfigLayerStackOrdering::HighestPrecedenceFirst,
+@@ -253,9 +243,8 @@ impl ConfigLayerStack {
+         )
+     }
+ 
+-    /// Returns config layers in the requested precedence order.
+-    ///
+-    /// Requirement sources are tracked separately and are not included here.
++    /// Returns the highest-precedence to lowest-precedence layers, so
++    /// `ConfigLayerSource::SessionFlags` would be first, if present.
+     pub fn get_layers(
+         &self,
+         ordering: ConfigLayerStackOrdering,
+diff --git a/codex-rs/core/src/codex.rs b/codex-rs/core/src/codex.rs
+index a916f3311d..7b947249bd 100644
+--- a/codex-rs/core/src/codex.rs
++++ b/codex-rs/core/src/codex.rs
+@@ -2385,11 +2385,12 @@ impl Session {
+                 &per_turn_config,
+             )
+             .await;
+-        let skills_outcome = Arc::new(
++        let skills_outcome = Arc::new(crate::skills::filter_skill_load_outcome_for_session_source(
+             self.services
+                 .skills_manager
+                 .skills_for_config(&per_turn_config),
+-        );
++            &session_configuration.session_source,
++        ));
+         let mut turn_context: TurnContext = Self::make_turn_context(
+             Some(Arc::clone(&self.services.auth_manager)),
+             &self.services.session_telemetry,
+@@ -4773,20 +4774,24 @@ mod handlers {
+         cwds: Vec<PathBuf>,
+         force_reload: bool,
+     ) {
+-        let cwds = if cwds.is_empty() {
++        let (cwds, session_source) = if cwds.is_empty() {
+             let state = sess.state.lock().await;
+-            vec![state.session_configuration.cwd.clone()]
++            (
++                vec![state.session_configuration.cwd.clone()],
++                state.session_configuration.session_source.clone(),
++            )
+         } else {
+-            cwds
++            let state = sess.state.lock().await;
++            (cwds, state.session_configuration.session_source.clone())
+         };
+ 
+         let skills_manager = &sess.services.skills_manager;
+-        let config = sess.get_config().await;
+         let mut skills = Vec::new();
+         for cwd in cwds {
+-            let outcome = skills_manager
+-                .skills_for_cwd(&cwd, config.as_ref(), force_reload)
+-                .await;
++            let outcome = crate::skills::filter_skill_load_outcome_for_session_source(
++                skills_manager.skills_for_cwd(&cwd, force_reload).await,
++                &session_source,
++            );
+             let errors = super::errors_to_info(&outcome.errors);
+             let skills_metadata = super::skills_to_info(&outcome.skills, &outcome.disabled_paths);
+             skills.push(SkillsListEntry {
+diff --git a/codex-rs/core/src/codex_tests.rs b/codex-rs/core/src/codex_tests.rs
+index 89d14e37ea..a7f5b72ea0 100644
+--- a/codex-rs/core/src/codex_tests.rs
++++ b/codex-rs/core/src/codex_tests.rs
+@@ -2187,7 +2187,7 @@ async fn new_default_turn_uses_config_aware_skills_for_role_overrides() {
+     let parent_outcome = session
+         .services
+         .skills_manager
+-        .skills_for_cwd(&parent_config.cwd, &parent_config, true)
++        .skills_for_cwd(&parent_config.cwd, true)
+         .await;
+     let parent_skill = parent_outcome
+         .skills
+diff --git a/codex-rs/core/src/plugins/manager.rs b/codex-rs/core/src/plugins/manager.rs
+index 5c65f1024b..7344e588f9 100644
+--- a/codex-rs/core/src/plugins/manager.rs
++++ b/codex-rs/core/src/plugins/manager.rs
+@@ -29,17 +29,22 @@ use crate::auth::CodexAuth;
+ use crate::config::Config;
+ use crate::config::ConfigService;
+ use crate::config::ConfigServiceError;
++use crate::config::ConfigToml;
+ use crate::config::edit::ConfigEdit;
+ use crate::config::edit::ConfigEditsBuilder;
++use crate::config::profile::ConfigProfile;
+ use crate::config::types::McpServerConfig;
+ use crate::config::types::PluginConfig;
+ use crate::config_loader::ConfigLayerStack;
+ use crate::features::Feature;
++use crate::features::FeatureOverrides;
++use crate::features::Features;
+ use crate::skills::SkillMetadata;
+ use crate::skills::loader::SkillRoot;
+ use crate::skills::loader::load_skills_from_roots;
+ use codex_app_server_protocol::ConfigValueWriteParams;
+ use codex_app_server_protocol::MergeStrategy;
++use codex_protocol::protocol::SessionSource;
+ use codex_protocol::protocol::SkillScope;
+ use codex_utils_absolute_path::AbsolutePathBuf;
+ use serde::Deserialize;
+@@ -417,7 +422,7 @@ impl From<RemotePluginFetchError> for PluginRemoteSyncError {
+ pub struct PluginsManager {
+     codex_home: PathBuf,
+     store: PluginStore,
+-    cached_enabled_outcome: RwLock<Option<PluginLoadOutcome>>,
++    cache_by_cwd: RwLock<HashMap<PathBuf, PluginLoadOutcome>>,
+     analytics_events_client: RwLock<Option<AnalyticsEventsClient>>,
+ }
+ 
+@@ -426,7 +431,7 @@ impl PluginsManager {
+         Self {
+             codex_home: codex_home.clone(),
+             store: PluginStore::new(codex_home),
+-            cached_enabled_outcome: RwLock::new(None),
++            cache_by_cwd: RwLock::new(HashMap::new()),
+             analytics_events_client: RwLock::new(None),
+         }
+     }
+@@ -440,44 +445,49 @@ impl PluginsManager {
+     }
+ 
+     pub fn plugins_for_config(&self, config: &Config) -> PluginLoadOutcome {
+-        self.plugins_for_config_with_force_reload(config, /*force_reload*/ false)
++        self.plugins_for_layer_stack(
++            &config.cwd,
++            &config.config_layer_stack,
++            /*force_reload*/ false,
++        )
+     }
+ 
+-    pub(crate) fn plugins_for_config_with_force_reload(
++    pub fn plugins_for_layer_stack(
+         &self,
+-        config: &Config,
++        cwd: &Path,
++        config_layer_stack: &ConfigLayerStack,
+         force_reload: bool,
+     ) -> PluginLoadOutcome {
+-        if !config.features.enabled(Feature::Plugins) {
++        if !plugins_feature_enabled_from_stack(config_layer_stack) {
+             return PluginLoadOutcome::default();
+         }
+ 
+-        if !force_reload && let Some(outcome) = self.cached_enabled_outcome() {
++        if !force_reload && let Some(outcome) = self.cached_outcome_for_cwd(cwd) {
+             return outcome;
+         }
+ 
+-        let outcome = load_plugins_from_layer_stack(&config.config_layer_stack, &self.store);
++        let outcome = load_plugins_from_layer_stack(config_layer_stack, &self.store);
+         log_plugin_load_errors(&outcome);
+-        let mut cache = match self.cached_enabled_outcome.write() {
++        let mut cache = match self.cache_by_cwd.write() {
+             Ok(cache) => cache,
+             Err(err) => err.into_inner(),
+         };
+-        *cache = Some(outcome.clone());
++        cache.insert(cwd.to_path_buf(), outcome.clone());
+         outcome
+     }
+ 
+     pub fn clear_cache(&self) {
+-        let mut cached_enabled_outcome = match self.cached_enabled_outcome.write() {
++        let mut cache_by_cwd = match self.cache_by_cwd.write() {
+             Ok(cache) => cache,
+             Err(err) => err.into_inner(),
+         };
+-        *cached_enabled_outcome = None;
++        cache_by_cwd.clear();
+     }
+ 
+-    fn cached_enabled_outcome(&self) -> Option<PluginLoadOutcome> {
+-        match self.cached_enabled_outcome.read() {
+-            Ok(cache) => cache.clone(),
+-            Err(err) => err.into_inner().clone(),
++    fn cached_outcome_for_cwd(&self, cwd: &Path) -> Option<PluginLoadOutcome> {
++        match self.cache_by_cwd.read() {
++            Ok(cache) => cache.get(cwd).cloned(),
++            Err(err) => err.into_inner().get(cwd).cloned(),
+         }
+     }
+ 
+@@ -625,10 +635,6 @@ impl PluginsManager {
+         config: &Config,
+         auth: Option<&CodexAuth>,
+     ) -> Result<RemotePluginSyncResult, PluginRemoteSyncError> {
+-        if !config.features.enabled(Feature::Plugins) {
+-            return Ok(RemotePluginSyncResult::default());
+-        }
+-
+         info!("starting remote plugin sync");
+         let remote_plugins = fetch_remote_plugin_status(config, auth)
+             .await
+@@ -812,11 +818,7 @@ impl PluginsManager {
+         config: &Config,
+         additional_roots: &[AbsolutePathBuf],
+     ) -> Result<Vec<ConfiguredMarketplace>, MarketplaceError> {
+-        if !config.features.enabled(Feature::Plugins) {
+-            return Ok(Vec::new());
+-        }
+-
+-        let (installed_plugins, enabled_plugins) = self.configured_plugin_states(config);
++        let (installed_plugins, configured_plugins) = self.configured_plugin_states(config);
+         let marketplaces = list_marketplaces(&self.marketplace_roots(additional_roots))?;
+         let mut seen_plugin_keys = HashSet::new();
+ 
+@@ -839,7 +841,10 @@ impl PluginsManager {
+                             // resolve to the first discovered source.
+                             id: plugin_key.clone(),
+                             installed: installed_plugins.contains(&plugin_key),
+-                            enabled: enabled_plugins.contains(&plugin_key),
++                            enabled: configured_plugins
++                                .get(&plugin_key)
++                                .copied()
++                                .unwrap_or(false),
+                             name: plugin.name,
+                             source: plugin.source,
+                             policy: plugin.policy,
+@@ -863,10 +868,6 @@ impl PluginsManager {
+         config: &Config,
+         request: &PluginReadRequest,
+     ) -> Result<PluginReadOutcome, MarketplaceError> {
+-        if !config.features.enabled(Feature::Plugins) {
+-            return Err(MarketplaceError::PluginsDisabled);
+-        }
+-
+         let marketplace = load_marketplace(&request.marketplace_path)?;
+         let marketplace_name = marketplace.name.clone();
+         let plugin = marketplace
+@@ -886,7 +887,7 @@ impl PluginsManager {
+             },
+         )?;
+         let plugin_key = plugin_id.as_key();
+-        let (installed_plugins, enabled_plugins) = self.configured_plugin_states(config);
++        let (installed_plugins, configured_plugins) = self.configured_plugin_states(config);
+         let source_path = match &plugin.source {
+             MarketplacePluginSource::Local { path } => path.clone(),
+         };
+@@ -927,7 +928,10 @@ impl PluginsManager {
+                 policy: plugin.policy,
+                 interface: plugin.interface,
+                 installed: installed_plugins.contains(&plugin_key),
+-                enabled: enabled_plugins.contains(&plugin_key),
++                enabled: configured_plugins
++                    .get(&plugin_key)
++                    .copied()
++                    .unwrap_or(false),
+                 skills,
+                 apps,
+                 mcp_server_names,
+@@ -935,8 +939,12 @@ impl PluginsManager {
+         })
+     }
+ 
+-    pub fn maybe_start_curated_repo_sync_for_config(self: &Arc<Self>, config: &Config) {
+-        if config.features.enabled(Feature::Plugins) {
++    pub fn maybe_start_curated_repo_sync_for_config(
++        self: &Arc<Self>,
++        config: &Config,
++        session_source: &SessionSource,
++    ) {
++        if plugins_feature_enabled_from_stack(&config.config_layer_stack) {
+             let mut configured_curated_plugin_ids =
+                 configured_plugins_from_stack(&config.config_layer_stack)
+                     .into_keys()
+@@ -958,11 +966,15 @@ impl PluginsManager {
+                     })
+                     .collect::<Vec<_>>();
+             configured_curated_plugin_ids.sort_unstable_by_key(super::store::PluginId::as_key);
+-            self.start_curated_repo_sync(configured_curated_plugin_ids);
++            self.start_curated_repo_sync(configured_curated_plugin_ids, session_source.clone());
+         }
+     }
+ 
+-    fn start_curated_repo_sync(self: &Arc<Self>, configured_curated_plugin_ids: Vec<PluginId>) {
++    fn start_curated_repo_sync(
++        self: &Arc<Self>,
++        configured_curated_plugin_ids: Vec<PluginId>,
++        session_source: SessionSource,
++    ) {
+         if CURATED_REPO_SYNC_STARTED.swap(true, Ordering::SeqCst) {
+             return;
+         }
+@@ -977,6 +989,7 @@ impl PluginsManager {
+                             codex_home.as_path(),
+                             &curated_plugin_version,
+                             &configured_curated_plugin_ids,
++                            &session_source,
+                         ) {
+                             Ok(cache_refreshed) => {
+                                 if cache_refreshed {
+@@ -1002,22 +1015,25 @@ impl PluginsManager {
+         }
+     }
+ 
+-    fn configured_plugin_states(&self, config: &Config) -> (HashSet<String>, HashSet<String>) {
+-        let configured_plugins = configured_plugins_from_stack(&config.config_layer_stack);
+-        let installed_plugins = configured_plugins
+-            .keys()
++    fn configured_plugin_states(
++        &self,
++        config: &Config,
++    ) -> (HashSet<String>, HashMap<String, bool>) {
++        let installed_plugins = configured_plugins_from_stack(&config.config_layer_stack)
++            .into_keys()
+             .filter(|plugin_key| {
+                 PluginId::parse(plugin_key)
+                     .ok()
+                     .is_some_and(|plugin_id| self.store.is_installed(&plugin_id))
+             })
+-            .cloned()
+             .collect::<HashSet<_>>();
+-        let enabled_plugins = configured_plugins
+-            .into_iter()
+-            .filter_map(|(plugin_key, plugin)| plugin.enabled.then_some(plugin_key))
+-            .collect::<HashSet<_>>();
+-        (installed_plugins, enabled_plugins)
++        let configured_plugins = self
++            .plugins_for_config(config)
++            .plugins()
++            .iter()
++            .map(|plugin| (plugin.config_name.clone(), plugin.enabled))
++            .collect::<HashMap<String, bool>>();
++        (installed_plugins, configured_plugins)
+     }
+ 
+     fn marketplace_roots(&self, additional_roots: &[AbsolutePathBuf]) -> Vec<AbsolutePathBuf> {
+@@ -1101,6 +1117,24 @@ impl PluginUninstallError {
+     }
+ }
+ 
++fn plugins_feature_enabled_from_stack(config_layer_stack: &ConfigLayerStack) -> bool {
++    // Plugins are intentionally opt-in from the persisted user config only. Project config
++    // layers should not be able to enable plugin loading for a checkout.
++    let Some(user_layer) = config_layer_stack.get_user_layer() else {
++        return false;
++    };
++    let Ok(config_toml) = user_layer.config.clone().try_into::<ConfigToml>() else {
++        warn!("failed to deserialize config when checking plugin feature flag");
++        return false;
++    };
++    let config_profile = config_toml
++        .get_config_profile(config_toml.profile.clone())
++        .unwrap_or_else(|_| ConfigProfile::default());
++    let features =
++        Features::from_config(&config_toml, &config_profile, FeatureOverrides::default());
++    features.enabled(Feature::Plugins)
++}
++
+ fn log_plugin_load_errors(outcome: &PluginLoadOutcome) {
+     for plugin in outcome
+         .plugins
+@@ -1181,6 +1215,7 @@ fn refresh_curated_plugin_cache(
+     codex_home: &Path,
+     plugin_version: &str,
+     configured_curated_plugin_ids: &[PluginId],
++    session_source: &SessionSource,
+ ) -> Result<bool, String> {
+     let store = PluginStore::new(codex_home.to_path_buf());
+     let curated_marketplace_path = AbsolutePathBuf::try_from(
+@@ -1191,9 +1226,12 @@ fn refresh_curated_plugin_cache(
+         .map_err(|err| format!("failed to load curated marketplace for cache refresh: {err}"))?;
+ 
+     let mut plugin_sources = HashMap::<String, AbsolutePathBuf>::new();
++    let mut product_restricted_plugin_names = HashSet::<String>::new();
+     for plugin in curated_marketplace.plugins {
+         let plugin_name = plugin.name;
+-        if plugin_sources.contains_key(&plugin_name) {
++        if plugin_sources.contains_key(&plugin_name)
++            || product_restricted_plugin_names.contains(&plugin_name)
++        {
+             warn!(
+                 plugin = plugin_name,
+                 marketplace = OPENAI_CURATED_MARKETPLACE_NAME,
+@@ -1204,16 +1242,32 @@ fn refresh_curated_plugin_cache(
+         let source_path = match plugin.source {
+             MarketplacePluginSource::Local { path } => path,
+         };
+-        plugin_sources.insert(plugin_name, source_path);
++        if session_source.matches_product_restriction(&plugin.policy.products) {
++            plugin_sources.insert(plugin_name, source_path);
++        } else {
++            product_restricted_plugin_names.insert(plugin_name);
++        }
+     }
+ 
+     let mut cache_refreshed = false;
+     for plugin_id in configured_curated_plugin_ids {
++        // Curated plugin cache entries are intentionally sticky across session source changes.
++        // Product restrictions gate refresh for this source, but do not retroactively evict an
++        // already-active cache entry from a shared CODEX_HOME.
+         if store.active_plugin_version(plugin_id).as_deref() == Some(plugin_version) {
+             continue;
+         }
+ 
+         let Some(source_path) = plugin_sources.get(&plugin_id.plugin_name).cloned() else {
++            if product_restricted_plugin_names.contains(&plugin_id.plugin_name) {
++                info!(
++                    plugin = plugin_id.plugin_name,
++                    marketplace = OPENAI_CURATED_MARKETPLACE_NAME,
++                    session_source = %session_source,
++                    "skipping curated plugin cache refresh for product-restricted plugin"
++                );
++                continue;
++            }
+             warn!(
+                 plugin = plugin_id.plugin_name,
+                 marketplace = OPENAI_CURATED_MARKETPLACE_NAME,
+@@ -1239,7 +1293,7 @@ fn refresh_curated_plugin_cache(
+ fn configured_plugins_from_stack(
+     config_layer_stack: &ConfigLayerStack,
+ ) -> HashMap<String, PluginConfig> {
+-    // Plugin entries remain persisted user config only.
++    // Keep plugin entries aligned with the same user-layer-only semantics as the feature gate.
+     let Some(user_layer) = config_layer_stack.get_user_layer() else {
+         return HashMap::new();
+     };
+diff --git a/codex-rs/core/src/plugins/manager_tests.rs b/codex-rs/core/src/plugins/manager_tests.rs
+index 49a63eee42..17b7fd3e73 100644
+--- a/codex-rs/core/src/plugins/manager_tests.rs
++++ b/codex-rs/core/src/plugins/manager_tests.rs
+@@ -9,10 +9,12 @@ use crate::config_loader::ConfigRequirements;
+ use crate::config_loader::ConfigRequirementsToml;
+ use crate::plugins::MarketplacePluginInstallPolicy;
+ use crate::plugins::test_support::TEST_CURATED_PLUGIN_SHA;
++use crate::plugins::test_support::write_curated_plugin;
+ use crate::plugins::test_support::write_curated_plugin_sha_with as write_curated_plugin_sha;
+ use crate::plugins::test_support::write_file;
+ use crate::plugins::test_support::write_openai_curated_marketplace;
+ use codex_app_server_protocol::ConfigLayerSource;
++use codex_protocol::protocol::SessionSource;
+ use pretty_assertions::assert_eq;
+ use std::fs;
+ use tempfile::TempDir;
+@@ -59,8 +61,18 @@ fn plugin_config_toml(enabled: bool, plugins_feature_enabled: bool) -> String {
+ 
+ fn load_plugins_from_config(config_toml: &str, codex_home: &Path) -> PluginLoadOutcome {
+     write_file(&codex_home.join(CONFIG_TOML_FILE), config_toml);
+-    let config = load_config_blocking(codex_home, codex_home);
+-    PluginsManager::new(codex_home.to_path_buf()).plugins_for_config(&config)
++    let stack = ConfigLayerStack::new(
++        vec![ConfigLayerEntry::new(
++            ConfigLayerSource::User {
++                file: AbsolutePathBuf::try_from(codex_home.join(CONFIG_TOML_FILE)).unwrap(),
++            },
++            toml::from_str(config_toml).expect("plugin test config should parse"),
++        )],
++        ConfigRequirements::default(),
++        ConfigRequirementsToml::default(),
++    )
++    .expect("config layer stack should build");
++    PluginsManager::new(codex_home.to_path_buf()).plugins_for_layer_stack(codex_home, &stack, false)
+ }
+ 
+ async fn load_config(codex_home: &Path, cwd: &Path) -> crate::config::Config {
+@@ -72,14 +84,6 @@ async fn load_config(codex_home: &Path, cwd: &Path) -> crate::config::Config {
+         .expect("config should load")
+ }
+ 
+-fn load_config_blocking(codex_home: &Path, cwd: &Path) -> crate::config::Config {
+-    tokio::runtime::Builder::new_current_thread()
+-        .enable_all()
+-        .build()
+-        .expect("tokio runtime should build")
+-        .block_on(load_config(codex_home, cwd))
+-}
+-
+ #[test]
+ fn load_plugins_loads_default_skills_and_mcp_servers() {
+     let codex_home = TempDir::new().unwrap();
+@@ -747,13 +751,8 @@ fn load_plugins_returns_empty_when_feature_disabled() {
+         &plugin_root.join("skills/sample-search/SKILL.md"),
+         "---\nname: sample-search\ndescription: search sample data\n---\n",
+     );
+-    write_file(
+-        &codex_home.path().join(CONFIG_TOML_FILE),
+-        &plugin_config_toml(true, false),
+-    );
+ 
+-    let config = load_config_blocking(codex_home.path(), codex_home.path());
+-    let outcome = PluginsManager::new(codex_home.path().to_path_buf()).plugins_for_config(&config);
++    let outcome = load_plugins_from_config(&plugin_config_toml(true, false), codex_home.path());
+ 
+     assert_eq!(outcome, PluginLoadOutcome::default());
+ }
+@@ -1003,125 +1002,12 @@ enabled = false
+     );
+ }
+ 
+-#[tokio::test]
+-async fn list_marketplaces_returns_empty_when_feature_disabled() {
+-    let tmp = tempfile::tempdir().unwrap();
+-    let repo_root = tmp.path().join("repo");
+-    fs::create_dir_all(repo_root.join(".git")).unwrap();
+-    fs::create_dir_all(repo_root.join(".agents/plugins")).unwrap();
+-    fs::write(
+-        repo_root.join(".agents/plugins/marketplace.json"),
+-        r#"{
+-  "name": "debug",
+-  "plugins": [
+-    {
+-      "name": "enabled-plugin",
+-      "source": {
+-        "source": "local",
+-        "path": "./enabled-plugin"
+-      }
+-    }
+-  ]
+-}"#,
+-    )
+-    .unwrap();
+-    write_file(
+-        &tmp.path().join(CONFIG_TOML_FILE),
+-        r#"[features]
+-plugins = false
+-
+-[plugins."enabled-plugin@debug"]
+-enabled = true
+-"#,
+-    );
+-
+-    let config = load_config(tmp.path(), &repo_root).await;
+-    let marketplaces = PluginsManager::new(tmp.path().to_path_buf())
+-        .list_marketplaces_for_config(&config, &[AbsolutePathBuf::try_from(repo_root).unwrap()])
+-        .unwrap();
+-
+-    assert_eq!(marketplaces, Vec::new());
+-}
+-
+-#[tokio::test]
+-async fn read_plugin_for_config_returns_plugins_disabled_when_feature_disabled() {
+-    let tmp = tempfile::tempdir().unwrap();
+-    let repo_root = tmp.path().join("repo");
+-    fs::create_dir_all(repo_root.join(".git")).unwrap();
+-    fs::create_dir_all(repo_root.join(".agents/plugins")).unwrap();
+-    let marketplace_path =
+-        AbsolutePathBuf::try_from(repo_root.join(".agents/plugins/marketplace.json")).unwrap();
+-    fs::write(
+-        marketplace_path.as_path(),
+-        r#"{
+-  "name": "debug",
+-  "plugins": [
+-    {
+-      "name": "enabled-plugin",
+-      "source": {
+-        "source": "local",
+-        "path": "./enabled-plugin"
+-      }
+-    }
+-  ]
+-}"#,
+-    )
+-    .unwrap();
+-    write_file(
+-        &tmp.path().join(CONFIG_TOML_FILE),
+-        r#"[features]
+-plugins = false
+-
+-[plugins."enabled-plugin@debug"]
+-enabled = true
+-"#,
+-    );
+-
+-    let config = load_config(tmp.path(), &repo_root).await;
+-    let err = PluginsManager::new(tmp.path().to_path_buf())
+-        .read_plugin_for_config(
+-            &config,
+-            &PluginReadRequest {
+-                plugin_name: "enabled-plugin".to_string(),
+-                marketplace_path,
+-            },
+-        )
+-        .unwrap_err();
+-
+-    assert!(matches!(err, MarketplaceError::PluginsDisabled));
+-}
+-
+-#[tokio::test]
+-async fn sync_plugins_from_remote_returns_default_when_feature_disabled() {
+-    let tmp = tempfile::tempdir().unwrap();
+-    write_file(
+-        &tmp.path().join(CONFIG_TOML_FILE),
+-        r#"[features]
+-plugins = false
+-"#,
+-    );
+-
+-    let config = load_config(tmp.path(), tmp.path()).await;
+-    let outcome = PluginsManager::new(tmp.path().to_path_buf())
+-        .sync_plugins_from_remote(&config, None)
+-        .await
+-        .unwrap();
+-
+-    assert_eq!(outcome, RemotePluginSyncResult::default());
+-}
+-
+ #[tokio::test]
+ async fn list_marketplaces_includes_curated_repo_marketplace() {
+     let tmp = tempfile::tempdir().unwrap();
+     let curated_root = curated_plugins_repo_path(tmp.path());
+     let plugin_root = curated_root.join("plugins/linear");
+ 
+-    write_file(
+-        &tmp.path().join(CONFIG_TOML_FILE),
+-        r#"[features]
+-plugins = true
+-"#,
+-    );
+     fs::create_dir_all(curated_root.join(".agents/plugins")).unwrap();
+     fs::create_dir_all(plugin_root.join(".codex-plugin")).unwrap();
+     fs::write(
+@@ -1148,6 +1034,12 @@ plugins = true
+         r#"{"name":"linear"}"#,
+     )
+     .unwrap();
++    write_file(
++        &tmp.path().join(CONFIG_TOML_FILE),
++        r#"[features]
++plugins = true
++"#,
++    );
+ 
+     let config = load_config(tmp.path(), tmp.path()).await;
+     let marketplaces = PluginsManager::new(tmp.path().to_path_buf())
+@@ -1743,8 +1635,13 @@ fn refresh_curated_plugin_cache_replaces_existing_local_version_with_sha() {
+     );
+ 
+     assert!(
+-        refresh_curated_plugin_cache(tmp.path(), TEST_CURATED_PLUGIN_SHA, &[plugin_id])
+-            .expect("cache refresh should succeed")
++        refresh_curated_plugin_cache(
++            tmp.path(),
++            TEST_CURATED_PLUGIN_SHA,
++            &[plugin_id],
++            &SessionSource::Cli,
++        )
++        .expect("cache refresh should succeed")
+     );
+ 
+     assert!(
+@@ -1774,8 +1671,13 @@ fn refresh_curated_plugin_cache_reinstalls_missing_configured_plugin_with_curren
+     .unwrap();
+ 
+     assert!(
+-        refresh_curated_plugin_cache(tmp.path(), TEST_CURATED_PLUGIN_SHA, &[plugin_id])
+-            .expect("cache refresh should recreate missing configured plugin")
++        refresh_curated_plugin_cache(
++            tmp.path(),
++            TEST_CURATED_PLUGIN_SHA,
++            &[plugin_id],
++            &SessionSource::Cli,
++        )
++        .expect("cache refresh should recreate missing configured plugin")
+     );
+ 
+     assert!(
+@@ -1804,8 +1706,64 @@ fn refresh_curated_plugin_cache_returns_false_when_configured_plugins_are_curren
+     );
+ 
+     assert!(
+-        !refresh_curated_plugin_cache(tmp.path(), TEST_CURATED_PLUGIN_SHA, &[plugin_id])
+-            .expect("cache refresh should be a no-op when configured plugins are current")
++        !refresh_curated_plugin_cache(
++            tmp.path(),
++            TEST_CURATED_PLUGIN_SHA,
++            &[plugin_id],
++            &SessionSource::Cli,
++        )
++        .expect("cache refresh should be a no-op when configured plugins are current")
++    );
++}
++
++#[test]
++fn refresh_curated_plugin_cache_skips_product_restricted_plugins_for_session_source() {
++    let tmp = tempfile::tempdir().unwrap();
++    let curated_root = curated_plugins_repo_path(tmp.path());
++    write_file(
++        &curated_root.join(".agents/plugins/marketplace.json"),
++        &format!(
++            r#"{{
++  "name": "{OPENAI_CURATED_MARKETPLACE_NAME}",
++  "plugins": [
++    {{
++      "name": "chatgpt-plugin",
++      "source": {{
++        "source": "local",
++        "path": "./plugins/chatgpt-plugin"
++      }},
++      "policy": {{
++        "products": ["CHATGPT"]
++      }}
++    }}
++  ]
++}}"#
++        ),
++    );
++    write_curated_plugin(&curated_root, "chatgpt-plugin");
++    write_curated_plugin_sha(tmp.path(), TEST_CURATED_PLUGIN_SHA);
++    let plugin_id = PluginId::new(
++        "chatgpt-plugin".to_string(),
++        OPENAI_CURATED_MARKETPLACE_NAME.to_string(),
++    )
++    .unwrap();
++
++    assert!(
++        !refresh_curated_plugin_cache(
++            tmp.path(),
++            TEST_CURATED_PLUGIN_SHA,
++            &[plugin_id],
++            &SessionSource::Cli,
++        )
++        .expect("cache refresh should skip disallowed product plugin")
++    );
++
++    assert!(
++        !tmp.path()
++            .join(format!(
++                "plugins/cache/openai-curated/chatgpt-plugin/{TEST_CURATED_PLUGIN_SHA}"
++            ))
++            .exists()
+     );
+ }
+ 
+@@ -1839,8 +1797,11 @@ fn load_plugins_ignores_project_config_files() {
+     )
+     .expect("config layer stack should build");
+ 
+-    let outcome =
+-        load_plugins_from_layer_stack(&stack, &PluginStore::new(codex_home.path().to_path_buf()));
++    let outcome = PluginsManager::new(codex_home.path().to_path_buf()).plugins_for_layer_stack(
++        &project_root,
++        &stack,
++        false,
++    );
+ 
+     assert_eq!(outcome, PluginLoadOutcome::default());
+ }
+diff --git a/codex-rs/core/src/plugins/marketplace.rs b/codex-rs/core/src/plugins/marketplace.rs
+index aee612d713..e7e0d2e4da 100644
+--- a/codex-rs/core/src/plugins/marketplace.rs
++++ b/codex-rs/core/src/plugins/marketplace.rs
+@@ -14,7 +14,6 @@ use std::io;
+ use std::path::Component;
+ use std::path::Path;
+ use std::path::PathBuf;
+-use tracing::warn;
+ 
+ const MARKETPLACE_RELATIVE_PATH: &str = ".agents/plugins/marketplace.json";
+ 
+@@ -55,8 +54,6 @@ pub enum MarketplacePluginSource {
+ pub struct MarketplacePluginPolicy {
+     pub installation: MarketplacePluginInstallPolicy,
+     pub authentication: MarketplacePluginAuthPolicy,
+-    // TODO: Surface or enforce product gating at the Codex/plugin consumer boundary instead of
+-    // only carrying it through core marketplace metadata.
+     pub products: Vec<Product>,
+ }
+ 
+@@ -128,9 +125,6 @@ pub enum MarketplaceError {
+         marketplace_name: String,
+     },
+ 
+-    #[error("plugins feature is disabled")]
+-    PluginsDisabled,
+-
+     #[error("{0}")]
+     InvalidPlugin(String),
+ }
+@@ -242,16 +236,7 @@ fn list_marketplaces_with_home(
+     let mut marketplaces = Vec::new();
+ 
+     for marketplace_path in discover_marketplace_paths_from_roots(additional_roots, home_dir) {
+-        match load_marketplace(&marketplace_path) {
+-            Ok(marketplace) => marketplaces.push(marketplace),
+-            Err(err) => {
+-                warn!(
+-                    path = %marketplace_path.display(),
+-                    error = %err,
+-                    "skipping marketplace that failed to load"
+-                );
+-            }
+-        }
++        marketplaces.push(load_marketplace(&marketplace_path)?);
+     }
+ 
+     Ok(marketplaces)
+diff --git a/codex-rs/core/src/plugins/marketplace_tests.rs b/codex-rs/core/src/plugins/marketplace_tests.rs
+index bfdce5e186..2516419edb 100644
+--- a/codex-rs/core/src/plugins/marketplace_tests.rs
++++ b/codex-rs/core/src/plugins/marketplace_tests.rs
+@@ -403,62 +403,6 @@ fn list_marketplaces_reads_marketplace_display_name() {
+     );
+ }
+ 
+-#[test]
+-fn list_marketplaces_skips_marketplaces_that_fail_to_load() {
+-    let tmp = tempdir().unwrap();
+-    let valid_repo_root = tmp.path().join("valid-repo");
+-    let invalid_repo_root = tmp.path().join("invalid-repo");
+-
+-    fs::create_dir_all(valid_repo_root.join(".git")).unwrap();
+-    fs::create_dir_all(valid_repo_root.join(".agents/plugins")).unwrap();
+-    fs::create_dir_all(invalid_repo_root.join(".git")).unwrap();
+-    fs::create_dir_all(invalid_repo_root.join(".agents/plugins")).unwrap();
+-    fs::write(
+-        valid_repo_root.join(".agents/plugins/marketplace.json"),
+-        r#"{
+-  "name": "valid-marketplace",
+-  "plugins": [
+-    {
+-      "name": "valid-plugin",
+-      "source": {
+-        "source": "local",
+-        "path": "./plugin"
+-      }
+-    }
+-  ]
+-}"#,
+-    )
+-    .unwrap();
+-    fs::write(
+-        invalid_repo_root.join(".agents/plugins/marketplace.json"),
+-        r#"{
+-  "name": "invalid-marketplace",
+-  "plugins": [
+-    {
+-      "name": "broken-plugin",
+-      "source": {
+-        "source": "local",
+-        "path": "plugin-without-dot-slash"
+-      }
+-    }
+-  ]
+-}"#,
+-    )
+-    .unwrap();
+-
+-    let marketplaces = list_marketplaces_with_home(
+-        &[
+-            AbsolutePathBuf::try_from(valid_repo_root).unwrap(),
+-            AbsolutePathBuf::try_from(invalid_repo_root).unwrap(),
+-        ],
+-        None,
+-    )
+-    .unwrap();
+-
+-    assert_eq!(marketplaces.len(), 1);
+-    assert_eq!(marketplaces[0].name, "valid-marketplace");
+-}
+-
+ #[test]
+ fn list_marketplaces_resolves_plugin_interface_paths_to_absolute() {
+     let tmp = tempdir().unwrap();
+diff --git a/codex-rs/core/src/skills/manager.rs b/codex-rs/core/src/skills/manager.rs
+index 7aa3e6d7a7..c8354fed32 100644
+--- a/codex-rs/core/src/skills/manager.rs
++++ b/codex-rs/core/src/skills/manager.rs
+@@ -92,24 +92,18 @@ impl SkillsManager {
+         roots
+     }
+ 
+-    pub async fn skills_for_cwd(
+-        &self,
+-        cwd: &Path,
+-        config: &Config,
+-        force_reload: bool,
+-    ) -> SkillLoadOutcome {
++    pub async fn skills_for_cwd(&self, cwd: &Path, force_reload: bool) -> SkillLoadOutcome {
+         if !force_reload && let Some(outcome) = self.cached_outcome_for_cwd(cwd) {
+             return outcome;
+         }
+ 
+-        self.skills_for_cwd_with_extra_user_roots(cwd, config, force_reload, &[])
++        self.skills_for_cwd_with_extra_user_roots(cwd, force_reload, &[])
+             .await
+     }
+ 
+     pub async fn skills_for_cwd_with_extra_user_roots(
+         &self,
+         cwd: &Path,
+-        config: &Config,
+         force_reload: bool,
+         extra_user_roots: &[PathBuf],
+     ) -> SkillLoadOutcome {
+@@ -153,9 +147,9 @@ impl SkillsManager {
+             }
+         };
+ 
+-        let loaded_plugins = self
+-            .plugins_manager
+-            .plugins_for_config_with_force_reload(config, force_reload);
++        let loaded_plugins =
++            self.plugins_manager
++                .plugins_for_layer_stack(cwd, &config_layer_stack, force_reload);
+         let mut roots = skill_roots(
+             &config_layer_stack,
+             cwd,
+diff --git a/codex-rs/core/src/skills/manager_tests.rs b/codex-rs/core/src/skills/manager_tests.rs
+index cb3c48ed7f..98ad9627bd 100644
+--- a/codex-rs/core/src/skills/manager_tests.rs
++++ b/codex-rs/core/src/skills/manager_tests.rs
+@@ -93,7 +93,6 @@ async fn skills_for_cwd_reuses_cached_entry_even_when_entry_has_extra_roots() {
+     let outcome_with_extra = skills_manager
+         .skills_for_cwd_with_extra_user_roots(
+             cwd.path(),
+-            &config,
+             true,
+             std::slice::from_ref(&extra_root_path),
+         )
+@@ -113,9 +112,7 @@ async fn skills_for_cwd_reuses_cached_entry_even_when_entry_has_extra_roots() {
+ 
+     // The cwd-only API returns the current cached entry for this cwd, even when that entry
+     // was produced with extra roots.
+-    let outcome_without_extra = skills_manager
+-        .skills_for_cwd(cwd.path(), &config, false)
+-        .await;
++    let outcome_without_extra = skills_manager.skills_for_cwd(cwd.path(), false).await;
+     assert_eq!(outcome_without_extra.skills, outcome_with_extra.skills);
+     assert_eq!(outcome_without_extra.errors, outcome_with_extra.errors);
+ }
+@@ -207,7 +204,6 @@ async fn skills_for_cwd_with_extra_roots_only_refreshes_on_force_reload() {
+     let outcome_a = skills_manager
+         .skills_for_cwd_with_extra_user_roots(
+             cwd.path(),
+-            &config,
+             true,
+             std::slice::from_ref(&extra_root_a_path),
+         )
+@@ -229,7 +225,6 @@ async fn skills_for_cwd_with_extra_roots_only_refreshes_on_force_reload() {
+     let outcome_b = skills_manager
+         .skills_for_cwd_with_extra_user_roots(
+             cwd.path(),
+-            &config,
+             false,
+             std::slice::from_ref(&extra_root_b_path),
+         )
+@@ -250,7 +245,6 @@ async fn skills_for_cwd_with_extra_roots_only_refreshes_on_force_reload() {
+     let outcome_reloaded = skills_manager
+         .skills_for_cwd_with_extra_user_roots(
+             cwd.path(),
+-            &config,
+             true,
+             std::slice::from_ref(&extra_root_b_path),
+         )
+@@ -423,9 +417,7 @@ enabled = true
+     let plugins_manager = Arc::new(PluginsManager::new(codex_home.path().to_path_buf()));
+     let skills_manager = SkillsManager::new(codex_home.path().to_path_buf(), plugins_manager, true);
+ 
+-    let parent_outcome = skills_manager
+-        .skills_for_cwd(cwd.path(), &parent_config, true)
+-        .await;
++    let parent_outcome = skills_manager.skills_for_cwd(cwd.path(), true).await;
+     let parent_skill = parent_outcome
+         .skills
+         .iter()
+diff --git a/codex-rs/core/src/skills/mod.rs b/codex-rs/core/src/skills/mod.rs
+index 8c311c5d34..2a39751414 100644
+--- a/codex-rs/core/src/skills/mod.rs
++++ b/codex-rs/core/src/skills/mod.rs
+@@ -20,4 +20,6 @@ pub use model::SkillError;
+ pub use model::SkillLoadOutcome;
+ pub use model::SkillMetadata;
+ pub use model::SkillPolicy;
++pub use model::filter_skill_load_outcome_for_session_source;
++pub use model::filter_skills_for_session_source;
+ pub use render::render_skills_section;
+diff --git a/codex-rs/core/src/skills/model.rs b/codex-rs/core/src/skills/model.rs
+index 0949300ec7..f4fa1515ab 100644
+--- a/codex-rs/core/src/skills/model.rs
++++ b/codex-rs/core/src/skills/model.rs
+@@ -5,6 +5,7 @@ use std::sync::Arc;
+ 
+ use codex_protocol::models::PermissionProfile;
+ use codex_protocol::protocol::Product;
++use codex_protocol::protocol::SessionSource;
+ use codex_protocol::protocol::SkillScope;
+ use serde::Deserialize;
+ 
+@@ -42,13 +43,18 @@ impl SkillMetadata {
+             .and_then(|policy| policy.allow_implicit_invocation)
+             .unwrap_or(true)
+     }
++
++    pub fn matches_product_restriction(&self, session_source: &SessionSource) -> bool {
++        match &self.policy {
++            Some(policy) => session_source.matches_product_restriction(&policy.products),
++            None => true,
++        }
++    }
+ }
+ 
+ #[derive(Debug, Clone, PartialEq, Eq, Default)]
+ pub struct SkillPolicy {
+     pub allow_implicit_invocation: Option<bool>,
+-    // TODO: Enforce product gating in Codex skill selection/injection instead of only parsing and
+-    // storing this metadata.
+     pub products: Vec<Product>,
+ }
+ 
+@@ -115,3 +121,39 @@ impl SkillLoadOutcome {
+             .map(|skill| (skill, self.is_skill_enabled(skill)))
+     }
+ }
++
++pub fn filter_skill_load_outcome_for_session_source(
++    mut outcome: SkillLoadOutcome,
++    session_source: &SessionSource,
++) -> SkillLoadOutcome {
++    outcome
++        .skills
++        .retain(|skill| skill.matches_product_restriction(session_source));
++    outcome.implicit_skills_by_scripts_dir = Arc::new(
++        outcome
++            .implicit_skills_by_scripts_dir
++            .iter()
++            .filter(|(_, skill)| skill.matches_product_restriction(session_source))
++            .map(|(path, skill)| (path.clone(), skill.clone()))
++            .collect(),
++    );
++    outcome.implicit_skills_by_doc_path = Arc::new(
++        outcome
++            .implicit_skills_by_doc_path
++            .iter()
++            .filter(|(_, skill)| skill.matches_product_restriction(session_source))
++            .map(|(path, skill)| (path.clone(), skill.clone()))
++            .collect(),
++    );
++    outcome
++}
++
++pub fn filter_skills_for_session_source(
++    skills: Vec<SkillMetadata>,
++    session_source: &SessionSource,
++) -> Vec<SkillMetadata> {
++    skills
++        .into_iter()
++        .filter(|skill| skill.matches_product_restriction(session_source))
++        .collect()
++}
+diff --git a/codex-rs/core/src/tools/context.rs b/codex-rs/core/src/tools/context.rs
+index 74efb0989b..6670af2613 100644
+--- a/codex-rs/core/src/tools/context.rs
++++ b/codex-rs/core/src/tools/context.rs
+@@ -199,41 +199,6 @@ impl ToolOutput for FunctionToolOutput {
+     }
+ }
+ 
+-pub struct ApplyPatchToolOutput {
+-    pub text: String,
+-}
+-
+-impl ApplyPatchToolOutput {
+-    pub fn from_text(text: String) -> Self {
+-        Self { text }
+-    }
+-}
+-
+-impl ToolOutput for ApplyPatchToolOutput {
+-    fn log_preview(&self) -> String {
+-        telemetry_preview(&self.text)
+-    }
+-
+-    fn success_for_logging(&self) -> bool {
+-        true
+-    }
+-
+-    fn to_response_item(&self, call_id: &str, payload: &ToolPayload) -> ResponseInputItem {
+-        function_tool_response(
+-            call_id,
+-            payload,
+-            vec![FunctionCallOutputContentItem::InputText {
+-                text: self.text.clone(),
+-            }],
+-            Some(true),
+-        )
+-    }
+-
+-    fn code_mode_result(&self, _payload: &ToolPayload) -> JsonValue {
+-        JsonValue::Object(serde_json::Map::new())
+-    }
+-}
+-
+ pub struct AbortedToolOutput {
+     pub message: String,
+ }
+diff --git a/codex-rs/core/src/tools/handlers/apply_patch.rs b/codex-rs/core/src/tools/handlers/apply_patch.rs
+index 1d799da7e7..12fb904f4d 100644
+--- a/codex-rs/core/src/tools/handlers/apply_patch.rs
++++ b/codex-rs/core/src/tools/handlers/apply_patch.rs
+@@ -13,7 +13,6 @@ use crate::codex::TurnContext;
+ use crate::function_tool::FunctionCallError;
+ use crate::sandboxing::effective_file_system_sandbox_policy;
+ use crate::sandboxing::merge_permission_profiles;
+-use crate::tools::context::ApplyPatchToolOutput;
+ use crate::tools::context::FunctionToolOutput;
+ use crate::tools::context::SharedTurnDiffTracker;
+ use crate::tools::context::ToolInvocation;
+@@ -126,7 +125,7 @@ async fn effective_patch_permissions(
+ 
+ #[async_trait]
+ impl ToolHandler for ApplyPatchHandler {
+-    type Output = ApplyPatchToolOutput;
++    type Output = FunctionToolOutput;
+ 
+     fn kind(&self) -> ToolKind {
+         ToolKind::Function
+@@ -180,7 +179,7 @@ impl ToolHandler for ApplyPatchHandler {
+                 {
+                     InternalApplyPatchInvocation::Output(item) => {
+                         let content = item?;
+-                        Ok(ApplyPatchToolOutput::from_text(content))
++                        Ok(FunctionToolOutput::from_text(content, Some(true)))
+                     }
+                     InternalApplyPatchInvocation::DelegateToExec(apply) => {
+                         let changes = convert_apply_patch_to_protocol(&apply.action);
+@@ -234,7 +233,7 @@ impl ToolHandler for ApplyPatchHandler {
+                             Some(&tracker),
+                         );
+                         let content = emitter.finish(event_ctx, out).await?;
+-                        Ok(ApplyPatchToolOutput::from_text(content))
++                        Ok(FunctionToolOutput::from_text(content, Some(true)))
+                     }
+                 }
+             }
+diff --git a/codex-rs/core/src/tools/handlers/plan.rs b/codex-rs/core/src/tools/handlers/plan.rs
+index af8dc2c310..9c9d3e9591 100644
+--- a/codex-rs/core/src/tools/handlers/plan.rs
++++ b/codex-rs/core/src/tools/handlers/plan.rs
+@@ -3,52 +3,21 @@ use crate::client_common::tools::ToolSpec;
+ use crate::codex::Session;
+ use crate::codex::TurnContext;
+ use crate::function_tool::FunctionCallError;
++use crate::tools::context::FunctionToolOutput;
+ use crate::tools::context::ToolInvocation;
+-use crate::tools::context::ToolOutput;
+ use crate::tools::context::ToolPayload;
+ use crate::tools::registry::ToolHandler;
+ use crate::tools::registry::ToolKind;
+ use crate::tools::spec::JsonSchema;
+ use async_trait::async_trait;
+ use codex_protocol::config_types::ModeKind;
+-use codex_protocol::models::FunctionCallOutputPayload;
+-use codex_protocol::models::ResponseInputItem;
+ use codex_protocol::plan_tool::UpdatePlanArgs;
+ use codex_protocol::protocol::EventMsg;
+-use serde_json::Value as JsonValue;
+ use std::collections::BTreeMap;
+ use std::sync::LazyLock;
+ 
+ pub struct PlanHandler;
+ 
+-pub struct PlanToolOutput;
+-
+-const PLAN_UPDATED_MESSAGE: &str = "Plan updated";
+-
+-impl ToolOutput for PlanToolOutput {
+-    fn log_preview(&self) -> String {
+-        PLAN_UPDATED_MESSAGE.to_string()
+-    }
+-
+-    fn success_for_logging(&self) -> bool {
+-        true
+-    }
+-
+-    fn to_response_item(&self, call_id: &str, _payload: &ToolPayload) -> ResponseInputItem {
+-        let mut output = FunctionCallOutputPayload::from_text(PLAN_UPDATED_MESSAGE.to_string());
+-        output.success = Some(true);
+-
+-        ResponseInputItem::FunctionCallOutput {
+-            call_id: call_id.to_string(),
+-            output,
+-        }
+-    }
+-
+-    fn code_mode_result(&self, _payload: &ToolPayload) -> JsonValue {
+-        JsonValue::Object(serde_json::Map::new())
+-    }
+-}
+-
+ pub static PLAN_TOOL: LazyLock<ToolSpec> = LazyLock::new(|| {
+     let mut plan_item_props = BTreeMap::new();
+     plan_item_props.insert("step".to_string(), JsonSchema::String { description: None });
+@@ -95,7 +64,7 @@ At most one step can be in_progress at a time.
+ 
+ #[async_trait]
+ impl ToolHandler for PlanHandler {
+-    type Output = PlanToolOutput;
++    type Output = FunctionToolOutput;
+ 
+     fn kind(&self) -> ToolKind {
+         ToolKind::Function
+@@ -119,9 +88,10 @@ impl ToolHandler for PlanHandler {
+             }
+         };
+ 
+-        handle_update_plan(session.as_ref(), turn.as_ref(), arguments, call_id).await?;
++        let content =
++            handle_update_plan(session.as_ref(), turn.as_ref(), arguments, call_id).await?;
+ 
+-        Ok(PlanToolOutput)
++        Ok(FunctionToolOutput::from_text(content, Some(true)))
+     }
+ }
+ 
+diff --git a/codex-rs/core/src/tools/runtimes/shell/unix_escalation.rs b/codex-rs/core/src/tools/runtimes/shell/unix_escalation.rs
+index afad1da2ab..89bf4d424c 100644
+--- a/codex-rs/core/src/tools/runtimes/shell/unix_escalation.rs
++++ b/codex-rs/core/src/tools/runtimes/shell/unix_escalation.rs
+@@ -489,7 +489,7 @@ impl CoreShellActionProvider {
+             .session
+             .services
+             .skills_manager
+-            .skills_for_cwd(&self.turn.cwd, self.turn.config.as_ref(), force_reload)
++            .skills_for_cwd(&self.turn.cwd, force_reload)
+             .await;
+ 
+         let program_path = program.as_path();
+diff --git a/codex-rs/core/tests/suite/code_mode.rs b/codex-rs/core/tests/suite/code_mode.rs
+index 8d80f3a5cc..62d13e649b 100644
+--- a/codex-rs/core/tests/suite/code_mode.rs
++++ b/codex-rs/core/tests/suite/code_mode.rs
+@@ -363,38 +363,6 @@ text(output.output);
+     Ok(())
+ }
+ 
+-#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+-async fn code_mode_update_plan_nested_tool_result_is_empty_object() -> Result<()> {
+-    skip_if_no_network!(Ok(()));
+-
+-    let server = responses::start_mock_server().await;
+-    let (_test, second_mock) = run_code_mode_turn(
+-        &server,
+-        "use exec to run update_plan",
+-        r#"
+-const result = await tools.update_plan({
+-  plan: [{ step: "Run update_plan from code mode", status: "in_progress" }],
+-});
+-text(JSON.stringify(result));
+-"#,
+-        false,
+-    )
+-    .await?;
+-
+-    let req = second_mock.single_request();
+-    let (output, success) = custom_tool_output_body_and_success(&req, "call-1");
+-    assert_ne!(
+-        success,
+-        Some(false),
+-        "exec update_plan call failed unexpectedly: {output}"
+-    );
+-
+-    let parsed: Value = serde_json::from_str(&output)?;
+-    assert_eq!(parsed, serde_json::json!({}));
+-
+-    Ok(())
+-}
+-
+ #[cfg_attr(windows, ignore = "flaky on windows")]
+ #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+ async fn code_mode_nested_tool_calls_can_run_in_parallel() -> Result<()> {
+@@ -1911,7 +1879,6 @@ async fn code_mode_can_apply_patch_via_nested_tool() -> Result<()> {
+         ),
+         text_item(&items, 0),
+     );
+-    assert_eq!(text_item(&items, 1), "{}");
+ 
+     let file_path = test.cwd_path().join(file_name);
+     assert_eq!(fs::read_to_string(&file_path)?, "hello from code_mode\n");
+diff --git a/codex-rs/core/tests/suite/realtime_conversation.rs b/codex-rs/core/tests/suite/realtime_conversation.rs
+index 06cb31630a..87044eb861 100644
+--- a/codex-rs/core/tests/suite/realtime_conversation.rs
++++ b/codex-rs/core/tests/suite/realtime_conversation.rs
+@@ -1144,7 +1144,7 @@ async fn conversation_mirrors_assistant_message_text_to_realtime_handoff() -> Re
+     );
+     assert_eq!(
+         realtime_connections[0][1].body_json()["output_text"].as_str(),
+-        Some("\"Agent Final Message\":\n\nassistant says hi")
++        Some("assistant says hi")
+     );
+ 
+     realtime_server.shutdown().await;
+@@ -1249,7 +1249,7 @@ async fn conversation_handoff_persists_across_item_done_until_turn_complete() ->
+     );
+     assert_eq!(
+         first_append.body_json()["output_text"].as_str(),
+-        Some("\"Agent Final Message\":\n\nassistant message 1")
++        Some("assistant message 1")
+     );
+ 
+     let _ = wait_for_event_match(&test.codex, |msg| match msg {
+@@ -1273,7 +1273,7 @@ async fn conversation_handoff_persists_across_item_done_until_turn_complete() ->
+     );
+     assert_eq!(
+         second_append.body_json()["output_text"].as_str(),
+-        Some("\"Agent Final Message\":\n\nassistant message 2")
++        Some("assistant message 2")
+     );
+ 
+     let completion = completions
+@@ -1796,7 +1796,7 @@ async fn delegated_turn_user_role_echo_does_not_redelegate_and_still_forwards_au
+     );
+     assert_eq!(
+         mirrored_request_body["output_text"].as_str(),
+-        Some("\"Agent Final Message\":\n\nassistant says hi")
++        Some("assistant says hi")
+     );
+ 
+     let audio_out = wait_for_event_match(&test.codex, |msg| match msg {
+diff --git a/codex-rs/core/tests/suite/sqlite_state.rs b/codex-rs/core/tests/suite/sqlite_state.rs
+index 620b9b5087..0252f3e086 100644
+--- a/codex-rs/core/tests/suite/sqlite_state.rs
++++ b/codex-rs/core/tests/suite/sqlite_state.rs
+@@ -482,7 +482,7 @@ async fn tool_call_logs_include_thread_id() -> Result<()> {
+         if let Some(row) = rows.into_iter().find(|row| {
+             row.message
+                 .as_deref()
+-                .is_some_and(|m| m.contains("ToolCall:"))
++                .is_some_and(|m| m.starts_with("ToolCall:"))
+         }) {
+             let thread_id = row.thread_id;
+             let message = row.message;
+@@ -497,7 +497,7 @@ async fn tool_call_logs_include_thread_id() -> Result<()> {
+     assert!(
+         message
+             .as_deref()
+-            .is_some_and(|text| text.contains("ToolCall:")),
++            .is_some_and(|text| text.starts_with("ToolCall:")),
+         "expected ToolCall message, got {message:?}"
+     );
+ 
+diff --git a/codex-rs/hooks/schema/generated/stop.command.input.schema.json b/codex-rs/hooks/schema/generated/stop.command.input.schema.json
+index 9e500fd83f..dbd4a3f648 100644
+--- a/codex-rs/hooks/schema/generated/stop.command.input.schema.json
++++ b/codex-rs/hooks/schema/generated/stop.command.input.schema.json
+@@ -41,6 +41,10 @@
+     },
+     "transcript_path": {
+       "$ref": "#/definitions/NullableString"
++    },
++    "turn_id": {
++      "description": "Codex extension: expose the active turn id to internal turn-scoped hooks.",
++      "type": "string"
+     }
+   },
+   "required": [
+@@ -51,7 +55,8 @@
+     "permission_mode",
+     "session_id",
+     "stop_hook_active",
+-    "transcript_path"
++    "transcript_path",
++    "turn_id"
+   ],
+   "title": "stop.command.input",
+   "type": "object"
+diff --git a/codex-rs/hooks/schema/generated/user-prompt-submit.command.input.schema.json b/codex-rs/hooks/schema/generated/user-prompt-submit.command.input.schema.json
+index 6198ecf337..be5e16fc50 100644
+--- a/codex-rs/hooks/schema/generated/user-prompt-submit.command.input.schema.json
++++ b/codex-rs/hooks/schema/generated/user-prompt-submit.command.input.schema.json
+@@ -38,6 +38,10 @@
+     },
+     "transcript_path": {
+       "$ref": "#/definitions/NullableString"
++    },
++    "turn_id": {
++      "description": "Codex extension: expose the active turn id to internal turn-scoped hooks.",
++      "type": "string"
+     }
+   },
+   "required": [
+@@ -47,7 +51,8 @@
+     "permission_mode",
+     "prompt",
+     "session_id",
+-    "transcript_path"
++    "transcript_path",
++    "turn_id"
+   ],
+   "title": "user-prompt-submit.command.input",
+   "type": "object"
+diff --git a/codex-rs/hooks/src/events/stop.rs b/codex-rs/hooks/src/events/stop.rs
+index 434e12f501..837f287afb 100644
+--- a/codex-rs/hooks/src/events/stop.rs
++++ b/codex-rs/hooks/src/events/stop.rs
+@@ -14,6 +14,7 @@ use crate::engine::ConfiguredHandler;
+ use crate::engine::command_runner::CommandRunResult;
+ use crate::engine::dispatcher;
+ use crate::engine::output_parser;
++use crate::schema::NullableString;
+ use crate::schema::StopCommandInput;
+ 
+ #[derive(Debug, Clone)]
+@@ -75,15 +76,17 @@ pub(crate) async fn run(
+         };
+     }
+ 
+-    let input_json = match serde_json::to_string(&StopCommandInput::new(
+-        request.session_id.to_string(),
+-        request.transcript_path.clone(),
+-        request.cwd.display().to_string(),
+-        request.model.clone(),
+-        request.permission_mode.clone(),
+-        request.stop_hook_active,
+-        request.last_assistant_message.clone(),
+-    )) {
++    let input_json = match serde_json::to_string(&StopCommandInput {
++        session_id: request.session_id.to_string(),
++        turn_id: request.turn_id.clone(),
++        transcript_path: NullableString::from_path(request.transcript_path.clone()),
++        cwd: request.cwd.display().to_string(),
++        hook_event_name: "Stop".to_string(),
++        model: request.model.clone(),
++        permission_mode: request.permission_mode.clone(),
++        stop_hook_active: request.stop_hook_active,
++        last_assistant_message: NullableString::from_string(request.last_assistant_message.clone()),
++    }) {
+         Ok(input_json) => input_json,
+         Err(error) => {
+             return serialization_failure_outcome(common::serialization_failure_hook_events(
+diff --git a/codex-rs/hooks/src/events/user_prompt_submit.rs b/codex-rs/hooks/src/events/user_prompt_submit.rs
+index cc937d44db..b909c183be 100644
+--- a/codex-rs/hooks/src/events/user_prompt_submit.rs
++++ b/codex-rs/hooks/src/events/user_prompt_submit.rs
+@@ -14,6 +14,7 @@ use crate::engine::ConfiguredHandler;
+ use crate::engine::command_runner::CommandRunResult;
+ use crate::engine::dispatcher;
+ use crate::engine::output_parser;
++use crate::schema::NullableString;
+ use crate::schema::UserPromptSubmitCommandInput;
+ 
+ #[derive(Debug, Clone)]
+@@ -75,14 +76,16 @@ pub(crate) async fn run(
+         };
+     }
+ 
+-    let input_json = match serde_json::to_string(&UserPromptSubmitCommandInput::new(
+-        request.session_id.to_string(),
+-        request.transcript_path.clone(),
+-        request.cwd.display().to_string(),
+-        request.model.clone(),
+-        request.permission_mode.clone(),
+-        request.prompt.clone(),
+-    )) {
++    let input_json = match serde_json::to_string(&UserPromptSubmitCommandInput {
++        session_id: request.session_id.to_string(),
++        turn_id: request.turn_id.clone(),
++        transcript_path: NullableString::from_path(request.transcript_path.clone()),
++        cwd: request.cwd.display().to_string(),
++        hook_event_name: "UserPromptSubmit".to_string(),
++        model: request.model.clone(),
++        permission_mode: request.permission_mode.clone(),
++        prompt: request.prompt.clone(),
++    }) {
+         Ok(input_json) => input_json,
+         Err(error) => {
+             return serialization_failure_outcome(common::serialization_failure_hook_events(
+diff --git a/codex-rs/hooks/src/schema.rs b/codex-rs/hooks/src/schema.rs
+index 3b896cfa40..067658541a 100644
+--- a/codex-rs/hooks/src/schema.rs
++++ b/codex-rs/hooks/src/schema.rs
+@@ -25,11 +25,11 @@ const STOP_OUTPUT_FIXTURE: &str = "stop.command.output.schema.json";
+ pub(crate) struct NullableString(Option<String>);
+ 
+ impl NullableString {
+-    fn from_path(path: Option<PathBuf>) -> Self {
++    pub(crate) fn from_path(path: Option<PathBuf>) -> Self {
+         Self(path.map(|path| path.display().to_string()))
+     }
+ 
+-    fn from_string(value: Option<String>) -> Self {
++    pub(crate) fn from_string(value: Option<String>) -> Self {
+         Self(value)
+     }
+ }
+@@ -178,6 +178,8 @@ impl SessionStartCommandInput {
+ #[schemars(rename = "user-prompt-submit.command.input")]
+ pub(crate) struct UserPromptSubmitCommandInput {
+     pub session_id: String,
++    /// Codex extension: expose the active turn id to internal turn-scoped hooks.
++    pub turn_id: String,
+     pub transcript_path: NullableString,
+     pub cwd: String,
+     #[schemars(schema_with = "user_prompt_submit_hook_event_name_schema")]
+@@ -188,32 +190,13 @@ pub(crate) struct UserPromptSubmitCommandInput {
+     pub prompt: String,
+ }
+ 
+-impl UserPromptSubmitCommandInput {
+-    pub(crate) fn new(
+-        session_id: impl Into<String>,
+-        transcript_path: Option<PathBuf>,
+-        cwd: impl Into<String>,
+-        model: impl Into<String>,
+-        permission_mode: impl Into<String>,
+-        prompt: impl Into<String>,
+-    ) -> Self {
+-        Self {
+-            session_id: session_id.into(),
+-            transcript_path: NullableString::from_path(transcript_path),
+-            cwd: cwd.into(),
+-            hook_event_name: "UserPromptSubmit".to_string(),
+-            model: model.into(),
+-            permission_mode: permission_mode.into(),
+-            prompt: prompt.into(),
+-        }
+-    }
+-}
+-
+ #[derive(Debug, Clone, Serialize, JsonSchema)]
+ #[serde(deny_unknown_fields)]
+ #[schemars(rename = "stop.command.input")]
+ pub(crate) struct StopCommandInput {
+     pub session_id: String,
++    /// Codex extension: expose the active turn id to internal turn-scoped hooks.
++    pub turn_id: String,
+     pub transcript_path: NullableString,
+     pub cwd: String,
+     #[schemars(schema_with = "stop_hook_event_name_schema")]
+@@ -225,29 +208,6 @@ pub(crate) struct StopCommandInput {
+     pub last_assistant_message: NullableString,
+ }
+ 
+-impl StopCommandInput {
+-    pub(crate) fn new(
+-        session_id: impl Into<String>,
+-        transcript_path: Option<PathBuf>,
+-        cwd: impl Into<String>,
+-        model: impl Into<String>,
+-        permission_mode: impl Into<String>,
+-        stop_hook_active: bool,
+-        last_assistant_message: Option<String>,
+-    ) -> Self {
+-        Self {
+-            session_id: session_id.into(),
+-            transcript_path: NullableString::from_path(transcript_path),
+-            cwd: cwd.into(),
+-            hook_event_name: "Stop".to_string(),
+-            model: model.into(),
+-            permission_mode: permission_mode.into(),
+-            stop_hook_active,
+-            last_assistant_message: NullableString::from_string(last_assistant_message),
+-        }
+-    }
+-}
+-
+ pub fn write_schema_fixtures(schema_root: &Path) -> anyhow::Result<()> {
+     let generated_dir = schema_root.join(GENERATED_DIR);
+     ensure_empty_dir(&generated_dir)?;
+@@ -390,10 +350,14 @@ mod tests {
+     use super::SESSION_START_OUTPUT_FIXTURE;
+     use super::STOP_INPUT_FIXTURE;
+     use super::STOP_OUTPUT_FIXTURE;
++    use super::StopCommandInput;
+     use super::USER_PROMPT_SUBMIT_INPUT_FIXTURE;
+     use super::USER_PROMPT_SUBMIT_OUTPUT_FIXTURE;
++    use super::UserPromptSubmitCommandInput;
++    use super::schema_json;
+     use super::write_schema_fixtures;
+     use pretty_assertions::assert_eq;
++    use serde_json::Value;
+     use tempfile::TempDir;
+ 
+     fn expected_fixture(name: &str) -> &'static str {
+@@ -445,4 +409,29 @@ mod tests {
+             assert_eq!(expected, actual, "fixture should match generated schema");
+         }
+     }
++
++    #[test]
++    fn turn_scoped_hook_inputs_include_codex_turn_id_extension() {
++        // Codex intentionally diverges from Claude's public hook docs here so
++        // internal hook consumers can key off the active turn.
++        let user_prompt_submit: Value = serde_json::from_slice(
++            &schema_json::<UserPromptSubmitCommandInput>()
++                .expect("serialize user prompt submit input schema"),
++        )
++        .expect("parse user prompt submit input schema");
++        let stop: Value = serde_json::from_slice(
++            &schema_json::<StopCommandInput>().expect("serialize stop input schema"),
++        )
++        .expect("parse stop input schema");
++
++        for schema in [&user_prompt_submit, &stop] {
++            assert_eq!(schema["properties"]["turn_id"]["type"], "string");
++            assert!(
++                schema["required"]
++                    .as_array()
++                    .expect("schema required fields")
++                    .contains(&Value::String("turn_id".to_string()))
++            );
++        }
++    }
+ }
+diff --git a/codex-rs/otel/src/events/session_telemetry.rs b/codex-rs/otel/src/events/session_telemetry.rs
+index e2c86a6e63..633f68b6a8 100644
+--- a/codex-rs/otel/src/events/session_telemetry.rs
++++ b/codex-rs/otel/src/events/session_telemetry.rs
+@@ -276,7 +276,7 @@ impl SessionTelemetry {
+                 account_email,
+                 originator: sanitize_metric_tag_value(originator.as_str()),
+                 service_name: None,
+-                session_source: session_source.to_string(),
++                session_source: sanitize_metric_tag_value(session_source.to_string().as_str()),
+                 model: model.to_owned(),
+                 slug: slug.to_owned(),
+                 log_user_prompts,
+diff --git a/codex-rs/protocol/src/protocol.rs b/codex-rs/protocol/src/protocol.rs
+index e5277c16bf..3965e2872f 100644
+--- a/codex-rs/protocol/src/protocol.rs
++++ b/codex-rs/protocol/src/protocol.rs
+@@ -2272,6 +2272,7 @@ pub enum SessionSource {
+     VSCode,
+     Exec,
+     Mcp,
++    Custom(String),
+     SubAgent(SubAgentSource),
+     #[serde(other)]
+     Unknown,
+@@ -2302,6 +2303,7 @@ impl fmt::Display for SessionSource {
+             SessionSource::VSCode => f.write_str("vscode"),
+             SessionSource::Exec => f.write_str("exec"),
+             SessionSource::Mcp => f.write_str("mcp"),
++            SessionSource::Custom(source) => f.write_str(source),
+             SessionSource::SubAgent(sub_source) => write!(f, "subagent_{sub_source}"),
+             SessionSource::Unknown => f.write_str("unknown"),
+         }
+@@ -2309,6 +2311,23 @@ impl fmt::Display for SessionSource {
+ }
+ 
+ impl SessionSource {
++    pub fn from_startup_arg(value: &str) -> Result<Self, &'static str> {
++        let trimmed = value.trim();
++        if trimmed.is_empty() {
++            return Err("session source must not be empty");
++        }
++
++        let normalized = trimmed.to_ascii_lowercase();
++        Ok(match normalized.as_str() {
++            "cli" => SessionSource::Cli,
++            "vscode" => SessionSource::VSCode,
++            "exec" => SessionSource::Exec,
++            "mcp" | "appserver" | "app-server" | "app_server" => SessionSource::Mcp,
++            "unknown" => SessionSource::Unknown,
++            _ => SessionSource::Custom(trimmed.to_string()),
++        })
++    }
++
+     pub fn get_nickname(&self) -> Option<String> {
+         match self {
+             SessionSource::SubAgent(SubAgentSource::ThreadSpawn { agent_nickname, .. }) => {
+@@ -2332,6 +2351,25 @@ impl SessionSource {
+             _ => None,
+         }
+     }
++
++    pub fn restriction_product(&self) -> Option<Product> {
++        match self {
++            SessionSource::Custom(source) => Product::from_session_source_name(source),
++            SessionSource::Cli
++            | SessionSource::VSCode
++            | SessionSource::Exec
++            | SessionSource::Mcp
++            | SessionSource::SubAgent(_)
++            | SessionSource::Unknown => Some(Product::Codex),
++        }
++    }
++
++    pub fn matches_product_restriction(&self, products: &[Product]) -> bool {
++        products.is_empty()
++            || self
++                .restriction_product()
++                .is_some_and(|product| products.contains(&product))
++    }
+ }
+ 
+ impl fmt::Display for SubAgentSource {
+@@ -2923,6 +2961,18 @@ pub enum Product {
+     #[serde(alias = "ATLAS")]
+     Atlas,
+ }
++
++impl Product {
++    pub fn from_session_source_name(value: &str) -> Option<Self> {
++        let normalized = value.trim().to_ascii_lowercase();
++        match normalized.as_str() {
++            "chatgpt" => Some(Self::Chatgpt),
++            "codex" => Some(Self::Codex),
++            "atlas" => Some(Self::Atlas),
++            _ => None,
++        }
++    }
++}
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema, TS)]
+ #[serde(rename_all = "snake_case")]
+ #[ts(rename_all = "snake_case")]
+@@ -3423,6 +3473,92 @@ mod tests {
+             .any(|root| root.is_path_writable(path))
+     }
+ 
++    #[test]
++    fn session_source_from_startup_arg_maps_known_values() {
++        assert_eq!(
++            SessionSource::from_startup_arg("vscode").unwrap(),
++            SessionSource::VSCode
++        );
++        assert_eq!(
++            SessionSource::from_startup_arg("app-server").unwrap(),
++            SessionSource::Mcp
++        );
++    }
++
++    #[test]
++    fn session_source_from_startup_arg_preserves_custom_values() {
++        assert_eq!(
++            SessionSource::from_startup_arg("atlas").unwrap(),
++            SessionSource::Custom("atlas".to_string())
++        );
++    }
++
++    #[test]
++    fn session_source_restriction_product_defaults_non_custom_sources_to_codex() {
++        assert_eq!(
++            SessionSource::Cli.restriction_product(),
++            Some(Product::Codex)
++        );
++        assert_eq!(
++            SessionSource::VSCode.restriction_product(),
++            Some(Product::Codex)
++        );
++        assert_eq!(
++            SessionSource::Exec.restriction_product(),
++            Some(Product::Codex)
++        );
++        assert_eq!(
++            SessionSource::Mcp.restriction_product(),
++            Some(Product::Codex)
++        );
++        assert_eq!(
++            SessionSource::SubAgent(SubAgentSource::Review).restriction_product(),
++            Some(Product::Codex)
++        );
++        assert_eq!(
++            SessionSource::Unknown.restriction_product(),
++            Some(Product::Codex)
++        );
++    }
++
++    #[test]
++    fn session_source_restriction_product_maps_custom_sources_to_products() {
++        assert_eq!(
++            SessionSource::Custom("chatgpt".to_string()).restriction_product(),
++            Some(Product::Chatgpt)
++        );
++        assert_eq!(
++            SessionSource::Custom("ATLAS".to_string()).restriction_product(),
++            Some(Product::Atlas)
++        );
++        assert_eq!(
++            SessionSource::Custom("codex".to_string()).restriction_product(),
++            Some(Product::Codex)
++        );
++        assert_eq!(
++            SessionSource::Custom("atlas-dev".to_string()).restriction_product(),
++            None
++        );
++    }
++
++    #[test]
++    fn session_source_matches_product_restriction() {
++        assert!(
++            SessionSource::Custom("chatgpt".to_string())
++                .matches_product_restriction(&[Product::Chatgpt])
++        );
++        assert!(
++            !SessionSource::Custom("chatgpt".to_string())
++                .matches_product_restriction(&[Product::Codex])
++        );
++        assert!(SessionSource::VSCode.matches_product_restriction(&[Product::Codex]));
++        assert!(
++            !SessionSource::Custom("atlas-dev".to_string())
++                .matches_product_restriction(&[Product::Atlas])
++        );
++        assert!(SessionSource::Custom("atlas-dev".to_string()).matches_product_restriction(&[]));
++    }
++
+     fn sandbox_policy_probe_paths(policy: &SandboxPolicy, cwd: &Path) -> Vec<PathBuf> {
+         let mut paths = vec![cwd.to_path_buf()];
+         paths.extend(
+diff --git a/codex-rs/state/logs_migrations/0002_logs_feedback_log_body.sql b/codex-rs/state/logs_migrations/0002_logs_feedback_log_body.sql
+deleted file mode 100644
+index 6cd38664ec..0000000000
+--- a/codex-rs/state/logs_migrations/0002_logs_feedback_log_body.sql
++++ /dev/null
+@@ -1,53 +0,0 @@
+-ALTER TABLE logs RENAME TO logs_old;
+-
+-CREATE TABLE logs (
+-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+-    ts INTEGER NOT NULL,
+-    ts_nanos INTEGER NOT NULL,
+-    level TEXT NOT NULL,
+-    target TEXT NOT NULL,
+-    feedback_log_body TEXT,
+-    module_path TEXT,
+-    file TEXT,
+-    line INTEGER,
+-    thread_id TEXT,
+-    process_uuid TEXT,
+-    estimated_bytes INTEGER NOT NULL DEFAULT 0
+-);
+-
+-INSERT INTO logs (
+-    id,
+-    ts,
+-    ts_nanos,
+-    level,
+-    target,
+-    feedback_log_body,
+-    module_path,
+-    file,
+-    line,
+-    thread_id,
+-    process_uuid,
+-    estimated_bytes
+-)
+-SELECT
+-    id,
+-    ts,
+-    ts_nanos,
+-    level,
+-    target,
+-    message,
+-    module_path,
+-    file,
+-    line,
+-    thread_id,
+-    process_uuid,
+-    estimated_bytes
+-FROM logs_old;
+-
+-DROP TABLE logs_old;
+-
+-CREATE INDEX idx_logs_ts ON logs(ts DESC, ts_nanos DESC, id DESC);
+-CREATE INDEX idx_logs_thread_id ON logs(thread_id);
+-CREATE INDEX idx_logs_thread_id_ts ON logs(thread_id, ts DESC, ts_nanos DESC, id DESC);
+-CREATE INDEX idx_logs_process_uuid_threadless_ts ON logs(process_uuid, ts DESC, ts_nanos DESC, id DESC)
+-WHERE thread_id IS NULL;
+diff --git a/codex-rs/state/src/bin/logs_client.rs b/codex-rs/state/src/bin/logs_client.rs
+index 6bfed4b235..66fc258957 100644
+--- a/codex-rs/state/src/bin/logs_client.rs
++++ b/codex-rs/state/src/bin/logs_client.rs
+@@ -46,7 +46,7 @@ struct Args {
+     #[arg(long = "thread-id")]
+     thread_id: Vec<String>,
+ 
+-    /// Substring match against the rendered log body.
++    /// Substring match against the log message.
+     #[arg(long)]
+     search: Option<String>,
+ 
+@@ -62,7 +62,7 @@ struct Args {
+     #[arg(long, default_value_t = 500)]
+     poll_ms: u64,
+ 
+-    /// Show compact output with only time, level, and rendered log body.
++    /// Show compact output with only time, level, and message.
+     #[arg(long)]
+     compact: bool,
+ }
+@@ -295,7 +295,7 @@ fn heuristic_formatting(message: &str) -> String {
+ 
+ mod matcher {
+     pub(super) fn apply_patch(message: &str) -> bool {
+-        message.contains("ToolCall: apply_patch")
++        message.starts_with("ToolCall: apply_patch")
+     }
+ }
+ 
+diff --git a/codex-rs/state/src/log_db.rs b/codex-rs/state/src/log_db.rs
+index 8ec4216659..e533d3c896 100644
+--- a/codex-rs/state/src/log_db.rs
++++ b/codex-rs/state/src/log_db.rs
+@@ -34,10 +34,6 @@ use tracing::span::Attributes;
+ use tracing::span::Id;
+ use tracing::span::Record;
+ use tracing_subscriber::Layer;
+-use tracing_subscriber::field::RecordFields;
+-use tracing_subscriber::fmt::FormatFields;
+-use tracing_subscriber::fmt::FormattedFields;
+-use tracing_subscriber::fmt::format::DefaultFields;
+ use tracing_subscriber::registry::LookupSpan;
+ use uuid::Uuid;
+ 
+@@ -99,8 +95,6 @@ where
+ 
+         if let Some(span) = ctx.span(id) {
+             span.extensions_mut().insert(SpanLogContext {
+-                name: span.metadata().name().to_string(),
+-                formatted_fields: format_fields(attrs),
+                 thread_id: visitor.thread_id,
+             });
+         }
+@@ -115,17 +109,16 @@ where
+         let mut visitor = SpanFieldVisitor::default();
+         values.record(&mut visitor);
+ 
++        if visitor.thread_id.is_none() {
++            return;
++        }
++
+         if let Some(span) = ctx.span(id) {
+             let mut extensions = span.extensions_mut();
+             if let Some(log_context) = extensions.get_mut::<SpanLogContext>() {
+-                if let Some(thread_id) = visitor.thread_id {
+-                    log_context.thread_id = Some(thread_id);
+-                }
+-                append_fields(&mut log_context.formatted_fields, values);
++                log_context.thread_id = visitor.thread_id;
+             } else {
+                 extensions.insert(SpanLogContext {
+-                    name: span.metadata().name().to_string(),
+-                    formatted_fields: format_fields(values),
+                     thread_id: visitor.thread_id,
+                 });
+             }
+@@ -140,7 +133,6 @@ where
+             .thread_id
+             .clone()
+             .or_else(|| event_thread_id(event, &ctx));
+-        let feedback_log_body = format_feedback_log_body(event, &ctx);
+ 
+         let now = SystemTime::now()
+             .duration_since(UNIX_EPOCH)
+@@ -151,7 +143,6 @@ where
+             level: metadata.level().as_str().to_string(),
+             target: metadata.target().to_string(),
+             message: visitor.message,
+-            feedback_log_body: Some(feedback_log_body),
+             thread_id,
+             process_uuid: Some(self.process_uuid.clone()),
+             module_path: metadata.module_path().map(ToString::to_string),
+@@ -159,19 +150,17 @@ where
+             line: metadata.line().map(|line| line as i64),
+         };
+ 
+-        let _ = self.sender.try_send(LogDbCommand::Entry(Box::new(entry)));
++        let _ = self.sender.try_send(LogDbCommand::Entry(entry));
+     }
+ }
+ 
+ enum LogDbCommand {
+-    Entry(Box<LogEntry>),
++    Entry(LogEntry),
+     Flush(oneshot::Sender<()>),
+ }
+ 
+-#[derive(Debug)]
++#[derive(Clone, Debug, Default)]
+ struct SpanLogContext {
+-    name: String,
+-    formatted_fields: String,
+     thread_id: Option<String>,
+ }
+ 
+@@ -239,54 +228,6 @@ where
+     thread_id
+ }
+ 
+-fn format_feedback_log_body<S>(
+-    event: &Event<'_>,
+-    ctx: &tracing_subscriber::layer::Context<'_, S>,
+-) -> String
+-where
+-    S: tracing::Subscriber + for<'a> LookupSpan<'a>,
+-{
+-    let mut feedback_log_body = String::new();
+-    if let Some(scope) = ctx.event_scope(event) {
+-        for span in scope.from_root() {
+-            let extensions = span.extensions();
+-            if let Some(log_context) = extensions.get::<SpanLogContext>() {
+-                feedback_log_body.push_str(&log_context.name);
+-                if !log_context.formatted_fields.is_empty() {
+-                    feedback_log_body.push('{');
+-                    feedback_log_body.push_str(&log_context.formatted_fields);
+-                    feedback_log_body.push('}');
+-                }
+-            } else {
+-                feedback_log_body.push_str(span.metadata().name());
+-            }
+-            feedback_log_body.push(':');
+-        }
+-        if !feedback_log_body.is_empty() {
+-            feedback_log_body.push(' ');
+-        }
+-    }
+-    feedback_log_body.push_str(&format_fields(event));
+-    feedback_log_body
+-}
+-
+-fn format_fields<R>(fields: R) -> String
+-where
+-    R: RecordFields,
+-{
+-    let formatter = DefaultFields::default();
+-    let mut formatted = FormattedFields::<DefaultFields>::new(String::new());
+-    let _ = formatter.format_fields(formatted.as_writer(), fields);
+-    formatted.fields
+-}
+-
+-fn append_fields(fields: &mut String, values: &Record<'_>) {
+-    let formatter = DefaultFields::default();
+-    let mut formatted = FormattedFields::<DefaultFields>::new(std::mem::take(fields));
+-    let _ = formatter.add_fields(&mut formatted, values);
+-    *fields = formatted.fields;
+-}
+-
+ fn current_process_log_uuid() -> &'static str {
+     static PROCESS_LOG_UUID: OnceLock<String> = OnceLock::new();
+     PROCESS_LOG_UUID.get_or_init(|| {
+@@ -307,7 +248,7 @@ async fn run_inserter(
+             maybe_command = receiver.recv() => {
+                 match maybe_command {
+                     Some(LogDbCommand::Entry(entry)) => {
+-                        buffer.push(*entry);
++                        buffer.push(entry);
+                         if buffer.len() >= LOG_BATCH_SIZE {
+                             flush(&state_db, &mut buffer).await;
+                         }
+@@ -460,6 +401,7 @@ mod tests {
+             .with(
+                 tracing_subscriber::fmt::layer()
+                     .with_writer(writer.clone())
++                    .without_time()
+                     .with_ansi(false)
+                     .with_target(false)
+                     .with_filter(Targets::new().with_default(tracing::Level::TRACE)),
+@@ -471,23 +413,30 @@ mod tests {
+         let guard = subscriber.set_default();
+ 
+         tracing::trace!("threadless-before");
+-        tracing::info_span!("feedback-thread", thread_id = "thread-1", turn = 1).in_scope(|| {
+-            tracing::info!(foo = 2, "thread-scoped");
++        tracing::info_span!("feedback-thread", thread_id = "thread-1").in_scope(|| {
++            tracing::info!("thread-scoped");
+         });
+         tracing::debug!("threadless-after");
+ 
+         drop(guard);
+ 
+-        let feedback_logs = writer.snapshot();
+-        let without_timestamps = |logs: &str| {
++        // SQLite exports now include timestamps, while this test writer has
++        // `.without_time()`. Compare bodies after stripping the SQLite prefix.
++        let feedback_logs = writer
++            .snapshot()
++            .replace("feedback-thread{thread_id=\"thread-1\"}: ", "");
++        let strip_sqlite_timestamp = |logs: &str| {
+             logs.lines()
+-                .map(|line| match line.split_once(' ') {
+-                    Some((_, rest)) => rest,
+-                    None => line,
++                .map(|line| {
++                    line.split_once(' ')
++                        .map_or_else(|| line.to_string(), |(_, rest)| rest.to_string())
+                 })
+                 .collect::<Vec<_>>()
+-                .join("\n")
+         };
++        let feedback_lines = feedback_logs
++            .lines()
++            .map(ToString::to_string)
++            .collect::<Vec<_>>();
+         let deadline = Instant::now() + Duration::from_secs(2);
+         loop {
+             let sqlite_logs = String::from_utf8(
+@@ -497,7 +446,7 @@ mod tests {
+                     .expect("query feedback logs"),
+             )
+             .expect("valid utf-8");
+-            if without_timestamps(&sqlite_logs) == without_timestamps(&feedback_logs) {
++            if strip_sqlite_timestamp(&sqlite_logs) == feedback_lines {
+                 break;
+             }
+             assert!(
+diff --git a/codex-rs/state/src/model/log.rs b/codex-rs/state/src/model/log.rs
+index 680486293e..cf973bceeb 100644
+--- a/codex-rs/state/src/model/log.rs
++++ b/codex-rs/state/src/model/log.rs
+@@ -8,7 +8,6 @@ pub struct LogEntry {
+     pub level: String,
+     pub target: String,
+     pub message: Option<String>,
+-    pub feedback_log_body: Option<String>,
+     pub thread_id: Option<String>,
+     pub process_uuid: Option<String>,
+     pub module_path: Option<String>,
+diff --git a/codex-rs/state/src/runtime.rs b/codex-rs/state/src/runtime.rs
+index 645aa42695..7ea6a53b2c 100644
+--- a/codex-rs/state/src/runtime.rs
++++ b/codex-rs/state/src/runtime.rs
+@@ -57,12 +57,10 @@ mod memories;
+ mod test_support;
+ mod threads;
+ 
+-// "Partition" is the retained-log-content bucket we cap at 10 MiB:
++// "Partition" is the retention bucket we cap at 10 MiB:
+ // - one bucket per non-null thread_id
+ // - one bucket per threadless (thread_id IS NULL) non-null process_uuid
+ // - one bucket for threadless rows with process_uuid IS NULL
+-// This budget tracks each row's persisted rendered log body plus non-body
+-// metadata, rather than the exact sum of all persisted SQLite column bytes.
+ const LOG_PARTITION_SIZE_LIMIT_BYTES: i64 = 10 * 1024 * 1024;
+ const LOG_PARTITION_ROW_LIMIT: i64 = 1_000;
+ 
+diff --git a/codex-rs/state/src/runtime/logs.rs b/codex-rs/state/src/runtime/logs.rs
+index 6c6009e96b..a2c2779a6a 100644
+--- a/codex-rs/state/src/runtime/logs.rs
++++ b/codex-rs/state/src/runtime/logs.rs
+@@ -13,15 +13,10 @@ impl StateRuntime {
+ 
+         let mut tx = self.logs_pool.begin().await?;
+         let mut builder = QueryBuilder::<Sqlite>::new(
+-            "INSERT INTO logs (ts, ts_nanos, level, target, feedback_log_body, thread_id, process_uuid, module_path, file, line, estimated_bytes) ",
++            "INSERT INTO logs (ts, ts_nanos, level, target, message, thread_id, process_uuid, module_path, file, line, estimated_bytes) ",
+         );
+         builder.push_values(entries, |mut row, entry| {
+-            let feedback_log_body = entry.feedback_log_body.as_ref().or(entry.message.as_ref());
+-            // Keep about 10 MiB of reader-visible log content per partition.
+-            // Both `query_logs` and `/feedback` read the persisted
+-            // `feedback_log_body`, while `LogEntry.message` is only a write-time
+-            // fallback for callers that still populate the old field.
+-            let estimated_bytes = feedback_log_body.map_or(0, String::len) as i64
++            let estimated_bytes = entry.message.as_ref().map_or(0, String::len) as i64
+                 + entry.level.len() as i64
+                 + entry.target.len() as i64
+                 + entry.module_path.as_ref().map_or(0, String::len) as i64
+@@ -30,7 +25,7 @@ impl StateRuntime {
+                 .push_bind(entry.ts_nanos)
+                 .push_bind(&entry.level)
+                 .push_bind(&entry.target)
+-                .push_bind(feedback_log_body)
++                .push_bind(&entry.message)
+                 .push_bind(&entry.thread_id)
+                 .push_bind(&entry.process_uuid)
+                 .push_bind(&entry.module_path)
+@@ -44,7 +39,7 @@ impl StateRuntime {
+         Ok(())
+     }
+ 
+-    /// Enforce per-partition retained-log-content caps after a successful batch insert.
++    /// Enforce per-partition log size caps after a successful batch insert.
+     ///
+     /// We maintain two independent budgets:
+     /// - Thread logs: rows with `thread_id IS NOT NULL`, capped per `thread_id`.
+@@ -294,7 +289,7 @@ WHERE id IN (
+     /// Query logs with optional filters.
+     pub async fn query_logs(&self, query: &LogQuery) -> anyhow::Result<Vec<LogRow>> {
+         let mut builder = QueryBuilder::<Sqlite>::new(
+-            "SELECT id, ts, ts_nanos, level, target, feedback_log_body AS message, thread_id, process_uuid, file, line FROM logs WHERE 1 = 1",
++            "SELECT id, ts, ts_nanos, level, target, message, thread_id, process_uuid, file, line FROM logs WHERE 1 = 1",
+         );
+         push_log_filters(&mut builder, query);
+         if query.descending {
+@@ -315,10 +310,10 @@ WHERE id IN (
+ 
+     /// Query per-thread feedback logs, capped to the per-thread SQLite retention budget.
+     pub async fn query_feedback_logs(&self, thread_id: &str) -> anyhow::Result<Vec<u8>> {
+-        let max_bytes = usize::try_from(LOG_PARTITION_SIZE_LIMIT_BYTES).unwrap_or(usize::MAX);
+-        // Bound the fetched rows in SQL first so over-retained partitions do not have to load
+-        // every row into memory, then apply the exact whole-line byte cap after formatting.
+-        let rows = sqlx::query_as::<_, FeedbackLogRow>(
++        let max_bytes = LOG_PARTITION_SIZE_LIMIT_BYTES;
++        // TODO(ccunningham): Store rendered span/event fields in SQLite so this
++        // export can match feedback formatting beyond timestamp + level + message.
++        let lines = sqlx::query_scalar::<_, String>(
+             r#"
+ WITH latest_process AS (
+     SELECT process_uuid
+@@ -328,58 +323,64 @@ WITH latest_process AS (
+     LIMIT 1
+ ),
+ feedback_logs AS (
+-    SELECT ts, ts_nanos, level, feedback_log_body, estimated_bytes, id
++    SELECT
++        printf(
++            '%s.%06dZ %5s %s',
++            strftime('%Y-%m-%dT%H:%M:%S', ts, 'unixepoch'),
++            ts_nanos / 1000,
++            level,
++            message
++        ) || CASE
++            WHEN substr(message, -1, 1) = char(10) THEN ''
++            ELSE char(10)
++        END AS line,
++        length(CAST(
++            printf(
++                '%s.%06dZ %5s %s',
++                strftime('%Y-%m-%dT%H:%M:%S', ts, 'unixepoch'),
++                ts_nanos / 1000,
++                level,
++                message
++            ) || CASE
++                WHEN substr(message, -1, 1) = char(10) THEN ''
++                ELSE char(10)
++            END AS BLOB
++        )) AS line_bytes,
++        ts,
++        ts_nanos,
++        id
+     FROM logs
+-    WHERE feedback_log_body IS NOT NULL AND (
++    WHERE message IS NOT NULL AND (
+         thread_id = ?
+         OR (
+             thread_id IS NULL
+             AND process_uuid IN (SELECT process_uuid FROM latest_process)
+         )
+     )
+-),
+-bounded_feedback_logs AS (
++)
++SELECT line
++FROM (
+     SELECT
++        line,
+         ts,
+         ts_nanos,
+-        level,
+-        feedback_log_body,
+         id,
+-        SUM(estimated_bytes) OVER (
++        SUM(line_bytes) OVER (
+             ORDER BY ts DESC, ts_nanos DESC, id DESC
+-        ) AS cumulative_estimated_bytes
++        ) AS cumulative_bytes
+     FROM feedback_logs
+ )
+-SELECT ts, ts_nanos, level, feedback_log_body
+-FROM bounded_feedback_logs
+-WHERE cumulative_estimated_bytes <= ?
+-ORDER BY ts DESC, ts_nanos DESC, id DESC
++WHERE cumulative_bytes <= ?
++ORDER BY ts ASC, ts_nanos ASC, id ASC
+ "#,
+         )
+         .bind(thread_id)
+         .bind(thread_id)
+-        .bind(LOG_PARTITION_SIZE_LIMIT_BYTES)
++        .bind(max_bytes)
+         .fetch_all(self.logs_pool.as_ref())
+         .await?;
+ 
+-        let mut lines = Vec::new();
+-        let mut total_bytes = 0usize;
+-        for row in rows {
+-            let line =
+-                format_feedback_log_line(row.ts, row.ts_nanos, &row.level, &row.feedback_log_body);
+-            if total_bytes.saturating_add(line.len()) > max_bytes {
+-                break;
+-            }
+-            total_bytes += line.len();
+-            lines.push(line);
+-        }
+-
+-        let mut ordered_bytes = Vec::with_capacity(total_bytes);
+-        for line in lines.into_iter().rev() {
+-            ordered_bytes.extend_from_slice(line.as_bytes());
+-        }
+-
+-        Ok(ordered_bytes)
++        Ok(lines.concat().into_bytes())
+     }
+ 
+     /// Return the max log id matching optional filters.
+@@ -393,32 +394,6 @@ ORDER BY ts DESC, ts_nanos DESC, id DESC
+     }
+ }
+ 
+-#[derive(sqlx::FromRow)]
+-struct FeedbackLogRow {
+-    ts: i64,
+-    ts_nanos: i64,
+-    level: String,
+-    feedback_log_body: String,
+-}
+-
+-fn format_feedback_log_line(
+-    ts: i64,
+-    ts_nanos: i64,
+-    level: &str,
+-    feedback_log_body: &str,
+-) -> String {
+-    let nanos = u32::try_from(ts_nanos).unwrap_or(0);
+-    let timestamp = match DateTime::<Utc>::from_timestamp(ts, nanos) {
+-        Some(dt) => dt.to_rfc3339_opts(chrono::SecondsFormat::Micros, true),
+-        None => format!("{ts}.{ts_nanos:09}Z"),
+-    };
+-    let mut line = format!("{timestamp} {level:>5} {feedback_log_body}");
+-    if !line.ends_with('\n') {
+-        line.push('\n');
+-    }
+-    line
+-}
+-
+ fn push_log_filters<'a>(builder: &mut QueryBuilder<'a, Sqlite>, query: &'a LogQuery) {
+     if let Some(level_upper) = query.level_upper.as_ref() {
+         builder
+@@ -456,7 +431,7 @@ fn push_log_filters<'a>(builder: &mut QueryBuilder<'a, Sqlite>, query: &'a LogQu
+         builder.push(" AND id > ").push_bind(after_id);
+     }
+     if let Some(search) = query.search.as_ref() {
+-        builder.push(" AND INSTR(COALESCE(feedback_log_body, ''), ");
++        builder.push(" AND INSTR(message, ");
+         builder.push_bind(search.as_str());
+         builder.push(") > 0");
+     }
+@@ -487,18 +462,14 @@ fn push_like_filters<'a>(
+ #[cfg(test)]
+ mod tests {
+     use super::StateRuntime;
+-    use super::format_feedback_log_line;
+     use super::test_support::unique_temp_dir;
+     use crate::LogEntry;
+     use crate::LogQuery;
+     use crate::logs_db_path;
+-    use crate::migrations::LOGS_MIGRATOR;
+     use crate::state_db_path;
+     use pretty_assertions::assert_eq;
+     use sqlx::SqlitePool;
+-    use sqlx::migrate::Migrator;
+     use sqlx::sqlite::SqliteConnectOptions;
+-    use std::borrow::Cow;
+     use std::path::Path;
+ 
+     async fn open_db_pool(path: &Path) -> SqlitePool {
+@@ -535,7 +506,6 @@ mod tests {
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+                 message: Some("dedicated-log-db".to_string()),
+-                feedback_log_body: Some("dedicated-log-db".to_string()),
+                 thread_id: Some("thread-1".to_string()),
+                 process_uuid: Some("proc-1".to_string()),
+                 module_path: Some("mod".to_string()),
+@@ -555,119 +525,7 @@ mod tests {
+     }
+ 
+     #[tokio::test]
+-    async fn init_migrates_message_only_logs_db_to_feedback_log_body_schema() {
+-        let codex_home = unique_temp_dir();
+-        tokio::fs::create_dir_all(&codex_home)
+-            .await
+-            .expect("create codex home");
+-        let logs_path = logs_db_path(codex_home.as_path());
+-        let old_logs_migrator = Migrator {
+-            migrations: Cow::Owned(vec![LOGS_MIGRATOR.migrations[0].clone()]),
+-            ignore_missing: false,
+-            locking: true,
+-            no_tx: false,
+-        };
+-        let pool = SqlitePool::connect_with(
+-            SqliteConnectOptions::new()
+-                .filename(&logs_path)
+-                .create_if_missing(true),
+-        )
+-        .await
+-        .expect("open old logs db");
+-        old_logs_migrator
+-            .run(&pool)
+-            .await
+-            .expect("apply old logs schema");
+-        sqlx::query(
+-            "INSERT INTO logs (ts, ts_nanos, level, target, message, module_path, file, line, thread_id, process_uuid, estimated_bytes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+-        )
+-        .bind(1_i64)
+-        .bind(0_i64)
+-        .bind("INFO")
+-        .bind("cli")
+-        .bind("legacy-body")
+-        .bind("mod")
+-        .bind("main.rs")
+-        .bind(7_i64)
+-        .bind("thread-1")
+-        .bind("proc-1")
+-        .bind(16_i64)
+-        .execute(&pool)
+-        .await
+-        .expect("insert legacy log row");
+-        pool.close().await;
+-
+-        let runtime = StateRuntime::init(codex_home.clone(), "test-provider".to_string())
+-            .await
+-            .expect("initialize runtime");
+-
+-        let rows = runtime
+-            .query_logs(&LogQuery::default())
+-            .await
+-            .expect("query migrated logs");
+-        assert_eq!(rows.len(), 1);
+-        assert_eq!(rows[0].message.as_deref(), Some("legacy-body"));
+-
+-        let migrated_pool = open_db_pool(logs_path.as_path()).await;
+-        let columns = sqlx::query_scalar::<_, String>("SELECT name FROM pragma_table_info('logs')")
+-            .fetch_all(&migrated_pool)
+-            .await
+-            .expect("load migrated columns");
+-        assert_eq!(
+-            columns,
+-            vec![
+-                "id".to_string(),
+-                "ts".to_string(),
+-                "ts_nanos".to_string(),
+-                "level".to_string(),
+-                "target".to_string(),
+-                "feedback_log_body".to_string(),
+-                "module_path".to_string(),
+-                "file".to_string(),
+-                "line".to_string(),
+-                "thread_id".to_string(),
+-                "process_uuid".to_string(),
+-                "estimated_bytes".to_string(),
+-            ]
+-        );
+-        let indexes = sqlx::query_scalar::<_, String>(
+-            "SELECT name FROM pragma_index_list('logs') ORDER BY name",
+-        )
+-        .fetch_all(&migrated_pool)
+-        .await
+-        .expect("load migrated indexes");
+-        assert_eq!(
+-            indexes,
+-            vec![
+-                "idx_logs_process_uuid_threadless_ts".to_string(),
+-                "idx_logs_thread_id".to_string(),
+-                "idx_logs_thread_id_ts".to_string(),
+-                "idx_logs_ts".to_string(),
+-            ]
+-        );
+-        migrated_pool.close().await;
+-
+-        let _ = tokio::fs::remove_dir_all(codex_home).await;
+-    }
+-
+-    #[test]
+-    fn format_feedback_log_line_matches_feedback_formatter_shape() {
+-        assert_eq!(
+-            format_feedback_log_line(1, 123_456_000, "INFO", "alpha"),
+-            "1970-01-01T00:00:01.123456Z  INFO alpha\n"
+-        );
+-    }
+-
+-    #[test]
+-    fn format_feedback_log_line_preserves_existing_trailing_newline() {
+-        assert_eq!(
+-            format_feedback_log_line(1, 123_456_000, "INFO", "alpha\n"),
+-            "1970-01-01T00:00:01.123456Z  INFO alpha\n"
+-        );
+-    }
+-
+-    #[tokio::test]
+-    async fn query_logs_with_search_matches_rendered_body_substring() {
++    async fn query_logs_with_search_matches_substring() {
+         let codex_home = unique_temp_dir();
+         let runtime = StateRuntime::init(codex_home.clone(), "test-provider".to_string())
+             .await
+@@ -681,7 +539,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("alpha".to_string()),
+-                    feedback_log_body: Some("foo=1 alpha".to_string()),
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: None,
+                     file: Some("main.rs".to_string()),
+@@ -694,7 +551,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("alphabet".to_string()),
+-                    feedback_log_body: Some("foo=2 alphabet".to_string()),
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: None,
+                     file: Some("main.rs".to_string()),
+@@ -707,14 +563,14 @@ mod tests {
+ 
+         let rows = runtime
+             .query_logs(&LogQuery {
+-                search: Some("foo=2".to_string()),
++                search: Some("alphab".to_string()),
+                 ..Default::default()
+             })
+             .await
+             .expect("query matching logs");
+ 
+         assert_eq!(rows.len(), 1);
+-        assert_eq!(rows[0].message.as_deref(), Some("foo=2 alphabet"));
++        assert_eq!(rows[0].message.as_deref(), Some("alphabet"));
+ 
+         let _ = tokio::fs::remove_dir_all(codex_home).await;
+     }
+@@ -734,8 +590,7 @@ mod tests {
+                     ts_nanos: 0,
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+-                    message: Some("small".to_string()),
+-                    feedback_log_body: Some(six_mebibytes.clone()),
++                    message: Some(six_mebibytes.clone()),
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: Some("main.rs".to_string()),
+@@ -747,8 +602,7 @@ mod tests {
+                     ts_nanos: 0,
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+-                    message: Some("small".to_string()),
+-                    feedback_log_body: Some(six_mebibytes.clone()),
++                    message: Some(six_mebibytes.clone()),
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: Some("main.rs".to_string()),
+@@ -787,8 +641,7 @@ mod tests {
+                 ts_nanos: 0,
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+-                message: Some("small".to_string()),
+-                feedback_log_body: Some(eleven_mebibytes),
++                message: Some(eleven_mebibytes),
+                 thread_id: Some("thread-oversized".to_string()),
+                 process_uuid: Some("proc-1".to_string()),
+                 file: Some("main.rs".to_string()),
+@@ -827,7 +680,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(six_mebibytes.clone()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: Some("main.rs".to_string()),
+@@ -840,7 +692,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(six_mebibytes.clone()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: Some("main.rs".to_string()),
+@@ -853,7 +704,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(six_mebibytes),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: Some("main.rs".to_string()),
+@@ -894,8 +744,7 @@ mod tests {
+                 ts_nanos: 0,
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+-                message: Some("small".to_string()),
+-                feedback_log_body: Some(eleven_mebibytes),
++                message: Some(eleven_mebibytes),
+                 thread_id: None,
+                 process_uuid: Some("proc-oversized".to_string()),
+                 file: Some("main.rs".to_string()),
+@@ -934,7 +783,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(six_mebibytes.clone()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: None,
+                     file: Some("main.rs".to_string()),
+@@ -947,7 +795,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(six_mebibytes),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: None,
+                     file: Some("main.rs".to_string()),
+@@ -960,7 +807,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("small".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: Some("main.rs".to_string()),
+@@ -1000,8 +846,7 @@ mod tests {
+                 ts_nanos: 0,
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+-                message: Some("small".to_string()),
+-                feedback_log_body: Some(eleven_mebibytes),
++                message: Some(eleven_mebibytes),
+                 thread_id: None,
+                 process_uuid: None,
+                 file: Some("main.rs".to_string()),
+@@ -1038,7 +883,6 @@ mod tests {
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+                 message: Some(format!("thread-row-{ts}")),
+-                feedback_log_body: None,
+                 thread_id: Some("thread-row-limit".to_string()),
+                 process_uuid: Some("proc-1".to_string()),
+                 file: Some("main.rs".to_string()),
+@@ -1081,7 +925,6 @@ mod tests {
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+                 message: Some(format!("process-row-{ts}")),
+-                feedback_log_body: None,
+                 thread_id: None,
+                 process_uuid: Some("proc-row-limit".to_string()),
+                 file: Some("main.rs".to_string()),
+@@ -1128,7 +971,6 @@ mod tests {
+                 level: "INFO".to_string(),
+                 target: "cli".to_string(),
+                 message: Some(format!("null-process-row-{ts}")),
+-                feedback_log_body: None,
+                 thread_id: None,
+                 process_uuid: None,
+                 file: Some("main.rs".to_string()),
+@@ -1176,7 +1018,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("alpha".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1189,7 +1030,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("bravo".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1202,7 +1042,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("charlie".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1220,12 +1059,7 @@ mod tests {
+ 
+         assert_eq!(
+             String::from_utf8(bytes).expect("valid utf-8"),
+-            [
+-                format_feedback_log_line(1, 0, "INFO", "alpha"),
+-                format_feedback_log_line(2, 0, "INFO", "bravo"),
+-                format_feedback_log_line(3, 0, "INFO", "charlie"),
+-            ]
+-            .concat()
++            "1970-01-01T00:00:01.000000Z  INFO alpha\n1970-01-01T00:00:02.000000Z  INFO bravo\n1970-01-01T00:00:03.000000Z  INFO charlie\n"
+         );
+ 
+         let _ = tokio::fs::remove_dir_all(codex_home).await;
+@@ -1247,7 +1081,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("small".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-oversized".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1260,7 +1093,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(eleven_mebibytes),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-oversized".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1296,7 +1128,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("threadless-before".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1309,7 +1140,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("thread-scoped".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1322,7 +1152,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("threadless-after".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1335,7 +1164,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("other-process-threadless".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-2".to_string()),
+                     file: None,
+@@ -1353,12 +1181,7 @@ mod tests {
+ 
+         assert_eq!(
+             String::from_utf8(bytes).expect("valid utf-8"),
+-            [
+-                format_feedback_log_line(1, 0, "INFO", "threadless-before"),
+-                format_feedback_log_line(2, 0, "INFO", "thread-scoped"),
+-                format_feedback_log_line(3, 0, "INFO", "threadless-after"),
+-            ]
+-            .concat()
++            "1970-01-01T00:00:01.000000Z  INFO threadless-before\n1970-01-01T00:00:02.000000Z  INFO thread-scoped\n1970-01-01T00:00:03.000000Z  INFO threadless-after\n"
+         );
+ 
+         let _ = tokio::fs::remove_dir_all(codex_home).await;
+@@ -1379,7 +1202,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("old-process-threadless".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-old".to_string()),
+                     file: None,
+@@ -1392,7 +1214,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("old-process-thread".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-old".to_string()),
+                     file: None,
+@@ -1405,7 +1226,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("new-process-thread".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-new".to_string()),
+                     file: None,
+@@ -1418,7 +1238,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some("new-process-threadless".to_string()),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-new".to_string()),
+                     file: None,
+@@ -1436,12 +1255,7 @@ mod tests {
+ 
+         assert_eq!(
+             String::from_utf8(bytes).expect("valid utf-8"),
+-            [
+-                format_feedback_log_line(2, 0, "INFO", "old-process-thread"),
+-                format_feedback_log_line(3, 0, "INFO", "new-process-thread"),
+-                format_feedback_log_line(4, 0, "INFO", "new-process-threadless"),
+-            ]
+-            .concat()
++            "1970-01-01T00:00:02.000000Z  INFO old-process-thread\n1970-01-01T00:00:03.000000Z  INFO new-process-thread\n1970-01-01T00:00:04.000000Z  INFO new-process-threadless\n"
+         );
+ 
+         let _ = tokio::fs::remove_dir_all(codex_home).await;
+@@ -1471,7 +1285,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(one_mebibyte.clone()),
+-                    feedback_log_body: None,
+                     thread_id: Some("thread-1".to_string()),
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1484,7 +1297,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(five_mebibytes),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+@@ -1497,7 +1309,6 @@ mod tests {
+                     level: "INFO".to_string(),
+                     target: "cli".to_string(),
+                     message: Some(four_and_half_mebibytes),
+-                    feedback_log_body: None,
+                     thread_id: None,
+                     process_uuid: Some("proc-1".to_string()),
+                     file: None,
+diff --git a/codex-rs/tui/src/app.rs b/codex-rs/tui/src/app.rs
+index 8db2a940e5..6cfcf8f1c7 100644
+--- a/codex-rs/tui/src/app.rs
++++ b/codex-rs/tui/src/app.rs
+@@ -2018,7 +2018,7 @@ impl App {
+         // TODO(xl): Move into PluginManager once this no longer depends on config feature gating.
+         thread_manager
+             .plugins_manager()
+-            .maybe_start_curated_repo_sync_for_config(&config);
++            .maybe_start_curated_repo_sync_for_config(&config, &SessionSource::Cli);
+         let mut model = thread_manager
+             .get_models_manager()
+             .get_default_model(&config.model, RefreshStrategy::Offline)
+diff --git a/sdk/python/src/codex_app_server/generated/v2_all.py b/sdk/python/src/codex_app_server/generated/v2_all.py
+index 0ff2c5897d..d1b02ccc9d 100644
+--- a/sdk/python/src/codex_app_server/generated/v2_all.py
++++ b/sdk/python/src/codex_app_server/generated/v2_all.py
+@@ -3131,6 +3131,7 @@ class ThreadSourceKind(Enum):
+     vscode = "vscode"
+     exec = "exec"
+     app_server = "appServer"
++    custom = "custom"
+     sub_agent = "subAgent"
+     sub_agent_review = "subAgentReview"
+     sub_agent_compact = "subAgentCompact"
+@@ -5810,11 +5811,19 @@ class SubAgentSessionSource(BaseModel):
+     sub_agent: Annotated[SubAgentSource, Field(alias="subAgent")]
+ 
+ 
+-class SessionSource(RootModel[SessionSourceValue | SubAgentSessionSource]):
++class CustomSessionSource(BaseModel):
++    model_config = ConfigDict(
++        extra="forbid",
++        populate_by_name=True,
++    )
++    custom: str
++
++
++class SessionSource(RootModel[SessionSourceValue | CustomSessionSource | SubAgentSessionSource]):
+     model_config = ConfigDict(
+         populate_by_name=True,
+     )
+-    root: SessionSourceValue | SubAgentSessionSource
++    root: SessionSourceValue | CustomSessionSource | SubAgentSessionSource
+ 
+ 
+ class Thread(BaseModel):

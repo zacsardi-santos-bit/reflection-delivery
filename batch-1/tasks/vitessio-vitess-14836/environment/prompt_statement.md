@@ -1,0 +1,7 @@
+I'm working on the tablet manager in Vitess and I need to improve how we handle database user privilege verification during tablet startup. Right now, there's a standalone function in the tablet server package that checks whether the DBA user has the required permissions, but it doesn't provide any way for other operations to wait until those permissions have been confirmed.
+
+The problem is that privileged operations like query execution and replication management can potentially run before the grant verification has finished, causing permission errors. I want to move the grant verification logic into the tablet manager itself and add a mechanism so that any operation requiring elevated privileges will wait until grants have been verified before proceeding.
+
+Specifically, when the grant check completes successfully (or is skipped — for example, when the wait time is zero, or when the tablet is externally managed), there should be a signal that marks grants as having been applied. Any privileged operation should wait on this signal. If a calling operation's context expires while waiting, it should receive an appropriate cancellation error. If grants aren't applied within the configured wait time, the verification should return an error clearly indicating the timeout duration.
+
+The existing standalone function in the tablet server package should be removed and replaced by this new tablet-manager-owned approach.

@@ -1,0 +1,29 @@
+{
+    "id": "9d85839a-d765-4144-8d70-12a7ef15422e",
+    "started_at": "2026-07-06T12:17:06.052652",
+    "finished_at": "2026-07-06T12:19:40.018130",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__pmndrs-react-spring-2431": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "pmndrs-react-spring-2431__UNuSqyL"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

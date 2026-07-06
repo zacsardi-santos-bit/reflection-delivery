@@ -1,5 +1,0 @@
-I'm working with a tracing library for Rust and I'd like to improve the API for entering spans. Right now, the only way to execute code within a span is to pass a closure to the span's entry method. This is quite limiting — it doesn't work well for code that spans multiple statements, uses early returns, or has borrow checker conflicts with closures.
-
-What I'd like is a guard-based approach: calling an entry method on the span returns a guard value, and the span remains active until that guard is dropped. This follows the same pattern as mutex guards in Rust — you hold the guard for as long as you need the span to be active, and dropping it automatically exits the span. This would let me use spans naturally across loops, inside async blocks, and in any other context where closures don't fit.
-
-I'd also like the closure-based method to be renamed to better reflect its purpose — it executes a given function within the scope of the span and returns its result. Both methods should produce the same subscriber notifications (enter on entry, exit on exit), and both should handle disabled spans gracefully as no-ops.

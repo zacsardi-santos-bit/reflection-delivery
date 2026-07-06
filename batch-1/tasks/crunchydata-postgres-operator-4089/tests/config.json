@@ -1,0 +1,36 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/collector -count=1",
+  "test_files": [
+    "internal/collector/config_test.go",
+    "internal/collector/helpers_test.go",
+    "internal/collector/patroni_test.go",
+    "internal/collector/pgadmin_test.go",
+    "internal/collector/pgbackrest_test.go",
+    "internal/collector/pgbouncer_test.go",
+    "internal/collector/postgres_test.go"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/crunchydata/postgres-operator/internal/collector::TestConfigToYAML/NilInstrumentationSpec",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestConfigToYAML/InstrumentationSpecDefined",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestConfigToYAML",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePatroniLogging/NilInstrumentationSpec",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePatroniLogging/InstrumentationSpecDefined",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePatroniLogging",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePgAdminLogging/NilInstrumentationSpec",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePgAdminLogging/InstrumentationSpecDefined",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePgAdminLogging",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestNewConfigForPgBackrestRepoHostPod/NilInstrumentationSpec",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestNewConfigForPgBackrestRepoHostPod/InstrumentationSpecDefined",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestNewConfigForPgBackrestRepoHostPod",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePgBouncerLogging/NilInstrumentationSpec",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePgBouncerLogging/InstrumentationSpecDefined",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePgBouncerLogging",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePostgresLogging/NilInstrumentationSpec",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePostgresLogging/InstrumentationSpecDefined",
+    "github.com/crunchydata/postgres-operator/internal/collector::TestEnablePostgresLogging"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "741679b7-95f6-4608-b20e-1d187f597e44",
+    "started_at": "2026-07-04T15:37:37.054307",
+    "finished_at": "2026-07-04T15:38:29.189927",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__axodotdev-cargo-dist-725": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "axodotdev-cargo-dist-725__8CV6Lf9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

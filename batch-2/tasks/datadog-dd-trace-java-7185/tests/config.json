@@ -1,0 +1,18 @@
+{
+  "test_framework": "maven",
+  "test_command": "echo '[INFO] Building internal-api [1/1]' && (set -o pipefail; ./gradlew :internal-api:test --tests datadog.trace.bootstrap.config.provider.OtelEnvironmentConfigSourceTest --no-daemon --configure-on-demand -x spotlessCheck -x spotbugsMain -x spotbugsTest -x javadocJar -x sourcesJar -x codenarcTest -x codenarcMain 2>&1 | grep -v 'BUILD FAIL')",
+  "test_files": [
+    "internal-api/src/test/groovy/datadog/trace/bootstrap/config/provider/OtelEnvironmentConfigSourceTest.groovy"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "internal-api::test_1",
+    "internal-api::test_2",
+    "internal-api::test_3",
+    "internal-api::test_4",
+    "internal-api::test_5",
+    "internal-api::test_6"
+  ],
+  "PASS_TO_PASS": []
+}

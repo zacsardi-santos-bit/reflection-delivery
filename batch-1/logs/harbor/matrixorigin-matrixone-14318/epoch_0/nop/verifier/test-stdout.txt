@@ -1,0 +1,24 @@
+patching file pkg/frontend/mysql_cmd_executor_test.go
+patching file pkg/frontend/routine_test.go
+patching file pkg/sql/compile/scopeRemoteRunTypes_test.go
+patching file pkg/sql/compile/scopeRemoteRun_test.go
+patching file pkg/tests/service/cnservice.go
+patching file pkg/tests/service/dnservice.go
+patching file pkg/tests/service/logservice.go
+patching file pkg/tests/service/service.go
+patching file pkg/util/uuidutil_test.go
+# github.com/matrixorigin/matrixone/pkg/util [github.com/matrixorigin/matrixone/pkg/util.test]
+pkg/util/uuidutil_test.go:121:18: undefined: uuid.NewV7
+pkg/util/uuidutil_test.go:123:17: undefined: uuid.NewV7
+# github.com/matrixorigin/matrixone/pkg/frontend [github.com/matrixorigin/matrixone/pkg/frontend.test]
+pkg/frontend/mysql_cmd_executor_test.go:1047:18: undefined: uuid.NewV7
+pkg/frontend/routine_test.go:105:18: undefined: uuid.NewV7
+FAIL	github.com/matrixorigin/matrixone/pkg/frontend [build failed]
+# github.com/matrixorigin/matrixone/pkg/sql/compile [github.com/matrixorigin/matrixone/pkg/sql/compile.test]
+pkg/sql/compile/scopeRemoteRunTypes_test.go:72:16: undefined: uuid.NewV7
+pkg/sql/compile/scopeRemoteRun_test.go:114:16: undefined: uuid.NewV7
+pkg/sql/compile/scopeRemoteRun_test.go:335:16: undefined: uuid.NewV7
+pkg/sql/compile/scopeRemoteRun_test.go:349:16: undefined: uuid.NewV7
+FAIL	github.com/matrixorigin/matrixone/pkg/sql/compile [build failed]
+FAIL	github.com/matrixorigin/matrixone/pkg/util [build failed]
+reward=0 graded=277 found=277 failed=277 parsed=3 framework=go exit_code=1

@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_html_parser -E 'test(each_with_method_call_key)'",
+  "test_files": [
+    "crates/biome_html_parser/tests/html_specs/ok/svelte/each_with_method_call_key.svelte",
+    "crates/biome_html_parser/tests/html_specs/ok/svelte/each_with_method_call_key.svelte.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) biome_html_parser::spec_tests ok::ok::svelte::each_with_method_call_key_svelte"
+  ],
+  "PASS_TO_PASS": []
+}

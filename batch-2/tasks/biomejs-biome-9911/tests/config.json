@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(/no_jsx_leaked_dollar/)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noJsxLeakedDollar/invalid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/noJsxLeakedDollar/invalid.jsx.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noJsxLeakedDollar/valid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/noJsxLeakedDollar/valid.jsx.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::no_jsx_leaked_dollar::valid_jsx",
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::no_jsx_leaked_dollar::invalid_jsx"
+  ],
+  "PASS_TO_PASS": []
+}

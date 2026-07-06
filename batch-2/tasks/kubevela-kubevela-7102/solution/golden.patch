@@ -1,0 +1,711 @@
+diff --git a/pkg/definition/defkit/cuegen.go b/pkg/definition/defkit/cuegen.go
+index a6ac8b13d..2c48eeac1 100644
+--- a/pkg/definition/defkit/cuegen.go
++++ b/pkg/definition/defkit/cuegen.go
+@@ -269,15 +269,19 @@ func (g *CUEGenerator) collectImportsFromResource(res *Resource) {
+ 			g.collectImportsFromValue(o.Value())
+ 		case *SetIfOp:
+ 			g.collectImportsFromValue(o.Value())
++			g.collectImportsFromValue(o.Cond())
+ 		case *SpreadIfOp:
+ 			g.collectImportsFromValue(o.Value())
++			g.collectImportsFromValue(o.Cond())
+ 		case *IfBlock:
++			g.collectImportsFromValue(o.Cond())
+ 			for _, innerOp := range o.Ops() {
+ 				switch inner := innerOp.(type) {
+ 				case *SetOp:
+ 					g.collectImportsFromValue(inner.Value())
+ 				case *SetIfOp:
+ 					g.collectImportsFromValue(inner.Value())
++					g.collectImportsFromValue(inner.Cond())
+ 				}
+ 			}
+ 		}
+@@ -526,32 +530,46 @@ func (g *CUEGenerator) writeValidator(sb *strings.Builder, v *Validator, depth i
+ 		name = "_validate"
+ 	}
+ 
+-	if v.GuardCondition() != nil {
+-		// Guarded validator: wrap in if guard { ... }
+-		guardCUE := g.conditionToCUE(v.GuardCondition())
+-		sb.WriteString(fmt.Sprintf("%sif %s {\n", indent, guardCUE))
+-		sb.WriteString(fmt.Sprintf("%s%s: {\n", inner, name))
+-		sb.WriteString(fmt.Sprintf("%s%q: true\n", inner2, v.Message()))
++	writeBody := func(bodyIndent, innerBodyIndent string) {
++		sb.WriteString(fmt.Sprintf("%s%s: {\n", bodyIndent, name))
++		sb.WriteString(fmt.Sprintf("%s%q: true\n", innerBodyIndent, v.Message()))
+ 		if v.FailCondition() != nil {
+-			failCUE := g.conditionToCUE(v.FailCondition())
+-			sb.WriteString(fmt.Sprintf("%sif %s {\n", inner2, failCUE))
+-			sb.WriteString(fmt.Sprintf("%s\t%q: false\n", inner2, v.Message()))
+-			sb.WriteString(fmt.Sprintf("%s}\n", inner2))
++			g.writeIfBlocksForCond(sb, v.FailCondition(), innerBodyIndent, func() {
++				sb.WriteString(fmt.Sprintf("%s\t%q: false\n", innerBodyIndent, v.Message()))
++			})
+ 		}
+-		sb.WriteString(fmt.Sprintf("%s}\n", inner))
+-		sb.WriteString(fmt.Sprintf("%s}\n", indent))
++		sb.WriteString(fmt.Sprintf("%s}\n", bodyIndent))
++	}
++
++	if v.GuardCondition() != nil {
++		// Guarded validator: wrap in if guard { ... }
++		g.writeIfBlocksForCond(sb, v.GuardCondition(), indent, func() {
++			writeBody(inner, inner2)
++		})
+ 	} else {
+-		// Unguarded validator
+-		sb.WriteString(fmt.Sprintf("%s%s: {\n", indent, name))
+-		sb.WriteString(fmt.Sprintf("%s%q: true\n", inner, v.Message()))
+-		if v.FailCondition() != nil {
+-			failCUE := g.conditionToCUE(v.FailCondition())
+-			sb.WriteString(fmt.Sprintf("%sif %s {\n", inner, failCUE))
+-			sb.WriteString(fmt.Sprintf("%s\t%q: false\n", inner, v.Message()))
+-			sb.WriteString(fmt.Sprintf("%s}\n", inner))
++		writeBody(indent, inner)
++	}
++}
++
++// writeIfBlocksForCond writes one or more `if cond { body }` blocks. For
++// AbsentOrEmptyCondition the body is duplicated into two blocks (one for
++// each branch) — CUE's `||` cannot express "absent OR empty" safely on
++// optional fields, so the structural duplication is required. For all other
++// conditions a single if block is emitted.
++func (g *CUEGenerator) writeIfBlocksForCond(sb *strings.Builder, cond Condition, indent string, writeBody func()) {
++	if aoe, ok := cond.(*AbsentOrEmptyCondition); ok {
++		for _, branch := range aoe.Branches() {
++			condCUE := g.conditionToCUE(branch)
++			sb.WriteString(fmt.Sprintf("%sif %s {\n", indent, condCUE))
++			writeBody()
++			sb.WriteString(fmt.Sprintf("%s}\n", indent))
+ 		}
+-		sb.WriteString(fmt.Sprintf("%s}\n", indent))
++		return
+ 	}
++	condCUE := g.conditionToCUE(cond)
++	sb.WriteString(fmt.Sprintf("%sif %s {\n", indent, condCUE))
++	writeBody()
++	sb.WriteString(fmt.Sprintf("%s}\n", indent))
+ }
+ 
+ // writeConditionalParamBlock writes conditional parameter branches.
+@@ -1350,10 +1368,25 @@ func (g *CUEGenerator) buildFieldTree(ops []ResourceOp) *fieldNode {
+ 		case *SetOp:
+ 			g.insertIntoTree(root, o.Path(), o.Value(), nil)
+ 		case *SetIfOp:
+-			g.insertIntoTree(root, o.Path(), o.Value(), o.Cond())
++			// Expand AbsentOrEmptyCondition into branches: each branch
++			// produces its own conditional value at the same path. The tree
++			// renderer emits one if block per condValue.
++			if aoe, ok := o.Cond().(*AbsentOrEmptyCondition); ok {
++				for _, branch := range aoe.Branches() {
++					g.insertIntoTree(root, o.Path(), o.Value(), branch)
++				}
++			} else {
++				g.insertIntoTree(root, o.Path(), o.Value(), o.Cond())
++			}
+ 		case *SpreadIfOp:
+ 			// SpreadIfOp adds a spread entry to the target node
+-			g.insertSpreadIntoTree(root, o.Path(), o.Value(), o.Cond())
++			if aoe, ok := o.Cond().(*AbsentOrEmptyCondition); ok {
++				for _, branch := range aoe.Branches() {
++					g.insertSpreadIntoTree(root, o.Path(), o.Value(), branch)
++				}
++			} else {
++				g.insertSpreadIntoTree(root, o.Path(), o.Value(), o.Cond())
++			}
+ 		case *ForEachOp:
+ 			// ForEachOp creates a for-each iteration at the target path
+ 			g.insertForEachIntoTree(root, o, nil)
+@@ -1374,13 +1407,28 @@ func (g *CUEGenerator) buildFieldTree(ops []ResourceOp) *fieldNode {
+ 				case *SetOp:
+ 					g.insertIntoTree(root, inner.Path(), inner.Value(), o.Cond())
+ 				case *SetIfOp:
+-					// Combine conditions
+-					combinedCond := &AndCondition{left: o.Cond(), right: inner.Cond()}
+-					g.insertIntoTree(root, inner.Path(), inner.Value(), combinedCond)
++					// Combine conditions. If inner is AbsentOrEmpty, expand
++					// each branch and combine the outer block's cond with each.
++					if aoe, ok := inner.Cond().(*AbsentOrEmptyCondition); ok {
++						for _, branch := range aoe.Branches() {
++							combined := &AndCondition{left: o.Cond(), right: branch}
++							g.insertIntoTree(root, inner.Path(), inner.Value(), combined)
++						}
++					} else {
++						combinedCond := &AndCondition{left: o.Cond(), right: inner.Cond()}
++						g.insertIntoTree(root, inner.Path(), inner.Value(), combinedCond)
++					}
+ 				case *SpreadIfOp:
+ 					// Combine conditions for spread
+-					combinedCond := &AndCondition{left: o.Cond(), right: inner.Cond()}
+-					g.insertSpreadIntoTree(root, inner.Path(), inner.Value(), combinedCond)
++					if aoe, ok := inner.Cond().(*AbsentOrEmptyCondition); ok {
++						for _, branch := range aoe.Branches() {
++							combined := &AndCondition{left: o.Cond(), right: branch}
++							g.insertSpreadIntoTree(root, inner.Path(), inner.Value(), combined)
++						}
++					} else {
++						combinedCond := &AndCondition{left: o.Cond(), right: inner.Cond()}
++						g.insertSpreadIntoTree(root, inner.Path(), inner.Value(), combinedCond)
++					}
+ 				case *ForEachOp:
+ 					// ForEach inside an if block - pass the block's condition
+ 					g.insertForEachIntoTree(root, inner, o.Cond())
+@@ -1866,16 +1914,7 @@ func (g *CUEGenerator) writeFieldNode(sb *strings.Builder, name string, node *fi
+ 
+ 	// Handle bracket notation in name (like [app.oam.dev/name])
+ 	if strings.HasPrefix(name, "[") && !strings.HasPrefix(name, "[0]") {
+-		// This is a map key access - extract the key
+-		key := strings.Trim(name, "[]")
+-		if node.value != nil {
+-			valStr := g.valueToCUE(node.value)
+-			sb.WriteString(fmt.Sprintf("%s%q: %s\n", indent, key, valStr))
+-		} else if len(node.children) > 0 {
+-			sb.WriteString(fmt.Sprintf("%s%q: {\n", indent, key))
+-			g.writeFieldTree(sb, node, depth+1)
+-			sb.WriteString(fmt.Sprintf("%s}\n", indent))
+-		}
++		g.writeBracketKeyNode(sb, name, node, indent, depth)
+ 		return
+ 	}
+ 
+@@ -1935,6 +1974,51 @@ func (g *CUEGenerator) writeFieldNode(sb *strings.Builder, name string, node *fi
+ 	}
+ }
+ 
++// writeBracketKeyNode renders a map-key access leaf (`[key]`) honoring the
++// node's primary condition and any additional condValues. Split out from
++// writeFieldNode so the dispatcher stays under gocritic's ifElseChain check.
++func (g *CUEGenerator) writeBracketKeyNode(sb *strings.Builder, name string, node *fieldNode, indent string, depth int) {
++	key := strings.Trim(name, "[]")
++	quoted := fmt.Sprintf("%q", key)
++
++	// Subtree: render as a nested struct (no condition handling — children
++	// carry their own conditions).
++	if node.value == nil {
++		if len(node.children) > 0 {
++			sb.WriteString(fmt.Sprintf("%s%s: {\n", indent, quoted))
++			g.writeFieldTree(sb, node, depth+1)
++			sb.WriteString(fmt.Sprintf("%s}\n", indent))
++		}
++		return
++	}
++
++	valStr := g.valueToCUE(node.value)
++	writeGuarded := func(cond Condition, v string) {
++		condStr := g.conditionToCUE(cond)
++		sb.WriteString(fmt.Sprintf("%sif %s {\n", indent, condStr))
++		sb.WriteString(fmt.Sprintf("%s\t%s: %s\n", indent, quoted, v))
++		sb.WriteString(fmt.Sprintf("%s}\n", indent))
++	}
++
++	switch {
++	case len(node.condValues) > 0:
++		// Multiple conditional values at the same bracket-access path —
++		// render each inside its own if block.
++		if node.cond != nil {
++			writeGuarded(node.cond, valStr)
++		} else {
++			sb.WriteString(fmt.Sprintf("%s%s: %s\n", indent, quoted, valStr))
++		}
++		for _, cv := range node.condValues {
++			writeGuarded(cv.cond, g.valueToCUE(cv.value))
++		}
++	case node.cond != nil:
++		writeGuarded(node.cond, valStr)
++	default:
++		sb.WriteString(fmt.Sprintf("%s%s: %s\n", indent, quoted, valStr))
++	}
++}
++
+ // canDecomposeByCondition checks if a struct node's children can be split into
+ // separate conditional blocks. This is possible when every child subtree has
+ // the same uniform set of leaf conditions (e.g., every leaf is guarded by either
+@@ -2101,6 +2185,10 @@ func (g *CUEGenerator) valueToCUE(v Value) string {
+ 		// Return reference to the helper by name
+ 		return val.Name()
+ 	case *StringParam, *IntParam, *BoolParam, *FloatParam, *ArrayParam, *MapParam, *StringKeyMapParam, *EnumParam, *OneOfParam:
++		// Dot syntax is safe here: the call sites that wrap value refs in a
++		// guarded if-block (e.g. `if len(parameter.X | []) > 0 { foo: parameter.X }`)
++		// have already established the field is concrete before the body
++		// evaluates.
+ 		return "parameter." + v.(Param).Name()
+ 	case *DynamicMapParam:
+ 		// Dynamic map parameters reference just "parameter"
+@@ -2907,11 +2995,17 @@ func (g *CUEGenerator) conditionToCUE(cond Condition) string {
+ 	case *StringEndsWithCondition:
+ 		return fmt.Sprintf(`strings.HasSuffix(parameter.%s, %q)`, c.ParamName(), c.Suffix())
+ 	case *LenCondition:
+-		return fmt.Sprintf("len(parameter.%s) %s %d", c.ParamName(), c.Op(), c.Length())
++		return g.lenConditionToCUE(c)
++	case *AbsentOrEmptyCondition:
++		return g.absentOrEmptyConditionToCUE(c)
+ 	case *ArrayContainsCondition:
+-		return fmt.Sprintf("list.Contains(parameter.%s, %s)", c.ParamName(), formatCUEValue(c.Value()))
++		return g.arrayContainsConditionToCUE(c)
+ 	case *MapHasKeyCondition:
+-		return fmt.Sprintf("parameter.%s.%s != _|_", c.ParamName(), c.Key())
++		// daemon.cue's idiom for nested optional access: bracket on the
++		// outer (optional) map, dot on the inner key (concrete after the
++		// outer guard).
++		return fmt.Sprintf(`parameter[%q] != _|_ && parameter[%q].%s != _|_`,
++			c.ParamName(), c.ParamName(), c.Key())
+ 	case *ParamCompareCondition:
+ 		// Parameter comparison: parameter.name op value
+ 		return fmt.Sprintf("parameter.%s %s %s", c.ParamName(), c.Op(), formatCUEValue(c.CompareValue()))
+@@ -2920,29 +3014,11 @@ func (g *CUEGenerator) conditionToCUE(cond Condition) string {
+ 		right := g.exprToCUE(c.Right())
+ 		return fmt.Sprintf("%s %s %s", left, c.Op(), right)
+ 	case *AndCondition:
+-		left := g.conditionToCUE(c.left)
+-		right := g.conditionToCUE(c.right)
+-		return fmt.Sprintf("(%s) && (%s)", left, right)
++		return g.andConditionToCUE(c)
+ 	case *LogicalExpr:
+-		parts := make([]string, len(c.Conditions()))
+-		for i, sub := range c.Conditions() {
+-			parts[i] = g.conditionToCUE(sub)
+-		}
+-		op := " && "
+-		if c.Op() == OpOr {
+-			op = " || "
+-		}
+-		return strings.Join(parts, op)
++		return g.logicalExprToCUE(c)
+ 	case *NotExpr:
+-		// Special case: Not(IsSet("x")) -> parameter["x"] == _|_
+-		if isSet, ok := c.Cond().(*IsSetCondition); ok {
+-			return fmt.Sprintf("parameter[%q] == _|_", isSet.ParamName())
+-		}
+-		// Special case: Not(PathExists("x")) -> x == _|_
+-		if pe, ok := c.Cond().(*PathExistsCondition); ok {
+-			return fmt.Sprintf("%s == _|_", pe.Path())
+-		}
+-		return fmt.Sprintf("!(%s)", g.conditionToCUE(c.Cond()))
++		return g.notExprToCUE(c)
+ 	case *HasExposedPortsCondition:
+ 		// Check if any port has expose=true
+ 		portsStr := g.valueToCUE(c.Ports())
+@@ -2971,14 +3047,7 @@ func (g *CUEGenerator) conditionToCUE(cond Condition) string {
+ 		// Check if a context.output path exists
+ 		return fmt.Sprintf("context.output.%s != _|_", c.Path())
+ 	case *AllConditionsCondition:
+-		// Generate compound condition: if cond1 if cond2 ...
+-		var parts []string
+-		for _, cond := range c.Conditions() {
+-			parts = append(parts, g.conditionToCUE(cond))
+-		}
+-		// For CUE, we generate: cond1 && cond2 && cond3
+-		// which will be used in a single if statement
+-		return strings.Join(parts, " && ")
++		return g.allConditionsConditionToCUE(c)
+ 	case *RegexMatchCondition:
+ 		// General-purpose regex match: <value> =~ "pattern"
+ 		return fmt.Sprintf(`%s =~ %q`, g.valueToCUE(c.Source()), c.Pattern())
+@@ -2990,6 +3059,114 @@ func (g *CUEGenerator) conditionToCUE(cond Condition) string {
+ 	}
+ }
+ 
++// usesChainedGuard returns true for condition types whose conditionToCUE output
++// uses CUE chained-if syntax (e.g. `guard if inner`). These conditions cannot
++// be placed inside `(…) && (…)` — compound conditions must join with ` if `
++// instead of ` && ` when any operand uses chained guards.
++func usesChainedGuard(c Condition) bool {
++	switch c.(type) {
++	case *ArrayContainsCondition, *LenCondition:
++		return true
++	}
++	return false
++}
++
++// lenConditionToCUE renders a LenCondition using CUE's chained-if guard
++// pattern: `parameter["X"] != _|_ if len(parameter["X"]) op N`.
++//
++// The bracket-existence guard handles CUE strict mode on optional fields
++// (dot syntax `parameter.X` errors on `_|_`). The second `if` only evaluates
++// when the first passes, so `len()` never references an absent value.
++// For required fields the outer guard always passes — a few characters
++// longer than `len(parameter.X) op N` but correctness is uniform across
++// required and optional fields. Pattern matches the chained-if form already
++// used at cuegen.go:1145 for compound optional access.
++func (g *CUEGenerator) lenConditionToCUE(c *LenCondition) string {
++	return fmt.Sprintf(`parameter[%q] != _|_ if len(parameter[%q]) %s %d`,
++		c.ParamName(), c.ParamName(), c.Op(), c.Length())
++}
++
++// absentOrEmptyConditionToCUE is the conditionToCUE fallback for paths that
++// haven't been updated to expand AbsentOrEmpty branches into separate if
++// blocks. It renders only the "set and empty" branch (the "absent" branch is
++// lost). Top-level SetIfOp / SpreadIfOp in buildFieldTree DO expand and
++// render both branches correctly via the field tree's condValues.
++func (g *CUEGenerator) absentOrEmptyConditionToCUE(c *AbsentOrEmptyCondition) string {
++	return fmt.Sprintf(`parameter[%q] != _|_ if len(parameter[%q]) == 0`,
++		c.ParamName(), c.ParamName())
++}
++
++// arrayContainsConditionToCUE renders an ArrayContainsCondition as the
++// chained-if guard `parameter["X"] != _|_ if list.Contains(parameter["X"], val)`.
++// CUE does not short-circuit `&&`, so the inner list.Contains would otherwise
++// be evaluated against `_|_` when the field is absent.
++func (g *CUEGenerator) arrayContainsConditionToCUE(c *ArrayContainsCondition) string {
++	return fmt.Sprintf(`parameter[%q] != _|_ if list.Contains(parameter[%q], %s)`,
++		c.ParamName(), c.ParamName(), formatCUEValue(c.Value()))
++}
++
++// andConditionToCUE renders an AndCondition. If either operand uses chained-if
++// guard syntax (e.g. ArrayContainsCondition), join with ` if ` instead of
++// ` && ` because chained-if expressions are invalid inside `(...) && (...)`.
++func (g *CUEGenerator) andConditionToCUE(c *AndCondition) string {
++	left := g.conditionToCUE(c.left)
++	right := g.conditionToCUE(c.right)
++	if usesChainedGuard(c.left) || usesChainedGuard(c.right) {
++		return fmt.Sprintf("%s if %s", left, right)
++	}
++	return fmt.Sprintf("(%s) && (%s)", left, right)
++}
++
++// logicalExprToCUE renders a LogicalExpr (AND/OR over N conditions). For
++// AND mode with any chained-guard operand, joins with ` if `; otherwise
++// ` && `. OR mode always joins with ` || `.
++func (g *CUEGenerator) logicalExprToCUE(c *LogicalExpr) string {
++	parts := make([]string, len(c.Conditions()))
++	anyChained := false
++	for i, sub := range c.Conditions() {
++		parts[i] = g.conditionToCUE(sub)
++		if usesChainedGuard(sub) {
++			anyChained = true
++		}
++	}
++	if c.Op() == OpOr {
++		return strings.Join(parts, " || ")
++	}
++	if anyChained {
++		return strings.Join(parts, " if ")
++	}
++	return strings.Join(parts, " && ")
++}
++
++// allConditionsConditionToCUE renders an AllConditionsCondition (AND over N
++// conditions). Joins with ` if ` when any operand uses chained-guard syntax.
++func (g *CUEGenerator) allConditionsConditionToCUE(c *AllConditionsCondition) string {
++	parts := make([]string, 0, len(c.Conditions()))
++	anyChained := false
++	for _, cond := range c.Conditions() {
++		parts = append(parts, g.conditionToCUE(cond))
++		if usesChainedGuard(cond) {
++			anyChained = true
++		}
++	}
++	if anyChained {
++		return strings.Join(parts, " if ")
++	}
++	return strings.Join(parts, " && ")
++}
++
++// notExprToCUE renders a NotExpr, special-casing Not(IsSet) and
++// Not(PathExists) to the canonical `X == _|_` form.
++func (g *CUEGenerator) notExprToCUE(c *NotExpr) string {
++	if isSet, ok := c.Cond().(*IsSetCondition); ok {
++		return fmt.Sprintf("parameter[%q] == _|_", isSet.ParamName())
++	}
++	if pe, ok := c.Cond().(*PathExistsCondition); ok {
++		return fmt.Sprintf("%s == _|_", pe.Path())
++	}
++	return fmt.Sprintf("!(%s)", g.conditionToCUE(c.Cond()))
++}
++
+ // inConditionToCUE converts an InCondition to CUE syntax.
+ // Generates: parameter.name == val1 || parameter.name == val2 || ...
+ func (g *CUEGenerator) inConditionToCUE(c *InCondition) string {
+@@ -3586,6 +3763,11 @@ func (g *CUEGenerator) writeOneOfParam(sb *strings.Builder, p *OneOfParam, inden
+ 				enumParts = append(enumParts, fmt.Sprintf("%q", v.Name()))
+ 			}
+ 		}
++		// A default makes the field effectively non-optional in CUE — the
++		// downstream `if name == "..."` blocks reference the field by name
++		// from sibling scope, which fails CUE strict mode when marked
++		// optional. Drop the "?" marker so the field is concrete.
++		optional = ""
+ 	} else {
+ 		for _, v := range variants {
+ 			enumParts = append(enumParts, fmt.Sprintf("%q", v.Name()))
+diff --git a/pkg/definition/defkit/expr.go b/pkg/definition/defkit/expr.go
+index 21201cbd1..2baf788e8 100644
+--- a/pkg/definition/defkit/expr.go
++++ b/pkg/definition/defkit/expr.go
+@@ -267,7 +267,13 @@ func (c *StringEndsWithCondition) ParamName() string { return c.paramName }
+ func (c *StringEndsWithCondition) Suffix() string { return c.suffix }
+ 
+ // LenCondition checks the length of a parameter (string, array, or map).
+-// Generates: len(parameter.name) op n
++// Generates: parameter["name"] != _|_ if len(parameter["name"]) op n
++//
++// CUE chained-if guard form. The bracket-existence guard handles strict
++// mode on optional fields (dot syntax `parameter.X` errors on `_|_`). The
++// second `if` only evaluates when the first passes, so `len()` never
++// references an absent (`_|_`) value. For required fields the outer guard
++// always passes.
+ type LenCondition struct {
+ 	baseCondition
+ 	paramName string
+@@ -284,6 +290,35 @@ func (c *LenCondition) Op() string { return c.op }
+ // Length returns the length to compare against.
+ func (c *LenCondition) Length() int { return c.length }
+ 
++// AbsentOrEmptyCondition fires when a collection parameter is either absent
++// (parameter["X"] == _|_) or set and empty (len(parameter["X"]) == 0).
++//
++// CUE cannot express "absent OR empty" as a single boolean expression: `||`
++// is strict in both operands, and `len(_|_)` propagates bottom. The condition
++// is therefore expanded at render time into two separate if blocks, each
++// emitting the same body — CUE unifies same-path/same-value writes.
++type AbsentOrEmptyCondition struct {
++	baseCondition
++	paramName string
++}
++
++// ParamName returns the parameter name being checked.
++func (c *AbsentOrEmptyCondition) ParamName() string { return c.paramName }
++
++// Branches returns the two simpler conditions equivalent to this OR:
++//  1. field absent (Not(IsSet))
++//  2. field set and empty (LenCondition == 0)
++//
++// Render paths that handle compound emission expand into both branches; paths
++// that don't (e.g. unknown contexts) fall back to conditionToCUE which renders
++// only the "set and empty" branch.
++func (c *AbsentOrEmptyCondition) Branches() []Condition {
++	return []Condition{
++		&NotExpr{cond: &IsSetCondition{paramName: c.paramName}},
++		&LenCondition{paramName: c.paramName, op: "==", length: 0},
++	}
++}
++
+ // ArrayContainsCondition checks if an array parameter contains a specific value.
+ // Generates: list.Contains(parameter.name, value)
+ type ArrayContainsCondition struct {
+@@ -298,6 +333,12 @@ func (c *ArrayContainsCondition) ParamName() string { return c.paramName }
+ // Value returns the value to check for.
+ func (c *ArrayContainsCondition) Value() any { return c.value }
+ 
++// RequiredImports returns the CUE imports required by ArrayContainsCondition.
++// list.Contains requires the "list" package.
++func (c *ArrayContainsCondition) RequiredImports() []string {
++	return []string{"list"}
++}
++
+ // MapHasKeyCondition checks if a map parameter has a specific key.
+ // Generates: parameter.name.key != _|_
+ type MapHasKeyCondition struct {
+diff --git a/pkg/definition/defkit/param.go b/pkg/definition/defkit/param.go
+index a896712f3..334fa0edf 100644
+--- a/pkg/definition/defkit/param.go
++++ b/pkg/definition/defkit/param.go
+@@ -293,31 +293,31 @@ func (p *StringParam) EndsWith(suffix string) Condition {
+ }
+ 
+ // LenEq creates a condition that checks if this string parameter has exactly n characters.
+-// Example: name.LenEq(5) generates: len(parameter.name) == 5
++// Example: name.LenEq(5) generates: parameter["name"] != _|_ if len(parameter["name"]) == 5
+ func (p *StringParam) LenEq(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: "==", length: n}
+ }
+ 
+ // LenGt creates a condition that checks if this string parameter has more than n characters.
+-// Example: name.LenGt(5) generates: len(parameter.name) > 5
++// Example: name.LenGt(5) generates: parameter["name"] != _|_ if len(parameter["name"]) > 5
+ func (p *StringParam) LenGt(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: ">", length: n}
+ }
+ 
+ // LenGte creates a condition that checks if this string parameter has n or more characters.
+-// Example: name.LenGte(5) generates: len(parameter.name) >= 5
++// Example: name.LenGte(5) generates: parameter["name"] != _|_ if len(parameter["name"]) >= 5
+ func (p *StringParam) LenGte(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: ">=", length: n}
+ }
+ 
+ // LenLt creates a condition that checks if this string parameter has fewer than n characters.
+-// Example: name.LenLt(5) generates: len(parameter.name) < 5
++// Example: name.LenLt(5) generates: parameter["name"] != _|_ if len(parameter["name"]) < 5
+ func (p *StringParam) LenLt(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: "<", length: n}
+ }
+ 
+ // LenLte creates a condition that checks if this string parameter has n or fewer characters.
+-// Example: name.LenLte(5) generates: len(parameter.name) <= 5
++// Example: name.LenLte(5) generates: parameter["name"] != _|_ if len(parameter["name"]) <= 5
+ func (p *StringParam) LenLte(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: "<=", length: n}
+ }
+@@ -764,52 +764,70 @@ func (p *ArrayParam) GetMaxItems() *int {
+ 	return p.maxItems
+ }
+ 
++// RequiredImports returns the CUE imports needed by this parameter's constraints.
++// MinItems/MaxItems generate list.MinItems()/list.MaxItems() which require "list".
++func (p *ArrayParam) RequiredImports() []string {
++	if p.minItems != nil || p.maxItems != nil {
++		return []string{"list"}
++	}
++	return nil
++}
++
+ // --- ArrayParam Runtime Condition Methods ---
+ 
+ // LenEq creates a condition that checks if this array has exactly n elements.
+-// Example: tags.LenEq(5) generates: len(parameter.tags) == 5
++// Example: tags.LenEq(5) generates: parameter["tags"] != _|_ if len(parameter["tags"]) == 5
++//
++// LenEq(0) is treated as "absent OR empty" — equivalent to IsEmpty(). It
++// returns an AbsentOrEmptyCondition that the renderer expands into two if
++// blocks (one for absent, one for set-and-empty).
+ func (p *ArrayParam) LenEq(n int) Condition {
++	if n == 0 {
++		return &AbsentOrEmptyCondition{paramName: p.name}
++	}
+ 	return &LenCondition{paramName: p.name, op: "==", length: n}
+ }
+ 
+ // LenGt creates a condition that checks if this array has more than n elements.
+-// Example: tags.LenGt(0) generates: len(parameter.tags) > 0
++// Example: tags.LenGt(0) generates: parameter["tags"] != _|_ if len(parameter["tags"]) > 0
+ func (p *ArrayParam) LenGt(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: ">", length: n}
+ }
+ 
+ // LenGte creates a condition that checks if this array has n or more elements.
+-// Example: tags.LenGte(1) generates: len(parameter.tags) >= 1
++// Example: tags.LenGte(1) generates: parameter["tags"] != _|_ if len(parameter["tags"]) >= 1
+ func (p *ArrayParam) LenGte(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: ">=", length: n}
+ }
+ 
+ // LenLt creates a condition that checks if this array has fewer than n elements.
+-// Example: tags.LenLt(10) generates: len(parameter.tags) < 10
++// Example: tags.LenLt(10) generates: parameter["tags"] != _|_ if len(parameter["tags"]) < 10
+ func (p *ArrayParam) LenLt(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: "<", length: n}
+ }
+ 
+ // LenLte creates a condition that checks if this array has n or fewer elements.
+-// Example: tags.LenLte(10) generates: len(parameter.tags) <= 10
++// Example: tags.LenLte(10) generates: parameter["tags"] != _|_ if len(parameter["tags"]) <= 10
+ func (p *ArrayParam) LenLte(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: "<=", length: n}
+ }
+ 
+ // Contains creates a condition that checks if this array contains a specific value.
+-// Example: tags.Contains("gpu") generates: list.Contains(parameter.tags, "gpu")
++// Example: tags.Contains("gpu") generates: parameter["tags"] != _|_ if list.Contains(parameter["tags"], "gpu")
+ func (p *ArrayParam) Contains(val any) Condition {
+ 	return &ArrayContainsCondition{paramName: p.name, value: val}
+ }
+ 
+-// IsEmpty creates a condition that checks if this array is empty.
+-// Example: tags.IsEmpty() generates: len(parameter.tags) == 0
++// IsEmpty creates a condition that checks if this array is absent or empty.
++// Renders as two separate if blocks: one for `parameter["X"] == _|_` (absent)
++// and one for `parameter["X"] != _|_ if len(parameter["X"]) == 0` (set and
++// empty). Both blocks emit the same body; CUE unifies same-path writes.
+ func (p *ArrayParam) IsEmpty() Condition {
+-	return &LenCondition{paramName: p.name, op: "==", length: 0}
++	return &AbsentOrEmptyCondition{paramName: p.name}
+ }
+ 
+-// IsNotEmpty creates a condition that checks if this array is not empty.
+-// Example: tags.IsNotEmpty() generates: len(parameter.tags) > 0
++// IsNotEmpty creates a condition that checks if this array is set and non-empty.
++// Example: tags.IsNotEmpty() generates: parameter["tags"] != _|_ if len(parameter["tags"]) > 0
+ func (p *ArrayParam) IsNotEmpty() Condition {
+ 	return &LenCondition{paramName: p.name, op: ">", length: 0}
+ }
+@@ -963,25 +981,30 @@ func (p *MapParam) HasKey(key string) Condition {
+ }
+ 
+ // LenEq creates a condition that checks if this map has exactly n entries.
+-// Example: config.LenEq(5) generates: len(parameter.config) == 5
++// Example: config.LenEq(5) generates: parameter["config"] != _|_ if len(parameter["config"]) == 5
++//
++// LenEq(0) is treated as "absent OR empty" — equivalent to IsEmpty().
+ func (p *MapParam) LenEq(n int) Condition {
++	if n == 0 {
++		return &AbsentOrEmptyCondition{paramName: p.name}
++	}
+ 	return &LenCondition{paramName: p.name, op: "==", length: n}
+ }
+ 
+ // LenGt creates a condition that checks if this map has more than n entries.
+-// Example: config.LenGt(0) generates: len(parameter.config) > 0
++// Example: config.LenGt(0) generates: parameter["config"] != _|_ if len(parameter["config"]) > 0
+ func (p *MapParam) LenGt(n int) Condition {
+ 	return &LenCondition{paramName: p.name, op: ">", length: n}
+ }
+ 
+-// IsEmpty creates a condition that checks if this map is empty.
+-// Example: config.IsEmpty() generates: len(parameter.config) == 0
++// IsEmpty creates a condition that checks if this map is absent or empty.
++// Renders as two if blocks (absent + set-and-empty). See AbsentOrEmptyCondition.
+ func (p *MapParam) IsEmpty() Condition {
+-	return &LenCondition{paramName: p.name, op: "==", length: 0}
++	return &AbsentOrEmptyCondition{paramName: p.name}
+ }
+ 
+-// IsNotEmpty creates a condition that checks if this map is not empty.
+-// Example: config.IsNotEmpty() generates: len(parameter.config) > 0
++// IsNotEmpty creates a condition that checks if this map is set and non-empty.
++// Example: config.IsNotEmpty() generates: parameter["config"] != _|_ if len(parameter["config"]) > 0
+ func (p *MapParam) IsNotEmpty() Condition {
+ 	return &LenCondition{paramName: p.name, op: ">", length: 0}
+ }
+@@ -1493,6 +1516,49 @@ func (p *StringKeyMapParam) Description(desc string) *StringKeyMapParam {
+ // GetType returns the parameter type.
+ func (p *StringKeyMapParam) GetType() ParamType { return p.paramType }
+ 
++// --- StringKeyMapParam Runtime Condition Methods ---
++//
++// These mirror MapParam's runtime conditions. StringKeyMap and Map.Of(ParamTypeString)
++// generate the same CUE schema ([string]: string), so they should expose the same
++// runtime predicates. Without these, callers writing validators or SetIf guards
++// against a StringKeyMap have to fall back to Map.Of(ParamTypeString) just to
++// recover HasKey / IsNotEmpty.
++
++// HasKey creates a condition that checks if this map has a specific key.
++// Example: labels.HasKey("app") generates: parameter.labels.app != _|_
++func (p *StringKeyMapParam) HasKey(key string) Condition {
++	return &MapHasKeyCondition{paramName: p.name, key: key}
++}
++
++// LenEq creates a condition that checks if this map has exactly n entries.
++// Example: labels.LenEq(3) generates: parameter["labels"] != _|_ if len(parameter["labels"]) == 3
++//
++// LenEq(0) is treated as "absent OR empty" — equivalent to IsEmpty().
++func (p *StringKeyMapParam) LenEq(n int) Condition {
++	if n == 0 {
++		return &AbsentOrEmptyCondition{paramName: p.name}
++	}
++	return &LenCondition{paramName: p.name, op: "==", length: n}
++}
++
++// LenGt creates a condition that checks if this map has more than n entries.
++// Example: labels.LenGt(0) generates: parameter["labels"] != _|_ if len(parameter["labels"]) > 0
++func (p *StringKeyMapParam) LenGt(n int) Condition {
++	return &LenCondition{paramName: p.name, op: ">", length: n}
++}
++
++// IsEmpty creates a condition that checks if this map is absent or empty.
++// Renders as two if blocks (absent + set-and-empty). See AbsentOrEmptyCondition.
++func (p *StringKeyMapParam) IsEmpty() Condition {
++	return &AbsentOrEmptyCondition{paramName: p.name}
++}
++
++// IsNotEmpty creates a condition that checks if this map is set and non-empty.
++// Example: labels.IsNotEmpty() generates: parameter["labels"] != _|_ if len(parameter["labels"]) > 0
++func (p *StringKeyMapParam) IsNotEmpty() Condition {
++	return &LenCondition{paramName: p.name, op: ">", length: 0}
++}
++
+ // DynamicMapParam represents a parameter where the parameter itself is a dynamic map.
+ // In CUE: parameter: [string]: T (where T is the value type)
+ // This is used for traits like labels where all user values become map keys.

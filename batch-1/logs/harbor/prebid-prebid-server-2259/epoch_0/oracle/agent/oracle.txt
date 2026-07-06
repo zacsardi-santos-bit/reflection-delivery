@@ -1,0 +1,16 @@
+patching file adapters/stroeerCore/params_test.go
+patching file adapters/stroeerCore/stroeercore.go
+patching file adapters/stroeerCore/stroeercore_test.go
+patching file adapters/stroeerCore/stroeercoretest/exemplary/mobile-banner-single.json
+patching file adapters/stroeerCore/stroeercoretest/exemplary/site-banner-multi.json
+patching file adapters/stroeerCore/stroeercoretest/exemplary/site-banner-single.json
+patching file adapters/stroeerCore/stroeercoretest/supplemental/bad-server-response.json
+patching file config/config.go
+patching file endpoints/cookie_sync.go
+patching file endpoints/setuid.go
+patching file exchange/adapter_builders.go
+patching file openrtb_ext/bidders.go
+patching file openrtb_ext/imp_stroeercore.go
+patching file router/router.go
+patching file static/bidder-info/stroeerCore.yaml
+patching file static/bidder-params/stroeerCore.json

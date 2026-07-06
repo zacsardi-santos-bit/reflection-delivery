@@ -1,0 +1,366 @@
+diff --git a/crates/node-bindings/src/transformer.rs b/crates/node-bindings/src/transformer.rs
+index 19fbcb605..36d1a0fc0 100644
+--- a/crates/node-bindings/src/transformer.rs
++++ b/crates/node-bindings/src/transformer.rs
+@@ -18,12 +18,12 @@ mod native_only {
+     threadsafe_function::{ThreadSafeCallContext, ThreadsafeFunctionCallMode},
+     JsBoolean, JsFunction, JsNumber, JsString, ValueType,
+   };
+-  use parcel_js_swc_core::{JsValue, SourceLocation};
++  use parcel_js_swc_core::{JsValue, MacroError, SourceLocation};
+   use std::sync::Arc;
+ 
+   // Allocate a single channel per thread to communicate with the JS thread.
+   thread_local! {
+-    static CHANNEL: (Sender<Result<JsValue, String>>, Receiver<Result<JsValue, String>>) = crossbeam_channel::unbounded();
++    static CHANNEL: (Sender<Result<JsValue, MacroError>>, Receiver<Result<JsValue, MacroError>>) = crossbeam_channel::unbounded();
+   }
+ 
+   struct CallMacroMessage {
+@@ -33,6 +33,12 @@ mod native_only {
+     loc: SourceLocation,
+   }
+ 
++  #[napi(object)]
++  struct JsMacroError {
++    pub kind: u32,
++    pub message: String,
++  }
++
+   #[napi]
+   pub fn transform_async(opts: JsObject, env: Env) -> napi::Result<JsObject> {
+     let call_macro_tsfn = if opts.has_named_property("callMacro")? {
+@@ -203,7 +209,7 @@ mod native_only {
+   fn await_promise(
+     env: Env,
+     result: JsUnknown,
+-    tx: Sender<Result<JsValue, String>>,
++    tx: Sender<Result<JsValue, MacroError>>,
+   ) -> napi::Result<()> {
+     // If the result is a promise, wait for it to resolve, and send the result to the channel.
+     // Otherwise, send the result immediately.
+@@ -217,12 +223,13 @@ mod native_only {
+         ctx.env.get_undefined()
+       })?;
+       let eb = env.create_function_from_closure("error_callback", move |ctx| {
+-        let res = ctx.get::<JsUnknown>(0)?;
+-        let message = match napi_to_js_value(res, env)? {
+-          JsValue::String(s) => s,
+-          _ => "Unknown error".into(),
++        let res = ctx.get::<JsMacroError>(0)?;
++        let err = match res.kind {
++          1 => MacroError::LoadError(res.message),
++          2 => MacroError::ExecutionError(res.message),
++          _ => MacroError::LoadError("Invalid error kind".into()),
+         };
+-        tx2.send(Err(message)).expect("send failure");
++        tx2.send(Err(err)).expect("send failure");
+         ctx.env.get_undefined()
+       })?;
+       then.call(Some(&result), &[cb, eb])?;
+diff --git a/packages/core/core/src/Transformation.js b/packages/core/core/src/Transformation.js
+index b27edded4..ca25f703d 100644
+--- a/packages/core/core/src/Transformation.js
++++ b/packages/core/core/src/Transformation.js
+@@ -264,24 +264,24 @@ export default class Transformation {
+     initialAsset: UncommittedAsset,
+   ): Promise<Array<UncommittedAsset>> {
+     let initialType = initialAsset.value.type;
+-    let assets: Array<UncommittedAsset> = await this.runPipeline(
+-      pipeline,
+-      initialAsset,
+-    );
+-
+-    // Add dev dep requests for each transformer
+-    for (let transformer of pipeline.transformers) {
+-      await this.addDevDependency({
+-        specifier: transformer.name,
+-        resolveFrom: transformer.resolveFrom,
+-        range: transformer.range,
+-      });
+-    }
++    let assets: Array<UncommittedAsset>;
++    try {
++      assets = await this.runPipeline(pipeline, initialAsset);
++    } finally {
++      // Add dev dep requests for each transformer
++      for (let transformer of pipeline.transformers) {
++        await this.addDevDependency({
++          specifier: transformer.name,
++          resolveFrom: transformer.resolveFrom,
++          range: transformer.range,
++        });
++      }
+ 
+-    // Add dev dep requests for dependencies of transformer plugins
+-    // (via proxied packageManager.require calls).
+-    for (let devDep of this.pluginDevDeps) {
+-      await this.addDevDependency(devDep);
++      // Add dev dep requests for dependencies of transformer plugins
++      // (via proxied packageManager.require calls).
++      for (let devDep of this.pluginDevDeps) {
++        await this.addDevDependency(devDep);
++      }
+     }
+ 
+     let finalAssets: Array<UncommittedAsset> = [];
+@@ -324,13 +324,17 @@ export default class Transformation {
+     }
+ 
+     // Ensure that the package manager has an entry for this resolution.
+-    await this.options.packageManager.resolve(
+-      specifier,
+-      fromProjectPath(this.options.projectRoot, opts.resolveFrom),
+-      {
+-        range,
+-      },
+-    );
++    try {
++      await this.options.packageManager.resolve(
++        specifier,
++        fromProjectPath(this.options.projectRoot, opts.resolveFrom),
++        {
++          range,
++        },
++      );
++    } catch (err) {
++      // ignore
++    }
+ 
+     let devDepRequest = await createDevDependency(
+       opts,
+diff --git a/packages/core/core/src/requests/DevDepRequest.js b/packages/core/core/src/requests/DevDepRequest.js
+index 8eb511240..eb1d93d5a 100644
+--- a/packages/core/core/src/requests/DevDepRequest.js
++++ b/packages/core/core/src/requests/DevDepRequest.js
+@@ -49,7 +49,12 @@ export async function createDevDependency(
+   let resolveFromAbsolute = fromProjectPath(options.projectRoot, resolveFrom);
+ 
+   // Ensure that the package manager has an entry for this resolution.
+-  await options.packageManager.resolve(specifier, resolveFromAbsolute);
++  try {
++    await options.packageManager.resolve(specifier, resolveFromAbsolute);
++  } catch (err) {
++    // ignore
++  }
++
+   let invalidations = options.packageManager.getInvalidations(
+     specifier,
+     resolveFromAbsolute,
+diff --git a/packages/transformers/js/core/src/lib.rs b/packages/transformers/js/core/src/lib.rs
+index 9ab67c217..cbaad4150 100644
+--- a/packages/transformers/js/core/src/lib.rs
++++ b/packages/transformers/js/core/src/lib.rs
+@@ -53,8 +53,8 @@ use node_replacer::NodeReplacer;
+ use typeof_replacer::*;
+ use utils::{error_buffer_to_diagnostics, Diagnostic, DiagnosticSeverity, ErrorBuffer, SourceType};
+ 
+-pub use crate::macros::JsValue;
+ use crate::macros::Macros;
++pub use crate::macros::{JsValue, MacroError};
+ pub use utils::SourceLocation;
+ 
+ type SourceMapBuffer = Vec<(swc_core::common::BytePos, swc_core::common::LineCol)>;
+diff --git a/packages/transformers/js/core/src/macros.rs b/packages/transformers/js/core/src/macros.rs
+index 87e3fa561..d374a1319 100644
+--- a/packages/transformers/js/core/src/macros.rs
++++ b/packages/transformers/js/core/src/macros.rs
+@@ -16,8 +16,15 @@ use crate::utils::{
+   ErrorBuffer, SourceLocation,
+ };
+ 
++pub enum MacroError {
++  /// An error occurred loading a macro (e.g. resolution or syntax error).
++  LoadError(String),
++  /// An error was thrown when executing a macro.
++  ExecutionError(String),
++}
++
+ pub type MacroCallback = Arc<
+-  dyn Fn(String, String, Vec<JsValue>, SourceLocation) -> Result<JsValue, String> + Send + Sync,
++  dyn Fn(String, String, Vec<JsValue>, SourceLocation) -> Result<JsValue, MacroError> + Send + Sync,
+ >;
+ 
+ pub struct Macros<'a> {
+@@ -27,6 +34,7 @@ pub struct Macros<'a> {
+   callback: MacroCallback,
+   source_map: &'a SourceMap,
+   diagnostics: &'a mut Vec<Diagnostic>,
++  load_errors: HashSet<String>,
+   assignment_span: Option<Span>,
+   in_call: bool,
+ }
+@@ -36,6 +44,8 @@ struct MacroImport {
+   src: JsWord,
+   /// The imported identifier. None if this is a namespace import.
+   imported: Option<JsWord>,
++  /// The location of the import specifier.
++  span: Span,
+ }
+ 
+ impl<'a> Macros<'a> {
+@@ -47,6 +57,7 @@ impl<'a> Macros<'a> {
+     Macros {
+       macros: HashMap::new(),
+       constants: HashMap::new(),
++      load_errors: HashSet::new(),
+       callback,
+       source_map,
+       diagnostics,
+@@ -68,6 +79,7 @@ impl<'a> Macros<'a> {
+             MacroImport {
+               src: import.src.value.clone(),
+               imported: Some(imported),
++              span: import.span,
+             },
+           );
+         }
+@@ -77,6 +89,7 @@ impl<'a> Macros<'a> {
+             MacroImport {
+               src: import.src.value.clone(),
+               imported: Some(js_word!("default")),
++              span: import.span,
+             },
+           );
+         }
+@@ -86,6 +99,7 @@ impl<'a> Macros<'a> {
+             MacroImport {
+               src: import.src.value.clone(),
+               imported: None,
++              span: import.span,
+             },
+           );
+         }
+@@ -93,7 +107,18 @@ impl<'a> Macros<'a> {
+     }
+   }
+ 
+-  fn call_macro(&self, src: String, export: String, call: CallExpr) -> Result<Expr, Diagnostic> {
++  fn call_macro(
++    &mut self,
++    src: String,
++    export: String,
++    call: CallExpr,
++    import_span: Span,
++  ) -> Result<Expr, Diagnostic> {
++    // If a macro already errorered during loading, don't try callinbg it again.
++    if self.load_errors.contains(&src) {
++      return Ok(Expr::Lit(Lit::Null(Null::dummy())));
++    }
++
+     // Try to statically evaluate all of the function arguments.
+     let mut args = Vec::with_capacity(call.args.len());
+     for arg in &call.args {
+@@ -115,16 +140,32 @@ impl<'a> Macros<'a> {
+ 
+     // If that was successful, call the function callback (on the JS thread).
+     let loc = SourceLocation::from(self.source_map, call.span);
+-    match (self.callback)(src, export, args, loc.clone()) {
++    match (self.callback)(src.clone(), export, args, loc.clone()) {
+       Ok(val) => Ok(self.value_to_expr(val)?),
+-      Err(err) => Err(Diagnostic {
+-        message: format!("Error evaluating macro: {}", err),
+-        code_highlights: Some(vec![CodeHighlight { message: None, loc }]),
+-        hints: None,
+-        show_environment: false,
+-        severity: crate::utils::DiagnosticSeverity::Error,
+-        documentation_url: None,
+-      }),
++      Err(err) => match err {
++        MacroError::LoadError(err) => {
++          self.load_errors.insert(src);
++          Err(Diagnostic {
++            message: format!("Error loading macro: {}", err),
++            code_highlights: Some(vec![CodeHighlight {
++              message: None,
++              loc: SourceLocation::from(self.source_map, import_span),
++            }]),
++            hints: None,
++            show_environment: false,
++            severity: crate::utils::DiagnosticSeverity::Error,
++            documentation_url: None,
++          })
++        }
++        MacroError::ExecutionError(err) => Err(Diagnostic {
++          message: format!("Error evaluating macro: {}", err),
++          code_highlights: Some(vec![CodeHighlight { message: None, loc }]),
++          hints: None,
++          show_environment: false,
++          severity: crate::utils::DiagnosticSeverity::Error,
++          documentation_url: None,
++        }),
++      },
+     }
+   }
+ 
+@@ -174,11 +215,12 @@ impl<'a> Fold for Macros<'a> {
+           Expr::Ident(ident) => {
+             if let Some(specifier) = self.macros.get(&ident.to_id()) {
+               if let Some(imported) = &specifier.imported {
+-                let specifier = specifier.src.to_string();
++                let src = specifier.src.to_string();
+                 let imported = imported.to_string();
++                let span = specifier.span;
+                 let call = call.fold_with(self);
+                 return handle_error(
+-                  self.call_macro(specifier, imported, call),
++                  self.call_macro(src, imported, call, span),
+                   &mut self.diagnostics,
+                 );
+               }
+@@ -193,11 +235,12 @@ impl<'a> Fold for Macros<'a> {
+               ) {
+                 // Check that this is a namespace import.
+                 if specifier.imported.is_none() {
+-                  let specifier = specifier.src.to_string();
++                  let src = specifier.src.to_string();
+                   let imported = prop.0.to_string();
++                  let span = specifier.span;
+                   let call = call.fold_with(self);
+                   return handle_error(
+-                    self.call_macro(specifier, imported, call),
++                    self.call_macro(src, imported, call, span),
+                     &mut self.diagnostics,
+                   );
+                 }
+diff --git a/packages/transformers/js/src/JSTransformer.js b/packages/transformers/js/src/JSTransformer.js
+index df9438377..edc88bd52 100644
+--- a/packages/transformers/js/src/JSTransformer.js
++++ b/packages/transformers/js/src/JSTransformer.js
+@@ -474,15 +474,20 @@ export default (new Transformer({
+       inline_constants: config.inlineConstants,
+       callMacro: asset.isSource
+         ? async (err, src, exportName, args, loc) => {
++            let mod;
+             try {
+-              let mod = await options.packageManager.require(
+-                src,
+-                asset.filePath,
+-              );
++              mod = await options.packageManager.require(src, asset.filePath);
+               if (!Object.hasOwnProperty.call(mod, exportName)) {
+                 throw new Error(`"${src}" does not export "${exportName}".`);
+               }
++            } catch (err) {
++              throw {
++                kind: 1,
++                message: err.message,
++              };
++            }
+ 
++            try {
+               if (typeof mod[exportName] === 'function') {
+                 let ctx: MacroContext = {
+                   // Allows macros to emit additional assets to add as dependencies (e.g. css).
+@@ -564,7 +569,10 @@ export default (new Transformer({
+                 }
+                 message += '\n' + line;
+               }
+-              throw message;
++              throw {
++                kind: 2,
++                message,
++              };
+             }
+           }
+         : null,

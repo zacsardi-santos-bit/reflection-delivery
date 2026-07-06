@@ -1,0 +1,29 @@
+{
+    "id": "e5bff396-ae86-444f-a57a-9455b84bda75",
+    "started_at": "2026-07-06T12:16:58.644848",
+    "finished_at": "2026-07-06T12:17:35.746250",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__promptfoo-promptfoo-9105": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "promptfoo-promptfoo-9105__7YZRHnx"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

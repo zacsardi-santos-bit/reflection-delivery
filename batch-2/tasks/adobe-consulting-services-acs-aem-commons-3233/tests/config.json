@@ -1,0 +1,17 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl bundle test -Dtest=DialogProviderAnnotationProcessorTest",
+  "test_files": [
+    "bundle/src/test/java/com/adobe/acs/commons/mcp/form/DialogProviderAnnotationProcessorTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "ACS::test_1",
+    "ACS::test_2",
+    "ACS::test_3",
+    "ACS::test_4",
+    "ACS::test_5"
+  ],
+  "PASS_TO_PASS": []
+}

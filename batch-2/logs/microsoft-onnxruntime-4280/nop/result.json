@@ -1,0 +1,29 @@
+{
+    "id": "852dafa8-bd9c-417b-be2e-f203e468b316",
+    "started_at": "2026-07-04T15:36:58.474544",
+    "finished_at": "2026-07-04T15:37:11.813651",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-onnxruntime-4280": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-onnxruntime-4280__us2hVx6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && maturin develop -m py-polars/runtime/polars-runtime-32/Cargo.toml && cd py-polars && pytest --import-mode=importlib -o \"addopts=\" -o \"xfail_strict=false\" tests/unit/io/test_iceberg.py tests/unit/io/test_lazy_parquet.py -v -k \"test_iceberg_sink_parquet_arrow_schema_roundtrip_all_iceberg_types or test_fill_missing_fields_with_identity_partition_values or test_sink_parquet_arrow_schema_fixed_size_binary\"",
+  "test_files": [
+    "py-polars/tests/unit/io/test_iceberg.py",
+    "py-polars/tests/unit/io/test_lazy_parquet.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.io.test_iceberg::test_iceberg_sink_parquet_arrow_schema_roundtrip_all_iceberg_types",
+    "tests.unit.io.test_lazy_parquet::test_sink_parquet_arrow_schema_fixed_size_binary"
+  ],
+  "PASS_TO_PASS": [
+    "tests.unit.io.test_iceberg::test_fill_missing_fields_with_identity_partition_values[True]",
+    "tests.unit.io.test_iceberg::test_fill_missing_fields_with_identity_partition_values[False]",
+    "tests.unit.io.test_iceberg::test_fill_missing_fields_with_identity_partition_values_nested"
+  ]
+}

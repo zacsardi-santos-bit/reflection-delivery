@@ -1,0 +1,41 @@
+patching file packages/vite/src/node/__tests__/plugins/index.spec.ts
+patching file packages/vite/src/node/__tests__/plugins/pluginFilter.spec.ts
+
+> vite@6.2.2 build-bundle /workspace/repo/packages/vite
+> rollup --config rollup.config.ts --configPlugin esbuild
+
+[36m
+[1m/workspace/repo/packages/vite/src/client/env.ts[22m → [1mdist/client/env.mjs[22m...[39m
+[32mcreated [1mdist/client/env.mjs[22m in [1m14ms[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/client/client.ts[22m → [1mdist/client/client.mjs[22m...[39m
+[32mcreated [1mdist/client/client.mjs[22m in [1m65ms[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/node/index.ts, /workspace/repo/packages/vite/src/node/cli.ts, /workspace/repo/packages/vite/src/node/constants.ts[22m → [1m./dist[22m...[39m
+shimmed: postcss-import/index.js
+shimmed: fsevents-handler.js
+shimmed: postcss-import/lib/parse-styles.js
+shimmed: postcss-load-config/src/req.js
+shimmed: process-content.js
+shimmed: lilconfig/src/index.js
+patched cjs context: node/chunks/dep-!~{001}~.js
+patched cjs context: node/chunks/dep-!~{003}~.js
+[32mcreated [1m./dist[22m in [1m4.5s[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/module-runner/index.ts[22m → [1m./dist[22m...[39m
+[32mcreated [1m./dist[22m in [1m117ms[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/node/publicUtils.ts[22m → [1m./dist[22m...[39m
+[32mcreated [1m./dist[22m in [1m323ms[22m[39m
+
+ RUN  v3.0.8 /workspace/repo/packages/vite
+
+ ✓ src/node/__tests__/plugins/pluginFilter.spec.ts (30 tests) 8ms
+ ✓ src/node/__tests__/plugins/index.spec.ts (6 tests) 37ms
+
+ Test Files  2 passed (2)
+      Tests  36 passed (36)
+   Start at  15:23:19
+   Duration  1.68s (transform 764ms, setup 0ms, collect 1.45s, tests 46ms, environment 0ms, prepare 227ms)
+
+reward=1 graded=36 found=0 failed=0 parsed=0 framework=vitest exit_code=0

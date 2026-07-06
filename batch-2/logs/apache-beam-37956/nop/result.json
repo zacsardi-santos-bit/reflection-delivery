@@ -1,0 +1,29 @@
+{
+    "id": "162e8ac4-dc3c-48f7-ad94-0ca2c1257b71",
+    "started_at": "2026-07-06T12:17:06.949040",
+    "finished_at": "2026-07-06T12:17:49.082386",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-beam-37956": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-beam-37956__hSNjrBR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

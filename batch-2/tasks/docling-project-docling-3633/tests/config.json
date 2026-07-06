@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_heading_hierarchy.py -v",
+  "test_files": [
+    "tests/test_heading_hierarchy.py",
+    "tests/test_heading_hierarchy_pdf.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_heading_hierarchy::test_roman_sections_outrank_arabic_subsections",
+    "tests.test_heading_hierarchy::test_legal_numbering_stack",
+    "tests.test_heading_hierarchy::test_levels_are_relative_to_schemes_present",
+    "tests.test_heading_hierarchy::test_dotted_decimal_depth",
+    "tests.test_heading_hierarchy::test_unnumbered_headings_have_no_numbering_level",
+    "tests.test_heading_hierarchy::test_ambiguous_single_letter_resolves_roman_in_roman_context",
+    "tests.test_heading_hierarchy::test_ambiguous_single_letter_resolves_alpha_in_alpha_context",
+    "tests.test_heading_hierarchy::test_keyword_part_and_article",
+    "tests.test_heading_hierarchy::test_non_marker_text_is_ignored",
+    "tests.test_heading_hierarchy::test_custom_numbering_scheme_order",
+    "tests.test_heading_hierarchy::test_max_level_clamping_on_document",
+    "tests.test_heading_hierarchy::test_assign_updates_document_levels_and_markdown",
+    "tests.test_heading_hierarchy::test_style_fallback_assigns_levels_by_font_size"
+  ],
+  "PASS_TO_PASS": []
+}

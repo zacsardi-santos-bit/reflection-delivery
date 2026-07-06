@@ -1,0 +1,18 @@
+patching file cicd/internal/flags/common-flags_test.go
+{"Time":"2026-06-29T15:29:05.484316476Z","Action":"start","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags"}
+{"Time":"2026-06-29T15:29:05.496777903Z","Action":"run","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild"}
+{"Time":"2026-06-29T15:29:05.496889266Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Output":"=== RUN   TestModulesToBuild\n"}
+{"Time":"2026-06-29T15:29:05.497548436Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Output":"    common-flags_test.go:58: Returned modules are not equal. Expected [v2/kafka-common/ v2/kafka-to-bigquery/ v2/kafka-to-gcs/ v2/kafka-to-kafka/ v2/kafka-to-pubsub/ plugins/templates-maven-plugin]. Got [KAFKA].\n"}
+{"Time":"2026-06-29T15:29:05.497648839Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Output":"--- FAIL: TestModulesToBuild (0.00s)\n"}
+{"Time":"2026-06-29T15:29:05.497695461Z","Action":"fail","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Elapsed":0}
+{"Time":"2026-06-29T15:29:05.497716181Z","Action":"run","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules"}
+{"Time":"2026-06-29T15:29:05.497737102Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules","Output":"=== RUN   TestDefaultExcludedSubModules\n"}
+{"Time":"2026-06-29T15:29:05.49800871Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules","Output":"--- PASS: TestDefaultExcludedSubModules (0.00s)\n"}
+{"Time":"2026-06-29T15:29:05.498062692Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules","Elapsed":0}
+{"Time":"2026-06-29T15:29:05.498075552Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:29:05.498496155Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Output":"FAIL\tgithub.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags\t0.014s\n"}
+{"Time":"2026-06-29T15:29:05.498543986Z","Action":"fail","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Elapsed":0.014}
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

@@ -1,0 +1,565 @@
+patching file package-lock.json
+patching file package.json
+patching file src/cli/actions/remoteAction.ts
+patching file src/config/configLoad.ts
+patching file src/core/file/fileCollect.ts
+patching file src/core/file/fileProcess.ts
+patching file src/core/file/workers/fileCollectWorker.ts
+patching file src/core/file/workers/fileProcessWorker.ts
+patching file src/core/metrics/aggregateMetrics.ts
+patching file src/core/metrics/calculateAllFileMetrics.ts
+patching file src/core/metrics/calculateIndividualFileMetrics.ts
+patching file src/core/metrics/calculateMetrics.ts
+patching file src/core/metrics/calculateOutputMetrics.ts
+patching file src/core/metrics/workers/fileMetricsWorker.ts
+patching file src/core/metrics/workers/outputMetricsWorker.ts
+patching file src/core/metrics/workers/types.ts
+patching file src/core/packager.ts
+patching file src/core/security/runSecurityCheckIfEnabled.ts
+patching file src/core/security/securityCheck.ts
+patching file src/core/security/validateFileSafety.ts
+patching file src/core/security/workers/securityCheckWorker.ts
+patching file src/shared/processConcurrency.ts
+patching file website/compose.yml
+patching file website/server/src/utils/cache.ts
+patching file package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file package-lock.json.rej
+patching file package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file package.json.rej
+patching file src/cli/actions/remoteAction.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/cli/actions/remoteAction.ts.rej
+patching file src/config/configLoad.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/config/configLoad.ts.rej
+patching file src/core/file/fileCollect.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/file/fileCollect.ts.rej
+patching file src/core/file/fileProcess.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/file/fileProcess.ts.rej
+The next patch would create the file src/core/file/workers/fileCollectWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/file/workers/fileProcessWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file src/core/metrics/aggregateMetrics.ts,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/metrics/calculateAllFileMetrics.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/metrics/calculateAllFileMetrics.ts.rej
+The next patch would delete the file src/core/metrics/calculateIndividualFileMetrics.ts,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/metrics/calculateMetrics.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/metrics/calculateMetrics.ts.rej
+The next patch would create the file src/core/metrics/calculateOutputMetrics.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/fileMetricsWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/outputMetricsWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/types.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/packager.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/packager.ts.rej
+The next patch would delete the file src/core/security/runSecurityCheckIfEnabled.ts,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/security/securityCheck.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/security/securityCheck.ts.rej
+patching file src/core/security/validateFileSafety.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/security/validateFileSafety.ts.rej
+The next patch would create the file src/core/security/workers/securityCheckWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/shared/processConcurrency.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/shared/processConcurrency.ts.rej
+patching file website/compose.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file website/compose.yml.rej
+patching file website/server/src/utils/cache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file website/server/src/utils/cache.ts.rej
+patching file package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file package-lock.json.rej
+patching file package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file package.json.rej
+patching file src/cli/actions/remoteAction.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/cli/actions/remoteAction.ts.rej
+patching file src/config/configLoad.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/config/configLoad.ts.rej
+patching file src/core/file/fileCollect.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/file/fileCollect.ts.rej
+patching file src/core/file/fileProcess.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/file/fileProcess.ts.rej
+The next patch would create the file src/core/file/workers/fileCollectWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/file/workers/fileProcessWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/metrics/aggregateMetrics.ts
+patching file src/core/metrics/calculateAllFileMetrics.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/metrics/calculateAllFileMetrics.ts.rej
+patching file src/core/metrics/calculateIndividualFileMetrics.ts
+patching file src/core/metrics/calculateMetrics.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/metrics/calculateMetrics.ts.rej
+The next patch would create the file src/core/metrics/calculateOutputMetrics.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/fileMetricsWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/outputMetricsWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/types.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/packager.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/packager.ts.rej
+patching file src/core/security/runSecurityCheckIfEnabled.ts
+patching file src/core/security/securityCheck.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/security/securityCheck.ts.rej
+patching file src/core/security/validateFileSafety.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/security/validateFileSafety.ts.rej
+The next patch would create the file src/core/security/workers/securityCheckWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/shared/processConcurrency.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/shared/processConcurrency.ts.rej
+patching file website/compose.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file website/compose.yml.rej
+patching file website/server/src/utils/cache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file website/server/src/utils/cache.ts.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/package-lock.json b/package-lock.json
+|index 2dc7b5fc..18a92768 100644
+|--- a/package-lock.json
+|+++ b/package-lock.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 328
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/package.json b/package.json
+|index 1c66a468..0abf7f28 100644
+|--- a/package.json
+|+++ b/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 340
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/cli/actions/remoteAction.ts b/src/cli/actions/remoteAction.ts
+|index e3ab05ed..27cb6ab6 100644
+|--- a/src/cli/actions/remoteAction.ts
+|+++ b/src/cli/actions/remoteAction.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 361
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/config/configLoad.ts b/src/config/configLoad.ts
+|index 48efb888..25d78ccb 100644
+|--- a/src/config/configLoad.ts
+|+++ b/src/config/configLoad.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 373
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/file/fileCollect.ts b/src/core/file/fileCollect.ts
+|index 4e14731d..17c4662d 100644
+|--- a/src/core/file/fileCollect.ts
+|+++ b/src/core/file/fileCollect.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 496
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/file/fileProcess.ts b/src/core/file/fileProcess.ts
+|index 6d5bf40d..18bea4d1 100644
+|--- a/src/core/file/fileProcess.ts
+|+++ b/src/core/file/fileProcess.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/src/core/file/workers/fileCollectWorker.ts
+patching file b/src/core/file/workers/fileProcessWorker.ts
+The next patch would delete the file a/src/core/metrics/aggregateMetrics.ts,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 776
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/metrics/calculateAllFileMetrics.ts b/src/core/metrics/calculateAllFileMetrics.ts
+|index b8c77774..7c301a25 100644
+|--- a/src/core/metrics/calculateAllFileMetrics.ts
+|+++ b/src/core/metrics/calculateAllFileMetrics.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/src/core/metrics/calculateIndividualFileMetrics.ts,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 885
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/metrics/calculateMetrics.ts b/src/core/metrics/calculateMetrics.ts
+|index aae8b9f9..29b8a622 100644
+|--- a/src/core/metrics/calculateMetrics.ts
+|+++ b/src/core/metrics/calculateMetrics.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/src/core/metrics/calculateOutputMetrics.ts
+patching file b/src/core/metrics/workers/fileMetricsWorker.ts
+patching file b/src/core/metrics/workers/outputMetricsWorker.ts
+patching file b/src/core/metrics/workers/types.ts
+can't find file to patch at input line 1100
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/packager.ts b/src/core/packager.ts
+|index 3c031ada..ce929b8d 100644
+|--- a/src/core/packager.ts
+|+++ b/src/core/packager.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/src/core/security/runSecurityCheckIfEnabled.ts,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1138
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/security/securityCheck.ts b/src/core/security/securityCheck.ts
+|index bdd48cae..81242ca8 100644
+|--- a/src/core/security/securityCheck.ts
+|+++ b/src/core/security/securityCheck.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1275
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/security/validateFileSafety.ts b/src/core/security/validateFileSafety.ts
+|index 8c0a345b..ec678134 100644
+|--- a/src/core/security/validateFileSafety.ts
+|+++ b/src/core/security/validateFileSafety.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/src/core/security/workers/securityCheckWorker.ts
+can't find file to patch at input line 1377
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/shared/processConcurrency.ts b/src/shared/processConcurrency.ts
+|index f6f29a43..cfed87cb 100644
+|--- a/src/shared/processConcurrency.ts
+|+++ b/src/shared/processConcurrency.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1422
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/website/compose.yml b/website/compose.yml
+|index 95f7ab09..f838e2ef 100644
+|--- a/website/compose.yml
+|+++ b/website/compose.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1433
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/website/server/src/utils/cache.ts b/website/server/src/utils/cache.ts
+|index d9362227..289ec7f5 100644
+|--- a/website/server/src/utils/cache.ts
+|+++ b/website/server/src/utils/cache.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file package-lock.json.rej
+patching file package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file package.json.rej
+patching file src/cli/actions/remoteAction.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/cli/actions/remoteAction.ts.rej
+patching file src/config/configLoad.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/config/configLoad.ts.rej
+patching file src/core/file/fileCollect.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/file/fileCollect.ts.rej
+patching file src/core/file/fileProcess.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/file/fileProcess.ts.rej
+The next patch would create the file src/core/file/workers/fileCollectWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/file/workers/fileProcessWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/metrics/aggregateMetrics.ts
+patching file src/core/metrics/calculateAllFileMetrics.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/metrics/calculateAllFileMetrics.ts.rej
+patching file src/core/metrics/calculateIndividualFileMetrics.ts
+patching file src/core/metrics/calculateMetrics.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/metrics/calculateMetrics.ts.rej
+The next patch would create the file src/core/metrics/calculateOutputMetrics.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/fileMetricsWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/outputMetricsWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file src/core/metrics/workers/types.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/core/packager.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/packager.ts.rej
+patching file src/core/security/runSecurityCheckIfEnabled.ts
+patching file src/core/security/securityCheck.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/security/securityCheck.ts.rej
+patching file src/core/security/validateFileSafety.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/security/validateFileSafety.ts.rej
+The next patch would create the file src/core/security/workers/securityCheckWorker.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/shared/processConcurrency.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/shared/processConcurrency.ts.rej
+patching file website/compose.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file website/compose.yml.rej
+patching file website/server/src/utils/cache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file website/server/src/utils/cache.ts.rej
+ERROR: golden patch failed to apply by all strategies

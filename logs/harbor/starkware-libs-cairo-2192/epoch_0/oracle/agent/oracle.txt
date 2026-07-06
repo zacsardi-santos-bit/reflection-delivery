@@ -1,7 +1,0 @@
-patching file corelib/array.cairo
-patching file corelib/test.cairo
-patching file crates/cairo-lang-sierra-to-casm/src/invocations/array.rs
-patching file crates/cairo-lang-sierra/src/extensions/modules/array.rs
-patching file crates/cairo-lang-sierra/src/simulation/core.rs
-patching file crates/cairo-lang-sierra/src/simulation/test.rs
-patching file examples/fib_array.cairo

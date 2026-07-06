@@ -1,0 +1,29 @@
+{
+    "id": "2f12c4d6-8e5f-4260-8072-e4c387a1f1a7",
+    "started_at": "2026-07-06T12:17:04.716041",
+    "finished_at": "2026-07-06T12:17:48.085013",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__conan-io-conan-3171": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "conan-io-conan-3171__fJK94yJ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,2161 @@
+diff --git a/src/mlir/ast-utils.h b/src/mlir/ast-utils.h
+index d761d72..5496343 100644
+--- a/src/mlir/ast-utils.h
++++ b/src/mlir/ast-utils.h
+@@ -55,7 +55,6 @@ namespace mlir::verona
+       None = 0,
+       Module = peg::str2tag("module"), // = 73005690
+       ClassDef = peg::str2tag("classdef"), // = 983016457
+-      Field = peg::str2tag("field"), // = 122469826
+       Function = peg::str2tag("function"), // = 89836898
+       FuncName = peg::str2tag("funcname"), // = 90200697
+       Sig = peg::str2tag("sig"), // = 124317
+@@ -197,12 +196,6 @@ namespace mlir::verona
+       return isA(ast, NodeKind::TypeOne);
+     }
+ 
+-    /// Return true if node is a field
+-    static bool isField(::ast::WeakAst ast)
+-    {
+-      return isA(ast, NodeKind::Field);
+-    }
+-
+     /// Return true if node is a function
+     static bool isFunction(::ast::WeakAst ast)
+     {
+@@ -326,7 +319,7 @@ namespace mlir::verona
+ 
+     // ================================================= Value Helpers
+     /// Get the string value of a token
+-    static llvm::StringRef getTokenValue(::ast::WeakAst ast)
++    static const std::string& getTokenValue(::ast::WeakAst ast)
+     {
+       assert(isValue(ast) && "Bad node");
+       auto ptr = ast.lock();
+@@ -335,7 +328,7 @@ namespace mlir::verona
+     }
+ 
+     /// Return true if node is a variable definition
+-    static llvm::StringRef getLocalName(::ast::WeakAst ast)
++    static const std::string& getLocalName(::ast::WeakAst ast)
+     {
+       // Local variables can be new 'local' or existing 'localref'
+       if (isLocalRef(ast))
+@@ -345,7 +338,7 @@ namespace mlir::verona
+     }
+ 
+     /// Return true if node is an ID (func, var, type names)
+-    static llvm::StringRef getID(::ast::WeakAst ast)
++    static const std::string& getID(::ast::WeakAst ast)
+     {
+       // FIXME: Why is the call ID 'function' while all others 'id'?
+       if (isA(ast, NodeKind::Call))
+diff --git a/src/mlir/dialect/TypeSyntax.cc b/src/mlir/dialect/TypeSyntax.cc
+index 4197a82..256e74f 100644
+--- a/src/mlir/dialect/TypeSyntax.cc
++++ b/src/mlir/dialect/TypeSyntax.cc
+@@ -63,7 +63,6 @@ namespace mlir::verona::detail
+         })
+         .Case<FloatType>([&](FloatType type) { os << "F" << type.getWidth(); })
+         .Case<BoolType>([&](BoolType type) { os << "bool"; })
+-        .Case<UnknownType>([&](UnknownType type) { os << "unk"; })
+         .Case<MeetType>([&](MeetType type) {
+           if (type.getElements().empty())
+           {
+@@ -289,8 +288,6 @@ namespace mlir::verona::detail
+         return CapabilityType::get(context, Capability::Immutable);
+       else if (keyword == "bool")
+         return BoolType::get(context);
+-      else if (keyword == "unk")
+-        return UnknownType::get(context);
+       else if (keyword.startswith("U") || keyword.startswith("S"))
+         return parseIntegerType(keyword);
+       else if (keyword.startswith("F"))
+diff --git a/src/mlir/dialect/VeronaDialect.cc b/src/mlir/dialect/VeronaDialect.cc
+index ef0dbc4..cf1f40f 100644
+--- a/src/mlir/dialect/VeronaDialect.cc
++++ b/src/mlir/dialect/VeronaDialect.cc
+@@ -29,7 +29,6 @@ void VeronaDialect::initialize()
+     ClassType,
+     FloatType,
+     BoolType,
+-    UnknownType,
+     ViewpointType>();
+ 
+   allowUnknownOperations();
+diff --git a/src/mlir/dialect/VeronaTypes.cc b/src/mlir/dialect/VeronaTypes.cc
+index fb7cbd8..175fb9e 100644
+--- a/src/mlir/dialect/VeronaTypes.cc
++++ b/src/mlir/dialect/VeronaTypes.cc
+@@ -274,11 +274,6 @@ namespace mlir::verona
+     return ::mlir::detail::TypeUniquer::get<BoolType>(ctx);
+   }
+ 
+-  UnknownType UnknownType::get(MLIRContext* ctx)
+-  {
+-    return ::mlir::detail::TypeUniquer::get<UnknownType>(ctx);
+-  }
+-
+   CapabilityType CapabilityType::get(MLIRContext* ctx, Capability cap)
+   {
+     return Base::get(ctx, cap);
+@@ -355,7 +350,6 @@ namespace mlir::verona
+       ClassType,
+       FloatType,
+       BoolType,
+-      UnknownType,
+       ViewpointType>();
+   }
+ 
+diff --git a/src/mlir/dialect/VeronaTypes.h b/src/mlir/dialect/VeronaTypes.h
+index 31992fd..cb644c8 100644
+--- a/src/mlir/dialect/VeronaTypes.h
++++ b/src/mlir/dialect/VeronaTypes.h
+@@ -92,13 +92,6 @@ namespace mlir::verona
+     static BoolType get(MLIRContext* context);
+   };
+ 
+-  struct UnknownType : public Type::TypeBase<UnknownType, Type, TypeStorage>
+-  {
+-    using Base::Base;
+-
+-    static UnknownType get(MLIRContext* context);
+-  };
+-
+   enum class Capability
+   {
+     Isolated,
+diff --git a/src/mlir/generator.cc b/src/mlir/generator.cc
+index 426d622..3e3a026 100644
+--- a/src/mlir/generator.cc
++++ b/src/mlir/generator.cc
+@@ -44,7 +44,7 @@ namespace mlir::verona
+   }
+ 
+   // ===================================================== Helpers
+-  mlir::Location Generator::getLocation(const ::ast::WeakAst& ast)
++  mlir::Location Generator::getLocation(const ::ast::Ast& ast)
+   {
+     auto path = AST::getPath(ast);
+     return builder.getFileLineColLoc(
+@@ -76,10 +76,10 @@ namespace mlir::verona
+     // Map type names to MLIR types
+     Types argTys;
+     for (auto a : types)
+-      argTys.push_back(generateType(a));
++      argTys.push_back(genOpaqueType(a));
+     llvm::SmallVector<mlir::Type, 1> retTys;
+     if (!retTy.empty())
+-      retTys.push_back(generateType(retTy));
++      retTys.push_back(genOpaqueType(retTy));
+ 
+     // Generate the function and check: this should never fail
+     auto func = generateProto(unkLoc, name, argTys, retTys);
+@@ -94,67 +94,79 @@ namespace mlir::verona
+   // ===================================================== AST -> MLIR
+   llvm::Error Generator::parseModule(const ::ast::Ast& ast)
+   {
++    assert(AST::isClass(ast) && "Bad node");
+     assert(AST::getID(ast) == "$module" && "Bad node");
+     module = mlir::ModuleOp::create(getLocation(ast));
+-    // Modules are nothing but global classes
+-    return parseClass(ast);
++
++    auto body = AST::getClassBody(ast);
++    llvm::SmallVector<::ast::WeakAst, 4> globals;
++    AST::getSubNodes(globals, body);
++    for (auto g : globals)
++    {
++      if (AST::isClass(g))
++      {
++        auto c = parseClass(g.lock());
++        if (auto err = c.takeError())
++          return err;
++        module->push_back(*c);
++      }
++      else if (AST::isFunction(g))
++      {
++        auto f = parseFunction(g.lock());
++        if (auto err = f.takeError())
++          return err;
++        module->push_back(*f);
++      }
++    }
++    return llvm::Error::success();
+   }
+ 
+-  llvm::Error Generator::parseClass(const ::ast::Ast& ast, mlir::Type parent)
++  llvm::Expected<mlir::verona::ClassOp>
++  Generator::parseClass(const ::ast::Ast& ast)
+   {
+     assert(AST::isClass(ast) && "Bad node");
+ 
++    // Add the type first
+     // Declare before building fields to allow for recursive declaration
+     auto name = AST::getID(ast);
+     auto type = ClassType::get(context, name);
+     typeTable.insert(name, type);
+ 
+-    // Nested classes, field names and types, methods, etc.
+-    llvm::SmallVector<::ast::WeakAst, 4> nodes;
++    // Field names and types
++    llvm::SmallVector<::ast::WeakAst, 1> nodes;
+     AST::getSubNodes(nodes, AST::getClassBody(ast));
+     llvm::SmallVector<std::pair<StringRef, mlir::Type>, 4> fields;
+-
+-    // Set the parent class
+-    if (parent)
+-      fields.push_back({"$parent", parent});
+-
+-    // Scan all nodes for nested classes, fields and methods
+     for (auto node : nodes)
+     {
+-      if (AST::isClass(node))
+-      {
+-        // Recurse into nested classes
+-        if (auto err = parseClass(node.lock(), type))
+-          return err;
+-      }
+-      else if (AST::isField(node))
+-      {
+-        // Get field name/type for class type declaration
+-        auto fieldName = AST::getID(node);
+-        auto fieldType = parseType(AST::getType(node).lock());
+-        fields.push_back({fieldName, fieldType});
+-      }
+-      else if (AST::isFunction(node))
+-      {
+-        // Methods
+-        auto func = parseFunction(node.lock());
+-        if (auto err = func.takeError())
+-          return std::move(err);
+-        // Associate function with module (late mangling)
+-        func->setAttr("class", TypeAttr::get(type));
+-        // Push function to module
+-        module->push_back(*func);
+-      }
+-      else
+-      {
+-        return parsingError(
+-          "Expecting field or function on class " + name.str(),
+-          getLocation(ast));
+-      }
++      auto fieldName = AST::getID(node);
++      auto fieldType = parseType(AST::getType(node).lock());
++      fields.push_back({fieldName, fieldType});
+     }
+     type.setFields(fields);
+ 
+-    return llvm::Error::success();
++    // Create the class operation
++    auto loc = getLocation(ast);
++    auto c = builder.create<mlir::verona::ClassOp>(loc, name);
++    auto block = addBlock(&c.getRegion());
++    auto prev = builder.getInsertionBlock();
++    builder.setInsertionPointToEnd(block);
++
++    // Add each field
++    llvm::SmallVector<::ast::WeakAst, 4> fieldNodes;
++    auto body = AST::getClassBody(ast);
++    AST::getSubNodes(fieldNodes, body);
++    for (auto field : fieldNodes)
++    {
++      auto desc = AST::getID(field);
++      auto ty = parseType(AST::getType(field).lock());
++      mlir::TypeAttr attr = TypeAttr::get(ty);
++      builder.create<mlir::verona::FieldOp>(
++        getLocation(field.lock()), desc, attr);
++    }
++    builder.create<mlir::verona::ClassEndOp>(loc);
++    builder.setInsertionPointToEnd(prev);
++
++    return c;
+   }
+ 
+   llvm::Expected<mlir::FuncOp> Generator::parseFunction(const ::ast::Ast& ast)
+@@ -267,32 +279,26 @@ namespace mlir::verona
+       return cacheReturn(getImm(context));
+     else if (name == "bool")
+       return cacheReturn(BoolType::get(context));
+-    else if (name == "unk")
+-      return cacheReturn(UnknownType::get(context));
+ 
+-    // Numeric (getAsInteger returns true on failure)
++    // Numeric
+     size_t bitWidth = 0;
+-    if (name.substr(1).getAsInteger(10, bitWidth))
+-      bitWidth = 64;
+-    assert(bitWidth >= 8 && bitWidth <= 128 && "Bad numeric type width");
+-
+-    // Float (default literal `float` to F64)
+-    // FIXME: This is not correct, but is needed to avoid opaque types
+-    // We could leave unknown and resolve later as a pass
+-    bool isFloat = name.startswith("F") || name == "float";
+-    if (isFloat)
++    name.substr(1).getAsInteger(10, bitWidth);
++    bool validWidth = bitWidth >= 8 && bitWidth <= 128;
++
++    // Float
++    bool isFloat = name.startswith("F");
++    if (isFloat && validWidth)
+       return cacheReturn(FloatType::get(context, bitWidth));
+ 
+-    // Integer (default literal `int` types to S64|U64)
+-    // FIXME: This is not correct, but is needed to avoid opaque types
+-    // We could leave unknown and resolve later as a pass
+-    bool isSigned = name.startswith("S") || name == "int";
+-    bool isUnsigned = name.startswith("U") || name == "hex" || name == "binary";
+-    if (isSigned || isUnsigned)
++    // Integer
++    bool isSigned = name.startswith("S");
++    bool isUnsigned = name.startswith("U");
++    if ((isSigned || isUnsigned) && validWidth)
+       return cacheReturn(IntegerType::get(context, bitWidth, isSigned));
+ 
+-    // We need better error handling here, but this should never happen
+-    llvm_unreachable("Cannot lower type");
++    // Anything else, return opaque for now
++    // TODO: Implement all Verona types...
++    return cacheReturn(genOpaqueType(name));
+   }
+ 
+   mlir::Type Generator::parseType(const ::ast::Ast& ast)
+@@ -414,7 +420,7 @@ namespace mlir::verona
+       auto name = AST::getTokenValue(ast);
+       auto var = symbolTable.lookup(name);
+       assert(var && "Undeclared variable lookup, broken ast");
+-      if (var.getType() == unkTy)
++      if (var.getType() == allocaTy)
+         return generateLoad(getLocation(ast), var);
+       return var;
+     }
+@@ -429,7 +435,7 @@ namespace mlir::verona
+     // TODO: Literals need attributes and types
+     assert(AST::isValue(ast) && "Bad node");
+     return parsingError(
+-      "Value [" + AST::getName(ast) + " = " + AST::getTokenValue(ast).str() +
++      "Value [" + AST::getName(ast) + " = " + AST::getTokenValue(ast) +
+         "] not implemented yet",
+       getLocation(ast));
+   }
+@@ -452,8 +458,8 @@ namespace mlir::verona
+     auto store = symbolTable.lookup(name);
+     if (!store)
+       return parsingError(
+-        "Variable " + name.str() + " not declared before use",
+-        getLocation(var));
++        "Variable " + name + " not declared before use",
++        getLocation(var.lock()));
+ 
+     // The right-hand side can be any expression
+     // This is the value and we update the variable
+@@ -501,87 +507,53 @@ namespace mlir::verona
+     }
+ 
+     // Else, it should be an operation that we can lower natively
+-    // TODO: This will change when we implement a Verona library, where
+-    // most of the native ops will still be dynamic calls and resolved
+-    // to native when converting to LLVM.
+     if (AST::isUnary(ast))
+-      return parseUnop(ast);
+-    else if (AST::isBinary(ast))
+-      return parseBinop(ast);
+-
+-    return parsingError(
+-      "Operation '" + name.str() + "' not implemented yet", getLocation(ast));
+-  }
+-
+-  llvm::Expected<ReturnValue> Generator::parseUnop(const ::ast::Ast& ast)
+-  {
+-    assert(AST::isUnary(ast) && "Bad node");
+-    auto name = AST::getID(ast);
+-
+-    // Get argument
+-    auto arg = parseNode(AST::getOperand(ast, 0).lock());
+-    if (auto err = arg.takeError())
+-      return std::move(err);
+-
+-    // Generate call to known Verona ops
+-    // Using StringSwitch like parseBinop isn't as easy here
+-    if (name == "tidy")
+     {
+-      builder.create<TidyOp>(getLocation(ast), arg->get());
+-      return ReturnValue();
++      return parsingError(
++        "Unary Operation '" + name + "' not implemented yet", getLocation(ast));
+     }
+-    else if (name == "drop")
++    else if (AST::isBinary(ast))
+     {
+-      builder.create<DropOp>(getLocation(ast), arg->get());
+-      return ReturnValue();
+-    }
+-
+-    return parsingError(
+-      "Unary Operation '" + name.str() + "' not implemented yet",
+-      getLocation(ast));
+-  }
+-
+-  llvm::Expected<ReturnValue> Generator::parseBinop(const ::ast::Ast& ast)
+-  {
+-    assert(AST::isBinary(ast) && "Bad node");
+-    auto name = AST::getID(ast);
++      // Get both arguments
++      // TODO: If the arguments are tuples, do we need to apply element-wise?
++      auto arg0 = parseNode(AST::getOperand(ast, 0).lock());
++      if (auto err = arg0.takeError())
++        return std::move(err);
++      auto arg1 = parseNode(AST::getOperand(ast, 1).lock());
++      if (auto err = arg1.takeError())
++        return std::move(err);
+ 
+-    // Get both arguments
+-    // TODO: If the arguments are tuples, do we need to apply element-wise?
+-    auto arg0 = parseNode(AST::getOperand(ast, 0).lock());
+-    if (auto err = arg0.takeError())
+-      return std::move(err);
+-    auto arg1 = parseNode(AST::getOperand(ast, 1).lock());
+-    if (auto err = arg1.takeError())
+-      return std::move(err);
++      // Get op name and type
++      using opPairTy = std::pair<llvm::StringRef, mlir::Type>;
++      opPairTy opTy = llvm::StringSwitch<opPairTy>(name)
++                        .Case("+", {"verona.add", unkTy})
++                        .Case("-", {"verona.sub", unkTy})
++                        .Case("*", {"verona.mul", unkTy})
++                        .Case("/", {"verona.div", unkTy})
++                        .Case("==", {"verona.eq", boolTy})
++                        .Case("!=", {"verona.ne", boolTy})
++                        .Case(">", {"verona.gt", boolTy})
++                        .Case("<", {"verona.lt", boolTy})
++                        .Case(">=", {"verona.ge", boolTy})
++                        .Case("<=", {"verona.le", boolTy})
++                        .Default(std::make_pair("", unkTy));
++      auto opName = opTy.first;
++      auto opType = opTy.second;
++
++      // Match, return the right op with the right type
++      if (!opName.empty())
++      {
++        return genOperation(
++          getLocation(ast), opName, {arg0->get(), arg1->get()}, opType);
++      }
+ 
+-    // Get op name and type
+-    using opPairTy = std::pair<llvm::StringRef, mlir::Type>;
+-    opPairTy opTy = llvm::StringSwitch<opPairTy>(name)
+-                      .Case("+", {"verona.add", unkTy})
+-                      .Case("-", {"verona.sub", unkTy})
+-                      .Case("*", {"verona.mul", unkTy})
+-                      .Case("/", {"verona.div", unkTy})
+-                      .Case("==", {"verona.eq", boolTy})
+-                      .Case("!=", {"verona.ne", boolTy})
+-                      .Case(">", {"verona.gt", boolTy})
+-                      .Case("<", {"verona.lt", boolTy})
+-                      .Case(">=", {"verona.ge", boolTy})
+-                      .Case("<=", {"verona.le", boolTy})
+-                      .Default(std::make_pair("", unkTy));
+-    auto opName = opTy.first;
+-    auto opType = opTy.second;
+-
+-    // Match, return the right op with the right type
+-    if (!opName.empty())
+-    {
+-      return genOperation(
+-        getLocation(ast), opName, {arg0->get(), arg1->get()}, opType);
++      return parsingError(
++        "Binary operation '" + name + "' not implemented yet",
++        getLocation(ast));
+     }
+ 
+     return parsingError(
+-      "Binary operation '" + name.str() + "' not implemented yet",
+-      getLocation(ast));
++      "Operation '" + name + "' not implemented yet", getLocation(ast));
+   }
+ 
+   llvm::Expected<ReturnValue> Generator::parseReturn(const ::ast::Ast& ast)
+@@ -980,16 +952,16 @@ namespace mlir::verona
+     // this to emit the attribute right away.
+     mlir::Type type = unkTy;
+     if (!typeName.empty())
+-      type = generateType(typeName);
++      type = genOpaqueType(typeName);
+     return genOperation(loc, "verona.constant(" + value.str() + ")", {}, type);
+   }
+ 
+   mlir::Value
+   Generator::generateAlloca(mlir::Location loc, llvm::StringRef typeName)
+   {
+-    mlir::Type type = unkTy;
++    mlir::Type type = allocaTy;
+     if (!typeName.empty())
+-      type = generateType(typeName);
++      type = genOpaqueType(typeName);
+     return genOperation(loc, "verona.alloca", {}, type);
+   }
+ 
+@@ -1023,4 +995,10 @@ namespace mlir::verona
+     auto res = op->getResult(0);
+     return res;
+   }
++
++  mlir::OpaqueType Generator::genOpaqueType(llvm::StringRef name)
++  {
++    auto dialect = mlir::Identifier::get("type", context);
++    return mlir::OpaqueType::get(dialect, name, context);
++  }
+ }
+diff --git a/src/mlir/generator.h b/src/mlir/generator.h
+index 2223006..b83dd86 100644
+--- a/src/mlir/generator.h
++++ b/src/mlir/generator.h
+@@ -5,7 +5,6 @@
+ 
+ #include "ast/ast.h"
+ #include "dialect/VeronaOps.h"
+-#include "dialect/VeronaTypes.h"
+ #include "error.h"
+ #include "mlir/IR/Builders.h"
+ #include "mlir/IR/Function.h"
+@@ -124,8 +123,10 @@ namespace mlir::verona
+     Generator(MLIRContext* context)
+     : context(context), builder(context), unkLoc(builder.getUnknownLoc())
+     {
+-      // Initialise boolean / unknown types for convenience coding
+-      unkTy = generateType("unk");
++      // Initialise known opaque types, for comparison.
++      // TODO: Use Verona dialect types directly and isA<>.
++      allocaTy = genOpaqueType("alloca");
++      unkTy = genOpaqueType("unk");
+       boolTy = builder.getI1Type();
+     }
+ 
+@@ -152,6 +153,8 @@ namespace mlir::verona
+     /// Nested reference for head/exit blocks in loops.
+     BasicBlockTableT loopTable;
+ 
++    /// Alloca types, before we start using Verona types with known sizes.
++    mlir::Type allocaTy;
+     /// Unknown types, will be defined during type inference.
+     mlir::Type unkTy;
+     /// MLIR boolean type (int1).
+@@ -162,7 +165,7 @@ namespace mlir::verona
+     // MLIR nodes.
+ 
+     /// Get location of an ast node.
+-    mlir::Location getLocation(const ::ast::WeakAst& ast);
++    mlir::Location getLocation(const ::ast::Ast& ast);
+ 
+     /// Declares a new variable.
+     void declareVariable(llvm::StringRef name, mlir::Value val);
+@@ -186,8 +189,7 @@ namespace mlir::verona
+     /// Parses a function, from a top-level (module) view.
+     llvm::Expected<mlir::FuncOp> parseFunction(const ::ast::Ast& ast);
+     /// Parse a class declaration
+-    llvm::Error
+-    parseClass(const ::ast::Ast& ast, mlir::Type parent = mlir::Type());
++    llvm::Expected<mlir::verona::ClassOp> parseClass(const ::ast::Ast& ast);
+ 
+     /// Recursive type parser, gathers all available information on the type
+     /// and sub-types, modifiers, annotations, etc.
+@@ -205,10 +207,6 @@ namespace mlir::verona
+     llvm::Expected<ReturnValue> parseAssign(const ::ast::Ast& ast);
+     /// Parses function calls and native operations.
+     llvm::Expected<ReturnValue> parseCall(const ::ast::Ast& ast);
+-    /// Parses function calls and native operations.
+-    llvm::Expected<ReturnValue> parseUnop(const ::ast::Ast& ast);
+-    /// Parses function calls and native operations.
+-    llvm::Expected<ReturnValue> parseBinop(const ::ast::Ast& ast);
+     /// Parses an if/else block.
+     llvm::Expected<ReturnValue> parseCondition(const ::ast::Ast& ast);
+     /// Parses a 'while' loop block.
+@@ -283,5 +281,8 @@ namespace mlir::verona
+       llvm::StringRef name,
+       llvm::ArrayRef<mlir::Value> ops,
+       mlir::Type retTy);
++
++    /// Wrappers for opaque types before we use actual Verona dialect.
++    mlir::OpaqueType genOpaqueType(llvm::StringRef name);
+   };
+ }
+diff --git a/src/rt/CMakeLists.txt b/src/rt/CMakeLists.txt
+index c5329f9..a163f3b 100644
+--- a/src/rt/CMakeLists.txt
++++ b/src/rt/CMakeLists.txt
+@@ -30,7 +30,7 @@ if(USE_ASAN)
+   if(MSVC)
+     message(FATAL_ERROR "MSVC does not support ASAN")
+   endif()
+-  target_compile_definitions(verona_rt INTERFACE -DUSE_MALLOC)
++  target_compile_definitions(verona_rt INTERFACE -DSNMALLOC_PASS_THROUGH)
+   target_compile_options(verona_rt INTERFACE -g -fsanitize=address -fno-omit-frame-pointer)
+   target_link_libraries(verona_rt INTERFACE -fsanitize=address)
+ endif()
+diff --git a/src/rt/README.md b/src/rt/README.md
+index ec09fc6..aea1093 100644
+--- a/src/rt/README.md
++++ b/src/rt/README.md
+@@ -66,7 +66,7 @@ trace for that seed.
+ These can be added to your cmake command line.
+ 
+ ```
+--DUSE_MALLOC=ON // Use malloc
++-DSNMALLOC_PASS_THROUGH=ON // Use underlying malloc
+ -DUSE_STATS=ON // Track allocation stats
+ -DUSE_MEASURE=ON // Measure performance with histograms
+ -DUSE_SCHED_STATS=ON // Track scheduler stats
+diff --git a/src/rt/ds/stack.h b/src/rt/ds/stack.h
+index 91bc828..771c2d5 100644
+--- a/src/rt/ds/stack.h
++++ b/src/rt/ds/stack.h
+@@ -7,128 +7,302 @@
+ 
+ namespace verona::rt
+ {
++  /**
++   * This class contains the core functionality for a stack using aligned blocks
++   * of memory. The stack is the size of a single pointer when empty.
++   */
+   template<class T, class Alloc>
+-  class Stack
++  class StackThin
+   {
+   private:
+-    static constexpr size_t STACK_COUNT = 63;
++    static constexpr size_t POINTER_COUNT = 64;
++    static_assert(
++      snmalloc::bits::next_pow2_const(POINTER_COUNT) == POINTER_COUNT,
++      "Should be power of 2 for alignment.");
++
++    static constexpr size_t STACK_COUNT = POINTER_COUNT - 1;
+ 
+-    struct Block
++    /**
++     * The assumes that the allocations are aligned to the same threshold as
++     * their size. The blocks contain one previous pointer, and 63 pointers to
++     * Ts.  This is a power of two, so we can use the bottom part of the
++     * pointer to track the index.
++     *
++     * As the block contains a previous pointer, there are only 64 possible
++     * states for a block, that is 0 - 63 live entries.
++     *
++     * The stack is represented by a single interior pointer, index, of type
++     * T**.
++     *
++     * Note that `index` can point to a `prev` element of a block,
++     * and thus be mistyped. This represents the empty block and is never
++     * followed directly.
++     */
++  public:
++    struct alignas(POINTER_COUNT * sizeof(T*)) Block
+     {
+-      Block* prev;
+-      T data[STACK_COUNT];
++      T** prev;
++      T* data[STACK_COUNT];
+     };
+ 
+-    Alloc* alloc;
+-    Block* block;
+-    Block* backup;
+-    size_t index;
++  private:
++    static_assert(
++      sizeof(Block) == alignof(Block), "Size and align must be equal");
++
++    // Dummy block to effectively allow pointer arithmetic on nullptr
++    // which is undefined behaviour.  So we statically allocate a block
++    // to represent the end of the stack.
++    inline static Block null_block{};
++
++    // Index of the full dummy block
++    // Due to pointer arithmetic with nullptr being undefined behaviour
++    // we use a statically allocated null block.
++    static constexpr T** null_index = &(null_block.data[STACK_COUNT - 1]);
++
++    /// Mask to access the index component of the pointer to a block.
++    static constexpr uintptr_t INDEX_MASK = (POINTER_COUNT - 1) * sizeof(T*);
++
++    /// Pointer into a block.  As the blocks are strongly aligned
++    /// the bits 9-3 represent the element in the block, with 0 being
++    /// a pointer to the `prev` pointer, and implying the empty block.
++    T** index;
++
++    /// Takes an index and returns the pointer to the Block
++    static Block* get_block(T** ptr)
++    {
++      return snmalloc::pointer_align_down<sizeof(Block), Block>(ptr);
++    }
++
++    /// Checks if an index into a block means the block is empty.
++    static bool is_empty(T** ptr)
++    {
++      return ((uintptr_t)ptr & INDEX_MASK) == 0;
++    }
++
++    /// Checks if an index into a block means the block has no space.
++    static bool is_full(T** index)
++    {
++      return ((uintptr_t)index & INDEX_MASK) == INDEX_MASK;
++    }
+ 
+   public:
+-    Stack(Alloc* alloc)
+-    : alloc(alloc), block(nullptr), backup(nullptr), index(STACK_COUNT)
+-    {}
++    StackThin() : index(null_index)
++    {
++      static_assert(
++        sizeof(*this) == sizeof(void*),
++        "Stack should contain only the index pointer");
++    }
+ 
+-    ~Stack()
++    /// Deallocate the linked blocks for this stack.
++    void dealloc(Alloc* alloc)
+     {
+-      auto local_block = block;
+-      while (local_block)
++      auto local_block = get_block(index);
++      while (local_block != &null_block)
+       {
+-        auto prev = local_block->prev;
++        auto prev = get_block(local_block->prev);
+         alloc->template dealloc<sizeof(Block)>(local_block);
+         local_block = prev;
+       }
+-      if (backup != nullptr)
+-        alloc->template dealloc<sizeof(Block)>(backup);
+     }
+ 
++    /// returns true if this stack is empty
+     ALWAYSINLINE bool empty()
+     {
+-      return block == nullptr;
++      return index == null_index;
+     }
+ 
+-    ALWAYSINLINE T peek()
++    /// Return the top element of the stack without removing it.
++    ALWAYSINLINE T* peek()
+     {
+       assert(!empty());
+-      return block->data[index - 1];
++      return *index;
+     }
+ 
+-    ALWAYSINLINE T pop()
++    /// Call this to pop an element from the stack.
++    ALWAYSINLINE T* pop(Alloc* alloc)
+     {
+       assert(!empty());
++      if (!is_empty(index - 1))
++      {
++        auto item = peek();
++        index--;
++        return item;
++      }
+ 
+-      index--;
+-      T item = block->data[index];
+-
+-      if (index == 0)
+-        pop_slow_path();
+-
+-      return item;
++      return pop_slow(alloc);
+     }
+ 
+-    ALWAYSINLINE void push(T item)
++    /// Call this to push an element onto the stack.
++    ALWAYSINLINE void push(T* item, Alloc* alloc)
+     {
+-      if (index < STACK_COUNT)
++      if (!is_full(index))
+       {
+-        block->data[index] = item;
+         index++;
++        *index = item;
++        return;
+       }
+-      else
+-      {
+-        push_slow_path(item);
+-      }
++
++      push_slow(item, alloc);
+     }
+ 
+-    template<void apply(T t)>
++    /// For all elements of the stack
++    template<void apply(T* t)>
+     void forall()
+     {
+-      Block* curr = block;
+-      size_t i = index;
++      T* curr = index;
+ 
+-      while (curr != nullptr)
++      while (curr != null_index)
+       {
+         do
+         {
+-          i--;
+-          apply(curr->data[i]);
+-        } while (i > 0);
++          apply(*curr);
++          curr--;
++        } while (is_empty(curr));
+ 
+-        curr = curr->prev;
+-        i = STACK_COUNT;
++        curr = get_block(curr)->prev;
+       }
+     }
+ 
+   private:
+-    void pop_slow_path()
++    /// Slow path for push, performs a push, when allocation is required.
++    void push_slow(T* item, Alloc* alloc)
++    {
++      assert(is_full(index));
++
++      Block* next = (Block*)alloc->template alloc<sizeof(Block)>();
++      assert(((uintptr_t)next) % alignof(Block) == 0);
++      next->prev = index;
++      index = &(next->data[0]);
++      *index = item;
++    }
++
++    /// Slow path for pop, performs a pop, when deallocation of a block is
++    /// required.
++    T* pop_slow(Alloc* alloc)
+     {
+-      Block* prev = block->prev;
++      assert(is_empty(index - 1));
+ 
+-      if (backup != nullptr)
+-        alloc->template dealloc<sizeof(Block)>(backup);
++      auto item = peek();
++      Block* block = get_block(index);
++      index = block->prev;
+ 
+-      backup = block;
+-      block = prev;
+-      index = STACK_COUNT;
++      alloc->template dealloc<sizeof(Block)>(block);
++      return item;
+     }
++  };
+ 
+-    void push_slow_path(T item)
++  /**
++   * This class uses the block structured stack with extra fields
++   * for the allocator, and a backup block, so that the common case
++   * of 0-1 elements can be fast, and any other block boundrary case.
++   *
++   * As this data-structure keeps a copy of the allocator, it must not
++   * be passed between threads.  Use `StackSmall` for that kind of use case.
++   * When pushing, this class will use the backup block rather than allocate and
++   * when popping will return a block to the backup pointer rather than
++   * deallocate. This means that we experience allocate / deallocate churn only
++   * when rapidly crossing two allocation boundaries. A loop that pushes 32
++   * elements and pops them on each iteration may trigger allocation the first
++   * time but will then not trigger allocation on any subsequent iteration.
++   */
++  template<class T, class Alloc>
++  class Stack
++  {
++    /**
++     * The BackupAlloc allocates Blocks for the stack
++     * Uses a one place pool to avoid always calling the allocator.
++     */
++    class BackupAlloc
+     {
+-      Block* next;
++      using Block = typename StackThin<T, BackupAlloc>::Block;
++
++      /// A one place pool of Block.
++      Block* backup = nullptr;
++
++      /// Allocator that blocks are supplied by.
++      Alloc* underlying_alloc;
++
++    public:
++      BackupAlloc(Alloc* a) : underlying_alloc(a) {}
++
++      /// Allocate a stack Block.
++      template<size_t Size>
++      ALWAYSINLINE void* alloc()
++      {
++        static_assert(
++          Size == sizeof(Block),
++          "Allocating something not the size of a block");
++
++        if (backup)
++          return std::exchange(backup, nullptr);
++        else
++          return underlying_alloc->template alloc<Size>();
++      }
+ 
+-      if (backup != nullptr)
++      /// Deallocate a stack Block.
++      template<size_t Size>
++      ALWAYSINLINE void dealloc(Block* b)
+       {
+-        next = backup;
+-        backup = nullptr;
++        static_assert(
++          Size == sizeof(Block),
++          "Deallocating something not the size of a block");
++
++        if (backup == nullptr)
++          backup = b;
++        else
++          underlying_alloc->template dealloc<Size>(b);
+       }
+-      else
++
++      ~BackupAlloc()
+       {
+-        next = (Block*)alloc->template alloc<sizeof(Block)>();
++        if (backup != nullptr)
++          underlying_alloc->template dealloc<sizeof(Block)>(backup);
+       }
++    };
++
++    /// Underlying stack
++    StackThin<T, BackupAlloc> stack;
++
++    /// Allocator for new blocks of stack
++    BackupAlloc backup_alloc;
+ 
+-      index = 1;
+-      next->data[0] = item;
+-      next->prev = block;
+-      block = next;
++  public:
++    Stack(Alloc* alloc) : backup_alloc(alloc) {}
++
++    /// Return top element of the stack
++    ALWAYSINLINE T* peek()
++    {
++      return stack.peek();
++    }
++
++    /// Put an element on the stack
++    ALWAYSINLINE void push(T* item)
++    {
++      stack.push(item, &backup_alloc);
++    }
++
++    /// Remove an element on the stack
++    ALWAYSINLINE T* pop()
++    {
++      return stack.pop(&backup_alloc);
++    }
++
++    /// Check if stack is empty
++    ALWAYSINLINE bool empty()
++    {
++      return stack.empty();
++    }
++
++    /// Apply function to every element of the stack.
++    template<void apply(T* t)>
++    void forall()
++    {
++      stack.template forall<apply>();
++    }
++
++    ~Stack()
++    {
++      stack.dealloc(&backup_alloc);
+     }
+   };
+ } // namespace verona::rt
+diff --git a/src/rt/external/snmalloc b/src/rt/external/snmalloc
+index e615c33..923705e 160000
+--- a/src/rt/external/snmalloc
++++ b/src/rt/external/snmalloc
+@@ -1 +1 @@
+-Subproject commit e615c33f7a1002d0209beaa4282c3981233f1fb1
++Subproject commit 923705e514e850ee0070cef470fca9d9c47ca3da
+diff --git a/src/rt/object/object.h b/src/rt/object/object.h
+index c859cff..60a7309 100644
+--- a/src/rt/object/object.h
++++ b/src/rt/object/object.h
+@@ -77,7 +77,7 @@ namespace verona::rt
+   class Object;
+   class RegionBase;
+ 
+-  using ObjectStack = Stack<Object*, Alloc>;
++  using ObjectStack = Stack<Object, Alloc>;
+   static constexpr size_t descriptor_alignment =
+     snmalloc::bits::min<size_t>(8, alignof(void*));
+ 
+@@ -282,6 +282,8 @@ namespace verona::rt
+       }
+ 
+       previous = value;
++#else
++      UNUSED(value);
+ #endif
+     }
+ 
+diff --git a/src/rt/sched/cown.h b/src/rt/sched/cown.h
+index ae3293a..1c58f50 100644
+--- a/src/rt/sched/cown.h
++++ b/src/rt/sched/cown.h
+@@ -928,8 +928,8 @@ namespace verona::rt
+       {
+         Systematic::cout() << "Reached message token on cown: " << this
+                            << std::endl;
+-        assert(stat.has_token());
+-        stat.set_has_token(false);
++        assert(stat.has_token == 1);
++        stat.has_token = 0;
+         status.store(stat, std::memory_order_release);
+ 
+         auto bp = bp_state.load(std::memory_order_acquire);
+@@ -942,27 +942,19 @@ namespace verona::rt
+       }
+ 
+       if (
+-        (!stat.has_token() && (curr->index == 0)) ||
++        ((stat.has_token == 0) && (curr->index == 0)) ||
+         (stat.current_load() == 0xff))
+       {
+         stat.reset_load();
+       }
+-      if (!stat.has_token())
++      if (stat.has_token == 0)
+       {
+         Systematic::cout() << "Cown " << this << ": enqueue message token"
+                            << std::endl;
+         queue.enqueue(stub_msg(alloc));
+       }
+       stat.inc_load();
+-      stat.set_has_token(true);
+-#ifdef USE_SYSTEMATIC_TESTING
+-      if (Systematic::coin(5) && !stat.overloaded())
+-      {
+-        stat.overload();
+-        assert(stat.overloaded());
+-        Systematic::cout() << "Cown " << this << " overloaded" << std::endl;
+-      }
+-#endif
++      stat.has_token = 1;
+       status.store(stat, std::memory_order_release);
+ 
+       return false;
+diff --git a/src/rt/sched/schedulerthread.h b/src/rt/sched/schedulerthread.h
+index 8222585..91956ea 100644
+--- a/src/rt/sched/schedulerthread.h
++++ b/src/rt/sched/schedulerthread.h
+@@ -251,7 +251,7 @@ namespace verona::rt
+ 
+           continue;
+         }
+-        Systematic::cout() << "Cown " << cown << ": backpressure state " << bp
++        Systematic::cout() << "Cown " << this << ": backpressure state " << bp
+                            << " -> Muted" << std::endl;
+         assert(!(bp & BackpressureState::IsUnmutable));
+       }
+@@ -422,12 +422,8 @@ namespace verona::rt
+                 }
+               }
+ 
+-              if (!has_thread_bit(cown))
+-              {
+-                Systematic::cout()
+-                  << "Reschedule cown: " << cown << " ("
+-                  << cown->get_epoch_mark() << ")" << std::endl;
+-              }
++              Systematic::cout() << "Reschedule cown: " << cown << " ("
++                                 << cown->get_epoch_mark() << ")" << std::endl;
+             }
+           }
+         }
+diff --git a/src/rt/sched/status.h b/src/rt/sched/status.h
+index 8b4b271..43aec9a 100644
+--- a/src/rt/sched/status.h
++++ b/src/rt/sched/status.h
+@@ -49,26 +49,30 @@ namespace verona::rt
+   /// Tracks status information for a cown. This class may only be modified by
+   /// the scheduler thread running a cown.
+   /// TODO: possibly I/O thread when cown is uncheduled
+-  class alignas(4) Status
++  class Status
+   {
+     // Load at which cown is overloaded.
+     static constexpr uint32_t overload_threshold = 800;
+     // Load at which a cown is no longer overloaded.
+     static constexpr uint32_t unoverloaded_threshold = 100;
+ 
+-    /// Ring buffer with a capacity for 4 4-bit entries.
+-    uint16_t _load_hist = 0;
+     /// Tracks an approximation of a cown's message queue depth as a count of
+     /// messages processed between token messages falling out of the queue. When
+     /// the token message falls out, the `reset_load()` function will push the
+     /// upper nibble of the current load into the `load_hist` ring buffer.
+-    uint8_t _current_load = 0;
+-    /// Other miscellaneous bits. 7 bits are reserved for future use.
+-    /// Bit 0 indicates if the token message is in a cown's queue. If zero, a
+-    /// new token message should be added if the cown runs another message.
+-    uint8_t _misc = 0;
++    uint32_t _current_load : 8;
++    /// Ring buffer with a capacity for 4 4-bit entries.
++    uint32_t _load_hist : 16;
++    /// Reserved for future use
++    uint32_t : 7;
+ 
+   public:
++    /// Indicates if the token message is in a cown's queue. If zero, a new
++    /// token message should be added if the cown runs another message.
++    uint32_t has_token : 1;
++
++    Status() noexcept : _current_load(0), _load_hist(0), has_token(0) {}
++
+     /// Return the count of messages processed since the last token message fell
+     /// out of this cown's queue.
+     inline uint8_t current_load() const
+@@ -81,11 +85,13 @@ namespace verona::rt
+     inline uint32_t total_load() const
+     {
+       // Add the current load to the 4 upper nibbles stored as load history.
+-      const uint32_t h3 = (uint32_t)bits::extract<15, 12>(_load_hist) << 4;
+-      const uint32_t h2 = (uint32_t)bits::extract<11, 8>(_load_hist) << 4;
+-      const uint32_t h1 = (uint32_t)bits::extract<7, 4>(_load_hist) << 4;
+-      const uint32_t h0 = (uint32_t)bits::extract<3, 0>(_load_hist) << 4;
+-      return h3 + h2 + h1 + h0 + _current_load;
++      // The load history could be more efficiently compressed, but the clang
++      // SLP vectorizer optimizes this nicely with AVX2 instructions.
++      const uint32_t h3 = bits::extract<15, 12>(_load_hist) << 4;
++      const uint32_t h2 = bits::extract<11, 8>(_load_hist) << 4;
++      const uint32_t h1 = bits::extract<7, 4>(_load_hist) << 4;
++      const uint32_t h0 = bits::extract<3, 0>(_load_hist) << 4;
++      return (h3 + h2 + h1 + h0) | _current_load;
+     }
+ 
+     /// Return true if this cown is overloaded.
+@@ -113,27 +119,10 @@ namespace verona::rt
+       _load_hist |= (_current_load >> 4);
+       _current_load = 0;
+     }
+-
+-    /// Artificially overload a cown.
+-    /// TODO: In the future, this will require a bit to remain overloaded after
+-    /// the load drops.
+-    inline void overload()
+-    {
+-      _load_hist = (uint16_t)-1;
+-      _current_load = (uint8_t)-1;
+-    }
+-
+-    /// Indicates if the token message is in a cown's queue. If zero, a
+-    /// new token message should be added if the cown runs another message.
+-    inline bool has_token()
+-    {
+-      return bits::extract<0, 0>(_misc) == 1;
+-    }
+-
+-    /// Set whether the cown has a token in its queue.
+-    inline void set_has_token(bool value)
+-    {
+-      _misc = (_misc & 0xFE) | (uint8_t)value;
+-    }
+   };
++
++  static_assert((sizeof(Status) == 4) && (alignof(Status) == 4));
++  static_assert(
++    (sizeof(Status) == sizeof(std::atomic<Status>)) &&
++    (alignof(Status) == alignof(std::atomic<Status>)));
+ }
+diff --git a/testsuite/mlir/mlir-parse/call/mlir.txt b/testsuite/mlir/mlir-parse/call/mlir.txt
+index 418e876..3c95621 100644
+--- a/testsuite/mlir/mlir-parse/call/mlir.txt
++++ b/testsuite/mlir/mlir-parse/call/mlir.txt
+@@ -1,50 +1,50 @@
+ 
+ 
+ module {
+-  func @foo(%arg0: !verona.imm, %arg1: !verona.meet<U64, imm>) -> !verona.meet<U64, imm> attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.imm, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !verona.unk) -> !verona.unk
+-    %4 = "verona.alloca"() : () -> !verona.unk
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %7 = "verona.add"(%5, %6) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %8 = "verona.store"(%7, %4) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %9 = "verona.alloca"() : () -> !verona.unk
+-    %10 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %11 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %12 = "verona.sub"(%10, %11) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %13 = "verona.store"(%12, %9) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %14 = "verona.load"(%4) : (!verona.unk) -> !verona.unk
+-    %15 = "verona.constant(100)"() : () -> !verona.S64
+-    %16 = "verona.lt"(%14, %15) : (!verona.unk, !verona.S64) -> i1
++  func @foo(%arg0: !verona.imm, %arg1: !verona.meet<U64, imm>) -> !verona.meet<U64, imm> {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.imm, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !type.alloca) -> !type.unk
++    %4 = "verona.alloca"() : () -> !type.alloca
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %6 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %7 = "verona.add"(%5, %6) : (!type.unk, !type.unk) -> !type.unk
++    %8 = "verona.store"(%7, %4) : (!type.unk, !type.alloca) -> !type.unk
++    %9 = "verona.alloca"() : () -> !type.alloca
++    %10 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %11 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %12 = "verona.sub"(%10, %11) : (!type.unk, !type.unk) -> !type.unk
++    %13 = "verona.store"(%12, %9) : (!type.unk, !type.alloca) -> !type.unk
++    %14 = "verona.load"(%4) : (!type.alloca) -> !type.unk
++    %15 = "verona.constant(100)"() : () -> !type.int
++    %16 = "verona.lt"(%14, %15) : (!type.unk, !type.int) -> i1
+     cond_br %16, ^bb1, ^bb2
+   ^bb1:  // pred: ^bb0
+-    %17 = "verona.load"(%4) : (!verona.unk) -> !verona.unk
+-    %18 = "verona.cast"(%17) : (!verona.unk) -> !verona.imm
+-    %19 = "verona.load"(%9) : (!verona.unk) -> !verona.unk
+-    %20 = "verona.cast"(%19) : (!verona.unk) -> !verona.meet<U64, imm>
++    %17 = "verona.load"(%4) : (!type.alloca) -> !type.unk
++    %18 = "verona.cast"(%17) : (!type.unk) -> !verona.imm
++    %19 = "verona.load"(%9) : (!type.alloca) -> !type.unk
++    %20 = "verona.cast"(%19) : (!type.unk) -> !verona.meet<U64, imm>
+     %21 = call @foo(%18, %20) : (!verona.imm, !verona.meet<U64, imm>) -> !verona.meet<U64, imm>
+     return %21 : !verona.meet<U64, imm>
+   ^bb2:  // pred: ^bb0
+-    %22 = "verona.load"(%4) : (!verona.unk) -> !verona.unk
+-    %23 = "verona.load"(%9) : (!verona.unk) -> !verona.unk
+-    %24 = "verona.add"(%22, %23) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %25 = "verona.cast"(%24) : (!verona.unk) -> !verona.meet<U64, imm>
++    %22 = "verona.load"(%4) : (!type.alloca) -> !type.unk
++    %23 = "verona.load"(%9) : (!type.alloca) -> !type.unk
++    %24 = "verona.add"(%22, %23) : (!type.unk, !type.unk) -> !type.unk
++    %25 = "verona.cast"(%24) : (!type.unk) -> !verona.meet<U64, imm>
+     return %25 : !verona.meet<U64, imm>
+   }
+-  func @apply() attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.constant(10)"() : () -> !verona.S64
+-    %2 = "verona.store"(%1, %0) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %3 = "verona.alloca"() : () -> !verona.unk
+-    %4 = "verona.constant(20)"() : () -> !verona.S64
+-    %5 = "verona.store"(%4, %3) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %6 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %7 = "verona.cast"(%6) : (!verona.unk) -> !verona.imm
+-    %8 = "verona.load"(%3) : (!verona.unk) -> !verona.unk
+-    %9 = "verona.cast"(%8) : (!verona.unk) -> !verona.meet<U64, imm>
++  func @apply() {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.constant(10)"() : () -> !type.int
++    %2 = "verona.store"(%1, %0) : (!type.int, !type.alloca) -> !type.unk
++    %3 = "verona.alloca"() : () -> !type.alloca
++    %4 = "verona.constant(20)"() : () -> !type.int
++    %5 = "verona.store"(%4, %3) : (!type.int, !type.alloca) -> !type.unk
++    %6 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %7 = "verona.cast"(%6) : (!type.unk) -> !verona.imm
++    %8 = "verona.load"(%3) : (!type.alloca) -> !type.unk
++    %9 = "verona.cast"(%8) : (!type.unk) -> !verona.meet<U64, imm>
+     %10 = call @foo(%7, %9) : (!verona.imm, !verona.meet<U64, imm>) -> !verona.meet<U64, imm>
+     return
+   }
+diff --git a/testsuite/mlir/mlir-parse/class.verona b/testsuite/mlir/mlir-parse/class.verona
+index d9bf9d7..6e0ecf7 100644
+--- a/testsuite/mlir/mlir-parse/class.verona
++++ b/testsuite/mlir/mlir-parse/class.verona
+@@ -1,10 +1,7 @@
+ // Copyright Microsoft and Project Verona Contributors.
+ // SPDX-License-Identifier: MIT
+ 
+-// Empty class declaration
+ class C {  }
+-
+-// Class with fields only
+ class D {
+   f: U64 & imm;
+   g: C & mut;
+@@ -12,32 +9,25 @@ class D {
+   i: F64;
+   j: bool;
+ }
+-
+-// Class with nested class, some yet-undeclared types
+ class E {
+   a: D;
+   b: E;
+-  // Nested class, showing deep recursion
+-  class NestE {
+-    x: G;
+-  }
+   c: F;
+   d: G;
+ }
+-
+-// Another class using an undeclared type
+ class F {
+   e: G;
+ }
++class G { }
+ 
+-// G is now declared, and has a static method
+-class G {
+-  static foo(a: U32) : F32 { 3.14; }
+-}
++bar(x: U64 & imm, y: U64 & imm) {
++    //let a : C & iso = new C;
++    //let b : C & mut = view a;
++    //let c : D & mut = new D { f: x, g: b } in a;
++    //let d : U64 & imm = c.f;
++    //let e : D & mut = c.g;
++    //let f : U64 & imm = (c.g = y);
+ 
+-bar(c: C, d: D, e: E, ne: NestE, f: F, g: G) {
+-  // Garbage collect
+-  tidy(c);
+-  // Drop value
+-  drop(d);
++    //tidy(a);
++    //drop(a);
+ }
+diff --git a/testsuite/mlir/mlir-parse/class/mlir.txt b/testsuite/mlir/mlir-parse/class/mlir.txt
+index 3910419..5d4b458 100644
+--- a/testsuite/mlir/mlir-parse/class/mlir.txt
++++ b/testsuite/mlir/mlir-parse/class/mlir.txt
+@@ -1,30 +1,31 @@
+ 
+ 
+ module {
+-  func @foo(%arg0: !verona.U32) -> !verona.F32 attributes {class = !verona.class<"G", "$parent" : class<"$module">>} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !verona.unk) -> !verona.unk
+-    %2 = "verona.constant(3.14)"() : () -> !verona.F64
+-    %3 = "verona.cast"(%2) : (!verona.F64) -> !verona.F32
+-    return %3 : !verona.F32
++  verona.class @C {
+   }
+-  func @bar(%arg0: !verona.class<"C", "$parent" : class<"$module">>, %arg1: !verona.class<"D", "$parent" : class<"$module">, "f" : meet<U64, imm>, "g" : meet<class<"C", "$parent" : class<"$module">>, mut>, "h" : F32, "i" : F64, "j" : bool>, %arg2: !verona.class<"E", "$parent" : class<"$module">, "a" : class<"D", "$parent" : class<"$module">, "f" : meet<U64, imm>, "g" : meet<class<"C", "$parent" : class<"$module">>, mut>, "h" : F32, "i" : F64, "j" : bool>, "b" : class<"E">, "c" : class<"F", "$parent" : class<"$module">, "e" : class<"G", "$parent" : class<"$module">>>, "d" : class<"G", "$parent" : class<"$module">>>, %arg3: !verona.class<"NestE", "$parent" : class<"E", "$parent" : class<"$module">, "a" : class<"D", "$parent" : class<"$module">, "f" : meet<U64, imm>, "g" : meet<class<"C", "$parent" : class<"$module">>, mut>, "h" : F32, "i" : F64, "j" : bool>, "b" : class<"E">, "c" : class<"F", "$parent" : class<"$module">, "e" : class<"G", "$parent" : class<"$module">>>, "d" : class<"G", "$parent" : class<"$module">>>, "x" : class<"G", "$parent" : class<"$module">>>, %arg4: !verona.class<"F", "$parent" : class<"$module">, "e" : class<"G", "$parent" : class<"$module">>>, %arg5: !verona.class<"G", "$parent" : class<"$module">>) attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.class<"C", "$parent" : class<"$module">>, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.store"(%arg1, %2) : (!verona.class<"D", "$parent" : class<"$module">, "f" : meet<U64, imm>, "g" : meet<class<"C", "$parent" : class<"$module">>, mut>, "h" : F32, "i" : F64, "j" : bool>, !verona.unk) -> !verona.unk
+-    %4 = "verona.alloca"() : () -> !verona.unk
+-    %5 = "verona.store"(%arg2, %4) : (!verona.class<"E", "$parent" : class<"$module">, "a" : class<"D", "$parent" : class<"$module">, "f" : meet<U64, imm>, "g" : meet<class<"C", "$parent" : class<"$module">>, mut>, "h" : F32, "i" : F64, "j" : bool>, "b" : class<"E">, "c" : class<"F", "$parent" : class<"$module">, "e" : class<"G", "$parent" : class<"$module">>>, "d" : class<"G", "$parent" : class<"$module">>>, !verona.unk) -> !verona.unk
+-    %6 = "verona.alloca"() : () -> !verona.unk
+-    %7 = "verona.store"(%arg3, %6) : (!verona.class<"NestE", "$parent" : class<"E", "$parent" : class<"$module">, "a" : class<"D", "$parent" : class<"$module">, "f" : meet<U64, imm>, "g" : meet<class<"C", "$parent" : class<"$module">>, mut>, "h" : F32, "i" : F64, "j" : bool>, "b" : class<"E">, "c" : class<"F", "$parent" : class<"$module">, "e" : class<"G", "$parent" : class<"$module">>>, "d" : class<"G", "$parent" : class<"$module">>>, "x" : class<"G", "$parent" : class<"$module">>>, !verona.unk) -> !verona.unk
+-    %8 = "verona.alloca"() : () -> !verona.unk
+-    %9 = "verona.store"(%arg4, %8) : (!verona.class<"F", "$parent" : class<"$module">, "e" : class<"G", "$parent" : class<"$module">>>, !verona.unk) -> !verona.unk
+-    %10 = "verona.alloca"() : () -> !verona.unk
+-    %11 = "verona.store"(%arg5, %10) : (!verona.class<"G", "$parent" : class<"$module">>, !verona.unk) -> !verona.unk
+-    %12 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    verona.tidy %12 : !verona.unk
+-    %13 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    verona.drop %13 : !verona.unk
++  verona.class @D {
++    verona.field "f" : !verona.meet<U64, imm>
++    verona.field "g" : !verona.meet<class<"C">, mut>
++    verona.field "h" : !verona.F32
++    verona.field "i" : !verona.F64
++    verona.field "j" : !verona.bool
++  }
++  verona.class @E {
++    verona.field "a" : !verona.class<"D", "j" : meet<U64, imm>, "j" : meet<class<"C">, mut>, "j" : F32, "j" : F64, "j" : bool>
++    verona.field "b" : !verona.class<"E", "d" : class<"D", "j" : meet<U64, imm>, "j" : meet<class<"C">, mut>, "j" : F32, "j" : F64, "j" : bool>, "d" : class<"E">, "d" : class<"F", "e" : class<"G">>, "d" : class<"G">>
++    verona.field "c" : !verona.class<"F", "e" : class<"G">>
++    verona.field "d" : !verona.class<"G">
++  }
++  verona.class @F {
++    verona.field "e" : !verona.class<"G">
++  }
++  verona.class @G {
++  }
++  func @bar(%arg0: !verona.meet<U64, imm>, %arg1: !verona.meet<U64, imm>) {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.meet<U64, imm>, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !type.alloca) -> !type.unk
+     return
+   }
+ }
+\ No newline at end of file
+diff --git a/testsuite/mlir/mlir-parse/conditional/mlir.txt b/testsuite/mlir/mlir-parse/conditional/mlir.txt
+index 2f3309b..c417b7e 100644
+--- a/testsuite/mlir/mlir-parse/conditional/mlir.txt
++++ b/testsuite/mlir/mlir-parse/conditional/mlir.txt
+@@ -1,36 +1,36 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.U16) -> !verona.S16 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U16, !verona.unk) -> !verona.unk
+-    %2 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %3 = "verona.constant(2)"() : () -> !verona.S64
+-    %4 = "verona.lt"(%2, %3) : (!verona.unk, !verona.S64) -> i1
++  func @f(%arg0: !verona.U16) -> !verona.S16 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U16, !type.alloca) -> !type.unk
++    %2 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %3 = "verona.constant(2)"() : () -> !type.int
++    %4 = "verona.lt"(%2, %3) : (!type.unk, !type.int) -> i1
+     cond_br %4, ^bb1, ^bb2
+   ^bb1:  // pred: ^bb0
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.constant(1)"() : () -> !verona.S64
+-    %7 = "verona.add"(%5, %6) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %8 = "verona.store"(%7, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %6 = "verona.constant(1)"() : () -> !type.int
++    %7 = "verona.add"(%5, %6) : (!type.unk, !type.int) -> !type.unk
++    %8 = "verona.store"(%7, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb3
+   ^bb2:  // pred: ^bb0
+-    %9 = "verona.constant(true)"() : () -> !verona.bool
+-    %10 = "verona.cast"(%9) : (!verona.bool) -> i1
++    %9 = "verona.constant(true)"() : () -> !type.bool
++    %10 = "verona.cast"(%9) : (!type.bool) -> i1
+     cond_br %10, ^bb4, ^bb5
+   ^bb3:  // 2 preds: ^bb1, ^bb6
+-    %11 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %12 = "verona.cast"(%11) : (!verona.unk) -> !verona.S16
++    %11 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %12 = "verona.cast"(%11) : (!type.unk) -> !verona.S16
+     return %12 : !verona.S16
+   ^bb4:  // pred: ^bb2
+-    %13 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %14 = "verona.constant(1)"() : () -> !verona.S64
+-    %15 = "verona.sub"(%13, %14) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %16 = "verona.store"(%15, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %13 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %14 = "verona.constant(1)"() : () -> !type.int
++    %15 = "verona.sub"(%13, %14) : (!type.unk, !type.int) -> !type.unk
++    %16 = "verona.store"(%15, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb6
+   ^bb5:  // pred: ^bb2
+-    %17 = "verona.constant(0)"() : () -> !verona.S64
+-    %18 = "verona.store"(%17, %0) : (!verona.S64, !verona.unk) -> !verona.unk
++    %17 = "verona.constant(0)"() : () -> !type.int
++    %18 = "verona.store"(%17, %0) : (!type.int, !type.alloca) -> !type.unk
+     br ^bb6
+   ^bb6:  // 2 preds: ^bb4, ^bb5
+     br ^bb3
+diff --git a/testsuite/mlir/mlir-parse/constant/mlir.txt b/testsuite/mlir/mlir-parse/constant/mlir.txt
+index 344bb70..2fb0cba 100644
+--- a/testsuite/mlir/mlir-parse/constant/mlir.txt
++++ b/testsuite/mlir/mlir-parse/constant/mlir.txt
+@@ -1,37 +1,37 @@
+ 
+ 
+ module {
+-  func @f() attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.constant(42)"() : () -> !verona.S64
+-    %2 = "verona.store"(%1, %0) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %3 = "verona.alloca"() : () -> !verona.unk
+-    %4 = "verona.constant(3.1415)"() : () -> !verona.F64
+-    %5 = "verona.store"(%4, %3) : (!verona.F64, !verona.unk) -> !verona.unk
+-    %6 = "verona.alloca"() : () -> !verona.unk
+-    %7 = "verona.constant(true)"() : () -> !verona.bool
+-    %8 = "verona.store"(%7, %6) : (!verona.bool, !verona.unk) -> !verona.unk
+-    %9 = "verona.alloca"() : () -> !verona.unk
+-    %10 = "verona.constant(0xAE)"() : () -> !verona.U64
+-    %11 = "verona.store"(%10, %9) : (!verona.U64, !verona.unk) -> !verona.unk
+-    %12 = "verona.alloca"() : () -> !verona.unk
+-    %13 = "verona.constant(0b11011)"() : () -> !verona.U64
+-    %14 = "verona.store"(%13, %12) : (!verona.U64, !verona.unk) -> !verona.unk
+-    %15 = "verona.alloca"() : () -> !verona.unk
+-    %16 = "verona.constant(42)"() : () -> !verona.S64
+-    %17 = "verona.store"(%16, %15) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %18 = "verona.alloca"() : () -> !verona.unk
+-    %19 = "verona.constant(3.1415)"() : () -> !verona.F64
+-    %20 = "verona.store"(%19, %18) : (!verona.F64, !verona.unk) -> !verona.unk
+-    %21 = "verona.alloca"() : () -> !verona.unk
+-    %22 = "verona.constant(false)"() : () -> !verona.bool
+-    %23 = "verona.store"(%22, %21) : (!verona.bool, !verona.unk) -> !verona.unk
+-    %24 = "verona.alloca"() : () -> !verona.unk
+-    %25 = "verona.constant(0xDEADBEEF)"() : () -> !verona.U64
+-    %26 = "verona.store"(%25, %24) : (!verona.U64, !verona.unk) -> !verona.unk
+-    %27 = "verona.alloca"() : () -> !verona.unk
+-    %28 = "verona.constant(0b1)"() : () -> !verona.U64
+-    %29 = "verona.store"(%28, %27) : (!verona.U64, !verona.unk) -> !verona.unk
++  func @f() {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.constant(42)"() : () -> !type.int
++    %2 = "verona.store"(%1, %0) : (!type.int, !type.alloca) -> !type.unk
++    %3 = "verona.alloca"() : () -> !type.alloca
++    %4 = "verona.constant(3.1415)"() : () -> !type.float
++    %5 = "verona.store"(%4, %3) : (!type.float, !type.alloca) -> !type.unk
++    %6 = "verona.alloca"() : () -> !type.alloca
++    %7 = "verona.constant(true)"() : () -> !type.bool
++    %8 = "verona.store"(%7, %6) : (!type.bool, !type.alloca) -> !type.unk
++    %9 = "verona.alloca"() : () -> !type.alloca
++    %10 = "verona.constant(0xAE)"() : () -> !type.hex
++    %11 = "verona.store"(%10, %9) : (!type.hex, !type.alloca) -> !type.unk
++    %12 = "verona.alloca"() : () -> !type.alloca
++    %13 = "verona.constant(0b11011)"() : () -> !type.binary
++    %14 = "verona.store"(%13, %12) : (!type.binary, !type.alloca) -> !type.unk
++    %15 = "verona.alloca"() : () -> !type.alloca
++    %16 = "verona.constant(42)"() : () -> !type.int
++    %17 = "verona.store"(%16, %15) : (!type.int, !type.alloca) -> !type.unk
++    %18 = "verona.alloca"() : () -> !type.alloca
++    %19 = "verona.constant(3.1415)"() : () -> !type.float
++    %20 = "verona.store"(%19, %18) : (!type.float, !type.alloca) -> !type.unk
++    %21 = "verona.alloca"() : () -> !type.alloca
++    %22 = "verona.constant(false)"() : () -> !type.bool
++    %23 = "verona.store"(%22, %21) : (!type.bool, !type.alloca) -> !type.unk
++    %24 = "verona.alloca"() : () -> !type.alloca
++    %25 = "verona.constant(0xDEADBEEF)"() : () -> !type.hex
++    %26 = "verona.store"(%25, %24) : (!type.hex, !type.alloca) -> !type.unk
++    %27 = "verona.alloca"() : () -> !type.alloca
++    %28 = "verona.constant(0b1)"() : () -> !type.binary
++    %29 = "verona.store"(%28, %27) : (!type.binary, !type.alloca) -> !type.unk
+     return
+   }
+ }
+\ No newline at end of file
+diff --git a/testsuite/mlir/mlir-parse/for/mlir.txt b/testsuite/mlir/mlir-parse/for/mlir.txt
+index f4f869b..8fa823c 100644
+--- a/testsuite/mlir/mlir-parse/for/mlir.txt
++++ b/testsuite/mlir/mlir-parse/for/mlir.txt
+@@ -1,75 +1,70 @@
+ 
+ 
+ module {
+-  func @foo(!verona.S32) attributes {class = !verona.class<"$module">}
+-  func @has_value(!verona.unk) -> !verona.bool
+-  func @apply(!verona.unk) -> !verona.unk
+-  func @next(!verona.unk)
+-  func @f(%arg0: !verona.U64) attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U64, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.constant(0)"() : () -> !verona.S64
+-    %4 = "verona.store"(%3, %2) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
++  func @foo(!verona.S32)
++  func @has_value(!type.unk) -> !type.bool
++  func @apply(!type.unk) -> !type.unk
++  func @next(!type.unk)
++  func @f(%arg0: !verona.U64) {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U64, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.constant(0)"() : () -> !type.int
++    %4 = "verona.store"(%3, %2) : (!type.int, !type.alloca) -> !type.unk
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
+     br ^bb2
+   ^bb1:  // pred: ^bb3
+-    call @next(%5) : (!verona.unk) -> ()
++    call @next(%5) : (!type.unk) -> ()
+     br ^bb2
+   ^bb2:  // 2 preds: ^bb0, ^bb1
+-    %6 = call @has_value(%5) : (!verona.unk) -> !verona.bool
+-    %7 = "verona.cast"(%6) : (!verona.bool) -> i1
++    %6 = call @has_value(%5) : (!type.unk) -> !type.bool
++    %7 = "verona.cast"(%6) : (!type.bool) -> i1
+     cond_br %7, ^bb3, ^bb4
+   ^bb3:  // pred: ^bb2
+-    %8 = call @apply(%5) : (!verona.unk) -> !verona.unk
+-    %9 = "verona.load"(%8) : (!verona.unk) -> !verona.unk
+-    %10 = "verona.cast"(%9) : (!verona.unk) -> !verona.S32
+-    call @foo(%10) : (!verona.S32) -> ()
++    %8 = call @apply(%5) : (!type.unk) -> !type.unk
++    %9 = "verona.cast"(%8) : (!type.unk) -> !verona.S32
++    call @foo(%9) : (!verona.S32) -> ()
+     br ^bb1
+   ^bb4:  // pred: ^bb2
+     return
+   }
+-  func @f2(%arg0: !verona.U64) attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U64, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.constant(0)"() : () -> !verona.S64
+-    %4 = "verona.store"(%3, %2) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
++  func @f2(%arg0: !verona.U64) {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U64, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.constant(0)"() : () -> !type.int
++    %4 = "verona.store"(%3, %2) : (!type.int, !type.alloca) -> !type.unk
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
+     br ^bb2
+   ^bb1:  // 2 preds: ^bb7, ^bb8
+-    call @next(%5) : (!verona.unk) -> ()
++    call @next(%5) : (!type.unk) -> ()
+     br ^bb2
+   ^bb2:  // 2 preds: ^bb0, ^bb1
+-    %6 = call @has_value(%5) : (!verona.unk) -> !verona.bool
+-    %7 = "verona.cast"(%6) : (!verona.bool) -> i1
++    %6 = call @has_value(%5) : (!type.unk) -> !type.bool
++    %7 = "verona.cast"(%6) : (!type.bool) -> i1
+     cond_br %7, ^bb3, ^bb4
+   ^bb3:  // pred: ^bb2
+-    %8 = call @apply(%5) : (!verona.unk) -> !verona.unk
+-    %9 = "verona.load"(%8) : (!verona.unk) -> !verona.unk
+-    %10 = "verona.cast"(%9) : (!verona.unk) -> !verona.S32
+-    call @foo(%10) : (!verona.S32) -> ()
+-    %11 = "verona.load"(%8) : (!verona.unk) -> !verona.unk
+-    %12 = "verona.constant(5)"() : () -> !verona.S64
+-    %13 = "verona.gt"(%11, %12) : (!verona.unk, !verona.S64) -> i1
+-    cond_br %13, ^bb5, ^bb6
++    %8 = call @apply(%5) : (!type.unk) -> !type.unk
++    %9 = "verona.cast"(%8) : (!type.unk) -> !verona.S32
++    call @foo(%9) : (!verona.S32) -> ()
++    %10 = "verona.constant(5)"() : () -> !type.int
++    %11 = "verona.gt"(%8, %10) : (!type.unk, !type.int) -> i1
++    cond_br %11, ^bb5, ^bb6
+   ^bb4:  // 2 preds: ^bb2, ^bb5
+     return
+   ^bb5:  // pred: ^bb3
+     br ^bb4
+   ^bb6:  // pred: ^bb3
+-    %14 = "verona.load"(%8) : (!verona.unk) -> !verona.unk
+-    %15 = "verona.constant(2)"() : () -> !verona.S64
+-    %16 = "verona.lt"(%14, %15) : (!verona.unk, !verona.S64) -> i1
+-    cond_br %16, ^bb8, ^bb9
++    %12 = "verona.constant(2)"() : () -> !type.int
++    %13 = "verona.lt"(%8, %12) : (!type.unk, !type.int) -> i1
++    cond_br %13, ^bb8, ^bb9
+   ^bb7:  // pred: ^bb10
+     br ^bb1
+   ^bb8:  // pred: ^bb6
+     br ^bb1
+   ^bb9:  // pred: ^bb6
+-    %17 = "verona.load"(%8) : (!verona.unk) -> !verona.unk
+-    %18 = "verona.cast"(%17) : (!verona.unk) -> !verona.S32
+-    call @foo(%18) : (!verona.S32) -> ()
++    %14 = "verona.cast"(%8) : (!type.unk) -> !verona.S32
++    call @foo(%14) : (!verona.S32) -> ()
+     br ^bb10
+   ^bb10:  // pred: ^bb9
+     br ^bb7
+diff --git a/testsuite/mlir/mlir-parse/function/mlir.txt b/testsuite/mlir/mlir-parse/function/mlir.txt
+index 9dcc796..dd4acc8 100644
+--- a/testsuite/mlir/mlir-parse/function/mlir.txt
++++ b/testsuite/mlir/mlir-parse/function/mlir.txt
+@@ -1,30 +1,30 @@
+ 
+ 
+ module {
+-  func @empty_declaration() attributes {class = !verona.class<"$module">}
+-  func @single_arg(!verona.S16) attributes {class = !verona.class<"$module">}
+-  func @args_and_ret(!verona.U32, !verona.S32) -> !verona.F64 attributes {class = !verona.class<"$module">}
+-  func @empty_return() attributes {class = !verona.class<"$module">} {
++  func @empty_declaration()
++  func @single_arg(!verona.S16)
++  func @args_and_ret(!verona.U32, !verona.S32) -> !verona.F64
++  func @empty_return() {
+     return
+   }
+-  func @foo(%arg0: !verona.imm, %arg1: !verona.meet<U64, imm>) -> !verona.meet<U64, imm> attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.imm, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !verona.unk) -> !verona.unk
+-    %4 = "verona.alloca"() : () -> !verona.unk
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %7 = "verona.add"(%5, %6) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %8 = "verona.store"(%7, %4) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %9 = "verona.alloca"() : () -> !verona.unk
+-    %10 = "verona.load"(%4) : (!verona.unk) -> !verona.unk
+-    %11 = "verona.store"(%10, %9) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %12 = "verona.load"(%4) : (!verona.unk) -> !verona.unk
+-    %13 = "verona.cast"(%12) : (!verona.unk) -> !verona.meet<U64, imm>
++  func @foo(%arg0: !verona.imm, %arg1: !verona.meet<U64, imm>) -> !verona.meet<U64, imm> {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.imm, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !type.alloca) -> !type.unk
++    %4 = "verona.alloca"() : () -> !type.alloca
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %6 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %7 = "verona.add"(%5, %6) : (!type.unk, !type.unk) -> !type.unk
++    %8 = "verona.store"(%7, %4) : (!type.unk, !type.alloca) -> !type.unk
++    %9 = "verona.alloca"() : () -> !type.alloca
++    %10 = "verona.load"(%4) : (!type.alloca) -> !type.unk
++    %11 = "verona.store"(%10, %9) : (!type.unk, !type.alloca) -> !type.unk
++    %12 = "verona.load"(%4) : (!type.alloca) -> !type.unk
++    %13 = "verona.cast"(%12) : (!type.unk) -> !verona.meet<U64, imm>
+     return %13 : !verona.meet<U64, imm>
+   }
+-  func @apply() attributes {class = !verona.class<"$module">} {
++  func @apply() {
+     return
+   }
+ }
+\ No newline at end of file
+diff --git a/testsuite/mlir/mlir-parse/nested-conditional/mlir.txt b/testsuite/mlir/mlir-parse/nested-conditional/mlir.txt
+index c6cc215..4d64b3c 100644
+--- a/testsuite/mlir/mlir-parse/nested-conditional/mlir.txt
++++ b/testsuite/mlir/mlir-parse/nested-conditional/mlir.txt
+@@ -1,85 +1,85 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.U32) -> !verona.U32 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !verona.unk) -> !verona.unk
+-    %2 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %3 = "verona.constant(2)"() : () -> !verona.S64
+-    %4 = "verona.lt"(%2, %3) : (!verona.unk, !verona.S64) -> i1
++  func @f(%arg0: !verona.U32) -> !verona.U32 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !type.alloca) -> !type.unk
++    %2 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %3 = "verona.constant(2)"() : () -> !type.int
++    %4 = "verona.lt"(%2, %3) : (!type.unk, !type.int) -> i1
+     cond_br %4, ^bb1, ^bb2
+   ^bb1:  // pred: ^bb0
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.constant(1)"() : () -> !verona.S64
+-    %7 = "verona.add"(%5, %6) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %8 = "verona.store"(%7, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %6 = "verona.constant(1)"() : () -> !type.int
++    %7 = "verona.add"(%5, %6) : (!type.unk, !type.int) -> !type.unk
++    %8 = "verona.store"(%7, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb3
+   ^bb2:  // pred: ^bb0
+-    %9 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %10 = "verona.constant(100)"() : () -> !verona.S64
+-    %11 = "verona.gt"(%9, %10) : (!verona.unk, !verona.S64) -> i1
++    %9 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %10 = "verona.constant(100)"() : () -> !type.int
++    %11 = "verona.gt"(%9, %10) : (!type.unk, !type.int) -> i1
+     cond_br %11, ^bb4, ^bb5
+   ^bb3:  // 2 preds: ^bb1, ^bb6
+-    %12 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %13 = "verona.cast"(%12) : (!verona.unk) -> !verona.U32
++    %12 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %13 = "verona.cast"(%12) : (!type.unk) -> !verona.U32
+     return %13 : !verona.U32
+   ^bb4:  // pred: ^bb2
+-    %14 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %15 = "verona.constant(1)"() : () -> !verona.S64
+-    %16 = "verona.sub"(%14, %15) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %17 = "verona.store"(%16, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %14 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %15 = "verona.constant(1)"() : () -> !type.int
++    %16 = "verona.sub"(%14, %15) : (!type.unk, !type.int) -> !type.unk
++    %17 = "verona.store"(%16, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb6
+   ^bb5:  // pred: ^bb2
+-    %18 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %19 = "verona.constant(20)"() : () -> !verona.S64
+-    %20 = "verona.le"(%18, %19) : (!verona.unk, !verona.S64) -> i1
++    %18 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %19 = "verona.constant(20)"() : () -> !type.int
++    %20 = "verona.le"(%18, %19) : (!type.unk, !type.int) -> i1
+     cond_br %20, ^bb7, ^bb8
+   ^bb6:  // 2 preds: ^bb4, ^bb9
+     br ^bb3
+   ^bb7:  // pred: ^bb5
+-    %21 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %22 = "verona.constant(2)"() : () -> !verona.S64
+-    %23 = "verona.mul"(%21, %22) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %24 = "verona.store"(%23, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %21 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %22 = "verona.constant(2)"() : () -> !type.int
++    %23 = "verona.mul"(%21, %22) : (!type.unk, !type.int) -> !type.unk
++    %24 = "verona.store"(%23, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb9
+   ^bb8:  // pred: ^bb5
+-    %25 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %26 = "verona.constant(50)"() : () -> !verona.S64
+-    %27 = "verona.ge"(%25, %26) : (!verona.unk, !verona.S64) -> i1
++    %25 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %26 = "verona.constant(50)"() : () -> !type.int
++    %27 = "verona.ge"(%25, %26) : (!type.unk, !type.int) -> i1
+     cond_br %27, ^bb10, ^bb11
+   ^bb9:  // 2 preds: ^bb7, ^bb12
+     br ^bb6
+   ^bb10:  // pred: ^bb8
+-    %28 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %29 = "verona.constant(10)"() : () -> !verona.S64
+-    %30 = "verona.div"(%28, %29) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %31 = "verona.store"(%30, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %28 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %29 = "verona.constant(10)"() : () -> !type.int
++    %30 = "verona.div"(%28, %29) : (!type.unk, !type.int) -> !type.unk
++    %31 = "verona.store"(%30, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb12
+   ^bb11:  // pred: ^bb8
+-    %32 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %33 = "verona.constant(10)"() : () -> !verona.S64
+-    %34 = "verona.eq"(%32, %33) : (!verona.unk, !verona.S64) -> i1
++    %32 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %33 = "verona.constant(10)"() : () -> !type.int
++    %34 = "verona.eq"(%32, %33) : (!type.unk, !type.int) -> i1
+     cond_br %34, ^bb13, ^bb14
+   ^bb12:  // 2 preds: ^bb10, ^bb15
+     br ^bb9
+   ^bb13:  // pred: ^bb11
+-    %35 = "verona.constant(10)"() : () -> !verona.S64
+-    %36 = "verona.store"(%35, %0) : (!verona.S64, !verona.unk) -> !verona.unk
++    %35 = "verona.constant(10)"() : () -> !type.int
++    %36 = "verona.store"(%35, %0) : (!type.int, !type.alloca) -> !type.unk
+     br ^bb15
+   ^bb14:  // pred: ^bb11
+-    %37 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %38 = "verona.constant(20)"() : () -> !verona.S64
+-    %39 = "verona.ne"(%37, %38) : (!verona.unk, !verona.S64) -> i1
++    %37 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %38 = "verona.constant(20)"() : () -> !type.int
++    %39 = "verona.ne"(%37, %38) : (!type.unk, !type.int) -> i1
+     cond_br %39, ^bb16, ^bb17
+   ^bb15:  // 2 preds: ^bb13, ^bb18
+     br ^bb12
+   ^bb16:  // pred: ^bb14
+-    %40 = "verona.constant(42)"() : () -> !verona.S64
+-    %41 = "verona.store"(%40, %0) : (!verona.S64, !verona.unk) -> !verona.unk
++    %40 = "verona.constant(42)"() : () -> !type.int
++    %41 = "verona.store"(%40, %0) : (!type.int, !type.alloca) -> !type.unk
+     br ^bb18
+   ^bb17:  // pred: ^bb14
+-    %42 = "verona.constant(0)"() : () -> !verona.S64
+-    %43 = "verona.store"(%42, %0) : (!verona.S64, !verona.unk) -> !verona.unk
++    %42 = "verona.constant(0)"() : () -> !type.int
++    %43 = "verona.store"(%42, %0) : (!type.int, !type.alloca) -> !type.unk
+     br ^bb18
+   ^bb18:  // 2 preds: ^bb16, ^bb17
+     br ^bb15
+diff --git a/testsuite/mlir/mlir-parse/nested-while/mlir.txt b/testsuite/mlir/mlir-parse/nested-while/mlir.txt
+index c9b0280..b01b94a 100644
+--- a/testsuite/mlir/mlir-parse/nested-while/mlir.txt
++++ b/testsuite/mlir/mlir-parse/nested-while/mlir.txt
+@@ -1,38 +1,38 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.S64) -> !verona.S64 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.S64, !verona.unk) -> !verona.unk
++  func @f(%arg0: !verona.S64) -> !verona.S64 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.S64, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb1:  // 2 preds: ^bb0, ^bb6
+-    %2 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %3 = "verona.constant(50)"() : () -> !verona.S64
+-    %4 = "verona.lt"(%2, %3) : (!verona.unk, !verona.S64) -> i1
++    %2 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %3 = "verona.constant(50)"() : () -> !type.int
++    %4 = "verona.lt"(%2, %3) : (!type.unk, !type.int) -> i1
+     cond_br %4, ^bb2, ^bb3
+   ^bb2:  // pred: ^bb1
+-    %5 = "verona.alloca"() : () -> !verona.unk
+-    %6 = "verona.constant(1)"() : () -> !verona.S64
+-    %7 = "verona.store"(%6, %5) : (!verona.S64, !verona.unk) -> !verona.unk
++    %5 = "verona.alloca"() : () -> !type.alloca
++    %6 = "verona.constant(1)"() : () -> !type.int
++    %7 = "verona.store"(%6, %5) : (!type.int, !type.alloca) -> !type.unk
+     br ^bb4
+   ^bb3:  // pred: ^bb1
+-    %8 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %9 = "verona.cast"(%8) : (!verona.unk) -> !verona.S64
++    %8 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %9 = "verona.cast"(%8) : (!type.unk) -> !verona.S64
+     return %9 : !verona.S64
+   ^bb4:  // 2 preds: ^bb2, ^bb5
+-    %10 = "verona.load"(%5) : (!verona.unk) -> !verona.unk
+-    %11 = "verona.constant(10)"() : () -> !verona.S64
+-    %12 = "verona.lt"(%10, %11) : (!verona.unk, !verona.S64) -> i1
++    %10 = "verona.load"(%5) : (!type.alloca) -> !type.unk
++    %11 = "verona.constant(10)"() : () -> !type.int
++    %12 = "verona.lt"(%10, %11) : (!type.unk, !type.int) -> i1
+     cond_br %12, ^bb5, ^bb6
+   ^bb5:  // pred: ^bb4
+-    %13 = "verona.load"(%5) : (!verona.unk) -> !verona.unk
+-    %14 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %15 = "verona.add"(%13, %14) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %16 = "verona.store"(%15, %5) : (!verona.unk, !verona.unk) -> !verona.unk
++    %13 = "verona.load"(%5) : (!type.alloca) -> !type.unk
++    %14 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %15 = "verona.add"(%13, %14) : (!type.unk, !type.unk) -> !type.unk
++    %16 = "verona.store"(%15, %5) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb4
+   ^bb6:  // pred: ^bb4
+-    %17 = "verona.load"(%5) : (!verona.unk) -> !verona.unk
+-    %18 = "verona.store"(%17, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %17 = "verona.load"(%5) : (!type.alloca) -> !type.unk
++    %18 = "verona.store"(%17, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb1
+   }
+ }
+\ No newline at end of file
+diff --git a/testsuite/mlir/mlir-parse/types/mlir.txt b/testsuite/mlir/mlir-parse/types/mlir.txt
+index 029e6c8..cd9c7b3 100644
+--- a/testsuite/mlir/mlir-parse/types/mlir.txt
++++ b/testsuite/mlir/mlir-parse/types/mlir.txt
+@@ -1,15 +1,15 @@
+ 
+ 
+ module {
+-  func @foo(%arg0: !verona.meet<S32, iso>, %arg1: !verona.meet<U64, imm>) -> !verona.join<meet<S32, iso>, meet<U64, imm>, meet<U32, mut>> attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.meet<S32, iso>, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !verona.unk) -> !verona.unk
+-    %4 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %5 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.add"(%4, %5) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %7 = "verona.cast"(%6) : (!verona.unk) -> !verona.join<meet<S32, iso>, meet<U64, imm>, meet<U32, mut>>
++  func @foo(%arg0: !verona.meet<S32, iso>, %arg1: !verona.meet<U64, imm>) -> !verona.join<meet<S32, iso>, meet<U64, imm>, meet<U32, mut>> {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.meet<S32, iso>, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.store"(%arg1, %2) : (!verona.meet<U64, imm>, !type.alloca) -> !type.unk
++    %4 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %5 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %6 = "verona.add"(%4, %5) : (!type.unk, !type.unk) -> !type.unk
++    %7 = "verona.cast"(%6) : (!type.unk) -> !verona.join<meet<S32, iso>, meet<U64, imm>, meet<U32, mut>>
+     return %7 : !verona.join<meet<S32, iso>, meet<U64, imm>, meet<U32, mut>>
+   }
+ }
+\ No newline at end of file
+diff --git a/testsuite/mlir/mlir-parse/while-cont-brk/mlir.txt b/testsuite/mlir/mlir-parse/while-cont-brk/mlir.txt
+index f6af03c..4ffed80 100644
+--- a/testsuite/mlir/mlir-parse/while-cont-brk/mlir.txt
++++ b/testsuite/mlir/mlir-parse/while-cont-brk/mlir.txt
+@@ -1,36 +1,36 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.U32, %arg1: !verona.S32) -> !verona.F16 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.store"(%arg1, %2) : (!verona.S32, !verona.unk) -> !verona.unk
++  func @f(%arg0: !verona.U32, %arg1: !verona.S32) -> !verona.F16 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.store"(%arg1, %2) : (!verona.S32, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb1:  // 3 preds: ^bb0, ^bb4, ^bb7
+-    %4 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %5 = "verona.constant(5)"() : () -> !verona.S64
+-    %6 = "verona.lt"(%4, %5) : (!verona.unk, !verona.S64) -> i1
++    %4 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %5 = "verona.constant(5)"() : () -> !type.int
++    %6 = "verona.lt"(%4, %5) : (!type.unk, !type.int) -> i1
+     cond_br %6, ^bb2, ^bb3
+   ^bb2:  // pred: ^bb1
+-    %7 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %8 = "verona.constant(1)"() : () -> !verona.S64
+-    %9 = "verona.add"(%7, %8) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %10 = "verona.store"(%9, %0) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %11 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %12 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %13 = "verona.lt"(%11, %12) : (!verona.unk, !verona.unk) -> i1
++    %7 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %8 = "verona.constant(1)"() : () -> !type.int
++    %9 = "verona.add"(%7, %8) : (!type.unk, !type.int) -> !type.unk
++    %10 = "verona.store"(%9, %0) : (!type.unk, !type.alloca) -> !type.unk
++    %11 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %12 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %13 = "verona.lt"(%11, %12) : (!type.unk, !type.unk) -> i1
+     cond_br %13, ^bb4, ^bb5
+   ^bb3:  // 2 preds: ^bb1, ^bb6
+-    %14 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %15 = "verona.cast"(%14) : (!verona.unk) -> !verona.F16
++    %14 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %15 = "verona.cast"(%14) : (!type.unk) -> !verona.F16
+     return %15 : !verona.F16
+   ^bb4:  // pred: ^bb2
+     br ^bb1
+   ^bb5:  // pred: ^bb2
+-    %16 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %17 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %18 = "verona.gt"(%16, %17) : (!verona.unk, !verona.unk) -> i1
++    %16 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %17 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %18 = "verona.gt"(%16, %17) : (!type.unk, !type.unk) -> i1
+     cond_br %18, ^bb6, ^bb7
+   ^bb6:  // pred: ^bb5
+     br ^bb3
+diff --git a/testsuite/mlir/mlir-parse/while-context/mlir.txt b/testsuite/mlir/mlir-parse/while-context/mlir.txt
+index 81e8ae5..19d21de 100644
+--- a/testsuite/mlir/mlir-parse/while-context/mlir.txt
++++ b/testsuite/mlir/mlir-parse/while-context/mlir.txt
+@@ -1,35 +1,35 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.F32) -> !verona.F64 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.F32, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.constant(1)"() : () -> !verona.S64
+-    %4 = "verona.store"(%3, %2) : (!verona.S64, !verona.unk) -> !verona.unk
++  func @f(%arg0: !verona.F32) -> !verona.F64 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.F32, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.constant(1)"() : () -> !type.int
++    %4 = "verona.store"(%3, %2) : (!type.int, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb1:  // 2 preds: ^bb0, ^bb2
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.constant(5)"() : () -> !verona.S64
+-    %7 = "verona.lt"(%5, %6) : (!verona.unk, !verona.S64) -> i1
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %6 = "verona.constant(5)"() : () -> !type.int
++    %7 = "verona.lt"(%5, %6) : (!type.unk, !type.int) -> i1
+     cond_br %7, ^bb2, ^bb3
+   ^bb2:  // pred: ^bb1
+-    %8 = "verona.alloca"() : () -> !verona.unk
+-    %9 = "verona.constant(2)"() : () -> !verona.S64
+-    %10 = "verona.store"(%9, %8) : (!verona.S64, !verona.unk) -> !verona.unk
+-    %11 = "verona.alloca"() : () -> !verona.unk
+-    %12 = "verona.load"(%8) : (!verona.unk) -> !verona.unk
+-    %13 = "verona.constant(3)"() : () -> !verona.S64
+-    %14 = "verona.add"(%12, %13) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %15 = "verona.store"(%14, %11) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %16 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %17 = "verona.load"(%11) : (!verona.unk) -> !verona.unk
+-    %18 = "verona.add"(%16, %17) : (!verona.unk, !verona.unk) -> !verona.unk
+-    %19 = "verona.store"(%18, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %8 = "verona.alloca"() : () -> !type.alloca
++    %9 = "verona.constant(2)"() : () -> !type.int
++    %10 = "verona.store"(%9, %8) : (!type.int, !type.alloca) -> !type.unk
++    %11 = "verona.alloca"() : () -> !type.alloca
++    %12 = "verona.load"(%8) : (!type.alloca) -> !type.unk
++    %13 = "verona.constant(3)"() : () -> !type.int
++    %14 = "verona.add"(%12, %13) : (!type.unk, !type.int) -> !type.unk
++    %15 = "verona.store"(%14, %11) : (!type.unk, !type.alloca) -> !type.unk
++    %16 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %17 = "verona.load"(%11) : (!type.alloca) -> !type.unk
++    %18 = "verona.add"(%16, %17) : (!type.unk, !type.unk) -> !type.unk
++    %19 = "verona.store"(%18, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb3:  // pred: ^bb1
+-    %20 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %21 = "verona.cast"(%20) : (!verona.unk) -> !verona.F64
++    %20 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %21 = "verona.cast"(%20) : (!type.unk) -> !verona.F64
+     return %21 : !verona.F64
+   }
+ }
+\ No newline at end of file
+diff --git a/testsuite/mlir/mlir-parse/while-if/mlir.txt b/testsuite/mlir/mlir-parse/while-if/mlir.txt
+index 356e441..842412e 100644
+--- a/testsuite/mlir/mlir-parse/while-if/mlir.txt
++++ b/testsuite/mlir/mlir-parse/while-if/mlir.txt
+@@ -1,31 +1,31 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.U32, %arg1: !verona.S32) -> !verona.U32 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !verona.unk) -> !verona.unk
+-    %2 = "verona.alloca"() : () -> !verona.unk
+-    %3 = "verona.store"(%arg1, %2) : (!verona.S32, !verona.unk) -> !verona.unk
++  func @f(%arg0: !verona.U32, %arg1: !verona.S32) -> !verona.U32 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !type.alloca) -> !type.unk
++    %2 = "verona.alloca"() : () -> !type.alloca
++    %3 = "verona.store"(%arg1, %2) : (!verona.S32, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb1:  // 2 preds: ^bb0, ^bb5
+-    %4 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %5 = "verona.constant(5)"() : () -> !verona.S64
+-    %6 = "verona.lt"(%4, %5) : (!verona.unk, !verona.S64) -> i1
++    %4 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %5 = "verona.constant(5)"() : () -> !type.int
++    %6 = "verona.lt"(%4, %5) : (!type.unk, !type.int) -> i1
+     cond_br %6, ^bb2, ^bb3
+   ^bb2:  // pred: ^bb1
+-    %7 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %8 = "verona.load"(%2) : (!verona.unk) -> !verona.unk
+-    %9 = "verona.ne"(%7, %8) : (!verona.unk, !verona.unk) -> i1
++    %7 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %8 = "verona.load"(%2) : (!type.alloca) -> !type.unk
++    %9 = "verona.ne"(%7, %8) : (!type.unk, !type.unk) -> i1
+     cond_br %9, ^bb4, ^bb5
+   ^bb3:  // pred: ^bb1
+-    %10 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %11 = "verona.cast"(%10) : (!verona.unk) -> !verona.U32
++    %10 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %11 = "verona.cast"(%10) : (!type.unk) -> !verona.U32
+     return %11 : !verona.U32
+   ^bb4:  // pred: ^bb2
+-    %12 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %13 = "verona.constant(1)"() : () -> !verona.S64
+-    %14 = "verona.add"(%12, %13) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %15 = "verona.store"(%14, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %12 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %13 = "verona.constant(1)"() : () -> !type.int
++    %14 = "verona.add"(%12, %13) : (!type.unk, !type.int) -> !type.unk
++    %15 = "verona.store"(%14, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb5
+   ^bb5:  // 2 preds: ^bb2, ^bb4
+     br ^bb1
+diff --git a/testsuite/mlir/mlir-parse/while/mlir.txt b/testsuite/mlir/mlir-parse/while/mlir.txt
+index 07ca7a1..a1a2efe 100644
+--- a/testsuite/mlir/mlir-parse/while/mlir.txt
++++ b/testsuite/mlir/mlir-parse/while/mlir.txt
+@@ -1,36 +1,36 @@
+ 
+ 
+ module {
+-  func @f(%arg0: !verona.U32) -> !verona.U32 attributes {class = !verona.class<"$module">} {
+-    %0 = "verona.alloca"() : () -> !verona.unk
+-    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !verona.unk) -> !verona.unk
++  func @f(%arg0: !verona.U32) -> !verona.U32 {
++    %0 = "verona.alloca"() : () -> !type.alloca
++    %1 = "verona.store"(%arg0, %0) : (!verona.U32, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb1:  // 2 preds: ^bb0, ^bb2
+-    %2 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %3 = "verona.constant(5)"() : () -> !verona.S64
+-    %4 = "verona.lt"(%2, %3) : (!verona.unk, !verona.S64) -> i1
++    %2 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %3 = "verona.constant(5)"() : () -> !type.int
++    %4 = "verona.lt"(%2, %3) : (!type.unk, !type.int) -> i1
+     cond_br %4, ^bb2, ^bb3
+   ^bb2:  // pred: ^bb1
+-    %5 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %6 = "verona.constant(1)"() : () -> !verona.S64
+-    %7 = "verona.add"(%5, %6) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %8 = "verona.store"(%7, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %5 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %6 = "verona.constant(1)"() : () -> !type.int
++    %7 = "verona.add"(%5, %6) : (!type.unk, !type.int) -> !type.unk
++    %8 = "verona.store"(%7, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb1
+   ^bb3:  // pred: ^bb1
+     br ^bb4
+   ^bb4:  // 2 preds: ^bb3, ^bb5
+-    %9 = "verona.constant(false)"() : () -> !verona.bool
+-    %10 = "verona.cast"(%9) : (!verona.bool) -> i1
++    %9 = "verona.constant(false)"() : () -> !type.bool
++    %10 = "verona.cast"(%9) : (!type.bool) -> i1
+     cond_br %10, ^bb5, ^bb6
+   ^bb5:  // pred: ^bb4
+-    %11 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %12 = "verona.constant(1)"() : () -> !verona.S64
+-    %13 = "verona.sub"(%11, %12) : (!verona.unk, !verona.S64) -> !verona.unk
+-    %14 = "verona.store"(%13, %0) : (!verona.unk, !verona.unk) -> !verona.unk
++    %11 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %12 = "verona.constant(1)"() : () -> !type.int
++    %13 = "verona.sub"(%11, %12) : (!type.unk, !type.int) -> !type.unk
++    %14 = "verona.store"(%13, %0) : (!type.unk, !type.alloca) -> !type.unk
+     br ^bb4
+   ^bb6:  // pred: ^bb4
+-    %15 = "verona.load"(%0) : (!verona.unk) -> !verona.unk
+-    %16 = "verona.cast"(%15) : (!verona.unk) -> !verona.U32
++    %15 = "verona.load"(%0) : (!type.alloca) -> !type.unk
++    %16 = "verona.cast"(%15) : (!type.unk) -> !verona.U32
+     return %16 : !verona.U32
+   }
+ }
+\ No newline at end of file

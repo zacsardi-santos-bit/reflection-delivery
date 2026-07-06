@@ -1,0 +1,430 @@
+diff --git a/python/mypy.ini b/python/mypy.ini
+index c7984042c..611f1b103 100644
+--- a/python/mypy.ini
++++ b/python/mypy.ini
+@@ -13,10 +13,6 @@ warn_untyped_fields = true
+ [mypy-semantic_kernel]
+ no_implicit_reexport = true
+ 
+-[mypy-semantic_kernel.connectors.ai.azure_ai_inference.*]
+-ignore_errors = true
+-# TODO (eavanvalkenburg): remove this: https://github.com/microsoft/semantic-kernel/issues/7132
+-
+ [mypy-semantic_kernel.connectors.ai.ollama.*]
+ ignore_errors = true
+ # TODO (eavanvalkenburg): remove this: https://github.com/microsoft/semantic-kernel/issues/7134
+diff --git a/python/semantic_kernel/connectors/ai/azure_ai_inference/azure_ai_inference_prompt_execution_settings.py b/python/semantic_kernel/connectors/ai/azure_ai_inference/azure_ai_inference_prompt_execution_settings.py
+index 804ddfd80..5e81ad8b7 100644
+--- a/python/semantic_kernel/connectors/ai/azure_ai_inference/azure_ai_inference_prompt_execution_settings.py
++++ b/python/semantic_kernel/connectors/ai/azure_ai_inference/azure_ai_inference_prompt_execution_settings.py
+@@ -23,7 +23,7 @@ class AzureAIInferencePromptExecutionSettings(PromptExecutionSettings):
+     stop: str | None = None
+     temperature: float | None = Field(None, ge=0.0, le=1.0)
+     top_p: float | None = Field(None, ge=0.0, le=1.0)
+-    extra_parameters: dict[str, str] | None = None
++    extra_parameters: dict[str, Any] | None = None
+ 
+ 
+ @experimental_class
+diff --git a/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_chat_completion.py b/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_chat_completion.py
+index 35d167d64..d7b11bb57 100644
+--- a/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_chat_completion.py
++++ b/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_chat_completion.py
+@@ -5,9 +5,9 @@ import logging
+ import sys
+ from collections.abc import AsyncGenerator
+ from functools import reduce
+-from typing import Any
++from typing import TYPE_CHECKING, Any
+ 
+-if sys.version >= "3.12":
++if sys.version_info >= (3, 12):
+     from typing import override  # pragma: no cover
+ else:
+     from typing_extensions import override  # pragma: no cover
+@@ -20,6 +20,7 @@ from azure.ai.inference.models import (
+     ChatCompletionsFunctionToolCall,
+     ChatRequestMessage,
+     StreamingChatChoiceUpdate,
++    StreamingChatCompletionsUpdate,
+ )
+ from azure.core.credentials import AzureKeyCredential
+ from pydantic import ValidationError
+@@ -34,8 +35,9 @@ from semantic_kernel.connectors.ai.chat_completion_client_base import ChatComple
+ from semantic_kernel.connectors.ai.function_calling_utils import update_settings_from_function_call_configuration
+ from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
+ from semantic_kernel.contents.chat_history import ChatHistory
+-from semantic_kernel.contents.chat_message_content import ChatMessageContent
++from semantic_kernel.contents.chat_message_content import ITEM_TYPES, ChatMessageContent
+ from semantic_kernel.contents.function_call_content import FunctionCallContent
++from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
+ from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
+ from semantic_kernel.contents.streaming_text_content import StreamingTextContent
+ from semantic_kernel.contents.text_content import TextContent
+@@ -49,6 +51,9 @@ from semantic_kernel.functions.kernel_arguments import KernelArguments
+ from semantic_kernel.kernel import Kernel
+ from semantic_kernel.utils.experimental_decorator import experimental_class
+ 
++if TYPE_CHECKING:
++    from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
++
+ logger: logging.Logger = logging.getLogger(__name__)
+ 
+ 
+@@ -97,7 +102,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+                 raise ServiceInitializationError(f"Failed to validate Azure AI Inference settings: {e}") from e
+ 
+             client = ChatCompletionsClient(
+-                endpoint=azure_ai_inference_settings.endpoint,
++                endpoint=str(azure_ai_inference_settings.endpoint),
+                 credential=AzureKeyCredential(azure_ai_inference_settings.api_key.get_secret_value()),
+             )
+ 
+@@ -111,7 +116,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+     async def get_chat_message_contents(
+         self,
+         chat_history: ChatHistory,
+-        settings: AzureAIInferenceChatPromptExecutionSettings,
++        settings: "PromptExecutionSettings",
+         **kwargs: Any,
+     ) -> list[ChatMessageContent]:
+         """Get chat message contents from the Azure AI Inference service.
+@@ -124,14 +129,20 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         Returns:
+             A list of chat message contents.
+         """
++        settings = self.get_prompt_execution_settings_from_settings(settings)
++        assert isinstance(settings, AzureAIInferenceChatPromptExecutionSettings)  # nosec
++
+         if (
+             settings.function_choice_behavior is None
+             or not settings.function_choice_behavior.auto_invoke_kernel_functions
+         ):
+             return await self._send_chat_request(chat_history, settings)
+ 
+-        kernel = kwargs.get("kernel", None)
+-        self._verify_function_choice_behavior(settings, kernel)
++        kernel = kwargs.get("kernel")
++        if not isinstance(kernel, Kernel):
++            raise ServiceInvalidExecutionSettingsError("Kernel is required for auto invoking functions.")
++
++        self._verify_function_choice_behavior(settings)
+         self._configure_function_choice_behavior(settings, kernel)
+ 
+         for request_index in range(settings.function_choice_behavior.maximum_auto_invoke_attempts):
+@@ -161,6 +172,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         self, chat_history: ChatHistory, settings: AzureAIInferenceChatPromptExecutionSettings
+     ) -> list[ChatMessageContent]:
+         """Send a chat request to the Azure AI Inference service."""
++        assert isinstance(self.client, ChatCompletionsClient)  # nosec
+         response: ChatCompletions = await self.client.complete(
+             messages=self._prepare_chat_history_for_request(chat_history),
+             model_extras=settings.extra_parameters,
+@@ -183,7 +195,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         Returns:
+             A chat message content object.
+         """
+-        items = []
++        items: list[ITEM_TYPES] = []
+         if choice.message.content:
+             items.append(
+                 TextContent(
+@@ -194,13 +206,14 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+             )
+         if choice.message.tool_calls:
+             for tool_call in choice.message.tool_calls:
+-                items.append(
+-                    FunctionCallContent(
+-                        id=tool_call.id,
+-                        name=tool_call.function.name,
+-                        arguments=tool_call.function.arguments,
++                if isinstance(tool_call, ChatCompletionsFunctionToolCall):
++                    items.append(
++                        FunctionCallContent(
++                            id=tool_call.id,
++                            name=tool_call.function.name,
++                            arguments=tool_call.function.arguments,
++                        )
+                     )
+-                )
+ 
+         return ChatMessageContent(
+             role=AuthorRole(choice.message.role),
+@@ -216,7 +229,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+     async def get_streaming_chat_message_contents(
+         self,
+         chat_history: ChatHistory,
+-        settings: AzureAIInferenceChatPromptExecutionSettings,
++        settings: "PromptExecutionSettings",
+         **kwargs: Any,
+     ) -> AsyncGenerator[list[StreamingChatMessageContent], Any]:
+         """Get streaming chat message contents from the Azure AI Inference service.
+@@ -229,6 +242,9 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         Returns:
+             A list of chat message contents.
+         """
++        settings = self.get_prompt_execution_settings_from_settings(settings)
++        assert isinstance(settings, AzureAIInferenceChatPromptExecutionSettings)  # nosec
++
+         if (
+             settings.function_choice_behavior is None
+             or not settings.function_choice_behavior.auto_invoke_kernel_functions
+@@ -249,10 +265,15 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         **kwargs: Any,
+     ) -> AsyncGenerator[list[StreamingChatMessageContent], Any]:
+         """Get streaming chat message contents from the Azure AI Inference service with auto invoking functions."""
+-        kernel: Kernel = kwargs.get("kernel", None)
+-        self._verify_function_choice_behavior(settings, kernel)
++        kernel = kwargs.get("kernel")
++        if not isinstance(kernel, Kernel):
++            raise ServiceInvalidExecutionSettingsError("Kernel is required for auto invoking functions.")
++
++        self._verify_function_choice_behavior(settings)
+         self._configure_function_choice_behavior(settings, kernel)
+-        request_attempts = settings.function_choice_behavior.maximum_auto_invoke_attempts
++
++        # mypy doesn't recognize the settings.function_choice_behavior is not None by the check above
++        request_attempts = settings.function_choice_behavior.maximum_auto_invoke_attempts  # type: ignore
+ 
+         for request_index in range(request_attempts):
+             all_messages: list[StreamingChatMessageContent] = []
+@@ -280,7 +301,8 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+                 arguments=kwargs.get("arguments", None),
+                 function_call_count=len(function_calls),
+                 request_index=request_index,
+-                function_behavior=settings.function_choice_behavior,
++                # mypy doesn't recognize the settings.function_choice_behavior is not None by the check above
++                function_behavior=settings.function_choice_behavior,  # type: ignore
+             )
+ 
+             if any(result.terminate for result in results if result is not None):
+@@ -290,6 +312,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         self, chat_history: ChatHistory, settings: AzureAIInferenceChatPromptExecutionSettings
+     ) -> AsyncGenerator[list[StreamingChatMessageContent], Any]:
+         """Send a streaming chat request to the Azure AI Inference service."""
++        assert isinstance(self.client, ChatCompletionsClient)  # nosec
+         response: AsyncStreamingChatCompletions = await self.client.complete(
+             stream=True,
+             messages=self._prepare_chat_history_for_request(chat_history),
+@@ -321,7 +344,7 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         Returns:
+             A streaming chat message content object.
+         """
+-        items = []
++        items: list[STREAMING_ITEM_TYPES] = []
+         if choice.delta.content:
+             items.append(
+                 StreamingTextContent(
+@@ -364,17 +387,11 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+         chat_request_messages: list[ChatRequestMessage] = []
+ 
+         for message in chat_history.messages:
+-            if message.role not in MESSAGE_CONVERTERS:
+-                logger.warning(
+-                    "Unsupported author role in chat history while formatting for Azure AI Inference: {message.role}"
+-                )
+-                continue
+-
+             chat_request_messages.append(MESSAGE_CONVERTERS[message.role](message))
+ 
+         return chat_request_messages
+ 
+-    def _get_metadata_from_response(self, response: ChatCompletions | AsyncStreamingChatCompletions) -> dict[str, Any]:
++    def _get_metadata_from_response(self, response: ChatCompletions | StreamingChatCompletionsUpdate) -> dict[str, Any]:
+         """Get metadata from the response.
+ 
+         Args:
+@@ -390,27 +407,25 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+             "usage": response.usage,
+         }
+ 
+-    def _verify_function_choice_behavior(
+-        self,
+-        settings: AzureAIInferenceChatPromptExecutionSettings,
+-        kernel: Kernel,
+-    ):
++    def _verify_function_choice_behavior(self, settings: AzureAIInferenceChatPromptExecutionSettings):
+         """Verify the function choice behavior."""
+-        if settings.function_choice_behavior is not None:
+-            if kernel is None:
+-                raise ServiceInvalidExecutionSettingsError("Kernel is required for tool calls.")
+-            if settings.extra_parameters is not None and settings.extra_parameters.get("n", 1) > 1:
+-                # Currently only OpenAI models allow multiple completions but the Azure AI Inference service
+-                # does not expose the functionality directly. If users want to have more than 1 responses, they
+-                # need to configure `extra_parameters` with a key of "n" and a value greater than 1.
+-                raise ServiceInvalidExecutionSettingsError(
+-                    "Auto invocation of tool calls may only be used with a single completion."
+-                )
++        if not settings.function_choice_behavior:
++            raise ServiceInvalidExecutionSettingsError("Function choice behavior is required for tool calls.")
++        if settings.extra_parameters is not None and settings.extra_parameters.get("n", 1) > 1:
++            # Currently only OpenAI models allow multiple completions but the Azure AI Inference service
++            # does not expose the functionality directly. If users want to have more than 1 responses, they
++            # need to configure `extra_parameters` with a key of "n" and a value greater than 1.
++            raise ServiceInvalidExecutionSettingsError(
++                "Auto invocation of tool calls may only be used with a single completion."
++            )
+ 
+     def _configure_function_choice_behavior(
+         self, settings: AzureAIInferenceChatPromptExecutionSettings, kernel: Kernel
+     ):
+         """Configure the function choice behavior to include the kernel functions."""
++        if not settings.function_choice_behavior:
++            raise ServiceInvalidExecutionSettingsError("Function choice behavior is required for tool calls.")
++
+         settings.function_choice_behavior.configure(
+             kernel=kernel, update_settings_callback=update_settings_from_function_call_configuration, settings=settings
+         )
+@@ -442,8 +457,9 @@ class AzureAIInferenceChatCompletion(ChatCompletionClientBase, AzureAIInferenceB
+             ],
+         )
+ 
++    @override
+     def get_prompt_execution_settings_class(
+         self,
+-    ) -> AzureAIInferenceChatPromptExecutionSettings:
++    ) -> type["PromptExecutionSettings"]:
+         """Get the request settings class."""
+         return AzureAIInferenceChatPromptExecutionSettings
+diff --git a/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_text_embedding.py b/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_text_embedding.py
+index 53942e6e2..852f277da 100644
+--- a/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_text_embedding.py
++++ b/python/semantic_kernel/connectors/ai/azure_ai_inference/services/azure_ai_inference_text_embedding.py
+@@ -1,6 +1,6 @@
+ # Copyright (c) Microsoft. All rights reserved.
+ 
+-from typing import Any
++from typing import TYPE_CHECKING, Any
+ 
+ from azure.ai.inference.aio import EmbeddingsClient
+ from azure.ai.inference.models import EmbeddingsResult
+@@ -17,6 +17,9 @@ from semantic_kernel.connectors.ai.embeddings.embedding_generator_base import Em
+ from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
+ from semantic_kernel.utils.experimental_decorator import experimental_class
+ 
++if TYPE_CHECKING:
++    from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
++
+ 
+ @experimental_class
+ class AzureAIInferenceTextEmbedding(EmbeddingGeneratorBase, AzureAIInferenceBase):
+@@ -63,7 +66,7 @@ class AzureAIInferenceTextEmbedding(EmbeddingGeneratorBase, AzureAIInferenceBase
+                 raise ServiceInitializationError(f"Failed to validate Azure AI Inference settings: {e}") from e
+ 
+             client = EmbeddingsClient(
+-                endpoint=azure_ai_inference_settings.endpoint,
++                endpoint=str(azure_ai_inference_settings.endpoint),
+                 credential=AzureKeyCredential(azure_ai_inference_settings.api_key.get_secret_value()),
+             )
+ 
+@@ -73,9 +76,20 @@ class AzureAIInferenceTextEmbedding(EmbeddingGeneratorBase, AzureAIInferenceBase
+             client=client,
+         )
+ 
+-    async def generate_embeddings(self, texts: list[str], **kwargs: Any) -> ndarray:
++    async def generate_embeddings(
++        self,
++        texts: list[str],
++        settings: "PromptExecutionSettings | None" = None,
++        **kwargs: Any,
++    ) -> ndarray:
+         """Generate embeddings from the Azure AI Inference service."""
+-        settings: AzureAIInferenceEmbeddingPromptExecutionSettings = kwargs.get("settings", None)
++        if not settings:
++            settings = AzureAIInferenceEmbeddingPromptExecutionSettings()
++        else:
++            settings = self.get_prompt_execution_settings_from_settings(settings)
++        assert isinstance(settings, AzureAIInferenceEmbeddingPromptExecutionSettings)  # nosec
++        assert isinstance(self.client, EmbeddingsClient)  # nosec
++
+         response: EmbeddingsResult = await self.client.embed(
+             input=texts,
+             model_extras=settings.extra_parameters if settings else None,
+diff --git a/python/semantic_kernel/connectors/ai/azure_ai_inference/services/utils.py b/python/semantic_kernel/connectors/ai/azure_ai_inference/services/utils.py
+index 33b1b04d6..56b40c2cd 100644
+--- a/python/semantic_kernel/connectors/ai/azure_ai_inference/services/utils.py
++++ b/python/semantic_kernel/connectors/ai/azure_ai_inference/services/utils.py
+@@ -1,12 +1,15 @@
+ # Copyright (c) Microsoft. All rights reserved.
+ 
++import json
+ import logging
+ from collections.abc import Callable
+ 
+ from azure.ai.inference.models import (
+     AssistantMessage,
+     ChatCompletionsFunctionToolCall,
++    ChatCompletionsToolCall,
+     ChatRequestMessage,
++    ContentItem,
+     FunctionCall,
+     ImageContentItem,
+     ImageDetailLevel,
+@@ -54,13 +57,15 @@ def _format_user_message(message: ChatMessageContent) -> UserMessage:
+     if not any(isinstance(item, (ImageContent)) for item in message.items):
+         return UserMessage(content=message.content)
+ 
+-    contentItems = []
++    contentItems: list[ContentItem] = []
+     for item in message.items:
+         if isinstance(item, TextContent):
+             contentItems.append(TextContentItem(text=item.text))
+         elif isinstance(item, ImageContent) and (item.data_uri or item.uri):
+             contentItems.append(
+-                ImageContentItem(image_url=ImageUrl(url=item.data_uri or str(item.uri), detail=ImageDetailLevel.Auto))
++                ImageContentItem(
++                    image_url=ImageUrl(url=item.data_uri or str(item.uri), detail=ImageDetailLevel.Auto.value)
++                )
+             )
+         else:
+             logger.warning(
+@@ -80,16 +85,23 @@ def _format_assistant_message(message: ChatMessageContent) -> AssistantMessage:
+     Returns:
+         The formatted assistant message.
+     """
+-    contentItems = []
+-    toolCalls = []
++    toolCalls: list[ChatCompletionsToolCall] = []
+ 
+     for item in message.items:
+         if isinstance(item, TextContent):
+-            contentItems.append(TextContentItem(text=item.text))
+-        elif isinstance(item, FunctionCallContent):
++            # Assuming the assistant message will have only one text content item
++            # and we assign the content directly to the message content, which is a string.
++            continue
++        if isinstance(item, FunctionCallContent):
+             toolCalls.append(
+                 ChatCompletionsFunctionToolCall(
+-                    id=item.id, function=FunctionCall(name=item.name, arguments=item.arguments)
++                    id=item.id or "",
++                    function=FunctionCall(
++                        name=item.name or "",
++                        arguments=json.dumps(item.arguments)
++                        if isinstance(item.arguments, dict)
++                        else item.arguments or "",
++                    ),
+                 )
+             )
+         else:
+@@ -99,7 +111,7 @@ def _format_assistant_message(message: ChatMessageContent) -> AssistantMessage:
+             )
+ 
+     # tollCalls cannot be an empty list, so we need to set it to None if it is empty
+-    return AssistantMessage(content=contentItems, tool_calls=toolCalls if toolCalls else None)
++    return AssistantMessage(content=message.content, tool_calls=toolCalls if toolCalls else None)
+ 
+ 
+ def _format_tool_message(message: ChatMessageContent) -> ToolMessage:
+@@ -118,10 +130,7 @@ def _format_tool_message(message: ChatMessageContent) -> ToolMessage:
+         )
+ 
+     if not isinstance(message.items[0], FunctionResultContent):
+-        logger.warning(
+-            "Unsupported item type in Tool message while formatting chat history for Azure AI"
+-            f" Inference: {type(message.items[0])}"
+-        )
++        raise ValueError("No FunctionResultContent found in the message items")
+ 
+     # The API expects the result to be a string, so we need to convert it to a string
+     return ToolMessage(content=str(message.items[0].result), tool_call_id=message.items[0].id)

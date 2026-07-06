@@ -1,0 +1,4900 @@
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 435ecfc55..543647934 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -47,7 +47,7 @@ If an issue does not have one of these two labels, assume it is **not ready** fo
+ ### Why is maintainer approval required?
+ 
+ **Deliberate design.** marimo is an intentionally designed project. We
+-put just as much thought into the features we exclude as the ones we include,
++put just as much thought into the features we exclude as the ones we include, 
+ in order to provide our users with a simple, consistent, delightful, and
+ powerful experience.
+ 
+@@ -294,7 +294,7 @@ For the frontend, you can choose to run slower hot reloading for an environment
+ 
+ <table>
+   <tr>
+-    <th>Production-esque</th>
++    <th>Production</th>
+     <th>Development</th>
+   </tr>
+   <tr>
+diff --git a/README.md b/README.md
+index 09e978958..191263c0b 100644
+--- a/README.md
++++ b/README.md
+@@ -337,13 +337,6 @@ a greater movement toward reactive dataflow programming. From
+ declarative, and reactive programming are transforming a broad range of tools
+ for the better.
+ 
+-Finally, we would like to acknowledge [Bennet
+-Meyers](https://bmeyers.github.io/about/) and [David
+-Chassin](https://www.chassin.org/about/) for believing in marimo from the very
+-beginning: this work was supported in part by U.S. DOE Office of Critical
+-Minerals and Energy Innovation (CMEI) Integrated Energy Systems Office (IESO),
+-Agreement 34368.
+-
+ <p align="right">
+   <img src="https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo-logotype-horizontal.png" height="200px">
+ </p>
+diff --git a/docs/index.md b/docs/index.md
+index b6ef37839..bb51dece0 100644
+--- a/docs/index.md
++++ b/docs/index.md
+@@ -395,13 +395,6 @@ a greater movement toward reactive dataflow programming. From
+ declarative, and reactive programming are transforming a broad range of tools
+ for the better.
+ 
+-Finally, we would like to acknowledge [Bennet
+-Meyers](https://bmeyers.github.io/about/) and [David
+-Chassin](https://www.chassin.org/about/) for believing in marimo from the very
+-beginning: this work was supported in part by U.S. DOE Office of Critical
+-Minerals and Energy Innovation (CMEI) Integrated Energy Systems Office (IESO),
+-Agreement 34368.
+-
+ <p align="right">
+   <img src="https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo-logotype-horizontal.png" style="height:200px" alt="marimo logo">
+ </p>
+diff --git a/frontend/src/components/data-table/__tests__/column-header.test.ts b/frontend/src/components/data-table/__tests__/column-header.test.ts
+index 947e757c3..9195d5d75 100644
+--- a/frontend/src/components/data-table/__tests__/column-header.test.ts
++++ b/frontend/src/components/data-table/__tests__/column-header.test.ts
+@@ -49,9 +49,7 @@ describe("seedFromFilter", () => {
+       values: [],
+       operator: "in",
+     });
+-    expect(
+-      seedFromFilter(Filter.number({ operator: "between", min: 0, max: 10 })),
+-    ).toEqual({
++    expect(seedFromFilter(Filter.number({ min: 0, max: 10 }))).toEqual({
+       values: [],
+       operator: "in",
+     });
+diff --git a/frontend/src/components/data-table/__tests__/column-header.test.tsx b/frontend/src/components/data-table/__tests__/column-header.test.tsx
+deleted file mode 100644
+index 0f4b85b14..000000000
+--- a/frontend/src/components/data-table/__tests__/column-header.test.tsx
++++ /dev/null
+@@ -1,203 +0,0 @@
+-/* Copyright 2026 Marimo. All rights reserved. */
+-import type { Column } from "@tanstack/react-table";
+-import { fireEvent, render, screen, within } from "@testing-library/react";
+-import { beforeAll, describe, expect, it, vi } from "vitest";
+-import { NumberFilterMenu, TextFilterMenu } from "../column-header";
+-import { Filter } from "../filters";
+-
+-beforeAll(() => {
+-  global.HTMLElement.prototype.scrollIntoView = () => {
+-    // jsdom does not implement scrollIntoView; Radix calls it on open.
+-  };
+-  // Radix Select gates pointer interactions on hasPointerCapture; jsdom omits it.
+-  if (!global.HTMLElement.prototype.hasPointerCapture) {
+-    global.HTMLElement.prototype.hasPointerCapture = () => false;
+-  }
+-  if (!global.HTMLElement.prototype.releasePointerCapture) {
+-    global.HTMLElement.prototype.releasePointerCapture = () => {
+-      // no-op
+-    };
+-  }
+-});
+-
+-function mockColumn(initial?: ReturnType<typeof Filter.number>): Column<
+-  unknown,
+-  unknown
+-> & {
+-  setFilterValue: ReturnType<typeof vi.fn>;
+-} {
+-  let filterValue = initial;
+-  const setFilterValue = vi.fn((next) => {
+-    filterValue = next;
+-  });
+-  return {
+-    id: "age",
+-    columnDef: { meta: { dataType: "number", filterType: "number" } },
+-    getFilterValue: () => filterValue,
+-    setFilterValue,
+-  } as unknown as Column<unknown, unknown> & {
+-    setFilterValue: ReturnType<typeof vi.fn>;
+-  };
+-}
+-
+-describe("NumberFilterMenu", () => {
+-  it("shows all expected operators in the dropdown", () => {
+-    const column = mockColumn();
+-    render(<NumberFilterMenu column={column} />);
+-    const trigger = screen.getByRole("combobox");
+-    fireEvent.click(trigger);
+-    const listbox = screen.getByRole("listbox");
+-    const labels = within(listbox)
+-      .getAllByRole("option")
+-      .map((o) => o.textContent);
+-    expect(labels).toEqual([
+-      "Between",
+-      "Equals",
+-      "Doesn't equal",
+-      "Greater than",
+-      "Greater than or equal",
+-      "Less than",
+-      "Less than or equal",
+-      "Is null",
+-      "Is not null",
+-    ]);
+-  });
+-
+-  it("between mode disables Apply until both min and max are defined", () => {
+-    const column = mockColumn();
+-    render(<NumberFilterMenu column={column} />);
+-    const apply = screen.getByRole("button", { name: /apply/i });
+-    expect(apply).toBeDisabled();
+-
+-    const min = screen.getByLabelText("min");
+-    fireEvent.change(min, { target: { value: "1" } });
+-    fireEvent.blur(min);
+-    expect(apply).toBeDisabled();
+-
+-    const max = screen.getByLabelText("max");
+-    fireEvent.change(max, { target: { value: "10" } });
+-    fireEvent.blur(max);
+-    expect(apply).not.toBeDisabled();
+-  });
+-
+-  it("comparison mode shows a single value field seeded from current filter", () => {
+-    const column = mockColumn(Filter.number({ operator: ">", value: 18 }));
+-    render(<NumberFilterMenu column={column} />);
+-    const value = screen.getByLabelText("value") as HTMLInputElement;
+-    expect(value).toBeInTheDocument();
+-    expect(value.value).toBe("18");
+-    expect(screen.queryByLabelText("min")).not.toBeInTheDocument();
+-    expect(screen.queryByLabelText("max")).not.toBeInTheDocument();
+-  });
+-
+-  it("selecting a nullish operator hides value inputs and commits on Apply", () => {
+-    const column = mockColumn();
+-    render(<NumberFilterMenu column={column} />);
+-    fireEvent.click(screen.getByRole("combobox"));
+-    const listbox = screen.getByRole("listbox");
+-    fireEvent.click(within(listbox).getByText("Is null"));
+-    expect(column.setFilterValue).not.toHaveBeenCalled();
+-    expect(screen.queryByLabelText("min")).not.toBeInTheDocument();
+-    expect(screen.queryByLabelText("max")).not.toBeInTheDocument();
+-    expect(screen.queryByLabelText("value")).not.toBeInTheDocument();
+-    fireEvent.click(screen.getByRole("button", { name: /apply/i }));
+-    expect(column.setFilterValue).toHaveBeenCalledWith(
+-      Filter.number({ operator: "is_null" }),
+-    );
+-  });
+-});
+-
+-function mockTextColumn(initial?: ReturnType<typeof Filter.text>): Column<
+-  unknown,
+-  unknown
+-> & {
+-  setFilterValue: ReturnType<typeof vi.fn>;
+-} {
+-  let filterValue = initial;
+-  const setFilterValue = vi.fn((next) => {
+-    filterValue = next;
+-  });
+-  return {
+-    id: "name",
+-    columnDef: { meta: { dataType: "string", filterType: "text" } },
+-    getFilterValue: () => filterValue,
+-    setFilterValue,
+-  } as unknown as Column<unknown, unknown> & {
+-    setFilterValue: ReturnType<typeof vi.fn>;
+-  };
+-}
+-
+-describe("TextFilterMenu", () => {
+-  it("shows all 11 text operators in the dropdown", () => {
+-    const column = mockTextColumn();
+-    render(<TextFilterMenu column={column} />);
+-    fireEvent.click(screen.getByRole("combobox"));
+-    const listbox = screen.getByRole("listbox");
+-    const labels = within(listbox)
+-      .getAllByRole("option")
+-      .map((o) => o.textContent);
+-    expect(labels).toEqual([
+-      "Contains",
+-      "Equals",
+-      "Doesn't equal",
+-      "Matches regex",
+-      "Starts with",
+-      "Ends with",
+-      "Is in",
+-      "Not in",
+-      "Is empty",
+-      "Is null",
+-      "Is not null",
+-    ]);
+-  });
+-
+-  it("single-string operator renders a text input seeded from current filter", () => {
+-    const column = mockTextColumn(
+-      Filter.text({ operator: "equals", text: "alice" }),
+-    );
+-    render(<TextFilterMenu column={column} />);
+-    const input = screen.getByPlaceholderText("Text...") as HTMLInputElement;
+-    expect(input).toBeInTheDocument();
+-    expect(input.value).toBe("alice");
+-  });
+-
+-  it("'in' operator renders the creatable values picker", async () => {
+-    const column = mockTextColumn(
+-      Filter.text({ operator: "in", values: ["a", "b"] }),
+-    );
+-    const calculateTopKRows = vi.fn(async () => ({
+-      data: [["a", 1] as [unknown, number]],
+-    }));
+-    render(
+-      <TextFilterMenu column={column} calculateTopKRows={calculateTopKRows} />,
+-    );
+-    expect(
+-      await screen.findByPlaceholderText(/Search or add a value/i),
+-    ).toBeInTheDocument();
+-    expect(screen.queryByPlaceholderText("Text...")).not.toBeInTheDocument();
+-  });
+-
+-  it("selecting is_empty hides the value UI and commits on Apply", () => {
+-    const column = mockTextColumn();
+-    render(<TextFilterMenu column={column} />);
+-    fireEvent.click(screen.getByRole("combobox"));
+-    const listbox = screen.getByRole("listbox");
+-    fireEvent.click(within(listbox).getByText("Is empty"));
+-    expect(column.setFilterValue).not.toHaveBeenCalled();
+-    expect(screen.queryByPlaceholderText("Text...")).not.toBeInTheDocument();
+-    fireEvent.click(screen.getByRole("button", { name: /apply/i }));
+-    expect(column.setFilterValue).toHaveBeenCalledWith(
+-      Filter.text({ operator: "is_empty" }),
+-    );
+-  });
+-
+-  it("apply is disabled when scalar text is empty", () => {
+-    const column = mockTextColumn();
+-    render(<TextFilterMenu column={column} />);
+-    expect(screen.getByRole("button", { name: /apply/i })).toBeDisabled();
+-    fireEvent.change(screen.getByPlaceholderText("Text..."), {
+-      target: { value: "x" },
+-    });
+-    expect(screen.getByRole("button", { name: /apply/i })).not.toBeDisabled();
+-  });
+-});
+diff --git a/frontend/src/components/data-table/__tests__/filter-by-values-picker.test.tsx b/frontend/src/components/data-table/__tests__/filter-by-values-picker.test.tsx
+deleted file mode 100644
+index 639c388db..000000000
+--- a/frontend/src/components/data-table/__tests__/filter-by-values-picker.test.tsx
++++ /dev/null
+@@ -1,112 +0,0 @@
+-/* Copyright 2026 Marimo. All rights reserved. */
+-import type { Column } from "@tanstack/react-table";
+-import { fireEvent, render, screen } from "@testing-library/react";
+-import { beforeAll, describe, expect, it, vi } from "vitest";
+-import { FilterByValuesList } from "../filter-by-values-picker";
+-
+-beforeAll(() => {
+-  global.HTMLElement.prototype.scrollIntoView = () => {
+-    // jsdom does not implement scrollIntoView; cmdk calls it on selection.
+-  };
+-});
+-
+-function mockColumn(): Column<unknown, unknown> {
+-  return {
+-    id: "name",
+-    columnDef: { meta: { dataType: "string" } },
+-  } as unknown as Column<unknown, unknown>;
+-}
+-
+-async function calculateTopK() {
+-  return {
+-    data: [
+-      ["alice", 3],
+-      ["bob", 1],
+-    ] as Array<[string, number]>,
+-  };
+-}
+-
+-describe("FilterByValuesList — creatable", () => {
+-  it("shows '+ Add \"X\"' item when creatable and query is non-empty", async () => {
+-    const onChange = vi.fn();
+-    render(
+-      <FilterByValuesList
+-        column={mockColumn()}
+-        calculateTopKRows={calculateTopK}
+-        chosenValues={new Set()}
+-        onChange={onChange}
+-        creatable={true}
+-      />,
+-    );
+-    await screen.findByText("alice");
+-    const input = screen.getByPlaceholderText(/Search or add/i);
+-    fireEvent.change(input, { target: { value: "carol" } });
+-    expect(await screen.findByText(/\+ Add "carol"/)).toBeInTheDocument();
+-  });
+-
+-  it("commits the literal when '+ Add' is selected", async () => {
+-    const onChange = vi.fn();
+-    render(
+-      <FilterByValuesList
+-        column={mockColumn()}
+-        calculateTopKRows={calculateTopK}
+-        chosenValues={new Set()}
+-        onChange={onChange}
+-        creatable={true}
+-      />,
+-    );
+-    await screen.findByText("alice");
+-    const input = screen.getByPlaceholderText(/Search or add/i);
+-    fireEvent.change(input, { target: { value: "carol" } });
+-    fireEvent.click(await screen.findByText(/\+ Add "carol"/));
+-    expect(onChange).toHaveBeenCalledWith(["carol"]);
+-  });
+-
+-  it("Enter key in creatable mode commits the query as a value", async () => {
+-    const onChange = vi.fn();
+-    render(
+-      <FilterByValuesList
+-        column={mockColumn()}
+-        calculateTopKRows={calculateTopK}
+-        chosenValues={new Set()}
+-        onChange={onChange}
+-        creatable={true}
+-      />,
+-    );
+-    await screen.findByText("alice");
+-    const input = screen.getByPlaceholderText(/Search or add/i);
+-    fireEvent.change(input, { target: { value: "dave" } });
+-    fireEvent.keyDown(input, { key: "Enter" });
+-    expect(onChange).toHaveBeenCalledWith(["dave"]);
+-  });
+-
+-  it("does NOT show '+ Add' when creatable is false", async () => {
+-    render(
+-      <FilterByValuesList
+-        column={mockColumn()}
+-        calculateTopKRows={calculateTopK}
+-        chosenValues={new Set()}
+-        onChange={vi.fn()}
+-        creatable={false}
+-      />,
+-    );
+-    await screen.findByText("alice");
+-    const input = screen.getByPlaceholderText(/Search among/i);
+-    fireEvent.change(input, { target: { value: "carol" } });
+-    expect(screen.queryByText(/\+ Add/)).not.toBeInTheDocument();
+-  });
+-
+-  it("renders chosen values that are not in top-K with — count", async () => {
+-    render(
+-      <FilterByValuesList
+-        column={mockColumn()}
+-        calculateTopKRows={calculateTopK}
+-        chosenValues={new Set(["zara"])}
+-        onChange={vi.fn()}
+-      />,
+-    );
+-    await screen.findByText("alice");
+-    expect(screen.getByText("zara")).toBeInTheDocument();
+-    expect(screen.getByText("—")).toBeInTheDocument();
+-  });
+-});
+diff --git a/frontend/src/components/data-table/__tests__/filter-pill-editor.test.tsx b/frontend/src/components/data-table/__tests__/filter-pill-editor.test.tsx
+deleted file mode 100644
+index 2cf8788df..000000000
+--- a/frontend/src/components/data-table/__tests__/filter-pill-editor.test.tsx
++++ /dev/null
+@@ -1,175 +0,0 @@
+-/* Copyright 2026 Marimo. All rights reserved. */
+-import type { Column, Table } from "@tanstack/react-table";
+-import { fireEvent, render, screen } from "@testing-library/react";
+-import { beforeAll, describe, expect, it, vi } from "vitest";
+-import { TooltipProvider } from "@/components/ui/tooltip";
+-import { FilterPillEditor } from "../filter-pill-editor";
+-import { Filter } from "../filters";
+-
+-const renderWithProviders = (ui: React.ReactElement) =>
+-  render(<TooltipProvider>{ui}</TooltipProvider>);
+-
+-beforeAll(() => {
+-  global.HTMLElement.prototype.scrollIntoView = () => {
+-    // jsdom does not implement scrollIntoView; cmdk calls it on selection.
+-  };
+-  // jsdom lacks hasPointerCapture used by radix Select
+-  if (!global.HTMLElement.prototype.hasPointerCapture) {
+-    global.HTMLElement.prototype.hasPointerCapture = () => false;
+-  }
+-  if (!global.HTMLElement.prototype.scrollTo) {
+-    global.HTMLElement.prototype.scrollTo = () => {
+-      // noop for jsdom
+-    };
+-  }
+-});
+-
+-function makeColumn(
+-  id: string,
+-  filterType: "text" | "number" | "boolean" | "select",
+-): Column<unknown, unknown> {
+-  return {
+-    id,
+-    columnDef: { meta: { filterType, dataType: "string" } },
+-  } as unknown as Column<unknown, unknown>;
+-}
+-
+-function mockTable(): Table<unknown> {
+-  const columns = [makeColumn("name", "text"), makeColumn("age", "number")];
+-  return {
+-    getAllColumns: () => columns,
+-    getColumn: (id: string) => columns.find((c) => c.id === id),
+-    setColumnFilters: vi.fn(),
+-  } as unknown as Table<unknown>;
+-}
+-
+-async function calculateTopK() {
+-  return {
+-    data: [
+-      ["alice", 3],
+-      ["bob", 1],
+-    ] as Array<[string, number]>,
+-  };
+-}
+-
+-describe("FilterPillEditor — snapshot rehydration", () => {
+-  it("rehydrates a number > snapshot with seeded value", () => {
+-    renderWithProviders(
+-      <FilterPillEditor
+-        snapshot={{
+-          columnId: "age",
+-          value: Filter.number({ operator: ">", value: 18 }),
+-        }}
+-        table={mockTable()}
+-        onClose={vi.fn()}
+-      />,
+-    );
+-    expect(screen.getByDisplayValue("18")).toBeInTheDocument();
+-    expect(screen.getByLabelText("value")).toBeInTheDocument();
+-    // No min/max range fields rendered for comparison operator.
+-    expect(screen.queryByLabelText("min")).not.toBeInTheDocument();
+-    expect(screen.queryByLabelText("max")).not.toBeInTheDocument();
+-  });
+-
+-  it("rehydrates a number between snapshot with seeded min/max", () => {
+-    renderWithProviders(
+-      <FilterPillEditor
+-        snapshot={{
+-          columnId: "age",
+-          value: Filter.number({ operator: "between", min: 1, max: 9 }),
+-        }}
+-        table={mockTable()}
+-        onClose={vi.fn()}
+-      />,
+-    );
+-    expect(screen.getByDisplayValue("1")).toBeInTheDocument();
+-    expect(screen.getByDisplayValue("9")).toBeInTheDocument();
+-  });
+-
+-  it("rehydrates a text in snapshot seeding the creatable picker", async () => {
+-    renderWithProviders(
+-      <FilterPillEditor
+-        snapshot={{
+-          columnId: "name",
+-          value: Filter.text({ operator: "in", values: ["a", "b"] }),
+-        }}
+-        table={mockTable()}
+-        calculateTopKRows={calculateTopK}
+-        onClose={vi.fn()}
+-      />,
+-    );
+-    expect(await screen.findByText("[a, b]")).toBeInTheDocument();
+-  });
+-
+-  it("rehydrates a text contains snapshot with seeded text", () => {
+-    renderWithProviders(
+-      <FilterPillEditor
+-        snapshot={{
+-          columnId: "name",
+-          value: Filter.text({ operator: "contains", text: "hello" }),
+-        }}
+-        table={mockTable()}
+-        onClose={vi.fn()}
+-      />,
+-    );
+-    expect(screen.getByDisplayValue("hello")).toBeInTheDocument();
+-  });
+-
+-  it("hides the value slot for is_null/is_not_null/is_empty", () => {
+-    const { rerender } = renderWithProviders(
+-      <FilterPillEditor
+-        snapshot={{
+-          columnId: "name",
+-          value: Filter.text({ operator: "is_null" }),
+-        }}
+-        table={mockTable()}
+-        onClose={vi.fn()}
+-      />,
+-    );
+-    expect(screen.queryByText("Value")).not.toBeInTheDocument();
+-
+-    rerender(
+-      <TooltipProvider>
+-        <FilterPillEditor
+-          snapshot={{
+-            columnId: "name",
+-            value: Filter.text({ operator: "is_empty" }),
+-          }}
+-          table={mockTable()}
+-          onClose={vi.fn()}
+-        />
+-      </TooltipProvider>,
+-    );
+-    expect(screen.queryByText("Value")).not.toBeInTheDocument();
+-  });
+-});
+-
+-describe("FilterPillEditor — apply", () => {
+-  it("commits a number > filter via setColumnFilters", () => {
+-    const table = mockTable();
+-    const onClose = vi.fn();
+-    renderWithProviders(
+-      <FilterPillEditor
+-        snapshot={{
+-          columnId: "age",
+-          value: Filter.number({ operator: ">", value: 18 }),
+-        }}
+-        table={table}
+-        onClose={onClose}
+-      />,
+-    );
+-    fireEvent.click(screen.getByLabelText("Apply filter"));
+-    expect(table.setColumnFilters).toHaveBeenCalledTimes(1);
+-    expect(onClose).toHaveBeenCalledTimes(1);
+-
+-    const updater = (table.setColumnFilters as ReturnType<typeof vi.fn>).mock
+-      .calls[0][0];
+-    const next = updater([]);
+-    expect(next).toEqual([
+-      {
+-        id: "age",
+-        value: { type: "number", operator: ">", value: 18 },
+-      },
+-    ]);
+-  });
+-});
+diff --git a/frontend/src/components/data-table/__tests__/filters.test.ts b/frontend/src/components/data-table/__tests__/filters.test.ts
+index 225623695..abc38d030 100644
+--- a/frontend/src/components/data-table/__tests__/filters.test.ts
++++ b/frontend/src/components/data-table/__tests__/filters.test.ts
+@@ -24,6 +24,7 @@ describe("filterToFilterCondition", () => {
+       {
+         column_id: "col",
+         operator: "is_null",
++        value: undefined,
+         type: "condition",
+         negate: false,
+       },
+@@ -39,53 +40,45 @@ describe("filterToFilterCondition", () => {
+       {
+         column_id: "col",
+         operator: "is_not_null",
++        value: undefined,
+         type: "condition",
+         negate: false,
+       },
+     ]);
+   });
+ 
+-  it("handles number filter with == operator", () => {
+-    const result = filterToFilterCondition(
+-      "age",
+-      Filter.number({ operator: "==", value: 42 }),
+-    );
+-    expect(result).toEqual([
+-      {
+-        column_id: "age",
+-        operator: "==",
+-        value: 42,
+-        type: "condition",
+-        negate: false,
+-      },
+-    ]);
++  it("handles number filter with min only", () => {
++    const result = filterToFilterCondition("age", Filter.number({ min: 18 }));
++    expect(result).toHaveLength(1);
++    expect(result[0]).toMatchObject({
++      column_id: "age",
++      operator: ">=",
++      value: 18,
++      type: "condition",
++      negate: false,
++    });
+   });
+ 
+-  it("handles number filter with all comparison operators", () => {
+-    for (const op of ["==", "!=", ">", ">=", "<", "<="] as const) {
+-      const result = filterToFilterCondition(
+-        "x",
+-        Filter.number({ operator: op, value: 5 }),
+-      );
+-      expect(result).toHaveLength(1);
+-      expect(result[0]).toMatchObject({ operator: op, value: 5 });
+-    }
++  it("handles number filter with max only", () => {
++    const result = filterToFilterCondition("age", Filter.number({ max: 65 }));
++    expect(result).toHaveLength(1);
++    expect(result[0]).toMatchObject({
++      column_id: "age",
++      operator: "<=",
++      value: 65,
++      type: "condition",
++      negate: false,
++    });
+   });
+ 
+-  it("number / between emits a single between condition", () => {
++  it("handles number filter with min and max", () => {
+     const result = filterToFilterCondition(
+       "age",
+-      Filter.number({ operator: "between", min: 18, max: 65 }),
++      Filter.number({ min: 18, max: 65 }),
+     );
+-    expect(result).toEqual([
+-      {
+-        column_id: "age",
+-        operator: "between",
+-        value: { min: 18, max: 65 },
+-        type: "condition",
+-        negate: false,
+-      },
+-    ]);
++    expect(result).toHaveLength(2);
++    expect(result[0]).toMatchObject({ operator: ">=", value: 18 });
++    expect(result[1]).toMatchObject({ operator: "<=", value: 65 });
+   });
+ 
+   it("handles text filter", () => {
+@@ -104,71 +97,6 @@ describe("filterToFilterCondition", () => {
+     ]);
+   });
+ 
+-  it("handles text filter with all single-string operators", () => {
+-    for (const op of [
+-      "contains",
+-      "equals",
+-      "does_not_equal",
+-      "regex",
+-      "starts_with",
+-      "ends_with",
+-    ] as const) {
+-      const result = filterToFilterCondition(
+-        "col",
+-        Filter.text({ operator: op, text: "x" }),
+-      );
+-      expect(result).toHaveLength(1);
+-      expect(result[0]).toMatchObject({ operator: op, value: "x" });
+-    }
+-  });
+-
+-  it("handles text filter with in operator", () => {
+-    const result = filterToFilterCondition(
+-      "name",
+-      Filter.text({ operator: "in", values: ["alice", "bob"] }),
+-    );
+-    expect(result).toEqual([
+-      {
+-        column_id: "name",
+-        operator: "in",
+-        value: ["alice", "bob"],
+-        type: "condition",
+-        negate: false,
+-      },
+-    ]);
+-  });
+-
+-  it("handles text filter with not_in operator", () => {
+-    const result = filterToFilterCondition(
+-      "name",
+-      Filter.text({ operator: "not_in", values: ["alice"] }),
+-    );
+-    expect(result).toEqual([
+-      {
+-        column_id: "name",
+-        operator: "not_in",
+-        value: ["alice"],
+-        type: "condition",
+-        negate: false,
+-      },
+-    ]);
+-  });
+-
+-  it("handles text filter with is_empty operator", () => {
+-    const result = filterToFilterCondition(
+-      "name",
+-      Filter.text({ operator: "is_empty" }),
+-    );
+-    expect(result).toEqual([
+-      {
+-        column_id: "name",
+-        operator: "is_empty",
+-        type: "condition",
+-        negate: false,
+-      },
+-    ]);
+-  });
+-
+   it("handles boolean true filter", () => {
+     const result = filterToFilterCondition(
+       "active",
+@@ -178,6 +106,7 @@ describe("filterToFilterCondition", () => {
+       {
+         column_id: "active",
+         operator: "is_true",
++        value: undefined,
+         type: "condition",
+         negate: false,
+       },
+@@ -193,6 +122,7 @@ describe("filterToFilterCondition", () => {
+       {
+         column_id: "active",
+         operator: "is_false",
++        value: undefined,
+         type: "condition",
+         negate: false,
+       },
+@@ -236,7 +166,7 @@ describe("filterToFilterCondition", () => {
+   it("every condition has type and negate fields", () => {
+     const result = filterToFilterCondition(
+       "col",
+-      Filter.number({ operator: "between", min: 1, max: 10 }),
++      Filter.number({ min: 1, max: 10 }),
+     );
+     for (const condition of result) {
+       expect(condition).toHaveProperty("type", "condition");
+@@ -258,7 +188,7 @@ describe("filtersToFilterGroup", () => {
+ 
+   it("wraps single filter in AND group", () => {
+     const result = filtersToFilterGroup([
+-      { id: "age", value: Filter.number({ operator: ">=", value: 18 }) },
++      { id: "age", value: Filter.number({ min: 18 }) },
+     ]);
+     expect(result.type).toBe("group");
+     expect(result.operator).toBe("and");
+@@ -268,25 +198,19 @@ describe("filtersToFilterGroup", () => {
+ 
+   it("wraps multiple filters in AND group", () => {
+     const result = filtersToFilterGroup([
+-      { id: "age", value: Filter.number({ operator: ">=", value: 18 }) },
++      { id: "age", value: Filter.number({ min: 18 }) },
+       { id: "name", value: Filter.text({ text: "foo", operator: "contains" }) },
+     ]);
+     expect(result.children).toHaveLength(2);
+     expect(result.operator).toBe("and");
+   });
+ 
+-  it("between filter emits a single between condition", () => {
++  it("flattens multi-condition filters", () => {
+     const result = filtersToFilterGroup([
+-      {
+-        id: "age",
+-        value: Filter.number({ operator: "between", min: 18, max: 65 }),
+-      },
++      { id: "age", value: Filter.number({ min: 18, max: 65 }) },
+     ]);
+-    expect(result.children).toHaveLength(1);
+-    expect(result.children[0]).toMatchObject({
+-      operator: "between",
+-      value: { min: 18, max: 65 },
+-    });
++    // min + max = 2 conditions
++    expect(result.children).toHaveLength(2);
+   });
+ });
+ 
+diff --git a/frontend/src/components/data-table/charts/components/form-fields.tsx b/frontend/src/components/data-table/charts/components/form-fields.tsx
+index bae172880..065f68637 100644
+--- a/frontend/src/components/data-table/charts/components/form-fields.tsx
++++ b/frontend/src/components/data-table/charts/components/form-fields.tsx
+@@ -789,7 +789,6 @@ export const TooltipSelect = ({
+             <FormControl>
+               <Multiselect
+                 options={fields?.map((field) => field.name) ?? []}
+-                disabled={false}
+                 value={values}
+                 setValue={(values) => {
+                   const selectedValues =
+diff --git a/frontend/src/components/data-table/column-header.tsx b/frontend/src/components/data-table/column-header.tsx
+index f556fbb46..365043724 100644
+--- a/frontend/src/components/data-table/column-header.tsx
++++ b/frontend/src/components/data-table/column-header.tsx
+@@ -9,7 +9,7 @@ import {
+   TextIcon,
+   XIcon,
+ } from "lucide-react";
+-import { useState } from "react";
++import { useRef, useState } from "react";
+ import { useLocale } from "react-aria";
+ import {
+   DropdownMenu,
+@@ -26,31 +26,25 @@ import type { CalculateTopKRows } from "@/plugins/impl/DataTablePlugin";
+ import type { OperatorType } from "@/plugins/impl/data-frames/utils/operators";
+ import { logNever } from "@/utils/assertNever";
+ import { cn } from "@/utils/cn";
++import { capitalize } from "@/utils/strings";
+ import { Button } from "../ui/button";
+ import { DraggablePopover } from "../ui/draggable-popover";
+ import { Input } from "../ui/input";
+-import { RegexInput } from "./regex-input";
+ import { NumberField } from "../ui/number-field";
+ import { PopoverClose } from "../ui/popover";
+ import {
+   Select,
+   SelectContent,
+   SelectItem,
++  SelectSeparator,
+   SelectTrigger,
+   SelectValue,
+ } from "../ui/select";
+ import { FilterByValuesList } from "./filter-by-values-picker";
+-import { OPERATOR_LABELS } from "./operator-labels";
+ import {
+   type ColumnFilterForType,
+   type ColumnFilterValue,
+   Filter,
+-  NUMBER_COMPARISON_OPS,
+-  type NumberComparisonOp,
+-  NUMBER_OPS,
+-  TEXT_OPS,
+-  TEXT_SCALAR_OPS,
+-  type TextScalarOp,
+ } from "./filters";
+ import {
+   ClearFilterMenuItem,
+@@ -154,7 +148,7 @@ export const DataTableColumnHeader = <TData, TValue>({
+               {renderColumnWrapping(column)}
+               {renderFormatOptions(column, locale)}
+               <DropdownMenuSeparator />
+-              {renderMenuItemFilter(column, calculateTopKRows)}
++              {renderMenuItemFilter(column)}
+               {renderFilterByValues(column, setIsFilterValueOpen)}
+               {hasFilter && <ClearFilterMenuItem column={column} />}
+             </DropdownMenuContent>
+@@ -217,7 +211,6 @@ const SortButton = <TData, TValue>({
+ 
+ export function renderMenuItemFilter<TData, TValue>(
+   column: Column<TData, TValue>,
+-  calculateTopKRows?: CalculateTopKRows,
+ ) {
+   const canFilter = column.getCanFilter();
+   if (!canFilter) {
+@@ -255,10 +248,7 @@ export function renderMenuItemFilter<TData, TValue>(
+         {filterMenuItem}
+         <DropdownMenuPortal>
+           <DropdownMenuSubContent>
+-            <TextFilterMenu
+-              column={column}
+-              calculateTopKRows={calculateTopKRows}
+-            />
++            <TextFilter column={column} />
+           </DropdownMenuSubContent>
+         </DropdownMenuPortal>
+       </DropdownMenuSub>
+@@ -271,7 +261,7 @@ export function renderMenuItemFilter<TData, TValue>(
+         {filterMenuItem}
+         <DropdownMenuPortal>
+           <DropdownMenuSubContent>
+-            <NumberFilterMenu column={column} />
++            <NumberRangeFilter column={column} />
+           </DropdownMenuSubContent>
+         </DropdownMenuPortal>
+       </DropdownMenuSub>
+@@ -302,28 +292,58 @@ export function renderMenuItemFilter<TData, TValue>(
+   return null;
+ }
+ 
+-const OperatorSelect = ({
++// Type-safe constants for null filter operators
++const NULL_FILTER_OPERATORS = {
++  is_null: "is_null",
++  is_not_null: "is_not_null",
++} satisfies Record<string, OperatorType>;
++
++const NullFilter = <TData, TValue>({
++  column,
++  defaultItem,
+   operator,
+-  options,
+-  onChange,
++  setOperator,
+ }: {
+-  operator: OperatorType;
+-  options: readonly OperatorType[];
+-  onChange: (next: OperatorType) => void;
+-}) => (
+-  <Select value={operator} onValueChange={(v) => onChange(v as OperatorType)}>
+-    <SelectTrigger className="border-border shadow-none! ring-0! w-full mb-0.5">
+-      <SelectValue />
+-    </SelectTrigger>
+-    <SelectContent>
+-      {options.map((op) => (
+-        <SelectItem key={op} value={op}>
+-          {OPERATOR_LABELS[op]}
++  column: Column<TData, TValue>;
++  defaultItem?: OperatorType | "between";
++  operator: OperatorType | "between";
++  setOperator: (operator: OperatorType) => void;
++}) => {
++  const handleValueChange = (value: OperatorType) => {
++    setOperator(value);
++    if (value === "is_null" || value === "is_not_null") {
++      column.setFilterValue(Filter.text({ operator: value }));
++    }
++  };
++
++  const isNullOrNotNull = operator === "is_null" || operator === "is_not_null";
++
++  return (
++    <Select
++      value={operator}
++      onValueChange={(value) => handleValueChange(value as OperatorType)}
++    >
++      <SelectTrigger
++        className={cn(
++          "border-border shadow-none! ring-0! w-full mb-0.5",
++          isNullOrNotNull && "mb-2",
++        )}
++      >
++        <SelectValue defaultValue={operator} />
++      </SelectTrigger>
++      <SelectContent>
++        {defaultItem && (
++          <SelectItem value={defaultItem}>{capitalize(defaultItem)}</SelectItem>
++        )}
++        <SelectSeparator />
++        <SelectItem value={NULL_FILTER_OPERATORS.is_null}>Is null</SelectItem>
++        <SelectItem value={NULL_FILTER_OPERATORS.is_not_null}>
++          Is not null
+         </SelectItem>
+-      ))}
+-    </SelectContent>
+-  </Select>
+-);
++      </SelectContent>
++    </Select>
++  );
++};
+ 
+ const BooleanFilter = <TData, TValue>({
+   column,
+@@ -369,21 +389,7 @@ const BooleanFilter = <TData, TValue>({
+   );
+ };
+ 
+-const NUMBER_COMPARISON_SET: ReadonlySet<OperatorType> = new Set(
+-  NUMBER_COMPARISON_OPS,
+-);
+-const isNumberComparisonOp = (op: OperatorType): op is NumberComparisonOp =>
+-  NUMBER_COMPARISON_SET.has(op);
+-
+-type NumberComparisonFilter = Extract<
+-  ColumnFilterForType<"number">,
+-  { value: number }
+->;
+-const isNumberComparisonFilter = (
+-  filter: ColumnFilterForType<"number">,
+-): filter is NumberComparisonFilter => isNumberComparisonOp(filter.operator);
+-
+-export const NumberFilterMenu = <TData, TValue>({
++const NumberRangeFilter = <TData, TValue>({
+   column,
+ }: {
+   column: Column<TData, TValue>;
+@@ -393,208 +399,149 @@ export const NumberFilterMenu = <TData, TValue>({
+     | undefined;
+   const hasFilter = currentFilter !== undefined;
+ 
+-  const [operator, setOperator] = useState<OperatorType>(
++  const [operator, setOperator] = useState<OperatorType | "between">(
+     currentFilter?.operator ?? "between",
+   );
+-  const [min, setMin] = useState<number | undefined>(
+-    currentFilter?.operator === "between" ? currentFilter.min : undefined,
+-  );
+-  const [max, setMax] = useState<number | undefined>(
+-    currentFilter?.operator === "between" ? currentFilter.max : undefined,
+-  );
+-  const [value, setValue] = useState<number | undefined>(
+-    currentFilter !== undefined && isNumberComparisonFilter(currentFilter)
+-      ? currentFilter.value
+-      : undefined,
+-  );
+-
+-  const isComparison = isNumberComparisonOp(operator);
+-  const isNullish = operator === "is_null" || operator === "is_not_null";
+-
+-  const applyDisabled =
+-    (operator === "between" && (min === undefined || max === undefined)) ||
+-    (isComparison && value === undefined);
+-
+-  const handleApply = () => {
+-    if (isNullish) {
+-      column.setFilterValue(Filter.number({ operator }));
+-      return;
+-    }
+-    if (operator === "between" && min !== undefined && max !== undefined) {
+-      column.setFilterValue(Filter.number({ operator: "between", min, max }));
+-      return;
+-    }
+-    if (isComparison && value !== undefined) {
+-      column.setFilterValue(Filter.number({ operator, value }));
+-    }
+-  };
++  const [min, setMin] = useState<number | undefined>(currentFilter?.min);
++  const [max, setMax] = useState<number | undefined>(currentFilter?.max);
++  const minRef = useRef<HTMLInputElement>(null);
++  const maxRef = useRef<HTMLInputElement>(null);
+ 
+-  const handleClear = () => {
+-    setMin(undefined);
+-    setMax(undefined);
+-    setValue(undefined);
+-    column.setFilterValue(undefined);
+-  };
+-
+-  const handleOperatorChange = (next: OperatorType) => {
+-    setOperator(next);
++  const handleApply = (opts: { min?: number; max?: number } = {}) => {
++    column.setFilterValue(
++      Filter.number({
++        min: opts.min ?? min,
++        max: opts.max ?? max,
++        operator: operator === "between" ? undefined : operator,
++      }),
++    );
+   };
+ 
+   return (
+     <div className="flex flex-col gap-1 pt-3 px-2">
+-      <OperatorSelect
++      <NullFilter
++        column={column}
++        defaultItem="between"
+         operator={operator}
+-        options={NUMBER_OPS}
+-        onChange={handleOperatorChange}
++        setOperator={setOperator}
+       />
+       {operator === "between" && (
+-        <div className="flex gap-1 items-center">
+-          <NumberField
+-            value={min}
+-            onChange={setMin}
+-            aria-label="min"
+-            placeholder="min"
+-            className="shadow-none! border-border hover:shadow-none!"
+-          />
+-          <MinusIcon className="h-5 w-5 text-muted-foreground" />
+-          <NumberField
+-            value={max}
+-            onChange={setMax}
+-            aria-label="max"
+-            placeholder="max"
+-            className="shadow-none! border-border hover:shadow-none!"
++        <>
++          <div className="flex gap-1 items-center">
++            <NumberField
++              ref={minRef}
++              value={min}
++              onChange={(value) => setMin(value)}
++              aria-label="min"
++              placeholder="min"
++              onKeyDown={(e) => {
++                if (e.key === "Enter") {
++                  handleApply({
++                    min: Number.parseFloat(e.currentTarget.value),
++                  });
++                }
++                if (e.key === "Tab") {
++                  maxRef.current?.focus();
++                }
++              }}
++              className="shadow-none! border-border hover:shadow-none!"
++            />
++            <MinusIcon className="h-5 w-5 text-muted-foreground" />
++            <NumberField
++              ref={maxRef}
++              value={max}
++              onChange={(value) => setMax(value)}
++              aria-label="max"
++              onKeyDown={(e) => {
++                if (e.key === "Enter") {
++                  handleApply({
++                    max: Number.parseFloat(e.currentTarget.value),
++                  });
++                }
++                if (e.key === "Tab") {
++                  minRef.current?.focus();
++                }
++              }}
++              placeholder="max"
++              className="shadow-none! border-border hover:shadow-none!"
++            />
++          </div>
++          <FilterButtons
++            onApply={handleApply}
++            onClear={() => {
++              setMin(undefined);
++              setMax(undefined);
++              column.setFilterValue(undefined);
++            }}
++            clearButtonDisabled={!hasFilter}
+           />
+-        </div>
+-      )}
+-      {isComparison && (
+-        <NumberField
+-          value={value}
+-          onChange={setValue}
+-          aria-label="value"
+-          placeholder="value"
+-          className="shadow-none! border-border hover:shadow-none!"
+-        />
++        </>
+       )}
+-      <FilterButtons
+-        onApply={handleApply}
+-        onClear={handleClear}
+-        clearButtonDisabled={!hasFilter}
+-        applyButtonDisabled={applyDisabled}
+-      />
+     </div>
+   );
+ };
+ 
+-const TEXT_SCALAR_SET: ReadonlySet<OperatorType> = new Set(TEXT_SCALAR_OPS);
+-const isTextScalarOp = (op: OperatorType): op is TextScalarOp =>
+-  TEXT_SCALAR_SET.has(op);
+-
+-export const TextFilterMenu = <TData, TValue>({
++const TextFilter = <TData, TValue>({
+   column,
+-  calculateTopKRows,
+ }: {
+   column: Column<TData, TValue>;
+-  calculateTopKRows?: CalculateTopKRows;
+ }) => {
+   const currentFilter = column.getFilterValue() as
+     | ColumnFilterForType<"text">
+     | undefined;
+   const hasFilter = currentFilter !== undefined;
+-
++  const [value, setValue] = useState<string>(currentFilter?.text ?? "");
+   const [operator, setOperator] = useState<OperatorType>(
+     currentFilter?.operator ?? "contains",
+   );
+-  const [text, setText] = useState<string>(
+-    currentFilter && "text" in currentFilter ? currentFilter.text : "",
+-  );
+-  const [values, setValues] = useState<string[]>(
+-    currentFilter && "values" in currentFilter ? [...currentFilter.values] : [],
+-  );
+-
+-  const isScalar = isTextScalarOp(operator);
+-  const isMulti = operator === "in" || operator === "not_in";
+-  const isNullish =
+-    operator === "is_null" ||
+-    operator === "is_not_null" ||
+-    operator === "is_empty";
+-
+-  const applyDisabled =
+-    (isScalar && text === "") || (isMulti && values.length === 0);
+ 
+   const handleApply = () => {
+-    if (isNullish) {
++    if (operator !== "contains") {
+       column.setFilterValue(Filter.text({ operator }));
+       return;
+     }
+-    if (isScalar && text !== "") {
+-      column.setFilterValue(Filter.text({ operator, text }));
++
++    if (value === "") {
++      column.setFilterValue(undefined);
+       return;
+     }
+-    if (isMulti && values.length > 0) {
+-      column.setFilterValue(Filter.text({ operator, values }));
+-    }
+-  };
+-
+-  const handleClear = () => {
+-    setText("");
+-    setValues([]);
+-    column.setFilterValue(undefined);
+-  };
+ 
+-  const handleOperatorChange = (next: OperatorType) => {
+-    setOperator(next);
++    column.setFilterValue(Filter.text({ text: value, operator }));
+   };
+ 
+   return (
+     <div className="flex flex-col gap-1 pt-3 px-2">
+-      <OperatorSelect
++      <NullFilter
++        column={column}
++        defaultItem="contains"
+         operator={operator}
+-        options={TEXT_OPS}
+-        onChange={handleOperatorChange}
++        setOperator={setOperator}
+       />
+-      {isScalar && operator === "regex" && (
+-        <RegexInput
+-          value={text}
+-          onChange={setText}
+-          onKeyDown={(e) => {
+-            e.stopPropagation();
+-            if (e.key === "Enter") {
+-              handleApply();
+-            }
+-          }}
+-        />
+-      )}
+-      {isScalar && operator !== "regex" && (
+-        <Input
+-          type="text"
+-          icon={<TextIcon className="h-3 w-3 text-muted-foreground mb-1" />}
+-          value={text}
+-          onChange={(e) => setText(e.target.value)}
+-          placeholder="Text..."
+-          onKeyDown={(e) => {
+-            e.stopPropagation();
+-            if (e.key === "Enter") {
+-              handleApply();
+-            }
+-          }}
+-          className="shadow-none! border-border hover:shadow-none!"
+-        />
+-      )}
+-      {isMulti && (
+-        <FilterByValuesList
+-          column={column}
+-          calculateTopKRows={calculateTopKRows}
+-          chosenValues={new Set(values)}
+-          onChange={(next) => setValues(next.map(String))}
+-          creatable={true}
+-        />
++      {operator === "contains" && (
++        <>
++          <Input
++            type="text"
++            icon={<TextIcon className="h-3 w-3 text-muted-foreground mb-1" />}
++            value={value ?? ""}
++            onChange={(e) => setValue(e.target.value)}
++            placeholder="Text..."
++            onKeyDown={(e) => {
++              if (e.key === "Enter") {
++                handleApply();
++              }
++            }}
++            className="shadow-none! border-border hover:shadow-none!"
++          />
++          <FilterButtons
++            onApply={handleApply}
++            onClear={() => {
++              setValue("");
++              column.setFilterValue(undefined);
++            }}
++            clearButtonDisabled={!hasFilter}
++          />
++        </>
+       )}
+-      <FilterButtons
+-        onApply={handleApply}
+-        onClear={handleClear}
+-        clearButtonDisabled={!hasFilter}
+-        applyButtonDisabled={applyDisabled}
+-      />
+     </div>
+   );
+ };
+diff --git a/frontend/src/components/data-table/filter-by-values-picker.tsx b/frontend/src/components/data-table/filter-by-values-picker.tsx
+index 25a7b9b4a..052aaf1ed 100644
+--- a/frontend/src/components/data-table/filter-by-values-picker.tsx
++++ b/frontend/src/components/data-table/filter-by-values-picker.tsx
+@@ -32,7 +32,6 @@ interface Props<TData, TValue> {
+   calculateTopKRows?: CalculateTopKRows;
+   chosenValues: unknown[];
+   onChange: (values: unknown[]) => void;
+-  creatable?: boolean;
+ }
+ 
+ export const FilterByValuesPicker = <TData, TValue>({
+@@ -40,7 +39,6 @@ export const FilterByValuesPicker = <TData, TValue>({
+   calculateTopKRows,
+   chosenValues,
+   onChange,
+-  creatable = false,
+ }: Props<TData, TValue>) => {
+   const [open, setOpen] = useState(false);
+ 
+@@ -60,7 +58,6 @@ export const FilterByValuesPicker = <TData, TValue>({
+     <Popover open={open} onOpenChange={setOpen}>
+       <PopoverTrigger asChild={true}>
+         <Button
+-          type="button"
+           variant="outline"
+           size="xs"
+           className="h-6 mb-1 w-full justify-between font-normal"
+@@ -82,7 +79,6 @@ export const FilterByValuesPicker = <TData, TValue>({
+           calculateTopKRows={calculateTopKRows}
+           chosenValues={chosenValuesSet}
+           onChange={onChange}
+-          creatable={creatable}
+         />
+       </PopoverContent>
+     </Popover>
+@@ -94,7 +90,6 @@ interface FilterByValuesListProps<TData, TValue> {
+   calculateTopKRows?: CalculateTopKRows;
+   chosenValues: Set<unknown>;
+   onChange: (values: unknown[]) => void;
+-  creatable?: boolean;
+ }
+ 
+ /**
+@@ -105,7 +100,6 @@ export const FilterByValuesList = <TData, TValue>({
+   calculateTopKRows,
+   chosenValues,
+   onChange,
+-  creatable = false,
+ }: FilterByValuesListProps<TData, TValue>) => {
+   const [query, setQuery] = useState<string>("");
+ 
+@@ -139,48 +133,13 @@ export const FilterByValuesList = <TData, TValue>({
+     }
+   }, [data, query]);
+ 
+-  // Surface chosen values that aren't in the top-K so they stay visible/uncheckable.
+-  // Count is undefined for these rows; the cell renders an em-dash.
+-  const mergedData = useMemo<Array<[unknown, number | undefined]>>(() => {
+-    const seen = new Set(filteredData.map(([v]) => v));
+-    const extras: Array<[unknown, number | undefined]> = [];
+-    for (const chosen of chosenValues) {
+-      if (seen.has(chosen)) {
+-        continue;
+-      }
+-      const str = String(chosen);
+-      const matches =
+-        query.length === 0 ||
+-        smartMatch(query, str) ||
+-        str.toLowerCase().includes(query.toLowerCase());
+-      if (matches) {
+-        extras.push([chosen, undefined]);
+-      }
+-    }
+-    return [...filteredData, ...extras];
+-  }, [filteredData, chosenValues, query]);
+-
+   const handleToggle = (value: unknown) => {
+     onChange([...Sets.toggle(chosenValues, value)]);
+   };
+ 
+-  const trimmedQuery = query.trim();
+-  const canCreate =
+-    creatable &&
+-    trimmedQuery !== "" &&
+-    !mergedData.some(([v]) => String(v) === trimmedQuery);
+-
+-  const commitCreate = () => {
+-    if (!canCreate) {
+-      return;
+-    }
+-    onChange([...chosenValues, trimmedQuery]);
+-    setQuery("");
+-  };
+-
+   const allVisibleChecked =
+-    mergedData.length > 0 &&
+-    mergedData.every(([value]) => chosenValues.has(value));
++    filteredData.length > 0 &&
++    filteredData.every(([value]) => chosenValues.has(value));
+ 
+   const selectAllState: boolean | "indeterminate" = allVisibleChecked
+     ? true
+@@ -194,11 +153,11 @@ export const FilterByValuesList = <TData, TValue>({
+     }
+     const next = new Set(chosenValues);
+     if (allVisibleChecked) {
+-      for (const [value] of mergedData) {
++      for (const [value] of filteredData) {
+         next.delete(value);
+       }
+     } else {
+-      for (const [value] of mergedData) {
++      for (const [value] of filteredData) {
+         next.add(value);
+       }
+     }
+@@ -224,24 +183,13 @@ export const FilterByValuesList = <TData, TValue>({
+   return (
+     <Command className="text-sm outline-hidden" shouldFilter={false}>
+       <CommandInput
+-        placeholder={
+-          creatable
+-            ? "Search or add a value…"
+-            : `Search among the top ${data.length} values`
+-        }
++        placeholder={`Search among the top ${data.length} values`}
+         autoFocus={true}
+-        value={query}
+-        onValueChange={setQuery}
+-        onKeyDown={(e) => {
+-          if (e.key === "Enter" && canCreate) {
+-            e.preventDefault();
+-            commitCreate();
+-          }
+-        }}
++        onValueChange={(value) => setQuery(value.trim())}
+       />
+       <CommandEmpty>No results found.</CommandEmpty>
+       <CommandList>
+-        {mergedData.length > 0 && (
++        {filteredData.length > 0 && (
+           <CommandItem
+             value="__select-all__"
+             className="border-b rounded-none px-3"
+@@ -256,7 +204,7 @@ export const FilterByValuesList = <TData, TValue>({
+             <span className="font-bold">Count</span>
+           </CommandItem>
+         )}
+-        {mergedData.map(([value, count]) => {
++        {filteredData.map(([value, count]) => {
+           const isSelected = chosenValues.has(value);
+           const valueString = stringifyUnknownValue({ value });
+           const sentinel = detectSentinel(
+@@ -278,19 +226,10 @@ export const FilterByValuesList = <TData, TValue>({
+               <span className="flex-1 overflow-hidden max-h-20 line-clamp-3">
+                 {sentinel ? <SentinelCell sentinel={sentinel} /> : valueString}
+               </span>
+-              <span className="ml-3">{count === undefined ? "—" : count}</span>
++              <span className="ml-3">{count}</span>
+             </CommandItem>
+           );
+         })}
+-        {canCreate && (
+-          <CommandItem
+-            value={`__create__:${trimmedQuery}`}
+-            className="border-t rounded-none px-3 italic"
+-            onSelect={commitCreate}
+-          >
+-            + Add "{trimmedQuery}"
+-          </CommandItem>
+-        )}
+       </CommandList>
+       {data.length === TOP_K_ROWS && (
+         <span className="text-xs text-muted-foreground py-1.5 text-center">
+diff --git a/frontend/src/components/data-table/filter-pill-editor.tsx b/frontend/src/components/data-table/filter-pill-editor.tsx
+index 28f17c210..8fffebc8d 100644
+--- a/frontend/src/components/data-table/filter-pill-editor.tsx
++++ b/frontend/src/components/data-table/filter-pill-editor.tsx
+@@ -3,9 +3,8 @@
+ 
+ import type { Column, Table } from "@tanstack/react-table";
+ import { CheckIcon, MinusIcon, Trash2Icon, XIcon } from "lucide-react";
+-import { useEffect, useId, useRef, useState } from "react";
++import { useId, useState } from "react";
+ import type { CalculateTopKRows } from "@/plugins/impl/DataTablePlugin";
+-import type { OperatorType } from "@/plugins/impl/data-frames/utils/operators";
+ import { Combobox, ComboboxItem } from "../ui/combobox";
+ import { Input } from "../ui/input";
+ import { NumberField } from "../ui/number-field";
+@@ -18,68 +17,67 @@ import {
+ } from "../ui/select";
+ import { Button } from "../ui/button";
+ import { FilterByValuesPicker } from "./filter-by-values-picker";
+-import { RegexInput } from "./regex-input";
+-import {
+-  type ColumnFilterValue,
+-  Filter,
+-  MEMBERSHIP_OPS,
+-  NUMBER_COMPARISON_OPS,
+-  type NumberComparisonOp,
+-  NUMBER_OPS,
+-  TEXT_OPS,
+-  TEXT_SCALAR_OPS,
+-  type TextScalarOp,
+-} from "./filters";
+-import { OPERATOR_LABELS } from "./operator-labels";
++import { type ColumnFilterValue, Filter } from "./filters";
+ import { Tooltip } from "../ui/tooltip";
+ 
++// Editable filter types in this editor — date/datetime/time are read-only
++// Will add support for rest in next PR
+ type EditableFilterType = "number" | "text" | "boolean" | "select";
+ 
+-const BOOLEAN_OPS = ["is_true", "is_false", "is_null", "is_not_null"] as const;
+-const SELECT_OPS = MEMBERSHIP_OPS;
+-
+-const OPERATORS_BY_TYPE: Record<
+-  EditableFilterType,
+-  ReadonlyArray<OperatorType>
+-> = {
+-  number: NUMBER_OPS,
+-  text: TEXT_OPS,
+-  boolean: BOOLEAN_OPS,
+-  select: SELECT_OPS,
++// UI-level operator for the operator dropdown. Today the committed filter
++// value does not carry this operator for number ranges — ranges are
++// converted to `>=` / `<=` condition pairs at the RPC boundary
++// (`filterToFilterCondition`). The follow-up PR splits UI operators into
++// distinct `<`, `>`, `between` variants and routes them through as-is.
++type UiOperator =
++  | "between"
++  | "contains"
++  | "is_true"
++  | "is_false"
++  | "is_null"
++  | "is_not_null"
++  | "in"
++  | "not_in";
++
++// will be expanded by a follow up PR
++const OPERATORS_BY_TYPE: Record<EditableFilterType, UiOperator[]> = {
++  number: ["between", "is_null", "is_not_null"],
++  text: ["contains", "is_null", "is_not_null"],
++  boolean: ["is_true", "is_false", "is_null", "is_not_null"],
++  select: ["in", "not_in"],
+ };
+ 
+-const DEFAULT_OPERATOR: Record<EditableFilterType, OperatorType> = {
++const DEFAULT_OPERATOR: Record<EditableFilterType, UiOperator> = {
+   number: "between",
+   text: "contains",
+   boolean: "is_true",
+   select: "in",
+ };
+ 
+-const OPERATORS_WITHOUT_VALUE = new Set<OperatorType>([
++const OPERATOR_LABELS: Record<UiOperator, string> = {
++  between: "Between",
++  contains: "Contains",
++  is_true: "Is true",
++  is_false: "Is false",
++  is_null: "Is null",
++  is_not_null: "Is not null",
++  in: "Is in",
++  not_in: "Not in",
++};
++
++const OPERATORS_WITHOUT_VALUE = new Set<UiOperator>([
+   "is_true",
+   "is_false",
+   "is_null",
+   "is_not_null",
+-  "is_empty",
+ ]);
+ 
+-const NUMBER_COMPARISON_SET: ReadonlySet<OperatorType> = new Set(
+-  NUMBER_COMPARISON_OPS,
+-);
+-const TEXT_SCALAR_SET: ReadonlySet<OperatorType> = new Set(TEXT_SCALAR_OPS);
+-
+-const isNumberComparisonOp = (op: OperatorType): op is NumberComparisonOp =>
+-  NUMBER_COMPARISON_SET.has(op);
+-const isTextScalarOp = (op: OperatorType): op is TextScalarOp =>
+-  TEXT_SCALAR_SET.has(op);
+-
+-type DraftValue =
+-  | { kind: "between"; min?: number; max?: number }
+-  | { kind: "single-number"; value?: number }
+-  | { kind: "single-text"; text?: string }
+-  | { kind: "multi-text"; values?: string[] }
+-  | { kind: "options"; options?: unknown[] }
+-  | { kind: "none" };
++interface DraftValue {
++  min?: number;
++  max?: number;
++  text?: string;
++  options?: unknown[];
++}
+ 
+ interface Snapshot {
+   columnId: string;
+@@ -94,7 +92,7 @@ interface FilterPillEditorProps<TData> {
+ }
+ 
+ export const FilterPillEditor = <TData,>({
+-  snapshot,
++  snapshot, // current state of filter pre-edit
+   table,
+   calculateTopKRows,
+   onClose,
+@@ -104,13 +102,13 @@ export const FilterPillEditor = <TData,>({
+   const valueId = useId();
+ 
+   const snapshotType = getEditableType(snapshot.value);
+-  const snapshotOperator = snapshot.value.operator as OperatorType;
++  const snapshotOperator = getUiOperator(snapshot.value);
+   const snapshotDraft = toDraftValue(snapshot.value);
+ 
+   const [draftColumnId, setDraftColumnId] = useState<string>(snapshot.columnId);
+   const [draftType, setDraftType] = useState<EditableFilterType>(snapshotType);
+   const [draftOperator, setDraftOperator] =
+-    useState<OperatorType>(snapshotOperator);
++    useState<UiOperator>(snapshotOperator);
+   const [draftValue, setDraftValue] = useState<DraftValue>(snapshotDraft);
+ 
+   const editableColumns = table.getAllColumns().filter((c) => {
+@@ -120,11 +118,18 @@ export const FilterPillEditor = <TData,>({
+     );
+   });
+ 
++  // if we switch back to pre-edit column+operator
++  // restore the original value as well
+   const rehydrateIfMatchesSnapshot = (args: {
+     id: string;
+-    operator: OperatorType;
++    type: EditableFilterType;
++    operator: UiOperator;
+   }) => {
+-    if (args.id === snapshot.columnId && args.operator === snapshotOperator) {
++    if (
++      args.id === snapshot.columnId &&
++      args.type === snapshotType &&
++      args.operator === snapshotOperator
++    ) {
+       setDraftValue(snapshotDraft);
+     }
+   };
+@@ -142,42 +147,34 @@ export const FilterPillEditor = <TData,>({
+       nextOperator = DEFAULT_OPERATOR[nextColumnType];
+       setDraftType(nextColumnType);
+       setDraftOperator(nextOperator);
+-      setDraftValue(emptyDraftFor(nextColumnType, nextOperator));
++      setDraftValue({});
+     }
+     setDraftColumnId(nextColumnId);
+     rehydrateIfMatchesSnapshot({
+       id: nextColumnId,
++      type: nextColumnType,
+       operator: nextOperator,
+     });
+   };
+ 
+-  const handleOperatorChange = (nextOp: OperatorType) => {
++  const handleOperatorChange = (nextOp: UiOperator) => {
+     setDraftOperator(nextOp);
+-    const nextEmpty = emptyDraftFor(draftType, nextOp);
+-    if (nextEmpty.kind !== draftValue.kind) {
+-      setDraftValue(nextEmpty);
+-    }
+     rehydrateIfMatchesSnapshot({
+       id: draftColumnId,
++      type: draftType,
+       operator: nextOp,
+     });
+   };
+ 
+-  const pendingValue = buildFilterValue({
+-    type: draftType,
+-    operator: draftOperator,
+-    draft: draftValue,
+-  });
+-  const applyDisabled = pendingValue === undefined;
+-  const applyTooltip = applyDisabled
+-    ? getMissingValueMessage(draftType, draftOperator)
+-    : "Apply filter";
+-
+   const handleApply = () => {
+-    if (!pendingValue) {
++    const value = buildFilterValue({
++      type: draftType,
++      operator: draftOperator,
++      draft: draftValue,
++    });
++    if (!value) {
+       return;
+     }
+-    const value = pendingValue;
+     table.setColumnFilters((filters) => {
+       const dropIds = new Set([snapshot.columnId, draftColumnId]);
+       const filtered = filters.filter((f) => !dropIds.has(f.id));
+@@ -194,29 +191,9 @@ export const FilterPillEditor = <TData,>({
+   };
+ 
+   const showValueSlot = !OPERATORS_WITHOUT_VALUE.has(draftOperator);
+-  const operatorOptions = OPERATORS_BY_TYPE[draftType];
+-
+-  const valueSlotRef = useRef<HTMLDivElement>(null);
+-  const operatorTriggerRef = useRef<HTMLButtonElement>(null);
+-  useEffect(() => {
+-    const firstInput = valueSlotRef.current?.querySelector<HTMLElement>(
+-      'input, [role="combobox"], button',
+-    );
+-    if (firstInput) {
+-      firstInput.focus();
+-    } else {
+-      operatorTriggerRef.current?.focus();
+-    }
+-  }, [draftType, draftOperator]);
+ 
+   return (
+-    <form
+-      className="flex flex-row gap-4 items-end p-3"
+-      onSubmit={(e) => {
+-        e.preventDefault();
+-        handleApply();
+-      }}
+-    >
++    <div className="flex flex-row gap-4 items-end p-3">
+       <div className="flex flex-col gap-1">
+         <label className="text-xs text-muted-foreground" htmlFor={columnId}>
+           Column
+@@ -241,19 +218,14 @@ export const FilterPillEditor = <TData,>({
+           Operator
+         </label>
+         <Select
+-          key={draftType}
+           value={draftOperator}
+-          onValueChange={(v) => handleOperatorChange(v as OperatorType)}
++          onValueChange={(v) => handleOperatorChange(v as UiOperator)}
+         >
+-          <SelectTrigger
+-            ref={operatorTriggerRef}
+-            id={operatorId}
+-            className="h-6 mb-1 bg-transparent"
+-          >
++          <SelectTrigger id={operatorId} className="h-6 mb-1 bg-transparent">
+             <SelectValue />
+           </SelectTrigger>
+           <SelectContent>
+-            {operatorOptions.map((op) => (
++            {OPERATORS_BY_TYPE[draftType].map((op) => (
+               <SelectItem key={op} value={op}>
+                 {OPERATOR_LABELS[op]}
+               </SelectItem>
+@@ -262,14 +234,13 @@ export const FilterPillEditor = <TData,>({
+         </Select>
+       </div>
+       {showValueSlot && (
+-        <div ref={valueSlotRef} className="flex flex-col gap-1">
++        <div className="flex flex-col gap-1">
+           <label htmlFor={valueId} className="text-xs text-muted-foreground">
+             Value
+           </label>
+           <ValueSlot
+             id={valueId}
+             type={draftType}
+-            operator={draftOperator}
+             value={draftValue}
+             onChange={setDraftValue}
+             column={table.getColumn(draftColumnId) ?? null}
+@@ -278,19 +249,17 @@ export const FilterPillEditor = <TData,>({
+         </div>
+       )}
+       <div className="flex gap-1 mb-1">
+-        <Tooltip content={applyTooltip}>
+-          <span className="inline-flex">
+-            <Button
+-              type="submit"
+-              size="icon"
+-              variant="ghost"
+-              disabled={applyDisabled}
+-              className="rounded-full text-primary hover:text-primary hover:bg-primary/10"
+-              aria-label="Apply filter"
+-            >
+-              <CheckIcon className="h-3.5 w-3.5" aria-hidden={true} />
+-            </Button>
+-          </span>
++        <Tooltip content="Apply filter">
++          <Button
++            type="button"
++            size="icon"
++            variant="ghost"
++            className="rounded-full text-primary hover:text-primary hover:bg-primary/10"
++            onClick={handleApply}
++            aria-label="Apply filter"
++          >
++            <CheckIcon className="h-3.5 w-3.5" aria-hidden={true} />
++          </Button>
+         </Tooltip>
+         <Tooltip content="Close without saving">
+           <Button
+@@ -317,14 +286,13 @@ export const FilterPillEditor = <TData,>({
+           </Button>
+         </Tooltip>
+       </div>
+-    </form>
++    </div>
+   );
+ };
+ 
+ interface ValueSlotProps<TData, TValue> {
+   id?: string;
+   type: EditableFilterType;
+-  operator: OperatorType;
+   value: DraftValue;
+   onChange: (next: DraftValue) => void;
+   column: Column<TData, TValue> | null;
+@@ -334,28 +302,26 @@ interface ValueSlotProps<TData, TValue> {
+ const ValueSlot = <TData, TValue>({
+   id,
+   type,
+-  operator,
+   value,
+   onChange,
+   column,
+   calculateTopKRows,
+ }: ValueSlotProps<TData, TValue>) => {
+-  if (type === "number" && operator === "between") {
+-    const v = value.kind === "between" ? value : { kind: "between" as const };
++  if (type === "number") {
+     return (
+-      <div className="flex gap-1 items-center w-44">
++      <div className="flex gap-1 items-center w-48">
+         <NumberField
+           id={id}
+-          value={v.min}
+-          onChange={(n) => onChange({ kind: "between", min: n, max: v.max })}
++          value={value.min}
++          onChange={(v) => onChange({ ...value, min: v })}
+           aria-label="min"
+           placeholder="min"
+           className="border-input flex-1 min-w-0"
+         />
+         <MinusIcon className="h-5 w-5 text-muted-foreground shrink-0" />
+         <NumberField
+-          value={v.max}
+-          onChange={(n) => onChange({ kind: "between", min: v.min, max: n })}
++          value={value.max}
++          onChange={(v) => onChange({ ...value, max: v })}
+           aria-label="max"
+           placeholder="max"
+           className="border-input flex-1 min-w-0"
+@@ -363,78 +329,26 @@ const ValueSlot = <TData, TValue>({
+       </div>
+     );
+   }
+-  if (type === "number" && isNumberComparisonOp(operator)) {
+-    const v =
+-      value.kind === "single-number"
+-        ? value
+-        : { kind: "single-number" as const };
+-    return (
+-      <NumberField
+-        id={id}
+-        value={v.value}
+-        onChange={(n) => onChange({ kind: "single-number", value: n })}
+-        aria-label="value"
+-        placeholder="value"
+-        className="border-input w-24 min-w-0"
+-      />
+-    );
+-  }
+-  if (
+-    type === "text" &&
+-    (operator === "in" || operator === "not_in") &&
+-    column
+-  ) {
+-    const v =
+-      value.kind === "multi-text" ? value : { kind: "multi-text" as const };
+-    return (
+-      <div className="w-48">
+-        <FilterByValuesPicker
+-          column={column}
+-          calculateTopKRows={calculateTopKRows}
+-          chosenValues={v.values ?? []}
+-          onChange={(next) =>
+-            onChange({ kind: "multi-text", values: next.map(String) })
+-          }
+-          creatable={true}
+-        />
+-      </div>
+-    );
+-  }
+-  if (type === "text" && isTextScalarOp(operator)) {
+-    const v =
+-      value.kind === "single-text" ? value : { kind: "single-text" as const };
+-    if (operator === "regex") {
+-      return (
+-        <RegexInput
+-          id={id}
+-          value={v.text ?? ""}
+-          onChange={(text) => onChange({ kind: "single-text", text })}
+-          className="w-40"
+-        />
+-      );
+-    }
++  if (type === "text") {
+     return (
+       <Input
+         id={id}
+         type="text"
+-        value={v.text ?? ""}
+-        onChange={(e) =>
+-          onChange({ kind: "single-text", text: e.target.value })
+-        }
++        value={value.text ?? ""}
++        onChange={(e) => onChange({ ...value, text: e.target.value })}
+         placeholder="Text…"
+-        className="border-input w-40 min-w-0"
++        className="border-input min-w-0"
+       />
+     );
+   }
+   if (type === "select" && column) {
+-    const v = value.kind === "options" ? value : { kind: "options" as const };
+     return (
+       <div className="flex w-48">
+         <FilterByValuesPicker
+           column={column}
+           calculateTopKRows={calculateTopKRows}
+-          chosenValues={v.options ?? []}
+-          onChange={(values) => onChange({ kind: "options", options: values })}
++          chosenValues={value.options ?? []}
++          onChange={(values) => onChange({ ...value, options: values })}
+         />
+       </div>
+     );
+@@ -455,74 +369,43 @@ function getEditableType(value: ColumnFilterValue): EditableFilterType {
+   if (value.type === "select") {
+     return "select";
+   }
++  // date/datetime/time fall back to text; callers should guard. supported in future
+   return "text";
+ }
+ 
+-function toDraftValue(value: ColumnFilterValue): DraftValue {
++function getUiOperator(value: ColumnFilterValue): UiOperator {
++  if (value.operator === "is_null") {
++    return "is_null";
++  }
++  if (value.operator === "is_not_null") {
++    return "is_not_null";
++  }
+   if (value.type === "number") {
+-    switch (value.operator) {
+-      case "between":
+-        return { kind: "between", min: value.min, max: value.max };
+-      case "is_null":
+-      case "is_not_null":
+-        return { kind: "none" };
+-      default:
+-        return { kind: "single-number", value: value.value };
+-    }
++    return "between";
+   }
+   if (value.type === "text") {
+-    switch (value.operator) {
+-      case "in":
+-      case "not_in":
+-        return { kind: "multi-text", values: [...value.values] };
+-      case "is_null":
+-      case "is_not_null":
+-      case "is_empty":
+-        return { kind: "none" };
+-      default:
+-        return { kind: "single-text", text: value.text };
+-    }
++    return "contains";
++  }
++  if (value.type === "boolean") {
++    return value.value ? "is_true" : "is_false";
+   }
+   if (value.type === "select") {
+-    return { kind: "options", options: [...value.options] };
++    return value.operator === "not_in" ? "not_in" : "in";
+   }
+-  return { kind: "none" };
++  return "contains";
+ }
+ 
+-function emptyDraftFor(
+-  type: EditableFilterType,
+-  operator: OperatorType,
+-): DraftValue {
+-  if (OPERATORS_WITHOUT_VALUE.has(operator)) {
+-    return { kind: "none" };
+-  }
+-  if (type === "number") {
+-    return operator === "between"
+-      ? { kind: "between" }
+-      : { kind: "single-number" };
+-  }
+-  if (type === "text") {
+-    return operator === "in" || operator === "not_in"
+-      ? { kind: "multi-text", values: [] }
+-      : { kind: "single-text" };
+-  }
+-  if (type === "select") {
+-    return { kind: "options", options: [] };
++function toDraftValue(value: ColumnFilterValue): DraftValue {
++  if (value.type === "number") {
++    return { min: value.min, max: value.max };
+   }
+-  return { kind: "none" };
+-}
+-
+-function getMissingValueMessage(
+-  type: EditableFilterType,
+-  operator: OperatorType,
+-): string {
+-  if (type === "number" && operator === "between") {
+-    return "Min and max are required";
++  if (value.type === "text") {
++    return { text: value.text };
+   }
+-  if (type === "text" && (operator === "in" || operator === "not_in")) {
+-    return "Pick at least one value";
++  if (value.type === "select") {
++    return { options: [...value.options] };
+   }
+-  return "Value is required";
++  return {};
+ }
+ 
+ function buildFilterValue({
+@@ -531,79 +414,51 @@ function buildFilterValue({
+   draft,
+ }: {
+   type: EditableFilterType;
+-  operator: OperatorType;
++  operator: UiOperator;
+   draft: DraftValue;
+ }): ColumnFilterValue | undefined {
+-  if (type === "number") {
+-    if (operator === "is_null" || operator === "is_not_null") {
+-      return Filter.number({ operator });
++  if (operator === "is_null" || operator === "is_not_null") {
++    const op = operator;
++    if (type === "number") {
++      return Filter.number({ operator: op });
+     }
+-    if (operator === "between") {
+-      if (
+-        draft.kind !== "between" ||
+-        draft.min === undefined ||
+-        draft.max === undefined
+-      ) {
+-        return undefined;
+-      }
+-      return Filter.number({
+-        operator: "between",
+-        min: draft.min,
+-        max: draft.max,
+-      });
+-    }
+-    if (!isNumberComparisonOp(operator)) {
+-      return undefined;
++    if (type === "boolean") {
++      return Filter.boolean({ operator: op });
+     }
+-    if (draft.kind !== "single-number" || draft.value === undefined) {
++    return Filter.text({ operator: op });
++  }
++  if (type === "number") {
++    if (draft.min === undefined && draft.max === undefined) {
+       return undefined;
+     }
+-    return Filter.number({ operator, value: draft.value });
++    return Filter.number({ min: draft.min, max: draft.max });
+   }
+   if (type === "text") {
+-    if (
+-      operator === "is_null" ||
+-      operator === "is_not_null" ||
+-      operator === "is_empty"
+-    ) {
+-      return Filter.text({ operator });
+-    }
+-    if (operator === "in" || operator === "not_in") {
+-      if (
+-        draft.kind !== "multi-text" ||
+-        !draft.values ||
+-        draft.values.length === 0
+-      ) {
+-        return undefined;
+-      }
+-      return Filter.text({ operator, values: draft.values });
+-    }
+-    if (!isTextScalarOp(operator)) {
+-      return undefined;
+-    }
+-    if (draft.kind !== "single-text" || !draft.text) {
++    if (!draft.text) {
+       return undefined;
+     }
+-    return Filter.text({ operator, text: draft.text });
++    return Filter.text({
++      text: draft.text,
++      operator: "contains",
++    });
+   }
+   if (type === "boolean") {
+     if (operator === "is_true") {
+-      return Filter.boolean({ value: true, operator: "is_true" });
++      return Filter.boolean({
++        value: true,
++        operator: "is_true",
++      });
+     }
+     if (operator === "is_false") {
+-      return Filter.boolean({ value: false, operator: "is_false" });
+-    }
+-    if (operator === "is_null" || operator === "is_not_null") {
+-      return Filter.boolean({ operator });
++      return Filter.boolean({
++        value: false,
++        operator: "is_false",
++      });
+     }
+     return undefined;
+   }
+   if (type === "select") {
+-    if (
+-      draft.kind !== "options" ||
+-      !draft.options ||
+-      draft.options.length === 0
+-    ) {
++    if (!draft.options || draft.options.length === 0) {
+       return undefined;
+     }
+     return Filter.select({
+diff --git a/frontend/src/components/data-table/filter-pills.tsx b/frontend/src/components/data-table/filter-pills.tsx
+index 68a6e5767..77839dfa6 100644
+--- a/frontend/src/components/data-table/filter-pills.tsx
++++ b/frontend/src/components/data-table/filter-pills.tsx
+@@ -13,7 +13,6 @@ import { Button } from "../ui/button";
+ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+ import { FilterPillEditor } from "./filter-pill-editor";
+ import type { ColumnFilterValue } from "./filters";
+-import { OPERATOR_LABELS } from "./operator-labels";
+ import { stringifyUnknownValue } from "./utils";
+ 
+ interface Props<TData> {
+@@ -210,62 +209,19 @@ function formatValue(
+   }
+ 
+   if (value.type === "number") {
+-    switch (value.operator) {
+-      case "between":
+-        return {
+-          operator: OPERATOR_LABELS.between.toLowerCase(),
+-          value: `${value.min} - ${value.max}`,
+-        };
+-      case "==":
+-      case "!=":
+-      case ">":
+-      case ">=":
+-      case "<":
+-      case "<=":
+-        return { operator: value.operator, value: String(value.value) };
+-    }
+-  }
+-  if (value.type === "text") {
+-    switch (value.operator) {
+-      case "in":
+-      case "not_in": {
+-        const items = value.values.map((v) => `"${v}"`);
+-        return {
+-          operator: value.operator === "in" ? "is in" : "not in",
+-          value: `[${items.join(", ")}]`,
+-        };
+-      }
+-      case "is_empty":
+-        return { operator: "is empty" };
+-      case "contains":
+-      case "equals":
+-      case "does_not_equal":
+-      case "regex":
+-      case "starts_with":
+-      case "ends_with":
+-        return {
+-          operator: OPERATOR_LABELS[value.operator].toLowerCase(),
+-          value: `"${value.text}"`,
+-        };
+-    }
++    return formatMinMax(value.min, value.max);
+   }
+   if (value.type === "date") {
+-    return formatMinMaxLegacy(
+-      value.min?.toISOString(),
+-      value.max?.toISOString(),
+-    );
++    return formatMinMax(value.min?.toISOString(), value.max?.toISOString());
+   }
+   if (value.type === "time") {
+-    return formatMinMaxLegacy(
++    return formatMinMax(
+       value.min ? timeFormatter.format(value.min) : undefined,
+       value.max ? timeFormatter.format(value.max) : undefined,
+     );
+   }
+   if (value.type === "datetime") {
+-    return formatMinMaxLegacy(
+-      value.min?.toISOString(),
+-      value.max?.toISOString(),
+-    );
++    return formatMinMax(value.min?.toISOString(), value.max?.toISOString());
+   }
+   if (value.type === "boolean") {
+     return { operator: `is ${value.value ? "True" : "False"}` };
+@@ -279,11 +235,14 @@ function formatValue(
+       value: `[${stringifiedOptions.join(", ")}]`,
+     };
+   }
++  if (value.type === "text") {
++    return { operator: "contains", value: `"${value.text}"` };
++  }
+   logNever(value);
+   return undefined;
+ }
+ 
+-function formatMinMaxLegacy(
++function formatMinMax(
+   min: string | number | undefined,
+   max: string | number | undefined,
+ ): FormattedFilter | undefined {
+diff --git a/frontend/src/components/data-table/filters.ts b/frontend/src/components/data-table/filters.ts
+index 3f7311b3e..f5d757c25 100644
+--- a/frontend/src/components/data-table/filters.ts
++++ b/frontend/src/components/data-table/filters.ts
+@@ -32,66 +32,15 @@ export type FilterType =
+   | "select"
+   | "boolean";
+ 
+-export const NULLISH_OPS = ["is_null", "is_not_null"] as const;
+-export const MEMBERSHIP_OPS = ["in", "not_in"] as const;
+-export const NUMBER_COMPARISON_OPS = [
+-  "==",
+-  "!=",
+-  ">",
+-  ">=",
+-  "<",
+-  "<=",
+-] as const;
+-export const TEXT_SCALAR_OPS = [
+-  "contains",
+-  "equals",
+-  "does_not_equal",
+-  "regex",
+-  "starts_with",
+-  "ends_with",
+-] as const;
+-
+-export const NUMBER_OPS = [
+-  "between",
+-  ...NUMBER_COMPARISON_OPS,
+-  ...NULLISH_OPS,
+-] as const;
+-export const TEXT_OPS = [
+-  ...TEXT_SCALAR_OPS,
+-  ...MEMBERSHIP_OPS,
+-  "is_empty",
+-  ...NULLISH_OPS,
+-] as const;
+-
+-export type NullishOp = (typeof NULLISH_OPS)[number];
+-export type MembershipOp = (typeof MEMBERSHIP_OPS)[number];
+-export type NumberComparisonOp = (typeof NUMBER_COMPARISON_OPS)[number];
+-export type TextScalarOp = (typeof TEXT_SCALAR_OPS)[number];
+-
+-interface NullishOpts {
+-  operator: NullishOp;
+-}
+-
+-type NumberFilterOpts =
+-  | { operator: "between"; min: number; max: number }
+-  | { operator: NumberComparisonOp; value: number }
+-  | NullishOpts;
+-
+-type TextFilterOpts =
+-  | { operator: TextScalarOp; text: string }
+-  | { operator: MembershipOp; values: string[] }
+-  | { operator: "is_empty" }
+-  | NullishOpts;
+-
+ // Filter is a factory function that creates a filter object
+ export const Filter = {
+-  number(opts: NumberFilterOpts) {
++  number(opts: { min?: number; max?: number; operator?: OperatorType }) {
+     return {
+       type: "number",
+       ...opts,
+     } as const;
+   },
+-  text(opts: TextFilterOpts) {
++  text(opts: { text?: string; operator: OperatorType }) {
+     return {
+       type: "text",
+       ...opts,
+@@ -135,15 +84,6 @@ export type ColumnFilterForType<T extends FilterType> = T extends FilterType
+   ? Extract<ColumnFilterValue, { type: T }>
+   : never;
+ 
+-function isNullishFilter(
+-  filter: ColumnFilterValue,
+-): filter is Extract<
+-  ColumnFilterValue,
+-  { operator: "is_null" | "is_not_null" }
+-> {
+-  return filter.operator === "is_null" || filter.operator === "is_not_null";
+-}
+-
+ export function filterToFilterCondition(
+   columnIdString: string,
+   filter: ColumnFilterValue | undefined,
+@@ -153,11 +93,12 @@ export function filterToFilterCondition(
+   }
+   const columnId = columnIdString as ColumnId;
+ 
+-  if (isNullishFilter(filter)) {
++  if (filter.operator === "is_null" || filter.operator === "is_not_null") {
+     return [
+       {
+         column_id: columnId,
+         operator: filter.operator,
++        value: undefined,
+         type: "condition",
+         negate: false,
+       },
+@@ -165,76 +106,38 @@ export function filterToFilterCondition(
+   }
+ 
+   switch (filter.type) {
+-    case "number":
+-      switch (filter.operator) {
+-        case "between":
+-          return [
+-            {
+-              column_id: columnId,
+-              operator: "between",
+-              value: { min: filter.min, max: filter.max },
+-              type: "condition",
+-              negate: false,
+-            },
+-          ];
+-        case "==":
+-        case "!=":
+-        case ">":
+-        case ">=":
+-        case "<":
+-        case "<=":
+-          return [
+-            {
+-              column_id: columnId,
+-              operator: filter.operator,
+-              value: filter.value,
+-              type: "condition",
+-              negate: false,
+-            },
+-          ];
+-        default:
+-          assertNever(filter);
++    case "number": {
++      const conditions: FilterConditionType[] = [];
++      if (filter.min !== undefined) {
++        conditions.push({
++          column_id: columnId,
++          operator: ">=",
++          value: filter.min,
++          type: "condition",
++          negate: false,
++        });
+       }
+-    case "text":
+-      switch (filter.operator) {
+-        case "contains":
+-        case "equals":
+-        case "does_not_equal":
+-        case "regex":
+-        case "starts_with":
+-        case "ends_with":
+-          return [
+-            {
+-              column_id: columnId,
+-              operator: filter.operator,
+-              value: filter.text,
+-              type: "condition",
+-              negate: false,
+-            },
+-          ];
+-        case "in":
+-        case "not_in":
+-          return [
+-            {
+-              column_id: columnId,
+-              operator: filter.operator,
+-              value: filter.values,
+-              type: "condition",
+-              negate: false,
+-            },
+-          ];
+-        case "is_empty":
+-          return [
+-            {
+-              column_id: columnId,
+-              operator: "is_empty",
+-              type: "condition",
+-              negate: false,
+-            },
+-          ];
+-        default:
+-          assertNever(filter);
++      if (filter.max !== undefined) {
++        conditions.push({
++          column_id: columnId,
++          operator: "<=",
++          value: filter.max,
++          type: "condition",
++          negate: false,
++        });
+       }
++      return conditions;
++    }
++    case "text":
++      return [
++        {
++          column_id: columnId,
++          operator: filter.operator,
++          value: filter.text,
++          type: "condition",
++          negate: false,
++        },
++      ];
+     case "datetime": {
+       const conditions: FilterConditionType[] = [];
+       if (filter.min !== undefined) {
+@@ -307,6 +210,7 @@ export function filterToFilterCondition(
+           {
+             column_id: columnId,
+             operator: "is_true",
++            value: undefined,
+             type: "condition",
+             negate: false,
+           },
+@@ -317,6 +221,7 @@ export function filterToFilterCondition(
+           {
+             column_id: columnId,
+             operator: "is_false",
++            value: undefined,
+             type: "condition",
+             negate: false,
+           },
+diff --git a/frontend/src/components/data-table/header-items.tsx b/frontend/src/components/data-table/header-items.tsx
+index 474225136..ef38721ee 100644
+--- a/frontend/src/components/data-table/header-items.tsx
++++ b/frontend/src/components/data-table/header-items.tsx
+@@ -328,21 +328,14 @@ export const FilterButtons = ({
+   onApply,
+   onClear,
+   clearButtonDisabled,
+-  applyButtonDisabled,
+ }: {
+   onApply: () => void;
+   onClear: () => void;
+   clearButtonDisabled?: boolean;
+-  applyButtonDisabled?: boolean;
+ }) => {
+   return (
+     <div className="flex gap-2 px-2 justify-between">
+-      <Button
+-        variant="link"
+-        size="sm"
+-        onClick={onApply}
+-        disabled={applyButtonDisabled}
+-      >
++      <Button variant="link" size="sm" onClick={onApply}>
+         Apply
+       </Button>
+       <Button
+diff --git a/frontend/src/components/data-table/operator-labels.ts b/frontend/src/components/data-table/operator-labels.ts
+deleted file mode 100644
+index 003b5b372..000000000
+--- a/frontend/src/components/data-table/operator-labels.ts
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/* Copyright 2026 Marimo. All rights reserved. */
+-import type { OperatorType } from "@/plugins/impl/data-frames/utils/operators";
+-
+-export const OPERATOR_LABELS: Record<OperatorType | "between", string> = {
+-  "==": "Equals",
+-  "!=": "Doesn't equal",
+-  ">": "Greater than",
+-  ">=": "Greater than or equal",
+-  "<": "Less than",
+-  "<=": "Less than or equal",
+-  between: "Between",
+-  contains: "Contains",
+-  equals: "Equals",
+-  does_not_equal: "Doesn't equal",
+-  starts_with: "Starts with",
+-  ends_with: "Ends with",
+-  regex: "Matches regex",
+-  in: "Is in",
+-  not_in: "Not in",
+-  is_empty: "Is empty",
+-  is_true: "Is true",
+-  is_false: "Is false",
+-  is_null: "Is null",
+-  is_not_null: "Is not null",
+-};
+diff --git a/frontend/src/components/data-table/regex-input.tsx b/frontend/src/components/data-table/regex-input.tsx
+deleted file mode 100644
+index 1e158dd65..000000000
+--- a/frontend/src/components/data-table/regex-input.tsx
++++ /dev/null
+@@ -1,61 +0,0 @@
+-/* Copyright 2026 Marimo. All rights reserved. */
+-import React from "react";
+-import { cn } from "@/utils/cn";
+-import { Input } from "../ui/input";
+-
+-export interface RegexInputProps {
+-  id?: string;
+-  value: string;
+-  onChange: (next: string) => void;
+-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+-  placeholder?: string;
+-  className?: string;
+-  autoFocus?: boolean;
+-  "aria-label"?: string;
+-}
+-
+-export const RegexInput = React.forwardRef<HTMLInputElement, RegexInputProps>(
+-  (
+-    {
+-      id,
+-      value,
+-      onChange,
+-      onKeyDown,
+-      placeholder = "pattern",
+-      className,
+-      autoFocus,
+-      "aria-label": ariaLabel,
+-    },
+-    ref,
+-  ) => (
+-    <div
+-      className={cn(
+-        "flex items-stretch h-6 mb-1 rounded-sm border border-input bg-background shadow-xs-solid focus-within:shadow-md-solid focus-within:ring-1 focus-within:ring-ring focus-within:border-primary",
+-        className,
+-      )}
+-    >
+-      <Slash />
+-      <Input
+-        ref={ref}
+-        id={id}
+-        type="text"
+-        value={value}
+-        onChange={(e) => onChange(e.target.value)}
+-        onKeyDown={onKeyDown}
+-        placeholder={placeholder}
+-        autoFocus={autoFocus}
+-        aria-label={ariaLabel}
+-        rootClassName="flex-1 min-w-0"
+-        className="border-0 mb-0 h-full shadow-none! hover:shadow-none! focus-visible:shadow-none! focus-visible:ring-0 focus-visible:border-0 rounded-none bg-transparent"
+-      />
+-      <Slash />
+-    </div>
+-  ),
+-);
+-RegexInput.displayName = "RegexInput";
+-
+-const Slash = () => (
+-  <span className="px-1.5 flex items-center text-muted-foreground font-code text-sm select-none">
+-    /
+-  </span>
+-);
+diff --git a/frontend/src/components/editor/chrome/wrapper/footer-items/backend-status.tsx b/frontend/src/components/editor/chrome/wrapper/footer-items/backend-status.tsx
+index 5a5694091..d2f79264f 100644
+--- a/frontend/src/components/editor/chrome/wrapper/footer-items/backend-status.tsx
++++ b/frontend/src/components/editor/chrome/wrapper/footer-items/backend-status.tsx
+@@ -57,7 +57,7 @@ export const BackendConnectionStatus: React.FC = () => {
+     }
+ 
+     try {
+-      const isHealthy = await runtime.isHealthy();
++      const isHealthy = await runtime.probeHealth();
+       setConnectionStatus(isHealthy ? "healthy" : "unhealthy");
+       return {
+         isHealthy,
+diff --git a/frontend/src/components/editor/file-tree/file-explorer.tsx b/frontend/src/components/editor/file-tree/file-explorer.tsx
+index da0937c63..ddaae0380 100644
+--- a/frontend/src/components/editor/file-tree/file-explorer.tsx
++++ b/frontend/src/components/editor/file-tree/file-explorer.tsx
+@@ -9,7 +9,6 @@ import {
+   CopyMinusIcon,
+   DownloadIcon,
+   ExternalLinkIcon,
+-  EyeIcon,
+   EyeOffIcon,
+   FilePlus2Icon,
+   FolderPlusIcon,
+@@ -199,7 +198,6 @@ export const FileExplorer: React.FC<{
+       <Toolbar
+         onRefresh={handleRefresh}
+         onHidden={handleHiddenFilesToggle}
+-        showHiddenFiles={showHiddenFiles}
+         onCreateFile={handleCreateFile}
+         onCreateNotebook={handleCreateNotebook}
+         onCreateFolder={handleCreateFolder}
+@@ -267,7 +265,6 @@ const INDENT_STEP = 15;
+ interface ToolbarProps {
+   onRefresh: () => void;
+   onHidden: () => void;
+-  showHiddenFiles: boolean;
+   onCreateFile: () => void;
+   onCreateNotebook: () => void;
+   onCreateFolder: () => void;
+@@ -278,7 +275,6 @@ interface ToolbarProps {
+ const Toolbar = ({
+   onRefresh,
+   onHidden,
+-  showHiddenFiles,
+   onCreateFile,
+   onCreateNotebook,
+   onCreateFolder,
+@@ -338,20 +334,14 @@ const Toolbar = ({
+         data-testid="file-explorer-refresh-button"
+         onClick={onRefresh}
+       />
+-      <Tooltip
+-        content={showHiddenFiles ? "Hide hidden files" : "Show hidden files"}
+-      >
++      <Tooltip content="Toggle hidden files">
+         <Button
+           data-testid="file-explorer-hidden-files-button"
+           onClick={onHidden}
+           variant="text"
+           size="xs"
+         >
+-          {showHiddenFiles ? (
+-            <EyeIcon size={16} className="text-primary" />
+-          ) : (
+-            <EyeOffIcon size={16} />
+-          )}
++          <EyeOffIcon size={16} />
+         </Button>
+       </Tooltip>
+       <Tooltip content="Collapse all folders">
+diff --git a/frontend/src/components/ui/combobox.tsx b/frontend/src/components/ui/combobox.tsx
+index 738c38e50..0112399d1 100644
+--- a/frontend/src/components/ui/combobox.tsx
++++ b/frontend/src/components/ui/combobox.tsx
+@@ -39,7 +39,6 @@ interface ComboboxCommonProps<TValue> {
+   className?: string;
+   id?: string;
+   keepPopoverOpenOnSelect?: boolean;
+-  disabled?: boolean;
+ }
+ 
+ type ComboboxFilterProps =
+@@ -96,7 +95,6 @@ export const Combobox = <TValue,>({
+   chipsClassName,
+   keepPopoverOpenOnSelect,
+   id,
+-  disabled = false,
+   ...rest
+ }: ComboboxProps<TValue>) => {
+   const [open = false, setOpen] = useControllableState({
+@@ -170,30 +168,19 @@ export const Combobox = <TValue,>({
+ 
+   return (
+     <div className={cn("relative")} {...rest}>
+-      <Popover
+-        open={open}
+-        onOpenChange={(v) => {
+-          if (disabled && v) {
+-            return;
+-          }
+-          setOpen(v);
+-        }}
+-      >
++      <Popover open={open} onOpenChange={setOpen}>
+         <PopoverTrigger asChild={true}>
+-          <button
++          <div
+             id={id}
+-            type="button"
+             className={cn(
+-              "flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid",
+-              disabled && "cursor-not-allowed opacity-50",
++              "flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50",
+               className,
+             )}
+             aria-expanded={open}
+-            aria-disabled={disabled}
+           >
+             <span className="truncate flex-1 min-w-0">{renderValue()}</span>
+             <ChevronDownIcon className="ml-3 w-4 h-4 opacity-50 shrink-0" />
+-          </button>
++          </div>
+         </PopoverTrigger>
+         <PopoverContent
+           className="w-full min-w-(--radix-popover-trigger-width) p-0"
+@@ -228,15 +215,9 @@ export const Combobox = <TValue,>({
+                   {displayValue?.(val) ?? String(val)}
+                   <XCircle
+                     onClick={() => {
+-                      if (disabled) {
+-                        return;
+-                      }
+                       handleSelect(val);
+                     }}
+-                    className={cn(
+-                      "w-3 h-3 opacity-50 hover:opacity-100 ml-1 cursor-pointer",
+-                      disabled && "pointer-events-none",
+-                    )}
++                    className="w-3 h-3 opacity-50 hover:opacity-100 ml-1 cursor-pointer"
+                   />
+                 </Badge>
+               );
+diff --git a/frontend/src/components/ui/number-field.tsx b/frontend/src/components/ui/number-field.tsx
+index cfad73e70..9ecaa389f 100644
+--- a/frontend/src/components/ui/number-field.tsx
++++ b/frontend/src/components/ui/number-field.tsx
+@@ -62,7 +62,6 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
+               slot="increment"
+               isDisabled={props.isDisabled}
+               variant={variant}
+-              excludeFromTabOrder={true}
+             >
+               <ChevronUp
+                 aria-hidden={true}
+@@ -74,7 +73,6 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
+               slot="decrement"
+               isDisabled={props.isDisabled}
+               variant={variant}
+-              excludeFromTabOrder={true}
+             >
+               <ChevronDown
+                 aria-hidden={true}
+diff --git a/frontend/src/core/codemirror/go-to-definition/__tests__/commands.test.ts b/frontend/src/core/codemirror/go-to-definition/__tests__/commands.test.ts
+index 85e7ef0e5..2ca544766 100644
+--- a/frontend/src/core/codemirror/go-to-definition/__tests__/commands.test.ts
++++ b/frontend/src/core/codemirror/go-to-definition/__tests__/commands.test.ts
+@@ -101,158 +101,6 @@ print(x)`);
+     `);
+   });
+ 
+-  test("selects the nearest in-scope local definition", async () => {
+-    const code = `\
+-a = 10
+-
+-def my_func():
+-    a = 20
+-    print(a)`;
+-    view = createEditor(code);
+-    const result = goToVariableDefinition(view, "a", code.lastIndexOf("a"));
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    expect(renderEditorView(view)).toMatchInlineSnapshot(`
+-      "
+-      a = 10
+-
+-      def my_func():
+-          a = 20
+-          ^
+-          print(a)
+-      "
+-    `);
+-  });
+-
+-  test("selects the nearest in-scope parameter definition", async () => {
+-    const code = `\
+-a = 10
+-
+-def my_func(a):
+-    print(a)`;
+-    view = createEditor(code);
+-    const result = goToVariableDefinition(view, "a", code.lastIndexOf("a"));
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    expect(renderEditorView(view)).toMatchInlineSnapshot(`
+-      "
+-      a = 10
+-
+-      def my_func(a):
+-                  ^
+-          print(a)
+-      "
+-    `);
+-  });
+-
+-  test("selects the comprehension target inside a set comprehension", async () => {
+-    const code = `\
+-x = 100
+-s = {x for x in range(10)}`;
+-    view = createEditor(code);
+-    // Go-to-definition on the `x` before `for` (the expression part of the
+-    // comprehension).
+-    const usagePosition = code.indexOf("{x") + 1;
+-    const result = goToVariableDefinition(view, "x", usagePosition);
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    // Should jump to the comprehension target `x` (after `for`), not the
+-    // outer `x = 100`. The Lezer Python grammar emits
+-    // `SetComprehensionExpression`, and we now correctly match it in
+-    // SCOPE_CREATING_NODES, so the comprehension creates a scope and the
+-    // for-target is collected correctly.
+-    expect(renderEditorView(view)).toMatchInlineSnapshot(`
+-      "
+-      x = 100
+-      s = {x for x in range(10)}
+-                 ^
+-      "
+-    `);
+-  });
+-
+-  test("selects the comprehension target inside a dict comprehension", async () => {
+-    const code = `\
+-x = 100
+-d = {x: x for x in range(10)}`;
+-    view = createEditor(code);
+-    const usagePosition = code.indexOf("{x") + 1;
+-    const result = goToVariableDefinition(view, "x", usagePosition);
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    // Positive control: `DictionaryComprehensionExpression` matches the grammar
+-    // and is in SCOPE_CREATING_NODES, so this should jump to the comprehension
+-    // target `x` (after `for`).
+-    expect(renderEditorView(view)).toMatchInlineSnapshot(`
+-      "
+-      x = 100
+-      d = {x: x for x in range(10)}
+-                    ^
+-      "
+-    `);
+-  });
+-
+-  test("skips enclosing class scope when resolving from inside a method", async () => {
+-    const code = `\
+-x = 100
+-class Foo:
+-    x = 10
+-    def method(self):
+-        return x`;
+-    view = createEditor(code);
+-    // Go-to-definition on the `x` inside `return x`.
+-    const usagePosition = code.lastIndexOf("x");
+-    const result = goToVariableDefinition(view, "x", usagePosition);
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    // Should jump to `x = 100` at module scope. In Python, methods do NOT see
+-    // their enclosing class body's names — class scopes are skipped in LEGB
+-    // lookup once a function boundary has been crossed. We now correctly skip
+-    // ClassDefinition in getScopeChain once a function boundary is crossed.
+-    expect(renderEditorView(view)).toMatchInlineSnapshot(`
+-      "
+-      x = 100
+-      ^
+-      class Foo:
+-          x = 10
+-          def method(self):
+-              return x
+-      "
+-    `);
+-  });
+-
+-  test("resolves a global forward-reference from inside a function", async () => {
+-    const code = `\
+-def foo():
+-    return a
+-
+-a = 10`;
+-    view = createEditor(code);
+-    // Go-to-definition on the `a` inside `return a`.
+-    const usagePosition = code.indexOf("return a") + "return ".length;
+-    const result = goToVariableDefinition(view, "a", usagePosition);
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    // Should jump to `a = 10` at the bottom. Python allows forward references
+-    // from within nested functions to module-level names. We now correctly omit
+-    // "global" from POSITION_SENSITIVE_SCOPES, allowing forward references to
+-    // global-level definitions declared after the usage position.
+-    expect(renderEditorView(view)).toMatchInlineSnapshot(`
+-      "
+-      def foo():
+-          return a
+-
+-      a = 10
+-      ^
+-      "
+-    `);
+-  });
+-
+   test("selects outer-scope function declaration", async () => {
+     view = createEditor(`\
+ def x():
+diff --git a/frontend/src/core/codemirror/go-to-definition/__tests__/utils.test.ts b/frontend/src/core/codemirror/go-to-definition/__tests__/utils.test.ts
+deleted file mode 100644
+index 63e11cc2e..000000000
+--- a/frontend/src/core/codemirror/go-to-definition/__tests__/utils.test.ts
++++ /dev/null
+@@ -1,99 +0,0 @@
+-/* Copyright 2026 Marimo. All rights reserved. */
+-
+-import { python } from "@codemirror/lang-python";
+-import { EditorState } from "@codemirror/state";
+-import { EditorView } from "@codemirror/view";
+-import { afterEach, describe, expect, test } from "vitest";
+-import { cellId, variableName } from "@/__tests__/branded";
+-import { initialNotebookState, notebookAtom } from "@/core/cells/cells";
+-import { store } from "@/core/state/jotai";
+-import { variablesAtom } from "@/core/variables/state";
+-import { goToDefinitionAtCursorPosition } from "../utils";
+-
+-async function tick(): Promise<void> {
+-  await new Promise((resolve) => requestAnimationFrame(resolve));
+-}
+-
+-function createEditor(content: string, selection: number) {
+-  const state = EditorState.create({
+-    doc: content,
+-    selection: { anchor: selection },
+-    extensions: [python()],
+-  });
+-
+-  return new EditorView({
+-    state,
+-    parent: document.body,
+-  });
+-}
+-
+-const views: EditorView[] = [];
+-
+-afterEach(() => {
+-  for (const view of views.splice(0)) {
+-    view.destroy();
+-  }
+-
+-  store.set(notebookAtom, initialNotebookState());
+-  store.set(variablesAtom, {});
+-});
+-
+-describe("goToDefinitionAtCursorPosition", () => {
+-  test("prefers the current-cell local definition over a reactive global", async () => {
+-    const globalCell = cellId("global-cell");
+-    const localCell = cellId("local-cell");
+-    const globalCode = `\
+-a = 10
+-print(a)`;
+-    const localCode = `\
+-def test():
+-    a = 20
+-    print(a)`;
+-
+-    const globalView = createEditor(globalCode, globalCode.length);
+-    const localView = createEditor(localCode, localCode.lastIndexOf("a"));
+-    views.push(globalView, localView);
+-
+-    const notebook = initialNotebookState();
+-    notebook.cellHandles[globalCell] = {
+-      current: { editorView: globalView, editorViewOrNull: globalView },
+-    };
+-    notebook.cellHandles[localCell] = {
+-      current: { editorView: localView, editorViewOrNull: localView },
+-    };
+-
+-    store.set(notebookAtom, notebook);
+-    store.set(variablesAtom, {
+-      [variableName("a")]: {
+-        dataType: "int",
+-        declaredBy: [globalCell],
+-        name: variableName("a"),
+-        usedBy: [localCell],
+-        value: "10",
+-      },
+-    });
+-
+-    const result = goToDefinitionAtCursorPosition(localView);
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    expect(localView.state.selection.main.head).toBe(
+-      localCode.indexOf("a = 20"),
+-    );
+-    expect(globalView.state.selection.main.head).toBe(globalCode.length);
+-  });
+-
+-  test("keeps private variables within the current cell", async () => {
+-    const code = `\
+-_x = 10
+-output = _x + 10`;
+-    const view = createEditor(code, code.lastIndexOf("_x"));
+-    views.push(view);
+-
+-    const result = goToDefinitionAtCursorPosition(view);
+-
+-    expect(result).toBe(true);
+-    await tick();
+-    expect(view.state.selection.main.head).toBe(code.indexOf("_x = 10"));
+-  });
+-});
+diff --git a/frontend/src/core/codemirror/go-to-definition/commands.ts b/frontend/src/core/codemirror/go-to-definition/commands.ts
+index 5ba4f47bd..b67a193fc 100644
+--- a/frontend/src/core/codemirror/go-to-definition/commands.ts
++++ b/frontend/src/core/codemirror/go-to-definition/commands.ts
+@@ -1,31 +1,7 @@
+ /* Copyright 2026 Marimo. All rights reserved. */
+ 
+ import { syntaxTree } from "@codemirror/language";
+-import type { EditorState } from "@codemirror/state";
+ import { EditorView } from "@codemirror/view";
+-import type { SyntaxNode, Tree, TreeCursor } from "@lezer/common";
+-
+-const SCOPE_CREATING_NODES = new Set([
+-  "FunctionDefinition",
+-  "LambdaExpression",
+-  "ArrayComprehensionExpression",
+-  "SetComprehensionExpression",
+-  "DictionaryComprehensionExpression",
+-  "ComprehensionExpression",
+-  "ClassDefinition",
+-]);
+-
+-const POSITION_SENSITIVE_SCOPES = new Set(["ClassDefinition"]);
+-
+-interface ScopeContext {
+-  id: number;
+-  type: string;
+-}
+-
+-interface VariableDeclaration {
+-  from: number;
+-  scopeId: number;
+-}
+ 
+ function goToPosition(view: EditorView, from: number): void {
+   view.focus();
+@@ -46,386 +22,50 @@ function goToPosition(view: EditorView, from: number): void {
+   });
+ }
+ 
+-function findFirstMatchingVariable(
+-  state: EditorState,
++/**
++ * This function will select the first occurrence of the given variable name,
++ * for a given editor view.
++ * @param view The editor view which contains the variable name.
++ * @param variableName The name of the variable to select, if found in the editor.
++ */
++export function goToVariableDefinition(
++  view: EditorView,
+   variableName: string,
+-): number | null {
++): boolean {
++  const { state } = view;
+   const tree = syntaxTree(state);
+ 
+-  let from: number | null = null;
++  let found = false;
++  let from = 0;
+ 
+   tree.iterate({
+     enter: (node) => {
+-      if (from !== null) {
++      if (found) {
+         return false;
+-      }
++      } // Stop traversal if found
+ 
++      // Check if the node is an identifier and matches the variable name
+       if (
+         node.name === "VariableName" &&
+         state.doc.sliceString(node.from, node.to) === variableName
+       ) {
+         from = node.from;
+-        return false;
++        found = true;
++        return false; // Stop traversal
+       }
+ 
++      // Skip comments and strings
+       if (node.name === "Comment" || node.name === "String") {
+         return false;
+       }
+-
+-      return undefined;
+     },
+   });
+ 
+-  return from;
+-}
+-
+-function getScopeChain(tree: Tree, usagePosition: number): ScopeContext[] {
+-  const scopeChain: ScopeContext[] = [];
+-  let currentNode: SyntaxNode | null = tree.resolveInner(usagePosition, 0);
+-
+-  while (currentNode) {
+-    if (SCOPE_CREATING_NODES.has(currentNode.name)) {
+-      // Skip ClassDefinition if we've already seen a function/lambda.
+-      const inFunctionLikeScope = scopeChain.some(
+-        (scope) =>
+-          scope.type === "FunctionDefinition" ||
+-          scope.type === "LambdaExpression",
+-      );
+-      if (!(inFunctionLikeScope && currentNode.name === "ClassDefinition")) {
+-        scopeChain.push({
+-          id: currentNode.from,
+-          type: currentNode.name,
+-        });
+-      }
+-    }
+-    currentNode = currentNode.parent;
+-  }
+-
+-  scopeChain.push({ id: -1, type: "global" });
+-  return scopeChain;
+-}
+-
+-function addDeclaration(
+-  declarations: VariableDeclaration[],
+-  scopeId: number,
+-  from: number,
+-) {
+-  declarations.push({ scopeId, from });
+-}
+-
+-function traverseChildren(
+-  cursor: TreeCursor,
+-  callback: (node: SyntaxNode) => void,
+-) {
+-  if (cursor.firstChild()) {
+-    do {
+-      callback(cursor.node);
+-    } while (cursor.nextSibling());
+-  }
+-}
+-
+-function collectMatchingTargets(
+-  cursor: TreeCursor,
+-  state: EditorState,
+-  variableName: string,
+-  scopeId: number,
+-  declarations: VariableDeclaration[],
+-) {
+-  switch (cursor.name) {
+-    case "VariableName":
+-      if (state.doc.sliceString(cursor.from, cursor.to) === variableName) {
+-        addDeclaration(declarations, scopeId, cursor.from);
+-      }
+-      break;
+-
+-    case "TupleExpression":
+-    case "ArrayExpression": {
+-      const childCursor = cursor.node.cursor();
+-      childCursor.firstChild();
+-      do {
+-        collectMatchingTargets(
+-          childCursor,
+-          state,
+-          variableName,
+-          scopeId,
+-          declarations,
+-        );
+-      } while (childCursor.nextSibling());
+-      break;
+-    }
+-    default:
+-      break;
++  if (found) {
++    goToPosition(view, from);
++    return true;
+   }
+-}
+-
+-function collectFunctionParameters(
+-  node: SyntaxNode | Tree,
+-  state: EditorState,
+-  variableName: string,
+-  scopeId: number,
+-  declarations: VariableDeclaration[],
+-) {
+-  const cursor = node.cursor();
+-  cursor.firstChild();
+-  do {
+-    if (cursor.name !== "ParamList") {
+-      continue;
+-    }
+-
+-    const paramCursor = cursor.node.cursor();
+-    paramCursor.firstChild();
+-    do {
+-      if (
+-        paramCursor.name === "VariableName" &&
+-        state.doc.sliceString(paramCursor.from, paramCursor.to) === variableName
+-      ) {
+-        addDeclaration(declarations, scopeId, paramCursor.from);
+-      }
+-    } while (paramCursor.nextSibling());
+-  } while (cursor.nextSibling());
+-}
+-
+-function collectForTargets(
+-  node: SyntaxNode | Tree,
+-  state: EditorState,
+-  variableName: string,
+-  scopeId: number,
+-  declarations: VariableDeclaration[],
+-) {
+-  const cursor = node.cursor();
+-  cursor.firstChild();
+-  let foundFor = false;
+-  do {
+-    if (cursor.name === "for") {
+-      foundFor = true;
+-    } else if (foundFor && cursor.name === "in") {
+-      break;
+-    } else if (foundFor) {
+-      collectMatchingTargets(
+-        cursor,
+-        state,
+-        variableName,
+-        scopeId,
+-        declarations,
+-      );
+-    }
+-  } while (cursor.nextSibling());
+-}
+-
+-function collectMatchingDeclarations(
+-  node: SyntaxNode | Tree,
+-  state: EditorState,
+-  variableName: string,
+-  scopeStack: number[],
+-  declarations: VariableDeclaration[],
+-) {
+-  const cursor = node.cursor();
+-  const nodeName = cursor.name;
+-  const nodeStart = cursor.from;
+-
+-  const isNewScope = SCOPE_CREATING_NODES.has(nodeName);
+-  const currentScopeStack = isNewScope
+-    ? [...scopeStack, nodeStart]
+-    : scopeStack;
+-  const currentScope = currentScopeStack[currentScopeStack.length - 1] ?? -1;
+-
+-  switch (nodeName) {
+-    case "FunctionDefinition":
+-    case "ClassDefinition": {
+-      const subCursor = node.cursor();
+-      subCursor.firstChild();
+-      do {
+-        if (
+-          subCursor.name === "VariableName" &&
+-          state.doc.sliceString(subCursor.from, subCursor.to) === variableName
+-        ) {
+-          const parentScope = scopeStack[scopeStack.length - 1] ?? -1;
+-          addDeclaration(declarations, parentScope, subCursor.from);
+-          break;
+-        }
+-      } while (subCursor.nextSibling());
+-
+-      if (nodeName === "FunctionDefinition") {
+-        collectFunctionParameters(
+-          node,
+-          state,
+-          variableName,
+-          nodeStart,
+-          declarations,
+-        );
+-      }
+-      break;
+-    }
+-    case "LambdaExpression":
+-      collectFunctionParameters(
+-        node,
+-        state,
+-        variableName,
+-        nodeStart,
+-        declarations,
+-      );
+-      break;
+-
+-    case "ArrayComprehensionExpression":
+-    case "DictionaryComprehensionExpression":
+-    case "SetComprehensionExpression":
+-    case "ComprehensionExpression":
+-    case "ForStatement":
+-      collectForTargets(node, state, variableName, currentScope, declarations);
+-      break;
+-
+-    case "AssignStatement": {
+-      const assignOpPositions: number[] = [];
+-      const subCursor = node.cursor();
+-      subCursor.firstChild();
+-      do {
+-        if (subCursor.name === "AssignOp") {
+-          assignOpPositions.push(subCursor.from);
+-        }
+-      } while (subCursor.nextSibling());
+-
+-      const lastAssignOpPosition =
+-        assignOpPositions[assignOpPositions.length - 1];
+-      if (lastAssignOpPosition === undefined) {
+-        break;
+-      }
+-
+-      const targetCursor = node.cursor();
+-      targetCursor.firstChild();
+-      do {
+-        if (targetCursor.from < lastAssignOpPosition) {
+-          collectMatchingTargets(
+-            targetCursor,
+-            state,
+-            variableName,
+-            currentScope,
+-            declarations,
+-          );
+-        }
+-      } while (targetCursor.nextSibling());
+-      break;
+-    }
+-    case "ImportStatement": {
+-      const subCursor = node.cursor();
+-      subCursor.firstChild();
+-      do {
+-        if (
+-          subCursor.name === "VariableName" &&
+-          state.doc.sliceString(subCursor.from, subCursor.to) === variableName
+-        ) {
+-          addDeclaration(declarations, currentScope, subCursor.from);
+-        }
+-      } while (subCursor.nextSibling());
+-      break;
+-    }
+-    case "ImportFromStatement": {
+-      const subCursor = node.cursor();
+-      subCursor.firstChild();
+-      let foundImport = false;
+-      do {
+-        if (subCursor.name === "import") {
+-          foundImport = true;
+-        } else if (
+-          foundImport &&
+-          subCursor.name === "VariableName" &&
+-          state.doc.sliceString(subCursor.from, subCursor.to) === variableName
+-        ) {
+-          addDeclaration(declarations, currentScope, subCursor.from);
+-        }
+-      } while (subCursor.nextSibling());
+-      break;
+-    }
+-    case "TryStatement":
+-    case "WithStatement": {
+-      const subCursor = node.cursor();
+-      subCursor.firstChild();
+-      let foundAs = false;
+-      do {
+-        if (subCursor.name === "as") {
+-          foundAs = true;
+-        } else if (
+-          foundAs &&
+-          subCursor.name === "VariableName" &&
+-          state.doc.sliceString(subCursor.from, subCursor.to) === variableName
+-        ) {
+-          addDeclaration(declarations, currentScope, subCursor.from);
+-          foundAs = false;
+-        }
+-      } while (subCursor.nextSibling());
+-      break;
+-    }
+-    default:
+-      break;
+-  }
+-
+-  traverseChildren(cursor, (childNode) => {
+-    collectMatchingDeclarations(
+-      childNode,
+-      state,
+-      variableName,
+-      currentScopeStack,
+-      declarations,
+-    );
+-  });
+-}
+-
+-function findScopedDefinitionPosition(
+-  state: EditorState,
+-  variableName: string,
+-  usagePosition: number,
+-): number | null {
+-  const tree = syntaxTree(state);
+-  const declarations: VariableDeclaration[] = [];
+-
+-  collectMatchingDeclarations(tree, state, variableName, [], declarations);
+-
+-  const clampedUsagePosition = Math.max(
+-    0,
+-    Math.min(usagePosition, state.doc.length),
+-  );
+-
+-  for (const scope of getScopeChain(tree, clampedUsagePosition)) {
+-    const match = declarations
+-      .filter((declaration) => declaration.scopeId === scope.id)
+-      .filter((declaration) => {
+-        return POSITION_SENSITIVE_SCOPES.has(scope.type)
+-          ? declaration.from <= clampedUsagePosition
+-          : true;
+-      })
+-      .toSorted((left, right) => left.from - right.from)[0];
+-
+-    if (match) {
+-      return match.from;
+-    }
+-  }
+-
+-  return null;
+-}
+-
+-/**
+- * This function will select the first occurrence of the given variable name,
+- * for a given editor view.
+- * @param view The editor view which contains the variable name.
+- * @param variableName The name of the variable to select, if found in the editor.
+- * @param usagePosition The position of the variable usage, if available.
+- */
+-export function goToVariableDefinition(
+-  view: EditorView,
+-  variableName: string,
+-  usagePosition?: number,
+-): boolean {
+-  const { state } = view;
+-  const from =
+-    (usagePosition !== undefined
+-      ? findScopedDefinitionPosition(state, variableName, usagePosition)
+-      : null) ?? findFirstMatchingVariable(state, variableName);
+-
+-  if (from === null) {
+-    return false;
+-  }
+-
+-  goToPosition(view, from);
+-  return true;
++  return false;
+ }
+ 
+ /**
+diff --git a/frontend/src/core/codemirror/go-to-definition/utils.ts b/frontend/src/core/codemirror/go-to-definition/utils.ts
+index 8eb09b7a4..65db96288 100644
+--- a/frontend/src/core/codemirror/go-to-definition/utils.ts
++++ b/frontend/src/core/codemirror/go-to-definition/utils.ts
+@@ -18,16 +18,10 @@ function getWordUnderCursor(state: EditorState) {
+   const { from, to } = state.selection.main;
+   if (from === to) {
+     const { startToken, endToken } = getPositionAtWordBounds(state.doc, from);
+-    return {
+-      position: startToken,
+-      word: state.doc.sliceString(startToken, endToken),
+-    };
++    return state.doc.sliceString(startToken, endToken);
+   }
+ 
+-  return {
+-    position: from,
+-    word: state.doc.sliceString(from, to),
+-  };
++  return state.doc.sliceString(from, to);
+ }
+ 
+ /**
+@@ -57,15 +51,15 @@ function isPrivateVariable(variableName: string) {
+  */
+ export function goToDefinitionAtCursorPosition(view: EditorView): boolean {
+   const { state } = view;
+-  const { position, word } = getWordUnderCursor(state);
+-  if (!word) {
++  const variableName = getWordUnderCursor(state);
++  if (!variableName) {
+     return false;
+   }
+   // Close popovers/tooltips
+   closeCompletion(view);
+   view.dispatch({ effects: closeHoverTooltips });
+ 
+-  return goToDefinition(view, word, position);
++  return goToDefinition(view, variableName);
+ }
+ 
+ /**
+@@ -75,19 +69,7 @@ export function goToDefinitionAtCursorPosition(view: EditorView): boolean {
+ export function goToDefinition(
+   view: EditorView,
+   variableName: string,
+-  usagePosition?: number,
+ ): boolean {
+-  if (usagePosition !== undefined) {
+-    const foundLocally = goToVariableDefinition(
+-      view,
+-      variableName,
+-      usagePosition,
+-    );
+-    if (foundLocally) {
+-      return true;
+-    }
+-  }
+-
+   // The variable may exist in another cell
+   const editorWithVariable = getEditorForVariable(view, variableName);
+   if (!editorWithVariable) {
+diff --git a/frontend/src/core/runtime/runtime.ts b/frontend/src/core/runtime/runtime.ts
+index 6cce29d6c..87ef9d4e2 100644
+--- a/frontend/src/core/runtime/runtime.ts
++++ b/frontend/src/core/runtime/runtime.ts
+@@ -44,17 +44,22 @@ export class RuntimeManager {
+     return this.httpURL.origin === window.location.origin;
+   }
+ 
++  private get isServerless(): boolean {
++    return isWasm() || isIslands() || isStaticNotebook();
++  }
++
+   /**
+    * The base URL of the runtime.
+    */
+-  formatHttpURL(
+-    path?: string,
+-    searchParams?: URLSearchParams,
++  formatHttpURL({
++    path = "",
++    searchParams,
+     restrictToKnownQueryParams = true,
+-  ): URL {
+-    if (!path) {
+-      path = "";
+-    }
++  }: {
++    path?: string;
++    searchParams?: URLSearchParams;
++    restrictToKnownQueryParams?: boolean;
++  }): URL {
+     // URL may be something like "http://localhost:8000?auth=123"
+     const baseUrl = this.httpURL;
+     const currentParams = new URLSearchParams(window.location.search);
+@@ -84,11 +89,11 @@ export class RuntimeManager {
+   formatWsURL(path: string, searchParams?: URLSearchParams): URL {
+     // We don't restrict to known query parameters, since mo.query_params()
+     // can accept arbitrary parameters.
+-    const url = this.formatHttpURL(
++    const url = this.formatHttpURL({
+       path,
+       searchParams,
+-      /* restrictToKnownQueryParams =*/ false,
+-    );
++      restrictToKnownQueryParams: false,
++    });
+ 
+     // For cross-origin runtimes, pass the auth token as a query parameter.
+     // WebSocket connections cannot send custom headers (no Authorization
+@@ -168,45 +173,63 @@ export class RuntimeManager {
+   }
+ 
+   getAiURL(path: "completion" | "chat"): URL {
+-    return this.formatHttpURL(`/api/ai/${path}`);
++    return this.formatHttpURL({ path: `/api/ai/${path}` });
+   }
+ 
+   /**
+    * The URL of the health check endpoint.
+    */
+   healthURL(): URL {
+-    return this.formatHttpURL("/health");
++    return this.formatHttpURL({ path: "/health" });
+   }
+ 
+-  async isHealthy(): Promise<boolean> {
+-    // Always healthy if WASM, Islands, or a static notebook (no server)
+-    if (isWasm() || isIslands() || isStaticNotebook()) {
+-      return true;
+-    }
+-
++  private async fetchHealth(): Promise<Response | null> {
+     try {
+-      const response = await fetch(this.healthURL().toString());
+-      // If there is a redirect, update the URL in the config
+-      if (response.redirected) {
+-        Logger.debug(`Runtime redirected to ${response.url}`);
+-        // strip /health from the URL, using URL parsing to handle query params
+-        const redirected = new URL(response.url);
+-        redirected.pathname = redirected.pathname.replace(/\/health$/, "");
+-        this.config.url = redirected.toString();
+-      }
+-
+-      const success = response.ok;
+-      if (success) {
+-        this.setDOMBaseUri(this.config.url);
+-      }
+-      return success;
++      return await fetch(this.healthURL().toString());
+     } catch (error) {
+       Logger.error(
+         `Failed to check health: ${error instanceof Error ? error.message : "Unknown error"}`,
+         { cause: error },
+       );
++      return null;
++    }
++  }
++
++  async reconcileFromHealth(): Promise<boolean> {
++    // Always healthy if WASM, Islands, or a static notebook (no server)
++    if (this.isServerless) {
++      return true;
++    }
++
++    const response = await this.fetchHealth();
++
++    if (!response) {
+       return false;
+     }
++
++    if (response.redirected) {
++      Logger.debug(`Runtime redirected to ${response.url}`);
++      // strip /health from the URL, using URL parsing to handle query params
++      const redirected = new URL(response.url);
++      redirected.pathname = redirected.pathname.replace(/\/health$/, "");
++      this.config.url = redirected.toString();
++    }
++
++    if (response.ok) {
++      this.setDOMBaseUri(this.config.url);
++    }
++
++    return response.ok;
++  }
++
++  async probeHealth(): Promise<boolean> {
++    // Always healthy if WASM, Islands, or a static notebook (no server)
++    if (this.isServerless) {
++      return true;
++    }
++
++    const response = await this.fetchHealth();
++    return response?.ok ?? false;
+   }
+ 
+   /**
+@@ -251,7 +274,7 @@ export class RuntimeManager {
+     const growthFactor = 1.2;
+     const maxDelay = 2000;
+ 
+-    while (!(await this.isHealthy())) {
++    while (!(await this.reconcileFromHealth())) {
+       if (retries >= maxRetries) {
+         Logger.error(`Failed to connect after ${maxRetries} retries`);
+         this.initialHealthyCheck.reject(
+diff --git a/frontend/src/core/websocket/transports/basic.ts b/frontend/src/core/websocket/transports/basic.ts
+index 226fd8338..b55c57640 100644
+--- a/frontend/src/core/websocket/transports/basic.ts
++++ b/frontend/src/core/websocket/transports/basic.ts
+@@ -43,9 +43,7 @@ export class BasicTransport implements IConnectionTransport {
+     return WebSocket.OPEN;
+   }
+ 
+-  readonly retryCount = 0;
+-
+-  reconnect(code?: number | undefined, reason?: string | undefined): void {
++  reconnect(_code?: number | undefined, _reason?: string | undefined): void {
+     this.close();
+     this.connect();
+     return;
+diff --git a/frontend/src/core/websocket/transports/transport.ts b/frontend/src/core/websocket/transports/transport.ts
+index 9cae75820..77ce4e699 100644
+--- a/frontend/src/core/websocket/transports/transport.ts
++++ b/frontend/src/core/websocket/transports/transport.ts
+@@ -25,7 +25,6 @@ export interface IConnectionTransport {
+     callback: ConnectionTransportCallback<T>,
+   ): void;
+   readyState: WebSocket["readyState"];
+-  readonly retryCount: number;
+ }
+ 
+ export class ConnectionSubscriptions {
+diff --git a/frontend/src/core/websocket/transports/ws.ts b/frontend/src/core/websocket/transports/ws.ts
+new file mode 100644
+index 000000000..a29e534d7
+--- /dev/null
++++ b/frontend/src/core/websocket/transports/ws.ts
+@@ -0,0 +1,94 @@
++/* Copyright 2026 Marimo. All rights reserved. */
++
++import ReconnectingWebSocket from "partysocket/ws";
++import type {
++  ConnectionEvent,
++  ConnectionTransportCallback,
++  IConnectionTransport,
++} from "./transport";
++
++// Per-`reconnect()` retry budget. After exhaustion, partysocket stops silently;
++// the wrapper rewrites the close-event reason to surface the give-up.
++export const MAX_RETRIES = 10;
++
++export const TRANSPORT_EXHAUSTED_REASON = "MARIMO_TRANSPORT_EXHAUSTED";
++
++export class WsTransport implements IConnectionTransport {
++  private inner: ReconnectingWebSocket;
++  private closeWrappers = new WeakMap<
++    ConnectionTransportCallback<"close">,
++    ConnectionTransportCallback<"close">
++  >();
++
++  constructor(urlProvider: () => string) {
++    this.inner = new ReconnectingWebSocket(urlProvider, undefined, {
++      maxRetries: MAX_RETRIES,
++      debug: false,
++      startClosed: true,
++      // long timeout — the server can become slow when many notebooks are open.
++      connectionTimeout: 10_000,
++    });
++  }
++
++  get readyState(): WebSocket["readyState"] {
++    return this.inner.readyState as WebSocket["readyState"];
++  }
++
++  reconnect(code?: number, reason?: string): void {
++    this.inner.reconnect(code, reason);
++  }
++
++  close(): void {
++    this.inner.close();
++  }
++
++  send(data: string | ArrayBuffer | Blob | ArrayBufferView): void {
++    this.inner.send(data);
++  }
++
++  addEventListener<T extends ConnectionEvent>(
++    event: T,
++    callback: ConnectionTransportCallback<T>,
++  ): void {
++    if (event === "close") {
++      const userCb = callback as ConnectionTransportCallback<"close">;
++      // Match native EventTarget dedupe: a second addEventListener with the
++      // same listener is a no-op. Without this, repeated adds leak wrappers
++      // on the inner socket and double-fire on close.
++      if (this.closeWrappers.has(userCb)) return;
++      const wrapper: ConnectionTransportCallback<"close"> = (e) => {
++        if (this.inner.retryCount >= MAX_RETRIES) {
++          userCb(
++            new CloseEvent("close", {
++              code: e.code,
++              reason: TRANSPORT_EXHAUSTED_REASON,
++              wasClean: e.wasClean,
++            }),
++          );
++        } else {
++          userCb(e);
++        }
++      };
++      this.closeWrappers.set(userCb, wrapper);
++      this.inner.addEventListener("close", wrapper);
++      return;
++    }
++    this.inner.addEventListener(event, callback as never);
++  }
++
++  removeEventListener<T extends ConnectionEvent>(
++    event: T,
++    callback: ConnectionTransportCallback<T>,
++  ): void {
++    if (event === "close") {
++      const userCb = callback as ConnectionTransportCallback<"close">;
++      const wrapper = this.closeWrappers.get(userCb);
++      if (wrapper) {
++        this.closeWrappers.delete(userCb);
++        this.inner.removeEventListener("close", wrapper);
++      }
++      return;
++    }
++    this.inner.removeEventListener(event, callback as never);
++  }
++}
+diff --git a/frontend/src/core/websocket/useMarimoKernelConnection.tsx b/frontend/src/core/websocket/useMarimoKernelConnection.tsx
+index 73f610bbb..510132325 100644
+--- a/frontend/src/core/websocket/useMarimoKernelConnection.tsx
++++ b/frontend/src/core/websocket/useMarimoKernelConnection.tsx
+@@ -11,10 +11,8 @@ import type {
+   NotificationMessageData,
+   NotificationPayload,
+ } from "@/core/kernel/messages";
+-import {
+-  MAX_RETRIES,
+-  useConnectionTransport,
+-} from "@/core/websocket/useWebSocket";
++import { TRANSPORT_EXHAUSTED_REASON } from "@/core/websocket/transports/ws";
++import { useConnectionTransport } from "@/core/websocket/useWebSocket";
+ import { renderHTML } from "@/plugins/core/RenderHTML";
+ import {
+   handleWidgetMessage,
+@@ -80,16 +78,27 @@ import {
+ 
+ const SUPPORTS_LAZY_KERNELS = true;
+ 
++// All MARIMO_* reasons except TRANSPORT_EXHAUSTED are emitted by the backend
++// (marimo/_server/api/endpoints/ws_endpoint.py and ws/*.py). Keep in sync with
++// the backend literals.
++export type CloseReason =
++  | "MARIMO_ALREADY_CONNECTED"
++  | "MARIMO_WRONG_KERNEL_ID"
++  | "MARIMO_NO_FILE_KEY"
++  | "MARIMO_NO_SESSION_ID"
++  | "MARIMO_NO_SESSION"
++  | "MARIMO_SHUTDOWN"
++  | "MARIMO_MALFORMED_QUERY"
++  | "MARIMO_KERNEL_STARTUP_ERROR"
++  | typeof TRANSPORT_EXHAUSTED_REASON;
++
+ export type CloseDecision =
+   | { kind: "terminal"; status: ConnectionStatus; closeTransport: boolean }
+   | { kind: "gave-up"; status: ConnectionStatus }
+   | { kind: "retry"; status: ConnectionStatus };
+ 
+-export function classifyCloseEvent(
+-  event: { reason?: string },
+-  context: { retryCount: number; maxRetries: number },
+-): CloseDecision {
+-  switch (event.reason) {
++export function classifyCloseEvent(event: { reason?: string }): CloseDecision {
++  switch (event.reason as CloseReason | undefined) {
+     case "MARIMO_ALREADY_CONNECTED":
+       return {
+         kind: "terminal",
+@@ -101,6 +110,15 @@ export function classifyCloseEvent(
+         },
+         closeTransport: true,
+       };
++    case TRANSPORT_EXHAUSTED_REASON:
++      return {
++        kind: "gave-up",
++        status: {
++          state: WebSocketState.CLOSED,
++          code: WebSocketClosedReason.KERNEL_DISCONNECTED,
++          reason: "kernel not found",
++        },
++      };
+     case "MARIMO_WRONG_KERNEL_ID":
+     case "MARIMO_NO_FILE_KEY":
+     case "MARIMO_NO_SESSION_ID":
+@@ -144,18 +162,7 @@ export function classifyCloseEvent(
+         logNever(event.reason as never);
+       }
+   }
+-  // partysocket stops retrying silently once `maxRetries` is hit; surface
+-  // CLOSED so callers can detect the give-up.
+-  if (context.retryCount >= context.maxRetries) {
+-    return {
+-      kind: "gave-up",
+-      status: {
+-        state: WebSocketState.CLOSED,
+-        code: WebSocketClosedReason.KERNEL_DISCONNECTED,
+-        reason: "kernel not found",
+-      },
+-    };
+-  }
++
+   return {
+     kind: "retry",
+     status: { state: WebSocketState.CONNECTING },
+@@ -440,7 +447,7 @@ export function useMarimoKernelConnection(opts: {
+     }
+     shouldTryReconnecting.current = true;
+     setConnection({ state: WebSocketState.CONNECTING });
+-    const healthy = await runtimeManager.isHealthy();
++    const healthy = await runtimeManager.reconcileFromHealth();
+     if (!healthy) {
+       shouldTryReconnecting.current = false;
+       setConnection({
+@@ -512,10 +519,7 @@ export function useMarimoKernelConnection(opts: {
+      */
+     onClose: (e) => {
+       Logger.warn("WebSocket closed", e.code, e.reason);
+-      const decision = classifyCloseEvent(e, {
+-        retryCount: ws.retryCount,
+-        maxRetries: MAX_RETRIES,
+-      });
++      const decision = classifyCloseEvent(e);
+       setConnection(decision.status);
+       if (decision.kind === "terminal" && decision.closeTransport) {
+         ws.close(); // close to prevent reconnecting
+diff --git a/frontend/src/core/websocket/useWebSocket.tsx b/frontend/src/core/websocket/useWebSocket.tsx
+index d367c7043..99cffc21f 100644
+--- a/frontend/src/core/websocket/useWebSocket.tsx
++++ b/frontend/src/core/websocket/useWebSocket.tsx
+@@ -1,11 +1,11 @@
+ /* Copyright 2026 Marimo. All rights reserved. */
+ 
+-import ReconnectingWebSocket from "partysocket/ws";
+ import { useEffect, useState } from "react";
+ import { Logger } from "@/utils/Logger";
+ import { createPyodideConnection } from "../wasm/bridge";
+ import { isWasm } from "../wasm/utils";
+ import { BasicTransport } from "./transports/basic";
++import { WsTransport } from "./transports/ws";
+ import type { IConnectionTransport } from "./transports/transport";
+ 
+ interface UseConnectionTransportOptions {
+@@ -18,10 +18,6 @@ interface UseConnectionTransportOptions {
+   onError: (event: WebSocketEventMap["error"]) => void;
+ }
+ 
+-// Per-`reconnect()` retry budget for partysocket. After exhaustion, partysocket
+-// stops silently; treat `retryCount >= MAX_RETRIES` as the give-up signal.
+-export const MAX_RETRIES = 10;
+-
+ function createConnectionTransport(
+   options: Pick<UseConnectionTransportOptions, "url" | "static">,
+ ): IConnectionTransport {
+@@ -31,19 +27,8 @@ function createConnectionTransport(
+   if (isWasm()) {
+     return createPyodideConnection();
+   }
+-  // Create a connection transport using the ReconnectingWebSocket from partysocket
+-  // This handles reconnecting when the connection is lost.
+-  const urlProvider = options.url; // We don't call the URL provider now since it may change (i.e. if the runtime redirects)
+-  // Cast needed: ReconnectingWebSocket types readyState as `number`
+-  // but IConnectionTransport expects `0 | 1 | 2 | 3`
+-  return new ReconnectingWebSocket(urlProvider, undefined, {
+-    maxRetries: MAX_RETRIES,
+-    debug: false,
+-    startClosed: true,
+-    // long timeout -- the server can become slow when many notebooks
+-    // are open.
+-    connectionTimeout: 10_000,
+-  }) as unknown as IConnectionTransport;
++  // urlProvider is passed lazily; it may change after a runtime redirect.
++  return new WsTransport(options.url);
+ }
+ 
+ /**
+diff --git a/frontend/src/plugins/core/__test__/sanitize.test.ts b/frontend/src/plugins/core/__test__/sanitize.test.ts
+index 6b311850f..dfd551739 100644
+--- a/frontend/src/plugins/core/__test__/sanitize.test.ts
++++ b/frontend/src/plugins/core/__test__/sanitize.test.ts
+@@ -557,34 +557,4 @@ describe("sanitizeHtml", () => {
+     const html = "<some-custom-element>Content</some-custom-element>";
+     expect(sanitizeHtml(html)).toMatchInlineSnapshot(`"Content"`);
+   });
+-
+-  // DOMPurify SAFE_FOR_XML strips attribute values containing `]>`, `-->`,
+-  // `--!>`, or `</(style|script|...)`. `_build_attr` JSON-escapes `<`/`>`
+-  // (`<`/`>`) before HTML-escaping so the parsed attribute value
+-  // never matches. These tests pin that contract.
+-  test("preserves data-* attribute with JSON-escaped ]> payload", () => {
+-    const html =
+-      "<marimo-table data-data='[{&quot;x&quot;:&quot;]&#92;u003e&quot;}]'></marimo-table>";
+-    expect(sanitizeHtml(html)).toMatchInlineSnapshot(
+-      `"<marimo-table data-data="[{&quot;x&quot;:&quot;]\\u003e&quot;}]"></marimo-table>"`,
+-    );
+-  });
+-
+-  test("preserves data-* attribute with JSON-escaped </script> payload", () => {
+-    const html =
+-      "<marimo-table data-data='[{&quot;x&quot;:&quot;&#92;u003c/script&#92;u003e&quot;}]'></marimo-table>";
+-    expect(sanitizeHtml(html)).toMatchInlineSnapshot(
+-      `"<marimo-table data-data="[{&quot;x&quot;:&quot;\\u003c/script\\u003e&quot;}]"></marimo-table>"`,
+-    );
+-  });
+-
+-  // Regression sentinel: confirms DOMPurify still strips an UN-escaped `]>`,
+-  // which is precisely the condition `_build_attr` exists to prevent.
+-  test("strips data-* attribute when raw ]> leaks through", () => {
+-    const html =
+-      "<marimo-table data-data='[{&quot;x&quot;:&quot;]&gt;&quot;}]'></marimo-table>";
+-    expect(sanitizeHtml(html)).toMatchInlineSnapshot(
+-      `"<marimo-table></marimo-table>"`,
+-    );
+-  });
+ });
+diff --git a/frontend/src/plugins/impl/DropdownPlugin.tsx b/frontend/src/plugins/impl/DropdownPlugin.tsx
+index 0567e21ef..47f6a8131 100644
+--- a/frontend/src/plugins/impl/DropdownPlugin.tsx
++++ b/frontend/src/plugins/impl/DropdownPlugin.tsx
+@@ -13,7 +13,6 @@ interface Data {
+   allowSelectNone: boolean;
+   fullWidth: boolean;
+   searchable: boolean;
+-  disabled: boolean;
+ }
+ 
+ export class DropdownPlugin implements IPlugin<string[], Data> {
+@@ -26,7 +25,6 @@ export class DropdownPlugin implements IPlugin<string[], Data> {
+     allowSelectNone: z.boolean(),
+     fullWidth: z.boolean().default(false),
+     searchable: z.boolean().default(false),
+-    disabled: z.boolean().default(false),
+   });
+ 
+   render(props: IPluginProps<string[], Data>): JSX.Element {
+@@ -63,15 +61,7 @@ interface DropdownProps extends Data {
+ const EMPTY_VALUE = "--";
+ 
+ const Dropdown = (props: DropdownProps): JSX.Element => {
+-  const {
+-    label,
+-    options,
+-    value,
+-    setValue,
+-    allowSelectNone,
+-    fullWidth,
+-    disabled,
+-  } = props;
++  const { label, options, value, setValue, allowSelectNone, fullWidth } = props;
+ 
+   const id = useId();
+ 
+@@ -95,7 +85,6 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
+         })}
+         value={singleValue}
+         id={id}
+-        disabled={disabled}
+       >
+         {allowSelectNone ? (
+           <option value={EMPTY_VALUE} selected={value.length === 0}>
+diff --git a/frontend/src/plugins/impl/MultiselectPlugin.tsx b/frontend/src/plugins/impl/MultiselectPlugin.tsx
+index 46f6736a5..6e11edaa4 100644
+--- a/frontend/src/plugins/impl/MultiselectPlugin.tsx
++++ b/frontend/src/plugins/impl/MultiselectPlugin.tsx
+@@ -14,7 +14,6 @@ interface Data {
+   options: string[];
+   fullWidth: boolean;
+   maxSelections?: number | undefined;
+-  disabled: boolean;
+ }
+ 
+ type T = string[];
+@@ -28,7 +27,6 @@ export class MultiselectPlugin implements IPlugin<T, Data> {
+     options: z.array(z.string()),
+     fullWidth: z.boolean().default(false),
+     maxSelections: z.number().optional(),
+-    disabled: z.boolean().default(false),
+   });
+ 
+   render(props: IPluginProps<string[], Data>): JSX.Element {
+@@ -65,7 +63,6 @@ export const Multiselect = ({
+   setValue,
+   fullWidth,
+   maxSelections,
+-  disabled,
+ }: MultiselectProps): JSX.Element => {
+   const id = useId();
+   const [searchQuery, setSearchQuery] = useState<string>("");
+@@ -202,7 +199,6 @@ export const Multiselect = ({
+         shouldFilter={false}
+         search={searchQuery}
+         onSearchChange={setSearchQuery}
+-        disabled={disabled}
+       >
+         {renderList()}
+       </Combobox>
+diff --git a/frontend/src/plugins/impl/SearchableSelect.tsx b/frontend/src/plugins/impl/SearchableSelect.tsx
+index b7bee9835..9ddcdcb9b 100644
+--- a/frontend/src/plugins/impl/SearchableSelect.tsx
++++ b/frontend/src/plugins/impl/SearchableSelect.tsx
+@@ -13,21 +13,12 @@ interface SearchableSelectProps {
+   label: string | null;
+   allowSelectNone: boolean;
+   fullWidth: boolean;
+-  disabled: boolean;
+ }
+ 
+ const NONE_KEY = "__none__";
+ 
+ export const SearchableSelect = (props: SearchableSelectProps): JSX.Element => {
+-  const {
+-    options,
+-    value,
+-    setValue,
+-    label,
+-    allowSelectNone,
+-    fullWidth,
+-    disabled,
+-  } = props;
++  const { options, value, setValue, label, allowSelectNone, fullWidth } = props;
+   const id = useId();
+   const [searchQuery, setSearchQuery] = useState<string>("");
+ 
+@@ -122,7 +113,6 @@ export const SearchableSelect = (props: SearchableSelectProps): JSX.Element => {
+         shouldFilter={false}
+         search={searchQuery}
+         onSearchChange={setSearchQuery}
+-        disabled={disabled}
+         data-testid="marimo-plugin-searchable-dropdown"
+       >
+         {renderList()}
+diff --git a/frontend/src/plugins/impl/__tests__/DropdownPlugin.test.tsx b/frontend/src/plugins/impl/__tests__/DropdownPlugin.test.tsx
+index f285e85f0..2e7cbc4cd 100644
+--- a/frontend/src/plugins/impl/__tests__/DropdownPlugin.test.tsx
++++ b/frontend/src/plugins/impl/__tests__/DropdownPlugin.test.tsx
+@@ -36,7 +36,6 @@ describe("DropdownPlugin", () => {
+           fullWidth: false,
+           searchable: true,
+           initialValue: [],
+-          disabled: false,
+         },
+         value: [],
+         setValue: vi.fn(),
+@@ -49,58 +48,6 @@ describe("DropdownPlugin", () => {
+       ).toBeInTheDocument();
+     });
+ 
+-    it("renders disabled native select when disabled is true", () => {
+-      const plugin = new DropdownPlugin();
+-      const host = document.createElement("div");
+-      const props: IPluginProps<
+-        string[],
+-        z.infer<(typeof plugin)["validator"]>
+-      > = {
+-        data: {
+-          label: "Test Label",
+-          options: ["Option 1", "Option 2"],
+-          allowSelectNone: false,
+-          fullWidth: false,
+-          searchable: false,
+-          disabled: true,
+-          initialValue: [],
+-        },
+-        value: [],
+-        setValue: vi.fn(),
+-        host,
+-        functions: {},
+-      };
+-      render(plugin.render(props));
+-      expect(screen.getByTestId("marimo-plugin-dropdown")).toBeDisabled();
+-    });
+-
+-    it("renders disabled searchable combobox with aria-disabled", () => {
+-      const plugin = new DropdownPlugin();
+-      const host = document.createElement("div");
+-      const props: IPluginProps<
+-        string[],
+-        z.infer<(typeof plugin)["validator"]>
+-      > = {
+-        data: {
+-          label: "Test Label",
+-          options: ["Option 1", "Option 2"],
+-          allowSelectNone: false,
+-          fullWidth: false,
+-          searchable: true,
+-          disabled: true,
+-          initialValue: [],
+-        },
+-        value: [],
+-        setValue: vi.fn(),
+-        host,
+-        functions: {},
+-      };
+-      render(plugin.render(props));
+-      const trigger = screen.getByTestId("marimo-plugin-searchable-dropdown")
+-        .firstChild as HTMLElement;
+-      expect(trigger).toHaveAttribute("aria-disabled", "true");
+-    });
+-
+     it("renders default dropdown when searchable is false", () => {
+       const plugin = new DropdownPlugin();
+       const host = document.createElement("div");
+@@ -115,7 +62,6 @@ describe("DropdownPlugin", () => {
+           fullWidth: false,
+           searchable: false,
+           initialValue: [],
+-          disabled: false,
+         },
+         value: [],
+         setValue: vi.fn(),
+@@ -141,7 +87,6 @@ describe("DropdownPlugin", () => {
+           fullWidth: false,
+           searchable: true,
+           initialValue: [],
+-          disabled: false,
+         },
+         value: [],
+         setValue,
+@@ -184,7 +129,6 @@ describe("DropdownPlugin", () => {
+           fullWidth: false,
+           searchable: true,
+           initialValue: [],
+-          disabled: false,
+         },
+         value: ["Apple"],
+         setValue,
+diff --git a/frontend/src/plugins/impl/data-frames/forms/__tests__/__snapshots__/form.test.tsx.snap b/frontend/src/plugins/impl/data-frames/forms/__tests__/__snapshots__/form.test.tsx.snap
+index 16417801c..3cc1dda05 100644
+--- a/frontend/src/plugins/impl/data-frames/forms/__tests__/__snapshots__/form.test.tsx.snap
++++ b/frontend/src/plugins/impl/data-frames/forms/__tests__/__snapshots__/form.test.tsx.snap
+@@ -27,12 +27,11 @@ exports[`renderZodSchema > should render a form aggregate 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_27_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_26_-form-item"
+             type="button"
+@@ -59,7 +58,7 @@ exports[`renderZodSchema > should render a form aggregate 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -83,12 +82,11 @@ exports[`renderZodSchema > should render a form aggregate 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_29_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_28_-form-item"
+             type="button"
+@@ -115,7 +113,7 @@ exports[`renderZodSchema > should render a form aggregate 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -401,12 +399,11 @@ exports[`renderZodSchema > should render a form explode_columns 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_2p_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_2o_-form-item"
+             type="button"
+@@ -433,7 +430,7 @@ exports[`renderZodSchema > should render a form explode_columns 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -599,12 +596,11 @@ exports[`renderZodSchema > should render a form group_by 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_1p_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_1o_-form-item"
+             type="button"
+@@ -631,7 +627,7 @@ exports[`renderZodSchema > should render a form group_by 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -655,12 +651,11 @@ exports[`renderZodSchema > should render a form group_by 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_1r_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_1q_-form-item"
+             type="button"
+@@ -687,7 +682,7 @@ exports[`renderZodSchema > should render a form group_by 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -803,12 +798,11 @@ exports[`renderZodSchema > should render a form pivot 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_3b_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_3a_-form-item"
+             type="button"
+@@ -835,7 +829,7 @@ exports[`renderZodSchema > should render a form pivot 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -859,12 +853,11 @@ exports[`renderZodSchema > should render a form pivot 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_3d_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_3c_-form-item"
+             type="button"
+@@ -891,7 +884,7 @@ exports[`renderZodSchema > should render a form pivot 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -915,12 +908,11 @@ exports[`renderZodSchema > should render a form pivot 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_3f_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_3e_-form-item"
+             type="button"
+@@ -947,7 +939,7 @@ exports[`renderZodSchema > should render a form pivot 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -1306,12 +1298,11 @@ exports[`renderZodSchema > should render a form select_columns 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_4_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_3_-form-item"
+             type="button"
+@@ -1338,7 +1329,7 @@ exports[`renderZodSchema > should render a form select_columns 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -1590,12 +1581,11 @@ exports[`renderZodSchema > should render a form unique 1`] = `
+           aria-invalid="false"
+           class="relative"
+         >
+-          <button
++          <div
+             aria-controls="radix-_r_32_"
+-            aria-disabled="false"
+             aria-expanded="false"
+             aria-haspopup="dialog"
+-            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++            class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+             data-state="closed"
+             id="_r_31_-form-item"
+             type="button"
+@@ -1622,7 +1612,7 @@ exports[`renderZodSchema > should render a form unique 1`] = `
+                 d="m6 9 6 6 6-6"
+               />
+             </svg>
+-          </button>
++          </div>
+           <div
+             class="flex flex-col gap-1 items-start"
+           />
+@@ -1750,12 +1740,11 @@ exports[`renders custom forms column_id_array 1`] = `
+       aria-invalid="false"
+       class="relative"
+     >
+-      <button
++      <div
+         aria-controls="radix-_r_41_"
+-        aria-disabled="false"
+         aria-expanded="false"
+         aria-haspopup="dialog"
+-        class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++        class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+         data-state="closed"
+         id="_r_40_-form-item"
+         type="button"
+@@ -1782,7 +1771,7 @@ exports[`renders custom forms column_id_array 1`] = `
+             d="m6 9 6 6 6-6"
+           />
+         </svg>
+-      </button>
++      </div>
+       <div
+         class="flex flex-col gap-1 items-start"
+       />
+@@ -1801,12 +1790,11 @@ exports[`renders custom forms column_id_dot_array 1`] = `
+       aria-invalid="false"
+       class="relative"
+     >
+-      <button
++      <div
+         aria-controls="radix-_r_43_"
+-        aria-disabled="false"
+         aria-expanded="false"
+         aria-haspopup="dialog"
+-        class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid min-w-[180px]"
++        class="flex h-6 w-fit mb-1 shadow-xs-solid items-center justify-between rounded-sm border border-input bg-transparent px-2 text-sm font-prose ring-offset-background placeholder:text-muted-foreground hover:shadow-sm-solid focus:outline-hidden focus:ring-1 focus:ring-ring focus:border-primary focus:shadow-md-solid disabled:cursor-not-allowed disabled:opacity-50 min-w-[180px]"
+         data-state="closed"
+         id="_r_42_-form-item"
+         type="button"
+@@ -1833,7 +1821,7 @@ exports[`renders custom forms column_id_dot_array 1`] = `
+             d="m6 9 6 6 6-6"
+           />
+         </svg>
+-      </button>
++      </div>
+       <div
+         class="flex flex-col gap-1 items-start"
+       />
+diff --git a/frontend/src/plugins/impl/data-frames/schema.ts b/frontend/src/plugins/impl/data-frames/schema.ts
+index 771783713..0115b722c 100644
+--- a/frontend/src/plugins/impl/data-frames/schema.ts
++++ b/frontend/src/plugins/impl/data-frames/schema.ts
+@@ -80,10 +80,7 @@ export const FilterConditionSchema = z
+       .enum(Object.keys(ALL_OPERATORS) as [OperatorType, ...OperatorType[]])
+       .describe(FieldOptions.of({ label: " " })),
+     type: z.literal("condition").default("condition"),
+-    value: z
+-      .any()
+-      .optional()
+-      .describe(FieldOptions.of({ label: "Value" })),
++    value: z.any().describe(FieldOptions.of({ label: "Value" })),
+     negate: z.boolean().default(false),
+   })
+   .describe(FieldOptions.of({ direction: "row", special: "column_filter" }));
+diff --git a/marimo/_plugins/core/web_component.py b/marimo/_plugins/core/web_component.py
+index 2dfbda575..018ea52b9 100644
+--- a/marimo/_plugins/core/web_component.py
++++ b/marimo/_plugins/core/web_component.py
+@@ -38,16 +38,7 @@ S = TypeVar("S", bound=JSONType)
+ 
+ 
+ def _build_attr(name: str, value: JSONType) -> str:
+-    encoded = encode_json_str(value)
+-    # Encode `<` and `>` as JSON `\uXXXX` escapes so the parsed attribute
+-    # value (post HTML unescaping) contains no literal `<` or `>`.
+-    # DOMPurify's SAFE_FOR_XML rule strips any attribute whose value matches
+-    # `]>` (or `</style>` etc.); without this, cell strings like `]>` or
+-    # `]>>` (atom-mapped reaction SMILES) would silently drop plugin args.
+-    # `JSON.parse` decodes `<`/`>` natively, so the frontend sees
+-    # the original characters.
+-    encoded = encoded.replace(">", "\\u003e").replace("<", "\\u003c")
+-    processed = escape(encoded)
++    processed = escape(encode_json_str(value))
+     # manual escapes for things html.escape doesn't escape
+     #
+     # - backslashes, when unescaped can lead to problems
+diff --git a/marimo/_plugins/ui/_impl/input.py b/marimo/_plugins/ui/_impl/input.py
+index 9a3b72988..5a980780f 100644
+--- a/marimo/_plugins/ui/_impl/input.py
++++ b/marimo/_plugins/ui/_impl/input.py
+@@ -996,7 +996,6 @@ class dropdown(UIElement[list[str], Any]):
+             this element's value changes. Defaults to None.
+         full_width (bool, optional): Whether the input should take up the full width
+             of its container. Defaults to False.
+-        disabled (bool, optional): Whether the dropdown is disabled. Defaults to False.
+     """
+ 
+     _FORCE_SEARCHABLE: Final[int] = 1000
+@@ -1014,7 +1013,6 @@ class dropdown(UIElement[list[str], Any]):
+         label: str = "",
+         on_change: Callable[[Any], None] | None = None,
+         full_width: bool = False,
+-        disabled: bool = False,
+     ) -> None:
+         # Force searchable if there are too many options
+         # This makes the list 'virtualized' on the frontend
+@@ -1052,7 +1050,6 @@ class dropdown(UIElement[list[str], Any]):
+                 "allow-select-none": allow_select_none,
+                 "searchable": searchable,
+                 "full-width": full_width,
+-                "disabled": disabled,
+             },
+             on_change=on_change,
+         )
+@@ -1121,7 +1118,6 @@ class multiselect(UIElement[list[str], list[object]]):
+             of its container. Defaults to False.
+         max_selections (int, optional): Maximum number of items that can be selected.
+             Defaults to None.
+-        disabled (bool, optional): Whether the multiselect is disabled. Defaults to False.
+     """
+ 
+     _MAX_OPTIONS: Final[int] = 100000
+@@ -1136,7 +1132,6 @@ class multiselect(UIElement[list[str], list[object]]):
+         on_change: Callable[[list[object]], None] | None = None,
+         full_width: bool = False,
+         max_selections: int | None = None,
+-        disabled: bool = False,
+     ) -> None:
+         if len(options) > multiselect._MAX_OPTIONS:
+             raise ValueError(
+@@ -1174,7 +1169,6 @@ class multiselect(UIElement[list[str], list[object]]):
+                 "options": list(self.options.keys()),
+                 "full-width": full_width,
+                 "max-selections": max_selections,
+-                "disabled": disabled,
+             },
+             on_change=on_change,
+         )
+diff --git a/marimo/_server/files/os_file_system.py b/marimo/_server/files/os_file_system.py
+index 7a0353626..8c1c76d73 100644
+--- a/marimo/_server/files/os_file_system.py
++++ b/marimo/_server/files/os_file_system.py
+@@ -21,14 +21,10 @@ from marimo._utils.files import natural_sort
+ 
+ LOGGER = _loggers.marimo_logger()
+ 
+-LIST_IGNORE_LIST = [
++IGNORE_LIST = [
+     ".",
+     "..",
+     ".DS_Store",
+-]
+-
+-SEARCH_IGNORE_LIST = [
+-    *LIST_IGNORE_LIST,
+     "__pycache__",
+     "node_modules",
+     ".git",
+@@ -75,7 +71,7 @@ class OSFileSystem(FileSystem):
+         try:
+             with os.scandir(path) as it:
+                 for entry in it:
+-                    if entry.name in LIST_IGNORE_LIST:
++                    if entry.name in IGNORE_LIST:
+                         continue
+                     try:
+                         is_directory = entry.is_dir()
+@@ -360,7 +356,7 @@ class OSFileSystem(FileSystem):
+                             break
+ 
+                         # Skip ignored files/directories
+-                        if entry.name in SEARCH_IGNORE_LIST:
++                        if entry.name in IGNORE_LIST:
+                             continue
+ 
+                         # Check if name matches query
+diff --git a/scripts/pytest.sh b/scripts/pytest.sh
+index 6f7e77732..70c495edf 100755
+--- a/scripts/pytest.sh
++++ b/scripts/pytest.sh
+@@ -45,7 +45,7 @@ while [[ $# -gt 0 ]]; do
+ done
+ 
+ if [ "$ENV" = "test-optional" ]; then
+-    exec uv run --isolated --python "$PY_VERSION" --group test-optional pytest "$@"
++    exec uv run --python "$PY_VERSION" --group test-optional pytest "$@"
+ else
+-    exec uv run --isolated --python "$PY_VERSION" --group test pytest "$@"
++    exec uv run --python "$PY_VERSION" --group test pytest "$@"
+ fi
+diff --git a/tests/_islands/snapshots/island-mimetypes.txt b/tests/_islands/snapshots/island-mimetypes.txt
+index 53369d347..507f4b8f0 100644
+--- a/tests/_islands/snapshots/island-mimetypes.txt
++++ b/tests/_islands/snapshots/island-mimetypes.txt
+@@ -4,7 +4,7 @@
+     data-reactive="true"
+ >
+     <marimo-cell-output>
+-    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eHello, islands!&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;'></marimo-mime-renderer>
++    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Hello, islands!&lt;/span&gt;&lt;/span&gt;&quot;'></marimo-mime-renderer>
+     </marimo-cell-output>
+     <marimo-cell-code hidden>mo.md('Hello%2C%20islands!')</marimo-cell-code>
+ </marimo-island>
+@@ -34,7 +34,7 @@
+     data-reactive="true"
+ >
+     <marimo-cell-output>
+-    <marimo-json-output data-json-data='[1,&quot;text/markdown:&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eHello&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;]' data-value-types='&quot;python&quot;'></marimo-json-output>
++    <marimo-json-output data-json-data='[1,&quot;text/markdown:&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Hello&lt;/span&gt;&lt;/span&gt;&quot;]' data-value-types='&quot;python&quot;'></marimo-json-output>
+     </marimo-cell-output>
+     <marimo-cell-code hidden>%5B1%2C%20mo.md('Hello')%5D</marimo-cell-code>
+ </marimo-island>
+\ No newline at end of file
+diff --git a/tests/_islands/snapshots/island-no-code.txt b/tests/_islands/snapshots/island-no-code.txt
+index 9a1ad6728..8707d5dc0 100644
+--- a/tests/_islands/snapshots/island-no-code.txt
++++ b/tests/_islands/snapshots/island-no-code.txt
+@@ -4,7 +4,7 @@
+     data-reactive="true"
+ >
+     <marimo-cell-output>
+-    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eHello, islands!&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;'></marimo-mime-renderer>
++    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Hello, islands!&lt;/span&gt;&lt;/span&gt;&quot;'></marimo-mime-renderer>
+     </marimo-cell-output>
+     <marimo-cell-code hidden>mo.md('Hello%2C%20islands!')</marimo-cell-code>
+ </marimo-island>
+\ No newline at end of file
+diff --git a/tests/_islands/snapshots/island.txt b/tests/_islands/snapshots/island.txt
+index 9a1ad6728..8707d5dc0 100644
+--- a/tests/_islands/snapshots/island.txt
++++ b/tests/_islands/snapshots/island.txt
+@@ -4,7 +4,7 @@
+     data-reactive="true"
+ >
+     <marimo-cell-output>
+-    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eHello, islands!&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;'></marimo-mime-renderer>
++    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Hello, islands!&lt;/span&gt;&lt;/span&gt;&quot;'></marimo-mime-renderer>
+     </marimo-cell-output>
+     <marimo-cell-code hidden>mo.md('Hello%2C%20islands!')</marimo-cell-code>
+ </marimo-island>
+\ No newline at end of file
+diff --git a/tests/_islands/snapshots/markdown.txt b/tests/_islands/snapshots/markdown.txt
+index 48c1a29f0..785548638 100644
+--- a/tests/_islands/snapshots/markdown.txt
++++ b/tests/_islands/snapshots/markdown.txt
+@@ -4,7 +4,7 @@
+     data-reactive="true"
+ >
+     <marimo-cell-output>
+-    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003ch1 id=&#92;&quot;hello-markdown&#92;&quot;&#92;u003eHello, Markdown!&#92;u003c/h1&#92;u003e&#92;n&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eThis is a paragsraph.&#92;u003c/span&#92;u003e&#92;n&#92;u003cdiv class=&#92;&quot;language-python3 codehilite&#92;&quot;&#92;u003e&#92;u003cpre&#92;u003e&#92;u003cspan&#92;u003e&#92;u003c/span&#92;u003e&#92;u003ccode&#92;u003e&#92;u003cspan class=&#92;&quot;n&#92;&quot;&#92;u003emo&#92;u003c/span&#92;u003e&#92;u003cspan class=&#92;&quot;o&#92;&quot;&#92;u003e.&#92;u003c/span&#92;u003e&#92;u003cspan class=&#92;&quot;n&#92;&quot;&#92;u003emd&#92;u003c/span&#92;u003e&#92;u003cspan class=&#92;&quot;p&#92;&quot;&#92;u003e(&#92;u003c/span&#92;u003e&#92;n&#92;u003cspan class=&#92;&quot;w&#92;&quot;&#92;u003e    &#92;u003c/span&#92;u003e&#92;u003cspan class=&#92;&quot;sd&#92;&quot;&#92;u003e&amp;#39;&amp;#39;&amp;#39;&#92;u003c/span&#92;u003e&#92;n&#92;u003cspan class=&#92;&quot;sd&#92;&quot;&#92;u003e    # Hello, Markdown!&#92;u003c/span&#92;u003e&#92;n&#92;n&#92;u003cspan class=&#92;&quot;sd&#92;&quot;&#92;u003e    This is a paragraph.&#92;u003c/span&#92;u003e&#92;n&#92;u003cspan class=&#92;&quot;sd&#92;&quot;&#92;u003e    &amp;#39;&amp;#39;&amp;#39;&#92;u003c/span&#92;u003e&#92;n&#92;u003cspan class=&#92;&quot;p&#92;&quot;&#92;u003e)&#92;u003c/span&#92;u003e&#92;n&#92;u003c/code&#92;u003e&#92;u003c/pre&#92;u003e&#92;u003c/div&#92;u003e&#92;u003c/span&#92;u003e&quot;'></marimo-mime-renderer>
++    <marimo-mime-renderer data-mime='&quot;text/markdown&quot;' data-data='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;h1 id=&#92;&quot;hello-markdown&#92;&quot;&gt;Hello, Markdown!&lt;/h1&gt;&#92;n&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;This is a paragsraph.&lt;/span&gt;&#92;n&lt;div class=&#92;&quot;language-python3 codehilite&#92;&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class=&#92;&quot;n&#92;&quot;&gt;mo&lt;/span&gt;&lt;span class=&#92;&quot;o&#92;&quot;&gt;.&lt;/span&gt;&lt;span class=&#92;&quot;n&#92;&quot;&gt;md&lt;/span&gt;&lt;span class=&#92;&quot;p&#92;&quot;&gt;(&lt;/span&gt;&#92;n&lt;span class=&#92;&quot;w&#92;&quot;&gt;    &lt;/span&gt;&lt;span class=&#92;&quot;sd&#92;&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;&#92;n&lt;span class=&#92;&quot;sd&#92;&quot;&gt;    # Hello, Markdown!&lt;/span&gt;&#92;n&#92;n&lt;span class=&#92;&quot;sd&#92;&quot;&gt;    This is a paragraph.&lt;/span&gt;&#92;n&lt;span class=&#92;&quot;sd&#92;&quot;&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;&#92;n&lt;span class=&#92;&quot;p&#92;&quot;&gt;)&lt;/span&gt;&#92;n&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/span&gt;&quot;'></marimo-mime-renderer>
+     </marimo-cell-output>
+     <marimo-cell-code hidden>%0Aimport%20marimo%20as%20mo%0Amo.md(%0A%20%20%20%20%22%22%22%0A%20%20%20%20%23%20Hello%2C%20Markdown!%0A%0A%20%20%20%20This%20is%20a%20paragsraph.%0A%0A%20%20%20%20%60%60%60python3%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20'''%0A%20%20%20%20%20%20%20%20%23%20Hello%2C%20Markdown!%0A%0A%20%20%20%20%20%20%20%20This%20is%20a%20paragraph.%0A%20%20%20%20%20%20%20%20'''%0A%20%20%20%20)%0A%20%20%20%20%60%60%60%0A%20%20%20%20%22%22%22%0A)%0A</marimo-cell-code>
+ </marimo-island>
+\ No newline at end of file
+diff --git a/tests/_plugins/core/test_web_component.py b/tests/_plugins/core/test_web_component.py
+index 60b6eac13..f182047cf 100644
+--- a/tests/_plugins/core/test_web_component.py
++++ b/tests/_plugins/core/test_web_component.py
+@@ -49,57 +49,3 @@ def test_embed_dollar_sign_in_md() -> None:
+     markdown = md(as_html(["$", "$"]).text)
+     # don't parse dollar in data as latex
+     assert "arithmatex" not in markdown.text
+-
+-
+-# DOMPurify's SAFE_FOR_XML rule strips any attribute whose value matches
+-# `]>`, `-->`, `--!>`, or `</(style|script|title|xmp|textarea|noscript|iframe
+-# |noembed|noframes)`. `_build_attr` must emit JSON-escaped `<`/`>` so the
+-# parsed attribute value never contains those literals.
+-SAFE_FOR_XML_TRIGGERS = [
+-    "]>",
+-    "]>>",
+-    "[Cl:31]>>[c:1]",
+-    "<script>alert(1)</script>",
+-    "<!-- comment -->",
+-    "<!--!>",
+-    "</style>",
+-    "</textarea>",
+-    "</iframe>",
+-]
+-
+-
+-def _attr_value(html: str, name: str) -> str:
+-    import html as _html_mod
+-
+-    match = re.search(f"data-{name}='(.*?)'", html)
+-    assert match is not None
+-    return _html_mod.unescape(match.groups()[0])
+-
+-
+-def test_build_attr_escapes_angle_brackets() -> None:
+-    for raw in SAFE_FOR_XML_TRIGGERS:
+-        html = build_ui_plugin(
+-            "tag-name", initial_value=raw, label=None, args={"data": raw}
+-        )
+-        for attr_name in ("initial-value", "data"):
+-            parsed = _attr_value(html, attr_name)
+-            assert ">" not in parsed, (raw, attr_name, parsed)
+-            assert "<" not in parsed, (raw, attr_name, parsed)
+-
+-
+-def test_initial_value_roundtrip_with_angle_brackets() -> None:
+-    for raw in SAFE_FOR_XML_TRIGGERS:
+-        html = build_ui_plugin(
+-            "tag-name", initial_value=raw, label=None, args={}
+-        )
+-        assert parse_initial_value(html) == raw
+-
+-
+-def test_build_attr_nested_data_escapes_angle_brackets() -> None:
+-    nested = {"rows": [{"x": raw} for raw in SAFE_FOR_XML_TRIGGERS]}
+-    html = build_ui_plugin(
+-        "tag-name", initial_value=None, label=None, args={"data": nested}
+-    )
+-    parsed = _attr_value(html, "data")
+-    assert ">" not in parsed
+-    assert "<" not in parsed
+diff --git a/tests/_plugins/stateless/test_mermaid.py b/tests/_plugins/stateless/test_mermaid.py
+index 8e04bb225..2dbd58ce2 100644
+--- a/tests/_plugins/stateless/test_mermaid.py
++++ b/tests/_plugins/stateless/test_mermaid.py
+@@ -10,7 +10,7 @@ from marimo._plugins.stateless.mermaid import mermaid
+ def test_mo_mermaid_diagram_only() -> None:
+     assert (
+         mermaid("graph TD\nA --> B").text
+-        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&#92;u003e B&quot;'></marimo-mermaid>"
++        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&gt; B&quot;'></marimo-mermaid>"
+     )
+ 
+ 
+@@ -24,7 +24,7 @@ def test_mo_mermaid_theme_and_theme_variables() -> None:
+                 "lineColor": "#475569",
+             },
+         ).text
+-        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&#92;u003e B&quot;' data-theme='&quot;base&quot;' data-theme_variables='{&quot;primaryColor&quot;:&quot;#E8EEF5&quot;,&quot;lineColor&quot;:&quot;#475569&quot;}'></marimo-mermaid>"
++        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&gt; B&quot;' data-theme='&quot;base&quot;' data-theme_variables='{&quot;primaryColor&quot;:&quot;#E8EEF5&quot;,&quot;lineColor&quot;:&quot;#475569&quot;}'></marimo-mermaid>"
+     )
+ 
+ 
+@@ -34,7 +34,7 @@ def test_mo_mermaid_theme_defaults_to_base_with_theme_variables() -> None:
+             "graph TD\nA --> B",
+             theme_variables={"primaryColor": "#E8EEF5"},
+         ).text
+-        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&#92;u003e B&quot;' data-theme='&quot;base&quot;' data-theme_variables='{&quot;primaryColor&quot;:&quot;#E8EEF5&quot;}'></marimo-mermaid>"
++        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&gt; B&quot;' data-theme='&quot;base&quot;' data-theme_variables='{&quot;primaryColor&quot;:&quot;#E8EEF5&quot;}'></marimo-mermaid>"
+     )
+ 
+ 
+@@ -52,5 +52,5 @@ def test_mo_mermaid_rejects_theme_variables_with_non_base_theme() -> None:
+ def test_mo_mermaid_accepts_any_theme_string() -> None:
+     assert (
+         mermaid("graph TD\nA --> B", theme=cast(Any, "custom-new-theme")).text
+-        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&#92;u003e B&quot;' data-theme='&quot;custom-new-theme&quot;'></marimo-mermaid>"
++        == "<marimo-mermaid data-diagram='&quot;graph TD&#92;nA --&gt; B&quot;' data-theme='&quot;custom-new-theme&quot;'></marimo-mermaid>"
+     )
+diff --git a/tests/_plugins/ui/_impl/test_input.py b/tests/_plugins/ui/_impl/test_input.py
+index 0712676a3..71643f6f6 100644
+--- a/tests/_plugins/ui/_impl/test_input.py
++++ b/tests/_plugins/ui/_impl/test_input.py
+@@ -466,14 +466,6 @@ def test_dropdown_lots_of_options() -> None:
+     assert dropdown._component_args["searchable"] is True
+ 
+ 
+-def test_dropdown_disabled() -> None:
+-    dd = ui.dropdown(options=["1", "2", "3"])
+-    assert dd._component_args["disabled"] is False
+-
+-    dd = ui.dropdown(options=["1", "2", "3"], disabled=True)
+-    assert dd._component_args["disabled"] is True
+-
+-
+ @pytest.mark.skipif(not HAS_PANDAS, reason="pandas not installed")
+ def test_dropdown_from_dataframe() -> None:
+     import pandas as pd
+@@ -595,14 +587,6 @@ def test_multiselect_too_many_options() -> None:
+     assert "maximum number" in str(e.value)
+ 
+ 
+-def test_multiselect_disabled() -> None:
+-    ms = ui.multiselect(options=["1", "2", "3"])
+-    assert ms._component_args["disabled"] is False
+-
+-    ms = ui.multiselect(options=["1", "2", "3"], disabled=True)
+-    assert ms._component_args["disabled"] is True
+-
+-
+ @pytest.mark.skipif(not HAS_PANDAS, reason="pandas not installed")
+ def test_multiselect_from_dataframe() -> None:
+     import pandas as pd
+diff --git a/tests/_server/files/test_os_file_system.py b/tests/_server/files/test_os_file_system.py
+index 742481898..543fe9089 100644
+--- a/tests/_server/files/test_os_file_system.py
++++ b/tests/_server/files/test_os_file_system.py
+@@ -741,8 +741,6 @@ def test_search_respects_ignore_list(test_dir: Path, fs: OSFileSystem) -> None:
+     (test_dir / ".DS_Store").write_text("content")
+     (test_dir / "__pycache__").mkdir()
+     (test_dir / "node_modules").mkdir()
+-    (test_dir / ".git").mkdir()
+-    (test_dir / ".venv").mkdir()
+     (test_dir / "regular_file.txt").write_text("content")
+ 
+     # Search for anything - should not find ignored items
+@@ -759,29 +757,6 @@ def test_search_respects_ignore_list(test_dir: Path, fs: OSFileSystem) -> None:
+     assert "__pycache__" not in file_names
+     assert "node_modules" not in file_names
+ 
+-    # .git and .venv must also be skipped by search to avoid traversing
+-    # large object stores / site-packages trees.
+-    results = fs.search(query=".", path=str(test_dir))
+-    file_names = {f.name for f in results}
+-    assert ".git" not in file_names
+-    assert ".venv" not in file_names
+-
+-
+-def test_list_files_includes_git_and_venv(
+-    test_dir: Path, fs: OSFileSystem
+-) -> None:
+-    """list_files surfaces .git/.venv so the frontend toggle can reveal them."""
+-    (test_dir / ".git").mkdir()
+-    (test_dir / ".venv").mkdir()
+-    (test_dir / ".DS_Store").write_text("content")
+-
+-    files = fs.list_files(str(test_dir))
+-    file_names = {f.name for f in files}
+-    assert ".git" in file_names
+-    assert ".venv" in file_names
+-    # .DS_Store remains filtered at the API layer.
+-    assert ".DS_Store" not in file_names
+-
+ 
+ def test_search_directory_and_file_filters(
+     test_dir: Path, fs: OSFileSystem

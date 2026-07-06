@@ -1,0 +1,29 @@
+{
+    "id": "c30d1d67-1278-4228-927d-82b993b9e5a4",
+    "started_at": "2026-07-06T12:18:30.523233",
+    "finished_at": "2026-07-06T12:19:01.139227",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microsoft-onnxruntime-28221": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microsoft-onnxruntime-28221__hPUaD26"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+patching file services/skus/model/model_test.go
+patching file services/skus/storage/repository/repository_test.go
+# github.com/brave-intl/bat-go/services/skus/model_test [github.com/brave-intl/bat-go/services/skus/model.test]
+skus/model/model_test.go:21:20: undefined: radom.MockClient
+skus/model/model_test.go:42:20: undefined: radom.MockClient
+skus/model/model_test.go:45:16: undefined: model.ErrInvalidOrderNoItems
+skus/model/model_test.go:55:20: undefined: radom.MockClient
+skus/model/model_test.go:58:16: undefined: model.ErrInvalidOrderNoSuccessURL
+skus/model/model_test.go:74:20: undefined: radom.MockClient
+skus/model/model_test.go:77:16: undefined: model.ErrInvalidOrderNoCancelURL
+skus/model/model_test.go:94:20: undefined: radom.MockClient
+skus/model/model_test.go:97:16: undefined: model.ErrInvalidOrderNoProductID
+skus/model/model_test.go:115:20: undefined: radom.MockClient
+skus/model/model_test.go:115:20: too many errors
+FAIL	github.com/brave-intl/bat-go/services/skus/model [build failed]
+reward=0 graded=7 found=7 failed=7 parsed=1 framework=go exit_code=2

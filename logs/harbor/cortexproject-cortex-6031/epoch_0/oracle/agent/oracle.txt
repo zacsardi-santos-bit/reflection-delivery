@@ -1,3 +1,0 @@
-patching file pkg/ingester/client/compat.go
-patching file pkg/querier/batch/batch.go
-patching file pkg/util/test_util.go

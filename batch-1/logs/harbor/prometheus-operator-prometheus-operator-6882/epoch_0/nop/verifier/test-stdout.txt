@@ -1,0 +1,26 @@
+patching file pkg/k8sutil/k8sutil_test.go
+patching file pkg/kubelet/controller_test.go
+# github.com/prometheus-operator/prometheus-operator/pkg/k8sutil [github.com/prometheus-operator/prometheus-operator/pkg/k8sutil.test]
+pkg/k8sutil/k8sutil_test.go:318:14: assignment mismatch: 2 variables but CreateOrUpdateService returns 1 value
+pkg/k8sutil/k8sutil_test.go:507:13: assignment mismatch: 2 variables but CreateOrUpdateService returns 1 value
+# github.com/prometheus-operator/prometheus-operator/pkg/kubelet [github.com/prometheus-operator/prometheus-operator/pkg/kubelet.test]
+pkg/kubelet/controller_test.go:253:47: cannot use c.nodes (variable of type []"k8s.io/api/core/v1".Node) as *"k8s.io/api/core/v1".NodeList value in argument to controller.getNodeAddresses
+pkg/kubelet/controller_test.go:314:54: cannot use nodes (variable of type []"k8s.io/api/core/v1".Node) as *"k8s.io/api/core/v1".NodeList value in argument to internalC.getNodeAddresses
+pkg/kubelet/controller_test.go:323:53: cannot use nodes (variable of type []"k8s.io/api/core/v1".Node) as *"k8s.io/api/core/v1".NodeList value in argument to externalC.getNodeAddresses
+pkg/kubelet/controller_test.go:329:57: undefined: nodeAddress
+pkg/kubelet/controller_test.go:373:3: undefined: WithEndpoints
+pkg/kubelet/controller_test.go:373:3: too many arguments in call to New
+	have (*slog.Logger, *"k8s.io/client-go/kubernetes/fake".Clientset, nil, string, string, string, nil, nil, unknown type, unknown type, unknown type, unknown type)
+	want (*slog.Logger, *kubernetes.Clientset, prometheus.Registerer, string, operator.LabelSelector, operator.Map, operator.Map, operator.NodeAddressPriority)
+pkg/kubelet/controller_test.go:373:20: undefined: WithEndpointSlice
+pkg/kubelet/controller_test.go:373:41: undefined: WithMaxEndpointsPerSlice
+pkg/kubelet/controller_test.go:373:70: undefined: WithNodeAddressPriority
+pkg/kubelet/controller_test.go:385:5: c.sync undefined (type *Controller has no field or method sync)
+pkg/kubelet/controller_test.go:385:5: too many errors
+{"Time":"2026-06-29T15:23:13.804154748Z","Action":"start","Package":"github.com/prometheus-operator/prometheus-operator/pkg/k8sutil"}
+{"Time":"2026-06-29T15:23:13.804238757Z","Action":"output","Package":"github.com/prometheus-operator/prometheus-operator/pkg/k8sutil","Output":"FAIL\tgithub.com/prometheus-operator/prometheus-operator/pkg/k8sutil [build failed]\n"}
+{"Time":"2026-06-29T15:23:13.804293957Z","Action":"fail","Package":"github.com/prometheus-operator/prometheus-operator/pkg/k8sutil","Elapsed":0}
+{"Time":"2026-06-29T15:23:14.790275055Z","Action":"start","Package":"github.com/prometheus-operator/prometheus-operator/pkg/kubelet"}
+{"Time":"2026-06-29T15:23:14.790321665Z","Action":"output","Package":"github.com/prometheus-operator/prometheus-operator/pkg/kubelet","Output":"FAIL\tgithub.com/prometheus-operator/prometheus-operator/pkg/kubelet [build failed]\n"}
+{"Time":"2026-06-29T15:23:14.790351275Z","Action":"fail","Package":"github.com/prometheus-operator/prometheus-operator/pkg/kubelet","Elapsed":0}
+reward=0 graded=66 found=0 failed=0 parsed=2 framework=go exit_code=1

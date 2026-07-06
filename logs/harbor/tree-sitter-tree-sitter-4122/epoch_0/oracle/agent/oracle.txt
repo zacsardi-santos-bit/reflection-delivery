@@ -1,3 +1,0 @@
-patching file lib/src/parser.c
-patching file lib/src/subtree.c
-patching file lib/src/subtree.h

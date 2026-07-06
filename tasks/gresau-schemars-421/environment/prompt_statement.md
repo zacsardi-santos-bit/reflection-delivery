@@ -1,5 +1,0 @@
-I'm using this schema generation library for Rust and I've noticed that whenever I have an enum using the untagged representation, the generated schema automatically inserts each variant's Rust name as a title inside every variant's subschema in the "anyOf" array. I don't want this behaviour by default — those variant names are internal Rust identifiers and they clutter the schema for consumers who don't need them.
-
-What I'd like is for variant titles to be omitted by default, giving a clean schema without automatically-injected names. At the same time, I'd like an explicit opt-in setting on the schema generation configuration so that teams who do want those titles — for documentation or display tooling — can turn them on. When the setting is enabled, every entry in the "anyOf" array should have a string title equal to the variant's name.
-
-This change should work consistently regardless of whether the enum is fully untagged or whether it has untagged variants mixed into an otherwise-tagged enum (adjacently, externally, or internally tagged). The clean default should apply everywhere.

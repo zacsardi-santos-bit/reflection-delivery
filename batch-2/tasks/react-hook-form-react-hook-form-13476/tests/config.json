@@ -1,0 +1,13 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --config ./scripts/jest/jest.config.js src/__tests__/useFieldArray.test.tsx --coverage=false --testNamePattern=\"should preserve nested field errors after remove\" --json",
+  "test_files": [
+    "src/__tests__/useFieldArray.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/__tests__/useFieldArray.test.tsx::useFieldArray with resolver should preserve nested field errors after remove when both root and field errors exist"
+  ],
+  "PASS_TO_PASS": []
+}

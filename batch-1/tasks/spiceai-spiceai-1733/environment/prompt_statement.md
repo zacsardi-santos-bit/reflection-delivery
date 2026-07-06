@@ -1,0 +1,7 @@
+I'm working with a library that converts Arrow schemas into PostgreSQL DDL statements. The method that generates table-creation SQL currently returns a single string. That's fine for simple schemas, but it becomes a problem when the schema has structured (nested composite) fields, because PostgreSQL needs those composite types to be declared in separate statements *before* the table creation can reference them.
+
+I need to change the PostgreSQL table-creation method so it returns a list of SQL statements instead of a single string. For schemas with no structured fields, the list should have exactly one entry — the same CREATE TABLE statement as before. For schemas with structured fields, composite type-creation statements should come first in the list, followed by the table-creation statement. The composite type statements should be conditional — they should only create the type if it doesn't already exist.
+
+Separately, the PostgreSQL module's test infrastructure isn't compiling at the moment because a required feature for async test macros is missing from the dependency configuration. That needs to be fixed as well so postgres-related tests can run.
+
+There also needs to be a standalone builder component for generating these conditional composite type creation statements from a set of Arrow fields. It should accept a type name and a collection of fields, and produce the appropriate conditional SQL.

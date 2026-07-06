@@ -1,4 +1,0 @@
-patching file lib/instrumentation/@azure/functions.js
-patching file lib/instrumentations.js
-patching file lib/util/logger.js
-patching file test/versioned/langchain/package.json

@@ -1,0 +1,29 @@
+{
+    "id": "9e3de314-9b13-41ee-ad43-ac53f73218da",
+    "started_at": "2026-07-06T12:17:22.327301",
+    "finished_at": "2026-07-06T12:17:52.674067",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__datahub-project-datahub-16655": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "datahub-project-datahub-16655__GRRSBd2"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

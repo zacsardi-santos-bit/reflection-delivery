@@ -1,0 +1,639 @@
+patching file pkg/controller/certificaterequests/venafi/venafi_test.go
+patching file pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+patching file pkg/issuer/venafi/client/request_test.go
+patching file pkg/issuer/venafi/client/venaficlient_test.go
+patching file test/e2e/LICENSES
+patching file test/e2e/go.mod
+patching file test/e2e/go.sum
+Hunk #1 FAILED at 4.
+Hunk #2 FAILED at 28.
+Hunk #3 succeeded at 120 with fuzz 1 (offset 75 lines).
+Hunk #4 succeeded at 141 with fuzz 2 (offset 81 lines).
+Hunk #5 succeeded at 191 (offset 104 lines).
+Hunk #6 FAILED at 101.
+Hunk #7 FAILED at 133.
+Hunk #8 FAILED at 165.
+Hunk #9 FAILED at 172.
+Hunk #10 FAILED at 197.
+Hunk #11 FAILED at 204.
+Hunk #12 FAILED at 227.
+Hunk #13 succeeded at 494 (offset 218 lines).
+Hunk #14 FAILED at 300.
+Hunk #15 succeeded at 551 (offset 235 lines).
+Hunk #16 FAILED at 336.
+11 out of 16 hunks FAILED -- saving rejects to file test/e2e/go.sum.rej
+patching file test/integration/LICENSES
+patching file test/integration/go.mod
+patching file test/integration/go.sum
+Hunk #1 FAILED at 18.
+Hunk #2 FAILED at 26.
+Hunk #3 FAILED at 59.
+Hunk #4 FAILED at 73.
+Hunk #5 FAILED at 82.
+Hunk #6 FAILED at 96.
+Hunk #7 FAILED at 112.
+Hunk #8 FAILED at 131.
+Hunk #9 FAILED at 164.
+Hunk #10 FAILED at 174.
+Hunk #11 FAILED at 193.
+Hunk #12 FAILED at 208.
+Hunk #13 FAILED at 229.
+Hunk #14 succeeded at 673 (offset 397 lines).
+Hunk #15 succeeded at 709 with fuzz 1 (offset 401 lines).
+Hunk #16 FAILED at 318.
+Hunk #17 FAILED at 334.
+Hunk #18 FAILED at 374.
+Hunk #19 succeeded at 813 (offset 422 lines).
+Hunk #20 FAILED at 413.
+Hunk #21 FAILED at 429.
+Hunk #22 FAILED at 442.
+Hunk #23 FAILED at 470.
+Hunk #24 FAILED at 485.
+Hunk #25 FAILED at 513.
+Hunk #26 FAILED at 581.
+Hunk #27 FAILED at 606.
+Hunk #28 FAILED at 636.
+Hunk #29 FAILED at 652.
+Hunk #30 FAILED at 689.
+Hunk #31 FAILED at 701.
+Hunk #32 FAILED at 729.
+Hunk #33 FAILED at 775.
+Hunk #34 FAILED at 799.
+Hunk #35 FAILED at 814.
+Hunk #36 FAILED at 830.
+Hunk #37 FAILED at 858.
+Hunk #38 succeeded at 1611 (offset 613 lines).
+Hunk #39 succeeded at 1721 (offset 613 lines).
+Hunk #40 succeeded at 1837 (offset 617 lines).
+Hunk #41 succeeded at 1881 (offset 617 lines).
+Hunk #42 succeeded at 1909 (offset 617 lines).
+Hunk #43 succeeded at 1923 with fuzz 1 (offset 617 lines).
+Hunk #44 FAILED at 1322.
+Hunk #45 FAILED at 1342.
+Hunk #46 FAILED at 1395.
+37 out of 46 hunks FAILED -- saving rejects to file test/integration/go.sum.rej
+patching file pkg/controller/certificaterequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificaterequests/venafi/venafi_test.go.rej
+patching file pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificatesigningrequests/venafi/venafi_test.go.rej
+patching file pkg/issuer/venafi/client/request_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/request_test.go.rej
+patching file pkg/issuer/venafi/client/venaficlient_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/venaficlient_test.go.rej
+patching file test/e2e/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file test/e2e/LICENSES.rej
+patching file test/e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file test/e2e/go.mod.rej
+patching file test/e2e/go.sum
+Hunk #1 succeeded at 48 with fuzz 3 (offset 44 lines).
+Hunk #2 FAILED at 30.
+Hunk #3 FAILED at 47.
+Hunk #4 FAILED at 60.
+Hunk #5 FAILED at 87.
+Hunk #6 FAILED at 101.
+Hunk #7 succeeded at 257 with fuzz 3 (offset 124 lines).
+Hunk #8 succeeded at 291 with fuzz 3 (offset 124 lines).
+Hunk #9 succeeded at 325 with fuzz 3 (offset 150 lines).
+Hunk #10 succeeded at 350 with fuzz 3 (offset 150 lines).
+Hunk #11 succeeded at 358 with fuzz 3 (offset 150 lines).
+Hunk #12 succeeded at 450 with fuzz 3 (offset 218 lines).
+Hunk #13 FAILED at 281.
+Hunk #14 succeeded at 530 with fuzz 3 (offset 225 lines).
+Hunk #15 FAILED at 322.
+Hunk #16 succeeded at 591 with fuzz 3 (offset 248 lines).
+7 out of 16 hunks FAILED -- saving rejects to file test/e2e/go.sum.rej
+patching file test/integration/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file test/integration/LICENSES.rej
+patching file test/integration/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file test/integration/go.mod.rej
+patching file test/integration/go.sum
+Hunk #1 succeeded at 18 with fuzz 3.
+Hunk #2 succeeded at 76 with fuzz 3 (offset 50 lines).
+Hunk #3 succeeded at 111 with fuzz 3 (offset 50 lines).
+Hunk #4 succeeded at 335 with fuzz 3 (offset 259 lines).
+Hunk #5 succeeded at 346 with fuzz 3 (offset 259 lines).
+Hunk #6 FAILED at 102.
+Hunk #7 FAILED at 118.
+Hunk #8 FAILED at 137.
+Hunk #9 succeeded at 429 with fuzz 3 (offset 259 lines).
+Hunk #10 succeeded at 552 with fuzz 3 (offset 371 lines).
+Hunk #11 succeeded at 575 with fuzz 3 (offset 374 lines).
+Hunk #12 FAILED at 218.
+Hunk #13 succeeded at 620 with fuzz 3 (offset 381 lines).
+Hunk #14 FAILED at 288.
+Hunk #15 FAILED at 319.
+Hunk #16 succeeded at 709 with fuzz 3 (offset 381 lines).
+Hunk #17 succeeded at 760 with fuzz 3 (offset 415 lines).
+Hunk #18 succeeded at 801 with fuzz 3 (offset 415 lines).
+Hunk #19 FAILED at 404.
+Hunk #20 succeeded at 842 with fuzz 3 (offset 415 lines).
+Hunk #21 succeeded at 859 with fuzz 3 (offset 415 lines).
+Hunk #22 succeeded at 898 with fuzz 3 (offset 440 lines).
+Hunk #23 succeeded at 927 with fuzz 3 (offset 440 lines).
+Hunk #24 FAILED at 503.
+Hunk #25 succeeded at 1017 with fuzz 3 (offset 486 lines).
+Hunk #26 succeeded at 1098 with fuzz 3 (offset 499 lines).
+Hunk #27 succeeded at 1123 with fuzz 3 (offset 499 lines).
+Hunk #28 succeeded at 1183 with fuzz 3 (offset 528 lines).
+Hunk #29 succeeded at 1201 with fuzz 3 (offset 528 lines).
+Hunk #30 succeeded at 1262 with fuzz 3 (offset 551 lines).
+Hunk #31 succeeded at 1274 with fuzz 3 (offset 551 lines).
+Hunk #32 succeeded at 1303 with fuzz 3 (offset 551 lines).
+Hunk #33 succeeded at 1350 with fuzz 3 (offset 551 lines).
+Hunk #34 FAILED at 824.
+Hunk #35 FAILED at 839.
+Hunk #36 FAILED at 855.
+Hunk #37 succeeded at 1434 with fuzz 3 (offset 551 lines).
+Hunk #38 FAILED at 1024.
+Hunk #39 succeeded at 1686 with fuzz 3 (offset 551 lines).
+Hunk #40 FAILED at 1247.
+Hunk #41 FAILED at 1290.
+Hunk #42 FAILED at 1319.
+Hunk #43 FAILED at 1335.
+Hunk #44 succeeded at 1903 with fuzz 3 (offset 551 lines).
+Hunk #45 succeeded at 1924 with fuzz 3 (offset 551 lines).
+Hunk #46 succeeded at 2070 with fuzz 3 (offset 643 lines).
+16 out of 46 hunks FAILED -- saving rejects to file test/integration/go.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/certificaterequests/venafi/venafi_test.go b/pkg/controller/certificaterequests/venafi/venafi_test.go
+|index 3219a499b..2fc7dee6e 100644
+|--- a/pkg/controller/certificaterequests/venafi/venafi_test.go
+|+++ b/pkg/controller/certificaterequests/venafi/venafi_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/certificatesigningrequests/venafi/venafi_test.go b/pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+|index 218971a4c..b9f7016c4 100644
+|--- a/pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+|+++ b/pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 31
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/request_test.go b/pkg/issuer/venafi/client/request_test.go
+|index 047787526..8f7278e62 100644
+|--- a/pkg/issuer/venafi/client/request_test.go
+|+++ b/pkg/issuer/venafi/client/request_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 48
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/venaficlient_test.go b/pkg/issuer/venafi/client/venaficlient_test.go
+|index 1357b53e3..1fe8e72fe 100644
+|--- a/pkg/issuer/venafi/client/venaficlient_test.go
+|+++ b/pkg/issuer/venafi/client/venaficlient_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 61
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/e2e/LICENSES b/test/e2e/LICENSES
+|index f261c4b21..578be6aa3 100644
+|--- a/test/e2e/LICENSES
+|+++ b/test/e2e/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 119
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/e2e/go.mod b/test/e2e/go.mod
+|index 2164acf65..4f1ff5ff1 100644
+|--- a/test/e2e/go.mod
+|+++ b/test/e2e/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 196
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/e2e/go.sum b/test/e2e/go.sum
+|index 00cca0279..627f45505 100644
+|--- a/test/e2e/go.sum
+|+++ b/test/e2e/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+16 out of 16 hunks ignored
+can't find file to patch at input line 390
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/integration/LICENSES b/test/integration/LICENSES
+|index aee0368b1..db4128e8a 100644
+|--- a/test/integration/LICENSES
+|+++ b/test/integration/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 522
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/integration/go.mod b/test/integration/go.mod
+|index 605ca490b..7719eea24 100644
+|--- a/test/integration/go.mod
+|+++ b/test/integration/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+11 out of 11 hunks ignored
+can't find file to patch at input line 682
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/integration/go.sum b/test/integration/go.sum
+|index f1db79446..f4086d729 100644
+|--- a/test/integration/go.sum
+|+++ b/test/integration/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+46 out of 46 hunks ignored
+patching file pkg/controller/certificaterequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificaterequests/venafi/venafi_test.go.rej
+patching file pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificatesigningrequests/venafi/venafi_test.go.rej
+patching file pkg/issuer/venafi/client/request_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/request_test.go.rej
+patching file pkg/issuer/venafi/client/venaficlient_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/venaficlient_test.go.rej
+patching file test/e2e/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file test/e2e/LICENSES.rej
+patching file test/e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file test/e2e/go.mod.rej
+patching file test/e2e/go.sum
+Hunk #1 succeeded at 49 with fuzz 3 (offset 45 lines).
+Hunk #2 FAILED at 30.
+Hunk #3 FAILED at 47.
+Hunk #4 FAILED at 60.
+Hunk #5 FAILED at 87.
+Hunk #6 FAILED at 101.
+Hunk #7 succeeded at 260 with fuzz 3 (offset 127 lines).
+Hunk #8 succeeded at 294 with fuzz 3 (offset 127 lines).
+Hunk #9 FAILED at 175.
+Hunk #10 succeeded at 327 with fuzz 3 (offset 127 lines).
+Hunk #11 succeeded at 335 with fuzz 3 (offset 127 lines).
+Hunk #12 FAILED at 232.
+Hunk #13 FAILED at 281.
+Hunk #14 FAILED at 305.
+Hunk #15 FAILED at 321.
+Hunk #16 FAILED at 342.
+11 out of 16 hunks FAILED -- saving rejects to file test/e2e/go.sum.rej
+patching file test/integration/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file test/integration/LICENSES.rej
+patching file test/integration/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file test/integration/go.mod.rej
+patching file test/integration/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+46 out of 46 hunks ignored -- saving rejects to file test/integration/go.sum.rej
+WARN: test.patch did not apply cleanly
+{"Time":"2026-07-01T14:41:42.090242416Z","Action":"start","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi"}
+{"Time":"2026-07-01T14:41:42.129492359Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign"}
+{"Time":"2026-07-01T14:41:42.129517169Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign","Output":"=== RUN   TestSign\n"}
+{"Time":"2026-07-01T14:41:42.130480101Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_without_an_approved_condition_should_do_nothing"}
+{"Time":"2026-07-01T14:41:42.130487115Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_without_an_approved_condition_should_do_nothing","Output":"=== RUN   TestSign/a_CertificateRequest_without_an_approved_condition_should_do_nothing\n"}
+{"Time":"2026-07-01T14:41:44.231944152Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_without_an_approved_condition_should_do_nothing","Output":"--- PASS: TestSign/a_CertificateRequest_without_an_approved_condition_should_do_nothing (2.10s)\n"}
+{"Time":"2026-07-01T14:41:44.231986389Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_without_an_approved_condition_should_do_nothing","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:44.232004914Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_with_a_denied_condition_should_update_Ready_condition_with_'Denied'"}
+{"Time":"2026-07-01T14:41:44.232009363Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_with_a_denied_condition_should_update_Ready_condition_with_'Denied'","Output":"=== RUN   TestSign/a_CertificateRequest_with_a_denied_condition_should_update_Ready_condition_with_'Denied'\n"}
+{"Time":"2026-07-01T14:41:44.905898557Z","Action":"start","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi"}
+{"Time":"2026-07-01T14:41:44.906000407Z","Action":"start","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client"}
+{"Time":"2026-07-01T14:41:44.920914864Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate"}
+{"Time":"2026-07-01T14:41:44.920941181Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate","Output":"=== RUN   TestVenafi_RequestCertificate\n"}
+{"Time":"2026-07-01T14:41:44.928484524Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem"}
+{"Time":"2026-07-01T14:41:44.928504895Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem","Output":"=== RUN   TestProcessItem\n"}
+{"Time":"2026-07-01T14:41:45.135982932Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_reading_the_zone_configuration_fails"}
+{"Time":"2026-07-01T14:41:45.136009551Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_reading_the_zone_configuration_fails","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_reading_the_zone_configuration_fails\n"}
+{"Time":"2026-07-01T14:41:45.137500735Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_reading_the_zone_configuration_fails","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_reading_the_zone_configuration_fails (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.137518549Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_reading_the_zone_configuration_fails","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.137533035Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_validating_the_certificate_fails"}
+{"Time":"2026-07-01T14:41:45.13753726Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_validating_the_certificate_fails","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_validating_the_certificate_fails\n"}
+{"Time":"2026-07-01T14:41:45.139268011Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_validating_the_certificate_fails","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_validating_the_certificate_fails (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.139274955Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_validating_the_certificate_fails","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.139284661Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_requesting_the_certificate_fails"}
+{"Time":"2026-07-01T14:41:45.139288945Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_requesting_the_certificate_fails","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_requesting_the_certificate_fails\n"}
+{"Time":"2026-07-01T14:41:45.141018509Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_requesting_the_certificate_fails","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_requesting_the_certificate_fails (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.14102827Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_requesting_the_certificate_fails","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.141035848Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_CSR_with_empty_DN"}
+{"Time":"2026-07-01T14:41:45.141041118Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_CSR_with_empty_DN","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_a_CSR_with_empty_DN\n"}
+{"Time":"2026-07-01T14:41:45.141282348Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_CSR_with_empty_DN","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_a_CSR_with_empty_DN (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.14128809Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_CSR_with_empty_DN","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.141294174Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_badly_formed_CSR"}
+{"Time":"2026-07-01T14:41:45.141297998Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_badly_formed_CSR","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_a_badly_formed_CSR\n"}
+{"Time":"2026-07-01T14:41:45.141318926Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_badly_formed_CSR","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_a_badly_formed_CSR (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.141328121Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_a_badly_formed_CSR","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.141334462Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_no_Common_Name,_DNS_Name,_or_URI_SANs_in_CSR"}
+{"Time":"2026-07-01T14:41:45.141338622Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_no_Common_Name,_DNS_Name,_or_URI_SANs_in_CSR","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_no_Common_Name,_DNS_Name,_or_URI_SANs_in_CSR\n"}
+{"Time":"2026-07-01T14:41:45.141545155Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_no_Common_Name,_DNS_Name,_or_URI_SANs_in_CSR","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_no_Common_Name,_DNS_Name,_or_URI_SANs_in_CSR (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.141550905Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_no_Common_Name,_DNS_Name,_or_URI_SANs_in_CSR","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.141557369Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_invalid_custom_field_type_found_the_error"}
+{"Time":"2026-07-01T14:41:45.141561429Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_invalid_custom_field_type_found_the_error","Output":"=== RUN   TestVenafi_RequestCertificate/error_if_invalid_custom_field_type_found_the_error\n"}
+{"Time":"2026-07-01T14:41:45.14324829Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_invalid_custom_field_type_found_the_error","Output":"--- PASS: TestVenafi_RequestCertificate/error_if_invalid_custom_field_type_found_the_error (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.143256076Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/error_if_invalid_custom_field_type_found_the_error","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.143262479Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_DNS_names_and_CN_specified"}
+{"Time":"2026-07-01T14:41:45.143266817Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_DNS_names_and_CN_specified","Output":"=== RUN   TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_DNS_names_and_CN_specified\n"}
+{"Time":"2026-07-01T14:41:45.143681913Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_DNS_names_and_CN_specified","Output":"--- PASS: TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_DNS_names_and_CN_specified (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.14368802Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_DNS_names_and_CN_specified","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.143694581Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_custom_fields_specified"}
+{"Time":"2026-07-01T14:41:45.143698798Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_custom_fields_specified","Output":"=== RUN   TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_custom_fields_specified\n"}
+{"Time":"2026-07-01T14:41:45.145447585Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_custom_fields_specified","Output":"--- PASS: TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_custom_fields_specified (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.145457637Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate/get_a_success_for_a_certificate_with_custom_fields_specified","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.145465787Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate","Output":"--- PASS: TestVenafi_RequestCertificate (0.22s)\n"}
+{"Time":"2026-07-01T14:41:45.145470652Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RequestCertificate","Elapsed":0.22}
+{"Time":"2026-07-01T14:41:45.145477737Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate"}
+{"Time":"2026-07-01T14:41:45.145482304Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate","Output":"=== RUN   TestVenafi_RetrieveCertificate\n"}
+{"Time":"2026-07-01T14:41:45.181403148Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_CA_and_certificate_should_update_with_certificate"}
+{"Time":"2026-07-01T14:41:45.181427028Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_CA_and_certificate_should_update_with_certificate","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_CA_and_certificate_should_update_with_certificate\n"}
+{"Time":"2026-07-01T14:41:45.259669907Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/error_if_retrieve_certificate_fails"}
+{"Time":"2026-07-01T14:41:45.259699957Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/error_if_retrieve_certificate_fails","Output":"=== RUN   TestVenafi_RetrieveCertificate/error_if_retrieve_certificate_fails\n"}
+{"Time":"2026-07-01T14:41:45.261630948Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/error_if_retrieve_certificate_fails","Output":"--- PASS: TestVenafi_RetrieveCertificate/error_if_retrieve_certificate_fails (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.261649805Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/error_if_retrieve_certificate_fails","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.261655073Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/successfully_retrieve_certificate"}
+{"Time":"2026-07-01T14:41:45.261657882Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/successfully_retrieve_certificate","Output":"=== RUN   TestVenafi_RetrieveCertificate/successfully_retrieve_certificate\n"}
+{"Time":"2026-07-01T14:41:45.265417866Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/successfully_retrieve_certificate","Output":"--- PASS: TestVenafi_RetrieveCertificate/successfully_retrieve_certificate (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265439347Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate/successfully_retrieve_certificate","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265444625Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate","Output":"--- PASS: TestVenafi_RetrieveCertificate (0.12s)\n"}
+{"Time":"2026-07-01T14:41:45.265448339Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestVenafi_RetrieveCertificate","Elapsed":0.12}
+{"Time":"2026-07-01T14:41:45.265454149Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT"}
+{"Time":"2026-07-01T14:41:45.265457358Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT","Output":"=== RUN   TestConfigForIssuerT\n"}
+{"Time":"2026-07-01T14:41:45.265471719Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_with_secret_key_ref,_should_use_API_key_at_default_index"}
+{"Time":"2026-07-01T14:41:45.265474716Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_with_secret_key_ref,_should_use_API_key_at_default_index","Output":"=== RUN   TestConfigForIssuerT/if_Cloud_and_secret_with_secret_key_ref,_should_use_API_key_at_default_index\n"}
+{"Time":"2026-07-01T14:41:45.265497313Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_with_secret_key_ref,_should_use_API_key_at_default_index","Output":"--- PASS: TestConfigForIssuerT/if_Cloud_and_secret_with_secret_key_ref,_should_use_API_key_at_default_index (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265504878Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_with_secret_key_ref,_should_use_API_key_at_default_index","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265510374Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_Cloud,_should_chose_TPP"}
+{"Time":"2026-07-01T14:41:45.265513011Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_Cloud,_should_chose_TPP","Output":"=== RUN   TestConfigForIssuerT/if_TPP_and_Cloud,_should_chose_TPP\n"}
+{"Time":"2026-07-01T14:41:45.265534382Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_Cloud,_should_chose_TPP","Output":"--- PASS: TestConfigForIssuerT/if_TPP_and_Cloud,_should_chose_TPP (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265539085Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_Cloud,_should_chose_TPP","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.26554507Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Venafi_spec_has_no_options_in_config_then_should_error"}
+{"Time":"2026-07-01T14:41:45.265547905Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Venafi_spec_has_no_options_in_config_then_should_error","Output":"=== RUN   TestConfigForIssuerT/if_Venafi_spec_has_no_options_in_config_then_should_error\n"}
+{"Time":"2026-07-01T14:41:45.265565409Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Venafi_spec_has_no_options_in_config_then_should_error","Output":"--- PASS: TestConfigForIssuerT/if_Venafi_spec_has_no_options_in_config_then_should_error (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265574946Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Venafi_spec_has_no_options_in_config_then_should_error","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265579523Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_but_getting_secret_fails,_should_error"}
+{"Time":"2026-07-01T14:41:45.265583591Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_but_getting_secret_fails,_should_error","Output":"=== RUN   TestConfigForIssuerT/if_TPP_but_getting_secret_fails,_should_error\n"}
+{"Time":"2026-07-01T14:41:45.265590063Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_but_getting_secret_fails,_should_error","Output":"--- PASS: TestConfigForIssuerT/if_TPP_but_getting_secret_fails,_should_error (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265596126Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_but_getting_secret_fails,_should_error","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265607621Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_user/pass,_should_return_config_with_those_credentials"}
+{"Time":"2026-07-01T14:41:45.265610621Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_user/pass,_should_return_config_with_those_credentials","Output":"=== RUN   TestConfigForIssuerT/if_TPP_and_secret_returns_user/pass,_should_return_config_with_those_credentials\n"}
+{"Time":"2026-07-01T14:41:45.265628137Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_user/pass,_should_return_config_with_those_credentials","Output":"--- PASS: TestConfigForIssuerT/if_TPP_and_secret_returns_user/pass,_should_return_config_with_those_credentials (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265632979Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_user/pass,_should_return_config_with_those_credentials","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265637029Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_access-token,_should_return_config_with_those_credentials"}
+{"Time":"2026-07-01T14:41:45.265639495Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_access-token,_should_return_config_with_those_credentials","Output":"=== RUN   TestConfigForIssuerT/if_TPP_and_secret_returns_access-token,_should_return_config_with_those_credentials\n"}
+{"Time":"2026-07-01T14:41:45.265666339Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_access-token,_should_return_config_with_those_credentials","Output":"--- PASS: TestConfigForIssuerT/if_TPP_and_secret_returns_access-token,_should_return_config_with_those_credentials (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265671703Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_TPP_and_secret_returns_access-token,_should_return_config_with_those_credentials","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265674671Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_but_getting_secret_fails,_should_error"}
+{"Time":"2026-07-01T14:41:45.265679516Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_but_getting_secret_fails,_should_error","Output":"=== RUN   TestConfigForIssuerT/if_Cloud_but_getting_secret_fails,_should_error\n"}
+{"Time":"2026-07-01T14:41:45.265684145Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_but_getting_secret_fails,_should_error","Output":"--- PASS: TestConfigForIssuerT/if_Cloud_but_getting_secret_fails,_should_error (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265691379Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_but_getting_secret_fails,_should_error","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265702448Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_but_no_secret_key_ref,_should_use_API_key_at_default_index"}
+{"Time":"2026-07-01T14:41:45.26570663Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_but_no_secret_key_ref,_should_use_API_key_at_default_index","Output":"=== RUN   TestConfigForIssuerT/if_Cloud_and_secret_but_no_secret_key_ref,_should_use_API_key_at_default_index\n"}
+{"Time":"2026-07-01T14:41:45.265722386Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_but_no_secret_key_ref,_should_use_API_key_at_default_index","Output":"--- PASS: TestConfigForIssuerT/if_Cloud_and_secret_but_no_secret_key_ref,_should_use_API_key_at_default_index (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265727014Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT/if_Cloud_and_secret_but_no_secret_key_ref,_should_use_API_key_at_default_index","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265731076Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT","Output":"--- PASS: TestConfigForIssuerT (0.00s)\n"}
+{"Time":"2026-07-01T14:41:45.265736737Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Test":"TestConfigForIssuerT","Elapsed":0}
+{"Time":"2026-07-01T14:41:45.265741304Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Output":"PASS\n"}
+{"Time":"2026-07-01T14:41:45.267118497Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Output":"ok  \tgithub.com/cert-manager/cert-manager/pkg/issuer/venafi/client\t0.361s\n"}
+{"Time":"2026-07-01T14:41:45.267139298Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/issuer/venafi/client","Elapsed":0.361}
+{"Time":"2026-07-01T14:41:46.334096515Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_with_a_denied_condition_should_update_Ready_condition_with_'Denied'","Output":"--- PASS: TestSign/a_CertificateRequest_with_a_denied_condition_should_update_Ready_condition_with_'Denied' (2.10s)\n"}
+{"Time":"2026-07-01T14:41:46.334132458Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/a_CertificateRequest_with_a_denied_condition_should_update_Ready_condition_with_'Denied'","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:46.334141663Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail"}
+{"Time":"2026-07-01T14:41:46.334146684Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Output":"=== RUN   TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail\n"}
+{"Time":"2026-07-01T14:41:47.283402772Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_CA_and_certificate_should_update_with_certificate","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_CA_and_certificate_should_update_with_certificate (2.10s)\n"}
+{"Time":"2026-07-01T14:41:47.283441039Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_CA_and_certificate_should_update_with_certificate","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:47.283453032Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing"}
+{"Time":"2026-07-01T14:41:47.283458091Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing","Output":"=== RUN   TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing\n"}
+{"Time":"2026-07-01T14:41:47.43524109Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Output":"E0701 14:41:47.435191    5134 venafi.go:88] \"cert-manager/sign: Required secret resource not found\" err=\"secret \\\"test-tpp-secret\\\" not found\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:48.384425825Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing","Output":"E0701 14:41:48.384314    5169 venafi.go:106] \"cert-manager/sign: Required secret resource not found\" err=\" \\\"test-secret\\\" not found\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:48.436355011Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Output":"--- PASS: TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail (2.10s)\n"}
+{"Time":"2026-07-01T14:41:48.436376997Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:48.436383547Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending"}
+{"Time":"2026-07-01T14:41:48.436389405Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"=== RUN   TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending\n"}
+{"Time":"2026-07-01T14:41:49.385436963Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing","Output":"--- PASS: TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing (2.10s)\n"}
+{"Time":"2026-07-01T14:41:49.385474423Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_not_found_error_should_fire_event_and_do_nothing","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:49.385488277Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed"}
+{"Time":"2026-07-01T14:41:49.385493348Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed","Output":"=== RUN   TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed\n"}
+{"Time":"2026-07-01T14:41:49.537938944Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"E0701 14:41:49.537884    5134 venafi.go:97] \"cert-manager/sign: Failed to initialise venafi client for signing\" err=\"this is a network error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:49.537966698Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"E0701 14:41:49.537922    5134 sync.go:143] \"cert-manager: error issuing certificate request\" err=\"this is a network error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:50.487141268Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed","Output":"E0701 14:41:50.487089    5169 venafi.go:113] \"cert-manager/sign: Failed to initialise venafi client for signing: generic error\" err=\"generic error\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:50.539022634Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"--- PASS: TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending (2.10s)\n"}
+{"Time":"2026-07-01T14:41:50.539041991Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:50.539062597Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/should_exit_nil_and_set_status_pending_if_referenced_issuer_is_not_ready"}
+{"Time":"2026-07-01T14:41:50.539066285Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/should_exit_nil_and_set_status_pending_if_referenced_issuer_is_not_ready","Output":"=== RUN   TestSign/should_exit_nil_and_set_status_pending_if_referenced_issuer_is_not_ready\n"}
+{"Time":"2026-07-01T14:41:51.48823682Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed","Output":"--- PASS: TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed (2.10s)\n"}
+{"Time":"2026-07-01T14:41:51.48827507Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_venafi_client_builder_returns_a_generic_error_should_mark_as_Failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:51.488285088Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed"}
+{"Time":"2026-07-01T14:41:51.488288284Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed","Output":"=== RUN   TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed\n"}
+{"Time":"2026-07-01T14:41:52.589225142Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed","Output":"E0701 14:41:52.589174    5169 sync.go:132] \"cert-manager: Failed to parse requested duration: failed to parse requested duration on annotation \\\"experimental.cert-manager.io/request-duration\\\": time: invalid duration \\\"garbage-duration\\\"\" err=\"failed to parse requested duration on annotation \\\"experimental.cert-manager.io/request-duration\\\": time: invalid duration \\\"garbage-duration\\\"\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" signerName=\"issuers.cert-manager.io/default-unit-test-ns.test-issuer\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:52.640319513Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/should_exit_nil_and_set_status_pending_if_referenced_issuer_is_not_ready","Output":"--- PASS: TestSign/should_exit_nil_and_set_status_pending_if_referenced_issuer_is_not_ready (2.10s)\n"}
+{"Time":"2026-07-01T14:41:52.640341242Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/should_exit_nil_and_set_status_pending_if_referenced_issuer_is_not_ready","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:52.640351504Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_cert_then_return_cert_and_not_failed"}
+{"Time":"2026-07-01T14:41:52.640367729Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_cert_then_return_cert_and_not_failed","Output":"=== RUN   TestSign/tpp:_if_sign_returns_cert_then_return_cert_and_not_failed\n"}
+{"Time":"2026-07-01T14:41:53.590312465Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed","Output":"--- PASS: TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed (2.10s)\n"}
+{"Time":"2026-07-01T14:41:53.590346568Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_requested_duration_annotations_contains_garbage_data_should_mark_as_Failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:53.59035898Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed"}
+{"Time":"2026-07-01T14:41:53.590362225Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed\n"}
+{"Time":"2026-07-01T14:41:54.692044686Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed","Output":"E0701 14:41:54.691982    5169 venafi.go:152] \"cert-manager/sign: \" err=\"certificate request contains an invalid Venafi custom fields type: \\\"test-type\\\"\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:54.742653266Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_cert_then_return_cert_and_not_failed","Output":"--- PASS: TestSign/tpp:_if_sign_returns_cert_then_return_cert_and_not_failed (2.10s)\n"}
+{"Time":"2026-07-01T14:41:54.742683438Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_cert_then_return_cert_and_not_failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:54.742694589Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields"}
+{"Time":"2026-07-01T14:41:54.742698336Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields","Output":"=== RUN   TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields\n"}
+{"Time":"2026-07-01T14:41:55.692226622Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed (2.10s)\n"}
+{"Time":"2026-07-01T14:41:55.692275966Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_with_fields_type_error,_should_mark_as_Failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:55.692286071Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_pending_error,_fire_event_and_return_error"}
+{"Time":"2026-07-01T14:41:55.692295878Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_pending_error,_fire_event_and_return_error","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_pending_error,_fire_event_and_return_error\n"}
+{"Time":"2026-07-01T14:41:55.843778327Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields","Output":"E0701 14:41:55.843725    5134 venafi.go:109] \"cert-manager/sign: Failed to parse \\\"venafi.cert-manager.io/custom-fields\\\" annotation\" err=\"invalid character 'c' looking for beginning of value\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:56.844758089Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields","Output":"--- PASS: TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields (2.10s)\n"}
+{"Time":"2026-07-01T14:41:56.844797634Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_JSON_in_custom_fields","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:56.844807029Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_type_in_custom_fields"}
+{"Time":"2026-07-01T14:41:56.844810431Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_type_in_custom_fields","Output":"=== RUN   TestSign/annotations:_Error_on_invalid_type_in_custom_fields\n"}
+{"Time":"2026-07-01T14:41:57.794428112Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_pending_error,_fire_event_and_return_error","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_pending_error,_fire_event_and_return_error (2.10s)\n"}
+{"Time":"2026-07-01T14:41:57.794465193Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_pending_error,_fire_event_and_return_error","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:57.79447511Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_with_a_denied_condition_should_do_nothing"}
+{"Time":"2026-07-01T14:41:57.794479962Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_with_a_denied_condition_should_do_nothing","Output":"=== RUN   TestProcessItem/a_CertificateSigningRequest_with_a_denied_condition_should_do_nothing\n"}
+{"Time":"2026-07-01T14:41:57.945836221Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_type_in_custom_fields","Output":"E0701 14:41:57.945784    5134 venafi.go:127] \"cert-manager/sign: certificate request contains an invalid Venafi custom fields type: \\\"Bool\\\"\" err=\"certificate request contains an invalid Venafi custom fields type: \\\"Bool\\\"\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:41:58.947035203Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_type_in_custom_fields","Output":"--- PASS: TestSign/annotations:_Error_on_invalid_type_in_custom_fields (2.10s)\n"}
+{"Time":"2026-07-01T14:41:58.94707099Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Error_on_invalid_type_in_custom_fields","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:58.947083444Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail"}
+{"Time":"2026-07-01T14:41:58.947087845Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Output":"=== RUN   TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail\n"}
+{"Time":"2026-07-01T14:41:59.89603062Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_with_a_denied_condition_should_do_nothing","Output":"--- PASS: TestProcessItem/a_CertificateSigningRequest_with_a_denied_condition_should_do_nothing (2.10s)\n"}
+{"Time":"2026-07-01T14:41:59.896068625Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_with_a_denied_condition_should_do_nothing","Elapsed":2.1}
+{"Time":"2026-07-01T14:41:59.896084538Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed"}
+{"Time":"2026-07-01T14:41:59.896087904Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed\n"}
+{"Time":"2026-07-01T14:42:00.048542702Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Output":"E0701 14:42:00.048494    5134 venafi.go:88] \"cert-manager/sign: Required secret resource not found\" err=\"secret \\\"test-cloud-secret\\\" not found\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:00.996826774Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed","Output":"E0701 14:42:00.996779    5169 venafi.go:160] \"cert-manager/sign: Failed to request venafi certificate: generic error\" err=\"generic error\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:01.049590652Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Output":"--- PASS: TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail (2.10s)\n"}
+{"Time":"2026-07-01T14:42:01.049613129Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_fail_to_build_client_based_on_missing_secret_then_return_nil_and_hard_fail","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:01.049623973Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err"}
+{"Time":"2026-07-01T14:42:01.049628297Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"=== RUN   TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err\n"}
+{"Time":"2026-07-01T14:42:01.998004262Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed (2.10s)\n"}
+{"Time":"2026-07-01T14:42:01.998043351Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_but_the_client_responds_a_generic_error,_should_mark_as_Failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:01.998055532Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error"}
+{"Time":"2026-07-01T14:42:01.998060167Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error\n"}
+{"Time":"2026-07-01T14:42:02.150615365Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"E0701 14:42:02.150570    5134 venafi.go:155] \"cert-manager/sign: Venafi certificate still in a pending state, the request will be retried\" err=\u003c\n"}
+{"Time":"2026-07-01T14:42:02.150652165Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\tIssuance is pending. You may try retrieving the certificate later using Pickup ID: test-cert-id\n"}
+{"Time":"2026-07-01T14:42:02.150658011Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\t\tStatus: test-status-pending\n"}
+{"Time":"2026-07-01T14:42:02.150671536Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":" \u003e related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:02.15067922Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"E0701 14:42:02.150602    5134 sync.go:143] \"cert-manager: error issuing certificate request\" err=\u003c\n"}
+{"Time":"2026-07-01T14:42:02.150683836Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\tIssuance is pending. You may try retrieving the certificate later using Pickup ID: test-cert-id\n"}
+{"Time":"2026-07-01T14:42:02.150691305Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\t\tStatus: test-status-pending\n"}
+{"Time":"2026-07-01T14:42:02.150695626Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":" \u003e related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:03.098947076Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error","Output":"E0701 14:42:03.098889    5169 venafi.go:193] \"cert-manager/sign: Failed to obtain venafi certificate: generic error\" err=\"generic error\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:03.151777976Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"--- PASS: TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err (2.10s)\n"}
+{"Time":"2026-07-01T14:42:03.151799561Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_pending_error_then_set_pending_and_return_err","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:03.151805952Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error"}
+{"Time":"2026-07-01T14:42:03.151809478Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"=== RUN   TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error\n"}
+{"Time":"2026-07-01T14:42:04.100033114Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error (2.10s)\n"}
+{"Time":"2026-07-01T14:42:04.100082564Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_generic_error,_fire_event_and_return_error","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:04.100094174Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed"}
+{"Time":"2026-07-01T14:42:04.100098647Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed\n"}
+{"Time":"2026-07-01T14:42:04.253084463Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"E0701 14:42:04.253035    5134 venafi.go:135] \"cert-manager/sign: Failed to request venafi certificate\" err=\"this is an error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:04.253121972Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"E0701 14:42:04.253066    5134 sync.go:143] \"cert-manager: error issuing certificate request\" err=\"this is an error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:05.201153761Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed","Output":"E0701 14:42:05.201110    5169 venafi.go:202] \"cert-manager/sign: Failed to parse returned certificate bundle: error decoding certificate PEM block\" err=\"error decoding certificate PEM block\" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:05.254296351Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"--- PASS: TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error (2.10s)\n"}
+{"Time":"2026-07-01T14:42:05.254316724Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_sign_returns_generic_error_then_set_pending_and_return_error","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:05.254331345Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error"}
+{"Time":"2026-07-01T14:42:05.25433599Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"=== RUN   TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error\n"}
+{"Time":"2026-07-01T14:42:06.20261593Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed (2.10s)\n"}
+{"Time":"2026-07-01T14:42:06.202654905Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_garbage_certificates,_should_mark_as_Failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:06.20266537Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_custom_fields_annotations_contain_garbage_data_should_mark_as_Failed"}
+{"Time":"2026-07-01T14:42:06.202668928Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_custom_fields_annotations_contain_garbage_data_should_mark_as_Failed","Output":"=== RUN   TestProcessItem/an_approved_CSR_where_the_custom_fields_annotations_contain_garbage_data_should_mark_as_Failed\n"}
+{"Time":"2026-07-01T14:42:06.355869328Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"E0701 14:42:06.355827    5134 venafi.go:135] \"cert-manager/sign: Failed to request venafi certificate\" err=\"this is an error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:06.355892121Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"E0701 14:42:06.355852    5134 sync.go:143] \"cert-manager: error issuing certificate request\" err=\"this is an error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:07.356130088Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error","Output":"--- PASS: TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error (2.10s)\n"}
+{"Time":"2026-07-01T14:42:07.356167767Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_generic_error_then_set_pending_and_return_error","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:07.356177855Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Custom_Fields"}
+{"Time":"2026-07-01T14:42:07.356185867Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Custom_Fields","Output":"=== RUN   TestSign/annotations:_Custom_Fields\n"}
+{"Time":"2026-07-01T14:42:08.303820366Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_custom_fields_annotations_contain_garbage_data_should_mark_as_Failed","Output":"--- PASS: TestProcessItem/an_approved_CSR_where_the_custom_fields_annotations_contain_garbage_data_should_mark_as_Failed (2.10s)\n"}
+{"Time":"2026-07-01T14:42:08.303885151Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_where_the_custom_fields_annotations_contain_garbage_data_should_mark_as_Failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:08.303892744Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error"}
+{"Time":"2026-07-01T14:42:08.303895925Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error\n"}
+{"Time":"2026-07-01T14:42:09.404697572Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error","Output":"E0701 14:42:09.404642    5169 venafi.go:187] \"cert-manager/sign: Venafi retrieve certificate timeout, retrying\" err=\"Operation timed out. You may try retrieving the certificate later using Pickup ID: \" resource_name=\"test-cr\" resource_namespace=\"\" resource_kind=\"CertificateSigningRequest\" resource_version=\"v1\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:09.458646314Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Custom_Fields","Output":"--- PASS: TestSign/annotations:_Custom_Fields (2.10s)\n"}
+{"Time":"2026-07-01T14:42:09.458677557Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/annotations:_Custom_Fields","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:09.45868702Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending"}
+{"Time":"2026-07-01T14:42:09.458690364Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"=== RUN   TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending\n"}
+{"Time":"2026-07-01T14:42:10.405772542Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error (2.10s)\n"}
+{"Time":"2026-07-01T14:42:10.405810923Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_has_a_pickup_ID,_retrieve_certificate_returns_a_timeout_error,_fire_event_and_return_error","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:10.405821604Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_without_an_approved_condition_should_fire_an_event"}
+{"Time":"2026-07-01T14:42:10.4058261Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_without_an_approved_condition_should_fire_an_event","Output":"=== RUN   TestProcessItem/a_CertificateSigningRequest_without_an_approved_condition_should_fire_an_event\n"}
+{"Time":"2026-07-01T14:42:10.559762765Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"E0701 14:42:10.559688    5134 venafi.go:97] \"cert-manager/sign: Failed to initialise venafi client for signing\" err=\"this is a network error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:10.559788865Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"E0701 14:42:10.559726    5134 sync.go:143] \"cert-manager: error issuing certificate request\" err=\"this is a network error\" related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:11.560706858Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Output":"--- PASS: TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending (2.10s)\n"}
+{"Time":"2026-07-01T14:42:11.560740518Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/tpp:_if_fail_to_build_client_based_on_secret_lister_transient_error_then_return_err_and_set_pending","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:11.560752772Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err"}
+{"Time":"2026-07-01T14:42:11.560757083Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"=== RUN   TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err\n"}
+{"Time":"2026-07-01T14:42:12.507427886Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_without_an_approved_condition_should_fire_an_event","Output":"--- PASS: TestProcessItem/a_CertificateSigningRequest_without_an_approved_condition_should_fire_an_event (2.10s)\n"}
+{"Time":"2026-07-01T14:42:12.507468151Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/a_CertificateSigningRequest_without_an_approved_condition_should_fire_an_event","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:12.507474801Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_should_update_the_annotation_with_one_and_return"}
+{"Time":"2026-07-01T14:42:12.507480701Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_should_update_the_annotation_with_one_and_return","Output":"=== RUN   TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_should_update_the_annotation_with_one_and_return\n"}
+{"Time":"2026-07-01T14:42:12.662129989Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"E0701 14:42:12.662082    5134 venafi.go:155] \"cert-manager/sign: Venafi certificate still in a pending state, the request will be retried\" err=\u003c\n"}
+{"Time":"2026-07-01T14:42:12.662163459Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\tIssuance is pending. You may try retrieving the certificate later using Pickup ID: test-cert-id\n"}
+{"Time":"2026-07-01T14:42:12.662169484Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\t\tStatus: test-status-pending\n"}
+{"Time":"2026-07-01T14:42:12.662175317Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":" \u003e related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:12.662183135Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"E0701 14:42:12.662121    5134 sync.go:143] \"cert-manager: error issuing certificate request\" err=\u003c\n"}
+{"Time":"2026-07-01T14:42:12.662188106Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\tIssuance is pending. You may try retrieving the certificate later using Pickup ID: test-cert-id\n"}
+{"Time":"2026-07-01T14:42:12.662192948Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"\t\tStatus: test-status-pending\n"}
+{"Time":"2026-07-01T14:42:12.662197017Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":" \u003e related_resource_name=\"test-issuer\" related_resource_namespace=\"default-unit-test-ns\" related_resource_kind=\"Issuer\" related_resource_version=\"v1\"\n"}
+{"Time":"2026-07-01T14:42:13.662986089Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Output":"--- PASS: TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err (2.10s)\n"}
+{"Time":"2026-07-01T14:42:13.663022042Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_pending_error_then_set_pending_and_return_err","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:13.663030495Z","Action":"run","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_cert_then_return_cert_and_not_failed"}
+{"Time":"2026-07-01T14:42:13.663045364Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_cert_then_return_cert_and_not_failed","Output":"=== RUN   TestSign/cloud:_if_sign_returns_cert_then_return_cert_and_not_failed\n"}
+{"Time":"2026-07-01T14:42:14.608081659Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_should_update_the_annotation_with_one_and_return","Output":"--- PASS: TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_should_update_the_annotation_with_one_and_return (2.10s)\n"}
+{"Time":"2026-07-01T14:42:14.608120365Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem/an_approved_CSR_which_does_not_yet_have_a_pickup_ID,_should_update_the_annotation_with_one_and_return","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:14.60812742Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem","Output":"--- PASS: TestProcessItem (29.68s)\n"}
+{"Time":"2026-07-01T14:42:14.608131373Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Test":"TestProcessItem","Elapsed":29.68}
+{"Time":"2026-07-01T14:42:14.608135006Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Output":"PASS\n"}
+{"Time":"2026-07-01T14:42:14.609518706Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Output":"ok  \tgithub.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi\t29.704s\n"}
+{"Time":"2026-07-01T14:42:14.609539158Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi","Elapsed":29.704}
+{"Time":"2026-07-01T14:42:15.765353485Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_cert_then_return_cert_and_not_failed","Output":"--- PASS: TestSign/cloud:_if_sign_returns_cert_then_return_cert_and_not_failed (2.10s)\n"}
+{"Time":"2026-07-01T14:42:15.76540063Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign/cloud:_if_sign_returns_cert_then_return_cert_and_not_failed","Elapsed":2.1}
+{"Time":"2026-07-01T14:42:15.765408514Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign","Output":"--- PASS: TestSign (33.64s)\n"}
+{"Time":"2026-07-01T14:42:15.765412685Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Test":"TestSign","Elapsed":33.64}
+{"Time":"2026-07-01T14:42:15.765416646Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Output":"PASS\n"}
+{"Time":"2026-07-01T14:42:15.766960367Z","Action":"output","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Output":"ok  \tgithub.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi\t33.676s\n"}
+{"Time":"2026-07-01T14:42:15.766982894Z","Action":"pass","Package":"github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi","Elapsed":33.677}
+reward=1 graded=54 found=54 failed=0 parsed=54 framework=go exit_code=0

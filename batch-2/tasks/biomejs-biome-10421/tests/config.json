@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_css_parser --test spec_tests -E 'test(media_interpolation_scss)'",
+  "test_files": [
+    "crates/biome_css_parser/tests/css_test_suite/error/scss/at-rule/query-feature-interpolation.scss",
+    "crates/biome_css_parser/tests/css_test_suite/error/scss/at-rule/query-feature-interpolation.scss.snap",
+    "crates/biome_css_parser/tests/css_test_suite/ok/scss/at-rule/media-interpolation.scss.snap",
+    "crates/biome_css_parser/tests/css_test_suite/ok/scss/at-rule/query-feature-interpolation.scss",
+    "crates/biome_css_parser/tests/css_test_suite/ok/scss/at-rule/query-feature-interpolation.scss.snap"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_css_parser::spec_tests ok::scss::at_rule::media_interpolation_scss",
+    "(2/2) biome_css_parser::spec_tests error::scss::at_rule::media_interpolation_scss"
+  ],
+  "PASS_TO_PASS": []
+}

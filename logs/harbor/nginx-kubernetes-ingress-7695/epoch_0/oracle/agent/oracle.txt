@@ -1,7 +1,0 @@
-patching file internal/k8s/controller.go
-patching file internal/telemetry/cluster.go
-patching file internal/telemetry/collector.go
-patching file internal/telemetry/data.avdl
-patching file internal/telemetry/exporter.go
-patching file internal/telemetry/nicresourcecounts_attributes_generated.go
-patching file site/content/overview/product-telemetry.md

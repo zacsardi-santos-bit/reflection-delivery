@@ -1,0 +1,17 @@
+patching file pkg/cmd/auth/setupgit/setupgit_test.go
+patching file pkg/cmd/auth/shared/git_credential_test.go
+patching file pkg/cmd/auth/shared/gitcredentials/helper_config_test.go
+patching file pkg/cmd/auth/shared/gitcredentials/updater_test.go
+github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials: no non-test Go files in /workspace/repo/pkg/cmd/auth/shared/gitcredentials
+# github.com/cli/cli/v2/pkg/cmd/auth/setupgit [github.com/cli/cli/v2/pkg/cmd/auth/setupgit.test]
+pkg/cmd/auth/setupgit/setupgit_test.go:184:12: tt.opts.CredentialsHelperConfig undefined (type *SetupGitOptions has no field or method CredentialsHelperConfig)
+{"Time":"2026-06-29T15:25:26.82135079Z","Action":"start","Package":"github.com/cli/cli/v2/pkg/cmd/auth/setupgit"}
+{"Time":"2026-06-29T15:25:26.821424277Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/auth/setupgit","Output":"FAIL\tgithub.com/cli/cli/v2/pkg/cmd/auth/setupgit [build failed]\n"}
+{"Time":"2026-06-29T15:25:26.821468465Z","Action":"start","Package":"github.com/cli/cli/v2/pkg/cmd/auth/shared"}
+{"Time":"2026-06-29T15:25:26.821466938Z","Action":"fail","Package":"github.com/cli/cli/v2/pkg/cmd/auth/setupgit","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.821490463Z","Action":"start","Package":"github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials"}
+{"Time":"2026-06-29T15:25:26.821505373Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials","Output":"FAIL\tgithub.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials [build failed]\n"}
+{"Time":"2026-06-29T15:25:26.821548335Z","Action":"fail","Package":"github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.821483691Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/auth/shared","Output":"FAIL\tgithub.com/cli/cli/v2/pkg/cmd/auth/shared [build failed]\n"}
+{"Time":"2026-06-29T15:25:26.821617784Z","Action":"fail","Package":"github.com/cli/cli/v2/pkg/cmd/auth/shared","Elapsed":0}
+reward=0 graded=46 found=0 failed=0 parsed=3 framework=go exit_code=1

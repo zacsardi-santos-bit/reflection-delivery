@@ -1,0 +1,5 @@
+I'm working on a Rust build tool that generates version metadata from git information. Right now, when the tool runs in a context where git data is unavailable (like building outside of a git repository), it silently fills in placeholder default values for all git variables even in the standard, non-idempotent mode. This is misleading — the build succeeds but the values are all fake.
+
+I'd like to change the behavior so that the default mode emits a warning message for each variable it cannot set (something like "Unable to set <variable name>") instead of inserting a default value. The idempotent mode should continue to work as before, using placeholder defaults and announcing them via warnings. Importantly, idempotent mode should be something the caller explicitly opts into rather than the default behavior.
+
+This change needs to be consistent across all the different git backends the tool supports, and the distinction between idempotent and non-idempotent behavior needs to be threaded through all the relevant parts of the codebase, including the configuration types that handle error fallback logic.

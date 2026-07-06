@@ -1,0 +1,98 @@
+patching file activation/handler_test.go
+patching file fetch/fetch_test.go
+patching file fetch/mesh_data_test.go
+patching file p2p/server/server_test.go
+patching file syncer/data_fetch_test.go
+# github.com/spacemeshos/go-spacemesh/p2p/server [github.com/spacemeshos/go-spacemesh/p2p/server.test]
+p2p/server/server_test.go:63:20: assignment mismatch: 2 variables but client.Request returns 1 value
+p2p/server/server_test.go:63:62: not enough arguments in call to client.Request
+	have (context.Context, peer.ID, []byte)
+	want (context.Context, peer.ID, []byte, func([]byte), func(error))
+p2p/server/server_test.go:69:13: assignment mismatch: 2 variables but client.Request returns 1 value
+p2p/server/server_test.go:69:55: not enough arguments in call to client.Request
+	have (context.Context, peer.ID, []byte)
+	want (context.Context, peer.ID, []byte, func([]byte), func(error))
+p2p/server/server_test.go:73:13: assignment mismatch: 2 variables but client.Request returns 1 value
+p2p/server/server_test.go:73:55: not enough arguments in call to client.Request
+	have (context.Context, peer.ID, []byte)
+	want (context.Context, peer.ID, []byte, func([]byte), func(error))
+p2p/server/server_test.go:77:13: assignment mismatch: 2 variables but client.Request returns 1 value
+p2p/server/server_test.go:77:44: not enough arguments in call to client.Request
+	have (context.Context, string, []byte)
+	want (context.Context, peer.ID, []byte, func([]byte), func(error))
+p2p/server/server_test.go:81:13: assignment mismatch: 2 variables but client.Request returns 1 value
+p2p/server/server_test.go:84:4: not enough arguments in call to client.Request
+	have (context.Context, peer.ID, []byte)
+	want (context.Context, peer.ID, []byte, func([]byte), func(error))
+p2p/server/server_test.go:81:13: too many errors
+# github.com/spacemeshos/go-spacemesh/fetch [github.com/spacemeshos/go-spacemesh/fetch.test]
+fetch/fetch_test.go:190:33: not enough arguments in call to f.mHashS.EXPECT().Request
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID, gomock.Matcher)
+	want (any, any, any, any, any)
+fetch/fetch_test.go:191:17: cannot use func(_ context.Context, _ p2p.Peer, req []byte) ([]byte, error) {…} (value of type func(_ context.Context, _ "github.com/libp2p/go-libp2p/core/peer".ID, req []byte) ([]byte, error)) as func(context.Context, "github.com/libp2p/go-libp2p/core/peer".ID, []byte, func([]byte), func(error)) error value in argument to f.mHashS.EXPECT().Request(gomock.Any(), peer, gomock.Any()).DoAndReturn
+fetch/fetch_test.go:255:31: not enough arguments in call to f.mHashS.EXPECT().Request
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID, gomock.Matcher)
+	want (any, any, any, any, any)
+fetch/fetch_test.go:256:15: cannot use func(_ context.Context, _ p2p.Peer, req []byte) ([]byte, error) {…} (value of type func(_ context.Context, _ "github.com/libp2p/go-libp2p/core/peer".ID, req []byte) ([]byte, error)) as func(context.Context, "github.com/libp2p/go-libp2p/core/peer".ID, []byte, func([]byte), func(error)) error value in argument to f.mHashS.EXPECT().Request(gomock.Any(), peer, gomock.Any()).DoAndReturn
+fetch/mesh_data_test.go:164:41: not enough arguments in call to f.mHashS.EXPECT().Request
+	have (gomock.Matcher, gomock.Matcher, gomock.Matcher)
+	want (any, any, any, any, any)
+fetch/mesh_data_test.go:166:6: cannot use func(_ context.Context, p p2p.Peer, req []byte) ([]byte, error) {…} (value of type func(_ context.Context, p "github.com/libp2p/go-libp2p/core/peer".ID, req []byte) ([]byte, error)) as func(context.Context, "github.com/libp2p/go-libp2p/core/peer".ID, []byte, func([]byte), func(error)) error value in argument to f.mHashS.EXPECT().Request(gomock.Any(), gomock.Any(), gomock.Any()).DoAndReturn
+fetch/mesh_data_test.go:475:58: not enough arguments in call to f.mMalS.EXPECT().Request
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID, []byte)
+	want (any, any, any, any, any)
+fetch/mesh_data_test.go:475:88: too many arguments in call to f.mMalS.EXPECT().Request(gomock.Any(), p2p.Peer("p0"), []byte{}).Return
+	have ([]byte, nil)
+	want (error)
+fetch/mesh_data_test.go:476:15: assignment mismatch: 2 variables but f.GetMaliciousIDs returns 1 value
+fetch/mesh_data_test.go:476:55: not enough arguments in call to f.GetMaliciousIDs
+	have (context.Context, string)
+	want (context.Context, []"github.com/libp2p/go-libp2p/core/peer".ID, func([]byte, "github.com/libp2p/go-libp2p/core/peer".ID), func(error, "github.com/libp2p/go-libp2p/core/peer".ID))
+fetch/mesh_data_test.go:476:15: too many errors
+# github.com/spacemeshos/go-spacemesh/activation [github.com/spacemeshos/go-spacemesh/activation.test]
+activation/handler_test.go:227:25: atxHdlr.processVerifiedATX undefined (type *testHandler has no field or method processVerifiedATX)
+activation/handler_test.go:279:25: atxHdlr.processVerifiedATX undefined (type *testHandler has no field or method processVerifiedATX)
+activation/handler_test.go:363:20: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:392:20: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:422:23: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:457:23: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:488:20: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:526:20: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:561:20: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:582:20: assignment mismatch: 3 variables but atxHdlr.SyntacticallyValidateDeps returns 2 values
+activation/handler_test.go:582:20: too many errors
+# github.com/spacemeshos/go-spacemesh/syncer_test [github.com/spacemeshos/go-spacemesh/syncer.test]
+syncer/data_fetch_test.go:108:55: not enough arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID)
+	want (any, any, any, any)
+syncer/data_fetch_test.go:109:5: cannot use func(_ context.Context, peer p2p.Peer) ([]byte, error) {…} (value of type func(_ context.Context, peer "github.com/libp2p/go-libp2p/core/peer".ID) ([]byte, error)) as func(context.Context, []"github.com/libp2p/go-libp2p/core/peer".ID, func([]byte, "github.com/libp2p/go-libp2p/core/peer".ID), func(error, "github.com/libp2p/go-libp2p/core/peer".ID)) error value in argument to td.mFetcher.EXPECT().GetMaliciousIDs(gomock.Any(), peer).DoAndReturn
+syncer/data_fetch_test.go:145:54: not enough arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID)
+	want (any, any, any, any)
+syncer/data_fetch_test.go:145:98: too many arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs(gomock.Any(), p2p.Peer("p0")).Return
+	have ([]byte, nil)
+	want (error)
+syncer/data_fetch_test.go:155:54: not enough arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID)
+	want (any, any, any, any)
+syncer/data_fetch_test.go:155:82: too many arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs(gomock.Any(), p2p.Peer("p0")).Return
+	have (nil, error)
+	want (error)
+syncer/data_fetch_test.go:169:54: not enough arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID)
+	want (any, any, any, any)
+syncer/data_fetch_test.go:169:83: too many arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs(gomock.Any(), p2p.Peer("p0")).Return
+	have ([]byte, nil)
+	want (error)
+syncer/data_fetch_test.go:170:54: not enough arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs
+	have (gomock.Matcher, "github.com/libp2p/go-libp2p/core/peer".ID)
+	want (any, any, any, any)
+syncer/data_fetch_test.go:170:98: too many arguments in call to td.mFetcher.EXPECT().GetMaliciousIDs(gomock.Any(), p2p.Peer("p1")).Return
+	have ([]byte, nil)
+	want (error)
+syncer/data_fetch_test.go:170:98: too many errors
+FAIL	github.com/spacemeshos/go-spacemesh/activation [build failed]
+FAIL	github.com/spacemeshos/go-spacemesh/fetch [build failed]
+FAIL	github.com/spacemeshos/go-spacemesh/p2p/server [build failed]
+FAIL	github.com/spacemeshos/go-spacemesh/syncer [build failed]
+reward=0 graded=394 found=394 failed=394 parsed=4 framework=go exit_code=1

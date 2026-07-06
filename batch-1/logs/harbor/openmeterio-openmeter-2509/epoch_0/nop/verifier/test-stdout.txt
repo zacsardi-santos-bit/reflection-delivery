@@ -1,0 +1,14 @@
+patching file api/spec/patches/@typespec__openapi3.patch
+patching file api/spec/pnpm-lock.yaml
+patching file api/spec/src/events.tsp
+patching file pkg/filter/filter_test.go
+# github.com/openmeterio/openmeter/pkg/filter_test [github.com/openmeterio/openmeter/pkg/filter.test]
+pkg/filter/filter_test.go:1628:21: tt.filter.IsEmpty undefined (type filter.FilterString has no field or method IsEmpty)
+pkg/filter/filter_test.go:1709:21: tt.filter.IsEmpty undefined (type filter.FilterInteger has no field or method IsEmpty)
+pkg/filter/filter_test.go:1790:21: tt.filter.IsEmpty undefined (type filter.FilterFloat has no field or method IsEmpty)
+pkg/filter/filter_test.go:1825:21: tt.filter.IsEmpty undefined (type filter.FilterBoolean has no field or method IsEmpty)
+pkg/filter/filter_test.go:1894:21: tt.filter.IsEmpty undefined (type filter.FilterTime has no field or method IsEmpty)
+{"Time":"2026-06-29T15:14:30.491430668Z","Action":"start","Package":"github.com/openmeterio/openmeter/pkg/filter"}
+{"Time":"2026-06-29T15:14:30.491499522Z","Action":"output","Package":"github.com/openmeterio/openmeter/pkg/filter","Output":"FAIL\tgithub.com/openmeterio/openmeter/pkg/filter [build failed]\n"}
+{"Time":"2026-06-29T15:14:30.491548189Z","Action":"fail","Package":"github.com/openmeterio/openmeter/pkg/filter","Elapsed":0}
+reward=0 graded=165 found=0 failed=0 parsed=1 framework=go exit_code=1

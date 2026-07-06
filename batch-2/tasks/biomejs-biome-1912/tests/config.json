@@ -1,0 +1,32 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(~no_barrel_file)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_default_named_alias_reexport.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_default_named_alias_reexport.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_named_alias_reexport.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_named_alias_reexport.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_named_reexprt.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_named_reexprt.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_wild_alias_reexport.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_wild_alias_reexport.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_wild_reexport.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/invalid_wild_reexport.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/valid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noBarrelFile/valid.ts.snap"
+  ],
+  "num_test_files": 14,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::invalid_named_reexprt_ts",
+    "(2/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::valid_ts",
+    "(3/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::invalid_wild_alias_reexport_ts",
+    "(4/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::invalid_default_named_alias_reexport_ts",
+    "(5/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::invalid_named_alias_reexport_ts",
+    "(6/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::invalid_ts",
+    "(7/7) biome_js_analyze::spec_tests specs::nursery::no_barrel_file::invalid_wild_reexport_ts"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python -m script.translations develop --all 2>/dev/null && pytest /workspace/repo/tests/components/schlage/test_lock.py -v --deselect tests/components/schlage/test_lock.py::test_add_code_service_duplicate_name --deselect tests/components/schlage/test_lock.py::test_add_code_service_duplicate_code",
+  "test_files": [
+    "tests/components/schlage/test_lock.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.schlage.test_lock::test_lock_attributes",
+    "tests.components.schlage.test_lock::test_lock_services",
+    "tests.components.schlage.test_lock::test_changed_by",
+    "tests.components.schlage.test_lock::test_add_code_service",
+    "tests.components.schlage.test_lock::test_add_code_service_invalid_code[non_digits]",
+    "tests.components.schlage.test_lock::test_add_code_service_invalid_code[too_short]",
+    "tests.components.schlage.test_lock::test_add_code_service_invalid_code[too_long]",
+    "tests.components.schlage.test_lock::test_add_code_service_invalid_code[mixed]",
+    "tests.components.schlage.test_lock::test_delete_code_service",
+    "tests.components.schlage.test_lock::test_delete_code_service_case_insensitive",
+    "tests.components.schlage.test_lock::test_delete_code_service_nonexistent_code",
+    "tests.components.schlage.test_lock::test_delete_code_service_no_access_codes",
+    "tests.components.schlage.test_lock::test_get_codes_service",
+    "tests.components.schlage.test_lock::test_get_codes_service_no_codes",
+    "tests.components.schlage.test_lock::test_get_codes_service_empty_codes",
+    "tests.components.schlage.test_lock::test_delete_code_service_nonexistent_code_with_existing_codes",
+    "tests.components.schlage.test_lock::test_add_code_service_refresh_error",
+    "tests.components.schlage.test_lock::test_add_code_service_api_error",
+    "tests.components.schlage.test_lock::test_delete_code_service_api_error",
+    "tests.components.schlage.test_lock::test_get_codes_service_refresh_error"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_api_image_request.py /workspace/repo/tests/test_api_usage_propagation.py /workspace/repo/tests/test_picture_description_base_model.py -v",
+  "test_files": [
+    "tests/test_api_image_request.py",
+    "tests/test_api_usage_propagation.py",
+    "tests/test_picture_description_base_model.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_api_image_request.TestApiImageRequest::test_content_filter_finish_reason",
+    "tests.test_api_image_request.TestApiImageRequest::test_length_finish_reason",
+    "tests.test_api_image_request.TestApiImageRequest::test_stop_finish_reason",
+    "tests.test_api_image_request.TestApiImageRequest::test_tool_calls_response",
+    "tests.test_api_image_request.TestApiImageRequest::test_exposes_full_usage_payload",
+    "tests.test_api_image_request.TestApiImageRequest::test_exposes_custom_usage_payload_key",
+    "tests.test_api_image_request.TestApiImageRequest::test_token_extract_key_alias_selects_usage_payload",
+    "tests.test_api_image_request.TestApiImageRequest::test_nested_usage_key_supplies_token_count_when_openai_usage_is_absent",
+    "tests.test_api_image_request.TestApiImageRequest::test_invalid_json_response_logs_preview_and_returns_unspecified",
+    "tests.test_api_image_request.TestApiImageRequest::test_empty_api_response_logs_status_and_returns_unspecified",
+    "tests.test_api_image_request.TestApiImageRequest::test_retry_session_retries_transient_api_errors",
+    "tests.test_api_image_request.TestApiImageRequest::test_streaming_response_preserves_usage_payload",
+    "tests.test_api_image_request.TestApiImageRequest::test_streaming_response_returns_usage_when_stopper_triggers",
+    "tests.test_api_usage_propagation::test_api_vlm_model_preserves_usage_on_prediction[False-api_image_request-api_result0-end_of_sequence]",
+    "tests.test_api_usage_propagation::test_api_vlm_model_preserves_usage_on_prediction[True-api_image_request_streaming-api_result1-unspecified]",
+    "tests.test_api_usage_propagation::test_api_vlm_engine_preserves_usage_on_output_metadata[input_data0-api_image_request-api_result0-end_of_sequence]",
+    "tests.test_api_usage_propagation::test_api_vlm_engine_preserves_usage_on_output_metadata[input_data1-api_image_request_streaming-api_result1-custom_criteria]",
+    "tests.test_api_usage_propagation::test_picture_description_api_model_forwards_usage_response_key",
+    "tests.test_picture_description_base_model::test_picture_description_options_control_batch_size_and_scale",
+    "tests.test_picture_description_base_model::test_picture_description_batch_size_controls_pipeline_chunking",
+    "tests.test_picture_description_base_model::test_picture_description_stores_usage_payload_on_description_meta",
+    "tests.test_picture_description_base_model::test_picture_description_scale_is_used_for_cropping",
+    "tests.test_picture_description_base_model::test_picture_description_embedded_images_keep_original_size",
+    "tests.test_picture_description_base_model::test_picture_description_batch_size_must_be_positive",
+    "tests.test_picture_description_base_model::test_picture_description_scale_must_be_positive",
+    "tests.test_picture_description_base_model::test_picture_description_preset_batch_size_must_be_positive",
+    "tests.test_picture_description_base_model::test_picture_description_preset_scale_must_be_positive"
+  ],
+  "PASS_TO_PASS": []
+}

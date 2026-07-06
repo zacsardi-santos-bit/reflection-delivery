@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "echo '127.0.0.1 us-central1-aiplatform.googleapis.com' >> /etc/hosts; python3 /usr/local/bin/fake-token-server.py & /usr/local/bin/fake-aiplatform-server & sleep 2 && cd /workspace/golang-samples/vertexai/evaluation && GOOGLE_APPLICATION_CREDENTIALS=/tmp/fake-creds.json GOLANG_SAMPLES_PROJECT_ID=test go test . -count=1",
+  "test_files": [
+    "vertexai/evaluation/evaluation_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/GoogleCloudPlatform/golang-samples/vertexai/evaluation::TestEvaluation"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,18 @@
+patching file graph/db/benchmark_test.go
+patching file itest/lnd_graph_migration_test.go
+patching file sqldb/paginate_test.go
+# github.com/lightningnetwork/lnd/sqldb [github.com/lightningnetwork/lnd/sqldb.test]
+./paginate_test.go:25:17: undefined: DefaultQueryConfig
+./paginate_test.go:47:10: undefined: ExecuteBatchQuery
+./paginate_test.go:58:23: undefined: QueryConfig
+./paginate_test.go:84:10: undefined: ExecuteBatchQuery
+./paginate_test.go:107:22: undefined: QueryConfig
+./paginate_test.go:134:10: undefined: ExecuteBatchQuery
+./paginate_test.go:147:17: undefined: DefaultQueryConfig
+./paginate_test.go:168:10: undefined: ExecuteBatchQuery
+./paginate_test.go:177:17: undefined: DefaultQueryConfig
+./paginate_test.go:198:10: undefined: ExecuteBatchQuery
+./paginate_test.go:198:10: too many errors
+FAIL	github.com/lightningnetwork/lnd/sqldb [build failed]
+FAIL
+reward=0 graded=17 found=17 failed=17 parsed=1 framework=go exit_code=1

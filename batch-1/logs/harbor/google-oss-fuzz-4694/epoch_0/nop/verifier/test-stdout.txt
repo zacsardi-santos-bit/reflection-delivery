@@ -1,0 +1,47 @@
+patching file infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+_ ERROR collecting infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py _
+/usr/local/lib/python3.11/dist-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+/usr/local/lib/python3.11/dist-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1206: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1178: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1149: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+/usr/local/lib/python3.11/dist-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py:23: in <module>
+    import compiler_wrapper
+infra/base-images/base-sanitizer-libs-builder/compiler_wrapper.py:23: in <module>
+    import msan_build
+infra/base-images/base-sanitizer-libs-builder/msan_build.py:32: in <module>
+    import wrapper_utils
+E     File "/workspace/repo/infra/base-images/base-sanitizer-libs-builder/wrapper_utils.py", line 37
+E       os.chmod(path, 0755)
+E                      ^
+E   SyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers
+=============================== warnings summary ===============================
+infra/base-images/base-sanitizer-libs-builder/msan_build.py:20
+  /workspace/repo/infra/base-images/base-sanitizer-libs-builder/msan_build.py:20: DeprecationWarning: the imp module is deprecated in favour of importlib and slated for removal in Python 3.12; see the module's documentation for alternative uses
+    import imp
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 1 warning, 1 error in 0.21s ==========================
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=pytest exit_code=2

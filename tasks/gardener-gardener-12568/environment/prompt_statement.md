@@ -1,7 +1,0 @@
-I'm integrating an OpenTelemetry Collector into Gardener's seed cluster logging pipeline. When this feature is active, node log agents should push logs to the collector rather than directly to the log store — but the system needs to handle both modes, switching the ingress routing and access control rules depending on whether the feature is enabled or disabled.
-
-As part of this, I need the authentication proxy sidecar to move from the log store component to the collector component. The collector should support being configured with or without the authentication proxy sidecar through a dedicated method. When enabled, the sidecar needs to use a projected kubeconfig volume for shoot authentication, expose the appropriate port, and run with a read-only non-root security context. The log store should stop activating its own authentication proxy, since the collector now owns that responsibility.
-
-I also need two general-purpose utility functions added: one that generates a standard projected kubeconfig volume combining a generic token kubeconfig secret and an access token secret, and one that generates a read-only volume mount for that volume. These should live in the gardener utilities package so they can be reused by multiple components.
-
-Finally, the collector component constructor needs to accept a secrets manager instead of a plain endpoint string, so it can handle credential retrieval properly, and a mock of the new collector interface needs to be generated for use in tests.

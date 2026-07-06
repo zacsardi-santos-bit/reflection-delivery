@@ -1,0 +1,13 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && Xvfb :99 -screen 0 1024x768x24 -nolisten tcp & sleep 2 && DISPLAY=:99 MOCHA_REPORTER=spec npm_config_match=api-web-contents-spec node_modules/.bin/electron --no-sandbox spec/ --ci -g 'referrer' 2>&1",
+  "test_files": [
+    "spec/api-web-contents-spec.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "propagates referrer information to new target=_blank windows"
+  ],
+  "PASS_TO_PASS": []
+}

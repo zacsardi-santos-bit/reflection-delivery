@@ -1,0 +1,19 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl hadoop-hdds/container-service test -Dtest=TestGrpcReplicationService -DfailIfNoTests=false",
+  "test_files": [
+    "hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/replication/TestGrpcReplicationService.java",
+    "hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/replication/TestGrpcReplicationServiceWithZeroCopy.java",
+    "hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/client/rpc/AbstractTestECKeyOutputStream.java",
+    "hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/client/rpc/TestECKeyOutputStream.java",
+    "hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/client/rpc/TestECKeyOutputStreamWithZeroCopy.java"
+  ],
+  "num_test_files": 5,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Apache::test_1",
+    "Apache::test_2",
+    "Apache::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

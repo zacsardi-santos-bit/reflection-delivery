@@ -1,0 +1,47 @@
+patching file pkg/controller/v1alpha1/inferencegraph/controller_test.go
+patching file pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go
+patching file pkg/controller/v1beta1/inferenceservice/reconcilers/hpa/hpa_reconciler_test.go
+patching file test/crds/serving.kserve.io_inferenceservices.yaml
+patching file test/e2e/graph/test_inference_graph.py
+# github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph [github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph.test]
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:248:14: undefined: createInferenceGraphPodSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:313:7: unknown field MinReplicas in struct literal of type "github.com/kserve/kserve/pkg/apis/serving/v1alpha1".InferenceGraphSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:314:7: unknown field MaxReplicas in struct literal of type "github.com/kserve/kserve/pkg/apis/serving/v1alpha1".InferenceGraphSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:384:7: unknown field MinReplicas in struct literal of type "github.com/kserve/kserve/pkg/apis/serving/v1alpha1".InferenceGraphSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:385:7: unknown field MaxReplicas in struct literal of type "github.com/kserve/kserve/pkg/apis/serving/v1alpha1".InferenceGraphSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:386:7: unknown field ScaleTarget in struct literal of type "github.com/kserve/kserve/pkg/apis/serving/v1alpha1".InferenceGraphSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:387:7: unknown field ScaleMetric in struct literal of type "github.com/kserve/kserve/pkg/apis/serving/v1alpha1".InferenceGraphSpec
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:387:22: undefined: ScaleMetric
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:415:29: undefined: constructForRawDeployment
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:507:4: undefined: PropagateRawStatus
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:507:4: too many errors
+FAIL	github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph [build failed]
+{"Time":"2026-06-29T15:16:00.435739184Z","Action":"start","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa"}
+{"Time":"2026-06-29T15:16:00.4616328Z","Action":"run","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA"}
+{"Time":"2026-06-29T15:16:00.46167522Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA","Output":"=== RUN   TestCreateHPA\n"}
+{"Time":"2026-06-29T15:16:00.46170712Z","Action":"run","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_default_hpa"}
+{"Time":"2026-06-29T15:16:00.46173301Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_default_hpa","Output":"=== RUN   TestCreateHPA/inference_graph_default_hpa\n"}
+{"Time":"2026-06-29T15:16:00.462043219Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_default_hpa","Output":"--- PASS: TestCreateHPA/inference_graph_default_hpa (0.00s)\n"}
+{"Time":"2026-06-29T15:16:00.462070599Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_default_hpa","Elapsed":0}
+{"Time":"2026-06-29T15:16:00.462110649Z","Action":"run","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_specified_hpa"}
+{"Time":"2026-06-29T15:16:00.462170048Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_specified_hpa","Output":"=== RUN   TestCreateHPA/inference_graph_specified_hpa\n"}
+{"Time":"2026-06-29T15:16:00.462200518Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_specified_hpa","Output":"--- PASS: TestCreateHPA/inference_graph_specified_hpa (0.00s)\n"}
+{"Time":"2026-06-29T15:16:00.462223488Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/inference_graph_specified_hpa","Elapsed":0}
+{"Time":"2026-06-29T15:16:00.462267948Z","Action":"run","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_default_hpa"}
+{"Time":"2026-06-29T15:16:00.462291388Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_default_hpa","Output":"=== RUN   TestCreateHPA/predictor_default_hpa\n"}
+{"Time":"2026-06-29T15:16:00.462321308Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_default_hpa","Output":"--- PASS: TestCreateHPA/predictor_default_hpa (0.00s)\n"}
+{"Time":"2026-06-29T15:16:00.462344448Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_default_hpa","Elapsed":0}
+{"Time":"2026-06-29T15:16:00.462368808Z","Action":"run","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_specified_hpa"}
+{"Time":"2026-06-29T15:16:00.462393188Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_specified_hpa","Output":"=== RUN   TestCreateHPA/predictor_specified_hpa\n"}
+{"Time":"2026-06-29T15:16:00.462436968Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_specified_hpa","Output":"--- PASS: TestCreateHPA/predictor_specified_hpa (0.00s)\n"}
+{"Time":"2026-06-29T15:16:00.462466477Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/predictor_specified_hpa","Elapsed":0}
+{"Time":"2026-06-29T15:16:00.462499597Z","Action":"run","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/invalid_input_for_hpa"}
+{"Time":"2026-06-29T15:16:00.462521257Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/invalid_input_for_hpa","Output":"=== RUN   TestCreateHPA/invalid_input_for_hpa\n"}
+{"Time":"2026-06-29T15:16:00.462641767Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/invalid_input_for_hpa","Output":"--- PASS: TestCreateHPA/invalid_input_for_hpa (0.00s)\n"}
+{"Time":"2026-06-29T15:16:00.462667057Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA/invalid_input_for_hpa","Elapsed":0}
+{"Time":"2026-06-29T15:16:00.462691437Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA","Output":"--- PASS: TestCreateHPA (0.00s)\n"}
+{"Time":"2026-06-29T15:16:00.462715697Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Test":"TestCreateHPA","Elapsed":0}
+{"Time":"2026-06-29T15:16:00.462741206Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:00.463409404Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Output":"ok  \tgithub.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa\t0.027s\n"}
+{"Time":"2026-06-29T15:16:00.463478044Z","Action":"pass","Package":"github.com/kserve/kserve/pkg/controller/v1beta1/inferenceservice/reconcilers/hpa","Elapsed":0.028}
+reward=0 graded=18 found=18 failed=12 parsed=7 framework=go exit_code=1

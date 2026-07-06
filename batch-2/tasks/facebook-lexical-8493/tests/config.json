@@ -1,0 +1,33 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run --project unit packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts",
+  "test_files": [
+    "packages/lexical-playground/__tests__/e2e/Headings/HeadingsBackspaceAtStart.spec.mjs",
+    "packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) 'preserves heading when previous block\u2026'",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) 'preserves quote when previous block i\u2026'",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) 'removes only the empty paragraph betw\u2026'",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) HeadingNode.collapseAtStart preserves a non-empty heading",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) preserves heading wrapped inside another ElementNode",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) preserves heading when followed by a non-paragraph sibling"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.constructor",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.createDOM()",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.updateDOM()",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.insertNewAfter() empty",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.insertNewAfter() middle",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.insertNewAfter() end",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests HeadingNode.setTag()",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests $createHeadingNode()",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests $isHeadingNode()",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::LexicalHeadingNode tests creates a h2 with text and can insert a new paragraph after",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) 'legacy merge still applies when previ\u2026'",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) 'list with an empty item: cross-block \u2026'",
+    "/workspace/repo/packages/lexical-rich-text/src/__tests__/unit/LexicalHeadingNode.test.ts::Backspace at start of heading (#4359) HeadingNode.collapseAtStart converts an empty heading to a paragraph"
+  ]
+}

@@ -1,5 +1,0 @@
-patching file http/check_test.go
-# github.com/influxdata/influxdb/http [github.com/influxdata/influxdb/http.test]
-http/check_test.go:429:6: h.handleGetCheckQuery undefined (type *CheckHandler has no field or method handleGetCheckQuery)
-FAIL	github.com/influxdata/influxdb/http [build failed]
-reward=0 graded=661 found=661 failed=661 parsed=1 framework=go exit_code=1

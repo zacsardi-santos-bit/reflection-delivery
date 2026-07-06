@@ -1,5 +1,0 @@
-patching file docs/cli/configuration.md
-patching file docs/telemetry.md
-patching file packages/cli/src/config/config.ts
-patching file packages/core/src/telemetry/config.ts
-patching file packages/core/src/telemetry/index.ts

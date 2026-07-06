@@ -1,0 +1,23 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p pulley-interpreter --features encode,disas",
+  "test_files": [
+    "pulley/tests/all/disas.rs",
+    "tests/disas/pulley/memory-inbounds.wat"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/10) pulley-interpreter::all disas::no_offsets_or_hexdump",
+    "( 2/10) pulley-interpreter regs::assert_special_start_is_right",
+    "( 3/10) pulley-interpreter regs::tests::special_x_regs",
+    "( 4/10) pulley-interpreter regs::tests::not_special_x_regs",
+    "( 5/10) pulley-interpreter::all test_call_indirect_host_width",
+    "( 6/10) pulley-interpreter::all disas::disassemble_br_table",
+    "( 7/10) pulley-interpreter::all disas::push_pop_many",
+    "( 8/10) pulley-interpreter::all disas::no_offsets",
+    "( 9/10) pulley-interpreter::all disas::simple",
+    "(10/10) pulley-interpreter regs::tests::binary_operands"
+  ],
+  "PASS_TO_PASS": []
+}

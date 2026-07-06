@@ -1,0 +1,513 @@
+diff --git a/MIGRATING_v8_to_v9.md b/MIGRATING_v8_to_v9.md
+new file mode 100644
+index 0000000..0a89175
+--- /dev/null
++++ b/MIGRATING_v8_to_v9.md
+@@ -0,0 +1,130 @@
++## If you weren't using the `git` features
++1. Change the `vergen` build dependency to the latest version.
++
++```toml
++[dependencies]
++#..
++[build-dependencies]
++# All features enabled
++vergen = { version = "9.0.0-beta.1", features = ["build", "cargo", "rustc", "si"] }
++# or
++vergen = { version = "9.0.0-beta.1", features = ["build"] }
++# if you wish to disable certain features
++```
++
++2. Update `build.rs` to use the version 9 updates.
++```rust
++use anyhow::Result;
++use vergen::{
++    BuildBuilder, CargoBuilder, Emitter, RustcBuilder, SysinfoBuilder,
++};
++
++pub fn main() -> Result<()> {
++    Emitter::default()
++        .add_instructions(&BuildBuilder::all_build()?)?
++        .add_instructions(&CargoBuilder::all_cargo()?)?
++        .add_instructions(&RustcBuilder::all_rustc()?)?
++        .add_instructions(&SysinfoBuilder::all_sysinfo()?)?
++        .emit()
++}
++```
++
++## If you were using the `gix` feature
++
++1. Change the `vergen` build dependency to `vergen-gix` in `Cargo.toml`. Remove `git` and `gix` from your feature list.
++
++```toml
++[dependencies]
++#..
++[build-dependencies]
++# All features enabled
++vergen-gix = { version = "1.0.0-beta.1", features = ["build", "cargo", "rustc", "si"] }
++# or
++vergen-gix = { version = "1.0.0-beta.1", features = ["build"] }
++# if you wish to disable certain features
++```
++
++2. Update `build.rs` to use the version 9 updates, replacing your `vergen` use with `vergen-gix`.
++
++```rust
++use anyhow::Result;
++use vergen_gix::{
++    BuildBuilder, CargoBuilder, Emitter, GixBuilder, RustcBuilder, SysinfoBuilder,
++};
++
++pub fn main() -> Result<()> {
++    Emitter::default()
++        .add_instructions(&BuildBuilder::all_build()?)?
++        .add_instructions(&CargoBuilder::all_cargo()?)?
++        .add_instructions(&GixBuilder::all_git()?)?
++        .add_instructions(&RustcBuilder::all_rustc()?)?
++        .add_instructions(&SysinfoBuilder::all_sysinfo()?)?
++        .emit()
++}
++```
++## If you were using the `gitcl` feature
++
++1. Change the `vergen` build dependency to `vergen-gitcl` in `Cargo.toml`. Remove `git` and `gitcl` from your feature list.
++
++```toml
++[dependencies]
++#..
++[build-dependencies]
++# All features enabled
++vergen-gitcl = { version = "1.0.0-beta.1", features = ["build", "cargo", "rustc", "si"] }
++# or
++vergen-gitcl = { version = "1.0.0-beta.1", features = ["build"] }
++# if you wish to disable certain features
++```
++
++2. Update `build.rs` to use the version 9 updates, replacing your `vergen` use with `vergen-gitcl`.
++
++```rust
++use anyhow::Result;
++use vergen_gitcl::{
++    BuildBuilder, CargoBuilder, Emitter, GitclBuilder, RustcBuilder, SysinfoBuilder,
++};
++
++pub fn main() -> Result<()> {
++    Emitter::default()
++        .add_instructions(&BuildBuilder::all_build()?)?
++        .add_instructions(&CargoBuilder::all_cargo()?)?
++        .add_instructions(&GitclBuilder::all_git()?)?
++        .add_instructions(&RustcBuilder::all_rustc()?)?
++        .add_instructions(&SysinfoBuilder::all_sysinfo()?)?
++        .emit()
++}
++```
++## If you were using the `git2` feature
++
++1. Change the `vergen` build dependency to `vergen-git2` in `Cargo.toml`. Remove `git` and `git2` from your feature list.
++
++```toml
++[dependencies]
++#..
++[build-dependencies]
++# All features enabled
++vergen-git2 = { version = "1.0.0-beta.1", features = ["build", "cargo", "rustc", "si"] }
++# or
++vergen-git2 = { version = "1.0.0-beta.1", features = ["build"] }
++# if you wish to disable certain features
++```
++
++2. Update `build.rs` to use the version 9 updates, replacing your `vergen` use with `vergen-git2`.
++
++```rust
++use anyhow::Result;
++use vergen_git2::{
++    BuildBuilder, CargoBuilder, Emitter, Git2Builder, RustcBuilder, SysinfoBuilder,
++};
++
++pub fn main() -> Result<()> {
++    Emitter::default()
++        .add_instructions(&BuildBuilder::all_build()?)?
++        .add_instructions(&CargoBuilder::all_cargo()?)?
++        .add_instructions(&Git2Builder::all_git()?)?
++        .add_instructions(&RustcBuilder::all_rustc()?)?
++        .add_instructions(&SysinfoBuilder::all_sysinfo()?)?
++        .emit()
++}
++```
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index b2ff434..1444866 100644
+--- a/README.md
++++ b/README.md
+@@ -44,25 +44,28 @@ to rerun instruction emission if the `SOURCE_DATE_EPOCH` environment variable ha
+ [![Crates.io](https://img.shields.io/crates/l/vergen-gix.svg)](https://crates.io/crates/vergen-gix)
+ [![Crates.io](https://img.shields.io/crates/d/vergen-gix.svg)](https://crates.io/crates/vergen-gix)
+ 
++## MSRV
++The current minimum supported rust version is 1.70.0
++
+ ## ⚠️ Notes on version 9 ⚠️
+-* Version 9 introduces 3 new libraries, `vergen-git2`, `vergen-gitcl`, and `vergen-gix`.
++* Version 9 introduces 3 new libraries, `vergen-git2`, `vergen-gitcl`, and `vergen-gix` that will be versioned independently from `vergen`.
+ * The 3 new libraries are intended to be drop in replacements for `vergen` when you need to generate git based cargo build script instructions.
+ * The git based features have been removed from the base `vergen` library.
+ * `vergen` now contains the `build`, `cargo`, `rustc`, and `sysinfo` feature implementations.   These features are re-exported by the new libraries allowing you to configure the output as you have previously.
+-* Version 9 introduces the `AddCustomEntries` trait.  Implementing this trait allows you to include your own custom Cargo instructions, using `vergen` as the engine to generate them. See the [`AddCustomEntries`](https://docs.rs/vergen/9.0.0-beta.0/vergen/trait.AddCustomEntries.html) docs for more information.
++* Version 9 introduces the `AddCustomEntries` trait.  Implementing this trait allows you to include your own custom Cargo instructions, using `vergen` as the engine to generate them. See the [`AddCustomEntries`](https://docs.rs/vergen/9.0.0-beta.1/vergen/trait.AddCustomEntries.html) docs for more information.
+ * The [version 8 branch](https://github.com/rustyhorde/vergen/tree/legacy/v8) will be maintained for some time.
+ 
+ ### Why?
+-This was done to resolve issues with [Cargo feature unification](https://doc.rust-lang.org/cargo/reference/features.html#mutually-exclusive-features) and mutually exclusive features.  Previous version of `vergen` had 3 mutually exclusive features (`git2`, `gitcl`, and `gix`).  Feature unification could cause compilation issues if you had included a dependency that also used `vergen` but had configured a different git feature.  Splitting the git backends into separate libraries helps alleviate this issue.
++This was done to resolve issues with [Cargo feature unification](https://doc.rust-lang.org/cargo/reference/features.html#mutually-exclusive-features) and mutually exclusive features.  Previous versions of `vergen` had 3 mutually exclusive features (`git2`, `gitcl`, and `gix`).  Feature unification could cause compilation issues if you had included a dependency that also used `vergen` but had configured a different git feature.  Splitting the git backends into separate libraries helps alleviate this issue.
+ 
+-### Migration from version 8
+-Will complete this documentation as I release more beta versions.
+-
+-## MSRV
+-The current minimum supported rust version is 1.70.0
++## Migration from version 8
++See the documentation at [MIGRATING_v8_to_v9.md](MIGRATING_v8_to_v9.md)
+ 
+-## Example Usage
+-See the documentation at [docs.rs](https://docs.rs/vergen/latest/vergen/) for example usage
++## Documentation
++* [vergen](https://docs.rs/vergen/latest)
++* [vergen-git2](https://docs.rs/vergen-git2/latest)
++* [vergen-gitcl](https://docs.rs/vergen-gitcl/latest)
++* [vergen-gix](https://docs.rs/vergen-gix/latest)
+ 
+ ## Contributing
+ See the documentation at [CONTRIBUTING.md](CONTRIBUTING.md)
+diff --git a/vergen-git2/Cargo.toml b/vergen-git2/Cargo.toml
+index fc8b7ed..9881dba 100644
+--- a/vergen-git2/Cargo.toml
++++ b/vergen-git2/Cargo.toml
+@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
+ name = "vergen-git2"
+ readme = "README.md"
+ repository = "https://github.com/rustyhorde/vergen"
+-version = "1.0.0-beta.0"
++version = "1.0.0-beta.1"
+ 
+ [package.metadata.cargo-all-features]
+ denylist = [
+@@ -46,3 +46,7 @@ regex = "1.10.3"
+ serial_test = "3.0.0"
+ temp-env = "0.3.6"
+ test_util = { path = "../test_util", features = ["repo"] }
++
++[package.metadata.docs.rs]
++features = ["build", "cargo", "rustc", "si"]
++rustdoc-args = ["--cfg", "docsrs"]
+\ No newline at end of file
+diff --git a/vergen-git2/src/lib.rs b/vergen-git2/src/lib.rs
+index 373d112..d55932f 100644
+--- a/vergen-git2/src/lib.rs
++++ b/vergen-git2/src/lib.rs
+@@ -487,3 +487,6 @@ pub use vergen::RustcBuilder;
+ #[cfg(feature = "si")]
+ pub use vergen::SysinfoBuilder;
+ pub use vergen_lib::AddCustomEntries;
++pub use vergen_lib::CargoRerunIfChanged;
++pub use vergen_lib::CargoWarning;
++pub use vergen_lib::DefaultConfig;
+diff --git a/vergen-gitcl/Cargo.toml b/vergen-gitcl/Cargo.toml
+index 43418b6..f0852ae 100644
+--- a/vergen-gitcl/Cargo.toml
++++ b/vergen-gitcl/Cargo.toml
+@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
+ name = "vergen-gitcl"
+ readme = "README.md"
+ repository = "https://github.com/rustyhorde/vergen"
+-version = "1.0.0-beta.0"
++version = "1.0.0-beta.1"
+ 
+ [package.metadata.cargo-all-features]
+ denylist = [
+@@ -45,3 +45,7 @@ regex = "1.10.3"
+ serial_test = "3.0.0"
+ temp-env = "0.3.6"
+ test_util = { path = "../test_util", features = ["repo"] }
++
++[package.metadata.docs.rs]
++features = ["build", "cargo", "rustc", "si"]
++rustdoc-args = ["--cfg", "docsrs"]
+\ No newline at end of file
+diff --git a/vergen-gitcl/src/lib.rs b/vergen-gitcl/src/lib.rs
+index a6149ba..edc07d5 100644
+--- a/vergen-gitcl/src/lib.rs
++++ b/vergen-gitcl/src/lib.rs
+@@ -487,3 +487,6 @@ pub use vergen::RustcBuilder;
+ #[cfg(feature = "si")]
+ pub use vergen::SysinfoBuilder;
+ pub use vergen_lib::AddCustomEntries;
++pub use vergen_lib::CargoRerunIfChanged;
++pub use vergen_lib::CargoWarning;
++pub use vergen_lib::DefaultConfig;
+diff --git a/vergen-gix/Cargo.toml b/vergen-gix/Cargo.toml
+index 3338351..fa3e7ed 100644
+--- a/vergen-gix/Cargo.toml
++++ b/vergen-gix/Cargo.toml
+@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
+ name = "vergen-gix"
+ readme = "README.md"
+ repository = "https://github.com/rustyhorde/vergen"
+-version = "1.0.0-beta.0"
++version = "1.0.0-beta.1"
+ 
+ [package.metadata.cargo-all-features]
+ denylist = [
+@@ -49,3 +49,7 @@ regex = "1.10.2"
+ test_util = { path = "../test_util", features = ["repo"] }
+ serial_test = "3.0.0"
+ temp-env = "0.3.6"
++
++[package.metadata.docs.rs]
++features = ["build", "cargo", "rustc", "si"]
++rustdoc-args = ["--cfg", "docsrs"]
+\ No newline at end of file
+diff --git a/vergen-gix/src/lib.rs b/vergen-gix/src/lib.rs
+index f440038..7d27535 100644
+--- a/vergen-gix/src/lib.rs
++++ b/vergen-gix/src/lib.rs
+@@ -487,3 +487,6 @@ pub use vergen::RustcBuilder;
+ #[cfg(feature = "si")]
+ pub use vergen::SysinfoBuilder;
+ pub use vergen_lib::AddCustomEntries;
++pub use vergen_lib::CargoRerunIfChanged;
++pub use vergen_lib::CargoWarning;
++pub use vergen_lib::DefaultConfig;
+diff --git a/vergen-lib/Cargo.toml b/vergen-lib/Cargo.toml
+index 7df3a1d..7c66aef 100644
+--- a/vergen-lib/Cargo.toml
++++ b/vergen-lib/Cargo.toml
+@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
+ name = "vergen-lib"
+ readme = "README.md"
+ repository = "https://github.com/rustyhorde/vergen"
+-version = "0.1.0"
++version = "0.1.1"
+ 
+ [package.metadata.cargo-all-features]
+ denylist = ["unstable"]
+@@ -34,3 +34,7 @@ rustversion = "1.0.14"
+ 
+ [dev-dependencies]
+ temp-env = "0.3.6"
++
++[package.metadata.docs.rs]
++features = ["build", "cargo", "git", "rustc", "si"]
++rustdoc-args = ["--cfg", "docsrs"]
+\ No newline at end of file
+diff --git a/vergen-lib/src/keys.rs b/vergen-lib/src/keys.rs
+index db35256..82a8016 100644
+--- a/vergen-lib/src/keys.rs
++++ b/vergen-lib/src/keys.rs
+@@ -231,6 +231,7 @@ pub(crate) mod vergen_key {
+ 
+     impl VergenKey {
+         /// Get the name for the given key.
++        #[must_use]
+         pub fn name(self) -> &'static str {
+             match self {
+                 VergenKey::Empty => "",
+diff --git a/vergen-pretty/Cargo.toml b/vergen-pretty/Cargo.toml
+index 2946306..0702531 100644
+--- a/vergen-pretty/Cargo.toml
++++ b/vergen-pretty/Cargo.toml
+@@ -48,6 +48,7 @@ tracing = { version = "0.1.37", features = [
+ [build-dependencies]
+ anyhow = "1.0.70"
+ rustversion = "1.0.12"
++vergen-lib = { path = "../vergen-lib" }
+ vergen-gix = { path = "../vergen-gix", features = [
+     "build",
+     "cargo",
+diff --git a/vergen-pretty/build.rs b/vergen-pretty/build.rs
+index 3bda199..a010fe1 100644
+--- a/vergen-pretty/build.rs
++++ b/vergen-pretty/build.rs
+@@ -3,7 +3,14 @@ use std::env;
+ #[cfg(feature = "__vergen_empty_test")]
+ use vergen_gix::Emitter;
+ #[cfg(feature = "__vergen_test")]
+-use vergen_gix::{BuildBuilder, CargoBuilder, Emitter, GixBuilder, RustcBuilder, SysinfoBuilder};
++use {
++    std::collections::BTreeMap,
++    vergen_gix::{
++        AddCustomEntries, BuildBuilder, CargoBuilder, Emitter, GixBuilder, RustcBuilder,
++        SysinfoBuilder,
++    },
++    vergen_lib::{CargoRerunIfChanged, CargoWarning, DefaultConfig},
++};
+ 
+ fn main() -> Result<()> {
+     nightly();
+@@ -26,6 +33,35 @@ fn emit() -> Result<()> {
+     Ok(())
+ }
+ 
++#[cfg(all(feature = "__vergen_test", not(feature = "__vergen_empty_test")))]
++#[derive(Default)]
++struct Custom {}
++
++#[cfg(all(feature = "__vergen_test", not(feature = "__vergen_empty_test")))]
++impl AddCustomEntries<&str, &str> for Custom {
++    fn add_calculated_entries(
++        &self,
++        _idempotent: bool,
++        cargo_rustc_env_map: &mut BTreeMap<&str, &str>,
++        _cargo_rerun_if_changed: &mut CargoRerunIfChanged,
++        cargo_warning: &mut CargoWarning,
++    ) -> Result<()> {
++        cargo_rustc_env_map.insert("vergen-cl", "custom_instruction");
++        cargo_warning.push("custom instruction generated".to_string());
++        Ok(())
++    }
++
++    fn add_default_entries(
++        &self,
++        _config: &DefaultConfig,
++        _cargo_rustc_env_map: &mut BTreeMap<&str, &str>,
++        _cargo_rerun_if_changed: &mut CargoRerunIfChanged,
++        _cargo_warning: &mut CargoWarning,
++    ) -> Result<()> {
++        Ok(())
++    }
++}
++
+ #[cfg(all(feature = "__vergen_test", not(feature = "__vergen_empty_test")))]
+ fn emit() -> Result<()> {
+     println!("cargo:warning=VERGEN TEST ENABLED!");
+@@ -40,6 +76,7 @@ fn emit() -> Result<()> {
+         .add_instructions(&gix)?
+         .add_instructions(&rustc)?
+         .add_instructions(&si)?
++        .add_custom_instructions(&Custom::default())?
+         .emit()
+ }
+ 
+diff --git a/vergen-pretty/src/lib.rs b/vergen-pretty/src/lib.rs
+index 32b6bf3..7f82ba5 100644
+--- a/vergen-pretty/src/lib.rs
++++ b/vergen-pretty/src/lib.rs
+@@ -485,4 +485,13 @@ macro_rules! vergen_pretty_env {
+         );
+         map
+     }};
++    ( $( $x:expr ),* ) => {{
++        {
++            let mut map = $crate::vergen_pretty_env!();
++            $(
++                let _old = map.insert($x, option_env!($x));
++            )*
++            map
++        }
++    }};
+ }
+diff --git a/vergen-pretty/src/pretty/mod.rs b/vergen-pretty/src/pretty/mod.rs
+index 2043bf0..0673a51 100644
+--- a/vergen-pretty/src/pretty/mod.rs
++++ b/vergen-pretty/src/pretty/mod.rs
+@@ -292,4 +292,19 @@ mod tests {
+         }
+         Ok(())
+     }
++
++    #[test]
++    fn custom_display_works() -> Result<()> {
++        let mut stdout = vec![];
++        let map = vergen_pretty_env!("vergen-cl");
++        let empty = is_empty(&map);
++        let fmt = PrettyBuilder::default().env(map).build()?;
++        fmt.display(&mut stdout)?;
++        if empty {
++            assert!(stdout.is_empty());
++        } else {
++            assert!(!stdout.is_empty());
++        }
++        Ok(())
++    }
+ }
+diff --git a/vergen-pretty/src/utils.rs b/vergen-pretty/src/utils.rs
+index 8623b72..fe6b66b 100644
+--- a/vergen-pretty/src/utils.rs
++++ b/vergen-pretty/src/utils.rs
+@@ -20,6 +20,7 @@ pub(crate) fn has_value(
+     }
+ }
+ 
++#[allow(clippy::unnecessary_wraps)]
+ pub(crate) fn split_key(tuple: (&str, &str)) -> Option<(Vec<String>, String)> {
+     let (key, value) = tuple;
+     let key = key.to_ascii_lowercase();
+@@ -27,10 +28,11 @@ pub(crate) fn split_key(tuple: (&str, &str)) -> Option<(Vec<String>, String)> {
+         let kv_vec: Vec<String> = key.split('_').filter_map(not_vergen).collect();
+         Some((kv_vec, value.to_string()))
+     } else {
+-        None
++        Some((vec![key], value.to_string()))
+     }
+ }
+ 
++#[allow(clippy::unnecessary_wraps)]
+ pub(crate) fn split_kv(tuple: (Vec<String>, String)) -> Option<(String, String, String)> {
+     let (mut kv, v) = tuple;
+     if kv.len() >= 2 {
+@@ -41,7 +43,7 @@ pub(crate) fn split_kv(tuple: (Vec<String>, String)) -> Option<(String, String,
+             .fold(String::new(), |a, b| a + " " + &b);
+         Some((category, label, v))
+     } else {
+-        None
++        Some(("custom".to_string(), kv[0].clone(), v))
+     }
+ }
+ 
+@@ -87,12 +89,19 @@ pub(crate) mod test_utils {
+     }
+ 
+     #[test]
+-    fn split_key_no_vergen_is_none() {
+-        assert!(split_key(("test", "test")).is_none());
++    fn split_key_no_vergen_is_not_split() {
++        let (split_key, value) = split_key(("test_k", "test_v")).unwrap_or_default();
++        assert_eq!(1, split_key.len());
++        assert_eq!("test_k", split_key[0]);
++        assert_eq!("test_v", value);
+     }
+ 
+     #[test]
+-    fn split_kv_too_short_is_none() {
+-        assert!(split_kv((vec!["test".to_string()], "test".to_string())).is_none());
++    fn split_kv_too_short_is_custom() {
++        let (category, label, value) =
++            split_kv((vec!["test_k".to_string()], "test_v".to_string())).unwrap_or_default();
++        assert_eq!("custom", category);
++        assert_eq!("test_k", label);
++        assert_eq!("test_v", value);
+     }
+ }
+diff --git a/vergen/Cargo.toml b/vergen/Cargo.toml
+index d8c10a7..b012c54 100644
+--- a/vergen/Cargo.toml
++++ b/vergen/Cargo.toml
+@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
+ name = "vergen"
+ readme = "README.md"
+ repository = "https://github.com/rustyhorde/vergen"
+-version = "9.0.0-beta.0"
++version = "9.0.0-beta.1"
+ 
+ [package.metadata.cargo-all-features]
+ denylist = [
+diff --git a/vergen/src/lib.rs b/vergen/src/lib.rs
+index 4bbbbcf..2a93972 100644
+--- a/vergen/src/lib.rs
++++ b/vergen/src/lib.rs
+@@ -542,3 +542,6 @@ pub use sysinfo::ProcessRefreshKind;
+ #[cfg(feature = "si")]
+ pub use sysinfo::RefreshKind;
+ pub use vergen_lib::AddCustomEntries;
++pub use vergen_lib::CargoRerunIfChanged;
++pub use vergen_lib::CargoWarning;
++pub use vergen_lib::DefaultConfig;

@@ -1,0 +1,29 @@
+{
+    "id": "ff6994c7-e513-4b3c-9614-174ff840c896",
+    "started_at": "2026-07-04T15:36:18.734995",
+    "finished_at": "2026-07-04T15:36:52.248787",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__aws-sagemaker-python-sdk-4499": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "aws-sagemaker-python-sdk-4499__z9hpEcd"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

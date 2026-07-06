@@ -1,0 +1,2337 @@
+diff --git a/src/backend.rs b/src/backend.rs
+index d89f449..c95005b 100644
+--- a/src/backend.rs
++++ b/src/backend.rs
+@@ -4,7 +4,7 @@ use std::fmt::Debug;
+ use std::sync::Arc;
+ use trace::Trace;
+ use tracing::instrument;
+-use trippy::tracing::{SocketImpl, Tracer, TracerChannel, TracerChannelConfig, TracerConfig};
++use trippy::tracing::{ChannelConfig, Config, SocketImpl, Tracer, TracerChannel};
+ 
+ pub mod flows;
+ pub mod trace;
+@@ -12,18 +12,14 @@ pub mod trace;
+ /// A tracing backend.
+ #[derive(Debug)]
+ pub struct Backend {
+-    tracer_config: TracerConfig,
+-    channel_config: TracerChannelConfig,
++    tracer_config: Config,
++    channel_config: ChannelConfig,
+     trace: Arc<RwLock<Trace>>,
+ }
+ 
+ impl Backend {
+     /// Create a tracing `Backend`.
+-    pub fn new(
+-        tracer_config: TracerConfig,
+-        channel_config: TracerChannelConfig,
+-        max_samples: usize,
+-    ) -> Self {
++    pub fn new(tracer_config: Config, channel_config: ChannelConfig, max_samples: usize) -> Self {
+         Self {
+             tracer_config,
+             channel_config,
+diff --git a/src/config.rs b/src/config.rs
+index abd2277..4254867 100644
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -4,6 +4,7 @@ use binding::TuiCommandItem;
+ use clap::{Command, CommandFactory, ValueEnum};
+ use clap_complete::{generate, Generator};
+ use file::ConfigFile;
++use humantime::format_duration;
+ use itertools::Itertools;
+ use serde::Deserialize;
+ use std::collections::HashMap;
+@@ -15,7 +16,8 @@ use strum::VariantNames;
+ use theme::TuiThemeItem;
+ use trippy::dns::ResolveMethod;
+ use trippy::tracing::{
+-    MultipathStrategy, PortDirection, PrivilegeMode, TracerAddrFamily, TracerProtocol,
++    defaults, AddrFamily, IcmpExtensionParseMode, MultipathStrategy, PortDirection, PrivilegeMode,
++    Protocol,
+ };
+ 
+ mod binding;
+@@ -58,7 +60,7 @@ pub enum Mode {
+ /// The tracing protocol.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq, ValueEnum, Deserialize)]
+ #[serde(rename_all = "kebab-case")]
+-pub enum Protocol {
++pub enum ProtocolConfig {
+     /// Internet Control Message Protocol
+     Icmp,
+     /// User Datagram Protocol
+@@ -67,16 +69,35 @@ pub enum Protocol {
+     Tcp,
+ }
+ 
++impl From<Protocol> for ProtocolConfig {
++    fn from(value: Protocol) -> Self {
++        match value {
++            Protocol::Icmp => Self::Icmp,
++            Protocol::Udp => Self::Udp,
++            Protocol::Tcp => Self::Tcp,
++        }
++    }
++}
++
+ /// The address family.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq, Deserialize)]
+ #[serde(rename_all = "kebab-case")]
+-pub enum AddressFamily {
++pub enum AddressFamilyConfig {
+     /// Internet Protocol V4
+     Ipv4,
+     /// Internet Protocol V6
+     Ipv6,
+ }
+ 
++impl From<AddrFamily> for AddressFamilyConfig {
++    fn from(value: AddrFamily) -> Self {
++        match value {
++            AddrFamily::Ipv4 => Self::Ipv4,
++            AddrFamily::Ipv6 => Self::Ipv6,
++        }
++    }
++}
++
+ /// The strategy Equal-cost Multi-Path routing strategy.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq, ValueEnum, Deserialize)]
+ #[serde(rename_all = "kebab-case")]
+@@ -89,6 +110,16 @@ pub enum MultipathStrategyConfig {
+     Dublin,
+ }
+ 
++impl From<MultipathStrategy> for MultipathStrategyConfig {
++    fn from(value: MultipathStrategy) -> Self {
++        match value {
++            MultipathStrategy::Classic => Self::Classic,
++            MultipathStrategy::Paris => Self::Paris,
++            MultipathStrategy::Dublin => Self::Dublin,
++        }
++    }
++}
++
+ /// How to render the addresses.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq, ValueEnum, Deserialize)]
+ #[serde(rename_all = "kebab-case")]
+@@ -211,8 +242,8 @@ pub enum LogSpanEvents {
+ #[derive(Debug, Eq, PartialEq)]
+ pub struct TrippyConfig {
+     pub targets: Vec<String>,
+-    pub protocol: TracerProtocol,
+-    pub addr_family: TracerAddrFamily,
++    pub protocol: Protocol,
++    pub addr_family: AddrFamily,
+     pub first_ttl: u8,
+     pub max_ttl: u8,
+     pub min_round_duration: Duration,
+@@ -221,7 +252,7 @@ pub struct TrippyConfig {
+     pub max_inflight: u8,
+     pub initial_sequence: u16,
+     pub tos: u8,
+-    pub icmp_extensions: bool,
++    pub icmp_extension_parse_mode: IcmpExtensionParseMode,
+     pub read_timeout: Duration,
+     pub packet_size: u16,
+     pub payload_pattern: u8,
+@@ -310,7 +341,7 @@ impl TrippyConfig {
+         let unprivileged = cfg_layer_bool_flag(
+             args.unprivileged,
+             cfg_file_trace.unprivileged,
+-            constants::DEFAULT_UNPRIVILEGED,
++            defaults::DEFAULT_PRIVILEGE_MODE.is_unprivileged(),
+         );
+         let privilege_mode = if unprivileged {
+             PrivilegeMode::Unprivileged
+@@ -341,7 +372,7 @@ impl TrippyConfig {
+         let protocol = cfg_layer(
+             args.protocol,
+             cfg_file_strategy.protocol,
+-            constants::DEFAULT_STRATEGY_PROTOCOL,
++            ProtocolConfig::from(defaults::DEFAULT_STRATEGY_PROTOCOL),
+         );
+         let target_port = cfg_layer_opt(args.target_port, cfg_file_strategy.target_port);
+         let source_port = cfg_layer_opt(args.source_port, cfg_file_strategy.source_port);
+@@ -350,67 +381,72 @@ impl TrippyConfig {
+         let min_round_duration = cfg_layer(
+             args.min_round_duration,
+             cfg_file_strategy.min_round_duration,
+-            String::from(constants::DEFAULT_STRATEGY_MIN_ROUND_DURATION),
++            format_duration(defaults::DEFAULT_STRATEGY_MIN_ROUND_DURATION).to_string(),
+         );
+         let max_round_duration = cfg_layer(
+             args.max_round_duration,
+             cfg_file_strategy.max_round_duration,
+-            String::from(constants::DEFAULT_STRATEGY_MAX_ROUND_DURATION),
++            format_duration(defaults::DEFAULT_STRATEGY_MAX_ROUND_DURATION).to_string(),
+         );
+         let initial_sequence = cfg_layer(
+             args.initial_sequence,
+             cfg_file_strategy.initial_sequence,
+-            constants::DEFAULT_STRATEGY_INITIAL_SEQUENCE,
++            defaults::DEFAULT_STRATEGY_INITIAL_SEQUENCE,
+         );
+         let multipath_strategy_cfg = cfg_layer(
+             args.multipath_strategy,
+             cfg_file_strategy.multipath_strategy,
+-            constants::DEFAULT_STRATEGY_MULTIPATH,
++            MultipathStrategyConfig::from(defaults::DEFAULT_STRATEGY_MULTIPATH),
+         );
+         let grace_duration = cfg_layer(
+             args.grace_duration,
+             cfg_file_strategy.grace_duration,
+-            String::from(constants::DEFAULT_STRATEGY_GRACE_DURATION),
++            format_duration(defaults::DEFAULT_STRATEGY_GRACE_DURATION).to_string(),
+         );
+         let max_inflight = cfg_layer(
+             args.max_inflight,
+             cfg_file_strategy.max_inflight,
+-            constants::DEFAULT_STRATEGY_MAX_INFLIGHT,
++            defaults::DEFAULT_STRATEGY_MAX_INFLIGHT,
+         );
+         let first_ttl = cfg_layer(
+             args.first_ttl,
+             cfg_file_strategy.first_ttl,
+-            constants::DEFAULT_STRATEGY_FIRST_TTL,
++            defaults::DEFAULT_STRATEGY_FIRST_TTL,
+         );
+         let max_ttl = cfg_layer(
+             args.max_ttl,
+             cfg_file_strategy.max_ttl,
+-            constants::DEFAULT_STRATEGY_MAX_TTL,
++            defaults::DEFAULT_STRATEGY_MAX_TTL,
+         );
+         let packet_size = cfg_layer(
+             args.packet_size,
+             cfg_file_strategy.packet_size,
+-            constants::DEFAULT_STRATEGY_PACKET_SIZE,
++            defaults::DEFAULT_STRATEGY_PACKET_SIZE,
+         );
+         let payload_pattern = cfg_layer(
+             args.payload_pattern,
+             cfg_file_strategy.payload_pattern,
+-            constants::DEFAULT_STRATEGY_PAYLOAD_PATTERN,
++            defaults::DEFAULT_STRATEGY_PAYLOAD_PATTERN,
+         );
+         let tos = cfg_layer(
+             args.tos,
+             cfg_file_strategy.tos,
+-            constants::DEFAULT_STRATEGY_TOS,
++            defaults::DEFAULT_STRATEGY_TOS,
+         );
+         let icmp_extensions = cfg_layer_bool_flag(
+             args.icmp_extensions,
+             cfg_file_strategy.icmp_extensions,
+-            constants::DEFAULT_ICMP_EXTENSIONS,
++            defaults::DEFAULT_ICMP_EXTENSION_PARSE_MODE.is_enabled(),
+         );
++        let icmp_extension_parse_mode = if icmp_extensions {
++            IcmpExtensionParseMode::Enabled
++        } else {
++            IcmpExtensionParseMode::Disabled
++        };
+         let read_timeout = cfg_layer(
+             args.read_timeout,
+             cfg_file_strategy.read_timeout,
+-            String::from(constants::DEFAULT_STRATEGY_READ_TIMEOUT),
++            format_duration(defaults::DEFAULT_STRATEGY_READ_TIMEOUT).to_string(),
+         );
+         let tui_max_samples = cfg_layer(
+             args.tui_max_samples,
+@@ -490,9 +526,9 @@ impl TrippyConfig {
+         );
+         let geoip_mmdb_file = cfg_layer_opt(args.geoip_mmdb_file, cfg_file_tui.geoip_mmdb_file);
+         let protocol = match (args.udp, args.tcp, args.icmp, protocol) {
+-            (false, false, false, Protocol::Udp) | (true, _, _, _) => TracerProtocol::Udp,
+-            (false, false, false, Protocol::Tcp) | (_, true, _, _) => TracerProtocol::Tcp,
+-            (false, false, false, Protocol::Icmp) | (_, _, true, _) => TracerProtocol::Icmp,
++            (false, false, false, ProtocolConfig::Udp) | (true, _, _, _) => Protocol::Udp,
++            (false, false, false, ProtocolConfig::Tcp) | (_, true, _, _) => Protocol::Tcp,
++            (false, false, false, ProtocolConfig::Icmp) | (_, _, true, _) => Protocol::Icmp,
+         };
+         let read_timeout = humantime::parse_duration(&read_timeout)?;
+         let min_round_duration = humantime::parse_duration(&min_round_duration)?;
+@@ -506,32 +542,30 @@ impl TrippyConfig {
+             })
+             .transpose()?;
+         let addr_family = match (args.ipv4, args.ipv6, cfg_file_strategy.addr_family) {
+-            (false, false, None) => addr_family(constants::DEFAULT_ADDRESS_FAMILY),
+-            (false, false, Some(AddressFamily::Ipv4)) | (true, _, _) => TracerAddrFamily::Ipv4,
+-            (false, false, Some(AddressFamily::Ipv6)) | (_, true, _) => TracerAddrFamily::Ipv6,
++            (false, false, None) => defaults::DEFAULT_ADDRESS_FAMILY,
++            (false, false, Some(AddressFamilyConfig::Ipv4)) | (true, _, _) => AddrFamily::Ipv4,
++            (false, false, Some(AddressFamilyConfig::Ipv6)) | (_, true, _) => AddrFamily::Ipv6,
+         };
+         let multipath_strategy = match (multipath_strategy_cfg, addr_family) {
+             (MultipathStrategyConfig::Classic, _) => Ok(MultipathStrategy::Classic),
+             (MultipathStrategyConfig::Paris, _) => Ok(MultipathStrategy::Paris),
+-            (MultipathStrategyConfig::Dublin, TracerAddrFamily::Ipv4) => {
+-                Ok(MultipathStrategy::Dublin)
+-            }
+-            (MultipathStrategyConfig::Dublin, TracerAddrFamily::Ipv6) => Err(anyhow!(
++            (MultipathStrategyConfig::Dublin, AddrFamily::Ipv4) => Ok(MultipathStrategy::Dublin),
++            (MultipathStrategyConfig::Dublin, AddrFamily::Ipv6) => Err(anyhow!(
+                 "Dublin multipath strategy not implemented for IPv6 yet!"
+             )),
+         }?;
+         let port_direction = match (protocol, source_port, target_port, multipath_strategy_cfg) {
+-            (TracerProtocol::Icmp, _, _, _) => PortDirection::None,
+-            (TracerProtocol::Udp, None, None, _) => PortDirection::new_fixed_src(pid.max(1024)),
+-            (TracerProtocol::Udp, Some(src), None, _) => {
++            (Protocol::Icmp, _, _, _) => PortDirection::None,
++            (Protocol::Udp, None, None, _) => PortDirection::new_fixed_src(pid.max(1024)),
++            (Protocol::Udp, Some(src), None, _) => {
+                 validate_source_port(src)?;
+                 PortDirection::new_fixed_src(src)
+             }
+-            (TracerProtocol::Tcp, None, None, _) => PortDirection::new_fixed_dest(80),
+-            (TracerProtocol::Tcp, Some(src), None, _) => PortDirection::new_fixed_src(src),
++            (Protocol::Tcp, None, None, _) => PortDirection::new_fixed_dest(80),
++            (Protocol::Tcp, Some(src), None, _) => PortDirection::new_fixed_src(src),
+             (_, None, Some(dest), _) => PortDirection::new_fixed_dest(dest),
+             (
+-                TracerProtocol::Udp,
++                Protocol::Udp,
+                 Some(src),
+                 Some(dest),
+                 MultipathStrategyConfig::Dublin | MultipathStrategyConfig::Paris,
+@@ -609,7 +643,7 @@ impl TrippyConfig {
+             packet_size,
+             payload_pattern,
+             tos,
+-            icmp_extensions,
++            icmp_extension_parse_mode,
+             source_addr,
+             interface,
+             port_direction,
+@@ -647,23 +681,23 @@ impl Default for TrippyConfig {
+     fn default() -> Self {
+         Self {
+             targets: vec![],
+-            protocol: protocol(constants::DEFAULT_STRATEGY_PROTOCOL),
+-            addr_family: addr_family(constants::DEFAULT_ADDRESS_FAMILY),
+-            first_ttl: constants::DEFAULT_STRATEGY_FIRST_TTL,
+-            max_ttl: constants::DEFAULT_STRATEGY_MAX_TTL,
+-            min_round_duration: duration(constants::DEFAULT_STRATEGY_MIN_ROUND_DURATION),
+-            max_round_duration: duration(constants::DEFAULT_STRATEGY_MAX_ROUND_DURATION),
+-            grace_duration: duration(constants::DEFAULT_STRATEGY_GRACE_DURATION),
+-            max_inflight: constants::DEFAULT_STRATEGY_MAX_INFLIGHT,
+-            initial_sequence: constants::DEFAULT_STRATEGY_INITIAL_SEQUENCE,
+-            tos: constants::DEFAULT_STRATEGY_TOS,
+-            icmp_extensions: constants::DEFAULT_ICMP_EXTENSIONS,
+-            read_timeout: duration(constants::DEFAULT_STRATEGY_READ_TIMEOUT),
+-            packet_size: constants::DEFAULT_STRATEGY_PACKET_SIZE,
+-            payload_pattern: constants::DEFAULT_STRATEGY_PAYLOAD_PATTERN,
++            protocol: defaults::DEFAULT_STRATEGY_PROTOCOL,
++            addr_family: defaults::DEFAULT_ADDRESS_FAMILY,
++            first_ttl: defaults::DEFAULT_STRATEGY_FIRST_TTL,
++            max_ttl: defaults::DEFAULT_STRATEGY_MAX_TTL,
++            min_round_duration: defaults::DEFAULT_STRATEGY_MIN_ROUND_DURATION,
++            max_round_duration: defaults::DEFAULT_STRATEGY_MAX_ROUND_DURATION,
++            grace_duration: defaults::DEFAULT_STRATEGY_GRACE_DURATION,
++            max_inflight: defaults::DEFAULT_STRATEGY_MAX_INFLIGHT,
++            initial_sequence: defaults::DEFAULT_STRATEGY_INITIAL_SEQUENCE,
++            tos: defaults::DEFAULT_STRATEGY_TOS,
++            icmp_extension_parse_mode: defaults::DEFAULT_ICMP_EXTENSION_PARSE_MODE,
++            read_timeout: defaults::DEFAULT_STRATEGY_READ_TIMEOUT,
++            packet_size: defaults::DEFAULT_STRATEGY_PACKET_SIZE,
++            payload_pattern: defaults::DEFAULT_STRATEGY_PAYLOAD_PATTERN,
+             source_addr: None,
+             interface: None,
+-            multipath_strategy: multipath_strategy(constants::DEFAULT_STRATEGY_MULTIPATH),
++            multipath_strategy: defaults::DEFAULT_STRATEGY_MULTIPATH,
+             port_direction: PortDirection::None,
+             dns_timeout: duration(constants::DEFAULT_DNS_TIMEOUT),
+             dns_resolve_method: dns_resolve_method(constants::DEFAULT_DNS_RESOLVE_METHOD),
+@@ -681,7 +715,7 @@ impl Default for TrippyConfig {
+             tui_theme: TuiTheme::default(),
+             tui_bindings: TuiBindings::default(),
+             mode: constants::DEFAULT_MODE,
+-            privilege_mode: privilege_mode(constants::DEFAULT_UNPRIVILEGED),
++            privilege_mode: defaults::DEFAULT_PRIVILEGE_MODE,
+             dns_resolve_all: constants::DEFAULT_DNS_RESOLVE_ALL,
+             report_cycles: constants::DEFAULT_REPORT_CYCLES,
+             geoip_mmdb_file: None,
+@@ -699,22 +733,6 @@ fn duration(duration: &str) -> Duration {
+     humantime::parse_duration(duration).expect("valid duration")
+ }
+ 
+-fn protocol(protocol: Protocol) -> TracerProtocol {
+-    match protocol {
+-        Protocol::Icmp => TracerProtocol::Icmp,
+-        Protocol::Udp => TracerProtocol::Udp,
+-        Protocol::Tcp => TracerProtocol::Tcp,
+-    }
+-}
+-
+-fn privilege_mode(unprivileged: bool) -> PrivilegeMode {
+-    if unprivileged {
+-        PrivilegeMode::Unprivileged
+-    } else {
+-        PrivilegeMode::Privileged
+-    }
+-}
+-
+ fn dns_resolve_method(dns_resolve_method: DnsResolveMethodConfig) -> ResolveMethod {
+     match dns_resolve_method {
+         DnsResolveMethodConfig::System => ResolveMethod::System,
+@@ -724,21 +742,6 @@ fn dns_resolve_method(dns_resolve_method: DnsResolveMethodConfig) -> ResolveMeth
+     }
+ }
+ 
+-fn multipath_strategy(multipath_strategy: MultipathStrategyConfig) -> MultipathStrategy {
+-    match multipath_strategy {
+-        MultipathStrategyConfig::Classic => MultipathStrategy::Classic,
+-        MultipathStrategyConfig::Paris => MultipathStrategy::Paris,
+-        MultipathStrategyConfig::Dublin => MultipathStrategy::Dublin,
+-    }
+-}
+-
+-fn addr_family(addr_family: AddressFamily) -> TracerAddrFamily {
+-    match addr_family {
+-        AddressFamily::Ipv4 => TracerAddrFamily::Ipv4,
+-        AddressFamily::Ipv6 => TracerAddrFamily::Ipv6,
+-    }
+-}
+-
+ fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
+     generate(gen, cmd, cmd.get_name().to_string(), &mut std::io::stdout());
+ }
+@@ -830,7 +833,7 @@ fn validate_strategy(strategy: MultipathStrategy, unprivileged: bool) -> anyhow:
+ /// We only allow multiple targets to be specified for the Tui and for `Icmp` tracing.
+ fn validate_multi(
+     mode: Mode,
+-    protocol: TracerProtocol,
++    protocol: Protocol,
+     targets: &[String],
+     dns_resolve_all: bool,
+ ) -> anyhow::Result<()> {
+@@ -842,11 +845,9 @@ fn validate_multi(
+                 "only a single target may be specified for this mode"
+             ))
+         }
+-        (_, TracerProtocol::Tcp | TracerProtocol::Udp) if targets.len() > 1 || dns_resolve_all => {
+-            Err(anyhow!(
+-                "only a single target may be specified for TCP and UDP tracing"
+-            ))
+-        }
++        (_, Protocol::Tcp | Protocol::Udp) if targets.len() > 1 || dns_resolve_all => Err(anyhow!(
++            "only a single target may be specified for TCP and UDP tracing"
++        )),
+         _ => Ok(()),
+     }
+ }
+diff --git a/src/config/cmd.rs b/src/config/cmd.rs
+index e730f90..0f2717c 100644
+--- a/src/config/cmd.rs
++++ b/src/config/cmd.rs
+@@ -2,7 +2,7 @@ use crate::config::binding::TuiCommandItem;
+ use crate::config::theme::TuiThemeItem;
+ use crate::config::{
+     AddressMode, AsMode, DnsResolveMethodConfig, GeoIpMode, IcmpExtensionMode, LogFormat,
+-    LogSpanEvents, Mode, MultipathStrategyConfig, Protocol, TuiColor, TuiKeyBinding,
++    LogSpanEvents, Mode, MultipathStrategyConfig, ProtocolConfig, TuiColor, TuiKeyBinding,
+ };
+ use anyhow::anyhow;
+ use clap::builder::Styles;
+@@ -31,7 +31,7 @@ pub struct Args {
+ 
+     /// Tracing protocol [default: icmp]
+     #[arg(value_enum, short = 'p', long)]
+-    pub protocol: Option<Protocol>,
++    pub protocol: Option<ProtocolConfig>,
+ 
+     /// Trace using the UDP protocol
+     #[arg(
+diff --git a/src/config/constants.rs b/src/config/constants.rs
+index 651a54d..32a2211 100644
+--- a/src/config/constants.rs
++++ b/src/config/constants.rs
+@@ -1,6 +1,6 @@
+ use crate::config::{
+-    AddressFamily, AddressMode, AsMode, DnsResolveMethodConfig, GeoIpMode, IcmpExtensionMode,
+-    LogFormat, LogSpanEvents, Mode, MultipathStrategyConfig, Protocol,
++    AddressMode, AsMode, DnsResolveMethodConfig, GeoIpMode, IcmpExtensionMode, LogFormat,
++    LogSpanEvents, Mode,
+ };
+ use std::time::Duration;
+ 
+@@ -13,9 +13,6 @@ pub const MAX_HOPS: usize = u8::MAX as usize;
+ /// The default value for `mode`.
+ pub const DEFAULT_MODE: Mode = Mode::Tui;
+ 
+-/// The default value for `unprivileged`.
+-pub const DEFAULT_UNPRIVILEGED: bool = false;
+-
+ /// The default value for `all_resolved_ips`.
+ pub const DEFAULT_DNS_RESOLVE_ALL: bool = false;
+ 
+@@ -28,51 +25,6 @@ pub const DEFAULT_LOG_SPAN_EVENTS: LogSpanEvents = LogSpanEvents::Off;
+ /// The default value for `log-filter`.
+ pub const DEFAULT_LOG_FILTER: &str = "trippy=debug";
+ 
+-/// The default value for `protocol`.
+-pub const DEFAULT_STRATEGY_PROTOCOL: Protocol = Protocol::Icmp;
+-
+-/// The default value for `addr-family`.
+-pub const DEFAULT_ADDRESS_FAMILY: AddressFamily = AddressFamily::Ipv4;
+-
+-/// The default value for `min-round-duration`.
+-pub const DEFAULT_STRATEGY_MIN_ROUND_DURATION: &str = "1s";
+-
+-/// The default value for `max-round-duration`.
+-pub const DEFAULT_STRATEGY_MAX_ROUND_DURATION: &str = "1s";
+-
+-/// The default value for `initial-sequence`.
+-pub const DEFAULT_STRATEGY_INITIAL_SEQUENCE: u16 = 33000;
+-
+-/// The default value for `multipath-strategy`.
+-pub const DEFAULT_STRATEGY_MULTIPATH: MultipathStrategyConfig = MultipathStrategyConfig::Classic;
+-
+-/// The default value for `grace-duration`.
+-pub const DEFAULT_STRATEGY_GRACE_DURATION: &str = "100ms";
+-
+-/// The default value for `max-inflight`.
+-pub const DEFAULT_STRATEGY_MAX_INFLIGHT: u8 = 24;
+-
+-/// The default value for `first-ttl`.
+-pub const DEFAULT_STRATEGY_FIRST_TTL: u8 = 1;
+-
+-/// The default value for `max-ttl`.
+-pub const DEFAULT_STRATEGY_MAX_TTL: u8 = 64;
+-
+-/// The default value for `packet-size`.
+-pub const DEFAULT_STRATEGY_PACKET_SIZE: u16 = 84;
+-
+-/// The default value for `payload-pattern`.
+-pub const DEFAULT_STRATEGY_PAYLOAD_PATTERN: u8 = 0;
+-
+-/// The default value for `tos`.
+-pub const DEFAULT_STRATEGY_TOS: u8 = 0;
+-
+-/// The default value for `icmp-extensions`.
+-pub const DEFAULT_ICMP_EXTENSIONS: bool = false;
+-
+-/// The default value for `read-timeout`.
+-pub const DEFAULT_STRATEGY_READ_TIMEOUT: &str = "10ms";
+-
+ /// The default value for `tui-max-samples`.
+ pub const DEFAULT_TUI_MAX_SAMPLES: usize = 256;
+ 
+diff --git a/src/config/file.rs b/src/config/file.rs
+index a00a121..4819ac9 100644
+--- a/src/config/file.rs
++++ b/src/config/file.rs
+@@ -1,15 +1,17 @@
+ use crate::config::binding::TuiKeyBinding;
+ use crate::config::theme::TuiColor;
+ use crate::config::{
+-    AddressFamily, AddressMode, AsMode, DnsResolveMethodConfig, GeoIpMode, IcmpExtensionMode,
+-    LogFormat, LogSpanEvents, Mode, MultipathStrategyConfig, Protocol,
++    AddressFamilyConfig, AddressMode, AsMode, DnsResolveMethodConfig, GeoIpMode, IcmpExtensionMode,
++    LogFormat, LogSpanEvents, Mode, MultipathStrategyConfig, ProtocolConfig,
+ };
+ use anyhow::Context;
+ use etcetera::BaseStrategy;
++use humantime::format_duration;
+ use serde::Deserialize;
+ use std::fs::File;
+ use std::io::read_to_string;
+ use std::path::Path;
++use trippy::tracing::defaults;
+ 
+ const DEFAULT_CONFIG_FILE: &str = "trippy.toml";
+ const DEFAULT_HIDDEN_CONFIG_FILE: &str = ".trippy.toml";
+@@ -109,7 +111,7 @@ impl Default for ConfigTrippy {
+     fn default() -> Self {
+         Self {
+             mode: Some(super::constants::DEFAULT_MODE),
+-            unprivileged: Some(super::constants::DEFAULT_UNPRIVILEGED),
++            unprivileged: Some(defaults::DEFAULT_PRIVILEGE_MODE.is_unprivileged()),
+             log_format: Some(super::constants::DEFAULT_LOG_FORMAT),
+             log_filter: Some(String::from(super::constants::DEFAULT_LOG_FILTER)),
+             log_span_events: Some(super::constants::DEFAULT_LOG_SPAN_EVENTS),
+@@ -120,8 +122,8 @@ impl Default for ConfigTrippy {
+ #[derive(Debug, Eq, PartialEq, Deserialize)]
+ #[serde(rename_all = "kebab-case", deny_unknown_fields)]
+ pub struct ConfigStrategy {
+-    pub protocol: Option<Protocol>,
+-    pub addr_family: Option<AddressFamily>,
++    pub protocol: Option<ProtocolConfig>,
++    pub addr_family: Option<AddressFamilyConfig>,
+     pub target_port: Option<u16>,
+     pub source_port: Option<u16>,
+     pub source_address: Option<String>,
+@@ -144,33 +146,35 @@ pub struct ConfigStrategy {
+ impl Default for ConfigStrategy {
+     fn default() -> Self {
+         Self {
+-            protocol: Some(super::constants::DEFAULT_STRATEGY_PROTOCOL),
+-            addr_family: Some(super::constants::DEFAULT_ADDRESS_FAMILY),
++            protocol: Some(ProtocolConfig::from(defaults::DEFAULT_STRATEGY_PROTOCOL)),
++            addr_family: Some(AddressFamilyConfig::from(defaults::DEFAULT_ADDRESS_FAMILY)),
+             target_port: None,
+             source_port: None,
+             source_address: None,
+             interface: None,
+-            min_round_duration: Some(String::from(
+-                super::constants::DEFAULT_STRATEGY_MIN_ROUND_DURATION,
+-            )),
+-            max_round_duration: Some(String::from(
+-                super::constants::DEFAULT_STRATEGY_MAX_ROUND_DURATION,
+-            )),
+-            initial_sequence: Some(super::constants::DEFAULT_STRATEGY_INITIAL_SEQUENCE),
+-            multipath_strategy: Some(super::constants::DEFAULT_STRATEGY_MULTIPATH),
+-            grace_duration: Some(String::from(
+-                super::constants::DEFAULT_STRATEGY_GRACE_DURATION,
+-            )),
+-            max_inflight: Some(super::constants::DEFAULT_STRATEGY_MAX_INFLIGHT),
+-            first_ttl: Some(super::constants::DEFAULT_STRATEGY_FIRST_TTL),
+-            max_ttl: Some(super::constants::DEFAULT_STRATEGY_MAX_TTL),
+-            packet_size: Some(super::constants::DEFAULT_STRATEGY_PACKET_SIZE),
+-            payload_pattern: Some(super::constants::DEFAULT_STRATEGY_PAYLOAD_PATTERN),
+-            tos: Some(super::constants::DEFAULT_STRATEGY_TOS),
+-            icmp_extensions: Some(super::constants::DEFAULT_ICMP_EXTENSIONS),
+-            read_timeout: Some(String::from(
+-                super::constants::DEFAULT_STRATEGY_READ_TIMEOUT,
++            min_round_duration: Some(
++                format_duration(defaults::DEFAULT_STRATEGY_MIN_ROUND_DURATION).to_string(),
++            ),
++            max_round_duration: Some(
++                format_duration(defaults::DEFAULT_STRATEGY_MAX_ROUND_DURATION).to_string(),
++            ),
++            initial_sequence: Some(defaults::DEFAULT_STRATEGY_INITIAL_SEQUENCE),
++            multipath_strategy: Some(MultipathStrategyConfig::from(
++                defaults::DEFAULT_STRATEGY_MULTIPATH,
+             )),
++            grace_duration: Some(
++                format_duration(defaults::DEFAULT_STRATEGY_GRACE_DURATION).to_string(),
++            ),
++            max_inflight: Some(defaults::DEFAULT_STRATEGY_MAX_INFLIGHT),
++            first_ttl: Some(defaults::DEFAULT_STRATEGY_FIRST_TTL),
++            max_ttl: Some(defaults::DEFAULT_STRATEGY_MAX_TTL),
++            packet_size: Some(defaults::DEFAULT_STRATEGY_PACKET_SIZE),
++            payload_pattern: Some(defaults::DEFAULT_STRATEGY_PAYLOAD_PATTERN),
++            tos: Some(defaults::DEFAULT_STRATEGY_TOS),
++            icmp_extensions: Some(defaults::DEFAULT_ICMP_EXTENSION_PARSE_MODE.is_enabled()),
++            read_timeout: Some(
++                format_duration(defaults::DEFAULT_STRATEGY_READ_TIMEOUT).to_string(),
++            ),
+         }
+     }
+ }
+diff --git a/src/frontend/render/header.rs b/src/frontend/render/header.rs
+index 0a4fb13..680cd98 100644
+--- a/src/frontend/render/header.rs
++++ b/src/frontend/render/header.rs
+@@ -8,7 +8,7 @@ use ratatui::widgets::{Block, BorderType, Borders, Paragraph};
+ use ratatui::Frame;
+ use std::time::Duration;
+ use trippy::dns::{ResolveMethod, Resolver};
+-use trippy::tracing::{PortDirection, TracerProtocol};
++use trippy::tracing::{PortDirection, Protocol};
+ 
+ /// Render the title, config, target, clock and keyboard controls.
+ #[allow(clippy::too_many_lines)]
+@@ -40,18 +40,18 @@ pub fn render(f: &mut Frame<'_>, app: &TuiApp, rect: Rect) {
+         .block(header_block.clone())
+         .alignment(Alignment::Right);
+     let protocol = match app.tracer_config().protocol {
+-        TracerProtocol::Icmp => format!(
++        Protocol::Icmp => format!(
+             "icmp({}, {})",
+             app.tracer_config().addr_family,
+             app.tracer_config().privilege_mode
+         ),
+-        TracerProtocol::Udp => format!(
++        Protocol::Udp => format!(
+             "udp({}, {}, {})",
+             app.tracer_config().addr_family,
+             app.tracer_config().multipath_strategy,
+             app.tracer_config().privilege_mode
+         ),
+-        TracerProtocol::Tcp => format!(
++        Protocol::Tcp => format!(
+             "tcp({}, {})",
+             app.tracer_config().addr_family,
+             app.tracer_config().privilege_mode
+diff --git a/src/main.rs b/src/main.rs
+index 4837d28..4018694 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -32,10 +32,10 @@ use tracing_chrome::{ChromeLayerBuilder, FlushGuard};
+ use tracing_subscriber::fmt::format::FmtSpan;
+ use tracing_subscriber::layer::SubscriberExt;
+ use tracing_subscriber::util::SubscriberInitExt;
+-use trippy::dns::{Config, DnsResolver, Resolver};
++use trippy::dns::{DnsResolver, Resolver};
+ use trippy::tracing::{
+-    MultipathStrategy, PortDirection, TracerAddrFamily, TracerChannelConfig, TracerConfig,
+-    TracerProtocol,
++    AddrFamily, ChannelConfig, Config, IcmpExtensionParseMode, MultipathStrategy, PortDirection,
++    Protocol,
+ };
+ use trippy::tracing::{PrivilegeMode, SourceAddr};
+ 
+@@ -71,12 +71,14 @@ fn main() -> anyhow::Result<()> {
+ /// Start the DNS resolver.
+ fn start_dns_resolver(cfg: &TrippyConfig) -> anyhow::Result<DnsResolver> {
+     Ok(match cfg.addr_family {
+-        TracerAddrFamily::Ipv4 => {
+-            DnsResolver::start(Config::new_ipv4(cfg.dns_resolve_method, cfg.dns_timeout))?
+-        }
+-        TracerAddrFamily::Ipv6 => {
+-            DnsResolver::start(Config::new_ipv6(cfg.dns_resolve_method, cfg.dns_timeout))?
+-        }
++        AddrFamily::Ipv4 => DnsResolver::start(trippy::dns::Config::new_ipv4(
++            cfg.dns_resolve_method,
++            cfg.dns_timeout,
++        ))?,
++        AddrFamily::Ipv6 => DnsResolver::start(trippy::dns::Config::new_ipv6(
++            cfg.dns_resolve_method,
++            cfg.dns_timeout,
++        ))?,
+     })
+ }
+ 
+@@ -224,8 +226,8 @@ fn make_tracer_config(
+     args: &TrippyConfig,
+     target_addr: IpAddr,
+     trace_identifier: u16,
+-) -> anyhow::Result<TracerConfig> {
+-    Ok(TracerConfig::new(
++) -> anyhow::Result<Config> {
++    Ok(Config::new(
+         target_addr,
+         args.protocol,
+         args.max_rounds,
+@@ -237,11 +239,8 @@ fn make_tracer_config(
+         args.initial_sequence,
+         args.multipath_strategy,
+         args.port_direction,
+-        args.read_timeout,
+         args.min_round_duration,
+         args.max_round_duration,
+-        args.packet_size,
+-        args.payload_pattern,
+     )?)
+ }
+ 
+@@ -250,18 +249,17 @@ fn make_channel_config(
+     args: &TrippyConfig,
+     source_addr: IpAddr,
+     target_addr: IpAddr,
+-) -> TracerChannelConfig {
+-    TracerChannelConfig::new(
++) -> ChannelConfig {
++    ChannelConfig::new(
+         args.privilege_mode,
+         args.protocol,
+-        args.addr_family,
+         source_addr,
+         target_addr,
+         args.packet_size,
+         args.payload_pattern,
+         args.multipath_strategy,
+         args.tos,
+-        args.icmp_extensions,
++        args.icmp_extension_parse_mode,
+         args.read_timeout,
+         args.min_round_duration,
+     )
+@@ -292,7 +290,7 @@ fn make_trace_info(
+         args.max_round_duration,
+         args.max_inflight,
+         args.initial_sequence,
+-        args.icmp_extensions,
++        args.icmp_extension_parse_mode,
+         args.read_timeout,
+         args.packet_size,
+         args.payload_pattern,
+@@ -339,8 +337,8 @@ pub struct TraceInfo {
+     pub privilege_mode: PrivilegeMode,
+     pub multipath_strategy: MultipathStrategy,
+     pub port_direction: PortDirection,
+-    pub protocol: TracerProtocol,
+-    pub addr_family: TracerAddrFamily,
++    pub protocol: Protocol,
++    pub addr_family: AddrFamily,
+     pub first_ttl: u8,
+     pub max_ttl: u8,
+     pub grace_duration: Duration,
+@@ -348,7 +346,7 @@ pub struct TraceInfo {
+     pub max_round_duration: Duration,
+     pub max_inflight: u8,
+     pub initial_sequence: u16,
+-    pub icmp_extensions: bool,
++    pub icmp_extensions: IcmpExtensionParseMode,
+     pub read_timeout: Duration,
+     pub packet_size: u16,
+     pub payload_pattern: u8,
+@@ -368,8 +366,8 @@ impl TraceInfo {
+         privilege_mode: PrivilegeMode,
+         multipath_strategy: MultipathStrategy,
+         port_direction: PortDirection,
+-        protocol: TracerProtocol,
+-        addr_family: TracerAddrFamily,
++        protocol: Protocol,
++        addr_family: AddrFamily,
+         first_ttl: u8,
+         max_ttl: u8,
+         grace_duration: Duration,
+@@ -377,7 +375,7 @@ impl TraceInfo {
+         max_round_duration: Duration,
+         max_inflight: u8,
+         initial_sequence: u16,
+-        icmp_extensions: bool,
++        icmp_extensions: IcmpExtensionParseMode,
+         read_timeout: Duration,
+         packet_size: u16,
+         payload_pattern: u8,
+diff --git a/src/tracing.rs b/src/tracing.rs
+index dfd6130..bfcdff2 100644
+--- a/src/tracing.rs
++++ b/src/tracing.rs
+@@ -1,3 +1,4 @@
++mod builder;
+ mod config;
+ mod constants;
+ mod error;
+@@ -9,9 +10,10 @@ mod types;
+ /// Packet wire formats.
+ pub mod packet;
+ 
++pub use builder::Builder;
+ pub use config::{
+-    MultipathStrategy, PortDirection, PrivilegeMode, TracerAddrFamily, TracerChannelConfig,
+-    TracerConfig, TracerProtocol,
++    defaults, AddrFamily, ChannelConfig, ChannelConfigBuilder, Config, ConfigBuilder,
++    IcmpExtensionParseMode, MultipathStrategy, PortDirection, PrivilegeMode, Protocol,
+ };
+ pub use net::channel::TracerChannel;
+ pub use net::source::SourceAddr;
+@@ -20,4 +22,8 @@ pub use probe::{
+     Extension, Extensions, IcmpPacketType, MplsLabelStack, MplsLabelStackMember, Probe,
+     ProbeStatus, UnknownExtension,
+ };
+-pub use tracer::{Tracer, TracerRound};
++pub use tracer::{CompletionReason, Tracer, TracerRound};
++pub use types::{
++    MaxInflight, MaxRounds, PacketSize, PayloadPattern, Port, Sequence, TimeToLive, TraceId,
++    TypeOfService,
++};
+diff --git a/src/tracing/builder.rs b/src/tracing/builder.rs
+new file mode 100644
+index 0000000..4c50461
+--- /dev/null
++++ b/src/tracing/builder.rs
+@@ -0,0 +1,327 @@
++use crate::tracing::error::TraceResult;
++use crate::tracing::{
++    ChannelConfig, Config, IcmpExtensionParseMode, MaxInflight, MaxRounds, MultipathStrategy,
++    PacketSize, PayloadPattern, PortDirection, PrivilegeMode, Protocol, Sequence, SocketImpl,
++    SourceAddr, TimeToLive, TraceId, Tracer, TracerChannel, TracerRound, TypeOfService,
++};
++use std::net::IpAddr;
++use std::time::Duration;
++
++/// Build and run a tracer.
++///
++/// This is a convenience builder to simplify the creation of execution of a
++/// tracer.
++///
++/// The builder exposes all configuration items from`trippy::tracing::Config`
++/// and `trippy::tracing::TracerChannel`.
++///
++/// # Examples:
++///
++/// ```no_run
++/// use trippy::tracing::{Builder, MultipathStrategy, Port, PortDirection, PrivilegeMode, Protocol};
++///
++/// let addr = std::net::IpAddr::from([1, 2, 3, 4]);
++/// Builder::new(addr, |round| println!("{:?}", round))
++///     .privilege_mode(PrivilegeMode::Unprivileged)
++///     .protocol(Protocol::Udp)
++///     .multipath_strategy(MultipathStrategy::Dublin)
++///     .port_direction(PortDirection::FixedBoth(Port(33000), Port(3500)))
++///     .start()
++///     .unwrap();
++/// ```
++pub struct Builder<F> {
++    target_addr: IpAddr,
++    on_round_handler: F,
++    channel_config: ChannelConfig,
++    tracer_config: Config,
++    trace_identifier: Option<TraceId>,
++    interface: Option<String>,
++}
++
++impl<F: Fn(&TracerRound<'_>)> Builder<F> {
++    /// Build a tracer builder for a given target.
++    pub fn new(target_addr: IpAddr, on_round_handler: F) -> Self {
++        Self {
++            target_addr,
++            on_round_handler,
++            channel_config: ChannelConfig::default(),
++            tracer_config: Config::default(),
++            trace_identifier: None,
++            interface: None,
++        }
++    }
++
++    /// Set the trace identifier.
++    ///
++    /// If not set then 0 will be used as the trace identifier.
++    #[must_use]
++    pub fn trace_identifier(self, trace_id: TraceId) -> Self {
++        Self {
++            trace_identifier: Some(trace_id),
++            ..self
++        }
++    }
++
++    /// Set the source interface.
++    ///
++    /// If the source interface is provided it will be used to lookup the IPv4
++    /// or IPv6 source address.
++    ///
++    /// If not provided the source address will be determined by OS based on
++    /// the target IPv4 or IPv6 address.
++    #[must_use]
++    pub fn interface(self, interface: &str) -> Self {
++        Self {
++            interface: Some(String::from(interface)),
++            ..self
++        }
++    }
++
++    /// Set the protocol.
++    #[must_use]
++    pub fn protocol(self, protocol: Protocol) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                protocol,
++                ..self.channel_config
++            },
++            tracer_config: Config {
++                protocol,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the privilege mode.
++    #[must_use]
++    pub fn privilege_mode(self, privilege_mode: PrivilegeMode) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                privilege_mode,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the multipath strategy.
++    #[must_use]
++    pub fn multipath_strategy(self, multipath_strategy: MultipathStrategy) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                multipath_strategy,
++                ..self.channel_config
++            },
++            tracer_config: Config {
++                multipath_strategy,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the packet size.
++    #[must_use]
++    pub fn packet_size(self, packet_size: PacketSize) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                packet_size,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the payload pattern.
++    #[must_use]
++    pub fn payload_pattern(self, payload_pattern: PayloadPattern) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                payload_pattern,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the type of service.
++    #[must_use]
++    pub fn tos(self, tos: TypeOfService) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                tos,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the ICMP extensions mode.
++    #[must_use]
++    pub fn icmp_extension_mode(self, icmp_extension_mode: IcmpExtensionParseMode) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                icmp_extension_mode,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the read timeout.
++    #[must_use]
++    pub fn read_timeout(self, read_timeout: Duration) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                read_timeout,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the TCP connect timeout.
++    #[must_use]
++    pub fn tcp_connect_timeout(self, tcp_connect_timeout: Duration) -> Self {
++        Self {
++            channel_config: ChannelConfig {
++                tcp_connect_timeout,
++                ..self.channel_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the maximum number of rounds.
++    #[must_use]
++    pub fn max_rounds(self, max_rounds: MaxRounds) -> Self {
++        Self {
++            tracer_config: Config {
++                max_rounds: Some(max_rounds),
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the first ttl.
++    #[must_use]
++    pub fn first_ttl(self, first_ttl: TimeToLive) -> Self {
++        Self {
++            tracer_config: Config {
++                first_ttl,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the maximum ttl.
++    #[must_use]
++    pub fn max_ttl(self, max_ttl: TimeToLive) -> Self {
++        Self {
++            tracer_config: Config {
++                max_ttl,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the grace duration.
++    #[must_use]
++    pub fn grace_duration(self, grace_duration: Duration) -> Self {
++        Self {
++            tracer_config: Config {
++                grace_duration,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the max inflight.
++    #[must_use]
++    pub fn max_inflight(self, max_inflight: MaxInflight) -> Self {
++        Self {
++            tracer_config: Config {
++                max_inflight,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the initial sequence.
++    #[must_use]
++    pub fn initial_sequence(self, initial_sequence: Sequence) -> Self {
++        Self {
++            tracer_config: Config {
++                initial_sequence,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the port direction.
++    #[must_use]
++    pub fn port_direction(self, port_direction: PortDirection) -> Self {
++        Self {
++            tracer_config: Config {
++                port_direction,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the minimum round duration.
++    #[must_use]
++    pub fn min_round_duration(self, min_round_duration: Duration) -> Self {
++        Self {
++            tracer_config: Config {
++                min_round_duration,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Set the maximum round duration.
++    #[must_use]
++    pub fn max_round_duration(self, max_round_duration: Duration) -> Self {
++        Self {
++            tracer_config: Config {
++                max_round_duration,
++                ..self.tracer_config
++            },
++            ..self
++        }
++    }
++
++    /// Start the tracer.
++    pub fn start(self) -> TraceResult<()> {
++        let trace_identifier = self.trace_identifier.unwrap_or_default();
++        let source_addr = SourceAddr::discover(
++            self.target_addr,
++            self.tracer_config.port_direction,
++            self.interface.as_deref(),
++        )?;
++        let channel_config = ChannelConfig {
++            source_addr,
++            target_addr: self.target_addr,
++            ..self.channel_config
++        };
++        let channel = TracerChannel::<SocketImpl>::connect(&channel_config)?;
++        let tracer_config = Config {
++            trace_identifier,
++            target_addr: self.target_addr,
++            ..self.tracer_config
++        };
++        let tracer = Tracer::new(&tracer_config, self.on_round_handler);
++        tracer.trace(channel)?;
++        Ok(())
++    }
++}
+diff --git a/src/tracing/config.rs b/src/tracing/config.rs
+index b25fa07..2a57a6a 100644
+--- a/src/tracing/config.rs
++++ b/src/tracing/config.rs
+@@ -5,9 +5,67 @@ use crate::tracing::types::{
+     TypeOfService,
+ };
+ use std::fmt::{Display, Formatter};
+-use std::net::IpAddr;
++use std::net::{IpAddr, Ipv4Addr};
+ use std::time::Duration;
+ 
++pub mod defaults {
++    use crate::tracing::config::IcmpExtensionParseMode;
++    use crate::tracing::{AddrFamily, MultipathStrategy, PrivilegeMode, Protocol};
++    use std::time::Duration;
++
++    /// The default value for `unprivileged`.
++    pub const DEFAULT_PRIVILEGE_MODE: PrivilegeMode = PrivilegeMode::Privileged;
++
++    /// The default value for `protocol`.
++    pub const DEFAULT_STRATEGY_PROTOCOL: Protocol = Protocol::Icmp;
++
++    /// The default value for `addr-family`.
++    pub const DEFAULT_ADDRESS_FAMILY: AddrFamily = AddrFamily::Ipv4;
++
++    /// The default value for `multipath-strategy`.
++    pub const DEFAULT_STRATEGY_MULTIPATH: MultipathStrategy = MultipathStrategy::Classic;
++
++    /// The default value for `icmp-extensions`.
++    pub const DEFAULT_ICMP_EXTENSION_PARSE_MODE: IcmpExtensionParseMode =
++        IcmpExtensionParseMode::Disabled;
++
++    /// The default value for `max-inflight`.
++    pub const DEFAULT_STRATEGY_MAX_INFLIGHT: u8 = 24;
++
++    /// The default value for `first-ttl`.
++    pub const DEFAULT_STRATEGY_FIRST_TTL: u8 = 1;
++
++    /// The default value for `max-ttl`.
++    pub const DEFAULT_STRATEGY_MAX_TTL: u8 = 64;
++
++    /// The default value for `packet-size`.
++    pub const DEFAULT_STRATEGY_PACKET_SIZE: u16 = 84;
++
++    /// The default value for `payload-pattern`.
++    pub const DEFAULT_STRATEGY_PAYLOAD_PATTERN: u8 = 0;
++
++    /// The default value for `min-round-duration`.
++    pub const DEFAULT_STRATEGY_MIN_ROUND_DURATION: Duration = Duration::from_millis(1000);
++
++    /// The default value for `max-round-duration`.
++    pub const DEFAULT_STRATEGY_MAX_ROUND_DURATION: Duration = Duration::from_millis(1000);
++
++    /// The default value for `initial-sequence`.
++    pub const DEFAULT_STRATEGY_INITIAL_SEQUENCE: u16 = 33000;
++
++    /// The default value for `tos`.
++    pub const DEFAULT_STRATEGY_TOS: u8 = 0;
++
++    /// The default value for `read-timeout`.
++    pub const DEFAULT_STRATEGY_READ_TIMEOUT: Duration = Duration::from_millis(10);
++
++    /// The default value for `grace-duration`.
++    pub const DEFAULT_STRATEGY_GRACE_DURATION: Duration = Duration::from_millis(100);
++
++    /// The default TCP connect timeout.
++    pub const DEFAULT_STRATEGY_TCP_CONNECT_TIMEOUT: Duration = Duration::from_millis(1000);
++}
++
+ /// The privilege mode.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq)]
+ pub enum PrivilegeMode {
+@@ -17,6 +75,16 @@ pub enum PrivilegeMode {
+     Unprivileged,
+ }
+ 
++impl PrivilegeMode {
++    #[must_use]
++    pub fn is_unprivileged(self) -> bool {
++        match self {
++            Self::Privileged => false,
++            Self::Unprivileged => true,
++        }
++    }
++}
++
+ impl Display for PrivilegeMode {
+     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+         match self {
+@@ -26,16 +94,44 @@ impl Display for PrivilegeMode {
+     }
+ }
+ 
++/// The ICMP extension parsing mode.
++#[derive(Debug, Copy, Clone, Eq, PartialEq)]
++pub enum IcmpExtensionParseMode {
++    /// Do not parse ICMP extensions.
++    Disabled,
++    /// Parse ICMP extensions.
++    Enabled,
++}
++
++impl IcmpExtensionParseMode {
++    #[must_use]
++    pub fn is_enabled(self) -> bool {
++        match self {
++            Self::Disabled => false,
++            Self::Enabled => true,
++        }
++    }
++}
++
++impl Display for IcmpExtensionParseMode {
++    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
++        match self {
++            Self::Disabled => write!(f, "disabled"),
++            Self::Enabled => write!(f, "enabled"),
++        }
++    }
++}
++
+ /// The address family.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq)]
+-pub enum TracerAddrFamily {
++pub enum AddrFamily {
+     /// Internet Protocol V4
+     Ipv4,
+     /// Internet Protocol V6
+     Ipv6,
+ }
+ 
+-impl Display for TracerAddrFamily {
++impl Display for AddrFamily {
+     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+         match self {
+             Self::Ipv4 => write!(f, "v4"),
+@@ -46,7 +142,7 @@ impl Display for TracerAddrFamily {
+ 
+ /// The tracing protocol.
+ #[derive(Debug, Copy, Clone, Eq, PartialEq)]
+-pub enum TracerProtocol {
++pub enum Protocol {
+     /// Internet Control Message Protocol
+     Icmp,
+     /// User Datagram Protocol
+@@ -55,7 +151,7 @@ pub enum TracerProtocol {
+     Tcp,
+ }
+ 
+-impl Display for TracerProtocol {
++impl Display for Protocol {
+     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+         match self {
+             Self::Icmp => write!(f, "icmp"),
+@@ -164,62 +260,346 @@ impl PortDirection {
+     }
+ }
+ 
++/// Build a `ChannelConfig`.
++#[derive(Debug)]
++pub struct ChannelConfigBuilder {
++    config: ChannelConfig,
++}
++
++impl ChannelConfigBuilder {
++    /// Create a new `ChannelConfigBuilder` between a source and target.
++    #[must_use]
++    pub fn new(source_addr: IpAddr, target_addr: IpAddr) -> Self {
++        Self {
++            config: ChannelConfig {
++                source_addr,
++                target_addr,
++                ..ChannelConfig::default()
++            },
++        }
++    }
++
++    /// Set the channel protocol.
++    #[must_use]
++    pub fn protocol(self, protocol: Protocol) -> Self {
++        Self {
++            config: ChannelConfig {
++                protocol,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel privilege mode.
++    #[must_use]
++    pub fn privilege_mode(self, privilege_mode: PrivilegeMode) -> Self {
++        Self {
++            config: ChannelConfig {
++                privilege_mode,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel multipath strategy.
++    #[must_use]
++    pub fn multipath_strategy(self, multipath_strategy: MultipathStrategy) -> Self {
++        Self {
++            config: ChannelConfig {
++                multipath_strategy,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel packet size.
++    #[must_use]
++    pub fn packet_size(self, packet_size: PacketSize) -> Self {
++        Self {
++            config: ChannelConfig {
++                packet_size,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel payload pattern.
++    #[must_use]
++    pub fn payload_pattern(self, payload_pattern: PayloadPattern) -> Self {
++        Self {
++            config: ChannelConfig {
++                payload_pattern,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel type of service.
++    #[must_use]
++    pub fn tos(self, tos: TypeOfService) -> Self {
++        Self {
++            config: ChannelConfig { tos, ..self.config },
++        }
++    }
++
++    /// Set the channel ICMP extensions mode.
++    #[must_use]
++    pub fn icmp_extension_mode(self, icmp_extension_mode: IcmpExtensionParseMode) -> Self {
++        Self {
++            config: ChannelConfig {
++                icmp_extension_mode,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel read timeout.
++    #[must_use]
++    pub fn read_timeout(self, read_timeout: Duration) -> Self {
++        Self {
++            config: ChannelConfig {
++                read_timeout,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the channel TCP connect timeout.
++    #[must_use]
++    pub fn tcp_connect_timeout(self, tcp_connect_timeout: Duration) -> Self {
++        Self {
++            config: ChannelConfig {
++                tcp_connect_timeout,
++                ..self.config
++            },
++        }
++    }
++
++    /// Build the `ChannelConfig` from this `ChannelConfigBuilder`.
++    #[must_use]
++    pub fn build(self) -> ChannelConfig {
++        self.config
++    }
++}
++
+ /// Tracer network channel configuration.
+-#[derive(Debug, Clone)]
+-pub struct TracerChannelConfig {
++#[derive(Debug, Clone, Eq, PartialEq)]
++pub struct ChannelConfig {
+     pub privilege_mode: PrivilegeMode,
+-    pub protocol: TracerProtocol,
+-    pub addr_family: TracerAddrFamily,
++    pub protocol: Protocol,
+     pub source_addr: IpAddr,
+     pub target_addr: IpAddr,
+     pub packet_size: PacketSize,
+     pub payload_pattern: PayloadPattern,
+     pub multipath_strategy: MultipathStrategy,
+     pub tos: TypeOfService,
+-    pub icmp_extensions: bool,
++    pub icmp_extension_mode: IcmpExtensionParseMode,
+     pub read_timeout: Duration,
+     pub tcp_connect_timeout: Duration,
+ }
+ 
+-impl TracerChannelConfig {
++impl ChannelConfig {
+     #[allow(clippy::too_many_arguments)]
+     #[must_use]
+     pub fn new(
+         privilege_mode: PrivilegeMode,
+-        protocol: TracerProtocol,
+-        addr_family: TracerAddrFamily,
++        protocol: Protocol,
+         source_addr: IpAddr,
+         target_addr: IpAddr,
+         packet_size: u16,
+         payload_pattern: u8,
+         multipath_strategy: MultipathStrategy,
+         tos: u8,
+-        icmp_extensions: bool,
++        icmp_extension_mode: IcmpExtensionParseMode,
+         read_timeout: Duration,
+         tcp_connect_timeout: Duration,
+     ) -> Self {
+         Self {
+             privilege_mode,
+             protocol,
+-            addr_family,
+             source_addr,
+             target_addr,
+             packet_size: PacketSize(packet_size),
+             payload_pattern: PayloadPattern(payload_pattern),
+             multipath_strategy,
+             tos: TypeOfService(tos),
+-            icmp_extensions,
++            icmp_extension_mode,
+             read_timeout,
+             tcp_connect_timeout,
+         }
+     }
+ }
+ 
++impl Default for ChannelConfig {
++    fn default() -> Self {
++        Self {
++            privilege_mode: defaults::DEFAULT_PRIVILEGE_MODE,
++            protocol: defaults::DEFAULT_STRATEGY_PROTOCOL,
++            source_addr: IpAddr::V4(Ipv4Addr::UNSPECIFIED),
++            target_addr: IpAddr::V4(Ipv4Addr::UNSPECIFIED),
++            packet_size: PacketSize(defaults::DEFAULT_STRATEGY_PACKET_SIZE),
++            payload_pattern: PayloadPattern(defaults::DEFAULT_STRATEGY_PAYLOAD_PATTERN),
++            multipath_strategy: defaults::DEFAULT_STRATEGY_MULTIPATH,
++            tos: TypeOfService(defaults::DEFAULT_STRATEGY_TOS),
++            icmp_extension_mode: defaults::DEFAULT_ICMP_EXTENSION_PARSE_MODE,
++            read_timeout: defaults::DEFAULT_STRATEGY_READ_TIMEOUT,
++            tcp_connect_timeout: defaults::DEFAULT_STRATEGY_TCP_CONNECT_TIMEOUT,
++        }
++    }
++}
++
++/// Build a `Config`.
++#[derive(Debug)]
++pub struct ConfigBuilder {
++    config: Config,
++}
++
++impl ConfigBuilder {
++    /// Create a new `ConfigBuilder`.
++    #[must_use]
++    pub fn new(trace_identifier: TraceId, target_addr: IpAddr) -> Self {
++        Self {
++            config: Config {
++                target_addr,
++                trace_identifier,
++                ..Config::default()
++            },
++        }
++    }
++
++    /// Set the tracer protocol.
++    #[must_use]
++    pub fn protocol(self, protocol: Protocol) -> Self {
++        Self {
++            config: Config {
++                protocol,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer maximum rounds.
++    #[must_use]
++    pub fn max_rounds(self, max_rounds: MaxRounds) -> Self {
++        Self {
++            config: Config {
++                max_rounds: Some(max_rounds),
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer first ttl.
++    #[must_use]
++    pub fn first_ttl(self, first_ttl: TimeToLive) -> Self {
++        Self {
++            config: Config {
++                first_ttl,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer max ttl.
++    #[must_use]
++    pub fn max_ttl(self, max_ttl: TimeToLive) -> Self {
++        Self {
++            config: Config {
++                max_ttl,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer grace duration.
++    #[must_use]
++    pub fn grace_duration(self, grace_duration: Duration) -> Self {
++        Self {
++            config: Config {
++                grace_duration,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer max inflight.
++    #[must_use]
++    pub fn max_inflight(self, max_inflight: MaxInflight) -> Self {
++        Self {
++            config: Config {
++                max_inflight,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer initial sequence.
++    #[must_use]
++    pub fn initial_sequence(self, initial_sequence: Sequence) -> Self {
++        Self {
++            config: Config {
++                initial_sequence,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer multipath strategy.
++    #[must_use]
++    pub fn multipath_strategy(self, multipath_strategy: MultipathStrategy) -> Self {
++        Self {
++            config: Config {
++                multipath_strategy,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer port direction.
++    #[must_use]
++    pub fn port_direction(self, port_direction: PortDirection) -> Self {
++        Self {
++            config: Config {
++                port_direction,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer minimum round duration.
++    #[must_use]
++    pub fn min_round_duration(self, min_round_duration: Duration) -> Self {
++        Self {
++            config: Config {
++                min_round_duration,
++                ..self.config
++            },
++        }
++    }
++
++    /// Set the tracer maximum round duration.
++    #[must_use]
++    pub fn max_round_duration(self, max_round_duration: Duration) -> Self {
++        Self {
++            config: Config {
++                max_round_duration,
++                ..self.config
++            },
++        }
++    }
++
++    /// Build the `Config` from this `ConfigBuilder`.
++    #[must_use]
++    pub fn build(self) -> Config {
++        self.config
++    }
++}
++
+ /// Tracing algorithm configuration.
+-#[derive(Debug, Copy, Clone)]
+-pub struct TracerConfig {
++#[derive(Debug, Copy, Clone, Eq, PartialEq)]
++pub struct Config {
+     pub target_addr: IpAddr,
+-    pub protocol: TracerProtocol,
++    pub protocol: Protocol,
+     pub trace_identifier: TraceId,
+     pub max_rounds: Option<MaxRounds>,
+     pub first_ttl: TimeToLive,
+@@ -229,18 +609,15 @@ pub struct TracerConfig {
+     pub initial_sequence: Sequence,
+     pub multipath_strategy: MultipathStrategy,
+     pub port_direction: PortDirection,
+-    pub read_timeout: Duration,
+     pub min_round_duration: Duration,
+     pub max_round_duration: Duration,
+-    pub packet_size: PacketSize,
+-    pub payload_pattern: PayloadPattern,
+ }
+ 
+-impl TracerConfig {
++impl Config {
+     #[allow(clippy::too_many_arguments)]
+     pub fn new(
+         target_addr: IpAddr,
+-        protocol: TracerProtocol,
++        protocol: Protocol,
+         max_rounds: Option<usize>,
+         trace_identifier: u16,
+         first_ttl: u8,
+@@ -250,11 +627,8 @@ impl TracerConfig {
+         initial_sequence: u16,
+         multipath_strategy: MultipathStrategy,
+         port_direction: PortDirection,
+-        read_timeout: Duration,
+         min_round_duration: Duration,
+         max_round_duration: Duration,
+-        packet_size: u16,
+-        payload_pattern: u8,
+     ) -> TraceResult<Self> {
+         if first_ttl > MAX_TTL {
+             return Err(TracerError::BadConfig(format!(
+@@ -283,11 +657,122 @@ impl TracerConfig {
+             initial_sequence: Sequence(initial_sequence),
+             multipath_strategy,
+             port_direction,
+-            read_timeout,
+             min_round_duration,
+             max_round_duration,
+-            packet_size: PacketSize(packet_size),
+-            payload_pattern: PayloadPattern(payload_pattern),
+         })
+     }
+ }
++
++impl Default for Config {
++    fn default() -> Self {
++        Self {
++            target_addr: IpAddr::V4(Ipv4Addr::UNSPECIFIED),
++            protocol: defaults::DEFAULT_STRATEGY_PROTOCOL,
++            trace_identifier: TraceId::default(),
++            max_rounds: None,
++            first_ttl: TimeToLive(defaults::DEFAULT_STRATEGY_FIRST_TTL),
++            max_ttl: TimeToLive(defaults::DEFAULT_STRATEGY_MAX_TTL),
++            grace_duration: defaults::DEFAULT_STRATEGY_GRACE_DURATION,
++            max_inflight: MaxInflight(defaults::DEFAULT_STRATEGY_MAX_INFLIGHT),
++            initial_sequence: Sequence(defaults::DEFAULT_STRATEGY_INITIAL_SEQUENCE),
++            multipath_strategy: defaults::DEFAULT_STRATEGY_MULTIPATH,
++            port_direction: PortDirection::None,
++            min_round_duration: defaults::DEFAULT_STRATEGY_MIN_ROUND_DURATION,
++            max_round_duration: defaults::DEFAULT_STRATEGY_MAX_ROUND_DURATION,
++        }
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    const SOURCE_ADDR: IpAddr = IpAddr::V4(Ipv4Addr::new(1, 1, 1, 1));
++    const TARGET_ADDR: IpAddr = IpAddr::V4(Ipv4Addr::new(2, 2, 2, 2));
++
++    #[test]
++    fn test_channel_config_builder_minimal() {
++        let cfg = ChannelConfigBuilder::new(SOURCE_ADDR, TARGET_ADDR).build();
++        assert_eq!(SOURCE_ADDR, cfg.source_addr);
++        assert_eq!(TARGET_ADDR, cfg.target_addr);
++        assert_eq!(
++            ChannelConfig {
++                source_addr: SOURCE_ADDR,
++                target_addr: TARGET_ADDR,
++                ..Default::default()
++            },
++            cfg
++        );
++    }
++
++    #[test]
++    fn test_channel_config_builder_full() {
++        let cfg = ChannelConfigBuilder::new(SOURCE_ADDR, TARGET_ADDR)
++            .protocol(Protocol::Tcp)
++            .privilege_mode(PrivilegeMode::Unprivileged)
++            .multipath_strategy(MultipathStrategy::Dublin)
++            .packet_size(PacketSize(128))
++            .payload_pattern(PayloadPattern(0xff))
++            .tos(TypeOfService(0x1a))
++            .icmp_extension_mode(IcmpExtensionParseMode::Enabled)
++            .read_timeout(Duration::from_millis(50))
++            .tcp_connect_timeout(Duration::from_millis(100))
++            .build();
++        assert_eq!(SOURCE_ADDR, cfg.source_addr);
++        assert_eq!(TARGET_ADDR, cfg.target_addr);
++        assert_eq!(Protocol::Tcp, cfg.protocol);
++        assert_eq!(PrivilegeMode::Unprivileged, cfg.privilege_mode);
++        assert_eq!(MultipathStrategy::Dublin, cfg.multipath_strategy);
++        assert_eq!(PacketSize(128), cfg.packet_size);
++        assert_eq!(PayloadPattern(0xff), cfg.payload_pattern);
++        assert_eq!(TypeOfService(0x1a), cfg.tos);
++        assert_eq!(IcmpExtensionParseMode::Enabled, cfg.icmp_extension_mode);
++        assert_eq!(Duration::from_millis(50), cfg.read_timeout);
++        assert_eq!(Duration::from_millis(100), cfg.tcp_connect_timeout);
++    }
++
++    #[test]
++    fn test_config_builder_minimal() {
++        let cfg = ConfigBuilder::new(TraceId(0), TARGET_ADDR).build();
++        assert_eq!(TraceId(0), cfg.trace_identifier);
++        assert_eq!(TARGET_ADDR, cfg.target_addr);
++        assert_eq!(
++            Config {
++                trace_identifier: TraceId(0),
++                target_addr: TARGET_ADDR,
++                ..Default::default()
++            },
++            cfg
++        );
++    }
++
++    #[test]
++    fn test_config_builder_full() {
++        let cfg = ConfigBuilder::new(TraceId(0), TARGET_ADDR)
++            .protocol(Protocol::Udp)
++            .max_rounds(MaxRounds(10))
++            .first_ttl(TimeToLive(2))
++            .max_ttl(TimeToLive(16))
++            .grace_duration(Duration::from_millis(100))
++            .max_inflight(MaxInflight(22))
++            .initial_sequence(Sequence(35000))
++            .multipath_strategy(MultipathStrategy::Paris)
++            .port_direction(PortDirection::FixedSrc(Port(33000)))
++            .min_round_duration(Duration::from_millis(500))
++            .max_round_duration(Duration::from_millis(1500))
++            .build();
++        assert_eq!(TraceId(0), cfg.trace_identifier);
++        assert_eq!(TARGET_ADDR, cfg.target_addr);
++        assert_eq!(Protocol::Udp, cfg.protocol);
++        assert_eq!(Some(MaxRounds(10)), cfg.max_rounds);
++        assert_eq!(TimeToLive(2), cfg.first_ttl);
++        assert_eq!(TimeToLive(16), cfg.max_ttl);
++        assert_eq!(Duration::from_millis(100), cfg.grace_duration);
++        assert_eq!(MaxInflight(22), cfg.max_inflight);
++        assert_eq!(Sequence(35000), cfg.initial_sequence);
++        assert_eq!(MultipathStrategy::Paris, cfg.multipath_strategy);
++        assert_eq!(PortDirection::FixedSrc(Port(33000)), cfg.port_direction);
++        assert_eq!(Duration::from_millis(500), cfg.min_round_duration);
++        assert_eq!(Duration::from_millis(1500), cfg.max_round_duration);
++    }
++}
+diff --git a/src/tracing/net/channel.rs b/src/tracing/net/channel.rs
+index d236146..ee90af2 100644
+--- a/src/tracing/net/channel.rs
++++ b/src/tracing/net/channel.rs
+@@ -1,11 +1,10 @@
++use crate::tracing::config::IcmpExtensionParseMode;
+ use crate::tracing::error::{TraceResult, TracerError};
+ use crate::tracing::net::socket::Socket;
+ use crate::tracing::net::{ipv4, ipv6, platform, Network};
+ use crate::tracing::probe::ProbeResponse;
+ use crate::tracing::types::{PacketSize, PayloadPattern, Sequence, TypeOfService};
+-use crate::tracing::{
+-    MultipathStrategy, PrivilegeMode, Probe, TracerChannelConfig, TracerProtocol,
+-};
++use crate::tracing::{ChannelConfig, MultipathStrategy, PrivilegeMode, Probe, Protocol};
+ use arrayvec::ArrayVec;
+ use std::net::IpAddr;
+ use std::time::{Duration, SystemTime};
+@@ -20,7 +19,7 @@ const MAX_TCP_PROBES: usize = 256;
+ /// A channel for sending and receiving `Probe` packets.
+ pub struct TracerChannel<S: Socket> {
+     privilege_mode: PrivilegeMode,
+-    protocol: TracerProtocol,
++    protocol: Protocol,
+     src_addr: IpAddr,
+     ipv4_length_order: platform::PlatformIpv4FieldByteOrder,
+     dest_addr: IpAddr,
+@@ -28,7 +27,7 @@ pub struct TracerChannel<S: Socket> {
+     payload_pattern: PayloadPattern,
+     multipath_strategy: MultipathStrategy,
+     tos: TypeOfService,
+-    icmp_extensions: bool,
++    icmp_extension_mode: IcmpExtensionParseMode,
+     read_timeout: Duration,
+     tcp_connect_timeout: Duration,
+     send_socket: Option<S>,
+@@ -41,7 +40,7 @@ impl<S: Socket> TracerChannel<S> {
+     ///
+     /// This operation requires the `CAP_NET_RAW` capability on Linux.
+     #[instrument(skip_all)]
+-    pub fn connect(config: &TracerChannelConfig) -> TraceResult<Self> {
++    pub fn connect(config: &ChannelConfig) -> TraceResult<Self> {
+         tracing::debug!(?config);
+         if usize::from(config.packet_size.0) > MAX_PACKET_SIZE {
+             return Err(TracerError::InvalidPacketSize(usize::from(
+@@ -53,9 +52,9 @@ impl<S: Socket> TracerChannel<S> {
+         let ipv4_length_order =
+             platform::PlatformIpv4FieldByteOrder::for_address(config.source_addr)?;
+         let send_socket = match config.protocol {
+-            TracerProtocol::Icmp => Some(make_icmp_send_socket(config.source_addr, raw)?),
+-            TracerProtocol::Udp => Some(make_udp_send_socket(config.source_addr, raw)?),
+-            TracerProtocol::Tcp => None,
++            Protocol::Icmp => Some(make_icmp_send_socket(config.source_addr, raw)?),
++            Protocol::Udp => Some(make_udp_send_socket(config.source_addr, raw)?),
++            Protocol::Tcp => None,
+         };
+         let recv_socket = make_recv_socket(config.source_addr, raw)?;
+         Ok(Self {
+@@ -68,7 +67,7 @@ impl<S: Socket> TracerChannel<S> {
+             payload_pattern: config.payload_pattern,
+             multipath_strategy: config.multipath_strategy,
+             tos: config.tos,
+-            icmp_extensions: config.icmp_extensions,
++            icmp_extension_mode: config.icmp_extension_mode,
+             read_timeout: config.read_timeout,
+             tcp_connect_timeout: config.tcp_connect_timeout,
+             send_socket,
+@@ -82,16 +81,16 @@ impl<S: Socket> Network for TracerChannel<S> {
+     #[instrument(skip(self))]
+     fn send_probe(&mut self, probe: Probe) -> TraceResult<()> {
+         match self.protocol {
+-            TracerProtocol::Icmp => self.dispatch_icmp_probe(probe),
+-            TracerProtocol::Udp => self.dispatch_udp_probe(probe),
+-            TracerProtocol::Tcp => self.dispatch_tcp_probe(probe),
++            Protocol::Icmp => self.dispatch_icmp_probe(probe),
++            Protocol::Udp => self.dispatch_udp_probe(probe),
++            Protocol::Tcp => self.dispatch_tcp_probe(probe),
+         }
+     }
+     #[instrument(skip_all)]
+     fn recv_probe(&mut self) -> TraceResult<Option<ProbeResponse>> {
+         let prob_response = match self.protocol {
+-            TracerProtocol::Icmp | TracerProtocol::Udp => self.recv_icmp_probe(),
+-            TracerProtocol::Tcp => match self.recv_tcp_sockets()? {
++            Protocol::Icmp | Protocol::Udp => self.recv_icmp_probe(),
++            Protocol::Tcp => match self.recv_tcp_sockets()? {
+                 None => self.recv_icmp_probe(),
+                 resp => Ok(resp),
+             },
+@@ -191,12 +190,12 @@ impl<S: Socket> TracerChannel<S> {
+                 IpAddr::V4(_) => ipv4::recv_icmp_probe(
+                     &mut self.recv_socket,
+                     self.protocol,
+-                    self.icmp_extensions,
++                    self.icmp_extension_mode,
+                 ),
+                 IpAddr::V6(_) => ipv6::recv_icmp_probe(
+                     &mut self.recv_socket,
+                     self.protocol,
+-                    self.icmp_extensions,
++                    self.icmp_extension_mode,
+                 ),
+             }
+         } else {
+diff --git a/src/tracing/net/ipv4.rs b/src/tracing/net/ipv4.rs
+index 767474e..a47985c 100644
+--- a/src/tracing/net/ipv4.rs
++++ b/src/tracing/net/ipv4.rs
+@@ -1,3 +1,4 @@
++use crate::tracing::config::IcmpExtensionParseMode;
+ use crate::tracing::error::{TraceResult, TracerError};
+ use crate::tracing::net::channel::MAX_PACKET_SIZE;
+ use crate::tracing::net::common::process_result;
+@@ -18,7 +19,7 @@ use crate::tracing::probe::{
+     ProbeResponseSeqTcp, ProbeResponseSeqUdp,
+ };
+ use crate::tracing::types::{PacketSize, PayloadPattern, Sequence, TraceId, TypeOfService};
+-use crate::tracing::{MultipathStrategy, PrivilegeMode, Probe, TracerProtocol};
++use crate::tracing::{MultipathStrategy, PrivilegeMode, Probe, Protocol};
+ use std::io::ErrorKind;
+ use std::net::{IpAddr, Ipv4Addr, SocketAddr};
+ use std::time::SystemTime;
+@@ -204,14 +205,14 @@ pub fn dispatch_tcp_probe<S: Socket>(
+ #[instrument(skip(recv_socket))]
+ pub fn recv_icmp_probe<S: Socket>(
+     recv_socket: &mut S,
+-    protocol: TracerProtocol,
+-    icmp_extensions: bool,
++    protocol: Protocol,
++    icmp_extension_mode: IcmpExtensionParseMode,
+ ) -> TraceResult<Option<ProbeResponse>> {
+     let mut buf = [0_u8; MAX_PACKET_SIZE];
+     match recv_socket.read(&mut buf) {
+         Ok(bytes_read) => {
+             let ipv4 = Ipv4Packet::new_view(&buf[..bytes_read])?;
+-            Ok(extract_probe_resp(protocol, icmp_extensions, &ipv4)?)
++            Ok(extract_probe_resp(protocol, icmp_extension_mode, &ipv4)?)
+         }
+         Err(err) => match err.kind() {
+             ErrorKind::WouldBlock => Ok(None),
+@@ -344,8 +345,8 @@ fn udp_payload_size(packet_size: usize) -> usize {
+ 
+ #[instrument]
+ fn extract_probe_resp(
+-    protocol: TracerProtocol,
+-    icmp_extensions: bool,
++    protocol: Protocol,
++    icmp_extension_mode: IcmpExtensionParseMode,
+     ipv4: &Ipv4Packet<'_>,
+ ) -> TraceResult<Option<ProbeResponse>> {
+     let recv = SystemTime::now();
+@@ -354,13 +355,16 @@ fn extract_probe_resp(
+     Ok(match icmp_v4.get_icmp_type() {
+         IcmpType::TimeExceeded => {
+             let packet = TimeExceededPacket::new_view(icmp_v4.packet())?;
+-            let (nested_ipv4, extension) = if icmp_extensions {
+-                let ipv4 = Ipv4Packet::new_view(packet.payload())?;
+-                let ext = packet.extension().map(Extensions::try_from).transpose()?;
+-                (ipv4, ext)
+-            } else {
+-                let ipv4 = Ipv4Packet::new_view(packet.payload_raw())?;
+-                (ipv4, None)
++            let (nested_ipv4, extension) = match icmp_extension_mode {
++                IcmpExtensionParseMode::Enabled => {
++                    let ipv4 = Ipv4Packet::new_view(packet.payload())?;
++                    let ext = packet.extension().map(Extensions::try_from).transpose()?;
++                    (ipv4, ext)
++                }
++                IcmpExtensionParseMode::Disabled => {
++                    let ipv4 = Ipv4Packet::new_view(packet.payload_raw())?;
++                    (ipv4, None)
++                }
+             };
+             extract_probe_resp_seq(&nested_ipv4, protocol)?.map(|resp_seq| {
+                 ProbeResponse::TimeExceeded(ProbeResponseData::new(recv, src, resp_seq), extension)
+@@ -369,10 +373,11 @@ fn extract_probe_resp(
+         IcmpType::DestinationUnreachable => {
+             let packet = DestinationUnreachablePacket::new_view(icmp_v4.packet())?;
+             let nested_ipv4 = Ipv4Packet::new_view(packet.payload())?;
+-            let extension = if icmp_extensions {
+-                packet.extension().map(Extensions::try_from).transpose()?
+-            } else {
+-                None
++            let extension = match icmp_extension_mode {
++                IcmpExtensionParseMode::Enabled => {
++                    packet.extension().map(Extensions::try_from).transpose()?
++                }
++                IcmpExtensionParseMode::Disabled => None,
+             };
+             extract_probe_resp_seq(&nested_ipv4, protocol)?.map(|resp_seq| {
+                 ProbeResponse::DestinationUnreachable(
+@@ -382,7 +387,7 @@ fn extract_probe_resp(
+             })
+         }
+         IcmpType::EchoReply => match protocol {
+-            TracerProtocol::Icmp => {
++            Protocol::Icmp => {
+                 let packet = EchoReplyPacket::new_view(icmp_v4.packet())?;
+                 let id = packet.get_identifier();
+                 let seq = packet.get_sequence();
+@@ -391,7 +396,7 @@ fn extract_probe_resp(
+                     recv, src, resp_seq,
+                 )))
+             }
+-            TracerProtocol::Udp | TracerProtocol::Tcp => None,
++            Protocol::Udp | Protocol::Tcp => None,
+         },
+         _ => None,
+     })
+@@ -400,10 +405,10 @@ fn extract_probe_resp(
+ #[instrument]
+ fn extract_probe_resp_seq(
+     ipv4: &Ipv4Packet<'_>,
+-    protocol: TracerProtocol,
++    protocol: Protocol,
+ ) -> TraceResult<Option<ProbeResponseSeq>> {
+     Ok(match (protocol, ipv4.get_protocol()) {
+-        (TracerProtocol::Icmp, IpProtocol::Icmp) => {
++        (Protocol::Icmp, IpProtocol::Icmp) => {
+             let echo_request = extract_echo_request(ipv4)?;
+             let identifier = echo_request.get_identifier();
+             let sequence = echo_request.get_sequence();
+@@ -411,13 +416,13 @@ fn extract_probe_resp_seq(
+                 identifier, sequence,
+             )))
+         }
+-        (TracerProtocol::Udp, IpProtocol::Udp) => {
++        (Protocol::Udp, IpProtocol::Udp) => {
+             let (src_port, dest_port, checksum, identifier) = extract_udp_packet(ipv4)?;
+             Some(ProbeResponseSeq::Udp(ProbeResponseSeqUdp::new(
+                 identifier, src_port, dest_port, checksum,
+             )))
+         }
+-        (TracerProtocol::Tcp, IpProtocol::Tcp) => {
++        (Protocol::Tcp, IpProtocol::Tcp) => {
+             let (src_port, dest_port) = extract_tcp_packet(ipv4)?;
+             Some(ProbeResponseSeq::Tcp(ProbeResponseSeqTcp::new(
+                 src_port, dest_port,
+diff --git a/src/tracing/net/ipv6.rs b/src/tracing/net/ipv6.rs
+index ed07fba..e23ade2 100644
+--- a/src/tracing/net/ipv6.rs
++++ b/src/tracing/net/ipv6.rs
+@@ -1,3 +1,4 @@
++use crate::tracing::config::IcmpExtensionParseMode;
+ use crate::tracing::error::{TraceResult, TracerError};
+ use crate::tracing::net::channel::MAX_PACKET_SIZE;
+ use crate::tracing::net::common::process_result;
+@@ -18,7 +19,7 @@ use crate::tracing::probe::{
+     ProbeResponseSeqTcp, ProbeResponseSeqUdp,
+ };
+ use crate::tracing::types::{PacketSize, PayloadPattern, Sequence, TraceId};
+-use crate::tracing::{MultipathStrategy, PrivilegeMode, Probe, TracerProtocol};
++use crate::tracing::{MultipathStrategy, PrivilegeMode, Probe, Protocol};
+ use std::io::ErrorKind;
+ use std::net::{IpAddr, Ipv6Addr, SocketAddr};
+ use std::time::SystemTime;
+@@ -173,8 +174,8 @@ pub fn dispatch_tcp_probe<S: Socket>(
+ #[instrument(skip(recv_socket))]
+ pub fn recv_icmp_probe<S: Socket>(
+     recv_socket: &mut S,
+-    protocol: TracerProtocol,
+-    icmp_extensions: bool,
++    protocol: Protocol,
++    icmp_extension_mode: IcmpExtensionParseMode,
+ ) -> TraceResult<Option<ProbeResponse>> {
+     let mut buf = [0_u8; MAX_PACKET_SIZE];
+     match recv_socket.recv_from(&mut buf) {
+@@ -186,7 +187,7 @@ pub fn recv_icmp_probe<S: Socket>(
+             };
+             Ok(extract_probe_resp(
+                 protocol,
+-                icmp_extensions,
++                icmp_extension_mode,
+                 &icmp_v6,
+                 *src_addr,
+             )?)
+@@ -294,8 +295,8 @@ fn udp_payload_size(packet_size: usize) -> usize {
+ }
+ 
+ fn extract_probe_resp(
+-    protocol: TracerProtocol,
+-    icmp_extensions: bool,
++    protocol: Protocol,
++    icmp_extension_mode: IcmpExtensionParseMode,
+     icmp_v6: &IcmpPacket<'_>,
+     src: Ipv6Addr,
+ ) -> TraceResult<Option<ProbeResponse>> {
+@@ -304,13 +305,16 @@ fn extract_probe_resp(
+     Ok(match icmp_v6.get_icmp_type() {
+         IcmpType::TimeExceeded => {
+             let packet = TimeExceededPacket::new_view(icmp_v6.packet())?;
+-            let (nested_ipv6, extension) = if icmp_extensions {
+-                let ipv6 = Ipv6Packet::new_view(packet.payload())?;
+-                let ext = packet.extension().map(Extensions::try_from).transpose()?;
+-                (ipv6, ext)
+-            } else {
+-                let ipv6 = Ipv6Packet::new_view(packet.payload_raw())?;
+-                (ipv6, None)
++            let (nested_ipv6, extension) = match icmp_extension_mode {
++                IcmpExtensionParseMode::Enabled => {
++                    let ipv6 = Ipv6Packet::new_view(packet.payload())?;
++                    let ext = packet.extension().map(Extensions::try_from).transpose()?;
++                    (ipv6, ext)
++                }
++                IcmpExtensionParseMode::Disabled => {
++                    let ipv6 = Ipv6Packet::new_view(packet.payload_raw())?;
++                    (ipv6, None)
++                }
+             };
+             extract_probe_resp_seq(&nested_ipv6, protocol)?.map(|resp_seq| {
+                 ProbeResponse::TimeExceeded(ProbeResponseData::new(recv, ip, resp_seq), extension)
+@@ -319,10 +323,11 @@ fn extract_probe_resp(
+         IcmpType::DestinationUnreachable => {
+             let packet = DestinationUnreachablePacket::new_view(icmp_v6.packet())?;
+             let nested_ipv6 = Ipv6Packet::new_view(packet.payload())?;
+-            let extension = if icmp_extensions {
+-                packet.extension().map(Extensions::try_from).transpose()?
+-            } else {
+-                None
++            let extension = match icmp_extension_mode {
++                IcmpExtensionParseMode::Enabled => {
++                    packet.extension().map(Extensions::try_from).transpose()?
++                }
++                IcmpExtensionParseMode::Disabled => None,
+             };
+             extract_probe_resp_seq(&nested_ipv6, protocol)?.map(|resp_seq| {
+                 ProbeResponse::DestinationUnreachable(
+@@ -332,7 +337,7 @@ fn extract_probe_resp(
+             })
+         }
+         IcmpType::EchoReply => match protocol {
+-            TracerProtocol::Icmp => {
++            Protocol::Icmp => {
+                 let packet = EchoReplyPacket::new_view(icmp_v6.packet())?;
+                 let id = packet.get_identifier();
+                 let seq = packet.get_sequence();
+@@ -341,7 +346,7 @@ fn extract_probe_resp(
+                     recv, ip, resp_seq,
+                 )))
+             }
+-            TracerProtocol::Udp | TracerProtocol::Tcp => None,
++            Protocol::Udp | Protocol::Tcp => None,
+         },
+         _ => None,
+     })
+@@ -349,22 +354,22 @@ fn extract_probe_resp(
+ 
+ fn extract_probe_resp_seq(
+     ipv6: &Ipv6Packet<'_>,
+-    protocol: TracerProtocol,
++    protocol: Protocol,
+ ) -> TraceResult<Option<ProbeResponseSeq>> {
+     Ok(match (protocol, ipv6.get_next_header()) {
+-        (TracerProtocol::Icmp, IpProtocol::IcmpV6) => {
++        (Protocol::Icmp, IpProtocol::IcmpV6) => {
+             let (identifier, sequence) = extract_echo_request(ipv6)?;
+             Some(ProbeResponseSeq::Icmp(ProbeResponseSeqIcmp::new(
+                 identifier, sequence,
+             )))
+         }
+-        (TracerProtocol::Udp, IpProtocol::Udp) => {
++        (Protocol::Udp, IpProtocol::Udp) => {
+             let (src_port, dest_port, checksum) = extract_udp_packet(ipv6)?;
+             Some(ProbeResponseSeq::Udp(ProbeResponseSeqUdp::new(
+                 0, src_port, dest_port, checksum,
+             )))
+         }
+-        (TracerProtocol::Tcp, IpProtocol::Tcp) => {
++        (Protocol::Tcp, IpProtocol::Tcp) => {
+             let (src_port, dest_port) = extract_tcp_packet(ipv6)?;
+             Some(ProbeResponseSeq::Tcp(ProbeResponseSeqTcp::new(
+                 src_port, dest_port,
+diff --git a/src/tracing/tracer.rs b/src/tracing/tracer.rs
+index e9e9484..4679f0f 100644
+--- a/src/tracing/tracer.rs
++++ b/src/tracing/tracer.rs
+@@ -6,8 +6,8 @@ use crate::tracing::probe::{
+     ProbeResponseSeqUdp,
+ };
+ use crate::tracing::types::{Sequence, TimeToLive, TraceId};
+-use crate::tracing::{MultipathStrategy, PortDirection, TracerProtocol};
+-use crate::tracing::{Probe, TracerConfig};
++use crate::tracing::{Config, Probe};
++use crate::tracing::{MultipathStrategy, PortDirection, Protocol};
+ use std::net::IpAddr;
+ use std::time::{Duration, SystemTime};
+ use tracing::instrument;
+@@ -35,7 +35,7 @@ impl<'a> TracerRound<'a> {
+ }
+ 
+ /// Indicates what triggered the completion of the tracing round.
+-#[derive(Debug, Copy, Clone)]
++#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+ pub enum CompletionReason {
+     /// The round ended because the target was found.
+     TargetFound,
+@@ -46,13 +46,13 @@ pub enum CompletionReason {
+ /// Trace a path to a target.
+ #[derive(Debug, Clone)]
+ pub struct Tracer<F> {
+-    config: TracerConfig,
++    config: Config,
+     publish: F,
+ }
+ 
+ impl<F: Fn(&TracerRound<'_>)> Tracer<F> {
+     #[instrument(skip_all)]
+-    pub fn new(config: &TracerConfig, publish: F) -> Self {
++    pub fn new(config: &Config, publish: F) -> Self {
+         tracing::debug!(?config);
+         Self {
+             config: *config,
+@@ -93,11 +93,11 @@ impl<F: Fn(&TracerRound<'_>)> Tracer<F> {
+         };
+         if !st.target_found() && st.ttl() <= self.config.max_ttl && can_send_ttl {
+             match self.config.protocol {
+-                TracerProtocol::Icmp => {
++                Protocol::Icmp => {
+                     network.send_probe(st.next_probe())?;
+                 }
+-                TracerProtocol::Udp => network.send_probe(st.next_probe())?,
+-                TracerProtocol::Tcp => {
++                Protocol::Udp => network.send_probe(st.next_probe())?,
++                Protocol::Tcp => {
+                     let mut probe = if st.round_has_capacity() {
+                         st.next_probe()
+                     } else {
+@@ -284,8 +284,7 @@ mod state {
+     use crate::tracing::probe::Extensions;
+     use crate::tracing::types::{MaxRounds, Port, Round, Sequence, TimeToLive, TraceId};
+     use crate::tracing::{
+-        IcmpPacketType, MultipathStrategy, PortDirection, Probe, ProbeStatus, TracerConfig,
+-        TracerProtocol,
++        Config, IcmpPacketType, MultipathStrategy, PortDirection, Probe, ProbeStatus, Protocol,
+     };
+     use std::array::from_fn;
+     use std::net::IpAddr;
+@@ -321,7 +320,7 @@ mod state {
+     #[derive(Debug)]
+     pub struct TracerState {
+         /// Tracer configuration.
+-        config: TracerConfig,
++        config: Config,
+         /// The state of all `Probe` requests and responses.
+         buffer: [Probe; BUFFER_SIZE as usize],
+         /// An increasing sequence number for every `EchoRequest`.
+@@ -348,7 +347,7 @@ mod state {
+     }
+ 
+     impl TracerState {
+-        pub fn new(config: TracerConfig) -> Self {
++        pub fn new(config: Config) -> Self {
+             Self {
+                 config,
+                 buffer: from_fn(|_| Probe::default()),
+@@ -476,9 +475,9 @@ mod state {
+         /// `PortDirection`.
+         fn probe_data(&self) -> (Port, Port, TraceId) {
+             match self.config.protocol {
+-                TracerProtocol::Icmp => self.probe_icmp_data(),
+-                TracerProtocol::Udp => self.probe_udp_data(),
+-                TracerProtocol::Tcp => self.probe_tcp_data(),
++                Protocol::Icmp => self.probe_icmp_data(),
++                Protocol::Udp => self.probe_udp_data(),
++                Protocol::Tcp => self.probe_tcp_data(),
+             }
+         }
+ 
+@@ -711,7 +710,7 @@ mod state {
+     mod tests {
+         use super::*;
+         use crate::tracing::probe::IcmpPacketType;
+-        use crate::tracing::types::{MaxInflight, PacketSize, PayloadPattern};
++        use crate::tracing::types::MaxInflight;
+         use crate::tracing::ProbeStatus;
+         use rand::Rng;
+         use std::net::{IpAddr, Ipv4Addr};
+@@ -987,10 +986,10 @@ mod state {
+             assert!(!state.in_round(Sequence(64491)));
+         }
+ 
+-        fn cfg(initial_sequence: Sequence) -> TracerConfig {
+-            TracerConfig {
++        fn cfg(initial_sequence: Sequence) -> Config {
++            Config {
+                 target_addr: IpAddr::V4(Ipv4Addr::UNSPECIFIED),
+-                protocol: TracerProtocol::Icmp,
++                protocol: Protocol::Icmp,
+                 trace_identifier: TraceId::default(),
+                 max_rounds: None,
+                 first_ttl: TimeToLive(1),
+@@ -1000,11 +999,8 @@ mod state {
+                 initial_sequence,
+                 multipath_strategy: MultipathStrategy::Classic,
+                 port_direction: PortDirection::None,
+-                read_timeout: Duration::default(),
+                 min_round_duration: Duration::default(),
+                 max_round_duration: Duration::default(),
+-                packet_size: PacketSize::default(),
+-                payload_pattern: PayloadPattern::default(),
+             }
+         }
+     }

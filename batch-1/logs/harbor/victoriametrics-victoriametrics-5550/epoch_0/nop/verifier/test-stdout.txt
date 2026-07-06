@@ -1,0 +1,16 @@
+patching file lib/promscrape/discovery/hetzner/hcloud_test.go
+patching file lib/promscrape/discovery/hetzner/robot_test.go
+# github.com/VictoriaMetrics/VictoriaMetrics/lib/promscrape/discovery/hetzner [github.com/VictoriaMetrics/VictoriaMetrics/lib/promscrape/discovery/hetzner.test]
+lib/promscrape/discovery/hetzner/hcloud_test.go:60:14: undefined: parseHcloudNetworksList
+lib/promscrape/discovery/hetzner/hcloud_test.go:64:18: undefined: HcloudNetworksList
+lib/promscrape/discovery/hetzner/hcloud_test.go:65:15: undefined: HcloudNetwork
+lib/promscrape/discovery/hetzner/hcloud_test.go:249:13: undefined: parseHcloudServerList
+lib/promscrape/discovery/hetzner/hcloud_test.go:253:17: undefined: HcloudServerList
+lib/promscrape/discovery/hetzner/hcloud_test.go:254:14: undefined: HcloudServer
+lib/promscrape/discovery/hetzner/hcloud_test.go:259:16: undefined: PublicNet
+lib/promscrape/discovery/hetzner/hcloud_test.go:260:12: undefined: IPv4
+lib/promscrape/discovery/hetzner/hcloud_test.go:263:12: undefined: IPv6
+lib/promscrape/discovery/hetzner/hcloud_test.go:267:19: undefined: PrivateNet
+lib/promscrape/discovery/hetzner/hcloud_test.go:267:19: too many errors
+FAIL	github.com/VictoriaMetrics/VictoriaMetrics/lib/promscrape/discovery/hetzner [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=1 framework=go exit_code=1

@@ -1,0 +1,52 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/ui-patterns && npx vitest run src/FilterBar/FilterBar.test.tsx src/FilterBar/hooks.test.ts src/FilterBar/utils.test.ts",
+  "test_files": [
+    "packages/ui-patterns/src/FilterBar/FilterBar.test.tsx",
+    "packages/ui-patterns/src/FilterBar/hooks.test.ts",
+    "packages/ui-patterns/src/FilterBar/utils.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar opens group popover and allows selecting a property",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar selects array option for value with keyboard",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar renders and applies custom value component inside popover",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar closes popover when clicking outside the filter bar",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar handles nested filter groups",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar hides logical operators by default",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useFilterBarState initializes with default values",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useFilterBarState resets state when resetState is called",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useOptionsCache initializes with empty cache",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useOptionsCache loads async options with debouncing",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useOptionsCache caches loaded options",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useOptionsCache handles loading errors gracefully",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/hooks.test.ts::FilterBar Hooks useOptionsCache does not load options for non-async functions",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findGroupByPath returns root group for empty path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findGroupByPath finds nested group by path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findGroupByPath returns null for invalid path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findGroupByPath returns null when path points to condition not group",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findConditionByPath finds condition at path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findConditionByPath finds nested condition",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils findConditionByPath returns null for group path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils addFilterToGroup adds filter to root group",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils addFilterToGroup adds filter to nested group",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils addGroupToGroup adds group to root",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils removeFromGroup removes condition from root group",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils removeFromGroup removes nested condition",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils updateNestedValue updates value at path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils updateNestedValue updates nested value",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils updateNestedOperator updates operator at path",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils updateNestedLogicalOperator toggles root logical operator",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils updateNestedLogicalOperator toggles nested logical operator",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils Type guards identifies custom option objects",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils Type guards identifies filter option objects",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils Type guards identifies async functions",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/utils.test.ts::FilterBar Utils Type guards identifies sync functions"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar renders with empty state",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar renders with search input",
+    "/workspace/repo/packages/ui-patterns/src/FilterBar/FilterBar.test.tsx::FilterBar handles existing filters in state"
+  ]
+}

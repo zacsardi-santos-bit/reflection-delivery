@@ -1,0 +1,15 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -f projects/pom.xml -pl batfish -am test -DskipTests=false -Dtest=CiscoNxosGrammarTest#testAggregateAddressExtraction+testAggregateAddressConversion -DfailIfNoTests=false",
+  "test_files": [
+    "projects/batfish/src/test/java/org/batfish/grammar/cisco_nxos/CiscoNxosGrammarTest.java",
+    "projects/batfish/src/test/resources/org/batfish/grammar/cisco_nxos/testconfigs/nxos-aggregate-address"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "batfish::test_1",
+    "batfish::test_2"
+  ],
+  "PASS_TO_PASS": []
+}

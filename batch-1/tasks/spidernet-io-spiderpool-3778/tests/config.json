@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "go test ./pkg/workloadendpointmanager -count=1 -v -gcflags=all=-l",
+  "test_files": [
+    "pkg/workloadendpointmanager/workloadendpoint_manager_test.go",
+    "test/doc/reclaim.md",
+    "test/e2e/common/constant.go",
+    "test/e2e/common/kruise.go",
+    "test/e2e/common/pod.go",
+    "test/e2e/common/spiderpool.go",
+    "test/e2e/common/statefulset.go",
+    "test/e2e/common/tools.go",
+    "test/e2e/reclaim/chaos_test.go",
+    "test/e2e/reclaim/reclaim_suite_test.go",
+    "test/e2e/reclaim/reclaim_test.go",
+    "test/e2e/spidermultus/spidermultus_test.go"
+  ],
+  "num_test_files": 12,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/spidernet-io/spiderpool/pkg/workloadendpointmanager::TestWorkloadEndpointManager"
+  ],
+  "PASS_TO_PASS": []
+}

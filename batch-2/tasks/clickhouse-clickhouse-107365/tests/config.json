@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -m pytest /workspace/test_sql.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/03935_with_fill_by_sorting_prefix_collation.reference",
+    "tests/queries/0_stateless/03935_with_fill_by_sorting_prefix_collation.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_sql::test_03935_with_fill_by_sorting_prefix_collation"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,424 @@
+diff --git a/site/docs/configuration/reference.md b/site/docs/configuration/reference.md
+index 2f45452f8..dcf0ec408 100644
+--- a/site/docs/configuration/reference.md
++++ b/site/docs/configuration/reference.md
+@@ -168,56 +168,57 @@ An assertion set groups multiple assertions and can define its own threshold, me
+ 
+ Set default values for command-line options. These defaults will be used unless overridden by command-line arguments.
+ 
+-| Property                 | Type               | Description                                                                                                           |
+-| ------------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
+-| **Basic Configuration**  |                    |                                                                                                                       |
+-| description              | string             | Description of what your LLM is trying to do                                                                          |
+-| config                   | string[]           | Path(s) to configuration files                                                                                        |
+-| envPath                  | string \| string[] | Path(s) to .env file(s). When multiple files are specified, later files override earlier values.                      |
+-| **Input Files**          |                    |                                                                                                                       |
+-| prompts                  | string[]           | One or more paths to [prompt files](/docs/configuration/prompts)                                                      |
+-| providers                | string[]           | One or more [LLM provider](/docs/providers) identifiers                                                               |
+-| tests                    | string             | Path to CSV file with [test cases](/docs/configuration/test-cases)                                                    |
+-| vars                     | string             | Path to CSV file with test variables                                                                                  |
+-| assertions               | string             | Path to [assertions](/docs/configuration/expected-outputs) file                                                       |
+-| modelOutputs             | string             | Path to JSON file containing model outputs                                                                            |
+-| **Prompt Modifications** |                    |                                                                                                                       |
+-| promptPrefix             | string             | Text to prepend to every prompt                                                                                       |
+-| promptSuffix             | string             | Text to append to every prompt                                                                                        |
+-| generateSuggestions      | boolean            | Generate new prompts and append them to the prompt list                                                               |
+-| **Test Execution**       |                    |                                                                                                                       |
+-| maxConcurrency           | number             | Maximum number of concurrent requests                                                                                 |
+-| repeat                   | number             | Number of times to run each test case                                                                                 |
+-| delay                    | number             | Delay between API calls in milliseconds                                                                               |
+-| grader                   | string             | [Provider](/docs/providers) that will grade [model-graded](/docs/configuration/expected-outputs/model-graded) outputs |
+-| var                      | object             | Set test variables as key-value pairs (e.g. `{key1: 'value1', key2: 'value2'}`)                                       |
+-| **Filtering**            |                    |                                                                                                                       |
+-| filterPattern            | string             | Only run tests whose description matches the regular expression pattern                                               |
+-| filterPrompts            | string             | Only run tests with prompts whose `id` or `label` matches this regex                                                  |
+-| filterProviders          | string             | Only run tests with providers matching this regex (matches against provider `id` or `label`)                          |
+-| filterTargets            | string             | Only run tests with targets matching this regex (alias for filterProviders)                                           |
+-| filterFirstN             | number             | Only run the first N test cases                                                                                       |
+-| filterRange              | string             | Run test cases in a zero-based `start:end` range. The end index is exclusive                                          |
+-| filterSample             | number             | Run a random sample of N test cases                                                                                   |
+-| filterMetadata           | string \| string[] | Only run tests matching metadata filters in `key=value` format. Multiple filters are combined with AND logic.         |
+-| filterErrorsOnly         | string             | Only run tests that resulted in errors from a previous output path or eval ID                                         |
+-| filterFailing            | string             | Only run non-passing tests (assertion failures and errors) from a previous output path or eval ID                     |
+-| filterFailingOnly        | string             | Only run assertion failures from a previous output path or eval ID, excluding errors                                  |
+-| **Output & Display**     |                    |                                                                                                                       |
+-| output                   | string[]           | [Output file](/docs/configuration/outputs) paths (csv, txt, json, yaml, yml, html)                                    |
+-| table                    | boolean            | Show output table (default: true, disable with --no-table)                                                            |
+-| tableCellMaxLength       | number             | Maximum length of table cells in console output                                                                       |
+-| progressBar              | boolean            | Whether to display progress bar during evaluation                                                                     |
+-| verbose                  | boolean            | Enable verbose output                                                                                                 |
+-| share                    | boolean            | Whether to create a shareable URL                                                                                     |
+-| noShare                  | boolean            | Disable sharing, overriding config-based sharing                                                                      |
+-| **Caching & Storage**    |                    |                                                                                                                       |
+-| cache                    | boolean            | Whether to use disk [cache](/docs/configuration/caching) for results (default: true)                                  |
+-| write                    | boolean            | Whether to write results to promptfoo directory (default: true)                                                       |
+-| **Other Options**        |                    |                                                                                                                       |
+-| watch                    | boolean            | Whether to watch for config changes and re-run automatically                                                          |
+-| retryErrors              | boolean            | Retry all ERROR results from the latest eval                                                                          |
+-| extension                | string[]           | Extension hooks to load from the CLI (same format as top-level `extensions`)                                          |
++| Property                 | Type               | Description                                                                                                                                                                                         |
++| ------------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
++| **Basic Configuration**  |                    |                                                                                                                                                                                                     |
++| description              | string             | Description of what your LLM is trying to do                                                                                                                                                        |
++| config                   | string[]           | Path(s) to configuration files                                                                                                                                                                      |
++| envPath                  | string \| string[] | Path(s) to .env file(s). When multiple files are specified, later files override earlier values.                                                                                                    |
++| **Input Files**          |                    |                                                                                                                                                                                                     |
++| prompts                  | string[]           | One or more paths to [prompt files](/docs/configuration/prompts)                                                                                                                                    |
++| providers                | string[]           | One or more [LLM provider](/docs/providers) identifiers                                                                                                                                             |
++| tests                    | string             | Path to CSV file with [test cases](/docs/configuration/test-cases)                                                                                                                                  |
++| vars                     | string             | Path to CSV file with test variables                                                                                                                                                                |
++| assertions               | string             | Path to [assertions](/docs/configuration/expected-outputs) file                                                                                                                                     |
++| modelOutputs             | string             | Path to JSON file containing model outputs                                                                                                                                                          |
++| **Prompt Modifications** |                    |                                                                                                                                                                                                     |
++| promptPrefix             | string             | Text to prepend to every prompt                                                                                                                                                                     |
++| promptSuffix             | string             | Text to append to every prompt                                                                                                                                                                      |
++| generateSuggestions      | boolean            | Generate new prompts and append them to the prompt list                                                                                                                                             |
++| suggestionsCount         | integer            | Number of prompt variations to generate when `generateSuggestions` is enabled (default `1`, max `50`). May also be set under `evaluateOptions`; the CLI flag `--suggest-prompts <n>` is equivalent. |
++| **Test Execution**       |                    |                                                                                                                                                                                                     |
++| maxConcurrency           | number             | Maximum number of concurrent requests                                                                                                                                                               |
++| repeat                   | number             | Number of times to run each test case                                                                                                                                                               |
++| delay                    | number             | Delay between API calls in milliseconds                                                                                                                                                             |
++| grader                   | string             | [Provider](/docs/providers) that will grade [model-graded](/docs/configuration/expected-outputs/model-graded) outputs                                                                               |
++| var                      | object             | Set test variables as key-value pairs (e.g. `{key1: 'value1', key2: 'value2'}`)                                                                                                                     |
++| **Filtering**            |                    |                                                                                                                                                                                                     |
++| filterPattern            | string             | Only run tests whose description matches the regular expression pattern                                                                                                                             |
++| filterPrompts            | string             | Only run tests with prompts whose `id` or `label` matches this regex                                                                                                                                |
++| filterProviders          | string             | Only run tests with providers matching this regex (matches against provider `id` or `label`)                                                                                                        |
++| filterTargets            | string             | Only run tests with targets matching this regex (alias for filterProviders)                                                                                                                         |
++| filterFirstN             | number             | Only run the first N test cases                                                                                                                                                                     |
++| filterRange              | string             | Run test cases in a zero-based `start:end` range. The end index is exclusive                                                                                                                        |
++| filterSample             | number             | Run a random sample of N test cases                                                                                                                                                                 |
++| filterMetadata           | string \| string[] | Only run tests matching metadata filters in `key=value` format. Multiple filters are combined with AND logic.                                                                                       |
++| filterErrorsOnly         | string             | Only run tests that resulted in errors from a previous output path or eval ID                                                                                                                       |
++| filterFailing            | string             | Only run non-passing tests (assertion failures and errors) from a previous output path or eval ID                                                                                                   |
++| filterFailingOnly        | string             | Only run assertion failures from a previous output path or eval ID, excluding errors                                                                                                                |
++| **Output & Display**     |                    |                                                                                                                                                                                                     |
++| output                   | string[]           | [Output file](/docs/configuration/outputs) paths (csv, txt, json, yaml, yml, html)                                                                                                                  |
++| table                    | boolean            | Show output table (default: true, disable with --no-table)                                                                                                                                          |
++| tableCellMaxLength       | number             | Maximum length of table cells in console output                                                                                                                                                     |
++| progressBar              | boolean            | Whether to display progress bar during evaluation                                                                                                                                                   |
++| verbose                  | boolean            | Enable verbose output                                                                                                                                                                               |
++| share                    | boolean            | Whether to create a shareable URL                                                                                                                                                                   |
++| noShare                  | boolean            | Disable sharing, overriding config-based sharing                                                                                                                                                    |
++| **Caching & Storage**    |                    |                                                                                                                                                                                                     |
++| cache                    | boolean            | Whether to use disk [cache](/docs/configuration/caching) for results (default: true)                                                                                                                |
++| write                    | boolean            | Whether to write results to promptfoo directory (default: true)                                                                                                                                     |
++| **Other Options**        |                    |                                                                                                                                                                                                     |
++| watch                    | boolean            | Whether to watch for config changes and re-run automatically                                                                                                                                        |
++| retryErrors              | boolean            | Retry all ERROR results from the latest eval                                                                                                                                                        |
++| extension                | string[]           | Extension hooks to load from the CLI (same format as top-level `extensions`)                                                                                                                        |
+ 
+ #### Example
+ 
+@@ -1119,6 +1120,7 @@ interface EvaluateOptions {
+   delay?: number;
+   eventSource?: string;
+   generateSuggestions?: boolean;
++  suggestionsCount?: number;
+   /** Deprecated: use maxConcurrency: 1 or -j 1 instead. */
+   interactiveProviders?: boolean;
+   maxConcurrency?: number;
+diff --git a/site/static/config-schema.json b/site/static/config-schema.json
+index c92e09d20..5245180ce 100644
+--- a/site/static/config-schema.json
++++ b/site/static/config-schema.json
+@@ -3096,6 +3096,11 @@
+         "generateSuggestions": {
+           "type": "boolean"
+         },
++        "suggestionsCount": {
++          "type": "integer",
++          "exclusiveMinimum": 0,
++          "maximum": 50
++        },
+         "interactiveProviders": {
+           "type": "boolean"
+         },
+@@ -3282,6 +3287,11 @@
+         "generateSuggestions": {
+           "type": "boolean"
+         },
++        "suggestionsCount": {
++          "type": "integer",
++          "exclusiveMinimum": 0,
++          "maximum": 50
++        },
+         "promptPrefix": {
+           "type": "string"
+         },
+diff --git a/src/commands/eval.ts b/src/commands/eval.ts
+index 05c15f05f..3219daf9f 100644
+--- a/src/commands/eval.ts
++++ b/src/commands/eval.ts
+@@ -27,7 +27,12 @@ import { createShareableUrl, isSharingEnabled } from '../share';
+ import { generateTable } from '../table';
+ import telemetry from '../telemetry';
+ import { EMAIL_OK_STATUS } from '../types/email';
+-import { CommandLineOptionsSchema, OutputFileExtension, TestSuiteSchema } from '../types/index';
++import {
++  CommandLineOptionsSchema,
++  MAX_SUGGESTIONS_COUNT,
++  OutputFileExtension,
++  TestSuiteSchema,
++} from '../types/index';
+ import { isApiProvider } from '../types/providers';
+ import { checkCloudPermissions, getEvalConfigFromCloud, getOrgContext } from '../util/cloud';
+ import { clearConfigCache, loadDefaultConfig } from '../util/config/default';
+@@ -69,6 +74,8 @@ const EvalCommandSchema = CommandLineOptionsSchema.extend({
+   remote: z.boolean().optional(),
+   noShare: z.boolean().optional(),
+   retryErrors: z.boolean().optional(),
++  // CLI alias preserved for the existing --suggest-prompts <n> flag; canonical key is suggestionsCount.
++  suggestPrompts: z.coerce.number().int().positive().max(MAX_SUGGESTIONS_COUNT).optional(),
+   extension: z.array(z.string()).optional(),
+   // Allow --resume or --resume <id>
+   resume: z.union([z.string(), z.boolean()]).optional(),
+@@ -76,6 +83,40 @@ const EvalCommandSchema = CommandLineOptionsSchema.extend({
+ 
+ type EvalCommandOptions = z.infer<typeof EvalCommandSchema>;
+ 
++function resolveSuggestionOptions(
++  cmdObj: Partial<CommandLineOptions & Command>,
++  commandLineOptions: Record<string, any> | undefined,
++  evaluateOptions: EvaluateOptions,
++): Pick<EvaluateOptions, 'generateSuggestions' | 'suggestionsCount'> {
++  const { suggestPrompts } = cmdObj as EvalCommandOptions;
++
++  // --suggest-prompts is itself an enable signal — passing a count opts in even
++  // if some other source explicitly set generateSuggestions=false.
++  if (suggestPrompts !== undefined) {
++    return { generateSuggestions: true, suggestionsCount: suggestPrompts };
++  }
++
++  const explicitGenerate =
++    cmdObj.generateSuggestions ??
++    commandLineOptions?.generateSuggestions ??
++    evaluateOptions.generateSuggestions;
++
++  if (explicitGenerate !== true) {
++    // Return explicit false so Object.assign clears any truthy default already on options.
++    return explicitGenerate === false ? { generateSuggestions: false } : {};
++  }
++
++  // Read cmdObj.suggestionsCount too: doEval is exported and non-Commander
++  // callers may pass the canonical key directly instead of the suggestPrompts CLI alias.
++  const suggestionsCount =
++    cmdObj.suggestionsCount ??
++    commandLineOptions?.suggestionsCount ??
++    evaluateOptions.suggestionsCount;
++  return suggestionsCount === undefined
++    ? { generateSuggestions: true }
++    : { generateSuggestions: true, suggestionsCount };
++}
++
+ export function showRedteamProviderLabelMissingWarning(testSuite: TestSuite) {
+   const hasProviderWithoutLabel = testSuite.providers.some((p) => !p.label);
+   if (hasProviderWithoutLabel) {
+@@ -536,8 +577,8 @@ export async function doEval(
+       testSuite.defaultTest = testSuite.defaultTest || {};
+       testSuite.defaultTest.vars = { ...testSuite.defaultTest.vars, ...cmdObj.var };
+     }
+-    if (!resumeEval && (cmdObj.generateSuggestions ?? commandLineOptions?.generateSuggestions)) {
+-      options.generateSuggestions = true;
++    if (!resumeEval) {
++      Object.assign(options, resolveSuggestionOptions(cmdObj, commandLineOptions, options));
+     }
+     // load scenarios or tests from an external file
+     if (testSuite.scenarios) {
+@@ -999,6 +1040,7 @@ export function evalCommand(
+   const evaluateOptions: EvaluateOptions = {};
+   if (defaultConfig.evaluateOptions) {
+     evaluateOptions.generateSuggestions = defaultConfig.evaluateOptions.generateSuggestions;
++    evaluateOptions.suggestionsCount = defaultConfig.evaluateOptions.suggestionsCount;
+     evaluateOptions.maxConcurrency = defaultConfig.evaluateOptions.maxConcurrency;
+     evaluateOptions.showProgressBar = defaultConfig.evaluateOptions.showProgressBar;
+   }
+@@ -1138,7 +1180,7 @@ export function evalCommand(
+     )
+     .option(
+       '--suggest-prompts <number>',
+-      'Generate N new prompts and append them to the prompt list',
++      `Generate N new prompts (1-${MAX_SUGGESTIONS_COUNT}) and append them to the prompt list`,
+     )
+     .option('-w, --watch', 'Watch for changes in config and re-run')
+     .option(
+diff --git a/src/evaluator.ts b/src/evaluator.ts
+index 3e0382c85..4d2238b2e 100644
+--- a/src/evaluator.ts
++++ b/src/evaluator.ts
+@@ -56,6 +56,7 @@ import {
+   type EvaluateResult,
+   type EvaluateStats,
+   type GradingResult,
++  MAX_SUGGESTIONS_COUNT,
+   type Prompt,
+   type ProviderResponse,
+   ResultFailureReason,
+@@ -1790,11 +1791,30 @@ async function maybeAddGeneratedPrompts(testSuite: TestSuite, options: EvaluateO
+     return true;
+   }
+ 
++  // Library callers bypass CLI/config schema validation, so re-clamp here.
++  const rawCount = options.suggestionsCount ?? 1;
++  let requestedCount = Number.isInteger(rawCount) && rawCount >= 1 ? rawCount : 1;
++  if (requestedCount > MAX_SUGGESTIONS_COUNT) {
++    logger.warn(
++      `suggestionsCount=${rawCount} exceeds max of ${MAX_SUGGESTIONS_COUNT}; clamping to ${MAX_SUGGESTIONS_COUNT}.`,
++    );
++    requestedCount = MAX_SUGGESTIONS_COUNT;
++  }
+   logger.info(`Generating prompt variations...`);
+-  const { prompts: newPrompts, error } = await generatePrompts(testSuite.prompts[0].raw, 1);
++  const { prompts: newPrompts, error } = await generatePrompts(
++    testSuite.prompts[0].raw,
++    requestedCount,
++  );
+   if (error || !newPrompts) {
+     throw new Error(`Failed to generate prompts: ${error}`);
+   }
++  if (newPrompts.length < requestedCount) {
++    logger.warn(
++      chalk.yellow(
++        `Only ${newPrompts.length} of ${requestedCount} requested prompt variants were generated. See warnings above for details.`,
++      ),
++    );
++  }
+ 
+   logger.info(chalk.blue('Generated prompts:'));
+   let numAdded = 0;
+diff --git a/src/suggestions.ts b/src/suggestions.ts
+index ef0589b34..0b736d9f5 100644
+--- a/src/suggestions.ts
++++ b/src/suggestions.ts
+@@ -1,6 +1,13 @@
++import async from 'async';
++import logger from './logger';
+ import { SUGGEST_PROMPTS_SYSTEM_MESSAGE } from './prompts/index';
+ import { getDefaultProviders } from './providers/defaults';
+-import { normalizeTokenUsage } from './util/tokenUsageUtils';
++import { MAX_SUGGESTIONS_COUNT } from './types/index';
++import {
++  accumulateTokenUsage,
++  createEmptyTokenUsage,
++  normalizeTokenUsage,
++} from './util/tokenUsageUtils';
+ 
+ import type { TokenUsage } from './types/index';
+ 
+@@ -10,41 +17,56 @@ interface GeneratePromptsOutput {
+   tokensUsed: TokenUsage;
+ }
+ 
+-export async function generatePrompts(
+-  prompt: string,
+-  _num: number,
+-): Promise<GeneratePromptsOutput> {
+-  const provider = (await getDefaultProviders()).suggestionsProvider;
++const SUGGESTIONS_CONCURRENCY = 4;
+ 
+-  const resp = await provider.callApi(
+-    JSON.stringify([
+-      SUGGEST_PROMPTS_SYSTEM_MESSAGE,
+-      {
+-        role: 'user',
+-        content: 'Generate a variant for the following prompt:',
+-      },
+-      {
+-        role: 'user',
+-        content: prompt,
+-      },
+-    ]),
+-  );
+-  if (resp.error || !resp.output) {
++export async function generatePrompts(prompt: string, num: number): Promise<GeneratePromptsOutput> {
++  if (!Number.isInteger(num) || num < 1 || num > MAX_SUGGESTIONS_COUNT) {
+     return {
+-      error: resp.error || 'Unknown error',
+-      tokensUsed: normalizeTokenUsage(resp.tokenUsage),
++      error: `generatePrompts: num must be an integer between 1 and ${MAX_SUGGESTIONS_COUNT} (got ${num})`,
++      tokensUsed: createEmptyTokenUsage(),
+     };
+   }
++  const provider = (await getDefaultProviders()).suggestionsProvider;
++  const payload = JSON.stringify([
++    SUGGEST_PROMPTS_SYSTEM_MESSAGE,
++    { role: 'user', content: 'Generate a variant for the following prompt:' },
++    { role: 'user', content: prompt },
++  ]);
+ 
+-  try {
+-    return {
+-      prompts: [String(resp.output)],
+-      tokensUsed: normalizeTokenUsage(resp.tokenUsage),
+-    };
+-  } catch {
+-    return {
+-      error: `Output is not valid JSON: ${resp.output}`,
+-      tokensUsed: normalizeTokenUsage(resp.tokenUsage),
+-    };
++  const indices = Array.from({ length: num }, (_, i) => i);
++  const responses = await async.mapLimit(indices, SUGGESTIONS_CONCURRENCY, async (i: number) => {
++    try {
++      return { i, resp: await provider.callApi(payload) };
++    } catch (err) {
++      // Convert thrown errors into the same {error} shape as a returned failure
++      // so a single rejection doesn't discard already-generated variants.
++      return { i, resp: { error: err instanceof Error ? err.message : String(err) } };
++    }
++  });
++
++  const tokensUsed = createEmptyTokenUsage();
++  const prompts: string[] = [];
++  const errors: string[] = [];
++
++  for (const { i, resp } of responses) {
++    accumulateTokenUsage(tokensUsed, normalizeTokenUsage(resp.tokenUsage));
++    if (resp.error || !resp.output) {
++      const message = resp.error || 'Unknown error';
++      errors.push(`Variant ${i + 1}: ${message}`);
++      logger.warn(`[suggestions] Variant ${i + 1}/${num} failed: ${message}`);
++      continue;
++    }
++    prompts.push(String(resp.output));
++  }
++
++  if (prompts.length === 0) {
++    const error = errors.length > 0 ? errors.join('; ') : 'No prompts generated';
++    return { error, tokensUsed };
++  }
++  if (errors.length > 0) {
++    logger.warn(
++      `[suggestions] Generated ${prompts.length}/${num} prompt variants; ${errors.length} failed.`,
++    );
+   }
++  return { prompts, tokensUsed };
+ }
+diff --git a/src/types/index.ts b/src/types/index.ts
+index 5fc7f6939..e984379fc 100644
+--- a/src/types/index.ts
++++ b/src/types/index.ts
+@@ -86,6 +86,8 @@ const FilterRangeSchema = z
+   })
+   .optional();
+ 
++export const MAX_SUGGESTIONS_COUNT = 50;
++
+ export const CommandLineOptionsSchema = z.object({
+   // Shared with TestSuite
+   description: z.string().optional(),
+@@ -128,6 +130,7 @@ export const CommandLineOptionsSchema = z.object({
+   var: z.record(z.string(), z.string()).optional(),
+ 
+   generateSuggestions: z.boolean().optional(),
++  suggestionsCount: z.coerce.number().int().positive().max(MAX_SUGGESTIONS_COUNT).optional(),
+   promptPrefix: z.string().optional(),
+   promptSuffix: z.string().optional(),
+   retryErrors: z.boolean().optional(),
+@@ -254,6 +257,7 @@ export const EvaluateOptionsSchema = z.object({
+   delay: z.number().optional(),
+   eventSource: z.string().optional(),
+   generateSuggestions: z.boolean().optional(),
++  suggestionsCount: z.coerce.number().int().positive().max(MAX_SUGGESTIONS_COUNT).optional(),
+   /**
+    * @deprecated This option has been removed as of 2024-08-21.
+    * @description Use `maxConcurrency: 1` or the CLI option `-j 1` instead to run evaluations serially.

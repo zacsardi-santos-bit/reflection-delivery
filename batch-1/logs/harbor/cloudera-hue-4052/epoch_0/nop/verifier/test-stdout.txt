@@ -1,0 +1,952 @@
+patching file desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx
+patching file desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx
+FAIL desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module './PaginatedTable' from 'desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx'
+
+    However, Jest was able to find:
+    	'./PaginatedTable.test.tsx'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'].
+
+    See https://jestjs.io/docs/configuration#modulefileextensions-arraystring
+
+      17 | import React from 'react';
+      18 | import { render, fireEvent } from '@testing-library/react';
+    > 19 | import Table from './PaginatedTable';
+         | ^
+      20 | import { ColumnProps } from 'antd/lib/table';
+      21 | import '@testing-library/jest-dom';
+      22 |
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx:19:1)
+
+FAIL desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx (10.602 s)
+  Metrics
+    ✕ should filter metrics based on name column value (1068 ms)
+    ✕ should select a specific metric from the dropdown filters the data using click events (1017 ms)
+    ✕ should ensure metrics starting with auth, multiprocessing and python.gc are not displayed (1015 ms)
+
+  ● Metrics › should filter metrics based on name column value
+
+    Unable to find an element with the text: Number of Queries. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"cuix antd metrics-component"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"ant-spin-container"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"admin-header"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow"[39m
+                  [33mdata-testid[39m=[32m"admin-header--select"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-select-selector"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"ant-select-selection-search"[39m
+                    [36m>[39m
+                      [36m<input[39m
+                        [33maria-activedescendant[39m=[32m"rc_select_TEST_OR_SSR_list_0"[39m
+                        [33maria-autocomplete[39m=[32m"list"[39m
+                        [33maria-controls[39m=[32m"rc_select_TEST_OR_SSR_list"[39m
+                        [33maria-haspopup[39m=[32m"listbox"[39m
+                        [33maria-owns[39m=[32m"rc_select_TEST_OR_SSR_list"[39m
+                        [33mautocomplete[39m=[32m"off"[39m
+                        [33mclass[39m=[32m"ant-select-selection-search-input"[39m
+                        [33mid[39m=[32m"rc_select_TEST_OR_SSR"[39m
+                        [33mreadonly[39m=[32m""[39m
+                        [33mrole[39m=[32m"combobox"[39m
+                        [33mstyle[39m=[32m"opacity: 0;"[39m
+                        [33mtype[39m=[32m"search"[39m
+                        [33munselectable[39m=[32m"on"[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"ant-select-selection-item"[39m
+                      [33mtitle[39m=[32m"All"[39m
+                    [36m>[39m
+                      [0mAll[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"ant-select-arrow"[39m
+                    [33mstyle[39m=[32m"user-select: none;"[39m
+                    [33munselectable[39m=[32m"on"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mclass[39m=[32m"cdp-icon-dropdown"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"1em"[39m
+                      [33mstyle[39m=[32m"font-size: 16px;"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"1em"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33mclip-rule[39m=[32m"evenodd"[39m
+                        [33md[39m=[32m"M6 9l6 6 6-6H6z"[39m
+                        [33mfill[39m=[32m"currentColor"[39m
+                        [33mfill-rule[39m=[32m"evenodd"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ant-input-affix-wrapper admin-header__input-filter"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"ant-input-prefix"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33maria-label[39m=[32m"search"[39m
+                      [33mclass[39m=[32m"anticon anticon-search"[39m
+                      [33mrole[39m=[32m"img"[39m
+                    [36m>[39m
+                      [36m<svg[39m
+                        [33maria-hidden[39m=[32m"true"[39m
+                        [33mdata-icon[39m=[32m"search"[39m
+                        [33mfill[39m=[32m"currentColor"[39m
+                        [33mfocusable[39m=[32m"false"[39m
+                        [33mheight[39m=[32m"1em"[39m
+                        [33mviewBox[39m=[32m"64 64 896 896"[39m
+                        [33mwidth[39m=[32m"1em"[39m
+                      [36m>[39m
+                        [36m<path[39m
+                          [33md[39m=[32m"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"[39m
+                        [36m/>[39m
+                      [36m</svg>[39m
+                    [36m</span>[39m
+                  [36m</span>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"ant-input"[39m
+                    [33mplaceholder[39m=[32m"Filter metrics..."[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"value"[39m
+                  [36m/>[39m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0mqueries.number[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mName[0m
+                                  [36m</th>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mValue[0m
+                                  [36m</th>[39m
+                                [36m</tr>[39m
+                              [36m</thead>[39m
+                              [36m<tbody[39m
+                                [33mclass[39m=[32m"ant-table-tbody"[39m
+                              [36m>[39m
+                                [36m<tr[39m
+                                  [33mclass[39m=[32m"ant-table-row ant-table-row-level-0"[39m
+                                  [33mdata-row-key[39m=[32m"value"[39m
+                                [36m>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mvalue[0m
+                                  [36m</td>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0m10[0m
+                                  [36m</td>[39m
+                                [36m</tr>[39m
+                              [36m</tbody>[39m
+                            [36m</table>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0mthreads.daemon[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mName[0m
+                                  [36m</th>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mValue[0m
+                                  [36m</th>[39m
+                                [36m</tr>[39m
+                              [36m</thead>[39m
+                              [36m<tbody[39m
+                                [33mclass[39m=[32m"ant-table-tbody"[39m
+                              [36m>[39m
+                                [36m<tr[39m
+                                  [33mclass[39m=[32m"ant-table-row ant-table-row-level-0"[39m
+                                  [33mdata-row-key[39m=[32m"value"[39m
+                                [36m>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mvalue[0m
+                                  [36m</td>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0m3[0m
+                                  [36m</td>[39m
+                                [36m</tr>[39m
+                              [36m</tbody>[39m
+                            [36m</table>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0mthreads.total[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mName[0m
+                                  [36m</th>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mValue[0m
+                                  [36m</th>[39m
+                                [36m</tr>[39m
+                              [36m</thead>[39m
+                              [36m<tbody[39m
+                                [33mclass[39m=[32m"ant-table-tbody"[39m
+                              [36m>[39m
+                                [36m<tr[39m
+                                  [33mclass[39m=[32m"ant-table-row ant-table-row-level-0"[39m
+                                  [33mdata-row-key[39m=[32m"value"[39m
+                                [36m>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mvalue[0m
+                                  [36m</td>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0m6[0m
+                                  [36m</td>[39m
+                                [36m</tr>[39m
+                              [36m</tbody>[39m
+                            [36m</table>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0musers[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mName[0m
+                                  [36m</th>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mValue[0m
+                                  [36m</th>[39m
+                                [36m</tr>[39m
+                              [36m</thead>[39m
+                              [36m<tbody[39m
+                                [33mclass[39m=[32m"ant-table-tbody"[39m
+                              [36m>[39m
+                                [36m<tr[39m
+                                  [33mclass[39m=[32m"ant-table-row ant-table-row-level-0"[39m
+                                  [33mdata-row-key[39m=[32m"value"[39m
+                                [36m>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mvalue[0m
+                                  [36m</td>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0m50[0m
+                                  [36m</td>[39m
+                                [36m</tr>[39m
+                              [36m</tbody>[39m
+                            [36m</table>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0musers.active[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mName[0m
+                                  [36m</th>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mValue[0m
+                                  [36m</th>[39m
+                                [36m</tr>[39m
+                              [36m</thead>[39m
+                              [36m<tbody[39m
+                                [33mclass[39m=[32m"ant-table-tbody"[39m
+                              [36m>[39m
+                                [36m<tr[39m
+                                  [33mclass[39m=[32m"ant-table-row ant-table-row-level-0"[39m
+                                  [33mdata-row-key[39m=[32m"value"[39m
+                                [36m>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mvalue[0m
+                                  [36m</td>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0m30[0m
+                                  [36m</td>[39m
+                                [36m</tr>[39m
+                              [36m</tbody>[39m
+                            [36m</table>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0musers.active.total[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mName[0m
+                                  [36m</th>[39m
+                                  [36m<th[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mValue[0m
+                                  [36m</th>[39m
+                                [36m</tr>[39m
+                              [36m</thead>[39m
+                              [36m<tbody[39m
+                                [33mclass[39m=[32m"ant-table-tbody"[39m
+                              [36m>[39m
+                                [36m<tr[39m
+                                  [33mclass[39m=[32m"ant-table-row ant-table-row-level-0"[39m
+                                  [33mdata-row-key[39m=[32m"value"[39m
+                                [36m>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0mvalue[0m
+                                  [36m</td>[39m
+                                  [36m<td[39m
+                                    [33mclass[39m=[32m"ant-table-cell"[39m
+                                  [36m>[39m
+                                    [0m40[0m
+                                  [36m</td>[39m
+                                [36m</tr>[39m
+                              [36m</tbody>[39m
+                            [36m</table>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      61 |     fireEvent.change(filterInput, { target: { value: 'value' } });
+      62 |
+    > 63 |     await waitFor(() => {
+         |                  ^
+      64 |       expect(screen.getByText('Number of Queries')).toBeInTheDocument();
+      65 |       expect(screen.getByText('Daemon Threads')).toBeInTheDocument();
+      66 |       expect(screen.getByText('Total Threads')).toBeInTheDocument();
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at _callee$ (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:63:18)
+      at call (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at Generator.tryCatch (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at Generator._invoke [as next] (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at _next (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at Object.<anonymous> (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+
+  ● Metrics › should select a specific metric from the dropdown filters the data using click events
+
+    Unable to find an element with the text: Number of Queries. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"cuix antd metrics-component"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"ant-spin-container"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"admin-header"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow"[39m
+                  [33mdata-testid[39m=[32m"admin-header--select"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-select-selector"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"ant-select-selection-search"[39m
+                    [36m>[39m
+                      [36m<input[39m
+                        [33maria-activedescendant[39m=[32m"rc_select_TEST_OR_SSR_list_0"[39m
+                        [33maria-autocomplete[39m=[32m"list"[39m
+                        [33maria-controls[39m=[32m"rc_select_TEST_OR_SSR_list"[39m
+                        [33maria-haspopup[39m=[32m"listbox"[39m
+                        [33maria-owns[39m=[32m"rc_select_TEST_OR_SSR_list"[39m
+                        [33mautocomplete[39m=[32m"off"[39m
+                        [33mclass[39m=[32m"ant-select-selection-search-input"[39m
+                        [33mid[39m=[32m"rc_select_TEST_OR_SSR"[39m
+                        [33mreadonly[39m=[32m""[39m
+                        [33mrole[39m=[32m"combobox"[39m
+                        [33mstyle[39m=[32m"opacity: 0;"[39m
+                        [33mtype[39m=[32m"search"[39m
+                        [33munselectable[39m=[32m"on"[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"ant-select-selection-item"[39m
+                      [33mtitle[39m=[32m"All"[39m
+                    [36m>[39m
+                      [0mAll[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"ant-select-arrow"[39m
+                    [33mstyle[39m=[32m"user-select: none;"[39m
+                    [33munselectable[39m=[32m"on"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mclass[39m=[32m"cdp-icon-dropdown"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"1em"[39m
+                      [33mstyle[39m=[32m"font-size: 16px;"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"1em"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33mclip-rule[39m=[32m"evenodd"[39m
+                        [33md[39m=[32m"M6 9l6 6 6-6H6z"[39m
+                        [33mfill[39m=[32m"currentColor"[39m
+                        [33mfill-rule[39m=[32m"evenodd"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ant-input-affix-wrapper admin-header__input-filter"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"ant-input-prefix"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33maria-label[39m=[32m"search"[39m
+                      [33mclass[39m=[32m"anticon anticon-search"[39m
+                      [33mrole[39m=[32m"img"[39m
+                    [36m>[39m
+                      [36m<svg[39m
+                        [33maria-hidden[39m=[32m"true"[39m
+                        [33mdata-icon[39m=[32m"search"[39m
+                        [33mfill[39m=[32m"currentColor"[39m
+                        [33mfocusable[39m=[32m"false"[39m
+                        [33mheight[39m=[32m"1em"[39m
+                        [33mviewBox[39m=[32m"64 64 896 896"[39m
+                        [33mwidth[39m=[32m"1em"[39m
+                      [36m>[39m
+                        [36m<path[39m
+                          [33md[39m=[32m"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"[39m
+                        [36m/>[39m
+                      [36m</svg>[39m
+                    [36m</span>[39m
+                  [36m</span>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"ant-input"[39m
+                    [33mplaceholder[39m=[32m"Filter metrics..."[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m/>[39m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-container"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-table"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"metrics-heading"[39m
+                          [36m>[39m
+                            [0mqueries.number[0m
+                          [36m</span>[39m
+                        [36m</div>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table-container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-content"[39m
+                          [36m>[39m
+                            [36m<table[39m
+                              [33mstyle[39m=[32m"table-layout: auto;"[39m
+                            [36m>[39m
+                              [36m<colgroup />[39m
+                              [36m<thead[39m
+                                [33mclass[39m=[32m"ant-table-thead"[39m
+                              [36m>[39m
+                                [36m<tr>[39m
+                                  [36m<th[39m
+                           ...
+
+      77 |     render(<Metrics />);
+      78 |
+    > 79 |     await waitFor(() => screen.getByText('Number of Queries'));
+         |                  ^
+      80 |
+      81 |     const select = screen.getByTestId('admin-header--select').firstElementChild;
+      82 |     if (select) {
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at _callee2$ (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:79:18)
+      at call (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at Generator.tryCatch (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at Generator._invoke [as next] (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at _next (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+      at Object.<anonymous> (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)
+
+  ● Metrics › should ensure metrics starting with auth, multiprocessing and python.gc are not displayed
+
+    expect(received).toBeInTheDocument()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+    Ignored nodes: comments, script, style
+    [36m<html>[39m
+      [36m<head />[39m
+      [36m<body>[39m
+        [36m<div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"cuix antd metrics-component"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"ant-spin-container"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"admin-header"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow"[39m
+                    [33mdata-testid[39m=[32m"admin-header--select"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-select-selector"[39m
+                    [36m>[39m
+                      [36m<span[39m
+                        [33mclass[39m=[32m"ant-select-selection-search"[39m
+                      [36m>[39m
+                        [36m<input[39m
+                          [33maria-activedescendant[39m=[32m"rc_select_TEST_OR_SSR_list_0"[39m
+                          [33maria-autocomplete[39m=[32m"list"[39m
+                          [33maria-controls[39m=[32m"rc_select_TEST_OR_SSR_list"[39m
+                          [33maria-haspopup[39m=[32m"listbox"[39m
+                          [33maria-owns[39m=[32m"rc_select_TEST_OR_SSR_list"[39m
+                          [33mautocomplete[39m=[32m"off"[39m
+                          [33mclass[39m=[32m"ant-select-selection-search-input"[39m
+                          [33mid[39m=[32m"rc_select_TEST_OR_SSR"[39m
+                          [33mreadonly[39m=[32m""[39m
+                          [33mrole[39m=[32m"combobox"[39m
+                          [33mstyle[39m=[32m"opacity: 0;"[39m
+                          [33mtype[39m=[32m"search"[39m
+                          [33munselectable[39m=[32m"on"[39m
+                          [33mvalue[39m=[32m""[39m
+                        [36m/>[39m
+                      [36m</span>[39m
+                      [36m<span[39m
+                        [33mclass[39m=[32m"ant-select-selection-item"[39m
+                        [33mtitle[39m=[32m"All"[39m
+                      [36m>[39m
+                        [0mAll[0m
+                      [36m</span>[39m
+                    [36m</div>[39m
+                    [36m<span[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"ant-select-arrow"[39m
+                      [33mstyle[39m=[32m"user-select: none;"[39m
+                      [33munselectable[39m=[32m"on"[39m
+                    [36m>[39m
+                      [36m<svg[39m
+                        [33mclass[39m=[32m"cdp-icon-dropdown"[39m
+                        [33mfill[39m=[32m"none"[39m
+                        [33mheight[39m=[32m"1em"[39m
+                        [33mstyle[39m=[32m"font-size: 16px;"[39m
+                        [33mviewBox[39m=[32m"0 0 24 24"[39m
+                        [33mwidth[39m=[32m"1em"[39m
+                      [36m>[39m
+                        [36m<path[39m
+                          [33mclip-rule[39m=[32m"evenodd"[39m
+                          [33md[39m=[32m"M6 9l6 6 6-6H6z"[39m
+                          [33mfill[39m=[32m"currentColor"[39m
+                          [33mfill-rule[39m=[32m"evenodd"[39m
+                        [36m/>[39m
+                      [36m</svg>[39m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"ant-input-affix-wrapper admin-header__input-filter"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"ant-input-prefix"[39m
+                    [36m>[39m
+                      [36m<span[39m
+                        [33maria-label[39m=[32m"search"[39m
+                        [33mclass[39m=[32m"anticon anticon-search"[39m
+                        [33mrole[39m=[32m"img"[39m
+                      [36m>[39m
+                        [36m<svg[39m
+                          [33maria-hidden[39m=[32m"true"[39m
+                          [33mdata-icon[39m=[32m"search"[39m
+                          [33mfill[39m=[32m"currentColor"[39m
+                          [33mfocusable[39m=[32m"false"[39m
+                          [33mheight[39m=[32m"1em"[39m
+                          [33mviewBox[39m=[32m"64 64 896 896"[39m
+                          [33mwidth[39m=[32m"1em"[39m
+                        [36m>[39m
+                          [36m<path[39m
+                            [33md[39m=[32m"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"[39m
+                          [36m/>[39m
+                        [36m</svg>[39m
+                      [36m</span>[39m
+                    [36m</span>[39m
+                    [36m<input[39m
+                      [33mclass[39m=[32m"ant-input"[39m
+                      [33mplaceholder[39m=[32m"Filter metrics..."[39m
+                      [33mtype[39m=[32m"text"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-table-wrapper cdp-table metrics-table"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-spin-nested-loading"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"ant-spin-container"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"ant-table"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-title"[39m
+                          [36m>[39m
+                            [36m<span[39m
+                              [33mclass[39m=[32m"metrics-heading"[39m
+                            [36m>[39m
+                              [0mqueries.number[0m
+                            [36m</span>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"ant-table-container"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"ant-table-content"[39m
+                            [36m>[39m
+                              [36m<table[39m
+                                [33mstyle[39m=[32m"table-layout: auto;"[39m
+                              [36m>[39m
+      ...
+
+      134 |       expect(screen.queryByText('multiprocessing.processes.total')).not.toBeInTheDocument();
+      135 |       expect(screen.queryByText('python.gc.objects')).not.toBeInTheDocument();
+    > 136 |       expect(screen.queryByText('Users')).toBeInTheDocument();
+          |                                           ^
+      137 |     });
+      138 |   });
+      139 | });
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/expect/build/index.js:325:30)
+      at Object.throwingMatcher [as toBeInTheDocument] (node_modules/expect/build/index.js:326:15)
+      at toBeInTheDocument (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:136:43)
+      at runWithExpensiveErrorDiagnosticsDisabled (node_modules/@testing-library/dom/dist/config.js:47:12)
+      at checkCallback (node_modules/@testing-library/dom/dist/wait-for.js:124:77)
+      at checkRealTimersCallback (node_modules/@testing-library/dom/dist/wait-for.js:118:16)
+
+Test Suites: 2 failed, 2 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        11.865 s
+Ran all test suites matching /desktop\/core\/src\/desktop\/js\/apps\/admin\/Metrics\/MetricsTab.test.tsx|desktop\/core\/src\/desktop\/js\/reactComponents\/PaginatedTable\/PaginatedTable.test.tsx/i.
+{"numFailedTestSuites":2,"numFailedTests":3,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":1,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":3,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746126614,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746138480,"message":"  ● Test suite failed to run\n\n    Cannot find module './PaginatedTable' from 'desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx'\n\n    However, Jest was able to find:\n    \t'./PaginatedTable.test.tsx'\n\n    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'].\n\n    See https://jestjs.io/docs/configuration#modulefileextensions-arraystring\n\n      17 | import React from 'react';\n      18 | import { render, fireEvent } from '@testing-library/react';\n    > 19 | import Table from './PaginatedTable';\n         | ^\n      20 | import { ColumnProps } from 'antd/lib/table';\n      21 | import '@testing-library/jest-dom';\n      22 |\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.require (desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx:19:1)\n","name":"/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx","startTime":1782746138480,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["Metrics"],"duration":1068,"failureDetails":[{"name":"TestingLibraryElementError"}],"failureMessages":["Error: Unable to find an element with the text: Number of Queries. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n              \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<input\u001b[39m\n                    \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                    \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                    \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                    \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                    \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                    \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                    \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                    \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                    \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                    \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                    \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                    \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                  \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[0mAll\u001b[0m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<svg\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                  \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                  \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                  \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                  \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<path\u001b[39m\n                    \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</svg>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n            \u001b[36m<span\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                  \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<svg\u001b[39m\n                    \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                    \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                    \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                    \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<path\u001b[39m\n                      \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</svg>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n              \u001b[36m<input\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                \u001b[33mvalue\u001b[39m=\u001b[32m\"value\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</span>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0mqueries.number\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mName\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mValue\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</thead>\u001b[39m\n                          \u001b[36m<tbody\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                              \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mvalue\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0m10\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</tbody>\u001b[39m\n                        \u001b[36m</table>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0mthreads.daemon\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mName\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mValue\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</thead>\u001b[39m\n                          \u001b[36m<tbody\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                              \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mvalue\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0m3\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</tbody>\u001b[39m\n                        \u001b[36m</table>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0mthreads.total\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mName\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mValue\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</thead>\u001b[39m\n                          \u001b[36m<tbody\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                              \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mvalue\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0m6\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</tbody>\u001b[39m\n                        \u001b[36m</table>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0musers\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mName\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mValue\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</thead>\u001b[39m\n                          \u001b[36m<tbody\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                              \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mvalue\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0m50\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</tbody>\u001b[39m\n                        \u001b[36m</table>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0musers.active\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mName\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mValue\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</thead>\u001b[39m\n                          \u001b[36m<tbody\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                              \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mvalue\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0m30\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</tbody>\u001b[39m\n                        \u001b[36m</table>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0musers.active.total\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mName\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mValue\u001b[0m\n                              \u001b[36m</th>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</thead>\u001b[39m\n                          \u001b[36m<tbody\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                              \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0mvalue\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                              \u001b[36m<td\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[0m40\u001b[0m\n                              \u001b[36m</td>\u001b[39m\n                            \u001b[36m</tr>\u001b[39m\n                          \u001b[36m</tbody>\u001b[39m\n                        \u001b[36m</table>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at waitForWrapper (/workspace/repo/node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n    at _callee$ (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:63:18)\n    at call (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at Generator.tryCatch (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at Generator._invoke [as next] (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at _next (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at Promise.then.completed (/workspace/repo/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/workspace/repo/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/workspace/repo/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (/workspace/repo/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:121:9)\n    at run (/workspace/repo/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/workspace/repo/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/workspace/repo/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/workspace/repo/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/workspace/repo/node_modules/jest-runner/build/runTest.js:444:34)\n    at Object.worker (/workspace/repo/node_modules/jest-runner/build/testWorker.js:106:12)"],"fullName":"Metrics should filter metrics based on name column value","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should filter metrics based on name column value"},{"ancestorTitles":["Metrics"],"duration":1017,"failureDetails":[{"name":"TestingLibraryElementError"}],"failureMessages":["Error: Unable to find an element with the text: Number of Queries. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n              \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<input\u001b[39m\n                    \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                    \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                    \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                    \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                    \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                    \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                    \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                    \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                    \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                    \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                    \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                    \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                  \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[0mAll\u001b[0m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<svg\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                  \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                  \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                  \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                  \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<path\u001b[39m\n                    \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</svg>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n            \u001b[36m<span\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                  \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<svg\u001b[39m\n                    \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                    \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                    \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                    \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<path\u001b[39m\n                      \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</svg>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n              \u001b[36m<input\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</span>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0mqueries.number\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<table\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<colgroup />\u001b[39m\n                          \u001b[36m<thead\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<tr>\u001b[39m\n                              \u001b[36m<th\u001b[39m\n                       ...\n    at waitForWrapper (/workspace/repo/node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n    at _callee2$ (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:79:18)\n    at call (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at Generator.tryCatch (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at Generator._invoke [as next] (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at _next (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n    at Promise.then.completed (/workspace/repo/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/workspace/repo/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/workspace/repo/node_modules/jest-circus/build/run.js:316:40)\n    at _runTest (/workspace/repo/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:121:9)\n    at run (/workspace/repo/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/workspace/repo/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/workspace/repo/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/workspace/repo/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/workspace/repo/node_modules/jest-runner/build/runTest.js:444:34)\n    at Object.worker (/workspace/repo/node_modules/jest-runner/build/testWorker.js:106:12)"],"fullName":"Metrics should select a specific metric from the dropdown filters the data using click events","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should select a specific metric from the dropdown filters the data using click events"},{"ancestorTitles":["Metrics"],"duration":1015,"failureDetails":[{"message":"expect(received).toBeInTheDocument()\n\nreceived value must be an HTMLElement or an SVGElement.\nReceived has value: null\n\nIgnored nodes: comments, script, style\n\u001b[36m<html>\u001b[39m\n  \u001b[36m<head />\u001b[39m\n  \u001b[36m<body>\u001b[39m\n    \u001b[36m<div>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n                \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<input\u001b[39m\n                      \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                      \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                      \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                      \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                      \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                      \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                      \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                      \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                      \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                      \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                      \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                      \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                      \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                    \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[0mAll\u001b[0m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                  \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                  \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<svg\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                    \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                    \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                    \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<path\u001b[39m\n                      \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                      \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                      \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</svg>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                    \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<svg\u001b[39m\n                      \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                      \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                      \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                      \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                      \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<path\u001b[39m\n                        \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</svg>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n                \u001b[36m<input\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                  \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                  \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                  \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                \u001b[36m/>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n            \u001b[36m<div>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<span\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[0mqueries.number\u001b[0m\n                        \u001b[36m</span>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<table\u001b[39m\n                            \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n  ..."}],"failureMessages":["Error: expect(received).toBeInTheDocument()\n\nreceived value must be an HTMLElement or an SVGElement.\nReceived has value: null\n\nIgnored nodes: comments, script, style\n\u001b[36m<html>\u001b[39m\n  \u001b[36m<head />\u001b[39m\n  \u001b[36m<body>\u001b[39m\n    \u001b[36m<div>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n                \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<input\u001b[39m\n                      \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                      \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                      \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                      \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                      \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                      \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                      \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                      \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                      \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                      \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                      \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                      \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                      \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                    \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[0mAll\u001b[0m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                  \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                  \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<svg\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                    \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                    \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                    \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<path\u001b[39m\n                      \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                      \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                      \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</svg>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                    \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<svg\u001b[39m\n                      \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                      \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                      \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                      \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                      \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<path\u001b[39m\n                        \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</svg>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n                \u001b[36m<input\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                  \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                  \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                  \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                \u001b[36m/>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n            \u001b[36m<div>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<span\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[0mqueries.number\u001b[0m\n                        \u001b[36m</span>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<table\u001b[39m\n                            \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n  ...\n    at __EXTERNAL_MATCHER_TRAP__ (/workspace/repo/node_modules/expect/build/index.js:325:30)\n    at Object.throwingMatcher [as toBeInTheDocument] (/workspace/repo/node_modules/expect/build/index.js:326:15)\n    at toBeInTheDocument (/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:136:43)\n    at runWithExpensiveErrorDiagnosticsDisabled (/workspace/repo/node_modules/@testing-library/dom/dist/config.js:47:12)\n    at checkCallback (/workspace/repo/node_modules/@testing-library/dom/dist/wait-for.js:124:77)\n    at checkRealTimersCallback (/workspace/repo/node_modules/@testing-library/dom/dist/wait-for.js:118:16)\n    at Timeout.task [as _onTimeout] (/workspace/repo/node_modules/jest-environment-jsdom/node_modules/jsdom/lib/jsdom/browser/Window.js:520:19)\n    at listOnTimeout (node:internal/timers:581:17)\n    at processTimers (node:internal/timers:519:7)"],"fullName":"Metrics should ensure metrics starting with auth, multiprocessing and python.gc are not displayed","invocations":1,"location":null,"numPassingAsserts":57,"retryReasons":[],"status":"failed","title":"should ensure metrics starting with auth, multiprocessing and python.gc are not displayed"}],"endTime":1782746138406,"message":"  ● Metrics › should filter metrics based on name column value\n\n    Unable to find an element with the text: Number of Queries. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\n    Ignored nodes: comments, script, style\n    \u001b[36m<body>\u001b[39m\n      \u001b[36m<div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n                  \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<input\u001b[39m\n                        \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                        \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                        \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                        \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                        \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                        \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                        \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                        \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                        \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                        \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                        \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                        \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                        \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</span>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                      \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[0mAll\u001b[0m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                    \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                    \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<svg\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                      \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                      \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                      \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<path\u001b[39m\n                        \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                        \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                        \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                        \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</svg>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                      \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<svg\u001b[39m\n                        \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                        \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                        \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                        \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                        \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                        \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                        \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<path\u001b[39m\n                          \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                        \u001b[36m/>\u001b[39m\n                      \u001b[36m</svg>\u001b[39m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                  \u001b[36m<input\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                    \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                    \u001b[33mvalue\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0mqueries.number\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mName\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mValue\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</thead>\u001b[39m\n                              \u001b[36m<tbody\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr\u001b[39m\n                                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                                  \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                                \u001b[36m>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mvalue\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0m10\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</tbody>\u001b[39m\n                            \u001b[36m</table>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0mthreads.daemon\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mName\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mValue\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</thead>\u001b[39m\n                              \u001b[36m<tbody\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr\u001b[39m\n                                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                                  \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                                \u001b[36m>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mvalue\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0m3\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</tbody>\u001b[39m\n                            \u001b[36m</table>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0mthreads.total\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mName\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mValue\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</thead>\u001b[39m\n                              \u001b[36m<tbody\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr\u001b[39m\n                                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                                  \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                                \u001b[36m>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mvalue\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0m6\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</tbody>\u001b[39m\n                            \u001b[36m</table>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0musers\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mName\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mValue\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</thead>\u001b[39m\n                              \u001b[36m<tbody\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr\u001b[39m\n                                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                                  \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                                \u001b[36m>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mvalue\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0m50\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</tbody>\u001b[39m\n                            \u001b[36m</table>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0musers.active\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mName\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mValue\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</thead>\u001b[39m\n                              \u001b[36m<tbody\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr\u001b[39m\n                                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                                  \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                                \u001b[36m>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mvalue\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0m30\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</tbody>\u001b[39m\n                            \u001b[36m</table>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0musers.active.total\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mName\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mValue\u001b[0m\n                                  \u001b[36m</th>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</thead>\u001b[39m\n                              \u001b[36m<tbody\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-tbody\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr\u001b[39m\n                                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-row ant-table-row-level-0\"\u001b[39m\n                                  \u001b[33mdata-row-key\u001b[39m=\u001b[32m\"value\"\u001b[39m\n                                \u001b[36m>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0mvalue\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                  \u001b[36m<td\u001b[39m\n                                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-cell\"\u001b[39m\n                                  \u001b[36m>\u001b[39m\n                                    \u001b[0m40\u001b[0m\n                                  \u001b[36m</td>\u001b[39m\n                                \u001b[36m</tr>\u001b[39m\n                              \u001b[36m</tbody>\u001b[39m\n                            \u001b[36m</table>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                      \u001b[36m</div>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</body>\u001b[39m\n\n      61 |     fireEvent.change(filterInput, { target: { value: 'value' } });\n      62 |\n    > 63 |     await waitFor(() => {\n         |                  ^\n      64 |       expect(screen.getByText('Number of Queries')).toBeInTheDocument();\n      65 |       expect(screen.getByText('Daemon Threads')).toBeInTheDocument();\n      66 |       expect(screen.getByText('Total Threads')).toBeInTheDocument();\n\n      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n      at _callee$ (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:63:18)\n      at call (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at Generator.tryCatch (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at Generator._invoke [as next] (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at _next (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at Object.<anonymous> (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n\n  ● Metrics › should select a specific metric from the dropdown filters the data using click events\n\n    Unable to find an element with the text: Number of Queries. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\n    Ignored nodes: comments, script, style\n    \u001b[36m<body>\u001b[39m\n      \u001b[36m<div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n                  \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<input\u001b[39m\n                        \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                        \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                        \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                        \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                        \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                        \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                        \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                        \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                        \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                        \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                        \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                        \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                        \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</span>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                      \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[0mAll\u001b[0m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                    \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                    \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<svg\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                      \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                      \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                      \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<path\u001b[39m\n                        \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                        \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                        \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                        \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</svg>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                      \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<svg\u001b[39m\n                        \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                        \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                        \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                        \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                        \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                        \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                        \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<path\u001b[39m\n                          \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                        \u001b[36m/>\u001b[39m\n                      \u001b[36m</svg>\u001b[39m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                  \u001b[36m<input\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                    \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                    \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<span\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[0mqueries.number\u001b[0m\n                          \u001b[36m</span>\u001b[39m\n                        \u001b[36m</div>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<table\u001b[39m\n                              \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<colgroup />\u001b[39m\n                              \u001b[36m<thead\u001b[39m\n                                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-thead\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n                                \u001b[36m<tr>\u001b[39m\n                                  \u001b[36m<th\u001b[39m\n                           ...\n\n      77 |     render(<Metrics />);\n      78 |\n    > 79 |     await waitFor(() => screen.getByText('Number of Queries'));\n         |                  ^\n      80 |\n      81 |     const select = screen.getByTestId('admin-header--select').firstElementChild;\n      82 |     if (select) {\n\n      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n      at _callee2$ (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:79:18)\n      at call (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at Generator.tryCatch (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at Generator._invoke [as next] (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at _next (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n      at Object.<anonymous> (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:2:1)\n\n  ● Metrics › should ensure metrics starting with auth, multiprocessing and python.gc are not displayed\n\n    expect(received).toBeInTheDocument()\n\n    received value must be an HTMLElement or an SVGElement.\n    Received has value: null\n\n    Ignored nodes: comments, script, style\n    \u001b[36m<html>\u001b[39m\n      \u001b[36m<head />\u001b[39m\n      \u001b[36m<body>\u001b[39m\n        \u001b[36m<div>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"cuix antd metrics-component\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"admin-header\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select admin-header__select-dropdown ant-select-single ant-select-show-arrow\"\u001b[39m\n                    \u001b[33mdata-testid\u001b[39m=\u001b[32m\"admin-header--select\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selector\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<input\u001b[39m\n                          \u001b[33maria-activedescendant\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list_0\"\u001b[39m\n                          \u001b[33maria-autocomplete\u001b[39m=\u001b[32m\"list\"\u001b[39m\n                          \u001b[33maria-controls\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                          \u001b[33maria-haspopup\u001b[39m=\u001b[32m\"listbox\"\u001b[39m\n                          \u001b[33maria-owns\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR_list\"\u001b[39m\n                          \u001b[33mautocomplete\u001b[39m=\u001b[32m\"off\"\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-search-input\"\u001b[39m\n                          \u001b[33mid\u001b[39m=\u001b[32m\"rc_select_TEST_OR_SSR\"\u001b[39m\n                          \u001b[33mreadonly\u001b[39m=\u001b[32m\"\"\u001b[39m\n                          \u001b[33mrole\u001b[39m=\u001b[32m\"combobox\"\u001b[39m\n                          \u001b[33mstyle\u001b[39m=\u001b[32m\"opacity: 0;\"\u001b[39m\n                          \u001b[33mtype\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                          \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                          \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                        \u001b[36m/>\u001b[39m\n                      \u001b[36m</span>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-selection-item\"\u001b[39m\n                        \u001b[33mtitle\u001b[39m=\u001b[32m\"All\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[0mAll\u001b[0m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-select-arrow\"\u001b[39m\n                      \u001b[33mstyle\u001b[39m=\u001b[32m\"user-select: none;\"\u001b[39m\n                      \u001b[33munselectable\u001b[39m=\u001b[32m\"on\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<svg\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n                        \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                        \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                        \u001b[33mstyle\u001b[39m=\u001b[32m\"font-size: 16px;\"\u001b[39m\n                        \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                        \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<path\u001b[39m\n                          \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                          \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n                          \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                          \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                        \u001b[36m/>\u001b[39m\n                      \u001b[36m</svg>\u001b[39m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-affix-wrapper admin-header__input-filter\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input-prefix\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<span\u001b[39m\n                        \u001b[33maria-label\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"anticon anticon-search\"\u001b[39m\n                        \u001b[33mrole\u001b[39m=\u001b[32m\"img\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<svg\u001b[39m\n                          \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                          \u001b[33mdata-icon\u001b[39m=\u001b[32m\"search\"\u001b[39m\n                          \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                          \u001b[33mfocusable\u001b[39m=\u001b[32m\"false\"\u001b[39m\n                          \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                          \u001b[33mviewBox\u001b[39m=\u001b[32m\"64 64 896 896\"\u001b[39m\n                          \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<path\u001b[39m\n                            \u001b[33md\u001b[39m=\u001b[32m\"M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z\"\u001b[39m\n                          \u001b[36m/>\u001b[39m\n                        \u001b[36m</svg>\u001b[39m\n                      \u001b[36m</span>\u001b[39m\n                    \u001b[36m</span>\u001b[39m\n                    \u001b[36m<input\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input\"\u001b[39m\n                      \u001b[33mplaceholder\u001b[39m=\u001b[32m\"Filter metrics...\"\u001b[39m\n                      \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                      \u001b[33mvalue\u001b[39m=\u001b[32m\"\"\u001b[39m\n                    \u001b[36m/>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<div>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-wrapper cdp-table metrics-table\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-nested-loading\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<div\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-spin-container\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<div\u001b[39m\n                          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table\"\u001b[39m\n                        \u001b[36m>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-title\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<span\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"metrics-heading\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[0mqueries.number\u001b[0m\n                            \u001b[36m</span>\u001b[39m\n                          \u001b[36m</div>\u001b[39m\n                          \u001b[36m<div\u001b[39m\n                            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-container\"\u001b[39m\n                          \u001b[36m>\u001b[39m\n                            \u001b[36m<div\u001b[39m\n                              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-table-content\"\u001b[39m\n                            \u001b[36m>\u001b[39m\n                              \u001b[36m<table\u001b[39m\n                                \u001b[33mstyle\u001b[39m=\u001b[32m\"table-layout: auto;\"\u001b[39m\n                              \u001b[36m>\u001b[39m\n      ...\n\n      134 |       expect(screen.queryByText('multiprocessing.processes.total')).not.toBeInTheDocument();\n      135 |       expect(screen.queryByText('python.gc.objects')).not.toBeInTheDocument();\n    > 136 |       expect(screen.queryByText('Users')).toBeInTheDocument();\n          |                                           ^\n      137 |     });\n      138 |   });\n      139 | });\n\n      at __EXTERNAL_MATCHER_TRAP__ (node_modules/expect/build/index.js:325:30)\n      at Object.throwingMatcher [as toBeInTheDocument] (node_modules/expect/build/index.js:326:15)\n      at toBeInTheDocument (desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx:136:43)\n      at runWithExpensiveErrorDiagnosticsDisabled (node_modules/@testing-library/dom/dist/config.js:47:12)\n      at checkCallback (node_modules/@testing-library/dom/dist/wait-for.js:124:77)\n      at checkRealTimersCallback (node_modules/@testing-library/dom/dist/wait-for.js:118:16)\n","name":"/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx","startTime":1782746127804,"status":"failed","summary":""}],"wasInterrupted":false}
+reward=0 graded=8 found=3 failed=3 parsed=4 framework=jest exit_code=1

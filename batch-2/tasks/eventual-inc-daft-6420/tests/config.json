@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_events.py -v",
+  "test_files": [
+    "tests/test_events.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_events::test_no_files_created_without_query",
+    "tests.test_events::test_event_log_subscriber_writes_query_lifecycle_events",
+    "tests.test_events::test_on_query_end_clears_stale_timing_state_for_failed_query",
+    "tests.test_events::test_on_query_end_only_clears_ended_query_state",
+    "tests.test_events::test_enable_event_log_attach_and_disable_close"
+  ],
+  "PASS_TO_PASS": []
+}

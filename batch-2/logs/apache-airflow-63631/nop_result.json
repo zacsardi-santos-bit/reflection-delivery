@@ -1,0 +1,29 @@
+{
+    "id": "4c8bbb85-1078-48e6-8d79-a151a41a2c29",
+    "started_at": "2026-07-02T17:17:18.793161",
+    "finished_at": "2026-07-02T17:17:51.185630",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-airflow-63631__JRyRhfY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

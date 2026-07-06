@@ -1,0 +1,7 @@
+patching file Cargo.lock
+patching file crates/datasources/src/clickhouse/convert.rs
+patching file crates/pgrepr/Cargo.toml
+patching file crates/pgrepr/src/scalar.rs
+patching file testdata/sqllogictests_clickhouse/data/setup-clickhouse.sql
+patching file testdata/sqllogictests_clickhouse/datatypes.slt
+patching file testdata/sqllogictests_object_store/local/datatypes.slt

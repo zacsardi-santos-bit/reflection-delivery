@@ -1,0 +1,14 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && NODE_ENV=development BABEL_ENV=test npx mocha --require babel-register test/setup.js test/enzyme-configuration.js app/pages/project/classify.spec.js",
+  "test_files": [
+    "app/pages/project/classify.spec.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "::ProjectClassifyPage renders when not logged in",
+    "::ProjectClassifyPage never tells you when the project is finished"
+  ],
+  "PASS_TO_PASS": []
+}

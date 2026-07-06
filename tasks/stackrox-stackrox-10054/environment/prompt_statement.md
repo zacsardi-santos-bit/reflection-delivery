@@ -1,5 +1,0 @@
-We have a built-in security policy that currently checks for missing resource settings across all four dimensions — CPU requests, CPU limits, memory requests, and memory limits. The policy name no longer accurately describes what it detects, and its broad coverage causes unnecessary alerts for workloads that intentionally leave certain settings unset.
-
-I'd like to rename this policy to something that clearly reflects it only cares about two specific settings: whether a CPU request and a memory limit are configured. Along with the rename, the policy's detection criteria should be updated so that it only generates a violation when a CPU request or memory limit is missing — it should stop alerting on missing CPU limits and memory requests.
-
-Since this policy is stored in the database for existing deployments, I also need a database migration that automatically transitions the old policy definition to the new name and criteria. The migration should compare the existing policy's name, description, and rule sections before updating, so it doesn't overwrite any user customizations.

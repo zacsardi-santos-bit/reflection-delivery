@@ -1,0 +1,17 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/utils/ragLogger.test.ts --coverage.enabled=false",
+  "test_files": [
+    "packages/core/src/utils/ragLogger.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/utils/ragLogger.test.ts::RagLogger initialize should create the logs directory if it does not exist",
+    "/workspace/repo/packages/core/src/utils/ragLogger.test.ts::RagLogger initialize should log an error to debugLogger if directory creation fails",
+    "/workspace/repo/packages/core/src/utils/ragLogger.test.ts::RagLogger log should warn if called before initialization",
+    "/workspace/repo/packages/core/src/utils/ragLogger.test.ts::RagLogger log should create log entry atomically and enforce permissions on first run",
+    "/workspace/repo/packages/core/src/utils/ragLogger.test.ts::RagLogger log should log an error to debugLogger if writing to file fails"
+  ],
+  "PASS_TO_PASS": []
+}

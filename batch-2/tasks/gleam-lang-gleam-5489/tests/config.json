@@ -1,0 +1,26 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E \"test(echo_in_a_pipeline) | test(multiple_echos_in_a_pipeline) | test(pipeline_has_correct_semicolons) | test(pipeline_with_final_has_correct_semicolon)\"",
+  "test_files": [
+    "compiler-core/src/javascript/tests/functions.rs",
+    "compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__echo__echo_in_a_pipeline.snap",
+    "compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__echo__echo_in_a_pipeline_with_message.snap",
+    "compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__echo__multiple_echos_in_a_pipeline.snap",
+    "compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__functions__pipeline_has_correct_semicolons.snap",
+    "compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__functions__pipeline_with_final_has_correct_semicolon.snap"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) gleam-core parse::tests::echo_in_a_pipeline",
+    "(2/9) gleam-core erlang::tests::echo::multiple_echos_in_a_pipeline",
+    "(3/9) gleam-core javascript::tests::echo::echo_in_a_pipeline",
+    "(4/9) gleam-core javascript::tests::echo::multiple_echos_in_a_pipeline",
+    "(5/9) gleam-core erlang::tests::echo::echo_in_a_pipeline",
+    "(6/9) gleam-core javascript::tests::functions::pipeline_has_correct_semicolons",
+    "(7/9) gleam-core javascript::tests::echo::echo_in_a_pipeline_with_message",
+    "(8/9) gleam-core javascript::tests::functions::pipeline_with_final_has_correct_semicolon",
+    "(9/9) gleam-core erlang::tests::echo::echo_in_a_pipeline_with_message"
+  ],
+  "PASS_TO_PASS": []
+}

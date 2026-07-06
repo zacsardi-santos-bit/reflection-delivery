@@ -1,0 +1,5 @@
+I'm working on cloud-nuke and I'd like to add support for cleaning up AWS Simple Email Service resources. Right now, when I run cloud-nuke against a test AWS account, it skips all SES resources entirely — things like configuration sets, receipt rule sets, receipt filters, email templates, and verified identities just get left behind.
+
+I need cloud-nuke to be able to list and delete each of these five SES resource categories. Each resource type should integrate with the existing filtering system — supporting both name-based regex exclusion and time-based exclusion (filtering out resources created after a certain time) where applicable. Specifically, receipt rule sets and email templates have creation timestamps that should be usable for time-based filtering, while configuration sets, receipt filters, and identities support name-based filtering only.
+
+The configuration system should also be updated so users can configure include/exclude rules for each of these new SES resource types, consistent with how other resource types are configured today.

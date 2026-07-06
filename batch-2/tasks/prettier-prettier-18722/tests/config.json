@@ -1,0 +1,17 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && node .yarn/releases/yarn-4.12.0.cjs install --immutable && ./node_modules/.bin/jest tests/format/angular/expression/arrow-function-options/format.test.js --coverage=false --verbose --json",
+  "test_files": [
+    "tests/format/angular/expression/__snapshots__/format.test.js.snap",
+    "tests/format/angular/expression/arrow-function-options/__snapshots__/format.test.js.snap",
+    "tests/format/angular/expression/arrow-function-options/format.test.js",
+    "tests/format/angular/expression/arrow-function.html",
+    "tests/format/angular/expression/instanceof-operator.html"
+  ],
+  "num_test_files": 5,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/format/angular/expression/arrow-function-options/format.test.js::format"
+  ],
+  "PASS_TO_PASS": []
+}

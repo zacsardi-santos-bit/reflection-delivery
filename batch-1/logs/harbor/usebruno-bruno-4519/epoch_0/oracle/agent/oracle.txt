@@ -1,0 +1,35 @@
+patching file package-lock.json
+Hunk #2 succeeded at 7792 (offset -6 lines).
+Hunk #3 succeeded at 26297 (offset -11 lines).
+Hunk #4 succeeded at 26312 (offset -11 lines).
+Hunk #5 succeeded at 26734 (offset -11 lines).
+patching file package.json
+patching file packages/bruno-app/src/components/RequestPane/Auth/OAuth2/Oauth2ActionButtons/index.js
+patching file packages/bruno-app/src/components/RequestPane/Auth/OAuth2/Oauth2TokenViewer/index.js
+patching file packages/bruno-app/src/utils/codemirror/brunoVarInfo.js
+patching file packages/bruno-app/src/utils/codemirror/javascript-lint.js
+patching file packages/bruno-app/src/utils/collections/index.js
+patching file packages/bruno-app/src/utils/exporters/postman-collection.js
+patching file packages/bruno-app/src/utils/importers/insomnia-collection.js
+patching file packages/bruno-app/src/utils/importers/openapi-collection.js
+patching file packages/bruno-app/src/utils/importers/postman-collection.js
+patching file packages/bruno-app/src/utils/importers/postman-environment.js
+patching file packages/bruno-app/src/utils/url/index.js
+patching file packages/bruno-common/babel.config.js
+patching file packages/bruno-common/jest.config.js
+patching file packages/bruno-common/package.json
+patching file packages/bruno-common/src/index.ts
+patching file packages/bruno-common/src/interpolate/index.ts
+patching file packages/bruno-common/src/utils/index.ts
+patching file packages/bruno-converters/src/index.js
+patching file packages/bruno-converters/src/insomnia/insomnia-to-bruno.js
+patching file packages/bruno-converters/src/postman/postman-translations.js
+patching file packages/bruno-converters/tests/insomnia/insomnia-collection-v5.spec.js
+patching file packages/bruno-converters/tests/postman/postman-translations.spec.js
+patching file packages/bruno-converters/tests/postman/postman-translations/postman-request.spec.js
+patching file packages/bruno-converters/tests/postman/postman-translations/postman-response.spec.js
+patching file packages/bruno-js/src/runtime/script-runtime.js
+patching file 'packages/bruno-tests/collection/scripting/inbuilt modules/cheerio/cheerio.bru'
+patching file 'packages/bruno-tests/collection/scripting/inbuilt modules/xml2js/xml2js.bru'
+patching file 'packages/bruno-tests/collection/string interpolation/objects-arrays interpolation.bru'
+patching file 'packages/bruno-tests/collection/string interpolation/runtime vars.bru'
