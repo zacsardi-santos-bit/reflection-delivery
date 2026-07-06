@@ -1,7 +1,19 @@
-I'm building out batched key lookups in our incremental view maintenance query layer and hitting a wall. Right now a fetch request only supports a single equality constraint, so when a join operator needs to pull a bunch of parent rows by their keys in one go, I either fire off row-by-row single-key lookups or over-fetch and filter downstream, which is slow and impossible to push down to storage. I want the moral equivalent of a SQL IN clause across one or more columns.
+## Description
 
-So I'd like to extend the fetch request to take an optional list of multi-value IN constraints. Each entry in that outer list is an array of partial row objects, where every object in the inner array is one combination of column values a row could match. The outer entries get ANDed together, so a row has to satisfy at least one combination in each entry to come back. An empty outer list is a no-op (everything returns), and an empty inner entry gets silently ignored rather than treated as never-matching. These need to compose with the existing single equality constraint, pagination cursors, and sort direction including reverse. Null values in the IN list follow standard SQL null semantics and never match stored nulls, and compound multi-column entries (multiple columns specified together, row matches all of them in at least one entry) have to work too.
+The data query layer currently has no efficient way to look up rows by a specific set of key-value combinations in a single fetch operation. When a join needs to retrieve a batch of parent rows identified by multiple child-side keys, the only option is to issue individual single-key lookups or to fetch more data than necessary and filter it downstream. This is both inefficient and difficult to optimize at the storage layer.
 
-The part that's easy to miss: the same filtering has to apply during live overlay handling, so when a pending write is applied mid-fetch, the new and old row values each get checked independently against the IN constraints to decide if they show up or get suppressed, and that's true for both ordered and unordered fetch modes.
+## Expected Behavior
 
-On the SQL side the query builder should emit correct index-friendly SQL, a single-column list uses a plain IN clause and a compound-column list uses row-value constructor syntax. Oh and the SQL conversion function needs to validate its input and throw descriptive errors if the list is empty, if any entry has no keys, or if entries have mismatched key shapes.
+- A fetch request should support an optional list of multi-value IN constraints, where each entry in the list specifies a set of column-value pairs a row must match.
+- When multiple IN constraint lists are provided, they should all be applied together (ANDed): only rows matching at least one entry in every list are returned.
+- An empty list of IN constraints should be a no-op (all rows are returned).
+- An empty entry within the list should be silently ignored, not treated as a non-matching constraint.
+- These IN constraints should compose correctly with existing equality filters, pagination cursors, and sort direction (including reverse).
+- Null values in the IN list should never match stored null values, following standard SQL null semantics.
+- Compound multi-column IN combinations should be supported: a row must match all specified columns in at least one entry.
+- During live writes (when a pending change is being applied), the same IN constraints should be applied to the overlay — the pending row is included or excluded based on whether it matches the IN list, and the add and remove sides of an edit are each evaluated independently.
+- The SQL query builder should generate correct and index-friendly SQL for both single-column and compound-column IN lists.
+
+## Why This Matters
+
+Without this capability, join operators that need to batch-fetch rows by a list of keys must fall back to row-by-row fetching or full scans, which is significantly less efficient. Batched key lookup enables the query planner to issue a single efficient indexed query to retrieve all relevant parent rows for a given set of child-side foreign-key values.

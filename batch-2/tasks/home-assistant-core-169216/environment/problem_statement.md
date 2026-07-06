@@ -1,7 +1,20 @@
-I'm adding physical siren support to the UniFi Protect integration for Home Assistant. We already handle alarm panels through the device's public API, but siren hardware is completely missing, there's no entity created for it and users can't control or monitor their sirens at all. I want these siren devices, whenever they're reachable through the public API, to show up as HA entities reflecting whether they're currently active or inactive. If the public API isn't available, don't create any siren entities.
+## Description
 
-They should turn on and off via the standard turn-on and turn-off services. On activation I want an optional duration and optional volume level. Only the durations the device actually supports are valid, so if someone asks for an unsupported one it needs to fail with a clear validation error before we touch the device at all, meaning if both a bad duration and a volume come in, neither the volume gets set nor the siren gets activated. When a valid volume is passed alongside activation, apply it before the siren starts.
+The UniFi Protect integration already supports alarm panels through the device's public API, but physical siren hardware is not yet exposed as Home Assistant entities. Users with UniFi siren devices have no way to control or monitor them — they cannot turn sirens on or off, set timed alerts, or adjust volume from Home Assistant, and the devices do not appear in the entity registry at all.
 
-Here's the tricky bit: the device never broadcasts a stop event when a timed run finishes, so the entity has to schedule its own automatic turn-off and flip itself to off when the timer expires. Also if HA restarts while a timed run is already underway, still schedule that turn-off at startup so it doesn't get stuck on indefinitely. And if a manual turn-off comes in while a timer's pending, cancel the timer.
+## Expected Behavior
 
-The entities need to track WebSocket availability too, going unavailable when the connection drops and recovering when it reconnects. If a siren gets removed from the system entirely (a delete event from the server), its entity should go unavailable. And underlying library API errors like auth failures or connection timeouts should surface as Home Assistant errors, not get swallowed. This lives alongside the existing alarm panel handling in the same integration.
+- Siren devices accessible via the public API should appear as entities in Home Assistant, reflecting their current active or inactive state.
+- If the public API is unavailable, no siren entities should be created.
+- Users should be able to activate and deactivate sirens through standard Home Assistant turn-on and turn-off services.
+- Activation should optionally accept a duration and a volume level. Only specific durations supported by the device are valid; requesting an unsupported duration should produce a clear validation error before any device communication occurs (meaning volume is not set and the siren is not activated).
+- When a valid volume level is provided alongside activation, the volume should be applied before the siren starts.
+- When a timed activation expires, the entity must automatically transition to the off state, since the device never broadcasts a stop event.
+- Siren entities must become unavailable when the WebSocket connection drops and automatically recover when it reconnects.
+- When a siren is removed from the system, its entity must reflect that by becoming unavailable.
+- If HA restarts while a timed run is already in progress, the entity must still schedule the automatic turn-off rather than remaining stuck in the on state indefinitely.
+- Underlying API errors (such as authorization failures or connection timeouts) must surface as Home Assistant errors rather than silent failures.
+
+## Why This Matters
+
+Users expect to be able to control every device in their UniFi Protect system from Home Assistant, including using sirens in automations, manually triggering alerts, and confirming the current alarm state. Without siren entity support, this class of hardware is completely invisible to the platform.

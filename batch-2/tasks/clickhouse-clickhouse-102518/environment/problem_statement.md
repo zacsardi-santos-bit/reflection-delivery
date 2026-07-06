@@ -1,5 +1,15 @@
-I'm hitting a server crash in ClickHouse when I try to query a Tuple subcolumn whose name has a dot in it. Here's the setup: I've got a Tuple column with two elements, one is a JSON type with a short name, and the other is an integer type whose name is that JSON element's name followed by a dot and some suffix (so the JSON element's name is a prefix of the integer element's dotted name). When I select the dotted-name integer element, ClickHouse either throws a server exception or hands me back the wrong value. It looks like it's resolving the dotted name as a dynamic path into the JSON element instead of matching the exact element name I asked for.
+## Description
 
-What I want is simple: selecting a Tuple element by its exact name should always return that element's stored value, even when another element's name is a prefix of it and that other element has a dynamic or JSON type. So in my example, asking for the dotted integer element gives me the integer's value, not whatever you'd get by traversing the short name as a JSON path.
+There is a bug in ClickHouse where selecting a Tuple element whose name contains a dot causes a server crash or returns the wrong value when another element in the same Tuple has a JSON type and a name that is a prefix of the dotted element name.
 
-The core fix is that an exact name match has to take priority over the prefix-based dynamic lookup into a JSON-typed element. Right now this is a regression that makes totally valid Tuple schemas unusable, any table where a JSON Tuple element happens to share a name prefix with another element's dotted name breaks on subcolumn queries with errors or silently wrong results, and people can't get at their data. A Tuple should be able to hold elements with dotted names alongside JSON-typed elements that share a name prefix without any of this blowing up.
+For example, if a Tuple column has two elements — one of JSON type with a short name, and another of integer type with a dotted name that starts with the JSON element's name — then selecting the dotted-name element should return the integer element's stored value. However, the current behavior either throws a server exception or returns the value obtained by traversing the short name as a dynamic path within the JSON element, which is incorrect.
+
+## Expected Behavior
+
+- A Tuple column can have elements with dotted names alongside elements of JSON type that share a name prefix.
+- Selecting the element by its exact dotted name returns that element's stored value.
+- An exact name match must always take priority over a dynamic/prefix-based lookup into a JSON-typed element.
+
+## Why This Matters
+
+This is a regression that makes certain valid Tuple schema definitions unusable: any table where a JSON-typed Tuple element happens to share a name prefix with another element's dotted name will produce server errors or silently wrong results for subcolumn queries. Users cannot reliably access their data in such schemas.

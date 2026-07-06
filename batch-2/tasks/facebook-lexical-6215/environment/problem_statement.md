@@ -1,5 +1,14 @@
-I noticed one of our docs pages has a demo link pointing at a stale feature branch instead of main, so anyone following it sees an old version of the demo rather than what's actually on main right now. These are the interactive demo links embedded in our markdown docs and package READMEs that point to an external playground platform hosting our examples. I want that broken link fixed so it points to the main branch's examples directory with the correct repo owner, repo name, branch, and path segment, and honestly I want all of them to be consistent that way.
+## Description
 
-On top of the fix, I'd like an automated check that scans every README and doc page and verifies any embedded demo link follows that standard format (right owner, right repo name, main branch, examples directory). The idea is if a future PR sneaks in a wrongly formatted or wrong-branch demo link, this audit catches it before merge instead of silently shipping readers to an outdated demo. So it should walk the docs, find these links, and fail loudly when one doesn't match.
+The project's documentation and README files contain embedded links to interactive demos hosted on an external platform. One of these links was accidentally pointing to a stale feature branch instead of the main branch of the repository. This means that users who follow that link will be shown code from an older branch that may no longer be maintained, rather than the current version on main.
 
-Also there's a related tweak in one of our test utility files where we glob files, the file-globbing library import needs to switch to namespace import syntax to work with the newer version of that lib, and while you're in there the path prefix that utility uses should drop its leading `./` so it's just the bare prefix. Small thing but it's needed for compatibility.
+Additionally, there is no automated check to prevent incorrectly formatted demo links from being added to documentation in the future.
+
+## Expected Behavior
+
+- All demo links embedded in documentation files and package READMEs should consistently point to the main branch of the repository's official examples directory.
+- An automated audit should scan the documentation files and enforce that any such demo links follow the correct, standardized format.
+
+## Why This Matters
+
+Without this fix, readers of the collaboration documentation are directed to an outdated demo. Without the automated check, similar mistakes could silently slip into future pull requests. This ensures a consistent and correct experience for anyone following demo links in the documentation.

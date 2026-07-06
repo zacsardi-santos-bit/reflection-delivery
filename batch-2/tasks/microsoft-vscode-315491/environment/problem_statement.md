@@ -1,5 +1,18 @@
-I'm hitting a gap in how we rebuild agent session history from stored events. When a completed coding session gets replayed, tool calls the agent actually ran (reading files, running commands, whatever) can silently vanish if the lifecycle tracking events for those invocations aren't in the event records. Like if we only recorded the assistant message with its tool requests but the execution start and completion events never got persisted, those calls just don't show up, so users end up staring at text responses with zero trace of what tools ran, which makes it impossible to understand what the agent did.
+# Session History Missing Tool Calls and Incorrect Announcement Order
 
-What I want is for the reconstruction to fall back to the tool request data that's embedded in the assistant messages whenever the lifecycle events are missing. A tool call that has no recorded outcome should be treated as having completed successfully, and a call that does have a completion record showing a failure with error details should reflect that failure status and surface the error. Internal, intent-signaling tool requests that aren't user-visible actions should still stay hidden from the displayed history same as before.
+## Description
 
-There's also a related ordering bug I keep hitting. When we inject a branch context note at the top of a restored session's history (the thing that says which working copy the agent was operating in), it sometimes lands after a tool result instead of first. If the first turn kicked off with a tool call, the annotation gets displaced. I need that branch context note, when it's present, to always be the very first item in the response history no matter what, tool call or not. Developers reviewing or resuming a session need a complete and correctly ordered account, and missing calls plus a misplaced note really undermine trust in the history view.
+When restoring a completed agent coding session, the history of tool actions the agent performed (such as reading files or running commands) can be silently missing if the underlying event records for those tool invocations are not present. Users see only the assistant's text responses with no trace of the tools that were actually called, making it impossible to understand what the agent did during the session.
+
+Additionally, when a branch context note is injected at the start of a session's history (to indicate which working copy the agent was operating in), it may appear in the wrong position. If the first response in the session includes a tool result, the branch annotation ends up appearing after that tool result rather than as the very first item — resulting in a confusing, out-of-order history.
+
+## Expected Behavior
+
+- When tool invocations are present in the original assistant messages but their lifecycle tracking events are absent, the session history should still reconstruct and display those tool calls, using whatever result information is available.
+- Tool calls that failed should reflect their failure status and error details. Tool calls with no recorded outcome should be shown as having completed successfully.
+- Intent-signaling tool requests that are not user-visible actions should remain hidden from the displayed history.
+- The branch context note, when present, must always be the very first item shown in the restored session history — never displaced by tool results or other content.
+
+## Why This Matters
+
+Developers reviewing or resuming a session need a complete and correctly ordered account of what the agent did. Missing tool calls and a misplaced context note undermine trust in the history view and make it hard to understand the agent's past actions.

@@ -1,9 +1,19 @@
-I'm building a TypeScript language service plugin for Payload CMS to give IDE help around those custom component path strings that show up all over Payload configs. Those strings are a file path plus an optional export name after a separator character, and right now there's zero tooling so misspelled paths and bad export names just silently break at runtime instead of getting caught while you type. I want the same errors, completions, and jump-to-definition experience people already expect from normal TypeScript imports.
+# TypeScript Plugin for Payload Component Path Validation and IDE Assistance
 
-Three things I need it to do. First, validation diagnostics: it should flag a component path string when the referenced file can't be found, and separately when the export name after the separator doesn't exist in that file, with distinct error codes for the two cases (one for the missing file, another for the missing or wrong export name). When the file's valid but the export name is wrong, the message should list the available exports from that module so I know what I meant to type. Also the no-separator case matters, if a path has no explicit export selector and the target module has no default export, that's an error too, but if there is a default export the path's fine without a selector.
+## Description
 
-Second, autocompletion. When my cursor's in the path portion I want file and subdirectory name suggestions, and once I'm past the separator character I want the named exports of the resolved module. Payload also has an object form of component references where the path and export name are separate fields, and each of those fields should get its own completions independently.
+Payload CMS configurations reference custom UI components using special path strings — a file path optionally followed by an export name. Developers writing these references have no IDE assistance: the editor does not validate whether the referenced file exists, whether the named export is correct, or offer any autocompletion while typing. Misspelled paths and non-existent export names go undetected until runtime.
 
-Third, go-to-definition, so clicking a component path string navigates to the actual component definition, resolving directory-level paths through index files when needed.
+## Expected Behavior
 
-All of this needs to work whether the paths are plain relative strings or use path aliases configured in the project's tsconfig (like an alias mapping a short prefix to a source dir), and both the simple string form and the object form need full support.
+A new TypeScript language service plugin for Payload should provide:
+
+- **Validation diagnostics**: Flag component path strings that reference a file that cannot be found (one error code for missing files, another for missing or wrong export names). When an export name is wrong but the file exists, the error message should suggest available exports from that module.
+- **Autocompletion**: When typing a component path string, offer completions for file paths and subdirectories. After the export separator character, offer completions for the named exports of the resolved module. The object-based form of component references (with separate path and export name fields) should also receive appropriate completions for each field.
+- **Go-to-definition**: Navigating to a component path string should jump to the referenced component's definition in the source file — including when the path uses directory-level references that resolve through an index file.
+- **Default export awareness**: If a path has no explicit export selector and the target module has no default export, an error should be reported. If a default export is present, the path is valid without an explicit export selector.
+- **Path alias support**: All of the above should work when component paths use aliases configured in the project's TypeScript settings (e.g., an alias that maps a short prefix to a source directory).
+
+## Why This Matters
+
+Without this plugin, Payload CMS developers have no immediate feedback when they mistype a component path or export name, leading to silent misconfiguration that only surfaces at runtime. This plugin brings the same IDE experience (errors, completions, jump-to-definition) to Payload component references that developers already expect for normal TypeScript imports.

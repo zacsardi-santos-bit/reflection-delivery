@@ -1,5 +1,13 @@
-I'm hitting a config health check failure on our CRI-containerd node e2e CI jobs. We've got the usual family living in the central job config, a regular variant plus serial and flaky ones, and a while back we started running a benchmark variant of these tests too but it looks like nobody ever registered it in the job configuration registry. So now the config integrity check is choking because it finds an orphaned environment config file that doesn't map to any registered job, and it flags that as a misconfiguration.
+## Description
 
-What I want is the benchmark job added to the config so it sits right alongside the serial and flaky CRI-containerd node e2e variants. It needs to be recognized as part of the same CRI-containerd node e2e family, and it should be allowed to share the same cloud infrastructure (GCP) project that its sibling jobs already use, otherwise the project-uniqueness validation will reject it since that check normally wants each job on its own project. So the benchmark entry has to be whitelisted or grouped as an exception the same way the other family members are.
+The CRI-containerd node end-to-end CI jobs include regular, serial, and flaky variants, but the **benchmark** variant is missing from the central job configuration registry. This causes the configuration integrity check to fail: it detects that environment configuration files are not properly accounted for, flagging the situation as a misconfiguration.
 
-Once it's properly registered the configuration consistency checks should pass cleanly, no orphaned env files, no uniqueness complaints. btw the reason this matters is that right now CI tooling reports config inconsistencies, the benchmark job's cloud resource usage isn't being tracked, and the automated validation gate is blocking merges. Getting this entry in brings benchmark in line with the rest of the CRI-containerd node e2e jobs and gets validation green again.
+## Expected Behavior
+
+- A benchmark variant of the CRI-containerd node end-to-end job should be registered in the job configuration alongside the existing serial and flaky variants.
+- The benchmark job should be recognized as part of the same CRI-containerd node e2e family and permitted to share the same cloud infrastructure project as its sibling jobs.
+- The configuration health check that verifies all environment files are properly referenced should pass without errors.
+
+## Why This Matters
+
+Without the benchmark job being registered in the configuration, CI tooling reports configuration inconsistencies, the job's cloud resource usage is not properly tracked, and automated validation gates block merges. Adding this entry brings the benchmark job in line with the other CRI-containerd node e2e jobs and restores clean configuration validation.

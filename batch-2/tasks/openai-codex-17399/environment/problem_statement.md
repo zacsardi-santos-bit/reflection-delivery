@@ -1,5 +1,15 @@
-I'm cleaning up the architectural boundary between our TUI layer and the core library in this Rust project, and right now the TUI crate reaches straight into core for a bunch of stuff, config structs, the config loader types, plugin types and their constants, skill metadata types, plus test-support helpers for building model info and resolving offline model slugs. That tight coupling makes it way too easy for accidental direct deps to sneak in, and it stops the two layers from evolving on their own.
+## Description
 
-What I want is a transitional compatibility re-export module living inside the intermediate client library, and then I want that module exposed from the TUI crate root so every TUI source file, test helpers included, can pull these types from there instead of importing core directly. The shim should re-export everything under the same names they had before, just at the new path, so it's basically a drop-in swap. Think of it as the "legacy" surface, anything in there is a transitional path we'll eventually replace with proper protocol/RPC based communication, so keeping it discoverable matters.
+The TUI component currently imports many types and utilities directly from the core library. This creates a direct dependency between the two layers, which prevents clean separation of the architectural boundary between the UI and the underlying agent/session logic.
 
-Once the compatibility module is wired up and all the TUI code (including the tests) goes through it, the core library should no longer be listed as a direct dependency in the TUI package's manifest at all. That last bit is the point really, dropping it from the manifest is what lets future tooling and CI catch boundary violations. So: new re-export module in the client lib covering config and config-loader types, plugin types plus constants, skill metadata, and the test-support model-info/offline-slug utilities, exposed off the TUI crate root, every TUI file switched over to it, and the direct core dep gone from the TUI manifest.
+We want to introduce a transitional compatibility layer — a re-export module — so the TUI no longer holds a direct dependency on the core library. Instead, TUI code should access the same types through this intermediate shim. This allows us to enforce the boundary between layers and gradually migrate legacy startup and configuration paths toward the proper protocol-based communication channel.
+
+## Expected Behavior
+
+- The TUI package exposes a compatibility module that re-exports all the types and utilities that were previously imported directly from the core library.
+- All TUI source files (including those used in tests) access these types through the compatibility module instead of through a direct core library import.
+- The core library is no longer listed as a direct dependency of the TUI package.
+
+## Why This Matters
+
+Enforcing this boundary ensures that the TUI and core library can be evolved independently. It also improves discoverability — developers know that anything marked as "legacy" in the compatibility module is a transitional path that should eventually be replaced with a proper RPC or protocol-based alternative. Keeping the direct dependency prevents future tooling and CI checks from catching accidental boundary violations.

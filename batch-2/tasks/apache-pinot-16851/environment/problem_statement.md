@@ -1,9 +1,16 @@
-I'm extending Pinot's audit logging so it can capture responses, not just incoming requests. Right now the audit filter over in the broker/controller audit code only logs details about the request coming in, and we've got no way to see what happened when the server responds, like the HTTP status code, how long the thing took to process, or any shared id to tie a response back to its request. I want to add a second audit event that fires at response time when response auditing is turned on.
+## Description
 
-That response event should carry the HTTP status code that got returned, the endpoint path that was called, the HTTP method, and the elapsed processing time in milliseconds. And here's the key bit, both the request-side and response-side audit events need to share the same unique identifier (a UUID) so we can correlate them later and reconstruct the full lifecycle of an API call.
+Pinot's audit logging system currently only captures information about incoming API requests — it does not record what happens after a request is processed. This means there is no way to audit HTTP response codes, request processing durations, or correlate a response back to its originating request.
 
-Config-wise this should be behind its own dedicated response-capture flag, but it also has to respect the existing master audit-enable flag, so response auditing only actually happens when both the global audit system is enabled and the response flag is explicitly on. The master flag stays the overall switch.
+## Expected Behavior
 
-I also need a way to carry state between the request phase and the response phase of the filter, specifically the unique request id and the start time, so the response-side logic can compute the duration and log the matching event. Stash it in the request context or wherever the filter can read it back.
+- When response auditing is enabled via configuration, both the incoming request and its corresponding response should be logged as separate audit events.
+- The request and response audit events must share a common unique identifier (a UUID), allowing users to correlate the two events and reconstruct the full lifecycle of any API call.
+- The response audit event should capture: the HTTP status code returned, the time taken to process the request (in milliseconds), the API endpoint path, and the HTTP method used.
+- The overall audit enable flag should act as a master switch — response auditing should only occur when both the global audit system is enabled and the response-capture flag is explicitly turned on.
+- If no request context is available during the response phase (e.g., the request filter was never called), or if the stored context is invalid, the response filter should handle it gracefully without throwing an exception or altering the response.
+- Errors encountered during response audit processing must not affect the HTTP response sent to the client.
 
-Oh and it's gotta fail gracefully. If there's no request context available during the response phase (say the request filter never ran), or the stored context is invalid, or some internal error pops up, the response filter should just quietly handle it without throwing an exception to callers or altering the actual HTTP response going back to the client. Errors in audit processing must never touch the real response. Without this, operators can't tell from audit logs whether calls succeeded or failed, how long they took, or trace individual request/response pairs, which makes diagnosing issues and meeting compliance harder.
+## Why This Matters
+
+Without response auditing, operators cannot determine from audit logs whether API calls succeeded or failed, how long they took, or trace individual request/response pairs. This makes it difficult to diagnose issues, enforce compliance requirements, or monitor API performance from audit data alone.

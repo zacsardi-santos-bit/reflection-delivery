@@ -1,5 +1,18 @@
-I'm bumping the hardhat plugin package over to a newer major of the Ethereum JS library and it's got some breaking changes I need to work through across all the plugin source, fixtures, and test config. The big one is that a deployed contract's address isn't a synchronous property anymore, you have to call an async method to get it (something like `getAddress()`), so every contract object returned by the plugin methods needs to expose its address that way now. Also the zero address constant and the ether-parsing utility moved into a different namespace in the new library, and the parse-ether function returns a native bigint now instead of the old BigNumber-style wrapper, so fixture test data needs updating to use the new zero address constant and the new parse ether, and anywhere I compare or use that value has to account for the bigint.
+## Description
 
-Separate from the migration, I want a new top-level property on the environment extension that tracks the most recently deployed Unlock contract address directly. Right now that address only lives nested inside a network-specific config object, which is a pain in local dev where no network is pre-registered. So this new property should start out unset (undefined) and get populated as soon as the Unlock protocol deploys. Oh and the networks config registered on the extension needs to include all the known network IDs from the shared networks package, including chain ID 12345.
+The hardhat plugin package needs to be updated to work with a newer major version of the Ethereum JavaScript library. The upgrade introduces breaking API changes that make the existing plugin code incompatible. Most notably, deployed contract addresses can no longer be read from a synchronous property — they now require an asynchronous method call. The zero address constant and ether-parsing utilities have also moved to a different namespace in the new library version.
 
-The lock-creation hardhat task takes a price value, and it needs to pass that through as a plain number instead of the bigint the parse-ether function hands back now, and it should return the created lock's address via that async address method too. Last thing, the test fixture project's hardhat config needs to import the updated toolbox package.
+Beyond the library migration, the plugin's development environment extension needs a new top-level property to track the most recently deployed Unlock protocol contract address directly. Currently this address is only stored inside a network-specific configuration object, making it difficult to retrieve in development environments where the network may not be pre-registered. The new property should start as unset and be populated when the protocol is deployed.
+
+## Expected Behavior
+
+- A dedicated property for the deployed Unlock contract address should exist on the environment extension, initialized as unset, and populated after a successful protocol deployment
+- All contract objects returned by plugin methods should expose their addresses via an asynchronous method call, compatible with the new library version
+- The networks configuration registered on the environment extension should include all known network IDs from the shared networks package, including network ID 12345
+- Fixture test data should use the updated library API for the zero address constant and for parsing ether values (which now returns a native large integer rather than the old wrapper object)
+- The hardhat task for creating locks should return the contract address via the async address method
+- The test fixture project configuration should import the updated toolbox package
+
+## Why This Matters
+
+The plugin currently fails tests because it uses outdated library APIs that no longer exist in the new library version. Developers using the plugin on a local hardhat network need to easily access the deployed Unlock contract address without pre-configuring network-specific settings.

@@ -1,15 +1,37 @@
-I'm doing a patch release across a bunch of Home Assistant integrations and need help knocking out several unrelated bugs, they're independent so treat each on its own.
+## Description
 
-First up the audio MIME type parser in the AI conversation integration only handles uppercase type codes, so when a device advertises its format with lowercase chars (like lowercase "l" instead of uppercase "L" in the audio subtype) it rejects it or botches the param extraction. I want it working identically for both cases regardless of letter case.
+This is a patch release fixing several independent bugs across different Home Assistant integrations.
 
-Also there's a security hole: users configured as local-only (meant to be restricted to the home network) can bypass that by using signed URLs or WebSocket connections from the internet, neither path enforces the local-network check right now. Inactive user accounts also aren't rejected when hitting signed URLs, oh and the WebSocket rejection should send back a clear explanation message saying why remote access was denied.
+## Issues Fixed
 
-On IMAP, when it loses connection to the mail server during a push-mode idle session it logs nothing about canceling the pending idle wait, I want a diagnostic message that includes the server name so admins can actually diagnose it.
+### Audio MIME Type Parsing
+An audio stream type parser failed when a connected device advertised its audio format using lowercase characters (e.g., lowercase "l" instead of uppercase "L" in the audio subtype). This caused audio processing to silently fail for those devices, even though the format was otherwise valid. The parser must handle both uppercase and lowercase variants identically.
 
-Then the MQTT light bug: an optimistic light saved in the off state crashes when you turn it on after a restart, because the saved state has a null color mode and the restore logic blindly overwrites the properly initialized default. After the fix the light should accept turn-on and report a valid color mode, so don't let restore clobber an initialized color mode with null.
+### Local-Only User Bypass via Signed URLs and WebSockets
+Users configured as "local-only" (restricted to the local network) could bypass that restriction by accessing the system through specially signed URLs or WebSocket connections from remote internet addresses. Neither the signed URL handler nor the WebSocket authentication layer enforced the local-network restriction. Additionally, inactive user accounts were not rejected when accessing signed URLs. WebSocket connections from remote addresses must now clearly communicate the reason for rejection.
 
-Roborock vacuums raise a cryptic internal error on an invalid fan speed but only for standard and Q7 series (the Q10 already raises a proper validation error), I want all robot types raising a clear validation error that names the specific invalid value.
+### IMAP Connection Loss — Missing Diagnostic Log
+When the system lost contact with an IMAP mail server during a push-mode idle session, it failed to log any information about the pending idle session being canceled. This made it very difficult to diagnose connectivity problems. A diagnostic message identifying the affected server must be logged when the idle wait is canceled.
 
-Victron Energy Bluetooth: some devices send advertisement packets with mode bytes the parser doesn't understand and right now those count as key failures, eventually triggering unnecessary reauth even when the encryption key is fine. These unrecognized-mode advertisements should be totally neutral, not incrementing or resetting the failure counter either direction. Just to be clear, two bad advertisements, then one unrecognized, then one more bad should still trigger reauth (three consecutive failures).
+### MQTT Light Crashes After Restart
+An optimistic MQTT light that was saved in the off state would fail when turned on after a restart. The saved state stored a null color mode, and on restore that null value overwrote the properly initialized color mode, causing the turn-on operation to report that the light does not have a valid color mode. The restore logic must not overwrite an initialized color mode with a null value.
 
-Finally the Gardena Bluetooth integration needs tiny sensor metadata fixes: "Current distance" and "Current flow" should get a measurement state class, and "Overall flow" should use the water device class instead of the generic volume one.
+### Roborock Vacuum — Unhelpful Fan Speed Error
+Roborock vacuum cleaners (standard and Q7 series) raised an unhelpful internal error when given an unsupported fan speed value, instead of a clear validation message. Users deserve to see a descriptive validation error that identifies exactly which value was invalid.
+
+### Victron BLE — False Reauthentication Prompts
+Certain Victron Energy Bluetooth devices broadcast advertisement packets with mode bytes that the parser does not recognize. The system was incorrectly counting these unreadable packets as authentication failures, eventually triggering unnecessary reauthentication prompts even when the encryption key was perfectly valid. Unrecognized-mode advertisements must be treated as neutral — they should not affect the failure counter in either direction.
+
+### Gardena Bluetooth — Incorrect Sensor Metadata
+The "Current distance" and "Current flow" Gardena Bluetooth sensors were missing the correct measurement state class, and the "Overall flow" sensor was using an incorrect device class (volume instead of water).
+
+## Expected Behavior
+
+- Audio MIME type parsing works regardless of letter case in the subtype
+- Local-only users are rejected from remote addresses when using signed URLs or WebSocket connections, with a clear error reason on WebSocket
+- Inactive users are rejected when accessing signed URLs
+- IMAP idle cancellations are logged with the server name
+- Optimistic MQTT lights restore properly from a saved null color mode and can be turned on without error
+- All Roborock vacuum types raise a descriptive validation error for invalid fan speeds
+- Victron BLE devices with unrecognized advertisement modes do not trigger false reauthentication
+- Gardena Bluetooth sensors report correct state classes and device classes

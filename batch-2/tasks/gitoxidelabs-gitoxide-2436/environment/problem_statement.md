@@ -1,7 +1,21 @@
-I'm poking at the refspec prefix logic in our git implementation and hit a real problem with how exact refs get turned into server-side prefixes when we talk to a remote. When I fetch a fully-qualified branch by name, we're handing the remote a broad prefix that covers the whole parent namespace instead of the exact ref I asked for, so the server advertises every branch in that namespace including ones I never wanted, and my error counts get inflated with unrelated siblings.
+## Description
 
-Here's the concrete symptom: when I fetch a branch that doesn't exist on the remote at all, I want the error to say zero refs matched my request, but instead I get a count of unrelated branches from the same parent directory, because we asked for the whole namespace rather than the specific ref.
+When fetching a specific, fully-qualified branch from a remote repository, the system currently queries the server for all refs under the parent directory of that branch instead of targeting the specific ref. This means fetching one particular branch causes the server to advertise every branch in the same namespace, including unrelated ones. This is both inefficient and produces misleading error messages.
 
-So I want the prefix computation to return the full ref path unchanged when it's given an exact non-wildcard ref. That includes short refs with just a single path component after the refs root, right now those return no prefix but they should be treated as valid exact targets. Simple glob patterns with a single wildcard should still return only the portion of the path before that wildcard. Complex patterns though, multiple wildcards, a leading wildcard, or special glob chars like brackets, those should return nothing since they can't be expressed as a simple server-side prefix.
+## Problem
 
-With that fixed, fetching a specific branch that doesn't exist should report 0 matching refs, and fetching one that does exist should only make the server advertise that exact ref rather than all its siblings. Oh and the error detection during fetch also needs work, right now when an explicit exact ref was requested but zero refs came back from the server, that case isn't flagged as an error even though it should be. Please wire that up too so a missing exact ref surfaces properly.
+When you try to fetch a ref that does not exist on the remote (e.g., a branch that has been deleted or never existed), the error message reports the count of unrelated refs found under the same parent directory — not the count of refs that actually match your request. So instead of accurately reporting zero refs matched, you see a non-zero count from sibling refs in the same namespace.
+
+Additionally, when a ref name has only a single path component after the root refs directory, the system currently returns no prefix at all instead of treating the ref as an exact target.
+
+## Expected Behavior
+
+- When fetching with an exact, non-wildcard refspec, the system should use the full ref name as the server-side filter. Only the requested ref (or refs sharing that exact prefix) should be advertised.
+- When a fetched ref simply does not exist on the remote, the error message should accurately report 0 matching refs.
+- Short refs with only a single path component after the refs root should be treated as valid, exact refs.
+- Simple wildcard patterns with a single glob character should still return only the portion of the path before that wildcard as the prefix.
+- Complex patterns with multiple wildcards or special glob syntax should continue to return no prefix, since they cannot be expressed as a simple server-side filter.
+
+## Why This Matters
+
+This affects the accuracy of fetch error messages and the efficiency of remote queries. With the corrected behavior, fetching a missing ref correctly tells you zero refs matched your request, and fetching a specific branch avoids downloading advertisement lists for the entire namespace.

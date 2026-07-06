@@ -1,5 +1,17 @@
-I'm adding headers-aware window state store support to Kafka Streams and right now the time-ordered window store supplier just can't hand back a store variant that carries record headers through the chain, which blocks any case where header info needs to ride along with windowed aggregations. So first thing, I want the store supplier factory to take a flag saying headers support is required, and when that's set it returns a headers-aware time-ordered window store type instead of the regular one.
+## Description
 
-Beyond the supplier itself I also need dedicated materializer classes for building window state stores, one for standard windows (tumbling, hopping) and one for sliding windows. Each should accept the materialization config, the window definition, and an emit strategy, and then once it's been configured with the streams configuration it produces a correctly layered store. The layering has to respect whether caching and change-logging are enabled or disabled, and it should use headers-aware wrapper types throughout (metering and change-logging wrappers) when the store format is configured as "headers". When it's not headers, use the regular wrappers.
+Kafka Streams window state stores lack support for a headers-aware storage format. Currently, when building stream processing topologies that use time-ordered window stores, there is no way to configure the store to propagate record headers through the full store chain. This is a gap that blocks use cases where header information must be preserved alongside windowed aggregations.
 
-One important distinction here: when the emit strategy is emit-on-window-close and caching is enabled, the standard window materializer should use a time-ordered caching store rather than the regular caching store. The sliding window materializer, though, should always use the regular caching store no matter what the emit strategy is. Getting the wrapper layering right matters for both actual behavior and testability, so please be careful with which wrapper type sits where in the chain.
+Additionally, the existing materializer components for building window state stores (for both standard tumbling/hopping windows and sliding windows) do not support the headers-aware store format, and need to be updated to correctly select and layer headers-aware wrapper types when this format is configured.
+
+## Expected Behavior
+
+- A headers-aware variant of the time-ordered window store should be available and creatable via the store supplier factory by passing a flag indicating headers support is required.
+- The window store materializers (for standard and sliding windows) should correctly build and layer caching, change-logging, and metering wrappers based on the configured materialization options, with full support for the headers-aware format.
+- When the store format is configured as "headers", the materializer should use headers-aware store wrapper types throughout the chain (metering, change-logging).
+- When the emit strategy is set to emit on window close (rather than on each update), the standard window materializer should use a time-ordered caching store instead of the regular caching store.
+- The sliding window materializer should always use a regular caching store regardless of the emit strategy.
+
+## Why This Matters
+
+This change enables Kafka Streams applications to use headers-aware window stores for time-ordered windowed aggregation, supporting use cases that depend on header propagation. The correct layering of store wrapper types is important for both functionality and testability.

@@ -1,5 +1,14 @@
-I'm poking at the experiment page sidebar nav in MLflow and hit an annoying thing where my time range filter gets nuked when I switch tabs. Like if I set a time window while looking at traces and then jump over to the Datasets or Judges tab, the time range just vanishes. Same deal going the other way, from some non-traces tab back into a traces-related tab, my selection's gone. It's frustrating because those time filters are just as relevant no matter which section I'm on, and having them silently reset every time forces me to re-enter the same thing over and over.
+## Description
 
-What I want is for the time range params to always carry over across any tab navigation on the experiment page. When I'm staying within the traces-related tabs (Overview, Sessions, Traces, and the rest of that group), keep everything, including traces-specific context like a selected trace ID. But the moment I cross between traces and non-traces tabs in either direction, or move between two non-traces tabs, only the time range params should follow, and other tab-specific stuff (a selected trace identifier, a selected dataset ID, etc.) should get dropped since it's meaningless outside its own section.
+When navigating between tabs on the experiment page, time range filter parameters (such as a selected time window) are only preserved when moving between traces-related tabs. Switching from a traces tab to any other section — or between non-traces sections — drops these time range parameters entirely, even though they are just as relevant on those other tabs.
 
-So basically the sidebar navigation logic needs updating so time range always survives every tab switch, while the tab-specific params only survive when I'm staying inside the same related group of tabs. The relevant handling lives in the experiment page sidebar nav code, so that's where the fix should go.
+## Expected Behavior
+
+- When navigating **within** traces-related tabs (e.g. Overview, Sessions), all query parameters — including both time range filters and any traces-specific context — should be preserved.
+- When navigating **away from** a traces-related tab to a non-traces tab (e.g. Datasets, Judges), time range filter parameters should still be carried over, but traces-specific context (like a selected trace identifier) should be dropped.
+- When navigating **from** a non-traces tab to a traces-related tab, time range filter parameters should be preserved, but tab-specific context from the source tab (like a selected dataset) should be dropped.
+- When navigating **between** non-traces tabs, the same rule applies: only time range parameters are preserved; other tab-specific parameters are dropped.
+
+## Why This Matters
+
+Users frequently set time range filters to narrow down their data view, and those filters are meaningful regardless of which section of the experiment page they are viewing. Having those preferences silently reset every time a user switches tabs is disruptive and forces repeated re-entry of the same filter selections. Time range context should follow the user across the entire experiment page.

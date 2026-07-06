@@ -1,5 +1,17 @@
-I'm building an agent that binds a ton of tools and I want to use the server-side tool search stuff that some providers offer, instead of shipping every tool's full schema on every single call (wastes tokens, adds latency). The idea is I mark certain tools as "deferred" so the provider retrieves their schema on demand. Right now there's no middleware for this so I'd have to manually detect my provider, inject the right provider-specific search descriptor, and mark each tool myself, which is annoying and easy to get wrong.
+## Description
 
-I want a middleware component I can add to the agent that handles all of it. It should take a list of tools to defer, either by name or by passing the tool object directly, and it also needs to handle tools that were pre-marked as deferred at definition time, not just ones I list explicitly. It figures out which provider the model is using from signals on the model object and injects the correct provider-native search tool into the request (Anthropic and OpenAI are the ones supported for now). Any existing metadata on a tool has to be preserved when deferral gets applied, and plain dictionary tools (provider-native specs) should pass through untouched with no errors.
+When building agents with large numbers of tools, sending every tool's full schema on every model call wastes tokens and increases latency. Several AI providers offer a server-side tool search feature that lets the model retrieve a tool's schema on demand rather than receiving all schemas upfront. However, there is currently no built-in middleware to take advantage of this — developers have to manually mark tools as deferred and inject the correct provider-specific search descriptor, which is error-prone and provider-specific.
 
-Safety matters here: if I accidentally list a tool name that isn't actually bound to the model, raise a clear error right away with the unrecognized name(s) in sorted order, and those validation errors should surface before any provider-related error. If the provider can't be determined or doesn't support server-side tool search, raise a clear actionable error too rather than silently doing the wrong thing. But if nothing actually needs deferring, or the tool list is empty, pass the request through completely unchanged, no unnecessary copying or modification, a clean no-op regardless of provider. And all this needs to work the same for both synchronous and asynchronous model calls.
+## Expected Behavior
+
+- Developers should be able to add middleware to an agent that automatically marks selected tools as "deferred" and injects the right provider-side search descriptor for the active provider (currently Anthropic and OpenAI are supported).
+- Tools can be identified for deferral either by name, by passing a tool instance, or by pre-marking them at definition time. Any existing metadata on a tool must be preserved when deferral is applied.
+- Plain dictionary tools (provider-native tool specs) should pass through unchanged without errors.
+- When no tools are deferred, the request should pass through completely unchanged.
+- If the middleware cannot determine the provider or the provider doesn't support server-side tool search, it should raise a clear, actionable error instead of silently doing the wrong thing.
+- Validation errors for misconfigured tool names should surface before provider-related errors, and should list unknown names in a consistent (sorted) order.
+- The middleware should work for both synchronous and asynchronous model calls.
+
+## Why This Matters
+
+Without this feature, using provider-side tool search requires custom boilerplate in every agent, and it's easy to accidentally send the wrong provider format or skip validation. This middleware centralizes the logic, makes it reusable, and provides clear feedback when configuration is wrong.

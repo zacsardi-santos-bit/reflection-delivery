@@ -1,3 +1,17 @@
-I'm working on a CLI that ships two ways, as a plain Node.js script and as a self-contained standalone binary, and I hit a nasty bug in the relaunch path. When the app needs to re-invoke itself with extra runtime flags (think bumping memory limits with something like `--max-old-space-size`), it currently assumes it's always a plain Node process and just tacks the flags onto the command line. That's fine for script mode but totally breaks in binary mode, because a standalone binary doesn't take Node runtime flags on argv the same way, they have to go through the environment instead. So right now those flags get silently ignored or the relaunch fails outright, which is bad for anyone distributing or running the binary.
+## Description
 
-I want some utilities that detect which mode we're in, standard binary, a binary that's relaunching itself (where the binary re-invokes itself), or a plain script, and then slice the script args out of the argument list correctly per mode since the offset differs. Also I need a helper that builds the spawn config for the relaunch: in binary mode it passes runtime flags via env vars, appending to whatever's already set rather than clobbering it, and in script mode it keeps passing them as command-line args like before. Oh and if someone passes a complex or unsupported flag format in binary mode, I want a clear descriptive error rather than it just quietly doing nothing. Then wire the actual relaunch logic to use these new utilities so both execution modes work right.
+The CLI application can be distributed and run in two different modes: as a standard Node.js script, or as a self-contained standalone binary. When the application needs to relaunch itself with additional runtime configuration (such as increased memory limits), it currently assumes it is always running as a plain Node.js process and passes runtime flags as command-line arguments.
+
+This approach breaks when the application is running as a standalone binary. Binaries do not accept Node.js runtime flags via the command line the same way a standard script invocation does — the flags must be passed through the environment instead.
+
+## Expected Behavior
+
+- The application should be able to detect whether it is running as a standalone binary, as a relaunching binary (where the binary re-invokes itself), or as a standard Node.js script.
+- When relaunching itself in standalone binary mode, runtime flags should be passed through the environment rather than as command-line arguments.
+- When relaunching itself in standard Node.js mode, runtime flags should continue to be passed as command-line arguments.
+- Existing environment settings for runtime flags should be preserved and new flags appended rather than overwritten.
+- Passing complex or unsupported flag formats in binary mode should result in a clear, descriptive error rather than silent failure.
+
+## Why This Matters
+
+Without these fixes, the application can silently fail or behave incorrectly when it attempts to relaunch itself with additional configuration in standalone binary mode. Developers distributing the CLI as a binary and users running such a binary will hit issues where memory or configuration flags are simply ignored, or the relaunch fails entirely.

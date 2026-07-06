@@ -1,5 +1,17 @@
-I'm adding a native PostgreSQL sink to Vector and I keep hitting the wall that there's just no built-in way to write logs, metrics, or traces straight into a Postgres table. Lots of teams already run Postgres as their main store and want event data there for analytics or auditing or long-term retention without standing up a separate ETL pipeline, so I want this to be a first-class sink that fits Vector's existing sink architecture.
+## Description
 
-The config should be simple: a connection endpoint string and a destination table name as the two required fields, plus a pool size and batching behavior that have sensible defaults. It needs to be configurable via TOML and parse cleanly from a config file, and it has to play nice with Vector's standard config generation tooling so it works with the generate command. Oh and it should accept all three event types (log, metric, and trace), support Vector's standard batching and request retry settings, and do connection pooling for efficient concurrent writes since that's the whole point performance-wise.
+Vector currently has no built-in way to send observability events (logs, metrics, or traces) directly to a PostgreSQL database. This is a common use case for teams who want to store event data in their own Postgres tables for analytics, auditing, or long-term retention.
 
-On the implementation side it's got to be registered as a feature-gated module in the build system (Cargo) and wired into the existing sinks module so it actually gets picked up. Also the insertion path should use PostgreSQL's JSON capabilities to map event fields into table columns rather than me hand-writing column mappings. Basically I want it to feel like every other Vector sink, just pointed at Postgres.
+We need a new PostgreSQL sink component that allows Vector to write batches of events into a user-specified database table. The sink should accept a connection string and a table name as configuration, and support connection pooling to handle concurrent writes efficiently.
+
+## Expected Behavior
+
+- Users should be able to configure the sink with a PostgreSQL connection string and a destination table name
+- The configuration should be parseable from a TOML config file and support Vector's standard configuration generation mechanism
+- The sink should accept log, metric, and trace events
+- Batching and request retry behavior should be configurable using Vector's standard settings
+- Connection pooling should be supported to improve performance
+
+## Why This Matters
+
+Many organizations already use PostgreSQL as a primary data store and would benefit from being able to route observability data there directly from Vector without needing a separate ETL pipeline. Adding native Postgres support closes this gap and makes Vector a first-class option for Postgres-based observability workflows.

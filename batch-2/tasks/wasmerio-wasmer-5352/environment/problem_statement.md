@@ -1,5 +1,12 @@
-I'm messing with cron expressions in the Wasmer config library (the app config bits) and I want to be able to spit out a human-readable description of what a schedule actually means. Like when I've got "@hourly", I want to ask for the English version and get back "Every hour." Problem is the parsed cron value that the expression type holds onto internally isn't public, so from outside the library I can't reach in and call the describe stuff on it. The type parses and stores the schedule fine, it's just that the field is private so callers are stuck with the raw string.
+## Description
 
-Can you make the underlying parsed schedule object a public field on the cron expression type so I can get at it and describe it from my own code? The parsed value comes from the cron library that's already in use, and that thing has a method for producing an English description, so once the field is exposed I should be able to construct a cron expression from something like "@hourly" and then call describe on the exposed field and get "Every hour" back.
+The cron expression type in the Wasmer configuration library parses and stores cron schedules, but the internal parsed representation is not accessible to callers. This means it is impossible to obtain a human-readable description of what a cron schedule actually does — for instance, understanding that a certain expression means "Every hour."
 
-The why here is pretty mundane but real: UIs, logs, and dev tooling all want to show cron schedules in plain language instead of cryptic expressions, and right now that's just not possible because the schedule object is locked away. Exposing it lets downstream code generate friendly (and potentially localized) descriptions of scheduled jobs.
+## Expected Behavior
+
+- Cron expressions should expose their underlying parsed schedule object as a public field, so that callers can programmatically work with it.
+- Given a cron expression like "@hourly", it should be possible to retrieve a human-readable English description such as "Every hour" by calling the appropriate describe method on the exposed field.
+
+## Why This Matters
+
+User interfaces, logging systems, and developer tooling often need to present cron schedules in plain language rather than as raw expressions. Without exposing the internal schedule object, this kind of human-readable output is not achievable. Exposing the underlying cron value allows downstream code to generate friendly, localized descriptions of scheduled jobs.

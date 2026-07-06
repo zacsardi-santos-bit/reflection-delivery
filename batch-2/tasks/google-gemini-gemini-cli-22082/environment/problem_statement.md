@@ -1,7 +1,17 @@
-I'm building a just-in-time context feature for our AI assistant and need help wiring it up. Right now project context (coding conventions, guidelines specific to a part of the codebase) only gets loaded once at session start, so when the assistant later touches a file in some subdirectory it never explored, it misses the local conventions that live there. I want it to check for relevant context every time it does a file operation and surface that right in the tool output so the model can apply it immediately.
+## Description
 
-So I need a new module holding the discovery logic. It should first check whether the feature is enabled, then call into the context manager to discover context relevant to the accessed path, passing all the workspace roots as trusted directories. It returns an empty string when the feature's disabled, when there's no context manager available, when nothing's found, or when any error happens (fail quiet, don't blow up the tool). There should also be a helper that appends discovered context to existing content using specific section delimiters, and if nothing was discovered it just returns the original content unchanged.
+When the AI assistant reads, writes, edits, or lists files in a project, it should automatically discover and surface any project-specific guidelines or conventions that exist in subdirectories relevant to those files. Currently, this kind of context is only loaded once at the start of a session, meaning the AI may miss important local conventions for code in subdirectories it visits later. This "just-in-time" context should be appended to the tool's output so the AI can immediately apply those conventions.
 
-Then all five of our major file tools need updating to call this discovery and fold any results into what they return to the model, that's read file, write file, edit file, list directory, and read many files. Each one attempts discovery against the path it accessed and appends new context with the clearly marked delimiters, otherwise completes normally.
+Additionally, when a chat session is reset, the context manager should be refreshed to clear any previously loaded paths, preventing stale context from carrying over into the new session.
 
-Oh and the other piece: when a chat session gets reset, the context manager should be refreshed to clear its record of previously loaded paths so stale context doesn't carry into the new session. Important bit, that reset has to succeed gracefully even when no context manager is configured at all, so guard for the None case.
+## Expected Behavior
+
+- When a file operation tool (read, write, edit, list directory, or read many files) executes, it should attempt to discover any new project context relevant to the accessed path.
+- If new context is discovered, it should be appended to the tool's output with clearly marked section delimiters.
+- If context discovery is disabled, unavailable, or fails, the tool should complete normally without any context appended.
+- When the chat is reset, any context manager tracking loaded paths should be refreshed so the new session starts clean.
+- Chat reset must succeed gracefully even when no context manager is configured.
+
+## Why This Matters
+
+Without this feature, the AI assistant may apply outdated or incorrect conventions when working in subdirectories it has not previously explored during a session. Automatically surfacing subdirectory-level context as files are accessed ensures the AI always has the most relevant project guidelines available.

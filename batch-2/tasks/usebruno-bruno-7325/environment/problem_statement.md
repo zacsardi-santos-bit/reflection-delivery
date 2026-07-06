@@ -1,7 +1,24 @@
-I'm working on the Bruno-to-Postman collection exporter and I keep hitting two bugs that make the output break when people import into Postman.
+## Description
 
-First one's about multipart form data with file attachments. Right now when a file field has a path, the exporter wraps that path in an array, like a single-element list, but Postman just wants a plain string for a single file path. So the form data comes out malformed on import. And when a file field has no path set at all, we're currently emitting an empty array instead of leaving the value absent, which also violates what Postman expects. I want the file field's path exported as a plain string when it's there, and just absent (not an empty list) when there isn't one.
+There are two bugs in the Bruno-to-Postman collection exporter that cause incorrect output when importing Bruno collections into Postman.
 
-Second bug is around bodyless methods. Postman treats GET and HEAD as conventionally bodyless and it'll automatically strip (prune) any body off those requests when it imports them. There's a special Postman flag that disables that body pruning, and we're not setting it, so any GET or HEAD request that actually has a body in Bruno silently loses its body after import. I want that flag set whenever the method is GET or HEAD and there's a body present. It should only show up in that exact case, not for POST or other methods, and not for GET/HEAD requests that have no body either.
+**Bug 1: File paths in multipart form data are wrapped in arrays**
 
-Both of these matter because folks migrating or sharing collections via this export end up with broken file uploads and missing bodies on GET/HEAD requests, which quietly breaks their API and test behavior. Can you fix both in the exporter?
+When exporting a Bruno collection that contains multipart form data with file attachments, the file path for each file field is incorrectly wrapped in an array. Postman expects a plain string for a single file path, not an array. As a result, importing the exported collection into Postman produces malformed form data.
+
+Additionally, when a file field has no path set, the exporter currently emits an empty array instead of an absent value, which also violates Postman's expected format.
+
+**Bug 2: GET and HEAD requests with bodies lose their body on Postman import**
+
+Postman automatically strips (prunes) the body from HTTP methods that are conventionally bodyless, such as GET and HEAD. Postman provides a special flag to override this behavior and preserve the body for these methods. The Bruno-to-Postman exporter does not currently set this flag, so any GET or HEAD requests that have a body in Bruno will silently have their body discarded when imported into Postman.
+
+## Expected Behavior
+
+- File fields in multipart form data should export their path as a plain string, not an array.
+- File fields with no path should export their path as an absent value, not an empty array.
+- GET and HEAD requests that include a body should include a flag in the exported Postman item that tells Postman to preserve (not prune) the body.
+- POST and other method requests, as well as GET/HEAD requests with no body, should not include this flag.
+
+## Why This Matters
+
+Users who rely on Bruno-to-Postman export to share or migrate collections will find that file uploads and GET/HEAD requests with bodies are broken or missing in Postman after importing, leading to incorrect test or API behavior.

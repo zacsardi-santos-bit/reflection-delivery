@@ -1,5 +1,14 @@
-I'm hitting a gap in our thread listing where anything that started as a goal-driven session just vanishes from the list. We support two kinds of sessions: interactive ones where a user types the first message, and agentic/automated ones where an objective (a goal) gets set before any user interaction happens. Right now the listing only picks up threads that have a first user message, so all our goal-initiated sessions either show up empty or don't appear at all, which means there's no way to find or resume them in the UI. That's rough for anyone running agentic workflows and expecting to revisit completed or in-progress runs.
+## Description
 
-What I want is for the goal's objective text to become the preview for those threads so they actually surface in discovery and list views. And here's the subtle part: if a user later sends a message in one of those goal-initiated sessions, that message should get recorded as the first user message, but the preview should stay as the goal objective, since the goal is a better summary of what the session's about than whatever the user typed afterward. For plain interactive sessions with no goal, keep the current behavior exactly, the first user message is both the preview and the first user message. And threads that have neither a goal objective nor any user message should still get filtered out of listings entirely, same as today.
+Thread listings currently use the first user-typed message as the preview text shown in discovery and list views. This works for interactive sessions where a user opens a conversation and types something. However, agentic or programmatic sessions often begin with an automated goal — an objective set before any user interaction occurs — and never produce a first user message at all. As a result, these goal-initiated sessions either appear invisible in thread lists or show empty previews, making them impossible to identify or navigate back to.
 
-To keep this clean, the thread data structures that carry preview and first-user-message info need a dedicated preview field so those two pieces of information stay separate rather than being conflated into one.
+## Expected Behavior
+
+- When a session is initiated with a goal objective, the objective text should serve as the preview for that thread in listings.
+- If a user later sends a message in a goal-initiated session, their message should be recorded separately as the first user message, while the goal objective remains the thread's preview.
+- For ordinary interactive sessions (no goal), the preview and first user message should remain the same (the user's opening message).
+- Threads with no discoverable preview — neither a goal objective nor a user message — should continue to be excluded from listings.
+
+## Why This Matters
+
+Teams using agentic workflows rely on the thread list to manage and revisit ongoing or completed sessions. Without this fix, all goal-driven sessions are invisible in the UI, making it impossible to track or resume agentic runs. Surfacing the goal objective as the preview gives users a meaningful label for every session regardless of how it was started.

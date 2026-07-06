@@ -1,5 +1,15 @@
-I'm hitting a bug in the async zero-sleep lint rule, the one that flags `trio.sleep(0)` style calls where the duration is zero and offers an autofix to swap them for the equivalent checkpoint call from the library's low-level submodule. The autofix is generating the wrong import. The thing it's pulling in is actually a submodule of the async library, not a plain attribute, so the only way it resolves at runtime is a direct module import (like `import trio.lowlevel`), but right now the fix emits a destructured from-import instead, and when I apply it Python can't resolve the submodule through that style and the code blows up at import time.
+## Description
 
-There's a second, related problem, when the original sleep was imported under an alias, the replacement reference the fix generates ends up as a short unqualified name rather than the fully-qualified dotted path, so even if the import were fixed on its own the call site is still wrong.
+The async zero-sleep linting rule, which detects and auto-fixes calls to sleep with a zero duration, generates incorrect import statements in its autofix suggestions. The component being imported is a submodule of the async library, not a plain attribute, so the only correct way to import it is as a direct module import. However, the current autofix generates a destructured "from" import instead.
 
-I want both fixed so applying the autofix always yields valid, runnable Python, meaning a proper direct submodule import plus a fully-qualified dotted reference in the replacement expression, and that fully-qualified path should hold even in the aliased-import case rather than deriving anything from the alias. The whole point is that autofixes producing broken code kill trust in the linter, nobody wants to apply a suggestion and then have to hand-correct an import error afterward. Oh and the linter's snapshot tests need updating to reflect the corrected output too.
+This means that after applying the suggested fix, the generated code may fail to run because the import style is wrong for a submodule.
+
+## Expected Behavior
+
+- The autofix should generate a direct submodule import, not a destructured import.
+- The replacement call should always use the fully-qualified module path, not a short unqualified reference.
+- When the sleep function has been imported under an alias, the autofix should still correctly use the fully-qualified submodule path in the replacement, not a reference derived from the alias.
+
+## Why This Matters
+
+Autofixes that produce broken code undermine user trust in the linter. Anyone who applies the suggested fix will end up with code that fails at import time, requiring a second manual correction. The fix should generate import statements that are syntactically and semantically valid.

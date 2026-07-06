@@ -1,5 +1,16 @@
-I'm working with TensorFlow's linear spacing op (the linspace-style helper in the math operations module, `@tensorflow/python/ops/math_ops.py` or wherever `linspace`/`lin_space` lives) and I need it to grow up a bit. Right now it only takes scalar start and stop, which is useless when I want to interpolate between two vectors element-wise, or build batched coordinate grids, or generate parallel sequences across a batch dimension. Doing that today means manual looping or fragile custom code, so I'd like the capability baked into the core op.
+## Description
 
-What I want: start and stop can be multi-dimensional tensors, and the function generates the evenly-spaced sequence along a chosen axis. Add an axis parameter defaulting to 0 that controls which dimension of the output carries the interpolated values, and it needs to handle both positive and negative axis indices. Scalar inputs should keep working exactly like before and match the standard reference linspace behavior.
+The built-in linear spacing operation in TensorFlow currently only supports scalar start and stop values, which limits its usefulness for multi-dimensional workflows. Developers frequently need to generate evenly-spaced sequences between multiple pairs of endpoints at once — for example, interpolating between two vectors element-wise, building batched coordinate grids, or creating parallel sequences across a batch dimension. With the current scalar-only restriction, these use cases require manual looping or custom workarounds.
 
-Couple of correctness things that matter to me. The first and last output values have to be exactly equal to the start and stop inputs, not approximately, so endpoint precision holds no matter how many steps I ask for (floating-point drift at the ends is a no-go). Also the number-of-steps argument should accept a dynamically determined tensor value, not just a hard-coded Python int, since I sometimes only know it at runtime. And it's gotta work even when the shapes of start and stop aren't fully known at graph construction time (partially defined shapes, dynamic dims, all that). Basically make batch interpolation first-class without me writing boilerplate around it.
+## Expected Behavior
+
+- The linear spacing function should accept multi-dimensional tensors for both start and stop, generating the interpolated sequence along a user-specified axis.
+- An axis parameter should control which dimension of the output holds the evenly-spaced values, with a default of 0. Both positive and negative axis indices should be supported.
+- Scalar inputs should continue to work as before and match the behavior of the standard reference implementation for linear spacing.
+- The first and last output values must exactly equal the start and stop inputs — not approximate them — so that endpoint precision is guaranteed regardless of the number of steps.
+- The number of steps parameter should accept dynamically-determined values (e.g., tensors whose values are only known at runtime), not just statically-known Python integers.
+- The function should handle cases where the shapes of start and stop are not fully known at graph construction time.
+
+## Why This Matters
+
+Without multi-dimensional support, any workflow that needs to simultaneously interpolate across a set of start/end pairs cannot use the standard utility and must rely on fragile custom implementations. Adding this capability directly into the core operation makes batch interpolation first-class, reduces boilerplate, and ensures numerical correctness at endpoints.

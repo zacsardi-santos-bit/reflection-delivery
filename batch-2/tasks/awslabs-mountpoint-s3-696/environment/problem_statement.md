@@ -1,5 +1,18 @@
-I'm building out a cloud filesystem tool and hit two caching gaps I want you to close.
+## Description
 
-First one's about the metadata TTL config. Right now it takes any numeric value, including stuff that's absurdly large or even too big to fit in the integer type we parse it into, and when it overflows the error you get is useless. I want a real upper bound of roughly 100 years enforced, so if someone passes a TTL bigger than that max the tool should bail out with a clear message that tells them the maximum allowed value expressed in seconds (100 years worth). And separately, when the value can't even be parsed because it overflows the integer type entirely, I want a distinct message saying the number is too large rather than the confusing default. Two different failure modes, two clear messages.
+The filesystem tool currently has two related issues around metadata TTL configuration and caching behavior:
 
-Second, I need negative caching, behind a feature flag so it's opt in. Today when the fs looks up a path that isn't in cloud storage it hits the cloud again on every single subsequent lookup for that same missing path, which is wasteful especially for workloads that keep probing for files that don't exist yet. So when negative caching is on I want a failed lookup remembered and later lookups for the same path to skip the redundant cloud request. But here's the catch, if a directory listing later discovers that file now actually exists, the negative cache entry for it has to get invalidated so the file becomes reachable through normal lookups again. Oh and the negative cache needs a configurable size limit so it doesn't grow unbounded. The TTL validation lives with the metadata cache config and the negative cache logic sits in the filesystem lookup and readdir paths, so wire it in there.
+1. **No upper bound on metadata TTL**: Users can specify arbitrarily large values for the metadata cache duration, including values that are so large they would overflow the integer type used to represent them. When this happens, the error message is confusing and not actionable. The tool should enforce a sensible maximum limit (approximately 100 years) and clearly explain why a given value was rejected.
+
+2. **No negative caching**: When the filesystem performs a lookup for a file that doesn't exist in cloud storage, it currently re-queries the cloud on every subsequent lookup for the same path. This is inefficient — especially during operations where a missing file is repeatedly probed. A negative cache would allow the filesystem to remember that a file was not found and skip redundant cloud requests for the same missing path.
+
+## Expected Behavior
+
+- When a user provides a metadata TTL value larger than the allowed maximum, the tool should exit with a clear error message indicating the maximum allowed value (~100 years, expressed in seconds).
+- When a user provides a metadata TTL value that cannot even be parsed as a valid integer (because it is too large to fit in the integer type), the tool should exit with a clear error message stating the number is too large.
+- When the negative cache is enabled, a failed file lookup should be remembered, and subsequent lookups for the same path should not trigger additional cloud requests.
+- A directory listing operation should be able to discover newly created files and invalidate any negative cache entries for those files, making them accessible via subsequent lookups.
+
+## Why This Matters
+
+Users running the filesystem with caching enabled need predictable, safe TTL values and clear feedback when they provide invalid input. The negative cache is important for workloads that probe for files that may not yet exist, preventing unnecessary cloud API calls and improving performance.

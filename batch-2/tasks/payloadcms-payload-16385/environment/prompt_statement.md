@@ -1,0 +1,9 @@
+I'm bootstrapping a new codemod package inside the Payload CMS monorepo, the kind of thing that'll eventually auto-migrate user codebases during major version bumps. Right now none of the foundational pieces exist and I want to lay them down so future contributors have a shared pattern to build against instead of everyone reinventing arg parsing and error recovery.
+
+First thing I need is a CLI arg parser that takes an array of argument strings and hands back a structured flags object. When called with no args it should fall back to sensible defaults, in particular the path defaults to the current working directory. It should understand a positional path argument, a boolean dry-run flag (and recognize a longer hyphenated alias for that same flag too), a flag to list available transforms, a flag to print the changes/output, and an option to pick a specific transform by name.
+
+Second, a transform runner that takes a TypeScript project plus a list of transforms, applies each one in order, and aggregates everything into one result. Key thing here: it can't bail when a transform throws, it's gotta keep going through the rest, and the final aggregate should tell me whether any failures happened. Each per-transform result needs the transform name, the files it changed, any notes, and whatever error got thrown (if any).
+
+Third, ship an example no-op transform as a reference template, it should leave source completely unchanged and be idempotent, oh and include fixture files showing the input and the matching expected output.
+
+Also I want a test helper that spins up an in-memory project from a source string, runs a given transform against it, and returns the resulting source text as a plain string, so writing unit tests for individual transforms doesn't need a real project on disk.

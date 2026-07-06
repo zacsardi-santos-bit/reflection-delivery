@@ -1,5 +1,14 @@
-I've got a bug with how box selections behave on Plotly scatter charts in my notebook. When I draw a box over a chart that has multiple data points sharing the same x-coordinate and I only mean to grab the one visible marker under my cursor, I get back all the other points at that same x-value too, even though Plotly already handed us the exact point that was selected. The selection's being expanded for no reason and downstream data processing ends up receiving way more points than I intended, which makes selections unreliable, especially for datasets with repeated x-values like multiple measurements at the same time or category.
+## Description
 
-What I want: when Plotly gives us an explicit list of selected points (which it does for marker-mode scatter charts with visible markers), just return those exact points as-is, don't go searching for extra points that happen to share the same x-coordinate. For charts that only draw lines without visible markers, Plotly doesn't include that point-level selection data, so the existing range-based approach of finding all in-range points along the x-axis should still kick in as a fallback.
+When a user selects a single marker on a Plotly scatter chart where multiple data points share the same x-coordinate, the selection incorrectly returns all points at that x-value instead of just the explicitly selected marker. This causes downstream data processing to receive far more points than the user intended to select.
 
-Also this needs to work per-trace on figures that mix trace types, like one figure with a markers trace and a line trace side by side. The markers trace should use Plotly's explicit selection payload while the line-only trace falls back to the range-based logic. So the fix is really about applying these two strategies on a per-trace basis in the selection handling logic rather than one blanket approach. Point being, marker selections become trustworthy and pure line charts keep behaving exactly like they do now.
+## Expected Behavior
+
+- When Plotly already provides an explicit list of selected points (as it does for charts with visible markers), those exact points should be returned without any additional expansion.
+- The system should NOT search for and include additional data points that happen to share the same x-coordinate as a selected point.
+- For line-only traces (where Plotly does not provide point-level selections), the existing range-based fallback should continue to work as before.
+- In figures that combine both marker traces and line-only traces, marker trace selections should be preserved from Plotly's payload, while line-only trace selections should still use the range-based fallback.
+
+## Why This Matters
+
+Users relying on chart selections for data filtering expect to get back exactly the points they selected. When a dataset has repeated x-values (e.g., multiple measurements at the same time or category), the over-expansion silently returns unrelated data points, making selections unreliable. Fixing this makes marker selections trustworthy while preserving the correct behavior for pure line charts.

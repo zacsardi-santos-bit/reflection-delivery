@@ -1,5 +1,25 @@
-I'm building out the vim-style editing mode in my CLI tool and there are a bunch of basic character-level commands that just aren't there yet, and it's driving me nuts because muscle memory keeps hitting stuff that does nothing. First off there's no uppercase X to delete the character right before the cursor, and no way to toggle case of characters at the cursor (should advance the cursor past whatever range it touched). Also r to replace a single char in place by typing the replacement isn't wired up, and if I hit Escape while it's waiting for that replacement char it needs to cancel cleanly with no leftover pending state.
+## Description
 
-Navigation's got holes too. I can't do f or F to jump to a specific char forward or backward on the current line, or the t/T "stop just before/after the target" variants, and there's no repeating the last such search in the same or opposite direction (the ; and , style repeat). Oh and none of this can delete yet either, so I want delete-to-search-target working forward and backward, both inclusive and exclusive, as a standalone delete and also combined with the change operator which should delete and drop me straight into insert mode.
+The CLI's built-in text editing mode that mimics a well-known terminal editor is missing several fundamental character-level editing and navigation commands that experienced users expect. Specifically, the following capabilities are absent:
 
-Everything here needs to respect a numeric count prefix to repeat the op, and the text-modifying ones have to be repeatable through the normal dot-repeat mechanism. And please handle Unicode and multi-byte chars correctly throughout, jumping to the Nth occurrence should count actual characters not bytes. These are the most-used commands in interactive editing so the mode feels broken without them.
+- Deleting the character **before** the cursor (the uppercase delete command)
+- **Toggling the case** of characters at or after the cursor position
+- **Replacing** a character in place by pressing a key sequence to specify the replacement
+- **Jumping the cursor** to a specific character ahead or behind on the current line (including a "stop just before the target" variant)
+- **Deleting text** from the current cursor position to a target character (forward and backward, both inclusive and exclusive)
+
+Without these commands, users who rely on the editing mode for efficient text manipulation find themselves missing core parts of the expected editing experience.
+
+## Expected Behavior
+
+- Users can delete the character(s) immediately before the cursor with an optional numeric repeat count
+- Users can toggle the case of one or more characters at the cursor, with the cursor advancing past the affected range
+- Users can replace one or more consecutive characters by specifying a replacement character; pressing Escape cancels the pending replacement
+- Users can jump the cursor to the Nth occurrence of a character forward or backward on the current line, including a variant that stops just before or just after the match
+- Users can repeat the last character-search jump in the same or opposite direction
+- Users can delete from the cursor to a forward or backward character search target (inclusive or exclusive), including when combined with the change operator (which also enters insert mode)
+- All count-prefixed variants work correctly, the commands that modify text are repeatable via the standard repeat mechanism, and all operations handle Unicode and multi-byte characters correctly
+
+## Why This Matters
+
+These commands are among the most frequently used in interactive terminal text editing. Their absence makes the editing mode feel incomplete and forces users to work around limitations that they would not encounter in a full editor.

@@ -1,7 +1,15 @@
-I'm adding proper Apple Silicon (ARM64) support to Flutter's iOS and macOS build tooling and could use a hand. Right now every place we shell out to Apple's developer command line tools uses a hardcoded path or plain tool name, and on ARM64 Macs that ends up running those tools under Rosetta 2 x86 translation instead of natively, which causes crashes and weird build failures that are a pain to diagnose. Apple Silicon is super common among Flutter devs now so I want native execution to be the default there.
+## Description
 
-What I want is a new method on the class that manages Apple developer toolchain invocations (over in `@packages/flutter_tools/lib/src/macos/xcode.dart`) that detects whether the host is ARM64 and returns the right command prefix, so on ARM64 it forces native execution using an architecture flag like `arch -arm64 <tool>`, and on x86 it just returns the plain tool name unchanged. Then use that everywhere we invoke these tools, so xcodebuild calls, simulator control ops, framework creation, device discovery, and the EULA/SDK checks all go through it.
+Flutter's iOS and macOS build tooling invokes Apple's developer command-line tools using hardcoded paths. On Apple Silicon Macs (ARM64), this can cause those tools to run under the Rosetta 2 x86 translation layer instead of natively. Running under translation can cause crashes and other unexpected failures when building Flutter apps for iOS.
 
-Also the class handling iOS Simulator interactions (`@packages/flutter_tools/lib/src/ios/simulators.dart`) needs to take the Apple dev toolchain manager as a dependency so it can build all its process invocations with that architecture-aware prefix too.
+## Expected Behavior
 
-Oh and one cleanup, the check for whether the xcdevice sub-tool is available currently does a separate process lookup to locate it, which is redundant. It's enough to just check that Xcode itself is installed and meets the version requirements, so drop the extra lookup. x86 behavior should stay exactly as it is today.
+- When running on an ARM64 Mac, all Apple developer tool invocations should be explicitly prefixed to force native ARM64 execution rather than going through Rosetta translation.
+- When running on an x86 Mac, the current behavior should remain unchanged.
+- The build system should detect the host architecture at runtime and choose the appropriate invocation style accordingly.
+- The detection of whether specific Apple sub-tools (like xcdevice) are available should be simplified — the current approach of doing a secondary process lookup is redundant and can be removed.
+- The class that manages iOS Simulator control must accept the Apple developer toolchain manager so it can use the correct, architecture-aware command prefix for all simulator operations.
+
+## Why This Matters
+
+Apple Silicon Macs are increasingly common among Flutter developers. When the build tools run in Rosetta translation unexpectedly, the developer gets hard-to-diagnose crashes or build failures. Forcing native execution on ARM64 hardware ensures reliable builds and avoids translation-related issues across the full range of iOS build operations: compiling, linking, framework creation, simulator management, and device discovery.

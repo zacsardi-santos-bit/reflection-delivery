@@ -1,7 +1,13 @@
-I'm bumping the arg parsing library that mocha's CLI leans on to a new major version and it's breaking everything. The old code pulls the library in through a subpath import and calls a state-reset method to get a clean parser, and neither of those exist anymore in the new major, so every one of the CLI builder option tests blows up because the test setup can't spin up a fresh parser the way the new version wants.
+## Description
 
-What I need is to switch the import in the CLI entry over in `@bin/options.js` (and wherever else it's referenced) from the old subpath-based import to the plain top-level import that the new major supports. Then drop the deprecated reset-state call so the tests can init the parser using the library's modern factory call instead of the old subpath-plus-reset dance.
+Mocha's command-line interface uses a third-party argument parsing library to define and process all its CLI flags. The project is currently pinned to an older major version of that library. This older version exposed an import pattern (via a subpath) and an API method for resetting state that are no longer available in the current major version. As a result, attempting to use or test the CLI option setup with the updated library causes failures across the entire suite of CLI option tests.
 
-The important thing is nothing about mocha's actual options changes, all the existing CLI flags need to keep getting registered and recognized after the swap, and that's the full set, the number-typed ones, the string ones, the boolean flags, and the array-typed flags too, all of them should still resolve correctly through the upgraded parser.
+## Expected Behavior
 
-Why it matters: anyone running mocha with command-line flags depends on those parsing right, and if this dep is stale or incompatible the CLI just breaks or worse silently misbehaves, plus staying current keeps us getting upstream support and security fixes. So keep the behavior identical, just modernize how we import and initialize.
+- The argument parsing library import in the CLI entry point should use the modern, top-level import pattern supported by the new major version.
+- All existing CLI options (covering number, string, boolean, and array types) should continue to be properly registered and recognized by the argument parser when using the upgraded version.
+- The fresh-instance initialization pattern used in tests should work using the library's standard factory call rather than the old subpath import and reset-state API.
+
+## Why This Matters
+
+Users running mocha with any of its command-line flags depend on those options being correctly parsed. If the underlying argument parsing library is out of date or incompatible, the CLI can break entirely or silently misbehave. Keeping the dependency up to date also ensures continued support and security fixes from the upstream library.

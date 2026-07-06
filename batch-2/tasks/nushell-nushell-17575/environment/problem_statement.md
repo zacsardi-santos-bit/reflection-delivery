@@ -1,7 +1,20 @@
-I'm hitting a weird bug in how nushell's describe command reports column types when a table has mixed value types across rows. When some rows in a column hold a simple value and others hold a more complex nested record, the type output ends up showing a union nested inside another union instead of one flat union of all the distinct types. That nested form is redundant and just plain wrong, it shouldn't ever show up.
+## Describe command produces nested union types instead of flat ones
 
-What makes it more annoying is that it depends on row ordering. If the simple-typed rows come before the complex nested-record rows, I get the nesting problem, but if the complex rows come first it's fine. That's inconsistent, the describe output should look the same no matter what order the rows appear in the table, so the type inference and flattening logic needs to merge all variants into a single flat union rather than accumulating a union-of-unions.
+## Description
 
-Also, and this is separate but related, glob-pattern values and plain string values living in the same column are getting silently merged into one string type. I'd expect them to stay as two distinct entries in the union since they're genuinely different types. And the ordering of types within the union should match the order they were first seen across the rows.
+When using nushell's built-in type-inspection command on a table that has columns containing values of different types, the output sometimes contains redundantly nested union type expressions. Instead of showing a clean, flat union of all distinct types, the result shows a union type wrapping another union type. This makes the type output confusing and incorrect.
 
-So basically: fix the type inference and flattening so unions are always flat (never a union containing a union), glob and string stay distinct, and the result is stable regardless of row order. This matters because accurate type descriptions are how folks reason about the shape of their data, and misleading nested or collapsed unions make typed pipelines and data-shape debugging way harder than it needs to be.
+The problem is especially apparent when rows with a simpler type appear before rows with a more complex nested record type. In that ordering, the type inference logic fails to properly flatten the union — it accumulates a nested union rather than merging all variants into one.
+
+Additionally, glob-pattern values and plain string values in the same column are being incorrectly merged into a single type rather than kept as two distinct types in the union. This loses the distinction between the two value kinds.
+
+## Expected Behavior
+
+- Type inspection of a mixed-type column must always produce a flat union — nested union types should not appear in any output
+- The flattening behavior must be consistent regardless of the order rows appear in the table
+- Glob values and plain string values must remain distinguishable in the union output rather than being collapsed
+- The order of types in the union should reflect the order in which they were first encountered across the rows
+
+## Why This Matters
+
+Accurate type descriptions are essential for users to understand and reason about the shape of their data. Nested or incorrectly collapsed type unions are misleading and may cause confusion when working with typed pipelines or debugging data shapes.

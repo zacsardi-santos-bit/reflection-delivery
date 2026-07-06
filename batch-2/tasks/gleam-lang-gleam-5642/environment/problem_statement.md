@@ -1,5 +1,22 @@
-I hit a nasty correctness bug in the Gleam compiler around list patterns and clause guards. When I write a case expression that matches a list, captures the tail as a variable (the usual `[first, ..rest]` kind of thing), and then references that tail variable inside the guard, say I prepend some fixed elements onto `rest` to build a new list and compare it against another value, the compiled output just drops the tail. The guard behaves as if the tail were an empty list, so the comparison is basically always wrong and the guarded branch never fires when it should.
+## Description
 
-This shows up on both compilation targets. In the Erlang output the guard's list construction needs to include the captured tail variable via cons-cell syntax, but right now the tail's just omitted. On the JavaScript side the tail should get extracted into a local variable before the guard runs, and the guard should use that local when building the comparison list, but instead it's dropped and the guard runs against an empty-ended list.
+When a case clause matches a list and captures the tail as a variable, and that tail variable is then referenced inside the clause guard (for example, to construct a new list and compare it to something), the compiler silently drops the tail. The guard in the generated Erlang and JavaScript code evaluates as if the tail were empty, which produces completely wrong results at runtime.
 
-I want list tail variables captured in patterns to be correctly substituted into guard expressions during codegen so the runtime matches what the code actually says. Concretely, if I've got a function taking two lists that matches the first against a tail-capturing pattern and guards on whether a list built by prepending fixed elements onto that tail equals the second argument, then inputs where the constructed list does match should take the guarded branch and return true, and inputs where it doesn't should fall through to the default and return false. Today it almost never works because the guard always sees an empty tail. It's a silent wrong-behavior thing, no compile warning, so please fix the substitution for both Erlang and JavaScript emission.
+## Expected Behavior
+
+- When a list pattern captures its tail and the guard uses that tail to build a new list, the compiled Erlang output should include the tail variable inside the guard's list construction.
+- The compiled JavaScript output should extract the captured tail into a local variable before evaluating the guard, and the guard should reference that variable when building the comparison list.
+- At runtime, a case clause whose guard references the list tail should correctly accept or reject inputs based on the actual tail contents — not treat the tail as an empty list.
+
+## Example
+
+If a function accepts two lists, matches the first against a pattern that captures the tail, and guards on whether a newly constructed list (prepending fixed elements onto that tail) equals the second argument, then:
+
+- Passing inputs where the constructed list does match the second argument should take the guarded branch (returning true).
+- Passing inputs where it does not match should fall through to the default branch (returning false).
+
+Currently, the guard always evaluates against an empty tail, so the match almost never works as intended.
+
+## Why This Matters
+
+This is a correctness bug: code that looks semantically correct compiles to code that behaves incorrectly. Developers relying on list tail variables inside clause guards will get silent wrong behavior with no compile-time warning.

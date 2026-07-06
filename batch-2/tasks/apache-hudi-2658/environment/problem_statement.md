@@ -1,7 +1,19 @@
-I'm adding automatic Avro schema inference to the Hudi Flink connector because right now it's annoying that people have to specify a schema file path in their table options even though the DDL already describes the whole column schema. It's redundant and error-prone, so I want the table factory (the one that builds sources and sinks from a Flink DDL) to just derive the Avro schema from the table's column definitions when nobody's set an explicit schema file path or schema string.
+## Description
 
-The logic I want: if neither the explicit file path nor a schema string is already present, infer the Avro schema from the resolved table schema, stash it into the config as the schema string, and use that for deserialization. But if an explicit schema file path IS provided, that wins, and we skip inference entirely (don't set or override the schema string in that case). Also I want a new config option that lets you hand over the Avro schema as a direct string instead of pointing at a file.
+When using the Hudi Flink connector, users currently have to manually specify the path to an Avro schema file in their table configuration, even though the table definition (DDL) already contains the complete column schema. This is redundant and error-prone — anyone creating a Hudi table in Flink has to remember to also provide a separate schema file just to get reads and writes working.
 
-Oh and while I'm in here, the config key for the schema file path should get renamed to something cleaner that groups the Avro schema options together under a common prefix, more consistent with the rest of the connector's naming. So there'd be the renamed file-path key, plus the new inline schema-string key, sitting under the same prefix.
+The connector should be capable of automatically inferring the Avro deserialization schema from the table's column definitions. When no explicit schema file path or schema string is provided, the system should derive the correct Avro schema from the table schema automatically and use it for deserialization. When an explicit schema file path is provided, that should take precedence and the auto-inference should be skipped.
 
-One more thing, the sources and sinks the factory produces should expose their internal configuration so callers can read back which options actually got resolved, including whether the schema ended up getting inferred automatically. That way it's verifiable from the outside what happened during table creation.
+Additionally, the configuration key for specifying an explicit schema file path should be renamed to follow a clearer, more consistent naming convention across the connector's configuration options.
+
+## Expected Behavior
+
+- When creating a table source or sink without specifying a schema file path or schema string, the connector automatically infers the Avro schema from the DDL column definitions
+- The inferred schema is stored internally in the configuration and used for deserialization
+- When a schema file path is explicitly provided, the connector uses that path and does NOT infer/override the schema string
+- The configuration key for the schema file path is renamed to follow a clearer, more consistent naming convention that groups related Avro schema options together under a common prefix
+- A new configuration option accepts an Avro schema string directly (without needing a separate file)
+
+## Why This Matters
+
+This removes the need for users to maintain a separate Avro schema file and manually wire it into every Hudi table definition in Flink. It simplifies the setup, reduces boilerplate, and makes the connector easier to use for the common case where the DDL already describes the full table schema.

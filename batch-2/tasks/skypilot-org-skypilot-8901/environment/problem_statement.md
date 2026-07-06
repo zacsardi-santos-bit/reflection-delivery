@@ -1,7 +1,18 @@
-I'm cleaning up GPU resource matching on our Slurm backend and it's a mess right now. Slurm reports GPUs as raw GRES strings that are all over the place, some carry vendor prefixes, some use underscores, some dashes, and a bunch tack on architecture or memory suffixes, so when someone asks for a specific GPU type we can't reliably tell which actual GRES entry on the cluster maps to that request. End result is people get bogus "not available" errors or the wrong GPU allocated.
+## Description
 
-I want a few things added to the Slurm provisioning utils. First a normalization function that strips vendor prefixes and standardizes the separators so raw GRES strings compare uniformly. Then a matching function that decides whether a requested GPU name corresponds to a given GRES string using subsequence-based comparison, but it's gotta distinguish close names correctly (L4 must not match L40 nodes, that kind of thing). Then a resolution function that scans all cluster nodes, optionally filtered by partition and by a minimum GPU count, and returns the real GRES type for the request. When multiple candidates match it should resolve ambiguity by preferring an exact match first, then the type that's available on the most nodes, then alphabetical order as the final tiebreaker. And a canonicalization function that maps raw GRES strings back to the well-known canonical GPU names we use elsewhere, falling back to an uppercased version when it doesn't recognize the type.
+Slurm clusters report GPU resources using raw GRES (Generic Resource) strings that vary widely in format — vendor prefixes, different separator conventions, architecture suffixes, and memory variant labels are all mixed together. When a user requests a specific GPU type, there's no reliable way to match that request against the cluster's actual available resources, leading to incorrect "not available" errors or mismatches between requested and allocated GPU types.
 
-Oh and the canonical GPU name list is currently buried in the Kubernetes module, I need it moved to a shared utility spot so the Slurm backend can pull from it too without duplicating. Both k8s and Slurm should read from that shared location.
+Additionally, the canonical list of GPU names that is already used for matching in other backends (such as Kubernetes) is buried in a backend-specific module, preventing its reuse across different cluster adapters.
 
-Also the error messages when a GPU type isn't found need work, they should tell the difference between there being no GPU nodes on the cluster at all versus GPU nodes existing but none matching what was asked for, and in that second case the message should list which GPU types actually are available so folks know their options.
+## Expected Behavior
+
+- A GPU name normalization utility should strip vendor prefixes and standardize separator characters so that raw GRES strings can be compared uniformly.
+- A matching function should be able to determine whether a user-requested GPU type corresponds to a given raw GRES string using subsequence matching to handle variants, while correctly distinguishing similar names (e.g., L4 should not match L40 nodes).
+- A resolution function should look up all nodes in a cluster (optionally filtered by partition and minimum GPU count), find the actual GRES identifier that matches the requested GPU type, and handle cases where multiple candidate GRES types match by preferring exact matches, then the type available on the most nodes, then alphabetical ordering.
+- A canonicalization function should convert raw GRES strings back to the well-known canonical GPU names used across the system, with a sensible uppercase fallback for unrecognized types.
+- The canonical GPU name list should be moved to a shared utility module so it is accessible to both Kubernetes and Slurm backends.
+- When no matching GPU is found, error messages should indicate what GPU types are actually available on the cluster. The error should distinguish between the case where no GPU nodes exist at all versus the case where GPU nodes exist but none match the requested type.
+
+## Why This Matters
+
+Without accurate GPU name resolution, users on Slurm clusters may be denied resources that are actually available, or have the wrong GPU allocated to their jobs. Centralizing the canonical name list also prevents duplication and keeps GPU identification consistent across cloud backends.

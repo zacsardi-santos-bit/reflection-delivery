@@ -1,5 +1,16 @@
-I've been playing with the multi-agent stuff and my session history is a mess now. Every time a sub-agent spins up to handle some sub-task in the background it writes its own session file to disk, and all those internal sessions end up showing in the list I browse when I want to resume a previous conversation. I never started those directly, they're just implementation details of tool-use under the hood, so seeing dozens of them mixed in with my real top-level chats makes it really hard to find what I actually care about.
+## Description
 
-What I want is a way to tell sub-agent sessions apart from ones I kicked off myself, basically a classification field stored on the session record so we know which is which. When a session's tagged as a sub-agent session it should be excluded from the list of sessions available for resumption, and my regular user-initiated (main) sessions should keep showing up like normal. So the filtering happens at list-time based on that field.
+When using multi-agent features, the tool spawns internal background agents to handle sub-tasks. Each of these agents creates its own session file on disk. The problem is that these internal sub-task sessions currently show up in the user-facing session list — the same list a user browses when they want to resume a previous conversation.
 
-Oh and one more thing while you're in there, when some critical internal component fails to initialize the error message I get surfaced has a redundant type prefix on it that makes it harder to read. I'd rather it just show the clean, human-readable error text instead of the raw type-prefixed string.
+This is confusing because the user never started those sessions directly; they are implementation details of tool-use under the hood. A user browsing their history should only see their own top-level conversations, not a long list of internal sub-agent executions they never interacted with directly.
+
+## Expected Behavior
+
+- Sessions created by sub-agents should be distinguishable from user-initiated sessions via a classification field stored in the session record.
+- When a session is tagged as a sub-agent session, it must be excluded from the list of sessions available for resumption.
+- User-initiated (main) sessions must continue to appear normally in the list.
+- Additionally, when a critical internal component fails to initialize, error messages surfaced to the user should display clean, human-readable text — not raw type-prefixed error strings.
+
+## Why This Matters
+
+Users interacting with multi-agent workflows would otherwise see dozens of internal sessions polluting their history, making it difficult to find and resume the conversations they actually care about.

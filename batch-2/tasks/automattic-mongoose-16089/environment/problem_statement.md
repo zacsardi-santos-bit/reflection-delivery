@@ -1,7 +1,19 @@
-I'm hitting a nasty TypeScript gap in Mongoose around populate plus plain-object conversion and I want to get the types right. Basically when I populate a ref field on a document and then call the plain-object conversion (toObject/toJSON style), the types still show the field as the original ObjectId ref instead of the populated subdocument shape, so I can't type-safely read subdocument fields off the converted result. I want converting a populated doc to a plain object to give me types that reflect the populated content, meaning the populated paths come back as their actual subdocument types with all their fields accessible.
+## Description
 
-I also need the reverse to work: when I convert a populated doc to plain object but pass the option to strip populated refs back to their original IDs, the types should flip back to the original schema reference identifier types (ObjectId refs again), not stay stuck on the populated shapes. And this type-correct behavior has to hold both with and without extra conversion options layered on, like flattening identifier values to their string representation, or including virtuals, and combinations of those should compose correctly together.
+When populating references on Mongoose documents, the TypeScript types for converting a populated document to a plain JavaScript object are incorrect. After populating a field, calling the plain-object conversion method on the populated document still returns types based on the original schema — showing database identifier references rather than the actual populated subdocument shapes. Developers cannot write type-safe code that accesses fields on the populated subdocuments after converting to a plain object.
 
-Oh and this needs to work no matter how the population happened, so through an instance method on the document, through the static model populate helper, and through query chains where populate runs before the query executes. When I chain multiple populate calls on a query for different fields, the plain-object conversion types should reflect all of those populated paths at once, not just one. This is all in the Mongoose type definitions and inference logic (roughly `@types/index.d.ts` and the related type-test coverage under `@test/types/`).
+The same issue exists in the reverse direction: if you convert a populated document back to plain-object form while requesting that references be stripped back to their original IDs, the type system doesn't correctly infer that those fields should be database identifier references again. Instead, the types remain incorrect.
 
-Also, actually, a populated document shouldn't be directly assignable back to the original model's un-populated document type, since the field types have fundamentally changed from ObjectId refs to subdocuments and that assignment would be unsound. The whole point here is that people populate refs and then serialize or process the plain object, and without correct types they lose TypeScript's checking on those results and hit runtime errors that should've been caught at compile time.
+This problem affects population done through instance methods on documents, through the static model helper, and through query chains. It also affects cases where multiple fields are populated in sequence via chained query calls.
+
+## Expected Behavior
+
+- Converting a populated document to a plain object should return types that reflect the populated content (e.g., subdocument fields are accessible with their correct types)
+- Converting a populated document to a plain object with the option to restore original reference identifiers should return types that reflect the original schema shapes (i.e., original database identifier references restored)
+- Various combinations of conversion options (such as converting reference identifiers to their string representation, including virtual fields) should work correctly together with populated document types
+- This correct type behavior should be available whether the document was populated via an instance method, the static model helper, or a query chain (including chained population of multiple fields)
+- A populated document should not be directly assignable back to the original model's un-populated document type
+
+## Why This Matters
+
+Developers using TypeScript with Mongoose often populate references and then convert documents to plain objects for further processing or serialization. Without correct types, they lose the benefits of TypeScript's type checking when working with the plain-object representations of populated documents, leading to potential runtime errors that TypeScript should have caught.

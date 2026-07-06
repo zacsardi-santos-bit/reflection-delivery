@@ -1,5 +1,16 @@
-I keep hitting these false positive "undeclared variable" lint errors in my Svelte components and it's driving me nuts. The pattern is always the same: I define a reusable snippet block whose parameters get default values, and the linter turns around and complains that the parameter variables themselves are undeclared, even though they're clearly bound right there in the snippet's parameter list. Those params should be in scope for the snippet's body, but the analysis is acting like they were never declared at all.
+## Description
 
-It's not just one param style either. Plain defaults trip it up, object destructuring with a default value trips it, array destructuring with a default trips it, and the more complex stuff does too, so nested patterns (objects inside arrays, objects inside objects, that kind of thing) with defaults, plus rest patterns combined with defaults where both the rest variable and any direct properties should count. In every one of these cases the variables introduced by the snippet parameters need to be recognized as valid in-scope bindings within that snippet.
+The linter incorrectly reports false positives for undeclared variables inside Svelte template snippet blocks when the snippet's parameters use default values. Variables that are legitimately declared by a snippet's parameter list (including via all forms of destructuring patterns with defaults) are being reported as undeclared, even though they are perfectly valid bindings that should be in scope within the snippet body.
 
-So what I want is for the undeclared-variable check to treat all variables bound by snippet parameter declarations, including ones with default values and any form of destructuring, as properly declared inside the snippet. This is the Svelte analysis path (the bit that resolves bindings for snippet blocks and reports undeclared refs), so wherever that scope resolution lives is where the fix belongs. Oh and it still has to catch the genuinely undeclared cases, so a variable that isn't a snippet parameter and isn't declared in the component's script block should still get flagged like before. Basically only flag things that are truly undeclared, don't punish valid code that binds through default params. Right now devs are suppressing warnings that shouldn't exist and it kills trust in the tooling.
+## Expected Behavior
+
+- When a snippet parameter uses a plain default value, the parameter variable should be recognized as declared within the snippet.
+- When a snippet parameter uses object destructuring with a default value, all destructured property variables should be recognized as declared.
+- When a snippet parameter uses array destructuring with a default value, all destructured element variables should be recognized as declared.
+- Nested destructuring patterns (objects inside arrays, objects inside objects, etc.) with default values should also have their bound variables recognized as declared.
+- Rest patterns combined with defaults should have both the rest variable and any direct properties recognized as declared.
+- Variables that are genuinely not declared (neither as snippet parameters nor in the outer component scope) should still be flagged correctly.
+
+## Why This Matters
+
+Developers writing Svelte components that use snippet blocks with default parameters receive spurious lint errors on valid code. This undermines trust in the linter and forces developers to suppress warnings that should not exist. The linter should only flag variables that are truly undeclared, not variables that are properly introduced through snippet parameter declarations.

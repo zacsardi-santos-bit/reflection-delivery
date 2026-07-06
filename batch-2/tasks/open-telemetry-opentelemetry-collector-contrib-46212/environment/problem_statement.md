@@ -1,5 +1,20 @@
-I'm working on the CloudTrail log unmarshaler in the AWS logs encoding extension, and right now it only does batch processing where you hand it an input stream, it reads everything, and gives you back all the records in one go. That's a problem for us because we need to process records one at a time and track progress so we can resume from a checkpoint if the pipeline restarts, otherwise a restart mid-way through a big log file means reprocessing everything we already saw.
+## Description
 
-So I want to add a streaming decoder to the CloudTrail log unmarshaler. It should let callers pull records incrementally with a configurable number of records per batch (so decode one or more at a time rather than all at once), and expose a way to query how far along we are in the stream at any point. It also needs to support starting from a given position (an offset) so already-processed records get skipped without reprocessing. Once all records have been returned it should signal end-of-stream cleanly, and any further requests after that should keep returning end-of-stream too.
+The CloudTrail log unmarshaler currently only supports batch processing — it reads the entire input and returns all records at once. This is problematic for integrations that need to process logs incrementally, track progress across restarts, or resume from a known checkpoint without reprocessing already-handled records.
 
-The tricky bit is CloudTrail logs come from different sources: S3 files, CloudWatch subscription filters, and digest files. For the S3 records format the offset should track the number of records processed. For the CloudWatch and digest formats, which chew through the whole payload in one shot and don't support partial replay, if a non-zero starting offset comes in the decoder should immediately return end-of-stream and report the total byte count consumed, so upstream components can keep accurate state. Oh and the existing batch-style unmarshaling has to keep working correctly after all this.
+We need to add streaming support to the CloudTrail log unmarshaler so that consumers can:
+- Decode one or more records at a time (rather than all records at once)
+- Track exactly how many records have been processed
+- Start from a specified position to skip records that were already processed
+
+## Expected Behavior
+
+- The CloudTrail log component should expose a streaming decoder interface that returns records incrementally based on a configurable batch size.
+- When given a starting position (offset), the decoder should skip that many already-processed records before beginning to return results.
+- After all records have been returned, the decoder should signal end-of-stream cleanly, and any further requests should also return end-of-stream.
+- The decoder should expose a method for callers to query the current progress position at any time.
+- For CloudWatch subscription filter and digest log formats — which do not support partial replay — the decoder should immediately signal end-of-stream when given a non-zero starting position, and should report the full byte count consumed so that upstream components can maintain accurate state.
+
+## Why This Matters
+
+Without streaming support, a pipeline that restarts mid-way through a large CloudTrail log file would need to reprocess all previously seen records. With an offset-aware streaming decoder, the pipeline can resume exactly where it left off, making CloudTrail log processing more reliable and efficient for high-volume environments.

@@ -1,5 +1,17 @@
-I'm doing a minor version bump across the whole Wasmer workspace and it's half-finished, so the build is busted right now. Some of the Cargo manifest files already got moved to the next minor release, but the rest are still sitting on the current version, and under strict lock file enforcement (like `--locked`) the whole thing falls over because `Cargo.lock` doesn't match what the manifests declare anymore.
+## Description
 
-What I need is for every remaining package manifest in the workspace to declare the new version consistently, and every internal cross-package dependency reference that pins an exact version needs to get updated to match too, otherwise they won't resolve. Oh and there's a handful of packages that don't take their version from the shared workspace version, they keep their own independent versioning, so those need bumping to their own respective next versions separately rather than following the workspace number. Once all the manifest files agree with each other, the lock file itself has to be regenerated so it reflects all these changes and lines up with the manifests.
+The Wasmer project is due for a minor version release. The workspace needs all package version numbers updated from the current release to the next one. Several packages also have their own independent versioning (not derived from the shared workspace version) that must be bumped separately.
 
-The end state I'm after: the project builds cleanly with strict lock file enforcement on, and the existing unit tests for the core type system all pass in full when built that way. Getting these version references consistent unblocks development and gets us ready for the actual release, so basically nothing should be left referencing the old numbers anywhere, manifests or lock file.
+At the moment, the workspace is in an inconsistent state: some manifest files have been partially updated while others still reference the old version numbers. This inconsistency causes the build to fail when strict dependency locking is enforced, because the recorded lock file no longer matches what the manifest files declare.
+
+## Expected Behavior
+
+- All packages in the workspace should declare the new version numbers consistently.
+- All cross-package dependency references that pin to exact version numbers should be updated to match.
+- A small number of packages that maintain their own versioning (separate from the main workspace version) should also be bumped to their respective next versions.
+- The lock file should be updated to reflect all of these changes.
+- After the update, the project must build cleanly under strict lock file enforcement, and the existing type system unit test suite must pass in full.
+
+## Why This Matters
+
+When version numbers are inconsistent across the workspace, any developer or CI system that relies on the committed lock file will encounter build failures. Making all version references consistent unblocks continued development and prepares the workspace for a proper release.

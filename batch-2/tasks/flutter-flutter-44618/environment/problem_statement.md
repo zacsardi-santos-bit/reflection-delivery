@@ -1,7 +1,15 @@
-I'm adding a deprecation-notice format check to the Flutter analysis tooling because right now nothing stops folks from writing these annotations wrong, they skip the version info, forget to capitalize the message, drop the trailing period, use a single-line form instead of the required multi-line form, or mess up indentation, and that makes it hard for people consuming our libraries to know when an API was deprecated and what to migrate to.
+## Description
 
-What I want is a tool that scans every Dart file in the repo and validates each deprecation annotation against the standard format. A valid one has to be multi-line, with a reason sentence that's grammatically correct (starts with a capital letter, ends with proper punctuation like a period) plus a separate line saying the version after which the thing was deprecated, and the right indentation. When something's off I need clear per-line error messages that name the file, the line number, and exactly what's wrong so it's easy to fix.
+The Flutter repository has no automated check to enforce that deprecation notices are written in the required format. Developers marking APIs as deprecated often omit the version at which the deprecation occurred, use incorrect grammar (missing capital letter or trailing period), use wrong indentation, or write the annotation as a single-line form rather than the required multi-line form. This makes it difficult for library consumers to know when an API was deprecated and what migration path to follow.
 
-Some deprecations intentionally don't follow the format (like special-purpose annotations that'll never actually be removed), so I want an inline comment that suppresses the check on those, and separately a grandfathering mechanism for existing violations that are already being tracked in an issue so they don't block everything while we clean up.
+## Expected Behavior
 
-Oh and while I'm in here, I need to move the existing test input fixtures for the other analysis checks into a subdirectory so the new inputs for this deprecation check stay cleanly separated from the old ones. The analysis tooling lives under `@dev/bots/analyze.dart` with its fixtures under `@dev/bots/test/analyze-test-input/`, so the reorg should keep those existing cases working while giving the new deprecation-check cases their own home.
+- An automated analysis tool should scan all Dart source files and validate every deprecation annotation against the standard format.
+- A valid deprecation annotation must be written in multi-line form with a grammatically correct reason sentence (starting with a capital letter, ending with punctuation) and a separate line indicating the version after which the feature was deprecated.
+- Violations should be reported as clear, per-line error messages that identify the file, line number, and specific problem.
+- The tool should support a special inline comment to suppress the check for deprecation notices that intentionally deviate from the standard (such as special-purpose annotations that will never be removed), as well as a separate grandfathering mechanism for existing violations tracked in an issue.
+- Existing test fixtures for other analysis checks were reorganized into a subdirectory to keep test inputs cleanly separated.
+
+## Why This Matters
+
+Consistent deprecation notices help the entire Flutter ecosystem: developers know exactly when a feature was deprecated, what to migrate to, and how long they have. Without automated enforcement, the quality of these notices degrades over time, leading to confusing or incomplete migration guidance.

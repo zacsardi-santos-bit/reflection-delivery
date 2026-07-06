@@ -1,5 +1,16 @@
-I'm hitting a bug in the AsciiDoc backend of the document converter where tables with empty cells don't survive the trip to Markdown. If a table row has two consecutive empty cells, or a cell that's just whitespace, those cells get dropped or mangled in the output instead of staying as proper empty Markdown table cells. So any AsciiDoc doc with sparse tables (where not every cell has content) comes out broken or incomplete, and I'd expect an empty cell to just stay empty rather than disappear or shift the other columns around.
+## Description
 
-While I'm in there, the Markdown export should produce clean standard formatting: proper heading notation, list items without spurious asterisk prefixes, compact table separators, and image blocks rendered as HTML-style comments rather than raw markup.
+The AsciiDoc backend produces incorrect output when converting tables that contain empty cells. When a table row has consecutive empty cells or cells containing only whitespace, those cells are lost or mangled in the converted Markdown output. This means any AsciiDoc document with sparse tables (tables where not every cell has content) is not faithfully represented after conversion.
 
-Oh and the existing tests for this backend are basically fake, the assertions were commented out so they just run the converter and pass unconditionally no matter what it spits out, which means regressions in output quality go totally undetected. I want those fixed so they actually compare the converted output against ground truth Markdown files. Also the test data files should be renamed to follow a consistent naming pattern so it's not a mess. Point is, users converting AsciiDoc with optional or empty cells are getting garbage right now and nothing's catching it.
+Additionally, the existing tests for the AsciiDoc backend do not actually verify the output — the assertions were commented out, so tests always passed regardless of what the converter produced. This means regressions in output quality go undetected.
+
+## Expected Behavior
+
+- Tables with empty cells should be preserved correctly in the Markdown output. A row where some cells are empty should produce a Markdown table row with those empty cells retained, not dropped or missing.
+- The Markdown export should produce standard heading notation, clean list formatting (no spurious asterisk prefixes on list items), and compact table format.
+- The test suite should compare the converted output against ground truth Markdown files, so any change in output quality is caught automatically.
+- Test data files should follow a consistent naming convention.
+
+## Why This Matters
+
+Users converting AsciiDoc documents that include tables with optional or empty cells will get broken or incomplete Markdown output. Since tests were not enforcing correctness, these issues could go undetected for a long time and affect any downstream consumer of the converted documents.

@@ -1,7 +1,25 @@
-I'm hacking on the F#-style pipeline operator in our JS parser and the await handling in pipeline expressions has a bunch of edge cases that are either unhandled or wrongly accepted, so I want help tightening it up. The pipeline lets you use a solo await as a pipeline step, which is nice, but right now if someone pipes a value into an awaited step and then slaps a binary or logical operator on the same line (think logical or, exponentiation, whatever), the parser just accepts it silently. That's ambiguous and it should instead emit a clear recoverable parse error telling the dev to wrap the pipeline in parentheses, and this needs to fire for any binary or logical operator following that solo-await step, not just one or two.
+## Description
 
-Also parenthesizing the await expression inside a pipeline step isn't valid syntax and should be a hard parse error, and same deal for using await inside an async arrow function that's serving as the pipeline step, that pattern should be rejected with a hard error too since it's not being caught properly today.
+The F#-style pipeline operator has a special feature allowing asynchronous waiting to be used as a solo pipeline step. However, several edge cases around this behavior are either unhandled or incorrectly accepted:
 
-On the flip side I don't want to break the valid cases. When a pipeline expression shows up in a non-async function, the await keyword should just parse as a plain identifier rather than an async-await expression. And in async functions, when a pipeline step with a solo await appears inside a for-in loop variable initializer, it should parse fine as an await expression without an argument.
+1. **Mixing solo-await with binary operators is silently allowed when it shouldn't be.** Writing code that pipes a value into an awaited step and then immediately applies a binary operator on the same line (e.g. with a logical or exponentiation operator) is ambiguous and should produce a clear error directing developers to add parentheses.
 
-The point of all this is unambiguous async pipelines plus clear guidance when someone writes something that could be misread. Can you implement these restrictions in the F#-style pipeline parser so the illegal patterns get caught and the valid ones keep working?
+2. **Parenthesized await in a pipeline step should be rejected.** Parenthesizing the await expression in this context is not valid syntax and should produce a parse error.
+
+3. **Await inside an async arrow function used as a pipeline step should be rejected.** This pattern is also disallowed but currently not properly caught.
+
+4. **Non-async context: await should parse as an identifier.** When a pipeline expression appears in a non-async function, the keyword that would otherwise be treated as an async-await expression should instead be treated as a plain identifier.
+
+5. **Async context with for-in: await should parse correctly.** In an async function, when a pipeline step using await appears inside a for-in variable initializer, it should be parsed as an await expression without an explicit argument.
+
+## Expected Behavior
+
+- Mixing a solo-await pipeline step with binary operators should produce a recoverable parse error with a message indicating the pipeline should be wrapped in parentheses.
+- Parenthesized await in a pipeline step should produce a hard parse error.
+- Await inside an async arrow function used as a pipeline step should produce a hard parse error.
+- In non-async contexts, await in a pipeline expression should be treated as a plain identifier.
+- In async contexts within for-in initializers, await should be parsed as an await expression.
+
+## Why This Matters
+
+These restrictions ensure that code using the F#-style pipeline operator with async/await patterns is unambiguous and that developers receive clear guidance when they write code that could be misinterpreted.

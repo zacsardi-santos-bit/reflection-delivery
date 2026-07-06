@@ -1,5 +1,16 @@
-I'm working on the Storybook review addon and I hit a gap where a cached review goes stale silently. When an agent generates a review it gets cached on the dev server and replayed to every browser tab that connects later, but if a dev keeps editing source files after that review was created, the review just sits there looking current even though the code it describes has moved on. There's no way right now for the server to notice and tell connected clients.
+## Description
 
-What I want is a lightweight notification thing in the core dev server that any server-side consumer (add-ons mostly) can tap into to hear about source file changes during a dev session. It needs to support multiple subscribers at once, let them unsubscribe cleanly, and if one subscriber throws while handling a change it can't break delivery for the others, that isolation matters.
+When an AI agent generates and pushes a review into the Storybook review addon, the review is cached on the dev server and replayed to every browser tab that connects later. The problem is that if a developer continues editing source files after the review was created, the review silently becomes outdated. There is currently no mechanism for the server to detect this and notify connected clients.
 
-Then the review addon subscribes to those notifications and flags the cached review as stale when a file change lands after the review was created. Oh and it should tolerate changes arriving right at creation time so we don't false-flag a review the moment it's pushed, so a small tolerance window on that timestamp comparison. Once it's stale, later file changes shouldn't keep firing more stale signals, one is enough. Store the stale status on the cached review itself so tabs connecting later see it too, and when the agent pushes a fresh review, clear the stale flag.
+## Expected Behavior
+
+- The core dev server should expose a way for any add-on to subscribe to source-file change notifications during a development session.
+- The review addon should subscribe to these notifications and automatically mark the cached review as stale when a source file changes after the review was created.
+- A brief tolerance window should be applied so that file-system events arriving just after a review is created do not immediately cause a false stale signal.
+- Once a review is flagged as stale, that status should be preserved in the cached review so that tabs connecting later also see it.
+- A single stale notification should be sufficient — multiple consecutive file changes should not produce repeated stale events.
+- Pushing a fresh review from the agent should reset the stale status.
+
+## Why This Matters
+
+Without this feature, a reviewer can be looking at an outdated review with no indication that the underlying code has changed since it was generated, leading to confusion about whether review comments still apply to the current state of the codebase.

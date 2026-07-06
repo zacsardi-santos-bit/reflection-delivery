@@ -1,5 +1,19 @@
-I'm adding a proper first-party Databricks provider to the MLflow gateway. Right now Databricks Model Serving endpoints get handled by routing through a generic third-party integration layer, and that's annoying because it doesn't natively support the full range of Databricks auth (OAuth service principal creds, environment-based credential discovery, etc.) and it uses an indirect config mechanism that doesn't line up with how the other first-party providers work.
+## Description
 
-What I want is a dedicated Databricks provider class that uses the Databricks SDK directly for auth and endpoint routing. Its config should have four optional fields: a workspace host URL, a personal access token, an OAuth client ID, and an OAuth client secret. All of them optional, so when none are given the SDK can fall back to its default credential chain, and when explicit creds are provided they get passed straight to the SDK instead. The provider needs to automatically normalize its base URL to append the required serving endpoints path, and it should pull auth headers directly from the SDK's credential resolution mechanism rather than building them by hand. It's gotta support both chat and embeddings requests.
+The MLflow gateway currently handles Databricks Model Serving endpoints by routing them through a generic third-party integration layer. This approach doesn't natively support the full range of Databricks authentication options (such as OAuth service principal credentials or environment-based credential discovery) and uses an indirect configuration mechanism that doesn't align with how other first-party providers are handled.
 
-Oh and it needs to be registered so that when a gateway endpoint is configured with the Databricks provider type, the resolved provider instance is this new Databricks-specific class and not the generic fallback. Also the existing test that checks the base URL normalization behavior should get updated to point at the new provider type and its config class. Net effect: people can configure Databricks endpoints with the full set of Databricks auth methods (OAuth M2M for service principals, env-based discovery) without fiddling with low-level integration details, and the provider stays consistent with the rest of the first-party providers.
+We should replace this with a dedicated first-party Databricks provider that uses the Databricks SDK directly for authentication and endpoint routing.
+
+## Expected Behavior
+
+- A dedicated Databricks provider class is available that uses the Databricks SDK for authentication
+- The provider's configuration supports four optional fields: workspace host URL, personal access token, OAuth client ID, and OAuth client secret — all optional so the SDK's default credential chain can be used
+- When a gateway endpoint is configured with the Databricks provider type, the resolved provider instance is the new Databricks-specific provider (not the generic fallback)
+- The provider's base URL is automatically normalized to append the required serving endpoint path
+- Authentication headers are obtained directly from the SDK's credential resolution mechanism
+- The provider supports both chat and embeddings requests
+- When credentials are explicitly configured, they are passed directly to the SDK; when omitted, the SDK resolves them automatically from the environment
+
+## Why This Matters
+
+This change enables users to configure Databricks Model Serving endpoints using the full range of Databricks authentication methods — including OAuth M2M for service principals and environment-based credential discovery — without needing to manually configure low-level integration details. It also makes the Databricks provider consistent with other first-party providers in the gateway.

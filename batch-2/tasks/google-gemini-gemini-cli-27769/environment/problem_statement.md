@@ -1,7 +1,21 @@
-I'm building out onboarding help for a companion CLI tool inside our assistant and the current behavior is pretty useless. When someone asks how to install or migrate to the companion tool they just get the generic fallback help instead of an actual command they can run. I want the help system to sniff the OS and hand back the right install command, so macOS and Linux get one command, Windows PowerShell gets its variant, and Windows Command Prompt gets its own. If we're on some platform we don't recognize, at least drop a link to the docs so they aren't stranded. And if the query mentions the companion tool but isn't actually asking about install or migration, just fall through to the normal help output like before, don't hijack it.
+## Description
 
-Same platform detection should feed the startup banner too, so when the banner is showing companion-tool content it appends the platform-appropriate install command inline for the supported ones.
+The CLI assistant currently provides no useful guidance when users ask how to install a companion CLI tool. Users who ask install or migration questions receive generic fallback help rather than actionable, platform-specific installation instructions. Additionally, the startup banner for content related to this companion tool does not include any installation hints, missing an opportunity to guide new users immediately.
 
-Separately there's a model routing gap I need fixed. When folks authenticate through Google accounts (Google login or Application Default Credentials) we send model name requests straight to the backend as-is, but the backend expects different internal identifiers, so the user-facing name and what actually gets routed don't match. I want a translation layer that transparently remaps the user-facing model name to the correct internal name before the request goes out, and it should only kick in on those Google account auth paths. Don't touch Vertex AI, direct Gemini/API-key, or Gateway auth, those stay as-is. The layer needs to stack cleanly on top of existing wrapping layers and expose a way to get at the underlying wrapped generator.
+There is also an internal model routing gap: when users authenticate through Google accounts (Google login or Application Default Credentials), model name requests are sent directly to the backend as-is, even though the backend expects different internal model identifiers. This causes a mismatch between the model the user requests and the one actually routed. This mapping should be applied transparently only for those authentication paths, not for direct API or Vertex AI access.
 
-Also want a built-in support guide for the companion tool that links to its getting-started docs, and there's a related model name constant that got recorded wrong and needs correcting to the proper identifier.
+A related model name constant was also recorded incorrectly and needs to be corrected to the proper model identifier.
+
+## Expected Behavior
+
+- When users ask how to install or migrate to the companion CLI tool, the assistant should detect the user's operating system and respond with the correct installation command for that platform (macOS/Linux, Windows PowerShell, or Windows Command Prompt).
+- On unsupported platforms, a link to the documentation should be shown instead.
+- If the query mentions the companion tool but does not ask about installation or migration, the assistant should fall back to its normal help output.
+- The startup banner for companion tool content should append a platform-appropriate installation command inline for supported platforms.
+- A built-in support guide for the companion tool should be available with a link to its getting-started documentation.
+- Model name translation should be applied transparently when using Google account authentication, so that user-facing model names are mapped to the correct backend identifiers before being sent to the API.
+- The model name translation must not be applied for Vertex AI, direct Gemini API, or Gateway authentication paths.
+
+## Why This Matters
+
+Users discovering the companion tool through the assistant's help system or startup banner need immediate, actionable installation guidance. Without platform-specific instructions, users are left to search documentation on their own. The model mapping fix ensures that requests using Google account authentication are correctly routed to the intended backend models without any user intervention.

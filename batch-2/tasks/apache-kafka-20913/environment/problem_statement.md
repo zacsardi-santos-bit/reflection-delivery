@@ -1,5 +1,19 @@
-I'm hacking on Kafka's tiered storage and want to add a way to delay when log segments get copied to remote storage. Right now the moment a segment rolls and its end offset drops below the last stable offset it gets queued for remote copy immediately, and that's not always what operators want since recent data is often still being read locally. So I want two new knobs, one time-based (time since the most recent record in the segment) and one size-based (how many bytes of local data have piled up after the segment), so people can tune how eagerly stuff gets tiered.
+## Description
 
-Behavior I'm after: if either threshold is hit, time OR size, the segment becomes eligible for upload. A threshold of 0 disables that particular check and means immediate upload like today. A threshold of -1 should resolve to the effective local retention value for that dimension (time retention for the time knob, size retention for the size one) as the max delay. And any config that doesn't make sense, like a positive copy lag that exceeds the effective local retention, needs to get caught and rejected right at config validation time with an error, not silently accepted.
+Kafka's tiered storage feature currently copies log segments to remote storage as soon as they roll and become eligible (i.e., their end offset is below the last stable offset). There is no mechanism to delay this upload, which can be undesirable in scenarios where operators want recent data to remain locally accessible before being offloaded to remote storage.
 
-These need to work both as topic configs and as broker configs, and the broker-level ones have to be dynamically reconfigurable. Also anything below -1, or non-numeric junk, should be rejected during config parsing too. Oh and one edge case that keeps biting me, when reading a segment's timestamps fails or a segment has a future timestamp from clock skew, don't block it forever, just treat it as eligible for upload. The core eligibility and retention resolution logic lives around the remote log manager and copy path in the storage layer (`@storage/src/main/java/org/apache/kafka/server/log/remote/storage/`), with the config plumbing in the log and topic config classes, so the validation and dynamic reconfig hooks belong wherever those broker and topic configs get defined and checked.
+This issue requests the addition of two new configuration options — one time-based and one size-based — that control how long a segment must "age" before it becomes eligible for remote copy.
+
+## Expected Behavior
+
+- A time-based upload delay setting: a segment should not be uploaded until the time elapsed since its most recent record has reached a configurable threshold.
+- A size-based upload delay setting: a segment should not be uploaded until enough local data (measured in bytes) has accumulated after it.
+- A value of 0 for either setting disables that particular delay check and results in immediate upload (the existing behavior).
+- A value of -1 means the setting should resolve to the effective local retention (time or size) as the maximum delay.
+- If either delay condition is satisfied (time OR size), the segment becomes eligible for upload.
+- Both the topic-level and broker-level variants of these settings must be validated: setting a positive copy lag that exceeds the effective local retention must be rejected with an error at configuration time.
+- Both settings must be dynamically reconfigurable at the broker level.
+
+## Why This Matters
+
+Operators running tiered storage workloads need finer control over when data is promoted to remote storage. Uploading too eagerly can consume unnecessary network and storage bandwidth for data that is still actively read locally. Having a configurable delay allows tuning the trade-off between local availability and remote storage utilization.

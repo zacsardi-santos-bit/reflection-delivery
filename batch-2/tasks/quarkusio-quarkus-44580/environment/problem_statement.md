@@ -1,5 +1,15 @@
-I'm hitting a weird serialization bug with the reflection-free JSON serializer optimization in my Quarkus REST app. You know how Quarkus can generate JSON serializers without runtime reflection by inspecting field accessor method names to figure out JSON property names? Well when the optimization's on, some of my data classes come back with wrong field names in the response JSON, and it's clearly the accessor-name-to-property-name logic that's broken.
+## Description
 
-Here's what I'm seeing: if a field's name is exactly one of the conventional Java accessor prefixes, like "set", "get", or "is", that field either vanishes from the output entirely or shows up with an empty key. And it gets weirder, a field whose name *starts* with one of those prefixes but has more characters after it (say "getting" or "isActive" as an actual field name) gets the prefix chopped off and lands under a truncated, wrong key instead of its full name. Disabling the optimization gives correct output every time, so the code generator is applying prefix-stripping even when the stripped result is empty or when the full name should just be kept as-is.
+Quarkus supports an optimization that generates JSON serializers without using reflection at runtime. This optimization inspects field accessor method names to determine the JSON property names for response objects. However, when a field's name exactly matches one of the conventional Java accessor prefixes — or starts with one — the code generator incorrectly strips the prefix, producing wrong or empty JSON property names.
 
-I want this fixed so fields named exactly like a prefix serialize with that exact name as the key, and fields that merely start with a prefix but keep going serialize under their full unmodified name. Basically the prefix-stripping should only kick in for genuine accessor methods, not clobber valid field names, so the optimization is safe to turn on for any legal Java field name and doesn't silently produce malformed JSON on endpoints returning objects with unconventional but valid names. It should match the non-optimized behavior in all these cases.
+For example, a response object that contains a field whose name exactly matches one of those conventional prefixes will have that field incorrectly serialized — the prefix is stripped away, leaving an empty key or causing the field to vanish from the output. Similarly, a field whose name starts with one of those prefixes but continues with additional characters will appear in the JSON under a truncated key with the prefix removed, rather than its full name. The result is that REST endpoints return malformed JSON when this optimization is active.
+
+## Expected Behavior
+
+- Fields whose names exactly equal a conventional accessor prefix should appear in the JSON output with those names as keys.
+- Fields whose names start with an accessor prefix but are followed by additional characters should appear in the JSON output with their full, unmodified name as the key.
+- The optimization should be safe to enable for any valid Java field name.
+
+## Why This Matters
+
+Users who enable this serialization optimization on REST endpoints that return objects with unconventional — but valid — field names will silently receive broken JSON responses. The optimization should produce correct JSON for all valid field names, not just those that conform to standard getter/setter naming conventions.

@@ -1,5 +1,14 @@
-I'm chasing a bug in the network driver that handles pod resource claims and static IP annotations. When a pod annotation specifies both an IPv4 and an IPv6 address for a network device, but the cluster is running single-stack (either IPv4-only or IPv6-only), the driver still tries to apply the address from the disabled family. So on an IPv4-only cluster the annotated IPv6 address gets applied anyway, and on an IPv6-only cluster the IPv4 one leaks through, and we end up with misconfigured devices.
+## Description
 
-The driver already tracks whether each IP family is enabled, but that flag isn't being respected when it processes the static IP annotations off the pod spec. What I want is that when preparing a device for a pod, only addresses belonging to enabled families actually get applied, and addresses from disabled families are silently skipped even if they show up in the annotation. Concretely, if only IPv4 is enabled and the annotation has both, use just the IPv4 one; if only IPv6 is enabled and the annotation has both, use just the IPv6 one; if it's dual-stack (both families enabled) apply both like before.
+When a pod requests a network device with static IP addresses for both address families specified in an annotation, the network driver does not take into account whether the cluster is running in single-stack or dual-stack mode. On a cluster where only one IP address family is enabled, the driver still applies the annotation address for the disabled family. This leads to misconfigured network devices on single-stack clusters.
 
-Also don't break the fallback path, if the annotation only specifies one family's address (regardless of stack mode) the other family should still fall back to the default from the resource claim configuration. Basically single-stack deployments shouldn't get addresses from the disabled family injected, and dual-stack behavior stays exactly the same as it is today.
+## Expected Behavior
+
+- If the cluster has only IPv4 enabled and the annotation specifies both an IPv4 and an IPv6 address, only the IPv4 address should be used for device configuration.
+- If the cluster has only IPv6 enabled and the annotation specifies both an IPv4 and an IPv6 address, only the IPv6 address should be used for device configuration.
+- If the cluster is dual-stack (both families enabled), both annotated addresses should be applied as before.
+- If the annotation only specifies one address family's address (regardless of stack mode), the other family's address should fall back to the default from the resource claim configuration.
+
+## Why This Matters
+
+Single-stack deployments should not have addresses from the disabled IP family injected into their network device configuration. The driver must respect the cluster's active IP family settings when applying static IP annotations, ensuring consistent and correct network behavior across single-stack and dual-stack environments.

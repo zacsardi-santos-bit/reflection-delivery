@@ -1,5 +1,17 @@
-I'm hitting a real headache with multi-output Keras models in the metrics layer. Say I've got a model with named outputs declared, my predictions come back as an ordered list but my dataset hands labels over as a named dict. When I compile with per-output metrics, they get applied to the wrong outputs, the code isn't using the declared output names to bridge a flat list against a named dictionary, so it just silently matches by position and everything's off. I want it to actually use the output names to line up each prediction with its right label whether the list is preds and dict is labels or the other way around. Also when I pass a metrics dict keyed by the declared output names but in some different order (not alphabetical), I want the metrics evaluated and reported following the output names ordering, not sorted alphabetically.
+## Description
 
-Then there's a related thing with deeply nested output structures, oh and I've declared output names for all the leaf outputs there too. After metrics get computed the result dict keys don't include the output name as a prefix so I can't tell which output a given measurement belongs to. When output names are declared I'd expect each result key prefixed with the corresponding output name, and when there are no output names declared the keys should stay unprefixed exactly like they are now.
+When compiling a Keras model that has multiple outputs with named outputs declared, the metric computation system does not correctly handle the case where the model's predictions are provided as an ordered list while the training labels are provided as a named dictionary (or vice versa). The system fails to use the declared output names to bridge these two different container structures, resulting in metrics being silently applied to the wrong outputs.
 
-One more thing, actually the existing tests all reuse the same shape across every output which totally hides these matching bugs. Different outputs can have different shapes (different feature counts) and the metric bridging needs to handle that fine without assuming uniform shapes everywhere. This kind of mixed-structure setup (list preds, dict labels, nested trees) is super common in real training, so without this fix named metrics on multi-output models are basically unreliable and you get subtle wrong-metric-on-wrong-output bugs.
+A related issue occurs with deeply nested model outputs: when output names are declared for such models, the metric result keys are not prefixed with those output names. This makes it impossible to identify which output a given metric measurement belongs to.
+
+## Expected Behavior
+
+- When predictions are a flat list and labels are a named dictionary (or vice versa), the declared output names should be used to correctly match each prediction to its corresponding label.
+- When a metrics dictionary is provided with keys matching the declared output names (even if in a different order), the metrics should be evaluated and reported in the output names ordering — not alphabetically.
+- For deeply nested model outputs, if output names are declared, each metric result key should be prefixed with its corresponding output name.
+- For deeply nested model outputs without declared output names, metric result keys should remain unprefixed (current behavior).
+- Outputs with different shapes (different number of features) should be handled correctly without requiring uniform shapes across all outputs.
+
+## Why This Matters
+
+Models with mixed-structure outputs and labels are common in real-world training setups. Without this fix, developers cannot reliably use named metrics with multi-output models when the label and prediction containers differ, leading to subtle bugs where the wrong metric is applied to the wrong output.

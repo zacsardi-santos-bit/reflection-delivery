@@ -1,9 +1,21 @@
-I want to add a short prefix syntax for pulling npm packages from named registries, mostly so I can install from GitHub Packages without setting up a whole scope-to-URL mapping in my project settings just to grab one private scoped package. Right now that's the only way and it's annoying. I'm thinking a concise notation like a short alias followed by a colon and then the package specifier, similar to how other package managers let you point at an alternate registry.
+## Description
 
-So there should be a built-in short prefix that resolves against the GitHub Packages npm registry out of the box. Beyond that I need it extensible: users should be able to define their own aliases in the workspace config under a new named-registries section, each mapping a short alias name to an arbitrary registry URL. And if someone's running a GitHub Enterprise Server, a user-defined entry with the same name as a built-in alias should override the built-in one so they can point it at their enterprise host instead.
+Installing packages from GitHub Packages or other private npm-compatible registries in pnpm currently requires configuring a full scope-to-URL mapping in the project settings. There's no concise shorthand syntax comparable to how other package managers let you express "install this from my private registry."
 
-Any registry URLs given in that workspace config should support the same environment variable substitution that's already used in the auth config files (the way per-URL npm auth tokens do it), so tokens and hostnames can get injected without hardcoding anything.
+This issue proposes adding a named-registry prefix system: a built-in short prefix that maps to the GitHub Packages npm registry, so developers can write a short alias followed by a colon and the scoped package name as an installation target. Beyond the built-in prefix, users should be able to define their own aliases in the workspace configuration, mapping custom short names to arbitrary registry URLs. Users running a GitHub Enterprise Server instance should also be able to override the built-in prefix to point at their enterprise host.
 
-Auth should just work automatically, oh and by that I mean when a specifier uses one of these aliases the resolver looks up credentials by the registry URL, so whatever per-URL token entries are already configured get picked up with no extra setup. Also if someone hands me a malformed URL, missing the protocol or using an unsupported protocol, I want that to blow up immediately when the resolver gets created, not later during an actual install run.
+Authentication should be picked up automatically from existing per-URL credential entries (the way npm authentication tokens already work), with no additional auth mechanism required.
 
-One thing to be careful about: specifiers that belong to other resolvers must not get intercepted by this, so git repository shorthands, workspace references, local file and link paths, and catalog entries all need to pass through untouched. Same goes for a specifier whose prefix just isn't in the configured alias set, that should fall through to the other resolvers unchanged too.
+## Expected Behavior
+
+- A built-in short prefix resolves packages against the GitHub Packages npm registry
+- Custom aliases can be configured in the workspace file under a new named-registries configuration section, mapping an alias to a registry URL
+- A user-defined entry under the same name as a built-in alias overrides the built-in (enabling GitHub Enterprise Server support)
+- Registry URLs in the workspace configuration support environment variable substitution, consistent with how per-URL authentication tokens are already handled
+- When a specifier uses a named-registry alias, authentication is looked up by the registry URL, so existing per-URL token entries work automatically
+- Creating the resolver fails at startup (not at install time) when a configured registry URL is malformed
+- Specifiers that belong to other resolvers (git shorthands, workspace references, file/link paths, catalog entries) are not intercepted
+
+## Why This Matters
+
+Teams using GitHub Packages or internal registries need a low-friction way to declare such dependencies without spelling out full registry URLs in every dependency specifier. The short-prefix approach is familiar from other package managers and fits naturally into the existing pnpm workflow.

@@ -1,5 +1,16 @@
-I'm stuck getting the beacon node's CLI tests to even compile again, they're all blowing up with compilation errors because a bunch of our networking deps got reorganized upstream. The main thing is the Ethereum Node Record (ENR) types and utilities that used to live inside the peer discovery library got extracted into their own dedicated ENR package, so anywhere we pull ENR stuff from the discovery lib needs to point at the new package instead. Also the function that derives a private key from a peer identity got renamed in the new package, and worse, its return shape changed, the private key is now a field on the returned object rather than being the direct return value, so every call site needs to switch to the new name and then read the key off that returned object.
+## Description
 
-On top of that the peer-to-peer interface types (peer identity types especially) that we used to import from separate sub-paths are all consolidated under the library's root entry point now, so those imports should come from the root path instead of the sub-paths.
+Several third-party libraries that the beacon node depends on have been reorganized, breaking compilation of the CLI package. Ethereum Node Record (ENR) functionality that was previously bundled inside the peer discovery library has been extracted into its own dedicated package. The function used to derive a private key from a peer identity has been renamed in the new package and its return type has changed — the private key is now a field on the returned object rather than the direct return value.
 
-The part that's hit hardest is the peer ID and ENR initialization logic, the stuff that creates new identities, reuses saved ones, and recovers from invalid or mismatched saved state, because it calls that renamed key-derivation function in several places. I want all the affected source files updated to the new package names and new call signatures so the CLI package compiles and the beacon node startup behavior (create, persist, reload, validate peer IDs and ENRs across the various startup scenarios) works right again. Right now nothing compiles so no tests run and the node won't start, so this is really just getting us back to green.
+Additionally, networking interface types that were previously imported from multiple distinct sub-paths within the peer-to-peer library are now consolidated under the library's root entry point. Because the source code still references the old package layout and old function signatures, the entire CLI package fails to compile and all related tests fail.
+
+## Expected Behavior
+
+- ENR-related types and utilities should be imported from the new dedicated ENR package rather than from the peer discovery library
+- The function for deriving private key material from a peer ID should use the new renamed function and access the private key field on its return value
+- Peer identity types should be imported from the root package path rather than from sub-paths
+- The beacon node's peer identity initialization logic should correctly create, persist, reload, and validate peer IDs and ENRs under various startup scenarios
+
+## Why This Matters
+
+Without these updates, the codebase fails to compile entirely, meaning no beacon node tests can run and the node cannot be started. Fixing the import paths and updated API call sites restores compilation and all peer identity/ENR initialization behavior.

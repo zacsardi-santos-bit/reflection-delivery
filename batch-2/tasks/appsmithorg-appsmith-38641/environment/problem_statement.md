@@ -1,7 +1,18 @@
-I'm pulling our IDE sidebar nav button out of the application layer and into the shared design system package so other parts of the codebase (and other packages) can use it without dragging in app-specific deps. Right now it's tightly coupled to application utilities and its prop types live bundled with the implementation, which is annoying.
+## Description
 
-What I want: the component should land as a named export under the Sidebar templates directory in the design system library, with its prop types pulled out into a separate types file sitting in that same directory. I also need a shared enums file in that same Sidebar templates directory that exports the condition states, including the warning condition used to flag buttons.
+The IDE sidebar navigation button component currently lives inside the application layer, tightly coupled to application-specific utilities and test infrastructure. This makes it difficult to reuse across different parts of the codebase and means consumers must depend on application-layer imports to get a shared UI building block. The component's type definitions are also bundled together with its implementation rather than being in a separate, importable types file.
 
-Behavior-wise the component renders a button that gets a data test identifier derived from an `id` prop so it's queryable. When a warning condition is set on the button it should render a condition indicator element whose test identifier incorporates the condition name (predictable, so something like the condition value baked into the id). Clicking the button should call the provided callback with the button's URL suffix, but only if the button isn't already selected. If it's already in the selected state, clicks get ignored and the callback doesn't fire.
+We need to move this sidebar button component into the shared design system library so it can be consumed by any part of the application (or other packages) without pulling in application-specific dependencies. The type definitions should be extracted into their own file for clearer organization.
 
-Oh, and our test infra moved to standard testing library `screen` queries instead of the old destructured render helpers, so make sure the component plays nice with querying by test id through `screen` rather than return values from render.
+## Expected Behavior
+
+- The sidebar button component is available as a named export from the design system library at the appropriate path under the Sidebar templates directory
+- The component's prop types are exported from a separate types file in the same directory
+- The condition-state enum (used to signal warning states on buttons) is defined and exported from a shared enums file in the Sidebar templates directory
+- When a condition is applied to the button (e.g., a warning), the corresponding indicator element is rendered with a predictable DOM identifier
+- Clicking an already-selected button does not trigger the navigation callback
+- Clicking an unselected button triggers the navigation callback with the button's URL suffix
+
+## Why This Matters
+
+Having the sidebar button in the shared design system package lets teams build on it without coupling to the application layer, reduces duplicate code, and makes testing more straightforward with standard testing library utilities.

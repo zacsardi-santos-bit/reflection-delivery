@@ -1,5 +1,23 @@
-I'm adding OpenTelemetry compatibility to the Datadog Java agent because right now teams running services with both have to duplicate every shared setting in two formats, once for OTel and once for Datadog, since the agent doesn't recognize OTel env vars or system properties at all. I want a new config source component that reads standard OpenTelemetry environment variables and system properties and translates them into their Datadog equivalents, but only when OTel compatibility is explicitly turned on via an enable flag.
+## Description
 
-The default is off, and when it's off none of the OTel variables should touch the Datadog config, everything gets ignored. When it's enabled, I need it to handle a bunch of mappings. Service name, environment, version, and custom resource attributes come out of the standard OTel resource attribute settings. A dedicated service name property should win over a service name that's also sitting inside the general resource attributes map. Propagation style names get translated, and the short-form single-header B3 identifier needs to be normalized to its more explicit alias variant. Sampling config maps to Datadog's sample rate. Setting an exporter to none/disabled turns off the corresponding Datadog data collection, traces or metrics respectively. HTTP request and response header capture from both the client and server OTel properties gets merged and reformatted into Datadog header tag mappings. The OTel Java agent extensions path maps to Datadog's extension path setting. Log level should come from the OTel environment variable form specifically, not the system property form, and map to Datadog's log level.
+Teams that run Java services instrumented with both the Datadog agent and OpenTelemetry-based configuration currently have to duplicate their settings in two different formats. The Datadog agent does not recognize OpenTelemetry environment variables or system properties, so every shared concern — service name, propagation style, sampling rate, data exporters, HTTP header capture, and resource attributes — must be configured separately in Datadog's own format.
 
-Oh and for custom resource attributes, the reserved keys (service name, env, version) get pulled out separately, and the remaining custom key-value tags are capped at the first 10 entries, anything beyond that gets dropped. This is all about killing the dual-config overhead and config drift for teams adopting OTel alongside Datadog.
+We need a bridge component inside the Datadog agent that, when users explicitly opt in to OpenTelemetry compatibility mode, automatically reads standard OpenTelemetry environment variables and system properties and translates them into the equivalent Datadog configuration.
+
+## Expected Behavior
+
+- When the OpenTelemetry compatibility layer is **not** opted into, all OTel-specific settings are completely ignored and have no effect on Datadog configuration.
+- When the compatibility layer **is** opted into (via an explicit enable flag), the following translations must occur:
+  - Service name, environment, version, and custom resource attributes are extracted from the standard OTel resource attribute settings.
+  - A dedicated service name property overrides the service name inside the general resource attributes map.
+  - Propagation style names are translated, with abbreviated format identifiers normalized to their explicit single-header variant equivalents.
+  - Sampling configuration maps to Datadog's sample rate setting.
+  - Setting an exporter to a disabled/no-output state turns off the corresponding Datadog data collection (traces or metrics).
+  - HTTP request and response header capture settings from both client and server OTel properties are merged and reformatted as Datadog header tag mappings.
+  - The OTel Java agent extensions path maps to Datadog's extension path setting.
+  - The log level from OTel environment variables maps to Datadog's log level setting.
+  - Custom resource attributes beyond the reserved keys are mapped to Datadog tags, limited to the first 10 entries.
+
+## Why This Matters
+
+This removes the need for dual configuration for teams adopting OpenTelemetry alongside Datadog, reducing operational overhead and configuration drift.

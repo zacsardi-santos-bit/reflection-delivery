@@ -1,5 +1,14 @@
-I'm hitting a bug with the SQL statement splitter in the JavaScript bindings here, the thing that chops a SQL string into individual statements before we hand them to the database. Problem is triggers. When I define a trigger whose body has multiple statements inside a begin/end block, the splitter sees each semicolon in the body as a statement boundary and shreds the trigger into a bunch of fragments, none of which are valid SQL on their own. What I actually want is the whole trigger definition, from the opening create trigger keyword all the way through the closing end marker, treated as one single self-contained statement.
+## Description
 
-A few edge cases are broken too. If I write the "temporary" variant of a trigger, or prefix the whole thing with an explain keyword, those aren't recognized as triggers at all and get split wrong, so I need those handled just like an ordinary trigger with the body kept intact. Also if a string literal inside the trigger body happens to contain the word that normally closes the block (end), the splitter gets fooled and closes the trigger too early, so it needs to look past string contents and ignore any end sitting inside a string literal.
+The SQL statement splitter used in the JavaScript database bindings incorrectly handles trigger definitions. When a trigger body contains multiple statements separated by semicolons (inside a begin/end block), the splitter treats each semicolon as a statement boundary, fragmenting the trigger into multiple invalid pieces instead of keeping the entire definition together as one statement.
 
-And to be clear, anything that comes after the trigger definition should still get split out normally as separate statements, that part I don't want to lose. This matters because multi-statement triggers are totally valid and common SQL, and right now the fragments fail when executed, which means we basically can't create or manage triggers through this path at all. The splitter logic lives in the JS bindings crate, so make it trigger-aware there.
+## Expected Behavior
+
+- A trigger definition with a multi-statement body should be returned as a single, self-contained SQL statement by the splitter.
+- Any additional SQL statements that follow the trigger definition should be split out correctly as separate statements.
+- String literals inside a trigger body that happen to contain the word that closes a trigger block should not be misinterpreted as a terminator — the splitter must look past string contents.
+- Trigger variants that include a "temporary" modifier or are prefixed with an explain keyword should be recognized just like ordinary triggers, with their bodies kept intact.
+
+## Why This Matters
+
+Multi-statement trigger definitions are valid and common SQL. When the splitter breaks them apart, the resulting fragments are individually invalid and will fail when executed against the database. This prevents any application that relies on this splitter from creating or managing triggers reliably.

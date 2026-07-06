@@ -1,5 +1,14 @@
-I'm working on a Python linter and I hit a gap with the naming convention rules, they just don't apply to variables bound inside match/case statements. So when I capture a value into a name in a pattern, the linter stays quiet even though the exact same name in a regular assignment would get flagged. For example binding an uppercase name inside a function's case clause, or a mixed-case name in a class body or at module scope, all slip through undetected. That's inconsistent and it makes it hard for teams to trust the linter as a real safeguard, developers who prefer pattern matching should get the same feedback as folks writing classic assignments.
+## Description
 
-What I want is for the naming checks to look at every way a match/case pattern can introduce a name. That's simple captures, class-pattern sub-captures, star captures in sequence patterns, mapping remainder captures (the double-star rest binding), and as-aliases. So in a function body, any pattern clause that binds a non-lowercase name through any of those forms should get reported as a naming violation since function scope wants lowercase. Inside a class body a pattern that binds a mixed-case name should be flagged for each bound identifier, and when there's an aliasing clause that means reporting both the capture and the alias. Same deal at module/global scope, mixed-case bindings get flagged including the mapping remainder binding and both sides of an aliasing pattern. And oh, lowercase captures plus the wildcard pattern (the underscore) should keep passing clean with no violation at all.
+Python's structural pattern matching syntax can bind variable names through several forms: simple captures, class-pattern sub-captures, star captures in sequence patterns, mapping remainder captures, and as-aliases. Currently, the naming convention rules that enforce lowercase variable names in function scope, disallow mixed-case names in class scope, and disallow mixed-case names in module/global scope do **not** inspect any of these bound names. This is a gap: a developer can introduce a non-conforming name via a pattern-matching clause with no warning from the linter, even though a regular assignment with the same name would be flagged.
 
-Basically I need the same convention logic that already runs on assignments to also walk match patterns wherever they bind names.
+## Expected Behavior
+
+- In a function body, a pattern-matching clause that binds a non-lowercase name (through any supported pattern form) should be reported as a naming violation.
+- Inside a class body, a pattern-matching clause that binds a mixed-case name should be reported as a naming violation for each bound identifier, including both the capture and the alias when an aliasing clause is present.
+- At module/global scope, a pattern-matching clause that binds a mixed-case name should be reported similarly, including mapping remainder bindings and both sides of an aliasing pattern.
+- Lowercase captures and the wildcard pattern should continue to be accepted without any violation.
+
+## Why This Matters
+
+Inconsistent naming enforcement makes it harder for teams to rely on the linter as a complete safeguard against convention violations. Developers who prefer pattern matching over traditional assignment should receive the same feedback as those who use classic assignment syntax.

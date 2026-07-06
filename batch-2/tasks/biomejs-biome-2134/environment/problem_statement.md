@@ -1,5 +1,13 @@
-I'm hitting a couple of indentation bugs in our JS/TS formatter and I could use a fix. First one: when I write a deeply nested conditional expression (a ternary inside the branch of another ternary, going several levels deep) and I put an inline comment on each of the branch operators to explain what that branch does, the indentation comes out wrong. The inner nested conditional lands at the wrong level relative to the outer one, so it doesn't read like a clean stepped structure. What I want is each nesting level adding a consistent additional indent so every level is a clearly indented block that's visually distinguishable from the one wrapping it, and the inline comments sitting on the operator tokens need to stay on the same line as their operator, not get shoved somewhere else.
+## Description
 
-Second bug is on the TypeScript side. When I write a type alias that's a union of object types, and one of those object members has a property whose type is itself a union of more object types, the nested union and its members get indented wrong. I want that inner union type and the object contents inside it to indent progressively deeper relative to their containing type, all levels lined up correctly.
+The code formatter does not correctly indent deeply nested conditional expressions when inline comments are present on the operator tokens. Similarly, TypeScript type declarations that use union types inside the properties of object type members are also formatted incorrectly.
 
-Both of these show up whether I'm configured for tab-based or space-based indentation, so whatever fix goes in needs to hold for both. Can you sort out the formatter so it handles these nested patterns right?
+## Expected Behavior
+
+- When a conditional expression is nested inside the branch of another conditional expression, and each operator has an inline comment, the formatter should apply proper incremental indentation at every nesting level. Each level of nesting should produce a clearly indented block that is visually distinguishable from the outer level.
+- Inline comments on operator tokens should be preserved on the same line as their operator in the formatted output.
+- When a TypeScript type alias uses a union type, and one of the union members is an object type whose properties are themselves typed as union types, the formatter should correctly indent all levels of the nested structure.
+
+## Why This Matters
+
+Developers who write deeply nested conditional expressions with explanatory comments on each branch operator, or who model complex data shapes using nested TypeScript union types, currently receive malformed output. This makes the formatted code harder to read and may even change its visual structure in ways that misrepresent the logic. Fixing this ensures the formatter reliably handles these common real-world patterns.

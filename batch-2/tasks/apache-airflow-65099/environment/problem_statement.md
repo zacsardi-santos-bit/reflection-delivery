@@ -1,7 +1,20 @@
-I'm hitting a dumb wall with the Airflow CLI. When I run the remote version check with the `--remote` flag to grab the server's version, it blows up with a credentials error if I'm not logged in. But checking the server version is a public, unauthenticated, read-only endpoint, so making people log in first is silly. A dev who just wants to see what version their remote server is running shouldn't have to authenticate at all.
+## Description
 
-What I want is a no-auth client mode in the CLI's API client that skips credential loading, keyring access, and token handling entirely. When that mode is active there should be zero keyring lookups and no credential file reads. It still needs to resolve to the standard API base URL, same path the regular CLI mode uses. And it's got to work even when there's no local config file or stored session around, so when credentials get loaded in no-auth mode without any config file present the result should just come back with no token and no URL set, no error raised.
+The CLI's remote version check command fails when the user is not logged in. Because the server version endpoint is a publicly accessible, read-only operation that doesn't require authentication, requiring stored credentials is unnecessarily restrictive.
 
-Then wire the remote version command to use this new mode so it works whether or not I'm logged in, and regardless of whether an API token gets passed alongside the flag.
+## Current Behavior
 
-Also, related bug while I'm in there: when a CLI-mode client is used with an explicit token handed in directly at call time, it should succeed even with no local config file present, using that provided token directly without touching the keyring. Right now it still raises a credentials error in that case, which it shouldn't.
+Running the command to fetch the remote server version with the --remote flag raises a credentials error when the user isn't logged in. The command treats this unauthenticated endpoint exactly the same as authenticated ones, requiring a full login to proceed.
+
+## Expected Behavior
+
+- The remote version command should work without any stored login credentials.
+- There should be a dedicated no-authentication client mode for calling API endpoints that don't require authentication.
+- When this mode is used, no keyring access or credential file lookup should occur.
+- The no-authentication mode should resolve to the standard API base URL (the same as the regular CLI mode).
+- When credentials are loaded in no-authentication mode without any config file present, the result should have no token and no URL set, without raising an error.
+- When a CLI-mode client is used with an explicit token provided at call time, it should work even without a local config file, using the provided token directly without keyring access.
+
+## Why This Matters
+
+Commands that call publicly accessible, unauthenticated endpoints should not require the user to be logged in. This is a usability issue — a developer who just wants to check the remote version of their server shouldn't have to authenticate first. The fix makes it possible to run such commands freely without prior login.

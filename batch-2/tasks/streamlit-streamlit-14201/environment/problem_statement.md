@@ -1,7 +1,21 @@
-I'm cleaning up the main menu component and its shared test utilities because right now everything leans on internal DOM identifiers to find elements, which screen readers can't see and which forces every test to thread a rendered component reference through helper calls. It's verbose, error-prone, and worse, it means our tests never actually prove the menu is accessible. I want to fix both sides.
+## Description
 
-On the helper side (the shared test utils for the menu), the function that collects visible menu item labels shouldn't take a render result at all anymore, it should locate the menu container on its own using the menu's accessible role and name, same signals a real assistive-tech user relies on. And the helper that opens the menu should find the trigger button by its accessible role and accessible name rather than some internal id.
+The main menu component's test utilities currently rely on internal DOM identifiers to locate elements during tests. These identifiers have no accessibility meaning — they are not visible to screen readers or assistive technologies, and they tightly couple tests to internal implementation details. When a team member opens the menu, collects item labels, or interacts with menu elements in tests, they must manually thread a rendered component reference through every helper call, which is verbose and error-prone.
 
-On the component itself, the menu button needs an accessible name of "Main menu", it should announce that it controls a popup menu, and reflect whether the menu is currently expanded or collapsed. The menu container carries the "menu" role plus an accessible name of "Main menu". Every action item exposes the "menuitem" role with its label as the accessible name so it's queryable by role and label text. The auto-rerun toggle should use the checkbox variant of menuitem with an accessible name containing "Auto rerun". Theme options use the radio menuitem role with their theme names, sitting inside a group labeled "Theme". Dividers get the separator role, and disabled items need to announce their disabled state.
+The test helper that collects visible menu item labels should be able to locate the menu container on its own — using the same semantic signals (roles and names) that a real user with assistive technology would rely on. Similarly, the helper that opens the menu should find the trigger button by its accessible label, not by an internal identifier.
 
-Net goal: tests stop passing component references into shared helpers, and all menu interactions in tests go through semantic accessibility queries instead of internal identifiers, which also means the tests implicitly verify accessibility for real.
+## Expected Behavior
+
+- The helper function that collects menu item labels should require no external component reference; it should locate the menu container automatically by its accessible role and name.
+- The helper function that opens the menu should locate the menu trigger button by its accessible role and accessible name.
+- The main menu button must expose an accessible name of "Main menu", announce that it controls a popup menu, and reflect whether the menu is currently open or closed.
+- The menu container must expose the "menu" role and an accessible name of "Main menu".
+- Each action item in the menu must expose the "menuitem" role with its label as the accessible name.
+- The auto-rerun toggle must expose the checkbox menuitem role with a name containing "Auto rerun".
+- Theme options must expose the radio menuitem role with their theme name, inside a group labeled "Theme".
+- Divider elements must expose the separator role.
+- Disabled items must announce their disabled state.
+
+## Why This Matters
+
+Using role and name-based queries rather than internal identifiers makes tests more meaningful: they implicitly verify that every tested interaction is accessible to users of assistive technologies, and they remove boilerplate from test code by eliminating the need to pass component references to shared helpers.

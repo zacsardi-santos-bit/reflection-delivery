@@ -1,5 +1,13 @@
-I'm working on the project-scoped secrets controller in Rancher and hit a labeling gap. Right now the project-scoped secrets we store in the management namespace only carry a label identifying which project they belong to, but there's nothing telling us which cluster they came from, so you can't figure out cluster membership from the secret's labels alone. That's a real pain when you're juggling secrets across multiple clusters and want operators or tooling to filter by cluster.
+## Description
 
-So I want to stamp a cluster identifier label onto project-scoped secrets alongside the existing project name label, so both the project and the cluster are readable straight off the labels. I also need a backfill operation that scans existing project-scoped secrets and finds any that are missing the cluster label and adds it automatically. Important bit, this backfill has to be non-blocking, so if updating one secret fails it keeps going through the rest and accumulates the errors instead of bailing at the first failure.
+Project-scoped secrets stored in Rancher's management namespace are labeled to identify which project they belong to, but they carry no label indicating which cluster they originate from. This means there is no way to determine cluster membership by inspecting the secret's labels alone, which creates problems when managing secrets across multiple clusters.
 
-Oh and the existing operation that migrates old-style secrets left over from a previous controller should also stamp the cluster label at migration time. And while you're in there, rename that function that handles the legacy Norman-style secret migration so it's obvious it specifically targets that old format.
+## Expected Behavior
+
+- Project-scoped secrets should be labeled with both their project name and their cluster name so that cluster membership can be determined directly from a secret's labels.
+- A new operation should be available to scan existing project-scoped secrets and add the missing cluster label to any that do not already have it, working in a non-blocking manner so that failures on individual secrets do not prevent the rest from being updated.
+- The existing migration operation that handles secrets left over from a previous controller should also stamp the cluster label on secrets it processes.
+
+## Why This Matters
+
+Without a cluster label, operators and automated tooling cannot easily filter or identify which cluster a project-scoped secret belongs to. This gap also complicates future multi-cluster secret management scenarios. Adding the cluster label — and backfilling it onto existing secrets — ensures all project-scoped secrets are consistently and fully labeled.

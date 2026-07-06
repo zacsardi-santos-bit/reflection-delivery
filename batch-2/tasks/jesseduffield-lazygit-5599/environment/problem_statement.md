@@ -1,5 +1,23 @@
-I hit a regression in the cherry-pick workflow and it's driving me nuts. Here's the deal: if I cherry-pick a single commit off a source branch's commit list and then switch over to the target branch's commits view and paste, everything looks fine at that point, the status bar correctly stops showing "commits copied" once the paste is done since there's nothing left in the clipboard as far as I'm concerned. But then the trouble starts. If I go back to another branch and use range selection to mark a few more commits for cherry-picking, the range copy looks like it worked (the status bar shows the right count) but when I actually paste those commits the result is wrong, the commits don't land in the right order, or the paste just fails entirely.
+## Description
 
-My hunch is that the internal cherry-pick state left behind after that first paste is bleeding into the next range-based operation and corrupting it. So basically after a paste the clipboard-ish state needs to be fully reset so a fresh range selection and paste behaves correctly. This breaks a super common workflow, paste once, then go pick a range from another branch and paste again, and right now the only fix is restarting the tool which is annoying.
+There is a regression in the cherry-pick workflow. After pasting a set of cherry-picked commits onto a branch, attempting to use range selection to copy additional commits from another branch does not work correctly. The range-copy operation either silently fails or produces incorrect results, making it impossible to cherry-pick multiple commits in sequence across paste operations.
 
-Can you track down what's going wrong with the cherry-pick state after a paste and fix it? I want that first paste to leave things clean, and I want a subsequent range selection (mark multiple commits, see the correct count in the status bar) to paste correctly with the expected commit ordering on the target branch, even after a previous paste already happened. The relevant logic lives around the cherry-pick handling and status/clipboard reset, so look there for the state that isn't being cleared properly.
+## Expected Behavior
+
+- After pasting cherry-picked commits, the status bar should no longer show "commits copied" — the paste is done, so there's nothing in the clipboard from the user's perspective
+- After a paste, the user should be able to navigate to another branch, select a range of commits, mark them for cherry-picking, and see the correct count displayed in the status bar
+- Pasting the newly selected range of commits should work correctly, producing the expected commit ordering on the target branch
+
+## Steps to Reproduce
+
+1. Cherry-pick a single commit from a source branch's commit list
+2. Switch to the target branch's commits view and paste
+3. After paste, navigate back to the source branch commit list
+4. Use range selection to mark multiple commits for cherry-picking
+5. Paste the range onto the target branch
+
+The range paste either fails or produces incorrect commit ordering.
+
+## Why This Matters
+
+Users who regularly cherry-pick commits across branches often need to perform multiple cherry-pick operations in sequence. If the first paste corrupts the state for subsequent range-based cherry-picks, they must restart the tool or work around the bug, which is disruptive to the workflow.

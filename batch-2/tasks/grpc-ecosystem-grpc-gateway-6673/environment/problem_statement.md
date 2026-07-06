@@ -1,5 +1,17 @@
-I'm working on the OpenAPI v3 generator for gRPC services and it's got a gap I need to close around visibility filtering. Right now it dumps every service, method, field, and enum value from the proto definitions into the output no matter what visibility annotations are attached, which means internal or preview surface leaks into every spec we generate. That kills our ability to produce audience-specific docs from a single proto (say one for public consumers, one for internal), and it's honestly a security concern too, not just a docs-quality one.
+## Description
 
-What I want is for the generator to respect those annotations. An element annotated with a visibility restriction should get excluded unless its restriction label matches one of the configured visibility selectors, and anything without an annotation should always show up regardless of what selectors are set. This needs to work consistently across all element types: a service-level annotation hides the whole service and its tag shouldn't appear in the document's tag list, a method-level annotation hides that individual operation, field annotations hide fields from request bodies and query parameters (including nested fields coming from message types), and enum value annotations hide individual values in component schemas.
+The OpenAPI v3 generator currently emits every service, method, field, and enum value defined in a proto file, regardless of any visibility annotations attached to those elements. Many projects use visibility annotations to distinguish between internal, preview, and publicly released API surface — but since the generator ignores those annotations, it's impossible to produce an audience-specific specification. Internal endpoints, unreleased fields, and restricted enum values all end up in every generated document.
 
-Couple of edge cases I care about. For mutually-exclusive field groups (the "pick at most one" constraint), if filtering knocks it down to a single remaining member, drop the mutual-exclusion constraint entirely since you can't have that constraint with only one option. For enums where filtering removes every value, still emit the component schema (other visible fields may reference it) but without an enum constraint, so it falls back to an unconstrained string type rather than an empty or invalid value list. And when no selectors are configured at all, treat every annotated element as hidden; with all the relevant selectors configured, everything appears.
+## Expected Behavior
+
+- Elements annotated with a visibility restriction should be excluded from the generated output unless their restriction label matches one of the configured visibility selectors.
+- Elements without any visibility annotation should always appear in the output.
+- The feature should apply consistently across all element types: services, methods, message fields (in request bodies, query parameters, and component schemas), and enum values.
+- When a service is hidden, its tag must not appear in the document's tag list.
+- When filtering reduces a mutually-exclusive field group to a single remaining member, the mutual-exclusion constraint should be dropped entirely rather than left in an inconsistent state.
+- When all values of an enumeration are hidden, the enum's component schema should still be emitted (since visible fields may reference it), but as an unconstrained type rather than an empty or invalid value list.
+- With no selectors configured, all annotated elements should be treated as hidden; with all relevant selectors configured, all elements should appear.
+
+## Why This Matters
+
+Without this capability, teams cannot use a single proto definition to generate multiple audience-specific API documents (for example, one for public consumers and one for internal use). Every internal detail leaks into every generated spec, which is both a documentation quality problem and a potential security concern.

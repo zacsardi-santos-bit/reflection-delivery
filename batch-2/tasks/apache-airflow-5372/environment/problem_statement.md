@@ -1,5 +1,21 @@
-I'm building incremental Airflow pipelines where each task needs to know about its own prior runs so it can process only the data that's landed since it last succeeded. Right now there's no clean way to get that from inside a task run, I keep having to query the metadata DB by hand or write custom helper logic and it's fiddly and easy to get wrong.
+## Description
 
-What I want is a set of properties hanging off the task instance object (the task run) so I can access previous runs directly. First, give me the immediately preceding task run for that task regardless of whether it passed or failed, and it should return nothing (None) if this is the very first run. Second, a property that skips over any failed runs and hands me the most recent previous run that actually succeeded, again returning None when there are no successful predecessors. On top of those, I'd love shortcut properties that pull just the execution date and just the start date of that most recent successful run, so I don't have to grab the whole object and dig into it.
+When building data pipelines, tasks often need context about their own previous runs — specifically, the last time they ran successfully. Right now there's no convenient way to retrieve that information from within a task. Developers have to manually query the database or write custom helper logic, which is cumbersome and error-prone.
 
-The key thing is all of this has to behave correctly no matter how the DAG is scheduled, whether it's a cron expression, a fixed time interval (timedelta), or no schedule at all, and it needs to work whether or not catchup is enabled. This lives in the task instance model, so wire these properties into `@airflow/models.py` (the TaskInstance class). Without it I can't reliably figure out the time window to process from within the task, which is the whole point for incremental loads.
+We should add properties to task run objects that expose:
+
+- The immediately preceding task run (regardless of whether it succeeded or failed)
+- The most recently successful preceding task run
+- The execution date of the most recently successful preceding task run
+- The start date of the most recently successful preceding task run
+
+## Expected Behavior
+
+- Accessing the "previous task instance" property on any task run should return the immediately preceding run for that task, or nothing if it is the first run.
+- Accessing the "previous successful task instance" property should skip over any failed runs and return the most recent run that succeeded, or nothing if there are no successful predecessors.
+- Dedicated properties should be available for retrieving just the execution date or start date of the most recent successful run, without needing to navigate through the full object.
+- All of these properties should work correctly regardless of whether the DAG uses a cron schedule, a fixed time interval, or no schedule at all — and whether or not catchup is enabled.
+
+## Why This Matters
+
+This is essential for writing incremental processing pipelines where each task run should pick up from where the last successful run left off. Without this, developers cannot easily determine the time window to process without querying the database themselves.

@@ -1,5 +1,16 @@
-I'm hitting a validation gap in the string tokenizer that splits on a custom list of separator strings. Right now if I pass an empty separator list it correctly errors out, but if the list actually contains an empty string element the query just silently accepts it, which feels wrong since splitting on an empty string is meaningless and leads to confusing or undefined behavior. So an array with a single empty string as the separator arg should fail, and an array that mixes valid non-empty separators alongside an empty string should also fail. In both cases I want a clear bad-argument error rather than the thing quietly going through.
+## Description
 
-The current behavior is that only a completely empty separator list gets rejected. Once the list has at least one element it passes validation even when one (or more) of those elements is itself an empty string, which is the hole I need closed. The fix is to reject any separator list containing an empty string, the same way an empty list is already rejected.
+When using the string tokenizer that splits on custom separators, passing an empty string as one of those separators is currently silently accepted. This should be invalid — splitting by an empty string is meaningless and can lead to confusing or undefined behavior. The tokenizer should reject any separator list that contains an empty string, just as it already rejects an empty separator list.
 
-The point here is consistency and predictability: folks who accidentally drop an empty string into their separator list get no feedback that their query is broken, so I want that mistake surfaced early with a clear error instead of silent acceptance.
+## Expected Behavior
+
+- Providing an array with a single empty string as the separator argument should fail with a bad-argument error.
+- Providing an array that mixes valid (non-empty) separators with an empty string should also fail with a bad-argument error.
+
+## Current Behavior
+
+Currently, only an entirely empty separator list is rejected. A separator list that contains at least one element passes validation even if one or more of those elements is an empty string.
+
+## Why This Matters
+
+Users who accidentally pass an empty string in their separator list receive no feedback that their query is invalid. Adding validation for this case makes the function behavior consistent and predictable, and surfaces configuration mistakes early with a clear error.

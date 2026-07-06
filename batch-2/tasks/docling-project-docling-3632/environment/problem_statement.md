@@ -1,7 +1,17 @@
-I'm hitting a gap with docling's API-based picture description pipeline. I'm annotating images in PDFs through an external inference endpoint and it generates descriptions fine, but the token usage info that the provider returns gets thrown away somewhere and never lands in the output doc. I need to track per-picture and per-document costs for billing and quota monitoring so this is kind of a dealbreaker right now.
+## Description
 
-What I want is for the response from an API image request to carry the full usage payload (token counts plus any provider-specific fields) alongside the generated text and the stop reason, and then have that usage flow through every layer, from the raw HTTP call through the model wrappers and into the document metadata on each annotated picture. So when the pipeline annotates a picture via an API call, the resulting usage payload should end up stored on that picture's description metadata and be retrievable downstream.
+When using an external API endpoint to generate picture descriptions during document processing, the pipeline discards the token usage information returned by the provider. This makes it impossible for callers to track costs, monitor quota consumption, or audit inference usage. There is also no way to handle providers that return usage data under a non-standard key in the response, or under a nested path.
 
-The tricky bit is my provider doesn't use the standard OpenAI "usage" field, it's under a different key and sometimes nested, so I need a way to tell the pipeline which key in the JSON response holds the usage data, including dotted paths for nested structures. Also please support an alias parameter for selecting that usage key so it stays compatible with existing plugin-style configs. Both the non-streaming and streaming request paths need to preserve usage and pass it through, and when streaming with custom stopping logic the usage seen before the stop should still get captured.
+## Expected Behavior
 
-Oh and if the API returns an empty or non-JSON body I'd rather have a graceful fallback with a clear log message than a crash or silent failure. Last thing, the HTTP retry behavior for transient errors should be well defined with specific retry counts, status codes to retry on, and backoff settings so it's consistent.
+- The response from an API image request should carry the full usage payload (token counts and any provider-specific fields) alongside the generated text and stop reason.
+- Callers should be able to specify which key in the provider's JSON response contains the usage data, including dotted paths for nested structures (e.g., a provider that places usage data under a nested path rather than at the top level).
+- An alias parameter should be supported for selecting the usage key, for compatibility with existing plugin-style configurations.
+- Usage information should flow through all pipeline layers — from the raw HTTP call, through the model wrappers, and into the document metadata on each annotated picture.
+- When the pipeline annotates a picture via an API call, the resulting usage payload should be stored on the picture's description metadata and be retrievable by downstream consumers.
+- Malformed or empty API responses should be handled gracefully with informative log messages rather than crashing silently.
+- The HTTP retry logic for transient failures should be clearly configured and consistent.
+
+## Why This Matters
+
+Users who rely on external vision models for picture annotation often need to track per-document or per-picture token costs for billing and monitoring purposes. Without usage data in the output, they have no programmatic way to attribute costs. Additionally, different providers use different response schemas for usage data, so a flexible key-selection mechanism is needed.

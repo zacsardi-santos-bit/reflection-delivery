@@ -1,7 +1,25 @@
-I'm trying to make our exported HTML actually usable with screen readers. Right now the export spits out generic container elements with custom data attributes instead of real semantic tags, so assistive tech can't figure out any structure at all. Headings aren't headings, lists aren't lists, quotes aren't blockquotes, the whole thing's opaque. There's already a transform function that takes a document object plus a document title string and mutates the doc in place, converting all this stuff into accessible markup, and most of it works, but I keep hitting two bugs.
+## Description
 
-First one's about headings. When a heading block already has an inner heading tag at the same level, the transform nests a duplicate instead of producing one clean heading. I want it to reuse the single element and carry the class name from that inner heading onto the output. Oh and when the inner heading's level doesn't match the block's declared level, the declared level wins and the inner heading gets replaced entirely, no trace of the mismatched element left behind.
+When documents are exported to HTML, the output relies on generic container elements with custom data attributes rather than proper semantic HTML. Screen readers and other assistive technologies cannot derive document structure from this output — headings are not real headings, lists are not real lists, quotes are not blockquotes, and so on.
 
-Second bug, when a heading block sits between two groups of same-type list items in the same container, they get wrongly merged into one list. They should split into two separate lists with the heading in between.
+There are also two specific bugs:
 
-While you're in there, everything else needs to keep behaving right too, so lists wrap into proper unordered or ordered list elements, quote blocks become blockquotes, callout blocks become aside elements announced as notes to assistive tech, checklist items get wrapped in an annotated list structure with each checkbox carrying a checked-state indicator that a screen reader can read, and code blocks become pre/code elements that preserve language metadata and styling class names. Images without alt text should get an empty alt attribute, but don't overwrite existing alt text. The body gets wrapped in a landmark region with a document role linked to the title heading. And if there's no top-level heading after processing, inject one from the document title with an identifier so the wrapper element can reference it. This all matters because these exports get used outside the editor and people relying on screen readers or keyboard nav can't navigate them without it.
+1. When the editor already emits an inner heading tag inside a heading block, the transformation creates a duplicate nested heading instead of replacing it cleanly. If the inner heading's level happens to differ from the block's declared level, both elements survive in the output, causing structural confusion.
+
+2. When a heading block appears between two groups of list items within the same container, both groups end up merged into a single list instead of being split into two separate lists around the heading.
+
+## Expected Behavior
+
+- Heading blocks should produce a single semantic heading element at the correct level. If an inner heading already exists at the same level, it should not be duplicated. If the inner heading is at a different level, the block's declared level should win.
+- If the document has no top-level heading after processing, one should be injected automatically using the document title, with an identifier that can be referenced by other elements.
+- List items should be wrapped in the appropriate list element (unordered or ordered). A heading that appears between list items should cause them to be placed in separate lists, not merged.
+- Quote blocks should become proper blockquote elements.
+- Callout blocks should become aside elements announced as notes to assistive technology.
+- Checklist items should be wrapped in an annotated list structure, and each checkbox should carry an indicator of its checked state readable by assistive technology.
+- Code blocks should become pre/code elements, preserving language metadata and styling class names.
+- Images without alternative text should receive an empty alt attribute; existing alt text must not be overwritten.
+- The document body should be wrapped in a landmark region with a document role, linked to the document's title heading.
+
+## Why This Matters
+
+Exported HTML documents are used outside the editor, and users who rely on screen readers or keyboard navigation need proper semantic structure to understand and navigate the content. Without these fixes, the exported output is effectively opaque to assistive technologies.

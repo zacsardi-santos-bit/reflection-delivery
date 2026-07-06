@@ -1,5 +1,17 @@
-I'm working on the guardian approval flow in the Codex agent and the network access prompt is bugging me. When the agent kicks off network access as part of running something (say a shell command that fires an HTTP request), the review system builds a prompt for a reviewer to approve or reject, but right now it just reuses the generic action-review language we wrote for file edits and command execution. So the reviewer sees stuff like "The Codex agent has requested the following action" and a "Retry reason" line and the JSON block labeled "Planned action JSON", none of which really fits a network request. There's also this omission note (the policy-blocked-access message) getting rendered into the approval body where it doesn't belong.
+## Description
 
-What I want instead is network-specific intro text saying this is a proposed network access request under review. And when there's a triggering command present, the prompt should tell the reviewer to focus on whether that triggering command was authorized by the user, and that explicit prior authorization for the exact network connection isn't required as long as the access is a reasonable consequence of the command. The JSON section should read "Network access JSON" not "Planned action JSON". None of those generic action-review labels ("The Codex agent has requested the following action", "Retry reason") should show up for network access, and the omission note shouldn't appear in the body either.
+When the Codex agent initiates network access as part of executing a command (for instance, making an HTTP request from a shell command), the guardian review system should present a clear and tailored explanation to the reviewer about what they're being asked to evaluate.
 
-Oh and while I'm in here, the snapshot tests for this prompt layout need to pass across platforms, so the path normalization helper used in snapshot comparison has to handle multiple canonical paths rather than just one. Reviewers making network approval calls need context that actually matches what they're evaluating, otherwise the generic wording just confuses things and they might make the wrong call.
+Currently, the network access approval prompt reuses generic action-review language designed for file edits or command execution. This means the reviewer sees labels like "Planned action JSON" and text like "The Codex agent has requested the following action", which are not appropriate for a network access request. There is also no guidance explaining how to assess network access specifically, and the omission note (a policy-blocked-access message) is shown even though it doesn't belong in the approval prompt body.
+
+## Expected Behavior
+
+- The network access approval prompt should use network-specific introductory language indicating that a proposed network access request is under review.
+- When a triggering command is present, the reviewer should be told to focus on whether that triggering command was authorized by the user, and that explicit prior authorization for the exact network connection is not required if the access is a reasonable consequence of the command.
+- The JSON section should be labeled as "Network access JSON", not "Planned action JSON".
+- Generic action-review labels ("The Codex agent has requested the following action", "Retry reason") should not appear for network access requests.
+- The omission note (if any) should not appear in the body of the network access approval prompt.
+
+## Why This Matters
+
+Reviewers evaluating network access approvals need context-specific guidance to make good decisions. Using generic action-review language makes the approval process confusing and may lead to incorrect decisions. Tailoring the prompt to the type of approval helps reviewers understand what they are evaluating and what criteria to apply.

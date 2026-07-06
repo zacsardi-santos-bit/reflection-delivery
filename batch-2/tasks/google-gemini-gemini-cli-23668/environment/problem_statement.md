@@ -1,5 +1,17 @@
-I'm reworking our policy engine so it can actually express the difference between interactive and non-interactive (automated pipeline) sessions instead of hacking it globally. Right now non-interactive mode just slaps a blanket override on everything: any rule that would resolve to "ask the user" gets silently rewritten to "deny." That's too blunt, I can't write a rule that asks in interactive mode but denies in non-interactive mode as two explicit entries, since every rule is authored for interactive use and the engine just clobbers them when automated. The trust models for these two session types are genuinely different and operators should be able to grant broader access interactively while locking down pipelines, without the engine quietly overriding their config.
+## Description
 
-So what I want: let individual policy rules carry an optional mode field marking them as interactive-only, non-interactive-only, or both when it's unspecified. And the function that builds the policy engine configuration should take an interactive flag directly so it sets the non-interactive property and the right default decision in one shot, rather than callers patching the config object after the fact.
+The policy engine currently handles non-interactive (automated/pipeline) mode by applying a blanket global override: any "ask the user" decision from any policy rule is silently converted to "deny." This means policy rules cannot express mode-specific intent — there is no way to write a rule that says "ask the user in interactive mode, but deny in non-interactive mode" as separate, explicit entries. Instead, all rules are written for interactive use and non-interactive mode just overrides them globally.
 
-Couple of specific behaviors to get right. Shell commands with output redirection shouldn't be auto-blocked in non-interactive mode anymore, that old behavior was way too aggressive, so if a rule explicitly allows redirected shell commands that permission needs to be respected. Also the list of tools excluded in non-interactive mode should be computed from explicit deny rules scoped to non-interactive mode, not derived from that global ask-to-deny conversion. Like the interactive-only user-facing interaction tool should end up excluded in non-interactive mode only because there's an explicit non-interactive deny rule for it, not because of some blanket override.
+This approach also has unintended side effects: shell commands that involve output redirection are automatically blocked in non-interactive mode, even when the system has been explicitly configured to allow them.
+
+## Expected Behavior
+
+- Policy rules should be able to carry an optional field indicating whether they apply only in interactive mode, only in non-interactive mode, or both (when unspecified).
+- The function that builds a policy engine configuration should accept an interactive flag so it can set the non-interactive mode property and appropriate default decision directly, rather than requiring the caller to patch the configuration after the fact.
+- When operating in non-interactive mode, the engine should respect explicit deny rules for each tool rather than applying a global automatic conversion of prompting-the-user decisions to denials.
+- Shell redirection commands should not be automatically denied in non-interactive mode if a rule explicitly allows them.
+- The tool exclusion list in non-interactive mode should be derived from explicit deny rules scoped to non-interactive mode, not from global behavior overrides.
+
+## Why This Matters
+
+Non-interactive and interactive sessions have fundamentally different trust models, and the policy system should be expressive enough to capture both. Operators should be able to write policies that grant broader access in interactive sessions while restricting automated pipelines — without the engine silently overriding their configurations.

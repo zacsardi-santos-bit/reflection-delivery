@@ -1,5 +1,14 @@
-I'm hitting a wall with our private npm registry around deprecating already-published versions. When a package manager sends the usual deprecation update, which is basically a metadata-only re-PUT of the packument with no tarball attached and the same dist checksum as the version we already host, the registry rejects it with a conflict error. So my team literally can't deprecate old versions, which is a problem when we need to tell consumers to move off vulnerable or abandoned releases.
+## Description
 
-What I want is for that metadata-only re-PUT that only tweaks the deprecation notice on an existing version to just succeed. But I also want it locked down: once a version is published, its resolution-critical fields (the checksum, download location, dependencies, all that) should be immutable and not overwritable through a metadata-only update, only the deprecation status should be changeable that way. If a client sends a malformed entry for an existing version (like a null) in a metadata-only request, quietly ignore it rather than corrupting or erasing what's stored. And if someone tries to introduce a brand-new version through a metadata-only request with no tarball uploaded, reject it outright, since that'd advertise a version pointing at a tarball that doesn't actually exist and can't be installed.
+Deprecating or undeprecating an already-published package version is broken. When a package manager sends a metadata-only update to mark a version as deprecated — which involves a re-PUT of the packument with no tarball attachment and the same distribution checksum as the already-published version — the registry incorrectly rejects the request with a conflict error. This completely breaks the deprecation workflow for any package hosted in the registry.
 
-The key thing is the merge logic that combines the incoming packument with the stored one needs to know which versions are already locally hosted so it can enforce these rules right, distinguishing locally-hosted versions (immutable except for deprecation) from versions that only exist upstream (which a new local publish can overwrite). This also matters for security, since without the guardrail a client could silently rewrite the checksum of a published version through a metadata-only update.
+## Expected Behavior
+
+- A metadata-only re-PUT that only changes the deprecation notice on an existing version should be accepted successfully.
+- The version's resolution-critical fields (checksum, download location, etc.) must be preserved from the originally-published version — a metadata-only update must not be able to overwrite them.
+- Malformed version entries sent in a metadata-only update must be ignored; they must not corrupt or erase the already-published version's data.
+- Metadata-only requests that try to introduce a brand-new version entry (without uploading an actual tarball) must be rejected, since they would create a version record pointing to a tarball that does not exist.
+
+## Why This Matters
+
+Teams relying on the registry to host packages need to be able to deprecate old versions to signal to consumers that they should upgrade. When the deprecation workflow is broken, users of those packages receive no guidance and may continue using vulnerable or abandoned versions. Additionally, the new guardrails prevent security-relevant scenarios such as a client silently rewriting the resolution metadata (e.g., the checksum) of an already-published version through a metadata-only update.

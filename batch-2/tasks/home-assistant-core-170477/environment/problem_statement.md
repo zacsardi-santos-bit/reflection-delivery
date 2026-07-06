@@ -1,5 +1,15 @@
-I'm cleaning up the Android TV setup flow in Home Assistant and I want to fix a discoverability problem. Right now the ADB connection options, specifically the ADB server address, the ADB server port, and the path to an ADB key file, only show up if someone's turned on "show advanced options." Most people never find that toggle, so they can't fully configure their ADB connection during initial setup, which is annoying if they're running a custom ADB server or pointing at a specific key file.
+## Description
 
-What I want is to pull those three options out from behind the advanced mode and put them into a collapsible section that's always visible in the standard setup form, so everyone can get at them without any special mode or context flag. The important catch here, and this is the part that's easy to get wrong, is that even though the form now groups these fields into a section, the data actually saved to the config entry has to stay in the same flat shape it's always been. No nesting in the stored config, so existing configurations stay fully compatible.
+The Android TV integration's setup flow gates certain connection options (ADB server address, ADB server port, and ADB key file path) behind an "advanced options" toggle. Users who don't know to enable this toggle have no way to configure their ADB connection fully during initial setup.
 
-And all the existing validation and error handling needs to keep working exactly like before, so if someone specifies both a key file and an ADB server at the same time it still gets rejected, invalid values still get caught, connection failures are still handled, all that. Basically just move the fields into a nicer visible section without changing what gets persisted or how it's validated. This lives in the Android TV integration's config flow under `@homeassistant/components/androidtv/config_flow.py`.
+These options should be surfaced in the standard setup form for everyone, grouped into a collapsible section, rather than hidden behind an advanced mode.
+
+## Expected Behavior
+
+- All ADB-related options (key path, server IP, server port) are accessible during the normal setup flow without any special mode or context flag.
+- User-submitted data that includes these grouped options is stored in the same flat format the integration has always used — existing configurations remain fully compatible.
+- All existing validation and error handling (conflicting options, invalid values, connection failures) continues to function correctly.
+
+## Why This Matters
+
+Users setting up Android TV devices with a custom ADB server or a specific ADB key file should not need to discover and enable a hidden advanced mode just to configure their connection. Surfacing these options as a collapsible section in the standard flow makes setup simpler, more discoverable, and consistent with other integrations.

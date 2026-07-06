@@ -1,5 +1,18 @@
-I'm hitting a nasty crash in the linter and I think it's in the type resolution path. If I write a function whose parameter has a type annotation that's a quoted string which itself wraps another quoted string literal (so a stringized annotation nesting a second string inside it, optionally with an escape sequence inside that inner string), the whole thing blows up with a fatal stack overflow instead of just linting the file and moving on. It looks like whatever handles forward-ref / quoted annotations keeps recursing on this pattern forever rather than bailing out and calling it unresolvable.
+## Description
 
-What I want is for it to handle this gracefully. A quoted annotation that contains another string literal can't be resolved to any concrete type, so it should just be treated as a dynamically typed expression and the linter should keep going and finish analyzing the rest of the file normally, no crash. And the diagnostics should still come through: the function using this annotation should still get flagged for a missing return type annotation, and the annotation itself should be reported as being a dynamically typed expression. Basically all syntactically valid Python should lint fine even when a particular annotation is nonsense we can't turn into a real type.
+The linter crashes with a fatal stack overflow when it encounters a type annotation that is a quoted string containing another nested string literal — for example, an annotation that wraps a string value inside another string. Instead of gracefully handling or rejecting this unusual pattern, the linter enters infinite recursion and aborts entirely.
 
-To repro, just define a function with a param annotated as a quoted string wrapping another quoted string (escape sequences in the inner one optional) and run the linter over it, right now it dies instead of producing diagnostics.
+## Expected Behavior
+
+- The linter should process files containing quoted annotations that nest another string literal without crashing
+- Such an annotation should be recognized as not resolvable to a concrete type and treated as a dynamically typed expression
+- The linter should still report a missing return type annotation for functions that use this pattern
+- The linter should report that the annotation represents a dynamically typed expression
+
+## Steps to Reproduce
+
+Define a function with a parameter whose annotation is a quoted string wrapping another quoted string (optionally with escape sequences in the inner string). Running the linter over that file causes a fatal crash rather than producing diagnostics.
+
+## Why This Matters
+
+Any codebase containing this annotation pattern causes the linter to crash entirely on that file, making it impossible to get any linting results. The linter should handle all syntactically valid Python gracefully, even if the annotation in question cannot be resolved to a meaningful type.

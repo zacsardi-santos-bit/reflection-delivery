@@ -1,5 +1,14 @@
-I keep hitting a nasty false positive in my eval pipeline around inverted assertions. When I use a "not-" variant of an LLM-rubric assertion and the grader itself blows up (network failure during remote grading, or the model spits back malformed/unparseable garbage), the inversion logic flips that failing result into a pass. So a grader malfunction gets silently laundered into a successful evaluation, which totally defeats the point of the assertion. This is especially bad for red-team style pipelines that lean on these inverted checks to actually catch problems.
+## Description
 
-The distinction I care about is grader failure versus a legitimate "did not pass." When the grader breaks, that's not a positive signal, and negation shouldn't treat it like one. What I want is for every grader failure path to stamp a distinguishing indicator into the result metadata so any caller, including the inversion logic, can tell this represents a grader malfunction rather than a normal outcome. That flag needs to cover all the failure modes: malformed output, null output, array output, failed JSON extraction, and remote grading transport errors. And for the remote transport errors specifically, include a clear human-readable reason saying remote grading couldn't be completed.
+When an LLM-based grader fails to produce a valid response — due to network errors, malformed output, or JSON parsing failures — the evaluation system has no reliable way to distinguish that failure from a genuine "did not pass" result. This becomes a critical bug with inverted ("not-") assertion types: a grader error that returns a failing result gets flipped to a passing result by the inversion logic, producing a false positive.
 
-Then the inversion logic should check for that flag, and when an inverted assertion type receives a grader failure carrying it, preserve the failure state as-is instead of flipping it to a pass. This should hold consistently across all the LLM-rubric-based assertion types, and yeah that includes the trajectory goal success assertions too, don't forget those. Basically a grader error propagates untouched through negation, while genuine not-passing results still invert normally.
+## Expected Behavior
+
+- All grader error/failure paths (malformed output, null output, array output, failed JSON extraction, remote transport failures) should include a distinguishing flag in their result metadata so downstream logic can detect them.
+- When an inverted assertion type receives a grader failure that has this flag set, it must preserve the failure state as-is rather than inverting it to a pass.
+- This behavior should apply consistently across all LLM-rubric-based assertion types, including trajectory goal success assertions.
+- Remote grading transport failures (e.g., network errors) should also be treated as tagged grader errors and include a human-readable reason indicating remote grading could not be performed.
+
+## Why This Matters
+
+Without this fix, any network or parsing failure in the grader causes inverted assertions to produce incorrect passing results that appear to validate the output. This undermines the reliability of red-team and other evaluation pipelines that depend on these inverted assertion types to catch problems.

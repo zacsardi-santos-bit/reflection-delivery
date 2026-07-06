@@ -1,7 +1,21 @@
-I'm working on marimo's AI tooling and I want to add a new tool that hands the AI assistant a structured view of the notebook's cell dependency graph. Right now the assistant has no real way to see how cells connect through shared variables, it can't tell which cell defines what, which cells consume those variables, or what the parent-child relationships look like, so it's basically flying blind when it tries to reason about safe edits or diagnose errors where the same variable gets defined in a couple of different places.
+## Description
 
-What I need is a tool that returns, per cell, the variables that cell defines along with the kind of each one (like whether it's a plain value or a function), the variables it references, and the lists of parent cells (the ones producing variables it consumes) and child cells (the ones consuming variables it produces). On top of that it should give me a notebook-wide map of which cells own which variables, flag any variable that's defined in more than one cell since that's a classic bug source, and report any circular dependency cycles.
+When an AI assistant is helping a user work with a marimo notebook, it currently has no structured way to understand how the notebook's cells are connected through shared variables. Without this information, the AI cannot easily determine which cells will be affected when a variable changes, identify cells that define the same variable (causing conflicts), or understand the broader data flow before making edits.
 
-Oh and I want an optional focus mode where you center on a specific cell and limit the results to only the cells within a given number of dependency hops from it. Important detail though, even when I'm doing that depth-limited query the variable ownership map should still cover the whole notebook, not just the filtered subset. If someone passes a cell id that doesn't exist, don't silently return nothing, raise a specific identifiable error instead. An empty notebook should just come back with empty results cleanly, no crash.
+## Expected Behavior
 
-Also the input and output types for this thing need to play nice with the serialization infrastructure the other existing AI tools in this codebase already rely on, so mirror whatever those tools do for their request/response types.
+A new AI tool should allow querying the notebook's cell dependency graph. The tool should return, for each cell:
+- The variables it defines, including the kind of each variable (e.g., whether it is a regular value or a function)
+- The variables it references
+- Which other cells are its parents (produce variables it consumes) and children (consume variables it produces)
+
+The tool should also provide:
+- A global map of which cells own which variables
+- A list of variables that are defined in more than one cell (a common source of errors)
+- Information about any circular dependency cycles in the notebook
+
+When querying, the user should be able to center the query on a specific cell and optionally limit results to only cells within a given number of dependency hops from that cell. Even when filtering by depth, the full variable ownership map should always reflect the entire notebook. If a non-existent cell identifier is supplied, the tool should fail with a clear, identifiable error.
+
+## Why This Matters
+
+This capability is essential for an AI assistant to reason safely about notebook structure before editing cells that involve shared variables, and to help diagnose dependency-related errors.

@@ -1,5 +1,20 @@
-I'm working on the percent-style string format checker in our Python linter and I want to close a gap in the rule that flags mismatches between the number of format placeholders in a format string and the number of substitution values on the right-hand side of the `%` operator. Right now if someone writes a string that has zero placeholders but still uses `%` with a non-empty value, the rule just stays quiet, which is wrong. That value gets silently thrown away at runtime, so it's almost always a bug, maybe a forgotten placeholder or a typo or some leftover expression from a refactor.
+## Description
 
-What I want is for the rule to report a diagnostic whenever a format string with no placeholders is paired with a non-empty right-hand side. That should cover literal values like integers and non-empty tuples, and also variable names (even unknown or undeclared ones), function call return values, and attribute access expressions. Basically anything that isn't provably a no-op substitution.
+The lint rule that checks for mismatches between the number of format placeholders and substitutions in percent-style format strings does not currently handle the case where the format string has **zero** placeholders but the expression still passes a non-empty value on the right-hand side.
 
-The one case that stays allowed is an empty tuple on the right-hand side, since `"" % ()` is a legit Python way to format a string when you don't intend any substitution at all. So don't flag that one, but do flag everything else.
+If a plain string with no format placeholders is used with the percent format operator and a value is supplied on the right-hand side, that value will be silently discarded at runtime. This is almost certainly a bug, but the rule currently stays silent about it.
+
+## Expected Behavior
+
+When a percent-style format string has no format placeholders, the rule should report a diagnostic for any right-hand side that is not an empty tuple. This includes:
+
+- Literal values (numbers, non-empty tuples)
+- Variable names, including undeclared/unknown variables
+- Function call return values
+- Attribute access expressions
+
+The only accepted exception is an empty tuple as the right-hand side, which is a valid Python pattern when no substitution is intended.
+
+## Why This Matters
+
+Silent, incorrect use of the percent format operator in cases where the format string has no placeholders is very unlikely to be intentional. Flagging these cases helps developers catch accidental formatting code, typos where a placeholder was forgotten, or leftover expressions from refactoring.

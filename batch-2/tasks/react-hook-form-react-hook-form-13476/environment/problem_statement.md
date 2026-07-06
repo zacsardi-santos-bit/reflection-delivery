@@ -1,5 +1,19 @@
-I'm hitting a nasty bug with field array validation and I think it's in how removal handles errors that live at two levels at once. Setup is: I've got a form with a field array whose custom validate function can return both a root-level error on the array as a whole (think "you need at least 4 items") and nested errors keyed to individual items (like "item at index 2 is too short"). First time I trigger validation both show up fine, array-level error and the per-item ones together, exactly what I want.
+## Description
 
-The problem is when I remove one of the items and re-validate. The array-level (root) error sticks around, good, but all the per-item errors just vanish, even though the offending items are still in the array, they've just shifted down to new indices. So I lose all my item-level feedback silently after any removal, which makes it basically impossible to guide someone through fixing a complex array where both an array-wide constraint and a per-item constraint are failing at the same time.
+When a field array uses custom validation logic that can produce both an array-level error (e.g., "at least N items required") and individual item-level errors (e.g., "this item's value is too short") at the same time, removing an item from the array causes the item-level errors to disappear — even after re-triggering validation.
 
-What I want: after removing an item and re-triggering validation, both the root array-level error and the item-level errors should still be present as long as the conditions still apply, and any item that had an error but got shifted to a new index should have its error show up at that updated index. Right now the remove path seems to blow away the nested errors when a root error coexists with them, so please dig into the field array removal logic (the remove handler in the field array hook under `@src`) and fix it so both error kinds survive a removal and re-index correctly.
+## Steps to Reproduce
+
+1. Set up a field array with custom validation logic that returns both a root-level error on the array (when the array has too few items) and nested errors on specific items (when an item's value fails some constraint).
+2. Trigger validation — both error types are correctly shown.
+3. Remove one of the items (which does not fix either the array-level or the item-level error), then re-trigger validation.
+4. The array-level error is still shown, but the item-level errors for the remaining items are gone, even though they should still be present.
+
+## Expected Behavior
+
+- Both the array-level error and the per-item errors should remain visible after removing an item and re-validating, as long as the validation conditions still apply.
+- If an item that had an error shifts to a new index after a removal, its error should appear at the updated index.
+
+## Why This Matters
+
+Developers who need to enforce both array-wide constraints (minimum length, etc.) and per-item constraints simultaneously will find that item-level validation feedback is silently lost after any removal, making it impossible to properly guide users through fixing all validation issues in a complex field array.

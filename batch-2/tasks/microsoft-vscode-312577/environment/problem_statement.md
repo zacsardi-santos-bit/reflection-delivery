@@ -1,5 +1,14 @@
-I'm cleaning up how we surface the deferred tools list in the Copilot agent prompt and I keep hitting a staleness bug. Right now the actual inventory of available deferred tools is baked right into the tool search instruction block that lives in the system prompt, and since we cache the system prompt across turns that list goes stale fast. If a new tool shows up or the deferred set shifts mid-session, the AI is still reading the old snapshot from the cached block and has no idea the current state changed.
+## Description
 
-What I want is to pull that deferred tools inventory out of the tool search instructions entirely and render it in the initial conversation context instead, so it's fresh at the start of each new conversation rather than frozen into a cacheable chunk. The tool search instructions should only carry guidance on how to search for tools, not the tools themselves. The inventory should live separately in the conversation context section, tagged appropriately with a clear header saying what it is.
+The list of available deferred tools is currently embedded inside the tool search instruction block, which is part of the system prompt. This is problematic because the system prompt is often cached across conversation turns — meaning the tool list embedded there may not accurately reflect the tools available in the current session. If a new tool becomes available or the set of deferred tools changes, the stale snapshot in the cached system prompt means the AI may not be aware of the current state.
 
-Also the wording in the search guidance needs fixing since it currently uses directional language like "listed below" and "above" that stops making sense once the list moves. Those should point to the "initial conversation context" instead, so anywhere it implies the list is right there below in the instructions should now say it's provided in the initial conversation context. Btw this also keeps the system prompt more stable and cache-friendly since the changing tool list no longer invalidates the cached instructions.
+## Expected Behavior
+
+- The deferred tools inventory should be moved out of the tool search instructions and into the initial conversation context, so that it is rendered fresh at the start of each new conversation.
+- The instruction text that references the tool list's location should be updated to reflect the new placement (i.e., it is "provided in the initial conversation context") rather than referring to it as being "below" in the instructions.
+- References to the list such as "listed below" and "above" in related instruction blocks should be removed or updated to avoid confusion.
+- The system prompt tool search instructions should only contain guidance on how to search for tools — not the actual list of tools.
+
+## Why This Matters
+
+Separating the deferred tool inventory from the cached system prompt ensures the AI always sees an accurate, up-to-date snapshot of available tools at the start of each session. This avoids scenarios where the AI is guided by a stale tool list. It also keeps the system prompt more stable and cache-friendly, since the tool list (which can change) no longer invalidates the cached system instructions.

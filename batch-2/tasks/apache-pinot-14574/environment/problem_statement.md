@@ -1,7 +1,19 @@
-I'm adding a concurrency throttler for multi-stage queries in our distributed Pinot cluster because right now nothing stops an unlimited number of these queries running at once, and under load that just exhausts resources and degrades things for everyone. So I need a component that enforces a cluster-wide limit but distributes it per broker.
+## Description
 
-The idea is each broker computes its own local quota from the cluster-wide limit, scaled proportionally by the number of servers and split across the number of brokers, with a floor of at least 1 permit per broker no matter what the math says. When a broker's permits are exhausted, a new query attempt should block waiting for a permit and if it can't get one before a timeout elapses it gets rejected. If the configured limit is zero or negative, throttling is disabled entirely and every query just passes straight through without blocking or acquiring anything.
+When using the multi-stage query engine in a distributed Pinot cluster, there is currently no mechanism to limit the number of multi-stage queries that can execute concurrently. Under high load, this can lead to resource exhaustion and degraded cluster performance for all users.
 
-It also needs to react to cluster topology changes, so when brokers or servers join or leave, recompute the per-broker quota and adjust the permit count accordingly, and it's fine if that temporarily drives available permits negative when the quota shrinks. Same deal when the cluster-level config gets updated, recalc and adjust the permits. One important catch though, the enabled vs disabled mode is locked in at startup and can't be toggled at runtime, so if it was disabled at init then a later config change enabling it does nothing, and if it was enabled at init it stays enabled even if config later says otherwise.
+We need a throttling component that enforces a cluster-wide limit on concurrent multi-stage queries and distributes that limit proportionally across all active brokers, taking into account the number of servers available.
 
-The cluster-wide maximum concurrent query limit should live as a named config key that the throttler reads out of the cluster configuration system both during initialization and on config-change events. Give operators one clean knob to protect the cluster while keeping the effective limit in sync with actual topology automatically.
+## Expected Behavior
+
+- A cluster administrator can configure a maximum number of concurrent multi-stage queries for the entire cluster.
+- Each broker automatically computes its own local quota from the cluster-wide limit proportionally (scaled by servers and split among brokers), with a minimum of 1 permit per broker.
+- When the quota is exhausted, new query attempts block until a permit becomes available or a timeout elapses, at which point the attempt is rejected.
+- Setting the limit to zero or a negative value disables throttling entirely — all queries proceed without any concurrency constraint.
+- When brokers or servers join or leave the cluster, the per-broker quota is automatically recalculated and the permit counts adjusted (which may result in temporarily negative available permits if the quota decreases).
+- When the cluster-level configuration is updated, the per-broker quota is recalculated and permits adjusted accordingly.
+- The enabled/disabled state of the throttler is determined at startup and cannot be toggled at runtime: if throttling was enabled at startup, it stays enabled; if it was disabled, it stays disabled.
+
+## Why This Matters
+
+Without per-broker query concurrency limits, a burst of simultaneous multi-stage queries can overwhelm the cluster. This feature gives operators a straightforward knob to protect cluster resources while keeping the limit in sync with the actual cluster topology automatically.

@@ -1,7 +1,20 @@
-I'm hitting a wall using MLflow's LLM judges in our locked-down setup where every outbound call has to go through a corporate proxy, and the LLM provider also wants some custom auth headers beyond the usual API key. Right now the judge system only talks to default endpoints with standard key auth, so there's just no hook for either of these, which basically blocks us entirely.
+## Description
 
-What I want is to pass a custom base URL (pointing at our proxy) and a dict of extra HTTP headers when I create a judge, and I want the same options exposed in the CLI path for registering judges too. The config needs real validation, so a base URL that isn't a string should be rejected, a headers object that isn't a dict should be rejected, and headers whose values aren't strings should be rejected, each with a clear error message telling me what went wrong.
+MLflow's LLM judge system does not currently support routing model API calls through a custom proxy server, or injecting additional HTTP headers when invoking the underlying language model. This is a significant gap for teams operating in enterprise environments where all outbound API traffic must pass through a corporate proxy, or where LLM providers require custom authentication headers beyond standard API keys.
 
-These values can carry sensitive credentials, so they must never be persisted when a judge gets registered or serialized. Actually the key test here is a round-trip: serialize then deserialize a judge and both fields should come back empty/unset. Oh and the judge's string representation should show the base URL but with credentials and query params stripped off for safety, plus the header keys, but never the header values.
+There should be a way to specify:
+1. A custom base URL (proxy endpoint) for the judge's model calls
+2. Extra HTTP headers (e.g., authentication tokens, routing headers) to include in each request
 
-One more thing, providers that do their own internal routing (Databricks managed judges, and Databricks or deployment endpoints) can't meaningfully apply these, so trying to use base URL or extra headers with those should raise a clear error saying they're not supported for that provider type. This all lives in the judge creation/invocation and serialization logic, so wire it through wherever judges get built and stringified.
+## Expected Behavior
+
+- Users can provide a custom base URL and/or extra HTTP headers when creating a judge
+- Both options should be available programmatically and via the command-line interface
+- Input validation should catch common mistakes: non-string base URLs, non-dictionary header objects, and headers with non-string values, each with a clear error message
+- Because these values may contain sensitive credentials, they must **not** be persisted when a judge is registered — a round-trip serialization/deserialization cycle should result in empty/unset values for both fields
+- The string representation of a judge should display the base URL (with credentials and query parameters stripped for safety) and header keys (but never header values)
+- Providers that manage their own routing (e.g., Databricks managed judges, Databricks/deployment endpoints) should reject these options with a clear error message, since they cannot be meaningfully applied to internally-routed endpoints
+
+## Why This Matters
+
+Teams using MLflow's evaluation and judging capabilities in locked-down or proxy-dependent environments are currently blocked from using LLM judges at all. This change enables those use cases while maintaining security by not storing credentials.

@@ -1,7 +1,24 @@
-I'm cleaning up the Flutter tools build system on the Windows desktop side and there are a few things tangled up. First off, the depfile service that writes those dependency tracking files (the ones recording which files were inputs and outputs of a build step) makes callers pass in a platform just to figure out how to escape paths, which is redundant since the file system object already knows its own path style. I want to drop that platform parameter so the service figures out escaping on its own from the file system, so it constructs with just a logger and file system, nothing else.
+## Description
 
-Second, there's no shared helper for copying desktop artifacts out of the engine cache into a project dir while also building a proper depfile. Linux and Windows both do basically the same thing so I want to unify it. I need a function that takes a source directory, an output directory, and a list of specific artifact names to copy (works for both individual files and whole directories), and hands back a Depfile with all the source and destination paths tracked as inputs and outputs. Oh and it should throw if any listed artifact is missing.
+The Windows desktop build pipeline has a few issues that need to be addressed:
 
-Third, the Windows engine unpacking step is copying files to the wrong place, they're going straight into the Windows Flutter folder when they should land in an ephemeral subdirectory instead, keeps things organized and makes it obvious what the build system manages. It also doesn't write a depfile at all right now, so nothing can tell when those artifacts go stale, so I need it to generate a dependency tracking file in the build directory recording source and destination paths every unpack.
+1. The service used to write dependency tracking files requires callers to pass in platform information explicitly. This is unnecessary since the underlying file system object already knows its own path style. Removing the platform dependency simplifies construction and reduces coupling.
 
-Finally I need a new build target for assembling Windows debug bundles, basically the mirror of what Linux already has. It should copy the compiled Dart kernel blob into the Flutter assets directory and write an asset dependency file in the build dir. And the old deprecated unpack command can go away now that these build targets handle artifact management. Without all this the Windows pipeline has no real dependency tracking, drops artifacts in the wrong spot, and can't incrementally build debug bundles through the standard build system.
+2. The Windows engine artifact unpacking step writes files directly to the Windows Flutter project directory rather than an ephemeral subdirectory. Generated artifacts should be isolated in an ephemeral subfolder to keep the project directory organized and make it clear which files are managed by the build system.
+
+3. The Windows artifact unpacking step does not generate a dependency tracking file. Without this, the build system cannot detect when engine artifacts are stale and need to be re-copied. A proper dependency file recording source and destination paths should be generated each time artifacts are unpacked.
+
+4. There is no dedicated build target for assembling Windows debug bundles. Linux already has this, but Windows is missing a target that copies the compiled Dart kernel to the assets directory and records an asset dependency file.
+
+5. The old deprecated unpack command should be removed now that the build system targets handle artifact management.
+
+## Expected Behavior
+
+- The dependency file service can be constructed with only a logger and file system — no platform argument needed
+- A reusable utility is available for copying desktop artifacts from a source directory to an output directory, tracking inputs and outputs in a depfile, and throwing an error if any expected artifact is missing
+- Windows engine artifacts are unpacked into the ephemeral subdirectory and a corresponding dependency file is generated
+- A Windows debug bundle target exists that copies the compiled kernel to the assets folder and generates an asset dependency file
+
+## Why This Matters
+
+Without these changes, the Windows build pipeline is missing proper dependency tracking, artifacts land in the wrong output location, and there is no way to incrementally build Windows debug bundles through the standard build system.

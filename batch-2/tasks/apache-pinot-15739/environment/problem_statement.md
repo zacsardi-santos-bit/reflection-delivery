@@ -1,5 +1,16 @@
-I'm working in the Apache Pinot Maven build and I want to stop people from declaring dependency versions in the wrong place, right now nothing prevents a developer from pinning a version directly inside a submodule pom instead of centralizing everything in the root dependency management section, and that drift makes project-wide upgrades and security audits way harder than they should be. I need a custom Maven Enforcer rule (a new rule class living in the project's dedicated dependency verification module) that detects and rejects these violations at build time.
+## Description
 
-The behavior depends on where it runs. Against the root build file it should only flag dependencies in the dependency management section that use a hardcoded literal version, so if someone uses a property placeholder for the version that's totally fine there. But for any submodule it's stricter, no dependency should declare a version at all, not even through a property reference, since all version management has to happen at the root level. When it finds a violation the build needs to fail with an error message that points developers to the project's dependency management documentation.
+Apache Pinot currently has no automated enforcement to prevent developers from specifying dependency versions directly in submodule build files instead of centralizing them in the root build configuration's dependency management section. As a result, developers can accidentally introduce version declarations in the wrong place, leading to inconsistencies and making project-wide dependency upgrades harder to manage.
 
-Oh and I need an escape hatch, the rule should accept a comma-separated list of module names that are exempt (certain plugin directories, for example). It figures out whether the current module is exempt by comparing its base directory relative to the top-level project directory, and if it matches something in that list it should skip all the checks and just pass silently.
+We need a new Maven Enforcer custom rule that automatically detects and rejects these violations at build time.
+
+## Expected Behavior
+
+- When the rule runs against the root build file, it should flag any dependency in the dependency management section that uses a hardcoded literal version (rather than a property reference). Property-based versions are acceptable in the root build file.
+- When the rule runs against a submodule build file, it should flag any dependency that declares a version at all — including property-based versions. Submodules must not specify versions for their dependencies; all version management must happen at the root level.
+- The rule must support a configurable list of modules that should be excluded from enforcement (e.g., plugin directories), so those modules are silently skipped.
+- When a violation is detected, the build must fail with an error message that includes a reference to the project's dependency management documentation.
+
+## Why This Matters
+
+Centralizing dependency version management in the root build configuration ensures consistency across the entire project, makes security audits simpler, and means that upgrading a dependency requires a change in only one place. Automated enforcement ensures this policy is actually followed as the project grows and new contributors join.

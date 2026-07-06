@@ -1,5 +1,15 @@
-I'm hitting a Jackson serialization gap in a Quarkus reactive REST app and could use a fix. I've got a class where all the JSON property names, snake_case stuff like `access_token` and `expires_in`, are declared through constructor parameter annotations instead of on the getters or fields. This is the shape you get when Kotlin data classes compile down to JVM bytecode, where every property annotation lands on the constructor params, and it's also common in Java code that mimics that style.
+## Description
 
-Here's the annoying part: deserialization works fine. When a request comes in with `access_token`, it reads it without complaint. But on the way out, serialization ignores the constructor annotation names and falls back to the camelCase names derived from the getter methods, so the response body says `accessToken` instead of `access_token`. That breaks the API contract for any client expecting the naming to stay consistent between what it sent and what it gets back.
+When using Quarkus's reactive REST layer with Jackson for JSON serialization, classes that define JSON property names exclusively through constructor parameter annotations do not serialize correctly. Such classes — common when Kotlin data classes are compiled to JVM bytecode — rely on constructor annotations to map snake_case JSON field names to camelCase Java field names. While deserialization (reading incoming JSON) works correctly, the serialization side (writing outgoing JSON) ignores the constructor annotation names and falls back to the camelCase names derived from getter methods.
 
-What I want is for Quarkus's Jackson integration to honor the property names defined on constructor parameters during serialization too, not just deserialization, so the JSON round-trip is symmetric. Same property names in the request body should show up in the response body. Best way to demonstrate it is a REST endpoint that accepts one of these objects and echoes it back, oh and the response should contain the same snake_case field names that were sent in, `access_token` and `expires_in` and all. Without this fix I'd have to sprinkle redundant annotations on every getter just to work around the asymmetry, which is exactly the kind of thing I don't want to maintain across a mixed Kotlin and Java codebase.
+This means a REST endpoint that accepts and returns such a class will correctly receive snake_case field names from the request body, but will respond with camelCase field names derived from getter methods instead of the original snake_case names. This breaks API contracts for clients expecting consistent naming in responses.
+
+## Expected Behavior
+
+- Classes using only constructor parameter annotations to define JSON property names should be serialized using those same property names
+- A REST endpoint that echoes such a class should return a JSON response with the same snake_case field names that were received in the request
+- The JSON round-trip (deserialize request, then serialize response) should be symmetric: the same property names used in the incoming request body should appear in the outgoing response body
+
+## Why This Matters
+
+Kotlin data classes are a common pattern in JVM applications and produce bytecode where all property annotations appear on constructor parameters. Quarkus applications mixing Kotlin and Java code, or Java code that mimics this pattern, are affected. Without this fix, developers must add redundant annotations to every getter method to work around the asymmetric serialization behavior.

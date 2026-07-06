@@ -1,3 +1,16 @@
-I'm working on the release notes renderer in VS Code, over in `@src/vs/workbench/contrib/update/browser/releaseNotesEditor.ts` (wherever the markdown-to-rendered-content path lives), and I want to add conditional sections so the same release notes doc can be tailored per audience at render time. Right now every user sees all content, including stuff that doesn't apply to their build, which is annoying since we publish to Stable channel users, Insiders channel users, and web-only folks. What I want is a conditional block syntax authors can wrap content in to declare which product context it belongs to, like stable-only, insiders-only, or in-product-only sections. When we render, the renderer should evaluate each conditional block and either reveal the inner content (stripping the surrounding markers) or drop the whole block, depending on whether that condition is active for the current user. Anything outside a conditional block should always survive untouched. Condition matching needs to be case-insensitive so authors don't have to sweat capitalization, and if there are multiple conditional blocks in one document they each get evaluated independently, don't let one leak into another.
+## Description
 
-Also I need the rendering function to take an optional quality or channel identifier. When rendering for the stable channel, show stable blocks and hide insiders ones; for insiders, flip it. Oh and the in-product condition should always be active when we're rendering inside the editor, no matter the channel, since that's a "not on the web" thing.
+VS Code release notes are published to multiple audiences: Stable channel users, Insiders channel users, and web-only users. Currently the release notes markdown has no mechanism for authors to mark sections as relevant to only one of these audiences. As a result, all users see all content, including content that doesn't apply to their version of the product.
+
+## Expected Behavior
+
+- Release note authors should be able to wrap content in special conditional markers that declare which product context that content belongs to (e.g. Stable-only, Insiders-only, or in-product-only sections).
+- When release notes are rendered, the renderer should detect the current user's context (channel/quality) and automatically show only the content blocks that apply to that context.
+- Content that doesn't match the current context should be silently removed from the rendered output.
+- Content outside any conditional block should always appear regardless of context.
+- Condition matching when evaluating these blocks should be case-insensitive.
+- Multiple conditional blocks within a single document should each be evaluated independently.
+
+## Why This Matters
+
+This allows authors to maintain a single release notes document that is automatically tailored to each audience at render time, eliminating the need to maintain separate documents per channel and preventing users from seeing irrelevant information.

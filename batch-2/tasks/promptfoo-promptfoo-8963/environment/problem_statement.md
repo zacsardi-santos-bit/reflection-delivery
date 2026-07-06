@@ -1,7 +1,14 @@
-I'm cleaning up a bunch of synchronous file system calls in our Node.js app because sync I/O blocks the whole event loop while the disk operation runs, which kills throughput and responsiveness on a server, and I want everything moved over to promise-based async fs operations instead.
+## Description
 
-There are a few spots hit by this. First the log export command currently uses a synchronous function to list log files plus sync calls to check whether a directory exists, so I need it checking directory existence and reading/archiving the log files via non-blocking promise-based fs, and on success it should report where the output file landed. Oh and the log listing function needs an async variant too.
+Several components in this codebase are using synchronous, blocking file system operations. In a Node.js server application, synchronous I/O calls block the entire event loop for the duration of the operation, degrading throughput and responsiveness. The affected areas include: the log export command, video provider caching logic shared across multiple providers, an SDK provider that creates and cleans up temporary directories, and a video file writing strategy.
 
-Then there's the video caching utilities shared across multiple video providers, they synchronously read and write cache mapping files right now. I want these pulled out into a dedicated async module with three helpers: one that computes the cache file path for a given key, one that asynchronously reads a cache mapping and returns null if the file doesn't exist (rather than throwing), and one that asynchronously stores a cache mapping, creating the target directory first if needed before it writes. Extracting them like this also makes them independently testable and reusable across the providers.
+## Expected Behavior
 
-Also the SDK provider that removes temporary directories does it synchronously, switch that to async file removal. And the video strategy that writes files synchronously should use async writes instead. Basically any other sync fs call in these affected components should get replaced with its async equivalent, it's just the standard best practice for keeping the runtime responsive.
+- The log export command should check for directory existence and read/archive log files using non-blocking, promise-based file system operations. On success, it should report the output file location.
+- Video cache utility functions (computing cache paths, reading cache mappings, and storing cache mappings) should be consolidated into async helpers that never block the event loop. Reading a missing cache entry should return a null result rather than throwing. Writing a cache entry should ensure the target directory exists before writing.
+- The SDK provider's cleanup of temporary directories should use async file removal.
+- The video file writing strategy should use async file writes.
+
+## Why This Matters
+
+Synchronous file I/O prevents Node.js from processing other requests or events while the disk operation completes. Converting these calls to their async equivalents allows the runtime to remain responsive and is consistent with best practices for Node.js applications. Additionally, extracting the video cache helpers into a dedicated module with a clear async interface makes them independently testable and easier to reuse across multiple providers.

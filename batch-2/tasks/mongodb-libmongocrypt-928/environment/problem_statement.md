@@ -1,7 +1,25 @@
-I'm building out encrypted full-text search in a C encryption library and I need the string encoding step that turns a plaintext string into the set of text fragments we use to build encrypted search indexes. Right now there's just no way to go from a plaintext string to the structured fragment sets (substrings, prefixes, suffixes) that indexing needs, and this encoding is the foundation for the whole thing, without it drivers can't prepare the encrypted tokens to index string fields for substring, prefix, or suffix queries on encrypted collections.
+## Description
 
-So the encoding takes a string plus params saying which index types are wanted (substring, suffix, prefix) and the lower/upper bounds on fragment length, and it produces a result holding all the requested fragment sets along with an exact copy of the original string bytes as an exact-match entry. It should build a base representation of the input with a special terminator byte appended, then generate the sets based on those bounds. A suffix set has all suffixes with lengths in range, a prefix set all prefixes in range, a substring set all unique substrings in range. Counts get padded to align with AES block size, rounding up to the nearest multiple of 16 codepoints, so we don't leak the string length. For substrings specifically, dedupe repeated sequences so each appears once and add the leftover count back as padding instead. If the lower bound exceeds the padded length for a set, omit that set entirely (null it out).
+We need to implement the string encoding step for encrypted full-text search indexing. Currently, there is no way to take a plaintext string and produce the structured set of encoded text fragments — substrings, prefixes, and suffixes — that are required to build encrypted text search indexes.
 
-Everything's got to be codepoint-based, not byte-based, all length math and fragment boundaries computed on Unicode codepoint counts so multi-byte characters work right. Empty strings handled gracefully. Invalid UTF-8 rejected with an error. And if the string is longer than the max indexable length in substring mode, that's an error too.
+The encoding process must:
+- Accept a string along with parameters specifying which index types are needed (substring, suffix, prefix) and the bounds on fragment lengths
+- Produce a result containing all requested fragment sets, along with an exact copy of the original string
+- Pad the fragment counts to align with AES block size (multiples of 16 codepoints) to prevent leaking the string length
+- Deduplicate substrings so that repeated character sequences appear only once, with the remaining count represented as padding
+- Correctly compute fragment boundaries for multi-byte Unicode characters (using codepoint positions, not byte positions)
+- Reject input strings that are not valid UTF-8
 
-Oh and I also want a testing variant that takes the unfolded codepoint length as an explicit param (this is for future case/diacritic folding where the unfolded string can be longer than the encoded one), plus some way to iterate over each encoded fragment set and pull out the fragment bytes, byte length, and count per entry.
+## Expected Behavior
+
+- A suffix set contains all suffixes of the string with lengths in the specified range, padded to the block-aligned total
+- A prefix set contains all prefixes of the string with lengths in the specified range, padded to the block-aligned total
+- A substring set contains all unique substrings with lengths in the range, deduplicated, padded to the expected total
+- The encoded result carries the original string bytes as an exact match entry
+- If the lower bound on fragment length exceeds the block-aligned padded length, the corresponding set is omitted (null)
+- If the string is longer than the specified maximum indexable length (substring mode only), encoding fails with an appropriate error
+- Encoding a string that is not valid UTF-8 fails with an error
+
+## Why This Matters
+
+This encoding step is the foundation for encrypted text search: without it, drivers cannot prepare the encrypted tokens needed to index string fields for substring, prefix, or suffix queries on encrypted collections.

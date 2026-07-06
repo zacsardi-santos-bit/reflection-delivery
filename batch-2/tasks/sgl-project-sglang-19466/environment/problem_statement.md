@@ -1,9 +1,18 @@
-I'm building out a tensor comparison debugger for distributed model runs and the output's too bare right now, it just spits comparison results with zero context about what was actually being fed in or how the model was carved up across ranks. Makes it really hard to tell if a diff is from mismatched inputs, bad sharding, or alignment weirdness. So I want a few things added.
+## Description
 
-First, for each rank at each step I want it to display the input token IDs along with their positions and the total token count. And when a tokenizer's available, either passed explicitly or auto-discovered, decode those token IDs into human-readable text too. Also show the rank topology per rank, meaning the tensor parallelism and pipeline parallelism config, each formatted as "current/total" (current rank over total).
+When debugging tensor comparison issues between two parallel model runs, it is difficult to understand what context surrounds the comparison results. Users have no visibility into which input token sequences were processed at each rank, how the model is distributed across ranks (e.g., tensor parallelism and pipeline parallelism topology), or what alignment plan was applied to the tensors before comparison. This makes it hard to diagnose whether differences are caused by mismatched inputs, incorrect sharding, or alignment issues.
 
-Next, the comparison records themselves should carry the alignment plan that got used during comparison so folks can see how tensors were grouped and transformed, and when this gets rendered as text the plan should list out the type of each sub-operation (like unsharding). btw the alignment plan lives near the comparison record code so it should show up in the text dump alongside everything else.
+Additionally, building alignment plans currently requires passing a parameter that has become unnecessary due to internal refactoring. Constructing plans without this parameter should be supported.
 
-On the tokenizer side, our dump files already stash metadata, so I need a utility that scans those dump files and returns the tokenizer path if one was stored in any file's metadata. That way the tool auto-discovers it instead of making people pass it manually. Dump files should be able to store and expose that tokenizer path in their metadata.
+## Expected Behavior
 
-Oh and one cleanup thing, the alignment plan objects currently get constructed with a token-dimension parameter that's dead weight after some recent refactoring. I want the constructor to work fine without it, so drop that param and make sure plans build without specifying it.
+- The comparison tool should display input token IDs and their positions for each rank at each step, along with the total number of tokens.
+- When a tokenizer is available (either specified explicitly or auto-discovered from dump file metadata), the tool should also display a human-readable decoded version of the token IDs.
+- The comparison tool should display the rank topology for each rank, including tensor parallelism and pipeline parallelism configuration in a "current rank / total" format.
+- Comparison output records should embed the alignment plan that was used, so users can inspect how tensors were grouped and transformed. When rendered as text, the plan should list the type of each sub-operation (e.g., unsharding).
+- Dump files should be able to store and expose the tokenizer path in their metadata, which the tool can discover automatically.
+- Alignment plan constructors must work without specifying the deprecated token-dimension parameter.
+
+## Why This Matters
+
+Tensor comparison between distributed model runs is opaque without input context. Being able to see what sequences were fed to each rank and how the topology is configured makes it far easier to diagnose correctness issues in distributed inference.

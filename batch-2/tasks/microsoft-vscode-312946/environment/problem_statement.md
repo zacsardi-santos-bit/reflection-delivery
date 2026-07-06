@@ -1,7 +1,16 @@
-I'm cleaning up the Claude Code session management layer in our VS Code extension and the API's gotten way too chatty. Right now when you construct a session or call into it you have to hand over a pile of low-level config (server port and auth credentials, the model ID, the permission mode) even though all of that already lives in service layers the session classes depend on anyway. It's redundant and it couples every call site to internal session details, so anytime the internal config shifts I have to go update a bunch of callers. Annoying.
+## Description
 
-What I want is to slim the session down so it's constructable with just the essentials: a reference to the language model server, the session ID, and a flag for whether this is a new or resumed session. Everything else gets pulled internally. So the server connectivity bits (port plus auth credentials) should be fetched from the language model server at the moment they're needed rather than passed in up front, which means the server itself needs to expose a way to hand back its current config (port and auth) so the session can grab it internally at the right time. Model ID and permission mode should keep getting read from the session state service at request time, and the session should still update the underlying SDK when those change between requests.
+The Claude Code session management layer has an overly verbose and redundant API surface. When creating or invoking a session, callers are forced to supply low-level configuration details — such as server connectivity settings, model selection, and permission modes — even though this information is already tracked by shared service layers and could be looked up internally. This redundancy creates unnecessary coupling between callers and internal session implementation details.
 
-The request-processing method on the session should take the raw chat request directly and resolve the prompt content internally instead of making callers pre-process it into some format first. And on the agent manager side, its request-handling method takes a chat context param it doesn't even use, so drop that, and it echoes back the session ID in the return value which is pointless since the caller already knows which session they asked about, so stop returning it too.
+## Expected Behavior
 
-Nothing behavior-changing beyond the signature simplification, oh and make sure the model/permission resolution still happens per request off the state service like before.
+- The session object should be constructable with only the essential identity information: which language model server to use, what the session ID is, and whether this is a new or resumed session.
+- Server connectivity details (port and authentication credentials) should be retrieved internally from the language model server at the time they are needed, not passed as constructor arguments.
+- Model ID and permission mode should be read from the session state service at request time, not passed as constructor arguments.
+- The prompt content should be resolved internally from the incoming chat request object rather than being pre-resolved and passed in as a separate argument.
+- The agent manager's request-handling method should not require a chat context argument, since it does not use it.
+- The agent manager's response should not include the session ID — callers already know which session they requested.
+
+## Why This Matters
+
+Forcing callers to pre-supply configuration that the session can retrieve itself leads to fragile, over-specified call sites that must be updated whenever internal session configuration changes. Removing these redundant parameters simplifies the API, reduces coupling, and makes session creation and invocation easier to work with correctly.

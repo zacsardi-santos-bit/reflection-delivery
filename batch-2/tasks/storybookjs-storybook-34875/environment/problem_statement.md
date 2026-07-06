@@ -1,5 +1,21 @@
-I'm building out service infrastructure and hitting a wall because there's no global registry, services just get instantiated by handing their definitions straight to a factory function every time, so one service can't look up another by name at runtime or during static generation. Cross-service calls need manual wiring at the call site right now and it's painful, plus building static snapshots means passing an explicit list of service defs each time with no path safety at all.
+## Description
 
-What I want is a new server-side module exposing a global registry. I should be able to register a service once by its string ID, and registration should optionally take server-supplied handler implementations for operations that aren't defined in the service definition (environment-specific behavior lives there). Then I can retrieve any registered service by ID from anywhere, including from inside other service handlers. Registering the same ID twice should be rejected with a clear structured error, and looking up an ID that was never registered should error the same way. Calling a query or command whose handler wasn't provided should fail with an informative "not implemented" style message instead of crashing silently. Oh and I need introspection: list all registered services with their operation names, and describe a single service fully including its input/output schemas.
+We need a unified server-side registry for our service infrastructure. Right now, services have to be instantiated by passing their definitions directly to a factory function each time, which means there's no global place to look up a service by name. This also means cross-service interactions — where one service's handler needs to call another service — require manual wiring at the call site.
 
-The static build function should take no arguments and just work off the global registry, running preloads in parallel and silently skipping services with no static config. It needs to normalize each output path to slash-separated keys, stripping leading dots and slashes and converting backslashes, and reject any path with directory traversal using a precise error that names both the invalid path and the query responsible. Then a companion function takes an output directory and writes each built snapshot to disk under a services subdirectory, pretty-printing the JSON and creating subdirectories as needed.
+Static file generation has the same problem: you have to pass an explicit list of service definitions every time you want to build snapshots, there's no way for services participating in the static build to look up other services, and there is no path safety validation.
+
+## Expected Behavior
+
+- Services should be registered globally by a dedicated registration function and retrievable by their string ID anywhere (including from within other service handlers).
+- Registering the same service ID twice should be rejected with a clear error.
+- Looking up a service ID that was never registered should also produce a clear error.
+- Calling a query or command whose handler was not provided should produce an informative "not implemented" error rather than crashing silently.
+- Registration should optionally accept handler implementations for operations that have no handler in the service definition, enabling the server to supply environment-specific behavior.
+- Introspection helpers should allow listing all registered services (with their operation names) and retrieving a full descriptor for a single service including its input/output schemas.
+- Building static files should automatically use all registered services rather than requiring an explicit list. Services that have no static configuration should be silently skipped.
+- Static build paths provided by a service must be normalized to consistent slash-separated keys, and any path that would escape the output root (using directory traversal) must be rejected with a clear, actionable error message.
+- A dedicated function should write the built snapshots to disk under a designated output directory, creating any needed subdirectories.
+
+## Why This Matters
+
+Without a registry, cross-service dependencies during static builds are impossible to express. A shared registry enables service isolation while still allowing services to discover and call one another, and it provides a consistent, safe mechanism for writing the static output to disk.

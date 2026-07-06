@@ -1,3 +1,14 @@
-I'm working with Wasmtime's async component model and I keep hitting a wall trying to pass streams and futures across component instance boundaries inside the same store. Right now if one component spins up a stream or a future through an async function, there's no way to hand those resources off to a separate component instance for consumption, even when both instances live in the same store, and that's a real problem for multi-component setups where one component produces async data (streams, future values) and another one downstream processes it. Without cross-instance passing that whole producer/consumer pipeline design is just impossible.
+## Description
 
-So what I want is a "source" component that exposes an async function returning both a stream of bytes and a future that resolves to a byte value. The stream should produce 2, 4, 6, 8, and 9 in that order, and the future should resolve to 10. Then a separate "sink" component (that one already exists in the test suite, so I just need to wire up the source side and the plumbing) should be able to receive both the stream and the future and successfully read them, and it needs to work when both are being read concurrently. Basically I want to prove out end-to-end cross-instance handoff of these async resources between two distinct component instances sharing one store, so the stream values and the future value all arrive intact on the sink side.
+Wasmtime's async component model currently lacks support for passing streams and futures across component instance boundaries within the same store. If one component instance creates a stream or future through an async function, those resources cannot be transferred to and consumed by a different component instance. This is a significant gap for multi-component architectures.
+
+## Expected Behavior
+
+- A component that exposes an async function returning a stream and a future should be able to produce those resources.
+- The stream and future produced by one component instance should be passable to a separate component instance for consumption.
+- Both the stream (containing a sequence of bytes) and the future (resolving to a single byte value) should be successfully read by the receiving component instance.
+- The cross-instance transfer should work correctly when both operations run concurrently.
+
+## Why This Matters
+
+Multi-component systems often need to pipeline async data: one component produces data streams or future values that another component processes. Without cross-instance stream and future passing, such designs are impossible. This feature enables component-based architectures where data producers and consumers are separate component instances within the same Wasmtime store.

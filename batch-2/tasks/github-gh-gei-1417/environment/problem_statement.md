@@ -1,7 +1,16 @@
-I'm building out a CLI that migrates Azure DevOps pipelines over to GitHub, and right now there's a scary gap: no way to test whether a pipeline will actually work once it's pointed at a GitHub repo without committing to the change for real. If it breaks, the team's stuck with a busted pipeline and has to manually undo everything. I want a reversible test mode so we can validate first.
+## Description
 
-So the ask is to add a test mode to the existing pipeline rewiring command. In this mode it should temporarily repoint the pipeline at the target GitHub repository, kick off a real build to confirm it works, and then immediately restore the pipeline back to its original Azure DevOps configuration, all in one automated pass. Also I need a timeout option to control how long we wait for that test build to finish.
+When teams are migrating Azure DevOps pipelines to GitHub, they currently have no way to test whether a pipeline will work after the migration without actually making the change permanent. If the migration fails, the team is left with a broken pipeline and has to manually undo the change. We need a way to safely test pipeline migrations before committing to them.
 
-On top of that I need a new result model to track the outcome of each test run. It should capture the pipeline's identity info, the build id and URL, timing (start time, end time, and a computed duration), plus a bunch of status flags: whether the rewiring succeeded, whether the restore succeeded afterward, and whether the build succeeded, failed, is still running, or has completed at all. Those build outcome flags need to map from the actual result and status values that the Azure DevOps API returns into computed boolean indicators for success/failure/completion/running.
+## Expected Behavior
 
-Oh and one important edge case: if the restore step fails, don't throw. Capture the failure in the result's error message field as a description of the restoration failure that includes the underlying error details, mark restore as not successful, and still return the overall result. Also if the caller doesn't pass a pipeline ID, the service should look it up by name automatically. The whole point here is giving teams confidence and clear structured feedback before they make anything permanent.
+- The pipeline rewiring command should support a test mode option that temporarily points a pipeline at a GitHub repository, triggers a real build, and then automatically restores the pipeline back to its original Azure DevOps configuration — all in one pass.
+- A separate timeout option should control how long the command waits for the test build to complete.
+- A new result model should track the full outcome of each test run, including: whether the rewiring succeeded, whether the restore succeeded, the build identity and URL, start and end times, the computed build duration, and computed status flags indicating whether the build succeeded, failed, is still running, or has completed.
+- The build outcome status flags should reflect the outcome values returned by Azure DevOps, mapping specific API result and status values to computed boolean indicators for success, failure, completion, and running state.
+- If the restore step fails, the error should be captured in the result's error message as a description of the restoration failure that includes the underlying error details, and the test result should indicate the restore was not successful — without aborting the overall test result return.
+- If no pipeline ID is supplied, the test service should look it up by name automatically.
+
+## Why This Matters
+
+Teams migrating from Azure DevOps to GitHub need confidence that their pipelines will work before committing to permanent changes. A reversible test mode reduces the risk of breaking active pipelines during migration and provides clear, structured feedback on what succeeded and what needs attention.

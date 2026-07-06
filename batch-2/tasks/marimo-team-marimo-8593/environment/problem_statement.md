@@ -1,3 +1,16 @@
-I upgraded the dataframe library to a newer major version and now a bunch of tests in the dataframe and table management components are blowing up, and it traces back to how we classify columns by data type and report that metadata to consumers. The classifier assumed exact dtype strings for certain logical types, and those string representations changed across the version bump. The big one is timedelta columns, they used to be matched by one specific dtype string tied to a single time resolution, but the new library reports the same logical type with a different resolution string, so the match fails and we don't recognize those columns anymore. I want the type classification to handle the whole family of timedelta types no matter which resolution qualifier shows up in the dtype string, and still return the right semantic type for them. String columns also report a different dtype name now, so the field type metadata assertions need to accept valid output from either the old or the new library version without failing.
+## Description
 
-On top of that there are snapshot tests for JSON and CSV output that are failing because null values in timestamp and duration columns serialize differently now, what used to come through as a special text string now shows up as a proper null, so the snapshots and assertions should accept both representations. Basically I want the full suite green against a recent major version, since anyone who upgrades hits broken table and dataframe display behavior right now and the root cause is that fragile dtype string matching doesn't account for the same logical type being expressed with different precision qualifiers across versions.
+After upgrading to a newer major version of the dataframe library, several tests in the dataframe and table management components are failing. The library classifies columns by their data type and reports this metadata to consumers, but some of this classification logic assumed specific string representations for certain data types that have changed in the newer version.
+
+In particular, timedelta-typed columns were matched using an exact dtype string that only matches one specific time resolution. Since the newer library version reports the same logical type but with a different resolution string, the classification fails to recognize these columns correctly. Similarly, string columns now report a different dtype name than before, and null values in timedelta/datetime columns now serialize to JSON as proper null values rather than as a special text representation.
+
+## Expected Behavior
+
+- The type classification system should correctly identify timedelta columns regardless of what time resolution appears in their dtype string, returning the appropriate semantic type for them.
+- Tests that compare field type metadata should accept valid output from either library version without failing.
+- JSON serialization snapshots should handle the way newer library versions represent null timestamp/duration values.
+- The full test suite should pass when running against a recent major version of the dataframe library.
+
+## Why This Matters
+
+Users who upgrade the dataframe library to a recent major version will encounter broken behavior in the table and dataframe display components. The root cause is fragile dtype string matching that doesn't account for how the same logical type can be expressed with different precision qualifiers across library versions.

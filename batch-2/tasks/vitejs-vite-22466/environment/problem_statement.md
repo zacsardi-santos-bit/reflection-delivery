@@ -1,5 +1,16 @@
-I'm messing with the glob-import playground in the Vite repo and I want to move everything into a subdirectory so I can test what happens when the project root isn't the same directory as the workspace config. Right now it's all flat at the top level of the playground, which means there's no way to exercise glob imports, HMR, and builds when Vite's root points at a nested folder, and honestly that's a super common real-world layout so the tests should cover it.
+## Description
 
-So basically I need all the source files, the Vite config, and the local package dependency relocated into a `root/` subdirectory inside the playground. The dev, build, and preview scripts in the package should pass `root` to Vite as the explicit project root (so the build tool treats that subdir as root instead of the workspace dir). Also the package.json paths need fixing to match the move, both the subpath imports (the `imports` map) and the reference to the local dependency, they all have to point into the new `root/` location now.
+The glob-import playground needs to be restructured so that all of its source files live in a dedicated subdirectory, with the build tool explicitly pointed at that subdirectory as its project root. Currently, everything sits at the playground's top level, which makes it impossible to test scenarios where the project root differs from the directory that contains the workspace configuration.
 
-After the move I want HMR to still correctly detect and respond to file additions, edits, and removals happening inside `root/`, and build output should land in `root/dist` rather than the old top-level `dist`. Oh and there's a test that scans for directories with special characters in their names (the escape-pattern glob stuff), it needs to look inside `root/escape` now instead of at the top level. The playground lives under `@playground/glob-import` so all these moves happen relative to there.
+## Expected Behavior
+
+- All source files, configuration, and the local package dependency are relocated into a `root/` subdirectory within the playground.
+- The dev, build, and preview scripts are updated to invoke the build tool with the `root` subdirectory as the explicit project root.
+- Hot Module Replacement (HMR) correctly detects and responds to file additions, edits, and removals inside the new `root/` subdirectory.
+- Build artifacts are emitted into a `dist/` folder inside `root/`, not at the old top-level location.
+- The test that scans for special-character glob pattern directories looks inside `root/escape/` instead of at the top level.
+- Package configuration paths (subpath imports and local dependency references) are updated to point into the new `root/` location.
+
+## Why This Matters
+
+This restructuring allows the playground to serve as a proper test for Vite's glob-import feature when the project root is a subdirectory — a common real-world pattern. Without it, the existing tests cannot cover this configuration, and HMR, build output, and glob resolution all assume a flat structure that does not match how many production projects are organized.

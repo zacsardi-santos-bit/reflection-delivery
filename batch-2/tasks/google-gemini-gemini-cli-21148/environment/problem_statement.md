@@ -1,5 +1,13 @@
-I'm adding two new statuses to the MCP server listing feature and could use your help. Right now when I run the command that lists configured MCP servers, every non-connected server looks identical whether it's blocked by an admin exclusion policy, turned off by the user, or just failing to connect (timeout, etc). They all show up as basically "disconnected" and that makes it impossible to tell whether a server is down from a network hiccup or because it's intentionally prevented from running. I want the ones sitting in the admin exclusion list to show a "Blocked" status and I don't want us even trying to connect to them, and servers that got individually turned off through the per-server enablement mechanism should show "Disabled", again with no connection attempt. Skipping those connections also saves time and cuts down confusing error output.
+## Description
 
-While I'm in here I need to change the listing function signature so it takes the full loaded settings object (the one carrying both the merged config and the trusted status) instead of just the merged settings directly, since we need the exclusion info off of that.
+When listing configured protocol servers, there is currently no way to distinguish between servers that are intentionally prevented from running and servers that simply failed to connect. A server excluded by administrator configuration and one that timed out look the same to the user, both appearing as "disconnected." This makes it difficult to understand the actual state of each server.
 
-Oh and there's a display bug too. In the server status view component, servers that are in the blocked list currently show up twice, once in the normal connected-server section and again in the blocked section. They should only appear in the blocked section, not the regular list. Also make sure the case where every configured server is blocked works right, it should still render the header and the blocked entries rather than showing nothing at all.
+## Expected Behavior
+
+- Servers that are blocked by an administrator exclusion configuration should display a "Blocked" status when listed, and no connection attempt should be made to them.
+- Servers that have been individually disabled through a per-server enablement mechanism should display a "Disabled" status when listed, and no connection attempt should be made to them.
+- The status display view should correctly separate blocked servers from the regular server list — a server that appears as blocked should not also appear in the regular connected-server section.
+
+## Why This Matters
+
+Users need to quickly understand why a server is unavailable. Without distinct status indicators for "blocked" and "disabled" states, there is no way to tell whether a server is down due to a network issue or intentionally prevented from running. This also prevents unnecessary connection attempts to servers that are known to be blocked or disabled, improving performance and reducing confusing error output.

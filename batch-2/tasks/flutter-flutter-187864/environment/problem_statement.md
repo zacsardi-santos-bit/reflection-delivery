@@ -1,9 +1,21 @@
-I'm cleaning up a bunch of error handling and filesystem robustness gaps in Flutter's build tooling, mostly in the dart:io error handling helpers and the SwiftPM integration, and I want them all handled together since they're related.
+## Description
 
-First thing: when a file or directory can't be found during a build, we sometimes just let the raw low-level filesystem exception bubble up on Linux, macOS, and Windows, which is useless to devs. I want those "file or directory not found" OS errors caught and turned into a clean tool exit with an actionable message that clearly says the file or directory couldn't be found. This needs to cover both the synchronous and the async file operation paths, not just one.
+The Flutter build tools have several gaps in error handling and filesystem robustness that cause poor developer experiences.
 
-Second, Windows builds fall over on transient file locking, like when antivirus or some other program briefly grabs a lock on a file we're trying to write. Right now the very first conflict aborts the write. Instead I want it to automatically retry a limited number of times with configurable delays before giving up, and there's gotta be a way to override that retry schedule (the delays between attempts) during tests so we're not sitting around waiting for real timeouts. When all the retries are exhausted, the message should clearly state the file is being used by another program.
+**File-not-found errors are not user-friendly.** When a file or directory cannot be found during a build operation on Linux, macOS, or Windows, the tool sometimes propagates a raw, low-level filesystem exception instead of a clear actionable message. Developers are left with a cryptic error and no guidance on how to recover.
 
-Third, the bit that deletes a filesystem entity before recreating it currently does a follow-links existence check, so broken symlinks are basically invisible to it and don't get cleaned up. Switch that to a type-agnostic check that doesn't follow symlinks, so broken symlinks, stale directories, and type-mismatched entries all get detected and deleted properly.
+**Windows builds are not resilient to transient file locking.** On Windows, it is common for antivirus software or other tools to briefly hold a lock on files during build operations. Currently, the first lock conflict immediately aborts the operation with an error. The tool should automatically retry a limited number of times before giving up, and when it does give up, it should provide a clear message that the file is in use.
 
-Last one, the Swift Package Manager plugin symlink creation is fragile. If a previous interrupted build left a directory, a file, or a broken symlink sitting at the expected symlink path, creation just fails. It should delete whatever's there and create the correct symlink. Oh and there's a race in parallel Xcode builds where two targets try to create the same symlink at once, so if we hit an OS "file exists" error but then verify the existing symlink already points at the right target, treat that as success and continue silently rather than blowing up. This is all in the flutter_tools build code around the SwiftPM plugin handling and the file system utilities.
+**Swift Package Manager symlink creation is fragile.** When building Flutter apps with plugins on Apple platforms, the tool creates symlinks to plugin Swift packages. If a previous interrupted build left a stale file, directory, or broken symlink at the expected symlink location, the current build crashes. The tool should handle all of these pre-existing conditions gracefully by cleaning them up before creating the symlink.
+
+## Expected Behavior
+
+- "File or directory not found" OS errors on all platforms should produce a clean, actionable tool exit message
+- On Windows, transient file-locking errors during write operations should trigger automatic retries before failing
+- If all retries are exhausted due to locking, the tool should report that the file is in use with a helpful message
+- Swift Package Manager symlink creation should succeed even when a directory, file, or broken symlink already exists at the target path
+- During parallel Xcode builds, if two processes race to create the same symlink and one succeeds first, the other should detect the already-correct symlink and continue rather than failing
+
+## Why This Matters
+
+These issues cause confusing build failures that are hard to diagnose and recover from. By providing clear error messages and automatic retries, the tool becomes more reliable and easier to use, especially on Windows and in complex multi-target Xcode setups.

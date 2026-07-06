@@ -1,5 +1,17 @@
-I'm reworking how snapshot storage gets configured in qdrant and the current setup is bugging me. Right now there's just a single optional cloud credentials field hanging off the storage config struct, and the logic is basically: if it's set, turn on S3 with those creds, and if it's absent, fall back to local filesystem storage. That's way too implicit (the absence of a field silently meaning "use local" is not great) and it doesn't extend at all, since supporting another backend like GCS or Azure later would mean piling on more optional top-level fields.
+## Description
 
-What I want instead is a dedicated snapshot storage configuration section that explicitly names the backend, either "local" or "s3", with any cloud credentials (bucket, region, access key, secret key, endpoint URL) nested underneath in their own sub-section rather than floating at the storage level. So in the YAML I want to move away from that flat optional cloud credential field on storage over to this structured block that holds both the backend selector and the backend-specific settings.
+The current snapshot storage configuration is expressed as a single optional field that, when present, enables cloud storage and provides credentials, or when absent, falls back to local filesystem storage. This design has two problems: the intent is implicit (absence of a field means "use local"), and it is fundamentally not extensible — adding support for additional cloud storage backends would require adding more optional top-level fields.
 
-Couple of things that matter: it needs to default to local storage when nothing's specified, so existing deployments that have no cloud config keep working exactly as before (equivalent to the old "no cloud config provided" behavior). And all the Rust structs plus any code that references the old field need to get updated to use the new nested structure, don't leave dangling references to the removed field. The whole point is making the intent explicit and readable, killing the ambiguity around defaults, and setting things up so adding more storage backends later doesn't turn into a mess of optional top-level flags.
+We need to replace this with a structured, explicit snapshot storage configuration that names the desired backend clearly and nests backend-specific credentials underneath it.
+
+## Expected Behavior
+
+- Snapshot storage configuration must be expressed under a dedicated configuration section rather than as a bare cloud-provider field at the top level.
+- Within that section, the storage backend type must be explicitly named (e.g., "local" or "s3").
+- Cloud storage credentials (bucket, region, access key, secret key, endpoint URL) must be nested under their own sub-section within the snapshot configuration block.
+- The default configuration (when nothing is specified) must produce local filesystem storage behavior, equivalent to the previous "no cloud config provided" state.
+- All code referencing the old configuration field must be updated to use the new structure.
+
+## Why This Matters
+
+This change makes the configuration intent explicit and readable, reduces ambiguity around defaults, and lays the groundwork for adding further storage backends (such as Google Cloud Storage or Azure) without proliferating optional top-level config fields.

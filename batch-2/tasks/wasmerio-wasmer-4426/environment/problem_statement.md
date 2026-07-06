@@ -1,5 +1,14 @@
-I'm updating our WebAssembly interface library so it stops pinning that ancient version of the wasm parsing dependency and uses the current workspace version instead. Right now the crate's manifest points at some old pinned release whose API is totally different from what everything else in the workspace uses, so the moment I bump it to the workspace version the validation code won't compile because the old way of building and running validators just doesn't exist anymore.
+## Description
 
-The old code created a validating parser with separate config for feature flags (threads, SIMD, reference types, and friends) and then drove it in a loop reading parser states. The newer version wants a different shape: you construct a validator with a features struct, setting fields for threads, reference types, SIMD, bulk memory, multi-value and so on, then call a single method to validate the whole binary in one go. So I need to rewrite the validation logic to match that pattern.
+The WebAssembly validation library is pinned to a very old version of a wasm parsing dependency. This older version has a completely different API from the current releases — the way validators are created, feature flags are configured, and validation is run has changed substantially in newer versions. As a result, the codebase cannot be updated to the newer dependency version without also updating all the code that uses the old API.
 
-The important bit is behavior can't regress. The existing tests around global import and export validation have to keep passing, those check that the validator correctly flags when imports or exports don't line up with the expected interface (returning the right errors when types don't match). Oh and a minimal wasm module should still validate cleanly through the new API. This all matters because the old pin blocks us from consolidating everyone onto one up-to-date parser version across the workspace.
+## Expected Behavior
+
+- The WebAssembly interface library should be able to use the current workspace-wide version of the wasm parsing dependency rather than its own old pinned version
+- The validation code should use the modern validator API that accepts a features configuration struct (enabling threads, reference types, SIMD, bulk memory, and multi-value features) and provides a single method to validate an entire wasm binary at once
+- After migrating to the new API, validation of global imports and exports against an interface should continue to work correctly — returning appropriate errors when types don't match
+- A minimal WebAssembly module should validate successfully using the new API
+
+## Why This Matters
+
+Currently, keeping an old pinned dependency version prevents the project from consolidating to a single version of the wasm parser across all crates. The old API is no longer available in newer releases, so any attempt to upgrade the dependency causes compilation failures across the library. Updating the code to use the modern API will allow the workspace to use a consistent, up-to-date version of the parser everywhere, and all existing validation tests will continue to pass.

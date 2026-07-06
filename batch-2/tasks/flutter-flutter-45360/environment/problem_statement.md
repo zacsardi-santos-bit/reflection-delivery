@@ -1,7 +1,17 @@
-I'm cleaning up the crash handling in the Flutter tool and it's kind of embarrassing right now, when the tool crashes people just get a bare error message with nothing actionable, no idea whether their crash is already filed on GitHub, no pointer to the docs, no way to file a fresh report. I want the crash path to surface three things: a URL that searches for similar existing issues on the Flutter GitHub repo, a reference to the bug-reporting documentation guide so folks know how to write a good report, and a pre-filled new-issue template URL they can paste into a browser to open a report with the details already populated. Developers hitting a crash usually don't know if the problem's known or how to report it well, so these contextual links cut a ton of friction.
+## Description
 
-Can you pull the GitHub URL generation into its own dedicated class so it's injectable through the existing service locator (the context/injection setup), that way tests can swap in a fake implementation? The crash reporter should get its GitHub URLs from that.
+When the Flutter tool crashes unexpectedly, developers currently see a minimal error message with little actionable information. There are no links to check for similar known issues, no guidance to the bug-reporting documentation, and no easy way to file a new bug report. We should improve this crash experience so developers can quickly find related issues and submit well-formatted reports.
 
-Also the internal chatter about background crash-data transmission is noise for most people, it's showing up in stdout and it shouldn't, move those messages down to verbose/trace-level output so they only appear when someone's running diagnostics.
+Additionally, there is a bug where the tool crashes trying to read a project's Android compatibility extension setting when the relevant manifest section is entirely absent — it should safely return a default value of false instead of failing.
 
-Oh and there's a real bug too: reading whether a Flutter project uses the Android compatibility extension blows up with an error when that whole section is missing from the project manifest. It should just return false in that case instead of crashing, treat an absent section as a plain default of false.
+## Expected Behavior
+
+- When a crash occurs, the tool should display a URL for searching similar existing issues on GitHub
+- A link to the Flutter bug-reporting documentation guide should be shown
+- A pre-filled GitHub issue template URL should be generated and shown so users can quickly file a new bug report
+- Internal background messages about crash-data transmission should not appear in standard output — they should only appear in verbose/diagnostic output
+- Reading the Android compatibility extension setting from a project manifest must safely return a default value of false when the relevant manifest section is absent, rather than crashing
+
+## Why This Matters
+
+Developers encountering a Flutter tool crash often don't know whether the problem is already known or how to properly report it. Providing contextual GitHub links at the time of a crash dramatically reduces friction and leads to better, more actionable bug reports.

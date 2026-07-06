@@ -1,7 +1,19 @@
-I'm chasing down a flaky column ordering thing in our eval results. When multiple test cases run at once and finish out of order, the variable columns in the results table come out in whatever sequence the rows completed, which means two runs of the same eval can show columns differently, and reloading saved results scrambles them too. It makes side-by-side comparison basically useless. What I want is for the column order to get captured at evaluation time based on the order variables are declared in the test config, then preserved every time those results get displayed or exported.
+# Variable Column Order Is Non-Deterministic in Evaluation Results
 
-So the stored order should be the leading sequence of columns. Any variables that only show up at runtime or come out of metadata transforms should get appended alphabetically after the configured ones. And legacy result files that don't have a stored order need to keep falling back to plain alphabetical sorting so I don't break existing data.
+## Description
 
-I also need a batch query against the database that pulls stored variable keys for a set of evaluations, returning them sorted alphabetically per evaluation. And the serialized results file format should include the persisted column order when it exists but omit that field entirely when there isn't one.
+When running evaluations with multiple test cases — especially when tests execute concurrently — the order of variable columns in the results table is not stable. Rows that finish out of order can cause the column sequence to differ between runs, and reloading saved results may present columns in a different order than what was originally shown. This makes it difficult to compare evaluation runs reliably.
 
-Couple edge cases too: if the stored column list has duplicate entries, dedupe them so I don't get repeated headers. If the stored order is malformed (not an array), just ignore it and treat it as absent, same as legacy. Also falsy variable values like empty string, zero, or false can't get silently overwritten by some alternative display value, they need to survive faithfully into the table. And when two sources hand me different values for the same column, log that collision at debug level so I can see the discrepancy without it blowing up.
+## Expected Behavior
+
+- The order of variable columns should reflect the order in which variables were declared in the test configuration, not the order in which test rows happened to complete.
+- This configured order should be stored alongside the evaluation so it can be restored faithfully when results are reloaded or exported.
+- When results are converted to a table for display, the persisted order should define the column sequence. Variables added dynamically at runtime or via metadata transforms should be appended alphabetically after the configured columns.
+- Legacy results files that do not contain a stored column order should continue to display variables in alphabetical order (preserving existing behavior for older data).
+- If the stored column order contains duplicate entries, those should be collapsed to avoid duplicate column headers.
+- Falsy variable values (such as an empty string, zero, or false) must be preserved faithfully in the table, not silently replaced by an alternative display value.
+- When two sources provide conflicting values for the same variable column, the discrepancy should be surfaced via a debug log.
+
+## Why This Matters
+
+Consistent column ordering is essential for side-by-side comparison of evaluation runs and for users to navigate large result tables without disorientation. Without this, any re-run or reload can scramble the column layout, breaking mental models users build around specific column positions.

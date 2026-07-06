@@ -1,7 +1,16 @@
-I'm building a policy system for MCP tool execution and hit a wall with how we handle tool annotations. Right now when an MCP tool declares semantic hints (like being read-only) at discovery time, we generate a dynamic policy rule from that and then just throw the annotation data away. So later when the policy engine actually decides allow vs deny vs prompt, it's got nothing to work with, it can't match rules against those hints at all. I want to fix that whole flow.
+## Description
 
-The core idea is annotations should stick around on the tool object after discovery instead of being discarded once a rule's generated, and they need to flow through the execution pipeline all the way down to the policy decision point so config-defined rules can match tools by their declared behavior. The rule matching in the policy engine should grow annotation-based criteria, meaning a rule can say it only applies to tools carrying certain annotation values. Concretely in plan mode, an MCP tool that declares itself read-only via its annotations should get a "prompt the user" decision rather than an unconditional deny, while MCP tools without that annotation (and non-MCP tools) stay denied like before.
+When MCP tools declare semantic behavior hints (such as indicating they are read-only), those annotations are currently consumed at discovery time to create dynamic policy rules, then discarded. As a result, the policy engine has no access to annotation data when it actually checks whether a tool should be allowed, denied, or sent for user confirmation. This creates a gap: policy rules defined in configuration files cannot match tools based on their declared behavior, and annotation information cannot flow through the tool execution pipeline.
 
-Also the tool exclusion mechanism needs to be annotation-aware. When annotation metadata is passed in (a mapping from tool names to their annotation objects) it should use that to filter exclusions against annotation-matching rules, but when no metadata's provided it should just skip the annotation-based rules rather than applying them wrong and excluding stuff incorrectly.
+## Expected Behavior
 
-Oh and rip out the dynamic rule generation at discovery time entirely, that's the fragile part I don't want anymore. Annotation-based policy rules should live in static policy config files instead, and the tool itself just carries its annotations for use at check time. The reason this matters is that today users in plan mode can't touch any MCP tool even if it's totally safe and read-only, which is annoying, and the discovery-time dynamic rule approach loses the info we'd need for fine-grained decisions across the session.
+- Tool annotations should be preserved on the tool object after discovery, not discarded after rule generation.
+- Annotations should be passed through the execution pipeline all the way to the policy decision point, so that policy rules can match tools based on their annotation values.
+- The policy engine's rule matching should support annotation-based criteria — rules can specify that they apply only to tools carrying certain annotation values.
+- In plan mode, MCP tools that declare themselves as read-only (via their annotations) should receive a "prompt user" decision rather than an unconditional denial, while MCP tools without such annotations remain denied.
+- The tool exclusion mechanism should support annotation-aware filtering when annotation metadata is available: when no metadata is provided, annotation-based rules should be skipped rather than causing incorrect exclusions.
+- Dynamic policy rule generation based on tool annotations at discovery time should be removed; annotation-based policy rules should live in static configuration files instead.
+
+## Why This Matters
+
+Without this change, users in plan mode cannot use any MCP tools even if those tools are inherently safe (read-only). The current approach of generating dynamic rules at discovery time is fragile and loses the annotation information that would allow fine-grained, annotation-aware policy decisions throughout the session.

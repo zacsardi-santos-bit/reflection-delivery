@@ -1,7 +1,14 @@
-I'm extending the memory file search feature and there are two gaps I keep running into. Right now when I search, the results only give me back the exact line that matched, which is basically useless without opening the whole file since one line rarely tells you anything. I want to be able to ask for a configurable number of context lines before and after each match so the result stands on its own. When I do that, each result needs to report both the line number of the actual matched line and the starting line number of the context window, because those two differ once you pull in surrounding lines, and oh, the context window has to be clamped to the file boundaries so I don't run off the start or end of the file.
+## Description
 
-Second thing, every search is case-sensitive right now with no way to turn that off. I need an opt-in case-insensitive mode that catches all the capitalization variants, so searching "needle" should also hit "Needle" and "NEEDLE".
+When searching memory files, the current implementation returns only the exact line that matched the query. This makes results hard to interpret without opening the full file, since a single line rarely provides enough context. There is also no way to perform case-insensitive searches — every search is case-sensitive with no override available.
 
-Also while you're in there, if a pagination cursor points past the end of the results it currently just silently hands back an empty page, which is wrong. It should get rejected with a proper error instead.
+## Expected Behavior
 
-To pull this off you'll need to update the search request type to accept these new options (context line count and the case-insensitivity flag), update the result type to carry the context window alongside the matched line and both line numbers, and update the actual search logic to implement both behaviors plus the cursor bounds check correctly.
+- Search results should support an optional number of surrounding context lines. When requested, each match should include the lines immediately before and after the matching line, so the result is self-contained and readable without visiting the full file.
+- Each result should report both the line number of the actual match and the starting line number of the context window, so users can precisely navigate to the right location.
+- Searches should support a case-insensitive mode that finds all capitalization variants of the query (e.g., matching "needle", "Needle", and "NEEDLE" when searching for "needle" case-insensitively).
+- A cursor that points beyond the end of available results should be rejected with an appropriate error rather than silently returning an empty page.
+
+## Why This Matters
+
+Developers using memory file search often need to understand the surrounding context of a match to make sense of it. Without surrounding context lines, every result requires a follow-up read of the full file. Case-insensitive matching is a standard search feature that is currently missing, making it impossible to find content regardless of how it was originally written.

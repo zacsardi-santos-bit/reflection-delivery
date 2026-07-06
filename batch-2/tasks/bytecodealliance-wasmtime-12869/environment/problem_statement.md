@@ -1,5 +1,14 @@
-I'm poking at the Pulley interpreter in the Wasmtime tree and hit a spot where the VM constructor just can't fail, it either works or it panics, and that's no good because spinning up the interpreter allocates stack memory and that allocation can absolutely fail when someone hands us a giant stack size or we're memory constrained. I want the constructor for the Pulley virtual machine to return a fallible result instead so callers get a chance to detect and recover from an init failure rather than eating a panic. Same deal with the stack type that takes a configurable size, its constructor should be fallible too since that's where the actual stack allocation happens and it's the thing that blows up under OOM.
+## Description
 
-While I'm at it I need a fallible way to build the runtime store, basically a new store creation entry point that returns an error when allocation fails, so if an embedder cranks the wasm stack size or the async stack size up to something absurd we return something they can handle instead of crashing. The concrete guarantee I care about: when the stack size is configured to the maximum representable value and I try to make a store, it must not panic under any circumstances, it either fails gracefully with an error or succeeds.
+The Pulley virtual machine's constructor is currently infallible — it either succeeds or panics with no opportunity for the caller to recover. This is a problem because initializing the virtual machine involves allocating stack memory, and that allocation can fail (for example, when the requested stack size is extremely large or memory is constrained). The same issue affects the runtime store when users configure very large stack sizes: the system can panic instead of returning a meaningful error.
 
-Oh and every existing call site that constructs the Pulley virtual machine needs updating to thread through the new fallible result, don't leave any of them assuming the infallible signature. This matters for embedders in constrained environments who want extreme or unusual stack sizes without risking a hard crash, and it also keeps us honest under strict memory analysis tooling where an OOM during init should surface as a recoverable error, not a process abort.
+## Expected Behavior
+
+- The virtual machine constructor should return a fallible result so callers can detect and handle initialization failures gracefully
+- Similarly, the constructor for stacks with a configurable size should also be fallible
+- A new fallible store creation function should be provided so that callers can handle the case where allocation fails (e.g., when the wasm stack or async stack size is configured to an extremely large value)
+- When the stack size is set to the maximum representable value, the runtime should not panic — it should either fail gracefully or succeed
+
+## Why This Matters
+
+Users and embedders need to be able to configure extreme or unusual stack sizes without risking a panic. In constrained environments, OOM conditions during initialization should be recoverable errors, not hard crashes. This is also important for correctness when running under strict memory analysis tools.

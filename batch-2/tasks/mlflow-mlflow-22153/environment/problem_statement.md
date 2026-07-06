@@ -1,5 +1,17 @@
-I'm cleaning up some duplicated gateway provider logic that's spread across two modules and it's getting annoying to maintain. Right now there's a gateway provider class plus a provider resolution function living in the judge/adapter layer, and separate but similar routing lives in the discovery/model utilities. The problem is when you call a model through a gateway-style URI without the optional LiteLLM library installed, the discovery utilities fallback path doesn't actually support gateway endpoints, so it breaks.
+## Description
 
-What I want is to centralize this. Move the gateway provider class and the provider resolution function into the shared metrics/model utility module so both the judge adapter and the discovery utilities can use the same lookup path. The shared resolver today handles "openai", "anthropic", "gemini", and "mistral" but not "gateway", so I need it to also handle "gateway" by looking up the gateway config by endpoint name, building a compatible provider object, and returning it. That provider object should expose the endpoint URL (ending in the chat completions path), any extra headers pulled from the gateway config, the model/endpoint name, and an adapter class for chat format conversion, consistent with how the other built-in providers get accessed. Oh and if someone passes a provider name that isn't supported, it should raise a clear error saying the provider isn't supported.
+The codebase currently has duplicated logic for resolving and routing requests to AI gateway providers. One copy of the gateway provider setup lives in the judge/adapter layer, and a separate path exists in the discovery utilities. This duplication means that when calling a model through a gateway-style URI without the optional LiteLLM library installed, gateway endpoints are not properly supported in the discovery utilities path.
 
-Then update the judge adapter to use this shared resolver instead of its own local copies, deleting the now-redundant local gateway provider class and resolution function. Also simplify the adapter's gateway invocation function: string prompts get handed to the existing score-on-payload helper, while list prompts go through the shared provider resolver and request sender. Similarly the discovery utilities' fallback path (the one used when LiteLLM isn't installed) needs to handle gateway-style URIs using that same shared resolver and request-sending function, so calling a model via a gateway URI works reliably even without LiteLLM. Net effect is consistent behavior across both paths and less code to keep in sync.
+Additionally, the gateway provider class and the function responsible for resolving provider instances are scattered across modules, making it hard to maintain and extend.
+
+## Expected Behavior
+
+- Gateway provider resolution should be centralized in a single shared utility module so that any component can use the same lookup path.
+- Calling a model via a gateway-style URI should work reliably when LiteLLM is not installed, routing through the shared provider resolution code.
+- The shared provider resolver should support the "gateway" provider type, using the gateway configuration to build a provider that correctly derives the endpoint URL and forwards any extra headers.
+- The gateway provider class should expose headers, endpoint URL, model name, and adapter class, consistent with how other built-in providers are accessed.
+- Unsupported provider names should produce a clear error indicating the provider is not supported.
+
+## Why This Matters
+
+Having duplicated provider setup logic in multiple places creates maintenance burden and subtle behavioral differences between code paths. Centralizing this logic ensures consistent behavior, removes the gap where gateway URIs were not handled in the discovery utilities fallback path, and reduces the overall amount of code to maintain.

@@ -1,5 +1,16 @@
-I'm working on the Sure Petcare integration in Home Assistant and I want to expose a bit more of the pet position data that the API already hands back but that we're not surfacing today. When a pet passes through one of the smart flap devices, the payload tells us which specific device the pet was last detected at, plus which user last manually recorded the pet's location, and right now there's no way to get at either of those through Home Assistant sensors.
+# Add Pet Last-Seen Flap Device and User Sensors for Sure Petcare Integration
 
-So I'd like to add two new sensors per pet. One should report the ID of the flap device the pet was last seen at, and the other should report the ID of the user who last manually updated that pet's location. Both of these are diagnostic-type sensors, they're the kind of extra detail most people won't care about, so I want them both disabled by default. Meaning they still get registered (they should show up in the entity registry so anyone who wants them can flip them on), but until someone explicitly enables them they shouldn't be active or produce any state.
+## Description
 
-The point here is to give power users a path to build automations off which flap a pet used, or to track manual location updates by household members, without cluttering dashboards for the casual folks. The sensor definitions live in the integration's sensor module (@homeassistant/components/surepetcare/sensor.py is where the pet sensor classes get set up), so the new entity classes and their per-pet registration should go there alongside the existing pet sensors.
+The Sure Petcare integration tracks pets and their positions when they pass through smart flap devices. The API already returns metadata about which specific device a pet was last seen at, and which user last manually recorded the pet's location — but this data is not currently exposed as Home Assistant sensor entities.
+
+## Expected Behavior
+
+- A new diagnostic sensor per pet should report the ID of the flap device the pet was last detected at.
+- A new diagnostic sensor per pet should report the ID of the user who last manually recorded the pet's location.
+- Both sensors should be **disabled by default** so they don't clutter dashboards for users who don't need them. Users can manually enable them in the entity registry when desired.
+- When disabled, these entities should still appear in the entity registry but should not produce any active state.
+
+## Why This Matters
+
+Users who want to build automations based on which specific flap device a pet last used, or who want to track manual pet location updates by household members, currently have no way to access this data through Home Assistant. Exposing these values as sensors (disabled by default) gives power users the option to use this data without affecting the experience for casual users.

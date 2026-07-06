@@ -1,5 +1,17 @@
-I'm hitting a recurring failure with MLflow's Databricks tracing backend, the one that stores and queries traces through a SQL warehouse. The warehouse gets stopped after idle periods, and when I make a tracing call it just fails instead of waking the thing up. I want MLflow to detect when the warehouse is stopped, or stopping, or mid-start (any non-running or transitional state really), and automatically start it and wait for it to become active before proceeding. This should kick in before any tracing API call that actually targets the SQL warehouse, so retrieving trace info, searching traces, managing trace locations, creating them, and working with assessments/annotations all need the check first. If the warehouse is already running the call should go straight through with no added delay.
+## Description
 
-Couple of controls I need: an environment variable to disable the auto-start entirely (in case I want to manage warehouse lifecycle myself), and another env var to set the wait timeout, with a sensible default when it's not set. Also I don't want to hammer the warehouse status API on every single call, so cache a successful check for a short window so repeated calls skip the re-check. Different warehouse IDs should get independent cache entries, don't let one warehouse's cached status leak into another.
+When using Databricks tracing with a SQL warehouse backend, the warehouse may not be running at the moment a trace operation is attempted — it could be stopped, stopping, or in the process of starting. Currently, tracing operations such as retrieving, searching, creating, or annotating traces simply fail if the warehouse isn't already in an active state. Users have no built-in way to let MLflow handle this transparently.
 
-When it goes wrong, like the warehouse doesn't come up within the timeout or the underlying status API errors out, raise a clear exception that names the warehouse ID and points at the relevant config options (the disable flag and timeout var) so I know what to tweak. And importantly, operations that don't route through the SQL warehouse, like logging raw spans or fetching online trace details, use different API paths and shouldn't be touched by any of this, no auto-start, no waiting. Basically make the tracing backend self-healing so a lapse in warehouse activity stops blowing up my production workflows.
+## Expected Behavior
+
+- Before making any tracing API call that targets a SQL warehouse (such as fetching trace info, searching traces, managing assessments, or creating trace locations), MLflow should automatically check whether the warehouse is running and start it if it isn't.
+- If the warehouse is already running, the operation should proceed immediately without any unnecessary delay.
+- If the warehouse is in a stopped or transitional state, MLflow should start it and wait for it to become active before continuing.
+- The auto-start behavior should be configurable: users should be able to disable it entirely via an environment variable.
+- The wait timeout should also be configurable via an environment variable, with a sensible default.
+- A caching mechanism should prevent redundant warehouse status checks from being made on every single call within a short period.
+- Operations that use different API paths and do not require a warehouse (such as logging raw spans or fetching online trace details) should not be affected by this feature.
+
+## Why This Matters
+
+Without this feature, any lapse in warehouse activity causes tracing operations to fail with unhelpful errors. Automatically managing warehouse lifecycle removes a significant operational burden from users who use Databricks SQL warehouses as their tracing backend, making MLflow tracing more robust and self-healing in production workflows.

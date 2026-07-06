@@ -1,7 +1,19 @@
-I've been digging into the Mistral provider and I'm worried about sensitive data leaking through caching and logging. Right now when it builds cache keys it seems to use raw request data, so the actual prompt text, the API key, and the endpoint URL can show up in plain text in cache identifiers and debug logs. That's bad news in any shared or multi-tenant setup where logs or the cache store aren't fully locked down.
+## Description
 
-What I want is for the provider to hash all the sensitive bits (prompt content, API key, and API endpoint address) with a cryptographic hash before they go into a cache key, so none of that ever appears in the clear. The hashing needs to be deterministic, same inputs always give the same key even across restarts or module reloads. And two providers on the same model but with different API credentials must produce different cache keys even for identical prompts, otherwise one tenant could get served another's cached response. This goes for both chat completion and embedding requests.
+The Mistral provider currently builds cache keys from raw request data, meaning that sensitive information — including prompt text, API keys, and API endpoint addresses — can appear directly in cache identifiers and debug log output. This is a privacy and security problem, particularly in shared or multi-tenant deployments where logs and cache stores may be visible to multiple parties.
 
-Also I want concurrent identical requests deduplicated, so if two requests with the same params are in flight at once only one real network call happens and both callers get the same result. That dedup has to be scoped properly too, requests in different operational scopes shouldn't share dedup state with each other.
+Additionally, when two concurrent requests with identical parameters are made, the provider makes redundant network calls instead of deduplicating them. And when embedding responses are served from cache, the result does not indicate this was a cached response.
 
-Oh and debug logging shouldn't spit out raw prompt text, API key values, or the generated model outputs. Last thing, when a response comes from cache instead of the network the result should indicate it was a cached hit, and that applies to both chat and embeddings.
+## Expected Behavior
+
+- Cache keys for both chat completion and embedding requests should be composed of cryptographic hashes of their components, so that sensitive data (prompt text, API credentials, endpoint URLs) never appears in plain text in any cache key or log.
+- Two providers with the same model but different API credentials must produce different cache keys, even for identical inputs — preventing cross-tenant cache collisions.
+- Cache key hashes must be stable and deterministic across application restarts or module reloads.
+- When identical concurrent requests are in flight, only one actual network call should be made; all callers should receive the same result.
+- This deduplication must be properly scoped: requests made in different operational scopes should not share deduplication state.
+- Debug logs must not contain raw prompt text, API key values, or generated model outputs.
+- Responses served from cache (for both chat and embeddings) must indicate that they came from cache.
+
+## Why This Matters
+
+Without this fix, debug logs and cache storage can inadvertently expose sensitive user data and credentials. In multi-tenant or production environments, this represents a real data leakage risk. Deduplication also reduces unnecessary API calls and latency.

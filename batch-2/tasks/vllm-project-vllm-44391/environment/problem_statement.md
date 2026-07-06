@@ -1,7 +1,16 @@
-I'm dealing with our chat completions server and the models we run sometimes emit internal reasoning (chain-of-thought) before the actual answer, and for a lot of our production traffic we just don't want that reasoning leaking out to end users. So I want to be able to flip on reasoning suppression and get back only the visible answer.
+## Description
 
-Problem is, right now if I send a non-streaming chat completion request with reasoning suppression turned on, the server just rejects it, like it treats the opt-out as an unsupported feature and bails instead of actually processing the request. I need it to accept that option and give me a normal successful response where the message body has only the answer text and no reasoning field hanging around.
+Some LLMs generate internal "reasoning" or "chain-of-thought" content before producing their final visible answer. While this can be useful for debugging, many production use cases don't want to expose the internal reasoning to end users — they only want the final answer.
 
-There's a subtle bit too around per-token metadata. If someone asks for output log probabilities or output token IDs on a request that also has reasoning suppressed, those output-level metadata fields need to get dropped from the choice object, otherwise they'd basically expose the hidden reasoning tokens through a side channel, which defeats the whole point. The prompt-level token info (prompt token IDs and that kind of thing) should still be there in the response, it's just the output-level token metadata tied to the hidden reasoning that gets omitted.
+Currently, the chat completions API rejects any non-streaming request that explicitly opts out of receiving reasoning content, treating this opt-out as an unsupported feature. This means developers cannot suppress reasoning output in non-streaming responses at all.
 
-Oh and this all needs to work on both the non-streaming and the streaming paths, not just one of them. Basically developers building user-facing apps on reasoning-capable models need the internal thinking kept private while still using the final answer, and the cleanest place to handle it is at the API level so nobody's stuck exposing raw reasoning or bolting on a post-processing step to strip it out.
+## Expected Behavior
+
+- A non-streaming chat completion request with reasoning suppressed should be accepted and return a successful response.
+- The response message should contain only the visible answer text, with no reasoning content included.
+- When reasoning is suppressed, any per-token output metadata (such as log probabilities and output token IDs) should also be omitted from the response choices, since that metadata would otherwise expose the hidden reasoning tokens through a side channel.
+- Prompt-level metadata (such as the prompt token IDs) should still be present in the response even when reasoning is suppressed.
+
+## Why This Matters
+
+Developers building user-facing applications on top of reasoning-capable models need a way to keep internal chain-of-thought private while still using the final answer. Without this capability, they must either expose internal reasoning to users or use a separate post-processing step to strip it — neither of which is ideal. The server should handle this cleanly at the API level.

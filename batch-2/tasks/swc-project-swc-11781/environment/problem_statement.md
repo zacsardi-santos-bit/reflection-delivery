@@ -1,5 +1,16 @@
-I'm chasing down a nasty correctness bug in the decorator transform. When I put a decorator on a class that extends a base class, and that subclass touches parent class references inside its static members, the transformed output does the wrong thing at runtime. The transform isn't rewriting the parent references correctly in these static contexts, so the values come out wrong compared to what the untransformed code would produce.
+## Description
 
-Concretely, here's what breaks. If my decorated subclass has a static field initializer that spreads a parent static array property, the merged array comes out wrong instead of the correct combined values. If it has a static accessor whose initializer reads a parent accessor value, it doesn't return the correct inherited value. If it has a private static method that calls a parent method, invoking that method gives the wrong result. And if it has a static initialization block that calls a parent method (including passing a parent property as the argument), the expected result doesn't get assigned properly. Basically any parent reference showing up in static field initializers, static accessors, private static methods, or static init blocks on a decorated subclass ends up broken.
+When a decorated class extends a base class and uses parent class references within its static members, the decorator transform produces incorrect output that breaks at runtime. Specifically, static field initializers that read or spread parent properties, static accessor initializers that copy parent values, private static methods that call parent methods, and static initialization blocks that invoke parent methods — all produce wrong values or fail entirely after transformation.
 
-Can you fix the decorator transform so it rewrites parent class references correctly across all of these static member contexts for decorated subclasses? Decorators plus inheritance is a super common pattern and right now it silently produces incorrect values during static initialization, which is really hard to debug. After the fix each of these cases should behave at runtime exactly like the non-transformed source would, so the spread array merges right, the accessor returns the inherited value, the private static method returns the correct result when called, and the static block assigns what it's supposed to.
+## Expected Behavior
+
+After the decorator transform, a decorated subclass that uses parent class references in its static members should behave correctly at runtime:
+
+- A static field that spreads a parent static array property should produce the correct merged array
+- A static accessor that reads a parent accessor value should return the correct inherited value
+- A private static method that calls a parent method should return the correct result when invoked
+- A static initialization block that calls a parent method using a parent property as an argument should correctly assign the expected result
+
+## Why This Matters
+
+Decorators combined with class inheritance are a common pattern. When the decorator transform breaks the handling of parent class references in static members, any decorated subclass that relies on parent properties or methods during static initialization will silently produce incorrect values — making this a correctness bug that is difficult to debug.

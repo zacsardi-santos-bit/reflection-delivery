@@ -1,5 +1,17 @@
-I'm hitting a dedup bug in the config loading path where providers get duplicated in the combined output whenever I reuse the same provider reference across multiple spots. Like if I define a provider config object that carries a function-valued property (a custom response transform, say) and then reference that same object more than once in my providers list, the final merged config ends up with two copies of it instead of one. Same thing happens with a class-based provider instance that implements the provider interface, reuse it twice and I get two entries. Plain string provider identifiers already dedupe correctly, so I'd expect identical behavior for objects and instances too, if it's literally the same reference it should show up exactly once after config combination.
+## Description
 
-The catch, and this is important, is that two *different* provider objects or instances that each happen to contain function properties must stay separate, they're genuinely distinct configs and shouldn't be collapsed. So the fix is really about reference equality, not deep structural comparison. Functions don't serialize nicely which is probably why the current logic silently falls over for these cases.
+When combining configuration from one or more sources, providers that are listed more than once using the same reference should be deduplicated. This already works for plain string provider identifiers, but fails silently for provider configuration objects that contain function-valued properties (such as a custom response transform).
 
-The reason this matters is people define a shared provider variable and sprinkle it around, or spread a provider list that accidentally includes the same entry twice, and in both cases they meant one provider but get confusing redundant eval runs. Can you fix the config merge logic so referencing the exact same provider object or instance any number of times always lands as a single entry in the combined providers list, while preserving genuinely distinct providers? Keep the existing string dedup behavior intact.
+## Current Behavior
+
+If the same provider config object — one that includes a function property — is referenced twice in a providers list, both entries appear in the final combined output. The user ends up with a duplicate provider that should have been collapsed to one.
+
+## Expected Behavior
+
+- When the exact same provider config object (with or without function-valued properties) is referenced multiple times, the combined output should contain only one copy of that provider.
+- When the exact same provider instance (a class instance implementing the provider interface) is referenced multiple times, the combined output should contain only one copy.
+- Two *different* provider objects or instances that each happen to carry function properties must still be preserved as separate entries, since they represent distinct configurations.
+
+## Why This Matters
+
+Users sometimes define a shared provider variable and reference it in multiple places within their config, or they spread a provider list that accidentally includes the same entry twice. In both cases the intention is a single provider, but the current behavior silently duplicates it. Aligning the deduplication logic so that reference equality is respected for all provider types — including those with function fields — prevents confusing redundant evaluation runs.

@@ -1,5 +1,13 @@
-I'm adding a configurable max byte size to the Airflow state store and it needs to work on both sides. On the server, the state store API endpoints for task state and for asset state should reject any stored value whose byte size goes over the configured maximum, and that rejection should come back as a validation error to the caller (not a 500 or silent drop). The size cap has to be configurable, and here's the important edge case: when the limit is set to zero it means disabled, so we accept values of any size, no validation at all. So zero isn't "reject everything," it's "no limit."
+## Description
 
-Then on the client side, the accessor code that runs inside a task and writes values into the state store should check the value against that same configured limit and emit a warning when it's too big. The warning should name the config option so a developer reading the log knows exactly which setting to bump. But (and this matters) the warning must not block anything, the value should still get sent to the store even after the warning fires. It's an early heads-up during development, not a hard stop.
+The state store does not enforce a configurable size limit on stored values. Currently, if a task or asset stores a very large value, the API accepts it without any size-based validation. There is also no client-side feedback when task code attempts to store an oversized value.
 
-The why here: without a size limit, tasks or assets can dump huge values into the state store and that bloats database storage and drags performance down. Server-side enforcement gives operators real control over storage growth, and the client-side warning gives developers immediate feedback before it becomes a problem. So I want the enforcement and the warning both wired to the same configurable limit, with zero consistently meaning off on both paths.
+## Expected Behavior
+
+- The state store API endpoints (both for tasks and assets) should enforce a maximum byte size for stored values. Requests that exceed this limit should be rejected with a validation error.
+- The size limit should be configurable. When the limit is set to zero, it should be treated as disabled, allowing values of any size to be accepted.
+- Client-side accessor code (running inside a task) should emit a warning when a value being stored exceeds the configured maximum size. The warning should not block the operation — the store call should still proceed — but the developer should be alerted.
+
+## Why This Matters
+
+Without a size limit, large values can be inadvertently stored in the state store, leading to excessive database storage usage and potential performance degradation. Providing both a server-side enforcement mechanism and a client-side early warning gives operators control over storage growth while giving developers immediate feedback during development.

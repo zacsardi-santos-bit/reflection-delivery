@@ -1,7 +1,21 @@
-I'm working on the HTML accessibility linter and want to add a new lint rule that checks whether anchor elements are actually being used for navigation. Right now nothing flags anchors that don't have a real destination, or point at a JavaScript execution string instead of a URL, or are just being used as click targets, and I want this to work across HTML, Astro, Svelte, and Vue template files since it's the same accessibility problem in all of them.
+## Description
 
-Here's what I want it to catch. If an anchor's link destination (href basically) is set to a JavaScript execution string like `javascript:` code, that's not a real URL so I want it rejected with a message asking for a valid destination value. Same message when the destination attribute is present but has no value at all (the empty/boolean form). If the anchor has a click event handler but no navigation destination, tell the dev to use a button instead since it's really an interactive control, not a link. And if there's no destination attribute at all, prompt them to always provide a navigation destination on anchors.
+The HTML analyzer is missing an accessibility rule that validates the correct usage of anchor elements in HTML-based template files. Anchor elements should only be used for navigation purposes with a real, valid destination. Currently, developers can write templates with anchors that have no destination, use invalid destinations (like JavaScript execution strings), or use anchors purely as interactive click targets — none of which are flagged by the linter.
 
-Don't flag the valid cases though: anchors with proper absolute URLs or fragment identifiers, anchors with dynamic expression bindings as the destination, and non-anchor elements like named component wrappers even if they happen to have similar attributes. This is only for actual `a` elements.
+## Expected Behavior
 
-One Vue-specific thing: Vue-style event binding syntax (the `@click` shorthand stuff) should be treated as an unknown attribute for this rule rather than a recognized click handler, so a Vue anchor like that generates the missing-destination diagnostic rather than the use-button-instead one. This lives with the other accessibility rules in the HTML analyzer, oh and the reason it matters is misused anchors wreck things for keyboard and screen reader users who count on anchors behaving like navigation links.
+A new accessibility lint rule should flag the following patterns in HTML, Astro, Svelte, and Vue template files:
+
+- An anchor element whose link destination is set to a JavaScript execution string — this is not a real URL and should be rejected with a message asking for a valid destination value.
+- An anchor element whose destination attribute is present but has no value (empty/boolean form) — this should also be flagged as needing a valid destination.
+- An anchor element that has a click event handler but no navigation destination — the developer should be told to use a button element instead, since the element is being used as an interactive control, not a link.
+- An anchor element with no destination attribute at all — the developer should be prompted to always provide a navigation destination on anchors.
+
+The rule should not flag:
+- Anchors with valid URLs (absolute or fragment-based)
+- Anchors with dynamic destination bindings (e.g., an expression as the destination)
+- Non-anchor elements like named component wrappers, even if they have similar attributes
+
+## Why This Matters
+
+Misused anchor elements degrade accessibility for keyboard and screen reader users, who rely on anchors behaving as navigation links. Without this rule, developers may unintentionally produce markup that confuses assistive technologies. Enforcing correct anchor usage across all supported HTML-like template formats ensures consistent accessibility behavior.

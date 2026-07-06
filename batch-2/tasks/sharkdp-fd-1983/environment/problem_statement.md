@@ -1,5 +1,18 @@
-I want to add a new search mode to the finder that does a true exact filename match. Right now the literal-string mode (the fixed-strings style flag that turns off regex interpretation) matches any file whose name contains my pattern as a substring, so searching for "a.foo" also gives me back "aa.foo" and "a.food", which is not what I want at all. I need a way to say only return files whose entire name matches the pattern exactly.
+## Description
 
-So I'm thinking a new flag that combines literal (non-regex) matching with whole-filename matching. All characters in the pattern should be treated as plain text, no regex interpretation, so dots and parentheses and similar don't need escaping. It should be case-insensitive by default like the rest of the tool, and it should also work together with the existing case-sensitive flag when I need a strict, case-exact whole-name match. Basically this fills the gap between the literal-substring mode and the full regex/glob modes, a simple safe way to look up a file by its complete name without knowing anchored regexes or glob syntax.
+When using this file finder tool, there is currently no straightforward way to search for files by their exact name using a plain-text pattern. The existing literal-string search mode matches any file whose name *contains* the pattern as a substring — so searching for something like "a.foo" also returns "aa.foo" and "a.food", which is often not what users want.
 
-Concretely, searching in exact mode for "a.foo" should return only "a.foo" and nothing that merely contains it as part of a longer name. Searching for "download (1).tar.gz" case-insensitively should match "Download (1).tar.gz", but searching for just "download (1)" should return nothing because the pattern doesn't cover the full filename. Oh and the whole point is that the match has to be against the entire name, not a substring, and it has to respect that case flag when I flip it on.
+To find files by exact name, users currently need to know how to write anchored regular expressions or use glob syntax. This is unnecessarily complex for a simple "find this exact filename" use case.
+
+## Expected Behavior
+
+A new flag should be added that combines literal (non-regex) pattern matching with whole-filename matching:
+
+- Special characters in the pattern (dots, parentheses, etc.) are treated as plain text, not as regex syntax
+- The pattern must match the **entire** filename, not just a substring
+- Matching is case-insensitive by default, consistent with the tool's existing behavior
+- The flag can be combined with the existing case-sensitive option to require an exact-case whole-name match
+
+## Why This Matters
+
+Users who want to find files named exactly "a.foo" get unexpected results from substring-based searches. This new mode fills the gap between the literal-substring mode and the full regex/glob modes, providing a simple, safe way to look up files by their complete name without any special syntax knowledge.

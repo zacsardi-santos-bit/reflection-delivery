@@ -1,7 +1,17 @@
-I'm chasing a resource leak in Hudi's metadata table reader. When we read from a metadata index (record location lookups, secondary index entries, that kind of thing) we spin up distributed in-memory data collections that get persisted for perf, and if an exception fires partway through one of these operations, those persisted collections never get released, so memory just keeps climbing in the cluster and eventually we hit OOM or degraded perf on long-running services.
+## Description
 
-Two things I need. First, both the regular HoodieData and the pair-type HoodiePairData collections should be able to release not just themselves but their whole upstream dependency chain in one call, walking the entire computation lineage recursively, because right now callers can only release the top-level object and all the ancestor computations stay cached for no reason.
+When reading from Hudi's metadata table — for example, to look up record locations or secondary index entries — the system may create distributed in-memory data collections that are persisted for performance. If an exception occurs mid-operation, those persisted collections are never released, causing memory pressure and resource leaks in the cluster.
 
-Second, I want a cleanup manager class that tracks multiple distributed data objects registered during an operation and auto-releases all of them via that recursive release if an exception occurs, but leaves them alone (doesn't eagerly release) when the operation succeeds normally. It's gotta be thread-aware so each thread's registered objects are tracked and cleaned up independently. Also if one object throws while releasing, keep going for the rest instead of bailing, and just silently skip null entries and objects of types it doesn't recognize.
+There is currently no mechanism to track or automatically clean up these cached distributed data objects when a metadata read fails partway through. Additionally, there is no way to release an entire dependency chain of cached collections at once; callers can only release the top-level object, leaving ancestor computations cached unnecessarily.
 
-Then wire the key metadata read paths (both the record index and secondary index lookups) to use this manager so any intermediate cached state gets freed whenever those methods hit an error, then re-throw. Success path stays untouched.
+## Expected Behavior
+
+- A cleanup manager should track distributed data objects registered by the current thread during a metadata read operation.
+- If an exception occurs, the cleanup manager should automatically release all tracked data objects before re-throwing the exception.
+- If the operation succeeds, tracked objects should **not** be eagerly released by the cleanup manager.
+- Key metadata read operations (record index lookups and secondary index lookups) should use this cleanup manager so their intermediate cached data is freed on failure.
+- Both pair-type and non-pair-type distributed data collections should support releasing themselves along with all their upstream dependency chain in one call.
+
+## Why This Matters
+
+Without cleanup on failure, long-running services or repeated index lookups that encounter errors will accumulate cached RDDs in Spark's memory, degrading performance and potentially causing out-of-memory failures. This change ensures that failures are handled gracefully without leaving memory leaks behind.

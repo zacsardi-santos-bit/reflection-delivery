@@ -1,5 +1,14 @@
-I'm hitting an annoying thing with our form library's dirty field tracking. When I diff current form values against the defaults to see what's actually been touched, I get back this cluttered blob that includes explicit "not dirty" markers for fields that haven't changed at all. So a field whose current value equals its default still shows up in the result, just flagged as clean, which is confusing and makes me check the value of every key instead of just checking whether the key exists. What I want is a sparse representation where presence means the field was changed and absence means it's clean, so anything equal to its default should just not appear in the dirty fields result.
+## Description
 
-This bites me on array fields too. When an array item's values all match their defaults, that array position should be an empty slot rather than an object stuffed with not-dirty markers for each field. And if the whole form matches defaults, I want the dirty fields result to come back as an empty object, not some deeply nested tree of false values. Basically any nested structure that would only contain not-dirty entries after the comparison should get pruned entirely rather than left hanging as an empty-ish container.
+The dirty fields tracking currently includes explicit "not dirty" markers for fields that haven't changed from their default values. When a form field's current value equals its default, it still appears in the dirty fields result — just with a marker indicating it is clean. This is confusing and creates clutter.
 
-Can you fix the dirty fields comparison logic so it only includes fields that genuinely changed and prunes any empty containers left behind once the clean fields are removed? It'd make working with dirty state in big forms, especially ones with field arrays, way more intuitive.
+## Expected Behavior
+
+- Fields that match their default values should be completely absent from the dirty fields result, not present with a "not dirty" marker.
+- In array-based fields, positions where all values match defaults should appear as empty slots rather than objects filled with "not dirty" markers.
+- When all values in a form match their defaults, the dirty fields result should be an empty object.
+- If a nested structure would only contain "not dirty" entries after comparison, the entire nested structure should be pruned from the result.
+
+## Why This Matters
+
+The current behavior forces consumers to check the value of each dirty field key (is it marked as changed or unchanged?) rather than simply checking whether the key exists at all. A sparse representation — where presence means "dirty" and absence means "clean" — is more intuitive and makes it easier to work with dirty state in large forms, including those with field arrays.

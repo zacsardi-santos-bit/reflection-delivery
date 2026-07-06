@@ -1,7 +1,20 @@
-We've got two CLI commands for conversation sessions that don't talk to each other and it's confusing everyone. One opens an interactive browser for auto-saved chats, the other is a parent command with subcommands for manually managed named checkpoints (list, save, resume, delete, share). Right now they're totally separate so people have to remember two names for what's really the same idea, managing sessions. I want to unify these.
+## Description
 
-The session browser command should directly expose those same checkpoint subcommands (list, save, resume, delete, share) so either command works interchangeably for checkpoint ops, and they behave identically. I also want a hidden compatibility alias under the session browser command that keeps the old nested structure around for existing workflows so nobody's scripts break.
+The CLI has two related but disconnected commands for session management: one opens an interactive browser for auto-saved conversations, and the other contains subcommands for manually managing named conversation checkpoints (listing, saving, resuming, deleting, and sharing). Currently these are completely separate, so users must remember two different command names for related operations. This is confusing because both commands are logically about managing conversation sessions.
 
-The grouped autocomplete menu needs work too. When someone types either command, or a unique partial prefix of either (it should show immediately on a unique prefix, not wait for an exact match), the completion suggestions should come back visually grouped with section separators, one group for browsing auto-saved sessions and one for manual checkpoint operations. So the suggestion display component has to render these section headers. Also the autocomplete mechanism needs to support inserting a canonical command form that's different from the suggestion's display label, so selecting a subcommand from a partial-prefix input inserts the correct full command text.
+Additionally, the error messages in the checkpoint subcommands currently reference the wrong command name, and the chat command's description doesn't accurately describe its purpose now that it should also open the session browser.
 
-Couple more things. The error messages inside the checkpoint subcommands currently point at the wrong command name (they reference the chat command) and need to point at the session browser command instead. And the chat command's description is stale, update it so it reflects that it now also opens the session browser and manages checkpoints. Oh and in nightly builds the debug subcommand should get added to both commands plus their nested checkpoint aliases. The whole point here is making the session browser a one-stop entry for session stuff with autocomplete that clearly guides folks to the right subcommand.
+## Expected Behavior
+
+- The session browser command should directly expose the same checkpoint management subcommands (list, save, resume, delete, share), so users can use either command interchangeably
+- Both commands should produce the same grouped autocomplete menu with visual section separators — one section for auto-saved sessions and one for manual checkpoints
+- Typing a unique partial prefix of either command should immediately show the same grouped menu, not wait for an exact match
+- A hidden compatibility alias under the session browser command should preserve the old nested structure for any existing workflows
+- Error messages in the checkpoint subcommands must reference the session browser command name, not the chat command name
+- The chat command description must be updated to reflect that it now also opens the session browser and manages checkpoints
+- The autocomplete suggestion system must support inserting a canonical command form (different from the suggestion's display label) when a suggestion is selected
+- In nightly builds, the debug subcommand must be added to both commands and their nested checkpoint aliases
+
+## Why This Matters
+
+This unification removes a confusing split between two commands that do similar things. Users can now use the session browser command as a one-stop entry point for all session-related operations, and the autocomplete experience consistently guides them to the right subcommands with clear visual grouping.

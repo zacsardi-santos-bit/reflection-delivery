@@ -1,3 +1,21 @@
-I'm hitting a couple of context scoping bugs in ZAP where the site tree walk decides what's in scope for a scanning context, and two node types get handled wrong. First one is data-driven placeholder nodes, the special nodes that stand in for dynamic URL segments (think a path segment whose value comes from a data set). When I add a child node under one of those placeholders, ZAP doesn't reconstruct the full URL right, so my include regex that references the dynamic segment never matches and the child silently drops out of scope. Exact same thing in reverse, my exclude regex won't exclude it either. What I'd expect is that a node sitting beneath a data-driven placeholder counts as included when the context's include regex matches the reconstructed URL (the placeholder segment basically acting as a wildcard as we walk up the tree), and counts as excluded (and not in scope) when the exclude regex matches. Oh and the method that returns all the contexts a given node belongs to needs to reflect this correctly too, so querying contexts for a node under a placeholder gives back the right list.
+## Description
 
-Second bug is my leaf nodes that append their URL parameter names in parentheses onto the display label. When those get matched against my context include/exclude patterns, it's using the whole decorated label (params and any method prefix) instead of the clean path name, so regexes that match the bare path just fail. Membership checks for both inclusion and exclusion should rebuild the URL from the clean path name of each node instead. Also it'd help a lot if nodes exposed a way to grab that clean name (the path segment without method prefix or parameter annotations) separately from the full decorated display name, so URL reconstruction and display can both use it accurately no matter what's tacked onto the label. This all lives in the site tree node and context scope matching code. Why it matters: people lean on context scoping to keep scans focused, and when data-driven paths or parameterized endpoints don't register as in-scope they get silently skipped during active scanning and real vulns go unfound.
+Context and scope matching incorrectly handles two types of site tree nodes: nodes that are children of "data-driven" placeholder nodes, and leaf nodes that have parameter names appended to their display labels.
+
+When a user defines a scanning context with include/exclude URL regular expressions, ZAP walks the site tree to decide which nodes are in scope. Two cases produce wrong results:
+
+1. **Data-driven nodes**: The site tree uses special placeholder nodes to represent dynamic URL segments (for example, a segment whose value is driven by a data set). When a child node sits beneath such a placeholder, ZAP does not reconstruct the full URL correctly for scope matching. As a result, include/exclude regexes that reference the dynamic segment never match, so child nodes are silently left out of (or incorrectly included in) the context.
+
+2. **Nodes with parameter annotations**: Leaf nodes append their URL parameter names in parentheses to the display name shown in the site tree. When these nodes are evaluated against context regexes, the parameter annotations are mistakenly included in the URL used for matching, causing regexes that match the bare path to fail.
+
+## Expected Behavior
+
+- A node that sits beneath a data-driven placeholder node should be considered included in a context when the context's include regex matches the full reconstructed URL (where the placeholder segment acts as a wildcard).
+- A node that sits beneath a data-driven placeholder node should be considered excluded from a context when the context's exclude regex matches the reconstructed URL, and should not be in scope.
+- Retrieving the list of contexts that contain a node beneath a data-driven placeholder should return the correct contexts.
+- A node whose display name contains parameter annotations in parentheses should match context regexes based on the clean path name only, without those annotations.
+- Nodes should also expose a clean name (the path segment name without method prefix or parameter annotations) for use in URL reconstruction and display.
+
+## Why This Matters
+
+Users rely on context scoping to limit scans to relevant parts of a web application. When data-driven paths or parameterized endpoint nodes are not recognized as in-scope, those paths are silently skipped during active scanning, leaving potential vulnerabilities undetected.

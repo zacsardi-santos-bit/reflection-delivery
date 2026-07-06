@@ -1,7 +1,16 @@
-I'm cleaning up the guidance in our redteam setup skill docs and the strategy default we ship is bugging me. Right now the skill instructions tell people to kick off their initial security test generation pass with a basic strategy and only escalate to the stronger jailbreak technique afterward, once they've verified the first batch of cases. I want to flip that so the more capable jailbreak technique is the recommended default from the very start, since it gives better coverage right away and there's no reason to make folks manually upgrade. So anywhere the skill instructions currently point at the basic approach for initial setup or the generation pass, switch it to recommend the stronger jailbreak technique instead.
+## Description
 
-Also I need a separate explicit recommendation for stateful targets that support multi-turn conversations, those should use a different technique than the single-turn default, so call that out on its own.
+The redteam setup skill and its reference documentation recommend starting with a basic strategy for the initial security test generation pass. This is not the best default — a more capable jailbreak approach should be recommended from the beginning rather than requiring users to manually escalate after verifying the first batch of test cases.
 
-Oh and the reference docs really need a clarifying note because people keep confusing two different things: configuring multiple input parameters is a structural thing about the target config and it's NOT the same as setting up a multi-turn conversational test, which is about stateful session handling. That trips up teams working with conversational AI systems and they end up applying the wrong strategy. So add a clear note that multi-input testing isn't multi-turn testing, plus an example config showing the right strategy for stateful conversational targets.
+Additionally, the reference documentation does not clearly distinguish between scanning with multiple inputs (a structural concern about the target configuration) and running multi-turn conversational tests (a concern about stateful session handling). This confusion can lead users to apply the wrong strategy for stateful conversational targets.
 
-Last thing, update all the example configurations throughout the reference docs to use the new default strategy instead of the basic one, and that includes the OpenAPI helper script that generates the initial redteam configs, it should emit configs using the new default too.
+## Expected Behavior
+
+- The skill instructions should recommend the more capable jailbreak technique as the default strategy for initial setup and generation passes, not the basic approach.
+- There should be a separate, explicit recommendation for when targets are stateful and support multi-turn conversations.
+- The reference examples should include a clear note that multi-input testing is not the same as multi-turn testing, along with example configuration showing the appropriate strategy for stateful conversational targets.
+- All example configurations in the reference documentation and the OpenAPI helper script should use the new default strategy instead of the basic one.
+
+## Why This Matters
+
+Users who follow the documented guidance for their first redteam setup will get better security test coverage from the start. The clarification between multi-input and multi-turn setups will also prevent a common misconfiguration for teams working with conversational AI systems.

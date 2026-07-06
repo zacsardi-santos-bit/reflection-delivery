@@ -1,7 +1,18 @@
-I'm wiring up a bridge between Soda data quality checks and Dagster and I want a proper library that ships a Dagster component for running Soda scans, because right now anyone using both has to write custom glue every single time just to see their Soda check outcomes show up as native asset checks in the Dagster UI. The idea is the component reads Soda's YAML-based check definition files, parses out the individual checks at definition time to produce Dagster asset check specs (one spec per check defined in the YAML), and then actually runs the Soda scan at execution time to produce asset check results.
+## Description
 
-Config-wise it needs to accept a list of YAML check file paths, a data source configuration file path, the data source name, and an optional mapping from Soda dataset names to Dagster asset keys. At definition time it reads the check files and auto-discovers the checks. Oh and check names have to be sanitized into valid Dagster identifiers, so replace any non-alphanumeric, non-underscore chars with underscores, truncate at 100 characters, strip leading and trailing underscores, and fall back to a default name when the result comes out empty.
+We need a new integration library that bridges Soda data quality checks with Dagster's asset check system. Right now, teams using Soda for data quality have no native way to run their existing Soda check files within Dagster and see the individual check results surfaced as Dagster asset checks. They have to write custom glue code every time.
 
-At execution time a passing outcome becomes a passed asset check result, while both fail and warn outcomes map to not-passed results. If a check declared in the YAML has no matching result back from the scan, it should still produce a failed result with a descriptive error message in the result metadata. And if the scan itself blows up (db connection failure, whatever), all declared checks for that dataset should produce failed results with the error details tucked into the metadata. Also each result's severity should be reflected in the metadata, with a configurable default severity used when the check result doesn't provide one.
+## Expected Behavior
 
-It should load from a config file as part of Dagster's component system with the dataset-to-asset-key mapping configurable there, and it should support scaffolding to generate a template checks file plus a default config so new users get started fast, wiring up a default dataset so the basic structure is there from the start.
+- A new Dagster component that can be configured with one or more Soda check YAML files, a data source configuration file, a data source name, and a mapping of dataset names to Dagster asset keys.
+- At definition time, the component reads the check files and produces the correct set of asset check specs — one per check defined in the YAML files.
+- At execution time, the component runs the Soda scan and maps each check result (pass/fail/warn) to a Dagster asset check result. A "pass" outcome should report as passed; "fail" and "warn" outcomes should report as not passed.
+- If a check is declared in the YAML but no result comes back from the scan, that check should still produce a failed asset check result with a descriptive error message.
+- If the scan itself throws an error (e.g., a database connection failure), all declared checks for that dataset should produce failed results with error details included in the result metadata.
+- The component should support being loaded from a configuration file, with the dataset-to-asset-key mapping configurable via that file.
+- The component should support scaffolding, generating a template check file and configuration so new users can get started quickly.
+- Severity information from Soda checks should be reflected in result metadata; when severity is not present on a result, a configurable default severity should be used.
+
+## Why This Matters
+
+Data teams using both Soda and Dagster today have no first-class integration. They can't see their Soda check results in the Dagster UI as native asset checks without writing substantial custom code. A dedicated component that handles YAML parsing, scan execution, and result mapping makes this integration accessible with minimal configuration.

@@ -1,5 +1,13 @@
-I keep hitting a crash when someone passes the model flag twice on the command line. The arg parser hands back an array of values when a flag shows up more than once, but our model resolution and model classification code assumes it's always dealing with a plain string, so it either blows up or does something weird at runtime. I want this to degrade gracefully instead.
+## Description
 
-What I'm after: when the model resolution logic gets an array (because the flag was repeated), treat the last element as the intended value, since later flags should override earlier ones, that's the last-wins behavior most CLI tools use. And if it gets some other non-string value for whatever reason (tooling or scripts passing things in odd formats), just coerce it to its string equivalent rather than throwing. Same deal for the model classification function, the one that checks whether a given model is a custom or non-standard model, it should handle array inputs too without throwing and apply that same last-wins logic (take the last element, then coerce).
+When a user specifies the model selection flag more than once on the command line, the argument parser produces an array of values instead of a single string. The model resolution and model classification logic currently assumes it always receives a single string, which causes crashes or incorrect behavior when it receives an array or another non-string value at runtime.
 
-The goal is that folks who accidentally repeat the flag don't get a cryptic crash and the behavior stays predictable. So make both the resolution and the classification paths safe against arrays and non-strings, last element wins on arrays, string coercion otherwise.
+## Expected Behavior
+
+- When the model flag is specified multiple times, the system should use the last specified value (last wins), consistent with how most command-line tools handle repeated flags.
+- When a non-string value is passed to model resolution functions at runtime, the value should be safely coerced to its string representation rather than causing an error.
+- The model classification function (which checks whether a model is a custom/non-standard model) should also handle array inputs without throwing, applying the same last-wins logic.
+
+## Why This Matters
+
+Users who accidentally specify the model flag more than once — or tooling/scripts that pass model values in unexpected formats — currently encounter crashes or unpredictable behavior. Making model resolution robust to these cases provides a better user experience and prevents confusing errors that are unrelated to the user's actual intent.

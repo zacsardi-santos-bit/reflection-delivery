@@ -1,7 +1,18 @@
-I'm hitting a nasty bug with multi-turn tool-call conversations when thinking/reasoning mode is on. After a tool response with thinking enabled, the chat template can leave the prompt ending right in the middle of an open reasoning channel, so the reasoning channel has been opened but not yet closed. The model then keeps generating tokens inside that already-open channel, but the streaming parser doesn't know that. It just assumes the default starting state (regular content), so the first tokens the model spits out, which are actually reasoning/thinking tokens, get classified as visible content instead of reasoning. End result is internal thinking leaks into the response content the user sees, which is a real correctness regression for the post-tool-call continuation pattern.
+## Description
 
-What I want is for the parser to detect when the prompt ends inside an open reasoning channel and adjust its starting state accordingly, so the first generated tokens get classified correctly as reasoning rather than content. Anything generated before the reasoning close marker should go to the reasoning field only and not appear in content, and once the reasoning close marker shows up, regular content flows normally into content again like you'd expect.
+When a thinking-capable model is used in a multi-turn conversation that involves tool calls, the chat template can leave the prompt ending in the middle of an open reasoning channel. Specifically, after a tool response and with thinking enabled, the prompt ends right after the reasoning channel has been opened — but before it has been closed. The model then continues generating text inside that already-open reasoning channel.
 
-There's also a related edge case: sometimes the model re-emits the reasoning channel opener even though the parser is already sitting in reasoning mode (pre-initialized from the prompt). In that case the redundant opener should just be silently dropped, not leak through as garbage text in either the reasoning or the content output.
+The problem is that the streaming parser doesn't know the prompt ended in this state. It assumes a default starting state (regular content), so the first tokens the model generates — which are reasoning/thinking tokens — get classified as visible content rather than as reasoning. This causes internal thinking to leak into the response content that the user sees.
 
-Oh and important, normal turn behavior where the prompt does not end inside an open channel has to keep working exactly as before. This fix should only touch the open-channel case and leave everything else untouched.
+## Expected Behavior
+
+- When the prompt ends inside an open reasoning channel, the parser should detect this and start in the correct state so that generated tokens before the reasoning close marker are classified as **reasoning**, not content.
+- Tokens after the reasoning close marker should continue to be classified as **content**, as expected.
+- If the model also redundantly emits a reasoning channel opener (even though the parser is already in reasoning mode), that redundant marker should be silently discarded and not appear as text in either the reasoning or content output.
+- Existing behavior for normal (non-open-channel) prompts must be fully preserved.
+
+## Why This Matters
+
+Users relying on tool-augmented multi-turn conversations with thinking-enabled models see garbled responses where internal reasoning appears as if it were the model's final answer. This is a correctness regression for the post-tool-call continuation pattern.
+
+Regression tracked as vllm-project/vllm#45834.

@@ -1,7 +1,12 @@
-I'm hitting a parsing bug in Biome's CSS parser with Tailwind support turned on. When I write a utility class declaration where the utility name has a slash in it (Tailwind uses slash notation all the time for opacity modifiers and variant expressions, like the whole `@utility` style names), the parser doesn't treat the slash-containing name as a single identifier. Instead it seems to break at the slash and gives me a malformed or otherwise incorrect parse tree, so the rule doesn't parse right.
+## Description
 
-What I want is for the parser, when Tailwind directives are enabled, to recognize the entire name including the slash as one identifier and parse the whole thing successfully as a valid utility rule. So a declaration whose utility name contains a `/` should come out clean, no broken tree.
+Biome's CSS parser does not correctly handle Tailwind utility class declarations whose names contain a slash character. Tailwind CSS commonly uses slash notation in utility names to express modifiers or opacity variants. When a developer writes such a declaration with Tailwind support enabled, the parser fails to treat the entire name (including the slash) as a single identifier, resulting in a broken or incorrect parse tree.
 
-Oh and the other side of it: when Tailwind directives are disabled, that same slash-in-the-name utility declaration should still behave sanely, meaning it should produce the standard parse diagnostic that says Tailwind-specific syntax isn't enabled, exactly like any other Tailwind-specific syntax would in that mode. Right now it's doing something else incorrect there instead of surfacing that expected "not enabled" error.
+## Expected Behavior
 
-This all lives in the CSS parser code, so the fix belongs wherever utility declarations and their names get tokenized and parsed in the css parser crate. Basically slash-containing names are legit Tailwind utility syntax and I just want them accepted when Tailwind's on and cleanly rejected with the right message when it's off.
+- When Tailwind directives are enabled, a utility declaration with a slash in its name should parse successfully as a valid utility rule, with the entire name (including the slash) recognized as one identifier.
+- When Tailwind directives are disabled, such a declaration should produce the standard parse diagnostic indicating that Tailwind-specific syntax is not enabled, just as any other Tailwind-specific syntax would.
+
+## Why This Matters
+
+Slash-containing names are valid Tailwind CSS utility syntax. Developers enabling Tailwind support in Biome should be able to write utility declarations with these names without encountering parser failures. The parser should correctly accept this syntax when Tailwind directives are enabled and provide the appropriate error message when they are not.

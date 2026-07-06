@@ -1,7 +1,14 @@
-I'm adding a WebAssembly build of tinymist so its core analysis can run in JS land, browsers and Node, not just as a native binary like today. I want a new core library crate that compiles to WebAssembly with the usual wasm-pack style tooling, packaged as an ES module I can import straight from JavaScript.
+## Description
 
-The main thing I need working end to end is a version query. After I load and init the wasm binary, I should be able to call a version function from JS that hands back a string describing the build, and that string needs to include build timestamps, git metadata, and the target triple/platform info so I can tell exactly which build is actually running. It's a small feature but it's the smoke test that proves the module loads and the wasm/JS bindings actually work.
+The tinymist language server currently runs only as a native binary. There is no way to embed or use its core functionality in JavaScript environments such as web browsers or Node.js applications. To enable web-based tooling — for example, running language analysis inside a browser-hosted editor — the tool needs a WebAssembly build target.
 
-One constraint that matters for me: it has to init by passing the raw binary data (a buffer) directly, no fetching from a URL, since I want this to work in Node and in the browser without network access. So the init path takes the WebAssembly bytes directly.
+## Expected Behavior
 
-Can you set up the new crate with the right Cargo config for wasm compilation, a build script that generates that build metadata (the timestamps, git info, target triple) at compile time so the version fn can return it, and the JS bindings that expose the version function? Basically wire up the crate, the build.rs metadata generation, and the wasm-bindgen exports so the whole thing initializes from a buffer and answers a version call.
+- A new core library crate should be created that can be compiled to WebAssembly using standard tooling.
+- The compiled WebAssembly module should be packaged as an ES module importable from JavaScript.
+- Once the module is initialized, it should expose a version query function that JavaScript callers can invoke to retrieve information about the running build.
+- The module should be initializable in Node.js and browser environments by passing the raw binary data directly, without requiring network fetches.
+
+## Why This Matters
+
+Providing a WebAssembly build of the core library makes it possible to integrate tinymist's analysis capabilities into web-based editors and tools. The version query is a simple but important first step — it validates that the module loads correctly and that the WebAssembly JavaScript bindings work as expected. Build metadata (timestamps, git info, target triple) included in the version output helps identify exactly which build of the library is running.

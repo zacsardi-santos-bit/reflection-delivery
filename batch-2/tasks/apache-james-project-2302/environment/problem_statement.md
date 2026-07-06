@@ -1,5 +1,14 @@
-I'm upgrading some test dependencies in Apache James and I've hit a compile wall. We use a JSON comparison library and it just went to a new major version that changed how you pass comparison options. Instead of wrapping the options in a container object before handing them to the comparison method, the new API lets you pass them directly as individual varargs-style arguments. I already went through and updated all the test files to use the new calling style, so that part's done, but the library version in the project's dependency management hasn't been bumped, so everything still fails to compile against the old API. I need the relevant version property in the project's dependency configuration (the pom setup) bumped to the new major version so those varargs-style JSON comparison calls actually compile and run.
+## Description
 
-There's also a related thing that bit me. When our code deserializes message metadata that contains a bad date value, the error that bubbles up changed between library versions. The old version wrapped it as a generic "no such element" (missing element) error, but the newer version surfaces it correctly as a date-and-time-specific error instead. I already updated the tests to expect that more precise error type, so I just need the underlying library version bumped so invalid-date deserialization actually raises the date-and-time error and not the generic missing-element one.
+Several of our test dependencies are out of date and the tests need to be updated to use the newer APIs they expose. The most visible change is that the JSON comparison library we use has a new major version that simplifies how comparison options are passed: rather than wrapping them in a special container object, options can now be supplied as individual arguments directly to the comparison method.
 
-So really it's two version property updates in the dependency config, one for the JSON comparison lib (the varargs option API) and whatever lib governs that date deserialization error, and then the tests should compile and pass. Keeping these current also helps us dodge security issues and Java runtime compatibility problems, and honestly the more precise error (malformed date vs just absent) makes serialization bugs way faster to diagnose. Thanks!
+A related change affects how the system reports errors when message metadata contains a malformed date: the older library version surfaces this failure as a generic "no such element" error, while the updated version correctly raises a date-and-time-specific error. The tests have already been updated to expect the more precise error type, but the underlying library versions have not been updated yet.
+
+## Expected Behavior
+
+- JSON comparison calls should compile and run using the simplified varargs-style option arguments rather than the legacy container-object style.
+- When deserializing message metadata with an invalid date value, the system should raise a date-and-time-specific error rather than a generic missing-element error.
+
+## Why This Matters
+
+Keeping library dependencies current avoids security vulnerabilities and compatibility problems with the Java runtime. It also improves the clarity of error messages — knowing that a date field is malformed (rather than merely absent) helps diagnose serialization bugs faster.

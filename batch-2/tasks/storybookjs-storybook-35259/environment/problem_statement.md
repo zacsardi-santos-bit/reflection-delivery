@@ -1,7 +1,16 @@
-I'm wiring up Storybook's dev server so it plays nice with AI coding assistants that auto-launch it in a preview mode. Right now when one of these assistants starts the dev server it hands the server a specific port to bind to, but the dev server just ignores that and grabs whatever port got configured elsewhere, so we hit conflicts and the assistant's preview can't reach it. Also it keeps trying to pop a browser window even though nobody's sitting there to see it.
+## Description
 
-I need two pieces. First a small utility that inspects the current environment and tells me whether we're running because an AI assistant launched us in preview mode versus a normal dev session. The way to detect that is checking whether a specific AI launcher signal is present in the env and no other explicit agent is configured, in which case it's an AI preview context.
+When Storybook's dev server is launched by an AI coding assistant operating in a preview capacity, the server currently has no awareness of this context and ignores the AI environment's port assignment. This leads to port conflicts and makes the dev server inaccessible to the assistant's preview feature. Additionally, the server unnecessarily tries to open a browser window in environments where there is no user to interact with one.
 
-Second, a function that resolves the final dev command options factoring in that detection. In a regular session an explicit port flag wins, then a secondary env-based port config, then the generic platform-assigned port (`PORT`). But in an AI preview session the platform-assigned port has to take top priority since the AI owns the networking, with the explicit flag and then the secondary config as fallbacks in that order. Oh and when we're in an AI preview context the function should force the open-browser behavior off regardless of what the caller asked for, since there's no user waiting. Outside a preview context leave the existing precedence and browser behavior alone.
+## Expected Behavior
 
-All of this needs real port validation, so any invalid or out-of-range value from any source throws a descriptive error saying the port must be a valid number between 1 and 65535 and includes the offending value in the message. Ports coming in as strings get parsed to numbers. And something like `"$PORT"` passed as the explicit port flag shouldn't be treated as an env var reference, just reject it as an invalid port value. This matters because these assistants need the server to bind to the port they control, and clear validation errors help folks spot misconfigs fast instead of hitting cryptic runtime failures.
+- The dev server startup process should be able to detect when it is running inside an AI assistant's preview environment.
+- When running in that context, the port assigned by the AI environment should take priority over any other port configuration, since the assistant controls the networking.
+- If no AI-assigned port is present in the environment, the explicitly configured port and then the secondary environment-based port configuration should be used in that order.
+- When running in an AI preview context, the browser-open behavior should be automatically suppressed, even if the caller requested it.
+- Outside of an AI preview context, existing port precedence and browser-open behavior should be unchanged.
+- Port values from any source should be validated and rejected with a clear, descriptive error if they are not valid integers in the accepted range.
+
+## Why This Matters
+
+AI-powered coding assistants that auto-launch dev servers need the server to bind to a specific port they control. Without this awareness, the server either ignores the assigned port or conflicts with it. Clear port validation errors also help developers quickly identify misconfigurations rather than encountering cryptic runtime failures.

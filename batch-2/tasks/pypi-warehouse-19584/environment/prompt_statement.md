@@ -1,0 +1,7 @@
+I want to add automated content scanning to our package upload flow. Right now anyone can upload a package with obfuscated or encrypted code that violates our acceptable use policies, and we've got nothing that detects or rejects it at upload time. Packages with obfuscated code make it impossible for users and security researchers to audit what the code actually does, so I want to catch this at ingestion.
+
+I need a new scanning utility module that can compile a set of pattern-matching rules from a rules directory, then inspect the individual files inside both wheel and source distribution archives. The scanner should only look at Python source and compiled files, and skip anything that's too large. It also needs to be fail-open, meaning any errors during scanning should never block an otherwise clean upload, that's important. Oh and when it does bulk scanning it has to avoid false positives from content that spans file boundaries (don't let a match leak across two members).
+
+Then the upload handler needs to wire this in: if any archive member matches a rule, reject the upload with a 400 Bad Request and a clear message explaining why it got rejected. I also want a way to disable scanning entirely by passing a parameter to skip it, so an admin can turn it off temporarily without a code change.
+
+And I need at least one concrete rule that detects PyArmor-encrypted content, both the main executor pattern and the runtime hook patterns, with a user-facing message that points uploaders to the terms of use / policy page.

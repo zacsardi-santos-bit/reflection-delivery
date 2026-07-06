@@ -1,5 +1,14 @@
-I'm poking at the Rust chat layer in vllm and hit a gap in how we auto-route model names to tool-call parsers. Right now there's no entry for the InternLM2 family, so anybody loading an InternLM2 or InternLM2.5 model gets no automatic tool-call parsing at all, which is annoying because the Python side already supports these. I want to add an InternLM2 tool-call parser implementation and wire it into the parser selection logic so these models land on the right parser without any manual override.
+## Description
 
-The matching needs to be careful. A model counts as InternLM2 when its identifier has the "internlm2" marker somewhere in it, and that shows up in both a dashed and an underscored form around the version number, think internlm2-chat-7b or internlm2_5-7b-chat, both should route to the dedicated InternLM2 parser. But I don't want to over-capture. Older InternLM v1 models don't carry the "internlm2" marker in their names and should keep routing to the Llama-based parser like before, so they must not get picked up by this new rule. Same deal for InternLM v3 models, they also ride on the Llama architecture and should stay unaffected. And the Intern-S1 and Intern-S1-Pro lines already have their own separate parser, so the new rule can't accidentally grab those either.
+The vllm Rust chat layer automatically routes model identifiers to the correct tool-call parser so users do not have to configure this manually. However, there is currently no routing entry for the InternLM2 family of models. Any user running an InternLM2 or InternLM2.5 model is left without automatic tool-call parsing support.
 
-The reason this matters: InternLM2 uses a prompt format with special tokens that's different from both InternLM v1 and Llama, so it genuinely needs its own parser, and this brings the Rust routing in line with the existing Python behavior so InternLM2 folks get streaming tool-call parsing out of the box.
+## Expected Behavior
+
+- Models whose identifier includes the InternLM2 version marker (both the dashed form and the underscored form, e.g., internlm2-chat-7b or internlm2_5-7b-chat) should be automatically routed to the dedicated InternLM2 tool-call parser.
+- Older InternLM v1 models (whose identifier does not contain the InternLM2 version marker) should continue to route to the Llama-based parser and should **not** be picked up by the InternLM2 routing rule.
+- InternLM v3 models, which also use the Llama architecture, should likewise be unaffected.
+- The Intern-S1 and Intern-S1-Pro model lines, which have their own separate parser, must not be captured by the InternLM2 routing rule.
+
+## Why This Matters
+
+InternLM2 uses a prompt format with special tokens that differs from both InternLM v1 and the Llama architecture. Without a dedicated routing rule, InternLM2 users cannot use the automatic tool-calling feature at all. Adding this rule aligns the Rust implementation with the existing Python-side support and lets InternLM2 users benefit from streaming tool-call parsing with no manual override needed.

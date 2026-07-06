@@ -1,9 +1,16 @@
-I'm doing some work on Rails view rendering and I want renderable objects, you know the ones that implement a `render_in` method to draw themselves into a view context, to be able to take local variables and blocks from whoever's rendering them. Right now there's no clean way to pass data to a renderable inline, so components end up leaning on instance variables and other hacks instead of just being parameterized properly.
+## Description
 
-What I'm after: when I render a renderable I want to pass named locals directly and have them show up inside the renderable's `render_in` as keyword arguments. This should work both positional style (passing the renderable object straight to render) and hash style (a named option key pointing at the renderable plus a separate `locals:` key). And I want to hand it a block too so the component can yield to it.
+Renderable objects in Rails views — components that implement a method to render themselves within a view context — have no way to receive local variables or block content from the caller at render time. This makes renderable components difficult to parameterize without resorting to instance variables or other workarounds.
 
-One gotcha with the hash style, don't forward the framework's own internal option keys (like the one naming the renderable itself) into `render_in`, only the actual locals should pass through.
+## Expected Behavior
 
-For backwards compat, renderables whose `render_in` still uses the old signature without keyword support should get a deprecation warning instead of blowing up right away. And any error raised inside `render_in`, including a NoMethodError from calling something that doesn't exist on an object, needs to surface to the caller with its full message intact and not get swallowed by the framework.
+- When rendering a renderable object, callers should be able to pass local variables as named options, which the renderable's rendering method will receive as keyword arguments.
+- When rendering a renderable object using the hash-style render options, a named locals option should be supported and its value forwarded to the renderable as keyword arguments.
+- When a block is given at the render call site, it should be forwarded to the renderable so the component can yield to it.
+- These features should work both inside view templates and from the standalone renderer exposed by controllers.
+- Existing renderable objects that haven't updated their rendering method signature to accept keyword arguments should trigger a deprecation warning (not a hard error), giving developers time to update their code.
+- Errors raised inside the renderable's rendering method — including naming errors that arise from calling a method that does not exist on an object — must propagate to the caller without being hidden or swallowed by the framework.
 
-Oh and this all needs to work through the standalone renderer controllers expose for out-of-request rendering too, both positional and hash-style APIs, with or without a block. The relevant bits live around the rendering code in `@actionview/lib/action_view/renderer/renderable_renderer.rb` and the controller renderer path, so check both.
+## Why This Matters
+
+Without this, renderable components are essentially static — they cannot be passed data at render time in a clean way. Supporting locals and blocks makes renderables composable and useful as lightweight view components.

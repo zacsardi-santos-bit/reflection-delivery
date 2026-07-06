@@ -1,7 +1,17 @@
-I'm building out a Symantec Endpoint Security cloud portal (ICDM) integration so our XSOAR platform can auto-ingest endpoint security incidents and enrich threat indicators, right now analysts have to manually hit the Symantec portal and copy-paste stuff back which is slow and error prone.
+## Description
 
-Here's what I need it to do. I want reputation lookups for files by hash, plus URLs, domains, and IP addresses against Symantec's threat intel. For the network-type indicators (IP, URL, domain) the output should carry the indicator value, overall reputation, a numeric risk level, categories, and first/last seen dates. File reputation is a bit different, it should include the indicator, the reputation, and any associated threat actors. I also want protection queries that tell me whether a given file, network indicator (domain or IP), or a known vulnerability is actively blocked by Symantec's protection technologies, and for those just pass through the raw API response untouched.
+We need a new integration for the Symantec Endpoint Security cloud portal (ICDM) so that security analysts can enrich threat indicators and automatically ingest endpoint security incidents into our XSOAR platform. Currently there is no built-in way to connect to this data source, meaning analysts have to manually look up reputation data or copy-paste incident details.
 
-Then there's scheduled incident fetching. It should pull endpoint security incidents on a recurring basis, but only ingest ones representing newly created detections, not updates. Each qualifying incident becomes an XSOAR incident with a human-readable name based on the incident reference ID, the creation timestamp, the full raw incident data serialized as a string, and the incident's unique identifier so mirroring works.
+## Expected Behavior
 
-Couple operational constraints. The API only supports querying incidents about 30 days back, so enforce that lookback limit automatically instead of letting someone request data that doesn't exist. Also I want a configurable list of domains to exclude from reputation lookups (internal infra and such) that gets filtered out automatically. Oh and required indicator arguments should fail with a clear error when they're missing or empty, and the indicator type routing (IP, URL, domain) needs to raise an appropriate error for unsupported types rather than silently doing nothing.
+- Analysts can look up the reputation of files (by hash), URLs, domains, and IP addresses against Symantec's threat intelligence, receiving back the reputation, risk level, categories, first/last seen dates, and associated threat actors where applicable.
+- Analysts can query whether a given file, network indicator (domain or IP), or known vulnerability is actively blocked by Symantec's protection technologies.
+- The integration can automatically fetch endpoint security incidents on a recurring schedule, converting each qualifying incident into an XSOAR incident with the appropriate name, timestamp, raw data, and mirror identifier.
+- The integration enforces a maximum lookback window of approximately 30 days when fetching incidents, since the underlying API does not support queries further back than that.
+- Domains that should be excluded from reputation lookups (e.g., internal infrastructure) can be configured and will be automatically filtered out.
+- Argument validation raises a clear error when a required indicator value is missing or empty.
+- The indicator type routing correctly handles IP addresses, URLs, and domains, and raises an error for any unsupported type.
+
+## Why This Matters
+
+Without this integration, analysts must manually query the Symantec portal and copy results back into XSOAR. Having automated reputation enrichment and incident ingestion reduces mean time to detect and respond, and ensures that Symantec's threat intelligence is consistently applied across all investigations.

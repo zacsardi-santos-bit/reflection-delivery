@@ -1,5 +1,14 @@
-I'm hitting a wall trying to write tests for our profiling CLI in the visualization utilities. The problem is structural: right now the tool builds its argparse setup inside the `if __name__ == "__main__"` launch block, and the main logic calls something like sys.exit instead of just returning. So I literally can't import it and call it from test code without spawning a subprocess, which is gross and hard to validate against.
+## Description
 
-What I want is the argument parser pulled out into its own importable function so I can call it directly and build parsed argument objects in my tests without launching anything. And the main logic function should take those parsed args as a parameter and return normally rather than exiting the process, so I can redirect and capture whatever it writes to stdout.
+The profiling CLI tool in the visualization utilities cannot be invoked programmatically from other Python code. The argument-parsing setup is embedded inside the script's launch block, and the main function terminates the process via an exit call rather than returning normally. This design makes it impossible to import and call the tool from within a test suite or from other modules while capturing its output.
 
-While I'm in there, I also need the trace output formatting fixed up. When I ask the tool to list available profiling devices, the SQTT trace names need to show up in the output so callers can actually discover them. And when I ask for the detailed instruction trace of a specific SQTT device, the first line should be a header identifying the clock column, then a separator, then data rows where the very first field on every row is always a numeric clock timestamp. Right now that last bit isn't reliably true, some rows don't lead with the numeric clock value like they should. Once the parser's importable, main returns cleanly, and the SQTT output satisfies that header-plus-numeric-clock-per-row shape, I can finally test it programmatically instead of shelling out.
+## Expected Behavior
+
+- The argument parser should be accessible as a standalone, importable function so that callers can construct parsed argument objects without launching a subprocess.
+- The main logic function should accept the parsed arguments as a parameter and return cleanly, rather than calling process-exit. This allows callers to capture any stdout output.
+- When the tool is asked to list available profiling devices, SQTT trace names should appear in the output so callers can discover them.
+- When the tool is asked to display the instruction trace for a specific SQTT device, the output should have a header line identifying the clock column, and every subsequent data row should start with a numeric clock timestamp.
+
+## Why This Matters
+
+Without these changes, the CLI tool can only be used as a standalone script, making automated testing and programmatic integration impossible. Exposing the parser and accepting arguments explicitly enables the tool to be exercised in test environments and embedded in larger workflows that need to capture and validate its output.

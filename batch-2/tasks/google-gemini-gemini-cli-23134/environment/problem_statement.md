@@ -1,5 +1,16 @@
-I've got context files sitting at the root of my git repo but the tool never picks them up because my configured project trust boundary is a subdirectory below the repo root. The upward walk that discovers memory/instruction files just stops dead at the trust boundary, so anything placed at the actual git root gets silently dropped. That's really confusing in a monorepo setup, or anytime my working dir is a subdirectory of the git root, because I put instructions at the repo root fully expecting them to load automatically.
+## Description
 
-What I want is for the discovery to keep walking up past the trust boundary all the way to the nearest git repository root, and include context files found in every directory between the trusted root and the git root. Detect the git root by looking for the standard git metadata marker, and handle both the normal case where it's a directory and the submodule/worktree case where it's a pointer file instead of a full directory. Files that live above the git root should never get included, that's the ceiling. And if there's no git repo detected at all, just fall back gracefully to the current behavior of stopping at the trust boundary.
+When the tool searches for project context/instruction files by walking up the directory hierarchy, it currently stops at the configured project trust boundary. If the actual git repository root sits above that trust boundary, any context files placed at the git repository root level are silently ignored and never loaded.
 
-This extended traversal needs to apply in both spots that do this kind of upward search, the standard environment memory discovery and the just-in-time context loading, so they behave consistently. Oh and one more wrinkle, when there are nested trust boundaries inside a single git repo, traversal should start from the innermost (deepest) matching boundary and walk up to the git root, collecting any context files along the way rather than stopping at the first boundary it hits.
+## Expected Behavior
+
+- When the tool walks upward from the trusted project root looking for context files, it should continue up to the nearest git repository root (detected by the presence of a git metadata marker — either as a directory for normal repos, or as a pointer file for submodules and worktrees).
+- Context files found in all directories between the trusted root and the git root should be included.
+- Files above the git root should never be included.
+- When no git repository is detected, the tool should fall back to the existing behavior of stopping at the trusted root.
+- Both "just-in-time" context loading and standard environment memory discovery should respect this extended traversal ceiling.
+- When multiple nested trusted roots exist within a git repository, traversal should start from the deepest matching root and extend up to the git root, collecting all context files along the way.
+
+## Why This Matters
+
+Users who place instruction or context files at the root of their git repository expect those files to be picked up automatically. The current hard stop at the trust boundary causes these files to be silently dropped, leading to missing context and confusing behavior — especially in monorepos or projects where the working directory is a subdirectory of the git root.

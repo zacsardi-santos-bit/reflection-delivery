@@ -1,5 +1,19 @@
-I'm hitting a crash in the auth token building path and it's blocking logins for older users. The setup: we've got an auth-enabled collection, and at some point we added group-type and tab-type field sections to its schema. Users who registered before those fields existed have stored documents that just don't have that data on them at all. Now when the system goes to build an authentication token for one of those legacy users, it blows up with a property access error trying to read into the missing group or tab data, so those folks literally can't log in or refresh a token.
+## Description
 
-What I want is for the token-building logic to not care when group-type or tab-type field data is absent from a user document. Treat the missing data as empty and keep going instead of throwing. So if you add group or tab fields to an existing auth collection and then try to authenticate as a user whose document predates that change, it should just work.
+When generating authentication tokens for users, the system crashes if the user's stored document is missing data for field groups or tabs that were later added to the collection schema. This causes a property access error, making it impossible to authenticate those "legacy" users.
 
-And the token that comes out still needs to carry the user's core identity, their ID, their email, and the collection they belong to, even when some of that grouped or tabbed field data isn't there. Schemas evolve, and I don't want legacy users locked out just because they're missing optional field data that got added later.
+## Expected Behavior
+
+- Building an authentication token for a user document that is missing group or tab field data should succeed without throwing an error.
+- The resulting token payload should still include the user's core identity information (their ID, email address, and collection name) even when some group/tab field data is absent.
+- Missing group or tab data should be treated as empty rather than causing a crash.
+
+## Steps to Reproduce
+
+1. Add group or tab fields to an existing auth collection's schema.
+2. Attempt to log in (or refresh a token) as a user whose stored document predates those schema changes — meaning the group/tab fields are not present in the stored data.
+3. Observe the crash / error response.
+
+## Why This Matters
+
+Schemas evolve over time. Users who registered before a group or tab field was introduced will have documents that lack that data. These users should still be able to log in successfully — the token-building process should be resilient to missing optional field data.

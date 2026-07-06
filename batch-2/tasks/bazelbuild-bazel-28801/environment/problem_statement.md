@@ -1,9 +1,19 @@
-I'm hitting a bug in Bazel's test infrastructure around how we figure out the OS of the platform that'll actually run a test when execution groups are in play. When a test rule defines a custom test exec group that pins tests to a specific OS (say macOS via platform constraints), the test runner doesn't use the platform assigned to that exec group. Instead it grabs the OS from the wrong spot, like the target's top-level constraints or the host platform, and then it generates the wrong kind of test wrapper scripts (Windows batch files when the tests should run on Linux or macOS), picks the wrong shell toolchain path, and makes other OS-specific decisions off bad info.
+## Description
 
-Same deal when a test uses an execution info provider to redirect testing to an alternative exec group. In that case the OS should come from that redirected group's execution platform, but it doesn't.
+Bazel's test infrastructure incorrectly determines the operating system of the platform that will execute tests when execution groups are involved. When a test rule defines a custom execution group with specific OS platform constraints, or when a test redirects execution to an alternative exec group, the test runner uses the wrong platform to figure out what OS the tests will run on.
 
-I want the test runner to read the execution OS from the platform actually assigned to run the tests (through the right exec group), not from target-level constraints or some fallback. So when a test group requires macOS, the execution settings should report macOS even if the target itself has different top-level constraints, and when execution info redirects to another group, the OS comes from that group's platform.
+This means the test runner may generate the wrong type of test wrapper scripts (e.g., Windows batch files when the tests should actually run on Linux or macOS), use the wrong shell toolchain path, and make other OS-specific decisions based on incorrect information.
 
-While I'm in here the OS-to-platform-constraint lookup needs cleanup. The current thing that takes just a constraint collection should be replaced with one that takes a full platform object, and it should only fall back to the host OS when the platform specifies no OS constraint at all, rather than defaulting to host for unrecognized constraints. Also the macOS canonical constraint alias needs to be recognized as equivalent to the legacy one when mapping platforms to OS values, so platforms declaring macOS compatibility under either name get identified right. Oh and the shell executable mapping should get explicit entries for Linux and macOS platforms too.
+## Expected Behavior
 
-There's some renaming to do as part of this, several existing methods and fields should be renamed to better reflect what they actually do now. This matters because folks using exec groups to route test workloads to specific OS environments in cross-platform setups need the runner to reflect the real target execution environment so the generated scripts and shell config are correct for where tests actually land.
+- When a test rule defines a test execution group that requires a specific OS (such as macOS), the test's execution settings should report that OS as the execution OS — even if the test target itself has different top-level platform constraints.
+- When a test uses an execution info provider to redirect testing to an alternative execution group, the OS should be read from that alternative group's execution platform.
+- The OS-to-constraint mapping used across the codebase should recognize the canonical macOS constraint alias (in addition to the legacy one), so that platforms declaring macOS compatibility using either name are correctly identified.
+
+## Related Refactoring
+
+Alongside the behavioral fix, the methods and fields used to determine OS from platform constraints need to be updated. The existing OS-constraint lookup should be replaced with a cleaner API that accepts a full platform object rather than just a constraint collection, and falls back to the host OS only when the platform specifies no OS constraint at all (rather than defaulting to the host OS for unrecognized constraints).
+
+## Why This Matters
+
+Developers who use execution groups to route test workloads to specific OS environments (in heterogeneous or cross-platform build setups) need the test runner to accurately reflect the target execution environment so that the generated test scripts and shell configurations are correct for where the tests will actually run.

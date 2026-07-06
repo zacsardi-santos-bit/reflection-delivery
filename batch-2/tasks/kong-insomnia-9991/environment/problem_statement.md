@@ -1,3 +1,19 @@
-I'm cleaning up how our API linting handles rulesets that extend remote URLs. Right now if someone uploads a ruleset with remote extends entries, those URLs stick around as live references and get re-fetched on every single lint run, which means results drift whenever the remote content changes, and worse, someone could craft a ruleset pointing at internal network addresses and turn us into an SSRF vector. I want to add a compilation step so that when a ruleset is saved, we fetch every remote extends reference, validate it, and inline it all into one self-contained compiled file stored locally per project. The compiled output should not contain the original remote URLs at all, the remote content gets embedded directly, and nested remote extends (a remote ruleset that itself extends another remote URL) need to resolve recursively too. Built-in linting identifiers referenced from remote rulesets should pass through unchanged, don't try to fetch those. Cache the compiled file per project and reuse it until the source content changes or the user explicitly asks for a refresh, so we're not recompiling on every lint op.
+## Description
 
-On security, reject any remote ruleset that declares custom functions outright since that's a code execution risk. Reject non-https URLs before we make any network request, and reject URLs pointing at loopback or private hosts before fetching too. Also our existing host-blocking logic only covers the standard loopback address, it needs to treat the whole 0.0.0.0/8 unspecified range as disallowed the same way loopback and private ranges already are. Oh and the cache needs to support deletion, removing a project's compiled ruleset should clear the associated in-memory cache so the next write triggers a full recompile instead of a no-op.
+When a user uploads a linting ruleset that references remote URLs (via extends entries), those remote resources are currently fetched live during every lint operation rather than being resolved once at upload time. This creates two problems: (1) the lint results can become inconsistent if remote content changes between runs, and (2) malicious or misconfigured ruleset content could be used to trigger requests to internal network addresses, including loopback and unspecified IP ranges that aren't currently blocked.
+
+## Expected Behavior
+
+- When a ruleset is saved, any remote extends references should be fetched, validated, and compiled into a single self-contained local file stored per project. The compiled file should not include the original remote URLs — the remote content should be fully inlined.
+- Nested remote extends (a remote ruleset that itself extends another remote URL) should also be resolved recursively.
+- Built-in identifiers referenced by remote rulesets should be preserved as-is in the compiled output without fetching.
+- Remote rulesets that declare custom functions should be rejected outright, as this is a code execution vector.
+- Non-https remote URLs should be rejected before any fetch attempt.
+- Remote URLs pointing at loopback hosts should be rejected before any fetch attempt.
+- IPv4 addresses in the 0.0.0.0/8 unspecified range should be treated as disallowed hosts, the same as loopback and private ranges.
+- The compiled ruleset should be cached per project and reused until content changes or the user explicitly requests a refresh.
+- Deleting a project's compiled ruleset should also clear the associated cache so the next write triggers a full recompile.
+
+## Why This Matters
+
+Without compiling rulesets at upload time, users are exposed to stale or changing remote content during linting, and the lack of full IP-range blocking leaves an SSRF-like attack surface open. Compiling once and caching locally makes linting deterministic, faster, and safer.

@@ -1,0 +1,9 @@
+I'm hitting a bunch of rough edges with the CTC (Connectionist Temporal Classification) ops in Keras and I want to clean them all up in one pass since they're related.
+
+Big one first: CTC loss and CTC decode just don't work on the numpy backend, they raise errors saying the op isn't supported. I do a lot of testing and prototyping on numpy so I need both `ctc_loss` and `ctc_decode` implemented there like the other backends have them. While you're in there, the decode function makes me pass a strategy every single time even when I just want plain greedy decoding, so make "greedy" the default so I can call it without specifying anything. Oh and if I pass some bogus strategy name it does something confusing, so validate the strategy up front and raise a clear error saying it's invalid before it tries to compute anything.
+
+Also the decoded output pads the unused positions (the ones past the actual decoded sequence length) with zeros, but 0 is a real valid label index so that's ambiguous, the conventional fill is -1 which actually means "no label here", so switch the padding fill value to -1.
+
+There's also a naming nit: the op class for CTC loss is capitalized differently from the other nn ops in the same module, so rename it to match the standard casing everyone else uses.
+
+Couple things I care about behavior-wise: decoded labels should always come back as integer tensors, and scores should be floating point with sensible dtype promotion, at least float32. And decode needs to work with symbolic tensor inputs too, so shape inference should compute the right output shapes from the input dims and the number of top paths. This all matters because CTC models like speech and handwriting recognition need to behave predictably across every backend, same dtypes, same padding conventions.

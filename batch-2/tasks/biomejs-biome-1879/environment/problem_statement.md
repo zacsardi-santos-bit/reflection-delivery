@@ -1,7 +1,14 @@
-I'm adding a new nursery lint rule to the Biome JavaScript linter and I could use a hand wiring it up. The idea is to catch files that are test files but also export stuff, because if a test file exports anything then any other file importing from it re-runs all those tests, which gives you duplicate confusing test executions that are a pain to trace down in CI. It's a well-known footgun and I want the linter to flag it automatically.
+## Description
 
-Here's the behavior I'm after. A file counts as a test file when it contains calls to test framework functions, so the rule should only kick in when it sees those calls present in a JS or CommonJS file. When that's the case, any export statement in the file should produce a lint warning. I want it to cover both the modern module export syntax (named exports and default exports) and the CommonJS exports object pattern, meaning direct assignment to exports, bracket-notation property assignment on it, and dot-notation property assignment on it too.
+We need a new lint rule that detects when a file is both a test file and exports values or functions. Exporting from a test file is dangerous because any other file that imports from it will also cause all the tests in that file to run again, leading to confusing duplicate test executions that are hard to trace.
 
-Couple of important negatives: if the file doesn't have any test framework calls, then exports are totally fine and shouldn't warn at all even when the exact same export shapes show up. And property assignments on some other object (not the CommonJS exports object) shouldn't be flagged either, even inside a test file, so only genuine module export patterns get caught.
+## Expected Behavior
 
-This one lives in the nursery lint category and should be marked as recommended. Thanks!
+- When a JavaScript or CommonJS file contains test framework function calls (indicating it is a test file), any export statements in that file should produce a lint warning.
+- The rule should cover both the modern module export syntax and the CommonJS export object pattern, including direct assignments, bracket-notation assignments, and dot-notation property assignments on the exports object.
+- If a file does not contain test framework calls, exports should be allowed without any warning, even if the same export patterns appear.
+- Only genuine module export patterns should be flagged — unrelated property assignments on other objects should not be affected.
+
+## Why This Matters
+
+Exporting from test files can cause tests to run multiple times unexpectedly when those files are imported in other test files or application code. This is a well-known pitfall, and a lint rule would catch this mistake automatically before it causes confusing behavior in CI or test runners.

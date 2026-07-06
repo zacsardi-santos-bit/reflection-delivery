@@ -1,7 +1,18 @@
-I'm cleaning up the server-side request handling layer and want to switch the mutation and query processing functions over to an object-based calling convention instead of the positional param style we have now. Right now if you want to pass the authenticated user's ID you tack on a trailing options object, which is super easy to forget, and the behavior when it's missing is all over the place. Logged-out users aren't clearly distinguished from cases where the user identity just wasn't provided, so downstream consumers get inconsistent response shapes.
+## Description
 
-What I want is for both the mutation handler and the query handler to take a single bundled options object holding everything, the database/handler reference, the request body or Request object, and the authenticated user ID. The user ID should be a required field but explicitly clearable. When a user's logged in, echo their ID back in the response as-is. When they're logged out (identity explicitly absent) the response should reflect an absent user identity, and when identity hasn't been resolved yet, treat that the same as explicitly absent so the shape stays consistent.
+The server-side handlers for processing mutations and queries currently use a positional parameter style that makes it cumbersome to associate an authenticated user's identity with each request. Passing user identity requires a trailing options object that is easy to forget or omit, and the behavior when it is missing is inconsistent — logged-out users aren't clearly distinguished from cases where user identity simply wasn't provided.
 
-The old positional calling style still needs to work for backwards compat, but responses that go through that path should omit the user ID field entirely, keeping the existing behavior intact.
+We want to move to a unified, object-based calling convention for both the mutation handler and the query handler. This makes it explicit which user's request is being processed, and ensures that logged-out states are clearly reflected in responses. When a user's identity has not yet been resolved, it should be treated the same as an explicitly absent identity so downstream consumers always get a consistent shape.
 
-Also I want to fold the two separate query-handling functions into one. Whatever the distinct "get queries" handler used to do should be reachable through the main query handler now, fewer exported symbols to keep track of. Oh and any error messages coming out of failed request parsing should just refer to "query requests" generically. The handler callback should get the query name and arguments and return a query object directly.
+## Expected Behavior
+
+- Both the mutation handler and the query handler should accept a single options object that bundles all arguments — the database/handler reference, the request body or Request object, and the authenticated user ID.
+- When a user is logged in, their ID should be echoed back in the response.
+- When a user is logged out, the response should explicitly reflect an absent user identity.
+- When a user's identity has not yet been resolved, it should be treated the same as an explicitly absent identity in the response.
+- The legacy positional calling convention should remain supported for backwards compatibility, with responses through that path omitting the user ID field.
+- The two previously separate query-handling functions should be unified: the behaviors previously covered by a distinct "get queries" handler should be accessible through the main query handler.
+
+## Why This Matters
+
+Developers integrating these handlers need a clear and consistent way to communicate user authentication state through the request pipeline. The old design made it easy to accidentally omit user context or produce responses with unpredictable shapes. Unifying the API also reduces the number of exported symbols that callers need to learn and maintain.

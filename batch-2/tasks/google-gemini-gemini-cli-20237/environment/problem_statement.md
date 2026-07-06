@@ -1,5 +1,17 @@
-I'm working on the Gemini CLI and want to make its guts observable through normal AI monitoring tooling. Right now we run LLM calls, tool executions, sub-agent invocations, tool scheduling, user prompts, and system prompt processing, but there's no way to trace what actually flows in and out of each of these steps using the standard gen-ai semantic conventions, so I can't correlate inputs to outputs or figure out which step in the pipeline blew up.
+## Description
 
-What I want is a tracing wrapper that creates an active span for each operation and auto-populates the default attributes on it, things like the operation name, the service name and description, and a conversation/session identifier tied to the current session. Then each instrumented spot should be able to record its own inputs, outputs, and any errors onto that span using the appropriate standardized attribute names. The tracing should always be on, don't gate it behind an env var, it's unconditional.
+The Gemini CLI processes AI requests, tool calls, agent invocations, and user prompts, but currently lacks structured observability instrumentation that follows industry-standard conventions for AI telemetry. Developers cannot trace what data flows into and out of each major operation (LLM calls, tool executions, agent invocations, tool scheduling, and user/system prompts) using standard monitoring tooling.
 
-The operation types I need covered are LLM calls (regular plus streaming, and also embedding), individual tool calls, batches of scheduled tool calls, sub-agent invocations, user prompts submitted to the CLI, and system prompt processing, and these should come from a well-defined enum of operation types (LLM call, tool call, user prompt, system prompt, agent call, tool scheduling) so the classification isn't ad hoc. For streaming stuff the span can't just close when the wrapped function returns, it needs to stay open until the stream finishes, so give me a manual span-ending callback for that case. Oh and if something throws while finalizing/ending a span, handle it gracefully so it doesn't crash normal operation, and make sure the span still gets ended properly either way.
+## Expected Behavior
+
+- A tracing wrapper should instrument key operations throughout the CLI pipeline, creating active spans for each operation
+- Each span should capture structured inputs, outputs, and errors using standardized semantic conventions for generative AI
+- Default span attributes should be populated automatically, including the operation name, service name and description, and a conversation identifier linked to the current session
+- Tracing should be unconditionally active — not gated behind an environment variable
+- Streaming operations should be handled correctly by deferring span completion until the stream ends, via a manual span-ending callback
+- If errors occur during span finalization, they should be handled gracefully without crashing, and the span should still be properly ended
+- The operation classification (LLM call, tool call, user prompt, system prompt, agent call, tool scheduling) should use a well-defined enumeration of operation types
+
+## Why This Matters
+
+Without structured spans around each operation, it is impossible to correlate what inputs triggered what outputs, diagnose failures in specific steps of the pipeline, or monitor the behavior of the CLI using standard observability platforms. This change makes the CLI's internal operations observable in a structured, standardized way.

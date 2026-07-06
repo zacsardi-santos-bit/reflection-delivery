@@ -1,5 +1,24 @@
-I'm digging into our sandbox execution code and found a real security hole I want closed. Right now callers can hand in sanitization config that flat out disables env var redaction, so secrets, API keys, tokens, whatever's in the environment can flow straight into sandboxed processes. That defeats the whole point. And even when redaction stays on, anything a caller sticks on the allowed list bypasses the sensitive-pattern filtering, so someone could allowlist a token-looking name and have it pass through unredacted.
+## Security Vulnerability: Environment Variable Redaction Can Be Bypassed
 
-What I need: redaction should always be enforced no matter what any caller requests, so if they try to turn it off we just silently override that and keep it on. Also any variable that matches a known sensitive name pattern (think tokens, API keys) or shows up on the never-allow list should still get redacted even if it's explicitly in the allowed list. Safe vars that don't match any sensitive pattern should still pass through the allowed list fine. I want this "secure merge" logic living in one centralized utility so every sandbox implementation shares the same guarantees, merging and validating the sanitization config, filtering sensitive vars, and deduplicating the lists.
+### Description
 
-Separately I need a new Linux sandbox backend that does actual OS-level process and filesystem isolation, wrapping commands with the Bubblewrap sandboxing tool (invoked as the `bwrap` program), binding only the workspace (plus any explicitly provided additional paths) as writable while everything else stays read-only, oh and workspace paths that duplicate the primary workspace shouldn't get added twice. The factory that builds sandbox managers needs a workspace path parameter now so it can pass it down, and it should auto-select the Linux backend when we're on Linux with sandboxing enabled, otherwise fall back to the existing non-sandboxed or platform-specific manager (on non-Linux with sandboxing on, keep using the current fallback).
+There is a security vulnerability in the sandbox system where callers can explicitly disable environment variable redaction when executing sandboxed commands. This means that sensitive credentials, API keys, tokens, and other secrets present in the environment could be passed directly to sandboxed processes, defeating the purpose of sandboxing.
+
+Even when redaction is left enabled, variables explicitly added to the "allowed" list bypass sensitive-pattern filtering. A caller could allowlist a token-like variable name and have it pass through even though it matches known dangerous patterns.
+
+### Expected Behavior
+
+- Environment variable redaction must always be enforced, regardless of what any caller requests. Attempting to disable it should be silently overridden.
+- Variables that match known sensitive name patterns or appear on the never-allowed list should be redacted even if they are explicitly listed as allowed.
+- Safe variables (those not matching any sensitive pattern) should still be passable through the allowed list.
+- A centralized utility should handle this "secure merge" logic so all sandbox implementations share the same security guarantees.
+
+### Additional Feature: Linux OS-Level Sandboxing
+
+The tool currently lacks a proper OS-level isolation backend for Linux. A new sandbox backend for Linux should use OS-level filesystem and process isolation, binding only the workspace and explicitly allowed paths as writable, while the rest of the filesystem is read-only. This backend should be selected automatically when running on Linux with sandboxing enabled.
+
+The factory function that creates sandbox managers should be updated to accept the workspace path as a parameter so it can be passed to the new Linux backend. On non-Linux platforms with sandboxing enabled, the existing fallback manager should continue to be used.
+
+### Why This Matters
+
+Leaking credentials or tokens into sandboxed subprocesses is a serious security risk. Enforcing redaction unconditionally prevents accidental or malicious bypasses. The new Linux sandboxing backend provides true process isolation, reducing the blast radius of any compromised sandboxed command.

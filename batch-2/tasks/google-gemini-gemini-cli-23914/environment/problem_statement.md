@@ -1,5 +1,14 @@
-I'm adding a persistent activity trace for subagents in the CLI and right now it's driving me nuts that once a subagent finishes you only see its final result, all the reasoning it did and the tools it called just vanish. I want that trace preserved in the conversation history so people can scroll back and audit what actually happened, because failures are hard to diagnose otherwise and even successful runs are totally opaque.
+## Description
 
-Two pieces I need wired up. First, while a subagent runs, its activity events (thoughts and tool calls) should get published to the internal event bus so the UI can track them live and accumulate them per subagent. Important bit: if the same activity gets updated, like a running step transitioning to completed, it should replace the existing entry in place instead of duplicating it. So keying by activity so updates land on the right one.
+When a subagent completes its work, its internal activity trace — the reasoning steps and tool invocations it performed — is currently lost. The conversation history only shows the final result, giving users no way to review what the subagent actually did during its execution. This makes it difficult to audit, debug, or understand subagent behavior after the fact.
 
-Second, I need a new UI component that renders this history in the conversation after the subagent finishes. It should show a header with the agent name plus how many items are in the trace, then each activity in order with an icon telling reasoning steps apart from tool invocations (brain icon for thoughts, a tool icon for tool calls), and a status indicator for each showing whether it completed successfully, failed with an error, or was still running. That's basically it, just make subagent behavior reviewable after the fact.
+## Expected Behavior
+
+- Subagent activity (thoughts and tool calls) should be broadcast over the internal event bus as they occur, making the activity stream available to the UI in real time.
+- A completed subagent run should leave behind a persistent history entry in the conversation that shows every thought and tool invocation, in order.
+- The history display should clearly distinguish between reasoning activity (with a brain icon) and tool usage (with a tool icon), and show status indicators for each item: whether it completed successfully, is still running, or encountered an error.
+- When the same activity is updated (e.g., a running thought transitions to completed), the existing entry should be updated in place rather than duplicated.
+
+## Why This Matters
+
+Users and developers working with subagents need to be able to review what happened after the fact — not just see the final result. Without a persistent trace, failures are hard to diagnose and successful runs are opaque. This change makes subagent behavior fully transparent and reviewable.

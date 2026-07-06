@@ -1,5 +1,15 @@
-I'm hitting serialization crashes with the Vercel Workers Python SDK whenever my queue payload includes normal Python stuff like UUIDs, datetimes, or Decimals. The JSON serialization step just blows up on these instead of turning them into sensible JSON values, so right now I have to manually stringify or downcast everything before I call send, which is tedious and super easy to mess up.
+## Description
 
-What I want is for the send path to handle these common types automatically when it serializes the message body, so a UUID or a datetime comes out as a string and a Decimal comes out as a number, and I can pass native Python objects straight through. On top of that I'd love to plug in my own custom encoder class for any extra types my app throws at it, while still keeping the built-in handling for the common cases so I don't lose that when I extend it.
+The Vercel Workers Python SDK currently fails when developers try to include common Python types — such as unique identifiers, timestamps, and decimal numbers — directly in queue message payloads. The SDK's JSON serialization step raises an error for these types instead of converting them to natural JSON equivalents.
 
-Same deal bites me in the Django task backend, oh and it's the exact same failure: when I enqueue a task and pass these types as positional args or as kwargs, the serialization fails. So both the direct send function and the Django integration should deal with this transparently without me pre-converting anything. Basically make the SDK meet real-world data where it is (identifiers, timestamps, decimals) instead of forcing boilerplate conversions before every enqueue.
+This means developers must manually convert all values before enqueueing a job, which is error-prone and adds unnecessary boilerplate. Similarly, the Django task backend has the same problem: passing these types as task arguments or keyword arguments causes the enqueue call to fail with a serialization error.
+
+## Expected Behavior
+
+- The SDK should handle these common Python types automatically when serializing a queue message payload, converting them to appropriate JSON values (strings for identifiers and timestamps, numbers for decimals).
+- Developers should also be able to provide a custom encoder class to extend the default behavior and support additional types.
+- The Django backend should serialize task arguments and keyword arguments containing these types correctly without requiring manual conversion.
+
+## Why This Matters
+
+Developers working with real-world data almost always deal with unique identifiers, datetimes, and decimal numbers. Forcing them to manually serialize these before each enqueue call creates unnecessary friction and potential bugs. The SDK should handle this transparently so developers can pass native Python objects directly.

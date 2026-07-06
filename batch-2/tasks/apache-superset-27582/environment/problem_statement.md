@@ -1,5 +1,16 @@
-I'm trying to reuse dataset metric formulas inside custom SQL expressions in Superset and right now the only option is to copy-paste the metric's underlying SQL by hand, which is super fragile since if the metric definition changes later I have to hunt down every place I pasted it. I want a new Jinja template macro that lets me reference a named dataset metric directly in a SQL expression so at query compile time the macro gets replaced with the actual metric SQL and it works end-to-end in real queries.
+## Description
 
-The macro should take a metric name as its first arg and optionally a dataset ID as the second. When I pass the dataset ID explicitly it should look up the metric in just that dataset without needing to inspect any request context. When I don't pass a dataset ID it should try to figure out the dataset automatically from the current chart or datasource context.
+Superset currently has no way to reference a named dataset metric from within a custom SQL expression using a Jinja template. If you want to reuse a metric's formula in a custom SQL expression, you have to copy and paste the metric's underlying SQL manually. This is tedious and error-prone — if the metric definition changes later, every place it was copied needs to be updated.
 
-Also I need it to fail loudly with descriptive errors so I know what to fix: if the dataset can't be found it should raise something identifying which dataset ID wasn't found, if the metric name doesn't exist in the specified dataset it should raise an error naming both the metric and the dataset, and if no dataset ID can be determined at all (not passed and not resolvable from context) it should tell me to specify the dataset ID in the macro call. The point is making metric definitions reusable across custom SQL without duplication so analysts can reference a metric by name instead of copying its SQL, keeping things consistent when definitions change. This lives in the Jinja templating layer, roughly around `@superset/jinja_context.py`.
+## Expected Behavior
+
+- A new Jinja macro should be available that accepts a metric name (and optionally a dataset ID) and expands to that metric's underlying SQL expression at query time.
+- When the dataset ID is not provided explicitly, the system should attempt to resolve it automatically from the current request context (e.g., from the current chart or datasource).
+- If the macro is used with a dataset ID, the macro should look up only the specified dataset and should not require any additional context.
+- If the dataset cannot be found, a clear error should be raised identifying which dataset ID was not found.
+- If the metric name doesn't exist in the specified dataset, a clear error should be raised identifying both the metric name and the dataset.
+- If no dataset ID can be determined (neither explicitly provided nor resolvable from context), a clear error should be raised asking the user to specify the dataset ID in the macro call.
+
+## Why This Matters
+
+This makes metric definitions reusable across custom SQL expressions without duplication. Analysts can reference a metric by name rather than copying its SQL, reducing maintenance burden and ensuring consistency when metric definitions change.

@@ -1,5 +1,18 @@
-I'm cleaning up our tensor alignment and unsharding utilities and the current setup drives me nuts because we track which dimension is "tokens" or "heads" by passing integer index params alongside tensors at every call site. Callers have to compute and pass stuff like "token dim is at position 1" by hand, and the concat params store an integer axis index instead of a readable name. I want to move to named tensor dimensions so the tensors carry their own dimension metadata and the internal code can look up the right dimension by name automatically. Way more self-documenting and less prone to off-by-one breakage when layouts shift.
+## Description
 
-So in the dimension spec module I need a few new utilities. One takes a dimension spec string and returns just the plain dimension names with any modifier annotations stripped off. Another resolves a named dimension's integer position in a named tensor by name, and it should raise an informative error if the name isn't found or if the tensor has no names at all. Then one that applies a list of string names to a tensor's dimensions, and one that strips all names from a tensor, and that last one has to work fine even if the tensor's already unnamed (no errors). Oh and the dimension specification class itself should be exported so callers can pull individual dimension names out of a parsed spec.
+The tensor alignment and unsharding utilities currently track which dimension represents "tokens," "heads," or other semantic axes by passing integer index parameters alongside tensors at call sites. This is fragile — callers must compute and pass these indices explicitly every time, and the meaning of each dimension is not encoded in the tensor itself. We should move to using named tensor dimensions so that tensors carry their own dimension metadata, and the internal processing code can look up the right dimensions by name automatically.
 
-On the data structures, the concatenation parameter type and the reordering parameter type should store a string dimension name instead of an integer index. The aligner plan type should drop its token dimension index field entirely, and the token alignment execution function should lose its explicit token-dimension parameter and instead find the token dimension by looking for the appropriately named dimension on the input tensor. Functions that deal in named tensors should accept named tensors and return named tensors, with callers stripping names when they need to compare against plain tensors.
+## Expected Behavior
+
+- A new utility function should accept a dimension specification string and return only the plain dimension names, stripping any modifier annotations.
+- A new utility function should resolve a named dimension's integer position in a named tensor, raising an informative error if the dimension is not found or if the tensor has no names at all.
+- New utility functions should make it easy to apply a list of names to a tensor and to strip all names from a tensor (including from already-unnamed tensors, without errors).
+- The dimension specification type should be exported so callers can extract dimension names from parsed specifications.
+- The concatenation and reordering parameter types should store string dimension names instead of integer indices.
+- Functions that previously required callers to pass explicit token dimension index parameters should instead infer the token dimension from the tensor's named dimensions, removing those parameters from the public API.
+- The aligner plan structure should no longer carry a token dimension field.
+- Functions that consume named tensors should accept and return named tensors, with callers responsible for stripping names when interoperating with code that expects plain tensors.
+
+## Why This Matters
+
+Storing dimension meaning as integer indices scattered across call sites makes the code hard to maintain and error-prone. By encoding dimension identity in the tensor itself and resolving positions by name, the system becomes more self-documenting and less prone to off-by-one mistakes when tensor layouts change.

@@ -1,5 +1,17 @@
-I'm cleaning up the Recon service in our Apache Ozone tree and the key listing endpoint bugs me. Right now every key we return gets wrapped in this heavyweight object that carries the full protobuf message per key, and the listing only ever touches a handful of fields. When Recon lists thousands of keys for the UI it's deserializing and holding way more than it needs, which is wasteful on memory and just slow, so I want to swap that wrapper for a slimmer data holder.
+## Description
 
-What I'm after is a new lightweight key-info class living in the Recon API types package that holds only the essentials: key name, volume and bucket names, the path, data size, replication config, the timestamps, parent object identifier, and a flag for whether the entry is a file. Then use it everywhere the old wrapper was referenced. That means the listing response type's key collection should be typed to the new class, the metadata table accessor interface plus its implementation should have that method renamed and retyped to return the new class, and the endpoint logic itself, the iteration, the filtering, and the bits that compute replicated and unreplicated totals, all need to run on the new class too. Oh and rip the old heavyweight wrapper out entirely, don't leave it hanging around.
+The Recon key listing endpoint currently returns key metadata using an internal wrapper object that holds the full protobuf representation of each key. This full representation includes significantly more data than is actually needed to support key browsing, pagination, and replication-size calculations. Deserializing and holding all of this extra data per key is wasteful, especially when listing large numbers of keys.
 
-Big thing though, the visible behavior can't change. Browsing and paginating through keys has to keep returning correct paths, keys, and replication info for both the file-system-optimized layout and the legacy bucket layout, pagination included. It's purely an internal representation swap, so the API responses should look identical before and after.
+We should replace the heavyweight wrapper with a new, lightweight data-holder class that captures only the essential fields needed for the listing API: key name, volume, bucket, path, data size, replication configuration, timestamps, parent identifier, and whether the entry is a file. The new class should be used consistently wherever the old wrapper was used — in the response type, the table accessor interface and its implementation, and throughout the endpoint logic.
+
+## Expected Behavior
+
+- A new lightweight key-info class is introduced in the Recon API types package and replaces the old heavy wrapper everywhere.
+- The key listing response's key collection is typed to use the new lightweight class.
+- The metadata table accessor method is renamed and typed to return the new class.
+- The endpoint iterates, filters, and computes totals using the new lightweight class.
+- Browsing and paginating through keys (both file-system-optimized and legacy bucket layouts) continues to return correct paths, keys, and replication information.
+
+## Why This Matters
+
+When Recon lists thousands of keys for the UI, it should not deserialize or hold in memory the full set of key metadata for each one. A focused, lightweight representation reduces memory pressure and makes the listing path more efficient without changing the observable behavior of the API.

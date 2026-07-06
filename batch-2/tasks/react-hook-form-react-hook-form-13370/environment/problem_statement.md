@@ -1,7 +1,26 @@
-I've got two dirty-field tracking bugs in my forms library and both are messing up how I show unsaved changes.
+## Description
 
-First one is about array fields that hold objects. When I set the value of one of these fields programmatically with dirty tracking turned on, the form just marks the whole array dirty with a single flat boolean instead of tracking which individual properties inside each array item actually changed. What I want is granular per-property dirty state, so each property within each array item gets flagged on its own rather than the entire array collapsing into one true/false.
+There are two related bugs in how the library tracks which form fields are "dirty" (have changed from their default values).
 
-Second one shows up when I mix programmatic updates with and without dirty tracking. Say I set a field's value programmatically but don't mark it dirty, then a user types into a different field and reverts it back to its default. The overall "is the form dirty" flag correctly stays true because that first field still differs from its default, but the field-level dirty fields list comes back empty, so it doesn't tell me which field is actually the source of the dirtiness. After that second field reverts to its default, the first field (whose value still differs from the default) should show up in the dirty fields list. Basically when the form-level dirty flag and the field-level list fall out of sync, I want the dirty fields recomputed from scratch against the default values, and any field whose value differs from its default should always land in that list even if it was set earlier without explicitly enabling the dirty flag at the time.
+**Bug 1: Array of objects loses per-property dirty granularity**
 
-This matters because anything relying on dirty fields state (showing unsaved changes, conditionally enabling save buttons, driving validation) ends up displaying wrong info, either too few dirty fields from the sync bug or lost fine-grained detail about which array item properties changed. Fix both.
+When a field holding an array of objects is updated programmatically with dirty tracking enabled, the library marks the entire array field as simply dirty (a flat boolean), instead of tracking which individual properties within each array item changed. The expected behavior is that dirty tracking should be granular — each property inside each array item should be individually flagged.
+
+**Bug 2: Inconsistent dirty state when mixing dirty and non-dirty programmatic updates**
+
+When a field's value is set programmatically without marking it as dirty, and later another field's dirty state changes (e.g., a user types into it and then reverts the value), the form can end up in an inconsistent state:
+
+- The overall "is the form dirty" flag correctly reports the form as dirty (because a field still has a value different from the default)
+- But the field-level dirty fields list is empty or incomplete — it doesn't show which specific field is actually dirty
+
+After reverting the second field to its default, the specific field whose value differs from the default should appear in the dirty fields list.
+
+## Expected Behavior
+
+- Programmatic updates to array-of-objects fields with dirty tracking should produce per-property dirty state inside each array item
+- When the form-level dirty flag and field-level dirty fields fall out of sync, the system should recompute dirty fields from scratch against default values
+- Fields with values differing from defaults must always appear in the dirty fields list, even if they were set without explicitly enabling the dirty flag at that time
+
+## Why This Matters
+
+Forms that rely on the dirty fields state to show unsaved changes, conditionally enable save buttons, or drive validation logic will display incorrect information when these bugs occur. Users will either see too few dirty fields (inconsistency bug) or lose fine-grained information about which array item properties changed (granularity bug).

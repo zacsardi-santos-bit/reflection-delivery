@@ -1,5 +1,16 @@
-I'm building out the label-schema feature in the MLflow experiment-tracking UI and I need both the data layer and the input widgets done. Label schemas are the structured definitions that control how human reviewers give feedback on AI model outputs, and right now there's no way to read, create, modify, or delete them through the API, plus no form controls that render the right element for a given schema format. Every team building a labeling surface ends up duplicating this wiring, so I want it once and correct.
+## Description
 
-On the data side I need a hook per API operation: fetch a single schema by its unique ID (and it should be a no-op skipping the network request entirely when no ID is passed), fetch a schema by the experiment plus name combo, list schemas for an experiment with optional pagination where the pagination params only show up in the request when they're actually supplied, create a schema, update one, and delete one. The update hook is the tricky one, it needs sparse-update semantics so only explicitly provided fields go to the server, but falsy values like an empty string or boolean false still have to be forwarded as real values instead of being treated as "nothing specified."
+The experiment-tracking UI needs a complete front-end layer for label schemas — structured definitions that control how human reviewers provide feedback on AI model outputs. Right now the UI has no way to read, create, modify, or delete these schemas through the API, and there are no input controls that can render the appropriate form element (pass/fail toggle, number input, dropdown, or free-text area) for a given schema format.
 
-On the UI side I need a family of input widgets that each render the right control for a schema's declared input format: a pass/fail toggle (two clickable choices, one positive and one negative), a numeric input honoring optional min and max bounds, a categorical dropdown supporting both single-select and multi-select, and a free-text input, each surfacing user input through a change callback. And I want one dispatcher component that's handed a schema's input definition and automatically renders whichever widget fits, showing a clear error message when the definition doesn't match any recognized format.
+## Expected Behavior
+
+- A set of data-fetching hooks that talk to the label-schema REST API endpoints for fetching a schema by ID, fetching a schema by experiment and name, listing schemas with pagination, creating a schema, updating a schema (with sparse semantics — only fields that are explicitly provided should be sent to the server), and deleting a schema
+- When performing a sparse update, explicitly providing an empty string or boolean false for a field must forward that value to the server rather than treating it as "no change"
+- Fetching by ID when no ID is supplied should skip the network request entirely
+- Listing schemas should support optional pagination parameters that are omitted from the request when not provided
+- A family of input widgets — pass/fail, numeric, categorical (single- and multi-select), and free-text — each rendering the appropriate control and surfacing user input through a change callback
+- A dispatcher component that inspects the schema's input definition and renders the correct widget automatically, and shows an error when no recognized input type is present
+
+## Why This Matters
+
+Label schemas are the foundation for structured human evaluation of AI model outputs in MLflow. Without these hooks and widgets, every team building a labeling surface has to independently duplicate the API wiring and form-control logic, leading to inconsistencies and bugs.

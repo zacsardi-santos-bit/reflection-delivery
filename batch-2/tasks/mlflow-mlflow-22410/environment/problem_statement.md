@@ -1,7 +1,17 @@
-I'm building MLflow tracing for a coding assistant and need code that turns our JSONL transcript files into proper traces. Each transcript records everything from a turn: the user message, model responses, tool calls and their results, timing info, and session metadata. Right now when the assistant fields a request, reasons through it, shells out to tools, and produces a final answer, none of it lands in MLflow, so there's no way to observe or debug what happened after the fact.
+## Description
 
-What I want is: each completed turn becomes a top-level agent-type span whose input is the user's prompt and whose output is the assistant's final response. Inside that root span I need a child language-model span for every round of model inference, with the reconstructed conversation history as input and the assistant reply as output, in standard chat message format. And I need a child span for every tool execution capturing the tool name, its call identifier, the parsed arguments, and its output. If a tool reports a failure with a non-zero exit code, mark that span with an error status that includes the exit code, otherwise it's a success.
+We want to add MLflow tracing support for a coding assistant tool so that each completed assistant turn is automatically recorded as a structured trace. Currently, when the assistant runs — fielding a user request, reasoning through the problem, calling shell tools, and producing a final response — none of that activity is captured in MLflow. This makes it impossible to observe, debug, or analyze agent behavior after the fact.
 
-Also I need parsing helpers for the transcript files: reading JSONL records, converting timestamps to nanoseconds, extracting text from content blocks, finding the last user message, isolating just the records for the most recent turn, pulling out token usage and model name and session ID, and building a map of tool outputs keyed by call identifier. Trace metadata should record the session and user identifiers too.
+## Expected Behavior
 
-Important bit on timing: span timestamps have to come from the actual record timestamps in the transcript, so each span's start and end reflect when that step really began and ended, not some relative offset, and the root span brackets the whole turn. Oh and the pipeline should flush the traces once all spans are created, and it should do nothing at all (no spans, no flush) if the turn has no user input.
+- Each completed turn should produce a top-level agent span that records the user's original request as its input and the assistant's final response as its output.
+- For each round of model inference within a turn, a nested language-model span should be created that captures the full conversation history leading up to that inference and the model's response.
+- Each tool invocation (e.g., a shell command execution) should produce its own child span with the tool name, call identifier, parsed arguments, and the tool's output.
+- Tool spans should reflect whether the tool call succeeded or failed, including the exit code when there is a failure.
+- Span timestamps should accurately bracket the work done — the root span covers the entire turn, and each child span's start and end times correspond to the actual timestamps from the transcript.
+- When no user prompt is present in a turn, no spans should be created and nothing should be flushed.
+- Trace metadata should record the session and user identifiers.
+
+## Why This Matters
+
+Without this tracing, developers using the coding assistant have no visibility into multi-step agentic behavior. Adding these traces lets teams audit what the model did, how long each step took, which tool calls failed, and what the full conversation context looked like at each inference — all through the standard MLflow tracing interface.

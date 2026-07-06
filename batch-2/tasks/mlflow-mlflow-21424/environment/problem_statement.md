@@ -1,7 +1,19 @@
-I'm reworking the tracing destination management in MLflow and there's a cluster of related things I need to fix in one go. The main piece is the destination registry that tracks where traces get exported, it needs to resolve the active destination across four priority levels: a per-task/per-thread local override that beats everything, then a global setting, then a per-experiment cached default that's only used when the currently active experiment actually matches, and finally the environment variable as the last fallback. Important subtlety: the per-experiment cached destination has to stay in memory even when the active experiment changes, so if the experiment doesn't match we fall through to the env var without wiping the cache. Also if looking up the active experiment blows up with some transient error, don't propagate it, just gracefully fall back to the cached per-experiment destination instead of crashing.
+## Description
 
-Second thing, the environment variable parsing needs to reject three-part dot-separated paths (that's a catalog, schema, and table prefix) with a clear error rather than silently doing something weird.
+The tracing system needs a more robust and flexible destination management layer that supports multiple priority levels when resolving where to export traces. Currently, the Unity Catalog span table name is resolved through a static helper each time a span is processed, and the destination registry has limited support for scoping destinations to specific experiments or concurrent execution contexts.
 
-Third, the tracing config API has to treat the two Unity Catalog destination types differently, the older schema-based one should emit a deprecation warning but still work, while the newer table-prefix type gets outright rejected with an informative error when passed to that API. Same rejection applies when the table-prefix format shows up via the env var.
+Additionally, the tracing configuration API needs to be updated to handle the distinction between two Unity Catalog destination types: the older schema-level type should emit a deprecation warning when passed to the configuration API, while the newer table-prefix type should be explicitly rejected via that API with an informative error. The same rejection logic should apply when the table-prefix format is specified through the environment variable.
 
-Oh and the Unity Catalog span processor should read the active destination straight from the central registry instead of going through that separate static helper it currently uses, handling both destination types and raising a clear error when nothing's configured. This whole thing is about letting us scope trace destinations per experiment or per concurrent task without stomping on other contexts, plus giving people clear guidance when they use deprecated or unsupported formats.
+## Expected Behavior
+
+- The destination registry should support four priority levels when resolving the active destination: per-task/thread local override, global setting, per-experiment cached default, and environment variable fallback.
+- Destinations can be cached per experiment, and when the active experiment changes the cached value is preserved but bypassed in favor of the environment variable.
+- If looking up the active experiment fails transiently, the system should fall back to the cached per-experiment destination rather than crashing.
+- Passing the older schema-level Unity Catalog destination type to the tracing configuration API should produce a clear deprecation warning.
+- Passing the newer table-prefix Unity Catalog destination type to the tracing configuration API should raise an error.
+- Specifying a three-part dot-separated path in the tracing destination environment variable should be rejected with a clear error message.
+- The span processor should read its destination directly from the central registry rather than via a separate helper function.
+
+## Why This Matters
+
+This change makes it possible to scope trace destinations to individual experiments or concurrent tasks without interfering with other contexts, and provides clear guidance when deprecated or unsupported destination formats are used.

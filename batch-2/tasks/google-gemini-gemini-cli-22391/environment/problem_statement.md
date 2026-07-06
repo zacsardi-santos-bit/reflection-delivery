@@ -1,3 +1,15 @@
-I'm working on credential storage in our CLI and hitting a wall in headless environments. Right now when the native OS keychain isn't available, like on headless servers, in Docker containers, or CI pipelines, the credential service just reports itself as unavailable and every single credential operation throws an error, which makes the tool totally unusable there. I want the service to always report itself as available by transparently falling back to an encrypted file-based storage backend whenever the native keychain can't be used. Same fallback should also kick in when a specific environment variable is set to force file-based storage (so give users a dedicated setting to explicitly force that path). When the fallback is active I want a debug log message emitted so operators can see the file path that's in use, and telemetry should still accurately report that the native keychain is not available even though we're falling back, don't lie about the keychain there.
+## Description
 
-Also I want to clean up the higher-level storage coordination layer while I'm at it. Right now it independently checks whether the keychain is available and manages a separate file storage class as a sibling option, which is redundant now. Instead it should just ask the credential service whether the file-based fallback is currently active and use that single answer to decide the reported storage type. Since the credential service handles the fallback internally now, that separate file storage class the coordinator was managing can go away entirely, remove it. The whole point is folks running in containers, remote shells, or CI shouldn't hit hard failures anymore, the CLI stays fully functional with creds stored securely in an encrypted local file.
+On systems where the native OS keychain is not available — such as headless servers, certain CI environments, or when the developer explicitly wants to avoid the native keychain — the credential storage service currently reports itself as unavailable and throws errors on every credential operation. This makes it impossible to store or retrieve credentials in those environments.
+
+## Expected Behavior
+
+- The credential storage service should always report itself as available, even when the native keychain cannot be used, by transparently falling back to an encrypted file-based storage backend.
+- When the fallback is active, a debug log message should be emitted to indicate that the file-based path is being used.
+- Telemetry should still accurately report that the native keychain is not available when the fallback is active.
+- A dedicated setting should allow users to explicitly force the file-based storage path.
+- The higher-level storage coordination logic should be simplified: instead of independently checking raw availability and managing a separate file storage class, it should ask the credential service whether the file-based fallback is currently active, and adjust the reported storage type accordingly.
+
+## Why This Matters
+
+Users running the CLI in environments without a native keychain (e.g., Docker containers, remote shells, CI pipelines) currently encounter hard failures when any credential operation is attempted. With the fallback in place, the CLI remains fully functional in these environments with credentials stored securely in an encrypted local file.

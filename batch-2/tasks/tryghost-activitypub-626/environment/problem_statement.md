@@ -1,3 +1,16 @@
-I'm building an ActivityPub social app and hit a gap in the follower/following endpoints. When I fetch the list of accounts someone follows, or the list of their followers, each entry comes back with the basic profile info but nothing about how the viewing user relates to those accounts. So there's no way to tell from the response whether I already follow a given account in the list, or whether I've blocked one, and that makes it impossible to render the obvious UI states like a "Following" badge next to people I follow back or some marker on accounts I've blocked. The data just isn't there right now.
+## Description
 
-What I want is for every account returned in a following list or a followers list to carry two relationship flags from the current viewer's perspective, one saying whether the viewer follows that account and one saying whether the viewer has blocked that account. This needs to work for accounts we store locally in our database and also for remote accounts we pull in from external ActivityPub servers. Important detail on the remote side: if a remote account isn't found in our local database, both flags should just default to false rather than erroring or getting omitted. Otherwise compute them properly against the viewer's actual follows and blocks. That's the whole thing, just get those two booleans populated correctly per account across both list endpoints.
+When a user views the list of people an account follows, or the list of an account's followers, the response includes basic profile information for each listed account but does not include any relationship status from the viewer's perspective. Specifically, there is no indication of whether the viewing user already follows a listed account, or whether they have blocked one.
+
+This means client applications have no way to render relationship indicators (such as a "Following" badge or a blocked-user marker) for the accounts shown in these lists. The data simply isn't returned.
+
+## Expected Behavior
+
+- Each account returned in a following or followers list should include a field indicating whether the current viewer follows that account.
+- Each account returned should also include a field indicating whether the current viewer has blocked that account.
+- These relationship flags should work correctly for both locally-stored accounts and for accounts retrieved remotely from external ActivityPub servers.
+- For remote accounts that are not found in the local database, both flags should default to false.
+
+## Why This Matters
+
+Without these fields, clients cannot accurately display the viewer's relationship with accounts in follower/following lists. A user may be viewing a follower list and have no way to know which accounts they already follow back or have blocked — making it impossible to build useful UI affordances around these states.

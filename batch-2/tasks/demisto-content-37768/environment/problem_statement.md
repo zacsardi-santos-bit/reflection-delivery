@@ -1,5 +1,17 @@
-I'm dealing with a broken Palo Alto Networks security advisories integration. It pulls vulnerability data from their API and turns each advisory into a threat intel indicator, and security teams rely on it to keep their indicators current, but the upstream API bumped to a new schema version and now we're reading fields from the wrong spots so the indicators come out with wrong CVE IDs, wrong severity, missing descriptions, and mangled publication references. I need the advisory-to-indicator conversion logic fixed so every field gets populated correctly again.
+## Description
 
-Here's what moved. In the old schema the CVE identifier, title, description, severity score, and publication date were up at the top level or in known top-level keys. Now the CVE identifier lives under a metadata section, and the advisory content (severity, description, references, vulnerability classification details) sits under a deeply nested container path, so title, description, publication date, and severity all need to be pulled from those updated locations. The vulnerability classification data changed shape too: it used to be a pre-formatted string, but now CWE identifiers are stored as a separate field on each entry, so the tag-parsing needs to loop the new structure and produce a flat list of CWE IDs. And the references changed, oh, the old format gave a URL plus a title plus a source per reference but the new one only has a URL, so publication references should carry just the URL links now, no title or source since those fields don't exist anymore.
+The Palo Alto Networks Security Advisories integration fetches security advisory data from the Palo Alto Networks API and converts it into threat intelligence indicators. The upstream API has been updated to use a new version of their advisory data schema, which reorganizes where key information is located within the response. Fields such as the CVE identifier, advisory title, description, publication date, severity scores, vulnerability classification references, and external links are now nested at different paths compared to the previous schema.
 
-So after the fix all the indicator fields (CVE ID, description, severity, vector string, publication date, title, tags, and references) should come out with the right values. I also need the sample data file that drives the conversion test updated to the new schema format with the correct expected output so the whole thing actually verifies against the new shape.
+As a result, the integration is no longer able to correctly parse advisory responses. Indicators produced by the integration end up with missing or incorrect field values — the wrong CVE identifier, incorrect severity, missing description, and malformed publication references.
+
+## Expected Behavior
+
+- The integration correctly reads the CVE identifier from its new location in the advisory response
+- Advisory titles, descriptions, publication dates, and severity information are extracted from their updated locations in the response schema
+- Vulnerability classification tags (CWE identifiers) are extracted as a flat list of IDs from the new nested structure
+- Publication references are extracted with only their URL links (no title or source fields that no longer exist in the new schema)
+- The test data file that drives integration verification is updated to reflect the new advisory schema format and the correct expected output
+
+## Why This Matters
+
+Security teams rely on this integration to automatically ingest Palo Alto Networks security advisories as up-to-date threat intelligence indicators. With the API schema change, the integration silently produces incorrect indicators, leading analysts to work with inaccurate or incomplete vulnerability data. Updating the parsing logic ensures the integration remains functional after the upstream API update.

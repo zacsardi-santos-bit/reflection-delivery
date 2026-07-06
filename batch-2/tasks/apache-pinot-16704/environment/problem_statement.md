@@ -1,5 +1,15 @@
-I'm working with Pinot and I keep wanting a sum aggregation that stays on the integer path instead of promoting everything to doubles like the general-purpose sum does. When I know a column is all integers, that type promotion is just wasted overhead plus it can lose precision on big values, so I want a dedicated variant that does native integer arithmetic and returns a 64-bit long as both its intermediate and final result type. It should show up in SQL under its own distinct name, resolved case-insensitively, so I can call it like any other agg.
+## Description
 
-The tricky part is nulls in both modes. When null handling is turned off, I want null values treated as the column's stored default null value and folded into the sum as normal entries, so a query over all-null data returns the default (zero when there's nothing prior) rather than blowing up. When null handling is enabled, nulls should be skipped entirely, and if every value in a group is null then that group's result should come back null, not zero.
+Pinot's existing sum aggregation function handles integer columns by converting values to floating-point numbers internally before accumulating the result. For workloads where the column is known to contain only integer data, this type promotion is wasteful — it adds conversion overhead and foregoes the efficiency of native integer arithmetic. A specialized sum aggregation optimized for integer columns would eliminate this overhead and return results as 64-bit integers directly.
 
-Oh and this needs to behave the same across query shapes, plain aggregation as well as group-by, including group-by on a multi-value dimension where one row can land in several groups at once. The null semantics have to stay consistent no matter the query shape. This lives in the aggregation function code alongside the existing sum implementation, so wire up the new function so it's discoverable by name and slots into the same aggregation machinery.
+## Expected Behavior
+
+- A new integer-specific sum aggregation function is available in SQL queries by a distinct name, resolved case-insensitively.
+- The function produces results as a 64-bit integer (LONG) for both intermediate and final output.
+- When null handling is disabled, null values in the input are treated as the column's stored default null value and contribute to the sum as normal entries. A result of zero is returned when all inputs are null and no prior partial sum exists.
+- When null handling is enabled, null values are excluded from the sum entirely. If all values in a group are null, the group returns null rather than zero.
+- The function supports plain aggregation queries as well as group-by queries over both single-value and multi-value dimensions, with consistent null handling behavior in all cases.
+
+## Why This Matters
+
+Users aggregating large integer datasets benefit from eliminating the overhead of converting integers to floating-point numbers during aggregation. This is particularly valuable in performance-sensitive pipelines where all column values are known to be integral and the cost of type promotion is avoidable. Returning long integer results also avoids the precision loss that can occur when large integers are represented as doubles.

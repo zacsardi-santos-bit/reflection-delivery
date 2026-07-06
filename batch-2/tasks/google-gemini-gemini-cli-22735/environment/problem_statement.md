@@ -1,5 +1,16 @@
-I'm working in the todo list tool and hit a gap: right now a task can be pending, in progress, completed, or cancelled, but there's no way to say a task is blocked. I keep running into cases where a subtask exists and should eventually get done but can't be progressed right now because it's waiting on another task or some external thing has to happen first. Cancelled is wrong because I'm not dropping the task, and pending is wrong because that implies it's ready to start. So I want a proper "blocked" status added across the whole system.
+## Description
 
-It needs to be a real separate state, recognized everywhere the other four statuses are, so wherever we validate todo item status the "blocked" value has to pass validation just like the rest. In the UI blocked tasks should be visually distinct with their own indicator so I can glance and see what's stalled. And ordering matters: when the list gets sorted/rendered, blocked tasks should sit after pending but before completed, so stalled work shows up in a logical spot between "not started yet" and "already done."
+The todo list tool currently supports four task statuses: pending, in progress, completed, and cancelled. However, there is no way to mark a task as **blocked** — meaning a task that cannot currently be worked on due to an external dependency, missing information, or other impediment.
 
-Also make sure it flows through the formatted output that comes back when the todo list is updated, not just the internal model. Basically anywhere pending or cancelled or completed is handled, blocked should be handled too, validation, display, sort position, and the update response text all included.
+This gap means that when an agent encounters a situation where it cannot proceed on a specific subtask (perhaps because it's waiting on another task, or because something external needs to happen first), there is no way to accurately represent that state in the todo list.
+
+## Expected Behavior
+
+- A new "blocked" status should be supported for todo items
+- Blocked tasks should be visually distinct in the UI
+- Blocked tasks should appear in the task list between pending tasks and completed tasks, so users can quickly see what work is stalled
+- The task tracking system should recognize blocked tasks as a separate state from both pending and cancelled tasks
+
+## Why This Matters
+
+Without a blocked status, agents are forced to either leave tasks as pending (which implies they could be worked on but haven't been started) or cancel them entirely (which wrongly implies the task won't be done). A blocked status accurately communicates that the task exists and should eventually be completed, but cannot be actioned right now.

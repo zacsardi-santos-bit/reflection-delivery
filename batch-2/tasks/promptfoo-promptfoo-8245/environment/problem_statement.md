@@ -1,5 +1,18 @@
-I'm running Codex agent evals that lean on skill files, and I keep hitting two things that make the results untrustworthy. First, when I pass custom env vars to the agent (say to set a custom home dir), the shell PATH gets wiped out entirely, so basic commands like reading a file blow up with "command not found" partway through the run. Even when I'm overriding specific variables, I'd still expect a minimal set of standard shell variables, especially PATH, to survive so the agent can actually do anything. So the fix there is: when custom environment variables are provided to override the Codex shell environment, still pass through a minimal set of essential shell variables (PATH included) so common shell commands keep working.
+## Description
 
-The second problem is downstream of the first, actually. When a skill read fails (because PATH was missing, or honestly for any other reason), that failed attempt still shows up in the eval result metadata as if it were a confirmed skill call, lumped in with the ones that really loaded. That makes any assertion on skill usage unreliable and hides the root cause. I want confirmed skill reads, meaning the read command actually completed successfully, reported as confirmed skill calls, and failed attempts tracked separately so I can tell when Codex tried to use a skill but couldn't load it.
+When evaluating Codex agents that use skill files, two related problems make it difficult to diagnose why skills are not loading correctly.
 
-Oh and related: when we record trace attributes for agent command executions, the skill-related span attributes should only get attached to commands that completed successfully. A failed command should still record its exit code and status like normal, it just shouldn't be tagged as a confirmed skill read. Basically failed reads and successful reads shouldn't look identical anywhere, since that's exactly what makes these skill-based evals so painful to debug.
+First, when a skill read fails — for example because the shell environment is missing standard tools — the failed attempt is currently grouped together with successful skill reads in the evaluation result metadata. This means the skill calls reported in the result can include skills that were never actually loaded, making assertions on skill usage unreliable and hiding the root cause of failures.
+
+Second, when custom environment variables are provided to override the Codex shell environment (for example, to set a custom home directory), the shell's PATH is stripped out entirely. This causes basic shell commands to fail with "command not found" errors, which in turn triggers the false-skill-call problem above.
+
+## Expected Behavior
+
+- Confirmed skill reads (where the read command completed successfully) should be reported as confirmed skill calls in the evaluation result.
+- Failed skill read attempts should be tracked separately, so developers can tell when Codex tried to use a skill but couldn't load it.
+- When custom environment variables are provided, a minimal set of essential shell variables — including the shell PATH — should still be passed to the agent's environment so that common shell commands remain available.
+- Span trace attributes for skill usage should only be attached to command executions that completed successfully. Failed commands should still record their exit code and status, but should not be tagged as confirmed skill reads.
+
+## Why This Matters
+
+Skill-based evaluations are hard to debug when failed reads look identical to successful ones. Developers need accurate signal about which skills were confirmed versus merely attempted, and they need the agent's shell environment to be functional even when overriding specific variables.

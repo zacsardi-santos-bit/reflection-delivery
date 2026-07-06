@@ -1,7 +1,18 @@
-I'm adding Google ADK (Agent Development Kit) integration into MLflow as native scorers, because right now there's no way to run ADK's deterministic evaluators, the ones that check whether an agent called the right tools or produced a similar enough text response, through MLflow's standard scorer and feedback plumbing. Teams on ADK have to bridge the two systems by hand, and I want these to behave like first-class MLflow feedback objects instead.
+## Description
 
-I need two scorer classes. One does tool call trajectory evaluation, comparing actual versus expected tool calls using ADK's evaluator and supporting exact, in-order, and any-order matching strategies. The other measures text response similarity between an actual response and a reference string. Both should return a standard MLflow Feedback carrying the numeric score, the threshold, and a framework identifier in the metadata, plus a yes/no categorical result depending on whether the score meets the threshold. I also want clear error feedback with descriptive messages when a required expectation field is missing or when the underlying evaluator throws.
+MLflow currently has no built-in integration with Google's Agent Development Kit (ADK) for evaluating AI agents. Teams using ADK to assess whether an agent invoked the right tools or produced sufficiently similar text responses must handle this outside of MLflow's evaluation infrastructure. We need native scorers that wrap ADK's deterministic evaluators so they behave as first-class MLflow feedback objects.
 
-There's also a real bug to fix: when a scorer gets a recorded trace from an actual agent run, it should pull the actual tool calls automatically out of the tool-typed spans in that trace. Right now that extraction doesn't happen, so trace-based evaluation silently treats the actual trajectory as empty and always reports failure, which means any production eval on recorded traces is quietly broken. If the caller explicitly passes actual tool calls in the expectations, that should win over trace extraction.
+There is also a bug in trace-based evaluation: when a scorer is given a recorded trace from a real agent run, the actual tool calls should be extracted automatically from the trace. Currently, users must explicitly re-specify the actual tool calls in the expectations dict — if they don't, the scorer silently treats the trajectory as empty and always reports failure.
 
-Oh and both scorers need to count as third-party scorers, so they can't be registered, started, stopped, updated, or aligned through MLflow's built-in scorer management, and any of those lifecycle attempts should raise an appropriate error. Last thing, I want a factory function that returns the right scorer by name and passes through any config options, and raises an error for an unrecognized metric name.
+## Expected Behavior
+
+- A new **tool trajectory scorer** that compares actual versus expected tool calls using ADK's evaluator, supporting exact, in-order, and any-order matching strategies. It should return a pass/no-pass result with the numeric score and threshold in the metadata.
+- A new **response similarity scorer** that measures text similarity between an actual response and a reference string, again returning a pass/no-pass result with score metadata.
+- Both scorers should be recognized as third-party scorers (not directly registered or managed as MLflow-native scorers).
+- When either scorer is called with a trace object from a real agent run, actual tool calls should be extracted automatically from the tool spans in the trace. An explicit override in the expectations should take precedence over trace extraction.
+- A factory function that creates the appropriate scorer by name and passes through configuration options, raising an error for unrecognized metric names.
+- Clear error feedback (with descriptive error messages) when required expectation fields are missing or when the underlying evaluator raises an exception.
+
+## Why This Matters
+
+Without this integration, ADK users who want to track evaluation results in MLflow experiments must manually bridge two systems. The trace extraction bug also means that any production agent evaluation based on recorded traces is silently broken, always reporting failure regardless of actual agent behavior.

@@ -1,5 +1,17 @@
-I'm building some tooling around our eval testing setup and I need a static analyzer that can read the source text of an eval test file and pull out structured metadata per test case without running anything. The tricky part is our eval files use a bunch of different patterns for defining cases, so I need it to handle direct calls to imported helpers, aliased imports, and local wrapper functions whether they're declared at the top level or nested inside describe blocks, and whether they're regular function declarations or arrow functions defined as part of multi-variable declarations. For each one it needs to trace the call back to the original base helper it wraps, and it should keep a map of every wrapper name and alias name to its base helper so I can inspect the resolution later.
+## Description
 
-For each test case it finds I want back the policy, the test name, the suite name, the suite type, the timeout if one's set, plus flags for whether a prompt is configured and whether files are configured. Oh and when a case can't be analyzed statically because it's using dynamic values (like a variable instead of a literal for the policy, or a variable for the case object) I don't want it to silently skip or crash, it should report a diagnostic message saying what it couldn't resolve. Also some of our files use JSX/TSX syntax so the parser has to handle component syntax cleanly. And one more thing, normalize all file paths in the output to forward slashes so results are consistent no matter what OS it runs on (Windows backslashes shouldn't leak through).
+The project's evaluation test system has grown to the point where there's a need for tooling that can work with eval test cases programmatically — indexing them, filtering by policy, generating reports, or validating their structure. However, no utility currently exists to extract structured information from eval files without executing them.
 
-The point of all this is that right now anything that wants to work with our eval cases (indexing them, filtering by policy, building reports, validating structure) either has to actually execute them, which is slow and needs a whole environment, or roll its own ad-hoc parsing. A shared analysis utility means we can build reliable consistent tooling on top of the eval infra instead.
+Eval files follow several different patterns: some use direct imports of known helpers, some use aliased imports, some define local wrapper functions (at top level or inside describe blocks, as regular functions or arrow function variables), and some files use JSX/TSX syntax. Any static analysis utility needs to handle all of these patterns correctly.
+
+## Expected Behavior
+
+- Given the source text of an eval file, the utility should extract all statically-defined test cases and return structured metadata for each: the policy, test name, suite name, suite type, timeout, and whether a prompt and files are configured.
+- The utility should resolve wrapper helpers to their original base helper, tracking the mapping for every alias or local wrapper encountered.
+- When a test case uses dynamic (runtime) values for its policy or case object, the utility should report a diagnostic message explaining what it could not resolve, rather than silently skipping or crashing.
+- File paths should always be returned with forward slashes regardless of the host operating system's path separator convention.
+- The utility should correctly parse files that include component/JSX syntax.
+
+## Why This Matters
+
+Without this utility, any tooling that needs to work with eval test cases must either run them (slow, requires environment setup) or implement its own ad-hoc parsing. A single shared analysis utility makes it possible to build reliable, consistent tooling on top of the eval infrastructure.

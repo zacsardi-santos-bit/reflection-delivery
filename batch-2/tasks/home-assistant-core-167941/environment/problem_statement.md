@@ -1,9 +1,18 @@
-I'm poking at the Anthropic integration config flow in Home Assistant and hit a real gap around the extended reasoning setup. Right now folks can set the thinking budget higher than (or equal to) the max tokens, and the form just accepts it silently, which is nonsense because if the thinking budget eats up everything there's nothing left for the actual response. The AI spends its whole budget on reasoning and produces nothing usable at runtime.
+# Anthropic Integration: Validate Thinking Budget Against Max Tokens
 
-Part of why we can't catch this today is layout: the maximum token limit gets collected in an earlier general settings step while the thinking budget shows up later in the model-specific options step, so there's no way to compare them at input time. I want to move the max tokens field down into that same model-specific step, right next to the thinking budget and the other model-specific options, so they live together.
+## Description
 
-Then add validation there: if the thinking budget is greater than or equal to the max tokens, reject the submission and surface a clear error on the thinking budget field so the user knows exactly what's wrong. When it's valid (thinking budget strictly less than max tokens), the config should save and complete normally like it does today.
+When configuring the Anthropic integration's thinking budget feature, there is currently no validation to prevent users from setting a thinking budget that is equal to or larger than the maximum token limit. This would result in an invalid configuration where the AI has no tokens left to produce an actual response after spending its entire budget on reasoning.
 
-Oh and one more thing I noticed, that model-specific options step used to get skipped entirely for models that don't support extended thinking. Since max tokens now lives in that step, it needs to always be shown regardless of whether extended thinking is available, otherwise there'd be no place to set the token limit for those models.
+Additionally, the maximum token limit is currently shown in the general model settings step, even though it is closely related to the thinking budget setting which appears later in the model-specific options step. This separation makes it impossible to validate the relationship between these two values at the time of input.
 
-The config flow logic lives under `@homeassistant/components/anthropic/config_flow.py`, so that's where the field reordering and the budget-versus-max-tokens check should land.
+## Expected Behavior
+
+- The maximum token limit should be moved to the model-specific settings step, alongside the thinking budget and other model-specific options.
+- When a user provides a thinking budget that is greater than or equal to the maximum token limit, the configuration form should reject the input and display a validation error on the thinking budget field.
+- When a valid combination is provided (thinking budget less than max tokens), the configuration should save and complete successfully.
+- The model-specific settings step should always be shown, since it now always contains the maximum token limit.
+
+## Why This Matters
+
+Users can currently save an invalid configuration where the thinking budget consumes all available tokens, leaving no room for the actual response. By moving these related settings together and adding proper validation, users get immediate feedback when their configuration is logically inconsistent — preventing silent failures at runtime.

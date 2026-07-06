@@ -1,3 +1,16 @@
-I added some new end-to-end tests for TLS traffic stealing and they pull in a PEM cert encoding library through the workspace dependency mechanism, meaning they expect it declared at the workspace root so crates can inherit it. Trouble is that library was never added to the workspace's shared dependency list. A few individual crates each pin it locally on their own, but the root manifest's shared dependencies section doesn't mention it at all, so when Cargo goes to load the workspace manifest it bails immediately saying it can't find the library in the workspace dependencies, and this happens before it compiles a single package. So the whole thing is broken, every package fails, including totally unrelated stuff like the codec unit tests in the protocol crate that have nothing to do with TLS or certs.
+## Description
 
-What I want is to declare this PEM encoding library as a proper workspace-level dependency in the root `@Cargo.toml`, and then have every crate that currently specifies it locally switch over to inheriting the workspace version instead so the version stays consistent across the board. Once that's done the workspace should load and compile cleanly again, and the protocol crate's codec unit tests should actually run and pass since they're the ones getting caught in the crossfire right now. The core issue is just that a dependency conflict at the workspace config level blocks the entire dependency graph from resolving, so promoting the shared library up to workspace level fixes it and unblocks all the downstream compilation.
+New end-to-end tests were added for TLS traffic stealing. These tests depend on a PEM-format certificate encoding library that is also used by several other internal crates in the workspace. The new tests reference this library through the workspace dependency mechanism (i.e., they expect it to be declared at the workspace level), but the library has never been added to the workspace's shared dependency list.
+
+As a result, when Cargo tries to load the workspace manifest, it cannot find the library in the workspace's shared dependencies section and fails immediately — before compiling a single package. This means every package in the workspace, including the core protocol crate with its independently-written codec unit tests, fails to compile and all tests fail.
+
+## Expected Behavior
+
+- The PEM encoding library should be declared as a workspace-level dependency.
+- All crates in the workspace that currently specify this library locally should instead reference the workspace entry, keeping the version consistent.
+- The workspace should load and compile successfully.
+- The protocol crate's codec unit tests should run and pass.
+
+## Why This Matters
+
+A dependency version conflict at the workspace configuration level blocks compilation of the entire project. Even tests that have nothing to do with TLS or certificates cannot run because the workspace cannot resolve its dependency graph. Promoting the shared library to workspace-level resolves the conflict and unblocks all downstream compilation.

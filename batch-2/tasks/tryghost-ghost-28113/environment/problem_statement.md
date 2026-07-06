@@ -1,5 +1,14 @@
-I'm working on the automation editor in our publishing platform and hit a gap that feels genuinely risky. Right now when an automation is already active (live) and a user has made some local edits, clicking the "Publish changes" button just fires the save immediately with zero warning. That's dangerous because active automations might be running for real members at that moment, so publishing mid-edit can mess with both future runs and any that are currently in progress in ways nobody expects.
+## Description
 
-What I want is a confirmation step before we actually save changes to an active automation. So clicking "Publish changes" on an active automation that has unsaved local edits shouldn't save right away, it should pop open a confirmation dialog instead. The dialog needs to clearly explain that the update will affect new runs of the automation as well as ones that are actively running, so the user actually understands the consequences before they commit to it.
+When a user edits an automation that is already active (live) and clicks the publish button to save their changes, the update fires immediately without any confirmation. This is risky because active automations may currently be running for existing members — publishing changes without warning could affect both future runs and any in-progress ones in unexpected ways.
 
-If they confirm, the save proceeds like normal. While the save is happening the confirm button inside the dialog should show a loading/spinning state and be disabled so they can't double-fire it. And if the save fails, don't close the dialog, keep it open and show a retry option that's visually styled as an error state so they can just try again without losing context or starting over. Basically an informed choice plus graceful failure handling for live workflows.
+## Expected Behavior
+
+- Clicking "Publish changes" on an **active** automation with unsaved local edits should **not** immediately save. Instead, it should open a confirmation dialog.
+- The dialog should clearly explain that the update will affect new runs of the automation as well as actively-running ones, so the user understands the consequences before confirming.
+- If the user confirms, the save should proceed. While saving is in progress, the confirm button inside the dialog should show a loading state and be disabled.
+- If the save fails, the dialog should stay open and present a retry option styled to indicate an error state, so the user can try again without losing their context.
+
+## Why This Matters
+
+Active automations are live workflows that may already be executing for real members. Accidentally publishing half-finished edits to a live automation can break member experiences. A confirmation step with clear impact messaging gives users a chance to reconsider and provides graceful handling of failures.

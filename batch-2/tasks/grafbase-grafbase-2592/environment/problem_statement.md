@@ -1,7 +1,17 @@
-I'm poking at the Grafbase extension testing framework and the test setup drives me nuts because it's two steps that are trivial to screw up. Right now I create the test runner with a synchronous constructor and then have to call a separate async method to actually spin up the gateway and the mock subgraph servers, and if I forget that second call my tests just blow up with confusing errors that don't point at the missing step at all. On top of that I'm forced to declare the runner as `mut` even though I never touch it after creation, the only mutation happens internally during that startup call I'm manually triggering, which is silly.
+## Description
 
-What I want is for creating the test runner to be a single async operation that starts all the servers automatically before it returns, so there's no separate startup method left in the public API and no need for a mutable binding in my test code anymore.
+Setting up the test environment for a Grafbase extension currently requires two separate steps that are easy to get wrong. First, the test runner is created with a synchronous call, and then a separate async method must be called to actually start the gateway and mock subgraph servers. Forgetting the second step causes tests to fail with confusing errors that don't make the missing step obvious. Additionally, the test runner variable must be declared as mutable even though user code never mutates it — the mutation happens only internally during server startup.
 
-Also the mock server utilities that power the test subgraphs are currently bundled inside the main SDK test utilities, and I'd rather they lived in their own standalone, independently-publishable package so extension authors can depend on the mock server infrastructure directly if they want it.
+The generated test scaffolding produced by the CLI extension initialization commands reflects this two-step API, so new extension authors are also exposed to this ergonomics issue from the start.
 
-Oh and the CLI extension init scaffolding needs updating too since it currently generates that clunky two-step pattern, so the generated test files should reflect the new single async constructor style, and the generated project manifest should reference the bumped SDK version. Basically merging construction and startup into one async call removes the footgun, cleans up onboarding, and makes the generated scaffolding nicer for new projects.
+## Expected Behavior
+
+- Creating the test runner should be a single async operation that automatically starts all servers before returning.
+- The test runner variable should not require a mutable binding in user test code.
+- No separate server startup call should be needed or available in the public API.
+- The mock server utilities should live in their own standalone package, separate from the main SDK test utilities, so they can be depended on independently.
+- The CLI-generated extension scaffolding should reflect the new, simpler API pattern and reference the updated SDK version.
+
+## Why This Matters
+
+The current two-step API forces every test author to remember an extra initialization call that could easily be merged into the construction step. Merging these into a single async constructor removes a footgun, simplifies onboarding, and produces cleaner generated scaffolding for new extension projects.

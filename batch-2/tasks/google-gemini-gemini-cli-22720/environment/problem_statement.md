@@ -1,9 +1,14 @@
-I'm adding tier-aware model handling to the CLI and right now it's kind of broken for non-premium users. If someone doesn't have premium access they can still end up with a premium auto-selected model configured, and when they open the model selection dialog they get shown premium options plus an "Auto" choice they literally can't use, which is confusing.
+## Description
 
-So two things. First, when the auth flow finishes and detects a user lacks premium access (this comes through an experiment flag), and their currently active model is an auto-selected premium model, I want it to automatically fall back to an appropriate flash model. For pro/premium users the active model should stay unchanged, don't touch it.
+Users who don't have premium model access are currently not handled correctly in two places. First, when the CLI is configured to use an auto-selected premium model and the user turns out to not have premium access, the model is never downgraded — the user ends up trying to use a model they can't actually access. Second, the model selection dialog shows premium model options (including the "Auto" mode) to users who don't have access to them, which is confusing and unhelpful.
 
-Second, the model selection dialog needs updating. When a user without premium access opens it, it should go straight to the manual model list instead of the main view, and that list should only include the models they actually have access to, in this order: flash preview first, then a new flash lite preview variant, then the regular flash options. No "Auto" option for these folks. Oh and when they hit Escape the dialog should just close instead of bouncing back to a main view.
+## Expected Behavior
 
-Also I need to introduce that new Flash Lite Preview model. It should only show up for free-tier users in the manual selection view, premium-tier users shouldn't see it in their list at all. It also needs to be recognized as an active model and have a proper display string so it renders right everywhere.
+- When authentication completes and the system detects that a user lacks premium access (via an experiment flag), and the user was previously on an auto-mode premium model, the active model should be automatically switched to an appropriate flash model.
+- The model selection dialog should detect upfront whether the user has premium access. If they do not, the dialog should open directly in the manual model selection view instead of the main view, showing only the models available to them (no premium or "Auto" options), in a defined order.
+- Users without premium access who see the manual selection dialog should be able to dismiss it by pressing Escape.
+- A new Flash Lite Preview model variant should be introduced and should appear in the model list exclusively for free-tier users — premium-tier users should not see this model in their selection list.
 
-Basically the goal is that the interface and the active model always match what the user's tier actually gives them access to.
+## Why This Matters
+
+Non-premium users currently have a broken experience: they're shown model options they cannot use, and if they had previously selected an auto mode, they may silently be assigned an inaccessible model. This change ensures the interface and the active model selection always match what the user actually has access to, based on their tier.

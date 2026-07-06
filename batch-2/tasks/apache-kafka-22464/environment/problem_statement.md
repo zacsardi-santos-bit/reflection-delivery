@@ -1,5 +1,16 @@
-I'm deep in the Kafka Streams group coordinator and hit a gap around tracking topology description state across restarts. Right now there's no record of whether a topology description plugin has actually run and been stored for a group's current topology version, or whether that attempt failed, so after a coordinator restart we can't tell if the stored description is still current, which means we either redo description work we didn't need to or miss a refresh we did.
+## Description
 
-What I want is two epoch-based tracking fields added to each group's persisted metadata record, one for the last topology epoch that was successfully described and stored, and one for the last epoch where description failed. These need to survive restarts, so persist them in the metadata record and restore them on replay. Then the group describe operation should return these per-group epoch values alongside the normal list of described groups, so the service layer can decide when to trigger new description work. Concretely I want the describe result to bundle the described groups together with a map from group ID to that group's stored description epoch so callers get one consistent snapshot, and the heartbeat result needs to carry the current topology epoch of the group so downstream logic can compare it against the stored description epoch.
+The Kafka Streams group coordinator does not currently track whether a topology description plugin has been successfully run and stored for a given group's current topology version, nor whether the description attempt failed. When the coordinator restarts, there is no way to determine whether an existing stored description is still current or needs refreshing, which can lead to unnecessary repeated description work or missed refreshes.
 
-Also I need a new operation that validates whether a specific member belongs to a streams group at a given committed state. It should return an error if the group doesn't exist or if the member isn't a current member of the group. Important detail here, this validation must only reflect committed state, so uncommitted in-flight records like member tombstones shouldn't affect it at all. This member-validation piece is a prerequisite for an upcoming request handler that processes topology description updates submitted by a group member, btw, so it needs to be solid on that committed-vs-uncommitted distinction.
+## Expected Behavior
+
+- Each streams group should persistently track two epoch values in its metadata record:
+  - The last topology epoch for which a description was successfully stored
+  - The last topology epoch for which description failed
+- These values must survive coordinator restarts (they must be persisted in the metadata record and restored on replay).
+- The group describe operation should return these per-group epoch values alongside the list of described groups, so the service layer can decide whether to trigger new description work.
+- A new validation operation should allow callers to check whether a specific member belongs to a streams group at a given committed state, returning an appropriate error if the group does not exist or the member is not a current member of the group. This operation must not be affected by uncommitted records.
+
+## Why This Matters
+
+Without these epoch fields, the coordinator cannot efficiently manage topology descriptions across restarts or between heartbeats. The per-group epoch values give the service layer enough information to avoid redundant description work and to detect when description needs to be retried. The member-validation operation is a prerequisite for an upcoming request handler that processes topology description updates submitted by a group member.

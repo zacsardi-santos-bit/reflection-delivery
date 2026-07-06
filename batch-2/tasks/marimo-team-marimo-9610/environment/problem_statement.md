@@ -1,5 +1,18 @@
-I'm refactoring the WebSocket reconnection and health-check infrastructure in the marimo frontend and there's some layer coupling that's been bugging me. Right now the close-event classifier needs a retry count injected into it from outside just so it can decide when reconnection attempts are exhausted, which is messy because the low-level transport already knows when it's run out of retries. I want the transport to detect its own retry budget exhaustion internally and emit a specific named close reason at that point, and then the classifier should just recognize that named reason as a terminal "give up" signal without any retry state passed in. So the classifier should accept only a close event (with a reason string) and treat that exhaustion signal as the terminal case. Also while you're in the transport, it should dedupe event listener registrations and fully clean up all internal wrappers when a listener gets removed.
+## Description
 
-Second thing, there's one health-check method that both probes whether the backend is reachable and, as a side effect, updates the runtime's base URL when it sees a redirect. Those are two different concerns and the side effect bites me when I just want a quick yes/no probe. I need it split into two methods, one that purely checks health and returns a boolean without touching any URL state, and one that checks health and reconciles the URL config when a redirect occurs. The existing retry-loop driving code and the DOM base URI setup should use the reconciling variant, while code that just needs a fast probe uses the pure one. Oh and the method that formats HTTP URLs should take a named object instead of positional params.
+The WebSocket reconnection and health-check infrastructure has a few design issues that are causing coupling between layers and making the code harder to reason about.
 
-This keeps the reconnection logic predictable, cuts the hidden coupling between layers, and makes health checking safer since a simple probe won't accidentally mutate URL state.
+**Retry budget tracking is spread across too many layers.** Currently, the low-level transport and the higher-level close-event classifier both need to know about retry counts. When the transport runs out of reconnection attempts, the classifier has to receive the retry count as an input to decide whether to give up. This coupling means the classifier can't stand alone — it always needs external state injected into it. Instead, the transport itself should detect when its retry budget is exhausted and signal that fact with a clear, named close reason. The classifier can then handle that named signal as a terminal case without needing any retry count.
+
+**The health-check method does two unrelated things.** The current single health-check method both verifies that the backend is reachable and, on receiving a redirect response, updates the runtime's base URL. These are distinct concerns: sometimes a caller just wants to know if the server is up, without any URL state being mutated. Other callers need the full reconciliation behavior. Mixing these into one method causes unintended side effects when a simple read-only probe is needed.
+
+## Expected Behavior
+
+- The low-level transport layer should handle retry budget exhaustion internally and emit a specific named signal when exhausted, rather than relying on callers to pass retry counts to downstream classifiers.
+- The close-event classifier should accept only a close event (with a reason string), not a retry count, and should treat the exhaustion signal as a terminal "give up" case.
+- The health-check functionality should be split into two methods: one that purely probes health without side effects, and one that also reconciles the runtime URL on redirect.
+- The transport layer should deduplicate event listener registrations and fully clean up on removal.
+
+## Why This Matters
+
+These changes make the reconnection logic cleaner and more predictable, reduce hidden coupling between layers, and make health checking safer by preventing unintended URL mutations when only a simple probe is needed.

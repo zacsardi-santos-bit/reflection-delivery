@@ -1,5 +1,17 @@
-I'm hitting a bug in Biome's HTML parser around how it deals with closing tags on void elements. If someone writes a line break element followed by its closing tag, or an input element with an explicit closing tag, the parser does two bad things right now. First, it spits out two separate errors, one saying the void element isn't allowed to have a closing tag, and another about an unexpected or mismatched closing tag. Those are redundant and honestly contradictory, so the person reading them can't tell what they're supposed to do. I want exactly one diagnostic that just clearly tells them to remove the closing tag.
+## Description
 
-The second problem's worse. The parser treats that bogus closing tag as if it closes the nearest enclosing parent. So say you've got a fieldset wrapping a void element that has an erroneous closing tag, the fieldset ends up parsed as if it was never properly closed by its own real closing tag later in the doc. That corrupts the tree and is a real correctness issue since downstream formatters and linters operating on the parsed output end up wrong for otherwise fine surrounding HTML.
+The HTML parser currently produces confusing and incorrect output when it encounters a closing tag for a void element (elements that cannot have children, like line break elements or input fields). There are two distinct problems:
 
-So the fix: when the parser sees a closing tag for a void element, emit that single clear "remove the closing tag" diagnostic, and treat the spurious closing tag as an invalid/bogus error node that does NOT close any parent element. The enclosing parent should stay intact, closed only by its own matching closing tag, and the whole document hierarchy needs to remain correct. This all lives in the HTML parser code under `@crates/biome_html_parser`, so that's where I'd start digging.
+1. **Multiple conflicting diagnostics**: When a void element is followed by a closing tag, the parser emits two separate parse errors — one about the void element not being allowed to have a closing tag, and another about a mismatched or unexpected closing tag. These two errors are redundant and contradictory, making it unclear what the user should do to fix their HTML.
+
+2. **Incorrect document hierarchy**: More critically, the parser mistakenly treats the spurious void closing tag as a structural close of the nearest enclosing parent element. This means the document tree is parsed incorrectly — the parent element appears to close early, even though the real closing tag for that parent appears later in the document. This is a correctness bug that can affect downstream processing of the parsed HTML.
+
+## Expected Behavior
+
+- When a void element is followed by a closing tag, exactly one diagnostic should be emitted that clearly tells the user to remove the closing tag.
+- The spurious closing tag must be recognized as invalid and treated as a bogus/error node in the document tree — it should not close any enclosing element.
+- The enclosing parent element's structure should remain intact, closed only by its own proper matching closing tag.
+
+## Why This Matters
+
+Users seeing multiple conflicting parse errors for a simple mistake are confused about what action to take. Additionally, the hierarchy corruption means downstream formatters, linters, or other tools operating on the parsed tree may produce wrong results for otherwise valid surrounding HTML.

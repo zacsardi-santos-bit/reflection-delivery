@@ -1,7 +1,17 @@
-I'm on the OpenTelemetry Python SDK and want to add per-meter enable/disable control to the metrics subsystem, basically mirroring what tracers already have. Right now it's all or nothing, there's no way to selectively disable measurement collection for specific instrumentation scopes without shutting down the whole metrics pipeline, which is annoying because instrumentation libs emit metrics for components I don't care about and filtering at export time just wastes CPU and memory on collection I never wanted.
+## Description
 
-So what I need: I want to pass a custom configurator function into the meter provider that gets each meter's instrumentation scope and decides whether that meter is enabled or disabled. It should be swappable at runtime too, so when I replace it all existing meters get reconfigured immediately, not just newly created ones. When a meter's disabled, every instrument operation (counters, histograms, gauges, up/down counters, the observable/async instruments, all of it) should silently skip recording, no measurements to the consumer and no callbacks invoked.
+The tracing subsystem already supports selectively enabling or disabling individual tracers based on their instrumentation scope, including glob-pattern matching. The metrics subsystem has no equivalent feature — there is currently no way to disable measurement collection for specific meters without shutting down the entire metrics pipeline.
 
-Also I'd like some built-in conveniences: a default configurator that enables everything, a disable-all one, and a rule-based configurator that takes a list of predicate/config pairs with first-match-wins semantics and falls back to a default when nothing matches. Oh and there's a glob-pattern predicate utility living in the tracing module right now, can you pull that out into a shared utility spot so both tracing and metrics use it without duplicating code.
+## Expected Behavior
 
-Last thing, make it loadable via an environment variable backed by an entry-point mechanism, same way the tracer configurator gets loaded at startup, so people can plug in custom implementations. And if a configurator ever raises during any of this, don't crash, just log the error and fall back to the default enabled behavior.
+- Users should be able to provide a custom configurator function when creating a meter provider that controls whether individual meters are enabled or disabled based on their instrumentation scope.
+- The configurator should be replaceable at runtime, immediately affecting all existing meters as well as any new ones created afterward.
+- A built-in "disable all" configurator should be available for convenience.
+- A rule-based configurator should be available that evaluates a list of predicate/config pairs in order (first match wins) and falls back to a default when no rule matches.
+- A glob-pattern predicate utility, currently only available in the tracing module, should be consolidated into a shared location so both tracing and metrics can use it.
+- When a configurator function raises an exception, the system should fall back gracefully to the default (enabled) behavior and log the error rather than crashing.
+- Custom meter configurators should be loadable via an environment variable backed by an entry-point mechanism, consistent with how the tracer configurator works.
+
+## Why This Matters
+
+Instrumentation libraries often emit metrics for components a user may not care about. Without per-meter enable/disable control, the only option is to filter or drop metrics at export time, which wastes CPU and memory on unnecessary collection. This feature allows fine-grained, scope-based control over which meters are active.

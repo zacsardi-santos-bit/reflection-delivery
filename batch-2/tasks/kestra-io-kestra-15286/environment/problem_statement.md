@@ -1,5 +1,12 @@
-So I'm digging into the flow update path in our workflow engine and hit a real gap. When I update a flow and only touch the tasks (all the triggers stay byte-for-byte identical between the old revision and the new one), we don't emit any event for those untouched triggers at all. That's a problem because anything downstream watching for trigger events, caches especially, never gets the nudge to refresh, so they sit there holding stale trigger state even though the flow actually changed.
+## Description
 
-What I want is for the update process to notice triggers that are identical across the two revisions and still fire off a notification event for each of them, basically signaling "hey, refresh your state" even though the trigger itself didn't move. The point is we stay consistent and keep all the trigger-aware components in sync on every revision change, regardless of whether the triggers were the ones that changed.
+When a flow is updated but only its tasks change (while all its triggers remain identical between revisions), the system currently does not emit any event for those unchanged triggers. As a result, other components that rely on trigger events to refresh their cached state are never notified, leaving them with stale trigger data even though the flow has been updated.
 
-To make that work I also need a little utility that takes two flow revisions and hands back the list of triggers present in both with the same identifier and fully matching configuration. Anything that's new, removed, or changed in any way (different config, different identity, whatever) shouldn't show up in that unchanged list, only the truly identical ones. Then the update logic can walk that list and emit the per-trigger notification for each.
+## Expected Behavior
+
+- When a flow update does not modify any of its triggers, the system should still emit a notification event for each of those unchanged triggers, signaling that a refresh is needed.
+- A utility should be available to compare two revisions of a flow and determine which triggers are completely unchanged — i.e., present in both revisions with the same identity and identical configuration. Triggers that have been added, removed, or modified should not be considered unchanged.
+
+## Why This Matters
+
+Without this behavior, trigger-aware caches can become stale after a flow update that only modifies tasks. The system should consistently keep all relevant components in sync whenever a flow revision changes, regardless of whether the triggers themselves were modified.

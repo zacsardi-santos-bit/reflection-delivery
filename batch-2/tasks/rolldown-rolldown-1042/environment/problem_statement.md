@@ -1,7 +1,13 @@
-I'm doing some cleanup on the testing infra for our Rust bundler and want to reorganize how test config files get loaded. Right now the logic that reads a config file off disk lives as an associated function directly on the config data type, and that's annoying because if I ever want to add schema validation or nicer error reporting I'd have to bloat the type itself. It also scatters responsibilities across crates in a way that's a pain to maintain.
+## Description
 
-What I want is to pull the config-loading responsibility out into its own dedicated submodule inside the testing library. That submodule should re-export the config type so callers can still get at it, and also provide a standalone free function that takes a file path and returns a parsed config object. Behavior of the new function needs to match the old method exactly for all the existing test configurations, so nothing should break, it's just a move plus a cleaner shape.
+The testing library for this bundler project currently embeds its configuration file loading logic directly on the configuration data type as an associated function. This design makes it hard to add preprocessing steps (like schema validation or richer error reporting) without modifying the core data type, and it scatters responsibilities across crates in a way that is difficult to maintain.
 
-Oh and the rest of the test infrastructure calls this thing in a ton of tests, so update all those call sites to use the new module path and function instead of the old method on the type.
+## Expected Behavior
 
-The point is to keep the config data type focused on structure and deserialization while letting the loading routine grow on its own later (validation against a schema, that kind of thing) without touching the data type.
+- The configuration loading functionality should be moved into a dedicated submodule within the testing library.
+- The submodule should expose both the configuration type and a standalone function for reading and parsing configuration files from a given file path.
+- The standalone function should replace the existing approach (calling a method directly on the configuration type), providing at minimum the same behavior for all existing test configurations.
+
+## Why This Matters
+
+Reorganizing this responsibility into its own module keeps the configuration data type focused on structure and deserialization, while allowing the loading routine to grow independently. Future additions — such as validation against a schema — can be added to the loading function without affecting the data type itself, improving long-term maintainability.

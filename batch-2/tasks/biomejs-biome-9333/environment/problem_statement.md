@@ -1,5 +1,13 @@
-I'm hitting a panic in the HTML formatter whenever I try to format files that have an inline element sitting right before a self-closing void element. Think something like a code snippet element or a bold/semantic wrapper immediately followed by a line break or an image, no whitespace between the closing inline tag and the void element. Instead of giving me output the formatter just blows up with some internal error about tokens not being processed, which is annoying because this is such a common real-world pattern. People writing docs, web pages, component templates, they wrap text in an inline element and then drop a `<br>` or `<img>` right after it all the time, so crashing on that makes the formatter kind of unusable for a big chunk of valid HTML.
+## Description
 
-What I want is for these to just be left alone. Since the whitespace sensitivity setting means we shouldn't be messing with how inline elements and adjacent self-closing elements get laid out, the output should come back identical to the input, same structure, same whitespace, elements kept on the same line, nothing altered. And obviously no panic and no complaint about leftover tokens.
+The HTML formatter crashes with a panic when trying to format HTML files that contain inline elements placed directly before self-closing void elements. This is a very common HTML pattern — for example, wrapping text in a semantic element and then following it with a line break or image — and it should be handled gracefully by the formatter.
 
-Can you fix this in the formatter (over in the HTML formatting code) so it handles this pattern stably? A bunch of variants should work too, so different kinds of inline elements followed by different kinds of self-closing void elements should all format cleanly and preserve the layout rather than crashing.
+## Expected Behavior
+
+- When an inline element's closing tag is immediately followed by a self-closing void element (like a line break or an image), the formatter should produce output identical to the input.
+- The formatter should not panic or raise any internal error about tokens not being processed.
+- Multiple variants of this pattern should work correctly: different kinds of inline elements followed by different kinds of self-closing elements should all format without errors and without altering the structure or whitespace of the input.
+
+## Why This Matters
+
+This crash makes the formatter unusable on a large category of valid, real-world HTML. Developers writing documentation, web pages, or component templates often use inline elements followed immediately by self-closing elements. The formatter should handle these patterns stably and preserve the existing layout rather than crashing or altering the content.

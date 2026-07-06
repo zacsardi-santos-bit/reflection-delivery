@@ -1,7 +1,21 @@
-I'm adding a proper header list API to Bruno's scripting layer, both the request object (in pre-request scripts) and the response object (in test scripts). Right now scripts can only touch headers as a plain object or through a couple of individual getters and setters, so anything non-trivial like searching by predicate, iterating, or checking a header exists with a specific value ends up verbose and fragile, and there's no way to see disabled headers (ones defined in the collection but toggled off).
+# Add a Rich Header List API to Request and Response Objects
 
-What I want is a header list property on each object exposing read methods (get by key, get the full header object, getAll, get by index, count/length), search methods (has with optional value matching, find, filter by predicate), iteration (forEach, map, reduce, all accepting an optional context/thisArg for the callback), and transform methods (to a plain object, to string, to JSON). All key lookups need to be case-insensitive since that's how HTTP headers work, and disabled headers should show up in the list marked with a disabled flag and counted in searches too.
+## Description
 
-The request side should be fully mutable: append new headers, set/update existing ones where the return value tells me whether it was a new add or an update, delete by key, by predicate, or by object reference, clear everything, populate from an array or a raw header string, and merge from another source with optional pruning of headers not present in that source. Deleted headers need to be tracked internally so the underlying request gets updated correctly. The response side gets all the same read and search stuff but any mutation attempt should throw a clear read-only error.
+Currently, when writing pre-request scripts or test scripts in Bruno, the only way to access or modify HTTP headers is through low-level raw object access or a small handful of individual getter/setter methods on the request object. There is no structured, consistent API for working with headers as a list — operations like searching for a header by predicate, iterating over all headers, or checking whether a header is present with a specific value require awkward workarounds.
 
-Oh and the script converters need updating too. Converting Bruno scripts to Postman should translate the header list property and its methods to the equivalent Postman header API, importing Postman scripts should translate those Postman header calls back to the Bruno header list equivalents, and the legacy Postman test syntax translator should emit the new header list API for header existence checks instead of the old approach.
+This means scripts that need to inspect or manipulate headers in any non-trivial way end up being verbose and fragile. It is also difficult to work with "disabled" headers (headers that are defined in the collection but toggled off) since the raw object access does not expose them.
+
+## Expected Behavior
+
+- Both the request object and the response object should expose a header list property with a rich, consistent interface.
+- The header list should support read methods (get by key, get full object, get all, get by index, count), search methods (has, find, filter), iteration methods (forEach, map, reduce), and transform methods (to plain object, to string, to JSON).
+- All key-based lookups should be case-insensitive, matching HTTP header semantics.
+- The request's header list should be fully mutable: headers can be appended, set, deleted, cleared, populated in bulk, or merged from another source.
+- The response's header list should be read-only; attempting to modify it should result in a clear error.
+- Disabled headers (headers toggled off in the UI) should be visible through the header list, marked as such, and included in counts and searches.
+- Iteration methods should accept an optional context object for controlling the execution context within callback functions.
+
+## Why This Matters
+
+This improves the scripting experience significantly: developers can write cleaner, more expressive scripts that interact with headers in a familiar, well-defined way. It also enables consistent behavior when scripts are converted between Bruno and Postman formats — header list operations should be translated correctly in both directions so that collections can be imported and exported without losing header manipulation logic.

@@ -1,7 +1,18 @@
-I'm hitting two annoying bugs when I use label-based indexing (like `.loc`) to drop a list of values into just some of the rows of a brand new column on a DataFrame, and both of them corrupt or crash depending on what type of values I'm assigning.
+## Description
 
-First one's with strings. Say I've got a DataFrame with four rows and I assign a list of three strings to the first three rows of a new column, the fourth row that I never touched ends up holding the single character "n" instead of a proper missing value. Looks like "nan" is getting written into it and then truncated down to just its first character, so it's a string-length artifact where the new column probably gets sized to the width of the string values and the NaN filler overflows that. What I actually want there is NaN sitting in that untouched row, not garbage.
+When using label-based indexing to assign a list of values to only a subset of rows in a **new** DataFrame column, two bugs affect the result depending on the type of values being assigned.
 
-Second one's with booleans. Same deal, partial row assignment with a list of bools, but this time it blows up with a type error instead of silently corrupting. From what I can tell the new column gets created as a float column first so it can hold NaN in the rows I didn't select, and then it can't place the boolean values into that float dtype. I'd expect this to just work, with the untouched rows as NaN and the column coming out as object dtype so it can hold both the bools and the missing values.
+**Bug 1 — String lists produce garbage in unselected rows:**
+If the list contains strings and the row selection does not cover every row in the DataFrame, the unselected rows end up containing a single-character garbage string instead of a proper missing value (NaN). This appears to be a string truncation artifact.
 
-So in both cases the unselected rows should just be NaN and the assignment itself should succeed. Can you fix the partial-row-into-new-column path so it handles string lists (no truncated "n" garbage) and boolean lists (no type error, object dtype result) correctly? It's making it impossible to build up new columns row-by-row or in chunks reliably.
+**Bug 2 — Boolean lists raise a type error:**
+If the list contains boolean values and the row selection does not cover every row in the DataFrame, the operation raises a type error. The underlying cause is that the new column is initialized with a floating-point data type (to hold NaN for the unselected rows), and then booleans cannot be placed into it.
+
+## Expected Behavior
+
+- Assigning a list of strings to a partial row selection should leave unselected rows as NaN (not as a garbage string character).
+- Assigning a list of booleans to a partial row selection should succeed, with unselected rows holding NaN and the column having object dtype.
+
+## Why This Matters
+
+These bugs make it impossible to reliably build up new DataFrame columns row-by-row or in chunks using label-based partial assignment. Users expecting NaN in unselected rows instead get corrupted data or a runtime error depending on the value type.

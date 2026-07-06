@@ -1,5 +1,15 @@
-I'm chasing down a bug in the ruff linter, specifically the auto-fix for the rule that strips out empty or trivial `finally` clauses from a try-finally block. When the fix unwraps a bare try-finally and pulls the body back out to the outer indentation level, it breaks if one of the lines inside the try body starts with a form-feed character (that page-break control char, `\f`, that some Python files use as a visual section separator). What happens is the dedent logic just skips those lines, so instead of removing the indentation that the try block added, it leaves that line sitting at its original indent, and now the output is syntactically invalid Python that won't even parse.
+## Description
 
-The reason this happens is Python's own lexer treats a form-feed at the start of a line as resetting the indentation context, so the indentation-removal code needs to follow that same convention. I want it to preserve the form-feed character itself in the output but dedent the spaces that come after it, exactly like it'd dedent any other line in the block. So the `\f` stays, the extra leading whitespace introduced by the try wrapper goes away, and the fixed code parses cleanly.
+The linter rule that detects and automatically removes trivial finally clauses produces incorrect output when the body of the try block contains a line that starts with a form-feed (page-break) control character.
 
-Once the indentation handling is fixed, the affected test's expected output snapshot needs updating to match the corrected, valid Python. Net goal: applying this fix on a try-finally whose body contains a form-feed-prefixed line should yield well-formed Python instead of the broken indentation it currently spits out.
+When the auto-fix is applied to such a block, the resulting code is syntactically invalid: the line that started with the form-feed character retains its original indentation instead of being dedented to the correct level. This causes the fixed file to fail Python's parser.
+
+## Expected Behavior
+
+- The auto-fix should correctly remove the try-finally wrapper and extract the body with proper indentation, even when one or more lines in the body start with a form-feed character.
+- Form-feed characters at the start of a line should be preserved in the output, but the indentation that was introduced by the try block should be removed — consistent with how Python's own lexer treats form-feed characters as resetting the indentation context.
+- The resulting code must be syntactically valid Python.
+
+## Why This Matters
+
+Python source files occasionally use form-feed characters as page separators (they appear in some codebases as a visual separator between sections). The linter should handle these files gracefully and not generate broken code when applying automatic fixes.

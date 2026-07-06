@@ -1,5 +1,14 @@
-I'm hitting a layout annoyance with the spherical harmonics function in the special functions module, specifically the variant that returns derivative info alongside the values. When I give it a batch of angular coordinates and ask for the Jacobian and Hessian too, the derivative dimensions come out at the front of the output arrays instead of the end, which is backwards from how the rest of the library works where batch/data dims lead and the fixed structural dims trail.
+## Description
 
-The practical pain is I can't do the usual ellipsis indexing to grab a specific derivative component across my batch, I have to index into the first dimension instead, ugh. For the Jacobian the 2-element derivative axis is leading when it should be trailing, and for the Hessian the two derivative axes sit at the front rather than the two trailing positions.
+When computing spherical harmonics together with their first and second derivatives, the output arrays for the Jacobian and Hessian currently place the derivative dimensions as the **leading** axes. This is inconsistent with the standard array convention where batch/data dimensions come first and fixed-size structural dimensions come last.
 
-What I want is for these derivative outputs to follow the trailing-axes convention. So the Jacobian should put that 2-element derivative dimension as the last axis so I can select the theta-component and phi-component via trailing-axis indexing across all batch dims, and the Hessian should put its two derivative dimensions as the last two axes so each second-derivative component comes out via trailing two-axis indexing for every batch element. That'd line it up with common array conventions (like how linear-algebra matrix outputs are shaped) and make broadcasting actually pleasant. Also it'd match how other derivative-returning functions in the ecosystem are structured, so please just fix the axis placement in that spherical harmonic derivative path.
+For example, if you evaluate the spherical harmonic gradient over a batch of angular coordinates, the resulting array has the derivative components in the first positions rather than the last. This forces users to index into the front of the array to pick a derivative component, which breaks the usual ellipsis-based broadcasting idiom and makes the interface awkward compared to the rest of the library.
+
+## Expected Behavior
+
+- The Jacobian (first-derivative output) should place the 2-element derivative dimension as the **last axis** of the returned array, so that the theta-component and phi-component can each be selected via trailing-axis indexing across all batch dimensions.
+- The Hessian (second-derivative output) should place the two derivative dimensions as the **last two axes**, so each second-derivative component can be retrieved via trailing two-axis indexing for all batch elements.
+
+## Why This Matters
+
+The current leading-axis convention makes it difficult to write generic, batch-friendly code when working with spherical harmonic derivatives. Moving derivative dimensions to trailing positions aligns the API with common array conventions (e.g., how matrix outputs from linear-algebra routines are shaped), improves usability with broadcasting and ellipsis indexing, and is consistent with how other derivative-returning functions in the scientific computing ecosystem are structured.

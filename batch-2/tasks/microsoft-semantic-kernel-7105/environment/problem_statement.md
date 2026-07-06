@@ -1,7 +1,18 @@
-I'm hitting a bunch of friction with the function call and function result content types in this AI framework and want to fix them together. Right now when I build a function call object I can only give it one combined name string, there's no way to pass the plugin name and the function name separately and have the combined form derived for me, and after construction I can't read those two pieces back out individually either. I want to be able to construct it either way (combined string or separate plugin name plus function name), have both components accessible as their own fields afterward, and have both the combined name and the individual pieces show up in serialized output. Same deal for function result objects, they should also accept separate plugin name and function name params and expose them individually.
+## Description
 
-The arguments situation is annoying too, a function call only takes a serialized string today so if I already have a native dictionary I'm forced into a pointless serialize round trip. I want dictionaries accepted natively, and when two partial function call objects get merged (streaming), dictionary args should combine by merging the dicts. If one side has string args and the other has a dict, or the two objects have different identifiers, that should raise a clear error rather than doing something weird.
+Objects representing AI function calls in this framework only store a combined name identifier and do not separately expose the plugin name and function name components. This creates friction when constructing these objects from parts, when inspecting individual components after construction, and when serializing the objects for debugging or storage.
 
-Also when I convert a function result to a chat message and pass the unwrap flag, I want the result inline as plain text content instead of buried in a function result wrapper.
+Additionally, function call arguments can only be provided as serialized strings. When callers naturally pass native dictionaries, the system fails or behaves unexpectedly. Merging partial streaming function calls with dictionary arguments is also unsupported.
 
-Oh and there's a streaming merge bug, when I combine two streaming message chunks whose text content items belong to different response streams (different choice index), come from different model sources (different model id), or use different character encodings, both items should be kept as separate items in the result, not silently merged and not erroring out. This all lives around the function call, function result, and streaming text content types in the framework's contents/streaming content layer. Being able to split out plugin vs function name makes routing, diagnostics, and tooling way easier, dict args cut the serialization overhead, and the merge fixes stop quiet data loss.
+## Expected Behavior
+
+- Function call and function result objects should be constructable using either a combined name string or separate plugin name and function name fields
+- Both the plugin name and the function name should be individually accessible on the object after construction
+- Both forms should appear in serialized output
+- Dictionary arguments should be accepted and properly merged when combining two partial calls
+- Attempting to combine incompatible calls (different identifiers, mismatched argument types) should raise a clear error
+- When combining streaming message chunks with items that differ in choice index, model identifier, or text encoding, the chunks should be retained as separate items rather than being merged or causing an error
+
+## Why This Matters
+
+Being able to separate and inspect the plugin name and function name makes it easier to route calls, display diagnostics, and build tooling on top of this layer. Supporting dictionary arguments reduces unnecessary serialization overhead and makes the API more ergonomic. Better merging behavior for streaming content prevents subtle data loss or confusing failures.

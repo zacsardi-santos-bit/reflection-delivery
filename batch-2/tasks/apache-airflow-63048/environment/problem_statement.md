@@ -1,5 +1,16 @@
-I'm digging into the API operations layer for our CLI that lists resources off a server, and I hit a pagination bug that's driving me nuts. When I call the list operation with a specific page size (the limit), that limit just isn't showing up as a query parameter on the actual HTTP requests going out. The value gets accepted as a parameter fine, but it never makes it into the query string, so the server ignores what I asked for and falls back to its own internal default page size.
+## Description
 
-That mismatch is the real problem. When the server's default differs from the limit I passed, the offset arithmetic for the follow-up paginated requests goes sideways, and I end up with duplicate entries or missing items in the final result. Basically the caller's requested limit has zero effect on server-side behavior right now, which makes multi-page listing unreliable.
+When fetching paginated lists of resources through the API client, the requested page size is not being forwarded to the server as a query parameter. As a result, the server falls back to its own internal default page size, which may differ from what the client expects. This mismatch causes offset calculations in subsequent paginated requests to go wrong, potentially producing duplicate entries or missing items in the final result.
 
-What I want is for the limit to get forwarded to the server as a query parameter on every single HTTP request, the initial one and all the subsequent paginated ones too, not just some of them. Once each request carries the requested page size, the server returns the expected number of items per page and the offset math stays consistent across pages. So please wire the limit through into the query params for the whole pagination loop.
+## Expected Behavior
+
+- When a caller specifies a page size (limit), that limit should be sent to the server as a query parameter on **every** HTTP request, including the initial request and all subsequent paginated requests.
+- Without this, the server uses its own default page size, which can be different from the client's requested size, leading to incorrect pagination arithmetic.
+
+## Current Behavior
+
+The limit value is accepted as a parameter but is not included in the query parameters sent to the server. All paginated requests go out without the limit, so the server decides how many items to return independently.
+
+## Why This Matters
+
+Users relying on the CLI to list resources with a specific page size will get unreliable results — items may appear multiple times or not at all depending on how the server's default page size compares to the requested limit.

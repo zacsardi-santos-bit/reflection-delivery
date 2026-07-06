@@ -1,5 +1,15 @@
-I'm working on the gRPC Bazel build helpers and hitting a wall getting Windows MSVC builds to go green. The core problem is in `@bazel/grpc_build_system.bzl` where our binary and library macros just don't take a tags parameter, so I can't annotate platform-incompatible targets and have them excluded on unsupported platforms. I want the C++ binary macro and the library macro to both accept a tags argument and forward it straight through to the underlying native rules, same deal for the test macro which also needs to pass tags down to the native rule it wraps.
+## Description
 
-The bigger pain is polling. A bunch of our test variants depend on POSIX polling mechanisms that just don't exist on Windows, and right now those poller-based test configurations get generated unconditionally, which breaks the MSVC build outright. So I need the test macro to check whether we're targeting MSVC and, if we are, skip generating those polling-based test variants entirely instead of emitting stuff that can't run there.
+The gRPC build system macros need improvements to support building and testing on Windows with the MSVC compiler. Currently, several test targets and build targets rely on POSIX-specific polling mechanisms that do not exist on Windows. When these targets are attempted on a Windows MSVC build, they fail or produce errors because the polling-based variants are unconditionally generated.
 
-Oh and I want a small reusable helper in that same file that detects whether the current build is using MSVC, since I'll want to call it from other build files too, not just for the test macro's poller-skipping logic. That way individual targets across the codebase can be properly kept off Windows. Without this the full suite either fails at build time or spits out test targets that can't run on the platform.
+Additionally, the build helper macros do not support accepting platform-filtering tags, which means that platform-incompatible targets throughout the codebase cannot be properly annotated and excluded from unsupported platforms at build time.
+
+## Expected Behavior
+
+- A way to detect whether the current build is using MSVC should be available to all build files
+- The helper macros for defining C++ binaries and libraries should accept and forward tags to the underlying build rules, allowing platform-specific tags to be passed through
+- When building with MSVC, test targets that rely on POSIX polling mechanisms should be automatically skipped instead of generating incompatible test variants
+
+## Why This Matters
+
+Without these changes, attempting to run the full gRPC test suite on Windows MSVC either fails during build or produces test targets that cannot run on that platform. By introducing MSVC detection and tag propagation in the build system macros, individual build targets across the codebase can be properly excluded from unsupported platforms, and the build system will not try to generate POSIX-specific test configurations on Windows.

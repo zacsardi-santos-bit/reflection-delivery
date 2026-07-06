@@ -1,5 +1,16 @@
-I'm working in Keras's numpy-compatible ops layer and there's just no way to find unique elements of an array, which is annoying because I can't use it inside the symbolic tensor graph with proper shape inference. numpy has this, we don't, so I want to add it. Basically I need something that finds unique values across a flattened array, or unique slices along a given axis if I pass one, and optionally hands back inverse indices that map each position in the original array back to its corresponding unique element, plus per-element occurrence counts when I ask for them.
+## Description
 
-It's gotta work in both worlds, eager execution with concrete arrays and symbolic tensor computation where it does shape inference during graph construction. One key thing: I want to pass a fixed output size so shapes are known at compile time. When there are fewer unique elements than that size it should pad with a configurable fill value, and when there are more it should truncate. For symbolic tensors, giving a size should mean the output shape is statically known, otherwise it stays dynamic. Oh and I'd like an option to return results without sorting them. Also NaN handling, each not-a-number value in the input should count as its own distinct unique element, and empty arrays shouldn't blow up either.
+The Keras numpy operations module is missing an operation to find the unique elements of an array or along a specified axis. This is a standard numerical computing operation present in numpy but currently unavailable in Keras's numpy-compatible ops layer.
 
-Expose it both as a standalone function and as a class with a callable interface, living in the numpy ops module (`@keras/src/ops/numpy.py` sort of area) so it dispatches to the backend correctly. This shows up all the time in data preprocessing and model construction, and right now people have to drop down to framework-specific or external code to do it, which defeats the point of the ops abstraction.
+## Expected Behavior
+
+- Users should be able to find unique elements of an array (with optional flattening), or unique slices along a specific axis.
+- The operation should support returning inverse indices — which map each position in the original array back to its corresponding unique element — as well as element occurrence counts.
+- The operation should work with both eager execution (concrete arrays) and symbolic tensor computation (shape inference during graph construction).
+- When given a fixed output size, the operation should pad results with a configurable fill value when fewer unique elements exist than requested, or truncate when more exist. For symbolic tensors, a provided size should result in a statically known output shape.
+- The operation should support an option to return results in unsorted order.
+- Each NaN value in the input should be treated as a distinct unique element.
+
+## Why This Matters
+
+Without this operation, users cannot perform unique-element finding within Keras's op graph in a way that integrates correctly with shape inference and backend dispatch. This is a common operation in data preprocessing and model construction, so its absence forces users to fall back to framework-specific or external code.

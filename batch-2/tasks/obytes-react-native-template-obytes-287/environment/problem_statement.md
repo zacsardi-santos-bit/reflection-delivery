@@ -1,5 +1,13 @@
-I'm working on a React Native app that uses utility-based styling (think Tailwind style class names) and supports dark mode, and I hit an annoying bug with our primary button. In light mode it looks fine, but the second I flip my device to dark mode the button background goes light while the label text stays white, so the label is basically invisible, white on white, totally unreadable. It's a real accessibility problem since anyone with dark mode on just sees a blank button.
+## Description
 
-What I want is dark mode text color support on the button's default (primary) variant so the label adapts. In light mode the default label should keep appearing white like it does now, and in dark mode it should switch to black so it contrasts against the lighter button background. The large-size variant is the one specifically affected here, so when the button renders at large size the label's applied style classes need to include both the existing light mode white text style and the dark mode dark text color override alongside it (so the dark class sits next to the white one rather than replacing it).
+The Button component is missing dark mode support for its text color in the default (primary) variant. When the user's device is set to dark mode, the button's background changes to a light color, but the label text stays white — making it invisible or very hard to read. The button label needs to adapt its text color for dark mode so that it remains legible in both light and dark themes.
 
-Can you add that dark mode text color class to the default variant's large size in the Button component? Just need the label legible in both light and dark themes.
+## Expected Behavior
+
+- In light mode, the default button label text should continue to appear white.
+- In dark mode, the default button label text should switch to black to contrast with the lighter button background.
+- When the button is rendered at large size, the label's applied style classes should include both the light mode text color and the dark mode text color override.
+
+## Why This Matters
+
+Without this fix, users who have dark mode enabled on their devices will see white text on a white (or near-white) button background, rendering the button label completely unreadable. This is a straightforward accessibility and usability issue that affects all users in dark mode.

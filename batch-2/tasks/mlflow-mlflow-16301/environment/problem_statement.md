@@ -1,7 +1,15 @@
-I'm building out the MLflow TypeScript SDK and we've got a gap in the trace entity layer, there's literally no way right now to represent a trace's lifecycle state, where it lives, or the metadata that hangs off it, and nothing that ties all that together with the span data. I want to fill that in so devs can actually construct, inspect, and exchange trace data with the MLflow API since these are the building blocks everything else leans on.
+## Description
 
-So first I need a type for trace lifecycle states covering things like ok, error, in-progress, and unspecified, plus a utility that maps OpenTelemetry status codes into those states. Then a type for trace location since a trace can be stored either in an experiment or in an inference table, and a little helper that builds a location when you just hand it an experiment identifier.
+The TypeScript SDK is missing foundational entity types for working with traces. Currently there is no way to represent where a trace is stored, what lifecycle state it is in, or the metadata associated with it (such as its identifier, timestamps, and request/response previews). There is also no top-level object that ties together trace metadata and span data into a single structure that can be serialized and deserialized.
 
-On top of that I want a class holding all the trace metadata, so its unique id, the location, timestamps, the lifecycle state, optional request and response previews, the client request id, execution duration, metadata key-value pairs, tags, and assessments. Also a separate class that just holds the collection of spans making up the trace.
+## Expected Behavior
 
-And then the top-level class that combines the trace metadata with the span data. This one's the important bit, it needs to serialize the whole trace out to a plain JSON-compatible object and reconstruct a fully equivalent trace back from that JSON, so the round-trip has to be lossless for the key fields (id, location, timestamps, state, previews, tags, metadata, spans, all of it should survive the trip and come back equivalent). These all belong in the trace entities area of the SDK under the src tree, wherever the other core entity types would naturally sit.
+- There should be a type that describes the possible states a trace can be in (e.g., in-progress, completed successfully, errored, or unspecified), including a utility that converts existing OpenTelemetry status codes into these states.
+- There should be a type that represents where a trace is stored — for example, in an experiment or in an inference table — along with a convenience function for constructing a location from an experiment identifier.
+- There should be a class that holds all trace metadata, including its ID, location, timestamps, request/response previews, tags, and metadata key-value pairs.
+- There should be a class that holds the collection of spans associated with a trace.
+- There should be a top-level trace class that combines the metadata and span data, with the ability to serialize the entire trace to a plain JSON object and reconstruct it from that JSON (round-trip serialization).
+
+## Why This Matters
+
+Without these types, developers using the TypeScript SDK cannot construct, inspect, or exchange trace data with the MLflow API. These are the core building blocks that all other trace-related functionality depends on.

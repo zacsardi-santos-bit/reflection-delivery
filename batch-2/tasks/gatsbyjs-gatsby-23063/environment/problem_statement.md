@@ -1,7 +1,18 @@
-I'm hip-deep in the Gatsby Recipes system and two of the resource providers are giving me grief, the plugin one and the shadow file one, both living under the recipes resources area.
+## Description
 
-The plugin resource tests only ever run against a project that already has a big list of plugins in its config. I want coverage for a "hello world" style starter too, where the plugins array starts basically empty, since folks really do apply recipes to freshly initialized projects. To make that work I need the fixtures reorganized so each starter type gets its own subdirectory instead of one flat folder, then verify the plugin resource adds a plugin correctly against that near-empty config as well as the loaded one.
+The Gatsby Recipes system has two resource providers — one for managing Gatsby plugins and one for shadowing theme component files — that are not fully functional or properly tested.
 
-The shadow file resource is worse, it's basically a stub right now. The test was left with placeholder comments instead of real data and it leaned on spinning up a temp dir with a random name every run, which is flaky. I need it fully wired up for create, read, update, destroy, and plan. On create it should copy the component out of the theme's package into the project's local `src` tree, making any intermediate directories along the way. Every operation (create/read/update/destroy/plan) should hand back a structured object carrying the shadowed file's resolved path under the project source tree, the originating theme name, the file contents, and a friendly human-readable message.
+The plugin resource tests used a single flat fixture directory, which means testing against different types of Gatsby configurations (such as a minimal project that starts with no plugins) wasn't possible. There's a real use case for applying recipes to freshly initialized projects that have a nearly empty configuration file.
 
-Oh and there's a related bug in the plain file resource too, writing a file to a nested path blows up if the parent dirs don't exist yet. Fix that so it creates the necessary parent directories automatically before writing, so recipes don't crash or silently fail when they hit paths that aren't there yet. Basically I want all this working reliably across different project states, minimal starters included.
+The shadow file resource was also incomplete: it had placeholder test code with no real test data, relied on generating a temporary directory with a random name on every run, and the underlying implementation didn't properly handle creating intermediate directories or returning structured resource objects. The shadow file resource needs to support the full lifecycle — creating, reading, updating, destroying, and planning — for shadowing a component from a Gatsby theme.
+
+## Expected Behavior
+
+- The plugin resource should work correctly in a project with a minimal initial configuration (empty plugins list), not just in a project with many existing plugins.
+- The shadow file resource should be fully implemented with proper create, read, update, destroy, and plan support.
+- Shadow file operations should produce structured result objects describing the shadowed file, including the resolved destination path, the theme name, file contents, and a human-readable message.
+- The file resource should ensure that parent directories exist before writing a file, so recipes don't fail when writing to nested paths that don't yet exist.
+
+## Why This Matters
+
+Recipe authors need these resources to work reliably across different project configurations, including minimal starter projects. Without these fixes, running a recipe to add a plugin or shadow a theme component can silently fail or crash depending on the state of the target project.

@@ -1,7 +1,15 @@
-I'm cleaning up how task logs render in the Airflow web UI and it's driving me a little nuts. When a task runs and spits out structured logs, the logging framework auto-injects the same task identity metadata into every single message, stuff like the task id, DAG id, run id, and the other identity context fields, so every line repeats these and the whole thing is super noisy and hard to actually read.
+## Description
 
-What I want is to pull those repeated task identity fields out of the individual log lines and show them just once as a consolidated summary block, something like a "Task Identity" preamble. It should land after the log source details section and before the first real log entry. Then the individual lines should only show fields that are genuinely unique to that line (the custom structured fields that vary per line), not the identity metadata that's identical across the whole run.
+When viewing task logs in the Airflow UI, the structured log output is unnecessarily noisy because the logging framework automatically injects task identity metadata into every single log message. Fields like the task identifier, DAG identifier, run identifier, and similar context fields are identical across every line in a given task run — yet they appear repeated on every single log line, cluttering the view and making it hard to focus on the actual log content.
 
-Couple things to get right: there needs to be a clear defined set of which fields count as "task identity" so we know exactly what gets stripped from per-line rendering and surfaced in the summary instead. Oh and if the log data doesn't actually contain any of those identity fields, don't change anything, no summary block at all.
+## Expected Behavior
 
-Also this has to work in both places, the interactive log viewer in the UI and the downloadable plain-text version of the logs, so the extraction and consolidation logic needs to apply to both paths. The motivation here is just readability, these logs get long and people scan them to diagnose problems, so collapsing the repeated identity fields into one block up top makes them way easier to read.
+- Task identity fields that are common to every log line for a task instance should appear only once, in a dedicated "Task Identity" summary block, rather than on every individual log line.
+- The "Task Identity" summary block should appear after the log source details section, before the first real log entry.
+- Individual log lines should show only fields that vary per line (custom structured fields), not the repeated task identity metadata.
+- This cleanup should apply both in the interactive UI log viewer and in the downloadable text version of the logs.
+- If no task identity fields are present in the log data, no summary block should be added.
+
+## Why This Matters
+
+Task logs can be long and are often inspected to diagnose problems. Having the same task identity fields repeated on every line creates visual noise that slows down log reading. Consolidating these fields into a single preamble makes logs much easier to scan and understand.

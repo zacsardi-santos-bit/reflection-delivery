@@ -1,5 +1,16 @@
-I'm working on the DataHub metadata ingestion library and I want to teach the CLI to figure out what tool or environment is actually invoking it at runtime. Right now every outgoing API request looks identical to the server whether it came from a CI pipeline, an AI coding assistant, a plain terminal, or some other automation, and that makes it impossible to audit, trace, or attribute API traffic by source. So I want to embed a short caller label in the HTTP User-Agent header so the server (and operators) can identify the origin of each request, no changes needed from tool authors.
+## Description
 
-The detection should be tiered: first honor an explicit environment variable override that always wins, then look at the current process's own env for well-known signals from things like CI systems and AI coding tools (each has its own distinguishing env vars), then try reading the parent process's environment via the proc filesystem on Linux or a subprocess on macOS, and finally fall back to walking the process tree and inspecting ancestor process names. When multiple signals show up at once, AI coding tool signals should take priority over generic CI signals. Process name heuristics need to tell shells apart (a human at a terminal) from other parents.
+When DataHub's metadata ingestion tools make API calls to the server, there is currently no way to know what tool or environment originated those calls. Whether the ingestion was triggered by a CI pipeline, an AI coding assistant, a terminal session, or another automation tool, all requests look the same to the server. This makes it difficult to audit, trace, or attribute API activity by its source.
 
-Big thing: this has to be safe to call from anywhere. It should never raise, it should cache its result for the lifetime of the process, and it should always hand back a compact header-safe string, falling back to a safe default if detection fails entirely. Oh and update the User-Agent string format so it carries both the component name and the caller label together, so the server can parse both pieces out of the one header. This is all in the ingestion client bits, so wire the detection into wherever we build the User-Agent for outgoing requests.
+## Expected Behavior
+
+- The ingestion client should automatically detect the calling context at runtime using a tiered strategy: first by checking for an explicit caller override, then by examining known environment variable signals, then by inspecting the parent process's environment, and finally by walking the process tree.
+- The detected caller label should be included in the HTTP User-Agent header of every outgoing request.
+- Users should be able to override the auto-detected caller by setting a dedicated environment variable.
+- The detection should recognize common environments such as CI systems, AI coding assistants, and terminal sessions.
+- The detection logic must be robust: it should never crash or raise an exception. If detection fails for any reason, it should fall back gracefully to a safe default value.
+- The result should always be a compact, header-safe string.
+
+## Why This Matters
+
+This gives the DataHub server (and operators) visibility into what tools are generating API traffic — enabling better observability, debugging, and support for multi-tool environments without requiring any changes from tool authors.

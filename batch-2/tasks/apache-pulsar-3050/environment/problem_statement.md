@@ -1,7 +1,17 @@
-I'm hitting a reporting bug in Pulsar Functions stats and I want to sort out the whole picture around it. When I query stats for a function that hasn't processed any messages yet, the average process latency comes back as zero instead of being absent, and same deal with the last invocation timestamp, so I literally can't tell if the function is idle (nothing's hit it yet) or if it's just blazing fast with near-zero latency. What I want is for both the average process latency and the last invocation timestamp to be absent or missing until the function actually consumes something, and then once messages flow through, those fields should show real, meaningful non-zero values reflecting actual work.
+## Description
 
-The underlying data model needs fixing so the average-latency aggregation across multiple instances only counts instances that actually have data, not the ones sitting idle with nothing processed, otherwise the zeros drag the average down.
+Pulsar Functions currently expose a stats endpoint and admin API, but the statistics data model has a bug: when a function instance has never processed any messages, the average latency and last invocation timestamp fields report as zero instead of being absent. This makes it impossible for operators to distinguish an idle function (one that hasn't received any messages yet) from a function with near-zero latency.
 
-Also I need the admin API to expose per-function aggregate stats (across all instances) and individual per-instance stats as separately queryable things, and they've gotta be consistent, so the per-instance stats from a direct instance query should equal the matching entry inside the aggregate response.
+Additionally, the admin command-line tool does not have a stats subcommand for functions, so there is no way to inspect function statistics from the shell without writing custom code.
 
-Oh and there's no CLI subcommand for pulling function stats today, which makes quick operational checks a pain. I'd like to run a stats query from the shell by passing tenant, namespace, and function name and get back structured, parseable output. This all matters because monitoring dashboards and health checks currently can't distinguish idle from fast since both look identical, and without a CLI command doing a quick check means writing custom code.
+## Expected Behavior
+
+- When a function has not yet processed any messages, the average process latency and last invocation timestamp fields should be absent rather than defaulting to zero.
+- When a function has processed messages, those fields should report meaningful, non-zero values reflecting actual processing activity.
+- Both aggregate function statistics and per-instance statistics should be retrievable through the admin API, and the results from both access paths should be consistent with each other.
+- The aggregate statistics should correctly average latency across only the instances that have actual processing data, rather than including instances with no data in the average.
+- The admin command-line tool should support retrieving function statistics by tenant, namespace, and function name, returning parseable output.
+
+## Why This Matters
+
+Without this fix, monitoring dashboards and health checks cannot reliably determine whether a function is idle or fast — both states look the same. The absence of a CLI stats command also makes quick operational checks impractical.

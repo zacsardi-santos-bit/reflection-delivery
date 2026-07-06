@@ -1,7 +1,18 @@
-I'm cleaning up the defined-name box in our spreadsheet UI. The name box is where a user types a cell reference or a named range to jump to it, and it also lets them create new named ranges. Problem is all the logic that decides what happens when someone presses Enter in that input lives buried inside a component with zero unit tests, so regressions sneak through and I can't isolate anything. I want to pull it out into a dedicated utility file so it can be tested on its own.
+## Description
 
-Here's what the extracted logic needs to cover when Enter is pressed: if the typed text matches an existing named range (case-insensitive comparison), focus that named range; if it's a valid cell or range reference, navigate to that selection; if it's a new valid name with no conflicts, trigger creation of a new named range; and if it's invalid, say because it collides with a sheet name, just reset the input. I also want a validation helper that returns a clear duplicate-name error when a defined name with the same name already exists.
+The defined-name box logic in the spreadsheet UI — the code that decides what should happen when a user types in the name input and presses Enter — is currently deeply embedded inside a component, making it impossible to test in isolation. This logic covers several distinct cases: navigating to an existing named range, jumping to a typed cell or range reference, creating a brand-new named range, or rejecting invalid input. Because this behavior is untested, regressions are difficult to catch.
 
-On top of that I need a utility that builds an absolute reference string from the current sheet selection, handling both a single cell and a range. And another one for restoring keyboard focus to the sheet after a name action is confirmed, which has two cases: if the inline cell editor was open, close it properly; if it wasn't, clear all the editor-related focus states and return focus to the main sheet grid.
+Similarly, the code that restores keyboard focus to the sheet grid after a defined-name action is confirmed has no unit coverage. It must handle two different scenarios: one where the inline cell editor is currently open (in which case the editor must be closed), and one where it is not (in which case various editor focus states must be reset and focus must return to the sheet).
 
-Point is, without unit coverage this stuff silently breaks (wrong navigation, missed focus restoration, that kind of thing), so getting it into a standalone utility module I can test independently is the whole goal.
+## Expected Behavior
+
+- When a user types a name that already exists (case-insensitive), the name box should navigate to that existing named range.
+- When a user types a valid cell or range reference, the name box should navigate to that selection.
+- When a user types a new valid name with no conflicts, it should trigger creation of a new named range.
+- When a user types an invalid name (such as a name that conflicts with a sheet name), the input should be reset.
+- Validation should return a clear duplicate-name error when a defined name with the same name already exists.
+- After confirming a name, keyboard focus should be correctly restored to the sheet — either by closing the open cell editor, or by resetting all editor focus states.
+
+## Why This Matters
+
+Without unit tests for this logic, bugs in name-box behavior (wrong navigation, missed focus restoration, silent failures) go undetected. Extracting and testing this utility code makes the feature reliable and maintainable.

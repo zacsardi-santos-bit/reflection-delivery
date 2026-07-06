@@ -1,5 +1,13 @@
-I'm cleaning up the HTML export path for marimo notebooks and hitting a media problem. When I export a notebook to a standalone HTML file, any audio or video that references our internal virtual files (those `/@file/...` style URLs that encode the byte size in the path) ends up broken in the output because those URLs are unresolvable once the notebook server isn't running. Images already work, they get converted to inline base64 data URIs during export, but audio and video get left alone so they just don't play. I want audio and video inlined the same way images are so exported notebooks are fully self-contained for sharing or offline use.
+## Description
 
-One catch, I don't want to blow up the file size, so files over roughly 10 MB shouldn't be fully embedded. Instead swap in a small informational placeholder. Either way, whether it's inlined as base64 or replaced with a placeholder, the original internal virtual URL must not show up anywhere in the final HTML.
+When exporting a marimo notebook to a standalone HTML file, audio and video elements that reference internal virtual files end up with broken, unresolvable URLs in the output. Only images are currently converted to embedded base64 data during export — audio and video are left as-is, which means media playback does not work in the exported file.
 
-Also the helper that does the virtual-file-to-data-URI substitution needs an optional max size parameter so callers can set the threshold. When a file's size (read from its URL) is over that limit, it should substitute a `text/plain` placeholder data URI and not count that file among the successfully replaced ones.
+## Expected Behavior
+
+- Audio and video files referenced through internal virtual file URLs should be embedded directly in the exported HTML as base64-encoded data, just like images already are.
+- To prevent extremely large exported files, media files that exceed a reasonable size threshold (approximately 10 MB) should be replaced with a small informational placeholder rather than being fully embedded. The original internal URL should not appear in the final HTML in either case.
+- The underlying helper that performs virtual-file-to-data-URI conversion should accept an optional file size limit parameter. When a file's size (encoded in its URL) exceeds the limit, a text/plain placeholder data URI should be substituted and the file should not be counted among the successfully inlined files.
+
+## Why This Matters
+
+Users who include audio clips or video in their notebooks currently get broken media when they export to HTML for sharing or offline use. Extending the inlining behavior to cover audio and video — and capping it at a sensible size — would make exported notebooks fully self-contained and playable without the notebook server running.

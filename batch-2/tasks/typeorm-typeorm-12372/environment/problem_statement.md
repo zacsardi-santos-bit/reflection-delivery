@@ -1,5 +1,18 @@
-I'm working on our TypeORM codemod and hitting a bunch of false positives where transforms rewrite files that have nothing to do with TypeORM. Like if some project has a CLI options object or a logger config or a third-party lib config that happens to use the same property names or API patterns as TypeORM, the tool just rewrites it anyway. I want most transforms to first check that the file actually imports from the library before touching anything, and only proceed if it does.
+## Description
 
-The import detection has to catch all the common ways code can depend on a package: standard named ES imports, type-only imports, side-effect imports (the bare `import "pkg"` form), sub-path imports (like importing from a package subpath), CommonJS `require()` calls, and TypeScript's import-equals-require syntax. One thing that actually matters here, a package that just shares a name prefix with the target (say some separate extension package with a similar name) should NOT count as a match, so match on the real package boundary not just a prefix.
+The codemod migration tool runs automated code transformations too aggressively. Currently, several transforms apply to any file they encounter, regardless of whether that file actually uses the library being migrated. This causes false positives: a configuration file that happens to use the same field names or API patterns as TypeORM gets incorrectly rewritten, even though it has nothing to do with TypeORM.
 
-Also, separate issue but related, the tool keeps processing ambient type declaration files and rewriting identifiers inside them, which silently corrupts the published type info downstream consumers rely on. So it should always skip those `.d.ts` ambient declaration files by default, independent of whatever exclusion settings a user passes. And when a user does supply their own exclusion patterns, those should get merged with the built-in default patterns so both apply, not have the user patterns clobber the defaults. Oh and I want the built-in default exclusion patterns exposed as a named export so callers can inspect or extend them, plus a helper for merging user patterns with the defaults should be exported too so the merge logic is independently testable and reusable. Both failure modes here (rewriting unrelated files, corrupting type declarations) are really hard to spot after the fact so I'd rather guard against them up front.
+Additionally, ambient type declaration files are being processed by the tool even though rewriting identifiers inside them would silently corrupt the type definitions that downstream consumers depend on.
+
+## Expected Behavior
+
+- Most transforms should first verify that the file actually imports from the library before making any changes. This check must recognize all common import styles, including standard ES module imports, imports from sub-paths of the package, side-effect imports, CommonJS require calls, and TypeScript-specific import syntax.
+- A module whose name merely shares a prefix with the target (e.g. a different package with a similar name) should not count as a match.
+- Ambient type declaration files should always be excluded from processing by default, independently of any user-provided exclusion settings.
+- User-provided exclusion patterns should be merged with the built-in defaults so that both apply, rather than user patterns replacing the defaults.
+- The built-in default exclusion patterns must be accessible as a named export so that callers can inspect or extend them.
+- A helper for merging user patterns with the defaults should also be exported so that the merging logic is testable and reusable.
+
+## Why This Matters
+
+Without these guards, running the migration tool on a large codebase risks silently rewriting files that have nothing to do with the ORM — for example, CLI option objects, logger configuration, or third-party library configurations that happen to share key names. It also risks corrupting published type declarations. Both failure modes are difficult to detect and can cause subtle runtime or type-checking breakages after migration.

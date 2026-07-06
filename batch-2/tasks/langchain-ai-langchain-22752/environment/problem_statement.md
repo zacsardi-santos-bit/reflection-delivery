@@ -1,9 +1,19 @@
-I'm building a chat app and I keep rewriting the same conversation-history preprocessing in every project, so I want these baked into the messages module instead. Three things specifically: merging consecutive same-type messages into one, filtering history by type or speaker, and trimming to fit a token budget. Currently the messages module has nothing for this and it's boilerplate every time.
+## Description
 
-For merge, I want it to combine consecutive messages of the same type into a single message, joining plain text content with newlines and concatenating content blocks and tool calls for the complex ones. Anything that can't be merged (tool response messages and the like) should be left untouched, don't force those together.
+Working with LLM chat applications often requires managing conversation history before sending it to a model. Common operations include trimming history to fit a token limit, filtering messages by type or speaker, and combining consecutive same-role messages into one. Currently, the messages module doesn't provide any built-in utilities for these tasks, so developers are left writing the same boilerplate in every project.
 
-For filter, I want to select messages by type, name, or ID, with both inclusion and exclusion criteria. The type filters should be flexible and accept type names as strings, message class objects, or lists of either.
+## Expected Behavior
 
-For trim, I pass in my own token counting function since token counts differ by model, and I pick whether to keep messages from the start or the end of the list. I also want an option to include a partial message at the cut point, split either at content-block boundaries or down to text/word boundaries, plus always preserving a leading system message when I ask for it, and constraining which message type the result starts or ends on.
+Three utility functions should be added to the messages module:
 
-Oh and important: none of these should mutate the original message list, work on copies. Also I want each of them usable two ways. As a plain function where I pass the message list directly, and as a composable pipeline step so I can chain them with other components. Same function called without a message list should return something I can wire into a chain and invoke later, so the calling convention doesn't change whether I'm doing it inline or building a pipeline. And export all three from the top-level messages namespace so I can import them right alongside the existing message classes.
+- A **merge** function that combines consecutive messages of the same type into a single message, joining text content with newlines and concatenating content blocks and tool calls for complex messages. It should leave messages of types that cannot be merged (such as tool response messages) untouched.
+
+- A **filter** function that selects messages from a list based on their type, name, or ID. It should support both inclusion and exclusion criteria, and type filters should accept type names as strings, message class objects, or lists of either.
+
+- A **trim** function that reduces a message list to fit within a token budget provided by a custom counting function. It should support keeping messages from the start or end of the list, optionally including partial messages (split at content-block or text boundaries), always preserving a leading system message when requested, and constraining which message type the result starts or ends on.
+
+## Why This Matters
+
+All three utilities should work both as plain functions (passing the message list directly) and as composable pipeline components (returned when called without a message list, accepting input via invocation). This makes them easy to drop into chains and agents without changing the calling convention.
+
+These functions should be exported from the top-level messages namespace so they can be imported alongside existing message classes.

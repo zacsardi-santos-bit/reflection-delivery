@@ -1,3 +1,17 @@
-I'm adding lifecycle hook support to the PCL binder and want to get the semantics right. The idea is you declare named hook blocks in a PCL program, each describing a command to run at some point in a resource's lifecycle (before or after creating, updating, or deleting), and each block has a command attribute plus an optional flag for whether it fires during preview runs. Inside the command I want to reference runtime context about the resource being operated on, so its identifier, name, and type as string fields, and old/new inputs and outputs as dynamic-map fields. That runtime context should only resolve inside the command though, not in the preview flag, so referencing it from the preview flag needs to be a binding error.
+## Description
 
-A hook block should only allow those two attributes, command and the preview flag, and anything else should error out with a message listing the valid ones. Also I need resources to opt into hooks through their options block via a lifecycle hooks configuration that maps recognized event names to lists of hook references. So the binder has to validate that only known lifecycle event names are used, that the config itself is an object mapping event names to lists, and that each entry actually is a list. If someone attaches an unrecognized event name, or gives the config as a non-object, or gives an entry as a non-list, each of those should surface its own clear diagnostic error with a specific message. Oh and once a program binds successfully it should be possible to enumerate all the hook nodes off the program object as a retrievable collection. The relevant work lives in the PCL binder code, so wire the hook block binding, the runtime context scoping, the options-block validation, and the program-level hook enumeration through there.
+The Pulumi Configuration Language (PCL) has no way to express resource lifecycle hooks — named commands that should execute at specific points in a resource's lifecycle, such as before or after creation, updates, or deletion. There is also no mechanism to attach those hooks to specific resources.
+
+## Expected Behavior
+
+- Developers should be able to declare named hook blocks in a PCL program, each specifying a command to run and optionally whether the hook should execute during preview operations.
+- Inside the hook command, the author should be able to reference runtime context about the resource being operated on (its identifier, name, type, and input/output snapshots). This runtime context must not be available in the preview condition.
+- A hook block must only allow recognized attributes. Unrecognized attributes should produce a clear error message listing the supported ones.
+- Resources should be able to reference declared hooks via a lifecycle hooks configuration in the options block, associating them with recognized lifecycle event names.
+- The binder must validate that only known lifecycle event names are used, that the lifecycle hooks configuration in the options block has the correct object structure, and that each lifecycle entry maps to a list of hook references.
+- Attempting to attach a hook with an unrecognized lifecycle event name, or specifying the lifecycle hooks configuration in the options block as a non-object, or specifying a lifecycle entry as a non-list value, should all produce descriptive diagnostic errors.
+- A program that successfully binds hooks should expose those hooks as a retrievable collection on the program object.
+
+## Why This Matters
+
+Without lifecycle hook support, there is no standardized way in PCL to express pre/post-operation side effects for resources. Adding this capability allows infrastructure programs to attach commands to resource events in a validated, type-checked way.

@@ -1,5 +1,15 @@
-I'm building out the automations admin API in Ghost and hit a gap. Right now that endpoint only lets you browse and read automations, there's no way to flip one from active to inactive (or back) short of poking the database directly, which is obviously not great for admin clients or integrations that want to toggle things programmatically.
+## Description
 
-I want to add an edit operation so an admin client can send a PUT with a desired status and have just the status updated on an existing automation. The key thing is it needs to be strictly scoped to the status field, so even if the request body includes name, steps, or connections, those get silently ignored and stay unchanged. On success I want the full automation record back so the caller can confirm the new status while seeing the untouched name, steps, and connections reflected as they were.
+The automations admin API currently supports browsing and reading automations, but there is no way to change an automation's status (active/inactive) through the API. Administrators need to be able to enable or disable automations programmatically without resorting to direct database access.
 
-Also the status value needs validating. If someone passes an unrecognized value, reject it with a clear validation error that names the acceptable values and echoes back the bad value they sent so they know what went wrong. And if the status field is omitted entirely, reject that too with a validation error that lists the acceptable values (no echoed value in that case since there wasn't one). The error responses should be informative enough that a client knows exactly what's allowed.
+## Expected Behavior
+
+- The admin API should expose an update operation for automations that allows changing the status of an existing automation.
+- The update operation should only affect the automation's status — attempting to change the name, steps, or connections alongside the status should be silently ignored; those fields remain unchanged.
+- A successful update should return the full automation record, confirming the new status while reflecting the unchanged name, steps, and connections.
+- If an invalid status value is supplied, the API should reject the request with a clear validation error that names the acceptable values and includes the problematic value that was provided.
+- If the status field is omitted entirely, the API should also reject the request with a validation error listing the acceptable values.
+
+## Why This Matters
+
+Without this endpoint, the only way to activate or deactivate an automation is through direct database manipulation. Adding an API-level edit operation allows admin clients and integrations to toggle automation status safely and with proper validation feedback.

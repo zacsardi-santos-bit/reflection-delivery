@@ -1,7 +1,15 @@
-I'm hitting an annoying inconsistency with the Google AI model when I run it in streaming mode. Errors that pop up partway through a stream, like after some content has already been delivered, aren't getting wrapped into our standard framework error types the way non-streaming calls handle it. Instead I get raw low-level SDK exceptions leaking straight through, which totally breaks the error-handling contract I'm relying on.
+## Description
 
-For non-streaming requests this already works fine, HTTP errors get distinguished from general API errors and translated into the proper hierarchy. But during streaming, if the remote service starts sending a response and then hits something like a rate limit or a service outage, the raw SDK exception just bubbles up as-is. Same deal with other API-level errors mid-stream, they escape untranslated.
+When using the Google AI model in streaming mode, errors that occur partway through a stream — after some content has already been delivered — are not wrapped into the framework's standard error types. Instead, they bubble up as raw, low-level SDK exceptions, which breaks the consistent error-handling contract that developers rely on.
 
-What I want is for streaming errors to get caught and re-raised into the same hierarchy we use for non-streaming. So if a rate-limit or service-unavailability error (or really any HTTP error with status 400 and above) happens mid-stream, I should get back a typed HTTP error that preserves the status code and keeps the original error details in the body. And if it's a non-HTTP API error (say a redirect), I want a generic model API error that carries the model name attached to it.
+For non-streaming requests, errors are already properly translated into the framework's error hierarchy (distinguishing HTTP errors with status codes from general API errors). But during streaming, if the remote service starts sending a response and then encounters an issue (such as a rate limit or service outage), the raw SDK exception leaks through rather than being caught and re-raised as a typed framework error.
 
-The key thing is the error type and structure should be identical whether the failure happened before the stream started or midway through it. My retry logic, error logging, and user-facing messages all depend on catching a predictable set of error types, and right now raw SDK errors escaping from streaming calls make that code fail silently or crash. The fix lives around the Google AI streaming path, so wherever the stream is consumed and yielded, wrap it so those exceptions get mapped the same way the non-streaming code already does it.
+## Expected Behavior
+
+- If a rate-limit or service-unavailability error occurs mid-stream, developers should receive a structured HTTP error with the correct status code and the original error details preserved in the body.
+- If a non-HTTP API error (e.g., a redirect) occurs mid-stream, developers should receive a generic model API error with the model name attached.
+- The error type and structure should be the same regardless of whether the error occurred before or during streaming.
+
+## Why This Matters
+
+Developers building retry logic, error logging, or user-facing error messages depend on being able to catch a predictable set of error types. When raw SDK errors escape from streaming calls, this error-handling code fails silently or crashes, making it much harder to build reliable applications on top of streaming AI responses.

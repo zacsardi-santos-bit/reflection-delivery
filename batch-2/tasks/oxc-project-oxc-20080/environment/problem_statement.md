@@ -1,3 +1,13 @@
-I'm hitting a nasty perf issue in the language server that does code action suggestions on top of our linter. Right now whenever a code action request comes in for a file and we've got nothing cached, we just kick off a full lint run on that file immediately. Problem is editors fire code action requests constantly, on file open, on every cursor move, during background scanning, so the linter ends up running on basically every editor event even when the user never actually asked to see any fixes. It's chewing CPU, adding memory pressure, and making editing feel sluggish.
+## Description
 
-What I want is for us to only auto-run the linter when the user has explicitly invoked code actions, like hitting a keyboard shortcut to pull up available fixes. In that explicit case, if there's nothing cached, go ahead and lint the file and return the resulting suggestions like we do today. But for everything else, the automatic or background requests (which is the default trigger kind a lot of editors send), we should just hand back whatever's already in the cache and not start a new lint run. And if there's nothing cached and it wasn't an explicit invocation, just return an empty response instead of triggering that expensive background lint. So the distinction really comes down to inspecting how the request was triggered and branching on explicit vs automatic. That way linting only happens when someone actively asks for it and normal typing stays fast and responsive, while explicit requests still get accurate up to date suggestions.
+The language server runs the linter on every code action request whenever no cached results are available — regardless of how the request was triggered. Code action requests are sent very frequently by editors: on file open, cursor movement, and during background scanning. This causes the linter to run constantly during normal editing, leading to significant CPU usage, memory pressure, and a sluggish user experience.
+
+## Expected Behavior
+
+- When a user **explicitly invokes** code actions (e.g., via a keyboard shortcut or a deliberate editor action), the server should lint the file if no cached results exist and return the resulting suggestions.
+- When code actions are requested **automatically or in the background** (the default behavior for many editors), the server should only return previously cached results — without triggering a new lint run.
+- If no cached results exist and the request is not an explicit invocation, the server should return an empty response rather than triggering expensive background linting.
+
+## Why This Matters
+
+By limiting automatic linting to explicit user-triggered requests, the language server becomes far more responsive during normal editing. Users experience less lag and reduced resource usage, while still receiving accurate code action suggestions when they actively request them.

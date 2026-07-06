@@ -33,8 +33,8 @@ timeout_sec = 3000
 
 [metadata]
 difficulty = "hard"
-difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
-pass_at_k_opus_4_8 = "0/13"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8 = 0)"
+pass_at_k_opus_4_8 = "0/8"
 category = "Data Processing and ETL"
 subcategory = "ETL pipelines"
 objective_labels = ["Implement", "Validate"]

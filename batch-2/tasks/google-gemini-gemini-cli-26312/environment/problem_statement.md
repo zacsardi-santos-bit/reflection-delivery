@@ -1,5 +1,15 @@
-I'm working on the MCP client's OAuth handling for HTTP-based servers and hitting a real problem with long sessions. Right now when a server needs OAuth we grab the access token once at connection setup and bake it straight into the HTTP transport. The second that token expires mid-session, every request after that fails with auth errors and there's no way for the transport to refresh or re-acquire, so the user just has to restart the CLI. Even servers whose stored tokens haven't expired are using this snapshot approach, which means a token cached in memory can outlive its actual validity window with nothing to trigger a refresh.
+## Description
 
-What I want is a dynamic token provider that fetches and if needed refreshes the OAuth token on demand at request time instead of freezing a static snapshot at startup. The transport creation logic should check token storage for stored credentials and, if any are found (whether or not the server config explicitly marks OAuth as enabled), wire up this dynamic provider rather than embedding a bare token in the request headers.
+When connecting to an MCP server that requires OAuth authentication, the current implementation fetches a single access token at connection setup time and freezes it inside the HTTP transport. As soon as that token expires, all subsequent requests to the server fail with authentication errors — the transport has no way to refresh or re-acquire a valid token because the credential was captured once at startup.
 
-For tokens that carry a known expiration timestamp the provider should briefly cache the result in memory so we're not hitting storage on every single request, but only for as long as that token stays valid. For tokens with no expiration timestamp we skip the in-memory cache entirely and re-fetch on every call, since we can't know when they'll go invalid, and we don't want stale creds reused indefinitely. Oh and the dynamic provider needs to plug into the existing OAuth provider and token storage infrastructure so it can retrieve, validate, and refresh stored credentials transparently. Net goal is keeping connections alive across token renewals without forcing a restart.
+There is also a secondary issue: even servers whose stored OAuth tokens haven't expired are using this "snapshot" approach, which means tokens cached in memory can outlive their actual validity window with no mechanism for refresh.
+
+## Expected Behavior
+
+- When an MCP server has stored OAuth credentials, the transport should use a dynamic token provider that can look up and return a fresh valid token on demand at request time, rather than locking in a single token at connection time.
+- If the stored token includes an expiration timestamp, the provider should cache the result in memory to reduce redundant lookups, but only for as long as the token remains valid.
+- If the stored token does not include an expiration timestamp, the provider must re-fetch the token on each request so stale credentials are never indefinitely reused.
+
+## Why This Matters
+
+Long-running sessions are broken today as soon as an OAuth token expires mid-session. The dynamic approach keeps connections alive across token renewals without requiring the user to restart the CLI.

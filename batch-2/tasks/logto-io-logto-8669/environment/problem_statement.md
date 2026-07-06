@@ -1,7 +1,16 @@
-I'm extending our multi-tenant OIDC signing key management to support scheduled key rotation. Right now an admin can stage a new signing key as "next" and rotate it immediately (forcing full cache invalidation to make it active), but there's no way to schedule a future activation. I want to record a future timestamp saying when the staged key should automatically become the active signing key, so we can publish the new key to the JWKS/discovery endpoint ahead of time and only start signing with it after a grace period, which is the zero-downtime rotation workflow operators actually want.
+## Description
 
-A few related things need fixing along the way. Our tenant health check currently reads straight from the distributed cache (Redis) to decide if the tenant needs recreating, but it doesn't fall back to the database when the cache is empty. I want it to consult the database-backed signing key rotation state using the cache as a read-through layer, so check the cache first, fall back to the DB when needed, and cache whatever the DB returns (including "nothing", so we don't hammer the DB on every health check). Once the scheduled time for a staged key arrives, the tenant should report itself unhealthy so it gets recreated.
+We need to add support for scheduled signing key rotation in our multi-tenant OIDC system. Currently, when an administrator stages a new signing key (marking it as "next"), there is no mechanism to automatically promote it to active status at a specific future time. The system also has a gap: cache invalidation only writes to the distributed cache (Redis), with no corresponding persistence to the database.
 
-Cache invalidation also only writes a timestamp to Redis today, it should persist to the database too so the state survives cache evictions and stays consistent. The persisted state holds both the cache invalidation time and the scheduled rotation time as separate fields that update independently, so each update merges its field into the existing row rather than clobbering the whole thing.
+## Expected Behavior
 
-And during tenant recreation, specifically during environment setup / load, before loading the OIDC config, the system should detect whether a previously scheduled rotation is now due and automatically promote the staged key to active. Oh and I need a helper that transitions key statuses: promote the staged key to active, demote the previously active key to retired, and just return the original key set unchanged when there's no staged key present.
+- Administrators should be able to record a future timestamp specifying when a staged signing key should become the active signing key.
+- The scheduled rotation timestamp, along with the cache invalidation timestamp, should be persisted to the database — not just held in Redis.
+- When a tenant checks whether it is still healthy, it should consult the database-backed signing key rotation state (using the distributed cache as a read-through layer to avoid redundant database queries).
+- When the scheduled time for a staged key arrives, the tenant should report itself as unhealthy so it gets recreated.
+- During tenant recreation (specifically during environment setup), the system should automatically promote any staged signing key whose scheduled activation time has passed, before loading OIDC configuration.
+- A helper function should exist to transition key statuses: promoting the staged key to active and demoting the previously active key to the retired state, and returning the original key set unchanged when no staged key is present.
+
+## Why This Matters
+
+Without this, staged signing keys can only be activated immediately (by forcing full cache invalidation). There is no way to pre-stage a key and have it go live at a predictable future time. This is important for zero-downtime key rotation workflows where operators want to publish the new key to the JWKS endpoint ahead of time, then switch to signing with it only after a grace period.

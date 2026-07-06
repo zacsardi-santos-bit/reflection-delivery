@@ -1,5 +1,17 @@
-I'm trying to clean up the benchmark datasets code and it's turned into this giant monolith where every dataset type gets imported and re-exported from one spot, and as we add more dataset types it's getting really painful to navigate, test, and maintain. Right now you can't even import a specific sampler from its own place, everything has to come through the top-level namespace, which is annoying.
+## Description
 
-What I want is to break this apart so each dataset type lives in its own dedicated submodule and each sampler function is independently importable from its own location. On top of that I want a central registry that maps dataset name strings to their loaders, exported from the top-level package, and it needs entries for every dataset type the benchmark tool currently supports. Then a single dispatch function should use that registry to pick and run the right loader instead of some ever-growing chain of if/else conditionals, and it should raise a clear error when someone passes a dataset name that isn't recognized.
+The benchmark tool's dataset-loading code has grown into an unwieldy monolith where all dataset types are imported and re-exported from a single location. As the number of supported dataset types has grown, this makes the module harder to navigate, test, and maintain. It is also not possible to import a specific dataset sampler from its own dedicated submodule — everything must come through the top-level namespace.
 
-The dispatch has to return the right row type per dataset, so regular typed data rows for most of them but plain dictionaries for the trace-replay dataset type (that one's used for trace-replay workloads). And the samplers themselves need to keep returning correctly typed rows: the random sampler should support both plain text strings and tokenized ID lists depending on what the caller wants, image samplers must include image data in each row, and the OpenAI-compatible sampler has to preserve optional per-request fields like temperature and tool definitions in each row's metadata. The whole point is that adding a new dataset type shouldn't mean editing a growing conditional, and callers who only need one dataset can just import that one thing.
+We need to reorganize the benchmark datasets code into a proper package structure where each dataset type lives in its own submodule. Additionally, a central registry should be introduced that maps dataset name strings to their respective loaders, so the dispatch logic is data-driven rather than an ever-growing chain of conditionals.
+
+## Expected Behavior
+
+- Each dataset sampler function should be importable from its own dedicated submodule, with each sampler independently accessible from its own location.
+- A registry mapping dataset names to loaders should be exported from the top-level package, and must include entries for all currently supported dataset types.
+- A unified dispatch function should use this registry to select and run the appropriate loader, and should raise a clear error when an unrecognized dataset name is provided.
+- The dispatch function should return the correct row type for each dataset — regular data rows for most datasets, plain dictionaries for the trace-replay dataset type.
+- Each sampler must continue to return correctly typed rows: random samplers should support both text and tokenized-ID output; image samplers must include image data; OpenAI-format samplers must preserve optional per-request fields such as temperature and tool definitions.
+
+## Why This Matters
+
+With a registry-based dispatch, adding new dataset types no longer requires modifying a growing conditional block. The clean submodule structure makes each sampler independently discoverable and testable. Callers working with a specific dataset can import only what they need rather than pulling in the entire datasets namespace.

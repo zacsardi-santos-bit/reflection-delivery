@@ -1,3 +1,14 @@
-I've been leaning on the query traversal system to analyze GraphQL documents, and it's great for read-only inspection but I keep hitting a wall because I can't actually modify a query while walking it. What I want is a transformation mode on the traversal API that produces a new, modified document out of my visitor callbacks. From inside a visitor I should be able to rename a field, delete a field, delete an inline fragment, delete a fragment spread, or add new sibling fields, and get back a document that's correctly structured and reflects all those edits. Right now there's no way to do query rewriting, field aliasing, or any kind of pre-processing pipeline that alters the AST before execution, so people end up hand-rolling tree-walking logic that's error-prone and skips the schema-aware visitor machinery that's already there.
+## Description
 
-Couple more things. When I'm in an inline fragment or fragment spread callback I need the same traversal context that field visitors get, so the same transformation utilities work in those callbacks too, right now they don't expose it. Also for the descent rules: when I transform a full document, I want it to visit fragment spreads but not descend into the bodies of named fragment definitions, those named fragments should only be traversable when I explicitly hand one in as the traversal root. And when a fragment definition is the root instead of a whole document, the transformation should traverse it and return the modified fragment. This kind of rewriting shows up all the time for middleware, instrumentation, and federation layers, so it'd be really nice to have it built in.
+The query traversal system currently only supports read-only analysis — developers can inspect query fields, fragments, and types, but there is no way to programmatically modify the query structure and get back a transformed document. This makes it impossible to build features like query rewriting, field aliasing, or pre-processing pipelines that need to alter the query AST before execution.
+
+## Expected Behavior
+
+- The traversal API should support a transformation mode that allows a visitor to rename fields, delete fields, delete inline fragments, delete fragment spreads, or add new sibling fields — and receive a new, modified document as output.
+- Visitor callbacks for inline fragments and fragment spreads should expose the traversal context, so that the same transformation utilities available in field visitors can also be used in those callbacks.
+- When performing a transformation over a full document, the traversal should visit fragment spreads but should not descend into the bodies of named fragment definitions — named fragments should only be traversable when explicitly supplied as the traversal root.
+- When a fragment definition is used as the traversal root (rather than a full document), the transformation should traverse and return the modified fragment.
+
+## Why This Matters
+
+Query rewriting and AST transformation are common needs for middleware, instrumentation, and schema federation layers. Without a built-in transformation API, developers must implement custom tree-walking logic, which is error-prone and bypasses the schema-aware visitor machinery already present in the library.

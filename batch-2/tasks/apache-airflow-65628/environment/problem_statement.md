@@ -1,7 +1,22 @@
-I'm hitting two related bugs in the DAG run clear operation in Airflow, both in the clear endpoint that handles dry-run mode from the web UI and API.
+## Description
 
-First one: when I trigger a dry-run of the clear DAG run action from the UI, the confirmation modal that's supposed to list the task instances that would be affected comes up completely empty. The API is actually returning task instance objects, but the critical display fields aren't populated, stuff like the DAG's display name and the run ID. The problem is those fields need database joins to resolve relationship data, and the dry-run path isn't fetching task instances with that relationship data loaded, so serialization silently fails and the UI gets nothing usable. I need the dry-run path to pull task instances with all the required relationship data so the response comes back fully populated (display names, run IDs, states, and every other response field). Oh and when filtering to only failed tasks, only instances actually in a failed state should show up, each with complete field data.
+There are two bugs in the DAG run "clear" operation that affect dry-run mode in the Airflow web UI and API:
 
-Second one: the "only new tasks" option (the idea being if a DAG got updated after a run was created, you can queue task instances just for the newly added tasks) doesn't work reliably. Right now it uses a DAG version comparison strategy that breaks in certain DAG bundle configurations, sometimes returning an empty set even when there clearly are new tasks, or just wrong results. I want to switch this to a task-instance existence check instead: a task counts as "new" if it appears in the latest DAG version but has no existing task instance for the current run. That's reliable across all the bundle configs. Also after new task instances get created through a real (non-dry-run) "only new" clear, the next dry-run preview should report zero new tasks, and right now that's inconsistent.
+**Bug 1: Dry-run response is missing task instance fields, causing empty UI modal**
 
-The dry-run confirmation modal is a key safety check that lets people see what'll be re-run before they commit, so an always-empty modal makes it useless, and the "only new" bug means anyone trying to queue newly added tasks gets unpredictable results depending on how their DAGs are bundled.
+When a user triggers a dry-run of the "clear DAG run" action from the UI, the confirmation modal should display a list of task instances that would be affected. Instead, the list appears empty. The API is returning task instance objects, but without the necessary relationship data needed to populate fields like the DAG's display name. Because those fields require database joins that are not being performed, the serialization silently fails and the UI receives no usable data.
+
+**Bug 2: "Only new tasks" feature does not correctly identify new tasks**
+
+The option to clear only tasks that are "new" to a DAG run (i.e., tasks added to the DAG definition after the run was created) uses a DAG version comparison strategy that does not work reliably in all DAG bundle configurations. In some setups, this approach returns an empty set even when there are genuinely new tasks, or returns incorrect results.
+
+## Expected Behavior
+
+- A dry-run clear request must return fully populated task instance data (display names, run IDs, states, and all other response fields).
+- When filtering to only failed tasks, only task instances with a failed state should be included, each with complete field data.
+- The "only new tasks" detection must use a task-instance existence check: a task is "new" if it appears in the latest DAG version but has no existing task instance for the current run. This approach is reliable across all DAG bundle configurations.
+- After new task instances are created via a real (non-dry-run) "only new" clear, a subsequent dry-run preview should show zero new tasks.
+
+## Why This Matters
+
+The dry-run confirmation modal is a key safety check that lets users see what will be re-run before committing. If it always appears empty, users cannot make informed decisions. The "only new tasks" bug means users trying to queue newly added tasks in an existing run get unpredictable results depending on how their DAGs are bundled.

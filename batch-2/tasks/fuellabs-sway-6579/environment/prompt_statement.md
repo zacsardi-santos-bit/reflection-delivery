@@ -1,0 +1,9 @@
+I'm stuck getting the workspace to compile after I bumped two deps to their latest versions, and both of them shipped breaking API changes so the whole thing is red right now, nothing builds, no tests run.
+
+First one's easy-ish: the TOML editing lib renamed its main mutable document type, so anywhere we parse a TOML file into an editable structure is pointing at a name that doesn't exist anymore and needs to move to the new one. Just gotta swap those over wherever we do mutable parsing.
+
+The EVM execution lib is the real headache, it went through a big architectural rework. You can't construct the VM the old direct way anymore, it's a builder pattern now. Transaction fields that used to be plain struct fields are behind an accessor method these days. The commit call used to hand back a value directly but now returns a result type you have to handle. And the execution result type got moved into a primitives submodule and turned into a proper enum with variants for success, revert, and halt, each carrying their own fields. Oh and the old success-reason enum got replaced with a new one that has different variant names, including a new variant for a contract-return mode that didn't exist before.
+
+So the EVM test harness that runs EVM-targeted programs needs all of this reflected: build the EVM via the builder, handle the result coming out of commit, match on the new enum variants to tell a successful contract creation apart from a revert or a halt, pull out the deployed contract's address, set up a follow-up call transaction through the new accessor, then read the final execution outcome to produce the right test result.
+
+Can you bump the workspace to the new versions of both libs and migrate everything to the new APIs so it compiles and the tests pass again? That includes getting the previously-passing client tooling tests (deploy, submit, encode, node URL) green again too. Right now this blocks every dev and CI since nothing compiles at all.

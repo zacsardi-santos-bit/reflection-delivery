@@ -1,5 +1,13 @@
-I'm running into a parser bug with Svelte list-rendering blocks whenever the key expression has parentheses in it. So you know how in an each block you can put a key in parens at the end of the opening tag? If that key is itself a method call or a function call, so it's got its own parens, the parser chokes. It looks like it grabs the inner closing paren of the call and treats that as the end of the key expression, which then throws off everything after it and I get a cascade of spurious parse errors for the rest of the file.
+## Description
 
-Concretely, if I call a string-conversion method on the iterated item as the key, that should parse fine with zero diagnostics. Same deal if I pass the item into some helper key-generation function, also should parse clean. In both cases the whole call expression, including its own parentheses, needs to be captured as the key content, not truncated at the first inner paren.
+The HTML parser crashes when parsing Svelte list-rendering blocks that use method calls or function calls as the iteration key. Any time the key expression (the value in parentheses at the end of the block opening) itself contains parentheses — such as calling a method on the iterated item or passing the item to a helper function — the parser misinterprets the inner closing parenthesis as the end of the key expression. This causes a cascade of parse errors for the rest of the file.
 
-These are totally valid, idiomatic Svelte patterns that show up in real templates all the time, so rejecting them with parse errors basically blocks the formatter and linter from touching otherwise perfectly good files. Can you fix the key-expression parsing in the HTML parser so it handles nested parentheses correctly and balances them instead of stopping at the first closing one?
+## Expected Behavior
+
+- Svelte list-rendering blocks with a method call as the key expression (e.g., calling a string-conversion method on the item) should parse successfully with no errors.
+- Svelte list-rendering blocks with a function call as the key expression (e.g., passing the item to a key-generation function) should also parse successfully with no errors.
+- In both cases the full call expression — including its own parentheses — should be captured as the key content.
+
+## Why This Matters
+
+These patterns are idiomatic Svelte and commonly appear in real-world templates. Rejecting them with spurious parse errors means the formatter and linter cannot process files that are perfectly valid Svelte code, blocking adoption for any project that relies on these patterns.

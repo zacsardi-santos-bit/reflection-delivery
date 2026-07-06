@@ -1,9 +1,16 @@
-I work at a company that uses single sign-on for DataHub, so I can't do username/password auth or generate a personal access token myself. Right now the CLI config command only supports those two paths (passing a token directly or username and password), which means I have to open the web UI, make a token there, and paste it back into my config, which is clunky.
+## Description
 
-What I want is a browser-based SSO login mode on the configuration command. When I use it, it should open a browser window, let me finish my org's identity provider login, and then automatically generate a token and save it along with the host URL to my config file. Print me a confirmation message so I know it worked, and specifically save the generated token name plus the host. This SSO mode has to be mutually exclusive with directly supplying a token or username/password, so if I combine them it should fail with a clear error.
+The DataHub CLI configuration command currently supports two authentication methods: providing a personal access token directly or authenticating with a username and password. However, organizations that rely on browser-based single sign-on have no way to use the CLI to generate and save a token automatically — users must manually navigate to the web UI to create a token and then copy it back into their CLI setup.
 
-Also there's a companion flag I need for support-access scenarios, oh and it only makes sense alongside SSO mode, so combining it with SSO signals a special access request but using it on its own (without SSO enabled) should be rejected with a clear error message.
+## Expected Behavior
 
-The default token lifetime should be sensible depending on the deployment: shorter for cloud-hosted instances, longer for local dev instances. For cloud URLs that carry a path suffix identifying the backend service, derive the frontend URL by stripping that suffix. For local instances, translate the backend port to the frontend port automatically.
+- The configuration command should support a browser-based SSO login mode that opens a browser window, lets the user complete their identity provider login, and automatically generates and stores an access token in the config file.
+- The SSO mode should be mutually exclusive with providing credentials (username/password or token) directly. Attempting to combine them should produce a clear error message.
+- The SSO mode should support a companion flag for special support-access use cases; that flag should require the SSO mode to also be active — using it alone should produce a clear error.
+- The default token duration should vary based on whether the host is a local development instance or a cloud-hosted deployment.
+- When SSO login succeeds, the generated token name and the host URL should be saved to the config file, and the user should see a confirmation message.
+- If previous CLI-generated tokens already exist for the user, a warning with a link to manage them should be printed so the user knows to clean up stale credentials.
 
-And one more thing, if there are already CLI-generated tokens active for that user, print a warning with a link to the token management page so I know to go clean up stale tokens. This all lives in the CLI configuration command code.
+## Why This Matters
+
+Users in SSO-enforced environments cannot authenticate via username/password, and manually creating tokens through the web UI adds friction. A browser-driven SSO flow in the CLI removes that barrier and makes it straightforward to configure access in such environments.

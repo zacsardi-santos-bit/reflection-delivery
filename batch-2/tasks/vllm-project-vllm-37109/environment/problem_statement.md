@@ -1,5 +1,17 @@
-I'm cleaning up the KV offloading subsystem and I want to break its dependency on the GPU block cache internals. Right now the offloading layer identifies offloaded blocks using the exact same hash type that the GPU block cache uses internally, and that hash carries zero group info, so I literally can't tell apart blocks that belong to different KV cache groups. If two hashes collide across groups, they look identical, which is bad. So I want a dedicated offload key type that packages a block's hash together with its cache group index, so the offloading manager can treat blocks from different groups as distinct even when hashes collide, and callers stop needing to import or understand the GPU cache's block-hash type.
+## Description
 
-Concretely, in the offloading abstract module I want the new key type defined and exported along with a factory function that builds a key from raw hash bytes plus a group index integer. The result object from the prepare-store operation needs its fields renamed so the list of blocks chosen for storing and the list of evicted blocks both use the new key type. The event objects that report block stores and evictions need their block-identifier field switched over to the new type too. And all the offloading manager methods, storing, loading, touching, and looking up blocks, should accept collections of the new key type instead of the old hash.
+The KV offloading layer currently identifies offloaded blocks using the same hash type that the GPU block cache uses internally. This creates an unwanted dependency between the offloading subsystem and the GPU cache, and—more importantly—it makes it impossible to distinguish blocks that belong to different KV cache groups, because only a hash is stored with no group information.
 
-Oh and on the scheduler side, the block-size settings are currently flat top-level attributes, and I want them reorganized into a structured config object that holds per-group settings, so the scheduler can eventually handle multiple KV cache groups rather than assuming one. Expose the per-group block-size config through that structured object.
+We need a dedicated key type for the offloading system that packages a block's hash together with its cache group index. This lets the offloading manager treat blocks from different groups as distinct entries even when their hashes collide, and it decouples the offloading API from the GPU cache internals.
+
+## Expected Behavior
+
+- A new dedicated offload key type and a corresponding factory function must be introduced and exported from the offloading abstract module.
+- All offloading manager operations (store, load, touch, lookup) must accept collections of the new key type.
+- The result objects returned by prepare-store must report the blocks selected for storing and the blocks evicted using the new key type (renaming the existing fields accordingly).
+- Offloading event objects must similarly report their affected blocks using the new key type.
+- The scheduler must expose its per-group block-size configuration through a structured config object rather than as flat top-level properties.
+
+## Why This Matters
+
+Without this change, the offloading system cannot support multiple KV cache groups — it has no way to record which group a stored block belongs to. The refactoring also makes the offloading API self-contained: callers no longer need to import or understand the GPU cache's internal block-hash type.

@@ -1,7 +1,19 @@
-I'm hitting a nasty gap in our agent host server, the thing that manages sessions against an AI backend. When it restarts it drops all in-memory state for sessions that were active before, but those sessions still live on the backend and show up in the session listing. So when a client subscribes to one of these orphaned sessions after a restart, we've got no conversation history and just hand back empty state, which is useless.
+## Session Restore After Server Restart
 
-I want a session restore path: when a client subscribes to a session the server hasn't seen in this process lifetime but the backend does recognize, we go fetch the full message history from the backend and rebuild the conversation turn by turn, tool calls and response text included. If a turn got interrupted (user message sent but the assistant never responded before we lost the session) that turn should come back marked cancelled with empty response text, and then the next turn reconstructs normally after it. Restored sessions should land in a ready state with all their historical turns populated.
+## Description
 
-Couple of important edge cases. It's gotta be idempotent, so if the session's already known to the server, restore is a no-op. And restoring must not fire a "session added" notification to connected clients, since the session was already visible in the listing before we restored it. If no agent can be found for the session URI, throw a clear error, and same deal if the backend doesn't actually recognize the session, another clear error.
+When the agent host server restarts, it loses all in-memory knowledge of sessions that were active during its previous lifetime. However, those sessions may still exist in the underlying agent backend. Currently, if a client tries to subscribe to one of these "orphaned" sessions — sessions visible in the session listing but unknown to the freshly-started server — the server cannot reconstruct any conversation history and fails silently or returns empty state.
 
-This needs wiring into two places: the side-effects layer where the history fetch and turn reconstruction actually happen, and the state manager that stores session state, which has to be able to create a session in a ready state with pre-populated turns without firing the normal session-added notification. The whole point is that a restart shouldn't permanently break a client's ability to view or continue prior conversations, they should just reconnect and get the full context back.
+## Expected Behavior
+
+- The server should support restoring sessions from a previous lifetime on demand. When a client subscribes to a session that the server has not seen in this process lifetime but that the agent backend recognizes, the server should fetch the session's full message history and rebuild the conversation turn by turn.
+- Restored sessions should appear in a ready state with all historical turns populated, including tool calls and response text.
+- If a turn was interrupted (a user message was sent but no assistant response was received before the session was lost), that turn should be preserved as cancelled with empty response text, and the next turn should begin normally.
+- The restore operation should be idempotent: calling it for a session that is already known to the server should be a no-op.
+- Restoring a session should not notify connected clients that a new session was added, since the session was already visible in the session listing before the restore.
+- Attempting to restore a session for which no agent can be found should produce a clear error.
+- Attempting to restore a session that the agent backend does not recognize should also produce a clear error.
+
+## Why This Matters
+
+Without session restore, any server restart permanently breaks the client's ability to view or continue previous conversations. With this change, clients can seamlessly reconnect to their prior sessions after a server restart, recovering the full conversation context automatically.

@@ -1,5 +1,22 @@
-So we've got this lint rule that flags empty conditional statements, the kind where the condition itself has side effects but the body does nothing, and it offers an autofix that rips out the conditional keyword and colon and leaves just the condition standing on its own as an expression statement. Works great for single-line stuff. The problem is when the condition spans multiple lines the fix spits out invalid Python, which is annoying because writing multiline conditions is totally normal for readability and people expect the suggested fix to give them something that actually parses.
+# Fix autofix for multiline conditional expressions
 
-Two patterns are broken right now. First one is a multiline binary or arithmetic expression wrapped in outer parentheses, like a big sum broken across lines inside parens. If we just drop the keyword and colon and keep the inner content, the expression loses the parentheses it needs to stay a valid standalone statement, so I want the fix to detect line breaks at the outermost level and either preserve the existing outer parens or add them if they're missing. Second pattern is a multiline function call where the args are on separate lines, and there the line breaks all live inside the argument list, so the call is already fine as a standalone expression and we should emit it directly without wrapping it in extra parentheses.
+## Description
 
-So the core of it is: teach the fix logic to check whether the condition has line breaks at the outermost level, wrap (or keep the wrap) when it needs parens for the binary/arithmetic case, and leave function calls alone when their breaks are contained inside the call. End result should be valid, correctly formatted Python in both cases instead of a syntax error.
+The lint rule that detects unnecessary empty conditional statements (where the condition has side effects but the body does nothing) can apply an automated fix to replace the entire statement with the condition as a standalone expression. This works correctly for single-line conditions, but the fix produces **invalid Python code** when the condition spans multiple lines.
+
+## Cases affected
+
+Two distinct multiline patterns are broken:
+
+1. **Multiline binary/arithmetic expression wrapped in outer parentheses** — when the condition is a binary expression spanning multiple lines and enclosed in outer parentheses, removing the keyword and colon while leaving the inner content produces invalid syntax because the expression needs those outer parentheses to remain a valid statement.
+
+2. **Multiline function call** — when the condition is a function call with arguments on separate lines, the fix must correctly produce the call as a standalone expression statement without adding unnecessary extra wrapping.
+
+## Expected Behavior
+
+- For a multiline condition already enclosed in outer parentheses, the fix should preserve the parenthesized form when converting to a standalone statement.
+- For a multiline function call whose line breaks are all within the call's argument list, the fix should emit the call directly as a standalone expression statement without additional parentheses.
+
+## Why This Matters
+
+Writing multiline conditions in conditional statements is common for readability. When this rule fires and the user applies the suggested fix, they should end up with valid, correctly formatted Python — not a syntax error.

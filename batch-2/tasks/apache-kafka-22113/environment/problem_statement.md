@@ -1,5 +1,14 @@
-I'm poking at Kafka's config management tooling and hit two annoying things I want fixed. First, every time I alter a config for anything (a topic, a broker, a default broker, client metrics, a group, whatever) the tool does this extra describe/read of the current config state before it actually submits my incremental alter. It's pointless for incremental alters and just tacks on a wasted network round trip and latency to every single change, so I want that pre-read step ripped out and the alter to go straight to applying the change without fetching current config first.
+## Description
 
-Second thing, and this one really bites me in automation: if I try to delete a config key that doesn't exist on a resource, the tool errors out instead of just shrugging and moving on. I want to be able to say "make sure this setting is unset" against a topic, a specific named broker, or the default broker (all brokers at once) without first checking whether the key is even present. So deleting a non-existent config key should be a quiet no-op that succeeds rather than throwing.
+The Kafka configuration management tool performs an unnecessary read operation before applying configuration changes. Every time a user runs an alter command, the tool fetches the current configuration from the broker before submitting the actual change, even though this pre-read serves no functional purpose for incremental alter operations. This adds extra latency and an unnecessary network round trip to every config change.
 
-Basically: no pre-read on alter, and idempotent deletes so I can write safe repeatable scripts that ensure a setting is absent even if it was never set in the first place.
+Additionally, the tool currently throws an error when a user tries to delete a configuration key that doesn't exist on a resource. This makes it impossible to write idempotent configuration management scripts — for example, ensuring that a particular setting is absent on a topic or broker should succeed even if the key was never set in the first place.
+
+## Expected Behavior
+
+- Altering configurations (for topics, brokers, default brokers, client metrics, groups) should not require a pre-read of the current configuration — the tool should apply the incremental change directly.
+- Deleting a configuration key that does not exist on the target resource (topic, named broker, or default broker) should succeed without throwing an error. The operation should be treated as a no-op success.
+
+## Why This Matters
+
+Removing the unnecessary pre-read reduces latency and broker load for every alter operation. Making deletion of non-existent configuration keys idempotent enables safe, repeatable automation scripts that ensure certain settings are absent — without needing to first check whether the key exists.

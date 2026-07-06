@@ -1,5 +1,16 @@
-I'm hitting a annoying gap in Keras where a bunch of ops don't validate axis args during shape inference, so when I'm building a model symbolically and pass an out-of-range axis to something like softmax or sparsemax or flip or roll or trace, nothing complains, and the error only shows up later at runtime which makes debugging way harder. I want these to catch bad axes early, right in the shape computation step, and raise a clear value error immediately when the axis is out of range.
+## Description
 
-Also there's no shared helper for canonicalizing a collection of axes, so everything handles it ad hoc or not at all. Can you add a new utility that takes either a single axis or a list/tuple of axes and normalizes them to a tuple of non-negative integers, converting negative values to their positive equivalents given the total number of dimensions. It should accept both built-in int types and integer-like types from numeric computing libraries (numpy integers and friends), and it should raise a clear type error when the axis is a non-integer or a sequence containing non-integer elements.
+Several tensor operations in Keras do not validate axis arguments during shape inference (when building models with symbolic tensors). When a developer specifies an out-of-range axis, no error is raised at model-build time — the mistake only surfaces at runtime, making debugging much harder. Additionally, there is no shared utility for canonicalizing multiple axes at once (normalizing negative indices, validating types), so each operation handles this ad hoc or not at all.
 
-Beyond that, flip and roll should actually accept a list of axes during shape inference, not just a single axis. Trace should raise an error when both of its axes refer to the same dimension (after normalization). And sparse categorical cross-entropy needs to handle the class dimension living at any axis position, not just the last one, so the output shape gets computed by dropping whichever axis holds the class probabilities instead of assuming it's the trailing dim. Enforcing axis bounds early like this makes model construction safer and gives immediate actionable feedback, oh and it makes flip, roll, and the cross-entropy op more flexible for non-standard tensor layouts too.
+## Expected Behavior
+
+- A new shared utility function should normalize a single axis or a collection of axes (given as a list or tuple) to a tuple of non-negative integers, handling negative indices correctly.
+- The utility should accept both built-in integer types and integer-like types from numeric computing libraries as valid axis inputs.
+- The utility should raise a clear type error when the axis argument is a non-integer or a sequence containing non-integer elements.
+- Operations that perform dimension-specific work (softmax variants, array flip, array roll, trace) should validate their axis arguments during shape inference and raise a clear value error for out-of-range values.
+- The trace operation should additionally raise an error when both trace axes refer to the same dimension.
+- The sparse categorical cross-entropy operation should correctly compute the output shape when the class dimension is specified at any axis position, not just the last dimension.
+
+## Why This Matters
+
+Without axis validation during shape inference, bugs caused by wrong axis values in large models are delayed and harder to trace. Enforcing axis bounds early makes model construction safer and gives developers immediate, actionable feedback. Supporting axis lists in flip and roll operations, and any-axis class dimensions in cross-entropy, also makes these operations more flexible for non-standard tensor layouts.

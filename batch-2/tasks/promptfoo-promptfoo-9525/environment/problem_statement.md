@@ -1,7 +1,17 @@
-I'm hitting a nasty gap in our GitHub Action that runs security scans on PRs, and it's actively hiding real findings. Right now if a scan response comes back with a skip reason, we treat the whole thing as if nothing ran, even when that same response also carries actual security findings that reviewers should be seeing. So genuine issues get swallowed and everyone thinks the scan was clean. I want the action to be smarter about these mixed responses.
+## Description
 
-Basically I need it to tell the difference between a pure skip (skip reason, no real findings) and a mixed response (skip reason plus findings with real, non-trivial severity). When it's a mixed response, still post those findings as PR comments and roll them into the security report where the format supports it, and also log a warning so operators know something contradictory came from upstream. If the findings sitting next to a skip reason are all trivial severity, honor the skip like before, no comments posted, no report generated.
+The code scanning action silently drops security findings when a scan response contains both a "skip" signal and real findings. This happens because the action currently treats any response with a skip reason as entirely skipped, without checking whether the response also contains actual security issues. As a result, genuine findings can be swallowed without ever reaching reviewers.
 
-Also there's a related bug: file-level findings, meaning ones tied to a file but no specific line number, are being misclassified and dropped instead of surfaced. Every other finding type gets posted but these vanish. I want both file-only findings and fileless findings (no file at all) that can't be placed as inline comments routed to general PR comments, with the comment body showing the file location and the line if we have one so the reviewer has a visible reference.
+Additionally, file-level security findings — findings tied to a specific file but not a particular line — are currently misclassified and dropped rather than being routed to general PR comments. This means an entire category of security issues is invisible to reviewers.
 
-One more thing on the report itself: only generate it when there are findings the report format can actually represent. Fileless findings can go up as PR comments but shouldn't produce an empty report entry, so a mixed-skip that only has fileless findings shouldn't generate a report at all.
+## Expected Behavior
+
+- When a scan response carries a skip reason alongside real security findings (non-trivial severity), the action should still surface those findings as PR comments and/or security report entries.
+- The action should distinguish between "pure skips" (no real findings) and "mixed responses" (skip reason + real findings), and warn operators when a contradictory mixed response is encountered.
+- File-level findings (associated with a file but not a specific line) should be routed to general PR comments instead of being silently discarded.
+- When a scan response with a skip reason contains only trivial-severity findings, the action should continue to treat it as a pure skip — no comments should be posted and no security report should be generated.
+- The security report should only be generated when there are findings that the report format can actually represent; a mixed-skip with only fileless findings should not produce an empty report entry.
+
+## Why This Matters
+
+Security findings that arrive in mixed-skip responses are currently invisible to developers and security teams. This creates a false sense that a clean scan occurred, when in reality real issues were silently discarded.

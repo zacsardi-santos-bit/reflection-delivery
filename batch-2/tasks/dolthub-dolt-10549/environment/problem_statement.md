@@ -1,9 +1,19 @@
-I'm hitting a data-loss thing in Dolt and want to fix it. When I check out a different branch, tables I've explicitly marked as ignored can get silently overwritten by the target branch's version. I use the ignore system to manage local-only stuff I never want to commit (environment-specific or runtime data), and a plain branch switch can wipe it out with zero warning, which is really surprising and disruptive.
+## Description
 
-What I want is a way to make checkout safer here. Give me a flag I can opt into that aborts the checkout if any of my locally-present ignored tables would be overwritten by the switch, and the error needs to actually name the specific tables at risk, not just fail vaguely. Also add a companion flag that explicitly says I'm fine with the overwrite (this keeps today's behavior but makes intent clear in scripts). These two should be mutually exclusive, so passing both in the same invocation should be rejected as a config error.
+When checking out a branch in Dolt, tables that have been explicitly marked as ignored can still be silently overwritten by the incoming branch's version of those tables. This means that locally managed data — data the user deliberately excluded from version control — can be lost during a routine branch switch without any warning.
 
-The protection's gotta be precise though. It should only block when the ignored table actually differs between the branches. If the table's identical on both sides there's nothing to protect, so proceed. Same if the target branch doesn't have the table at all, or if the table only exists locally and isn't on the target, no overwrite is happening so let it through. And creating a brand-new branch from the current HEAD should never be blocked since no overwrite can occur there.
+There is currently no way to opt into protection against this. Users who rely on ignore patterns to manage local-only data have no safeguard when switching between branches that have different versions of an ignored table.
 
-Oh and one edge case that matters: combining my protection flag with the force flag (the one that discards working-set changes) should not bypass the ignored-table check. Force and the ignore protection need to be independent of each other.
+## Expected Behavior
 
-All of this should work both from the command line and through the SQL stored procedure interface for checkout.
+- A new checkout flag should allow users to opt in to protection: when the flag is used, checkout should abort if any locally-present ignored table differs on the target branch, and the error message should name the specific tables that would be overwritten.
+- A complementary flag should allow users to explicitly signal that overwriting ignored tables is acceptable (preserving the existing behavior, but making intent explicit).
+- Using both flags together in the same invocation should be rejected as a configuration error.
+- The protection should be precise: it should only block checkout when an ignored table actually differs between branches. If the table is identical, if it only exists on the target branch, or if it only exists locally, no error should occur.
+- The force flag for discarding working-set changes should not override the ignored-table protection.
+- Creating a brand-new branch from the current HEAD should never be blocked by this protection, because no overwrite can occur.
+- These flags should work both via the command-line interface and via the SQL stored procedure interface.
+
+## Why This Matters
+
+Dolt's ignore system lets teams manage tables that hold environment-specific or runtime data outside of version control. Without this protection, a simple branch checkout can silently destroy that data, which is unexpected and potentially disruptive.

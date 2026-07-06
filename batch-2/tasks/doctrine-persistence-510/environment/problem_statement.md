@@ -1,5 +1,21 @@
-I'm cleaning up a few things in our PHP metadata mapping drivers and the persistence registry, three related fixes really. First the PHP mapping driver, right now it just includes a file and expects code to run against some implicitly available `$metadata` variable which is super fragile. I want mapping files to explicitly return a closure that takes the metadata object as its parameter, and when the driver loads one it should invoke that closure with the metadata as the argument. If a file doesn't return a closure, throw a clear descriptive error that names the exact file path and tells the dev what the file's supposed to return. Closures that reach for an unbound `$this` context or do invalid static class access in a bad scope should just fail naturally when they get invoked, don't try to catch that.
+## Description
 
-Second, the static PHP driver is leaking too many public methods. Trim its public interface down to exactly four: the constructor, the method that lists all class names, the transient class check, and the metadata loading method, everything else goes non-public. Also the constructor should accept a pre-built class list object as an alternative to the usual array of directory paths, and when someone hands it a class list object, listing all class names should return exactly the classes that object holds, nothing more.
+There are several related improvements needed in the PHP-based metadata mapping drivers and the persistence registry.
 
-Third, the persistence registry currently forces you to always pass a proxy interface class name. Make that optional (null). When it's not configured the registry should still resolve the right manager for regular managed entity classes, but return null for proxy classes and anonymous classes. Basically I want to use this in setups where we don't do proxies at all. These live in the PHP mapping and persistence layers, oh and keep the error message on the closure requirement genuinely helpful since that's the whole point of making the API explicit.
+**PHP Mapping Driver — require Closures:** Currently, PHP mapping files work by executing code directly in a shared scope, relying on the metadata variable being implicitly available. This approach is fragile. Mapping files should instead be required to return a closure that explicitly receives the metadata object as its parameter. If a file does not follow this pattern, a clear and descriptive error should be raised so the developer knows exactly what the file should do.
+
+**Static PHP Driver — public API cleanup:** The static PHP driver exposes more public methods than it should. Its public interface should be trimmed down to only the essential methods (construction, listing all class names, checking for transient classes, and loading metadata for a class). Additionally, the driver should support accepting a pre-built class list object as an alternative to specifying file system directory paths, giving callers more flexibility.
+
+**Registry — optional proxy interface:** The persistence registry currently requires a proxy interface class name to always be provided. There are valid use cases where no proxy support is needed, so this parameter should be made optional. When it is not set, the registry should still correctly resolve managers for regular entity classes, while returning nothing for proxy and anonymous classes.
+
+## Expected Behavior
+
+- PHP mapping files that do not return a closure produce a descriptive error message including the file path
+- PHP mapping files that return a valid closure have it invoked with the metadata object as the argument
+- The static PHP driver has a minimal, well-defined public API with exactly four public methods
+- The static PHP driver can be initialized with either directory paths or a class list object
+- The persistence registry can be configured without a proxy interface (null), and still correctly resolves entity managers for managed entity classes while returning null for proxy and anonymous classes
+
+## Why This Matters
+
+These changes make the mapping API more explicit and predictable, reduce accidental coupling to implicit global state in mapping files, and allow the registry to be used in environments where proxy classes are not employed.

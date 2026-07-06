@@ -1,7 +1,17 @@
-I keep hitting a crash when I run convolutions with a filter that has a zero-size kernel dimension. Instead of getting something readable, the bad filter goes straight through to the hardware backend, and on GPU that turns into an unhandled low-level crash or just undefined behavior, super hard to diagnose.
+## Description
 
-What I want is early argument validation in the convolution ops so a zero-size kernel spatial dimension gets caught before any hardware execution starts. This should cover both 1D and 2D convs, so for a 1D conv that's a zero kernel length, and for 2D it's a zero kernel height or width. When any of those spatial dims is zero, I'd expect a clear Python-level error raised immediately rather than the framework passing the invalid input down to the device.
+Convolution operations do not validate that filter kernel dimensions must be strictly greater than zero. When a user accidentally constructs a filter with a zero-size kernel dimension and calls a convolution operation, the framework passes the invalid input directly to the hardware backend. On GPU, this results in an unhandled low-level crash rather than a clear, informative error message.
 
-Also it needs to hold for all the configs, not just the simple case: standard convolutions and depthwise convolutions, the different data layouts/formats, and at least the common floating-point precisions. Basically no matter which device or dtype I'm on, a zero-size kernel should give me an actionable message that identifies the invalid kernel dimension instead of an opaque system-level failure.
+## Expected Behavior
 
-The point is just making the guard fire strictly greater than zero on kernel dims up front, so users who accidentally build a zero-size kernel get told what's wrong.
+- Both 1D and 2D convolution operations should detect a zero-size kernel dimension early in argument validation.
+- When a zero-size kernel dimension is detected, a clear Python-level error should be raised immediately — before any hardware execution begins.
+- This validation should apply to all supported configurations: standard convolutions, depthwise convolutions, all data formats, and all supported numeric precisions.
+
+## Current Behavior
+
+Passing a filter tensor with a zero-size spatial dimension (e.g., a kernel of height or width equal to zero) to a convolution operation causes a crash or opaque error at the hardware level, instead of producing a helpful validation message.
+
+## Why This Matters
+
+Without this guard, users who accidentally create a zero-size kernel get an unhelpful system-level error that is hard to diagnose. Adding early validation ensures users get a clear, actionable message identifying the invalid kernel dimension, regardless of which device or data type they are using.

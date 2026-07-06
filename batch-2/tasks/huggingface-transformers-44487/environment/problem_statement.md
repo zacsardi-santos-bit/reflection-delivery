@@ -1,5 +1,19 @@
-I'm training models with the transformers library inside a Kubeflow cluster and I want the training job to report progress back to the platform on its own without me wiring anything up. Right now Kubeflow has zero visibility into how training is going, no progress percentage, no ETA, no metrics, so long jobs are impossible to monitor or tell if they've stalled.
+## Description
 
-I want a new training callback that pushes updates to the Kubeflow server at the key moments: when training starts it reports 0% progress, after each training step it reports current progress plus an estimated time remaining, when metrics get logged it forwards them, and when training ends it reports 100%. Couple of things I care about here. The progress percent should never hit 100% during the intermediate steps, it should only read 100% once training is actually done, so cap it below that until the end. Only numeric metric values (loss, learning rate, that kind of thing) should go to the server, anything string or otherwise non-numeric should just be silently dropped. Status updates need to be rate-limited so we're not hammering the server on every single step, individual updates can get skipped if they come too fast, but certain ones like the start and the end always need to go through regardless. And in distributed training only the main process should be sending anything.
+When training models on Kubeflow infrastructure, there is currently no built-in way for the trainer to report progress back to the Kubeflow platform. The platform has no visibility into how far along training is, what metrics are being produced, or how much time remains — users must manually instrument this or go without any progress tracking from the platform's perspective.
 
-Also it should gracefully skip the network call and report failure when the server URL isn't configured in the environment, and auth tokens should be read from a configured file path and cached so we're not re-reading it constantly. Oh and the convenient part: the training config should auto-detect it's running inside Kubeflow (basically check whether a server URL is present in the environment) and enable this integration by itself so I don't have to remember to add it every time. That auto-detection should work even when I specified no integrations at all, and it shouldn't create duplicates, so at most one entry even if the detection runs multiple times or I already added it explicitly.
+## Expected Behavior
+
+- A new training callback should be added that can push training progress updates to a Kubeflow server during training. It should report progress as a percentage, include an estimated time remaining, and forward training metrics (such as loss and learning rate).
+- The callback should only report progress on the main process in distributed training setups.
+- Progress should be reported at training start (0%), updated throughout training steps, and finalized at 100% when training ends.
+- Progress percentage during intermediate steps should be capped — it should not reach 100% until training explicitly completes.
+- Only numeric metric values should be forwarded to the server; non-numeric log entries should be silently ignored.
+- Status updates should be rate-limited to avoid overwhelming the server with requests — individual updates may be skipped if they happen too frequently, but certain updates (like start and end) should always be sent regardless.
+- The callback should gracefully skip the network call and report failure when the server URL is not configured in the environment.
+- Authentication tokens should be read from a configured file path and cached to avoid redundant reads.
+- When a Kubeflow server URL is detected in the environment, the training configuration should automatically enable this integration without requiring users to explicitly configure it. This auto-detection should work even if the user specified no integrations, and it should add at most one entry even if called multiple times.
+
+## Why This Matters
+
+Users running training jobs on Kubeflow infrastructure currently get no feedback in the Kubeflow UI about training progress. This makes it difficult to monitor long-running jobs, estimate completion time, or detect stalled training. Automatically enabling this integration when running inside a Kubeflow environment removes the need for any manual configuration.

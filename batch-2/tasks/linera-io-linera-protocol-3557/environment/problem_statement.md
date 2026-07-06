@@ -1,5 +1,14 @@
-I'm wiring up our validator server so it can push profiling data to an external continuous profiling service, and right now there's just no way to point it at a backend because the config structs don't carry the profiling location at all. Both the per-shard config struct and the validator-level config struct have zero fields for where the profiling service lives, so at startup the server can't connect to anything.
+## Description
 
-What I want is required fields for the profiling server address on both structs. The shard config needs a required field for the profiling server hostname, and the validator-level config needs required fields for both the profiling server hostname and port. These have to be genuinely required, meaning if a config file omits them, deserialization should blow up with a parse error instead of quietly falling back to some default and loading fine. That silent-default behavior is exactly what I'm trying to kill here, since it's way too easy to deploy a node that skips profiling entirely with no signal that anything's wrong. If it's required, every deployment has to declare its profiling setup up front and a missing value gets caught at startup rather than later when we notice profiling data is missing.
+The validator server and its shards should integrate with a continuous profiling service to collect performance data during operation. Currently, the configuration structures for both individual shards and the validator as a whole have no fields for specifying where the profiling service is located. This means there is no way to connect the server to a profiling backend at startup.
 
-Also the function that generates shard configs from a template pattern needs updating so it accepts and applies the profiling server details, populating each generated shard's config with the right profiling server hostname and port. Oh and since these are now required, all the existing config files and test fixtures that use these structures will fail to deserialize unless I update them too, so those need valid values for the new profiling fields plugged in so they stay parseable.
+## Expected Behavior
+
+- The shard configuration structure must include a required field for the profiling server hostname. Attempting to load a shard configuration that omits this field should fail with a parse error rather than silently succeeding.
+- The validator-level configuration structure must also include required fields for the profiling server hostname and port. Loading validator configuration without these fields should likewise fail.
+- The function that generates shard configurations from a template must accept and apply profiling server connection details, populating each generated shard's configuration with the appropriate profiling server address and port.
+- All existing configuration files and test fixtures used to validate the configuration structures must be updated to include the new required profiling fields so they remain valid.
+
+## Why This Matters
+
+Without required profiling configuration, it is easy to deploy a validator node that silently skips profiling — there is no signal that profiling is misconfigured. Making these fields required ensures that every deployment explicitly declares its profiling setup, and that a missing configuration is caught at startup rather than discovered later through missing profiling data.

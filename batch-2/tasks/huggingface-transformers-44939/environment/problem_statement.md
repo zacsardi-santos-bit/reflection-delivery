@@ -1,5 +1,18 @@
-I'm cleaning up the modeling structure linter in the transformers repo and it's driving me a bit nuts. Right now it's just a standalone script and the only way to import it is to manually append its directory to sys.path, which makes tests awkward and means I can't invoke it through the normal Python module system. I want to turn it into a real Python package living under the repo's utilities directory (think a proper package with `__init__.py` so it's importable with plain import statements, no path hacks). It should also expose a submodule structure so internal bits, like the pipeline-parallelism rule's module map, can be patched independently in tests.
+## Description
 
-While I'm in there I want to add three new lint rules. First, flag any model class decorated with an empty documentation decorator, if someone uses that decorator they should always pass a non-empty string. Second, flag in-place tensor operations done directly on module weight attributes inside weight initialization methods, since the right pattern is to call the dedicated init utility functions instead of mutating in place. Third, flag model constructors that don't call the post-initialization hook.
+The modeling structure linter is currently implemented as a standalone script that must be manually added to the Python path before it can be imported. This makes it difficult to import cleanly in tests, and it cannot be invoked through the standard Python module system. Additionally, three useful lint checks are missing: one to catch documentation decorators used with empty strings, one to enforce proper weight initialization patterns (using dedicated init utilities rather than in-place tensor operations), and one to ensure model constructors always call the required post-initialization hook.
 
-Oh and the CI side needs work too. The test fetcher currently has no clue about this linter package, so changes to its files don't trigger the linter's own tests. I want to add functions to discover the list of repo utility tests, decide whether those tests need to run based on which files changed, route them to the correct output file, and wire all that into the overall test inference logic so that touching anything in the linter package automatically pulls in the linter's tests. Basically keeping it a flat script just creates friction, and the new rules close real gaps in modeling best-practices enforcement.
+The test infrastructure also has no awareness of the linter package — changes to its files do not automatically trigger the linter's own tests to run in CI.
+
+## Expected Behavior
+
+- The linter should live in a proper Python package under the repository's utilities directory and be importable using standard import statements without any path hacks.
+- The package should expose a submodule structure so that internal components (like the pipeline-parallelism rule's module map) can be patched independently in tests.
+- A new lint rule should flag model classes decorated with an empty documentation decorator, requiring non-empty content.
+- A new lint rule should flag in-place weight initialization operations inside weight initialization methods, requiring the use of dedicated init utility functions instead.
+- A new lint rule should flag model constructors that do not call the post-initialization hook.
+- The test fetcher should be updated with functions to discover the linter's tests, determine when those tests need to run based on which files changed, route them to the correct output file, and include them when running tests after changes to the linter.
+
+## Why This Matters
+
+Keeping the linter as a flat script rather than a package creates unnecessary friction for testing and import. The three new lint rules close gaps in modeling best-practices enforcement. Integrating the linter into CI test routing ensures that future linter changes are always tested automatically.

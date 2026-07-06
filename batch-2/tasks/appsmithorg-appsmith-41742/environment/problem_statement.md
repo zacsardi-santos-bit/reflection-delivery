@@ -1,5 +1,15 @@
-I'm chasing down a nasty data corruption bug in our REST API connector. When someone uploads a binary file like a PDF and binds that file data to a query or template, the content gets silently mangled before it goes out. Turns out our template rendering path decodes HTML entity-ish byte sequences that just happen to show up in binary data, so something that looks like an encoded newline entity in the raw bytes gets turned into an actual newline, and now the file is garbage on the receiving end. This hits any binary format (PDFs, images, whatever) whose bytes coincidentally resemble HTML entities, which is super common.
+## Description
 
-What I want: when a binding value gets rendered into a template, leave basically every HTML entity sequence alone, so things representing less-than, greater-than, ampersand, line feed, carriage return, and friends all pass through untouched. The one exception is the HTML encoding for double-quote, which should still be converted to a properly escaped double quote so our JSON stays valid. And this only applies to the bound value itself, so text sitting directly in the template outside of any binding expression must never be touched. If the template literally contains an HTML entity, it should come out exactly as written.
+When users upload binary files (such as PDFs) through the REST API connector and bind the file data to a query or template, the file content is being silently corrupted. Binary files often contain byte sequences that resemble HTML special character notations, and the template rendering system was incorrectly converting all such sequences to their decoded equivalents. This alters the actual binary data before it is sent in the request, making the uploaded file unreadable or invalid on the receiving end.
 
-There's also a related routing bug I keep hitting: when a multipart file upload payload is a JSON array but has leading whitespace or newlines before the opening bracket, we misidentify it and send it to the wrong handler instead of treating it as a structured file array. The routing check needs to run on the trimmed content so leading whitespace doesn't throw it off. Oh and the whole point is that binary file data with entity-like sequences should survive the multipart pipeline end to end without any modification.
+## Expected Behavior
+
+- When a binding value is inserted into a template, HTML entity sequences such as those representing less-than, greater-than, ampersand, line feed, carriage return, and similar patterns must pass through unchanged.
+- Only the HTML encoding for double-quote characters should be converted (to escaped double quotes), as this is required for JSON validity.
+- Text that appears directly in the template (outside of binding expressions) must not be altered in any way — if the template itself contains an HTML entity, it must appear unchanged in the output.
+- When a multipart file upload payload is encoded as a JSON array and the value has leading whitespace or newlines, it must still be correctly recognized and processed as a structured file array rather than being misrouted to a different handler.
+- Binary file data containing HTML entity-like sequences must survive the multipart upload pipeline without corruption.
+
+## Why This Matters
+
+Users are experiencing silent data corruption when uploading binary files (PDFs, images, etc.) via dynamic REST API requests. The corrupted data causes the uploaded file to be unreadable or rejected by the target server. This issue affects any file whose binary content happens to contain byte patterns that resemble HTML entity sequences, which is common in standard binary file formats.

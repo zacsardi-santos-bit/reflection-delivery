@@ -1,9 +1,19 @@
-I've been digging into how we record tool interaction telemetry when the agent accepts file edits, and there's a few things that are off and messing up the data quality.
+## Description
 
-First, the accepted line count is wrong. Right now it only counts lines that were added, but I want it to sum both added and removed lines together so the number actually reflects the full scope of the change, not just half of it.
+The tool interaction telemetry has several issues that reduce the accuracy and usefulness of the data being recorded when the AI agent accepts file edits.
 
-Second, when a file gets edited we're not recording the programming language at all, even though it's sitting right there and can be derived from the file extension. I want the detected language included in the telemetry interaction record so we can see which file types the AI is editing most often.
+First, the accepted line count is calculated incorrectly — only added lines are being counted, when both added and removed lines should be summed to represent the true scope of a change.
 
-Third, and this one's the noisiest problem, every accepted tool call is currently emitting a telemetry interaction event, including tools that have nothing to do with editing files. Those are getting logged as a generic "unknown" interaction which is just clutter. I only want file-editing tool interactions to generate these events. Everything else should be skipped entirely, silently ignored rather than recorded as unknown.
+Second, the programming language of the edited file is not included in the telemetry, even though this information is directly available from the file extension. Language information would make it easier to understand which file types the AI edits most frequently.
 
-So basically: fix the line count to be added plus removed, attach the language detected from the extension, and stop emitting interaction events for non-editing tools. Accurate telemetry matters here because miscounted lines, missing language info, and spurious unknown interactions all degrade the insights we can pull from this data.
+Third, a generic "unknown" interaction is being recorded for every accepted tool call, including tools that have nothing to do with file editing. This creates unnecessary noise in the telemetry data and makes it harder to analyze meaningful edit interactions.
+
+## Expected Behavior
+
+- When a file edit is accepted, the accepted line count should include both added and removed lines.
+- When a file is edited, the programming language (detected from the file extension) should be included in the telemetry interaction record.
+- Only file-editing tool interactions should generate interaction telemetry events; other tool types should be silently ignored.
+
+## Why This Matters
+
+Accurate telemetry is essential for understanding the scope and patterns of AI-assisted edits. Miscounted lines, missing language data, and spurious unknown interactions all degrade the quality of telemetry insights and make it harder to act on the data.

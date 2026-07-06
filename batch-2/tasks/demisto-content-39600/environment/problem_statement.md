@@ -1,7 +1,13 @@
-I'm building out a new integration for the Anomali Security Analytics Alerts platform inside our SOAR setup, and right now analysts have no way to run search queries against Anomali's analytics engine or manage alert states without leaving the platform, so I want to close that gap end to end. Can you help me implement the core command functions? There's a client class that should take a server URL, a username, an API key, plus settings for certificate verification and proxy, and every function needs to return standard SOAR-compatible command output objects.
+## Description
 
-First the search job creation one: it takes a query, a data source, and a time range, submits the job to the API, and returns the job identifier in structured output along with a human-readable confirmation that the job was created so analysts can track it.
+We need a new integration for the Anomali Security Analytics Alerts platform. Currently there is no way for analysts to interact with Anomali's search and alert management capabilities from within the SOAR platform. This integration should allow analysts to submit search queries, track their progress, retrieve structured results, and manage alert records.
 
-Then retrieving results by job identifier, which checks the status. If it's still running, return the current status and a message saying it isn't done yet. If the id is invalid or the server errors out, show a descriptive message that includes the job identifier that was looked up, the error detail, and a nudge to verify the id. If it's done and there's structured tabular data (field names paired with row data), transform that into a list of dicts mapping each field name to its value, and don't leak the raw list of field names separately in the output. If it's done but there's no structured tabular stuff, just pass the raw result through directly as the output.
+## Expected Behavior
 
-Last one is updating an alert by its unique identifier with an optional status and optional comment. If neither is given, reject the request with a clear error saying at least one of those is required, otherwise call the API and return a human-readable confirmation. Thanks!
+- Analysts can launch a new search job by providing a query, a data source, and a time range. The system should return the job identifier so the job can be tracked.
+- Analysts can check on a running search job by its identifier. If the job is still in progress, the response should clearly indicate it is still running. If the job has completed with structured data (field names and records), the results should be returned as a table with the field names as headers and each record as a row of key-value pairs. If the job completed but with no structured fields, the raw result data should be returned. If the job identifier is invalid or the server returns an error, the response should clearly communicate the error, include the job identifier that was looked up, and prompt the analyst to verify it.
+- Analysts can update an existing alert by its unique identifier, providing a new status, a comment, or both. If neither a status nor a comment is provided, the system must reject the request with a clear error message indicating that at least one of these fields is required.
+
+## Why This Matters
+
+Without this integration, analysts have no automated way to run queries against Anomali's analytics engine or update alert states from within the SOAR workflow. This closes the gap and enables end-to-end alert management and investigation directly within the platform.

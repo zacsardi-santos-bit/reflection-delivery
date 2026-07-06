@@ -1,7 +1,14 @@
-I'm hitting a gap in this doc conversion library, the one that reads markdown into a structured document model and can spit it back out as markdown. Some of my source files have these custom block-level tags for signatures and stamps, basically self-contained blocks wrapping a short text description of the visual element. Right now when I run a markdown file with those through the pipeline, the conversion either just ignores them or produces the wrong thing, which is a problem because signed docs and certified copies coming from markdown are pretty common in my workflows and silently dropping that content breaks everything downstream.
+## Description
 
-What I want is for each signature or stamp block to get recognized as its own distinct element in the document model, specifically a classified picture element where the classification captures whether it's a signature or a stamp, and the inner text gets preserved as a child element hanging off that picture. So the description text isn't lost, it lives inside the model as a child of the classified picture.
+The markdown backend does not handle custom block-level tags for signatures and stamps that can appear in markdown documents. When a markdown file contains these semantically meaningful sections wrapped in custom tags, the conversion pipeline fails to recognize them and does not produce the expected structured output.
 
-Then on export back to markdown, a signature block should come out as the capitalized type label "Signature" on its own line followed by an image placeholder comment, and a stamp block the same way with "Stamp" followed by that image placeholder comment. Whatever the standard image placeholder comment is in the markdown backend, use that.
+## Expected Behavior
 
-Oh and the regular surrounding text has to stay put, appearing in the right order around these special elements, not reshuffled or clobbered. This all needs to flow through the full parse-and-export path in the markdown backend consistently for both tag types, not one-off handling for just signatures.
+- A markdown file containing a custom signature block should be correctly parsed during conversion, and when exported back to markdown, should render as a labeled heading ("Signature") followed by an image placeholder comment.
+- Similarly, a custom stamp block should render as "Stamp" followed by the image placeholder comment in the exported markdown.
+- The text content inside these blocks should be preserved in the internal document model as a child element of the corresponding classified picture element.
+- The surrounding text content in the document should remain unaffected and appear in the correct order relative to these special elements.
+
+## Why This Matters
+
+Documents that originate from markdown sources and include embedded signature or stamp sections are increasingly common in workflows involving signed documents or certified copies. Without proper handling of these tags, the conversion pipeline either silently drops the content or produces malformed output, breaking downstream use of the converted document.

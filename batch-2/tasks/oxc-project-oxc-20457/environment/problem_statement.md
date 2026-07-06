@@ -1,5 +1,12 @@
-I'm hitting a false positive from the unused-variables lint rule and it's driving me nuts. I've got a loop where I keep updating a variable each iteration by calling a method on the variable's own current value, so like `x = x.foo()` inside a `for` or `while` body, and the rule flags that variable as "assigned but never used" even though its previous value is obviously read to produce the new one on every pass. That's just wrong, the variable is genuinely being used because the old value feeds into each reassignment.
+## Description
 
-What I want is for the rule to recognize that reassigning a variable using its own current value inside a loop body is a real use and to not emit a warning for it. But here's the tricky part, I don't want to just blanket-suppress that pattern everywhere. If the exact same self-referential method-call assignment shows up outside any loop, and the result of that reassignment is never read afterward, then it should still get flagged as unused like before. So the fix needs to distinguish the two cases based on whether the self-referential reassignment happens within a loop or not.
+The unused-variables lint rule produces a false positive for a common iterative programming pattern: when a variable is repeatedly updated by calling a method on its own current value inside a loop. In this pattern, the previous value of the variable is read to produce the new value on each iteration, so the variable is genuinely being used. However, the rule currently flags such variables as "assigned but never used," which is incorrect.
 
-Can you patch the lint rule so it handles this correctly? The whole point is that iterative accumulation through method calls is a totally valid way to use a variable, and right now the noise is undermining trust in a rule that's supposed to catch genuinely unused variables, not valid code.
+## Expected Behavior
+
+- A variable that is reassigned inside a loop body by passing its own current value through a method call should be treated as used and should NOT generate a lint warning.
+- A variable that is reassigned via the same self-referential method call pattern but outside any loop (where the result is never subsequently read) should continue to be flagged as unused.
+
+## Why This Matters
+
+This false positive causes valid code to be incorrectly rejected. Patterns where an object accumulates changes through iterative method calls — a common technique — are perfectly valid uses of a variable. Developers relying on this lint rule to find genuinely unused variables will instead encounter noise that undermines their trust in the rule.

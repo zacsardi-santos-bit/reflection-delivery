@@ -1,7 +1,17 @@
-I need to add a daily cron job to ClusterFuzz that rolls up the previous day's per-fuzzer stats and pushes them into our cloud data warehouse (BigQuery-style dataset and table). Right now nothing persists these per-fuzzer daily metrics, so we can't track trends over time or run historical queries on how fuzzers are performing, which is the whole point here.
+## Description
 
-The way I want it to work: the job queries the data source for yesterday's stats, then makes sure the destination dataset and table exist, creating them if they don't, and loads the rows using a bulk-load path. On the very first run it sets everything up, but after that the dataset and table will already be there, so if creation hits an "already exists" situation the job should just keep going instead of blowing up. Any other unexpected error during that setup should still propagate so we actually see it.
+The ClusterFuzz project lacks a cron job that automatically aggregates daily fuzzer statistics and stores them in a cloud data warehouse for long-term analysis and reporting. There is currently no automated process to collect per-fuzzer metrics (such as number of testcases executed, generation counts, and fuzzing durations) from the previous day and write them into a time-partitioned table that supports efficient date-range queries.
 
-I also want an optional command-line flag to target a specific date instead of defaulting to yesterday, so we can backfill history. If someone passes a date that doesn't parse as a valid date format, argument parsing should fail immediately rather than limping along. When a valid date is given, both the stats query and the destination table partition need to reflect that date, not yesterday.
+## Expected Behavior
 
-Oh and the table should be partitioned by day so each date lands in its own partition, and rows should load with a replace strategy so re-running the same date is idempotent and safe. Each uploaded record needs to carry the fuzzer name, the date, the count of testcases executed and generated along with their respective durations, and the total fuzzing duration.
+- A scheduled job should query the previous day's fuzzer stats and load them into a dedicated dataset and table.
+- The dataset and table should be created automatically on first run; if they already exist, the job should continue without error.
+- Unexpected infrastructure errors during setup should be surfaced (not silently ignored).
+- The job should support an optional date override so operators can backfill stats for a specific date.
+- Passing an invalid date format should cause the job to exit with an error immediately.
+- The destination table should use day-based partitioning so historical data is organized and queryable by date.
+- Uploaded records should include all relevant fuzzer stat fields: fuzzer name, date, testcases executed and generated (with durations), and total fuzzing duration.
+
+## Why This Matters
+
+Without this job, fuzzer performance data is ephemeral and cannot be analyzed over time. Persisting daily stats to a queryable, partitioned table enables teams to track trends, identify regressions, and report on fuzzer effectiveness across the fleet.

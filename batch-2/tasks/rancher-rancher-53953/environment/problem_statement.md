@@ -1,5 +1,21 @@
-I'm deep in the RBAC aggregation code in Rancher and hit a labeling design problem I need help fixing. Right now both the management-plane controllers and the downstream user-cluster controllers stamp the role bindings and cluster roles they create with the same aggregation label, so when I go to reconcile or clean up I literally can't tell which layer owns a given resource. The nasty part shows up when someone disables the feature: the migration cleanup only removes management-plane role bindings and leaves the corresponding downstream-cluster resources orphaned, and because the label is shared there's a real risk one side's cleanup clobbers the other side's resources.
+## Description
 
-What I want is for the management plane to use its own dedicated aggregation label, distinct from the label the downstream cluster side already uses (downstream keeps its existing one). I need helper functions available to apply the right label in each context, management-plane and downstream separately, and the function that builds aggregating cluster roles should stop auto-applying an aggregation label so callers apply the appropriate one themselves. The listing operations used during reconcile and cleanup should get more precise too, combining the resource-owner identifier together with the appropriate aggregation label so we only touch the right resources. And when the feature flag flips off, the migration should clean up both the management-plane resources and the matching downstream-cluster resources instead of just the management side.
+The RBAC aggregation feature in Rancher relies on labeled Kubernetes resources (role bindings and cluster roles) to track which objects it has created. Currently, both the management plane and the downstream user cluster controllers use the same label to mark their respective aggregation resources. This shared label makes it impossible to distinguish which layer of the system created and owns a particular resource.
 
-Oh and on the downstream side there's some refactoring: a couple of methods that currently take separate label string params should instead accept the binding object directly and derive the label selectors internally, rather than making callers pass them in.
+This causes two related problems:
+
+1. When the aggregation feature is disabled and a migration cleanup runs, the management-plane controller cannot reliably filter to only its own resources, and may accidentally target resources that belong to the downstream cluster side (or vice versa).
+2. When the feature is turned off, the cleanup only removes management-plane role bindings but does not clean up corresponding resources in downstream clusters, leaving orphaned resources behind.
+
+## Expected Behavior
+
+- The management plane should use a distinct label (separate from the one used by downstream cluster controllers) to mark its aggregation-related role bindings and cluster roles.
+- The downstream (user cluster) side should continue using its own label.
+- Listing operations that find resources to reconcile or clean up should use combined label selectors — the resource owner identifier together with the appropriate aggregation label — to avoid operating on unrelated resources.
+- When the aggregation feature flag is disabled, the migration process should clean up resources at both the management-plane level and in the corresponding downstream clusters.
+- Helper functions should be available to apply the correct aggregation label in each context (management-plane and downstream).
+- The function that builds aggregating cluster roles should not automatically apply an aggregation label; callers should apply the appropriate label separately.
+
+## Why This Matters
+
+Without distinct labels, disabling the aggregation feature can leave orphaned role bindings in downstream clusters, or cause the wrong layer to accidentally clean up resources it does not own. Clearer label separation ensures each controller operates only on its own resources and that full cleanup is performed when the feature is toggled off.

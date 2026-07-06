@@ -1,0 +1,7 @@
+I'm building out the extension management UI and right now it only lets people view active graph extensions, there's no way to actually remove one. I need to add delete controls to each row in the extensions table so admins can clean up custom extensions they don't need anymore, while keeping built-in ones protected from accidental removal.
+
+Here's the behavior I want. Every extension row gets a delete control. For built-in extensions the control should be visually disabled and non-interactive since those can't be removed, and for custom extensions it should be active and clickable. To make that distinction work the extension data model needs a field indicating whether an extension is built-in, that flag is what drives whether the delete control is enabled or disabled.
+
+When someone clicks delete on a custom extension I want a confirmation dialog to pop up that warns them the action is permanent and irreversible, and it should make them type the extension's exact name before the deletion can go through (this is the guard against accidental data loss). If they cancel, the dialog just closes without doing anything, oh and if they reopen it the confirmation input should be cleared, no leftover text.
+
+Once they confirm, delete the extension by hitting the appropriate backend endpoint. On success show a notification confirming it was deleted and also refresh the extension list automatically so the row disappears. On failure show an error notification telling them to try again.

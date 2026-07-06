@@ -1,5 +1,18 @@
-I'm adding SSRF protections to our CLI tool that fires off outbound HTTP requests based on user-provided or model-generated URLs, and right now there's literally nothing stopping it from hitting internal or reserved addresses, which is bad because a crafted prompt or tool input could point us at internal services, cloud metadata APIs (that well-known link-local metadata IP), or just probe internal infra. I want a new utility module in the core package that makes outbound requests safe by default.
+## Description
 
-So I need a synchronous check that takes an IP or hostname and tells me whether it's private, reserved, or non-routable, covering standard private IPv4 (RFC 1918) ranges, the broader RFC 6890 reserved ranges, loopback and link-local, private and link-local IPv6 ranges, and importantly IPv4-mapped IPv6 addresses where the embedded IPv4 is private, plus special names like localhost. On top of that I want a sync wrapper that pulls the hostname out of a URL and runs that same check. Then an async version that also does DNS resolution so domain names resolving to private IPs get blocked too, and it's gotta fail closed, meaning if DNS resolution itself fails I treat the URL as unsafe rather than letting it through.
+The CLI currently has no protection against server-side request forgery (SSRF) attacks. When the tool makes outbound HTTP requests based on user-provided or model-generated URLs, there is nothing preventing those requests from targeting internal network addresses, cloud instance metadata endpoints, or other reserved ranges that should never be reachable from an application serving external users.
 
-Also need a DNS lookup replacement that filters private IPs out of the resolved results and errors when everything resolves to a private address. And a safe fetch wrapper that uses a dispatcher to enforce private-network blocking and rejects with a clear error. Oh and a fetch-with-timeout utility that surfaces both timeout errors and private-IP errors with specific messages, including the offending URL when relevant.
+## Expected Behavior
+
+A new utility module should be added to the core package that provides:
+
+- A synchronous check to determine whether a given IP address or hostname is private, reserved, or non-routable, covering standard private IPv4 ranges, RFC 6890 reserved ranges, private and link-local IPv6 ranges, IPv4-mapped IPv6 addresses where the embedded IPv4 is private, and special names like localhost.
+- A synchronous check that extracts the hostname from a URL and determines if it is a private address.
+- An asynchronous check that additionally performs DNS resolution on domain names, so that hostnames that point to private IPs are also blocked. If DNS resolution fails, the check should fail closed (i.e., treat the URL as unsafe rather than allowing the request).
+- A DNS lookup wrapper that filters out private IPs from resolved results. If all resolved addresses are private, the lookup should signal an error.
+- A safe fetch wrapper that rejects connections to private network addresses with a clear error message.
+- A fetch utility that supports a timeout, and that also surfaces private network access errors with the offending URL included in the error message.
+
+## Why This Matters
+
+Without these protections, a crafted prompt or tool input could direct the CLI to exfiltrate data from internal services, access cloud metadata APIs (such as the well-known link-local metadata endpoint), or probe internal infrastructure. Adding SSRF protections ensures that outbound requests are safe by default.

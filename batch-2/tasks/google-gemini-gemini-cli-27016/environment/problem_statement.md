@@ -1,7 +1,15 @@
-I want to add a secure RAG trace logger so we can actually see what code snippets our retrieval is pulling and their relevance scores, persisted across sessions to a local file. Right now there's no way to capture RAG retrieval details for post-hoc debugging and it's making retrieval issues really hard to investigate.
+## Description
 
-The shape I'm after: a logging component you initialize with a directory path. On init it creates that directory if it doesn't exist, and sets strict owner-only permissions on it since these snippets can be sensitive. Once it's initialized, I want to hand it a structured trace entry (a session ID, a status string, and the list of retrieved snippets) and have it append that as a single JSON line to a named log file inside that dir. Each entry should automatically get a timestamp added, I don't want to pass that in myself.
+We need a new utility that can record Retrieval-Augmented Generation (RAG) trace data to a local log file for debugging purposes. Currently, there is no way to capture details about which code snippets are retrieved during RAG operations — such as their content and relevance scores — in a way that persists across sessions.
 
-Couple important bits: on the very first write to the log file the permissions need to be explicitly enforced to owner-only too, even if the file already existed from before. And the writing should be atomic, open the file, write the line, close it, rather than keeping a handle open the whole time.
+## Expected Behavior
 
-Also please handle the sad paths gracefully instead of crashing. If someone calls the logger before it's been initialized, just report a warning through our existing debug logger. And if the directory can't be created or the file can't be written, catch it and report it through that same debug logger with a descriptive message, don't let the exception propagate up to the caller. It's a debug utility, it shouldn't take down the thing it's tracing.
+- A new logging component should be initializable with a directory path. On initialization, it must create that directory if it doesn't exist, setting strict directory permissions (owner-only access) to protect potentially sensitive data.
+- Once initialized, the logger should accept structured RAG trace entries containing a session identifier, a status string, and a list of retrieved snippets, and append each entry as a single JSON line to a named log file inside the initialized directory. Each entry must include an automatically generated timestamp.
+- On the first write, the log file's permissions must also be enforced to owner-only access — even if the file was pre-existing.
+- If the logger is used before being initialized, it should report a warning through the debug logging system rather than failing.
+- If directory creation or file writing fails, the error should be reported through the debug logging system with a descriptive message rather than propagating the exception.
+
+## Why This Matters
+
+This feature enables developers and operators to debug RAG retrieval behavior by inspecting what snippets are being retrieved and their relevance scores in a persistent local trace file. Without this, RAG-related issues are difficult to investigate post-hoc.

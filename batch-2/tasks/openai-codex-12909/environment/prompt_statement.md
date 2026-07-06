@@ -1,0 +1,7 @@
+I'm working on the memory consolidation system and I need to add a recency filter to how phase-2 picks its inputs. Right now when we choose which stage-1 memory outputs to consolidate, we only look at how recently each one was updated, we don't check whether the memory's actually been used inside any real time window, so long-stale stuff that nobody touches anymore still gets pulled into consolidation and that wastes resources and can drag down memory quality.
+
+What I want is a configurable staleness threshold, basically a max-unused-days parameter on the selection function that controls the recency window for inclusion. Memories whose recorded last-usage timestamp falls outside that window should get excluded. But here's the catch, memories that have never been used at all should still be eligible, falling back to their generation/creation date instead, as long as that date is inside the window. So the query needs both branches.
+
+Also there's a flaky test around the consolidation dispatcher reclaiming a stale lock. It currently asserts the job is still running when a follow-up lock claim happens, but in fast environments the job can actually finish first, which is totally valid. Make it accept both outcomes, job still running or job already completed with nothing left to process.
+
+And oh, since selection now filters on recency, any fixtures that seed stage-1 data for these tests need to use the current time instead of some hardcoded historical timestamp, otherwise the seeded records just get filtered out as too old and the tests fall apart.

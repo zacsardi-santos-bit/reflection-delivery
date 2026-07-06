@@ -1,5 +1,13 @@
-I'm poking at the CLI execute command that runs scaffolder actions and there's this annoying UX gap I keep hitting. Right now if you run execute without passing an action ID and without the help flag, the command just prints the help text and exits like everything's fine, which is exactly what you'd see if you'd explicitly asked for help. So there's zero signal that you screwed up and forgot the action ID, it just looks like normal help output and you're left scratching your head.
+## Description
 
-What I want is for that specific case (no action ID, no help flag) to still show the help text like it does today, but then also throw an error afterward with a message saying the action ID is required, so it's obvious right away what went wrong. The help display shouldn't change, I just want the throw layered on top of it in that scenario.
+When running the CLI execute command without providing an action ID and without requesting help, the command silently displays help output without any error message. This is misleading because the user gets the same help display they would see when explicitly requesting help, with no indication that they did something wrong.
 
-Everything else needs to keep working the way it does now. When help is explicitly requested (even with no action ID), keep showing help and don't throw, that's fine as-is. When an action ID actually is provided, carry on normally, and when auth fails it should still behave correctly too. Oh and in both help paths (explicit help, or the missing-ID case) don't bother attempting auth resolution at all, no point resolving auth when we're just bailing to help.
+## Expected Behavior
+
+- When the execute command is invoked without an action ID and without the help flag, it should display the help text and then throw a clear error indicating that the action ID is required.
+- When the execute command is invoked with the help flag but no action ID, the current behavior (showing help without an error) should remain unchanged.
+- Auth resolution should not be attempted in either help scenario.
+
+## Why This Matters
+
+Users who accidentally omit the required action ID receive no feedback about what went wrong — they just see the help text and don't know they need to provide an action ID. Adding an explicit error thrown after showing help makes the interface clearer and helps developers quickly understand what they need to fix.

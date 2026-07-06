@@ -1,9 +1,17 @@
-I'm chasing down some deadline alert weirdness in our workflow scheduler. We've got a deadline alert model hanging off workflow definitions, and right now these alerts lean on the standard equality and hash operators for comparison, which is biting us in two ways.
+## Description
 
-First problem: when a workflow gets re-serialized without any actual changes to its deadline definitions, the existing deadline alert records in the database get replaced with brand new ones instead of being kept around. So the alerts lose their original identifiers and that breaks continuity with existing workflow runs, which is exactly what I don't want.
+Deadline alert configurations attached to workflow definitions need a stable, explicit way to determine whether two alerts represent the same logical configuration. Currently, deadline alerts rely on the standard equality and hashing mechanisms for comparison, but this approach has proven insufficient for two important scenarios:
 
-Second, when I bump a deadline alert's timing interval and then re-write the serialized workflow, the system doesn't reliably notice that as a meaningful change that should require a new workflow version with a new hash. So the change just sort of vanishes.
+1. When a workflow is re-processed without any changes to its deadline definitions, the existing deadline alert records in the database should survive unchanged (same IDs). Instead, they are currently being replaced, which breaks continuity.
+2. When a deadline alert's timing interval is modified, this change should be detected as a meaningful difference that requires creating a new workflow version with a new hash. Currently this detection may not work correctly.
 
-What I want is for the deadline alert model to have an explicit method that checks whether one alert matches the definition of another, so we can tell whether an existing db record already represents a given config. It should compare the relevant fields, the timing reference, the interval, and the callback configuration, and here's the important bit: when the thing it's comparing against isn't a deadline alert object at all, it should signal "not applicable" rather than just returning false. The interval itself should be stored as a float value in seconds, btw.
+## Expected Behavior
 
-Once that method's in place, the workflow serialization logic should reuse the existing alert records when nothing's changed (same IDs persist), and correctly detect an interval change (or other property changes) as needing a new serialized workflow version with a different hash, and the alert record should end up storing the updated interval. Without stable persistence and proper change detection here the scheduler can't reliably track which deadline configs apply to which workflow version, and we end up with missed deadlines or alerts assigned to the wrong runs.
+- Deadline alerts should expose a dedicated method for checking whether one alert matches the definition of another — comparing relevant fields like the timing reference, interval, and callback configuration.
+- When two alerts are compared and the argument is not a deadline alert object, the comparison should signal that the comparison is not applicable, rather than simply returning false.
+- When a workflow with deadline alerts is re-serialized without changes, the same database records for those alerts must persist with their original identifiers.
+- When a deadline alert's interval is changed, re-writing the workflow must produce a new serialized workflow version with a different hash, and the associated alert record must store the updated interval.
+
+## Why This Matters
+
+Without stable deadline alert persistence and proper change detection, the scheduler cannot reliably track which deadline configurations apply to a given workflow version, leading to missed deadlines or incorrect alert assignments across workflow runs.

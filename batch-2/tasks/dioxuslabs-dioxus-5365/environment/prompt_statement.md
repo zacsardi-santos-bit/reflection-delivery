@@ -1,0 +1,9 @@
+I'm hitting a nasty propagation bug in the reactive store, the one with nested fields and lens-based child accessors. When I write to a deeply nested field through a child lens, components that subscribed to the parent value just don't re-render, they sit there with stale data. Reading the whole parent struct and then updating one inner field via a lens should re-render that parent component because the parent value effectively changed, but it doesn't. Weirdly the reverse works fine, writing to the root does notify child subscribers, it's only the upward bubbling that's broken.
+
+I want this to work at any depth, so writing a grandchild re-renders grandparent subscribers, writing a great-grandchild re-renders great-grandparent subscribers, and so on. Unrelated siblings at any level must stay untouched, no spurious re-renders there.
+
+Also collections need fixing. Pushing a new item to a nested collection field should notify subscribers of the parent struct, and a full replacement counts too, but modifying a specific element by index should only notify subscribers of that element, not the whole collection.
+
+Oh and the subscriber traversal API is off. When I access the subscriber list of a child store lens, ancestor deep subscriptions aren't surfaced during traversal, and removing via the child's subscriber handle doesn't clean those ancestor subscriptions up either, so both the listing and the removal path need to see them.
+
+Last thing, when a path gets marked dirty, ancestor deep subscribers and descendant subscribers each need to be notified exactly once, no double notifications even when a single write matches both criteria at the same time. Without all this, parent-level readers get silently ignored when a child field changes through a lens, and the only workaround is writing at the exact subscribed path, which makes fine-grained mutations useless for any component reading an aggregate view.

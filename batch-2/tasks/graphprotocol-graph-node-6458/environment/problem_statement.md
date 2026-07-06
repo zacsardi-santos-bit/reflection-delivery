@@ -1,7 +1,15 @@
-I'm hitting a wall with immutable entity types in graph-node. Right now if a subgraph writes the same immutable entity across two different blocks, the store throws an error, but a bunch of subgraphs use block polling handlers or similar patterns where the mapping naturally emits the same entity data every single block, so they fall over on the second block they process. I want a way to declare that a given immutable entity type should just silently ignore duplicate writes across blocks instead of failing.
+## Description
 
-So the plan is a new annotation on immutable entity types. When it's set, cross-block duplicate inserts get silently discarded, meaning the operation reports success with no rows affected rather than returning an error. And operations that are normally illegal for immutable entities, like overwrite or delete, should also be silently ignored (return success) for these annotated types instead of blowing up. Same-block duplicate inserts should still go through normally and be kept, don't drop those. The idea is "this entity is immutable but safe to write multiple times, keep the first, ignore the rest."
+Immutable entity types in subgraphs currently reject any attempt to write the same entity across different blocks, returning an error. This is a problem for subgraphs that use block polling handlers or other indexing patterns where the mapping naturally produces the same entity data on every block. There is currently no way to declare that an immutable entity type should silently ignore duplicate writes across blocks.
 
-Really important, regular immutable entity types without this annotation have to behave exactly like before, rejecting cross-block duplicates with an error, so I don't want to change existing behavior there at all.
+## Expected Behavior
 
-Oh and while I'm in here, the way we build up groups of entity row modifications needs a cleanup. The constructor currently takes a separate flag saying whether the entity type is immutable, but that's redundant since we can derive it straight from the entity type itself, so drop that param and pull it from the type.
+- It should be possible to annotate an immutable entity type so that if the same entity is written again in a later block, that write is silently discarded rather than causing a failure.
+- When an entity write is skipped due to this annotation, the operation should report success (not an error).
+- Attempts to overwrite or delete entities of this annotated type (which are normally invalid operations for immutable entities) should also be silently ignored and return success.
+- Same-block duplicate writes for this entity type should still be kept (not dropped).
+- Standard immutable entity types without this annotation must continue to reject cross-block duplicates with an error, preserving existing behavior.
+
+## Why This Matters
+
+Subgraphs with block polling handlers commonly write the same entity on every block. Without this feature, any such entity declared as immutable will fail on the second block it is processed. Developers need a way to express "this entity is immutable but can be safely written multiple times — just keep the first write and ignore subsequent ones."

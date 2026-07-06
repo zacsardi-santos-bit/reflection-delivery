@@ -1,7 +1,13 @@
-I'm hitting a nasty bug in the Backstage frontend framework around component lookups. When the frontend plugin API package gets installed more than once (super easy to trigger with transitive deps resolving to different versions), a component reference object created by one installation isn't recognized against a component that was registered via a reference from another installation, even though both describe the exact same component type. So components that were registered correctly just look missing at runtime, which is confusing and painful to debug.
+## Description
 
-What I want is for the components API implementation to stop keying off reference object identity and instead look things up by the component's unique identifier string. Any two separate reference objects that share the same ID should always resolve to the same registered component, no matter which copy of the package minted them. This is common in real deployments and hard to avoid, so ID-based resolution is the right fix.
+There is a bug in the Backstage frontend framework where the components API breaks when the frontend plugin API package is installed more than once (e.g. through transitive dependencies resolving to different versions). When this happens, a component reference object from one installation is not recognized by a component registered via a reference from another installation, even though both references describe the same component type. Components appear to be missing even though they were registered correctly.
 
-Also, the components API implementation should be able to initialize itself directly from the application's extension tree instead of making callers manually iterate component extensions and build the lookup map by hand. Give me a convenient way to construct it straight from that extension tree.
+## Expected Behavior
 
-Oh and one more thing while you're in there: the utility that resolves app node specifications from a list of features currently forces callers to pass extension lists and parameter arrays that often aren't relevant to what they're doing. Make those optional and default them to empty so I can just pass the features I actually care about.
+- Component lookups should be based on the component's unique identifier, not on object identity of the reference itself. Two separate reference objects pointing to the same component type (sharing the same ID) should always resolve to the same registered component.
+- The components API implementation should be initializable directly from the application's extension tree, without requiring the caller to manually extract and wire together component registrations.
+- The utility function used to resolve app node specifications from a list of features should not require callers to supply extension lists or parameter lists that are irrelevant to their use case — these should be optional and default to empty.
+
+## Why This Matters
+
+In real-world Backstage deployments, duplicate package installations are common and hard to avoid. When component registration silently fails because of object identity mismatches between two copies of the same reference type, the application breaks in confusing and hard-to-debug ways. Making component resolution ID-based ensures robustness regardless of how many times a package is installed.

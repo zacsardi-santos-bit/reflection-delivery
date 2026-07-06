@@ -1,5 +1,17 @@
-I'm trying to get some visibility into MCP tool calls in our Rust codex-rs setup. Here's the deal: when an MCP tool call finishes it can hand back structured metadata alongside the actual result, and that metadata sometimes carries telemetry like which target got accessed and whether some server-side user interaction fired. Problem is we're just throwing all of that away right now, it never makes it into the tracing spans, so anyone staring at distributed traces has zero insight into it. I want to fix that by pulling those fields out of the result metadata and recording them as attributes on the current tracing span so they actually show up downstream.
+## Description
 
-The metadata has a specific shape I need you to follow: the telemetry lives under a designated key, and inside that there's a span-specific section, and within that section are the individual fields, one for the target identifier and one for the server user flow flag. Only those two get promoted to span attributes, anything else in the telemetry section should just be ignored. Types matter too, so if the target identifier is present and is a non-empty string, record it, but if it's the wrong type (say a number where a string's expected) silently skip it. Same idea for the flow flag, only record it when it's actually a boolean. And if the metadata's missing entirely or malformed at any level, do nothing, no attributes recorded and definitely no errors raised.
+When MCP tool calls complete, they can return structured metadata alongside their results. This metadata can include useful context such as which target was accessed and whether a server-side user interaction was triggered. Currently, this metadata is discarded entirely — it is never surfaced in the tracing spans that represent the tool call. As a result, operators and developers have no visibility into this information when inspecting distributed traces.
 
-Oh and for the target identifier specifically, truncate it to at most 256 characters when it's too long, but do that truncation safely at a character boundary so multi-byte Unicode chars don't get sliced in half. Also the tracing span needs to pre-declare both of these attributes as empty up front so they can get populated after the tool call completes.
+## Expected Behavior
+
+- After an MCP tool call completes, the system should inspect the result's metadata for a designated telemetry section containing span fields.
+- If a target identifier is present and is a non-empty string, it should be recorded as a span attribute. If the identifier is excessively long, it should be safely truncated to a defined character limit (256 characters) before recording.
+- Truncation must always occur at a valid character boundary so that multi-byte Unicode characters are never split.
+- If a flag indicating whether a server-side user interaction was triggered is present and is a boolean, it should be recorded as a span attribute.
+- Fields with incorrect types (e.g., a number where a string is expected) should be silently ignored.
+- Unknown or unexpected fields in the telemetry section should not be promoted to span attributes.
+- If the metadata structure is absent or malformed at any level, no attributes should be recorded and no errors should be raised.
+
+## Why This Matters
+
+Without surfacing this telemetry, tracing infrastructure is blind to meaningful contextual signals embedded in tool call results. Adding this capability allows teams to trace exactly which targets their MCP integrations are accessing and whether server-side flows were triggered, which is critical for debugging and observability.

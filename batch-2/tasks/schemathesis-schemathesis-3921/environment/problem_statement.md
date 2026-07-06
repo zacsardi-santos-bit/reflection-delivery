@@ -1,5 +1,18 @@
-I'm adding support to Schemathesis for parsing structured validation error responses from ASP.NET Core, the Microsoft web framework. Right now the error feedback system understands formats from a handful of popular frameworks, but it doesn't recognize the standardized validation envelope ASP.NET produces when an API on that stack rejects a request. That envelope carries per-field validation messages, stuff like "this field is required," "the string must be at least N characters," "the value must be between A and B," invalid format, etc., and it shows up in two flavors depending on whether the API uses the built-in DataAnnotations validation attributes or the popular FluentValidation library. I want a new parser that recognizes this envelope, tells it apart from the other frameworks we already support, and pulls meaningful constraints out of the messages.
+## Description
 
-Here's why I care: I keep seeing cases where a valid-looking input sneaks past validation and triggers a 500, but Schemathesis never finds it because it can't build valid inputs on its own. Without understanding this format we just keep generating inputs that fail validation over and over, masking real bugs behind the validation gate. So the extracted constraints need to feed into the test generation pipeline, so when Schemathesis sees a 400 with this kind of structured feedback it can generate follow-up requests that satisfy those constraints.
+Schemathesis currently supports several web framework error formats — but it doesn't recognize structured validation responses from Microsoft's web framework. When an API built on that stack rejects an invalid request, it returns a standardized error envelope containing per-field validation messages (required field missing, string too short, value out of range, invalid format, etc.). Without understanding this format, Schemathesis cannot learn from these 400 responses and keeps generating inputs that continue to fail validation — potentially masking real bugs (like 500 errors) that only become visible when a valid input slips through.
 
-Concretely, recognized messages should turn into structured observations: required-field constraints, string length bounds, numeric range bounds, email format expectations, and regex pattern requirements. The framework hands back field names in PascalCase but the API schema uses lowercase, so I need field name normalization to lowercase when building parameter paths. Also it should drop pseudo-fields (JSON pointer references and deserialization placeholders that show up in deserialization errors) rather than treating them as real fields, and any message it doesn't recognize should just be silently skipped instead of crashing. Oh and it needs to plug into the existing priority-based parser selection, ranking above the more general parser that can also partially match this format, while the other framework-specific parsers shouldn't falsely claim these responses.
+## Expected Behavior
+
+- The error feedback system should recognize responses that follow Microsoft's standardized validation error envelope format.
+- Both the built-in validation attribute style and the popular third-party fluent validation style should be parsed.
+- Recognized messages should be converted to structured observations: required-field constraints, string length bounds, numeric range bounds, email format expectations, and regex pattern requirements.
+- Field names in PascalCase should be normalized to lowercase when building parameter paths.
+- Pseudo-fields (like JSON pointer references and deserialization placeholders) should be ignored.
+- Messages that don't match any known pattern should be silently skipped.
+- The parser should take priority over the more general parser that can also match these responses when both apply.
+- Other framework-specific parsers should not falsely claim these responses.
+
+## Why This Matters
+
+APIs built with Microsoft's stack are extremely common. Without this support, Schemathesis systematically fails to use the structured error feedback those APIs provide, leaving potential bugs permanently hidden behind the validation gate. This change enables full error-feedback-driven testing for this class of API.

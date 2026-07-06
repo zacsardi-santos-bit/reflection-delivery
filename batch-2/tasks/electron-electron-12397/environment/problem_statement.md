@@ -1,3 +1,17 @@
-So I'm hitting a gap in Electron around how new windows get opened from web content. When a page opens a new window, say someone clicks a link that targets a new tab or window, Electron fires an event on the web contents to let my app know and handle it. Problem is that event doesn't carry any referrer info at all, so I've got no idea which page actually triggered the new window, and there's no way for me to forward that context along when I go handle the open myself. The downside shows up server side: the URL the new window navigates to never gets the Referer HTTP header a normal browser would send, which breaks anything relying on it for analytics, access control, or navigation tracking.
+## Description
 
-What I want is for the new-window event to include the referrer as an extra argument when it fires. That referrer object should carry the originating page's URL plus the referrer policy that governs how the header gets sent. Once I've got both pieces I can propagate them properly when I actually open the new window, and then the target server should receive the correct Referer header just like it would in a full browser. Basically apps that intercept window creation need to preserve referrer info so opened URLs behave the way they would normally, otherwise these server-side features are just broken for anything routed through Electron's new window handling.
+When a web page opens a new window (for example, by clicking a link that opens in a new tab or window), Electron fires an event on the web content component to notify the application. However, this event currently does not include any information about the **referrer** — that is, which page was responsible for opening the new window and what referrer policy applies.
+
+This omission makes it impossible for Electron applications to properly forward referrer context when they intercept and handle new window requests. Web servers that rely on the Referer HTTP header for analytics, access control, or navigation tracking will not receive the expected referrer header when Electron handles the new window event.
+
+## Expected Behavior
+
+- When a new window is requested by clicking a link that targets a new window, the event fired for new window creation should include the referrer context as an additional argument.
+- The referrer context should contain:
+  - The URL of the originating page
+  - The referrer policy that governs how the referrer header is sent
+- When the referrer is correctly forwarded, the target URL's server should receive the proper Referer HTTP header.
+
+## Why This Matters
+
+Applications that intercept window creation need to be able to preserve the referrer information so that opened URLs behave as they would in a full browser. Without this, server-side features dependent on the Referer header are broken for windows opened through Electron's new window creation handling.

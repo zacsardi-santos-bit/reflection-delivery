@@ -1,7 +1,24 @@
-I'm working on the AI tutor suggestion component in Artemis, the bit that shows tutors AI-generated replies to student questions in course discussion channels, and I've got a handful of gaps to close. First, navigation between multiple suggestions is broken. The up and down arrows are in the UI but there's no logic behind them, so I need a method that moves the currently displayed suggestion to the next or previous item in the suggestions array, plus another method that updates which arrows are enabled or disabled based on where I am (down arrow disabled at the first item, up arrow disabled at the last, and both disabled when there's only a single suggestion). When multiple suggestions have piled up over a session, tutors can't currently go back to an older one or forward to a newer one, which is the whole point.
+## Description
 
-Second, I want the component to auto-detect when a student posts a new answer after the last suggestion was generated. If the latest answer on the post has a creation date newer than the timestamp of the most recent suggestion, it should automatically request a fresh suggestion. This has to handle the edge cases gracefully: no post, no answers at all, no suggestions yet, a suggestion that has no timestamp, and multiple answers where only the newest one matters.
+The AI tutor suggestion feature in Artemis needs several improvements to be more useful and robust for tutors.
 
-Third, the existing suggestion-request flow needs better error handling. If loading the message history fails, set the error state but still go ahead and request a new suggestion anyway. If the suggestion request itself fails, update the error state too. And if the AI isn't enabled or there's no current post, skip the request entirely. Related, there should also be a separate method for when a tutor explicitly clicks a button to request a new suggestion, which calls the suggestion service directly and updates the error state on failure.
+Currently, the suggestion panel displays only a single AI-generated suggestion with no way to navigate between older and newer ones. When multiple suggestions have been generated over the course of a session, tutors cannot go back to review a previous suggestion or advance to a newer one. Navigation arrows exist in the UI but the logic behind them is incomplete.
 
-Finally, the backend pipeline for tutor suggestions only handles programming exercises right now. It should also handle text exercises, sending the relevant text exercise info as part of the request to the AI pipeline so tutors in those channels get suggestions too. Right now those failures are silent and text-exercise tutors get nothing, so this is about making it reliable and useful across exercise types.
+In addition, the system does not currently detect when a student has added a new answer to the discussion thread after the last suggestion was generated. Ideally, if a student posts a new reply after the AI provided a suggestion, the system should automatically detect this and request a fresh, updated suggestion that accounts for the new content.
+
+Error handling is also insufficient: if the service fails while loading the session history, the failure is silent and the tutor receives no indication that something went wrong. Similarly, if the suggestion generation itself fails, the error is not surfaced. Both failure modes should update the visible error state so the tutor knows what happened.
+
+Finally, the feature currently only works for programming exercises. Tutors helping students in text exercise discussion channels should also benefit from AI suggestions.
+
+## Expected Behavior
+
+- Tutors can navigate forward and backward through the list of AI suggestions using arrow buttons.
+- Navigation arrows are disabled when the tutor has reached the first or last suggestion in the list.
+- When a student adds a new answer after the last AI suggestion was created, the component automatically requests a new suggestion.
+- If loading the session message history fails, the error is recorded and the suggestion request still proceeds.
+- If the suggestion generation request fails, the error is recorded and visible.
+- Tutors in text exercise channels receive AI suggestions, with the text exercise's details sent as part of the pipeline request.
+
+## Why This Matters
+
+These improvements make the tutor suggestion feature more reliable, informative, and broadly applicable across exercise types, improving the experience for tutors responding to student questions.

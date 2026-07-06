@@ -1,5 +1,16 @@
-I'm cleaning up the sketch-based distinct count aggregators in Pinot's star-tree index builder because they're doing way too much work per merge. Right now the CPC sketch aggregator, the Theta sketch aggregator, and the integer tuple sketch aggregator all eagerly compact every intermediate merge result into a finalized compact sketch after each aggregation step, even when more merges are about to happen immediately, which wastes CPU and memory when building the index. I want them to accumulate into open union objects internally and only finalize (compact) into a sketch at serialization time, so the library can optimize merges instead of materializing a fresh compacted sketch every time.
+## Description
 
-Practically that means the core aggregation methods (creating the initial aggregated value, applying a raw value, applying an already-aggregated value, and cloning) can return something that's either a union or a sketch, so callers need to handle both cases, don't assume it's always a compact sketch. Also the method reporting the maximum aggregated byte size is currently tracking the largest compacted sketch seen so far at runtime, which makes the value depend on whatever data got processed and is useless for pre-allocation. I want that to return a statically determined upper bound computed from the aggregator's configuration instead, so star-tree pre-allocation is predictable and doesn't over-allocate.
+The sketch-based aggregators used for distinct count operations in the star-tree index builder have a design problem: they eagerly compact intermediate merged results into finalized sketch objects after every aggregation step. This means that when building a star-tree index, every call to merge two sketches materializes a brand-new compacted sketch, even though further merges will happen immediately afterward. This unnecessary compaction wastes CPU and memory.
 
-Oh and one more thing for the integer tuple sketch variant, drop its default precision from the current larger setting (2^16 nominal entries) down to 2^14 to match what the CPC and Theta sketches use, since the bigger value was forcing high memory pre-allocation without a real accuracy payoff.
+A related problem is that the method reporting the maximum aggregated byte size dynamically tracks the largest compacted sketch seen during processing, rather than returning a statically known upper bound. This makes the reported maximum size dependent on what data has been processed so far, which is unreliable for pre-allocation decisions.
+
+## Expected Behavior
+
+- The aggregators should accumulate data using union objects internally and only finalize (compact) into a sketch when serialization is requested.
+- The aggregated value returned by the core aggregation methods (initial value creation, raw value application, aggregated value application, and clone operations) may be either a union or a sketch object — callers should handle both cases.
+- The method reporting the maximum aggregated byte size should return a statically determined upper bound based on the aggregator's configuration, not the largest size observed at runtime.
+- The default precision parameter for the integer tuple sketch variant should be consistent with the other sketch types (2^14 nominal entries), rather than the larger value (2^16) previously used.
+
+## Why This Matters
+
+Returning consistent, configuration-based byte size estimates makes star-tree pre-allocation predictable and avoids unnecessarily large memory allocations. Keeping intermediate results as open union objects reduces the number of compaction operations and allows the library to optimize merges more efficiently.

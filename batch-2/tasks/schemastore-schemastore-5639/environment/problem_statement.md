@@ -1,7 +1,14 @@
-I want to add a JSON schema for yamlfmt config files to SchemaStore. Right now there's just nothing for it, so anyone using yamlfmt in their editor or CI gets no autocompletion, no inline validation, no feedback at all until yamlfmt itself runs and complains. Typos or unsupported values in the config sit there undetected until runtime, which is annoying. I want instant feedback instead.
+## Description
 
-So the schema needs to cover the main top-level config fields. That means line ending style (which only allows a couple of valid options, not arbitrary strings), the path matching strategy, output format, and the include/exclude array fields for patterns. Any unsupported value for line ending style, output format, or the path matching mode should get rejected, not silently accepted.
+There is currently no JSON schema available for the yamlfmt configuration file format in SchemaStore. As a result, developers who use yamlfmt in their projects get no editor autocompletion, no inline validation, and no helpful feedback when they write configuration files. Invalid settings — such as unsupported values for line ending style, output format, or path matching mode — go undetected until runtime.
 
-Then there's the formatter section, which is where it gets a bit fiddly. There are two formatter types: the default basic formatter and an alternate formatter type. The basic one supports a rich set of options like indentation, line break handling, quote style, and array/list formatting style, each with their own constraints on valid values (so the array style and quote style should only accept their documented options, anything unrecognized gets rejected). The alternate formatter type though only accepts the type designation and nothing else, so if someone uses a basic-formatter-only option alongside the alternate type, that should be flagged as invalid.
+## Expected Behavior
 
-Oh and placement matters. Drop the schema at the right path in the repo so the existing validation tooling picks it up automatically when it runs checks against yamlfmt config files. That usually means the schema file lives under the standard schemas directory (something like `@src/schemas/json/yamlfmt.json`) plus whatever catalog/test wiring the repo expects for a new schema to be validated.
+- A schema should validate top-level configuration fields including line ending style, path matching strategy, output format, and related options, rejecting any unsupported values for those fields.
+- A schema should validate formatter-specific settings, distinguishing between the default (basic) formatter type and the alternate formatter type, allowing each type only its own supported properties.
+- When the alternate formatter type is selected, any property that belongs exclusively to the default formatter type should be flagged as invalid.
+- Fields like the array formatting style and quote style should only accept their documented valid options; unrecognized values should be rejected.
+
+## Why This Matters
+
+Developers relying on yamlfmt in their CI pipelines or editor workflows currently have no way to catch typos or unsupported values in their configuration files until yamlfmt itself runs and reports an error. A schema enables instant feedback, reduces debugging time, and improves the overall developer experience when setting up and maintaining yamlfmt configurations.

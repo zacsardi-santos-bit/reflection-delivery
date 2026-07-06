@@ -1,7 +1,17 @@
-I'm building out the docs publishing pipeline for provider releases and I need a script that figures out which providers should actually get their registry entries updated for a given wave. Right now when the pipeline fires with the broad "all providers" meta-signal, it does a full rebuild every single time, even when only a handful of providers got new releases in that wave, which is wasteful. What I want is a utility that takes the current release wave tag plus the list of inputs from the dispatch, looks at git release tags between the current wave and the previous one, and works out exactly which providers had new final (non-RC) releases. That subset is what gets the incremental registry update.
+## Description
 
-It needs to fall back cleanly to a full rebuild (with a warning message emitted) in a few cases: when the current ref isn't actually a date-stamped wave tag (say it's a branch name or a commit SHA or an RC-tagged ref), when there's no predecessor wave tag at all (like the very first wave), when there are zero new final release tags between the two waves, or when all the provider tags between waves are just release candidates (treat that same as no new finals). A wave tag follows a standardized date-based naming convention, so anything not matching that pattern means full rebuild.
+The documentation publishing pipeline for provider releases lacks an intelligent way to determine which individual providers actually had new releases in a given wave. Currently, when the pipeline is triggered with a broad "all providers" token, it cannot distinguish between a full rebuild scenario and an incremental one — it has no mechanism to figure out that only a subset of providers had actual new final releases in that wave.
 
-For inputs that don't use the "all providers" token, I just want it to normalize and dedupe whatever provider tokens came in: strip out non-provider entries like the core Airflow package, the helm chart, or the Docker stack, convert full package names to their short provider IDs, and replace dots with hyphens in the short names. Duplicates get collapsed.
+## Expected Behavior
 
-Oh and important, expose the core logic as a function that accepts an injectable git runner so I can drive it with controlled inputs in tests without shelling out to real git.
+- When a documentation publish run is triggered for a wave release tag (a date-stamped tag following a standardized date-based naming convention), the pipeline should automatically determine which providers had new final (non-release-candidate) releases since the previous wave tag, and scope the registry update to only those providers.
+- When the trigger reference is not a valid wave tag (e.g. a branch name, a commit SHA, or an RC-tagged ref), the pipeline should fall back to a full rebuild.
+- When there is no predecessor wave tag (e.g. the very first wave), the pipeline should fall back to a full rebuild and emit a warning.
+- When no new final provider release tags exist between the two wave tags, the pipeline should fall back to a full rebuild and emit a warning.
+- When all provider tags between waves are release candidates, the system should treat this as no new finals and fall back to a full rebuild with a warning.
+- Non-provider tokens in the input (such as those representing the Airflow core, helm chart, or Docker stack) must be ignored when building the provider list.
+- Full package name tokens must be normalized to short provider IDs. Dots in provider short names must be converted to hyphens. Duplicate provider entries must be deduplicated.
+
+## Why This Matters
+
+Without this logic, every wave dispatch that uses the "all providers" meta-token triggers a full rebuild of the entire provider registry, even when only a handful of providers were actually updated. An incremental approach based on git release tags makes the pipeline significantly more efficient for normal wave releases.

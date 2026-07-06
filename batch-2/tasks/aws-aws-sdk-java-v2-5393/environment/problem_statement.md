@@ -1,11 +1,18 @@
-I'm hitting a wall with the AWS SDK V1-to-V2 migration tool. After it runs, the output still doesn't compile in two common enum cases and I'd like to fix both.
+## Description
 
-First one is enum constants. The old SDK uses mixed-case names for enum constants, the new SDK uses all-uppercase-with-underscores. The tool rewrites the type imports fine so they point at the new SDK types, but it never renames the constant references themselves, so you get code that imports the new type yet still refers to constants with the old naming, and those just don't exist in V2. I want it to automatically convert those mixed-case constant references to the uppercase-underscore convention when migrating.
+The V1-to-V2 migration tool does not handle two common enum-related code patterns that appear across many AWS services. When migrating code automatically, these patterns are left unchanged, causing compilation errors in the migrated output.
 
-Second one is getter methods. Old SDK has getters on model objects that return enum types directly. New SDK replaced those with string-returning variants that follow a predictable pattern, single values get a string suffix and list/collection values get a plural string suffix. The tool doesn't touch these calls at all right now so they point at methods that no longer exist. I want those enum-returning getter calls rewritten to their string-returning equivalents.
+**Problem 1 — Enum constant naming convention:** The older SDK uses a mixed-case style for enum constants, whereas the newer SDK uses an all-uppercase style with underscores. The migration tool changes the type imports but does not update the constant names to match the new convention, resulting in references to constants that do not exist in the new SDK.
 
-Both transformations need to cover at least the SQS, SNS, and DynamoDB service models so the migrated code actually compiles.
+**Problem 2 — Enum-returning getter methods:** The older SDK provides getter methods that return enum types directly. The newer SDK replaces these with string-returning variants following a predictable naming convention. For single-value enum fields, the getter is renamed with a string suffix. For list-valued enum fields, the getter is renamed with a plural string suffix. The migration tool does not rewrite these method calls, so the migrated code fails to compile.
 
-Oh and one more thing while you're in here, the migration integration test only applies version substitution to the "after" project's build file, not the "before" one. Fix that so both build files get the version applied consistently before building.
+## Expected Behavior
 
-Without this stuff the migrated code won't compile even after the tool runs, which means hand-fixing every enum reference and getter call across a big codebase, so getting these automated is the whole point.
+- Enum constant references should be automatically renamed from mixed-case to all-uppercase-with-underscores when migrating from V1 to V2.
+- Enum-returning getter calls on model objects should be automatically rewritten to their string-returning equivalents.
+- The migration should cover these patterns for at least the SQS, SNS, and DynamoDB service models.
+- The migration integration tests should correctly apply version substitution to all relevant project files before building.
+
+## Why This Matters
+
+Without these transformations, migrated code will not compile even after the migration tool has run, requiring significant manual effort to fix every enum reference and enum getter call in a large codebase. Adding these automated transformations makes the migration tool produce correct, compilable V2 code in more cases.

@@ -1,5 +1,20 @@
-We're breaking up the old all-in-one NgRx generator for Angular into two focused ones, a root store setup generator and a feature state generator, and I need a migration that runs during the version upgrade to fix up everyone's saved generator defaults so they don't silently stop applying. The trick is these defaults live both in the workspace config and in any per-project config files, and I want a single migration run to walk all of them, updating anything that references the old generator name while leaving projects or workspaces with no relevant defaults completely untouched.
+## Description
 
-When it redistributes the old options, some only make sense for root store setup and shouldn't get copied onto the feature generator, some belong only on the feature side, and shared ones go to both. There's also a deprecated option that specifies a parent module path that needs renaming to the new option name the feature generator expects, and if both the old and new names happen to be set the old one wins. Oh and the old root/feature toggle flag is obsolete now (since you just pick the right generator directly), so drop it entirely, and if dropping it leaves nothing else to write then don't create an empty entry.
+The existing monolithic NgRx generator for Angular workspaces handles both root store setup and feature state generation through a single entry point, relying on a toggle flag to differentiate the two use cases. This design has led to a confusing mix of options that are only relevant to one scenario or the other. The plan is to split this into two dedicated generators — one for root store setup, one for feature state generation.
 
-Also these defaults show up in two formats, a flat one and a nested one, and when both are present flat takes precedence. I want the output to match whatever format the user was already using where possible. If they've already set defaults under the new generator keys, merge into those instead of overwriting them. And after I pull the old entry out of a nested collection, if that collection ends up empty, clean it up so there's no leftover empty object hanging around.
+However, many teams already have saved generator preferences (defaults) in their workspace configuration files or per-project configurations. These saved defaults reference the old generator name. After the split, those preferences would silently stop applying, potentially causing unexpected behavior or requiring manual intervention.
+
+## Expected Behavior
+
+- A migration should automatically update saved generator defaults to point to the correct new generator.
+- Defaults should be redistributed according to which options are relevant to root store setup vs. feature state generation.
+- The migration should handle both the flat configuration format and the nested format that some workspaces use.
+- A deprecated option for specifying the parent module path should be normalized to the new option name.
+- Obsolete options (like the root/feature toggle itself) should be dropped; if dropping them leaves nothing to configure, no empty entries should be written.
+- Existing user customizations under the new generator keys should not be silently overwritten — the migration should merge rather than replace.
+- The migration should process both the workspace-level configuration and all per-project configuration files in a single run.
+- Projects or workspaces with no relevant defaults should be left completely unchanged.
+
+## Why This Matters
+
+Without this migration, teams upgrading to the new version would find that any generator preferences they had configured simply stop working. The migration ensures a smooth, zero-friction upgrade path that respects existing configurations.

@@ -1,5 +1,13 @@
-I added database persistence to promptfoo and now basically the whole test suite is dead. Tests for assertions, the evaluator, providers, test-case loading, and the general utils are all failing, and it's not because those modules are broken. The problem is that importing any of them now kicks off database initialization at load time, and the test environment doesn't have a real database running, so everything crashes before a single test even executes.
+## Description
 
-What I want is to pull the database initialization logic out into its own dedicated module so it can be mocked out during tests. Right now the db setup is tangled into whatever gets imported transitively, which means a foundational infra concern (database connectivity) is leaking into tests that have nothing to do with persistence. Once the db code lives on its own, the test files for assertions, the evaluator, providers, test cases, and util should be able to mock that module and run cleanly with no live database connection, and mocking it should stop any db-related side effects from bleeding into unrelated test logic.
+After recent changes that introduced database persistence to promptfoo, the entire test suite for core evaluation features has started failing. Tests for assertions, evaluation logic, provider integrations, test-case loading, and utility functions all fail when the test runner imports the relevant source modules — not because of any issue with those modules themselves, but because importing them now triggers database initialization that requires a real database to be running.
 
-So the goal is to structure the database code so it's properly separated and testable. After that, all five of those test areas (assertions, evaluator, providers, test cases, utilities) should run and pass without needing me to set up or configure a database first, because right now this is blocking CI and local dev entirely. Can you help me restructure it that way?
+## Expected Behavior
+
+- Tests for assertions, evaluator, providers, test cases, and utilities should all run and pass without requiring a live database connection.
+- Database initialization logic should be isolated in its own module so that it can be cleanly disabled during testing.
+- Mocking the database layer in tests should prevent any database-related side effects from interfering with unrelated test logic.
+
+## Why This Matters
+
+Developers should be able to run the full test suite in a local environment without needing to set up and configure a database. The current situation blocks CI and local development workflows because a foundational infrastructure concern (database connectivity) is leaking into tests that have nothing to do with persistence.

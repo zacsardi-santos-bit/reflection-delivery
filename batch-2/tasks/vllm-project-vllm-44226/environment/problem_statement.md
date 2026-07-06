@@ -1,5 +1,19 @@
-I'm poking at the render endpoints to see how my prompts tokenize before I actually fire them at the model, and I can get token IDs back fine but there's no way to know where each token lands in the original text. So right now I'm stuck re-running the tokenizer myself just to grab char offsets, which is silly and duplicative. I want to add an opt-in flag to both the completion render endpoint and the chat completion render endpoint that, when it's set, makes the response include a list of character-level start/end offset pairs sitting alongside the token IDs. The offsets should be one-to-one with the token IDs, so one pair per token, and they represent positions in the original source text for completions, or the fully rendered/templated prompt string for chat requests. When the flag isn't set the offset field should just be null so I don't break any existing callers, backward compat matters here.
+## Description
 
-Also it's totally fine for that field to come back null instead of erroring in a couple cases: when the underlying tokenizer can't do offsets (like a slow tokenizer that doesn't support fast offset computation), or when the request has multimodal content. Don't throw, just null it out. Oh and it needs to work for batch requests to the completions endpoint too, where I send multiple prompts, each one gets its own independent offset list.
+The prompt rendering endpoints currently return token IDs but provide no way for callers to know where each token starts and ends in the original prompt text. This makes it necessary to re-run the tokenizer separately with character-offset tracking enabled in order to align tokens with character positions — adding complexity and extra work.
 
-The main thing is wiring it through properly, the flag has to propagate from the request object down through the internal tokenization params into the renderer so every layer honors it consistently, and the serialization format passing data between components needs to carry the offsets through without dropping them. This is for span extraction, highlighting, structured output post-processing, that kind of alignment work that's annoying and error-prone to do externally.
+We should add an opt-in flag to both the completions render endpoint and the chat completions render endpoint that, when set, causes the response to include per-token character offset pairs. Each pair should indicate the start and end character positions of the token within the source text.
+
+## Expected Behavior
+
+- When the flag is enabled in a request to the completions render endpoint, each item in the response should include a list of character offset pairs (one per token), where each pair gives the start and end position of the token within the prompt string.
+- When the flag is not set, the offset field in the response should be null, preserving backward compatibility.
+- The same flag and behavior should apply to the chat completions render endpoint, where offsets are relative to the fully templated prompt string.
+- For batch requests to the completions render endpoint, each prompt in the batch should independently receive its own offset list.
+- If the tokenizer does not support fast offset computation (e.g. it is a slow tokenizer), or if the request includes multimodal content, the offset field should be null rather than raising an error.
+- The internal tokenization parameters must propagate the flag so that all layers from the request object through to the renderer correctly honor the setting.
+- The serialization format used between components must be able to carry the offset data through without loss.
+
+## Why This Matters
+
+Token-to-character alignment is needed in use cases such as span extraction, highlighting, and structured output post-processing. Without built-in support, callers must perform this alignment externally, which is redundant and error-prone. Exposing offsets directly from the render endpoint makes such use cases easier to implement correctly.

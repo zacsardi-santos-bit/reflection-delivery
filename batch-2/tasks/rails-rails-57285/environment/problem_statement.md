@@ -1,5 +1,14 @@
-I'm working on the lifecycle of view reloaders in Rails and there's a gap that keeps biting me. Right now when a reloader gets created it registers a hook with the view path system, but there's no clean way to undo that registration, the hook just sits there forever. So stale hooks pile up in the registry even when the reloader isn't needed anymore, and that messes with the reloading lifecycle when I try to rebuild or refresh things during engine init or test teardown.
+## Description
 
-I want two related pieces. First, on the reloader itself, I need it to expose its registered hook so external code can inspect or manage it directly, and I need an explicit deactivation step that removes that hook from the view path registry. Deactivating the same reloader more than once should be totally safe and not blow up, no harmful side effects. Also give me a factory method that both instantiates the reloader and registers it with the view path registry in one step, so creation plus registration is a single call.
+Rails currently has no standardized way to deactivate and remove view reloaders once they have been created. When a reloader is created, it registers a hook with the view path system, but there is no corresponding mechanism to remove that hook later. This means stale hooks can accumulate in the registry even when the associated reloader is no longer needed, which can interfere with the reloading lifecycle.
 
-Second, I want a dedicated collection class for managing a bunch of reloaders. Clearing the collection should deactivate every reloader it holds and then empty itself out, and removing an individual reloader from the collection should deactivate that one too. Oh and it needs to gracefully handle reloaders that don't actually support deactivation (don't assume every member responds to it), and it should be safely enumerable so standard stuff like iterating over it or checking membership just works.
+## Expected Behavior
+
+- A reloader should be creatable via a factory method that both instantiates the reloader and registers it with the view path registry in one step.
+- Each reloader should expose its registered hook so that external code can inspect or manage it directly.
+- Each reloader should support an explicit deactivation step that removes its hook from the view path registry. Deactivating the same reloader multiple times should be safe and produce no errors.
+- A managed collection class for reloaders should be provided. Clearing the collection should deactivate all contained reloaders and empty the collection. Removing an individual reloader from the collection should also deactivate it. The collection should be safely enumerable.
+
+## Why This Matters
+
+Without a lifecycle management mechanism, reloader hooks can outlive their intended use and remain registered permanently. This makes it difficult to rebuild or refresh the reloader set (for example, during engine initialization or test teardown) without risking stale state. Adding explicit deactivation and a managed collection gives developers a clean way to manage the full lifecycle of view reloaders.

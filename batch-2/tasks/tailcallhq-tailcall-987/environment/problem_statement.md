@@ -1,5 +1,13 @@
-I'm swapping the JWT library in our Rust auth code over to the SurrealDB-maintained fork of that same crate, mostly for ecosystem alignment so we don't hit weird compatibility issues when SurrealDB-specific stuff runs alongside JWT auth. Right now everything JWT related imports from the original crate: token verification, audience and issuer claim validation, fetching JWKS (web key sets) from remote URLs, and decoding keys. I need all those imports repointed at the SurrealDB fork instead, and the crate dependency itself should reference the fork rather than the upstream library.
+## Description
 
-There are a couple small API differences to watch for. The way you pull the algorithm off a JSON Web Key changed a bit, so wherever we read the alg from a JWK that access pattern needs adjusting to match the new types. Also a setting that used to be configured manually is now handled automatically by the new library, so that manual bit of config can just go away.
+The project currently uses a mainstream JWT library for all authentication operations, but we need to switch to a SurrealDB-compatible fork of that same library. This is needed for better alignment with the SurrealDB ecosystem and to avoid compatibility issues when SurrealDB-specific features are used alongside JWT authentication.
 
-Everything that works today should keep working exactly the same after the switch, validating tokens, checking the audience and issuer claims, handling JWKS both local and remote, and matching key IDs. On top of that I want to be able to deserialize a JSON web key set from JSON using the new library's types, including representing an empty set of keys, so the web key set types need to round-trip through serde cleanly.
+## Expected Behavior
+
+- The project dependency should use the SurrealDB-maintained JWT fork instead of the original library
+- All JWT authentication operations must continue to work as before: token verification, audience and issuer claim validation, JWKS key set handling (both local and remote), and key ID matching
+- The web key set types from the new library must be properly serializable and deserializable from JSON, including the ability to represent an empty set of keys
+
+## Why This Matters
+
+The SurrealDB ecosystem provides its own JWT library fork that may have subtle API differences. Mixing the original library with SurrealDB-specific code can lead to incompatibilities. Switching entirely to the SurrealDB fork ensures consistent behavior and simplifies the dependency tree for projects that already rely on SurrealDB. Any code that currently works for JWT authentication — including token validation, audience checks, issuer checks, and remote JWKS fetching — should continue to function correctly after the switch.

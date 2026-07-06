@@ -1,5 +1,25 @@
-I'm hitting a dirty state tracking bug in my form and I think it's an actual bug, not me holding it wrong. Here's the setup: I've got a form with default values that include an array of objects, and I register a child field inside that array so the array actually has items to start with. Then I subscribe to the form's dirty state, both the overall isDirty flag and the dirtyFields map, so I can react to changes.
+## Description
 
-The problem shows up when I programmatically set that whole array field to an empty array and pass the option that marks the field as dirty on set. I'd expect the form to notice the value changed from the default (had items, now empty) and flag it, but instead the overall dirty state stays false and the dirtyFields map comes back empty like nothing happened at all. That's clearly wrong since the array went from populated to empty.
+When programmatically setting an array field to an empty array with dirty tracking enabled, the form does not correctly reflect that a change has been made. The dirty state remains false even though the array's contents have clearly changed from the default values.
 
-What I want is for setting that array to `[]` with the dirty option to mark the overall form dirty, and to have the dirtyFields map show the parent array field itself as dirty rather than any of the individual child fields underneath it. Right now anything that leans on dirty tracking, like unsaved-changes warnings or conditionally enabling a submit button, silently fails here because the empty-array case never registers as a change. Can you dig into the set-value and dirty comparison logic and fix it so emptying an array off a non-empty default is correctly detected as dirty?
+## Steps to Reproduce
+
+1. Create a form with default values containing an array of objects.
+2. Register a child field within that array.
+3. Subscribe to the form's dirty state and dirty fields map.
+4. Programmatically set the array field to an empty array, passing the option to mark the field as dirty.
+5. Observe that the form's dirty state is still false and the dirty fields map is empty — despite the array having been emptied.
+
+## Expected Behavior
+
+- The overall form should be marked as dirty.
+- The dirty fields map should reflect the parent array field as dirty, not any individual child fields.
+
+## Actual Behavior
+
+- The form's dirty state remains false.
+- The dirty fields map is empty, even though the value has been changed from its default.
+
+## Why This Matters
+
+This makes it impossible to reliably detect user-driven or programmatic changes to array fields when the new value is an empty array. Any logic that depends on dirty tracking (e.g., unsaved-changes warnings, conditional submit button enabling) will fail silently in this scenario.

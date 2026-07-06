@@ -1,7 +1,27 @@
-I've been leaning on the dygraph-to-static graph compilation stuff in PaddlePaddle and hit a bunch of rough edges I want cleaned up. First off, the method on the program translator for turning the dynamic-to-static translation on and off has this long clunky name I keep fat-fingering, so I want it renamed to something short and clean that's easy to remember.
+# Improve dygraph-to-static API Consistency and Usability
 
-Then there's the namespace mess. When I grab the program translator class through different import paths, like the top-level dygraph namespace, an alternative submodule path, or the full internal module path, I get different objects back instead of the one singleton, which is super confusing. It's a singleton so every access path should hand me back the exact same instance. Same deal for the decorator that marks functions for translation, I want it reachable through any of those namespace paths interchangeably. Right now the program translator class isn't even exported from the top-level dygraph namespace so I'm stuck having to know the exact internal module path, which is annoying.
+## Description
 
-Also when my model's forward returns multiple outputs and I go to save an inference model, there's no way to pick which outputs I actually want saved. I'd like to pass a list of output indices to select just the subset I need, since deploying models with complex output structures kinda depends on that.
+The dynamic-to-static graph compilation API has several inconsistencies and missing capabilities that make it harder to use:
 
-Oh and last thing, when a function ends up with an incompatible combo of decorators (like stacking a class method decorator together with the translation decorator), I want a clear descriptive error raised instead of it failing silently or doing something weird. These changes just make the API way more predictable for production workflows.
+1. **API naming**: The method for enabling or disabling the dynamic-to-static translation has a long, hard-to-remember name. It should be simplified to a shorter, cleaner name.
+
+2. **Namespace accessibility**: Users should be able to access the decorator and program translator class through multiple namespace paths interchangeably. Currently, the program translator class is not exported from the top-level dygraph namespace, meaning users have to know the exact internal module path.
+
+3. **Singleton consistency**: The program translator is a singleton, but when accessed through different namespace paths, it should always return the same object. This equivalence should hold regardless of which namespace path is used.
+
+4. **Inference model saving with multiple outputs**: When a model's forward function returns multiple outputs and the user wants to save an inference model, there is no way to select a subset of outputs. A parameter should be added so users can specify which output indices to save.
+
+5. **Multiple decorator error handling**: When a function is decorated with more than one decorator and the combination is not supported, the system should raise a clear, descriptive error rather than failing silently or producing incorrect behavior.
+
+## Expected Behavior
+
+- The enable/disable method on the program translator should have a shorter, cleaner name
+- The decorator and program translator should be accessible via multiple namespace paths (top-level namespace, an alternative submodule path, and the full module path)
+- All access paths for the program translator should return the same singleton instance
+- Saving an inference model with a multi-output model should support specifying a list of indices to select specific outputs to save
+- Applying unsupported combinations of decorators should raise a clear error
+
+## Why This Matters
+
+These improvements make the API more predictable and consistent for users building production workflows. Users can write cleaner code when the API is accessible through natural namespace paths, and the ability to select specific inference outputs is essential for deploying models with complex output structures.

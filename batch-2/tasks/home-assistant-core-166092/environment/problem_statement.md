@@ -1,5 +1,20 @@
-I'm working on the SMLIGHT integration for Home Assistant and I want to add support for the built-in ambient LED strip that ships on the SMLIGHT Ultima devices. Right now we handle sensors, switches, and firmware updates over in the integration, but there's no way to control that LED strip at all, so users can't put it in automations or scenes or dashboards (like flash the strip red on an alert, that kind of thing).
+## Description
 
-So I need a new light platform that creates a controllable light entity, but only for Ultima hardware. Devices that don't have the LED strip shouldn't get a light entity created at all. The entity should turn on and off, set brightness, take an RGB color, and pick from a set of built-in effects, and here's the exact effect list I need supported: Solid, Off, Blur, Rainbow, Breathing, Color Wipe, Comet, Fire, Twinkle, Police, Chase, Color Cycle, Gradient Scroll, Strobe, System Warning, System Error, System OK, and System Info. A couple of edge cases: if the light's already on and someone turns it on again with no extra params it should be a no-op, and if someone passes an effect name we don't recognize it should just silently do nothing rather than erroring.
+SMLIGHT Ultima devices include an integrated ambient LED strip that can display colors and animated lighting effects. Currently the Home Assistant SMLIGHT integration has no way to expose or control this hardware feature, so users cannot incorporate it into automations, scenes, or dashboards.
 
-The device pushes real-time state over a server-sent events stream, so the entity needs to subscribe to those updates and reflect them into HA state. Integer color values coming off the event stream need converting to the proper format before we store them. Also I keep worrying about bad data, so if we get an invalid color string or an out-of-range mode value it needs to be handled gracefully instead of crashing. And when a connection error happens during a command it should raise a standard Home Assistant error so the user actually gets feedback, and once connectivity comes back the entity should work again like normal.
+## Expected Behavior
+
+- Ultima devices should expose a controllable light entity that supports:
+  - Turning the LED strip on and off
+  - Adjusting brightness
+  - Setting an RGB color
+  - Selecting from a set of built-in lighting effects (Solid, Off, Blur, Rainbow, Breathing, Color Wipe, Comet, Fire, Twinkle, Police, Chase, Color Cycle, Gradient Scroll, Strobe, System Warning, System Error, System OK, System Info)
+- Non-Ultima devices (those without a built-in LED strip) should not have a light entity created
+- State changes reported by the device over its real-time event stream should automatically update the entity in Home Assistant
+- Invalid or unknown lighting modes received from the device should be handled gracefully without errors
+- Connection errors during control commands should surface as a standard Home Assistant error
+- After recovering from a connection error, the entity should resume normal operation
+
+## Why This Matters
+
+Users with SMLIGHT Ultima hardware currently have no way to control the ambient LED strip through Home Assistant. Adding a light entity allows them to include the LED strip in automations (e.g., flash red on an alert) and control it alongside other lights in their home.

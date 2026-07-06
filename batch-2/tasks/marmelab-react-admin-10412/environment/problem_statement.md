@@ -1,7 +1,17 @@
-I'm building forms in a React Admin app and I keep hitting a wall with pre-population. The logic that reads navigation context (either the router's hidden state or a visible URL query param) to pre-fill form fields is currently trapped inside the built-in Create page, so any form I build outside of that (like my multi-tab forms that use sub-routes for each section) can't reuse it without me copy-pasting internal guts. I want that extracted into a standalone hook that any form can call to grab the record pre-population data from the current location, returning null when there's nothing there. It should read from navigation state or the URL query string, and when both have data, state wins over the query param. Also I want to customize which key it reads from in the state or query string instead of being stuck with the default key names, so pass those in as options.
+## Description
 
-Beyond just reading, I need the main form component to actually apply this location-based record to the fields when it's present. So if there's already a record loaded into the form, the location values override just the fields they specify and leave the rest alone, and if I also hand it default values, those fill in any fields not covered by the existing record or the location data. Merge order matters here.
+React Admin forms support pre-populating fields from navigation context (either router state or URL query parameters), but this functionality is currently only available within the built-in "Create" page and is not accessible as a standalone, reusable utility. Developers building forms outside of the standard create page — for example, multi-tab forms that use sub-routes to display different sections — cannot use this pre-population capability without duplicating internal logic.
 
-The annoying edge case: my form uses multiple routes for its tabs, so navigating between tabs changes the URL. The location-based pre-population needs to stay applied as the sub-route changes, it shouldn't reset or re-apply on every navigation, that's been biting me. This makes pre-population a first-class reusable thing across all form contexts, so I can do stuff like pre-fill an edit form from a workflow step or detect whether the current form got pre-populated with overrides.
+Additionally, when a developer navigates to a form with pre-population data in the URL or router state, the form should apply those values even when there is an existing record already loaded. The location-based values should override the relevant fields in the initial record.
 
-Oh and I need a story/demo component showing this in a multi-route tabbed form, one tab with general fields and another with content fields, and it should let me pass in a starting URL (with or without pre-population data), an optional initial record, and optional default values so I can check all the combinations behave right.
+## Expected Behavior
+
+- A standalone hook should exist that any form can call to retrieve the record pre-population data from the current router location (either from hidden navigation state or visible URL parameters).
+- The hook should support customizing which key in the navigation state or URL query string is read, rather than being locked to hardcoded key names.
+- Forms should automatically pick up pre-population data from the location and apply it as field values, merging correctly with any existing record and default values.
+- When navigating between tabs or sub-routes within a multi-route form, pre-populated values should remain in place — the location-based data should not be re-applied or lost on navigation.
+- When both navigation state and URL query parameters contain pre-population data, navigation state should take precedence.
+
+## Why This Matters
+
+This makes form pre-population a first-class, reusable capability across all form contexts — not just the create page — enabling use cases like pre-filling an edit form from a workflow step, or detecting from the UI whether the current form has been pre-populated with overrides.

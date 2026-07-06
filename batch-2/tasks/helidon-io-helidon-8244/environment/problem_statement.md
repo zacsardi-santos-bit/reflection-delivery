@@ -1,5 +1,17 @@
-I'm hitting a nasty context corruption bug in Helidon's OpenTelemetry tracing integration around baggage and span scope management. The scenario: I activate a span, then set baggage on it while that scope is active, and the context stack gets wrecked. After the scope closes, the current span doesn't revert to what was active before I activated. It just holds onto the wrong context.
+## Description
 
-Digging in, it looks like setting baggage on an active span creates an internal context scope that's left unclosed, so when I later close the original scope from activation it can't cleanly undo that extra context. The result is the "current span" after the scope exits doesn't match what was there before, which is a real correctness problem: nested span hierarchies or middleware chains that set baggage and then rely on context being restored will silently get the wrong active span, and spans can end up attributed to the wrong traces or context can leak across requests.
+There is a bug in the OpenTelemetry tracing implementation where setting baggage on a span that is currently active corrupts the span's scope management. After baggage is set, the context stack becomes disrupted, so when the scope is closed, the previously active context is not properly restored.
 
-What I want is for setting baggage to be a pure data operation on the span, it shouldn't create any additional context scope or change which span is currently active. Activating a span should make it the current span for the duration of the scope, and it should manage the span context together with any associated baggage context so both can be cleanly unwound when the scope closes. Then closing the scope should always restore exactly the prior context whether or not baggage was set during it, and if there was no active span before activation, closing should drop back to the default root state, that no-op span identifiable by an all-zero span ID. Can you fix the OpenTelemetry span implementation so baggage setting doesn't leave unclosed scopes and activation properly bundles span plus baggage context for clean teardown?
+## Expected Behavior
+
+- When a span is activated, it becomes the current span for the duration of the scope.
+- Setting baggage on a span during activation should be a pure data operation — it must not create any additional context scope or affect which span is currently active.
+- After the scope closes (whether or not baggage was set), the context must revert to exactly what it was before the span was activated. If no span was active before, the current span should revert to the default no-op span (identifiable by an all-zero span ID).
+
+## What Currently Happens
+
+When baggage is set on an active span, an internal context scope is created and left unclosed. When the original scope is later closed, it does not properly undo this extra context, so the "current span" after the scope exits does not match what was active before the span was activated.
+
+## Why This Matters
+
+Any code that sets baggage on an active span and then relies on span context being correctly restored afterward (for example, in nested span hierarchies or middleware chains) will silently get the wrong active span after the scope exits. This is a correctness issue that can cause spans to be attributed to the wrong traces or for context to leak across requests.

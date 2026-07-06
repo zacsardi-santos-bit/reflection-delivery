@@ -1,5 +1,15 @@
-I'm cleaning up error handling in the field index filtering layer and hitting a wall. Right now when you ask a field index for the points matching a filter condition, the filter method can only hand back a matching iterator or nothing at all, so there's literally no way for it to tell callers that something went wrong inside. Errors just vanish, and worse, callers can't tell the difference between "this filter type doesn't apply to this particular index" and "an actual internal failure happened during filtering." That's a real debugging headache and it blocks any graceful recovery down the line.
+## Description
 
-What I want is to update the filtering interface so the return type carries both an error channel and an optional value. So instead of just an Option (some iterator or none), it should be something like a Result wrapping an Option, where the Result propagates failures and the inner Option still signals whether the condition even applies to this index type. The "not applicable" case has to stay expressible, I don't want to lose that, I just also want genuine errors to surface.
+When filtering points using a field index, the filtering operation currently returns either a matching iterator or nothing. There is no mechanism to signal that an error occurred during the filtering process. This means errors are silently discarded and callers cannot distinguish between "this filter type doesn't apply to this index" and "something went wrong internally."
 
-Once the trait signature changes, every existing implementation across the various field index types needs to match the new signature, oh and all the call sites that invoke these filtering operations have to be updated too so they handle both the error path and the optional (none means not applicable) result separately. This is really the groundwork for proper error handling through the whole filtering pipeline, so please keep the two concerns (error vs not-applicable) cleanly distinct rather than collapsing them into one.
+We need to add proper error propagation to the field index filtering interface so that the result type can express both "not applicable" (no match for this index type) and "an error occurred."
+
+## Expected Behavior
+
+- The filtering operation on a field index should be able to signal errors to callers rather than silently suppressing them.
+- The return value should carry both an error layer (to propagate failures) and an optional layer (to indicate whether the filter condition applies to the given index type).
+- Callers should handle both the error case and the "not applicable" case separately when consuming filter results.
+
+## Why This Matters
+
+Without error propagation at the filtering layer, genuine failures during index filtering are invisible to callers, making debugging difficult and preventing the system from recovering gracefully from errors. This change lays the groundwork for robust error handling throughout the entire filtering pipeline.

@@ -1,5 +1,24 @@
-I'm adding segment-based cleaning to the Roborock vacuum integration in Home Assistant and could use your help. My robot supports multiple floors, each with named room segments, but there's currently no way to query those segments or trigger cleaning of specific rooms through HA, which is a real pain for multi-floor homes where you want to target individual rooms via automations or the UI.
+# Add Segment Cleaning Support to Roborock Vacuum Integration
 
-Two things I want. First, a way to retrieve the list of all available room segments across all loaded floor maps, where each segment carries a unique identifier scoped to its floor map (the id encodes which map it belongs to), plus a room name and a floor group name. When there's no map data around, that should just come back as an empty list. Second, the vacuum entity should support the standard clean area service, so triggering a named area resolves that area to its segment IDs and fires a clean command to the robot.
+## Description
 
-There are a bunch of edge cases I need handled right. If the target segments live on a different floor map than the currently active one, it should automatically switch to the correct map before starting the clean. If a request mixes segments from multiple different maps, raise a clear error saying all segments must belong to the same map. Also the segment identifiers use a separator between the map flag and the room ID, so if one's malformed (missing that separator, or non-numeric values in either part) I want a descriptive error that names the problematic segment. And if the map switch itself fails because of a device error, surface a clear message about the failed map load. This all lives in the Roborock integration under `@homeassistant/components/roborock`, mostly touching the vacuum entity there. Thanks!
+Roborock vacuums that support multiple floor maps have named room segments across those maps. Currently, the Home Assistant Roborock integration has no way to expose those room segments or let users clean specific rooms through automations or the UI.
+
+We need to:
+1. Add the ability to query all available room segments across all loaded floor maps for a Roborock vacuum entity.
+2. Support cleaning specific named areas (which map to one or more room segments) through the standard vacuum service interface.
+
+## Expected Behavior
+
+- A new way to retrieve all room segments across all loaded floor maps, where each segment has a unique identifier (scoped to its floor map), a room name, and a floor group name.
+- When no map data is available, an empty list of segments is returned.
+- The standard vacuum "clean area" service should work on Roborock entities. When triggered with a named area, the integration resolves the area to its segment IDs and issues a clean command to the robot.
+- If the target segments are on a different floor map than the currently active one, the integration automatically switches to the correct map before starting the clean.
+- Clear, user-friendly error messages must be provided when:
+  - A cleaning request mixes segments from multiple different floor maps.
+  - A segment identifier is malformed (missing the map-scope separator or contains non-numeric parts).
+  - The attempt to switch to the required floor map fails.
+
+## Why This Matters
+
+Multi-floor Roborock users need to be able to trigger room-specific cleaning through Home Assistant automations. Without this, users cannot target individual rooms on different floor plans, limiting the integration's usefulness for homes with multiple floors.

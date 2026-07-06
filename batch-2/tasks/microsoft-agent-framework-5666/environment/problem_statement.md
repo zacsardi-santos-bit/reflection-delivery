@@ -1,3 +1,19 @@
-I'm building a hosting server for agents that pause on sensitive tool calls until a user approves them. The flow is: agent asks for approval, server emits an approval request item to the caller, and on the next turn the caller sends back approve or reject. The trouble is the server has no memory between turns, so when the response comes in I can't look up the original request. I've lost which function was being approved and what args it had, and the agent just gets a bare decision with zero context. It's a round-trip problem, requests get emitted once and thrown away, but responses need to point back at them.
+## Description
 
-What I want is a way to persist approval request data when it's first emitted and retrieve it when the matching response shows up later. Give me two backends: an in-memory one for simple single-session cases, and a file-backed one for when state has to survive a restart. Both should reject a duplicate save for the same request ID and raise a lookup error when I ask for an ID that isn't there. The message conversion functions in the server need to go async so they can do these storage lookups, and when they hit an approval-related item type but there's no storage backend wired up, they should raise a clear error rather than guessing. Also when the server gets an approval response referencing an ID that was never saved, it should return a server-side error response to the caller instead of silently dropping it. And on the happy path, when a response arrives for a known ID, the agent should get the full context back, the decision plus the original function details that were approved. Without this the whole human-in-the-loop approval story is broken end to end in multi-turn conversations.
+When an agent requests user approval before executing a sensitive tool, the hosting server emits an approval request to the caller. On the next turn, the caller sends back their decision (approve or reject). However, the server currently has no way to remember the original request details between turns — so when the approval response arrives, the context of what was actually approved (the specific function and its arguments) is lost.
+
+This is a round-trip problem: approval requests are emitted once and discarded, but approval responses need to reference them. Without persisting the original request data, the agent cannot receive meaningful context about what was approved.
+
+## Expected Behavior
+
+- The server should save approval request data when emitting an approval request item, so it can be retrieved in later turns.
+- An in-memory storage option should be available for lightweight, single-session use cases.
+- A file-based storage option should be available for scenarios requiring persistence across server restarts.
+- Both storage options should reject duplicate saves for the same request ID and raise a lookup error when a requested ID is not found.
+- The message conversion functions should become async to support these storage lookups.
+- When a caller sends an approval response referencing an unknown request ID, the server should return a server-side error.
+- When an approval response arrives for a known request ID, the agent should receive the full context: the approval decision and the original function details that were approved.
+
+## Why This Matters
+
+Without this change, human-in-the-loop approval for tool calls is broken end-to-end: the agent is notified of a decision but has no context about what was decided. This makes the approval mechanism non-functional in multi-turn conversations.

@@ -1,7 +1,19 @@
-I work with IoT and sensor datasets stored in a time-series file format (think measurements keyed by device identity over time), and I want to load them straight through our standard datasets loading infra instead of writing bespoke parsing code every time. Can you add a packaged module that understands this format and hands back a structured dataset in "wide" layout, one row per unique device or sensor identity (identified by its categorical/tag columns), with the measurements over time stored as aligned lists?
+## Description
 
-A few things I really need to work right. When the same device shows up across more than one file, merge its records into a single row with all time points sorted chronologically. Fields present in some files but missing in others should be null-filled for the time points where they're absent, and when a field has different numeric precision across files the wider type should win for the merged result. I also want time-range filtering to limit which points load, plus the ability to request just a subset of fields, and in that case the tag and time columns should always come back, with any requested-but-absent field filled with nulls. Oh and I need to be able to select a specific table from multi-table files.
+The datasets library should support loading time-series files used in IoT and sensor-data workflows. Currently there is no built-in way to load this format through the standard dataset-loading infrastructure, forcing users to write custom parsing code.
 
-Corrupted files should be handleable per a config option: either raise an error, skip silently, or skip with a warning log. Also please support streaming mode, an optional timezone attachment for timestamp columns, and a configurable batch size for reading. All the common types (boolean, integer, floating-point, text, timestamp, date, binary) need to load correctly.
+## Expected Behavior
 
-The config for this loader should validate strictly and reject bad inputs with clear messages: invalid config names, non-dictionary data-file arguments, zero batch sizes, empty column lists, unsupported time-unit values, and unsupported bad-file-handling modes should all error out. And there's a utility function I want for converting various timestamp representations to a numeric epoch value, it should handle raw numeric values, plain or timezone-aware date and time values, formatted date-time strings with or without timezone offsets, and typed timestamp scalars, while booleans and other unsupported input types raise a type error. Wire it into the same uniform API users already rely on for other formats so it's just another loadable source.
+- Users should be able to point the standard data loader at one or more of these time-series files and receive a structured dataset back.
+- The resulting dataset should be in "wide" format: one row per unique device or sensor identity (identified by its categorical/tag columns), with the measurements over time stored as aligned lists.
+- When the same device appears across multiple files, its records should be automatically merged into a single row with all time points sorted chronologically.
+- Fields that appear in some files but not others should be filled in with null values for the time points where they are absent.
+- When the same field has different numeric precision across files, the wider type should be used for the merged result.
+- Users should be able to filter which fields to include, apply time-range constraints, select a specific table from multi-table files, and attach a timezone to timestamps.
+- Corrupted files should be handleable with configurable behavior: raise an error, skip silently, or skip with a warning.
+- Streaming mode should be supported.
+- All common data types (boolean, integer, floating-point, text, timestamp, date, binary) should load correctly.
+
+## Why This Matters
+
+Many real-world sensor and IoT datasets are stored in this file format, and having a native loader removes the friction of writing bespoke parsing pipelines. It also makes the data accessible through the same uniform API that users already rely on for other formats.

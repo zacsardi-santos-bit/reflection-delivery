@@ -1,5 +1,15 @@
-I'm hacking on the ecobee integration in Home Assistant and I want to add a username plus password path to the config flow, right now the only way in is the PIN dance where you grab an API key and then go authorize a PIN over on the ecobee site, which is a pain for folks who just want to plug in their normal account creds. So the ask, in the setup form over in `@homeassistant/components/ecobee/config_flow.py`, is let someone type their ecobee account username and password (no API key) and have the integration try to authenticate right then, and if it works I want the config entry created immediately, fully set up, no PIN step, no extra screens.
+## Description
 
-If the credential auth fails I want the user to stay put on the form and see a clear "login failed" style error so they can fix their input and try again, and a retry with corrected creds should go through and succeed. There's also this edge case, someone might paste an API key alongside their username and password, and if that combo fails to authenticate I want a distinct error indicating the auth method isn't valid (different from the plain login failed one), and again they should be able to drop back to just creds and retry successfully.
+The ecobee integration currently only supports a PIN-based setup flow that requires users to obtain an API key and complete a separate authorization step on the ecobee website. There is no way to set up the integration using a standard ecobee account username and password. Many users would prefer to authenticate with their credentials directly rather than navigating the multi-step API key and PIN process.
 
-Keep this new credential path totally separate from the existing PIN flow, oh and the PIN flow needs to keep working exactly like before, don't regress it.
+## Expected Behavior
+
+- Users should be able to enter their ecobee account username and password in the initial setup form to authenticate directly.
+- If credential authentication succeeds, the integration should be fully configured and ready to use without any additional steps.
+- If credential authentication fails, the user should see a clear error on the setup form and be able to correct their credentials and try again.
+- If a user provides both an API key and credentials but authentication still fails, a distinct error should be shown to indicate the combination is not valid.
+- After a failed authentication attempt, the user should be able to retry and successfully complete the setup.
+
+## Why This Matters
+
+Users who don't want to deal with API keys and PIN flows should have a simpler path to set up the ecobee integration using only their account credentials. The current flow is unnecessarily complex for users who just want to connect their ecobee thermostat to Home Assistant.

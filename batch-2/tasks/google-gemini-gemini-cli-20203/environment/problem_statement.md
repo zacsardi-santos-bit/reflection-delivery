@@ -1,5 +1,13 @@
-I'm working on this CLI tool with multiple approval modes, and one of them is a read-only planning mode where the AI can only plan out actions but not run them. The problem I keep hitting is when I manually exit planning mode by switching to a different approval mode, the AI has zero context that this happened. Nothing gets added to the conversation history to tell it I bailed out of planning on purpose versus the plan getting approved for execution, so the next response feels weirdly disconnected from what I just did.
+## Description
 
-What I want is for the tool to automatically inject a notification into the conversation history whenever the user manually exits planning mode. The message should make clear the user intentionally exited planning (not that a plan was auto-approved), and it should say which mode the session switched into. And for the other case, when the switch away from planning happens automatically after a plan gets approved, the injected message should instead reflect that a plan was approved and name the mode that's now active.
+When a user manually exits the read-only planning mode by switching to a different approval mode, the AI model has no way of knowing this context switch happened. Nothing is injected into the conversation history to communicate whether a plan was approved and execution should proceed, or whether the user decided to exit planning manually without approving. This makes it harder for the AI to understand the current state of the conversation.
 
-To make this clean I think we need a small utility that generates consistent human-readable descriptions for each of the available approval modes, plus another that composes the right exit message depending on whether the switch was manual or automatic. Both of those should be reachable from the core package as well as the CLI layer so they don't get duplicated. Basically the goal is that the model always gets a clear signal about why the mode changed and what I'm intending next, whether that's proceeding with an approved plan or just stepping out of planning myself, so the conversation keeps decent continuity.
+## Expected Behavior
+
+- When a user manually exits planning mode (by explicitly selecting a different approval mode), a notification message should be automatically added to the conversation history explaining that the user has manually exited planning mode and indicating which mode they switched to.
+- When the switch away from planning mode happens automatically (e.g., after a plan is approved), the notification message should reflect that a plan was approved and indicate which mode is now active.
+- A utility should exist to generate consistent, human-readable descriptions for each available approval mode.
+
+## Why This Matters
+
+Without this notification, the AI model receives no signal about why the mode changed or what the user intends to do next. Adding a contextual message to the conversation history ensures the model understands the transition — whether the plan was approved for execution or the user chose to exit planning manually — enabling better continuity in the conversation.

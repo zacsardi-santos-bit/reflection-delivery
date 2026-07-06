@@ -1,9 +1,14 @@
-I'm building out the retail search sample library for Google Cloud and need three new snippet files covering common search patterns we're missing right now, since developers currently have to figure out offset navigation, token-based pagination, and category browsing on their own with the Retail Search API and I'd rather give them ready-to-run examples.
+## Description
 
-First one should demo how to search with an offset so results start from a specific position in the result set. It needs to print a header showing the offset value used and then list the product IDs found.
+The Google Cloud Retail Search API supports several useful search patterns that developers commonly need — including offset-based result navigation, manual page-by-page pagination using page tokens, and category-based browsing as an alternative to keyword search. Currently, there are no sample scripts demonstrating these capabilities, which makes it harder for developers to understand how to integrate them into their own applications.
 
-Second should show manual pagination through results using page tokens. So it fetches the first page, pulls the token out of that response, uses it to fetch the second page, and prints clearly labeled output for each page (like page one vs page two) with the product IDs found on each.
+## Expected Behavior
 
-Third one handles two distinct modes: a keyword-based text search and a category-based browsing search. When a query string is provided, use it for the search and leave the category list empty. When a list of page categories is provided instead, use those for browsing and leave the query empty. For each result print the product ID, title, and the relevance scores. Oh and this request-based one should also handle API errors gracefully, printing a useful error message plus the project ID to stderr.
+- A sample that demonstrates how to search with an offset so results start from a specific position in the result set, printing the offset used and the product IDs found.
+- A sample that demonstrates manual pagination by fetching the first page of results and then using the page token from that response to fetch a second page, clearly labeling each page in the output.
+- A sample that demonstrates the difference between text-based searching (using a query string) and category-based browsing (using a list of page categories), printing product IDs, titles, and relevance scores for each result.
+- The request-based sample should also handle API errors gracefully, printing a useful error message to stderr that includes the project ID.
 
-That's the three, offset search, token pagination, and text-vs-category browsing, each as its own runnable sample.
+## Why This Matters
+
+Without these samples, developers have to discover on their own how to use offset navigation, token-based pagination, and category browsing with the Retail Search API. Providing ready-to-run examples reduces onboarding time and reduces the risk of incorrect API usage.

@@ -1,7 +1,21 @@
-I'm chasing down a couple bugs in how we parse named access control filters in remap config files, over in the remap ACL handling code. First one is a crash: if someone defines a named filter twice with the same name (say to override it with a different action), the server dies with an assertion failure instead of just updating the filter. What's happening is the code tries to add a "match all addresses" IP entry when the filter already has entries from the first definition, and that trips the assertion. I want the second definition to just replace the first, last-specified action wins, no crash.
+## Description
 
-Second bug is that a named filter with no IP address restrictions, once it's activated for a remap rule, ends up with no IP matching info at all so it doesn't match any client, which makes the ACL rule silently inert. The "match all addresses" fallback that's supposed to make it apply to everyone isn't getting set right here. I think the fix is to apply that fallback at the point where the named filter actually gets attached to a remap rule, not back where the filter was originally defined. So a named filter with no explicit IP restrictions should implicitly treat all client IPs as matching.
+There are two related bugs in how named access control filters are processed in remap configuration files.
 
-Oh and there's a third related thing, if a single filter definition includes more than one action directive, that should be a config error and parsing should fail, and the error path there needs to clean up any partially allocated resources too so we don't leak.
+**Bug 1: Crash when redefining a named filter**
 
-These matter because right now we either crash or end up with silently broken ACL rules, and for a proxy doing access control that's bad news. I just need these three behaviors correct so named filter definitions work like people expect in real production remap configs.
+When a named filter is defined using the same name a second time (with different settings), the server crashes with an assertion failure instead of updating the filter definition. This makes it impossible to refine or override a previously defined filter. The expected behavior is that the second definition replaces the first, and the most recently specified action takes effect.
+
+**Bug 2: Named filters without IP restrictions don't match anything**
+
+When a named filter that specifies no IP address restrictions is activated for a remap rule, the resulting filter has no IP matching criteria. Because the "match all addresses" fallback is never applied, the filter cannot match any client, making the ACL rule effectively inert. The expected behavior is that a named filter with no explicit IP restrictions should implicitly treat all client IP addresses as matching.
+
+## Expected Behavior
+
+- Redefining a named filter with a new action should succeed, with the last-specified action taking effect.
+- A named filter with no IP restrictions, when applied to a remap rule, should automatically use an "allow all addresses" policy so the filter correctly applies to all clients.
+- A filter definition that includes more than one action directive in a single definition should be rejected as a configuration error.
+
+## Why This Matters
+
+These bugs cause either crashes or silently broken ACL rules, which are serious issues for a proxy server where correct access control behavior is critical.

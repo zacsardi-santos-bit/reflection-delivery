@@ -1,7 +1,14 @@
-I'm working on the memories backend and its error reporting for missing paths is bugging me. Right now if you ask it to list or search memories at a path that doesn't exist on disk, it just hands back empty results, so the caller can't tell whether the path exists but has nothing in it versus the path being flat out absent. And when reading a file at a path that doesn't exist, it returns the wrong error category (a "not a file" kind of error) instead of signaling the path wasn't found.
+## Description
 
-What I want is a dedicated "not found" variant on the backend's error type so all three operations, reading and listing and searching, can return a clear specific error when the target path is absent instead of silently returning nothing. So listing or searching a missing path should give me that not found error rather than an empty set, and reading a file at a missing path should give me not found instead of the not-a-file error.
+The memories backend does not have a way to report that a requested path does not exist. When callers ask the backend to list entries in a directory that isn't there, or search within a path that doesn't exist, the backend silently returns empty results. Callers have no way to distinguish "the path exists but has no results" from "the path does not exist at all." Likewise, when reading a file at a non-existent path, the wrong error category is returned.
 
-There's also a related path resolution thing I hit. When a scoped path gets resolved component by component, if any component turns out to be a symlink to a directory, the resolution should fail with an "invalid path" error. That stops callers from using symlinked directories to escape the permitted memory root, so the boundary stays enforced even when paths traverse through symlinks.
+## Expected Behavior
 
-Oh and at the server layer, the new not found error should be classified as a client error, same way malformed paths and invalid cursors already are. Without this whole thing clients can't distinguish missing from empty and it's a confusing silent-failure debugging mess.
+- When listing or searching memories at a path that does not exist on disk, the backend should return a clear "not found" error, not an empty result set.
+- When reading a memory file at a path that does not exist on disk, the backend should return a "not found" error rather than a "not a file" error.
+- During path resolution, if any component of a scoped path is a symbolically linked directory, the operation should be rejected with an "invalid path" error to prevent symlink-based traversal outside the permitted memory root.
+- The "not found" error should be treated as a client error at the server layer, consistent with how malformed paths and cursors are already handled.
+
+## Why This Matters
+
+Without a dedicated "not found" error, clients cannot distinguish missing paths from empty paths, leading to silent failure and confusing debugging experiences. The symlink rejection ensures that the memory root boundary is enforced even when callers construct paths that traverse through symlinked directories.

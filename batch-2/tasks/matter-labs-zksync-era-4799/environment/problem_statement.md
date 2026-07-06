@@ -1,7 +1,15 @@
-I'm poking at the contract verifier in zksync-era and hit a gap where the zksolc compilation input builder has no idea which compiler version is about to run. Right now the function that constructs the zksolc input gets called without any version info, so the output artifact selection is always the same no matter what, which is wrong because newer zksolc versions can emit EVM output alongside EraVM while older ones can't. So I end up either requesting unsupported outputs on old compilers or missing the EVM artifacts on new ones.
+## Description
 
-What I want is to add the version string as an explicit second argument to that input-building function. Callers already hold the version info struct that has a field with the raw version string, so they just pass it through. Then the output selection should branch on the actual version: newer versions get the EVM artifact selector added, older ones don't. Watch out, there's one special pre-release version string that needs to be treated as legacy even though its name might look newer, so that comparison has to account for it.
+The contract verifier currently builds compilation inputs without knowing which version of the zksolc compiler will be used. This is a problem because different compiler versions have different capabilities: newer versions can generate EVM output in addition to EraVM output, while older ones cannot. As a result, the input builder always uses the same output flags regardless of which compiler version is active, which leads to either requesting unsupported outputs for older compilers or missing useful outputs for newer ones.
 
-Also the version-threshold check helper should be refactored into a standalone function that takes any version string directly instead of leaning on instance state, so it can be called freely. And separately, the standalone Solidity EVM compiler's input builder (no zksolc layer) currently uses a broad catch-all output selector, and I want it to request the specific bytecode/EVM artifact fields we actually need instead of the generic wildcard.
+## Expected Behavior
 
-One thing across all of this, please don't clobber anything the caller already put in the request. Whatever output selections or settings came in on the original input need to be preserved and merged in, not overwritten. Getting these selectors right matters because the verification pipeline has to capture bytecode and other artifacts correctly across every supported version, otherwise verifications silently come back incomplete or wrong depending on which compiler's active.
+- The function that constructs the zksolc compilation input should accept the compiler version as an explicit input parameter.
+- The output artifact selection embedded in the compilation input should be determined by the actual compiler version: newer compilers should have EVM output requested, while older compilers should not.
+- A helper that checks whether a compiler version meets the relevant version threshold should work as a standalone utility rather than being tied to a specific compiler instance.
+- Existing output selections and settings supplied by callers should be preserved and merged rather than overwritten.
+- For standalone Solidity EVM compilation (without the zksolc layer), the output selection should request specific EVM artifact fields explicitly rather than using a broad catch-all selector.
+
+## Why This Matters
+
+Getting the output selectors right is necessary for the contract verification pipeline to correctly capture bytecode and other artifacts across all supported compiler versions. Without this fix, verifications may silently produce incorrect or incomplete outputs depending on which compiler version is in use.

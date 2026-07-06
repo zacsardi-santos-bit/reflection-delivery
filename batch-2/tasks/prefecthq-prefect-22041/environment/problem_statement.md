@@ -1,5 +1,19 @@
-I'm building out the Prefect server and I keep hitting a gap around worker cleanup. When flow runs time out or get cancelled there's cleanup work that has to happen on the worker side, but right now there's nothing that reliably hands that off, retries it if something flakes, or gives up gracefully after too many tries. I want a proper message queue subsystem for this and it needs to live in the server.
+## Description
 
-Here's the shape of what I need. Cleanup tasks get enqueued idempotently so if the same cleanup request comes in more than once it only ever produces one active task, no duplicate work. Workers claim a task through a lease-based reservation so two workers can't be processing the same thing at once, and once they've got it they can acknowledge it as done, release it back for retry if they can't finish, or renew the lease while they're still working. If a lease expires without an ack the task should automatically become available again for redelivery, and after a configurable number of failed delivery attempts it moves to a dead-letter store instead of retrying forever.
+The Prefect server needs a reliable, idempotent message queue subsystem for tracking worker cleanup operations — tasks that must be performed after flow runs time out or are cancelled. Currently there is no dedicated mechanism to ensure cleanup work is delivered to workers reliably, retried on transient failures, or discarded after exhausting all retry attempts.
 
-Also workers shouldn't have to poll, they should be able to efficiently wait for new work using a sequence-based wakeup notification that fires when new tasks arrive or when expired leases get redelivered. The whole queue is scoped by work pool so operations on one pool can't interfere with another. Oh and it's gotta be pluggable, the backing store is configurable via a server setting with an in-memory implementation as the default. Lease duration, max delivery attempts, and the idempotency retention window should all be driven by server settings too. Without this, cleanup for timed-out or cancelled runs has no guaranteed delivery path and workers either miss it, redo it, or have no clean way to wait for it, so I want this to be the reliable, observable foundation for that.
+## Expected Behavior
+
+- Cleanup tasks can be enqueued idempotently: sending the same cleanup request multiple times results in only one active task.
+- Workers can claim a cleanup task via a lease-based reservation, ensuring no two workers process the same task simultaneously.
+- Workers can acknowledge successful completion, release the task back for retry on failure, or renew their lease while work is in progress.
+- When a lease expires without acknowledgment, the task is automatically made available again for redelivery.
+- After a configurable number of failed delivery attempts, the task is moved to a dead-letter store rather than retried indefinitely.
+- Workers can efficiently wait for new work to appear rather than polling, using a sequence-based wakeup notification mechanism.
+- The queue is scoped by work pool, so operations on one pool cannot interfere with another.
+- The system is pluggable: the backing store implementation is configurable, with an in-memory implementation provided by default.
+- All relevant behavior (lease duration, maximum delivery attempts, idempotency retention) is controlled by server settings.
+
+## Why This Matters
+
+Without this subsystem, cleanup tasks for timed-out or cancelled flow runs have no guaranteed delivery path. Workers could miss cleanup work, retry it redundantly, or have no efficient way to wait for new cleanup tasks to arrive. This change provides the infrastructure needed to make worker-driven cleanup operations reliable and observable.

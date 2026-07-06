@@ -1,5 +1,16 @@
-I'm adding a server-wide default result storage config to Prefect. Right now there's no way to set one shared storage location at the server level, every flow or deployment has to configure its own result storage, which is a pain when I just want all flows on a server pointing at the same backend. I want admin API endpoints that let me set, read, and clear a default result storage block for the whole server.
+## Description
 
-Setting works by pointing at an existing storage block. If the block doesn't exist, reject it with a not found error, and if the block exists but isn't actually suitable for result storage (wrong block type basically), reject it with a validation error. Reading gives back the current default, and when nothing's configured yet the response should indicate an unset state. Clearing wipes it so a subsequent read goes back to that unset state again.
+There is currently no way to configure a server-wide default result storage location in Prefect. Every flow and deployment that needs result storage must have it configured individually, which is cumbersome when you want all flows on a server to share the same storage backend. Administrators need a centralized way to set, read, and clear a default result storage block that applies server-wide.
 
-I also need both Python clients wired up, so the async client and the synchronous client each get corresponding methods to set, read, and clear this from code. And there needs to be a new model module in the server handling persistence for this config, with functions to write the stored default, read it back, and clear it. Keep the admin routes, the client methods, and the model functions all consistent with each other so callers can drive this programmatically end to end.
+## Expected Behavior
+
+- Administrators can set a specific storage block as the server-wide default for result storage through the administration API.
+- The current server default result storage configuration can be read back at any time. When no default is configured, the response indicates an unset state.
+- The server default result storage can be cleared, after which the configuration returns to its unset state.
+- Attempting to set a block that does not exist should be rejected with a "not found" error.
+- Attempting to set a block that exists but is not suitable for result storage should be rejected with an appropriate validation error.
+- These operations are available through both the asynchronous and synchronous Python clients.
+
+## Why This Matters
+
+Without a server-level default, teams must configure storage on every individual flow or deployment. A centralized default simplifies setup in environments where a single shared storage backend should apply to all flows, and allows administrators to change or clear the default without modifying each flow individually.

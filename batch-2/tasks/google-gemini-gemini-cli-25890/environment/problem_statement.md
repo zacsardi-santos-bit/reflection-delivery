@@ -1,7 +1,22 @@
-I'm chasing down a bug in the home directory warning our CLI throws at startup, the one that's supposed to fire when someone launches the tool directly from their home dir since that can expose sensitive files to AI-assisted stuff. It's misbehaving in two common setups and I need both fixed in that same startup warning check.
+## Description
 
-First issue: on machines where the home directory is actually a symlink to the real dir, the warning never shows even when you're sitting right in home, because the path comparison doesn't resolve the link before comparing. I want it to resolve both the current working directory and the home path to their real locations first, then check if they match, so the warning still fires when the cwd resolves through symlinks to the same place as home.
+The CLI tool is supposed to warn users when they launch it from their home directory, since doing so can expose sensitive files to AI-assisted tools. However, this warning has two bugs that prevent it from working correctly in common scenarios.
 
-Second issue: some environments let people set a custom application home directory via an environment variable, and when that custom home points somewhere that isn't the actual OS home and the user's working there, the warning fires incorrectly. So the check should pull the operating system's home directory directly, not any app-level override, so folks in custom-home setups don't get false warnings.
+## Problem 1: Symlinked Home Directories
 
-Net behavior I'm after: the warning fires when the cwd is the real OS home (symlink or not) or resolves via symlinks to it, and it stays quiet everywhere else, including plain subdirectories of home and those custom app-home configs pointed elsewhere. Basically it should trigger exactly when you're running directly in your OS home and suppress in all other cases.
+On many systems, the home directory path is actually a symbolic link to the real directory. When this is the case, the current path comparison doesn't resolve the link before comparing, so the warning is never shown — even when the user is running directly from their home directory. The comparison should resolve both paths to their real locations before checking if they match.
+
+## Problem 2: Application Home Overrides Environment Variable
+
+Some environments allow users to configure a custom application home directory via an environment variable. When this custom home is set to the user's current working directory, the warning incorrectly fires — even though the user is not working in their actual OS home directory. The home directory warning check should use the operating system's home directory directly, not any application-level override.
+
+## Expected Behavior
+
+- The home directory warning should fire when the current working directory is the actual OS home directory (whether or not it's a symlink).
+- The home directory warning should fire when the current working directory resolves (via symlinks) to the same location as the OS home directory.
+- The home directory warning should NOT fire when the current working directory is merely a subdirectory of the home directory.
+- The home directory warning should NOT fire when an application-level home environment variable is set to a path other than the OS home, and the user is working in that configured path.
+
+## Why This Matters
+
+Users relying on this safety warning may not receive it due to these bugs, leaving them unaware that the CLI is operating in a sensitive location. Conversely, users with legitimate custom home configurations may see spurious warnings that don't apply to their situation.

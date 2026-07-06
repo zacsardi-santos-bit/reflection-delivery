@@ -1,9 +1,15 @@
-I'm on a Spring reactive project and I keep copy-pasting the same little filter logic every time I spin up a `WebClient`, so I want one central utility class with static factory methods that each hand back an `ExchangeFilterFunction` I can plug into the client builder. There's no single home for these cross-cutting behaviors right now and it's getting duplicated all over.
+## Description
 
-Three filters I need. First, a URL versioning one that takes a version string and appends it as an extra path segment on every outgoing request, so a request to something like "/api/resource" sent through the filter with version "1.0" actually goes out to "/api/resource/1.0". Just tack it on as another segment.
+When using a reactive HTTP client in Spring, developers frequently need to apply cross-cutting behaviors — such as logging outgoing requests, counting how many GET requests have been made, or versioning URLs by appending a path suffix — to every request without repeating that logic everywhere. Currently, there is no centralized utility class for these common filter patterns, so teams are forced to inline this logic each time they construct a new client instance.
 
-Second, a GET-counting filter that takes some shared counter and bumps it whenever the request method is GET, and leaves it completely alone for anything else like POST. Handy for monitoring request volume.
+## Expected Behavior
 
-Third, a logging filter that takes an output stream at construction time and writes a short line about each outgoing request to it. The format is exactly the word "Sending request" then a space then the HTTP method then a space then the full URL, all on one line, and no trailing newline at the end, so don't println it.
+A utility class should exist that provides reusable filter factories for use when building reactive HTTP clients:
 
-Each of these is a static factory returning a filter, all living together so it's easy to compose several onto one client. This is the usual stuff (versioned APIs, request counting, debugging outbound traffic), just consolidated so behavior stays consistent and there's less boilerplate.
+- A **URL-modifying filter** that accepts a version string and appends it as a path segment to every outgoing request URL.
+- A **counting filter** that accepts a shared counter and increments it on each GET request, leaving it unchanged for other HTTP methods such as POST.
+- A **logging filter** that accepts an output stream and writes a concise message identifying the HTTP method and target URL for every outgoing request, with no trailing newline.
+
+## Why This Matters
+
+These filter patterns are common in real applications — for versioned APIs, for monitoring request volumes, and for debugging outbound traffic. Having them in one place reduces boilerplate, makes behavior consistent, and makes it easy to compose multiple filters onto a single client.

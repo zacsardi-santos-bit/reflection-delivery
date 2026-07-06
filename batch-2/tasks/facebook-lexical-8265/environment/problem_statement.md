@@ -1,7 +1,21 @@
-I'm poking at the markdown conversion stuff in lexical-markdown and hit two whitespace bugs that wreck round-trip fidelity, which matters a lot for anything that loads and saves markdown source without wanting to silently mangle it.
+## Description
 
-First one: when markdown gets normalized without the line-merging mode, trailing spaces on content lines are getting stripped before import. So if I've got a paragraph like "hello world   " with three trailing spaces, then a blank line, then another paragraph, those trailing spaces vanish after import and re-export. They shouldn't, they can be meaningful. So in that non-merging normalization path I want non-empty content lines to keep their trailing whitespace intact, while whitespace-only lines still collapse down to empty so they keep acting as paragraph separators. Net effect: a default-mode round-trip through import and export should preserve trailing whitespace in paragraph text.
+The markdown import and export utilities have two related whitespace-handling bugs that cause certain content to be silently corrupted during round-trips through the editor.
 
-Second one is in the preserve-newlines export mode, the option that keeps structural newlines when exporting. Backslashes in text content are getting double-escaped there. If I've got content using a backslash at the end of a line as a hard line break, importing it and exporting with preserve-newlines on gives me a doubled backslash, which changes the meaning of the source. So backslash chars in text shouldn't be escaped at all when exporting in preserve-newlines mode, and a round-trip with that option on should preserve backslash-terminated hard line breaks exactly as written.
+**Bug 1: Trailing whitespace stripped in non-merging mode**
 
-Both live in the markdown import/export utilities. Fixing them so neither trailing spaces nor backslash line breaks get silently altered on a load/save cycle.
+When markdown is normalized without the line-merging option, trailing spaces on content lines are removed before the content is imported. This means that paragraphs with intentional trailing whitespace lose those spaces after a round-trip. For example, a paragraph like "hello world   " (with three trailing spaces) followed by a blank line should preserve those trailing spaces across import and export, but currently they are discarded.
+
+**Bug 2: Backslashes double-escaped on export with preserve-newlines option**
+
+When exporting markdown with the option to preserve structural newlines, backslash characters in text content are unnecessarily escaped. This corrupts content that uses backslash-terminated hard line breaks: importing and re-exporting such content with the preserve-newlines option produces double-escaped backslashes, changing the meaning of the source.
+
+## Expected Behavior
+
+- When normalizing markdown without line merging, trailing whitespace on non-empty content lines must be preserved (only whitespace-only lines should collapse to empty).
+- A round-trip through import and export in default mode should preserve trailing whitespace in paragraph text.
+- A round-trip through import and export with the preserve-newlines option enabled should preserve backslash-terminated hard line breaks exactly as written.
+
+## Why This Matters
+
+Applications that use the editor to load and save markdown source need to faithfully round-trip content. Losing trailing spaces or corrupting backslash line breaks degrades the fidelity of the markdown, which is especially problematic for users or tools that depend on these whitespace conventions for formatting.

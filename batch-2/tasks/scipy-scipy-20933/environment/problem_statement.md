@@ -1,7 +1,22 @@
-I've been hitting a cluster of SciPy bugs and want them all fixed together. The big one is ODE integration stepping past the interval. When I solve an ODE where my right-hand side is only valid between the start and end times, the solver sometimes evaluates it at a t slightly beyond the endpoint (or below the start), and my function raises because it's outside its domain even though the interval itself is totally valid. It needs to strictly respect both the upper and lower time bounds and never step outside them, and this affects more than one solver method (it's the regression behind gh-17341, gh-8848, and gh-9198 so please check the various methods, not just one).
+## Description
 
-Related to that, the initial step size ignores max_step. When I pass a maximum step size, the first step can still blow past it even though every subsequent step honors it. The routine that computes the starting step size should clamp to the user-specified max_step just like the later steps do.
+Several bugs have been identified in SciPy's ODE solver and statistics modules that need to be fixed:
 
-Separate area, there's a deprecated distribution alias in the stats module. When I call methods on the old name (the pdf, cdf, survival function sf, the ppf quantile function, etc) I get no deprecation warning at all. I want each method call to warn me to move to the new name, and the message should say specifically which method is deprecated so it's clear what I touched.
+1. **ODE solver evaluates function outside integration bounds**: When solving ODEs, the solver sometimes calls the user's derivative function at time values beyond the integration endpoint. This causes failures when the function is only defined within the integration domain — any call outside the interval throws an error. Multiple solver methods are affected (regression for gh-17341, gh-8848, gh-9198).
 
-Last thing, `scipy.stats.bootstrap` with two samples. Passing two samples that differ in size along the resampling axis is intentional and valid for some two-sample statistics, so that should just work with no warning. But if the sample shapes are incompatible along a non-resampling dimension, I do want a warning so I know something's off. Right now both cases feel wrong (this is the gh-20850 regression). Fix so unequal-along-axis is silent and incompatible-elsewhere warns.
+2. **Initial step size ignores the maximum step constraint**: The function that computes the initial step size for ODE integration does not respect the user-specified maximum step size. When a maximum step size is provided, the first step can still exceed it, which is inconsistent with the behavior of subsequent steps.
+
+3. **Missing deprecation warnings on deprecated distribution alias**: A distribution in the statistics module was deprecated in favor of a newer name. However, accessing the statistical methods on the old alias (such as the density function, cumulative distribution, survival function, and quantile functions) does not currently issue any deprecation warning. Users should be warned each time they use a deprecated method so they can update their code.
+
+4. **Bootstrap resampling behaves incorrectly for multi-dimensional samples**: When calling the bootstrap function with two samples of different sizes along the resampling axis — which is expected behavior for two-sample test statistics — the function should succeed without any warning. Conversely, when sample shapes are incompatible in non-axis dimensions, the function should issue a warning to alert users of potential issues but currently may not do so consistently (regression for gh-20850).
+
+## Expected Behavior
+
+- The ODE solver must never evaluate the derivative function outside the integration interval.
+- The initial step size selection must honor the user-specified maximum step size constraint.
+- All methods on the deprecated distribution alias must issue a deprecation warning with a clear message identifying which method is deprecated.
+- Bootstrap must accept two-sample inputs where sizes differ along the resampling axis without warnings, and must warn when shapes are incompatible in other dimensions.
+
+## Why This Matters
+
+These bugs can cause unexpected crashes or silent incorrect results, especially when ODE functions are only defined on a restricted domain, when maximum step sizes are critical for numerical accuracy, or when users unknowingly rely on a deprecated interface.

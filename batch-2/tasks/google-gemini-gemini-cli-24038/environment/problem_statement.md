@@ -1,9 +1,18 @@
-I'm dealing with our sandbox security layer, the bit that decides which file paths are allowed vs forbidden when we run sandboxed commands, and I've got three things to untangle.
+## Description
 
-First up, forbidden paths shouldn't be a static array passed in when the sandbox manager gets constructed. Some of these paths come from reading project config off disk, which is async and can happen way later than startup, so forcing early resolution is wasteful and rigid. I want to hand it a deferred function that returns a promise of paths and only actually call it when the sandbox goes to prepare a command. The config layer needs to wire this up so forbidden paths aren't fetched during init at all, only lazily when a command's being prepared.
+The sandbox security system currently requires forbidden paths to be provided as a static list at the time the sandbox manager is constructed. This is problematic because some forbidden paths — such as paths derived from project configuration files — can only be known after reading the filesystem, which happens asynchronously and potentially much later than startup. Forcing early resolution adds unnecessary overhead and limits flexibility.
 
-Second, the allowed/forbidden conflict handling is fragile. Right now if a path shows up in both lists it gets added to the allow list and then denied, which is this ordering-dependent mess. What I actually want is forbidden always wins, so a conflicting path gets stripped out of the allowed list entirely and never shows up in both.
+Additionally, the current conflict resolution behavior between allowed and forbidden paths is ambiguous: when a path appears in both lists, the sandbox managers would add it to the allow list and then also deny it. This ordering dependency is fragile. The correct behavior should be that forbidden paths always win — a conflicting path should never appear in the allow list at all.
 
-Third, path comparison ignores case-insensitive filesystems. On macOS and Windows two paths differing only in case should count as the same for dedup and conflict detection, but on Linux case stays significant. For this I need a utility that normalizes a path to an "identity" for comparison, so stripping trailing slashes and normalizing separators, then lowercasing only on the case-insensitive platforms. Oh and the path sanitization helper should return an empty array when no paths are given instead of undefined or null.
+Finally, path comparison does not account for case-insensitive filesystems on macOS and Windows, which can allow paths that differ only in case to slip through conflict checks.
 
-Net effect I'm after: security rules evaluated at the right time, no startup overhead resolving paths we might not need, no ambiguous allow-then-deny, and correct behavior across platforms.
+## Expected Behavior
+
+- Forbidden paths should be supplied as a deferred function (resolved lazily only when needed), not as a static list provided at construction time.
+- The configuration system should compute its forbidden paths lazily and only when the sandbox actually prepares a command — not at startup or during initialization.
+- When a path appears in both the forbidden and allowed lists, it must be removed from the allowed list entirely, so it is only ever enforced as forbidden.
+- Path deduplication and conflict detection must be case-insensitive on macOS and Windows, and case-sensitive on Linux.
+
+## Why This Matters
+
+This change ensures sandbox security rules are evaluated at the right time, avoids startup overhead from resolving paths that may not be needed, eliminates ambiguous allow-then-deny ordering, and correctly handles case-insensitive filesystems across platforms.

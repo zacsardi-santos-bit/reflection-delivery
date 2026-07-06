@@ -1,7 +1,17 @@
-I'm chasing down two bugs in Excalidraw that are kind of related around animation and collab cleanup, and I want both fixed properly.
+## Description
 
-First one is in the animation management system. The way it handles frames right now, if I cancel an animation and then start a brand new one, the new animation doesn't run correctly. Something about the cancelled state isn't getting reset so the fresh start gets ignored or half-runs. On top of that there's a resource leak: when animations finish naturally or get cancelled, the controller sometimes leaves timers still scheduled in the background even though there's literally nothing left to animate. So I need the controller to correctly support starting a new animation after a previous cancellation (it should just work reliably), and I need it to guarantee no orphaned timers hang around once all animations have ended or been cancelled. When the queue empties out, everything should be torn down.
+There are two related bugs with animation management and collaborative laser pointer cleanup.
 
-Second bug is on the collaborative side with laser pointers. When remote collaborators are drawing laser trails and then all of them leave the shared session, their trail paths stay painted on the canvas forever. It's confusing since it looks like people are still active when they've disconnected. I want the laser trail rendering to drop remote collaborator trails as soon as those collaborators are gone, so when everyone remote leaves the session their trails get cleaned up and removed from the canvas immediately and the canvas reflects who's actually present.
+**Animation system bug:** The internal animation management system has a flaw where starting a new animation after the previous one was cancelled does not work correctly. Additionally, when animations are cancelled or finish naturally, orphaned timers can remain active in the background — even after all animations have stopped. This wastes resources and can cause unexpected behavior.
 
-Both of these matter for correctness: the orphaned timers waste resources and can cause subtle rendering glitches, and the stale trails give people wrong info about who's in the session. Fix the animation controller and the laser trail cleanup path.
+**Laser trail persistence bug:** When all remote collaborators leave a shared drawing session, any laser pointer trails they were drawing are not cleaned up from the canvas. The visual artifacts (trail paths) remain visible even though the collaborators have disconnected, which is confusing and incorrect.
+
+## Expected Behavior
+
+- After an animation is cancelled, starting a new animation should work reliably.
+- When all animations have ended or been cancelled, no timers should remain scheduled.
+- When all remote collaborators leave the session, their laser pointer trails should be removed from the canvas immediately.
+
+## Why This Matters
+
+Leaving orphaned timers after animations complete wastes resources and could cause subtle rendering glitches. Leaving laser trails on screen after collaborators have left is a visual correctness issue that gives users incorrect information about who is currently active in the session.

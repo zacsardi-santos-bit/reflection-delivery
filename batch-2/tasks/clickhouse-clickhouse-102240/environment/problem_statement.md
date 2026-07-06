@@ -1,5 +1,24 @@
-I'm hitting a nasty segfault in ClickHouse and I'm pretty sure it's about join nullability settings differing between when a view was created and when I query it. Here's the setup: I've got two base tables with some rows, then a simple view wrapping one of them, and then a second view doing a LEFT JOIN between the first table and that wrapping view. The catch is I created that outer join view while nullable join columns were enabled (the `join_use_nulls`-style setting), so the view's stored metadata records the join output column as nullable. Now if I flip my session to have nullable join columns disabled, turn on the new analyzer, and run a query against that join view with a filter on the nullable column, the whole thing crashes with a SIGSEGV instead of returning rows.
+## Description
 
-Digging into it, the problem looks like it's in filter pushdown during query planning. When the optimizer propagates filters down into a view it compiles the filter against the column types from the view's metadata, but at query time the actual execution plan produces different types (non-nullable instead of nullable, because my session setting changed). So we end up applying a filter compiled for nullable columns to non-nullable ones and it blows up deep in the execution engine, classic type confusion.
+ClickHouse crashes with a segmentation fault when querying a view that contains a join, if the session setting for join nullability differs between when the view was created and when it is queried.
 
-What I want is for this to just work. I should be able to query views regardless of what settings were live when they were built, an innocent setting difference shouldn't take down the server. So when filter propagation notices the filter's expected column types don't line up with the plan's actual types, it should safely skip pushing that filter down (rather than applying it unsafely) or otherwise recompile it for the real types. Either way the query returns the matching rows and doesn't crash.
+## Steps to Reproduce
+
+1. Create two base tables and insert some rows.
+2. Wrap one of the tables in a simple view.
+3. Create a second view that performs a LEFT JOIN between the first table and the wrapping view, while the session has nullable join columns enabled. The resulting view metadata stores the join output column as nullable.
+4. Switch the session to have nullable join columns disabled.
+5. Enable the new query analyzer.
+6. Query the join view with a filter on the nullable column.
+
+**Result:** ClickHouse crashes with a SIGSEGV / segmentation fault.
+
+**Expected:** The query should return the matching rows without crashing.
+
+## Root Cause
+
+When the query optimizer propagates filters down into views during query planning, it compiles the filter against the column types stored in the view's metadata. If the session setting controlling join nullability has changed since the view was created, the actual execution plan uses different column types than what the compiled filter expects. Applying a filter compiled for nullable columns to non-nullable columns (or vice versa) causes a type-confused crash deep in the execution engine.
+
+## Why This Matters
+
+Users should be able to query views freely regardless of what session settings were active when those views were created. Crashes caused by innocent setting differences are unacceptable in a production database. The fix should ensure that when filter propagation detects a column type mismatch between the filter's expected types and the plan's actual types, the filter is safely skipped rather than applied unsafely.

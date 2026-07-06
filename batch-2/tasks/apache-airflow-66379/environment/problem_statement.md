@@ -1,5 +1,18 @@
-I'm running a distributed Airflow setup with remote log storage and I just noticed callback logs are getting lost. When callbacks run as subprocesses, their logs never make it to remote storage after the subprocess finishes, only task execution logs get uploaded. That's fine locally but in any ephemeral environment where local disk isn't persistent, the callback logs are just gone, so operators debugging a callback failure have nothing to look at.
+## Description
 
-There's a related snag underneath this. The remote log upload path right now always insists on a task instance being passed in, but callbacks run outside the context of any specific task instance, so I need the upload interface to make the task instance optional. Both the Elasticsearch and the OpenSearch remote log IO implementations should handle being called without a task instance gracefully, ideally just returning early and doing no upload work in that case.
+Callback subprocess logs are currently never uploaded to remote log storage after execution. Only task execution logs benefit from remote upload. This gap means callback logs are only available locally, which is problematic in distributed or ephemeral environments where local storage is not persistent.
 
-What I want is for the callback subprocess to upload its logs to remote storage after it runs, the same way task logs get uploaded. Also the logging setup step for callbacks should establish the remote logging connection using the client that's already active at that point. And it's got to be tolerant, if remote logging isn't configured the upload should just complete silently with no error, and if the upload fails for any reason (remote storage unreachable, whatever) that error needs to get swallowed so the callback's exit code is still returned correctly and unaffected.
+Additionally, the remote log upload interface currently requires a task instance to always be provided, making it impossible to upload logs for processes (such as callbacks) that run outside the context of a specific task instance.
+
+## Expected Behavior
+
+- The remote log upload interface should allow the task instance parameter to be optional, so it can be called without providing a task instance.
+- Both the Elasticsearch and OpenSearch remote log IO implementations should gracefully handle the case where no task instance is provided, returning early without performing any upload work in that case.
+- After a callback subprocess finishes, its logs should be uploaded to remote storage (if remote logging is configured).
+- If remote logging is not configured, the callback log upload should complete silently without error.
+- If the upload fails for any reason (e.g., remote storage is unreachable), the error must be swallowed so that the callback's exit code is still returned correctly.
+- The logging configuration step for callbacks should establish the remote logging connection using the active client.
+
+## Why This Matters
+
+Without this change, callback logs are invisible in systems that rely on remote log storage. Operators debugging callback failures in such environments cannot retrieve any log output. Making log upload optional (tolerant of no task instance) and adding it to the callback subprocess lifecycle closes this gap cleanly.

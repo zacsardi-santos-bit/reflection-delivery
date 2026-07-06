@@ -1,5 +1,21 @@
-I'm working on ScrapeGraphAI and want to add a lighter-weight document loader as an alternative to our Chromium-based one, since Chromium eats like 300MB per session, needs a full browser install, and spits out tons of boilerplate that jacks up token costs when we feed pages to LLMs. The idea is a loader backed by a lightweight external CLI tool that fetches and extracts page content without a whole browser runtime, and it should slot into our existing loader pattern.
+## Description
 
-It takes a list of URLs plus optional settings, output format, a timeout, a CSS/ARIA selector to scope extraction, and custom HTTP headers. It's gotta support at least three formats, plain text, markdown, and a structured object-model format, and validate the format at construction time so an unsupported value raises a clear error right away. On a successful load it yields one document per URL carrying the page content plus metadata with the source URL, the loader name, and the format used.
+ScrapeGraphAI currently only supports a Chromium-based document loader for fetching web page content. Chromium requires significant memory (~300MB per session), depends on a full browser installation, and produces verbose output with lots of boilerplate — increasing token costs when feeding content to language models.
 
-Failures should degrade nicely: empty content gets skipped with a warning log, timeouts get skipped with a warning log too, and a non-zero exit code from the underlying tool skips that URL silently. Oh and if the tool isn't installed at all I want a clear installation error raised immediately telling the user what to do. Also needs an async mode so we can fetch multiple URLs concurrently with the same skip-on-empty behavior, and passing an empty URL list should just produce no output without erroring in both sync and async modes.
+There is a need for a lighter-weight document loader that can fetch and extract web page content without requiring a full browser runtime. Such a loader should integrate naturally into the existing loader pattern: accept a list of URLs, fetch each page, and return structured document objects with source metadata.
+
+## Expected Behavior
+
+- The loader accepts a list of URLs plus optional configuration: output format, timeout, a CSS/ARIA selector to scope extraction, and custom HTTP headers.
+- It supports at least three output formats: plain text, markdown, and a structured object model format.
+- It validates the output format at construction time and rejects unsupported values with a clear error.
+- On success, it yields one document per URL, with the page content and metadata identifying the source URL, the loader name, and the format used.
+- Empty responses are silently skipped with a warning log.
+- Timeouts are handled gracefully — the URL is skipped and a warning is logged.
+- If the underlying tool is not installed, a clear installation error is raised immediately.
+- Both synchronous and asynchronous loading modes are supported.
+- Empty URL lists produce no output without errors.
+
+## Why This Matters
+
+Users running AI-powered scraping pipelines benefit from faster, lower-memory page fetching that produces cleaner, more compact content — reducing LLM costs and improving reliability for server-rendered pages.

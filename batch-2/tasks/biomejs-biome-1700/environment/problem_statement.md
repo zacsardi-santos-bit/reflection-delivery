@@ -1,5 +1,17 @@
-I'm running into a bug with path-based config overrides for JS globals in my linter and it's driving me nuts. So the setup is I've got a config where I declare some base globals at the top level, then I have an override section that targets specific directories (my test folder, say) and defines its own globals there, like test helper utilities that only exist in the test environment. Makes sense right?
+## Description
 
-Except the override globals just don't take effect. When the linter processes a file inside that overridden directory, it should pick up the globals I listed in the override matching that path and treat them as declared, but instead it keeps flagging them as undeclared variables. The override-specific globals are basically getting ignored entirely, so it's impossible to configure environment-specific globals per directory, which is a super common thing when different parts of the codebase have different global environments (test framework helpers scoped to the test dir being the obvious one).
+When using path-based configuration overrides to specify different global variables for different directories, the linter does not correctly apply the globals defined in the override section. Instead of recognizing variables listed in an override's globals for files that match the override's path pattern, the linter appears to ignore the override globals entirely, causing those variables to be incorrectly flagged as undeclared.
 
-What I want is for the linter to correctly apply the globals from an override when a file matches that override's include pattern, so variables listed as globals in the override don't produce false undeclared-variable warnings for files in that directory. If a test-specific global is configured for the test directory, files there shouldn't get flagged. Can you fix the override globals handling so they're properly merged in and applied when a file matches the override's include pattern?
+## Expected Behavior
+
+- When a file matches a path-based override, the global variables listed in that override should be recognized as declared for that file.
+- Variables that are listed as globals specifically within the override block should not trigger undeclared variable warnings for files in the matching path.
+- The override's globals should take effect correctly so that, for example, test-specific globals configured for a test directory are not incorrectly flagged as undeclared in test files.
+
+## Current Behavior
+
+Globals defined inside override sections are not properly applied to matched files. Files that fall under an override's include path still get undeclared variable errors for variables that the override is supposed to declare as globals.
+
+## Why This Matters
+
+This makes it impossible to use path-based overrides to configure environment-specific globals (e.g., test framework helpers for test directories), which is a common use case for projects that have different global environments in different parts of the codebase.

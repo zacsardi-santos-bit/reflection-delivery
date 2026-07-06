@@ -1,13 +1,25 @@
-I'm knee-deep in the multi-workspace stuff and hit a cluster of routing/navigation bugs I want to fix in one pass.
+## Description
 
-First off the workspace router is way too trigger-happy about redirecting people away when the URL has a workspace identifier in it. If the workspace list is still loading, or it errored out, or it just doesn't happen to include that workspace, the router keeps bouncing users away and it's a mess. I want the workspace name from the URL trusted as-is and set as the active workspace, no navigation redirect at all, regardless of whether the list loaded or returned an error.
+The workspace routing and navigation system has several gaps that cause a frustrating experience when switching between or navigating to workspaces.
 
-Second, the workspace selector dropdown only lets you pick from what the server returned. I want folks to type a workspace name directly and go there even if it's not in the list. So the selector should surface a "Go to workspace" option for any valid, non-matching typed name, trim the surrounding whitespace, and actually navigate there when picked. This needs to work even when the list totally fails to load.
+**Unwanted redirects when the workspace list is unavailable.** When a user navigates to a URL that includes a workspace identifier, the router sometimes redirects them away — even when the workspace list is still loading or failed to fetch. A valid workspace in the URL should always be honored, not thrown away just because the list didn't return it yet.
 
-Third, the home page should notice when the currently selected workspace doesn't exist on the server anymore. Right now it silently fails or shows some generic error. Instead I want a clear "Page Not Found" page that names the missing workspace, includes a link back to the plain home route (not the workspace-prefixed one), and also clears that stale workspace out of the local remembered state.
+**No way to manually enter a workspace name.** The workspace selector only lets users pick from the fetched list. If a user knows the name of a workspace they want to access, they should be able to type it directly and navigate there — even if it doesn't appear in the dropdown.
 
-Fourth, the error view component that renders those fallback nav links should take an option to skip workspace URL prefixing on the link, for cases like this not-found scenario where it should point at the root.
+**Stale workspace state persists after the workspace is deleted.** When a user's previously remembered workspace no longer exists, the home page should detect this, show a clear error explaining that the workspace was not found, and clean up the stale workspace from memory. Currently, no such error page exists.
 
-Oh and lastly, tighten up workspace name validation to also reject names that are too short (under 2 characters) or too long (64 or more characters), which currently slip through client-side validation.
+**Workspace name length limits are not enforced.** Workspace names shorter than 2 characters or 64 or more characters long are technically invalid but currently pass client-side validation.
 
-Why it all matters: right now users get stuck in redirect loops, can't reach workspaces they know exist, and see stale workspace context after one's been removed.
+**Workspace-prefixed links in error pages may be unwanted.** Error views that link back to the home page always apply workspace prefixing, but in some cases (such as the workspace-not-found error page) the link should go to the plain root path.
+
+## Expected Behavior
+
+- A workspace name in the URL should be preserved as the active workspace without redirecting, regardless of whether the workspace list has loaded or returned an error.
+- The workspace selector should allow typing an arbitrary valid workspace name and navigating to it directly.
+- The home page should detect when the current workspace no longer exists on the server, display a "Page Not Found" message with a link back to the root, and clear the remembered workspace.
+- Workspace name validation should reject names shorter than 2 characters and names 64 or more characters long.
+- Error view fallback links should support an option to skip workspace URL prefixing.
+
+## Why This Matters
+
+These issues cause users to get stuck in redirect loops, be unable to access workspaces they know exist, and see stale or incorrect workspace context after a workspace is removed.

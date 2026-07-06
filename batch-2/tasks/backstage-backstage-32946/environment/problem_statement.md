@@ -1,3 +1,14 @@
-I'm on the Backstage catalog backend and want to add some metrics visibility to the piece that reacts to source control events. Right now when the catalog processes repo events like a file getting deleted, moved, or renamed, it goes and updates the entity registrations (deleting a location when a repo is deleted, creating a new location when a file URL changes, recording a move when a repo is renamed), but there's zero way to see how often any of this is happening or what kind of action was taken. Platform operators basically have no visibility into how often entities get added, removed, or moved because of SCM activity, and I want to fix that so we can monitor rate and type, do anomaly detection, all that.
+## Description
 
-So what I need is for the service that manages these SCM events to accept an external metrics provider passed in, and it should expose a method to record that an action was taken in response to an event, including which kind it was, something like 'delete', 'create', or 'move'. That method should bump a counter and attach the action type as an attribute on the metric so we can slice by it later. Then, whenever the catalog actually processes an SCM event and takes action on its catalog locations, it should call that new method to report what just happened, so both the count of actions and the action type end up recorded. Oh and the action types should line up with the real operations, deleting a catalog registration, creating one, or moving one.
+The catalog backend handles events from source control systems — when files are moved, deleted, or renamed in a repository, it updates the catalog's entity registrations accordingly. However, there is currently no way to observe or measure how many catalog operations are being triggered by these repository events. We have no visibility into how often entities are being added, removed, or moved as a result of SCM activity.
+
+## Expected Behavior
+
+- The SCM events service should accept an external metrics provider so it can report telemetry about its activity.
+- The service should expose a way to record that a specific type of action was taken in response to an SCM event (e.g., a deletion, creation, or move of a catalog registration).
+- When the catalog processes an SCM event and takes action — such as removing an entity registration because a file was deleted, creating a new registration because a file was moved, or updating registrations after a repository rename — a counter should be incremented to record what happened.
+- The metrics produced should include the action type (e.g., 'delete', 'create', 'move') so that platform operators can distinguish between different kinds of catalog changes triggered by repository events.
+
+## Why This Matters
+
+Without this observability, platform operators have no way to monitor the rate or type of catalog operations being triggered by repository events. Adding metrics here enables better operational visibility, anomaly detection, and understanding of how SCM activity affects the catalog.

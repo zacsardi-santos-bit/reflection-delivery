@@ -1,7 +1,29 @@
-I'm digging into our file discovery and ignore-pattern code and there's a cluster of related gaps I want to fix together. The core issue is our ignore files (both the version-control ones and the project-specific config ones) support directory-only patterns, the kind with a trailing slash, but the methods that check whether a path is ignored have no idea whether they're looking at a file or a directory, so those directory-specific patterns just don't evaluate right. Stuff like `node_modules/` or `dist/` doesn't get recognized as ignored when the path comes in without a trailing slash. So first thing, I want to add a second parameter to the ignore-check methods indicating whether the path is a directory, and directory-specific patterns should only match when it actually is one, and get skipped for files.
+## Description
 
-Second, I need a new method on the file discovery service that returns all ignored paths that actually exist on disk, as absolute paths. It should walk the project dir, collect every ignored file and directory (per whatever ignore rules are active), and as an optimization stop descending into a directory once it's already ignored instead of enumerating everything under it. It's gotta respect un-ignore patterns too, so anything explicitly un-ignored shouldn't show up in the results. And it should take the same filter options we use elsewhere to control which ignore-rule sources count. This is for IDE integrations, context scoping, workspace prep, basically anything that needs to know upfront what the active rules exclude.
+The ignore-pattern checking system doesn't properly handle directory-specific ignore rules, and there's no way to get a list of all currently ignored paths that actually exist on disk.
 
-Third, give me a dedicated method just to check if a specific directory is ignored, simpler than the full enumeration but handy for cheaply deciding whether to skip descending into a dir during traversal.
+## Background
 
-Last thing, the logic for normalizing a path relative to a project root is duplicated around and I want it pulled into its own reusable utility. It needs to handle all the edge cases: paths outside the root return nothing (treated as invalid), sibling paths that share a name prefix with the root are also invalid, relative vs absolute inputs, Windows-style backslash separators, whether the path is a file or directory (which affects whether a trailing slash gets added), and the project root itself passed in as input.
+The project uses ignore files (both from version control and from project-specific configuration) to exclude certain paths from processing. These ignore files support patterns that apply specifically to directories (indicated by a trailing slash). However, the current implementation has no way to distinguish whether a given path being checked is a file or a directory, so directory-specific patterns are not evaluated correctly. As a result, a directory that should be excluded by an ignore rule may not be recognized as ignored.
+
+## Problems to Solve
+
+1. **Directory-aware ignore checking**: The methods used to check whether a path is ignored should accept an indication of whether the path is a file or a directory. Directory-specific patterns should only match when the path is actually a directory.
+
+2. **Enumerate ignored paths on disk**: There is currently no way to get a flat list of all paths (files and directories) that are ignored and exist on disk. This capability is needed for IDE integrations, context scoping, and workspace preparation — any use case that needs to know upfront what the active ignore rules exclude.
+
+3. **Directory ignore check**: A dedicated method to check whether a specific directory is ignored would allow callers to efficiently skip traversing into ignored directories.
+
+4. **Path normalization utility**: The logic for normalizing a path relative to a project root (handling absolute vs. relative paths, Windows separators, out-of-root paths, etc.) should be centralized in a reusable utility rather than duplicated across callers.
+
+## Expected Behavior
+
+- Ignore checkers should correctly match directory-specific patterns when told the path is a directory, and correctly skip those patterns for files.
+- A new method on the file discovery service should return the list of all ignored paths present on disk, stopping traversal at directories that are already ignored.
+- Un-ignore patterns must be respected: explicitly un-ignored files must not appear in the result.
+- The enumeration must support filtering by which set of ignore rules to apply.
+- Path normalization should handle edge cases: paths outside the root (return nothing), Windows-style separators, the root itself, and sibling directories that share a name prefix with the project root.
+
+## Why This Matters
+
+Without directory-aware ignore checks, directories like `node_modules/` or `dist/` may not be recognized as ignored when their path is passed without a trailing slash. And without the ability to enumerate all ignored paths, consumers of the service cannot efficiently communicate the full exclusion set to other tools.

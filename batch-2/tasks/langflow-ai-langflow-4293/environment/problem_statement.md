@@ -1,5 +1,18 @@
-I'm cleaning up the async hygiene in our test suite and keep running into this: a bunch of tests run inside a running event loop, but various spots in the codebase do blocking I/O (file reads and writes, socket calls, plain sleeping) right on the event loop thread and nothing catches it, so tests either silently slow down or flake in weird timing-dependent ways. I want a blocking-detection utility I can turn on at test setup time so that once it's active, any blocking I/O done while an async event loop is running immediately raises a distinctive error, while those exact same operations keep working fine when they're called from ordinary synchronous code (outside any async context). The point is to force us to push blocking calls onto thread pools instead of running them on the loop.
+# Detect and prevent blocking I/O in async test contexts
 
-There need to be a few carve-outs though, the detection should let through blocking calls that come from a debugger's pause mechanism, from test-infrastructure bytecode rewriting, and writes to stdout and stderr, otherwise everything breaks.
+## Description
 
-Also, the function that builds the component list from a directory path does blocking I/O internally right now, so calling it from an async test trips the new detector. I want an async-friendly version of that component-list-loading function added so async tests can await it directly without issue, and once detection is active that awaited loading should work correctly. Oh and the other operations showing up in async tests (loading starter projects, getting the session service, that kind of thing) should be moved off the event loop into thread pools rather than running directly on it.
+Our test suite runs many tests in an async context, but several operations in the codebase perform blocking I/O directly on the event loop thread without any detection or warning. These blocking calls can silently degrade test performance, cause subtle timing issues, and make it hard to reason about the async behavior of the code under test.
+
+We need a way to automatically detect when blocking I/O operations (file reads/writes, network socket calls, sleeping) are executed while an async event loop is running, and raise an error when this happens. This will force developers to move blocking calls to thread pools.
+
+## Expected Behavior
+
+- A blocking-detection mechanism should be available that, once initialized, raises a distinct error whenever a blocking call (such as sleeping, file I/O, or socket communication) is made from within a running async event loop.
+- Blocking calls made outside of any async context (plain synchronous code) should continue to work normally.
+- A new async-safe version of the component list loading function should be provided so that code in async tests can call it without triggering the blocking error.
+- Certain special cases (e.g., calls from within a debugger or from test infrastructure that rewrites bytecode) should be allowed through without raising the error.
+
+## Why This Matters
+
+Without this detection, blocking calls on the event loop thread fail silently, making it difficult to catch regressions where synchronous I/O sneaks into async code paths. With the detection in place, tests immediately fail when a blocking call is made on the event loop, making it clear which code needs to be fixed.

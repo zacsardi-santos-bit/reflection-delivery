@@ -1,5 +1,17 @@
-I'm adding text-to-audio (speech synthesis) support to our Semantic Kernel integration and it's the obvious missing piece right now. We already have audio-to-text and text-to-image connectors, but nothing goes the other direction to turn a text string into actual audio output, so anyone wanting a chatbot to respond verbally is stuck bolting on some separate unintegrated thing. I want a proper first-class service that follows the same conventions as the other media services, and I need both a standard variant and an Azure-hosted variant set up the same way.
+## Description
 
-Config-wise it should pull the model/deployment ID and API stuff from environment variables by default, but let me override via constructor params too. Be strict about missing config: if the model ID, API key, or endpoint is absent or invalid it should raise a clear initialization error rather than failing weirdly later. It also needs to construct from a settings dictionary and serialize back out to one. When I call it with a text string I want it to return audio content carrying the binary audio data plus the model identifier that produced it.
+The project provides AI connector services for converting audio to text and generating images from text, but there is no equivalent service for converting text into audio output. Developers who want to build applications with speech synthesis capabilities — such as having a chatbot respond verbally — have no way to do this through the existing connector infrastructure.
 
-Oh and while you're in there, the existing audio-to-text and text-to-image services don't expose their execution settings class through a consistent accessor method, so please add that method to them (and to the new service) so I can discover and configure everything uniformly. Also some of these classes aren't reachable from the top-level package namespace the way other services are, so make the new text-to-audio classes (standard and Azure) plus whatever's currently missing importable from the top level, consistent with how the rest are exposed. Basically I want the audio output scenario brought in line with the existing input and image generation paths so we can build fully audio-capable conversational apps.
+## Expected Behavior
+
+- A new text-to-audio service should be available for both standard and Azure-hosted deployments, following the same conventions as existing media services
+- The service should read its model/deployment configuration from environment variables, with the ability to override through constructor parameters
+- Calling the service with a text string should return audio content that includes the binary audio data and the model identifier
+- The service should support serialization and deserialization through dictionary settings
+- Appropriate errors should be raised when required configuration (model ID, API key, endpoint) is missing or invalid
+- The existing audio-to-text and text-to-image services should expose their execution settings classes through a consistent accessor method
+- Relevant classes should be accessible from the top-level package namespace, consistent with how other services are exposed
+
+## Why This Matters
+
+Without this capability, developers must use separate, unintegrated approaches to add speech synthesis to their Semantic Kernel applications. Adding a first-class text-to-audio service brings the audio output scenario in line with existing input and image generation services, enabling full audio-capable conversational applications.

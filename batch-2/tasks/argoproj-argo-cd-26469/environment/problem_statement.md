@@ -1,5 +1,14 @@
-I'm hitting a precision problem in how Argo CD reports Kubernetes server versions. Right now when it stores and displays a cluster's version it only keeps major and minor, so I get "1.30" and the patch number just gets thrown away. That's annoying because I can't tell if a cluster is on patch 5 or patch 11, which actually matters for compatibility checks, verifying chart and template engine capability requirements, and comparing versions across different distributions. On top of that, some cloud providers append vendor-specific build metadata to the version string (stuff like "+IKS" or similar tags) and that junk either shows up or breaks comparisons instead of being cleanly stripped.
+## Description
 
-What I want is the full three-part semantic version (like "v1.30.11") used everywhere the cluster version is stored and displayed, with any provider-specific suffixes and build metadata normalized away so only the clean semver remains. When the version can't be retrieved from the cluster at all, the error that comes back should clearly say the version retrieval failed rather than being vague. And in a default or uninitialized state where there's no real version, I want a sensible fallback of "0.0.0" instead of a malformed placeholder like ".".
+Argo CD currently stores and displays Kubernetes cluster versions using only the major and minor version numbers (e.g., "1.30"). The patch version is discarded, and provider-specific build metadata appended by some distributions is not handled. This produces inaccurate version strings that make it harder to distinguish between patch releases, verify chart and template engine capability requirements, and compare versions across different Kubernetes distributions.
 
-Oh and the end-to-end test fixtures and the comparison logic they use when checking Kubernetes version capabilities need updating too, so they compare against the full version string including the patch number and stay accurate. This is server-version handling in the cluster code, so trace where the ServerVersion gets set and formatted and make sure the patch component survives all the way through to what users see in the UI and CLI when they list or inspect clusters.
+## Expected Behavior
+
+- The cluster version stored and displayed by Argo CD should include the full three-part semantic version (e.g., "v1.30.11") rather than just the major and minor (e.g., "1.30").
+- Provider-specific suffixes and build metadata appended by cloud distributions should be stripped, leaving only the clean semantic version.
+- When the version cannot be retrieved from the cluster, a descriptive error should be returned indicating that the version retrieval failed.
+- When no real version is available (e.g., in a default or uninitialized state), the version should fall back to a valid three-part zero version ("0.0.0") rather than a malformed placeholder like ".".
+
+## Why This Matters
+
+Using only major.minor version information is imprecise. Capability checks, version comparisons in GitOps tooling, and compatibility assessments all benefit from knowing the exact patch release. Cloud providers and distributions append vendor suffixes to version strings that must be normalized away for clean comparisons. Users will see a more accurate version in the UI and CLI output when listing or inspecting clusters.

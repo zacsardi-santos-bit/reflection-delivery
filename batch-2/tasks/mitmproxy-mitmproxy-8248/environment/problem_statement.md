@@ -1,5 +1,13 @@
-I'm seeing a display bug in mitmweb's content viewer where blank lines in HTTP message bodies just disappear. When a request or response body has empty lines in it, they collapse into invisible empty self-closing elements instead of showing up as actual blank lines that take up space on the page. So if a message has a couple blank lines in a row, you literally can't tell they're there, which is a problem because you can't see how many there are or where they land in the content.
+## Description
 
-This matters a lot for debugging since blank lines are meaningful structural delimiters in tons of formats (HTTP itself, MIME messages, various text protocols), and when I'm poking at traffic in mitmweb I need to see the exact content including the blank lines. Right now the rendered content doesn't match the real message body, which makes debugging unreliable and honestly kind of confusing.
+In mitmweb's HTTP content viewer, blank lines within message bodies are not being displayed correctly. When a request or response body contains empty lines, they collapse and become invisible — rendered as empty, self-closing elements rather than visible blank lines. This makes it impossible to distinguish how many blank lines are present or where they appear in the content.
 
-What I want is for the viewer over in the frontend content view code (the line-rendering logic that builds up each line of a message body) to render blank/empty lines as visible elements that actually occupy vertical space, so multiple consecutive blank lines each show as their own distinct visible line and the displayed output accurately reflects the whitespace structure of the body instead of silently swallowing it.
+## Expected Behavior
+
+- Blank/empty lines in the content viewer should be rendered as visible elements that occupy space on the page
+- Multiple consecutive blank lines should each appear as a distinct, visible line
+- The content viewer should accurately reflect the whitespace structure of the HTTP message body, not silently collapse blank lines
+
+## Why This Matters
+
+Many data formats (such as HTTP itself, MIME messages, and various text protocols) use blank lines as meaningful structural delimiters. When debugging traffic in mitmweb, developers need to see the exact content of messages including blank lines. If the viewer collapses blank lines, the displayed content no longer accurately represents the actual message — making debugging unreliable and confusing.

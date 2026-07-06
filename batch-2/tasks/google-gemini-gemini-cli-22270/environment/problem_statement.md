@@ -1,3 +1,16 @@
-I'm building stuff on top of our agent session abstraction and I keep hitting the same wall in unit tests: there's no in-process way to fake an agent, so I'm either spinning up a real backend or hand-rolling throwaway fakes every time I want to test message sending, streaming events, session state, or interrupted streams. It's tedious and flaky. I want a proper reusable mock agent session living in the core package's agent directory, alongside the agent session type definitions (the `AgentSession` interface and the agent event/send types in `packages/core/src/agent/types.ts`), which you will also need to define there if they are not already present, so anything that consumes a session can be tested fast and deterministically without network access.
+## Description
 
-Here's what I need it to do. I want to pre-load it with a set of events that get returned when I send a message, and it should handle the expected bookkeeping for me automatically so I'm not manually assembling full event sequences. That means wrapping queued events in the right start and end stream markers, reflecting user messages and session updates back through the stream, and emitting elicitation responses based on what was actually sent. I also need to simulate ongoing streams that haven't finished yet, so it should support pausing and resuming, push additional events into a live stream after it's started, and trigger an abort to end a stream early, that way I can test async behaviors like waiting on new events or getting cut off mid-stream in a controlled way. Oh and it needs to accumulate the complete history of every event that flowed through the session so I can assert on exactly what happened, the whole log. Last thing: if I try to send an unsupported action type it should raise a clear, descriptive error saying what was attempted, not just blow up silently.
+There is currently no controlled, in-process way to test code that depends on an agent session. Writing tests for features that send messages to an agent, observe streaming events, manage session state, or handle interrupted streams requires either a live backend connection or ad-hoc fakes that have to be rebuilt per-project. This makes testing unreliable and tedious.
+
+## Expected Behavior
+
+- A reusable mock agent session implementation should be available in the core package.
+- Developers should be able to pre-load the mock with a set of events that will be returned when a message is sent.
+- The mock should automatically inject appropriate bookkeeping events (stream boundaries, user messages, session updates, elicitation responses) based on what was sent, so tests don't have to manually build full event sequences.
+- The mock should support pausing and resuming streams so asynchronous behaviors — like waiting for new events or being aborted mid-stream — can be tested deterministically.
+- The mock should expose the full history of events that flowed through the session so tests can assert on the complete event log.
+- Sending an unsupported action type should raise a clear error describing what was attempted.
+
+## Why This Matters
+
+Without a proper mock, any code that consumes an agent session is difficult to unit-test. Providing a first-class testing utility in the core package makes it straightforward to write fast, deterministic tests for all agent-session-driven features without requiring network access or real agent infrastructure.

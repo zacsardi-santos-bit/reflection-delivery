@@ -1,5 +1,20 @@
-I'm cleaning up Ray Data's usage telemetry and there are two gaps in the workload payload I need closed. Right now the plan tree and the flat operator list in the recorded payload only carry anonymized operator names with no stable IDs, so when the same operator type shows up more than once, or when a dataset's plan is actually a shared-node DAG (think zipping a dataset with itself), there's no way to tell the instances apart. I want each operator node in the plan tree and each entry in the flat operator list to carry a stable short identifier that lets me correlate references from different parts of the payload back to the same node. One catch: if an operator instance is shared across multiple branches of the plan, it should get exactly one identifier, no duplicates.
+## Description
 
-Second thing, the issue detection subsystem already flags stuff like hanging operators or high memory usage while a pipeline runs, but that info gets logged and then dropped, it never lands in the telemetry record. So downstream analytics can't see how often issues happen or which operators are worst. I want the execution result to include a list of detected issues where each entry says the type of issue and the name of the operator it hit. When nothing was detected the field should still be there, just an empty list rather than missing. Also the component tracking these issues needs to dedupe, so reporting the same issue for the same operator twice only records it once.
+Ray Data's telemetry system records workload plans and execution results for usage analytics, but it currently has two gaps:
 
-Oh and one more, physical operators that got fused from several logical stages should produce a combined name reflecting all their constituent logical operators, and if identifiers are available embed them into that combined name so I can still trace each stage individually. If a fused physical operator has no logical source at all, fall back to a generic unknown label.
+1. **No operator identifiers in the workload plan.** Operators in the recorded plan tree and flat operator list carry only their anonymized names. When the same operator type appears more than once (or when an operator is referenced from multiple branches of a shared-plan DAG), there is no way to distinguish them. Every node needs a stable short identifier that can be used to correlate references across different parts of the payload.
+
+2. **Detected issues are never included in the usage payload.** When the issue detectors identify problems (such as a hanging operator or excessive memory usage) during pipeline execution, that information is silently discarded — it never makes it into the telemetry record. Downstream analytics therefore have no visibility into how often or in which operators issues occur across user workloads.
+
+## Expected Behavior
+
+- Every operator node in the workload plan, and every entry in the flat operator list, should carry a stable unique identifier so that references to the same operator from different parts of the payload can be correlated.
+- When the same operator instance is shared across multiple plan branches, it should receive exactly one identifier (no duplicates).
+- After execution finishes, any issues detected during that run should be included in the usage payload as a list of records describing the type of issue and which operator it affected.
+- If no issues were detected, the corresponding field in the payload should be an empty list rather than absent.
+- The component responsible for tracking detected issues must deduplicate them — reporting the same issue for the same operator twice should not create duplicate records.
+- Physical operators that were fused from multiple logical stages should expose their full composition in a way that preserves traceability back to individual logical operators and their identifiers.
+
+## Why This Matters
+
+Without operator identifiers, telemetry cannot distinguish operators of the same type, and issue reports cannot be matched to specific nodes in the workload plan. Without issue data in the payload, the team has no aggregate view of how often execution problems occur or which operators are most affected. Both gaps reduce the actionability of Ray Data's telemetry.

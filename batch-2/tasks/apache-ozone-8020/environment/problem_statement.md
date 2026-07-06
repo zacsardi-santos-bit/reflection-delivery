@@ -1,7 +1,17 @@
-I'm working on the Ozone S3 gateway and I've got two related cleanups that are breaking the unit tests right now, so I need both done together to get things compiling and green again.
+## Description
 
-First one is a header name constant for the S3 content hash. It's currently defined inside a signing-specific helper class, but honestly it belongs in the shared S3 constants file that the rest of the gateway pulls from. Move it there so other components can import it from one canonical spot. After the move it should be importable from the shared S3 constants class instead of the signing helper.
+The S3 gateway needs two related improvements to keep the codebase maintainable and accurate.
 
-Second thing is how the gateway copies object data streams internally. Right now it calls a simple copy utility that just takes a buffer size, and I want to swap that for the variant that takes explicit offset and length (byte limit) params instead, since that's better for large objects and gives precise control over how much data actually gets transferred. This needs to happen in all three spots where object data gets written: plain PUT object writes, server-side object copies, and multipart part uploads. Same offset-and-length form of the copy in each place.
+First, a string constant representing the S3 content hash header is currently defined in a signing-specific class, but it is useful across multiple parts of the gateway. It should be moved to the shared constants file so other components can import it from a single, well-known location.
 
-The reason this is blocking me is the existing error-recovery tests. They check that when a stream error gets thrown mid-copy (like the client disconnecting partway through), the checksum computation state gets properly reset, and that has to hold whether the interrupted op was a PUT, a copy, or a multipart part upload. Thing is, those tests mock the copy utility by its exact method signature, so with the production code still calling the old buffer-size-only method, they don't compile and fail. Once I move to the offset+length variant everywhere the mocks line up and the reset behavior gets verified against the real code. Both changes together, please.
+Second, the gateway's internal data stream copying logic currently uses a simple buffer copy utility. This should be replaced with a variant that explicitly accepts an offset and a byte length limit, which is better suited for large objects and gives more precise control over how much data is transferred. All places where object data is written — plain PUT, server-side object copy, and multipart part upload — should use this approach.
+
+## Expected Behavior
+
+- The content hash header constant is importable from the shared S3 constants class.
+- Object data is copied using the offset-and-length form of the stream copy utility.
+- If an error occurs mid-transfer (e.g., the client disconnects), the checksum computation state is properly reset regardless of whether the interrupted operation was a PUT, a copy, or a multipart part upload.
+
+## Why This Matters
+
+These changes align the implementation with cleaner utility patterns for large-file handling and ensure the existing error-recovery tests compile and run correctly against the actual production code.

@@ -1,9 +1,24 @@
-I'm building a script from scratch to catch CI performance regressions in our GitHub Actions workflows and ping Slack when a job slows down a lot versus its historical baseline. Right now nobody notices these until things get painful, so I want it automated with a robust statistical comparison, not a plain average that one weird outlier can skew.
+# Add CI Job Duration Regression Detection Script
 
-I need a few utility helpers first. One parses ISO 8601 timestamps handling both the Z suffix and the +00:00 offset forms and returns nothing on invalid input. Another computes elapsed seconds between two timestamps, returning nothing for negative or unparseable results. Another computes the median of a list of numbers, and one formats a seconds count as a human-readable string with zero-padded seconds when minutes are involved.
+## Description
 
-For GitHub Actions I need a function fetching recent workflow runs that returns run records including computed durations, can filter to only successful runs, drops runs with near-zero durations (cancelled or non-representative ones), and passes an optional event filter down to the gh CLI call only when that filter's non-empty. The underlying gh call always forces a GET so the CLI doesn't default to POST, oh and when the API returns no data it just returns an empty list. I also want a function that fetches the individual jobs for a specific run and returns a job-name to duration-in-seconds mapping, skipping any job that wasn't successful and returning empty if the command fails.
+We have no automated way to detect when our CI workflows start running significantly longer than their historical baseline. Currently, engineers have to manually review workflow run histories to notice when a CI job has regressed in performance. This is time-consuming and means regressions often go unnoticed until they cause serious disruption.
 
-Then the regression detector compares recent duration values against baseline values using both a relative threshold and a minimum absolute increase, and it only flags a regression when both conditions hit at once. It uses the median to stay outlier-resistant, returns nothing when either input set is empty, and jobs with no baseline history just get silently skipped rather than flagged.
+We need a script that:
+- Fetches recent workflow run data from GitHub Actions
+- Computes durations for individual jobs within runs
+- Compares recent durations against a rolling historical baseline using a robust statistical method (not a simple average, which is easily skewed by outliers)
+- Sends an alert to a Slack channel when a meaningful regression is detected
 
-Last piece, a function that takes the regression results and builds a Slack message structure with a designated channel, a header block, and a text field including the branch name plus enough detail that the affected job names show up in the message. The whole thing should handle GitHub API failures gracefully and return empty results instead of blowing up.
+## Expected Behavior
+
+- Short or cancelled runs (non-representative wall-clock durations) must be excluded from both the baseline and the latest sample so they don't distort the comparison.
+- Regression detection should require BOTH a meaningful relative increase AND a minimum absolute increase, so short noisy jobs don't generate false alarms.
+- A single unusually slow baseline run must not hide a genuine regression (the comparison must be outlier-resistant).
+- Jobs that are new and have no baseline history must be silently skipped rather than flagged.
+- When the GitHub API returns no data or fails, the script must handle the error gracefully and return empty results.
+- Slack alert messages must include context: the affected branch, the regressed job names, and a header block for visual structure.
+
+## Why This Matters
+
+CI regressions can silently multiply developer wait times and block releases. Proactive, automated alerting lets the team catch and address these issues quickly instead of discovering them through complaints or manual auditing.

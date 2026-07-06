@@ -1,7 +1,21 @@
-I'm digging into the physical query optimizer in our execution engine and the sort elimination logic around window aggregation nodes is making bad calls. When a plan has a window function and then a sort requirement on top, sometimes it keeps sorts that are provably redundant and other times it drops sorts it should've kept, which gives us slower plans and in rare cases wrong results. The root problem is it doesn't reason about what ordering a window function actually guarantees on its output.
+## Description
 
-Here's what I want it to understand. When a window covers the whole table with no partitioning clause its output is constant for every row so any downstream sort on that column is trivially removable. When it's partitioned by an already-ordered column the output is constant within each partition, a kind of partial constantness, which can also let some sorts go. And when the function is set-monotonic (its running result is guaranteed to increase or decrease as rows enter the frame, think running counts or running maximums) and the frame type plus input ordering line up, the output column has a deterministic order that satisfies the upstream sort. But if the function has no monotonicity, or it's applied to a column that isn't sorted in the input, we can't infer anything and the sort has to stay.
+The physical query optimizer incorrectly handles sort elimination for execution plans that contain window aggregation operations. When a query includes a window function followed by a sort requirement, the optimizer sometimes fails to remove sorts that are provably redundant, and in other cases it may eliminate sorts that should be preserved. This leads to suboptimal (or, in rare cases, incorrect) execution plans.
 
-The fix needs to cover the combinations: frame types (fully unbounded, causal/one-sided, and sliding with both boundaries), whether a partitioning expression is present, whether the function is monotonically increasing, decreasing, or neither, and whether the function argument column is part of the existing input ordering, since all of those affect whether the output has a deterministic ordering. Both the unbounded-frame and bounded-frame window aggregation node types need handling, and chained window operations should optimize correctly without cascading bad decisions.
+The core issue is that the optimizer does not correctly account for the ordering properties that different window functions guarantee. Specifically:
 
-Oh and while you're in there, please clean up the optimizer test infra. Drop the helper utilities that aren't needed anymore once the tests directly construct window expressions with the right functions and parameters, so the tests read more explicitly.
+- When a window covers the entire table with no partitioning, its output value is constant for all rows, making any downstream sort on that output unnecessary.
+- When a window has partitioning by an already-ordered column, the output is constant within each partition — a form of partial constantness — which can also allow certain sorts to be eliminated.
+- When a window function has set-monotonic properties (meaning its running result is guaranteed to increase or decrease as rows are added to the window frame), and the frame type and input ordering are compatible, the output column has a deterministic ordering that can satisfy downstream sort requirements.
+- When the window function lacks monotonicity or operates on an unordered column, sorts cannot be inferred and must be preserved.
+
+## Expected Behavior
+
+- Sorts above a window aggregation should be removed when the window's output ordering (given its frame type, function monotonicity, and input column ordering) already satisfies the sort requirement.
+- When the window function or input ordering cannot guarantee the required output order, the sort must be kept in the plan.
+- Both unbounded-frame and bounded-frame window aggregation node types must be handled correctly.
+- Plans with multiple chained window operations must be optimized correctly without cascading incorrect decisions.
+
+## Why This Matters
+
+Window functions appear frequently in analytical queries (running totals, rankings, moving averages). Having the optimizer correctly reason about their output ordering properties allows unnecessary sorts to be eliminated, reducing query execution time. This fix also prevents the opposite bug where sorts are incorrectly removed, which could produce wrong results.

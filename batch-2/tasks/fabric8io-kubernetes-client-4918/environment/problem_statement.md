@@ -1,5 +1,18 @@
-I'm hitting a frustrating gap in our Kubernetes client library. It resolves service URLs from a few sources, platform-injected env vars, ingress resources, and service annotations, but the ingress-based resolver only ever looks at the old extensions ingress API group. On modern clusters ingresses live under the newer networking API group, so the resolver just silently finds nothing and returns nothing even when perfectly valid ingresses exist. Users on recent Kubernetes versions can't get URLs through the ingress path at all.
+## Description
 
-What I want is for the resolver to check which ingress API group the cluster actually supports (networking first, then extensions) and use whichever one is there. When an ingress in the networking group has TLS configured for the matching host it should hand back an HTTPS URL, otherwise plain HTTP. And if neither group is supported it should just return nothing gracefully, no exceptions.
+The Kubernetes client library resolves service URLs through several mechanisms: platform-injected environment variables, ingress resources, and service annotations. However, the ingress-based URL resolver only considers the older "extensions" ingress API group and completely ignores the newer networking API group that is used by modern Kubernetes clusters. This means users on recent Kubernetes versions cannot get valid service URLs through the ingress resolution path — the resolver silently fails to find any ingress and returns nothing.
 
-Also the supporting URL resolution helpers need to behave right and honestly they've got no unit coverage which makes edge cases scary. So the helpers that look up service host, port, and protocol from env vars or system properties should return the right values, the method that builds an HTTPS URL from a host string returns nothing for an empty host, the methods that search networking-group and extensions-group ingress lists for a matching backend return the appropriate URL, and the port-lookup-by-name method returns nothing for an empty port list, the first port for an empty name, and the matching port when a name's given. Oh and resolving a URL when no matching port name exists in the service should throw a clear error naming the missing port and the service. This matters because folks running real workloads depend on the networking group and right now we're leaving them stranded.
+Additionally, there is no unit test coverage for the individual URL resolution helper methods, making it hard to verify edge cases and maintain correct behavior.
+
+## Expected Behavior
+
+- When resolving a service URL via ingress resources, the client should check which ingress API group the cluster actually supports (the newer networking group or the older extensions group) and use that group accordingly.
+- When an ingress in the networking API group has TLS configured for the matching host, the returned URL should use HTTPS; otherwise it should use HTTP.
+- If neither ingress API group is supported by the cluster, the resolver should return nothing instead of throwing an error.
+- Helper utilities for looking up host, port, and protocol from environment variables or system properties should work correctly and return the right values.
+- Resolving a URL when no matching port name exists in the service should throw a clear error identifying the missing port and service name.
+- Looking up a service port by name should return nothing for an empty port list, the first port for an empty port-name query, and the matching port otherwise.
+
+## Why This Matters
+
+Users running workloads on modern Kubernetes clusters rely on the networking API group for ingress definitions. Without this fix, the client library silently ignores those ingress resources and cannot produce service URLs for them. Proper unit tests also make it much easier to maintain and extend this functionality confidently.

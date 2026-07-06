@@ -1,3 +1,21 @@
-I keep hitting a nasty bug in ClickHouse around INSERTs that read client-provided data through the special one-shot streaming table function (the input() thing that pulls rows from the client). If I wrap that streaming source in a common table expression and then reference the CTE more than once in the same query, like joining two aliases both derived from the same underlying CTE in a cross-join, everything goes sideways. On debug builds the server crashes with an internal error that kills the process, and on release builds it's even scarier because the INSERT silently drops my rows, no warning, data just gone. Neither is okay, and there's no way for me to tell that the streaming source can only be consumed once.
+## Description
 
-What I want is early detection: any query that would try to read that streaming source a second time should get rejected up front with a clear, specific error saying the source is a one-shot stream and can't be read more than once. Make it distinct from a generic internal logic error so I know it's a usage problem on my end, not a server bug, and it'd be great if the message hints at the materialized CTE workaround (a materialized CTE with the right settings enabled does let me reference the same data multiple times, so that path should keep working). Queries that reference the CTE only once must still work fine, and using the streaming function directly without any CTE must keep working too. Please cover both the HTTP insertion path and the local command-line tool path since both show the same problem. And after the server rejects one of these bad queries it has to stay alive and fully functional, no lingering crash or corruption.
+When an INSERT statement reads client-provided data through the special one-shot streaming table function, wraps it in a Common Table Expression, and then references that CTE more than once in the same query (for example, joining two CTE aliases derived from the same underlying CTE in a cross-join), ClickHouse behaves incorrectly:
+
+- In **debug builds**, the server crashes with an internal error that kills the process.
+- In **release builds**, the INSERT silently discards the client's data — rows are lost without any warning.
+
+Neither outcome is acceptable. Users have no way of knowing that the streaming source can only be consumed once.
+
+## Expected Behavior
+
+- Any query that would attempt to read the streaming source a second time should be **rejected early** with a clear, specific error indicating that the source is a one-shot stream.
+- The error should be distinct from internal logic errors, so users understand it is a usage problem, not a server bug.
+- Queries that reference the CTE only once should continue to work normally.
+- Using the streaming function directly without a CTE should continue to work.
+- As a supported workaround, using a materialized CTE (with the appropriate settings enabled) should allow multiple references to the same data.
+- After rejecting such a query, the server must remain alive and stable.
+
+## Why This Matters
+
+Users may naturally try to reference the same CTE more than once — for example, to join different columns from the same input data. The current behavior either silently corrupts data or crashes the server, making it very hard to diagnose. A clean rejection with a helpful error message allows users to understand the limitation and apply the documented workaround.

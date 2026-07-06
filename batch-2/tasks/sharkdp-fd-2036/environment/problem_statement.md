@@ -1,3 +1,14 @@
-I've been poking at the file search tool and hit an annoying inconsistency around patterns that contain path separators. If I accidentally stick a slash in the main search pattern, it does the right thing and bails out with a clear message telling me the pattern contains a path-separation character and will not lead to any results, which makes sense since patterns match against file names, not full paths, so a slash can never match anything unless full-path mode is on. But here's the gap: if I make that exact same mistake in a pattern I pass through the "and" flag (the additional patterns you can layer on), the search just quietly returns nothing. No error, no hint, nothing. It's a real footgun because it's the same mistake, just in a different spot, and one path yells at me while the other silently swallows it.
+## Description
 
-What I want is for that validation to cover "and" patterns too. Any "and" pattern containing a path separator should fail immediately with the same diagnostic the primary pattern already produces (that the search pattern contains a path-separation character and will not lead to any results). And the escape hatch needs to carry over consistently as well, so when full-path matching mode is explicitly enabled, path separators in "and" patterns are treated as intentional exactly like they already are for the primary pattern, and the search just runs normally. Basically I want uniform, predictable feedback across all the search patterns instead of this one-off silent-empty behavior for "and" patterns.
+The file search tool already protects users from a common mistake: when a search pattern contains a path separator, the tool warns them and exits with an error rather than silently returning zero results. This is because patterns are matched against file names, not full paths, so a slash in a pattern can never produce any matches without enabling full-path mode.
+
+However, this protection only applies to the primary search pattern. Additional patterns supplied through the "and" flag receive no such validation. If a user accidentally pastes a full path as an "and" pattern, the search quietly returns nothing — no error, no hint about what went wrong.
+
+## Expected Behavior
+
+- When any "and" pattern contains a path separator, the tool should fail immediately and display the same diagnostic it shows for the primary pattern: that the search pattern contains a path-separation character and will not lead to any results.
+- When full-path matching is explicitly enabled, path separators in "and" patterns should be treated as intentional (exactly as they are for the primary pattern), and the search should proceed normally.
+
+## Why This Matters
+
+This is an easy footgun: the same mistake that triggers a clear error for the main pattern produces silent empty output when made in an "and" pattern. Making the validation consistent across all search patterns gives users uniform, predictable feedback and reduces confusion.

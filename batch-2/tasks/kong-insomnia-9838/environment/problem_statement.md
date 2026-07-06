@@ -1,5 +1,14 @@
-I'm working on curl import in Insomnia and hit an inconsistency I want fixed. When someone imports a curl command, the request we build doesn't carry our identifying header, the User-Agent style one that reports the app name and version. When Insomnia sends requests normally they include this header, but anything coming through curl import skips it, which looks wrong and means those requests don't self-identify as coming from us.
+## Description
 
-So I want the import path in the curl converter (the code under `@packages/insomnia/src/utils/importers/importers/curl.ts`) to auto-inject that identifying header into each imported request, showing the application name and version. Couple of rules though. If the original curl command already set its own custom identification header, leave it completely alone, don't override it. And that match has to be case-insensitive so a lowercase variant and a capitalized variant are treated as the same header, either one should block the injection.
+When importing a curl command into Insomnia, the resulting request does not automatically include an identifying application header. This means imported requests don't self-identify as coming from Insomnia unless the user manually adds a header, which is inconsistent with how Insomnia normally sends requests (which include a header showing the app name and version).
 
-Also there needs to be an app-level setting to opt out, for folks who don't want the version leaking out for privacy reasons. When that setting's on, don't inject anything. But even with injection disabled, if the user explicitly passed an identification header in their curl command, it should still show up in the imported request untouched.
+## Expected Behavior
+
+- When a curl command is imported, the resulting request should automatically include an identifying header showing the application name and version.
+- If the original curl command already includes its own custom identification header, it should be preserved as-is and not overridden — including when the header name is provided in different capitalizations.
+- There should be an application-level setting to opt out of this automatic injection for users who do not want the application version included in their requests.
+- Even when the automatic injection is disabled, any explicitly set identification header from the original curl command should still appear in the imported request.
+
+## Why This Matters
+
+Automatically injecting the application's identifying header into imported curl requests ensures consistency between how Insomnia normally sends requests and how imported requests behave. It helps servers identify request sources without requiring manual header additions from the user. The opt-out setting provides flexibility for users with privacy concerns about exposing the application version.

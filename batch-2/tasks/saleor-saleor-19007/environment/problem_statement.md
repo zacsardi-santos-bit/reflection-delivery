@@ -1,5 +1,14 @@
-I'm hitting a dedup bug in our attribute filtering and it's messing up storefront filters. When I query attributes scoped to a specific product category or collection, the same attribute shows up multiple times in the results. It happens whenever a single attribute is shared between two or more product types and products from those types all live in the same category or collection. Like if a "color" attribute belongs to both a shirt product type and a pants product type, and our category has products of both types, the color attribute comes back twice in the filtered list.
+## Description
 
-What I want is for each attribute to appear exactly once. It shouldn't get dropped from the results (a shared attribute that qualifies for the filter still needs to show up), it just shouldn't be repeated. So filtering attributes by a category should return a deduplicated list where each attribute appears at most once even when multiple product types in that category share it, and same deal for filtering by collection.
+When querying attributes filtered by a product category or collection, the API can return the same attribute multiple times in the result list. This happens when a single attribute is assigned to more than one product type, and products from those different product types all exist in the same category or collection.
 
-Oh and this has to hold for both query styles: the older legacy filter input and the newer where-based input. Right now anything consuming the attributes list for a category or collection facet is getting duplicate entries which breaks UI components and downstream logic that assumes each attribute is unique. It's basically a data correctness bug that makes the filtering API unreliable whenever attributes are shared across product types, so I need the fix covering both category and collection paths and both the filter and where inputs.
+## Expected Behavior
+
+- Filtering attributes by a category should return a deduplicated list of attributes — each attribute must appear at most once, even if multiple product types in that category share the same attribute.
+- Filtering attributes by a collection should return a deduplicated list of attributes — each attribute must appear at most once, even if multiple product types in that collection share the same attribute.
+- A shared attribute that qualifies for the filter must still appear in the results — it should not be omitted, just not repeated.
+- This deduplication must work regardless of whether the query uses the legacy filter input or the newer where input style.
+
+## Why This Matters
+
+Any client consuming the attributes list for a category or collection facet (e.g., storefront filters) will encounter duplicate entries, breaking UI components or downstream logic that assumes each attribute appears once. This is a data correctness bug that makes the attribute filtering API unreliable whenever attributes are shared between product types.

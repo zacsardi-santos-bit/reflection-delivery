@@ -1,1 +1,11 @@
-I'm keeping the Nx Angular plugin in step with Angular's release cadence, and there's a new release candidate out in the current series that I need us to catch up to. The Angular package keeps a versions file with a bunch of version constants for the Angular-related deps we pull in when generating new Angular projects or updating existing ones, and right now the Angular DevKit constant is lagging behind. Can you bump that DevKit version constant to point at the latest RC? It should use a tilde-based semver range, so the compatible-with prefix (`~`) in front of the RC version string, not a caret or a pinned exact version. This matters because when someone spins up or upgrades an Angular workspace through Nx, they get their toolchain version from these constants, so if we don't sync the DevKit version to Angular's new RC, folks who want to test the release candidate tooling through Nx hit annoying version mismatches. So just the one constant in that Angular versions file, updated to the new RC with the tilde range. Everything else in there can stay as is.
+## Description
+
+The Nx Angular integration maintains a file with version constants for Angular-related dependencies. These constants are used when generating new Angular projects or updating existing ones. The Angular DevKit version in this file needs to be updated to reflect the latest release candidate in Angular's current release cycle.
+
+## Expected Behavior
+
+- The version constant for Angular DevKit should be updated to point to the new release candidate version, using a tilde-based semver range (compatible-with prefix).
+
+## Why This Matters
+
+Keeping the Angular DevKit version constant in sync with Angular's release cadence ensures that users of the Nx Angular plugin get the correct toolchain version when setting up or upgrading Angular projects. When Angular publishes a new release candidate, the Nx Angular package should be updated accordingly so developers can test and use the RC tooling through Nx without version mismatches.

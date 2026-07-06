@@ -1,5 +1,12 @@
-I'm adding Tencent's Hy3 model family to our tool-call parsing system and right now it just doesn't recognize those models at all, so when someone spins up a Tencent Hy3 model with tool-calling turned on the system can't auto-select the right parser because there's no pattern mapping for that family. Other families are already wired up with name patterns so the code can identify them automatically, and I want Hy3 handled the exact same way.
+## Description
 
-So basically two things. First, there needs to be a named entry for the Hy3 family in the parser name registry, the same place all the other supported model families are registered by name so they can be referenced later. Second, the system's default set of model-name patterns should get entries that match Hy3 model identifiers and map them onto that named registry entry, so a user just gives their model name and it routes to the correct tool parser without any manual config.
+The tool-call parsing system currently does not recognize Tencent's Hy3 family of models. When a user specifies a Tencent Hy3 model and tool-calling is enabled, the system fails to automatically select the appropriate parser because no pattern mapping exists for this model family.
 
-The why here is pretty simple, without this Hy3 users can't rely on automatic parser selection, they'd have to manually point at a parser or go without tool-calling entirely, and I just want Hy3 in line with everything else we already support. Match the naming and pattern conventions the existing families use so it slots in cleanly.
+## Expected Behavior
+
+- The system should automatically identify Tencent Hy3 models by their model name and route them to the appropriate tool parser.
+- A named entry for this model family should exist in the parser registry so that it can be referenced by name, similar to how other currently supported model families are handled.
+
+## Why This Matters
+
+Without this support, users who want to use Tencent Hy3 models with tool-calling capabilities cannot rely on automatic parser selection. They would have to manually configure the parser or go without tool-calling support entirely. Adding automatic recognition brings Hy3 in line with the other supported models in the system.

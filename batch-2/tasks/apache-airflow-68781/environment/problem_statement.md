@@ -1,5 +1,12 @@
-I'm hitting a rough edge in the CloudWatch log integration for Airflow. When a task's log stream doesn't exist in CloudWatch, say because the task wrote to stdout instead of remote storage or just hasn't produced any logs yet, the log reader blows up with an unhandled exception instead of dealing with it gracefully. For operators this surfaces as a 500 server error, or sometimes a completely blank log view that makes it look like remote logging silently failed, which is super confusing.
+## Description
 
-What I want is for the log retrieval in the CloudWatch task handler (over in `@providers/amazon/src/airflow/providers/amazon/aws/log/cloudwatch_task_handler.py`) to handle a missing log stream cleanly. So when the stream isn't found, instead of raising, it should return a single informational message telling the user no log stream was found and it needs to include the actual name of the stream that got looked up so people can see what was queried. That's the case where the AWS client complains about a nonexistent resource, essentially the ResourceNotFoundException path.
+When viewing task logs in Airflow using CloudWatch as the remote log storage backend, if the task's log stream doesn't exist — for example because the task wrote to standard output instead of remote storage, or hasn't produced any logs yet — the log reader crashes with an unhandled exception. This surfaces as a server error (500) for the user, or in some cases shows a completely blank log view that makes it look like remote logging silently failed.
 
-But I don't want to swallow everything. Other errors, like an access or permissions problem, should still propagate normally the way they do today, so genuine misconfigurations aren't hidden behind a friendly-looking message. Basically only the missing-stream case gets the nice hint, everything else bubbles up. This way operators can quickly tell "oh the task just didn't write logs here" apart from an actual credentials or setup issue.
+## Expected Behavior
+
+- When the log stream does not exist in CloudWatch, the log reader should gracefully return a single informational message explaining that no log stream was found, rather than raising an exception. The message should include the name of the log stream that was looked up.
+- When a genuine error occurs (such as an access or permissions problem), the error should still propagate normally so operators are not misled about the root cause.
+
+## Why This Matters
+
+Currently, users who encounter a missing log stream (a fairly common scenario when tasks haven't started writing or log to stdout only) get a cryptic error or a blank page instead of a useful explanation. A clear hint message would help operators quickly understand what happened and distinguish this from a misconfiguration.

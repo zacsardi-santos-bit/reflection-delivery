@@ -1,3 +1,14 @@
-I'm working on the OpenAI conversation integration for Home Assistant and I want to add a way to configure a service tier when we make API requests. Right now there's no option for it, and service tiers matter because they trade off cost, latency, priority, and availability. So during setup I want users to pick a tier from the options their chosen model actually supports, filtered automatically. Some models support all of "auto", "flex", "default", and "priority", but others only handle a subset, so if a model doesn't support "flex" don't show flex, same deal for "priority", and if a model supports neither of those extras then don't show the service tier selector at all. Whatever tier gets configured needs to be stored and then sent along with every API request we make.
+## Description
 
-There's also a reliability thing I keep hitting. When I'm on the lower-cost "flex" tier, that tier is sometimes temporarily unavailable and the request comes back as a rate limit error, which kills the whole conversation. That's a bad experience. So when flex is the configured tier and a request fails specifically because flex is temporarily unavailable, I want the integration to quietly fall back to the standard "default" tier and retry the request, transparently, so the user just gets a normal response instead of an error. The retry should only kick in for that specific unavailable-tier case, not swallow other errors. The relevant config flow and request handling lives in the OpenAI conversation integration under `@homeassistant/components/openai_conversation/`, so the tier selection option, the model-aware filtering of choices, the storing of the selected tier, and the flex-to-default retry logic all belong there.
+The OpenAI conversation integration in Home Assistant does not currently allow users to select a service tier when making API requests. Service tiers control cost, speed, and priority — for example, a "flex" tier offers lower cost but may occasionally be temporarily unavailable, while other tiers like "default" or "priority" offer different trade-offs. Different AI models support different subsets of these tiers, so the available choices should vary based on the selected model.
+
+## Expected Behavior
+
+- When configuring the integration, users should be able to choose a service tier from the options supported by their chosen model.
+- The list of available service tier options should be filtered automatically: models that do not support the "flex" option should not display it, and similarly for the "priority" option. Models that support neither should show no service tier selector at all.
+- The configured service tier should be stored and sent with each API request.
+- If the "flex" tier is chosen and a request fails because that tier is temporarily unavailable, the integration should automatically fall back to the standard tier and retry the request transparently, rather than surfacing an error to the user.
+
+## Why This Matters
+
+Without service tier control, all users are locked into a single tier with no ability to optimize for cost or latency. More importantly, when using lower-cost tiers that can occasionally be unavailable, the current behavior is to fail the conversation entirely — a poor experience that could be avoided with an automatic retry at a different tier.

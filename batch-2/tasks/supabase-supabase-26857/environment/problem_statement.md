@@ -1,5 +1,14 @@
-I'm building out an auto-limit feature for the SQL editor in our studio app and I keep worrying that someone's gonna run a broad SELECT against a multi-million row table and either grind everything to a halt or crash the browser. There's no safety cap right now, so I want to append a sensible row limit automatically, but only when it actually makes sense and without stepping on what the user intended if they've already written a limit or they're running something that isn't a plain SELECT.
+## Description
 
-So I need two utility functions exported from the SQL editor utilities file living in the SQLEditor component directory. One decides whether an automatic row limit should be appended to a given SQL query. It should return false (don't append) when the limit value is zero or negative, when the query already contains a row limit, when the query isn't a SELECT statement, when there are multiple statements in the input, or when the query contains line comments. It only returns true for a clean, single SELECT with a positive limit and no existing limit clause.
+When users run SELECT queries in the SQL editor against large tables, the editor can accidentally return an enormous number of rows. There's currently no automatic safety mechanism to cap results. We need utility functions that can determine whether a row limit should be automatically appended to a query, and that can produce a properly formatted SQL string with the limit applied.
 
-The other one does the actual formatting, it takes a SQL string plus a limit number, strips any trailing semicolons off the original query (even if there's a bunch of them stacked up), and then appends the limit clause followed by exactly one semicolon. So no matter how many semicolons the original ended with, you get the limit and a single trailing semicolon. Keep it simple, this is mostly a guard to make the editor safer and more predictable by default.
+## Expected Behavior
+
+- Given a SQL query and a desired row limit, the system should be able to decide whether it is safe and appropriate to auto-append a limit to the query.
+- Auto-appending should only happen for simple, single SELECT statements — not for non-SELECT queries, queries that already include a row limit, queries with multiple statements, or queries containing comments.
+- A limit of zero or below should never trigger auto-appending.
+- A helper that applies the limit to a SQL string should strip any trailing semicolons from the original query and append the limit clause followed by a single semicolon, regardless of how many semicolons the original query ended with.
+
+## Why This Matters
+
+Without this guard, a developer or end user running a broad SELECT on a multi-million row table in the SQL editor could cause significant slowdowns or even browser crashes. Automatically appending a sensible row limit for qualifying queries makes the editor safer and more predictable by default, while respecting the user's intent when they have already specified a limit or are running something other than a simple SELECT.

@@ -1,5 +1,17 @@
-I'm working on the HTML accessibility linting in my project and there's a gap I keep running into. Right now nothing warns me when someone slaps an interactive ARIA role onto a plain, non-semantic element that can't actually receive keyboard focus. It's a real a11y problem, screen readers announce the thing as interactive, like a button, but keyboard-only folks and AT users navigating by keyboard can never reach it or activate it. So we can ship code that looks interactive to a screen reader and is totally unreachable, which violates accessibility guidelines and creates this confusing "hear about a control you can't touch" experience.
+## Description
 
-I want a new accessibility lint rule in the HTML linter that catches this. When a generic element has an interactive ARIA role but no way to get keyboard focus, raise an error pointing at the element saying it's not focusable, and mention the specific interactive role that was found. Also emit an informational note reminding me that non-interactive elements with such roles aren't reachable for keyboard navigation, plus a suggestion to make the element keyboard-focusable.
+When a developer assigns an interactive ARIA role to a generic, non-semantic HTML element (for example giving a plain container element the visual or semantic appearance of a button), the element does not automatically become keyboard-focusable. Keyboard-only users and assistive technology users who navigate by keyboard can never reach that element, even though it is intended to be interactive.
 
-Oh and it's gotta be smart about the valid cases so I don't get noise. If the element already has explicit keyboard focusability sitting alongside the interactive role, don't fire. Natively interactive elements (buttons, form controls, the stuff that's inherently keyboard-reachable) shouldn't be flagged either. And if the element only carries a non-interactive role, leave it alone completely, no warning.
+Currently there is no lint warning to catch this pattern. Developers can ship code where elements appear interactive to screen readers but are completely unreachable via keyboard, violating accessibility guidelines.
+
+## Expected Behavior
+
+- An HTML element that is assigned an interactive ARIA role but has no mechanism to receive keyboard focus should produce an accessibility lint error explaining that the element is not focusable.
+- The error should indicate which interactive role was found and suggest adding a focusability mechanism.
+- Elements that already carry both an interactive ARIA role and explicit keyboard focusability should pass without a warning.
+- Natively interactive elements (such as buttons and form controls that are inherently keyboard-reachable) should not be flagged.
+- Elements assigned a non-interactive ARIA role should not be flagged.
+
+## Why This Matters
+
+Accessibility tools and screen readers may announce these elements as interactive, creating a confusing experience where a user hears about an interactive control they can never actually reach or activate with the keyboard. Catching this at lint time ensures the problem is fixed before users are affected.

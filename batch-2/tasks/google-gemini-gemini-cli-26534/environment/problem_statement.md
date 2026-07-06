@@ -1,9 +1,19 @@
-I'm deep in the context management pipeline for our CLI AI assistant and hit a few related gaps I need sorted out together.
+## Description
 
-First thing, when I render conversation history to send to the model there are these temporary "preview" nodes floating around that represent in-flight or speculative state, stuff that was never meant to be permanent, and right now they leak into the final rendered output and pollute the model's context. I want to pass in a set of node IDs to exclude so those preview nodes get dropped from the rendered history.
+The context pipeline that manages conversation history for this CLI tool has several gaps that need to be addressed. Preview nodes — temporary, in-flight entries that represent pending or speculative state — are currently being included in the final conversation history sent to the AI model, which pollutes the model's context with content that was never meant to be permanent. Additionally, legacy session-context header blocks, which may appear at any position in a session's history, are not filtered out and instead appear as real user messages, causing unexpected behavior.
 
-Second, we've got old-style session-context header blocks that can show up at any position in a session's stored history, not just the top, and when I convert the flat history into a graph they're currently treated as regular user messages which causes weird behavior. They should just be silently skipped wherever they appear, mid-history or not.
+Finally, the working buffer that tracks processed conversation nodes (such as masked entries or rolling summaries) has no mechanism to synchronize with the upstream authoritative history. When new messages are added or old ones are removed from the authoritative source, the working buffer cannot reconcile those changes: it cannot append newly seen nodes, it cannot drop processed nodes whose original source was removed, and it cannot maintain the correct chronological order when both mutations and new additions occur simultaneously.
 
-Third, and this is the bigger piece, the working buffer that tracks processed conversation nodes (things like masked entries and rolling summaries) has no way to reconcile with changes to the upstream authoritative history. When new messages get added upstream or old ones get dropped, I need a synchronization method on the buffer that takes the new authoritative node list and does the right thing: it appends any nodes that are newly present, it removes processed nodes whose original source node got dropped, and it correctly weaves the retained processed nodes (whether mutated or summarized) back into their chronological positions relative to the new additions, so ordering stays right even when additions and removals happen at once. Oh and for the tricky case, if a processed node was derived from multiple source roots and even one of those roots is gone, drop the whole processed node too.
+## Expected Behavior
 
-Without this we end up sending stale preview state, legacy headers, and desynced processed entries to the model, which wastes tokens and confuses responses.
+- Preview nodes must be excluded from the rendered conversation history.
+- Legacy session-context header blocks must be silently skipped regardless of where they appear in the history.
+- The working buffer must expose a synchronization method that, given the new authoritative node list:
+  - Appends any nodes that are newly present.
+  - Removes any processed nodes whose original source node has been dropped.
+  - Correctly positions retained processed nodes (mutated or summarized) relative to new additions.
+  - Drops any multi-root processed node if even one of its roots has been removed.
+
+## Why This Matters
+
+Without these fixes, the context window sent to the model can contain stale preview state, legacy headers, and desynchronized processed entries, leading to incorrect or confusing model responses and potential token waste.

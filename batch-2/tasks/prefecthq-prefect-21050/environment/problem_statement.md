@@ -1,7 +1,22 @@
-I'm working on the Prefect Kubernetes integration and want better visibility into pod failures and infra state. Right now when a pod running a flow run hits problems (bad image name, OOM kill, repeated crashes, cluster not having capacity to schedule the pod, or the pod getting evicted from its node) the flow run has zero indication of what went wrong at the infra level, so users have to go poke at the cluster manually, which is slow and needs k8s expertise.
+## Description
 
-Two things I want. First, when a pod is still pending and the flow run hasn't started yet, I want the flow run to transition into an intermediate infrastructure-pending state so folks can tell provisioning is actually in progress vs stalled. This should only fire once though, if the flow run already moved past that state don't re-transition it.
+When a Kubernetes pod running a Prefect flow run encounters infrastructure problems, users currently have little visibility into what went wrong. The flow run either stays stuck or crashes without any indication of whether the issue was a bad container image, a memory limit being exceeded, the container repeatedly crashing, the cluster lacking capacity to schedule the pod, or the pod being evicted from its node. This lack of visibility makes it difficult to diagnose and resolve these issues quickly.
 
-Second, I want a diagnostic layer that inspects the pod's status on each event and, when it spots a known failure, writes a structured log straight to the flow run explaining what happened and how to fix it. Conditions to cover: image pull errors (image can't be pulled from the registry), out-of-memory kills (container terminated for exceeding its memory limit), crash loops (container keeps crashing after starting), scheduling failures (no node with enough resources), and evictions (pod removed due to resource pressure). Each message needs both an explanation and actionable resolution guidance. Oh and init containers should get diagnosed the same way regular containers do.
+In addition, when a pod is still being provisioned (sitting in a pending state), the corresponding flow run does not reflect this — users cannot tell whether infrastructure is actively being set up or if something has stalled.
 
-Also dedup matters: if the same failure persists across multiple events for the same pod, only log it once, don't spam it every event. But if the pod recovers and then fails again later, log it again. Wire this into the pod watching/event handling in the k8s worker under `@src/integrations/prefect-kubernetes/prefect_kubernetes/`.
+## Expected Behavior
+
+- When a Kubernetes pod is in a pending state, the associated flow run should transition to an intermediate pending state so users know infrastructure is still being provisioned. This should only happen once — if the flow run has already moved past this state, no re-transition should occur.
+- Common infrastructure failure patterns should be automatically detected from pod status information and surfaced as structured, actionable log messages directly on the flow run. These include:
+  - Image pull failures (the image cannot be retrieved from the registry)
+  - Out-of-memory kills (the container was terminated because it exceeded its memory limit)
+  - Crash loops (the container is repeatedly crashing after starting)
+  - Scheduling failures (the cluster cannot find a node with sufficient resources)
+  - Evictions (the pod was removed from its node due to resource pressure)
+- Failure diagnostics should include both an explanation of what happened and guidance on how to resolve it.
+- If the same failure condition persists across multiple events for the same pod, the diagnostic log should only be emitted once — not repeatedly. If the pod recovers and then fails again, the diagnostic should be logged again.
+- Failures on init containers should be diagnosed the same way as regular containers.
+
+## Why This Matters
+
+Users running flows on Kubernetes currently have to manually inspect pod status in their cluster to understand what went wrong. Surfacing this information directly in the Prefect flow run logs reduces the time to diagnosis and gives users actionable next steps without requiring Kubernetes expertise.

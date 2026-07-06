@@ -1,5 +1,14 @@
-I'm hitting a weird webpack bug with CSS modules when I mix export types. I've got two CSS files, one set up to inject its styles into the page (style type) and another set up to export its content as a raw text string (text type via something like `?type=text` or the equivalent asset/export config). The style-injecting file uses a CSS-level `@import` to pull in the text-type file. Problem is, even though the text file is imported by the style-injecting parent, its styles never make it into the DOM. If I import the text file directly in JS I get its content back as a string just fine, but through the parent's import chain where it should show up as an active stylesheet inside a `<style>` tag, it just silently doesn't appear. No error, no warning, the rules are just gone, which is nasty to debug.
+## Description
 
-What I want is for the parent's export type to win here. When a text-configured CSS file gets imported at the CSS level by a style-configured CSS file, the imported content should get injected as an active stylesheet regardless of the child's own type config, so those utility styles actually take effect. The parent module's export type should take precedence when webpack resolves how a CSS-level imported dependency is handled.
+When a CSS file is configured to export its content as a raw text string and is imported at the CSS level by another CSS file configured to inject its styles into the page, the imported file's styles are not being applied to the page. Instead of creating a style tag for the imported content, webpack treats the imported file purely as text — meaning its CSS rules are silently ignored and do not take effect in the browser.
 
-Directly importing that text-type file in JS should still return its content as a string, don't break that. And CSS Modules class name exports from the style-type parent should keep working correctly too. Oh and while you're in there, the module comment annotations in the compiled output are showing the wrong export type label for these imported files, which makes debugging more confusing than it needs to be, so fix those to reflect the actual resolved type. The relevant logic lives in webpack's CSS handling, so trace how CSS-level imports resolve their export type against the importing module and make the parent's style injection propagate down the import chain.
+## Expected Behavior
+
+- When a CSS file is imported at the CSS level by a CSS file that is configured to inject styles into the DOM, the imported file's content should also be injected as an active stylesheet, regardless of the imported file's own export type configuration.
+- The parent module's export type should take precedence when resolving how a CSS-level imported dependency is handled.
+- Directly importing the text-type CSS file in JavaScript should still return its content as a string.
+- CSS Modules class name exports from the style-type parent should continue to work correctly.
+
+## Why This Matters
+
+This is a subtle but impactful bug: a developer who imports a utility CSS file (configured as text for some use cases) from within a style-injecting CSS module will find that the utility styles are never applied to the page. There is no error or warning — the styles are just silently absent. The fix ensures that the CSS injection chain works correctly when mixing export types through CSS-level imports.

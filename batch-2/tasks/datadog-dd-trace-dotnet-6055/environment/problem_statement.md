@@ -1,3 +1,19 @@
-I'm poking at the CI Visibility instrumentation in dd-trace-dotnet and there's a gap I want to close: when a test session gets traced and shipped to Datadog, the span metrics don't say anything about how many logical CPUs the host has. That's annoying because test timing swings a lot based on the number of logical processors on the CI box, and without that context it's hard to tell a real perf regression from just running on a smaller machine. So I want to capture the host's logical CPU count automatically as a numeric metric on every CI test session span, set once when the session starts, and read-only so external callers can't stomp on it. The value should just be whatever the runtime reports as the processor count.
+## Description
 
-To wire this up I need a new constant in the shared CI tags file that maps a readable name over to the wire-format metric key for logical CPU count, so the instrumentation layer and any snapshot/verification tooling reference it consistently. Then the test session tags class needs a read-only property for it, initialized in the constructor and decorated with the metric attribute so it flows into the standard metrics payload. Oh and this repo checks in pre-generated serialization code, so the generated partial class files for the session tags (across all the supported target frameworks) have to be updated too, they need to enumerate, get, set, and write the new metric, including the correct binary-encoded byte representation of the metric key. Make sure it serializes cleanly as part of the normal metrics for the session span.
+When test sessions are instrumented and their data is sent to Datadog CI Visibility, the resulting span metrics do not include information about the number of logical processors available on the host machine. This makes it harder to correlate test performance and timing data with the underlying hardware environment.
+
+## Expected Behavior
+
+- Each CI test session span should automatically include the host's logical processor count as a numeric metric under a dedicated logical CPU count metric key.
+- The value should equal the number of logical processors reported by the runtime.
+- This metric should be read-only — it is set once at session initialization and cannot be overridden by external callers.
+- The metric should be serialized correctly as part of the standard metrics payload for CI test session spans.
+
+## Why This Matters
+
+Test execution time can vary significantly depending on how many logical CPUs are available on the CI host. Without capturing this information as part of the test session telemetry, it is difficult to distinguish between performance regressions and environmental differences. Adding the logical CPU count as a standard read-only metric gives teams the context they need to interpret timing data accurately.
+
+## Notes
+
+- The metric tag constant must be added to the shared CI tags file so it can be referenced consistently across the test instrumentation layer and any verification or snapshot tooling.
+- The generated serialization code for the session tags class must also be updated to include the new metric in enumeration, get, set, and write operations.

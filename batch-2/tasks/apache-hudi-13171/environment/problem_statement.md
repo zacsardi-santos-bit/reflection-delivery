@@ -1,5 +1,22 @@
-I'm working on Hudi's file group reading infrastructure and I need a real, engine-independent Avro reader context living in the core library so it works in any JVM environment without pulling in engine-specific deps. Right now the file group reading tests (including bootstrap table support and the various record merge strategies) lean on a test-only stub that doesn't fully implement everything, especially the part where it merges skeleton and data file iterators together for bootstrap tables, so those tests aren't actually exercising the production code paths and we can't catch Avro reading bugs across the JVM engines.
+## Description
 
-Here's what I want the new reader context to do. It should look up field values by name from an Avro record and just return null when the field isn't present in the schema. It should extract record keys either from the metadata fields embedded in the record (when the table's configured to populate meta fields) or by delegating to a configurable key generator, picking which path based on the table config. And it needs to merge two parallel iterators, one coming from a skeleton file and one from a base data file, into a single iterator of combined records. When merging, skeleton fields come first in the output record's schema and then the base fields, using a merged schema. The two iterators have to stay in sync: equally sized inputs produce a result with exactly the same record count, empty inputs give empty output, and mismatched sizes should raise an error since they're supposed to line up. Put this in the core library module.
+Hudi's file group reading infrastructure currently relies on a test-only reader context stub for Avro-based record reading. This stub does not fully implement all required behaviors — in particular, it does not correctly merge skeleton and data file iterators for bootstrap tables. This means tests for record merging strategies and bootstrap reading are not validating the actual production code paths.
 
-Also I need to update the abstract base class for the file group reader tests so that when it creates a reader context it can reuse the already-loaded table metadata client instead of rebuilding it internally. Thanks!
+We need a proper, engine-independent Avro reader context in the core library that can be used in any JVM environment. This implementation should handle:
+
+- Extracting field values from Avro records by field name, returning null when a field is absent from the schema
+- Resolving record keys either from embedded metadata fields (when the table is configured to populate them) or by delegating to a configurable key generator
+- Merging two file iterators (skeleton partition file and base data file) into a single stream of combined records with the correct combined schema, preserving field ordering
+
+## Expected Behavior
+
+- When merging bootstrap skeleton and base file iterators, the resulting records should contain skeleton fields first, followed by base fields, using a merged schema
+- Merging two equally-sized iterators should produce a result with exactly the same number of records
+- Merging two empty iterators should produce an empty result
+- Merging iterators of different sizes should result in an error (the iterators must be in sync)
+- Field value lookup by name should return null for fields not present in the schema
+- Record key extraction should use key generator delegation or metadata field lookup based on the table configuration
+
+## Why This Matters
+
+Without this implementation, integration tests for file group reading cannot use the real production logic and instead depend on test stubs. This prevents catching bugs in Avro-based reading across all JVM-based environments and limits reuse of the reader context across different engines.

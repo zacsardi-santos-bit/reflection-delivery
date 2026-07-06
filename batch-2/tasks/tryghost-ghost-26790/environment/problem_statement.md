@@ -1,5 +1,15 @@
-I'm working on the Transistor podcast embed card renderer in Ghost and right now when one of these cards gets rendered for the web it just spits out a static placeholder, you know a generic icon plus the text "Members-only podcasts" and a short description, so readers can't actually listen to anything inline, they just stare at a non-interactive block. I want to swap that out for a real embeddable podcast player so people can hit play right there on the page without leaving.
+## Description
 
-A few things I care about: the player iframe should lazy load so it doesn't block page load, and I need a no-JavaScript fallback iframe too so the podcast stays accessible when JS is disabled. Also there should be a small inline script that detects the background color of the surrounding content and passes it along to the player so the visuals stay consistent.
+The Transistor podcast embed card currently renders a static placeholder on the web — a generic icon with the text "Members-only podcasts" and a short description. This means visitors to a Ghost site cannot actually listen to Transistor podcasts inline; they only see a non-interactive placeholder. The embed should instead render a real podcast player so readers can listen directly on the page.
 
-Oh and the site's unique identifier needs to get passed to the player as a context query parameter when it's available, so the player can tailor its experience per site. When there's no identifier, just use the URL as-is and omit the context param entirely, don't tack on an empty one. Btw the embed URL format uses a placeholder for the member UUID that gets substituted in at request time, so keep that substitution intact.
+## Expected Behavior
+
+- When a Transistor podcast card is rendered on the web, it should output an embeddable player (not a static placeholder)
+- The embed should use lazy-loading so the player iframe does not block page load
+- A no-JavaScript fallback should be provided, ensuring the podcast player is still accessible when JavaScript is disabled
+- A small inline script should be included to detect the background color of the surrounding content and pass it to the player for visual consistency
+- The site's unique identifier should be passed to the player as a context parameter so the player can tailor its experience per site; if no identifier is available, the parameter should simply be omitted
+
+## Why This Matters
+
+Ghost users who embed Transistor podcasts into their content currently see only a placeholder — their readers cannot actually interact with or listen to the podcast. Replacing the placeholder with a real player gives readers a seamless inline listening experience without leaving the page.

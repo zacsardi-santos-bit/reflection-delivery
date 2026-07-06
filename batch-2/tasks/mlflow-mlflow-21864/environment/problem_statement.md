@@ -1,5 +1,15 @@
-I'm hacking on MLflow's evaluation and discovery pipeline, the part that fires off LLM calls internally as it runs. Right now those internal calls only know how to talk to direct external provider endpoints, so if a team runs a local MLflow gateway as a proxy for their model calls they can't point the evaluation workflows at it, which is a real gap for us since the whole point of the gateway is centralized credential management, rate limiting, and routing without callers passing creds around.
+## Description
 
-So what I want: when the model target is a gateway endpoint (the gateway URI scheme), the internal LLM call function should detect that, look up the gateway's connection details (the service URL, the API key, plus any custom request headers it needs), and route the call through that gateway. For a normal provider URI it should behave exactly like today, going through the existing URI conversion logic with no gateway-specific params sneaking in.
+MLflow's evaluation and discovery tools can call LLMs internally as part of their pipeline, but these calls currently only work with direct external provider endpoints. There is no support for routing these calls through a locally running MLflow gateway service. This means teams who use MLflow's gateway as a proxy for their model calls cannot use it as the target model for evaluation workflows.
 
-Also I want the call function to support a JSON output mode where the response format is just a plain JSON object type, and a structured schema mode where I hand it a model class and get a typed response back. And oh, when I pass in a token usage tracker, the function should update it after each call with input tokens used, output tokens generated, and the cost of that call, so we can monitor usage across runs.
+## Expected Behavior
+
+- When a gateway endpoint is specified as the model target (using the gateway URI scheme), the system should detect this, retrieve the gateway's connection details (service URL, API key, and any custom request headers), and route the LLM call through that gateway.
+- When a standard provider URI is used, the call should continue to work exactly as before, using the existing URI conversion logic with no gateway-specific parameters.
+- The LLM call interface should support requesting structured JSON output mode as a call option.
+- The LLM call interface should support passing a structured schema (defined as a model class) to request structured responses.
+- When a token usage tracker is provided, the system should populate it with the number of input tokens, output tokens, and the monetary cost after each LLM call.
+
+## Why This Matters
+
+This makes it possible to use the MLflow gateway as a unified proxy for LLM calls throughout the evaluation pipeline, enabling centralized credential management, rate limiting, and routing without requiring callers to supply credentials directly. Token and cost tracking enables usage monitoring across evaluation runs.

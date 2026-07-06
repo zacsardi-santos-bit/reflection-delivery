@@ -1,5 +1,17 @@
-I'm extending the skill inbox in our CLI and hit a gap. Right now the inbox only surfaces newly extracted skills (whole new skill directories you can preview and install), but the memory extraction system can also spot improvements to skills you've already got installed in your global or workspace dirs, and there's no way to propose, review, or apply those incremental tweaks. I want the inbox to carry a second category: skill updates represented as patch files, so people can eyeball proposed changes before applying or dismissing.
+## Description
 
-So when the inbox dialog opens it should fetch both new skills and skill update patches, and when both exist, group them under section headers separating the two. Selecting a new skill shows a content preview first; selecting an update shows the diff of the proposed changes with apply or dismiss options. Applying a patch has to be atomic (all changes land or nothing is written, no partial state) and on success it calls back to reload skills. Dismissing just drops the patch without reloading. Also trust-aware: if a patch targets the current workspace's skills and the workspace isn't trusted yet, disable the apply option with a clear message saying why. For Windows-style paths, show a clean label with just the filename plus an origin tag instead of the raw full path.
+The skill inbox currently only surfaces newly extracted skills — entire new skill directories that users can review and install. However, the memory extraction process can also identify improvements to skills that are already installed in the user's global or workspace directories. Right now, there is no mechanism to propose, review, or apply those incremental updates. Users miss out on refinements that the system has detected.
 
-On the backend I need functions to list available patches from the inbox, apply a named patch to its target files, and dismiss a patch without applying. The apply path needs real validation: reject path traversal in the filename, confirm target files sit within the allowed skill roots (resolving symlinks), reject patches with no hunks or mismatched headers, and give a specific error message per failure mode. Oh and I want a validation helper that scans the inbox directory, deletes any invalid patch files, and returns the names of the valid ones. Finally, when the memory extraction service runs and produces new patches, it should emit a notification pointing folks at the inbox to review the updates. Without this the memory system can only suggest brand-new skills, never refine the ones people already rely on.
+## Expected Behavior
+
+- When the memory extraction process identifies improvements to existing skills, it should produce update proposals as patch files alongside the new skill directories.
+- The inbox dialog should display both new skills and skill updates together, with clear section labels separating the two categories when both are present.
+- Selecting a skill should show a preview of its contents before offering install options.
+- Selecting a skill update should show the proposed diff so users can review the exact changes before deciding to apply or discard them.
+- Applying an update should be atomic — either all changes succeed, or nothing is written — so a failure never leaves a skill in a partially updated state.
+- Workspace trust settings should be respected: updates targeting the current workspace's skills must be blocked when the workspace is not yet trusted.
+- When extraction produces new skill updates, the system should notify the user that updates are waiting in the inbox for review.
+
+## Why This Matters
+
+Without this feature, the memory system can only suggest brand-new skills, not refine ones the user already relies on. Supporting incremental updates lets the system continuously improve existing skills based on patterns observed in real sessions, and gives users a safe, reviewable workflow for accepting or rejecting those improvements.

@@ -1,5 +1,15 @@
-I'm poking at the Bedrock AgentCore Runtime delete operator in the Amazon provider for Airflow, and right now it just fires the delete request and returns immediately, no way to know when the runtime is actually gone. That makes chaining dependent teardown/provision steps a pain since downstream tasks can race against a resource that isn't fully removed yet. I want to bring it in line with how other async-resource operators work.
+## Description
 
-So the delete operator should support three modes: return right away after submitting (opt-out for folks who don't care), wait synchronously by polling until the runtime disappears, and defer the Airflow task asynchronously and resume only once deletion is confirmed. If both deferrable and the synchronous wait flag are set, deferrable wins. On resume from the deferred path it should return normally on success and raise an error if the deletion went sideways.
+The operator that deletes an AgentCore Runtime currently fires off the delete request and returns immediately — there is no way to tell when the runtime has actually been removed. This makes it difficult to chain dependent tasks that should only run once the resource is fully gone.
 
-For the deferring bit I need a new trigger class that tracks deletion progress via the right hook and waiter, and yields a success event carrying the runtime ID once deletion's confirmed. Also I need a new custom waiter definition that treats "resource no longer found" as success, keeps retrying while it's still in a deleting state, and fails if it lands in any other terminal state like a failed or ready status (don't silently report success in that case, actually raise). The operator and trigger live under `@airflow/providers/amazon/aws`, with the waiter registered in the provider's waiter config alongside the other AgentCore Runtime waiters.
+## Expected Behavior
+
+- The delete operator should support an option to wait for the deletion to complete before the task finishes.
+- Waiting should be available both synchronously (polling until the resource disappears) and asynchronously (suspending the Airflow task and resuming only when deletion is confirmed).
+- Users who don't need to wait should still be able to opt out and return immediately after submitting the request.
+- If deletion ends up in an unexpected terminal state instead of cleanly disappearing, the operator should raise an error rather than silently reporting success.
+- The underlying polling logic should treat the resource being no longer found as the success condition, continue retrying while the resource is in a deleting state, and fail when the resource enters any other terminal state.
+
+## Why This Matters
+
+Workflows that provision and teardown AgentCore Runtimes need to know when a runtime is truly gone before proceeding to the next step. Without completion tracking, downstream tasks may attempt to create or configure resources that depend on the deleted runtime being fully removed, leading to race conditions or unexpected failures.

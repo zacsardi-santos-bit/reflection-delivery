@@ -1,7 +1,17 @@
-I'm trying to add a knob to the deployment engine that skips the up-front plugin pre-installation phase. Right now when a deployment runs, the engine asks the language host for all required packages and checks or installs every single one before the program even starts executing. The problem is the language host is over-inclusive, it reports every package the program imports, not just the ones that actually register cloud resources during that run, so we burn time (and hit potential failure points) checking packages that never get used.
+## Description
 
-What I want is an option that, when enabled, makes the engine skip this bulk pre-installation check entirely. Plugins that are genuinely needed should still get loaded on demand by the provider infrastructure when the program registers a resource of that type, and packages that are imported but never used to create resources should just never be loaded at all. When the option isn't set, keep the existing default, all packages the language host reports get checked before the deployment proceeds.
+When Pulumi runs a deployment, the engine performs an up-front installation check for all plugins that the language host reports as required by the program. However, the language host is over-inclusive — it lists every package the program imports, not just those whose resources are actually registered during that particular run. This means the engine checks and potentially installs packages that are imported as a library but never used to create any resources, adding unnecessary overhead and potential failure points.
 
-Programs often pull in provider packages for type info or utility functions without ever creating resources from them, so this lazy-loading path should make those deployments faster and less fragile.
+## Expected Behavior
 
-Oh and the lifecycle test framework needs updating too so tests can inject a custom plugin manager into the engine context. That way it's possible to observe which plugins the engine considers for up-front installation versus which ones get loaded lazily at runtime. Make sure both cases are exercisable: with the skip option on, nothing should be pre-checked and only the actually-registered resource's plugin loads lazily; with it off, everything imported still gets checked up front like before.
+There should be a way to skip the up-front plugin pre-installation step. When this option is enabled:
+
+- The engine should not perform any up-front check or installation for plugins reported by the language host
+- Plugins that are truly needed at runtime should still be loaded on demand when the program actually registers a resource of that type
+- Unused plugins (imported but never creating resources) should not be loaded at all
+
+When the option is disabled (the default), the existing behavior should be preserved: all packages reported by the language host are checked for installation before the deployment proceeds.
+
+## Why This Matters
+
+Programs often import provider packages for type information or utility functions without ever creating resources from those packages. The current behavior forces the engine to try to install every imported package, even those that will never create a resource in this run. A lazy-loading approach avoids this unnecessary work and makes deployments faster and more robust for programs that import many packages.

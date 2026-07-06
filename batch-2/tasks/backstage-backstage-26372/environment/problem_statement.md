@@ -1,7 +1,15 @@
-I'm building out an auditing service for the Backstage backend framework because right now there's no built-in, standardized way for plugins to record audit events. Plugins that need to track security-relevant stuff (data access, config changes, entity mutations, that kind of thing) have nowhere structured to capture what happened, whether it worked, and the metadata tied to it. I want to fix that.
+## Description
 
-The core idea is a service that lets backend plugins record structured audit events with lifecycle stages, so you track when an operation kicks off (initiated) and then whether it ultimately succeeded or failed. When an event gets created with some initial metadata, that metadata should carry through to the success or failure record, merging with whatever extra context gets passed in at completion. And if the operation fails, I want the error captured in string form as part of the record.
+Backstage's backend framework currently lacks a built-in, standardized service for recording audit events. Plugins that need to track security-relevant operations — such as data access, configuration changes, or entity mutations — have no structured way to capture what happened, whether it succeeded or failed, and what contextual metadata was associated with it.
 
-I need two concrete classes here. There's a root-level auditor that can be instantiated with optional config, and it should expose a way to spin up a plugin-scoped child instance by accepting auth, HTTP auth, and plugin metadata dependencies. The plugin-scoped instance then exposes a method to create events that returns an event handle, and that handle has methods for recording success or failure.
+## Expected Behavior
 
-Oh and separately, the catalog backend router's setup function needs to accept this auditing service as part of its options, alongside the other services it already receives. Wire it in there too.
+- A new auditing service should allow plugin developers to create a structured audit event at the start of an operation.
+- The event should have a clear lifecycle: initiated, succeeded, or failed.
+- Metadata provided when creating the event should be carried forward and merged with any additional metadata provided at completion (success or failure).
+- When an operation fails, the error details should be captured as part of the audit record.
+- The catalog backend plugin's router creation should accept and integrate the auditing service.
+
+## Why This Matters
+
+Without a dedicated auditing service, teams have no consistent way to produce audit trails for backend operations. This change makes it possible for plugin developers to track the start and outcome of security-relevant operations in a structured, uniform manner that can be extended across the platform.

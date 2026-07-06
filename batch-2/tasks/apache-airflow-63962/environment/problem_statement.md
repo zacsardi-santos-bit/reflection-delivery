@@ -1,3 +1,12 @@
-I'm poking at the Airflow scheduler and hit a gap with partitioned timetable DAGs. So we've got DAGs that use partitioned timetables where the scheduled runs get organized around a partition key instead of the usual datetime-based intervals, and right now when one of those partition-aware DAGs has no partition key set (which basically means no run is currently due) the scheduler just doesn't have any guard for that. It keeps going and processes the DAG anyway instead of bailing out cleanly, which can lead to incorrect behavior or half-created DAG runs, and there's nothing in the logs telling an operator what happened.
+## Description
 
-What I want in the DAG run creation logic is a real check for this: if the DAG is partition-aware but the partition key is missing, I want it to log a descriptive error saying the partition key isn't set and then skip that DAG for the current scheduling cycle. If the partition key is present though, it should just proceed with run creation like normal, no change there. The point is that operators can look at the logs and immediately see that a partitioned timetable DAG isn't ready to schedule, rather than the scheduler silently doing the wrong thing and maybe creating invalid runs. So it's really two branches, missing key means error log plus skip, present key means carry on as usual.
+The Airflow scheduler supports DAGs that use partitioned timetables, where scheduled runs are organized around partition keys rather than standard datetime-based intervals. When a partitioned timetable DAG has no partition key set — meaning no run is currently due — the scheduler currently lacks a guard for this situation. Instead of skipping the DAG gracefully, it may proceed with processing, potentially leading to incorrect behavior or incomplete DAG run creation.
+
+## Expected Behavior
+
+- When the scheduler encounters a partitioned timetable DAG that has no partition key set, it should log a descriptive error and skip that DAG for the current scheduling cycle.
+- When a partitioned timetable DAG does have a partition key set, the scheduler should proceed with DAG run creation as normal.
+
+## Why This Matters
+
+Without this guard, the scheduler may attempt to create DAG runs for partitioned timetable DAGs even when no partition is ready. Adding an explicit check with an informative error log makes it easier to diagnose scheduling issues and avoids potentially invalid runs being created.

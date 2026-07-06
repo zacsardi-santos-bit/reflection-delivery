@@ -1,11 +1,17 @@
-I'm cleaning up the container listing command in our CLI and the non-interactive output is rough. Right now when you run the list command in a non-tty it dumps raw data that's basically unreadable and shows nothing about health. I want it to render a clean formatted table instead with columns for the container ID, name, derived state, live instance count, and last modified time.
+## Description
 
-The state should come from health counters in the API response. If any instances are failing the container is "degraded", if instances are starting or being scheduled (and nothing's failing) it's "provisioning", if there are active instances with no failures it's "active", and if all the counters are zero it's "ready". Degraded wins over everything else, that priority matters.
+The containers listing command needs to be updated to use a newer API endpoint and provide significantly better output. Currently, running the list command in a non-interactive terminal outputs raw data that is difficult to read at a glance, and it doesn't show meaningful status information about each container's health. Users want to be able to quickly scan a table of their containers and see whether each one is healthy, degraded, or still provisioning — without having to parse a blob of data.
 
-I also need a flag for machine-readable output. When that's passed I want a JSON array where each entry has the container's ID, name, derived state, instance count, image reference, version, and both the created and updated timestamps.
+## Expected Behavior
 
-Also add a per-page pagination option, and if someone passes 0 or a negative number it should fail right away with a clear error message. In non-interactive mode I want a single unpaginated request rather than trying to page through. Oh and when there are no containers, say so clearly instead of showing an empty structure.
+- The list command should call the updated API endpoint for fetching container applications.
+- In non-interactive mode, the command should render a clean, formatted table showing each container's ID, name, derived state, number of live instances, and last modified time.
+- The state of each container should be derived from underlying health counters: a container with failing instances is "degraded", one with starting or scheduling instances is "provisioning", one with active healthy instances is "active", and an idle container with no running instances is "ready".
+- A JSON output flag should be available for machine-readable output, producing objects with consistent fields.
+- A per-page option should be available; passing 0 or a negative value should be rejected immediately with a clear error message.
+- When no containers exist, the output should say so clearly rather than showing an empty structure.
+- Client-side errors (bad request) and server-side errors should produce distinct, descriptive error messages.
 
-The API endpoint for fetching the list changed too, so we need to hit the updated endpoint, and introduce a new type representing each container application (with its health counters) in the shared package. API errors should be descriptive, with distinct messages for bad request (client-side) errors versus server errors.
+## Why This Matters
 
-Same non-interactive table treatment should apply to the command that lists individual container instances, it should show a table rather than JSON by default when non-interactive.
+Operators managing containerized workloads from the CLI need quick visibility into container health. The current raw dump makes it hard to act on the information. A structured table view with human-friendly state labels dramatically reduces cognitive load during operational tasks.

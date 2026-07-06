@@ -1,7 +1,20 @@
-I'm chasing a bug in our Rust monorepo build tool, specifically the lockfile pruning code that takes a full monorepo lockfile and spits out a minimal subset lockfile for a given set of workspace packages. The problem is workspace injection, where the package manager copies workspace packages into node_modules as real installed packages instead of symlinking them. Pruning botches these in two different ways and I need both fixed.
+## Description
 
-First case, newer package manager versions support a global workspace-level setting in the lockfile that turns on injection for all workspace deps at once. When that's on, those workspace deps resolve via a file-based protocol and show up in both the packages and snapshots sections. Our pruning doesn't even look at this global setting, so those injected workspace packages get silently dropped and the pruned output is incomplete and won't install.
+When using workspace injection in a monorepo managed by a package manager that supports copying workspace packages into node_modules as real installed packages (rather than symlinks), the pruning feature that creates minimal lockfile subsets for individual apps fails to handle these injected packages correctly.
 
-Second case is the older per-dependency style where each dep is individually marked injected in the lockfile metadata. There's a bug where the injected package lands in the packages section of the pruned lockfile but not in snapshots, and on top of that its transitive deps never get traversed or pulled in.
+There are two broken scenarios:
 
-Both really come down to the same thing, when a workspace package is injected and uses file-based resolution it's gotta appear in both the packages and snapshots sections, and all its transitive dependencies need to be walked and included too. Oh and packages that belong only to workspaces outside the requested subset should still be excluded like before, don't want those leaking in. This matters because folks run pruning to build deployable subsets for CI/CD and Docker, and a broken incomplete lockfile there means the install just fails.
+1. **Global injection setting (newer-style configuration):** Some package manager versions support a global workspace-level setting that enables injection for all workspace packages. When this setting is active, workspace dependencies are resolved using a file-based protocol rather than the typical symlink/link approach, which causes them to appear in the lockfile's packages and snapshots sections. However, the pruning logic does not recognize this global setting, so injected workspace packages are silently dropped from the pruned lockfile — making the subset incomplete and non-installable.
+
+2. **Per-dependency injection with file resolution:** Even in older setups where injection is declared individually per-dependency, a bug causes the injected package to be added to the packages section of the pruned lockfile but omitted from the snapshots section. Additionally, the transitive dependencies of the injected package are not traversed or included in the pruned lockfile.
+
+## Expected Behavior
+
+- When the lockfile has a global injection setting enabled, all workspace dependencies resolved via the file protocol should appear in both the packages and snapshots sections of the pruned lockfile.
+- When individual dependencies are marked as injected with file-based resolution, they must appear in both the packages and snapshots sections of the pruned lockfile.
+- In both cases, the transitive dependencies of each injected workspace package must be discovered and included in the pruned lockfile.
+- Packages that belong only to workspaces not included in the subset must still be excluded from the pruned lockfile.
+
+## Why This Matters
+
+Users running pruning to create deployable subsets of their monorepo will get incomplete lockfiles that cannot be installed correctly, breaking CI/CD pipelines and Docker builds that rely on the pruned output.

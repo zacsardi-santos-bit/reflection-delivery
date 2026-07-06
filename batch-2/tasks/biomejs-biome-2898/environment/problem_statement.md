@@ -1,5 +1,17 @@
-I'm trying to make our CLI feel more familiar to folks coming from other linters and formatters. Right now automatic corrections get triggered with `apply` and `apply-unsafe` flags, which work fine, but everyone I talk to expects a plain `fix` flag instead, and honestly bundling safe and unsafe fixes into one combined flag name makes it awkward to express what you actually want.
+## Description
 
-So I want to add a `fix` flag to the check, format, lint, and migrate subcommands that behaves exactly like each subcommand's existing write flag. I also want a standalone `unsafe` flag on check and lint so people can independently opt into the riskier automatic corrections in combination with `fix` or the existing write flag, rather than reaching for a combined name. The old `apply` and `apply-unsafe` flags need to keep working as backward-compatible aliases so nobody's existing scripts break, that part's important.
+The tooling currently uses "apply" and "apply-unsafe" flags to trigger automatic code corrections. While these work, many developers coming from other ecosystems expect a simpler "fix" convention, and having separate flags for "safe" and "unsafe" fixes tied together in a combined flag name makes it harder to express intent clearly.
 
-Oh and one edge case: if someone accidentally passes both a new flag and its old equivalent at the same time (like `fix` together with `apply`, or `fix` together with `write`), don't silently pick one, reject the invocation with a clear incompatibility error saying which args conflict. Also when auto-fixing runs but some issues just can't be fixed automatically, still write out all the fixes it can apply, then exit non-zero and list the errors that couldn't be resolved.
+We should introduce a "fix" flag as a more intuitive alias for the write/apply behavior across all major subcommands (check, format, lint, and migrate). Additionally, a standalone "unsafe" flag would let users separately opt into riskier automatic corrections without having to use a combined flag name.
+
+## Expected Behavior
+
+- A "fix" flag should be available for the check, format, lint, and migrate subcommands and behave exactly like the existing write flag for each.
+- An "unsafe" flag should be available on check and lint to allow unsafe fixes in combination with "fix" or the existing write flag.
+- The old flags ("apply", "apply-unsafe") should continue to work as backward-compatible aliases so existing scripts are not broken.
+- When a user mistakenly passes both the new flag and an equivalent old flag at the same time (e.g., "fix" together with "apply", or "fix" together with "write"), the tool should clearly reject the invocation with an informative incompatibility error rather than silently accepting it.
+- When auto-fixing is requested but some issues cannot be automatically corrected, the tool should still write all fixes it can apply and then report a non-zero exit code listing the unfixed errors.
+
+## Why This Matters
+
+The "fix" convention is widely recognized from other linters and formatters. Adding it as a supported flag improves discoverability and makes the tool feel more familiar to new users, without breaking anyone who already relies on the existing flag names.

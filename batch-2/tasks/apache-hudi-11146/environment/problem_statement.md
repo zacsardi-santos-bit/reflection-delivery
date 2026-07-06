@@ -1,5 +1,17 @@
-I'm cleaning up the metadata index infrastructure in our data lake since everything's still named for "functional indexes" even though we want the same plumbing to serve several index types now, including a new secondary index we're adding. The problem is the model classes and the metadata client accessor all bake in the functional-index name, which is too narrow and gets confusing as we pile on more index types, so I want to generalize it.
+## Description
 
-Concretely I need the functional-index-specific model classes renamed to generic ones, both the index definition model class and its metadata container class should drop the "functional" flavor and use generic index names. The metadata client should stop exposing a functional-index-specific accessor and instead have a single unified method for getting index definitions that works for any index type. Also I need to add a new secondary index partition type to the metadata partition enum, and it's gotta behave the same way the functional index type does when we figure out which partitions are enabled, meaning neither secondary nor functional indexes should show up as independently enabled partitions before initialization.
+The current metadata index infrastructure uses "functional index"-specific class names and API methods, even though the same infrastructure needs to serve multiple different index types (including a new secondary index type). This naming is now too narrow and causes confusion as more index types are added.
 
-Oh and the last piece, I want a static utility method on the partition type enum that takes any metadata partition path string and maps it back to the matching partition type, covering all the known partition types, and it should throw a clear error when it hits a path it doesn't recognize. The whole point here is that once the shared model isn't coupled to the functional index name, we can reuse the same infrastructure for secondary indexes and whatever index types come next without redoing this refactor every time.
+We need to generalize the index metadata model by renaming the functional-index-specific classes to generic index classes, and renaming the corresponding metadata client accessor to a unified method that works for all index types. At the same time, we need to add support for a new secondary index partition type alongside the existing functional index type.
+
+## Expected Behavior
+
+- The index definition model class and its metadata container class should use generic names rather than "functional index"-specific ones.
+- The metadata client should expose a single, generalized method for accessing index definitions, usable for any index type.
+- A new secondary index partition type should be recognized by the metadata partition infrastructure.
+- A utility method should be available to resolve any metadata partition path string back to its corresponding partition type, throwing a clear error for unrecognized paths.
+- Both functional indexes and secondary indexes should behave consistently when determining which partitions are enabled — neither should appear as an independently enabled partition before initialization.
+
+## Why This Matters
+
+As the system grows to support more index types beyond the original functional index, having type-specific names in the shared model creates unnecessary coupling. Generalizing the model and its accessor now allows the same infrastructure to be reused cleanly for secondary indexes and any future index types without additional refactoring.

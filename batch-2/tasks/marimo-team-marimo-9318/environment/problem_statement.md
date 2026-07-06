@@ -1,5 +1,17 @@
-I'm working on the server-side HTML template rendering for exported notebooks and I hit a gap. When a notebook gets exported as a self-contained static page or as a WebAssembly-powered interactive page, the resulting HTML has no way to tell the embedded runtime that the code it's about to run came from a genuine, server-generated export. Right now that means the runtime can't automatically grant trust to notebook-authored resources like virtual data files, so users have to manually run cells before those resources get accepted, which is annoying for anything viewed offline or embedded in an external page.
+## Description
 
-What I want is a tamper-resistant trust marker baked right into the exported HTML. Basically inject a frozen, read-only object into the page's global JavaScript scope that identifies the page as a trusted export and carries the complete original notebook source code. It's gotta be set up so other scripts on the page can't overwrite it (think frozen/read-only so it can't be clobbered).
+When marimo exports a notebook as a static HTML page (or as a WebAssembly-powered interactive page), the embedded runtime currently has no way to know that the notebook code it is about to run originated from a trusted, server-generated export. This means the runtime cannot automatically grant trust to notebook-authored resources such as virtual data files — users need to manually execute cells before those resources are accepted.
 
-This marker needs to land in both the static HTML export templates and the WebAssembly-powered notebook templates. For the static exports it should show up in the page head, right after the existing block that sets up the static data. For the WebAssembly exports it should appear just before the element that embeds the notebook code. The idea is the interactive runtime reads this context and grants trust to all the notebook resources from the moment the page loads, no manual cell execution needed. Oh and the snapshot files for the static export templates need updating too so they reflect the new output.
+We need to embed a tamper-resistant, frozen trust marker directly in the exported HTML. This marker should identify the page as a genuine server export and carry the complete original notebook source code. The marker must be set up so that it cannot be overwritten by other scripts running on the page.
+
+## Expected Behavior
+
+- Every exported static notebook HTML page includes a JavaScript block that installs a frozen, read-only export context object in the page's global JavaScript scope
+- The export context object marks the page as trusted and carries the full original notebook source code
+- The export context block appears in the page head, after the existing static data block
+- The same export context block is also injected into WebAssembly-powered notebook pages
+- The embedded interactive runtime can read this context to determine trust without requiring manual user cell execution
+
+## Why This Matters
+
+Without this trust marker, exported notebooks viewed offline or embedded in external pages cannot automatically load notebook-authored data files and other virtual resources. The marker allows the runtime to correctly grant trust to all notebook resources from the moment the page loads, making shared and embedded notebooks work reliably out of the box.

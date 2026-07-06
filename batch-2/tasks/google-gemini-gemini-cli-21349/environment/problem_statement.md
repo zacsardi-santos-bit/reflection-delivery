@@ -1,7 +1,15 @@
-I'm adding a third auth method to the CLI and I could use a hand wiring it in. Right now we only support the direct API key flow and Google login, but folks running behind a corporate proxy or a managed gateway have no supported path in, they need to authenticate through an intermediary that hands them its own endpoint URL and custom request headers. So I want a gateway-based auth option alongside the existing two.
+## Description
 
-A few things it needs to do. First, this new gateway method should show up in the list of available authentication options that clients enumerate, and it should advertise its associated protocol metadata so it's discoverable alongside the others. When a user picks the gateway method and supplies a valid base URL as a string plus a set of request headers, we should accept that config and forward those two values through to the underlying auth refresh logic so the connection gets configured properly and auth completes.
+The CLI currently supports only a limited set of authentication methods (direct API key and Google login). There is no way for enterprise or gateway-based deployments to authenticate through an intermediary service that provides its own endpoint URL and custom request headers. This means users operating behind a corporate proxy or a custom gateway cannot use the tool.
 
-Validation matters here too. If the gateway payload is malformed, say someone passes a number instead of a string for the URL, I want us to throw an error whose message makes clear the gateway payload is malformed, so misconfig gets caught early rather than failing weird downstream.
+## Expected Behavior
 
-Oh and the underlying auth refresh function itself needs updating, it should take two new optional params (the gateway URL and the headers) so they can be passed through when the gateway method is selected. Existing auth flows have to keep working exactly as they do now, those two extra params just default to undefined when nobody's doing gateway auth. Basically nothing changes for API key or Google login except the wider signature.
+- A new gateway-based authentication option should appear in the list of available authentication methods.
+- The gateway option should advertise its associated protocol metadata so clients can discover it.
+- When a user selects the gateway authentication method and supplies a valid base URL (string) and request headers, the system should accept the configuration and complete authentication.
+- If the gateway configuration is malformed — for example, if the base URL is not a valid string — the system should reject it with a clear error describing the problem.
+- The underlying authentication refresh logic should be extended to accept the gateway endpoint URL and headers as optional parameters, so gateway-based connections can be properly configured.
+
+## Why This Matters
+
+Teams deploying this tool in environments that route traffic through a managed gateway currently have no supported authentication path. Adding gateway authentication as a first-class option lets these users connect without workarounds, while validation ensures misconfigured payloads are caught early with a helpful error.

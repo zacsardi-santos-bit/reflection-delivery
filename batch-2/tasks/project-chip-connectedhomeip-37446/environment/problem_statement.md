@@ -1,5 +1,14 @@
-I'm hacking on the Matter/CHIP SDK's Java codegen pipeline and hit a portability wall. The generator spits out cluster code that relies on the modern Java cleanup API (the Cleaner-style thing that auto-releases native resources when an object gets GC'd), but that API isn't available on the older Android environments we have to target, so the generated bindings just don't work there and honestly won't even compile/run in those setups. Any project pulling in the CHIP SDK's generated Java bindings is blocked from targeting those older platforms, which is the whole reason I'm doing this.
+## Description
 
-What I want is to swap the template over to the traditional finalizer pattern for native resource cleanup. So the generated base cluster class should override the old-school finalize mechanism: when the GC reclaims the object, it checks whether the native cluster pointer is still valid and, if so, releases the native resource and clears the pointer, so we don't double-free or leak. And the modern cleanup API registration that currently happens in the constructor plus its associated field both need to come out entirely, don't leave any trace of it.
+The Java code generator for the Matter/CHIP SDK currently produces cluster management code that uses a modern Java resource cleanup API to handle native memory deallocation when objects are garbage collected. However, this API is not available or compatible with the older Android environments that the CHIP SDK targets, making the generated code unusable in those environments.
 
-Heads up, there's a generator test that diffs the generator's actual output against golden reference files, so this is a two-part change: I need to update the codegen template itself (so all future generation produces the finalizer pattern) and update the matching golden output file at the same time, otherwise the diff test won't pass. Both have to move together.
+## Expected Behavior
+
+- The code generator's Java output should not rely on the modern Java cleanup API for managing native resource lifecycle.
+- Instead, the generated Java cluster base class should use the traditional object finalization mechanism to trigger native resource cleanup when an object is garbage collected.
+- The finalizer in the generated code must safely release the associated native cluster pointer if it has not already been released.
+- The generator template itself must be updated so that all future code generation also produces the updated pattern.
+
+## Why This Matters
+
+Without this fix, the generated Java files fail to compile or run in older Android environments. Any project using the CHIP SDK's generated Java bindings would be blocked from targeting those environments. Switching to the older, widely supported finalization approach restores broad platform compatibility while still ensuring native resources are cleaned up automatically when cluster objects become unreachable.

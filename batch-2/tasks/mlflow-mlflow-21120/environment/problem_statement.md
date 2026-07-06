@@ -1,5 +1,13 @@
-I'm working on the auth layer for the MLflow server and hit a gap around the AI gateway budget policy endpoints. Right now any authenticated user can hit the create, update, and delete routes for budget policies, which is bad news since these policies control spending limits and financial guardrails for the gateway. I don't want random non-admin users messing with financial controls.
+## Description
 
-What I need is for the write operations on budget policies (creating one, updating an existing one, and deleting one) to be locked down to admin users only. If a non-admin tries any of those three, they should come back with a 403 Forbidden. So wire up the authorization checks in the server that enforce admin-only on those write paths.
+The AI gateway budget policy management endpoints currently lack proper access controls. Any authenticated user can create, update, or delete budget policies, which should be restricted to administrators only. Budget policies control spending limits and financial guardrails for the gateway, so allowing non-admin users to modify them is a security concern.
 
-The read side stays open though, so listing all budget policies and fetching a single policy by its ID should both keep working for any authenticated user, admin or not. That's on purpose, regular users can still view existing policies for transparency, they just can't change them. Also make sure the admin path still lets admins create, update, and delete freely, so the check only blocks non-admins on the writes and leaves reads untouched for everybody.
+## Expected Behavior
+
+- Admin users can create, update, and delete budget policies
+- Non-admin users attempting to create, update, or delete a budget policy should receive a **403 Forbidden** response
+- Non-admin users should be able to **read** budget policies — both listing all policies and retrieving a specific policy by ID should be permitted for any authenticated user
+
+## Why This Matters
+
+Budget policies are financial controls that govern how much spending the gateway allows. Only administrators should have the ability to create or change these policies. Regular authenticated users should still be able to view existing policies (for transparency), but write operations must be admin-only to prevent unauthorized changes to financial limits.

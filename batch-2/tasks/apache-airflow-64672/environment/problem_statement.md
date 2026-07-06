@@ -1,7 +1,14 @@
-I'm hitting a wall with the Google Cloud Composer provider for Airflow, it always talks to the same fixed REST API endpoint paths no matter what version of Airflow is actually running inside the target Composer environment, and that breaks hard once the environment is on Airflow 3 or later because those newer versions expose a different REST API version with different path prefixes. So requests get sent to the wrong endpoint and operations just fail.
+## Description
 
-What I want is for the hooks, operators, sensors, and triggers in the Cloud Composer provider to actually be aware of the Airflow version of the target environment and route calls accordingly. Concretely, when the environment is running Airflow 3 or above I need requests going to the version 2 REST API path prefix, and when it's below 3 keep using the existing version 1 path like today. This version-aware routing has to apply consistently everywhere it matters, so triggering DAG runs, fetching DAG runs, and fetching task instances all need to pick the right API version, and that goes for both the synchronous and the async code paths (the trigger side included), not just one of them.
+The Cloud Composer provider currently uses a single, fixed REST API version when making calls to remote Airflow environments, regardless of which version of Airflow is actually running in that environment. This means that operations that interact with Cloud Composer environments running Airflow 3 or later will issue requests to the wrong API endpoint version, leading to failures.
 
-Oh and there's an old parameter in the DAG run sensor and trigger classes that used to control whether to use the REST API at all. Since the REST API is now always used, that param is obsolete and I want it deprecated, so passing it should raise a deprecation warning rather than silently doing anything, and it should also no longer show up in the trigger's serialized state (the stuff you get back from serialize). Basically don't let it influence behavior anymore, just warn.
+## Expected Behavior
 
-The point of all this is that folks running Composer on Airflow 3 currently can't reliably use these trigger, sensor, and hook classes at all, and fixing the routing makes the provider work against both older and newer Composer environments while deprecating the dead toggle keeps people from getting confused and preps them for its eventual removal.
+- When interacting with a Cloud Composer environment running Airflow 3 or later, the provider should route requests to the version 2 of the REST API.
+- When interacting with environments running Airflow versions below 3, the provider should continue using the version 1 REST API.
+- This version-aware routing should apply consistently across all relevant operations: triggering DAG runs, fetching DAG runs, and fetching task instances — both in synchronous and asynchronous code paths.
+- Additionally, there is currently a parameter in the DAG run sensor and trigger classes that controls whether to use the REST API at all. Since the REST API is now always used, this parameter is obsolete. Passing it should produce a deprecation warning rather than silently influencing behavior, and it should no longer be reflected in the trigger's serialized state.
+
+## Why This Matters
+
+Users running Cloud Composer environments on Airflow 3 cannot reliably use the existing trigger, sensor, and hook classes because all requests are sent to the wrong API version. Fixing the version-aware routing makes the provider compatible with both older and newer Cloud Composer environments. Deprecating the now-unnecessary toggle prevents future confusion and prepares users for its eventual removal.

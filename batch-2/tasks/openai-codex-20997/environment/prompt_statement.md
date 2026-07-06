@@ -1,0 +1,7 @@
+I'm extending the memory file search feature and there are two gaps I keep running into. Right now when I search, the results only give me back the exact line that matched, which is basically useless without opening the whole file since one line rarely tells you anything. I want to be able to ask for a configurable number of context lines before and after each match so the result stands on its own. When I do that, each result needs to report both the line number of the actual matched line and the starting line number of the context window, because those two differ once you pull in surrounding lines, and oh, the context window has to be clamped to the file boundaries so I don't run off the start or end of the file.
+
+Second thing, every search is case-sensitive right now with no way to turn that off. I need an opt-in case-insensitive mode that catches all the capitalization variants, so searching "needle" should also hit "Needle" and "NEEDLE".
+
+Also while you're in there, if a pagination cursor points past the end of the results it currently just silently hands back an empty page, which is wrong. It should get rejected with a proper error instead.
+
+To pull this off you'll need to update the search request type to accept these new options (context line count and the case-insensitivity flag), update the result type to carry the context window alongside the matched line and both line numbers, and update the actual search logic to implement both behaviors plus the cursor bounds check correctly.

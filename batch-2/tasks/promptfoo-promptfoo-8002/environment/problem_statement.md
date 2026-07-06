@@ -1,5 +1,20 @@
-I'm building out our red team testing framework for insurance AI systems and the existing plugins are too narrow, so I need to expand a couple and add a new one. Right now the coverage discrimination plugin only catches a thin slice of bias, and I want it to also detect geographic redlining, credit scores used as a proxy for protected characteristics, discrimination based on occupation or marital status, source-of-income discrimination, and retaliation against policyholders who file legitimate claims. While you're in there update the pass and fail criteria in its evaluation rubric to match those new behaviors, and the regulatory context should reference fair housing and equal credit laws on top of whatever's already cited.
+# Expand Insurance Red Team Plugins to Cover Broader Risk Scenarios
 
-The network misinformation plugin also needs broadening. It's scoped to healthcare provider networks only right now, but auto insurance is full of vendor networks like preferred contractors, body shops, rental car partners, and other vendors, so it should catch when an AI misrepresents whether these vendors are actually preferred partners, and it should warn about risks like voided warranties and unexpected costs from using non-participating repair facilities. Keep all the existing balance billing and healthcare content, just supplement it, don't rip it out.
+## Description
 
-Then I need a brand new plugin for detecting unauthorized disclosure of policyholder data. It should evaluate whether the AI improperly shares sensitive insurance records (claims history, underwriting data, driving records, beneficiary info, that kind of thing) without verifying authorization, with detailed criteria for when a response passes or fails, references to the applicable privacy regulations governing insurance data, and a structured evaluation output. Oh and make sure it gets wired in, register it in the insurance suite's compliance frameworks and add it to the list of domain-specific plugins. This all matters because insurance AI faces regulatory scrutiny across fair lending, privacy, and network adequacy, and gaps here mean bias and privacy violations slip through into penalties, consumer harm, and class action exposure.
+The current insurance-related red team plugins cover a limited set of scenarios that don't fully reflect the breadth of harms an AI system deployed in insurance contexts could cause. Specifically:
+
+- The coverage discrimination plugin does not detect newer or subtler forms of bias such as geographic redlining, using credit scores as a proxy for protected characteristics, or retaliating against policyholders who file legitimate claims.
+- The network provider misinformation plugin is scoped to healthcare networks only, but many insurance products involve vendor networks (auto repair shops, preferred contractors, rental car partners) where misinformation can cause real financial harm.
+- There is no plugin to detect unauthorized disclosure of policyholder data — a significant privacy and regulatory risk, since AI systems may be manipulated into sharing sensitive insurance records, claims history, or personal information without proper authorization.
+
+## Expected Behavior
+
+- The coverage discrimination plugin should detect a wider set of discriminatory behaviors including geographic, credit-based, occupational, and claims-retaliation practices, and reference the full set of applicable laws including fair housing and equal credit laws.
+- The network misinformation plugin should cover auto insurance vendor networks (body shops, preferred contractors, rental car partners) in addition to healthcare provider networks, and flag guidance that could lead to voided warranties or unexpected costs.
+- A new data disclosure plugin should evaluate whether an AI system inappropriately reveals policyholder information, and should reference applicable privacy regulations governing insurance data.
+- The insurance suite should be updated with expanded compliance framework coverage and the new plugin should be included in the list of domain-specific plugins.
+
+## Why This Matters
+
+Insurance AI systems face regulatory scrutiny across multiple dimensions — fair lending, privacy, and network adequacy. Without comprehensive red team coverage, bias and privacy violations can go undetected, leading to regulatory penalties, consumer harm, and class action exposure.

@@ -1,9 +1,27 @@
-I'm deep in the pnpm codebase chasing down three related bugs and could use a hand knocking them all out.
+## Description
 
-First one's kind of nasty. When we update a project's manifest to add dependencies, if a package name happens to collide with a built-in JavaScript object property name (think stuff like the prototype/constructor family of reserved property names), the current code ends up corrupting global JS state instead of just storing the entry. So installing a package with one of these unusual but totally valid names has weird global side effects, which is a real prototype pollution problem. I want the manifest update logic to store any valid dependency name safely as a regular dependency entry, no side effects on the global environment, regardless of the name.
+There are three related correctness issues in the package manager that need to be fixed:
 
-Second, our registry "not found" handling is unhelpful. People often paste a package name with a version number accidentally appended to it (copying from docs and whatnot), and since the whole string isn't a real package, they get a 404. When that happens I want the error to suggest the correct name with the version stripped off. It's gotta work for scoped/namespaced packages too. Only show the suggestion on genuine 404 not-found responses, don't show it for other errors, and skip it when there's no version suffix or when stripping the version would leave an empty name (no meaningful name recovered means no hint). Oh and the current detection has a gnarly perf issue, certain adversarial inputs make it take forever, probably catastrophic regex backtracking, so it needs to run in linear time no matter what you throw at it.
+**1. Prototype pollution when storing specially-named dependencies**
 
-Third, over in the provenance publish path where we check package visibility, we build registry API URLs for scoped package names and only the first separator character (the `/` in the scope) is getting encoded. Subsequent separators are left raw, so the URL comes out malformed. I want all separator characters encoded so the URL is correct for any valid scoped name.
+When a project has dependencies whose names happen to match reserved JavaScript object property names, updating the project manifest silently corrupts global JavaScript state instead of safely recording those packages. This means that installing a package with one of these unusual-but-valid names can have unexpected global side effects. The manifest update logic should store all dependency entries safely, regardless of their name.
 
-That's the set. Correctness plus a security fix plus making that version detection fast.
+**2. Unhelpful error message when a version number is accidentally included in the package name**
+
+A common user mistake is to accidentally include a version number as part of the package name (for example, when copying from documentation). When this happens, the registry returns a "not found" error because the full string including the version isn't a real package name. The package manager should detect this pattern and suggest the correct package name in the error message. This should work for both regular and scoped (namespaced) packages, should only appear on genuine "not found" errors, and should not produce a suggestion when no meaningful name can be recovered. Additionally, the current implementation of this detection has a performance issue — certain inputs can make it take an extremely long time to process.
+
+**3. Incomplete URL encoding for scoped package names in provenance workflows**
+
+When checking package visibility during a provenance-enabled publish, scoped package names (which contain a separator character in their name) are only partially encoded in the registry URL. Only the first separator is encoded, leaving subsequent ones unencoded. All separator characters should be encoded.
+
+## Expected Behavior
+
+- Updating a manifest with a dependency whose name matches a JavaScript built-in property name stores it correctly as a regular dependency entry without modifying global state.
+- When a 404 error occurs and the requested name appears to include an appended version, the error message suggests the name without the version.
+- The suggestion is not shown for non-404 errors, for names with no version suffix, or when stripping the version would leave an empty name.
+- The version-detection logic performs efficiently on any input.
+- All separator characters in scoped package names are encoded when constructing registry API URLs.
+
+## Why This Matters
+
+The prototype pollution issue is a security and correctness concern. The error hint helps users identify and fix a common typing mistake quickly. The URL encoding fix ensures that package visibility checks work correctly for any valid package name.

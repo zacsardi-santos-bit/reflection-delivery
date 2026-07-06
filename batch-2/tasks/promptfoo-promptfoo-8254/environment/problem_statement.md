@@ -1,5 +1,15 @@
-I'm hitting a wall with cost tracking across all the different AI providers we talk to. Right now the provider config only lets me set one unified cost per token, and that single value gets applied to every token type uniformly, but basically every provider out there charges different rates for input tokens versus output tokens (input is usually cheaper than output), so my estimates come out wrong no matter what number I plug in. This makes it really hard to compare providers or stay on budget when cost calculation is off in a provider-specific way.
+## Description
 
-What I want is to be able to set separate input and output per-token costs in the provider configuration for each provider. When I specify both an input cost and an output cost, those should take priority over any unified cost setting. If I only set one of the two, the unified cost should act as a fallback for the direction I didn't specify. And this needs to behave the same way across all the major providers, including the ones with tiered pricing based on context length, the ones doing prompt caching, audio tokens, and the cloud-specific pricing variants like Vertex AI.
+When configuring AI provider costs, there is currently no way to specify separate per-token rates for input tokens versus output tokens. The only option is a single unified cost value that gets applied uniformly to all token types. Since virtually all AI providers charge different rates for input and output tokens, this limitation makes cost estimates inaccurate.
 
-Oh and for providers that support audio tokens, same deal: separate audio input and audio output costs should take priority over a single unified audio cost, with the same fallback behavior when only one of them is set. Just want it consistent everywhere so the numbers actually line up.
+## Expected Behavior
+
+Users should be able to configure distinct per-token costs for inputs and outputs separately in provider configuration. Specifically:
+
+- When both an input cost and an output cost are provided, they should take precedence over any single unified cost setting.
+- When only one of the two is provided alongside a unified cost, the unified cost should serve as a fallback for the unspecified direction.
+- This behavior should be consistent across all supported providers, including those with tiered pricing, prompt caching, audio tokens, and cloud-provider-specific pricing variants.
+
+## Why This Matters
+
+Most production AI providers publish distinct input and output pricing (e.g., input is cheaper than output). Without the ability to set them independently, any cost tracking or budgeting that relies on the tool's cost calculation will overcharge or undercharge in a provider-specific way, making it harder to accurately compare costs across providers or stay within budget.

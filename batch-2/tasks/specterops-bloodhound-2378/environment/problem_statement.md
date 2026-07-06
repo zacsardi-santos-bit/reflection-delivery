@@ -1,7 +1,17 @@
-I'm building out the extension management UI and right now it only lets people view active graph extensions, there's no way to actually remove one. I need to add delete controls to each row in the extensions table so admins can clean up custom extensions they don't need anymore, while keeping built-in ones protected from accidental removal.
+## Description
 
-Here's the behavior I want. Every extension row gets a delete control. For built-in extensions the control should be visually disabled and non-interactive since those can't be removed, and for custom extensions it should be active and clickable. To make that distinction work the extension data model needs a field indicating whether an extension is built-in, that flag is what drives whether the delete control is enabled or disabled.
+The extension management interface lets administrators view active graph extensions, but there is no way to remove them. Administrators need the ability to delete custom extensions that are no longer needed, while built-in extensions should remain protected from accidental removal.
 
-When someone clicks delete on a custom extension I want a confirmation dialog to pop up that warns them the action is permanent and irreversible, and it should make them type the extension's exact name before the deletion can go through (this is the guard against accidental data loss). If they cancel, the dialog just closes without doing anything, oh and if they reopen it the confirmation input should be cleared, no leftover text.
+## Expected Behavior
 
-Once they confirm, delete the extension by hitting the appropriate backend endpoint. On success show a notification confirming it was deleted and also refresh the extension list automatically so the row disappears. On failure show an error notification telling them to try again.
+- Each extension in the management interface should have a delete control.
+- The delete control for built-in extensions should be visually disabled and non-interactive, since built-in extensions cannot be removed.
+- Custom extensions should have an active delete control that, when clicked, opens a confirmation dialog.
+- The confirmation dialog should warn the user that the action is permanent and irreversible, and require the user to confirm by typing the extension's exact name before the deletion can proceed.
+- After confirming, the extension should be deleted via the backend API.
+- The user should receive a success notification when the deletion completes, or an error notification if the deletion fails.
+- Canceling the dialog should dismiss it without performing any deletion, and if the dialog is reopened, the confirmation input should be cleared.
+
+## Why This Matters
+
+Without this capability, administrators have no self-service way to clean up unwanted custom extensions from the management interface. The name-confirmation requirement ensures that permanent deletions are intentional, reducing the risk of accidental data loss.

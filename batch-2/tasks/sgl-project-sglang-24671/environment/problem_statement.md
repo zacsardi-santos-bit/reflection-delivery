@@ -1,3 +1,14 @@
-I'm chasing down a nasty file descriptor leak in our NIXL-backed cache storage layer, the thing we use for a high-priority cache system, and it's turning into a real problem for long-running services. Every cache read and write opens file handles to get at the storage files but nothing ever closes them, so after enough get and set operations the process just runs out of available file descriptors and all further I/O starts failing. I need the handles opened during cache transfers released once each operation finishes, and that has to happen even when something blows up partway through, so wrap it up in whatever cleanup guarantees you need. The bar I'm using is simple: the count of open file descriptors should stay constant across repeated cache get and set cycles rather than creeping up.
+## Description
 
-While you're in there, I also want to tidy up the storage config and init API. The configuration object should carry all the parallelism dimensions we actually care about (tensor parallelism, pipeline parallelism, and attention checkpoint parallelism) plus an optional plugin config dictionary. Plugin selection should come from that config too, so the cache object's constructor shouldn't take a plugin name as a separate argument anymore, it just reads it off the configuration. And the file registration method should accept plain file paths directly instead of making callers convert them into some intermediate form first. Basically without the cleanup fix this backend is unusable for production, so that's the priority, but folding in the config changes at the same time makes sense.
+The NIXL-backed cache storage layer has a file descriptor leak. Every time a cache read or write operation is performed, the underlying implementation opens file handles to access storage files but never closes them afterward. Over time, these handles accumulate and can exhaust the system's file descriptor limit, causing subsequent operations to fail.
+
+## Expected Behavior
+
+- File handles opened during cache read and write operations must be properly closed after each operation completes, regardless of whether the operation succeeded or failed.
+- The cache storage configuration object should capture all relevant parallelism dimensions (tensor parallelism, pipeline parallelism, attention checkpoint parallelism) as well as optional plugin configuration.
+- Plugin selection and configuration should be expressed through the configuration object rather than as a separate constructor argument.
+- Registering files with the cache backend should work by supplying file paths directly, without requiring a caller to perform any intermediate conversion.
+
+## Why This Matters
+
+Without proper cleanup, long-running services that perform many cache operations will accumulate open file handles until the OS limit is hit, at which point all further I/O fails. This makes the NIXL storage backend unusable for production workloads.

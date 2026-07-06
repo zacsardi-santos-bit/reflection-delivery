@@ -1,5 +1,16 @@
-I'm hitting a really confusing error in pandas when I try to read with memory-mapped mode turned on but I'm passing an in-memory buffer instead of a file on disk. Instead of something readable I get this cryptic low-level OS error complaining about a missing file descriptor, which tells me nothing about what actually went wrong or how to fix it. The buffer doesn't have a real fd backing it so the mmap machinery blows up deep in the operating system layer and that exception just bubbles straight up to me.
+## Description
 
-What I want is for the I/O handling (this lives around `@pandas/io/common.py`) to notice this situation and raise a plain descriptive `ValueError` instead, one that clearly says memory mapping is only supported when reading from a real file path and not from an in-memory buffer. So when someone requests memory-map mode with a buffer object, they should get that actionable message right away rather than the obscure internal fd error.
+When trying to read data into pandas using memory-mapped mode with an in-memory buffer object, users receive a cryptic, low-level error about a missing file descriptor. This error originates deep in the operating system and provides no helpful context about why the operation failed or what the user should do instead.
 
-The key bits: it needs to be a standard value error, not the OS-level exception, and the message should communicate the actual constraint so people can correct their code without digging through source. Basically catch the buffer-plus-memory-map combo early and fail loud with something useful.
+## Expected Behavior
+
+- When memory-mapped reading is requested with an in-memory buffer, pandas should raise a clear, descriptive error that tells the user memory mapping is only supported when reading from a real file path.
+- The error type should be a standard value error, not an obscure internal exception from the operating system layer.
+
+## Current Behavior
+
+- A low-level internal error about a missing file descriptor is surfaced directly to the user with no explanation of the actual constraint.
+
+## Why This Matters
+
+Users who pass in-memory buffers while also requesting memory-mapped reading have no way to understand from the current error what went wrong or how to fix it. A clear, actionable error message immediately communicates the limitation — memory mapping requires an actual file on disk — and helps users correct their code without having to dig through documentation or source code.

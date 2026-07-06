@@ -1,5 +1,18 @@
-I've got a table with a text index where the tokenizer stores each row's whole column value as one atomic token in the dictionary instead of splitting it into individual words. When I run wildcard substring queries against it, both LIKE (case-sensitive) and ILIKE (case-insensitive) variants, I noticed the optional dictionary-scan optimization that you turn on with a query setting does nothing here. The query still reads every data part and granule instead of consulting the index dictionary to skip blocks that can't possibly match. Turns out that optimization currently just ignores this whole-value tokenizer mode, so anyone relying on it for substring matching gets no pruning even though the dictionary already has everything needed to prune irrelevant data.
+## Description
 
-What I want is for the optimization, when enabled, to also cover the whole-value tokenizer. So it examines its dictionary, figures out which tokens actually contain the search pattern, and skips any data blocks whose tokens don't. Concretely, if I search for a pattern that lives in only one part out of four, the query should read just that one part and skip the rest, and if I search for something that appears in no token at all, it should skip everything (zero parts and granules scanned). This needs to hold for both case-sensitive and case-insensitive queries, including when I give the pattern in a different case than the stored values.
+ClickHouse supports text indexes with different tokenizer modes. One of these modes stores each column value as a single whole token in the index dictionary, rather than splitting values into word-level sub-tokens. There is also an existing optimization that, when explicitly enabled via a query setting, scans the index dictionary to find which tokens match a wildcard substring pattern and uses that information to skip data blocks that cannot contain matching rows.
 
-Big constraint: toggling the setting on and off must not change the returned rows at all. The result set stays identical, only the count of data blocks read should differ. Can you extend it to handle this tokenizer config?
+However, this optimization currently ignores the whole-value tokenizer mode. When a text index is created with that tokenizer mode, enabling the optimization has no effect: queries still perform a full data scan instead of using the index to skip irrelevant parts and granules.
+
+## Expected Behavior
+
+- When the LIKE/ILIKE dictionary scan optimization is enabled, it should also apply to text indexes that use the whole-value tokenizer mode.
+- For LIKE queries (case-sensitive), the index should skip all data blocks that cannot contain the pattern.
+- For ILIKE queries (case-insensitive), the same skipping behavior should apply, including for patterns given in a different case than the stored values.
+- Enabling the optimization must not change query results — it must only affect which data blocks are read.
+- A pattern that cannot match any token in the dictionary should cause the query to skip all data blocks entirely (zero parts and granules scanned).
+- A pattern matching only some tokens should scan only the relevant data blocks.
+
+## Why This Matters
+
+Users who rely on the whole-value tokenizer for substring matching currently cannot benefit from the index optimization even though the dictionary contains all the information needed to prune irrelevant data. Extending the optimization to cover this tokenizer makes wildcard queries on such columns significantly more efficient without requiring any schema changes.

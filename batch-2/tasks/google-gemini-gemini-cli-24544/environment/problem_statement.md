@@ -1,7 +1,19 @@
-I'm building a skill inbox for our CLI's memory manager and need the whole thing wired up. The memory manager auto-extracts reusable skills from past conversations during background processing and dumps them into a temporary staging directory, but there's no way for users to review or act on them right now, so they just silently appear. I want an inbox that holds these pending skills until the user approves them.
+## Description
 
-On the backend I need functions to list what's waiting in the inbox, and each entry should carry the skill's name, description, and when it was extracted. I also need to move a skill into either the global skills directory or the project-local one, plus a way to dismiss (permanently discard) a skill the user doesn't want. When moving, validate the skill name against path traversal attacks and check for a name conflict in the destination, and if something with that name already exists don't overwrite it, just reject with a clear message. Both move and dismiss should hand back a result object saying whether it succeeded plus a message explaining the outcome, and I care about the exact wording for each case (success, conflict, traversal, untrusted, etc).
+The memory manager can automatically extract reusable skills from past conversations during background processing. However, there is currently no way for users to review these auto-extracted skills before they become active — skills extracted by the memory manager are placed in a temporary location with no workflow for the user to accept, install, or discard them. Users have no visibility into what was extracted or control over where skills end up.
 
-For the UI I want an interactive dialog that loads the inbox and lets the user browse and act on each pending skill. If the current workspace isn't trusted, still show the project-level destination but mark it unavailable with an explanation. And if a move fails, or the skill reload after a successful move fails, surface that inline in the dialog instead of crashing it.
+## Expected Behavior
 
-Also when the background memory service finishes extracting new skills, emit a notification telling the user new skills are waiting in the inbox and pointing them at the slash command where they can review them. Speaking of which, the memory slash command needs an inbox subcommand: when the experimental memory manager feature is off, return an informational message telling them how to turn it on; when the config hasn't loaded yet, return an error saying that; and when everything's ready, open the inbox dialog.
+- A new "inbox" concept should hold auto-extracted skills in a staging area until the user reviews them.
+- Users should be able to list the skills waiting in the inbox, including each skill's name, description, and when it was extracted.
+- Users should be able to install an inbox skill to either their global skills directory or their project-local skills directory.
+- Users should be able to dismiss (permanently discard) an inbox skill they don't want.
+- When the current workspace has not been marked as trusted, installing a skill to the project should be blocked and explained to the user.
+- If a skill with the same name already exists in the destination, the move should be rejected with a clear message rather than overwriting.
+- When new skills are extracted during background processing, the tool should notify the user that items are waiting for review and direct them to the inbox.
+- A slash command should expose the inbox as an interactive dialog, with appropriate error messages if the experimental memory manager feature is not enabled or if the configuration has not yet loaded.
+- Error conditions (failed installs, failed reloads after a successful install) should be reported inline in the dialog.
+
+## Why This Matters
+
+Without this feature, auto-extracted skills silently appear in the system with no user review step. Users need a way to curate what skills are actually installed, choose the right scope (global vs. project), and be notified when new skills are ready for their attention.

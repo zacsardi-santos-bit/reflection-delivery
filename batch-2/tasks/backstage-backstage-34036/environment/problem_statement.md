@@ -1,7 +1,15 @@
-I'm hitting a nasty issue with the GitHub repository publishing scaffolder action in our Backstage plugin. Users in corporate environments keep reporting failures when the action tries to push the initial repository content, and it turns out their network proxies are doing deep packet inspection and blocking the binary payload the git protocol crams into HTTP POST requests, so the push dies with a connection reset or connection refused error and the whole scaffolding workflow blows up with nothing useful for the user.
+## Description
 
-What I want is a fallback. When that initial git push fails specifically because of a connection-level error, checking both the error's own code and the cause's code for connection reset or refused, the action should automatically retry by uploading the files through GitHub's GraphQL API instead, since that's plain JSON requests proxies don't block. Errors that aren't connection-level, like auth failures, need to just get rethrown as-is without touching the fallback at all.
+The GitHub repository publishing action fails with a cryptic connection error in corporate environments where network proxies perform deep packet inspection. The git protocol used to push repository content sends binary data in HTTP POST requests, which many enterprise proxies reject or drop, causing the push to fail with connection reset or connection refused errors. When this happens, the entire scaffolding workflow fails and users get no useful guidance.
 
-The fallback's got some edge cases. Before committing through the API it needs to grab the current HEAD reference of the target branch. If the repo was just created and is empty, the API throws a 404 or 409 getting the branch ref, and in that case it should create a placeholder file to initialize the repo first, get the resulting commit identifier, then delete that placeholder as part of the actual commit. If the branch just isn't found on an existing non-empty repo, throw a clear error describing that. If the repo itself doesn't exist, propagate that error too.
+## Expected Behavior
 
-For collecting files it should recursively walk the workspace directory, skip the git directory, skip symlinks, and skip any entries that aren't regular files or directories, and files in nested subdirectories need to come through with their correct relative paths. Oh and there should be a retry: if the API rejects the commit because the expected HEAD identifier no longer matches (concurrent change), it fetches the latest ref and tries the commit once more. On success, set the output commit hash the same way the normal push path does.
+- When the initial git push fails due to a connection-level error (connection reset or refused), the action should automatically detect this and fall back to an alternative upload mechanism that uses standard JSON-based requests instead of binary git protocol data.
+- The fallback should also handle the case where the repository was just created and is still empty, initializing it properly before uploading files.
+- If the branch being targeted is not found on a non-empty repository, the action should report a clear error describing the situation.
+- If the git push fails for a reason unrelated to connectivity (such as an authentication error), the original error should still be propagated — the fallback should only activate for connection-level failures.
+- After a successful fallback push, the action should report the resulting commit identifier as output in the same way the normal path does.
+
+## Why This Matters
+
+Organizations with strict network proxy policies that block binary payloads cannot currently use the scaffolding workflow to create repositories without manual intervention. This fallback would allow template scaffolding to work reliably in those environments without any configuration changes required.

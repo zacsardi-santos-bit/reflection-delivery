@@ -1,7 +1,19 @@
-I'm putting together a supply-chain check for our CI that looks at PRs bumping or adding Python deps, since right now nothing verifies whether a new package was actually built and published through a trusted, verifiable pipeline, and automated dep updates are a classic attack vector so I'd rather catch sketchy bumps before merge instead of eyeballing every one by hand.
+## Description
 
-I want a new script module that reads a unified diff file and figures out which packages were added or had versions changed, but only in files matching our tracked requirement file pattern (ignore docs, project config, anything else). Normalize the package names so naming variations don't cause missed matches, then for each changed package hit the public package index and check whether a provenance attestation exists for that specific release from a recognized automated publisher. Each package ends up with a status: pass, warning, fail, or "needs agent review" for the cases where automated verification isn't enough and a human or AI agent should look closer.
+When pull requests bump or add Python package dependencies in this project, there is currently no automated way to verify the supply-chain security of those packages. Specifically, we lack tooling to check whether a newly-added or updated package was built and published through a trusted, verifiable automated pipeline, and to flag packages that require further human or agent review.
 
-Edge cases matter here: a package that doesn't exist at the specific version should fall back to general metadata but get marked as not found; network and server errors should be treated as missing, not crash; validate package URLs coming back from the index to block domain lookalikes and injection of dangerous characters; and try multiple attestation endpoints if the first returns nothing.
+We need a new script that can be invoked as part of CI to analyze PR diffs, identify which packages changed in tracked requirement files, look up each package on the public package index, and verify whether a provenance attestation exists for the published release. The script should produce a structured report and a formatted comment summarizing the security status of each package change.
 
-Also generate a formatted comment summarizing results, collapsed when everything passes, expanded with fill-in placeholders when agent review is needed. And give me a CLI entry point that takes a PR number, a path to a diff file, and an output path, writes the full results as a JSON artifact, prints a summary line to stderr, and exits with an error code if the diff file doesn't exist.
+## Expected Behavior
+
+- The tool parses a unified diff and detects package version changes only in files that match the tracked requirement file pattern; changes in other file types (documentation, project configuration, etc.) are ignored.
+- Package names are normalized before lookup so that naming variations do not cause missed matches.
+- For each changed package, the tool checks whether the published release has a trusted provenance attestation from a recognized automated publisher.
+- Results are categorized as passed, warning, failed, or needing further review depending on what was found.
+- A formatted summary is generated that can be posted as a pull request comment; it collapses details when everything passes, and expands with placeholders for an AI agent when human-level review is needed.
+- The tool can be invoked from the command line, reads a diff file and a PR number, and writes a JSON artifact with the full results.
+- If the diff file path provided does not exist, the tool exits with an error.
+
+## Why This Matters
+
+Automated dependency updates are a common attack vector for supply-chain compromises. By automatically checking whether package releases are backed by verifiable, trusted publishing pipelines, we can catch suspicious or unverified dependency bumps before they are merged — without requiring a human to manually inspect every update.

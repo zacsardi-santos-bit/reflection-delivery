@@ -1,5 +1,18 @@
-I'm hitting a nasty time travel bug in my graph workflow, the one with human-in-the-loop interrupts. When I jump back to a past checkpoint and re-run from there, the graph doesn't seem to know it's on a fresh execution path. So if I then resume with a new answer at an interrupt, it grabs the wrong state and gives me bad results, basically it acts like I never replayed at all and just keeps chugging along the old branch. Really frustrating for any "redo from here" or "try a different answer" flow.
+## Description
 
-It's even worse with subgraphs that have their own checkpointers. If I time-travel into a subgraph-level interrupt checkpoint and resume with a new answer, the parent graph doesn't correctly tie the resume to the replayed state, so it finds the wrong checkpoint for the subgraph and behaves as if the old answer's still in effect. Feels like no clear divergence point ever gets written into the checkpoint history when I replay, so later resumes can't figure out where to start.
+When a user travels back to a past execution point (time travel / replay) in a graph that uses human-in-the-loop interrupts, resuming with new inputs after the replay does not work correctly. Instead of building a new execution branch from the point of divergence, the graph resumes on the old branch — picking up stale state rather than the fresh state established by the replay.
 
-What I want is this: when I replay from a past checkpoint and re-invoke the graph, a branching marker should automatically show up in the checkpoint history marking exactly where the new run diverged from the old one. That marker's gotta be the newest entry in the history, and it should link back to the original divergence point (correct lineage). The original branch's checkpoints need to stay untouched, preserved exactly as they were. Then resuming after the branch point should run along the new branch, not the old one. Oh and the same thing has to work whether the replay point is in the parent graph or sitting inside a subgraph's checkpoint, the marker still needs to land in the parent's history with the right lineage. Also, if I replay the same checkpoint multiple times to re-fire the same interrupt question, I should get consistent interrupt values and state values across each replay, even though every replay spins up its own independent branch. Right now this whole thing's unreliable and it's making multi-turn human-in-the-loop workflows fundamentally broken for exploring alternate paths.
+This is particularly broken in graphs that contain subgraphs with their own checkpointers. When you time-travel to a subgraph checkpoint where an interrupt fired and then resume with a new answer, the graph may find the wrong checkpoint for the subgraph's state, causing it to behave as if the old answer was still in effect.
+
+## Expected Behavior
+
+- Traveling back to a past checkpoint and re-invoking the graph should automatically create a branching marker in the checkpoint history, so that the new execution clearly diverges from the old one.
+- The branching marker must be recorded as the newest entry in the history and must link back to the original divergence point.
+- The original execution branch's checkpoints must be preserved unchanged.
+- Resuming after the branch point must execute along the new branch, not the old one.
+- When time-traveling into a subgraph's interrupt checkpoint, the branch marker must appear in the parent graph's history with the correct lineage.
+- Replaying the same checkpoint multiple times (for example, to re-fire the same interrupt question) must yield consistent interrupt values and state values across replays.
+
+## Why This Matters
+
+Without this fix, any workflow that uses "redo from this point" or "try a different answer" via time travel is unreliable. Resuming after a time-travel can silently pull the wrong prior state, leading to incorrect graph outputs. This makes time travel and multi-turn human-in-the-loop workflows fundamentally broken for users who need to explore alternate execution paths.

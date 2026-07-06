@@ -1,7 +1,16 @@
-I'm hacking on the dynamic-to-static graph converter in PaddlePaddle and hitting a wall with if conditions that mix tensor checks and plain Python comparisons through logical operators. Simple tensor-based conditionals convert fine, but the moment someone writes something like `if some_tensor > 0 and python_flag:` the converter either blows up or emits wrong static graph code, and honestly a lot of real dynamic-graph models use compound conditions like that, so without this they just can't be exported to static graph for deployment.
+## Description
 
-What I want is to refactor the logic that decides whether a conditional expression needs static graph control flow into a visitor-based design. That visitor should do two things: detect whether a condition is tensor-driven control flow, and expose a transform step that rewrites compound conditions (logical operators mixing tensor subexpressions with Python ones) into equivalent sequences of static-graph logical assignment operations. The behavior needs to split three ways. When the condition is purely Python-level (arithmetic, None checks, that kind of thing), it should report that no control flow is needed and do no transformation at all. When it's a simple tensor comparison with no logical operators, it should report that control flow is needed but still not rewrite anything. And when it's a compound condition combining tensor ops and Python values via and/or, it should report control flow is needed and produce a series of assignment nodes representing the decomposed logic.
+The dynamic-to-static graph conversion tool does not correctly handle conditional expressions that combine tensor-based checks with regular Python comparisons through logical operators. When a condition mixes tensor operations and plain Python values using "and" or "or", the converter either fails or produces incorrect static graph code.
 
-I also need a separate lower-level visitor that, given an externally provided map of variable types, can tell whether a given variable in an expression is a Paddle tensor and just report True or False. That's handy when static analysis already knows the types. Oh and the existing helper that collects variable name identifiers from AST nodes has to keep working, don't break that.
+## Expected Behavior
 
-Last thing: there are a few example dynamic-graph functions demoing if conditions with mixed and/or logic scattered around, please move those into a shared helper module so the tests can reuse them.
+- A visitor-based interface should be introduced to determine whether a given conditional expression requires static graph control flow. This interface should also expose a transformation step that rewrites compound conditions (with logical operators mixing tensor and Python subexpressions) into equivalent sequences of static graph logical operations.
+- For simple conditions that are purely Python-level (arithmetic, None checks, etc.), the visitor must report no control flow is needed and perform no transformation.
+- For simple tensor comparisons without logical operators, the visitor must report control flow is needed but apply no transformation.
+- For compound conditions with logical operators that mix tensor operations and Python values, the visitor must report control flow is needed and produce a sequence of assignment nodes that represent the transformed logic.
+- A separate, lower-level visitor must support checking whether a variable in an expression is a Paddle tensor based on an externally provided type map, and report True or False accordingly.
+- The existing helper for collecting variable name identifiers from AST nodes must remain available.
+
+## Why This Matters
+
+Developers writing dynamic-graph models often use compound conditional expressions. Without this fix, any such model that mixes tensor checks with Python conditions cannot be converted to a static graph for deployment. This change enables those patterns to be handled correctly, broadening the range of dynamic models that can be exported to optimized static graph form.

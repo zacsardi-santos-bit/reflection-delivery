@@ -1,7 +1,18 @@
-I'm adding router-aware interactivity tracking to our Expo observability package and could use your help wiring it up. Right now when a screen gets marked interactive there's no notion of which route the user is actually on, so all the performance data just gets aggregated globally and we can't break it down per screen, which makes it impossible to tell which screens are slow. I want to connect navigation state into the tracking layer so we get per-route analysis.
+## Description
 
-So here's what I need. The hook that tracks screen interactivity should automatically pull the current route's path name and attach it to the event when it reports, as long as the router's installed. If the current screen isn't in focus though, the mark-interactive function should be a total no-op and record nothing. The hook needs to always call the router integration on every render, and fall back to the default interactivity tracking behavior whenever that integration isn't available or returns nothing (or is disabled). Oh and the object the hook returns should expose only the interactivity-marking function as its single key, nothing else.
+The observability package needs to be aware of the current navigation route when tracking screen interactivity. Right now, when a screen is marked as interactive, there is no route information attached — so performance data cannot be broken down per screen. We need the tracking system to automatically include the current route's path when recording an interactivity event.
 
-Also the module's configuration method needs a clean way to opt out. When someone passes an option to disable the router integration, we should skip setting up the router integration entirely, and strip that option out before forwarding the rest of the config down to the underlying native layer so it doesn't leak through. And if the router isn't installed at all, we should just skip the router integration setup automatically too, no error.
+Additionally, the module's configuration layer needs a clean way to opt out of the router integration. Currently there is no mechanism to disable the router-aware behavior without removing the integration entirely. An explicit configuration flag should allow the router integration to be skipped when desired.
 
-Basically: route path gets included on mark-interactive when router's there and not disabled, focus gating no-ops when off-screen, config flag disables cleanly without polluting native config, missing router skips setup gracefully, and the hook always falls back to default tracking when the integration gives nothing back.
+## Expected Behavior
+
+- When the app's router is available and the integration is not explicitly disabled, calling the "mark interactive" function should automatically include the current route's path name as part of the event data.
+- When the current screen is not in focus, the "mark interactive" function should be a no-op and should not record anything.
+- When a configuration option to disable the router integration is provided, the router integration should not be initialized, and the option should not be forwarded to the underlying native configuration layer.
+- When the router is not installed, the system should skip router integration setup automatically.
+- The top-level hook should fall back to the default interactivity tracking when the router integration is unavailable or disabled.
+- The hook should return an object exposing only the interactivity-marking function as its sole property.
+
+## Why This Matters
+
+Without route-aware interactivity tracking, all screen performance data is aggregated globally, making it impossible to identify which specific screens are slow. Connecting navigation state to the tracking layer unlocks per-route performance analysis.

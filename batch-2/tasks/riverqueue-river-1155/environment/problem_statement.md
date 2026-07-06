@@ -1,5 +1,14 @@
-I'm trying to run River behind a connection pooler (PgBouncer in transaction pooling mode) and it's blowing up. That mode forces a simple query protocol that has no support for extended binary encoding of parameters or type OIDs, so when my workers process jobs the JSON args get sent as raw byte slices with no type context and Postgres interprets them as binary instead of JSON text. I keep hitting invalid syntax errors that stop jobs from being enqueued or processed at all.
+## Description
 
-The pgx-based driver just doesn't adapt how it encodes query params based on the active query execution mode. What I want is for it to detect when the connection is running in a text-based or simple protocol mode and automatically convert JSON byte arguments into something Postgres will accept as JSON text. At the same time args that are explicitly meant to be binary (because the SQL casts them that way) have to stay untouched, don't rewrite those. And connections using the normal prepared-statement mode should behave exactly like today, no change in the default path.
+River's PostgreSQL driver fails when the database connection is configured to use a query protocol that doesn't support extended binary encoding for parameters — the kind required by connection poolers running in transaction pooling mode. In these modes, the driver sends byte-slice arguments without any type context, causing PostgreSQL to interpret JSON job arguments as binary data rather than JSON. This results in invalid syntax errors that prevent jobs from being enqueued or processed at all.
 
-There's a related snag too. Sometimes the driver can't directly inspect the connection's config, like when the underlying connection isn't reachable (test transactions that don't expose a live conn are the obvious case), and right now that path panics. It should fall back safely to the standard prepared-statement behavior instead of crashing. The shared transaction wrapper in the test infrastructure currently panics when it gets probed for connection details, which is exactly what blocks this capability detection from working, so that needs to return gracefully so mode detection can degrade to the default. Net goal, someone configures their pool for transaction pooling and River just works transparently.
+## Expected Behavior
+
+- When the driver detects that the underlying connection uses a text-based or simple query execution mode, it should automatically convert JSON byte arguments to a type that PostgreSQL can accept as JSON text.
+- Arguments that are explicitly intended as binary data (via an appropriate SQL cast) must not be affected.
+- Connections using the standard prepared-statement execution mode should continue working exactly as before — no behavioral change in the default case.
+- The driver should handle the case where a connection's mode information is unavailable (e.g., in test transactions that don't expose a live connection), falling back to the standard prepared-statement behavior.
+
+## Why This Matters
+
+Many production deployments run behind connection poolers like PgBouncer configured in transaction pooling mode. This mode requires a simple query protocol that has no support for type OIDs. Without this fix, River cannot be used in those environments at all. Users should be able to configure their connection pool for transaction pooling mode and have River work transparently.

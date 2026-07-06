@@ -1,7 +1,23 @@
-I'm building out the attack paths feature on our cloud security platform, the one that keeps graph data in a graph database, and right now users can only run our predefined queries against a scan. There's no escape hatch for ad-hoc exploration and no way to even discover the schema, so folks can't write meaningful custom queries. I want two new endpoints on the attack paths scan resource.
+## Description
 
-First one takes a read-only graph query from the user, runs it against the graph db for that scan (filtered to the scan's provider), and returns the matching nodes and relationships. Cap the node list at a configurable max, drop any orphan relationships from the truncated result, and include a truncation flag plus the total node count from before truncation. If it's a write query, reject it with a 403. If the graph data for the scan isn't ready yet, return a 400 saying the data is not available. An empty result (no nodes at all) should come back as a 404.
+The attack paths feature currently only supports executing predefined queries against graph data. Users have no way to run ad-hoc graph queries to explore relationships or data structures that aren't covered by the built-in query set. Additionally, there is no way to discover metadata about the underlying graph schema — specifically the cloud provider version and links to the official schema documentation — which makes it difficult to write meaningful custom queries.
 
-Second endpoint is a plain read-only one that returns the cloud provider name, the version of the graph data library we're using, and links to the schema docs, both a normal browsable GitHub URL and a raw file URL. If there's no schema metadata for that scan's provider, 404 with a message about missing schema metadata. Same 400 if graph data isn't ready.
+Two new capabilities are needed:
 
-Oh and while you're in there, rename a few existing helpers for consistency, the payload normalization helper for predefined queries, the param prep helper, and the query execution helper all need shorter, more general names. Their result format needs updating too so it carries the total node count and the truncation flag, and the existing predefined-query result objects should get those same two fields.
+1. **Custom query endpoint** — a new endpoint that accepts an arbitrary read-only graph query, executes it against the provider's graph database, and returns the matching nodes and relationships. The results should be filtered to the scan's provider and automatically truncated to a configurable maximum number of nodes. Write queries must be rejected with a permission error. If the graph data for the scan is not yet ready, the endpoint should return an appropriate error.
+
+2. **Graph schema metadata endpoint** — a new read-only endpoint that returns the cloud provider, graph library version in use, and URL links to the schema documentation (both a browsable GitHub URL and a raw file URL). If no schema metadata is available for the provider, the endpoint should indicate that with a not-found response.
+
+## Expected Behavior
+
+- Submitting a read-only graph query against a ready scan returns a graph result including a node list, relationship list, total node count, and a flag indicating whether the result was truncated.
+- Submitting a write query is rejected with a 403 response.
+- Querying when graph data is not yet available returns a 400 response indicating data is not available.
+- An empty result set (no nodes) returns a 404 response.
+- The schema endpoint returns provider name, version, and two documentation URLs when metadata is available.
+- The schema endpoint returns 404 with a message about missing schema metadata when no schema metadata record exists.
+- Existing graph query result objects must also include total node count and truncation flag fields.
+
+## Why This Matters
+
+Without custom query support, users are limited to a fixed set of predefined queries and cannot explore the graph freely. Without schema discovery, users cannot easily understand the data model, making it hard to write effective queries.

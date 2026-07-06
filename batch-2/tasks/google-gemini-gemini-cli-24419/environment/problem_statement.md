@@ -1,7 +1,23 @@
-I'm trying to get browser automation to behave when the CLI runs inside a sandbox, because right now it just blows up with cryptic errors and no path forward. Two scenarios I need handled.
+## Browser Agent Fails in Sandboxed Environments
 
-First, the macOS filesystem sandbox. The browser tries to use a persistent profile, and the sandbox policy restricts access to those profile directories so it hits filesystem permission errors and dies. What I want instead is for it to auto-switch to an isolated, headless mode that works within the sandbox restrictions, no config from the user at all, and print an informational message explaining that isolated mode is being used for sandbox compatibility. Important caveat: if the user's already got existing session mode configured, leave it alone, don't override it.
+### Description
 
-Second, Docker/Podman containers. Chrome isn't installed in the container, so any launch attempt fails immediately even when the browser agent's enabled in settings. So it should be disabled by default there with a clear message saying why and how to turn it back on (by connecting to a Chrome instance running on the host). But if the user explicitly sets existing session mode inside a container, allow it, and in that case resolve the host machine's address and connect to Chrome on the host at port 9222 instead of doing local browser discovery, with an info message showing the address it's connecting through.
+When running the CLI inside a sandboxed environment — either the macOS filesystem sandbox or a Docker/Podman container — the browser automation feature fails in ways that are confusing and hard to debug.
 
-Oh and outside any sandbox, everything should work exactly like before, totally unchanged. The sandbox detection and these overrides live wherever the browser agent gets configured/started, so tuck the logic in there.
+In the macOS sandbox, using a persistent browser profile triggers filesystem permission errors because the sandbox policy restricts access to profile directories. The browser agent simply errors out without a clear explanation.
+
+In Docker or Podman containers, Chrome is not installed inside the container, so any attempt to start the browser fails immediately. Even when the user enables the browser agent in their settings, it tries to launch Chrome and fails with no useful guidance.
+
+### Expected Behavior
+
+- When running under the macOS filesystem sandbox, the browser feature should automatically switch to an isolated, headless mode that works within sandbox restrictions — no user configuration required. An informative message should be shown explaining that isolated mode is being used for sandbox compatibility.
+
+- When running inside a container sandbox, the browser agent should be disabled by default, and the user should receive a clear informational message explaining why and how to re-enable it by connecting to a Chrome instance running on the host machine.
+
+- When the user configures existing session mode inside a container sandbox, the browser feature should automatically resolve the host machine's address and connect to Chrome on the host at port 9222, with an informational message showing the address being used.
+
+- Outside any sandbox, existing browser behavior should be completely unchanged.
+
+### Why This Matters
+
+Users running the CLI in sandboxed or containerized environments get cryptic errors with no path forward. This change makes the browser feature work correctly across all supported sandbox types with sensible defaults and clear feedback.

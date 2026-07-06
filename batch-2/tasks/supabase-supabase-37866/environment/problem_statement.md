@@ -1,5 +1,18 @@
-I'm working on the charting components in the Supabase Studio dashboard and I want to add a way to synchronize hover interactions across multiple charts at once. Right now each chart manages its own hover state independently, so when I move my cursor over a data point on one chart the others don't react at all, and there's no shared highlighting or tooltip display, plus no way to remember my preference between page loads. Users comparing multiple time-series charts really benefit from seeing the same time point highlighted everywhere at once, otherwise cross-chart comparison is tedious.
+## Description
 
-So I need a new chart hook that manages hover state which can optionally be shared across all chart instances on the page. When synced hover is enabled, hovering a data point on any chart should make all charts reflect the same hovered position, and each chart should be able to tell whether it's the one being directly hovered or just mirroring a synced hover from another chart. Tooltip display should also be optionally synchronizable as a separate preference layered on top of hover syncing. Oh and enabling tooltip sync should automatically turn on hover sync too, while disabling hover sync should automatically turn off tooltip sync.
+Charts in the Supabase Studio dashboard do not currently have a way to synchronize hover interactions across multiple charts simultaneously. When a user hovers over a data point on one chart, the other charts on the page remain unresponsive — there is no shared highlighting or tooltip display. Additionally, there is no way to persist the user's preference for synchronized interactions between page loads.
 
-Both preferences, hover sync and tooltip sync, need to persist in the browser's local storage across reloads. Handle the edge cases gracefully please: if the stored prefs are corrupted or unreadable, fall back to sensible defaults (syncing off) with a logged warning instead of breaking. If saving to storage fails or the browser storage throws, still update the in-memory preference and emit a warning. Also setting a preference to its current value should just be a no-op. Multiple chart components need to tap into this shared state simultaneously, so make sure that works cleanly.
+## Expected Behavior
+
+- A new chart hook should be introduced to manage hover state that can optionally be shared across all chart instances on the page.
+- When synchronized hover is enabled, hovering a data point on any chart should cause all charts to reflect the same hovered position.
+- Each chart should be able to distinguish whether it is the one directly being hovered or is simply reflecting a synced hover from another chart.
+- Tooltip display should also be optionally synchronizable, as a separate preference on top of hover syncing.
+- Enabling tooltip sync should automatically enable hover sync; disabling hover sync should automatically disable tooltip sync.
+- Both preferences (hover sync and tooltip sync) should be stored in the browser's local storage so they persist across page reloads.
+- If stored preferences are corrupted or unreadable, the system should fall back to defaults gracefully (syncing off) with a warning, rather than breaking.
+- If the browser storage is unavailable or throws when saving, the in-memory state should still be updated and a warning should be logged.
+
+## Why This Matters
+
+Users who work with multiple time-series or comparative charts benefit greatly from being able to see the same time point highlighted across all charts simultaneously. Without this feature, cross-chart data comparison is tedious. Persisting the user's sync preference avoids having to re-enable it after every page load.

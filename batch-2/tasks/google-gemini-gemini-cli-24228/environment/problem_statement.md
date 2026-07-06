@@ -1,5 +1,13 @@
-I'm hitting a weird problem with the browser agent's action limit. I set a cap on how many browser actions the agent can take per task so it doesn't run forever, but it keeps blowing through the limit way sooner than it should. Digging in, it looks like the agent's own internal housekeeping stuff, like injecting and removing visual overlays and those input-blocking scripts it uses to manage the browser environment, is getting counted toward the same limit as real user-facing browser interactions. That's the bug. Those internal setup and teardown calls shouldn't eat into the action budget at all.
+## Description
 
-What I want is for the action counting to grow a way to flag internal operations so they get excluded from the limit. Only meaningful browser actions the agent takes on behalf of the user should count. So all the spots where these internal operations call into the browser tool execution mechanism need to pass that flag so the counter gets skipped for them. Real user-initiated interactions still increment the counter like normal.
+When a user configures a limit on the number of browser actions the agent is allowed to take per task, internal automation operations—such as injecting or removing visual overlays and input-blocking scripts that the agent uses for its own housekeeping—are incorrectly counted toward that limit. This causes the action budget to be exhausted prematurely, preventing the agent from completing the actual work the user wanted it to do.
 
-And once the limit is actually reached based on genuine user-facing actions, any further non-internal call should get rejected with a clear error that says the maximum action limit was hit. Internal calls should still go through even after that, since they don't count. Basically the configured limit should reflect real browser work, not framework overhead like overlay and input-blocking script management. Right now users who set a modest budget to guard against runaway automation get their tasks killed early not because of too many real interactions but because the agent's own scripts drained the quota, which makes the whole limit unreliable and annoying to tune.
+## Expected Behavior
+
+- Internal infrastructure operations (e.g., managing overlays and input-blocking scripts) should NOT count against the user-configured action limit.
+- Only meaningful browser interactions initiated on behalf of the user should be counted.
+- When the action limit is reached based on actual user-facing actions, subsequent non-internal calls should be rejected with a clear error indicating the maximum action limit.
+
+## Why This Matters
+
+Users who configure a modest action budget to prevent runaway automation find their tasks terminated early not because of too many real browser interactions, but because the agent's own internal setup and teardown scripts consume the quota. This makes the action limit unreliable and frustrating to configure correctly.

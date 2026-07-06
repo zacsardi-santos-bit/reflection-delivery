@@ -1,5 +1,16 @@
-I'm hitting a serialization wall in the distributed process runtime part of Semantic Kernel. Events and messages get passed between distributed actors and they carry arbitrary data payloads, stuff like integers, strings, GUIDs, arrays, user-defined complex objects, and error objects built from exceptions. Right now serialization goes through the .NET data contract system which needs every possible payload type declared statically up front, so when an event or message crosses to the receiving actor the concrete type of the data field gets lost and downstream steps either error out or do the wrong thing.
+## Description
 
-What I want is dedicated serialization utilities that turn a process event or process message into a portable string representation and then deserialize it back with the original payload types fully restored, no prior type registration at all. It needs to cover all those payload kinds I mentioned, and also lists where different entries carry different payload types should round-trip correctly in one pass.
+When process events and messages are exchanged between distributed actors in the process runtime, they carry data payloads whose concrete types are only known at runtime. The current serialization mechanism, based on the .NET data contract system, requires all payload types to be declared statically in advance. This makes it impossible to correctly round-trip events and messages whose data fields hold arbitrary types — including primitive values, arrays, user-defined objects, and structured error information.
 
-While I'm in there the types need restructuring too. The internal process event type should directly expose its namespace, source id, data payload, visibility, and error flag instead of wrapping a separate event object, and the error info type needs reshaping so it round-trips cleanly through the new approach. Oh and the external event type's id field should become non-nullable defaulting to empty string. This type fidelity matters because losing it corrupts the whole data pipeline between actors.
+When an event is serialized and then deserialized at the receiving actor, the original type of the data payload is lost. This causes errors or incorrect behavior when downstream steps try to process the data.
+
+## Expected Behavior
+
+- Serializing an event or message to a transferable representation and then deserializing it should fully restore the original data, including its concrete type.
+- The solution should handle at minimum: integers, strings, GUIDs, arrays, user-defined complex objects, and error objects created from exceptions.
+- A list containing events or messages with different payload types should round-trip correctly in a single pass.
+- The approach should not require pre-registration of payload types.
+
+## Why This Matters
+
+The process runtime relies on distributed actors passing events and messages to each other. Losing type fidelity during transfer corrupts the data pipeline and causes failures in downstream process steps. A robust serialization layer that preserves type information is essential for the reliability of the distributed process runtime.

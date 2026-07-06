@@ -1,7 +1,19 @@
-I'm working with Active Job and there's just no built-in way to declare typed, persistent state on a job class right now. If I want a job to track a running counter or a flag across retries, or across the resume points of an iterating job, I have to hand-roll all the serialization myself, which is repetitive and easy to get wrong. What I want is an opt-in module I can include in my job classes that lets me declare named fields with a type and a default value, kind of like how model attributes work elsewhere in the framework.
+## Description
 
-The declared fields should act like typed accessors, so assigning a value coerces it automatically. Assign a numeric string to an integer field and I get an integer back, assign "0" to a boolean field and it gets stored as false, that kind of thing. Those field values should automatically ride along in the job's serialized form and get restored on deserialization, so the whole declared set survives a full serialize/deserialize round-trip without me doing anything extra.
+Active Job currently provides no built-in mechanism for declaring typed, persistent attributes on a job class. Developers who need to track and accumulate state across retries or across the resume cycles of a long-running iterating job are forced to manage serialization manually, which is repetitive and error-prone.
 
-A few edge cases matter here. If the deserialized data has fields that aren't declared on the current job class, just silently ignore them, don't blow up. If the serialized data is missing the attributes payload entirely, the declared fields should fall back to their defaults rather than erroring out. And since jobs get serialized before re-enqueueing on retry, any attribute mutations made during a failed attempt need to carry forward into the next attempt automatically. Also jobs that take keyword arguments in their perform method have to keep working fine when this module is mixed in. And for iterating jobs that support mid-execution interruption and resumption, I need declared attributes to persist correctly across multiple interrupt/resume cycles, so accumulated values carry forward each time the job picks up where it left off.
+## Expected Behavior
 
-Basically I want a standardized attribute declaration system so stateful jobs are easier to write and read, with state handled correctly across all the lifecycle scenarios Active Job supports (retries, continuations, keyword args, all of it).
+A new opt-in module should be available that job authors can include to declare named fields with types and default values on their job classes:
+
+- Declared fields should behave like typed accessors: assigning a value applies automatic type coercion (e.g. a numeric string assigned to an integer field should be stored as an integer, and "0" assigned to a boolean field should be stored as false).
+- Field values should be automatically included in the job's serialized form and correctly restored during deserialization, so the full set of declared values survives a serialize/deserialize round-trip.
+- If deserialized data contains fields that are not declared on the job class, they should be silently ignored rather than causing an error.
+- If deserialized data is missing the attributes payload entirely, declared fields should fall back to their default values without error.
+- Because jobs are serialized before re-enqueueing on retry, attribute mutations made during a failed attempt must carry forward into the next attempt automatically.
+- Jobs that also accept keyword arguments in their perform method must continue to work correctly when this module is included.
+- Iterating jobs that support mid-execution interruption and resumption should be able to declare attributes and have those values persist correctly across multiple interrupt/resume cycles.
+
+## Why This Matters
+
+Without this feature, any stateful job pattern requires custom serialization boilerplate. A standardized attribute declaration system makes stateful jobs much easier to write, read, and maintain, and ensures that state is handled correctly in all the lifecycle scenarios Active Job supports (retries, continuations, etc.).

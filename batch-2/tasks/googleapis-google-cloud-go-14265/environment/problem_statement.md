@@ -1,7 +1,16 @@
-I'm working on the HTTP transport layer for one of our Google Cloud client libraries and I've got a gap I want you to close. We already do distributed tracing for outgoing requests, but there's no structured logging when things go wrong, so when a call fails, whether the server hands back an error body with structured details (rate limit, permission denied, that kind of thing), or the context times out, or the request gets cancelled, or we hit a network read error, developers have nothing automatic to lean on beyond traces, which don't always carry the full server-side error detail or tell timeout apart from cancellation apart from a real server error. I want the transport to emit a single structured debug log record on any failed round trip.
+## Description
 
-That record needs the error category, the HTTP method, the status codes, the error domain, any quota metadata, the resend count and resource name pulled from the request context, plus any static client attributes. For structured server responses the error category should come from the machine-readable reason in the body, for transport-level context errors it should be a well-known label for timeout or cancellation, and for anything else fall back to the Go type name of the error.
+The HTTP transport layer in this library supports distributed tracing for outgoing API requests, but it currently has no structured logging capability for error responses. When a request fails — due to a rate limit violation, a permission denial, a context timeout, a cancellation, or a network-level error — developers have no automatic way to capture a structured diagnostic record with the relevant error context at the transport layer.
 
-Important timing bit: don't emit the log until the response body is closed, so the tracing span's still active and we get log/trace correlation. Oh but if the body's bigger than 8 KB, skip the deferred buffering entirely and just log immediately using the HTTP status string as the message. Also early body close and network read errors still need to produce a record, don't silently drop those.
+## Expected Behavior
 
-Logging and tracing should each be gated by their own experimental feature flag and work independently, neither one affecting the other, and when logging's off I want zero log output from the transport, none.
+- When an error occurs during an HTTP round trip (whether an error HTTP response or a transport-level failure), the transport should emit a single, structured debug log record containing key diagnostic fields: the error category, the HTTP method, status codes, the affected domain, quota metadata, request resend count, and resource name.
+- Errors from structured server responses should populate the log record's error type from the recognized machine-readable reason in the response body. Transport-level context errors (timeout or cancellation) should produce well-known error type labels. Other errors should use a type name derived from the error itself.
+- The log record should be deferred until the response body is closed, so that active distributed tracing spans are still open and can be correlated with the log at the time of emission.
+- When a response body is too large to buffer (above the 8 KB limit), the transport should log immediately using the HTTP status string, without wrapping the body in the deferred buffering mechanism.
+- Logging and tracing must be independently controllable via experimental feature flags, each working correctly with or without the other.
+- When logging is disabled, the transport must complete with no logging side effects at all.
+
+## Why This Matters
+
+Without this capability, developers troubleshooting failed API calls have to rely solely on traces, which may not carry the full structured error detail from the server response or distinguish between timeout, cancellation, and server-side error categories. Having structured log records automatically emitted at the transport layer, with span correlation, makes diagnosing production API failures significantly faster.

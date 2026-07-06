@@ -1,3 +1,12 @@
-I'm cleaning up some stale stuff in the ClickHouse stateless test suite and hit one that's just wrong now. There's an old SQL test that exercises the array normalization functions over arrays of an experimental floating-point type, and it's no longer valid, the behavior it checks doesn't match what we actually do anymore, so it's just sitting there as a potential source of false CI failures or confusion for contributors who think it reflects current behavior. I want it gone.
+## Description
 
-Both the `.sql` query file and its matching `.reference` file (the expected output) live in the stateless tests directory and share the same base name, so please delete both of them so the pair stays consistent. Don't leave the reference file behind orphaned or the test query without its reference, remove the whole pair. After this the suite should only contain the test that reflects how normalization over that experimental float type works today (or rather, it just shouldn't contain this outdated one at all). That's really the whole ask, drop the outdated stateless test for experimental floating-point array normalization plus its reference file from the stateless tests dir, keep everything else untouched.
+A stateless SQL test for array normalization operations using an experimental floating-point type has become outdated. The test file and its expected output reference file are no longer valid and should be removed from the repository to keep the test suite clean.
+
+## Expected Behavior
+
+- The stateless SQL test for experimental floating-point type array normalization is removed from the stateless tests directory.
+- The corresponding reference file with expected output is also removed from the stateless tests directory.
+
+## Why This Matters
+
+Leaving stale or superseded test files in the suite can cause false failures in CI or mislead contributors about expected behavior. Removing both the test and its reference file ensures the suite only contains tests that reflect the current state of the system.

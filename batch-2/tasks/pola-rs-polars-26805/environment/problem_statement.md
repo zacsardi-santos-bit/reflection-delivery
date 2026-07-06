@@ -1,3 +1,19 @@
-I'm hitting a correctness bug in our Parquet scan path where filters on floating-point columns can silently drop rows that contain NaN. The engine tries to skip whole row groups that can't satisfy a filter by looking at the min/max stats stored in the file, but Parquet row-group statistics exclude NaN values even though the actual data may have them. So if I run something like "x > 5.0" against a file where a row group holds only NaN in column x, that group gets skipped and those rows vanish from my results even though they shouldn't be silently dropped.
+## Description
 
-I want the batch-skipping logic to be aware of NaN semantics for float columns and only apply the skip when it's provably safe. "Less than" and "less than or equal" comparisons stay safe with any bound including NaN, since NaN never satisfies those. Equality against a non-NaN literal is safe too because NaN is never equal to a non-NaN value, but equality and inequality against a NaN literal aren't safe since the stats don't capture NaN. "Greater than" and "greater than or equal" with non-NaN literals are not safe to skip, because hidden NaN values would satisfy them and the stats don't reflect that. The flip side, "greater than NaN" and "greater than or equal to NaN", are safe since nothing is greater than NaN under total ordering. Range checks should only use the skip optimization when both bounds are non-NaN constants. Oh and it needs to handle the case where the expression is written with the column on the right side of the comparison, so the operator direction gets flipped correctly when deciding safety. The goal is keeping the safe optimizations while fixing the dropped-rows correctness problem.
+When scanning Parquet files and filtering on floating-point columns, the query engine attempts to skip entire row groups that cannot satisfy the filter condition by examining the min/max statistics stored in the file. However, Parquet row-group statistics exclude NaN values — yet the actual data may contain NaN. This creates a correctness problem: for certain comparisons like "greater than", a row group containing only NaN values would be incorrectly skipped, causing those rows to disappear from query results even though they should be returned or at minimum not silently dropped.
+
+## Expected Behavior
+
+The batch-skipping optimization for floating-point columns should only be applied when it is provably safe:
+
+- "Less than" and "less than or equal" comparisons with any bound (including NaN) are safe, because NaN never satisfies such comparisons.
+- Equality comparisons with a non-NaN literal are safe, because NaN is never equal to any non-NaN value.
+- Equality and inequality comparisons with a NaN literal are not safe, because statistics do not capture NaN.
+- "Greater than" and "greater than or equal" comparisons with non-NaN literals are not safe, because hidden NaN values in a row group would satisfy them even though statistics do not reflect this.
+- "Greater than or equal to NaN" and "greater than NaN" are safe, because nothing can be greater than NaN under total ordering.
+- Range checks are safe only when both bounds are non-NaN constants.
+- When the comparison is written with the column on the right side, the operator direction must be accounted for when determining safety.
+
+## Why This Matters
+
+This bug could cause floating-point data to be silently dropped from query results when filters like "x > 5.0" are applied to Parquet files containing NaN values in column x. Fixing it ensures correctness while still allowing safe optimizations to proceed.

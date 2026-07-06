@@ -1,0 +1,9 @@
+I'm building out a vector store library and right now it only does similarity search, which is killing me because there's no way to filter results by document metadata like category, status, or priority. I want to build a filter query like "top 5 most similar docs where category is 'feature' and priority greater than 1" without post-processing everything in app code.
+
+So I need a composable filter expression system where I can express conditions on named fields, equality and inequality, range comparisons (greater-than, less-than, and the rest), and membership in a list, then combine them with AND, OR, and NOT logic. The chaining should produce flat expressions, not nested ones. These filters need to evaluate client-side against a plain record dict, and they've gotta survive JSON serialization and back so I can store or transmit them. Then I want to pass a filter as an optional param into the similarity search methods so only matching docs come back, with similarity ordering preserved.
+
+Also on search, two more optional params: one for field projection to limit which metadata fields come back per document, and one to omit the vector from results when I don't need it.
+
+Beyond batch loading I need individual doc lifecycle ops: insert a single document, update its fields (with the modification timestamp set automatically), remove by id, and count total documents. Oh and right now searching for an id that doesn't exist returns a silent placeholder, that's bad, it should raise an error instead.
+
+Last thing, date fields including the built-in creation and modification timestamps should get auto-decomposed into components (year, month, month name, day, day of week, hour, quarter) and stored alongside the document so I can filter by calendar quarter or day of week without parsing dates myself. Those built-in timestamps should get populated automatically too.

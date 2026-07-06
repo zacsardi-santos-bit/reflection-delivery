@@ -1,5 +1,18 @@
-I'm cleaning up the transport layer in Ledger Live Desktop's internal process, the stuff that talks to hardware wallets over USB/HID. Right now the code that sits between the internal process and the renderer is all tangled together and I can't test any of it in isolation, errors get surfaced inconsistently, and the whole IPC layer is a pain to reason about. I want a dedicated transport handler module that exposes one well-scoped function per operation, and each function returns an observable stream of responses so consumers can handle everything uniformly.
+## Description
 
-Here's what it needs to do. Opening a connection to a device should succeed when a compatible transport module is registered, and when none is available I want a structured error object in the stream instead of a thrown exception. Sending a single low-level command returns the response as a hex string on success, or a structured disconnection error if there's no open connection or the device drops out. Sending a batch of commands should emit one response per command inline, so an individual failure surfaces on its own without aborting the whole stream. Listening for device plug and unplug events should continuously emit structured event objects describing each plug or unplug. Unsubscribing from that listener should immediately stop further emissions and complete the listening stream. And closing a connection should invoke the underlying close routine, confirm it succeeded, and then prevent any further commands from going to that device.
+The Ledger Live Desktop application uses an internal process to manage communication with hardware devices over USB/HID. Currently, the transport logic that sits between the application's internal process and the renderer process is not cleanly separated into a dedicated, well-defined module. This makes it difficult to maintain, reason about, and test in isolation.
 
-Big thing across all of these: every error case is a structured response object inside the observable, not an exception. Also please wire these up using the existing message type definitions that map each transport operation key to its parameter shape, don't invent new ones.
+We need a dedicated transport handler module that exposes well-scoped functions for each transport operation: opening a connection to a device, sending a single low-level command, sending a batch of low-level commands, listening for device plug/unplug events, unsubscribing from those events, and closing a device connection.
+
+## Expected Behavior
+
+- Opening a device connection should succeed when a compatible transport module is registered, and return a structured error when none is available.
+- Sending a command to a device should return the response as a hex string on success, or a structured disconnection error if no connection exists or the device becomes unavailable.
+- Sending a batch of commands should emit one response per command, with individual failures surfaced inline rather than aborting the entire stream.
+- Listening for device events should continuously emit structured objects describing each plug or unplug event.
+- Unsubscribing from device event listening should immediately stop further events from being emitted and complete the listening stream.
+- Closing a device connection should invoke the underlying close routine, confirm success, and prevent any further commands from being sent to that device.
+
+## Why This Matters
+
+Without this module, the transport logic is not independently testable, errors are inconsistently surfaced, and the IPC layer is harder to maintain. A clean, observable-based transport handler makes the internal process more robust and ensures predictable behavior for all hardware device interactions within Ledger Live Desktop.

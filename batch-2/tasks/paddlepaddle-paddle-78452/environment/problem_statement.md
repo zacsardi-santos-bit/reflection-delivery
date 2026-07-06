@@ -1,5 +1,16 @@
-I keep hitting a wall with the secure model loading utils in PaddlePaddle. When I save a model bundled with config objects, plain Python classes or structured data container configs like training argument classes, then reload the file, the restricted deserializer just rejects those config objects outright. They're totally safe, they don't override any of the special serialization hooks that could be abused for code execution, but the current restricted unpickler only permits a hardcoded whitelist of types, so any user-defined class gets blocked. This is way too strict and it breaks a really common workflow where people stash model configuration right alongside the weights in one file.
+## Description
 
-What I want is for the loader to also accept user-defined classes that are provably safe, meaning they don't define any dangerous serialization methods, while still blocking anything that could be exploited. When an unsafe class does get rejected, the error message needs to clearly say which dangerous method triggered the rejection so I know what's going on. Also I'd like a standalone helper function that takes any class and returns whether it's safe to deserialize, so the logic is reusable and testable on its own, not buried inside the unpickler.
+When saving and loading model files that include configuration objects — such as training argument classes or structured data container configs — the secure deserialization layer rejects these objects even when they are completely safe. This is overly restrictive: simple user-defined classes that don't override any serialization hooks cannot be exploited for code execution, yet they are blocked by the current whitelist-only approach.
 
-Oh and there's a related bug: the utility that walks loaded object graphs tries to iterate into structured configuration objects, which processes them incorrectly instead of returning them as-is. Those structured config objects should just pass through the traversal unchanged whether they're at the top level or nested inside dicts, lists, tuples, or ordered mappings. The point is safe config classes load correctly while all the existing protections against malicious payloads stay intact.
+Additionally, the utility that traverses loaded objects tries to iterate into structured configuration objects, which can corrupt or discard them instead of leaving them intact.
+
+## Expected Behavior
+
+- User-defined classes, including structured data container classes, that do not define any dangerous serialization methods should be loadable when they were previously saved alongside model weights.
+- Classes that do define such dangerous methods should still be blocked, and the resulting error should clearly identify that the problematic method is the cause.
+- When traversing a loaded object graph, structured configuration objects should be passed through as-is without the traversal logic attempting to iterate into them.
+- This safe/unsafe determination should be exposed as a standalone utility that can be called on any class to check whether it is safe to deserialize.
+
+## Why This Matters
+
+Many real-world workflows save model configuration alongside weights in a single file. Blocking simple config classes breaks these workflows unnecessarily. The fix allows safe configuration classes to load correctly while preserving all existing security guarantees against malicious payloads.

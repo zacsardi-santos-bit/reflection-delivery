@@ -1,5 +1,13 @@
-I'm hitting a gap in Playwright's custom reporter API around worker-scoped fixtures. When one of those worker-scoped fixtures throws during teardown, my reporter's error callback fires but the second parameter comes through undefined, so I've got the error but zero context about where it came from. Everywhere else in the reporter lifecycle I get worker context on worker-related events, so this feels like an oversight rather than intended behavior.
+## Description
 
-What I want is for fixture teardown errors to pass the full worker context alongside the error, same shape as other worker events. Concretely, when a worker-scoped fixture teardown fails, the reporter's error handler should get both the thrown error and the worker context tied to it. That context needs to tell me which worker was running as a numeric worker index, which parallel slot it occupied (also a numeric parallel index), and which project it belonged to including the project details. And the error itself should still be accessible with its message containing the text that was actually thrown.
+When a worker-scoped fixture teardown throws an error, the reporter's error callback is invoked without any worker context. This means reporters cannot determine which worker or project was responsible for the error, making it impossible to produce meaningful, contextualized error reports for fixture teardown failures.
 
-The reason this matters is I can't write a reporter that clearly identifies which worker or project a teardown error belongs to right now, which makes debugging distributed or multi-project runs painful. Reporters are supposed to give full diagnostic context for every error during a run, and worker fixture teardown failures are currently a blind spot, no way to associate them with a specific worker or project config. Wiring the worker context through the error callback fixes that so reporters can produce meaningful, actionable reports. Can you get this working so teardown errors carry the same context the other worker lifecycle events already do?
+## Expected Behavior
+
+- When a worker-scoped fixture teardown fails (throws an error), the reporter's error handler should receive not only the error itself, but also the worker context associated with that error.
+- The worker context should identify which worker was running (as a numeric index), which parallel slot it occupied (also a numeric index), and which project it belonged to.
+- The error message itself should be accessible and contain the text of the thrown error.
+
+## Why This Matters
+
+Reporters are expected to provide full diagnostic context for all errors during a test run. When worker fixture teardowns fail, the current behavior provides no way to associate those errors with a specific worker or project configuration, making it difficult to debug failures in distributed or multi-project test suites. Passing worker context alongside the error enables reporters to give users complete, actionable error reports.

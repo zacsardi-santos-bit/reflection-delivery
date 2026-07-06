@@ -32,9 +32,9 @@ timeout_sec = 3000
 [solution]
 
 [metadata]
-difficulty = "medium"
-difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
-pass_at_k_opus_4_8 = "0/13"
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8 = 0)"
+pass_at_k_opus_4_8 = "0/8"
 category = "Software Engineering"
 subcategory = "Feature implementation"
 objective_labels = ["Implement", "Validate", "Fix"]

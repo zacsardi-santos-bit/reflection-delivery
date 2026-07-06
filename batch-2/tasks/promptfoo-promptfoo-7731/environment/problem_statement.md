@@ -1,5 +1,18 @@
-I'm hitting a wall with the post-test lifecycle hook in our extension system. The hook fires after each test case and I can see the result inside it just fine, but anything I return from the hook just vanishes, it never lands in the stored results or the summary metrics. I want to use it to attach stuff like a session URL, a count of how many tool calls happened, turn counts, or a computed cost estimate to each result, all things I can calculate right there in the hook, but there's no way to actually surface them right now.
+## Description
 
-What I'd expect is for a post-test hook to be able to return custom named numeric scores plus arbitrary metadata key-value pairs, and have those merged into the persisted evaluation result for that test case. The custom named scores should also show up in the per-prompt aggregate metrics in the eval summary, and any response metadata the hook returns should get merged into the result's response metadata too. The one hard limit is the hook shouldn't be allowed to change the core fields, so it can't flip whether the test passed, can't touch the main score, and can't rewrite the raw response output, it's only adding supplementary data on top.
+The post-test lifecycle hook in the extension system currently cannot attach custom scores or metadata to evaluation results. When a hook runs after each test case, it can observe the result, but any values it returns are silently discarded — they never make it into the persisted evaluation data or summary metrics.
 
-Oh and when I've got multiple hooks configured, each hook in the chain should receive the already-enriched result from all the prior hooks, not just the original pre-hook state, so they can build on each other. Also there's a related bug, if a hook throws an error the whole result row seems to get lost right now, and that's bad, the evaluation result for that test should still be saved even when a hook blows up. Right now the only workaround is hacking providers or graders which couples things that should stay separate, so I'd really like the hook path fixed instead.
+This is a significant gap for advanced use cases. Developers who want to track things like session URLs, tool invocation counts, turn counts, cost estimates, or other computed metrics during a hook cannot currently surface those values in the evaluation results. The data simply disappears.
+
+## Expected Behavior
+
+- A post-test hook should be able to return custom named numeric scores and arbitrary metadata key-value pairs, which are then merged into the persisted evaluation result.
+- Custom named scores returned by hooks should also appear in the per-prompt aggregate metrics in the evaluation summary.
+- Hook-returned response metadata should be merged into the result's response metadata.
+- Hooks must not be able to alter core result fields like whether the test passed, the main score, or the raw response output.
+- When multiple hooks are configured, each hook in the chain should receive the already-enriched context from all prior hooks — not just the original pre-hook state.
+- When a hook throws an error, the evaluation result for that test should still be saved; the error should not cause the row to be lost.
+
+## Why This Matters
+
+Without this capability, developers cannot use the hook system to enrich evaluation results with computed or externally-sourced metadata. The only workaround today is to modify providers or graders, which couples concerns that should be separate. Fixing this makes the extension hook system genuinely useful for attaching post-hoc signals to evaluation results.

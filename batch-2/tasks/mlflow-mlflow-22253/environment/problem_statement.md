@@ -1,9 +1,20 @@
-I've been fine-tuning diffusion models with adapter techniques (think LoRA-style adapter weights) and I want to track and serve them through MLflow like I do everything else. Right now there's no native flavor for this so I'm stuck dumping the weights as generic artifacts with zero first-class support for loading, serving, or versioning against the base model they were trained on.
+## Description
 
-What I want is a new MLflow flavor, accessible through the standard MLflow namespace, that saves adapter weights (either a single file or a whole directory) along with a reference to the base diffusion model and an optional adapter type specifier that defaults to something sensible. Saving should produce a complete loadable artifact with all the usual MLflow files (conda env and pip requirements, model signature, metadata), and the flavor config should record the base model identifier, the adapter type, and the resolved base model version pulled from the model hub when it's available.
+MLflow currently has no native support for diffusion model adapters (such as fine-tuned adapter weights). Data scientists who fine-tune diffusion models with adapter techniques are unable to use MLflow's standard model tracking, versioning, and serving workflows to manage their adapter weights alongside the reference to the base model they were trained on.
 
-When I load it back I want a structured object that exposes the base model reference, adapter type, weight location, and that resolved version. It should bring up the full inference pipeline on demand with an optional base model override at load time, and raise a clear error if the base model can't be found rather than something cryptic.
+## Expected Behavior
 
-Also it needs to work through the standard serving interface so I can call predict with text prompts as plain strings, lists, dicts, or DataFrames and get back generated images as binary data. Validate the inputs please, so missing prompt fields, empty lists, wrong types, or a pipeline that produces no images all give me informative errors instead of confusing stack traces.
+- There should be a dedicated MLflow flavor for saving and loading diffusion model adapters, accessible via the standard MLflow namespace
+- Saving a model should accept a path to adapter weights (either a single file or a directory), a reference to the base diffusion model, and an optional adapter technique specifier (with a sensible default), and should produce a complete, loadable MLflow model artifact
+- The saved artifact should include all standard MLflow model files (environment specifications, model signature, metadata), and the flavor configuration should record the base model identifier, adapter type, and the resolved version of the base model from the model hub when available
+- When loading a saved model, the returned object should expose the base model reference, adapter type, adapter weight location, and the resolved base model version
+- The loaded model should support on-demand pipeline loading with an optional base model override, and raise a clear error if the base model cannot be found
+- The model should also be loadable via the standard model serving interface, accepting text prompts (as strings, lists, dicts, or DataFrames) and returning the generated images as binary data
+- Prediction must validate its inputs and raise informative errors for missing prompt fields, empty inputs, wrong types, and pipeline failures
+- The default pip requirements for the flavor should include the required core machine learning and model serving libraries, plus optional packages when they are already installed
 
-Oh and expose the standard helpers for pip requirements and the conda environment spec, covering the core ML and model-serving deps plus optional packages when they happen to already be installed. Last thing, there's a utility for validating HuggingFace repo identifiers that already lives in another flavor, I want that pulled into a shared central location too so it can be reused across flavors without me copy-pasting it around.
+## Why This Matters
+
+Without a native flavor, teams cannot use MLflow to version and reproduce their adapter-based diffusion model experiments, serve fine-tuned models in a standardized way, or share adapter artifacts with the same governance tooling they use for all their other models. Adding this flavor brings diffusion model adapters into the MLflow ecosystem as first-class citizens.
+
+Additionally, a shared utility for validating HuggingFace repository identifiers should be available in a common location so that it can be reused across multiple MLflow flavors without duplication.

@@ -1,9 +1,15 @@
-I'm working on the topic message display in our CLI and right now it's stuck in a fixed compact layout that only shows the title and a short strategic intent, there's no way to actually read the fuller summary text tied to a topic entry, so I want to add expand/collapse support.
+## Description
 
-Here's the behavior I'm after. When the terminal is in an unconstrained view (no height limit set), the topic message should just automatically show both the strategic intent and the full summary, no clicking needed. When height is constrained though, the topic should start collapsed showing only the intent, and users should be able to click on it to toggle the expanded state so the summary shows up beneath the intent line. That click needs to call into our shared expansion context so per-item state gets tracked correctly, meaning only the entries the user actually clicked stay expanded (each item tracked on its own).
+The topic message display in the CLI is currently always in a compact, collapsed state. It shows the title and a short strategic intent, but there is no way to see the more detailed summary associated with a topic. Users have no mechanism to expand a topic entry to view its full details.
 
-Couple of edge cases too. If the strategic intent is missing but there's a summary present, the summary should serve as the primary short description in the default collapsed view. And if only the strategic intent is there with no summary, then nothing expandable should be offered at all, just show the intent.
+## Expected Behavior
 
-Oh and there's a constant used as the key for the summary field in topic arguments, right now it's effectively a hardcoded string, I want it exported from the core package so other parts of the codebase (and tests) can reference it by name instead. Wire the click handling and the summary lookup through that.
+- When the terminal is in an unconstrained view (no height limit), the topic message should automatically display both the strategic intent and the full summary.
+- Users should be able to click on a topic message to toggle its expanded state, revealing the summary text beneath the intent line.
+- The expansion state should be tracked per-item using a shared context, so that only the items the user has clicked are expanded.
+- When only a summary is present (no strategic intent), it should be shown as the primary description in the default collapsed view.
+- When only a strategic intent is present (no summary), only the intent should be shown with no expand control offered.
 
-The point of all this is transparency, folks can currently only see a brief bit of what the model's working toward, so being able to expand individual entries (or having them auto-expand when viewing the full conversation) makes longer or more complex sessions way more readable.
+## Why This Matters
+
+Right now users can only see a brief summary of what the model is working toward. Having the ability to expand individual topic entries — or automatically expand them when viewing the full conversation — makes the interface more transparent and useful, especially for longer or more complex sessions.

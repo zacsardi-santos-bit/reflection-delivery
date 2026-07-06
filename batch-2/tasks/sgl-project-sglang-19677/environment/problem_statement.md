@@ -1,5 +1,18 @@
-I'm cleaning up a tensor comparison debug utility and the logging is muddy right now, everything goes out through one "warning" channel so a real rank mismatch or a load failure reads the same as an advisory note like "hey we fell back to the default alignment strategy." I want to split diagnostics into two levels, actual errors for stuff that genuinely broke, and informational messages for the advisory notices that don't mean failure. This split needs to flow through the whole output format too, so the output records that aggregate these messages should track errors and informational entries separately, and the text rendering should visually distinguish the two so you can eyeball what needs action.
+## Description
 
-Also the exit-code handling. There's already a flag that takes a regex pattern to allow certain skipped comparisons without forcing a non-zero exit, and I want the same thing for failures, a flag that takes a regex for tensor names whose failures we tolerate. So as long as at least one tensor actually passed and every failure matches the pattern, the run exits successfully. Important edge case though, if nothing passed at all it still exits as a failure even when every failed tensor matches the pattern, don't let an all-fail run sneak through. And while you're in there, rename the existing allow-skipped flag so it uses consistent terminology with this new tolerate-failures one.
+The tensor comparator's diagnostic logging system currently treats all messages as uniform "warnings" with no distinction between conditions that indicate real problems versus those that are merely informational. For example, a note that the alignment strategy fell back to a default is given the same weight as an actual rank mismatch that corrupts results. This makes it hard for users to quickly identify which messages require action.
 
-Last thing, when a tensor's dimension metadata names a different number of dims than the tensor actually has, the current message is useless. I want a clear error that states the actual tensor shape, how many dimensions are present, the names that were provided, and a suggestion for fixing the dimension string. This is mostly for CI folks running pipelines with a few known-bad tensors who currently have to ignore all failures or squint at vague errors, so clearer output and finer exit control saves real debugging time.
+Additionally, there is currently no way to tell the comparator to tolerate specific named failures — you can allow named skips to be ignored when computing the exit code, but if a known-bad tensor fails comparison, the entire run exits with a failure even if everything else passed.
+
+Finally, when a tensor's dimension metadata doesn't match its actual number of dimensions, the failure message is unclear and difficult to diagnose.
+
+## Expected Behavior
+
+- Log messages should be separated into two levels: errors (conditions that actually caused a problem) and informational notices (advisory messages that do not indicate failures).
+- Users should be able to specify a regex pattern naming tensors whose failures should be tolerated, so the overall exit code can still be zero when only those named tensors fail.
+- When dimension metadata is inconsistent with the actual tensor shape, a clear descriptive error should be raised that explains the mismatch, the actual shape, the names provided, and how to fix it.
+- The existing "allow skipped" pattern argument should be renamed for clarity.
+
+## Why This Matters
+
+Without log level separation, operators can't easily filter noise from real failures. Without a "tolerate failure" pattern, CI pipelines that need to allow a few known-bad tensors must ignore all failures. Clearer dimension mismatch errors reduce debugging time.

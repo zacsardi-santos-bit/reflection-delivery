@@ -1,9 +1,15 @@
-I'm hitting a real annoyance with the AI operators in Airflow (the ones that run LLM and agent workflows). When I define a structured output type for a task, the operator serializes the result down to a plain dict before handing it off over the inter-task communication system, so downstream tasks get an untyped dictionary instead of the typed object I actually defined. That kills type hints, IDE support, and any chance of relying on the object's fields without manually re-parsing everything.
+## Description
 
-What I want is for these operators to pass the actual typed model instance to downstream tasks when there's a structured output type, not a dict. Keep an opt-in flag though so folks who depend on the old dict behavior can still get it for backward compatibility.
+When AI operators (used for running LLM and agent workflows) produce structured typed output, they currently serialize the result to a plain dictionary before returning it via the inter-task communication system. This loses the type information entirely — downstream tasks receive an untyped dictionary instead of the original typed object. Developers who define structured output types for their AI tasks cannot rely on those types in downstream logic, and must manually re-parse or reconstruct the typed objects from the dictionary.
 
-There's a safety angle too. Output types defined inside local functions can't survive a serialization round-trip since they can't be re-imported by qualified name, so I want the operator to catch that at init time and raise a clear error rather than silently producing broken results. Valid module-level output type classes should get auto-registered so the XCom deserialization side can rebuild them to the correct type, and I'd like that registration to work per-class without me having to touch global config.
+## Expected Behavior
 
-Also on the serialization display side, string field values currently render without quotes which makes them blend in with other values, so show them quoted in a Python-like way. And when a DAG gets loaded dynamically an internal module prefix leaks into the displayed class name, please strip that off so the display stays clean.
+- When an AI operator completes execution with a structured typed output, the result passed to downstream tasks should be the original typed object instance, not a plain dictionary.
+- There should be an opt-in mode where the old behavior (returning a dict) is still available for backward compatibility.
+- Operators should validate at initialization time that the output type is safe to serialize and round-trip through the inter-task communication system — specifically, classes defined inside functions cannot be reliably re-imported and should be rejected with a clear error message.
+- A new registration mechanism should allow specific output type classes to be whitelisted for typed deserialization without requiring changes to global configuration.
+- The serialization display layer should show string field values in a quoted Python-like format for readability, and should clean up internal module name prefixes (from dynamically loaded DAG files) that otherwise appear in displayed class names.
 
-Oh and I need a utility to walk output type annotations, including unions, optionals, and generic containers like lists and dicts, and pull out all the data model classes they reference. Plus a helper that takes a raw value and returns either the typed model instance or a dict depending on a flag.
+## Why This Matters
+
+Downstream tasks using typed XCom rely on receiving the actual typed object, not a dict. Without this, the typed XCom feature for AI operator results is effectively unusable — developers lose type safety, IDE support, and the ability to rely on structured data contracts between tasks in an AI pipeline.

@@ -1,7 +1,21 @@
-I'm poking at our tensor comparison debug tool and want to knock out three things that keep tripping me up.
+## Description
 
-First, the dimension spec syntax. Right now modifiers on individual tensor dimensions (the annotations for how a dim is distributed across parallel workers, like sharded with partial reduction) use parentheses, and I want those to switch to square brackets instead. While I'm in there, the parse function shouldn't just hand back a raw list anymore, it should return a structured result object and callers grab the parsed dimension list off an attribute on that result.
+This PR improves a tensor comparison debugging utility in three ways: it updates the dimension specification syntax, simplifies the comparison output format, and adds support for automatically navigating into a single engine subdirectory when a wrapper directory is given.
 
-Second, the comparison printout is too loud. We report three metrics, the relative difference, the max absolute difference, and the mean absolute difference, and every one of them gets a pass/fail emoji (checkmark or cross) prefix. I only want that status symbol on the relative difference, the other two should just print their values plain with no symbol out front.
+## Changes
 
-Third, and this is the big one, I keep having to manually point the tool at the exact engine subdir. Folks store per-engine dumps inside a parent wrapper directory, so I want a new helper in the utilities module that takes a directory path plus a label string and does the right thing. If the directory directly has data files in it, return it as-is. If the top level has no data files but exactly one child subdir does have them (other empty subdirs are fine), return that child and log a message that references the label and says an auto-descent happened. If more than one child subdir contains data, raise a clear error saying multiple subdirectories contain data and the user should specify one directly. And if there's no data anywhere, raise a clear error saying no data files were found. The main comparison entrypoint should run this on both the baseline and target paths first thing, before it does anything else, so I can just aim it at the wrapper dir and it works transparently.
+### Dimension modifier syntax update
+
+The syntax for annotating how individual tensor dimensions are distributed across parallel workers has been updated to use square brackets instead of parentheses for modifiers (for example, indicating a dimension is sharded with partial reduction). The parsing function now returns a structured result object, and callers access the parsed dimension list via an attribute on that result.
+
+### Simplified comparison output
+
+The comparison output format has been simplified. Previously, all three reported metrics — the relative difference, the maximum absolute difference, and the mean absolute difference — each showed a pass/fail status symbol (checkmark or cross). Now only the primary metric (relative difference) shows the status symbol. The other two metrics are printed without any symbol prefix, reducing visual noise.
+
+### Auto-descent into engine subdirectories
+
+A new utility function is needed that, given a directory and a label string, checks whether the directory directly contains data files. If it does, the directory is returned unchanged. If it does not but has exactly one subdirectory containing data files, that subdirectory is returned automatically. If there are multiple subdirectories with data files, a clear error is raised explaining that multiple subdirectories contain data and the user should specify one directly. If no data files are found anywhere, a clear error is raised explaining that no data was found. When a descent occurs, a log message is emitted that references the label and indicates an auto-descent happened. The main comparison entrypoint must use this function on both input paths so that users can point it at a parent wrapper directory and have it work transparently.
+
+## Why This Matters
+
+Users often store per-engine tensor dumps inside a single parent directory. Without auto-descent, they have to manually specify the exact engine subdirectory. This change lets users pass the wrapper directory directly, and the tool finds the correct subdirectory automatically — or raises a descriptive error if the layout is ambiguous.

@@ -1,5 +1,15 @@
-I'm hitting a thing with the task tracker feature where the AI always tells people the wrong storage location. When the persistent task tracking is enabled, the assistant gets a system prompt that mentions where task files live, but right now that's a hardcoded relative path baked in the same for every project and every user, so it never points at the actual directory on my machine. That means when someone asks the AI where their task tracker data is stored, or expects it to navigate there, the answer is just misleading for basically every setup.
+## Description
 
-What I want is for the system prompt to pull the real absolute storage path from the project configuration and embed that dynamically instead of the fixed placeholder. So when the feature's active the AI actually knows the true location and can give people accurate info about where their task files are.
+When the persistent task tracking feature is enabled, the AI assistant is given a system prompt that references the location of the task storage directory. Currently, this location is a hardcoded relative path that is the same for every project and every user — it never reflects the actual directory where task files are stored on the user's machine.
 
-Oh and one gotcha, the path needs to be sanitized before it goes into the instructions. If the storage directory name happens to contain newlines or closing bracket characters those could corrupt the prompt, so clean those special characters out first before embedding. Basically the config already knows the real path, I just want the prompt to reflect that dynamic, sanitized location.
+This means the AI cannot tell users where their task tracker data actually lives, and any attempt to reference or navigate to the storage location will be incorrect for most setups.
+
+## Expected Behavior
+
+- When the task tracker feature is active, the system prompt should dynamically include the actual absolute path to the task tracker storage directory for the current project.
+- The real storage path should be retrieved from the project configuration rather than using a fixed placeholder.
+- The storage path should be sanitized before inclusion to prevent directory names containing newlines or special bracket characters from corrupting the system instructions.
+
+## Why This Matters
+
+Users who ask the AI where their task tracking data is stored — or who rely on the AI to reference that location — currently receive a misleading generic path. With the dynamic path, the AI always knows the true storage location and can give users accurate information about where their task files live.

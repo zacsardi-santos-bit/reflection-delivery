@@ -1,5 +1,14 @@
-I'm poking at the Kotlin Misk server code generator and there's a handful of config knobs I keep wishing existed. First one, I want a configurable path prefix that gets prepended to all the generated API action route paths so I can namespace everything without hand-editing generated files after the fact. Second, I need a toggle for whether stub implementation classes get generated alongside the action interfaces, because sometimes I only want the action class and don't need a separate impl stub sitting there. This one should default to disabled (off unless I ask for it). Third, I want an option to control whether the generated model classes get annotated for JSON serialization via that popular adapter library (Moshi-style annotations), since not every project pulls that dependency in. This one should default to enabled since most projects do use it.
+## Description
 
-Oh and there's an actual bug too. The generator's declared feature support says it doesn't handle JSON as a wire format, which is just wrong, the generated server code clearly reads and writes JSON requests and responses fine. So JSON should show up in the supported wire formats list right alongside the binary protocol buffer format that's already declared there. Otherwise the generator gets filtered out of tool searches that key off supported formats, which is annoying.
+The Kotlin Misk server code generator is missing several configuration options that developers need to customize their generated server code. Currently, there is no way to specify a prefix that gets applied to all generated API action paths, no option to control whether stub implementation classes are generated alongside interfaces, and no option to toggle whether generated model classes include annotations for a popular serialization library. Additionally, the generator's declared feature set incorrectly omits JSON as a supported wire format, even though the generated server code handles JSON requests and responses.
 
-So basically: add those three configurable options with the defaults I mentioned, and fix the wire format declaration so JSON is listed too. It's all in the Kotlin Misk server generator code.
+## Expected Behavior
+
+- The generator should accept a configurable path prefix that gets prepended to all API action route paths.
+- The generator should have an option to control whether stub implementation classes are generated (defaulting to disabled).
+- The generator should have an option to control whether model classes are annotated for JSON serialization (defaulting to enabled).
+- The generator's declared supported wire formats should include JSON in addition to the already-declared binary protocol buffer format.
+
+## Why This Matters
+
+Without these options, developers using the Kotlin Misk generator cannot customize basic structural aspects of their generated code and are forced to manually edit generated files. The incorrect wire format declaration may also cause the generator to be excluded from tool searches that filter by supported formats.

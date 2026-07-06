@@ -1,7 +1,19 @@
-I'm deep in the rollback path for Merge-on-Read tables and hitting a bug with how log files get handled when several log files from the same file group need rolling back. The tricky part is the behavior has to split by table version. On older table versions I don't want log files deleted at all, instead I need a single rollback marker block written per file group to invalidate the uncommitted data. On newer table versions each log file should get deleted individually.
+## Description
 
-Right now the marker-based rollback strategy doesn't group or separate these correctly when multiple log files from one file group show up across separate rollback requests. For older tables it should emit one grouped rollback request per file group, combining all the log file metadata, but for newer tables it should emit one request per log file. Then when those requests execute, the older path should consolidate into a single rollback block per file group while the newer path deletes each file on its own. Getting this wrong means rolling back a big batch of log writes (say an inflight delta commit that needs abandoning) either misses files or creates redundant rollback blocks, so data goes inconsistent.
+When rolling back uncommitted changes in Merge-on-Read (MOR) tables, the rollback mechanism handles log files differently depending on the table version. In older table versions, log files must be preserved and a single rollback marker block should be written per file group to invalidate the uncommitted data. In newer table versions, each log file should be independently targeted for deletion.
 
-I also want a utility that groups rollback requests by file group, merging log-only requests that share the same partition, file ID, and base instant into one consolidated request with a merged set of log files to handle. Requests referencing base files to delete shouldn't get merged with log-only ones, and if a request has both files to delete and log blocks, split the file portion from the log block portion. Oh and null partition paths need normalizing to empty strings in the output.
+The current implementation does not correctly handle the case where multiple log files from the same file group appear across separate rollback requests during marker-based rollback. Specifically:
 
-Last thing, the test utilities need a way to create log file markers with the right marker type per table version (creation-type marker for newer tables, append-type for older ones), and the log file creation helper should let me pass an explicit instant time instead of always defaulting to the current commit's instant.
+- For older table versions: multiple rollback requests for the same file group are not properly consolidated, potentially resulting in incorrect rollback behavior instead of writing a single rollback block per file group.
+- For newer table versions: log files are not correctly treated as individually deletable per request, which leads to an incorrect number of rollback requests being generated.
+
+## Expected Behavior
+
+- A utility method should be available to group rollback requests by file group, consolidating multiple log-only requests for the same file group into a single request with a merged set of log files to handle.
+- The marker-based rollback strategy should produce one rollback request per log file for newer table versions, and one grouped request per file group for older table versions.
+- The rollback execution should delete individual log files for newer tables and append a single rollback command block per file group for older tables.
+- Null partition paths in rollback requests should be normalized to empty strings during grouping.
+
+## Why This Matters
+
+Without this fix, rolling back a large number of log file writes in a MOR table (a common operation when an inflight delta commit needs to be abandoned) can produce incorrect rollback results — either missing some files or creating redundant rollback blocks — leading to data inconsistency.

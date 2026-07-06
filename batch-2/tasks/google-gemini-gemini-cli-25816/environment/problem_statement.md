@@ -1,11 +1,25 @@
-I'm deep in the session memory system and hit a cluster of bugs that all need fixing together, so bear with me. First off we've got sessions written in the newer line-delimited format and right now those are completely ignored when we go looking for a previous session to summarize or during memory extraction. The code only knows how to parse the legacy single-document format, so anything line-delimited gets read, sorted, and summarized as if it doesn't exist. Needs to handle both formats.
+## Description
 
-Also when we pick the most recently updated session we're sorting by the timestamp baked into the filename, but that's wrong. The actual last-updated value lives inside the file and it can differ from the filename date, especially for resumed sessions that got picked back up after an earlier run, so we end up selecting the wrong one. Selection should key off the in-file last-updated timestamp instead.
+The session memory system has several related issues around how session files are tracked, read, and summarized.
 
-Then there's the extraction state tracking. Right now if the extraction agent fails to open a session file (permission error, whatever) it still gets recorded as fully processed and never retried, which silently loses history. I want the state to track candidate sessions (the ones we attempted/offered) separately from the ones we actually read successfully, so failures can be retried later.
+**New session file format is unsupported.** Sessions now stored in a line-delimited format are completely ignored when looking for a previous session to summarize. The system only handles the older single-document format.
 
-Related to that, batch selection always grabs the newest sessions, so older sessions that failed to process get perpetually starved and skipped forever. We should rotate older unprocessed sessions into the batches so they get another shot.
+**Sessions are sorted by filename, not by actual update time.** When selecting the most recently updated session, the system sorts by the timestamp encoded in the filename. But a session's last-updated timestamp inside the file may differ from the filename date — especially for resumed sessions. This causes the wrong session to be selected.
 
-Oh and saving summaries: for a session in the new line-delimited format, don't rewrite the whole file, just append a delta record containing only the summary. And handle the concurrent case where another process bumped the session's last-updated timestamp while we were working, the newer timestamp should win and be preserved.
+**No distinction between "offered" and "successfully read" sessions during extraction.** When the memory extraction agent fails to read a session file (due to a permission error or other issue), the system still marks that session as processed and never retries it. The extraction state should record which sessions were candidates and separately which were actually read successfully.
 
-Last thing, the improved memory feature is currently opt-in and I want it enabled by default so users don't have to explicitly configure anything. The whole point is people expect past interactions to be available for memory extraction even if an earlier attempt got interrupted.
+**Older sessions are starved by newer ones.** The extraction batch always fills up with the most recently seen sessions, meaning older sessions that failed processing are perpetually skipped in favor of newer ones.
+
+**Memory feature is disabled by default.** The improved memory experience requires users to explicitly opt in. It should be enabled by default.
+
+## Expected Behavior
+
+- Sessions in the new line-delimited format are read, sorted, and summarized correctly
+- Session selection is based on the actual last-updated time stored in the file, not the filename
+- The extraction state separately records candidate sessions (attempted) and processed sessions (successfully read)
+- Older unprocessed sessions are rotated into extraction batches to prevent starvation
+- The improved memory feature is active by default without requiring explicit configuration
+
+## Why This Matters
+
+Conversation history is silently lost when the system ignores new-format sessions, picks the wrong session to summarize, or permanently skips sessions it failed to extract. Users expect their past interactions to be available for memory extraction, even if an earlier attempt was interrupted.

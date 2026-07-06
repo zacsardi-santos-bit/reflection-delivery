@@ -1,7 +1,17 @@
-I'm working on the Backstage search backend plugin and want to wire up a new action in the backend actions registry so agents and other action-based integrations can actually query the search engine. Right now there's no path for that, which means anything integrating through the actions API can't discover catalog entities, docs, or other indexed content, so I'd like a function that registers a search query action.
+## Description
 
-The action needs to take a search term plus a bunch of optional params, things like which document types to search across, filters to apply (and these can include nested objects, not just flat key/values), and pagination controls. All of that should get forwarded straight through to the underlying search engine as-is, no rewriting. The response should carry back the matching results, a cursor for the next page when there is one, the total number of results when that's available, and a flag saying whether more results can be fetched.
+The search backend plugin has no way to expose its search functionality through the backend actions registry. Other systems and agents that integrate via the actions API cannot currently perform search queries, limiting their ability to discover content indexed by Backstage.
 
-Two safety things I care about: any internal authorization metadata riding along on result documents has to be stripped before I return anything, and also any result whose location uses an unsafe URL scheme (anything that isn't a normal web protocol like http/https) needs to be filtered out completely. When I drop one of those, I want an informational log message that includes the offending URL so it's traceable. Oh and registration should still succeed cleanly even when nothing's been indexed yet and there are no document types, don't want it blowing up on an empty index.
+## Expected Behavior
 
-This lives in the search backend plugin, so put the registration logic where the plugin sets up its backend module (roughly `@plugins/search-backend/src`), and it should hang off whatever actions registry service the plugin already depends on. The goal is search-driven workflows through the actions API while keeping the returned data safe from leaked auth info and dangerous links.
+- A new action should be registered with the backend actions registry that allows callers to query the search engine.
+- The action should accept a search term along with optional parameters for filtering by document type, applying field filters (including nested objects), and paginating results.
+- All input fields should be forwarded to the underlying search engine as provided.
+- Results should indicate whether additional pages are available.
+- The total count of results (when available) should be included in the response.
+- Sensitive internal authorization metadata must be stripped from result documents before they are returned.
+- Results whose document location uses an unsafe URL scheme (anything other than standard web protocols) must be excluded from the response, and each exclusion should be logged.
+
+## Why This Matters
+
+Without this capability, AI agents and other action-based integrations cannot use the Backstage search index to look up catalog entities, documentation, or other indexed content. Exposing search through the actions API enables richer, search-driven workflows while keeping the response safe by sanitizing authorization data and dangerous URLs.

@@ -1,3 +1,12 @@
-I hit a bug in our deep equality helper where an empty array comes back as equal to an empty plain object, which is wrong since those are fundamentally different kinds of values and shouldn't ever be considered deeply equal. I think the comparison logic just sees zero elements on one side and zero properties on the other and calls it a day, but I want comparing `[]` to `{}` to always return false no matter which one I pass first, so it needs to be order independent. Same deal when they're nested, like if I've got two objects with matching keys but one key points at an empty array and the other points at an empty plain object, the whole comparison should come back not equal instead of true. Basically anywhere this empty-array-versus-empty-object mismatch shows up, however deeply nested, it should register as a difference.
+## Description
 
-The reason this matters is it's messing with change detection in form state management. When a field value flips from an empty array to an empty object or the other way around, that's a real structural change and we should catch it, but right now the transition gets silently swallowed and the UI ends up out of sync with the actual data. So please fix the deep equality util so it distinguishes array type from plain object type before treating same-length emptiness as equality.
+There is a bug in the deep equality utility where an empty array is incorrectly considered equal to an empty plain object. Because both structures have zero properties/elements, the comparison logic treats them as equivalent — but they are fundamentally different types and should never be considered equal.
+
+## Expected Behavior
+
+- Comparing an empty array with an empty plain object should be considered not equal, regardless of argument order.
+- When two objects share the same keys but one key holds an empty array and the other holds an empty plain object, the objects should be considered not equal.
+
+## Why This Matters
+
+This bug can cause incorrect change-detection behavior in form state management. If a field value transitions from an empty array to an empty object (or vice versa), the change should be detected. With this bug, such transitions are silently ignored, leading to subtle form state inconsistencies where the UI does not reflect the actual data structure change.

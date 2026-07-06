@@ -1,5 +1,16 @@
-I'm digging into the Flutter tools plugin resolution code and hit a gap with inline Dart implementations on desktop. So the deal is, when a Flutter plugin ships its own implementation directly in the app-facing package (no separate implementation package) for desktop platforms like Linux, macOS, and Windows, it never gets auto-selected as its own default implementation, even though mobile and web already do this correctly. It was disabled on purpose way back to avoid breaking already-published packages that didn't expect the behavior, but now I want an opt-in path.
+## Description
 
-Here's what I'm after: if a desktop plugin declares a minimum Flutter framework/SDK version of 2.11 or later, treat it as its own default inline implementation on desktop, same as mobile, and produce one resolution per declared desktop platform it supports. If the plugin declares no Flutter version requirement at all, or its minimum is older than 2.11, keep today's behavior exactly, so zero resolutions, no auto-selection. That way newly published plugins requiring 2.11+ get the right thing while old ones aren't broken.
+Flutter plugins written entirely in Dart can provide platform implementations directly (without a separate implementation package) for desktop platforms such as Linux, macOS, and Windows. On mobile and web, such "app-facing" plugins are automatically treated as their own default implementation and get resolved correctly. On desktop, however, this was deliberately disabled as a backward-compatibility measure, because enabling it for all existing plugins at once would have broken already-published packages that did not expect this behavior.
 
-To pull this off the plugin metadata structure needs to carry the Flutter SDK version constraint straight from the plugin's config (pubspec) so the resolution logic can read it when deciding per desktop platform whether the new behavior applies. So basically: no version = 0 resolutions, below 2.11 = 0 resolutions, 2.11 or higher = one resolution per declared desktop platform, and the constraint has to be inspectable from the metadata. btw the point is dart-only desktop plugins published after 2.11 should just work like mobile plugins without users manually wiring up an implementation that's already bundled, while older published plugins stay safe.
+We now have a mechanism to opt in: plugins that declare a minimum Flutter framework version of 2.11 or later should be treated as their own default inline implementation on desktop, just like mobile plugins. Plugins that declare no Flutter SDK version requirement, or declare a minimum version older than 2.11, must continue to behave as before.
+
+## Expected Behavior
+
+- A desktop plugin with no declared minimum Flutter version is **not** auto-selected as its own default implementation (0 resolutions).
+- A desktop plugin declaring a minimum Flutter version below 2.11 is **not** auto-selected (0 resolutions).
+- A desktop plugin declaring a minimum Flutter version of 2.11 or higher **is** auto-selected as its own default implementation, producing one resolution per declared desktop platform.
+- The plugin's version constraint must be readable from the plugin metadata so the resolution logic can use it.
+
+## Why This Matters
+
+Dart-only desktop plugins published after Flutter 2.11 should work the same way as mobile plugins — users shouldn't have to manually wire up an implementation that is already bundled in the app-facing package. At the same time, older plugins must not be broken by this change.

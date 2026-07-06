@@ -1,3 +1,19 @@
-I'm hacking on my Markdown parser and blockquotes are dropping block-level structure. When I write a line of text then a line of dashes inside a blockquote, that should come out as a level-two setext heading, but instead the dashes just render as plain paragraph text and the heading vanishes. Same deal with horizontal rules, a standalone line of dashes, stars, or underscores inside a quote should be a thematic break but it's coming through as a paragraph. I traced it and the root cause is that after the lexer consumes the blockquote angle-bracket prefix on a line, its internal state doesn't realize it's back at the start of a line, so it never emits the right block-level tokens for stuff like setext underlines or thematic breaks, it just tokenizes them as plain text chars.
+## Description
 
-What I think I need is a way for the buffered lexer to re-lex the current token while pretending the current position is the start of a line, then the parser can produce the correct block tokens right after eating the quote prefix. With that in place I want setext headings inside blockquotes working, both single-level and nested, and thematic breaks inside blockquotes using dashes, stars, or underscores whether or not there are spaces between the characters. A few things that should NOT become thematic breaks though: mixed-character sequences that combine different break chars, and unspaced three-star sequences inside a blockquote. Oh and indented code blocks inside blockquotes need to terminate before a thematic break line rather than swallowing it as code content. All of this has to work for nested blockquotes too, since per CommonMark these are all valid constructs people use constantly and right now the parser just produces wrong output for perfectly good Markdown.
+The Markdown parser fails to correctly handle block-level constructs — headings and horizontal rules — when they appear inside blockquotes. After consuming the blockquote prefix character on each line, the lexer's internal state does not recognize the remaining content as being at the start of a line. As a result, sequences that should be recognized as heading underlines or thematic breaks are instead tokenized as plain text characters, causing the parser to produce incorrect output.
+
+For example, a blockquote containing a text line followed by a line of three dashes should render as a level-two heading inside the blockquote. Instead, the parser treats the dashes line as plain paragraph text, dropping the heading structure entirely. Similarly, a standalone line of dashes inside a blockquote should produce a horizontal rule, but is currently parsed as a paragraph.
+
+## Expected Behavior
+
+- A text line followed by three or more dashes or equals signs inside a blockquote should produce a setext heading.
+- A standalone thematic break pattern (three or more dashes, stars, or underscores, with or without spaces between them) on a quoted line should produce a horizontal rule.
+- Mixed-character sequences combining different thematic break characters must NOT be treated as thematic breaks.
+- Unspaced three-star sequences inside blockquotes must NOT be parsed as thematic breaks.
+- Indented code blocks inside blockquotes must terminate properly when followed by a thematic break line, rather than absorbing the break as code content.
+- These behaviors must also work correctly for nested blockquotes.
+- The underlying lexer infrastructure must support re-lexing a token at the current position while treating that position as a line start, so the parser can correctly produce block-level tokens after consuming a blockquote prefix.
+
+## Why This Matters
+
+Blockquotes are common in Markdown documents, and headers and horizontal rules inside blockquotes are valid and frequently used constructs according to the CommonMark specification. Without this fix, the parser produces incorrect output for valid Markdown, causing tools that rely on this parser to behave incorrectly.

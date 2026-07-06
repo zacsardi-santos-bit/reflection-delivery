@@ -1,5 +1,16 @@
-I'm working on the Ray Serve HAProxy integration and I need to add a metrics collection layer for the ingress request router, because right now when the proxy routes a request we've got zero visibility into how long the routing decision took, whether the request landed on the replica we intended or got redirected somewhere else, whether the body got truncated during routing, or what actually went wrong when routing failed. That makes it impossible to build dashboards or alerts around routing quality and latency, so operators can't tell slow routing from slow replicas, can't catch replica-pinning failures, and get no signal on truncation.
+## Description
 
-The plan is to have HAProxy emit structured log lines over a Unix datagram socket, and a new Python collector component on our side listens on that socket, parses those lines into typed records, and records metrics. I want routing latency in milliseconds broken out by success versus failure, a counter for truncated-body events, a counter for replica-mismatch events (intended vs actual replica differ), a counter for failures with the specific failure reason attached as a tag, and a total request counter. Everything's tagged by application name, and if the app name is missing from a log entry, fall back to "unknown" instead of dropping the observation. Events that never passed through the router at all shouldn't produce any metric updates, and a failure event with no latency measurement should still bump the failure and request counters but leave the latency histogram alone.
+Ray Serve's HAProxy integration currently has no way to collect per-request routing metrics. When a request is processed by the ingress request router, there is no visibility into how long the routing decision took, whether the request landed on the intended replica or was redirected to a different one, whether the request body was truncated during routing, or what caused a routing failure. This makes it impossible to build dashboards or alerts around routing quality and latency.
 
-Also the proxy config file and the embedded scripting logic both need to respect a metrics-enabled toggle. When metrics are on, the rendered config and script include the structured logging directives and the timing instrumentation; when off, all of that's completely absent from the output. Oh and the socket binding needs to handle a stale socket file left over from a previous run, and closing the collector should remove the socket file and be safe to call multiple times or even before any binding happened.
+## Expected Behavior
+
+- A new metrics collector component should be introduced that listens for structured log entries from the proxy process over a Unix socket and parses them into typed records.
+- The collector should track routing latency (in milliseconds, broken out by success vs. failure outcome), replica mismatch events, truncated body events, per-reason failure counts, and total request counts — all labeled by application name.
+- When the application name is not present in a log entry, it should fall back to "unknown" rather than silently dropping the observation.
+- Events that did not pass through the router at all should not produce any metric updates.
+- The proxy configuration and the associated scripting logic should both support a toggle: when metrics are enabled, the rendered output includes the structured logging directives and timing instrumentation; when disabled, all of that is omitted.
+- Binding a socket for receiving log entries should be safe to call even when a stale socket file already exists, and closing the collector should remove the socket file and be safe to call multiple times or before binding.
+
+## Why This Matters
+
+Without routing-level metrics, operators cannot distinguish slow routing from slow replicas, cannot detect replica-pinning failures, and have no signal when body truncation is occurring. This feature makes the ingress request router observable.

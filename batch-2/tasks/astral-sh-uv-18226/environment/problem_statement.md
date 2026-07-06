@@ -1,5 +1,17 @@
-I'm hitting a couple of annoying bugs when I combine upgrade flags in our dependency compilation tool, and I think they both come down to how we merge the global upgrade settings with the per-package ones. First case: I run a global upgrade (upgrade everything) but I also pass a per-package flag with a version constraint on one dependency, like keep this library capped at 1.x. Right now that constraint just gets silently dropped and the package upgrades right past the cap I asked for, which breaks stuff downstream. What I actually want is for that constrained package to resolve to its latest version that still satisfies the constraint, while every other package upgrades freely like normal.
+## Description
 
-Second case: I explicitly disable upgrades globally (no-upgrade) but want to make an exception for exactly one package by also passing a per-package upgrade flag for it. That exception gets silently ignored too, so the package stays at its old pinned version even though I clearly asked for it to move. I want only that one named package to upgrade and everything else to stay pinned.
+There are two related but broken behaviors when combining global upgrade flags with per-package upgrade flags in the dependency compilation tool:
 
-So basically the per-package version constraints need to be respected even during a global upgrade, and a per-package upgrade exception needs to override a global no-upgrade setting. While you're in there, the internal settings representation for upgrade config should cleanly separate the two concerns, which packages we're upgrading versus what version constraints apply to those packages, since those are really distinct things and modeling them as one blob is probably why this is broken in the first place. Users reasonably expect combining these flags to just work, and silently eating their intent is confusing and leads to surprising resolution results for anyone who wants fine-grained control over upgrades.
+1. **Global upgrade + per-package constraint is ignored**: When you run a global upgrade but also specify that a particular package should be kept below a certain version (e.g., "upgrade everything but keep this library at version 1.x"), the version constraint is silently ignored. The package gets upgraded without any upper bound.
+
+2. **No-upgrade + per-package upgrade is ignored**: When you explicitly disable upgrades globally but want to make an exception for one specific package, the exception is silently discarded. The package stays pinned even though you explicitly requested it be upgraded.
+
+## Expected Behavior
+
+- When upgrading all packages while specifying a version constraint for one package, the constrained package should resolve to its latest version that satisfies the constraint. Other packages should upgrade freely.
+- When disabling upgrades globally while specifying a package to upgrade, only that specific package should be upgraded. All other packages should remain at their pinned versions.
+- The settings representation for upgrade configuration should cleanly separate "which packages to upgrade" from "what version constraints apply to those packages." These are distinct concerns and should be modeled separately.
+
+## Why This Matters
+
+Users reasonably expect that combining these flags should work as described. The current behavior silently ignores user intent, which is confusing and leads to unexpected resolution results. This affects anyone who wants fine-grained control over dependency upgrades.

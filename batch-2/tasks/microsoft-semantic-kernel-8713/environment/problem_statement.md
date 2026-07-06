@@ -1,7 +1,27 @@
-I'm messing with the Semantic Kernel vector store connectors and I've got two related things I need sorted out.
+## Description
 
-First up, the Qdrant connector doesn't have any built-in way to work with a generic dictionary-based data model. Right now it only handles strongly-typed record classes, so if I want the flexible schema-driven approach where I pass in a record definition and just work with key/value dictionaries instead of a concrete model type, I'm stuck. Other connectors already do this and Qdrant should too. What I want is a generic data model mapper for Qdrant that the connector picks up automatically whenever the record type is the built-in generic data model, and it needs to work for both numeric keys and UUID-based keys, so I can upsert and retrieve without needing a dedicated class.
+We want to add support for a generic, dictionary-based data model to the Qdrant vector store connector, similar to what already exists for other connectors. Additionally, there are two bugs in the existing Azure AI Search generic data model mapper that need to be fixed.
 
-Second, the existing Azure AI Search generic data model mapper has a couple of bugs I keep hitting. When I map a partial record, one that doesn't have values for every property declared in the record definition, it crashes instead of just skipping the missing fields. This bites me in both directions, writing a partial record to storage and reading one back from storage that's missing some fields, so the mapper should silently skip any property that isn't present rather than blowing up. Oh and the other thing, when a record I pull from storage is missing its required key field, it throws some low-level generic system exception, which is annoying to catch predictably in app code. It should raise a proper domain-specific mapping exception with a clear message that names which key property was missing.
+## Issues to Address
 
-The point of all this is to let me work with records in a loosely-structured but schema-driven way, which really helps for dynamic or multi-tenant setups where the schema varies or a dedicated strongly-typed class just isn't practical.
+### 1. Missing generic data model support in Qdrant connector
+
+The Qdrant connector currently only supports strongly-typed record classes. Developers who want to use a flexible, schema-driven approach — passing in a record definition and working with key/value dictionaries instead of concrete model classes — have no way to do this with Qdrant. Other connectors already support this pattern, and Qdrant should too.
+
+### 2. Azure AI Search generic mapper crashes on partial records
+
+When mapping from a data model to storage using the Azure AI Search generic mapper, if the data model does not contain values for all properties declared in the record definition, the mapper crashes instead of gracefully skipping the missing fields. The same issue occurs in the reverse direction: when mapping from storage back to the data model, fields absent from the storage document cause an error rather than being skipped.
+
+### 3. Azure AI Search generic mapper throws wrong exception type for missing key
+
+When retrieving a record from Azure AI Search and the key field is absent from the stored document, the mapper throws a low-level system exception rather than a domain-specific mapping exception. This makes it harder to catch and handle predictably in application code.
+
+## Expected Behavior
+
+- The Qdrant connector should support using a generic, dictionary-based data model (with either numeric or UUID keys), allowing upsert and retrieval without requiring a strongly-typed record class.
+- Both the Qdrant and Azure AI Search generic mappers should silently skip properties that are not present in the source data during mapping, in both directions.
+- When a required key field is missing from a retrieved record, the mapper should raise a domain-specific mapping exception with a clear message identifying which key property was missing.
+
+## Why This Matters
+
+This gives developers the flexibility to work with vector store records in a schema-driven but loosely-structured way, which is especially useful for dynamic or multi-tenant scenarios where the schema may vary or where a dedicated strongly-typed class is not practical.

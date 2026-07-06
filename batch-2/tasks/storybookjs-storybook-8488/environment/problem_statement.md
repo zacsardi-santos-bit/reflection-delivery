@@ -1,5 +1,23 @@
-I want to rework how Storybook figures out whether a newer version is available. Right now the client makes a live HTTP request at runtime every time Storybook starts, which adds startup latency, needs a network connection, and drags in a bunch of caching logic to avoid checking too often, plus the results get stored permanently in local state between sessions. I'd rather flip this to build-time: have the server fetch the version info once during startup and bake it into the application bundle so the client can read it directly from that pre-fetched data, no runtime network call at all.
+## Description
 
-Concretely the client-side version state should have both the latest stable release and the next (pre-release) version available immediately from that build-time data, right from initialization, so nothing waits on an async fetch. And since the data is always freshly baked into the bundle, whatever gets written to the store doesn't need permanent persistence anymore.
+Currently, the version update checker makes a live HTTP request to a remote server every time Storybook starts, in order to find out whether a newer version is available. This approach has several downsides: it adds startup latency, it requires a network connection, it introduces complex caching logic to avoid checking too frequently, and the results need to be stored permanently in local state between sessions.
 
-While I'm in here I also want to clean up the update notification logic because it's noisy. Patch-only bumps shouldn't trigger a notification at all, only minor or major upgrades are worth surfacing. Also if the latest available version is itself a prerelease, don't notify for it no matter how much higher the number is. Oh and for anyone currently on a prerelease build, strip the prerelease tag off their version and compare that base version against the latest stable release, so they get correctly told about a newer stable version without being misled by patch or prerelease comparisons. Net effect is a simpler architecture, no runtime network dependency on the client, and notifications that only fire for meaningful upgrades.
+We should instead fetch version information once at build/startup time on the server side, bake it into the application bundle, and have the client read it directly from that pre-fetched data. This eliminates the client-side network request entirely.
+
+## Expected Behavior
+
+- Version information (including the latest stable release and the latest pre-release) should be available to the client immediately from build-time data, without any runtime network calls.
+- The state should include both the latest stable version and the next (pre-release) version from the build-time data, right from initialization — no need to wait for an async fetch.
+- The version data written to the store should not require permanent persistence, since it is always freshly available from the bundle.
+
+## Update Notification Logic Improvements
+
+Along with this change, the update notification logic should be refined:
+
+- **Patch-only updates should not trigger a notification.** If the only difference between the current version and the latest is a patch increment, users should not be notified. Only minor or major version updates warrant a notification.
+- **Prerelease latest versions should not trigger a notification.** If the latest available version is itself a prerelease, users should not be notified regardless of how much higher the version number is.
+- **Users on a prerelease build** should have their base version compared against the latest stable release, so they are correctly notified about a newer stable version but not misled by patch/prerelease comparisons.
+
+## Why This Matters
+
+This change simplifies the architecture, removes a runtime network dependency from the client, and makes update notifications less noisy by only surfacing meaningful upgrades.

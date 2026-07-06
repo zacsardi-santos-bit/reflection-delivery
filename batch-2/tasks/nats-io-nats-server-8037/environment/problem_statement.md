@@ -1,5 +1,14 @@
-I'm hitting a nasty bug in the file-based message store where one transient data corruption event permanently kills all further writes to a stream. What happens is when the store rebuilds its per-subject message index and runs into corrupt cached data, that error bubbles up as if a write failed, so the write path shuts itself down for good, even though the underlying storage is totally healthy and the only thing that broke was reading back some existing data. That's way too aggressive since a corrupt read cache doesn't affect our ability to write new stuff to good disk, and freezing ingestion for a whole stream over it risks data loss and availability.
+## Description
 
-What I want is for the store to actually distinguish between errors that come from reading or decoding existing on-disk data (a corrupt message cache, a partially valid state file, that kind of thing) versus errors from genuinely writing new data. Read-side errors should just get logged and handled gracefully without blocking anything, so after one of those happens mid store operation the next write should go through fine. Real write failures, like something from the underlying I/O layer, still need to permanently disable writes like they do today, no change there.
+The file-based message store permanently disables writes when it encounters corrupt or unreadable on-disk data during an otherwise valid write operation. This is incorrect behavior: errors that arise from reading and decoding existing stored data (such as a corrupt message cache or a partially valid state file) are fundamentally different from errors that arise from writing new data. Currently, both types of errors are treated identically, causing the write path to shut itself down even when the storage device is healthy and the failure was a transient read-side issue.
 
-Oh and one more thing while you're in there. When rebuilding that per-subject index fails partway through, right now it seems to get stuck reusing the same corrupt in-memory state on the next attempt, so it just loops on the same bad data. I want both the partially-built index and the corrupt in-memory message cache discarded when the rebuild fails, so the next attempt retries clean from disk instead of reusing the incomplete or corrupt state. The fix lives around the store's index rebuild and write handling paths, so trace where that rebuild error gets classified and make sure a decode/read failure there can't take down the writer.
+## Expected Behavior
+
+- Errors originating from reading or interpreting existing on-disk data should be recognized as distinct from write failures and should not permanently disable the write path.
+- After encountering such a read-side error during a store operation, subsequent write operations should succeed normally.
+- True write failures (e.g., from the underlying I/O layer) must still permanently disable writes as before.
+- When rebuilding the internal per-subject message index fails partway through, the partially-built index and the corrupt in-memory cache must both be discarded, so the next attempt starts clean from disk rather than reusing incomplete or corrupt in-memory state.
+
+## Why This Matters
+
+A single transient data corruption event — something that only affects the ability to read back a specific message — can permanently freeze message ingestion for an entire stream. Since writes to healthy storage are completely unaffected by a corrupt read cache, blocking all further writes is far too aggressive and causes unnecessary data-loss risk or stream unavailability.

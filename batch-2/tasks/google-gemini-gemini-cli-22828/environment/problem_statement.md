@@ -1,3 +1,21 @@
-I'm cleaning up how our CLI handles subagent activity and I hit two things that need fixing. First one's a security problem: sensitive stuff is leaking through the activity stream. When subagents run, passwords, API keys, auth tokens, and cryptographic private key material end up in error messages, tool call arguments, and even the agent's own thought output, which then gets shown to the user or written to logs. I want a set of sanitization utilities that scrub this before anything gets surfaced, swapping the sensitive bit out for a safe placeholder. At minimum it's gotta handle inline PEM blocks in error messages (the kind with BEGIN/END markers around the key material), key-value pairs in error messages and tool arguments where the key looks like a credential name (api_key, password, token, secret, that sort of thing), and token-like patterns in thought content. Oh and really important, the pattern matching can't hang on adversarial input, like a string that looks like the start of a PEM block but never actually terminates. So please avoid catastrophic backtracking, cap things, whatever it takes so it doesn't time out.
+## Description
 
-Second thing, when a subagent streams its reasoning in real time, each new thought fragment is getting appended to the activity list instead of replacing the current thought. So users see every partial thought ever streamed instead of just the latest thinking, and the list grows unbounded with stale junk during long runs. I want a new thought chunk to overwrite the previous one in the activity list so only the most recent thought shows at any moment. Both the browser agent invocation path and the local subagent invocation path need this thought-overwriting fix. The sanitization should run on content before it's displayed or logged. Point is, nobody watching the stream or reading logs should ever see credentials or key material, and the activity display should stay readable.
+There are two related issues with how subagent activity is handled in the CLI:
+
+1. **Sensitive data leaks through activity streams.** When subagents run, sensitive information — such as passwords, API keys, authentication tokens, and cryptographic key material — can appear in error messages, tool call arguments, and the agent's own thought output. This data gets surfaced in progress displays and logs without any sanitization, which is a security concern.
+
+2. **Thought content accumulates instead of updating.** As a subagent streams its reasoning, each new thought fragment is appended to the activity list rather than replacing the previous one. This causes the activity display to grow unboundedly with stale partial thoughts, when users really only care about the agent's current thinking.
+
+## Expected Behavior
+
+- A utility should exist for sanitizing agent-related content before it is displayed or logged. It should:
+  - Remove PEM-encoded cryptographic material from error messages, replacing it with a safe placeholder.
+  - Remove sensitive key-value pairs (like API keys and credentials) from error messages and tool arguments.
+  - Remove token-like sensitive values from agent thought content.
+  - Be resilient to adversarial inputs that could otherwise cause the sanitization logic to hang or time out.
+
+- When a subagent emits a new thought, it should replace the previous thought in the activity list rather than adding another entry.
+
+## Why This Matters
+
+Users and operators relying on the activity stream or logs should not see credentials or private key material. Accumulating partial thoughts also makes the UI hard to read during long agent runs.

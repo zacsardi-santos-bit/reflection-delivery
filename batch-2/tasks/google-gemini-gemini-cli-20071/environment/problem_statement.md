@@ -1,7 +1,21 @@
-I've been staring at the context window indicator in the CLI footer and the framing feels backwards. Right now it shows something like "50% context left," which is counterintuitive, when the window is completely full it reads "0% context left" instead of the more natural "100% context used." I want to flip it so we display how much context has been consumed, so "50% context used," "100% context used" when fully consumed, "0% context used" when nothing's used yet. On narrow terminals keep the abbreviated form that drops the label and just shows the percentage.
+## Description
 
-Also, when the CLI auto-compresses conversation history to free up space it happens silently right now and users have no clue it happened. After a compression event I want a visible informational message that reports the before and after context usage percentages, and mentions where the compression threshold can be adjusted in settings.
+The CLI currently shows context window information as "X% context left" (remaining capacity). This framing is confusing, especially when the context window is fully used — the display reads "0% context left" rather than the more intuitive "100% context used." It should be changed to show how much context has been consumed instead of how much remains.
 
-Oh and the context overflow warning wording bugs me too, it currently says "remaining context window limit" which is redundant. It should say "context window limit" with the remaining token count shown separately as "N tokens left."
+Additionally, when the CLI automatically compresses conversation history to free up context space, users receive no feedback about what happened. There should be an informational message telling them the before-and-after context usage percentages after a compression event, along with a hint pointing them to where they can adjust the compression threshold in settings.
 
-Last thing, numeric settings that have units should show those units in the settings viewer. If a setting stores a decimal representing a percentage, show both the raw value and its percentage equivalent. If a setting stores a number in a time unit like seconds, append the unit abbreviation to the value. Right now these display as bare numbers and it's ambiguous what they mean without looking it up.
+Finally, settings with associated units (such as a threshold value that represents a percentage, or an interval that represents seconds) currently display as bare numbers. The units should be shown alongside the value so users can understand what the number means without having to look it up.
+
+## Expected Behavior
+
+- Context usage display shows "X% context used" (not "X% context left")
+- On narrow terminals, the abbreviated form shows just the percentage without the label
+- When fully consumed, shows "100% context used" rather than "0% context left"
+- When 0% is consumed, shows "0% context used"
+- After automatic history compression, an informational message reports the before and after context usage percentages and mentions where to change the compression threshold
+- Context overflow warning messages reference the "context window limit" and show remaining tokens with a "left" qualifier
+- Numeric settings with units display the value with its unit (e.g., a percentage setting shows both the raw decimal and the equivalent percentage; a seconds setting shows the number appended with the unit)
+
+## Why This Matters
+
+"Context used" is a more natural framing aligned with how users think about memory and storage consumption. Without feedback on compression events, users don't know that their context window was automatically managed. And without units on numeric settings, configuration values are ambiguous.

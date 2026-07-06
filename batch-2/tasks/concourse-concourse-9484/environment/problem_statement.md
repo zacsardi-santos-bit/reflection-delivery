@@ -1,7 +1,17 @@
-I'm building out admin controls for the Concourse wall broadcast thing. So right now the wall can show a banner message to everybody across the top of the UI, but there's literally no way for an admin to actually set, edit, or clear that message from inside the dashboard. The whole management side is missing, so the feature is basically one-directional. I want to fix that by adding an admin-only button in the dashboard top bar plus an inline editor panel.
+## Description
 
-Couple of important bits on visibility: the management button should only show up for users who are both logged in AND have admin privileges. Unauthenticated visitors shouldn't see it, and regular logged-in non-admin accounts shouldn't either. Clicking that button opens the inline editor where the admin types a broadcast message and either submits it or clears any existing one. Clicking the button again while the editor's already open should toggle it closed, and there should also be a dedicated close button inside the panel itself.
+Concourse has a "wall" feature that lets an operator broadcast an important message to all users, shown as a banner across the top of the UI. However, the dashboard currently has no controls for administrators to actually compose, submit, or remove that message — the admin-facing management interface is completely absent.
 
-The editor needs to auto-close in a few cases: when the admin navigates away from the dashboard to another page, when they log out, and when a save succeeds. But if the save fails on the backend, keep the editor open so they can retry, don't just eat the message. Clicking the clear control should immediately trigger removal of the existing broadcast and also close the editor. Oh and after a successful save the app should re-fetch and display the updated wall message so the new content actually shows up, and after a successful clear the wall banner should disappear from the view entirely.
+## Expected Behavior
 
-This all lives in the dashboard frontend code, so wire the button and editor panel into the dashboard top bar components and hook the save/clear/re-fetch behavior through wherever the wall message state and API calls already live.
+- A management button should appear in the dashboard top bar **only** for users who are both logged in and have admin privileges. It should not be visible to unauthenticated users or to logged-in non-admin users.
+- Clicking the management button should open an inline editor panel that allows the admin to type a broadcast message and submit it, or clear any existing broadcast.
+- The editor panel should close automatically when the admin navigates away from the dashboard, logs out, or successfully saves the message.
+- If the save operation fails on the backend, the editor should remain open so the admin can retry.
+- Clicking a "clear" control should immediately trigger removal of the existing broadcast and close the editor.
+- After a successful save, the application should refresh the displayed wall message so the new content appears.
+- After the broadcast is successfully cleared, the wall banner should disappear from the UI.
+
+## Why This Matters
+
+Without these controls, admins have no way to manage the wall message from within the Concourse UI, making the wall feature effectively one-directional. Adding the editor makes the feature fully usable for operators who want to communicate real-time status to their users.

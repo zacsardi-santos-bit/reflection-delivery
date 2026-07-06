@@ -1,9 +1,18 @@
-I'm hitting what looks like a false positive in the Svelte compiler around the word "type" in template expressions. If I've got a variable literally named `type` and I use it in a normal expression, say comparing it against a string, doing some arithmetic with it, or checking a prototype chain or membership (instanceof, in, that kind of thing), the compiler bails and tells me declaration tags must use variable declaration keywords. But these aren't type declarations at all, they're totally valid JavaScript expressions, so the error makes no sense.
+## Description
 
-It gets weirder with comments. If I drop a block comment inside a binary expression where `type` is the left operand, like between the operator and the right operand while doing an instanceof check, the parser misidentifies the whole thing as a type declaration and either fails to parse or classifies it wrong.
+The Svelte template compiler incorrectly rejects valid template expressions that use the word "type" as a regular variable identifier. Expressions such as comparisons, arithmetic operations, and prototype chain or membership checks on a variable named "type" trigger a false positive error saying that declaration tags must use variable declaration keywords — even though these are perfectly valid JavaScript expressions, not type declarations at all.
 
-What I want is for the compiler to tell the difference between `type` being used as a regular identifier in an expression versus `type` being used as the TypeScript keyword to declare a type alias. The keyword case in a declaration tag should still throw the appropriate error, that part's correct, but the plain-identifier expressions should just work.
+Additionally, when a block comment appears inside a binary expression where "type" is the left operand (for example, between the operator and the right operand), the parser incorrectly classifies the whole expression as a type declaration, leading to a parse failure or misidentification.
 
-Oh and there's a related thing in the loose/recovery parsing mode. When I write an incomplete variable declaration inside a declaration tag where the right-hand side ends with a division operator and nothing comes after it, the recovery parser chokes and doesn't produce any AST node for that partial declaration. It should handle that gracefully and still give back a node even though the expression is incomplete.
+A separate but related issue exists in the compiler's recovery/loose mode: when parsing an incomplete variable declaration tag whose right-hand side ends with a division operator and no right operand, the parser fails to produce a valid AST node for the partial declaration.
 
-This matters because `type` is a super common variable name, and folks using it in Svelte templates get these spurious compile errors that are really hard to understand, especially in TypeScript projects where `type` is both a keyword and a perfectly valid identifier depending on context.
+## Expected Behavior
+
+- Template expressions using "type" as a regular identifier in binary operations (comparisons, arithmetic, prototype chain checks, membership checks, etc.) should be accepted without errors.
+- A block comment appearing inside a binary expression involving "type" should not cause the expression to be misidentified as a type declaration.
+- Actual TypeScript type alias declarations within declaration tags should still produce the appropriate error.
+- The loose/recovery parser should gracefully handle incomplete variable declarations that end with a division operator.
+
+## Why This Matters
+
+Developers who happen to use a variable named "type" in their Svelte templates — a common variable name — get spurious compile errors that are difficult to understand. This is especially confusing in TypeScript projects where "type" has special meaning as a keyword but is also valid as an identifier in expressions.

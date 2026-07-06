@@ -1,5 +1,16 @@
-I'm working on the CuPy CI infra and need to bump our test matrix to newer Python interpreters and numeric library versions across every supported GPU environment. We keep a central version matrix config that lists the Python and numpy/scipy-style library versions for each CUDA and ROCm variant, and there's a generator script that reads that config and emits the container build files (Dockerfiles) for each environment. The config is stale right now, so first thing I want is to update it with the intended current Python interpreter and numeric computing library versions for every CUDA and ROCm entry.
+## Description
 
-Here's the annoying part though: one family of environments runs on an older OS, and to build a newer Python version there you first have to install some extra system-level build dependencies before Python will even compile. The generator doesn't know how to emit those setup steps yet, so I need to extend it so that when it's generating build files for those older-OS environments targeting a newer Python, it also writes out the extra system dependency install steps. Environments that don't need them shouldn't get them.
+The CuPy CI pipeline uses a central version matrix configuration and an automated generator script to produce container build files for each supported GPU environment (various CUDA and ROCm versions). When the supported Python interpreter and numeric library versions in the test matrix need to be updated, the generator must be run to regenerate those container build files so they remain consistent with the configuration.
 
-When I run the generator in dry-run / validation mode right now it complains that dozens of container build files are out of sync and exits non-zero, which is blocking everyone. So after I update the config and teach the generator about the older-OS deps, I need to actually regenerate all the container build files so they exactly match what the generator produces. Then running the generator in validation mode should pass cleanly with nothing reported as needing regeneration and a zero exit status. Keeping this matrix current is what lets us catch dependency compatibility issues early, and right now the out-of-sync state is just producing noise and blocking real work.
+Currently, the version matrix is out of date. Additionally, one family of environments (based on an older OS) requires additional system dependencies to build newer Python versions, and the generator does not yet emit those setup steps. As a result, running the generator in validation mode reports that many container build files need to be regenerated, and the validation check fails.
+
+## Expected Behavior
+
+- The central version matrix configuration should be updated with current Python interpreter and numeric computing library versions for every CUDA and ROCm environment.
+- The generator should be extended to emit the required system-level build dependencies for older OS environments that need them when building newer Python versions.
+- After both changes, all container build files should exactly match what the generator would produce.
+- Running the generator in dry-run (validation) mode should succeed with no files reported as needing regeneration.
+
+## Why This Matters
+
+Keeping the CI test matrix up to date ensures CuPy is tested against relevant and current dependency versions, catching compatibility issues early. An out-of-sync matrix causes CI validation failures that block contributors and obscure real issues.

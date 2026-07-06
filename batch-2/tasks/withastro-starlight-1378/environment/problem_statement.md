@@ -1,3 +1,16 @@
-I'm poking at the Starlight docs framework's Tailwind CSS integration and the generated base CSS is out of date. When the integration builds its stylesheet it emits a bunch of CSS custom properties, and one of them is the sans-serif font family variable that's derived from Tailwind's own default font config. A newer Tailwind CSS release trimmed that default sans-serif stack way down, it dropped the long list of OS-specific font name fallbacks (the ones that used to target specific browser rendering engines on Windows, macOS, and older Android) and now just leans on modern browser support for the system font keywords instead. So the new stack basically starts with those system font keywords and then only has the emoji fallbacks after them, much shorter and cleaner.
+## Description
 
-Right now our output still shows the old long list, so I need the integration bumped to the updated Tailwind CSS dependency so the generated CSS reflects that simplified font family. What I want is for the produced stylesheet to carry the new short sans-serif value and for the old explicit OS-specific font names to be completely gone from the output. Oh and this needs to hold whether or not Tailwind's built-in CSS reset (base styles) is enabled, same result either way. Everything else in the generated CSS should stay exactly as it is, so the monospace font variable and all the color variables shouldn't change at all, only the sans-serif family. It matters because users expect the generated CSS to match what the current Tailwind release actually produces, and stale snapshots or drifted output just confuse contributors.
+The Starlight Tailwind integration's generated stylesheet includes a default font family variable for sans-serif text. This font family list is based on the underlying Tailwind CSS library's default fonts. A newer version of Tailwind CSS simplified the default sans-serif font stack — removing a long list of OS-specific font name fallbacks in favor of relying on modern browser support for system font keywords, resulting in a shorter, cleaner list.
+
+Currently, the integration still reflects the older, longer font stack. The library dependency needs to be updated so that the generated stylesheets use the new, simplified font family list from the updated Tailwind CSS release.
+
+## Expected Behavior
+
+- The generated CSS should include the updated, shorter sans-serif font family: starting with the system font keywords and followed only by emoji fallbacks.
+- The old list of explicit OS-specific font names (targeting specific browser rendering engines on Windows, macOS, and older Android) should no longer appear in the output.
+- This should be consistent regardless of whether Tailwind's built-in CSS reset is enabled or disabled.
+- All other generated CSS custom properties (monospace font, color variables) should remain unchanged.
+
+## Why This Matters
+
+Keeping dependencies up to date ensures the Starlight integration correctly reflects the behavior and output of the version of Tailwind CSS it ships with. Users expect the generated CSS to match what the current Tailwind release produces for default font settings. Stale snapshots and mismatched output can confuse contributors and signal that the integration has drifted from its dependencies.

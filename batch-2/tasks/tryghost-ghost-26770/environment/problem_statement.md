@@ -1,5 +1,18 @@
-I'm doing two small front-end changes in the Ghost codebase and want them handled together. First one's a copy fix in the member portal's Transistor podcast integration. Right now the action button reads "Manage" but that's just wrong, members aren't managing anything, they're viewing their private podcast feed, so I want the default button text to be "View" instead. Everything else about the behavior should stay the same: when the member has podcasts available and their unique identifier is present, the Transistor section renders a "Podcasts" heading plus that "View" button, and the button links out to the member's private feed following the Transistor partner URL pattern with the member's unique identifier substituted in. Oh and it should still open in a new tab. Also important, when either the podcasts flag isn't set or the member identifier is missing, the whole section shouldn't render at all, it just shows nothing.
+## Description
 
-Second thing is kind of unrelated but part of a new welcome email customization feature we're building on the admin side. I need a new component file to exist under the admin settings source tree in the member emails section, something that'll eventually be the welcome email design customization modal. For now it just needs to exist and export a default component, a placeholder's totally fine, I just want the foundation in place so we can build the modal on top of it later.
+The Transistor podcasts integration in the member portal currently labels its action button "Manage", but this wording is misleading. Members using this feature are not managing anything — they are simply accessing their private podcast feed. The button text should be updated to "View" to better reflect the actual action being taken.
 
-The "Manage" wording has been confusing people so getting it to "View" actually matters for clarity, it lines the UI text up with what members are really doing.
+## Expected Behavior
+
+- When a member has podcasts available and their identifier is present, the Transistor section should display a "Podcasts" heading and a "View" button linking to their private feed.
+- The "View" link should open in a new tab.
+- The link destination should follow the partner URL pattern using the member's unique identifier.
+- When either the podcasts flag is not set or the member identifier is missing, the section should not be shown at all.
+
+## Related Work
+
+Additionally, as part of ongoing welcome email improvements in the admin settings area, a new component file is needed for a welcome email design customization modal. This file should be added to the admin settings component directory at the appropriate location within the member emails section.
+
+## Why This Matters
+
+Using "Manage" as the button label for viewing a private podcast feed is confusing and inaccurate. "View" communicates the correct intent — members are accessing their feed, not managing it. This small but meaningful label change improves clarity for members and aligns the UI text with the actual functionality.

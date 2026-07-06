@@ -1,5 +1,15 @@
-I'm working on our CLI tool's Plan Mode, the mode where agents are only allowed to create or modify plan files instead of touching source code directly, and right now the agents have basically no awareness of that restriction when they actually run. When we're in Plan Mode the system instructions we inject into sub-agent prompts don't mention the file-write limits at all, so I want a clearly labeled constraints section added to those instructions explaining that write capabilities are restricted to plan files only, and specifically only within the designated plans directory. Agents attempting forbidden operations mostly comes down to us never telling them the rules.
+## Description
 
-There's also the general-purpose agent's capability description, which is static and always talks about batch refactoring and error fixing across files. That's just wrong in Plan Mode. I want it to flip dynamically based on the current mode so that in Plan Mode it reflects the planning and investigation focus instead (think "large-scale investigation and batch planning") rather than the code-modification wording.
+The CLI tool supports a "Plan Mode" where agents are restricted to only creating or modifying plan files, rather than making direct source code changes. However, agents currently lack awareness of this mode in two important ways: their capability descriptions do not change to reflect what they're actually allowed to do in Plan Mode, and the instructions injected into sub-agent system prompts don't mention the file-write restrictions at all.
 
-Last thing, when someone opens a plan confirmation dialog and the referenced plan file doesn't actually exist on disk, we currently surface this confusing storage initialization error. I'd rather it clearly say the file wasn't found and include the path, since the generic storage error makes it way harder to figure out what went wrong and recover.
+Additionally, when a user opens a plan confirmation dialog for a plan file that doesn't exist on disk, the error shown is a confusing storage initialization message rather than a clear "file not found" indication.
+
+## Expected Behavior
+
+- When the tool is in Plan Mode, a general-purpose agent's description should reflect the planning and investigation focus (e.g., referencing "large-scale investigation and batch planning") rather than describing code-modification tasks like batch refactoring and error fixing.
+- When the tool is in Plan Mode, the system instructions sent to sub-agents should include a clearly labeled constraints section explaining that write capabilities are restricted to plan files only within the designated plans directory.
+- When a plan confirmation dialog references a plan file that does not exist, the error displayed should clearly state that the file was not found (including the path), not show a generic storage error.
+
+## Why This Matters
+
+Users relying on Plan Mode need agents to behave predictably and communicate their restrictions clearly — both in their capability descriptions and in the instructions they receive. Unclear or missing constraint communication leads to agents attempting forbidden operations. Similarly, a confusing error message when a plan file is missing makes it harder to diagnose and recover from the problem.

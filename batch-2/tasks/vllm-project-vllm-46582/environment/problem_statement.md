@@ -1,5 +1,15 @@
-I'm hitting a wall with the vLLM Rust server whenever a chat completion request carries a big body. If I send something around 2 MB, like a chunky template argument (long system prompt or a bunch of template customization), the server bounces it with an HTTP error before it ever reaches the model backend. Pretty sure it's the web framework's default request body size limit kicking in, since it caps things at roughly 2 MiB unless you override it, and right now we're just taking that default.
+## Description
 
-What I want is for the server to accept larger bodies, up to at least 32 MiB, so these requests actually go through and return a normal valid response instead of failing at the HTTP layer with some unintuitive error. The chat completion endpoint is the one that matters here. So I need the router/server setup to configure the body size limit explicitly to 32 MiB rather than relying on the framework default.
+The vLLM server's chat completion endpoint rejects valid requests that contain large payloads. This happens because the web framework's built-in default request body size limit is applied without override, causing any request body larger than approximately 2 MiB to be rejected with an HTTP error.
 
-This bites real workloads, people passing extended context payloads or lengthy template stuff are getting silently rejected even though the payload's totally reasonable in size. Once the limit's raised, a request with a large template argument should succeed and come back with a proper response.
+This is a problem in practice when users pass large template arguments (e.g., lengthy system prompts or template customizations) as part of a chat completion request. Even though the payload is within a reasonable range for real workloads, the server rejects it at the HTTP layer before the request ever reaches the model backend.
+
+## Expected Behavior
+
+- The server should accept chat completion request bodies that are larger than the framework's built-in default limit.
+- Specifically, the server should support request bodies up to at least 32 MiB.
+- Requests with large template arguments or other large fields should succeed normally and return a valid response.
+
+## Why This Matters
+
+Users sending requests with large template customizations or extended context payloads are hitting silent HTTP-level rejections. Raising the configured body size limit ensures these requests are processed correctly rather than failing with an unintuitive error response.

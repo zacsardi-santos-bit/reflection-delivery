@@ -1,5 +1,13 @@
-I want to clean up how our eval utility functions are organized because right now they're scattered across layers and it's making reuse painful. We've got helpers for converting eval tables to CSV and JSON living in the server utilities folder, and separate filtering helpers for tests, providers, and prompts buried down in the commands layer. None of these actually depend on the server or command environment, they're just general-purpose stuff, so it's awkward that non-server code that wants to generate a CSV export or filter test cases has to reach into server or command-specific directories. That coupling is annoying and I keep hitting it.
+## Description
 
-So I want to move all of these into a shared utility directory under a dedicated eval sub-folder, somewhere layer-agnostic that any part of the app can import from. The eval table CSV/JSON export helpers should end up there instead of the server utilities folder, and the test/prompt/provider filtering utilities should move out of the commands layer into that same shared space.
+Several utility functions related to evaluation processing are spread across different layers of the codebase. Some live inside the server layer and others inside the commands layer, but they are general-purpose utilities with no inherent dependency on either layer. This makes it awkward to reuse them from other parts of the application — for example, non-server code that needs to generate CSV exports or filter test cases must reach into server or command-specific directories, creating undesirable coupling.
 
-The important part is old import paths can't break. The server-layer eval table utilities module should become a re-export shim forwarding to the new shared location, and same deal for the filtering utilities that currently live in commands. And these re-exports need to be the exact same references, not copies, so existing consumers (including enterprise integrations) can't tell anything moved. Basically everything importing through the old paths keeps working untouched while new code imports from the shared location. Also the goal here is just less coupling and one obvious place to look for eval-related utilities.
+## Expected Behavior
+
+- Eval table utilities (CSV/JSON export helpers) should live in a shared utility directory accessible to any part of the codebase, not inside the server utilities folder.
+- Filtering utilities for tests, prompts, and providers should similarly move out of the commands layer into a shared utility space.
+- Existing import paths should continue to work via backward-compatible re-exports so that enterprise integrations and any other consumers are not broken.
+
+## Why This Matters
+
+Consolidating these utilities into a dedicated, layer-agnostic location reduces coupling between application layers and makes the utilities available to a wider set of consumers. It also makes the codebase easier to navigate — developers looking for eval-related utilities have one clear place to look.

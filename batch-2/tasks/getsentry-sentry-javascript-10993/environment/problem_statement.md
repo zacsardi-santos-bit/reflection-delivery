@@ -1,7 +1,16 @@
-I'm building a dedicated Sentry SDK package for Google Cloud serverless functions and want your help wiring it up. Right now there's no idiomatic way for folks on Google Cloud Functions to hook in Sentry, they have to manually instrument every handler for error capture and tracing, and there's zero automatic tracing of outgoing Google Cloud API calls, so I want to bring this to parity with the other serverless platforms we already support.
+## Description
 
-The core is wrapping three kinds of handlers. HTTP functions should get a performance span per invocation named after the HTTP method and path, capture any thrown exceptions, and flush pending events after each response completes, and importantly the HTTP wrapper should never throw if that flush itself fails (swallow the error, don't surface it to the caller). Background event functions come in synchronous, Promise-returning, and callback-based flavors, and wrapping them should record a span named after the event type and report thrown exceptions to Sentry marked as unhandled. Cloud Event functions work similarly, errors captured and marked unhandled with a span per invocation. All the wrappers should also stash relevant invocation context (event type, resource, that kind of thing) on the current Sentry scope.
+We need a dedicated Sentry SDK package for Google Cloud serverless workloads. Developers running applications on Google Cloud Functions currently have no idiomatic way to integrate Sentry monitoring — they cannot easily capture unhandled exceptions from their serverless handlers, record performance traces per function invocation, or automatically trace outgoing calls to Google Cloud services.
 
-Beyond wrapping handlers I need integrations that auto-instrument outgoing calls. Calls to RESTful Google Cloud APIs like BigQuery should produce spans identifying the service plus the HTTP method/path, and gRPC calls like Pub/Sub publishes should produce spans identifying the service and the operation name, both by instrumenting the relevant client libraries.
+## Expected Behavior
 
-The init function needs to set correct SDK metadata so Sentry's ingestion pipeline can tell events came from this package, and it should pull in the request data integration by default. Oh and the package exports should stay consistent with the rest of the Sentry Node SDK surface, minus a small set of intentionally excluded legacy symbols.
+- Developers should be able to wrap their Google Cloud HTTP function handlers to automatically capture exceptions and record a performance span for each invocation. The span should be named after the HTTP method and path, and any pending events should be sent to Sentry after each response completes. If sending those events fails, the error should be swallowed rather than surfaced to the caller.
+- Developers should be able to wrap background event function handlers (both synchronous and asynchronous, with or without callbacks) to capture errors and record spans named after the event type. Exceptions thrown during these handlers should be reported to Sentry and marked as unhandled.
+- Developers should be able to wrap Cloud Event function handlers similarly, with errors automatically captured and marked as unhandled, and spans recorded per invocation.
+- The SDK should automatically trace outgoing Google Cloud API calls over HTTP (e.g. BigQuery queries) and gRPC (e.g. Pub/Sub publishes) by instrumenting the relevant client libraries.
+- The SDK initialization should register itself with correct metadata so Sentry can identify events as coming from this SDK.
+- The package should export a consistent set of symbols compatible with the existing Node SDK surface.
+
+## Why This Matters
+
+Without this package, Google Cloud Function users must manually instrument every function handler for error capture and tracing, and have no support at all for automatic tracing of Google Cloud API calls. A dedicated SDK removes this friction and brings Google Cloud Functions to parity with other serverless platforms already supported.

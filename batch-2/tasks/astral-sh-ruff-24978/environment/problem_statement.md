@@ -1,5 +1,15 @@
-I'm hacking on the code folding in our Python language server and the multiline block header handling is off. Say I've got a function def whose parameters are broken across several lines (each param on its own line inside the parens), the editor should let me fold just that parameter list on its own, but right now it doesn't offer that region at all. And the body fold for that function is anchored at the start of the `def` keyword, so when I collapse the body it hides part of the header too, which is wrong. What I want instead is for the body fold to start from the end of the closing line of the header (the line with the closing paren), so the full signature stays visible when the body's folded.
+## Description
 
-Same deal with match statements. If a case has a pattern that spans multiple lines, like a dict or sequence pattern with entries on separate lines using braces or brackets, I want to fold just the pattern content independently, and then the case body fold should start from the end of that multiline pattern's closing delimiter line rather than from the `case` keyword, again keeping the full case header visible when the body collapses.
+The language server's code folding feature does not correctly handle Python block headers that span multiple lines. When a function signature has its parameters broken across several lines, or when a structural pattern match case has a complex multi-line pattern, the folding ranges reported to editors are incomplete or incorrect.
 
-Basically any delimiter-bounded content that's part of a block header (a multiline param list in parens, a multiline pattern in braces or brackets) should get its own fold region, and the body fold begins only after the whole header ends. Oh and one more thing, when a multiline expression is already covered by one of these block header folds it shouldn't also show up as a separate standalone expression fold, that's just redundant. Devs with heavily typed signatures or detailed match patterns lean on folding to manage the visual noise, so getting these header spans right matters. Fixes live wherever the folding ranges get computed in the language server crate.
+## Expected Behavior
+
+- When a function's parameter list spans multiple lines (each parameter on its own line inside the parentheses), users should be able to fold just the parameter list independently.
+- The body fold for such a function should start from the end of the closing line of the header — not from the beginning of the function keyword — so that the full header remains visible when the body is collapsed.
+- When a match case uses a pattern that spans multiple lines (e.g., a dictionary or sequence pattern with entries on separate lines), users should be able to fold just the pattern content.
+- Similarly, the case body fold should start from the end of the multiline pattern's closing line, keeping the full case header visible when the body is folded.
+- Multiline delimiter content that is already represented as a block header fold should not also appear as a redundant standalone expression fold.
+
+## Why This Matters
+
+Developers working with complex Python code — such as functions with many typed parameters or match statements with detailed patterns — rely on code folding to manage visual complexity. Without correct folding for multiline headers, editors either show no fold region for the header, or show a fold region that hides part of the header when collapsing the body. This makes it harder to navigate and read large Python files.

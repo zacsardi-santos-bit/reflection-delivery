@@ -1,5 +1,15 @@
-I'm extending the Anthropic integration in Home Assistant and right now the only server-side tool we support is web search. I want to add two more: a code execution tool that runs shell commands, and one that reads and edits files, both running in Anthropic's sandboxed environments. Lots of genuinely useful stuff (running calculations, generating and saving data, reading/editing files) needs real code execution instead of just text, so this opens up multi-step tasks in a persistent session.
+## Description
 
-First off there needs to be a new config option to turn code execution on, and it should default to off (disabled). When the AI actually uses one of these tools mid-conversation, the chat history has to record both the tool invocation (the call) and its result, and that means the success path (output, return codes, file contents, whatever comes back) as well as error responses. Both cases need to serialize into the right format so they replay correctly when we send the conversation history back to the API on later turns.
+The Anthropic integration in Home Assistant currently supports web search as a server-side AI tool. We need to extend this to support two additional server-side capabilities: running shell commands and reading/editing files in isolated sandbox environments.
 
-The tricky bit: when the AI uses a code execution tool, the API response references a sandbox environment it spun up. I need to stash that environment reference with the conversation so it gets passed back on the next message, letting the AI reuse the same sandbox across turns. Without that it starts fresh every turn and loses any files it created earlier. So basically after an environment is created during one turn, the same one has to come back on subsequent turns of that conversation. The work lives in the anthropic conversation handling under `@homeassistant/components/anthropic/`, alongside the existing web search tool support and the config flow where that option gets exposed.
+## Expected Behavior
+
+- Users should be able to enable a new "code execution" option in the Anthropic integration configuration, which is disabled by default.
+- When the AI uses these code execution tools during a conversation, the conversation history should correctly record both the action (tool call) and its result (tool result), including any output, error codes, or file contents.
+- After a sandboxed environment is created during a conversation turn, the same environment must be reused in subsequent turns of that conversation so that any files or state from earlier turns remain available.
+- The integration must correctly handle both successful code execution results and error responses from these tools.
+- These new tool types must be serialized correctly when the conversation history is sent back to the AI in subsequent turns.
+
+## Why This Matters
+
+Many useful tasks — like running calculations, generating and saving data, or reading/editing files — require actual code execution rather than just text generation. Supporting these server-side tools lets the AI carry out complex multi-step tasks within a persistent session, greatly expanding what the assistant can do for users.

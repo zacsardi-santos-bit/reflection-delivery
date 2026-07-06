@@ -1,5 +1,17 @@
-I'm cleaning up how our telemetry tracks auth state and it's got a stale-data problem I keep hitting. Right now we read the user's email, login status, and auth method once at startup and cache all of that for the whole process lifetime, so if anything about the user's auth changes mid-session the analytics events keep getting tagged with the old identity info. It also means our dashboards can't reliably filter events by person properties (stuff like excluding CI traffic or segmenting by auth method) because those properties never get attached to the individual events, so the filters silently show incomplete or wrong data.
+## Description
 
-What I want is one consolidated function that snapshots the current auth state in a single config read and returns an object with the user's email (or null if it isn't set), whether they're logged into cloud via an API key (which could come from either config or an environment variable), and which auth method is in use. That auth method should report as one of three values, API key auth, email-only auth, or no auth at all.
+Our telemetry system currently captures authentication state (email address, login status, and auth method) once at initialization and caches it for the lifetime of the process. This causes two problems:
 
-Then I need the event recording path to actually call this on every event send, fetching a fresh snapshot at record time instead of leaning on that cached startup value. Each event we push to the analytics service should embed the current person properties right in the event payload so the dashboard filters work. Oh and the email we report to our reporting endpoint should also come from this fresh per-event snapshot, not the startup cache. Bonus is it cuts down the redundant config reads too.
+1. Analytics events can be tagged with stale identity information if a user's auth state changes during a session.
+2. Dashboard filters based on person properties (e.g. filtering out CI traffic, segmenting by auth method) are unreliable because person properties are not mirrored onto individual event payloads.
+
+## Expected Behavior
+
+- There should be a single consolidated function that snapshots the current user's authentication info in one config read, returning the email address (or null), whether the user is logged into cloud (via API key from config or environment), and the authentication method (one of three states: API key authentication, email-only authentication, or no authentication).
+- Every telemetry event sent should include a fresh snapshot of these person properties, embedded directly in the event payload, so analytics dashboards can reliably filter on them.
+- The fresh auth snapshot should be fetched at event-send time, not cached from startup.
+- The email reported to the analytics reporting endpoint should also reflect the current, live auth state rather than a cached startup value.
+
+## Why This Matters
+
+Analytics dashboards rely on person properties being present on events to enable filtering (e.g. "exclude CI runs", "segment by auth method"). Without mirroring these properties on each event, those filters may silently fail or show incomplete data. Consolidating the auth snapshot into a single function also reduces redundant config reads.

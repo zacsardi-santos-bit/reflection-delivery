@@ -1,7 +1,19 @@
-I want to add a new lint rule to Biome's nursery group that catches a TypeScript anti-pattern I keep running into, where people slap a type assertion on the initial accumulator value of an array reduce call instead of passing the type as a type parameter on the call itself. The problem is subtle: asserting the type on the init value silences TS's checker so it never verifies that the reducer callback actually returns the right type, whereas passing the accumulator type directly as a type parameter on the reduce call lets TS fully validate the callback's return. So the rule should flag when the initial value of a reduction call uses a type assertion and steer folks toward the type-parameter approach.
+## Description
 
-A few things it needs to handle. It should flag both the forward and reverse variants of the reduce method (reduce and reduceRight). It should recognize type assertions in all their syntactic forms, including when they're wrapped in parentheses. And it should cover all asserted types, simple ones, arrays, tuples, union types, intersection types, and generic types.
+When calling array reduction methods in TypeScript, it is common to cast the initial accumulator value to a specific type using a type assertion. This pattern silences TypeScript's type checker in a way that can hide real type errors: the checker accepts the assertion instead of verifying that the reducer callback actually returns the correct type. The recommended approach is to pass the accumulator type directly as a type parameter on the reduction call, which allows TypeScript to fully validate the callback's return type.
 
-For the automatic fix (mark it unsafe), when the call has no existing type parameter, move the asserted type onto a type parameter on the call and strip the assertion off the init value; when the call already has a type parameter, just remove the now-redundant assertion from the init value.
+Currently, Biome has no lint rule that catches this pattern and guides developers toward the safer, type-parameter-based approach. A rule should be added to detect when the initial value of a reduction call uses a type assertion and suggest converting it to use a type parameter instead.
 
-Important edge cases: only flag actual type assertions, not the type narrowing/constraint operator which has different semantics, so don't touch that. Also don't flag calls with no initial value, calls where the init value has no assertion, or calls that already correctly use a type parameter without any assertion. Oh and there was a gap before where calls that already had a type parameter but whose init value still carried a redundant assertion weren't being caught, so make sure that case gets flagged too. The diagnostic should explain that the assertion bypasses checking and point at the type-parameter fix.
+## Expected Behavior
+
+- When a reduction call's initial value uses a type assertion in any of its syntactic forms (including parenthesized forms), a diagnostic should be emitted.
+- The diagnostic should apply to both the forward and reverse variants of the array reduction method.
+- It should apply to all asserted types: simple types, arrays, tuples, union types, intersection types, and generic types.
+- It should also work correctly when the call already has a type parameter but the initial value still carries a redundant assertion — this was previously a false negative that went undetected.
+- An automatic unsafe fix should be provided that either moves the type from the assertion to a type parameter (when no type parameter exists) or simply removes the redundant assertion (when a type parameter is already present).
+- Calls without an initial value, with an initial value that has no assertion, or that already correctly use a type parameter without an assertion should not be flagged.
+- Using a type narrowing/constraint operator (which has different semantics from a type assertion) on the initial value should also not be flagged.
+
+## Why This Matters
+
+Type assertions on accumulator initial values silently bypass TypeScript's type checking in a way that can introduce subtle bugs. Developers who want their reducer callbacks to be fully type-checked have no automated guidance today. This lint rule provides that guidance and offers an automatic fix, making it easy to migrate to the safer pattern.

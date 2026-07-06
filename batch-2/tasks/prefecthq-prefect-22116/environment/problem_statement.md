@@ -1,5 +1,15 @@
-I'm hitting an annoying thing with Prefect runners. When a runner pulls a deployment and the code has a Python project definition (like a pyproject), it goes off and tries to autodetect a compatible package manager and install/manage deps before it even starts the flow run. Problem is this happens unconditionally, there's no way to turn it off. I build custom Docker images that already bundle everything, so having the runner try to install stuff at runtime is bad news, it can overwrite my pinned versions, add startup overhead on every run, and generally make things nondeterministic.
+## Description
 
-I want this flipped to opt-in. By default the runner should just start the flow using whatever environment is already there and not attempt any dependency install or prep at all. Folks who actually want runtime dependency preparation should be able to enable it explicitly through a config setting rather than getting it forced on them.
+When a Prefect runner pulls a deployment whose code includes a Python project definition, it currently tries to automatically detect a compatible package manager and use it to install and manage dependencies before starting the flow run. This happens unconditionally — there is no way to disable it if you have a pre-built environment that already contains the required packages.
 
-Oh and one more thing, when that setting is enabled and the runner does call out to the package manager to set up deps, it should only install the core project dependencies and skip any optional or default dependency groups, so we don't drag in extra packages during flow startup. Basically keep existing image-based workflows predictable while still supporting the pull-and-prepare case for people who opt in.
+This creates a problem for users who build custom Docker images with all dependencies already bundled: the runner may still attempt to install packages at runtime, potentially causing unexpected behavior, overwriting carefully pinned versions, or adding install overhead on every flow run startup.
+
+## Expected Behavior
+
+- By default, the runner should **not** attempt to install or prepare dependencies when a flow run is starting. It should simply start the flow with whatever environment is already present.
+- Users who do want runtime dependency preparation should be able to opt into this behavior explicitly via a configuration setting.
+- When the opt-in setting is enabled and a compatible package manager is used, only the core project dependencies should be installed — optional/default dependency groups should be excluded.
+
+## Why This Matters
+
+Users deploying flows in custom images with pre-installed dependencies need a predictable, reproducible runtime. Automatic dependency installation introduces nondeterminism, can slow down flow startup, and can conflict with carefully managed image contents. Making this behavior opt-in ensures existing workflows continue to work as expected while still supporting the use case of pulling and running code that needs dependencies prepared at runtime.

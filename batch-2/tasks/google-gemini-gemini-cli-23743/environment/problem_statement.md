@@ -1,7 +1,16 @@
-I'm hitting a wall with remote agents in this project. Right now when I define a remote agent in a config file I have to point it at a hosted URL where the agent card lives, which means I need a running server every single time I want to test an agent locally, even when I already know exactly what the card content is. Annoying.
+## Description
 
-What I want is to be able to drop the agent card in as an inline JSON string right there in the agent definition file, as an alternative to the hosted URL endpoint, so I can skip the network fetch entirely and just hand it the card content directly. When an inline JSON card is present the loading code should use it as-is without making any network request to resolve the card.
+When configuring a remote agent, users are currently required to provide a URL pointing to a hosted agent card endpoint. There is no way to embed the agent card content directly in the configuration — you always need to have the card served at a live URL. This is frustrating when testing locally or when the agent card content is already available and doesn't need to be fetched from a remote server.
 
-A few validation things matter here. When loading the configuration, validate the embedded JSON and if it's malformed report a clear, descriptive error at config load time that identifies which agent's JSON is invalid. Also reject any config that provides both a hosted URL and an inline JSON card for the same agent at once, only one is allowed, that's a validation error. And a remote agent has to specify one or the other, having neither should be an error too. Oh and the agent kind should get inferred as "remote" automatically when an inline card is given, same as it already does for URL-based definitions.
+## Expected Behavior
 
-Beyond parsing the config, the code that actually loads a remote agent into memory needs updating so it branches on whichever form was provided, parsing the card directly for the inline case versus fetching for the URL case. I'd also like helper utilities to derive the appropriate load parameters from an agent definition and to pull out the agent's target URL from either form of the definition. This should make local testing way easier since devs won't have to stand up a live endpoint just to serve a card, and it opens up cases where the card is generated or known ahead of time without any network-accessible server.
+- Users should be able to specify a remote agent's card definition as an inline JSON string directly in the agent definition file (as an alternative to a hosted URL endpoint).
+- When an inline JSON card is provided, the system should use it directly without making any network request to resolve the card.
+- If the inline JSON string is malformed, the system should report a clear error at configuration load time identifying which agent's JSON is invalid.
+- Specifying both a hosted URL and an inline JSON card for the same agent at the same time should be rejected with a validation error.
+- The agent kind should be automatically inferred as "remote" when an inline JSON card is provided, just as it already is for URL-based card definitions.
+- A remote agent definition must specify either a URL or an inline JSON card — having neither should be an error.
+
+## Why This Matters
+
+This makes it significantly easier to test and configure remote agents locally. Developers no longer need to stand up a live endpoint just to serve an agent card; they can embed the card content directly in the configuration file. It also enables use cases where the card content is generated or known ahead of time without requiring a network-accessible server.

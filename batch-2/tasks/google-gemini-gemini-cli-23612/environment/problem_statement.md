@@ -1,5 +1,14 @@
-I'm working on the file system service that proxies read and write ops to a connected agent session, and I've got a security gap I want closed. Right now the service forwards every file request to the remote connection as long as the capability is advertised, without ever checking whether the requested file actually lives inside the project's working directory. That means an agent session could read or write files well outside the project scope, including the user's private tool config folder, which is not something I want going over the wire.
+## Description
 
-What I want is for the service to take a root directory path and treat it as a boundary. Only forward a file operation to the remote connection when the target file is inside that root and not inside the user's personal configuration directory. If the file's outside the root, fall back to the local file system service instead, even when the remote capability's available. And here's the tricky bit, files inside the user's private config folder should always be handled locally even if the root is set to some parent that would technically encompass that config folder, so the config check wins over the root check.
+The file system service that proxies read/write operations to a connected agent session currently forwards all file path requests to the remote connection without checking whether the file actually lives within the intended project workspace. This means an agent session could potentially access files outside the working directory, including sensitive personal configuration folders used by the tool itself.
 
-Also I noticed when the remote connection can't find a file it throws a generic error, but the rest of the codebase expects a standard filesystem "file not found" error with the proper error code so callers can handle it consistently. So the service should catch those not-found errors coming back from the remote side and translate them into that standard not-found format (right error code and all) before they propagate. Basically enforce a root boundary on what gets proxied, keep config-dir stuff local no matter what, and normalize the not-found errors so downstream code doesn't choke on the remote's generic version.
+## Expected Behavior
+
+- File operations should only be forwarded to the remote connection when the target file path falls within a designated root directory.
+- If the requested file is outside the root directory, the operation should fall back to the local file system service, even when the remote capability is available.
+- Files that reside in the user's personal tool configuration folder should always be handled locally (fallback), even when the root directory is set to a parent that would otherwise encompass them.
+- When the remote connection reports that a requested file does not exist, the error should be translated into a standard filesystem "file not found" error (with an appropriate error code) so that callers can handle it consistently.
+
+## Why This Matters
+
+Without path-based access control, any file operation proxied to a connected agent session could inadvertently expose or modify files outside the project scope, including configuration data that the tool manages privately. Enforcing a root boundary and properly normalizing "not found" errors makes the service safer and more predictable for both users and downstream code.

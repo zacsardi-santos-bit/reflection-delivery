@@ -1,5 +1,13 @@
-I'm updating tortoise-orm so it works with the new major version of the SQL query-building library (pypika-style) it depends on, and right now a bunch of stuff is broken because the SQL generation API changed underneath us. The big change is that the methods that render SQL used to accept arbitrary keyword arguments, and now they want an explicit SQL context object passed in instead. On top of that they moved how you get the database quote character, it used to come off some internal builder pattern and now it lives as a dedicated attribute on the context object.
+## Description
 
-So I need to go through all the places we override the library's SQL generation interfaces and update the signatures to take the new context arg rather than `**kwargs`. That's the get_sql-style overrides in our filters, expressions, and functions (string wrapping, concatenation, raw SQL, subqueries, custom filters, parameterized queries), plus the backend-specific code. The backend's query class should also expose a SQL context object holding config like the quote character so we can read it directly instead of reaching through the builder. Oh and the test infra that resets database state between tests grabs the quote character too, so that needs to switch to the new attribute path.
+The core SQL query-building library that tortoise-orm depends on has released a new version that redesigns how SQL is generated. The new version requires an explicit SQL context object to be passed when rendering SQL expressions, and it changed the way a database connection's quote character is retrieved. Existing tortoise-orm code still uses the old patterns and is therefore incompatible with the updated library.
 
-Once that's done I want all the compound filter expressions to still render the right SQL when built with the new context, so simple equality, AND/OR combos, negation, blank filter handling, nested groups, and annotation-based filters should all produce correct strings, and the database management operations should work again. The whole point is the old internal patterns just don't exist anymore in the new version, so anything calling the old SQL methods or looking up the quote char fails at runtime, and this restores compatibility.
+## Expected Behavior
+
+- The database backend's query class should expose a SQL context object that holds configuration like the quote character, so it can be retrieved directly instead of through an internal builder.
+- SQL generation methods across tortoise-orm that override the underlying library's interfaces (for things like string wrapping, concatenation, raw SQL, subqueries, custom filters, and parameterized queries) should accept the new SQL context argument rather than arbitrary keyword arguments.
+- All compound filter expressions — including equality, AND/OR combinations, negation, nested groups, blank filter handling, and annotation-based filters — should continue to produce the correct SQL strings when rendered with the updated library.
+
+## Why This Matters
+
+Because the old internal API patterns no longer exist in the new library version, any code that calls SQL generation methods or tries to look up the quote character will fail at runtime. Updating tortoise-orm to use the new patterns restores full compatibility, allowing all query building and database management operations to work correctly.

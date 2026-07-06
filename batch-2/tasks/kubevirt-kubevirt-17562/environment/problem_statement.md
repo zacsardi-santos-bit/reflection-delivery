@@ -1,11 +1,33 @@
-I'm chasing down a cluster of bugs in KubeVirt live migration, mostly around decentralized (non-shared-state) migrations that keep failing or leaving VMs stranded. First one: the connection transport type the source uses never makes it to the target. The sync controller copies a bunch of fields from the source VMI status over to the target VMI, but it skips the transport type, so the target can't figure out how to set up its migration proxy. Copy that field across during migration synchronization too.
+## Description
 
-Second, when we mark a migration failed we always slam the start timestamp to now, which nukes valid timing data. If a start time was already recorded earlier in the lifecycle, keep it, and only touch the end timestamp and the failure flags.
+Several bugs in the KubeVirt live migration system need to be addressed, particularly around decentralized (non-shared-state) migrations. These issues cause migrations to fail, leave virtual machines stuck in intermediate states, and produce incorrect timing data when migrations fail.
 
-Third, during cleanup of a failed migration target we're deleting an annotation that signals the VM needs to be re-initialized from scratch, which kills the recovery path. Only strip that annotation on successful cleanup, failed cleanup should leave it in place so recovery can proceed.
+## Problems
 
-Fourth, a target VMI sitting in the scheduled phase should move to the waiting-for-synchronization state whenever its pod has terminated (failed or completed, and this should fire even when a pod object still exists), or when the migration itself has definitively failed even if the pod's still running. Right now some of those conditions don't trigger the transition and the VMI gets stuck in scheduled.
+**1. Migration transport type not propagated to target**
 
-Also I want the logic that picks which key to use for the migration proxy pulled out into its own dedicated function. For decentralized migrations over a socket-based transport the proxy has to use the source VMI's identifier, not the target's, because the QEMU process on the destination builds its socket paths off the source identifier. Everything else keeps using the local VMI's own identifier.
+During a decentralized migration, the connection transport type used by the source VM is never forwarded to the target node. As a result, the target node cannot correctly determine how to set up the migration proxy, causing migration setup to fail.
 
-And last thing, instead of replacing the whole migration state object in one patch (which conflicts with concurrent updates from other controllers), patch each changed field on its own: an add op when the field is new, a test-then-replace when it already has a value, skip unchanged fields, and a test-then-remove when the migration state is going away entirely. Without all this, decentralized migrations fail silently, lose timing data, or block recovery.
+**2. Start time overwritten on failed migrations**
+
+When the system marks a migration as failed, it always sets the start time to the current time — even if a start time was already recorded earlier in the migration lifecycle. This overwrites valid timing data and makes it impossible to determine the actual migration duration.
+
+**3. Recovery annotation removed too early on failed migrations**
+
+During cleanup of a failed migration target, a critical annotation that signals the virtual machine needs re-initialization is being removed. This prevents the VM from following its proper recovery path after the migration fails.
+
+**4. Migration target VMI not transitioning to waiting state on pod failure**
+
+A virtual machine instance in the scheduled phase that is a migration target should transition to a waiting/recovery state when its pod terminates or when the migration has definitively failed. Currently, certain conditions (a terminated pod with an existing pod object, or a failed migration with a still-running pod) are not handled, leaving the VMI stuck in the scheduled phase instead of re-entering the synchronization flow.
+
+## Expected Behavior
+
+- The transport type should be copied from the source VMI status to the target during migration synchronization.
+- A pre-existing start timestamp should be preserved when marking a migration as failed; only the end timestamp and failure flags should be updated.
+- After a failed migration cleanup, the recovery annotation should remain on the VMI.
+- A migration target VMI should transition to the waiting-for-synchronization state whenever its pod becomes unavailable (failed or completed) or when the migration has failed, regardless of whether a pod object still exists.
+- The patch mechanism for migration state updates should operate at the individual field level rather than replacing the entire object, to avoid conflicts with concurrent updates from other controllers.
+
+## Why This Matters
+
+Without these fixes, decentralized live migrations are unreliable: they can fail silently, leave VMs stranded in intermediate states, lose accurate timing data, or prevent proper VM recovery after migration failure.

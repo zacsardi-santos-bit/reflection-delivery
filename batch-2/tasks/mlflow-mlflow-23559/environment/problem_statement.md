@@ -1,5 +1,21 @@
-I'm extending the MLflow assistant's provider system and could use a hand wiring it all up. First thing, I want MLflow's own AI Gateway to show up as a first-class provider option so folks who already run a gateway endpoint on their MLflow server can point the assistant at it directly instead of setting up a separate external provider. Since the gateway routes through the same MLflow server, there's no static base URL to store in config, the chat URL should get derived from the tracking URI at request time. Model listing from the backend isn't needed here because the frontend already surfaces gateway endpoints through existing UI APIs, so the backend's connection check should say that explicitly (clearly indicate listing isn't supported) rather than silently returning OK or blowing up in some confusing way.
+## Add MLflow AI Gateway as an Assistant Provider and Consolidate Streaming Infrastructure
 
-Second, the streaming provider right now only handles one locally-run model server and the logic's basically duplicated per provider, which makes adding new ones a pain. I want to pull it into a reusable shared engine that can drive any OpenAI-compatible chat backend. That shared engine needs to parse the server-sent event stream format, filter out inline internal reasoning blocks that some reasoning models embed in their responses before they reach the user, correctly accumulate tool call payloads when they arrive split across multiple stream chunks, and trim conversation history when it grows past the context window.
+### Description
 
-Also there's a security thing, the endpoint that lists available models for a provider currently takes the API key as a URL query param, which is bad because those leak into access logs, browser history, and referrer headers. Move it to a dedicated request header instead. And the provider config should be able to persist an API key so it gets forwarded automatically without manual entry each request. Oh and Ollama should keep working as a preset of the new shared provider, with its model listing forwarding a configured API key as a bearer token for people running Ollama behind an auth proxy.
+The MLflow assistant currently supports a small set of external model providers (such as locally-run models and cloud-based coding assistants). Users who have already set up an MLflow AI Gateway endpoint on their MLflow server cannot use that gateway as the backing model for the assistant — they must configure a separate external provider. This is a gap: the gateway is right there in the same server, but it has no first-class integration with the assistant.
+
+Additionally, the streaming logic that handles real-time responses from model providers is currently duplicated across provider implementations. This makes it harder to add new compatible providers and means improvements (such as filtering out internal reasoning blocks that some models embed inline in their responses) must be replicated everywhere.
+
+There is also a security concern with the current approach to model discovery: when the frontend asks the backend to enumerate available models for a provider, the API key is sent as a URL query parameter. Query parameters appear in server access logs, browser history, and HTTP referrer headers — all of which are common sources of credential leaks.
+
+### Expected Behavior
+
+- Users should be able to select MLflow AI Gateway as a provider option and pick an existing gateway endpoint as their assistant model. The gateway uses MLflow's own server for routing, so no separate base URL needs to be configured.
+- A shared streaming engine should handle the OpenAI-compatible chat protocol, including: filtering inline reasoning blocks from responses before they reach the user, accumulating multi-part tool call payloads correctly, and parsing the standard event-stream format.
+- Providers that do not support programmatic model listing (such as the MLflow Gateway, which surfaces its endpoints through existing UI APIs) must clearly indicate this rather than silently returning success.
+- API keys used for model listing must be transmitted via a dedicated request header, not as URL query parameters.
+- Provider configurations must support storing an API key so that authenticated backends can be used without manual key entry on each request.
+
+### Why This Matters
+
+Users running MLflow with the AI Gateway enabled should get a seamless experience connecting the assistant to their gateway — rather than needing a separate provider. Moving credentials out of URLs prevents them from leaking into logs and browser history. Centralizing streaming logic reduces duplication and makes it easier to add future providers.

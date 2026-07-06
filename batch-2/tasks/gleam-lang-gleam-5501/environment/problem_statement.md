@@ -1,7 +1,15 @@
-I've been staring at the Gleam compiler's error and warning output and the "Hint" sections are formatted inconsistently, which bugs me. In a bunch of messages the hint text shows up right after the message body with no blank line between them, so it visually runs into the body and you can't spot it at a glance. Other messages do have a blank line before the hint. I want it consistent: whenever there's body text above a hint, put a blank line separating the two so the hint is clearly distinct from the explanation. If there's no body text above it, then obviously no leading blank line is needed.
+## Description
 
-Also, some of the hint messages about using the wrong numeric/arithmetic operator start with a lowercase word, which looks sloppy next to everything else that follows proper sentence capitalization. Those should start with an uppercase letter so they read like real sentences.
+The Gleam compiler's error and warning messages include a "Hint" section at the end that offers developers actionable advice on how to resolve the issue. Currently, the hint text is not consistently formatted across different kinds of messages. In some messages the hint appears immediately after the message body with no blank line between them, making it visually blend into the body and harder to distinguish at a glance. In other messages a blank line is already present. This inconsistency makes the output harder to read.
 
-And one more thing, some hint strings are too long and don't wrap to the standard line width the rest of the diagnostic output uses, so they run past everything else. I want the hint text wrapped to that same width so the whole output lines up uniformly.
+Additionally, some hint messages about arithmetic operator mismatches use inconsistent capitalization — the hint sentence begins with a lowercase word — which looks unprofessional compared to other diagnostic messages. And in some cases, long hint strings are not wrapped to the standard display width, causing them to run longer than the rest of the output.
 
-So basically fix the diagnostic rendering (this lives in the error/warning formatting code, look around `@compiler-core/src/diagnostic.rs`) so hints are always visually separated from the body when there's body text, consistently capitalized, and wrapped to the standard display width. Readable error messages are a big part of the Gleam dev experience and folks lean on these hints to figure out how to fix their code, so getting the formatting polished and uniform actually matters here.
+## Expected Behavior
+
+- When a diagnostic message has body text followed by a hint, there should always be a blank line separating the two, making the hint clearly distinct from the explanation.
+- Hint text that begins with a sentence fragment should follow standard sentence capitalization.
+- Hint text should be wrapped to the same standard line width used by the rest of the compiler diagnostic output.
+
+## Why This Matters
+
+Consistent and readable error messages are a core part of the Gleam developer experience. Developers rely on hints to quickly understand how to fix compilation errors. Making the formatting uniform across all messages improves readability and gives the output a more polished, professional appearance.

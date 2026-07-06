@@ -1,5 +1,15 @@
-I'm reworking the remote agent comms module and right now it's stuck on a request-response model, it fires a message and just waits for the whole thing before showing anything, which means users stare at nothing during long agent runs. I want to move it to streaming so chunks show up progressively as they arrive.
+## Description
 
-So on the agent client manager I need a streaming method that returns an async iterable of results instead of one resolved value, basically yield results incrementally as the remote agent produces them. Alongside that I need a few helpers. One that tells me whether a task has hit a terminal state (completed, failed, canceled, or rejected) so we know when to clear the task identifier before the next conversation turn. Another that pulls context and task identifiers out of any kind of streaming event and also reports back whether the task ID should be cleared (that clear-on-terminal thing lets the next interaction start a fresh task). And a class that accumulates a sequence of streaming events and reassembles them into a single readable string, it's gotta handle status messages and artifact updates including incremental artifact appends where an artifact gets built up by appending parts across multiple events, joining sections with blank lines and labeling each artifact section by its name.
+The current remote agent communication system uses a request-response model: it sends a message and waits for the entire response before displaying anything. This means users see no feedback during potentially long agent operations. We need to upgrade this to support streaming so that incremental responses can be shown as they arrive.
 
-Then the remote invocation layer should switch over to the streaming method, pass the abort signal through so the remote call can actually be cancelled, and call an optional callback with the progressively growing assembled output after each chunk. Oh and it needs to handle abort mid-stream gracefully, so resolve with an error rather than throwing or hanging or leaving things in some undefined state. The final result should carry the fully assembled output. The whole point here is responsive progressive UX plus clean cancellation.
+## Expected Behavior
+
+- The agent communication layer should expose a streaming interface that yields results incrementally rather than returning a single complete response.
+- A utility for determining whether a task has reached a terminal state (completed, failed, canceled, or rejected) should be available.
+- The response ID extraction utility should indicate whether the task ID should be cleared after a terminal response, allowing subsequent interactions to start fresh tasks.
+- A reassembler utility should exist that can accept a sequence of streaming event chunks and build a coherent, formatted text output. It should handle status messages and artifact updates (including incremental artifact appends), joining sections with blank lines and labeling artifact sections by name.
+- The remote invocation layer should iterate the stream, progressively notify a provided callback with the growing assembled output, and properly handle abort signals mid-stream — resolving with an error rather than hanging or crashing.
+
+## Why This Matters
+
+Without streaming, users interacting with remote agents have no visibility into progress and must wait for the full response before seeing any output. This change enables responsive, progressive UX where output appears as the remote agent produces it. It also ensures that cancellation during a streaming operation is handled gracefully, rather than leaving the system in an undefined state.

@@ -1,5 +1,21 @@
-I keep hitting a crash in ClickHouse when I use the wildcard-with-exclusion syntax, you know `SELECT * EXCEPT (c) ...`, in a query where the excluded column name `c` is also reused as an alias for some computed expression in that same SELECT. Basically I want to select everything except one column and then add a new computed column with the same name, so it "replaces" the original with a transformed version, which feels like a totally natural pattern, but instead of rows I get an internal logical error about a type mismatch.
+## Description
 
-Digging in, it looks like the real problem is in the query normalization phase: alias substitution runs inside the exclusion column list before that list has been fully resolved. So the alias substitution logic swaps the column name in the EXCEPT clause with the aliased computed expression before the exclusion list gets expanded, and then when the exclusion list is processed later, boom, type mismatch. So the fix is really about not doing that premature substitution inside the exclusion list.
+There is a bug in ClickHouse where using the wildcard column selection with exclusions causes a crash when the excluded column name is also used as an alias for a computed expression in the same SELECT statement.
 
-This bites me on both analyzers, the legacy one and the new experimental one, and they should both run these queries fine and return identical results. Oh and it's not just the direct-on-a-table case, it also breaks when the excluded-and-redefined column shows up inside a subquery that's part of a JOIN, inside a CTE that's then joined, and when I exclude multiple columns at once while redefining all of them as aliases. All of those variations should execute correctly and return the expected result rows instead of crashing. This came in as a real production incident, and right now it forces people to rewrite queries in a much more verbose form, so I'd like it just handled.
+For example, a query like "select everything except column c, and then define c as a computed expression" should work perfectly — the excluded original column is dropped, and the alias provides the new computed value for c. Instead, the query engine throws an internal logical error about a type mismatch.
+
+The root cause is that during the query normalization phase, alias substitution happens inside the exclusion column list before that list has been fully resolved. The internal alias substitution logic incorrectly replaces the column name in the exclusion clause with the aliased computed expression before the exclusion list is expanded, causing a type mismatch when the exclusion list is subsequently processed.
+
+## Expected Behavior
+
+- Queries using wildcard selection with column exclusions, where the excluded column name matches an alias in the same SELECT, should execute successfully and return the correct results.
+- This should work in all common query patterns:
+  - Direct queries on a table
+  - Subqueries used in JOINs
+  - CTEs (Common Table Expressions) referenced via JOINs
+  - Multiple columns listed in the exclusion clause
+- Both the legacy query analyzer and the new experimental analyzer should handle these queries correctly and produce identical results.
+
+## Why This Matters
+
+This query pattern is a natural and ergonomic way to "replace" a column with a computed version while keeping all other columns. It is reported as a real production incident. The crash is unexpected and forces users to rewrite queries in a more verbose form.

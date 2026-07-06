@@ -1,5 +1,22 @@
-I'm working on the gift subscription feature in our Ghost publication platform, where someone can buy a gift sub for another person who then gets a link with a unique token to activate it. The checking side already works, I can look up a gift by token and verify it's redeemable (not already redeemed, consumed, expired, or refunded, and that the recipient doesn't already have a paid subscription), but there's no redemption flow yet. So a recipient gets their link and nothing actually turns it into an active subscription, which means the feature can be purchased and sent but never activated. I want to close that loop.
+## Description
 
-What I need is for a member to redeem a gift by supplying their account ID and a gift token, and it has to run atomically so two simultaneous attempts on the same gift can't both succeed. On success the gift gets marked redeemed, the member's account gets upgraded with the right tier access, and the subscription end date is calculated from the gift's billing cadence (monthly or yearly) and its duration, applied from the moment of redemption. The month-end math needs to be correct, so adding a month to January 31 should overflow into the following month rather than clip to an invalid February date, and leap years should be handled right too.
+The gift subscription feature is missing the ability to actually redeem a gift. While the codebase can already check whether a gift is eligible for redemption (verifying it hasn't been redeemed, consumed, expired, or refunded, and that the recipient doesn't already have a paid subscription), there is no mechanism to perform the redemption itself. Recipients can receive a gift link, but nothing can convert it into an active subscription for their account.
 
-Both the service and repository layers need updating. The repository should be able to persist gift state changes, inserting new records and updating existing ones, and run operations inside a database transaction with row-level locking. The service should expose discrete composable pieces: a method to fetch a gift by token that throws a consistent not-found error when it doesn't exist (same error across all entry points), a method to assert a gift is redeemable given the member's current subscription status, and the full redemption method tying it all together. The error messages matter and have to match exactly what the rest of the system expects, so a non-existent token gives a not-found error, an already-redeemed, consumed, expired, or refunded gift each give a distinct bad-request error describing that specific reason, a member who already has an active paid or comped subscription gets an error saying they already have an active subscription, and redeeming for a member that doesn't exist gives a not-found error identifying the missing member.
+## Expected Behavior
+
+- A member should be able to redeem a gift by supplying their account ID and a gift token. This should run atomically so that two simultaneous redemption attempts cannot both succeed.
+- When a gift is redeemed, the system should calculate the correct subscription end date based on the gift's billing period (monthly or yearly) and its duration, applied from the moment of redemption. Month-end date math should handle edge cases (e.g. adding a month to January 31 should overflow correctly into the following month rather than produce an invalid date).
+- The repository layer should support persisting gift state changes (creating a new record or updating an existing one) and should support running operations inside a database transaction with row-level locking.
+- The service layer should expose discrete, composable operations: fetching a gift by token (with a clear not-found error), asserting a gift is redeemable given a member's subscription status (with appropriate errors for each invalid state), and performing the full redemption transaction.
+- The not-found error when a gift token does not exist should be consistent across all entry points.
+
+## Error Conditions
+
+- Attempting to redeem a non-existent gift token should produce a not-found error.
+- Attempting to redeem a gift that has already been redeemed, consumed, expired, or refunded should each produce a distinct bad-request error with an appropriate message describing the specific reason.
+- Attempting to redeem when the member already has an active paid or comped subscription should produce an error indicating they already have an active subscription.
+- Attempting to redeem a gift on behalf of a member that does not exist should produce a not-found error identifying the missing member.
+
+## Why This Matters
+
+Without redemption, the gift subscription feature is incomplete — gifts can be purchased and sent, but never activated. Adding the redemption layer closes the loop and makes the feature functionally end-to-end.

@@ -1,5 +1,16 @@
-I'm hitting a weird numericality validation bug in ActiveModel around equality checks on decimal columns that have a defined precision. Say I've got a monetary column set up to store 2 decimal places, and I add a numericality validation with an equal_to constraint of 10000000.12, then create a record passing 10000000.121. The DB would round that to 10000000.12 on store, so the stored value matches exactly what I'm validating against, but the validator rejects it anyway because it's comparing the raw 10000000.121 input against 10000000.12 without thinking about the column's precision at all.
+## Description
 
-What I want is for equality validation on a precision-constrained decimal column to compare using the value as it'd actually be stored, so after casting it to the column's type, instead of the raw input. Basically the record above should come back valid. Also, and this already works today but needs to keep working, equality on a decimal column without an explicit precision, or on a virtual attribute declared as a decimal type, shouldn't blow up on floating-point representation differences at very high precision, so no spurious failures there either. The goal is to make precision-constrained decimal columns behave consistently with those other two cases.
+Numericality validation with an "equal to" constraint incorrectly rejects records when the attribute is a decimal column with a defined precision. The validator compares the raw input value against the expected value, but it does not account for how the database will actually store the value after applying the column's precision constraints.
 
-Right now folks have to manually pre-round either their comparison value or their input to dodge these bogus failures, which is annoying, the validation should just naturally account for the column's precision. The numericality validator logic lives in the ActiveModel validations area (`@activemodel/lib/active_model/validations/numericality.rb`), so the fix for handling the cast-to-column-type comparison during equality checks belongs somewhere around there.
+## Example of the Problem
+
+Suppose a decimal column is defined to store numbers with 2 decimal places. If you validate that the column must equal 10,000,000.12 and then create a record with the value 10,000,000.121, the database would store 10,000,000.12 (rounded to the column's precision) — which matches the expected value. However, the validator currently rejects the record because it compares the raw 10,000,000.121 against 10,000,000.12 without considering the column's precision.
+
+## Expected Behavior
+
+- When validating equality on a decimal column with a defined precision, the comparison should use the value as it would actually be stored (i.e., after casting to the column's type), not the raw input.
+- When validating equality on a decimal column without an explicit precision, or on a virtual decimal attribute, floating-point representation differences at very high precision should not cause false validation failures.
+
+## Why This Matters
+
+Developers using numericality equality validations on precision-constrained decimal columns are forced to manually pre-round their comparison values or input values to avoid spurious failures. The validation should naturally account for the column's precision, making equality checks work as intuitively expected.

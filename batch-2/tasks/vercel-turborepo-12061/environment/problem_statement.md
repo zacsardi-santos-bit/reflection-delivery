@@ -1,3 +1,17 @@
-I've got a monorepo where one workspace package pulls in a dependency using the aliased package syntax, so it uses a local name but explicitly points at a specific npm registry package (the `npm:` style alias where the name maps to a registry version). Thing is, I've also got a local workspace package that happens to share that same name, and when I build, the dependency keeps resolving to my local workspace package instead of the registry package I explicitly asked for. The whole point of the alias syntax is me saying "always grab the registry version, never the workspace one", but that intent is getting silently thrown away, which is exactly the kind of thing that leads to sneaky version mismatches and broken builds nobody can figure out (see vercel/turborepo#8989 for the context).
+## Description
 
-I need this fixed in two places. First, the high-level dependency splitting logic that decides whether a dep is internal or external to the workspace, it needs to treat an aliased registry reference as always external, never matching a workspace package even when a workspace with the same name and version exists. The key is distinguishing a plain version range (which can still resolve to a workspace via the usual semver compatibility rules) from an aliased reference (which must always be external). Second, the low-level lockfile parsing and pruning, when I prune a lockfile down to a subgraph for a workspace that uses these aliased deps, the pruned result needs to include the registry version of the aliased package, not the workspace version. So basically make the resolver actually honor the alias as an explicit external registry dependency in both the graph construction and the lockfile resolution paths.
+In a monorepo, when a package declares a dependency using aliased package syntax to reference a specific registry package under a local name, and a local workspace package with that same name also exists, the build system incorrectly treats the dependency as a reference to the local workspace package. The user's explicit intent — to use the npm registry version — is silently ignored.
+
+This bug affects both the high-level dependency splitting logic (which decides whether a dependency is internal or external to the workspace) and the low-level lockfile parsing (which resolves the exact package to use).
+
+## Expected Behavior
+
+- When a dependency uses the alias syntax to explicitly request a registry package, it must never be resolved to a workspace package, even if a workspace with a matching name and version exists.
+- The distinction between a plain registry version range (which may still resolve to a workspace) and an aliased registry reference (which must always be treated as external) should be correctly identified and enforced.
+- When pruning a lockfile for a workspace that uses aliased dependencies, the pruned lockfile should include the registry version of the aliased package, not the workspace version.
+
+## Why This Matters
+
+This causes incorrect build graphs in monorepos where workspace packages share a name with npm packages. Developers explicitly using the aliasing syntax to opt into the npm registry version end up unknowingly using the local workspace package, which can lead to subtle version mismatches and broken builds that are difficult to diagnose.
+
+Related issue: https://github.com/vercel/turborepo/issues/8989

@@ -1,3 +1,15 @@
-I'm chasing a bug in the network driver operator around how we auto-create IP address pools at startup. Right now when we get a map of pool names to specs, the code parses and creates each one inline in the same loop, so if some later entry has a malformed spec we bail with an error but every pool before it already got created in Kubernetes. That leaves us in a partial state that's a pain to recover from. I want all-or-nothing: validate every spec in the map up front, and only if all of them parse cleanly do we go create anything. If even one is invalid, return the error right away and create nothing. Once we're past validation and actually creating pools, errors during the create step (pool already exists, transient API stuff, whatever) should just get logged and skipped, not abort the loop or make the whole thing return an error.
+## Description
 
-Related, the reconciler bits that sync node and cluster configs need to be idempotent. For node configs, skip the spec update when the existing spec already matches what we'd write. For cluster configs, skip the status update when the conflict condition is already set to the right value. Both should still surface unexpected API errors instead of swallowing them. And the reconciler and allocator registration functions should be graceful no-ops, returning nil without panicking or registering anything, when the Kubernetes client is disabled or the network driver feature flag is off.
+The operator responsible for managing network driver configurations and IP address pools has a bug in how it handles auto-creation of pools. When multiple pools are configured, each pool specification is parsed and created immediately in sequence. If a later specification turns out to be invalid, any pools that were already created earlier in the loop remain in the cluster — leaving the system in a partial state. The expected behavior is all-or-nothing: validate every specification first, and only if all are valid proceed with creation.
+
+## Expected Behavior
+
+- When auto-creating IP pools from a set of name-to-spec mappings, the system should validate **all** specifications before creating any pools.
+- If at least one specification is invalid, the function must return an error and no pools should be created.
+- If all specifications are valid, creation proceeds; errors on individual create operations (such as a pool already existing or a transient API error) should be logged but must not abort the remaining creations or cause the function to return an error.
+- When the Kubernetes client is disabled, pool-related setup functions must return cleanly without panicking or registering anything.
+- When the network driver feature is disabled, reconciler registration functions must be no-ops that return without error.
+
+## Why This Matters
+
+Partial pool creation can leave a cluster in an inconsistent state that is difficult to recover from automatically. Operators rely on this initialization being atomic — either all intended pools exist or none do, so the reconciler can make a clean second attempt. The idempotency guarantees on the reconciler components also matter for reliability: re-adding the same node or configuration should not cause unnecessary Kubernetes API calls.

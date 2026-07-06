@@ -1,5 +1,17 @@
-I'm messing with the Pulley bytecode interpreter and I need to shuffle around which instructions count as "regular" versus "extended." Quick context: Pulley uses two tiers of instruction encoding, regular ops that get a single-byte opcode and extended ops that use a two-byte opcode prefix. The regular set has a fixed opcode budget so I want to reserve those cheap single-byte opcodes for the hot-path common instructions, and push the rarely-executed stuff into the extended tier where the extra byte doesn't hurt.
+## Description
 
-Specifically I want to move the stack register push and pop operations, both the single-register and the multi-register variants, plus the overflow-checked arithmetic ops, out of the regular instruction set and into the extended one. After the move these should no longer be direct variants of the main instruction enum, they need to live inside the extended op variant so anything that constructs them or pattern-matches on them has to go through that extended op wrapper form instead of the old direct enum path. It's a breaking change to the enum structure so all that existing code needs updating.
+The Pulley bytecode interpreter uses a two-tier instruction encoding: regular instructions with a single-byte opcode and extended instructions that use a two-byte opcode prefix. Some instructions that are rarely executed in the hot path—such as stack push/pop operations and overflow-checked arithmetic—currently live in the regular instruction set but should be moved to the extended instruction set.
 
-Since extended ops take one more byte than regular ops, the byte-level encoding of these instructions grows by a byte each, which means disassembly output for any function using them shifts, all the subsequent instructions show up at higher byte addresses. The hex offsets in the disasm need to reflect the new sizes. The human-readable mnemonics though should stay exactly the same, only the byte encoding and offset math changes, not the printed names.
+Moving these instructions to the extended tier is important for opcode space management: the regular instruction set has a fixed opcode budget, and reserving those opcodes for the most common instructions improves the efficiency of the overall encoding.
+
+## Expected Behavior
+
+- Stack register push/pop operations (single and multi-register variants) should be encoded as extended instructions, wrapped inside the extended op variant of the main instruction enum.
+- Overflow-checked arithmetic operations should similarly move to the extended instruction category.
+- Disassembly output for functions containing these operations should reflect the updated byte offsets: because extended ops take one more byte than regular ops, all subsequent instructions appear at higher byte addresses.
+- Existing disassembly mnemonics (the human-readable names) for these operations should remain unchanged—only the byte-level encoding and offset calculations change.
+- Code that constructs or pattern-matches on these instructions must use the extended op wrapper form.
+
+## Why This Matters
+
+As the Pulley instruction set grows, it is important to carefully curate which instructions occupy the limited regular opcode space. Reorganizing less-frequently-used instructions into the extended opcode space keeps the common-case fast path compact.

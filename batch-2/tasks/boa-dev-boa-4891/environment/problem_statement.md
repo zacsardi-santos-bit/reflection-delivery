@@ -1,5 +1,16 @@
-I'm building a custom runtime on top of the boa JavaScript engine and I keep hitting a wall with the event loop. Right now the only way to drain pending jobs is a synchronous, blocking call that runs everything in the queue until it's all done, which is fine for simple scripts but totally breaks the moment I want to embed the engine inside a bigger async Rust app. I need to interleave JS job processing with other async work, like reading input off a channel, waiting on timers driven by a fixed clock, handling network stuff, coordinating with other tasks in the same executor, that kind of thing.
+## Description
 
-What I want is for the event loop to be usable as an async future that yields control back to the outer executor between processing cycles, so I can poll it one iteration at a time, do other async work in between, and check whether it's terminated or still running. The big pain point: when an async JavaScript job repeatedly yields to the executor (say it's spinning waiting on some condition), that currently holds the whole loop captive and starves everything else. Instead I want that yield propagated outward rather than the loop just spinning, and any jobs that got enqueued in the meantime should get picked up on the next iteration instead of being blocked by the yielding one. Also when all pending jobs are processed and nothing's left in the queue, the loop should signal completion rather than continuing to spin forever.
+The JavaScript engine's event loop currently only supports a synchronous, blocking execution model. When you call the method to run all pending jobs, it blocks the calling thread until every job in the queue is completely finished. This is fine for simple scripts, but it breaks down the moment you want to embed the engine inside a larger async Rust application that needs to interleave JavaScript execution with other async work — things like reading user input from a channel, handling network requests, or coordinating with other async tasks running in the same executor.
 
-Oh and it'd really help to have a way to actually test this. I want a test helper that lets an async Rust closure interact with the JavaScript context, so I can verify the loop yields correctly and picks up newly enqueued jobs between iterations, driving async JS scenarios with fine-grained async control from the Rust side. The existing synchronous run-all-jobs path should keep working for the simple cases, I just need this async, pollable, iteration-at-a-time mode alongside it.
+The problem is that the current "run all jobs" operation cannot yield control back to the outer async runtime between processing cycles. An async JavaScript job that repeatedly yields (e.g., while waiting for some condition) holds the event loop captive and prevents other async Rust work from making progress.
+
+## Expected Behavior
+
+- The event loop should be drivable from an async context, yielding control between job processing iterations so that other async tasks can run in between.
+- An async job that continuously yields to the executor should not block other enqueued jobs from being processed — those jobs should be picked up in the next cycle.
+- When all pending jobs have been processed and nothing remains in the queue, the event loop should signal completion rather than continuing to spin.
+- It should be possible to poll the event loop one iteration at a time from an async context, checking whether it has completed or is still running.
+
+## Why This Matters
+
+Embedders and custom runtime authors need to build event loops that process JavaScript jobs alongside async I/O without one blocking the other. The test infrastructure also needs the ability to write tests that drive async JavaScript scenarios with fine-grained async control from Rust.

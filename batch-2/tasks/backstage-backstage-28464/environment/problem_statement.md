@@ -1,5 +1,13 @@
-I'm working on the Backstage backend caching layer and need to revert a library swap that shouldn't have happened. Someone recently replaced the standard Redis store adapter with an open-source Redis-compatible alternative, and I want to go back to the original Redis adapter for managing our Redis cache connections. The cache manager currently reaches for the alternative library internally whenever it creates a Redis store connection, so that spot needs to point at the standard `@keyv/redis` adapter instead (that's the one we're standardizing back on).
+## Description
 
-Behavior should stay identical after the revert. When the backend is configured with a Redis cache backend, each plugin's cache client should be backed by the original Redis adapter, not the open-source drop-in. And the one-connection-per-plugin guarantee has to hold, so if I ask for cache clients across N plugins with a Redis backend, I should end up with exactly N adapter instances created, one dedicated store per plugin, no sharing or pooling surprises.
+The Backstage backend caching system was recently changed to swap the Redis store adapter for an open-source Redis-compatible alternative. However, this change should be reverted — the cache system should go back to using the original Redis adapter library for managing Redis cache connections.
 
-Oh and the dependency declaration matters too. The backend-defaults package needs to list the correct adapter package so the intended library actually gets pulled in. Operators running Redis as their cache backend depend on this matching the library choice we meant to ship, so standard Redis deployments keep working as expected.
+## Expected Behavior
+
+- When the backend is configured to use a Redis cache, each plugin's cache client should be backed by the original Redis adapter (not the open-source alternative)
+- The one-connection-per-plugin guarantee should be preserved: requesting cache clients for N plugins with a Redis backend should result in exactly N adapter instances being created
+- The correct adapter package must be declared as a dependency in the backend-defaults package
+
+## Why This Matters
+
+Operators running Backstage with Redis as their cache backend need the system to use the correct underlying adapter. The previous change introduced a different adapter that should not have been swapped in. Reverting ensures that standard Redis deployments work as expected and that the cache system's internals match the intended library choice.

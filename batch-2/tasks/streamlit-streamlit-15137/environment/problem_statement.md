@@ -1,5 +1,14 @@
-I'm messing with Streamlit's server startup config over in the code that builds the settings dict for our underlying ASGI server (uvicorn), and right now we're doing something dumb. We always hardcode the websocket protocol to the legacy value ("wsproto" / the old websockets-based handling) no matter what version of uvicorn is actually installed. Problem is newer uvicorn (from a specific stable release onward) ships an improved websockets implementation that cleanly separates I/O from protocol logic and actually handles ping interval and timeout settings properly, and we just never use it. So people on modern installs get nothing.
+## Description
 
-What I want is for the websocket protocol to get picked automatically based on the installed uvicorn version. If uvicorn is at or above that threshold version (the first stable release that introduced the new impl), select the improved protocol; anything older falls back to the legacy one exactly like today. Also, and this is the fiddly bit, pre-release variants of the threshold version like release candidates and dev builds should still count as below the threshold so they use the legacy path. Do the version comparison properly so an rc or a devN of that version doesn't accidentally trip the "at or above" check.
+Streamlit's ASGI server startup always configures its websocket handling with a legacy protocol setting, even when running on a newer version of the underlying server library that offers an improved implementation. The newer implementation, available from a specific release of the server library onward, provides a cleaner separation between I/O and protocol logic and adds full support for ping interval and timeout settings. By always falling back to the older approach, Streamlit users miss out on these improvements automatically.
 
-Everything else in the config dict needs to stay untouched, so the SSL cert files, ping intervals, compression settings, and logging flags all pass through unchanged. It's really just the websocket protocol value that becomes conditional on the detected version. You'll want to inspect uvicorn's version at runtime and compare it against the threshold. Nothing about the user-facing config or options changes, it's purely transparent behavior that upgrades gracefully when a good enough uvicorn is present and degrades quietly for old ones.
+## Expected Behavior
+
+- When the installed server library is below a certain version threshold, websocket handling should continue using the existing legacy protocol (as it does today).
+- When the installed server library is at or above that threshold (specifically the first stable release to introduce the new implementation), the improved websocket protocol should be selected automatically.
+- Pre-release versions of the threshold release (release candidates, dev builds) should be treated as below the threshold and use the legacy protocol.
+- All other configuration values (SSL certificates, ping intervals, compression settings, logging flags) should be passed through unchanged.
+
+## Why This Matters
+
+Users running newer installations currently don't benefit from the improved websocket stack. Making the selection automatic means Streamlit transparently takes advantage of a better implementation when it's available, without requiring any user configuration changes, and falls back gracefully for older installations.

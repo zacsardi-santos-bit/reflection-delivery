@@ -1,7 +1,17 @@
-I'm trying to make the prompt suggestion feature actually useful for comparing alternatives, and right now it's kind of broken for that. When you ask it to generate alternative prompts during an eval, there's no way to say "give me 3" or "give me 5", it just always spits out a single result. I want to add a count parameter that controls how many variants get generated per run.
+## Description
 
-Behavior I'm after: when someone asks for N variants, call the underlying provider N times and return all the successful results. Partial failures shouldn't nuke the whole batch, so if some calls fail but others succeed, hand back the ones that worked. If all of them fail, combine the individual error messages into one aggregated error so it's clear what went wrong. When nobody specifies a count, default to generating one variant like today.
+The prompt suggestion feature currently has no way to request more than one variant at a time. When generating alternative prompts during an evaluation, users should be able to specify how many variants they want — but right now there is no supported count parameter, so you always get a fixed single result.
 
-Also the count needs validating before we make any provider calls, so zero, negative values, fractional numbers, and anything above the max cap of 50 all get rejected with a clear error message that mentions the valid range (1 to 50). And I want a publicly exported named constant for that max of 50 so other parts of the codebase (downstream consumers) can reference it instead of hardcoding.
+## Expected Behavior
 
-Oh and this count has to flow through the config system properly. Users should be able to set it in their config file, both in the evaluate options section and in the command-line-options defaults section, and actual command-line flags should override those config-file defaults. There's a precedence thing I care about: the flag for suggesting prompts, when it's given a count as its value, takes priority over everything else including an explicit "no suggestions" flag. Same idea for the generate flag and the suggestion count, both should merge according to that clear precedence order with the command-line option winning over config defaults. Without this people have to run the tool over and over just to compare prompts, which is silly.
+- Users should be able to specify the number of prompt variants to generate, both via the command line and through the config file.
+- The feature should validate the requested count: zero, negative, fractional, and excessively large values should be rejected with a clear error message indicating the valid range (1 to 50).
+- When no count is specified, the system should default to generating one variant.
+- When requesting multiple variants, the system should handle partial failures gracefully: if some calls succeed and others fail, the successfully generated variants should still be returned rather than discarding everything.
+- When all variant generation attempts fail, the system should aggregate the individual error messages into a single combined error.
+- A named constant representing the maximum allowed suggestion count (50) should be publicly exported so downstream consumers can reference it.
+- Config file settings for both the generate flag and the suggestion count should be properly merged according to a clear precedence order, with the command-line option taking priority over config-file defaults.
+
+## Why This Matters
+
+Without the ability to request multiple variants in a single run, users are forced to invoke the tool multiple times to compare different prompt alternatives. Proper error handling and config-layer merging ensures the feature behaves predictably regardless of how it is invoked.

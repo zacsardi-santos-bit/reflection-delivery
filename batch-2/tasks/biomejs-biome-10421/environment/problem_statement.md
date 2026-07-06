@@ -1,5 +1,16 @@
-I'm hitting a few bugs in the SCSS parser around query feature conditions, specifically when variable interpolation shows up inside media and container query range conditions. The big one is container range queries where both the left and right bounds are interpolated variables, like checking whether some property sits between two dynamic interpolated values. Right now the parser won't recognize that as valid syntax so perfectly good SCSS gets rejected or produces wrong parse output. I want a container range query that uses interpolation on both bounds to parse cleanly with no errors and produce the correct AST structure.
+## Description
 
-There's also a classification bug I keep running into: when a media query range has an interpolated value on the left and a literal property name on the right, the parser tags it as a standard range query when it should really be a reversed-range query, which is a distinct node variant. So that left-interpolated, right-property case needs to come out as the reversed form, not the same type as the normal one.
+The SCSS parser does not correctly support variable interpolation in all positions within media and container query range conditions. Specifically, when a container query uses interpolated variables as both the left and right bounds of a range comparison (e.g., checking whether a property lies between two dynamic values), the parser fails to recognize this as valid syntax. This means valid SCSS code is rejected or produces incorrect parse output.
 
-Oh and the error handling is weak. When an interpolated feature name is followed by a colon but no value in a media query, or when a range comparison operator is followed by nothing (like the closing paren shows up right where a value belongs), I want a clear error about an unexpected value or character, plus a list of what was actually expected there, so an identifier, string, number, dimension, ratio, custom property, or function. Both of those malformed cases should surface that same guidance so debugging isn't a guessing game. The parsing work lives in the SCSS parser's query feature handling under `@crates`, so that's where these fixes belong. Devs lean on interpolation to drive media and container breakpoints dynamically for responsive designs, and it's frustrating when valid interpolated bounds get thrown out or bad ones fail silently.
+Additionally, when an interpolated value appears on the left side of a comparison in a media query range (with the property name on the right), the parser assigns the wrong node type. Instead of treating this as a distinct "reversed" form of a range query, it produces the same node type as a standard range query, which is incorrect.
+
+## Expected Behavior
+
+- A container range query that uses interpolated variables for both bounds should parse successfully with no errors and produce the correct AST structure.
+- When an interpolated feature name is followed by a colon but no value (in a media query), the parser should report a clear error indicating an unexpected character and listing the expected value types.
+- When a range interval is missing its right-side value after a comparison operator (e.g., the closing parenthesis appears where a value should be), the parser should report a clear error with the same guidance.
+- A range query where the interpolated value appears on the left and the property name appears on the right should be classified as a reversed-range query — distinct from the standard form.
+
+## Why This Matters
+
+Developers writing SCSS for complex responsive designs often use variable interpolation to drive media or container breakpoints dynamically. Without these fixes, valid SCSS that uses interpolation on both sides of a range comparison is rejected, and malformed range queries do not produce clear error messages to guide debugging.

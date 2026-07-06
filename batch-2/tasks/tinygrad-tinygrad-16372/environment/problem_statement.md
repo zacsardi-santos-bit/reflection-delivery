@@ -1,5 +1,13 @@
-So I keep hitting this weird inconsistency in tinygrad's constant-fill tensor factories and I want to fix the default behavior. Basically when I make a tensor full of a constant, like `Tensor.ones(...)` or `Tensor.zeros(...)` or a scalar fill, and then I call `.realize()` on it, the thing doesn't actually get a real backing buffer. Its `is_realized` stays False, which is totally unlike every other tensor I work with, where realizing means it now owns real memory on the device. Right now these constant-fill factories produce "virtual" broadcast constants instead of real memory-backed tensors, so code that expects a realized constant to behave like any other realized tensor hits unexpected behavior. It's a footgun.
+## Description
 
-What I want: change the default so that after I call the built-in realize on a constant-fill tensor (ones, zeros, scalar fill), it's backed by actual allocated memory and its is_realized status comes back True, consistent with every other realized tensor. That way constant tensors can participate uniformly in ops that require realized inputs.
+Tensor factories that fill with a constant value (all-ones, all-zeros, or a scalar fill) currently produce "virtual" broadcast constants rather than real memory-backed tensors. This causes a surprising inconsistency: calling the standard "realize" operation on such a tensor does **not** result in a genuinely realized, memory-backed tensor — even though the same operation on any other kind of tensor does. Code that expects a realized constant tensor to behave like any other realized tensor will encounter unexpected behavior.
 
-But I still need an escape hatch. There should be an explicit opt-in flag on these constant-fill factories for callers who specifically want the old lightweight broadcast-constant behavior with no allocation. When that option's enabled, the tensor should need zero schedule ops to access its constant elements, and existing code that relied on constant-fill tensors being broadcast constants should keep working when that flag is explicitly passed. So default = real buffer like everything else, explicit opt-out = the old no-alloc broadcast constant.
+## Expected Behavior
+
+- After calling the built-in realize function on a constant-fill tensor (e.g. ones or zeros), the resulting tensor should be backed by actual allocated memory, and its "is realized" status should be True — consistent with all other realized tensors.
+- An explicit option should be available on constant-fill tensor factories for callers that specifically want the lightweight broadcast-constant behavior (no allocation). With this option enabled, the tensor should require no schedule operations to access constant elements.
+- Existing code that relied on constant-fill tensors being broadcast constants should continue to work when that option is explicitly passed.
+
+## Why This Matters
+
+Users who realize a ones or zeros tensor and then treat it as a concrete realized buffer get inconsistent behavior compared to every other tensor type. Making the default match the general contract (realized = has a buffer) removes a footgun and allows constant tensors to participate uniformly in operations that require realized inputs. The opt-out option preserves the old lightweight behavior when explicitly requested.

@@ -1,7 +1,22 @@
-I'm knee-deep in container reconciliation for Apache Ozone and hit a stub I need to actually fill in. The method that's supposed to compare a datanode's local container checksum tree against a peer's currently just returns an empty do-nothing result, it was left as a TODO, and without it the reconciliation pipeline can't figure out what data to copy from a healthy peer to fix a degraded replica. Datanodes replicate container data across replicas and when they drift out of sync from corruption, missed writes, or partial data, we need to know exactly what each node is missing or has corrupted compared to its peers.
+## Description
 
-So I want it to walk the two Merkle trees and produce a real report from the local replica's perspective, capturing three categories of discrepancy: entire blocks that exist in the peer but are absent locally, specific chunks within blocks that exist in the peer but not locally, and chunks that are present locally but corrupt (meaning our copy is marked unhealthy while the peer's copy is healthy with a different checksum). When the peer is the one missing data compared to ours, don't report it, the peer reconciles separately from its own perspective so our report stays empty in that case.
+Ozone datanodes replicate container data across multiple replicas, and when replicas drift out of sync — due to corruption, missed writes, or partial data — there needs to be a way to identify exactly what each datanode is missing or has corrupted compared to its peers. Currently the container comparison method is a stub that always returns an empty result, making it impossible to act on checksum tree differences.
 
-Edge case that matters: if a block's been deleted, either marked deleted in our own checksum info or in the peer's, exclude it from the diff entirely. Deleted blocks aren't missing blocks, their absence is expected. Also if the comparison fails because the local container has no checksum file, or because the container IDs don't match between local and peer, throw an appropriate storage exception with a clear error.
+## Expected Behavior
 
-Oh and it needs metrics: diff latency, a count of diffs that resulted in repairs being needed, a count that needed no repair, and a count of failures. The report itself should expose methods to get the list of missing blocks, a map of missing chunks keyed by block ID, a map of corrupt chunks keyed by block ID, and a boolean for whether any repair is needed at all.
+- When a datanode compares its local container checksum tree against a peer's, it should receive a detailed report listing which entire blocks are missing, which specific chunks within blocks are absent, and which chunks are corrupted (present locally but with a bad checksum while the peer's copy is healthy).
+- When the peer's tree is the one with missing data (rather than ours), our diff report should be empty — we only report what we locally need to repair.
+- Blocks that have been deleted — whether on our side or the peer's side — should be excluded from the diff report, since their absence is intentional.
+- If the comparison fails (for example, no local checksum file exists, or the container identifiers don't match), the operation should fail with a clear error.
+
+## Metrics
+
+The comparison operation should be tracked with metrics:
+- Latency of each diff operation
+- Count of diffs that require repair
+- Count of diffs that require no repair
+- Count of diff failures
+
+## Why This Matters
+
+Without this, the container reconciliation pipeline cannot determine what data to copy from a healthy peer to fix a degraded replica. This is a critical building block for automated container repair in Ozone.

@@ -1,3 +1,16 @@
-I'm hitting a dumb but annoying bug on the vLLM OpenAI-compatible server. When I POST to the chat completions endpoint or the plain completions endpoint and pass `allowed_token_ids` as an empty list, I get back an HTTP 500 internal server error instead of anything useful. Which, yeah, an empty allowed-token list is logically nonsense (if nothing's allowed then there's literally nothing for the model to generate) but right now that just sails through the API layer and blows up somewhere in the backend, so from the client side it looks like the server broke, not like I messed up my request.
+## Description
 
-What I want is for both those endpoints to catch this at the API boundary and reject it early with a 400 Bad Request instead of the 500. The response body should follow the standard OpenAI error structure with the error type set to invalid request and a message that clearly says the allowed token ID list can't be empty, so clients actually know what to fix. Basically same validation behavior on chat completions and on completions, both should return the 400 with that informative message rather than propagating the empty list down to where it triggers the internal error. Right now there's just no signal at all that it was a client-side input mistake.
+The chat completions and completions API endpoints do not validate whether the list of allowed token IDs is empty before processing the request. Submitting a request with an empty token ID constraint list is logically invalid — if no tokens are allowed, generation cannot proceed meaningfully — but instead of returning a clear error, the server currently propagates this to the backend where it causes an internal server error (HTTP 500).
+
+## Expected Behavior
+
+- When a client submits a generation request (to either the chat completions or the plain completions endpoint) with an empty list of allowed token IDs, the server should immediately reject it with a 400 Bad Request response.
+- The response body should follow the standard OpenAI error format, with the error type set to indicate an invalid request and a message that clearly explains the problem with the empty token ID list.
+
+## Current Behavior
+
+Both endpoints currently return HTTP 500 (Internal Server Error) when an empty allowed token ID list is provided, rather than giving the client an actionable error message.
+
+## Why This Matters
+
+Returning 500 for what is clearly a client-side input error is confusing and unhelpful. Users have no indication of what went wrong or how to fix it. Proper input validation at the API boundary makes the service more robust and developer-friendly, and keeps the error response consistent with the OpenAI API error format that clients already expect.

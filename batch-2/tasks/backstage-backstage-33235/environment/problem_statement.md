@@ -1,7 +1,22 @@
-I'm working on the MCP actions backend plugin and there's two gaps I keep hitting. Right now every registered action shows up as a flat list of tools at one endpoint using just the bare action name, so there's no way to tell which plugin an action actually came from, and no way to split things into focused endpoints.
+## Description
 
-First thing I want is namespaced tool names. By default the tool name should combine the originating plugin's ID with the action name so it's obvious to MCP clients where each tool comes from. But I need this to be opt-out, so there's a flag to turn it off and fall back to the plain bare action name for backward compat.
+The MCP actions backend currently exposes all registered actions as a flat list of tools at a single endpoint, using only the bare action name without any plugin prefix. This makes it impossible to tell which plugin an action originates from, and there is no way to partition actions into separate, focused server endpoints.
 
-Second, I want to configure multiple server endpoints, each scoped to a subset of actions. Each configured server gets its own URL path and only exposes and executes actions matching its filter rules. Filters should support include matching on action IDs with glob patterns (like grabbing all actions from a given plugin, or everything with a name prefix), and also attribute-based exclude filters, so an operator could say exclude all destructive actions for example (or read-only, that kind of attribute). When a client calls a tool that got filtered out on a particular server, it should come back with a not-found error for that action, not silently run it.
+We need two improvements:
 
-Oh and the important part, when no server config is given at all, the plugin has to keep behaving exactly like today, a single endpoint exposing all the actions. This all lives in the MCP actions backend plugin so wire it in there. The whole point is teams can stand up purpose-built endpoints for different consumers with clear scoping and namespacing that prevents accidental execution of stuff they didn't mean to expose.
+1. **Namespaced tool names**: By default, tool names should include a plugin prefix so that the source of each tool is clear to MCP clients. The format should combine the originating plugin's ID and the action name. This namespacing should be opt-out for backward compatibility.
+
+2. **Multi-server configuration**: Operators should be able to configure multiple MCP server endpoints, each scoped to a subset of actions. Filtering should support matching on action IDs (with glob patterns) and on action attributes (such as whether an action is destructive or read-only). Each endpoint should only expose and execute actions within its permitted set — calls targeting out-of-scope actions must return a "not found" error.
+
+## Expected Behavior
+
+- Tool names default to a namespaced format combining the plugin ID and the action name.
+- Namespacing can be disabled to restore the bare action name format.
+- When multiple servers are configured, each server gets its own endpoint and only lists tools within its scope.
+- Glob-style patterns must be supported for include filters, allowing matching of all actions from a given plugin or actions with a name matching a prefix.
+- Attribute-based exclude filters must be supported, allowing operators to exclude all destructive actions, for example.
+- Calling a filtered-out tool on a server returns an error indicating the action was not found.
+
+## Why This Matters
+
+This allows teams to expose purpose-built endpoints to different consumers, with clear scoping and namespacing that prevents confusion and accidental execution of unintended actions.

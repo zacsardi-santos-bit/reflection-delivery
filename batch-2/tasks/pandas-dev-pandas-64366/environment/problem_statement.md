@@ -1,5 +1,17 @@
-I'm hitting inconsistent skewness and kurtosis results depending on how I trigger the computation, and it's driving me nuts. If I take a constant series (all identical values, so variance is literally zero) and compute skewness or kurtosis, I get different answers across code paths. A plain reduction on a single column might hand me back a number, a rolling window gives something else, and a groupby aggregation gives yet another, some return a numeric value like zero for skewness or negative three for kurtosis, and others correctly return NaN. Mathematically these higher-order moments are undefined when variance is zero, so NaN is the right answer everywhere, but that's not what's happening today.
+## Description
 
-What I want is for all these paths to agree: computing skewness or kurtosis on a constant series should always return NaN, no matter the series length and no matter which API I call. That means direct reductions on individual data columns, the same reductions when the column lives inside a multi-column table, grouped aggregations, and rolling window calculations all need to land on NaN for the zero-variance case.
+Skewness and kurtosis calculations produce inconsistent and mathematically incorrect results for constant or near-constant data, depending on which computation path is used.
 
-Beyond that degenerate case, I also need numerical stability for tiny or huge magnitudes. Skewness and kurtosis are supposed to be scale-invariant, so multiplying the data by a very small or very large constant shouldn't change the result, and all those computation paths (reduction, table column, groupby, rolling) should agree with each other even for scaled inputs. Right now floating-point precision issues make them diverge even on non-degenerate distributions, which shouldn't happen. Please make the zero-variance detection and the moment math consistent across every one of these paths.
+A constant distribution — where all values are identical — has a variance of zero, making skewness and kurtosis mathematically undefined. The correct result in this case is NaN (not a number). However, currently a numeric value (such as zero for skewness and negative three for kurtosis) is returned in some code paths when all values in a window or group are equal, while NaN is returned in others. This inconsistency varies by whether you compute using a plain data column, a rolling window, a grouped aggregation, or a column in a multi-column table.
+
+Additionally, when data has very small or very large magnitudes, floating-point precision issues cause skewness and kurtosis to disagree across computation paths, even for non-degenerate distributions.
+
+## Expected Behavior
+
+- Computing skewness or kurtosis on a constant series (all equal values) should always return NaN, regardless of series length and regardless of which API is used.
+- All computation paths (direct reduction on individual columns or multi-column tables, grouped aggregation, rolling window) should return consistent values for the same underlying data.
+- The results should be numerically stable and scale-invariant: multiplying the data by a very small or very large constant should not change the skewness or kurtosis.
+
+## Why This Matters
+
+Users relying on skewness and kurtosis for statistical analysis may get silently incorrect or inconsistent results depending on how they invoke these operations. The behavior should be well-defined and consistent: a zero-variance distribution should always yield NaN for these higher-order moments.

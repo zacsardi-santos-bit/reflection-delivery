@@ -1,5 +1,17 @@
-I'm hitting a confusing validation bug in the storage layer around resource names (bucket or volume names, that kind of thing). If I try to create a resource with a name that's too short but also happens to be all digits, like "12", I get back an error complaining that the name is all-numeric instead of telling me the real issue, which is that the name is just too short. The length check should really come first before any of the content-pattern checks run, so the more fundamental problem gets surfaced.
+## Description
 
-What I want is for any name below the minimum allowed length to always produce an error that clearly says the length is the problem, regardless of whether it's also all-numeric or matches some other content rule. And more broadly, any name whose length falls outside the allowed range (too short or too long) should return a message that indicates the length is invalid, so I know exactly what to fix instead of chasing the wrong thing. Basically length validation needs to take priority over the content-based rules like the all-numeric detection.
+When a resource name (such as a bucket or volume name) is too short, the validation logic can return a misleading error message. If the too-short name also happens to consist entirely of digits, the current code detects the all-numeric pattern before checking the length, and the user receives an error message about the name being all-numeric — when the actual problem is simply that the name is too short.
 
-So can you reorder the name validation logic so length is evaluated before content patterns, and make sure the length-violation error message consistently communicates that it's the length that's wrong? Right now that all-numeric branch fires too early and it's misleading.
+## Expected Behavior
+
+- A name that is below the minimum allowed length should always produce an error that clearly identifies the length as the problem, regardless of whether the name is also all-numeric.
+- The error message for any name whose length falls outside the allowed range should indicate that the length is invalid.
+- Length validation should take priority over content-based validation rules.
+
+## Current Behavior
+
+A short all-numeric string like "12" fails validation with an error about the name being all-numeric rather than about the name being too short. This is confusing because the length violation is the more fundamental issue and should be reported first.
+
+## Why This Matters
+
+Users who accidentally create a resource with a name that is too short and happens to be numeric receive a misleading error message that directs them to fix the wrong problem. Consistently checking length before content patterns makes the error message accurate and actionable.

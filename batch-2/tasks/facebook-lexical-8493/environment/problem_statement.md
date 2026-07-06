@@ -1,5 +1,17 @@
-I'm hitting an annoying bug in the rich text editor. When there's an empty paragraph sitting right before a heading and I press Backspace at the very start of that heading, the heading loses its formatting. Instead of just deleting the blank line above, the editor either merges the heading into the preceding block or converts it into a plain paragraph, so I lose the heading style, tag, and content. That's not what I want. I keep doing this because I accidentally hit Enter before adding content and then try to clean up the blank line with Backspace, same as most word processors where only the empty line vanishes and the heading stays a heading.
+## Description
 
-What I want is: pressing Backspace at the start of a heading that immediately follows an empty paragraph removes just that empty paragraph and keeps the heading with its original type and content intact. This should apply to other formatted block types too, not only headings, so block quotes and the like behave the same way. If there are more blocks after the heading, they've gotta stay untouched, only the empty preceding paragraph disappears.
+When a heading is preceded by an empty paragraph and the user presses Backspace at the very beginning of the heading, the editor should remove only the empty paragraph and leave the heading intact. Currently, instead of cleanly deleting the blank line, the editor merges the heading into the preceding block or converts it into a plain paragraph — stripping the heading's formatting entirely.
 
-On the flip side, I don't want to break existing behavior. When the preceding block is not empty, Backspace should still merge the blocks like it does today. And an empty heading (no content) should still convert to a plain paragraph when I press Backspace at its start. Oh and one more case: when a heading has no preceding block at all, like it's the first block or it's nested inside a wrapper element, then Backspace at the start should just leave the heading as-is, don't convert it to a paragraph and don't remove it.
+This is a common editing scenario: the user accidentally creates a blank line before a heading (e.g., by pressing Enter before adding content) and then tries to remove it with Backspace. The expected result matches how most modern word processors behave — only the empty line disappears, and the heading stays a heading.
+
+## Expected Behavior
+
+- Pressing Backspace at the start of a heading that immediately follows an empty paragraph removes the empty paragraph and keeps the heading with its original type and content.
+- This behavior applies to other formatted block types as well (e.g., block quotes), not just headings.
+- If there are additional blocks after the heading, they must remain unaffected.
+- When the preceding block is **not** empty, the existing merge behavior continues to apply as before.
+- A heading with no content (empty heading) should still convert to a plain paragraph on Backspace at the start, preserving that existing behavior.
+
+## Why This Matters
+
+Users frequently press Backspace at the start of a heading to remove a preceding blank line. The current behavior destroys heading formatting in that scenario, forcing users to manually reapply the heading style. The fix makes the editor behave predictably: an empty preceding line is simply deleted, and the heading is left untouched.

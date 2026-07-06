@@ -1,7 +1,16 @@
-I'm trying to cut down peak GPU memory when I do LoRA fine-tuning on big language models, and the thing that's killing me is that every adapted linear layer stashes its full input activations during the forward pass so it can compute the weight gradients later in backward. On models with wide hidden dims that cache is huge and it's what limits my batch size or the model size I can fit on a card.
+## Description
 
-What I want is a memory-efficient LoRA variant that compresses the input activations into a compact form during forward using a learned projection, then reconstructs an approximation of them in backward. That approximation should only feed the low-rank weight gradient computation, the actual input gradient still needs to come out correct so normal gradient-based training keeps working.
+Standard low-rank adaptation (LoRA) fine-tuning stores the full input activations of each adapted layer during the forward pass so they can be used to compute weight gradients during backpropagation. For large models with wide hidden dimensions, these cached activations can account for a significant fraction of peak GPU memory, limiting the batch sizes or model sizes that fit on a given device.
 
-I want this driven by a new config object that attaches to the existing LoRA config. It needs three settings: how many groups to split the input features into (more groups means a better approximation but more memory), a scale factor applied to the reconstructed activations during backward, and an init strategy for the projection vector. The init strategies I need are random (init right away from a random normalized vector), batch average once (init from the stats of the first training batch then keep it fixed), and batch average (recompute the projection from each training batch), so the update policy differs depending on which one you pick.
+It would be useful to have a LoRA variant that reduces this memory cost by compressing the input activations into a compact representation during the forward pass and then reconstructing an approximation during the backward pass. The compression should be configurable: users should be able to control how many groups the input features are split into, a scale factor applied during reconstruction, and how the compression projection vector is initialized (randomly at startup, once from the first training batch, or freshly from each training batch).
 
-Oh and the config class has to validate its inputs and throw clear, descriptive errors when something's off, specifically a non-positive group count, a non-positive scale factor, or an unrecognized init strategy. Also it needs to play nice with the existing adapter saving, loading, merging, and disabling flows so nothing breaks there. End result should be noticeably less memory for stored intermediate activations versus plain LoRA while still training fine.
+## Expected Behavior
+
+- A new configuration class allows users to enable and configure this memory-efficient LoRA variant by attaching it to the standard LoRA configuration.
+- The resulting fine-tuning should use significantly less memory for stored intermediate activations compared to standard LoRA, while still allowing normal gradient-based training.
+- The adapted layers should support the three projection initialization strategies, with different update policies depending on the chosen strategy.
+- The configuration class should validate its inputs and raise descriptive errors for invalid values (non-positive group count, non-positive scale, or unsupported initialization type).
+
+## Why This Matters
+
+Memory is one of the primary bottlenecks when fine-tuning large models. This feature lets practitioners fine-tune with larger batches or on devices with less memory, closing the gap between LoRA and gradient-checkpointing approaches while retaining better training throughput.

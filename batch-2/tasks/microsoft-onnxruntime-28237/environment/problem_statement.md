@@ -1,5 +1,19 @@
-I'm quantizing a neural net for a hardware target that only accepts activation zero-points at certain canonical values, and standard asymmetric unsigned 8-bit quantization computes zero-points freely from calibration stats which my hardware just rejects. I don't want to fall back to symmetric quantization since that loses precision on one-sided distributions like post-ReLU outputs, so I need a new option in the static quantization pipeline that constrains how activation zero-points get chosen when I'm doing uint8 quant.
+## Description
 
-Here's the behavior I want: when the option's on and the calibrated minimum activation value is non-negative (all-positive stuff, like after a rectification op), snap the zero-point to the minimum of the quantized range which is zero, so the value zero is exactly representable, and recompute the scale so the dequantized range still covers the full calibrated range without clipping. When the calibrated min is negative and the activation spans positive and negative, snap the zero-point to the midpoint of the quantized range instead (128 for standard unsigned 8-bit) for balanced coverage, again recomputing scale to cover both halves. And when the option's left at its default disabled state, the existing standard asymmetric behavior has to stay exactly the same.
+When performing static quantization of neural networks to unsigned 8-bit integers, certain deployment targets require activation zero-points to be restricted to specific canonical values rather than computed freely from calibration statistics. For all-positive activations (such as those that follow a rectification operation), the zero-point should be fixed at the minimum of the quantized range so that the value zero is exactly representable. For activations that span both positive and negative values, the zero-point should be fixed at the midpoint of the quantized range to provide balanced coverage.
 
-Oh and I want the underlying snapping logic exposed as a standalone public utility function so I can call it directly in my own custom quantization workflows outside the full pipeline. That utility needs to support a narrowed quantized range (for reduce-range mode), enforce a minimum scale floor when I pass a minimum real range parameter, and handle degenerate calibration data gracefully where all the values are zero, which should just snap to the minimum of the quantized range.
+Currently there is no way to request this constrained zero-point behavior without switching to symmetric quantization, which loses precision for one-sided distributions.
+
+## Expected Behavior
+
+- A new quantization option should allow users to enable restricted asymmetric zero-point snapping for activations when using unsigned 8-bit quantization.
+- When the option is enabled and the calibrated minimum activation value is non-negative, the activation zero-point should be set to the minimum of the quantized range (zero), and the scale recomputed to cover the calibrated range without clipping.
+- When the option is enabled and the calibrated minimum activation value is negative, the activation zero-point should be set to the midpoint of the quantized range (128 for standard unsigned 8-bit), and the scale recomputed to cover both halves.
+- When the option is disabled, existing standard asymmetric quantization behavior must be preserved.
+- A utility function implementing the snapping logic should be publicly accessible so developers can apply it directly outside of the full quantization pipeline.
+- The utility function must respect a narrowed quantized range mode and must also enforce a minimum scale floor when a minimum real range is specified.
+- Degenerate calibration data (all values zero) should be handled gracefully, snapping to the minimum of the quantized range.
+
+## Why This Matters
+
+Hardware and inference runtimes that operate most efficiently with constrained zero-points cannot be targeted easily with free asymmetric quantization. This change lets users produce quantized models that satisfy these constraints without sacrificing the precision benefits of asymmetric quantization for one-sided activation distributions.

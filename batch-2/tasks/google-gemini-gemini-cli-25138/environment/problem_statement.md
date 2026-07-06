@@ -1,7 +1,15 @@
-I'm cleaning up how plan mode handles file paths in the CLI and it's bugging me that the AI is currently told to reference plan files using paths relative to the project root, so it says stuff like "plans/myplan.md". That unnecessarily couples the AI's references to wherever the plans directory happens to sit, and worse, the system prompt shows the plans dir as an absolute filesystem path which is machine-specific and totally not portable, plus it leaks internal directory structure to the model.
+## Description
 
-What I want instead: plan file paths should be treated as relative filenames within the plans directory itself, so the AI just says "myplan.md" or "subfolder/myplan.md" and the tools work out the correct full path on their own. The plan path validation logic needs updating to match, including adding a third parameter for the project root so it can resolve things properly. That validation also has to correctly handle nested subdirectories inside the plans folder, so something like "conductor/tracks/test.md" validates fine.
+When using plan mode in the CLI, the AI is currently expected to reference plan files using paths relative to the project root (e.g., "plans/myplan.md"). This is unnecessarily coupled to the project's directory layout and can cause confusion. Additionally, the system prompt tells the AI to write plan files to an absolute filesystem path, which is fragile, machine-specific, and exposes internal directory structure to the AI.
 
-The system prompt should display the plans directory as a path relative to the project root rather than an absolute one. Oh and when writing or editing plan files, a relative path like "conductor/tracks/plan.md" should automatically resolve within the plans directory, creating any intermediate directories as needed so the write doesn't blow up.
+## Expected Behavior
 
-Also the configuration interface needs a new method to expose the project root directory, since these components need it to compute relative paths correctly. Using absolute paths in the prompt is just brittle across different machines and environments, and simplifying how the AI references plan files should cut down on errors and make plan mode more predictable, while the nested subfolder support gives people room to organize more complex plans.
+- Plan file references should use simple relative filenames within the plans directory (e.g., "myplan.md" or "subfolder/myplan.md") rather than paths relative to the project root.
+- The system prompt should show the plans directory as a path relative to the project root, not as an absolute path.
+- Path validation for plan files should correctly handle nested subdirectories within the plans folder.
+- When writing or editing plan files, a relative path like "conductor/tracks/plan.md" should automatically be resolved within the plans directory, with intermediate directories created as needed.
+- The configuration interface should expose a way to retrieve the project root directory.
+
+## Why This Matters
+
+Using absolute paths in the system prompt is brittle across different machines and environments. Simplifying how the AI references plan files reduces errors and makes plan mode more predictable. Supporting nested plan subdirectories also gives users more flexibility in organizing complex plans.

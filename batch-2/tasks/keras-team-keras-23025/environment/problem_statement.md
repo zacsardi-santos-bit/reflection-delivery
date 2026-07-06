@@ -1,5 +1,13 @@
-I'm poking at the distribution classes in our distributed training library and hitting a couple gaps I want you to close up. First, there's no clean way to ask a distribution object how many model replicas exist. I want each strategy to expose a property for that count, so for data-parallel training it should just be the total device count, while for model-parallel it should be the size of the data/batch axis in the device mesh. Both strategies need this same property.
+## Description
 
-Second, the base distribution class needs a derived property that figures out the data shard index for the current process, computed from the number of model replicas and total process count. When there are at least as many replicas as processes each process gets its own shard, but when there are more processes than model replicas several processes end up sharing a shard, so the index gets computed by dividing evenly across them. Right now users have to hand-roll this and they get it wrong in exactly that unequal case, which is why I want it as first-class API.
+The distributed training library needs cleaner, more consistent APIs for working with multi-process, multi-device setups. Currently there is no standard way for a process to know which shard of the training data it should consume, and the internal attribute tracking process count is inconsistently named (using a grammatically incorrect singular form).
 
-Oh and also there's a naming wart: the internal attribute and public API tracking the number of processes uses a singular form where it should really be plural (grammatically it's just wrong). Fix that consistently across the class, including anywhere validation error messages reference it, so the plural name shows up everywhere the old singular one did.
+## Expected Behavior
+
+- Both the data-parallel and model-parallel distribution strategies should expose a property that reports how many complete copies of the model exist across all devices.
+- The distribution base class should expose a property that automatically computes which data shard the current process is responsible for, based on the number of model replicas and the total number of processes. When there are at least as many model replicas as processes, each process gets its own shard. When there are more processes than model replicas, multiple processes share the same shard.
+- The process-count attribute and property should use consistent, grammatically correct naming throughout (plural form), including in validation error messages.
+
+## Why This Matters
+
+Without a standard way to determine data shard assignment, users must manually implement this logic — and risk getting it wrong in the common case where the number of processes differs from the number of model replicas. Providing these properties as first-class API makes distributed data loading straightforward and correct for all distribution strategies.

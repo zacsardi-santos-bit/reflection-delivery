@@ -1,5 +1,14 @@
-I'm on the OpenAI Responses API model and the token pre-counting thing just isn't there. I set up usage limits with an input token ceiling plus the option to count tokens before each request, and nothing happens, the request just sails through without checking the budget first. I know this works fine with Anthropic, Google, and Bedrock Converse, so it looks like the Responses model integration just never implemented this and I want it brought up to parity.
+## Description
 
-What I want is for the Responses model to count the input tokens a given set of messages and tool definitions would consume ahead of time by calling the appropriate token counting endpoint on the OpenAI API. So when I run an agent with a usage limit that enforces input tokens ahead of time and the model would blow past that limit, the run should stop early with a clear error that tells me both the configured limit and the actual token count, not wait for the real inference call to fail. When the projected count is within budget, the run should just continue normally like it does today.
+The OpenAI Responses API model integration is missing support for pre-request token counting. Other model providers (Anthropic, Google, Bedrock Converse) already support the ability to count tokens before sending a request to enforce an input token limit proactively, but the OpenAI Responses model does not implement this capability.
 
-Oh and one edge case, if the counting method gets called without any messages (and no reference to a previous server-side conversation either), that should give a helpful error rather than silently misbehaving. The whole point here is folks who want to manage costs or dodge context window overruns can't do it right now on this model, they have to eat a failed inference request instead of catching it up front, so getting this in lets people set real input token budgets that get enforced consistently across providers.
+## Expected Behavior
+
+- The Responses API model should support a method for counting the input tokens that would be consumed by a given set of messages and tool definitions, by calling the appropriate OpenAI API endpoint.
+- When running an agent with a usage limit that enforces input tokens ahead of time, and the model would exceed that limit, the run should stop early with a clear error message indicating the limit and the actual token count.
+- When the projected token count is within the configured limit, the agent run should continue normally.
+- Attempting to count tokens without providing any messages (or a reference to a previous server-side conversation) should result in a clear error.
+
+## Why This Matters
+
+Users who want to manage costs or avoid exceeding context windows proactively cannot do so with the OpenAI Responses model. They must wait for the actual inference request to fail rather than catching the issue before the request is made. Bringing the Responses model to parity with other supported providers would allow users to set meaningful input token budgets that are enforced consistently.

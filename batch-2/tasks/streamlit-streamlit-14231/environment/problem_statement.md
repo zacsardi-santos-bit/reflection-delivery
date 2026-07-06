@@ -1,5 +1,17 @@
-I'm cleaning up the file attachment chip stuff in Streamlit's chat input because right now the chip component and all its helper utilities are jammed into the chat input widget's directory as private, chat-input-specific code, and I want to pull it all out into a shared component library so other widgets can reuse it without copy-pasting. The chip display component that renders each uploaded file needs to be renamed to something generic (not tied to chat input) and moved into the shared components location, and the container that wraps multiple chips needs the same treatment, rename plus move. All the related helper functions, the file type icon lookup, file extension parsing, image file detection, filename truncation, and the image preview URL management, should get consolidated into a single shared utilities module living in that same shared directory rather than scattered next to the chat input widget.
+## Description
 
-The visual behavior and accessibility attributes should stay exactly the same, but the actual rendered UI markers need updating too. Right now the chip container, the individual chip elements, the delete buttons, the filename labels, and the image previews all carry identifiers that imply they only belong to chat input, so those need to change to reflect the generic shared nature of the component instead.
+The components and utility functions for displaying uploaded file chips in the chat input are currently implemented as private, chat-input-specific code. As we expand file upload support to other widgets, these components need to be available as shared, reusable building blocks rather than living inside a single widget's directory.
 
-Oh and separately I want to make sure the chat input handles the combo case correctly, where someone types text, records audio, and attaches files all at once and submits it in one go. All three content types (text, the audio recording, and the file attachments) should show up together in the submitted value, and the input should clear itself afterward. Worth confirming end to end that text plus audio plus attachments can all ride along in a single submission.
+This issue tracks refactoring the uploaded file chip display component — along with related utility functions for file type icons, filename truncation, and image previews — into the shared component library. The visual behavior and accessibility attributes should remain the same, but the components should live in a shared location accessible to any widget.
+
+## Expected Behavior
+
+- The file chip display component should be renamed to reflect its generic, shared nature and moved to the shared component library.
+- All related utility functions (file type icon lookup, file extension parsing, image file detection, filename truncation, and image preview URL management) should be consolidated into a single shared utilities module in the same shared directory.
+- The rendered elements in the UI should use updated identifiers that reflect the generic nature of the component rather than implying they are specific to the chat input.
+- The container that wraps multiple file chips should likewise be renamed and moved.
+- End-to-end scenarios should confirm that text, audio recordings, and file attachments can all be combined and submitted together in a single interaction.
+
+## Why This Matters
+
+This refactoring allows other widgets beyond the chat input to reuse the same file chip UI and related utilities without duplicating code. It also makes the codebase easier to maintain by consolidating file upload display logic in one shared location.

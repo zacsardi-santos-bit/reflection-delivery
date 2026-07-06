@@ -1,9 +1,20 @@
-I'm cleaning up our red team security testing setup wizard because it looks fine on desktop but falls apart on narrow or mobile screens. Right now form rows, tab strips, and panels all try to sit side-by-side even when there's no room, so stuff overflows and content gets clipped. I want those layouts to stack vertically on small screens and flip back to horizontal (side-by-side) once the viewport's wide enough.
+# Red Team Setup Wizard: Responsive Layout and Accessibility Improvements
 
-There's also a dialog problem: dialogs with long scrollable content currently scroll the whole thing, so the action buttons at the bottom scroll out of view. I need dialogs to have a fixed max height where only the content body scrolls and the footer buttons stay anchored at the bottom.
+## Description
 
-On accessibility, a bunch of the interactive buttons (the ones to remove, configure, edit, or view documentation for items in lists) have no descriptive label, so screen reader users can't tell which item a button acts on. Each of these buttons needs an accessible label naming both the action and the specific item, plus its position in the list when there's more than one (so the remove button for the second item clearly says it removes that item and calls out it's second). Oh and when only a single removable item's left, its remove button should be disabled so you can't accidentally wipe out all the entries.
+The red team setup wizard does not adapt well to narrow or mobile-sized screens. Many panels, form rows, dialogs, and tab strips display their elements side-by-side regardless of available screen width, causing overflow and layout problems on small devices. The wizard should stack elements vertically on narrow screens and switch to a horizontal arrangement when enough space is available.
 
-Also the main setup page has its own layout thing: the sidebar nav shouldn't show up at all on mobile. Instead there should be a dedicated menu available only on mobile giving access to config management actions like saving a configuration.
+Additionally, numerous interactive action buttons throughout the wizard — including buttons to remove, configure, edit, and view documentation for items — carry no descriptive accessible name. Screen reader users cannot determine which item a button acts on or what it will do. Every button that acts on a specific list item must include the item's name and position in its accessible label.
 
-Last thing, I need a new component that shows estimated run duration and cost side-by-side on wide screens and stacks them vertically on narrow ones. All of this is about making the wizard actually usable on mobile and tablet and getting us compliant with accessibility standards so screen reader folks can navigate the setup flow.
+## Expected Behavior
+
+- Layouts across the setup wizard stack vertically on narrow/mobile screens and switch to horizontal when the viewport is wide enough.
+- Dialogs that display long content render with a fixed maximum height, a scrollable body area, and a footer that always stays visible and does not scroll away.
+- The setup page sidebar is hidden on mobile, with a dedicated accessible menu available instead.
+- Interactive buttons for removing, configuring, editing, or viewing documentation for a specific item carry labels that identify both the action and the item (e.g., the button to remove the second item in a list clearly names that item and its position).
+- When there is only one removable item, its remove button is disabled to prevent accidentally clearing all entries.
+- A new component displays estimated run duration and cost in a row that stacks on small screens.
+
+## Why This Matters
+
+These changes make the wizard usable on mobile and tablet devices and ensure compliance with accessibility standards, allowing screen reader users to navigate and interact with the setup flow effectively.

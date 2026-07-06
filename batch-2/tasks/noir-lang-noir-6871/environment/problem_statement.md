@@ -1,3 +1,15 @@
-I'm mid-upgrade on the arithmetic libs that Noir's circuit VM leans on (ark-ff and friends), bumping them to their latest major versions across the workspace, and the core package plus its field element types are already ported over. Problem is now a bunch of tests won't compile. The reference crypto crates we use in tests, specifically the external Poseidon and Poseidon2 implementations we compare our hashes against, still pin the older versions of those same arithmetic libs, so the old and new field element types are just plain incompatible and any test that used to hand a field value straight into one of those reference functions blows up at compile time.
+## Description
 
-What I want is two things. First, update the workspace dependency declarations to pull the newer versions. Second, for the test packages that have to talk to those older external libs, make both the old and the new arithmetic libraries available at once under distinct names (some kind of aliasing in the manifest) so test code can construct the old-versioned types when calling into the reference impls and convert back and forth with the new field element type. The bridge should go through a byte-based serialization, raw big-endian bytes basically, and the field element type in our core crate should have (or needs me to add) methods to serialize to and deserialize from those big-endian byte arrays, since that's a neutral exchange format both type systems agree on. Please wire up the manifest aliases and whatever source changes are needed so the Poseidon and Poseidon2 equivalence tests compile again and actually produce results matching the external references. Oh and don't touch the behavior of the existing solver tests, they should keep compiling and passing untouched. Keeping these deps current matters for security and perf, but I don't want one bump cascading into failures everywhere, so the old/new bridge is the key piece here.
+The arithmetic library dependencies used throughout Noir's circuit system need to be upgraded to newer versions. However, several external cryptographic libraries used in tests (for reference implementations of Poseidon and Poseidon2 hashing) depend on older versions of these same arithmetic libraries. Because the old and new versions define incompatible types for field elements, tests that compare Noir's hash output against these reference implementations fail to compile.
+
+## Expected Behavior
+
+- The core arithmetic library dependencies should be upgraded to their latest major versions across the workspace.
+- For test code that interoperates with external cryptographic reference libraries, compatibility aliases should be introduced that make both the old and new versions of the arithmetic libraries available simultaneously under distinct names.
+- The field element type should support serialization to and deserialization from raw big-endian byte arrays, providing a version-agnostic bridge between the old and new type systems.
+- Poseidon and Poseidon2 hash equivalence tests should compile and produce results matching their respective external reference implementations.
+- All existing solver tests should continue to compile and pass without modification.
+
+## Why This Matters
+
+Keeping arithmetic library dependencies up to date is important for security and performance. Without a clear strategy for bridging between old and new versions during the transition period, a single dependency upgrade can cascade into widespread test failures across the project.

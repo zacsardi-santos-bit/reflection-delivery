@@ -1,3 +1,12 @@
-I've got a Svelte component that imports a utility function and uses it two different ways, once up in the script block where I pull its parameter types via a TS utility (think `Parameters<typeof fn>` style extraction for a type annotation), and once down in the template where I actually call it inside an HTML attribute expression. The lint rule that enforces type-only imports keeps flagging that import as one that should become a type-only import, but that's a false positive. If I follow the suggestion and switch it to `import type`, the call in the template blows up at runtime because type-only imports get erased before execution.
+## Description
 
-The fix is in how the rule analyzes Svelte templates. When an imported symbol is called as a function inside a template attribute expression, that's a real runtime value usage and the rule needs to treat it that way. So for an import that's used as a value in the template (even when the same import also shows up in a type position inside the script block), the rule should emit no diagnostic at all, no warning and no suggestion to convert. Basically calling a function in a template attribute counts as value usage and can't be flagged for conversion to type-only.
+The lint rule that enforces type-only imports is producing a false positive in Svelte files. When a function is imported and used in two ways — once in the script block to describe a type (via a TypeScript utility that extracts parameter types), and once in the HTML template as an actual function call — the rule incorrectly flags the import as needing to be a type-only import.
+
+## Expected Behavior
+
+- When an imported symbol is called as a function inside a Svelte template's attribute expression, the rule should recognize this as a runtime value usage.
+- The rule should produce no diagnostic (no warning or suggestion) for imports that are used as values in the template, even if those same imports also appear in type positions within the script block.
+
+## Why This Matters
+
+If a developer follows the rule's suggestion and changes the import to a type-only import, the function call in the template will break at runtime because type-only imports are erased before the code executes. The rule must not suggest converting imports to type-only when they are needed at runtime in the template.

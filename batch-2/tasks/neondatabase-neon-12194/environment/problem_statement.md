@@ -1,5 +1,13 @@
-I'm doing some cleanup on the pageserver and I keep hitting a wall when trying to figure out who's holding layer manager locks during contention. Right now the read and write lock methods on the layer manager take zero args, so lock acquisition is totally anonymous and there's no record anywhere of which subsystem grabbed the lock. Makes it a pain to diagnose contention, track ownership, or reason about which code paths are holding what at any given moment.
+## Description
 
-What I want is to make every caller identify itself when acquiring a read or write lock. So I need a new type representing the possible lock holders, think compaction, GC, the HTTP route handlers, test code, that kind of thing, with at least a dedicated variant for test code so tests can grab locks without pretending to be some production component. Then update the read and write lock methods on the layer manager to require one of these holder identifiers as an argument instead of taking nothing.
+The layer manager's lock acquisition mechanism needs to be updated so that every caller must declare who is acquiring the lock. Currently, the read and write lock methods on the layer manager accept no arguments, meaning any component can acquire a lock without leaving any record of which part of the system is holding it. This makes it difficult to diagnose lock contention, track ownership, and reason about which code paths hold locks at any given time.
 
-This is a breaking API change on purpose, so once the signatures change every existing call site across the pageserver needs to be updated to pass an appropriate identifier or it won't compile. Please chase down all of them, the whole thing needs to build clean afterward. Point is that once this lands we've got a clear record of which subsystem holds locks, which should make future debugging and deadlock analysis way easier.
+## Expected Behavior
+
+- The layer manager's read and write lock methods should require callers to provide an identifier that names the component or context acquiring the lock.
+- A dedicated identifier variant should be provided for use in test code, so tests can acquire locks without impersonating production components.
+- All existing callers throughout the pageserver must be updated to pass an appropriate identifier.
+
+## Why This Matters
+
+Without a holder identifier, lock acquisition is anonymous, which complicates debugging and observability. By requiring each lock acquisition to declare itself, the codebase gains a clear record of which subsystems hold locks, making future debugging and deadlock analysis significantly easier. This is a breaking API change that must be applied consistently across all callers to restore compilation.

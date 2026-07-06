@@ -1,7 +1,16 @@
-I'm using Biome's organize imports action and it's not fully handling bare exports, the ones where you export identifiers straight from the current file without naming any source module (so no `from "..."` part). It sorts and groups imports and re-exports that reference a source module just fine, but bare exports get left behind.
+## Description
 
-A few things I keep hitting. When I've got multiple consecutive bare export statements in the same group, they don't get merged, they just sit there as separate statements. I want them collapsed into a single export statement with the specifiers sorted alphabetically. Also when a file has both imports and bare exports, there's no blank line inserted between them to break them into distinct groups, so it all runs together and looks inconsistent even after running the action.
+The import organization feature in Biome does a great job of sorting and grouping imports and re-exports that reference a source module. However, it currently does not fully handle "bare" exports — those that export identifiers from the current file without naming any source module.
 
-Oh and the custom group ordering config should apply to these bare exports the same way it already does to imports, so type-only exports can go before value exports, and exports from Node.js built-in modules can be treated separately, that kind of thing. One caveat though, if a bare export is separated from other exports by non-export code like a function declaration in between, it should stay in its own separate group and not get merged across that boundary.
+When a file has multiple consecutive bare exports, they are left as separate statements without being merged or sorted. When bare exports appear alongside import statements, no blank-line separation is applied between them. Additionally, custom group ordering configurations (such as placing type-only exports before value exports, or treating Node.js built-in module exports differently) are not applied to bare exports.
 
-Basically I want the organize imports action to treat all the export and import statements uniformly so the file comes out fully organized in one pass. This lives in Biome's import/export organization logic, so wherever that sorting, grouping, and merging happens.
+## Expected Behavior
+
+- When a file has both imports and bare exports, a blank line should be inserted between them to separate them into distinct groups.
+- Multiple consecutive bare export statements appearing in the same group should be merged into a single export statement, with their specifiers sorted alphabetically.
+- Custom group ordering options should apply to export statements, including type-only exports and exports from Node.js built-in modules.
+- Bare exports that are separated from other exports by non-export code (such as function declarations) should remain in their own separate group.
+
+## Why This Matters
+
+Files that mix imports with bare exports, or that have multiple bare export statements, end up with inconsistently organized code even after running the organize imports action. Developers expect the action to handle all export and import statements uniformly so the file is fully organized in one pass.

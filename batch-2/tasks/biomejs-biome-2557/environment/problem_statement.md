@@ -1,5 +1,16 @@
-I'm working on the Biome GraphQL parser and there's a gap I keep hitting: it completely ignores schema definitions, those `schema { ... }` blocks that declare which types back the query, mutation, and subscription root operations in a GraphQL API. Right now any document containing one of these blocks fails to produce a valid parse tree, which means we can't analyze or lint real-world SDL files at all, and since schema files are the foundation of any GraphQL API this is a pretty big hole for backend and full-stack tooling.
+## Description
 
-I want the parser to handle this the way it already handles other definition types. On the happy path, a schema block with any combination of the three recognized root operation type entries should parse into a well-structured, typed AST node. Schema definitions can also optionally have a string or block string description immediately before them, and I want that captured as part of the definition node.
+The Biome GraphQL parser does not currently support parsing schema definitions, which are a core construct in GraphQL Schema Definition Language. A schema definition declares which types serve as the entry points for query, mutation, and subscription operations. Without this support, any GraphQL document containing a schema block fails to parse correctly, making it impossible to analyze or lint real-world schema files.
 
-For the error cases I care about graceful recovery plus meaningful diagnostics so the rest of the file still parses after a bad block. If someone writes a name that isn't one of the three recognized operation type keywords, report what was found and what was expected. If the schema block is left unclosed (missing closing brace), detect that the next token doesn't belong and report the mismatch. If a root operation type entry is missing its type reference after the colon, flag that too. And unterminated description strings before a schema definition should get caught with an appropriate error. Basically parse valid inputs correctly into typed nodes and emit clear, recoverable errors for malformed ones, living alongside the existing GraphQL parser code so subsequent definitions keep parsing.
+## Expected Behavior
+
+- A schema block with any combination of query, mutation, and subscription root operation type entries should parse successfully into a properly structured AST node.
+- A schema definition optionally preceded by a string or block string description should also parse correctly, with the description captured as part of the definition.
+- When a schema block contains invalid operation type keywords (not one of the three recognized operation types), the parser should produce a clear error message identifying the unexpected token and what was expected instead.
+- When a schema block is missing its closing brace, or when a root operation type entry is missing its type reference, the parser should produce a targeted diagnostic pointing to exactly what was found and what was expected.
+- Unterminated description strings before a schema definition should be flagged with an appropriate error.
+- Error recovery should allow subsequent definitions in the file to continue parsing after a malformed schema definition.
+
+## Why This Matters
+
+GraphQL schema files are the foundation of any API built with GraphQL. Without schema definition support, tools built on Biome cannot process or validate schema documents at all, severely limiting their usefulness for backend and full-stack GraphQL development.

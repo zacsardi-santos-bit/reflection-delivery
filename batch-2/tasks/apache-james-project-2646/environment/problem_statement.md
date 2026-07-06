@@ -1,5 +1,20 @@
-I'm hitting a wall with shared mailbox rename and move on my mail server. When I've got a mailbox that's shared with me and I've actually been granted the rights to manage it, renaming or moving it just fails anyway, and worse, when someone without rights tries to rename a mailbox they can't touch, we hand back a "not found" error which is super confusing since the thing clearly exists, they just aren't allowed. So the whole delegated management story is broken because either legit users can't do what they've been given permission to do, or the errors lie about why.
+## Description
 
-What I want is for both rename and re-parent to honor ACL rights properly. If a user's been granted the delete right on the source mailbox (deleting is basically what moving away requires) they should be able to rename or move it, and if they've been granted the create-children right on the destination parent they should be allowed to rename a mailbox into that parent. When both those rights line up (delete on source, create on the destination parent) the rename has to succeed. When either right is missing, don't fudge it with a not-found or a generic argument-validation error, give back a clear access-denied / forbidden result that actually says it's a permission problem.
+Mailbox rename operations do not correctly honor access control rights granted to other users. When a user has been explicitly given permission to manage a shared mailbox (such as the right to delete it or to create children under a parent mailbox), those rights are currently ignored during rename and move operations.
 
-This needs fixing at two layers. In the low-level mailbox manager API, the rename path should throw a specific insufficient-rights exception instead of the not-found one it throws today. And at the higher-level JMAP protocol layer, the error type reported in mailbox update responses for unauthorized operations on delegated mailboxes needs to consistently signal a permission/forbidden problem rather than the current generic argument or not-found failure. Both the JMAP rename and the JMAP re-parent operations have to respect these ACL checks. Basically I want to be able to build real sharing workflows that include reorganizing mailboxes, oh and the key thing is the error surface actually telling the truth about permissions.
+## Current Behavior
+
+- Attempting to rename a shared mailbox when the user has the necessary ACL rights either fails entirely or returns a misleading error.
+- When a user lacks the rights to rename a shared mailbox, the error returned is either "not found" or a generic argument-validation error — neither of which clearly communicates that the operation was rejected for insufficient permissions.
+
+## Expected Behavior
+
+- A user granted the right to delete a shared mailbox should be able to rename (move) it.
+- A user granted the right to create child mailboxes under a shared parent should be able to rename a mailbox into that parent.
+- When both rights are present (delete on source, create on destination parent), the rename must succeed.
+- When rights are absent, the server must return a clear access-denied (forbidden) error rather than a misleading "not found" or generic validation error.
+- The error type in mailbox update responses for unauthorized operations on delegated mailboxes must consistently signal a permission problem rather than a generic argument or not-found failure.
+
+## Why This Matters
+
+The current behavior makes shared mailbox management unreliable: legitimate delegated users cannot exercise permissions they have been granted, and error messages do not accurately reflect the underlying access control problem. This makes it impossible to build proper mailbox sharing workflows that include rename and reorganization operations.

@@ -1,7 +1,17 @@
-I'm cleaning up our code assistant tool that creates and manages config rule files, and right now the logic for turning rule names into safe filenames, building the rule file path, and generating markdown with YAML frontmatter is scattered and duplicated all over the place. I want to pull all of that into shared utilities so any part of the codebase can create rule files without reinventing it, which keeps the format and paths consistent no matter who's writing them.
+## Description
 
-So I need a new module in the config markdown directory that gives me a function to sanitize a rule name into a filename (lowercase, spaces become hyphens, drop special characters), a function to build the full path under the workspace's rules config directory from a workspace dir plus rule name, a function that wraps arbitrary markdown content in a YAML frontmatter block with the frontmatter serialized so it round-trips and parses back cleanly, and a higher-level function that assembles a complete rule file from a name, a body, and optional metadata like description, file glob patterns, and an always-apply flag. Important bit: that always-apply flag should only show up in the frontmatter when it's actually provided, not by default. All of these get re-exported through a single barrel index file, along with a constant for the rule file extension.
+The rule file creation system has scattered logic that makes it difficult to maintain and reuse. Currently, the code for sanitizing rule names, constructing rule file paths, and generating formatted markdown with YAML frontmatter is duplicated or missing from shared utilities. There is also no standardized way to generate template content for different types of configuration blocks, and no utility to find an available filename when creating new workspace configuration files to avoid overwriting existing ones.
 
-I also want utilities over in the workspace blocks module. One generates template file content based on the config block type, so rules give back markdown but everything else (models, context, docs, prompts, MCP servers) gives back YAML. Oh and another that finds an available filename in a directory by checking if it exists and bumping a numeric suffix until it hits a free name, so we don't clobber existing files. Rules use the markdown extension, everything else defaults to YAML.
+## Expected Behavior
 
-Last thing, the existing rule creation tool should stop using its own inline logic and lean on these shared path and content helpers instead. When that tool writes a rule file, its frontmatter should only carry the description and file patterns, not the always-apply flag.
+- A shared utility should exist for sanitizing rule names into safe filenames (lowercase, hyphens instead of spaces, no special characters)
+- A shared utility should construct the correct rule file path within the workspace's rules configuration directory from a workspace directory and rule name
+- A shared utility should create markdown content with properly formatted YAML frontmatter that can be parsed back correctly
+- A shared utility should create complete rule markdown files from a name, content body, and optional metadata (description, file patterns, and whether to always apply)
+- The workspace block file creation system should generate appropriate template content based on block type — markdown format for rules, YAML format for other types
+- When creating a new configuration file, the system should find an available filename by incrementing a counter suffix if the base name already exists
+- The rule creation tool should use these shared path and content utilities instead of duplicating the logic
+
+## Why This Matters
+
+Centralizing these utilities prevents logic drift between different parts of the codebase that need to create or manage rule files. It also ensures that rule files always use a consistent format and path structure, regardless of which part of the system creates them.

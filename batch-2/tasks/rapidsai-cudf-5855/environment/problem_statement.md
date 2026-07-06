@@ -1,3 +1,14 @@
-I'm working with the Java bindings for cuDF's GPU memory manager over in the RMM initialization path and right now there's just no way to tell the pool "hey, don't grow past X bytes." The current init only takes an initial pool size, so once you're in pool allocation mode the thing just expands to eat as much GPU memory as it wants, which is a real pain when the GPU is shared with other processes or I've got memory reserved for other workloads. What I want is a new overload of the initialization method that takes a maximum pool size as an extra parameter on top of the existing args, so I can cap how big the pool is allowed to get at startup.
+## Description
 
-Behavior I'm after: if someone passes a max that's smaller than the initial pool size, the call should blow up right away with a clear descriptive error instead of silently accepting a nonsense config. Same thing if they try to set a pool limit but the allocation mode they picked doesn't actually support pools, fail immediately with a descriptive message. And when no max is given, or the value is non-positive (zero or negative), just keep the old behavior and let the pool grow without an artificial ceiling. The point is to give a simple explicit knob to cap memory usage while validating bad combos up front rather than ignoring them.
+The Java interface for cuDF's GPU memory manager currently provides no way to limit how large the memory pool can grow after initialization. When running in pool allocation mode, the pool will expand to consume as much GPU memory as needed, which can be problematic in environments where GPU memory must be shared or reserved for other workloads.
+
+## Expected Behavior
+
+- Users should be able to specify an optional upper bound on the memory pool's maximum size at initialization time.
+- If a maximum pool size is specified but is smaller than the initial pool size, initialization should fail immediately with a clear error.
+- If a maximum pool size is specified but the chosen allocation mode does not support pools, initialization should also fail immediately with a clear error.
+- When no maximum pool size is specified (or a non-positive value is given), the existing behavior should be preserved — the pool grows without an artificial limit.
+
+## Why This Matters
+
+Without this limit, applications sharing a GPU with other processes have no way to prevent cuDF's memory pool from consuming all available GPU memory. The new parameter gives developers a simple, explicit way to cap memory usage at startup, with validation that catches invalid configurations immediately rather than silently ignoring them.

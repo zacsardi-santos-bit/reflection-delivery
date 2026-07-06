@@ -1,7 +1,16 @@
-I've got datasets where each row belongs to some natural group, think a document_id or category column, sometimes a speaker or an experimental run, and I want to batch rows so that all consecutive rows sharing the same group value land together in one batch. Right now the only batching I can do is a fixed number of rows per batch, which happily splits my groups across batch boundaries and makes it painful to process related rows together.
+## Description
 
-What I want is for the batching method to take one or more columns as grouping keys, so consecutive rows with matching values in those columns get bundled into a single batch. Key detail: it's about consecutive runs, not global sorting. So if a category column goes A, A, B, B, C, B I should get four batches (first A run, then B, then C, then the second B run), not three, since that later B is a separate stretch and shouldn't merge back with the earlier one. When I pass multiple columns at once, a new batch should start whenever any of those columns changes value.
+When working with datasets that have natural groupings — for example, multiple rows belonging to the same document, the same speaker, or the same experimental run — there is currently no way to collect all rows from the same group into a single batch. The only available batching option uses a fixed number of rows per batch, which can split a group across multiple batches and makes it hard to process related rows together.
 
-Also, if I hand it a fixed row count alongside the column grouping, that count should only be a buffering/processing hint internally, it must not cap how many rows end up in an output batch. Each output batch still holds all consecutive matching rows no matter how many there are.
+## Expected Behavior
 
-This needs to work for both regular in-memory datasets and iterable/streaming ones, and for the streaming case it's important the whole thing stays compatible with checkpoint/resume so I can stop and pick back up. This is really handy for NLP stuff where rows are sentences or tokens from the same document, or time-series where measurements belong to the same event window, without me having to pre-sort or pre-group anything first.
+The batching API should support a "group by column" mode where consecutive rows sharing the same value in one or more specified columns are collected into a single batch. For example:
+
+- If a dataset has a category column where the values follow the pattern A, A, B, B, C, B, grouping by that column should produce four batches: one for the first run of A, one for B, one for C, and another for the second run of B.
+- Grouping should be based on **consecutive runs**, not global sorting. If the same value appears in two separate stretches, they produce two separate batches.
+- It should also be possible to group by multiple columns simultaneously, so that a batch boundary is created whenever any of the specified columns changes value.
+- When a fixed batch size is also provided, it should serve as a processing buffer hint only — it must not limit how many rows end up in a single output batch.
+
+## Why This Matters
+
+This feature enables natural processing of grouped data without requiring the user to pre-sort or pre-group records beforehand. It is especially useful for NLP workflows where multiple rows represent sentences or tokens from the same document, or time-series data where multiple measurements belong to the same event window.

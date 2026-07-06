@@ -1,3 +1,14 @@
-I want to clean up two rough spots in the nushell test infra. First one is containment assertions. Right now when a test wants to check that some output contains an expected substring or element, we end up calling the container's own contains method inside a generic assert, and when it fails you just get "assertion failed" with zero context, you can't see what the container actually held or what you were looking for, so debugging is slow and annoying. I want a dedicated helper that takes the needle first and the container (haystack) second, in that readable order, checks containment, and on failure prints both the container contents and the expected item so I can actually tell what went wrong. It's gotta work uniformly across strings, slices, vectors, maps, sets, and ranges without the caller needing to know the concrete container type, so no special-casing at the call site. And it should be automatically in scope whenever tests pull in the standard test support prelude, so nobody has to import it separately.
+## Description
 
-Second thing, some tests that shell out to external programs fail in the sandboxed test env because the executable search path (PATH) isn't inherited from the host, so the engine can't find the external command like it would in a normal shell session. I want a simple method on the test runner that copies the host process's executable search path into the test engine, opt-in, so those tests spawning external processes can find their executables reliably. btw both of these are quality-of-life stuff for test authors, clearer failures and consistent patterns make tests way easier to read and maintain, and the path thing unblocks the external-command tests that currently have to work around the sanitized environment.
+Writing tests for nushell commands currently requires a verbose, error-prone pattern to verify that output contains an expected substring: you must call the container's own "contains" method inside a generic assertion. When the check fails, the output gives no context about what was actually in the container or what was expected, making debugging slow. Additionally, tests that invoke external programs (like shell commands) fail silently on some systems because the test environment does not inherit the host's executable search path.
+
+## Expected Behavior
+
+- There should be a dedicated assertion helper for containment checks that accepts the needle and haystack in a readable order and automatically produces an informative failure message showing both what was searched for and what the container actually held.
+- The helper should work uniformly across strings, collections, and ranges without requiring callers to know the container's concrete type.
+- It should be available automatically when tests import the standard test support prelude.
+- The test runner should offer an option to inherit the host system's executable search path so that tests depending on external programs can find those executables reliably.
+
+## Why This Matters
+
+These are quality-of-life improvements for test authors. Clearer failure messages reduce debugging time, and consistent assertion patterns make tests easier to read and maintain. The path inheritance feature unblocks tests for commands that rely on spawning external processes, which previously had to work around the sanitized test environment.

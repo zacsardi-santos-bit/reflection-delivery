@@ -1,5 +1,18 @@
-I'm cleaning up the telemetry from our PIR (Personal Information Removal) scan feature and hit two things I want fixed together. First is the manufacturer field we attach to pixel requests. Right now it's sent exactly as the device reports it, so the same manufacturer shows up with all kinds of casing across devices and it's making aggregated analytics messy, plus a bunch of obscure brands just add noise. I want the manufacturer value always lowercased before it goes out, and only recognized well-known brands should be reported by their (lowercased) name. Anything that's not on the recognized list should get reported as "other" instead so we can group cleanly.
+## Description
 
-Second thing, the scan completion and initial scan duration pixel events are missing context that'd help us correlate performance with device conditions and workload. When a scan completes I want to also send how many profile queries were used, how many data brokers were involved, and whether power-saving mode was active on the device at scan time. And the initial scan duration event should include power-saving status, battery optimization status, and the broker count too. All the call sites that fire these events need updating to pass the new info through, don't leave any firing the old signatures.
+The PIR (Personal Information Removal) scan feature sends telemetry events to help the team understand scan performance and device behavior. Two issues need to be addressed:
 
-Basically: known brands report as their lowercased name, unknown brands report as "other", completion events carry profile query count + broker count + power-saving status, and initial scan duration events carry power-saving status + battery optimization status + broker count. This matters because without normalization the manufacturer data is unreliable for grouping, and without the extra fields we can't tell if slow scans line up with specific manufacturers, big broker/profile counts, or power-saving constraints.
+1. **Manufacturer normalization**: The device manufacturer name is currently sent as-is in pixel events. This means the same manufacturer can appear with different casing depending on how the device reports it, and uncommon/obscure brands add noise to aggregated analytics. Manufacturer values should be normalized to lowercase, and only well-known brands should be reported directly — any brand not on the recognized list should be grouped under a generic "other" category.
+
+2. **Missing scan context in telemetry**: When reporting scan completion and initial scan duration events, several useful fields are missing: the number of data brokers involved in the scan, the number of profile queries used, and whether the device's power-saving mode was active at scan time. Without these fields, it's difficult to correlate scan performance with device conditions and workload.
+
+## Expected Behavior
+
+- Manufacturer values in pixel requests are always lowercased
+- Known device brands are reported as their lowercased name; unknown brands are reported as "other"
+- Scan completion events include profile query count, broker count, and power-saving status
+- Initial scan duration events include power-saving status, battery optimization status, and broker count
+
+## Why This Matters
+
+These fields help the team understand whether scan performance issues correlate with specific manufacturers, large broker/profile counts, or power-saving constraints. Without normalization, manufacturer data is unreliable for grouping and analysis.

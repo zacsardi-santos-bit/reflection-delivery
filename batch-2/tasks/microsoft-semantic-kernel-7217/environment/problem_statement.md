@@ -1,9 +1,27 @@
-I'm hitting a bunch of stuff with the Azure AI Inference connector in semantic-kernel that's blocking me from building agentic workflows, so I need a few fixes across the chat completion, message formatting, and embedding paths.
+## Description
 
-Biggest one is automatic function/tool calling just isn't wired up. When I set the execution settings to auto-invoke kernel functions and the model comes back with a tool call, nothing picks it up. I want it to actually loop through the invocations up to the configured max, run the kernel functions, feed results back, and finish with the right finish reason. It also needs validation before it even tries: if I forgot to pass a kernel it should raise an error, and if I've got auto function invocation on but I'm asking for more than one completion that should error too (can't do multiple completions while auto-invoking). Right now those invalid states just get silently ignored or blow up in confusing ways. Same behavior for both the regular and the streaming chat completion paths, don't want them diverging.
+The Azure AI Inference connector in semantic-kernel is missing support for automatic function/tool calling, has bugs in message formatting utilities, and has an inconsistent method signature for embedding generation.
 
-Second, message formatting bugs. When an assistant message carries tool call references, the content field ends up as a list of content items instead of a plain string, oh and the fix is the text content stays a string on the message with the tool call data going into its own separate field. Also the tool result formatter: if the first item in the message isn't a function result, it currently just logs a warning and keeps going, which is how I get silent corruption, it should raise an error instead.
+## Problems
 
-Third, the embedding generation method signature is off, it wants execution settings as a keyword arg but everywhere else in the codebase settings come through positionally, so positional-style callers don't get their settings handled right and the settings object leaks through into the underlying API call's extra kwargs where it doesn't belong. Make it a normal positional argument and keep it out of those extra kwargs.
+**Function/Tool Calling Not Supported**
+When a model responds with a tool call request, the connector has no mechanism to validate prerequisites (such as requiring a kernel to be present), enforce constraints (such as only supporting a single completion when auto-invoking tools), or automatically invoke kernel functions and continue the conversation loop. Both regular and streaming chat completion paths are affected.
 
-That's it, three areas, all in the Azure AI Inference connector.
+**Message Formatting Bugs**
+The assistant message formatter incorrectly builds the message content as a list of content items instead of passing the message text directly as a string. The tool message formatter silently logs a warning when the message is malformed (first item is not a function result) instead of raising an error to alert the caller.
+
+**Embedding Method Signature Inconsistency**
+The embedding generation method requires the execution settings to be passed as a named keyword argument, but the rest of the codebase passes settings as a positional argument. This inconsistency causes calls using positional argument style to fail to forward settings correctly.
+
+## Expected Behavior
+
+- Attempting to use automatic function invocation without providing a kernel should result in an error.
+- Attempting to use automatic function invocation while requesting more than one completion should result in an error.
+- When a tool call is returned and auto-invocation is configured, the service should loop through invocations up to the configured limit and report the final result with an appropriate finish reason.
+- Assistant messages with tool calls should format the content as a string, with tool call details in a separate field.
+- A malformed tool message (where the first item is not a function result) should raise an error rather than silently continuing.
+- Embedding generation should accept execution settings as a regular positional argument, and those settings should not leak into the underlying API call's extra keyword arguments.
+
+## Why This Matters
+
+Without these fixes, developers using the Azure AI Inference connector cannot build agentic workflows that rely on automatic function calling, and may encounter silent data corruption or unhelpful error messages when working with message history or tool results.

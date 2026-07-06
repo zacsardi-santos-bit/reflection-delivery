@@ -1,5 +1,14 @@
-I'm working on the GitHub Enterprise Importer CLI and want to close a gap in the migrate-repo command. Right now I can either let it generate archives automatically from a GitHub Enterprise Server source, or hand it pre-hosted archive URLs that point to externally accessible storage, but if I've already downloaded the git and metadata archives to my local machine there's no way to just feed those files in. I have to upload them somewhere first and then pass the resulting URLs, which is an annoying extra step especially for offline or restricted environments.
+## Description
 
-So I'd like to add two new optional, hidden command-line options that take local file paths, one for the git data archive and one for the metadata archive. These should mirror the existing archive URL options in behavior (optional and hidden) but accept file paths instead of URLs. When both paths are provided, the tool should open those files and upload them to the configured blob storage, the same Azure, AWS, or GitHub Storage integration it already uses in other flows, then proceed with the migration using the uploaded URLs.
+The repository migration tool currently supports two modes for supplying migration archives: it can generate them automatically from a GitHub Enterprise Server source, or accept pre-hosted archive URLs that point to externally accessible storage. However, there is no way for users who have already downloaded or prepared migration archives on their local machine to feed those files directly into a migration. Currently they would have to manually upload the archives to a hosting location and then provide the resulting URLs — an unnecessary extra step.
 
-Validation matters here too. If only one of the two path options is given, the command should fail with a clear error saying both are required together. And if someone provides both a URL and a local path for the same archive (git or metadata), that combination should be rejected with a clear error too. Basically both-or-neither for the paths, and never mix a URL with a path for the same archive.
+## Expected Behavior
+
+- Users should be able to point the migrate-repo command at local archive files on disk (one for the git data archive and one for the metadata archive)
+- When local paths are provided, the tool should upload those files to the configured blob storage (Azure, AWS, or GitHub Storage) automatically and proceed with the migration
+- The tool should validate that both archive path options are always provided together — supplying only one of the two should produce a clear error message indicating both are required
+- If a user mistakenly provides both a pre-hosted URL and a local path for the same archive, the tool should reject the combination with a clear error
+
+## Why This Matters
+
+Users who have pre-downloaded archives or who manage archives locally should have a streamlined path to migrate repositories without needing an intermediate hosting step. This reduces friction and makes the tool more flexible for offline or restricted environments.

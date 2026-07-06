@@ -1,1 +1,27 @@
-I'm chasing down some busted TCF privacy metrics in our prebid server and the numbers on our dashboards are all wrong, which makes it impossible to tell how often each privacy enforcement action actually happens. A few things are tangled up. In the function that records auction-level TCF metrics the args for "analytics blocked" and "request blocked" are swapped, so each one fires for the wrong condition, need those mapped back to the right conditions. Also there's no metric at all for total TCF consent requests broken down by version, so I want a new method that takes a TCF version number and bumps the matching per-version request counter. The bigger correctness issue is that when a bidder request gets fully blocked by privacy enforcement we're still recording user-ID-removal and geo-masking metrics right alongside the block, which is nonsense since those actions don't matter once the whole thing is blocked, so in that case only the "request blocked" metric should fire and user ID removal, geo masking, and analytics blocking all stay at zero. Analytics blocking should only get recorded when the request isn't fully blocked. On top of that the user-ID-removal metric should only fire when the bidder's user actually has private user identifiers present, oh and if the user only has non-identifying fields it shouldn't fire even if the enforcement action says remove user IDs. Same idea for geo, the geo-masking metric should only count when there's real geographic location data on the user or the device, if neither has geo data don't count it even when the action says to mask geo. And finally the per-version request count metric and the geo metric should only be emitted for valid non-empty consent strings, right now they fire even when the consent string is empty or invalid. Fixing this matters because bad privacy metrics lead to incorrect compliance reporting.
+## Description
+
+The TCF (Transparency and Consent Framework) privacy metrics emitted during auction processing are inaccurate in several ways, leading to misleading data in our monitoring dashboards.
+
+## Issues Found
+
+1. **Swapped metric flags**: The parameters for "analytics blocked" and "request blocked" in the auction TCF metric recording function are in the wrong order, causing these two metrics to be incremented for the wrong conditions.
+
+2. **Missing per-version request count metric**: There is no metric tracking how many TCF consent requests were processed per TCF version. A new counter should be incremented for each valid consent request, broken down by TCF version.
+
+3. **Inflated masking metrics when request is fully blocked**: When a bid request is blocked entirely by privacy enforcement, the system should only record "request blocked" — not user ID removal or geo masking, since those are irrelevant once the whole request is blocked. Currently, other metrics are still being incremented alongside the block.
+
+4. **Geo and user ID masking counted when there is no data to mask**: The user-ID-removed and geo-masked metrics are being incremented even when the bidder's user object has no actual private user identifiers, and when neither the user nor device has any geographic data. These metrics should only fire when there was actual sensitive data present that got masked.
+
+5. **TCF metrics fired for invalid consent strings**: The per-version request count and geo metrics are being emitted even when the consent string is empty or otherwise invalid. Metrics should only be recorded for valid, non-empty consent strings.
+
+## Expected Behavior
+
+- When a request is fully blocked, only the "request blocked" metric should fire; user ID removal, geo masking, and analytics blocking metrics should remain zero.
+- The analytics blocked and request blocked counters should be mapped to the correct corresponding conditions.
+- A new counter should track TCF request counts per version.
+- User ID removal and geo masking metrics should only fire when there is actual private data to mask.
+- Per-version TCF metrics should only be emitted for valid (non-empty) consent strings.
+
+## Why This Matters
+
+Inaccurate privacy metrics make it impossible to correctly assess how often each type of privacy enforcement action is actually taken, leading to incorrect compliance reporting.

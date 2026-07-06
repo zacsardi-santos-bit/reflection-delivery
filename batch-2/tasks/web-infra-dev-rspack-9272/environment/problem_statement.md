@@ -1,5 +1,14 @@
-So a chunk of our HTML plugin tests are red right now and it traces back to the pug template loader we depend on. The package we're using, `pug-loader`, is unmaintained and no longer plays nice with the rest of the tooling, so rendering blows up or resolves wrong. I want to migrate everything over to the actively maintained `@webdiscus/pug-loader` instead.
+## Description
 
-That means going through the package dependency files that declare `pug-loader` and swapping the declaration to `@webdiscus/pug-loader`, and then chasing down every spot in the test infra where the old name shows up. Anywhere we reference it in webpack or rspack module rules, or in inline loader syntax like `pug-loader!./whatever.pug`, needs to point at the new loader name. Oh and there's commented-out code in some test files that still mentions the old loader by name, update those too just so nothing's inconsistent.
+The test suite currently depends on an old, unmaintained pug template loader package. This package has become incompatible with the rest of the tooling, causing several test configurations to fail. The project needs to migrate all references to this outdated loader to a modern, actively maintained alternative.
 
-There's also a behavioral gotcha worth calling out. The old loader had a quirk where rendering a pug template in a specific variable-access mode (the one where you access locals directly) would prepend some unexpected junk characters before the actual variable value in the output. The new loader renders it correctly without that prefix. So the expected HTML in the affected test needs to be updated to match the correct rendering, no stray prefix anymore. Once all that's done the failing HTML plugin config tests should go green again.
+## Expected Behavior
+
+- All package dependency files that currently declare the old pug loader package should be updated to declare the new replacement package instead.
+- Every place in the test infrastructure where the old loader name is referenced in webpack/rspack module rules or inline loader syntax should use the new loader name.
+- After switching to the new loader, rendering a pug template in a specific variable-access mode should produce correct HTML output — the new loader no longer prepends unexpected characters to variable values.
+- Any commented-out code in test files that mentions the old loader name should also be updated for consistency.
+
+## Why This Matters
+
+Several test cases in the HTML plugin configuration test suite are currently failing because the old pug template loader cannot be resolved or behaves incorrectly. Replacing it with the maintained alternative restores correct template rendering and unblocks the affected tests. The change also ensures the variable-access mode output matches what the templates are actually designed to produce.

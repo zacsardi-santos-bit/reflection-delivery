@@ -1,7 +1,15 @@
-I'm cleaning up the agent core library and I want to pull the logic that turns raw model stream events into our structured agent events out into its own dedicated module I can unit test on its own. Right now this translation is buried inside other code and there's no clean seam to test the individual mappings, plus the event types don't really benefit from type narrowing the way they should.
+## Description
 
-The new module needs to handle every kind of event that can come off the model stream: plain text content, chain-of-thought/thought output, tool call requests and their responses, model info updates, error conditions, and the session lifecycle stuff (start, end, cancellation), oh and usage stats too. It has to keep some per-stream state between events, mainly so a tool call response can be matched back to its originating request by tool call ID (mapping the ID to the tool name). Each translated event should carry a stream-scoped sequential ID plus the stream ID itself.
+The agent runtime processes a continuous stream of events from the underlying model API, but the logic for translating those low-level stream events into the structured, typed events consumed by the rest of the system has not been extracted into a standalone, independently testable module. As a result, this translation layer is hard to verify in isolation and the event types themselves don't take full advantage of language-level type narrowing.
 
-I also want the finish reasons handled properly (normal stop, token budget exceeded, safety refusal, and the others), HTTP status codes translated into a consistent status classification that distinguishes auth errors, rate limits, general failures and so on, and errors coming from different sources (structured error objects, native Error instances, plain strings) all mapped into one unified format with the right severity and metadata attached. Model usage statistics should get mapped to a normalized shape as well.
+## Expected Behavior
 
-And alongside the translation module, I want the agent event type itself turned into a proper discriminated union so that checking an event's type field automatically narrows it and makes the type-specific properties accessible without any manual casts.
+- A dedicated translation module should exist that converts each kind of raw model stream event into the appropriate structured agent events. This includes text content, thoughts, tool call requests and responses, model information updates, error conditions, session lifecycle events (start, end, cancellation), usage statistics, and more.
+- The module should maintain per-stream state so that, for example, tool call responses can be matched to their originating requests by ID.
+- Each translated event should carry a unique ID (scoped to its stream) and the stream identifier.
+- Error events in the stream should be mapped to a consistent status classification (distinguishing authentication errors, rate limits, general failures, etc.).
+- The structured event type for agent events should be a proper discriminated union, so that code checking an event's type can access type-specific fields without requiring explicit type casts.
+
+## Why This Matters
+
+Having a well-tested, isolated translation layer makes it far easier to verify correctness of the event pipeline, to add new event types in the future, and to ensure that type narrowing works naturally throughout the codebase — reducing both bugs and boilerplate.

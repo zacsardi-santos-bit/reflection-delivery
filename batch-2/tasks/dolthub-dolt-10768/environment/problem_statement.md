@@ -1,5 +1,18 @@
-I've got a Dolt cluster running with one node as primary and the rest as standbys, and I'm hitting a noise problem during replication. When the primary pushes data to a standby through the remote API path, every commit hook registered on the standby fires, even the ones that only make sense on the primary like the outgoing replication hooks. The result is that standby logs fill up with warnings about receiving a commit callback while not being the primary role, on literally every replication event, which buries anything actually worth looking at. Worse, hooks that should be no-ops on standbys can trigger side effects like replication loops.
+## Description
 
-What I want is a way for each commit hook to declare whether it should fire when a write comes in through the replica (standby) path. Hooks meant only for the primary, like outgoing replication, should be able to opt out so they don't fire and don't spew those warnings, while maintenance hooks like stats and GC should be able to opt in and keep running. Net effect: during normal cluster replication a standby's server logs shouldn't contain those spurious not-the-primary-role warnings anymore, but the hooks that genuinely need to run on standbys still do.
+In a Dolt cluster with primary and standby roles, data from the primary is pushed to standby nodes through a remote API endpoint during replication. When writes arrive at a standby this way, all registered commit hooks fire — including hooks that are only meaningful on the primary (such as outgoing replication hooks). This causes spurious warning messages about receiving a commit callback while not being the primary role to appear in the standby's server logs during every normal replication event.
 
-Oh and I also need the integration test server driver to grow the ability to assert that certain patterns do NOT appear in the server log output, not just the existing check that a pattern does appear. That's what lets me actually verify the unwanted warnings are gone after this change instead of just eyeballing it.
+## Expected Behavior
+
+- Commit hooks should be able to declare whether they want to fire when a write arrives through the replica (standby) path.
+- Hooks that only make sense on the primary should be able to opt out of replica write execution, so they don't fire and don't produce noisy warnings on standbys.
+- Hooks relevant to maintenance operations (stats, GC) should be able to opt in.
+- Standby server logs should not contain spurious warnings about processing commit callbacks while not in the primary role, during normal cluster replication.
+
+## Infrastructure
+
+Additionally, the integration test server driver should support asserting that specific patterns do NOT appear in server log output, complementing the existing ability to assert that patterns DO appear. This allows tests to verify that unwanted log messages have been suppressed.
+
+## Why This Matters
+
+Without this fix, standby server logs are polluted with warning messages during routine replication, making it harder to detect genuine problems. Hooks that should be no-ops on standbys can also trigger unintended side effects, such as replication loops.

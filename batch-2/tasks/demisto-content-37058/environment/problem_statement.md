@@ -1,5 +1,18 @@
-I'm deep in the Cybereason integration over in `@Packs/Cybereason/Integrations/Cybereason/Cybereason.py` and hit two annoying gaps that keep biting me.
+## Description
 
-First one is session token handling. We cache a session token but nothing ever checks if it's still alive before we fire off requests, so once it goes stale the calls just fail quietly instead of re-authenticating, super annoying after any idle period. I want a session check function that looks at the stored token's expiry time and, if it's expired, logs in again and refreshes the token in both the global request headers and the stored context, then records the new expiry as the login timestamp plus 28000 seconds. Basically don't proceed with a dead token, just re-auth and update the session first.
+The Cybereason integration has two important gaps that need to be addressed: session token management is not being validated before use, and the malop-to-incident conversion is incomplete.
 
-Second thing, the function that turns a malop alert into an incident record is producing barely anything, right now it only returns the incident name. It needs to build a full record: a numeric status (active/unread/reopened map to 0, remediated to 1, resolved to 2) derived from the malop's management status, creation and last update timestamps, the detection type, whether it's an EDR malop, root cause element name and type, and a mirror ID set to the malop's GUID. Oh and the malop data shows up in two shapes, EDR malops use a nested format where fields are buried in sub-dictionaries, while non-EDR malops keep everything flat at the top level, so both need handling. Also any numeric timestamp values should get converted to strings. And if the input isn't a dictionary at all, raise an error whose message says the raw response isn't valid. These fields feed downstream triage automation so analysts actually need them in the incident view.
+When the integration makes API calls using a cached session token, it never checks whether that token has expired. This means requests can silently fail after a period of inactivity without automatically refreshing the authentication. A proper session check should verify the token's expiry time and, if expired, re-authenticate and update the session before proceeding.
+
+Additionally, the function that converts a Cybereason malop into a platform incident is returning very little information — currently only the incident name. It should be producing a full incident record that includes the incident status (mapped from the malop's management status), timestamps for creation and last update, detection type, EDR flag, root cause element name and type, and a mirror ID. These fields are needed for downstream automation and incident management workflows.
+
+## Expected Behavior
+
+- When a cached session token is expired, re-authenticate automatically and store the refreshed token along with its new expiry time (current time plus 28000 seconds).
+- The malop-to-incident conversion should return a fully populated incident record with all relevant fields populated from both EDR malops (which use nested field structures) and non-EDR malops (which use flat field structures).
+- The status of the malop should be translated to a numeric incident status: active/unread/reopened malops should be status 0, remediated malops should be status 1, and resolved malops should be status 2.
+- If the malop data is not in the expected format, an appropriate error should be raised.
+
+## Why This Matters
+
+Without session refresh logic, long-running integrations will experience authentication failures. Without complete incident data, analysts cannot see critical context about threats directly in the incident view, reducing the effectiveness of automated triage workflows.

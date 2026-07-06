@@ -1,11 +1,19 @@
-I'm refactoring our sandbox system and hitting a design wall. Right now security policies for sandboxed command execution, stuff like which file paths are accessible and whether network's allowed, get passed into the sandbox manager's constructor, which means every command a manager runs is stuck with the same policy. I want to move these per-execution settings (allowed file paths, network access, env var sanitization rules) out of the constructor and into the individual command requests so one manager instance can serve multiple commands with different policies. This hits all three platform managers, Linux, macOS, and Windows.
+# Refactor: Move per-execution sandbox policies from constructor to per-request
 
-While I'm in here I also want a shared helper for validating and deduplicating path lists. It should reject any path that isn't absolute with a clear error naming which path failed, and silently drop duplicate entries while preserving order.
+## Description
 
-On Linux, allowed paths beyond the primary workspace should use a soft bind variant that doesn't fail at mount time if the path doesn't exist yet, oh and the manager should dedupe the workspace against the allowed paths after normalizing trailing slashes.
+Our sandbox managers (for Linux, macOS, and Windows) currently accept security policy settings — such as which file paths should be accessible and whether network access is permitted — as constructor arguments. This design means every command executed by a single manager instance must use the same fixed security policy. There is no way to apply different access controls for different command executions without creating an entirely new manager instance each time.
 
-On macOS, move the sandbox profile building logic inside the manager itself instead of a separate helper module, and resolve symlinks in workspace and allowed path entries to their real paths to prevent escapes. If a path doesn't exist on disk, walk up to the nearest existing parent, resolve that, then reconstruct the full path. If resolution fails for any other reason (like a permission error), let it propagate.
+We also lack a centralized, shared utility for validating and deduplicating the list of paths provided as sandbox-accessible locations. As a result, duplicate or relative paths may silently slip through without a clear error.
 
-On Windows, the Low Integrity access grant should target the workspace configured at construction time, not the per-request working directory, plus any additional paths from the per-request policy.
+## Expected Behavior
 
-The point is reuse: same manager, different access policies per command, plus centralized path validation so misconfigured paths get caught early with actionable messages instead of slipping through.
+- Per-execution security settings (allowed file paths, network access, environment variable sanitization rules) should be moved out of the manager constructor and into individual command requests, so a single manager instance can serve multiple commands with different policies.
+- A new shared utility should validate and deduplicate path lists: it should reject any non-absolute path with a descriptive error message, and silently remove duplicate entries preserving order.
+- On Linux, allowed paths beyond the workspace should use a "soft bind" that does not fail if the path does not exist at mount time.
+- On macOS, the sandbox profile should be generated from per-request policy; symlinks should be resolved to prevent path-based escapes; if a path does not exist, the manager should resolve the nearest existing parent directory and reconstruct the path from there; permission errors during path resolution should be re-thrown.
+- On Windows, Low Integrity access should be granted to the configured workspace (set at construction time) and all per-request allowed paths.
+
+## Why This Matters
+
+This change enables the same sandbox manager instance to be reused across multiple command executions with different access policies. It also centralizes path validation, reducing duplication across platform-specific implementations and making it easier to catch misconfigured paths early with actionable error messages.

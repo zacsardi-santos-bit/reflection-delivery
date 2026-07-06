@@ -1,5 +1,16 @@
-I'm hitting a weird off-by-a-pixel thing with Hugo's content-aware image cropping. When I use smart anchor to crop to an exact size, the output sometimes comes back 1 or 2 pixels smaller than I asked for. Like if I take a 900x562 and crop it to 900x561 with smart anchor, I'll occasionally get 899x560 back instead, which is annoying. If I use a plain anchor like TopLeft I always get the exact dimensions, so this feels specific to smart mode. Digging in, it looks like the smart crop analysis sometimes picks a focus region that's a touch smaller than the target, and then we just clip to that smaller region without pushing it back out to the requested size.
+## Description
 
-What I want is for smart crop (and smart fill) to return images at exactly the dimensions requested whenever the source is big enough. So when the analysis lands on a region that's slightly smaller than the target, expand that region until it hits the target size, and distribute the extra pixels evenly across both sides of each axis while staying inside the source image bounds. If the source is actually too small to reach the target, then just leave it, return the best available region rather than blowing past the source edges. This matters because folks relying on predictable sizes for layout grids and galleries keep getting these unexpectedly small images, and smart crop really should honor the requested dimensions like every other anchor mode does.
+When using content-aware (smart) cropping to produce images at an exact target size, the output image can sometimes be 1–2 pixels smaller than requested. This happens because the smart crop analysis occasionally identifies a focus region that is slightly smaller than the target dimensions, and the system clips the result to that smaller region without expanding it back to the requested size.
 
-Oh and since this changes what smart crop spits out, the internal version counter that's part of the image cache key for smart crop and smart fill operations needs to get bumped so any previously cached results get regenerated automatically instead of serving stale wrong-sized images.
+For example, cropping a 900×562 image to exactly 900×561 using smart anchor may produce a 899×560 result instead. This is inconsistent with non-smart anchoring (e.g., TopLeft), which always returns the exact requested dimensions.
+
+## Expected Behavior
+
+- Smart crop and smart fill operations must return images with exactly the dimensions requested by the user, as long as the source image is large enough.
+- If the smart crop analysis selects a region that is slightly smaller than the target, that region should be expanded to meet the target size while remaining within the source image bounds.
+- Expansion should be distributed evenly between both sides of each axis, staying within the source image boundaries.
+- If the source image is too small to accommodate the target size, the function should return the best available region without attempting to expand beyond the source.
+
+## Why This Matters
+
+Users who depend on predictable output dimensions (e.g., for layout grids or image galleries) get unexpectedly small images when using smart crop. This is a correctness bug — the smart crop mode should honor the requested dimensions just like any other anchor mode. Because this fix changes the output of the smart crop algorithm, previously cached smart-cropped images need to be regenerated, which requires bumping an internal version counter used as part of the image cache key.

@@ -1,5 +1,15 @@
-I hit a security hole in the WASI filesystem host code and I want it patched. The setup is a preopened directory where files are read-only, so no write permission is granted at the file level, and my expectation is a WebAssembly guest just can't modify anything in there. Turns out that's not true. A guest can still truncate a file (empty out its contents) by passing the truncation flag when it opens the file, even with zero write permission. The truncate path skips the write-permission check completely, so the guest silently destroys file contents despite the host's access restrictions, which totally breaks the sandbox since hosts rely on these preopen permissions to enforce least-privilege filesystem access.
+## Description
 
-What I need is for the host to treat truncation as a write operation when it enforces file-level permissions. So if write permission hasn't been granted for a file, any open request that includes the truncation flag should get rejected with a permission denied error, and the file has to stay exactly as it was, no bytes erased or modified after the failed attempt.
+There is a security vulnerability in the WASI filesystem host implementation: a WebAssembly guest program can bypass the host's write-restriction policy by using the file truncation flag at open time.
 
-Oh and this needs to hold for both interfaces, the older Preview 1 syscall-based path and the newer Preview 2 component model path, since both can reach the same underlying open logic. Make sure both reject truncate-without-write and leave the file untouched.
+When a host registers a preopened directory where files are only permitted to be read (no write access granted), the expectation is that guest programs cannot modify those files in any way. However, by requesting truncation when opening a file, a guest can empty the contents of a read-only file without ever needing explicit write permission. The host fails to recognize truncation as a write operation for the purposes of its permission check.
+
+## Expected Behavior
+
+- When a preopened directory is configured with read-only file access (no write permission), any attempt by a guest WASM program to open a file with the truncation flag should be rejected with a permission denied error.
+- After such a rejected attempt, the file contents must remain exactly as they were — no data should be erased or modified.
+- This behavior must hold for both the WASI Preview 1 (syscall-based) and WASI Preview 2 (component model) interfaces.
+
+## Why This Matters
+
+Hosts use preopened directory permissions to sandbox WebAssembly programs and enforce least-privilege access to the filesystem. If the truncation path bypasses write-permission checks, the host's security boundary is incomplete, and guest programs can silently destroy file data in directories that were supposed to be read-only. This is a correctness and security fix.

@@ -1,5 +1,16 @@
-I'm working with the Codex client library and I keep hitting this thing where it silently injects environment context into user messages before they hit the API. It wraps a bunch of working-environment metadata (current directory, stuff about the environment, etc.) in special markup tags and prepends or appends it to every user turn. That's fine for interactive sessions I guess, but in my integration I need to send clean messages that are exactly what the user typed, nothing extra tacked on. Right now there's no way to turn it off.
+## Description
 
-What I want is a config flag that lets me disable this environment context injection entirely. When I set it to off, the API requests should carry only the content I explicitly put in the user turn, so the user-role inputs shouldn't contain any of those environment context tags or metadata at all. When it's left on, behavior stays the same as today.
+The Codex client automatically injects environment context information into user messages before sending them to the API. This metadata (details about the working environment, current directory, etc.) is wrapped in special markup tags and silently prepended or appended to every user turn. While this behavior is useful for interactive sessions, it cannot currently be turned off.
 
-The reason this matters is I can't fully control what actually goes over the wire without it, and that blocks integration tests, deterministic prompt engineering, and privacy-sensitive deployments where I really don't want system info being transmitted. So basically: new configuration option, off means clean user messages with zero injected context markup, and the default keeps the current injecting behavior so nothing else breaks.
+Developers building integrations, running automated workflows, or operating in controlled environments often want clean messages — exactly what the user typed — without any automatically-appended context. There is no configuration option to suppress this injection.
+
+## Expected Behavior
+
+A new configuration flag should allow the environment context injection to be disabled. When this flag is set to off:
+
+- User messages sent to the API must contain only the actual user content
+- No environment context markup or metadata should appear in the user-role inputs of API requests
+
+## Why This Matters
+
+Without the ability to disable environment context injection, developers cannot fully control the exact content of messages sent to the API. This is a blocker for use cases that require precise, predictable API payloads — such as integration tests, deterministic prompt engineering, or privacy-sensitive deployments where system information should not be transmitted.

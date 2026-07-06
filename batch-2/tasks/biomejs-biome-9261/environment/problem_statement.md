@@ -1,5 +1,15 @@
-I'm hitting a real annoyance with the CSS formatter around inline comments inside property declarations. When I write a comment between the property name and the colon, or between the colon and the value, the formatter yanks those comments out and dumps them before the whole property name, which totally wrecks what I meant. I use those spots on purpose, sometimes to temporarily disable a chunk of a value, sometimes to annotate why I picked a value, sometimes to keep a fallback around, so moving them breaks the intent and just produces confusing output.
+## Description
 
-What I actually want is for a comment sitting between the property name and the colon to stay right there after formatting, so it lands after the property name but before the `:`. And a comment written between the colon and the value should stay immediately after the colon, and to keep it readable the value should then drop to the next line with an extra level of indentation. If there's no comment after the colon, the value should stay on the same line as the property like it normally does, no extra line break. Comments that live on their own line before a property declaration should keep working like before and stay in that leading position, don't touch those.
+The CSS formatter incorrectly moves inline comments in property declarations away from their original positions. Specifically, comments that appear between a property name and the colon, or between the colon and the value, are being relocated to appear before the entire property name. This changes the visual and semantic placement of the comment, breaking the developer's intent.
 
-Oh and this needs to hold not just in regular rule blocks but also when declarations show up inside at-rule feature queries (the conditions), so the same handling applies there too.
+## Expected Behavior
+
+- A comment written between a property name and the colon (directly before `:`) should remain in that position after formatting — it should appear after the property name but before the colon.
+- A comment written between the colon and the value should remain immediately after the colon. To preserve readability, the value should then be placed on the next line with an extra level of indentation.
+- If no comment appears between the colon and the value, the value should stay on the same line as the property without any extra line break.
+- Comments written on their own line before a property declaration should remain before the property name, unaffected by these changes.
+- These rules must also apply to declarations that appear inside at-rule feature queries.
+
+## Why This Matters
+
+CSS developers sometimes use inline comments to temporarily disable part of a value, to annotate why a specific value was chosen, or to preserve fallback values. When the formatter relocates these comments to before the property name, it breaks the intent of the comment and produces confusing output. The formatter should leave inline comments in their original logical positions within declarations.

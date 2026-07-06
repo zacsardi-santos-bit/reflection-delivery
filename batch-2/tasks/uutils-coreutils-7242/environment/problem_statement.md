@@ -1,5 +1,15 @@
-I'm trying to bump our random number generation crate to its new major version and it's breaking the build everywhere because of a pile of API renames. The thread-local RNG accessor got renamed (the old function that hands you the thread rng is gone), the distributions module path got reorganized so imports need fixing, the range-generation methods were renamed, and the boolean and ratio randomness helpers got new names too. The big gotcha is the uniform distribution constructor now returns a fallible result instead of panicking on bad args, so anywhere we build a uniform distribution has to handle that result. Also the method for seeding an RNG from OS entropy got renamed, and one of the standard distribution types was both moved and renamed, so those call sites need updating as well.
+## Description
 
-I want the whole codebase moved over consistently so it compiles clean and the random-dependent tests pass. That means the main Cargo manifest needs the new version pinned, plus the fuzz testing manifest under the fuzz setup, and then all the actual call sites: the shared test utilities, the several source utility files that touch RNG, and the numerous fuzz target files which lean on this a lot.
+The codebase currently depends on an older version of the random number generation library. A new major version of this library has been released that introduces several breaking changes: the thread-local RNG accessor function was renamed, the module path for distributions was reorganized, range-generation methods were renamed, boolean and ratio randomness methods were renamed, and the uniform distribution constructor was changed to return a fallible result rather than panicking. Additionally, the method for seeding an RNG from the OS entropy source was renamed, and one of the standard distribution types was moved and renamed.
 
-Why bother? The old version isn't getting security or bug fixes anymore and downstream tooling is already dropping support for the old API, so this unblocks future dependency updates and keeps tests reliable. Please update everything (manifests, test helpers, source utils, fuzz targets) to the new API names, module paths, and the result-returning uniform constructor, and make sure it all builds and the affected tests go green.
+Because of these breaking changes, the codebase no longer compiles against the new library version. All tests that depend on random number generation are currently failing as a result.
+
+## Expected Behavior
+
+- All source utilities, shared test helpers, and fuzz targets should be updated to use the new API names and module paths.
+- The dependency manifest should be updated to specify the new library version.
+- The codebase should compile cleanly and all affected tests should pass after the update.
+
+## Why This Matters
+
+Keeping dependencies up to date is important for security patches, bug fixes, and compatibility with the broader ecosystem. The old version of the library is no longer receiving updates, and the new version has been available long enough that dependent tooling has begun dropping support for the old API. This migration unblocks further dependency updates and ensures tests can run reliably.

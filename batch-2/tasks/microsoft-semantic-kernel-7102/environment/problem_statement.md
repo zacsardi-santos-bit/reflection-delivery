@@ -1,5 +1,19 @@
-I'm building on the Azure OpenAI connector in Semantic Kernel and I hit a gap, there's no text-to-audio (text-to-speech) support. Chat completion, text embedding, and text-to-image are all wired up through the connector already, but if I want to turn text into spoken audio there's just no built-in service class or DI extension for it, so I'm stuck rolling my own and bypassing the framework's shared abstractions.
+## Description
 
-What I want is a dedicated Azure OpenAI text-to-audio service I can register in my dependency injection container by handing it a deployment name, an endpoint URL, and an API key, and then resolve through the standard text-to-audio service interface like every other modality. It should let me pick a voice and an output audio format, and when I ask for a voice or format that isn't in the supported set it needs to fail with a clear, informative error instead of silently doing something weird.
+The Azure OpenAI connector in Semantic Kernel is missing support for text-to-audio (text-to-speech) generation. While Azure OpenAI exposes this capability through its API, there is currently no way for developers using the Azure OpenAI integration to generate spoken audio from text input via the framework's standard service abstractions.
 
-Also the model resolution matters, it should go in priority order where the model set at construction time wins first, then any model in the per-request settings, and finally falling back to the deployment name if neither's given. Oh and if the HTTP client passed to the service already has a base address configured, use that instead of the endpoint I passed at construction. Last thing, expose the deployment name and model ID as metadata attributes so I can inspect them at runtime. This just brings audio output up to parity with the existing integration patterns.
+Other modalities (chat completion, text embedding, text-to-image) are already supported by the Azure OpenAI connector. Text-to-audio should be available in the same way — registerable through dependency injection and accessible via the shared audio service interface.
+
+## Expected Behavior
+
+- Developers should be able to register an Azure OpenAI text-to-audio service in their dependency injection container, providing a deployment name, endpoint URL, and API key.
+- The registered service should be retrievable via the standard text-to-audio service interface.
+- The service should support selecting from a set of available voices and output audio formats.
+- Requesting audio with an unsupported voice or format should fail with an informative error rather than silently misbehaving.
+- When generating audio, the model to use should be resolved from a priority order: the model configured at construction time takes precedence, followed by any model specified in per-request settings, with the deployment name used as a final fallback.
+- If the HTTP client used by the service has a base address configured, that should take precedence over the endpoint provided at construction time.
+- The service should expose metadata attributes for the deployment name and model ID.
+
+## Why This Matters
+
+Applications that use Azure OpenAI often need to support audio output alongside text generation. Without this service, developers must implement their own Azure OpenAI audio integration from scratch, bypassing Semantic Kernel's unified service abstractions. Adding this service brings Azure OpenAI feature parity with the existing integration patterns in the framework.

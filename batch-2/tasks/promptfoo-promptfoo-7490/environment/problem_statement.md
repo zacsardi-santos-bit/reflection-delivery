@@ -1,7 +1,19 @@
-I'm running evals through the Vertex AI path in promptfoo's Google integration and cost is always coming back undefined, every single call, even for models that have published pricing. Makes it basically impossible to track spend or compare costs across models and runs, so I want Vertex AI to calculate and return cost the same way the standard AI Studio integration already does, pulling from the same pricing catalog.
+## Description
 
-The nuance is that some models have different Vertex AI pricing than AI Studio pricing, so for those it should use the Vertex-specific rate, and for models that don't have a separate Vertex price it should just fall back to the standard rate. That way cost reporting works consistently no matter which Google surface I hit.
+When using promptfoo's Google integration through Vertex AI, cost information is never reported — cost is simply absent from every Vertex AI call response, even when the underlying model has publicly available pricing. This makes it impossible to track, compare, or budget AI costs when using the Vertex AI path.
 
-Also I noticed a few newer models have no pricing data at all, not even in AI Studio mode, so those need to get added to the catalog. Specifically there's an embedding model and a robotics preview model that are both missing. And there's a newer Pro preview model that should support tiered pricing (higher rate above a token threshold) like the other Pro models already do.
+Additionally, several newer Google AI models are missing from the pricing catalog, so cost estimates are unavailable even in AI Studio mode for those models.
 
-Couple of edge cases too: if an API response doesn't include token usage data, cost should come back as undefined rather than zero or throwing an error. And when a cached response gets returned, it should carry over the cost and any metadata from when the original response was first cached, so cached results aren't missing that info.
+## Expected Behavior
+
+- Vertex AI calls should report actual costs based on token usage, using the same pricing catalog used for AI Studio calls.
+- For models where Vertex AI pricing differs from AI Studio pricing, the Vertex-specific rate should be used.
+- For models without a separate Vertex AI price, the standard pricing should apply as a fallback.
+- The following models should have pricing data available: an embedding model and a robotics preview model that are currently missing from the catalog.
+- A newer Pro preview model should support tiered pricing (higher rates above a token threshold).
+- When a response does not include token usage data, cost should be reported as unavailable rather than zero or causing an error.
+- When a cached response is returned, the cost and metadata from the original response should be preserved and included in the result.
+
+## Why This Matters
+
+Teams running evals or benchmarks on Vertex AI currently have no visibility into cost, making resource planning difficult. Fixing cost tracking for Vertex AI — and expanding the model pricing catalog — ensures that cost reporting works consistently regardless of which Google API surface is used.

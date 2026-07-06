@@ -1,1 +1,14 @@
-I'm seeing a gap in how we build the compaction request when a session's conversation history gets too long and we auto-summarize it to free up context. The problem is the compaction request we send to the model is missing a bunch of config that our normal turn requests carry, so the model during compaction isn't set up the same way as during a regular turn, which can hurt summary quality and cause inconsistent behavior after compaction. Specifically I want the compaction request to forward the same tool definitions we make available to the model on normal requests, plus the parallel tool execution setting (whether the model's allowed to call tools in parallel), plus the reasoning configuration, and the text formatting/controls we send with regular requests. Right now all four of those are absent from the compaction path, so please carry them forward so there's parity between regular conversation requests and the compaction request. The idea is the model should have the exact same tools, the same parallel-tools flag, the same reasoning setup, and the same text controls throughout the whole session lifecycle, including when we compact. Basically whatever we populate on a standard request needs to also populate on the compaction request so nothing silently differs, oh and the values should match what the regular request would use, not some defaulted or empty version.
+## Description
+
+When a session's conversation history becomes too long, the system automatically compacts (summarizes) it to free up context space. However, the compaction request is currently missing several important configuration fields that the regular conversation requests carry. Specifically, the tool definitions available to the model, whether parallel tool execution is allowed, the reasoning configuration, and the text formatting controls are all absent from the compaction request.
+
+## Expected Behavior
+
+- The compaction request should include the same tool definitions as the regular conversation requests
+- The compaction request should include the same parallel tool execution setting as regular requests
+- The compaction request should include the same reasoning configuration as regular requests
+- The compaction request should include the same text control settings as regular requests
+
+## Why This Matters
+
+Without these settings, the model behavior during compaction can differ from its normal behavior — for example, it might not be aware of available tools, or it might apply different reasoning settings. This inconsistency can lead to lower quality summaries or unexpected behavior after compaction. Ensuring parity between regular requests and compaction requests means the model has the same context and configuration throughout the session lifecycle.

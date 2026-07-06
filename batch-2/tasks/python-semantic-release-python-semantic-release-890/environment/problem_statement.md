@@ -1,11 +1,23 @@
-I'm cleaning up our changelog generation and the hosting service integrations and hit a cluster of related gaps I want fixed together.
+## Description
 
-First off, our changelog templates can already link to pull requests and commits, and GitLab can build issue links, but GitHub and Gitea have no way to generate a direct URL to an issue by its number. I want an issue-link method on both of those hosting clients that accepts the issue number as either an integer or a string and returns the right URL.
+There are several gaps in the changelog and hosting service integrations that need to be addressed:
 
-Second, the method we use to upload release attachments has too generic a name, it reads like a general file upload. I want it renamed so it's obvious it's specifically for uploading assets to a release, and any internal callers, like the distribution upload logic, need to point at the new name.
+1. **Missing issue URL generation for some platforms**: Changelog templates can reference pull requests and commits, but GitHub and Gitea don't support generating direct links to issues. GitLab already supports this but the other platforms are missing it.
 
-Third, Bitbucket only talks to the cloud version right now, so folks running on-prem Bitbucket Server can't aim the tool at their own box. I need it to handle a custom domain with an explicitly provided API path, a custom domain where the API lives on a separate subdomain, a custom domain where the API URL should be derived automatically, path-prefix-based server addresses, and insecure HTTP connections both when the http scheme is spelled out and when it should be inferred from the config. These all either fail today or spit out wrong API URLs.
+2. **Ambiguous release asset upload method name**: The method for uploading files to a release has a generic name that doesn't make clear it's specifically for release artifacts. Renaming it would make the API more self-documenting and consistent.
 
-Finally, the base class every hosting service client inherits from is supposed to be abstract but you can instantiate it directly right now, which skips the required method implementations. I want it to actually be abstract so it raises if someone constructs it without a concrete subclass, forcing subclasses to implement the mandatory interface methods. Oh and it should expose a method that returns all the URL-generation functions the changelog template system registers as filters, where the exact set of filters varies depending on which hosting service is configured (so GitHub/Gitea now surface issue links too).
+3. **Bitbucket on-premises not supported**: The Bitbucket integration only works with the cloud version. Enterprise users with self-hosted Bitbucket Server installations cannot configure a custom domain, subdomain, path prefix, or HTTP (insecure) connection. These configurations all fail or produce incorrect API URLs.
 
-Teams on self-hosted Bitbucket Server literally can't use the tool today, and projects tracking work as issues on GitHub or Gitea can't get useful issue links in their changelogs, so this matters.
+4. **Base hosting interface can be instantiated directly**: The base class for hosting service clients is supposed to be abstract — all concrete functionality lives in the subclasses. However, it can currently be instantiated directly, which bypasses required method implementations. It should enforce that all subclasses provide the mandatory methods.
+
+## Expected Behavior
+
+- GitHub and Gitea should each expose a method to generate links to issues by issue number, accepting both integer and string inputs
+- The method for uploading release attachments should be named to clearly indicate it handles release assets specifically
+- Bitbucket should work correctly when pointed at a custom domain or self-hosted server, including configurations with subdomain-based APIs, path-based APIs, and insecure HTTP connections
+- The base hosting service class should be abstract and raise an error if someone tries to instantiate it without providing a concrete subclass implementation
+- Changelog templates should be able to use all these URL-generation capabilities as template filters, with the specific filters available depending on which hosting service is configured
+
+## Why This Matters
+
+Teams using self-hosted Bitbucket Server are currently unable to use the tool at all. Projects that track work via issues on GitHub or Gitea cannot generate useful issue links in changelogs. The inconsistent method naming makes the public API harder to understand and use correctly.

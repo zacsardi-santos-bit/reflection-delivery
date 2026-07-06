@@ -1,5 +1,17 @@
-I'm hitting a wall with the MLflow judge evaluation system where everything good depends on that optional third-party routing library being installed. When it's missing my team is stuck with a tiny slice of providers, and worse, the moment I try a trace-based evaluation (passing a recorded execution trace to the judge so it can reason about what actually happened) it just errors out saying the library is required. We really don't want to pull in that dependency, so I want a proper built-in fallback path that talks to the big AI providers directly through the existing gateway infrastructure instead.
+## Description
 
-Concretely this built-in path should reach OpenAI, Anthropic, Gemini, Mistral, and gateway-managed / MLflow-managed endpoints on its own, routing the gateway ones through the internal gateway infra with proper caller identification. It needs to drive the full tool-calling loop that trace-based eval depends on, so the judge can do multi-turn agentic evaluation and iteratively fetch trace data via tool calls. And please handle the messy edge cases: when the conversation balloons from accumulated tool call history and blows the context window, trim the oldest tool interactions and retry, and also proactively prune before we actually hit the limit once token usage crosses a configurable threshold. Oh and if a model doesn't support structured/response-format output, degrade gracefully by retrying without it rather than crashing.
+The judge evaluation system currently has a hard dependency on an optional third-party library for communicating with AI providers. When that library is not installed, users can only access a very limited set of providers and — critically — cannot use execution traces as evaluation context at all. This blocks an important use case: evaluating AI responses against real, observed application behavior without having to install additional dependencies.
 
-Beyond traces, widen the provider coverage so Mistral and gateway endpoints with plain string prompts work out of the box too, update the list of providers considered supported without the optional library to reflect all this, and rip out the current restriction that blocks trace-based evaluation whenever the optional library isn't present. Point is, teams avoiding that package should still get full judge functionality including evaluating complex multi-step agent behavior captured in traces.
+## Expected Behavior
+
+- A built-in fallback should allow judges to call major AI providers (OpenAI, Anthropic, Gemini, Mistral, and gateway endpoints) without needing the optional library.
+- Trace-based evaluation — where the judge receives a recorded execution trace to reason about — should work even when the optional library is absent. Previously this raised an error.
+- The fallback should support multi-turn agentic evaluation loops where the judge iteratively fetches trace data via tool calls.
+- Context window overflows during tool-calling loops should be handled gracefully by pruning the oldest tool interactions and retrying.
+- Proactive pruning should also happen before hitting the limit, when token usage exceeds a configurable threshold.
+- Structured output formatting should degrade gracefully: if a model does not support it, the system retries without it rather than failing.
+- Gateway and MLflow-managed endpoints should be routable through the internal gateway infrastructure, with proper caller identification.
+
+## Why This Matters
+
+Teams that do not want to install optional third-party packages should still get full judge functionality, including the ability to evaluate complex multi-step agent behavior captured in traces. The current hard failure when traces are used without the optional library is a significant usability gap.

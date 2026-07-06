@@ -1,3 +1,23 @@
-I'm hitting a bug with webpack's HTML loader where asset source URLs don't get rewritten for some of my elements. It works fine with standard double-quoted attribute values, but the moment I write a boolean attribute (like a bare flag on a form input with no value at all), an empty-string attribute value, or an unquoted attribute value, the loader just skips the adjacent asset reference and leaves my original source path in the output instead of swapping in the content-hashed filename. So an `<img>` that also carries a boolean attr, or one with an empty attribute, or one with an unquoted value, ends up with a broken path in the compiled output, which is annoying because these are super common shorthand patterns.
+## Description
 
-Root cause looks like the low-level HTML token walker the loader leans on doesn't handle all the valid attribute styles. I want that tokenizer replaced or extended so it correctly deals with boolean attributes, empty attribute values, and unquoted values, plus self-closing tags, HTML comments (multi-line and empty ones too), and plain text between tags. It should take a string and a starting position, then walk the content firing user-supplied callbacks for each token type, open tags, close tags, attributes, comments, and text. Each callback needs to get the original string plus precise start and end positions so callers can slice out the exact token text. Oh and the attribute callback has to fire before the open-tag callback for the same element. Also expose constants telling which quote style got used per attribute value, double, single, or none. And it's gotta be lossless: concatenating all the token slices should reconstruct the original input exactly, nothing lost or duplicated. Please handle the annoying edge cases too, empty input, plain text with no tags at all, and a lone less-than sign sitting at the very end of the input.
+Webpack's HTML loader fails to detect and rewrite asset source URLs for certain HTML elements, depending on how their attributes are written. Specifically, when an element has a boolean attribute (an attribute written without a value, such as a boolean flag on a form control), an empty-string attribute, or an attribute value that is not surrounded by double quotes, the loader skips over the asset reference entirely and leaves the original source path unchanged in the output.
+
+## Expected Behavior
+
+- An image or other asset element that also has a boolean attribute should have its source URL correctly rewritten to the content-hashed output path.
+- An element with an empty-string attribute value should have its source URL correctly processed.
+- An element with an unquoted attribute value should have its source URL correctly processed.
+- The full variety of real-world HTML attribute styles should be handled without breaking asset detection.
+
+## Additional Context
+
+The root cause is that the underlying HTML token walker used by the loader does not properly support all attribute value styles. A robust, low-level HTML tokenizer should:
+- Walk HTML content and fire callbacks for open tags, close tags, attributes, comments, and text nodes.
+- Provide precise character-level position information in each callback so callers can slice the original string.
+- Correctly identify boolean attributes, distinguish between double-quoted, single-quoted, and unquoted attribute values, and detect self-closing tags.
+- Guarantee that concatenating all token slices exactly reconstructs the original HTML (lossless roundtrip).
+- Gracefully handle edge cases such as empty input, plain text with no tags, and a lone less-than sign at the end of the input.
+
+## Why This Matters
+
+Users writing HTML with common shorthand patterns (boolean attributes for form controls, unquoted attribute values, etc.) currently end up with broken asset paths in their compiled output. The fix enables the HTML loader to handle all standard attribute styles correctly.

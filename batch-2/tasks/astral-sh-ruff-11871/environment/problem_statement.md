@@ -1,5 +1,18 @@
-I'm digging into how our Python parser handles f-strings that have syntax errors, and there's some busted behavior I want cleaned up. When I've got multiple f-strings on consecutive lines and each one has an unclosed expression brace, the parser wrongly merges all of them into a single concatenated expression instead of treating each as its own separate statement. That gives me a wrong AST structure with bad byte-range info, and error messages that point to the wrong spots in the source.
+## Description
 
-There's a related recovery mess too. When an f-string with an unterminated string body or an unclosed brace shows up as a function call argument (say, inside a conditional expression) and the next line is an indented block, the parser gets confused, spits out a bunch of spurious errors, and misidentifies what that indented block actually belongs to instead of recovering cleanly and continuing to parse normally.
+When Python source code contains f-strings with syntax errors — such as unclosed expression braces or unterminated string bodies — the parser exhibits two related problems:
 
-What I want: each malformed f-string should land as its own independent expression statement in the AST, with diagnostics that accurately pinpoint the location and nature of each individual f-string error rather than pointing at unrelated code that follows. And when one of these unterminated or malformed f-strings appears inside list-like parsing contexts like function argument lists, the parser should recover gracefully so the rest of the file parses correctly, no cascading errors, and no secondary errors reported for code that's actually valid but just happens to follow a broken f-string. Devs leaning on this for linting, formatting, and editor tooling keep getting misled by wrong locations and bogus messages, so fixing it makes the error feedback way more trustworthy.
+1. **Incorrect grouping of malformed f-strings**: Multiple f-strings on separate lines that each have an unclosed brace are merged into a single concatenated expression in the AST, instead of being treated as independent statements. This produces a wrong AST structure and incorrect byte-range information.
+
+2. **Poor error recovery in call-argument contexts**: When an unterminated f-string appears as an argument inside a function call (for example, as part of a conditional expression), and the following line is indented code, the parser fails to recover gracefully. It produces confusing error messages pointing to the wrong locations and misidentifies what the subsequent indented block belongs to.
+
+## Expected Behavior
+
+- Each f-string with a syntax error should be represented as its own independent expression statement in the AST.
+- Error diagnostics should accurately identify the location and nature of each individual f-string error, not the location of subsequent unrelated code.
+- When an unterminated f-string appears in a function call argument context followed by an indented block, the parser should recover correctly and continue parsing the rest of the file without cascading errors.
+- Spurious secondary errors (reported for code that is itself valid, but follows an invalid f-string) should not be emitted.
+
+## Why This Matters
+
+Developers relying on the parser for linting, formatting, or editor tooling see misleading error messages and incorrect source locations when their f-strings have syntax errors. Fixing this makes the tool significantly more useful for error feedback during development.

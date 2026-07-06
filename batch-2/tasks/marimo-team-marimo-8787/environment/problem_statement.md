@@ -1,7 +1,31 @@
-I'm hitting a bunch of selection correctness bugs with Plotly charts in Marimo and want to clean them up together since they all touch the same selection extraction path. Biggest one: when I draw a box selection on a pure line chart, I get back way more points than I should, feels like the y-axis is just ignored so any vertex whose x lands in the box comes back even if its y is nowhere near the region I drew. I want box selections to only return data point vertices that sit inside both the x and y bounds. Same spirit for lasso, drawing one on a line chart should only return the vertices actually enclosed by the polygon, not points that happen to be connected by a segment passing through the region. Also clicking directly on a point on a line chart just does nothing right now, click events on line traces aren't handled, and I want that click to register and report the clicked point back as the selection.
+## Description
 
-On the bar chart side there's point duplication when the frontend already hands over selected points, the backend extraction runs again and re-adds the same entries, so I end up with dupes. Also non-numeric bar or base values (strings) blow up the range-overlap check, that should just return a negative result rather than raising. And when the selection payload has empty placeholder entries in the points list, those should get filtered out with the remaining indices kept aligned to the valid points.
+Several correctness issues affect interactive selections on Plotly charts embedded in Marimo notebooks, particularly for line charts, bar charts, and charts with datetime or categorical axes.
 
-Then datetime handling on selection axes is inconsistent, naive datetime objects get treated differently depending on the server's timezone so the same chart behaves differently across environments, I want naive datetimes treated as UTC consistently everywhere. This all matters because people use chart selections to drive downstream computations in their notebooks and right now they get wrong data back for line charts and these bar/datetime edge cases, so the feature isn't trustworthy.
+**Line chart selection ignores y-axis range:** When a user draws a box selection on a pure line chart, the selection currently includes all data points whose x-coordinate falls within the drawn range, regardless of their y-position. This means selecting a small region near the bottom of the chart still returns points with y-values far outside the visible selection box. The selection should only include data point vertices that fall inside both the x and y bounds.
 
-Oh and on the frontend side, update the selection logic so the mode bar buttons for line-chart selection get exposed properly, and fix the click-selection predicate so it correctly identifies which trace types support direct click selection versus box/lasso selection. The relevant code lives in the Plotly chart plugin under `@frontend/src/plugins/impl/plotly` and the backend selection extraction in the marimo plotly module, so weave the fixes through both.
+**Lasso selection on line charts is broken:** Drawing a lasso on a pure line chart should return only the vertices enclosed by the lasso polygon, but currently line segments that merely pass through the region are incorrectly included.
+
+**Clicking a data point on a line chart does not register:** A direct click on a point in a pure line chart should report that point as the selection, but click events are not currently handled for line traces.
+
+**Bar chart selection produces duplicates:** When the frontend already provides explicit selected points, the backend extraction logic may duplicate them, returning the same point twice.
+
+**Bar chart ignores malformed entries:** When the selection payload contains empty placeholder entries in the points list, they should be silently filtered out and the reported indices should remain aligned with only the valid entries.
+
+**Non-numeric bar values cause crashes:** Range-overlap checks for bar charts raise exceptions when bar values or base values are non-numeric strings, instead of gracefully returning a negative result.
+
+**Datetime handling is timezone-dependent:** Naive datetime objects in selection ranges are interpreted differently depending on the server's timezone configuration, leading to inconsistent results across environments.
+
+## Expected Behavior
+
+- Box selections on line charts return only vertices inside both x and y bounds
+- Lasso selections on line charts return only vertices inside the polygon
+- Click events on line chart points return the clicked point as the selection
+- Bar chart selections with pre-provided points are not duplicated
+- Empty point entries in bar selections are filtered out with proper index alignment
+- Non-numeric bar values are handled gracefully without raising errors
+- Naive datetimes are treated as UTC consistently, regardless of server timezone
+
+## Why This Matters
+
+Users relying on chart selections to drive downstream computations in their notebooks get incorrect data back when using line charts or encountering edge cases with bar charts and datetime axes, making the selection feature unreliable in practice.

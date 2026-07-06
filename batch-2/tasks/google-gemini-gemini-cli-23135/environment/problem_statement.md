@@ -1,5 +1,13 @@
-I'm hitting a confusing thing with how context files get wrapped when they're loaded into memory. Right now when the memory discovery system pulls in a file, it wraps that file's content with a header and footer, something like "Context from" at the top and "End of Context from" at the bottom, and those markers are showing paths relative to the current working directory. So if I run the tool from one directory and then from another, the exact same context file shows up under a totally different label, which makes it really hard to trace which file actually contributed what to the AI's memory.
+## Description
 
-What I want is for those context source markers to always show the full absolute path to each file instead of a relative one, so there's zero ambiguity no matter where I invoke the tool from. This needs to apply across the board to every kind of context file the discovery picks up, so global context files, project-level ones found by walking up or down the directory tree, extension context files, custom-named context files, and files coming from included directories should all get the absolute path treatment consistently.
+When context files are loaded by the memory discovery system, each file's content is wrapped in markers that identify where the content came from. Currently these markers show paths relative to the current working directory, which means the same file appears under a different label depending on where the tool is invoked. This inconsistency makes it hard to trace which file contributed what content.
 
-The key thing is the label should be stable regardless of the working directory. Can you update the memory content generation so both the "Context from" and "End of Context from" markers render the complete absolute path? Relative paths here are just ambiguous and absolute ones make it obvious which file is populating memory, which makes debugging way easier.
+## Expected Behavior
+
+- The "Context from" and "End of Context from" markers in memory content should always display the full absolute path to each context file, not a relative path.
+- This should apply consistently to all types of context files: global context files, project-level context files discovered by upward or downward directory traversal, extension context files, custom-named context files, and context files from included directories.
+- The behavior should be consistent regardless of the working directory from which the tool is invoked.
+
+## Why This Matters
+
+Using relative paths in context markers is ambiguous — the same file will be shown with different labels in different environments or when invoked from different directories. Absolute paths make it immediately clear which file contributed each piece of context, simplifying debugging and understanding of how the AI's memory is being populated.

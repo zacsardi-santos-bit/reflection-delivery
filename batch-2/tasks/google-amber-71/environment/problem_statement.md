@@ -1,11 +1,21 @@
-So I'm cleaning up numeric type inconsistencies in our C++ graphics testing framework, and they're both causing compiler warnings (which fail the build since we treat warnings as errors) and some genuine precision problems at runtime. A few things I keep hitting.
+## Description
 
-First, some accessors that logically return integer quantities are being treated as floats. The stencil buffer clear value and the count of control points in a patch command are the big ones, they get compared as if they were floating-point numbers when they should return proper unsigned integer types. That creates pointless type conversions and mismatch warnings.
+Several accessor methods in the codebase are using incorrect or imprecise numeric types, which causes compiler warnings (treated as errors on many configurations) and real precision loss at runtime.
 
-Then there's a real precision issue with converting large 64-bit integer token values to double. When you take the minimum or maximum representable 64-bit signed integer and convert it, then read it back as a double, the result loses accuracy. Feels like there's an intermediate single-precision step sneaking in somewhere, and it should preserve the full double-precision value instead.
+Specifically:
 
-Same flavor of bug with tolerance threshold values used in comparisons, they're getting stored as single precision rather than double, so comparing against things like 0.5 or 5.0 picks up rounding errors. Store those as double so the equality checks stay clean.
+- Some methods that logically deal with integer quantities — such as the stencil buffer clear value and the patch control point count — are returning or being compared as floating-point numbers instead of integers. This creates unnecessary type conversions and type-mismatch warnings.
+- The conversion of large 64-bit integer token values to their double-precision representation is losing precision. When the minimum or maximum 64-bit signed integer value is converted and then retrieved as a double, the result does not accurately preserve the full double-precision value.
+- Tolerance threshold values used in comparisons appear to be stored with insufficient precision (single rather than double), which can cause rounding errors in equality checks.
+- Several single-precision float–valued accessors (for geometry coordinates, color components, depth/stencil values, and pipeline parameters) are being compared against double-precision literals, producing implicit-conversion warnings that fail strict builds.
 
-Oh and there's a whole pile of single-precision float accessors, covering geometry coordinates, color components, depth and stencil values, and various pipeline state parameters, that are being compared against double-precision literals in tests. That triggers implicit-conversion warnings on strict compilers. I want those cleanly comparable against single-precision float literals so no implicit conversion happens.
+## Expected Behavior
 
-Net goal: integer-valued accessors return integers, single-precision accessors compare with single-precision literals, double-precision values actually retain double precision, and the build comes out clean under strict warning settings.
+- Integer-valued accessors (stencil clear value, control point count) should return unsigned integer types.
+- Single-precision float accessors should be cleanly comparable to single-precision float literals without implicit conversions.
+- Converting a 64-bit integer token to double precision should preserve the full double-precision value, not silently round through an intermediate single-precision step.
+- Tolerance values should be stored as double-precision to prevent rounding errors in comparison logic.
+
+## Why This Matters
+
+These type mismatches prevent the code from building cleanly under strict warning configurations and can introduce subtle numeric bugs (precision loss when handling edge-case integer values, or incorrect equality comparisons on tolerance thresholds).

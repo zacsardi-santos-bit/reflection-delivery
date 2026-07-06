@@ -1,5 +1,17 @@
-I want to make the SOCKS5 proxy handshake in Bitcoin Core actually fuzzable. Right now the handshake logic in the networking layer is glued directly to live socket operations so there's no way to feed it arbitrary or adversarial responses and check it handles the weird cases. This is the exact code path that had a security bug back in 2017, and fuzzing would've caught that within seconds, so I want the infrastructure in place so that class of vuln can't slip by again.
+## Description
 
-The core refactor is pulling the handshake out into a standalone function that takes a socket abstraction as a parameter instead of always operating on a real network socket. The socket type needs virtual methods (send, receive, connect, that kind of thing) so a fake, fuzz-driven implementation can be swapped in during testing. The function should also accept an optional credential struct holding a username and password for authenticated proxy connections. Oh and there's a timeout used during the handshake, I want that exposed as a globally accessible variable so the timeout-related branches can actually be exercised during fuzzing rather than being unreachable.
+The SOCKS5 proxy handshake implementation in the Bitcoin networking layer is not independently testable because it is tightly coupled to live socket operations. There is no way to exercise the protocol logic in isolation — with arbitrary or adversarial socket responses — to verify that it handles all edge cases correctly.
 
-Once the production code is shaped that way, I want a fuzz target wired up that drives the handshake through all combinations of arbitrary hostnames, port numbers, optional credentials, and simulated socket behavior, so send errors, partial receives, connection resets, and fake latency. The harness should run fine with an empty seed corpus and not crash. Fuzzing is the proven way to shake out memory safety and protocol-parsing bugs here, so making this piece fuzzable means future changes keep getting validated against a huge input space instead of us finding out the hard way.
+A security vulnerability was discovered in 2017 that affected exactly this code path. Had fuzz testing been available at the time, it would have caught the issue within seconds. We should add the infrastructure needed to fuzz this code so that similar vulnerabilities cannot slip through undetected in the future.
+
+## Expected Behavior
+
+- The SOCKS5 handshake logic should be exposed as a standalone function that accepts a socket abstraction as a parameter, rather than always operating on a live network socket.
+- The socket abstraction should be designed with virtual methods so that a fake, fuzz-driven implementation can be substituted during testing.
+- A credential structure for proxy authentication (username and password) should be defined and accepted by the handshake function.
+- A global timeout variable used during the handshake should be externally accessible so that timeout-related code paths can be exercised during fuzzing.
+- A fuzz target for the SOCKS5 handshake should be wired up and runnable, exercising all combinations of hostname, port, optional credentials, and arbitrary socket I/O responses including errors, partial reads, and timeouts.
+
+## Why This Matters
+
+Fuzzing is a proven technique for discovering memory safety and security bugs in network protocol parsers. Making the SOCKS5 handshake fuzzable ensures that future changes to this code are continuously validated against a wide space of inputs, preventing the class of vulnerabilities that previously went undetected.

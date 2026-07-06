@@ -1,3 +1,17 @@
-I'm hitting a false positive with the linter rule that wants me to convert regular imports into type-only imports, and it's biting me hard in Astro files. So the deal is an Astro file has two parts, the frontmatter block which is the script area between the delimiter markers where your TypeScript/JavaScript lives, and then the template section below it which is the markup where you actually render components. I've got a component imported up top in the frontmatter and I only use it as a rendered element down in the template, I never reference it as a value in the frontmatter itself. The rule sees that and goes "hey this import is never used as a runtime value, make it type-only" which is just wrong, because if I follow that advice and switch it to a type-only import my component breaks at runtime, you can't render a type-only import.
+## Description
 
-The root cause is the rule isn't treating a component used as a rendered element in the Astro template section as a real runtime usage, it's basically ignoring template usage entirely. I want it fixed so that when a component is imported in the frontmatter and then used as a rendered element in the template, the rule recognizes that as a genuine value usage and does not suggest converting it to a type-only import. Astro's a popular format and people do this constantly, so the false positive needs to go away, template usage should count as real usage and no type-only suggestion should fire for those component imports.
+The lint rule that suggests converting regular imports to type-only imports incorrectly fires for component imports in Astro files when those components are used as rendered elements in the template section.
+
+## Expected Behavior
+
+In Astro files, there are two distinct sections:
+- A **frontmatter** block (the script area between the delimiter markers) containing TypeScript/JavaScript code
+- A **template** section (the markup area below the frontmatter) where components can be used as rendered elements
+
+When a component is imported in the frontmatter and then used as a rendered element in the template section, the lint rule should recognize this as a real runtime value usage. It should **not** suggest converting the import to a type-only import.
+
+Currently, the rule appears to ignore template section usage, causing it to incorrectly flag these component imports — suggesting they should be type-only imports even though doing so would break the code.
+
+## Why This Matters
+
+Astro files are a popular file format that combines a script block with a template section. Developers commonly import components in the frontmatter and use them in the template. If the linter incorrectly tells them to convert those imports to type-only imports, and they follow that suggestion, their Astro components will break at runtime. The fix should make the linter aware of component usage in the Astro template section so that false positive suggestions are no longer produced.

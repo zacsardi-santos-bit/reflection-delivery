@@ -1,5 +1,13 @@
-We're dropping LoongArch64 on Linux from our officially supported platforms, so I need the build and docs cleaned up so nothing references that arch anymore. Right now the CI/CD pipeline platform matrix config still lists LoongArch64 on Linux as a build and test target, and there's a multi-job variant of that same matrix config that also still has it, and both of those need it gone. On top of that the Docker-based development workflow documentation still describes LoongArch64 as one of the cross-compilation options, so that mention has to come out too.
+## Description
 
-The point here is that leaving stale platform references around just confuses contributors, misleads automated tooling into thinking that target is actually tested, and can trigger failed or unexpected CI job attempts for a platform we don't officially maintain anymore. I want the config to be honest about what's really supported going forward and to cut down the maintenance burden.
+We have decided to remove LoongArch64 on Linux from the set of officially supported target platforms in our build and CI/CD infrastructure. Currently the pipeline platform matrix configuration files still list this architecture as a build and test target, and the Docker-based development workflow documentation still describes it as a cross-compilation option. These references should be cleaned up to reflect the new support policy.
 
-So basically: remove LoongArch64 on Linux from the pipeline platform matrix, remove it from the multi-job variant of that matrix, and drop the LoongArch64 cross-compilation entry from the Docker workflow docs. After that the configuration should accurately reflect which platforms we still support.
+## Expected Behavior
+
+- The CI/CD pipeline platform matrix configuration should no longer include LoongArch64 on Linux as a platform target.
+- The multi-job variant of the pipeline platform matrix configuration should also have LoongArch64 on Linux removed.
+- The Docker workflow documentation should no longer mention LoongArch64 as a supported cross-compilation architecture.
+
+## Why This Matters
+
+Leaving stale platform references in place causes confusion for contributors, misleads automated tooling about which targets are actually tested, and may result in failed or unexpected CI job attempts for a platform that is no longer officially maintained. Removing these entries keeps the project's configuration honest and reduces maintenance burden.

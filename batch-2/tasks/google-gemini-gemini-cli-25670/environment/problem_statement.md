@@ -1,5 +1,21 @@
-I'm in the agent integration layer and hit two gaps I want cleaned up.
+## Description
 
-First thing, when a remote agent chews on a task it streams intermediate status messages along the way (think a "working" state with some message text), and right now those in-progress messages get tracked internally in the reassembler but there's no way to pull them back out in any structured shape. I want a method on the results reassembler that hands me all the accumulated agent messages as a list of activity items so I can render them for the user or pass them downstream. Each item needs a sequential identifier, a type that flags it as the agent's reasoning/thought process, the actual message content, and a completed status on it. Basically surface the intermediate reasoning steps so UI stuff can show what the agent was thinking as it went.
+There are two related improvements needed in the agent integration layer.
 
-Second, I need to reload/refresh the agent registry (re-reading and re-registering all the agent definitions) programmatically, and right now the only trigger is a private method sitting on the config object, so anything external that wants to force a reload has to do gross TypeScript workarounds to reach a private method. I'd rather the agent registry itself expose a public reload method any caller can hit cleanly, and the config object should expose a public getter to grab the registry so callers can just invoke that reload directly, which makes the config's private method unnecessary for outside callers and kills the unsafe access.
+**1. Surface intermediate agent messages as activity items**
+
+When a remote agent processes a task, it sends intermediate status messages during execution (e.g., "working" state with a message). Currently, these in-progress messages are tracked internally but there is no way to retrieve them in a structured format for display or downstream processing. We need a way to retrieve all accumulated agent messages as a list of activity items, where each item has an identifier, a type indicating it represents the agent's reasoning/thought process, the message content, and a completion status.
+
+**2. Expose agent registry reload as a public API**
+
+Refreshing the agent registry (re-reading and re-registering all agent definitions) is currently only possible through a private internal method on the configuration object. Tests and other code that needs to programmatically trigger a reload are forced to use TypeScript workarounds to access a private method. The agent registry should expose a public reload method directly, making the configuration object's private method unnecessary for external callers.
+
+## Expected Behavior
+
+- The reassembler for agent results should allow callers to retrieve accumulated in-progress messages as a list of activity items
+- Each activity item should include a sequential identifier, a type indicating it represents agent reasoning, the message text, and a completed status
+- The agent registry should have a public method to reload/refresh all registered agents without requiring access to internals of the configuration object
+
+## Why This Matters
+
+This enables UI components and other consumers to display the agent's intermediate reasoning steps, and removes the need for unsafe private method access when reloading agent configurations.

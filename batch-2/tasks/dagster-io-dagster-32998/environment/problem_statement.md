@@ -1,5 +1,16 @@
-I'm working on the BigQuery IO manager in Dagster and I need to make its pre-write behavior configurable instead of the hardcoded "drop the whole table every time" thing it does now. Right now that single fixed strategy is way too rigid, so I want a write mode setting on the IO manager that controls how data lands in the destination table, with truncate as the default. In truncate mode I only want the table's rows cleared while keeping the table itself along with its schema and settings intact (this matters because some downstream tools depend on the table metadata that a full drop would blow away). Replace mode should fully drop and recreate the table during the write, basically the old behavior. And append mode should do no pre-write cleanup at all, just add the new data on top of what's already there, which is what I need for incremental loading.
+## Description
 
-Oh and important: for partitioned tables the existing per-partition deletion logic has to keep working exactly like before, no matter which write mode is set. That path shouldn't change.
+The BigQuery IO manager currently uses a single fixed strategy for clearing data before writing: it always drops the entire destination table. This one-size-fits-all approach is too rigid for real-world use cases. Users who want to preserve the table's schema and metadata while only removing its rows (truncate), or who want to add data to an existing table without any pre-write deletion (append), have no way to configure this behavior.
 
-Also I keep hitting auth failures in some cases because the config isn't threaded all the way down, so I need both the write mode and the GCP credentials from the IO manager's config to actually get passed through to the underlying client that runs the BigQuery queries. Some tools need non-null keyfile credentials on the client, so if they don't propagate the client can't authenticate. Can you wire all this up?
+## Expected Behavior
+
+- Users should be able to configure a write mode for the BigQuery IO manager that controls how data is written to the destination table.
+- In truncate mode, only the table's data should be cleared — the table itself (along with its schema and settings) should be preserved.
+- In replace mode, the existing table should be fully dropped and recreated during the write.
+- In append mode, no pre-write cleanup should occur — new data is simply added to the existing table.
+- For partitioned tables, the existing per-partition deletion logic should continue to work as before, regardless of the configured write mode.
+- The write mode setting and any GCP credentials configured on the IO manager should be correctly passed through to the underlying client that executes queries.
+
+## Why This Matters
+
+Without this flexibility, users are forced to accept full table replacement even when they only want to clear rows or append new data. Truncate mode is valuable when downstream tools depend on BigQuery table metadata that would be lost on a full drop. Append mode is essential for incremental loading scenarios. Additionally, credentials must flow correctly to the client to avoid authentication failures in tools that require non-null keyfile credentials.

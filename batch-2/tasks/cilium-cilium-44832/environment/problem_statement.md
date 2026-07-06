@@ -1,3 +1,18 @@
-I'm chasing a nasty bug in the pod CIDR allocation path for dual-stack nodes in the IPAM allocator. When a node registers with both an IPv4 and an IPv6 pod CIDR range, and one of those ranges is already held by another node, the allocator rolls back the whole thing including the address family that had no conflict at all. So the node loses its perfectly valid range, that range gets returned to the free pool, and it can then get handed out to yet another node. Now two different nodes hold overlapping pod CIDRs, and I get routing failures that are miserable to trace because the allocator's in-memory state no longer matches what's actually deployed, oh and the original node never gets a replacement either.
+# Bug: Dual-stack CIDR conflict incorrectly releases the valid address family
 
-What I want instead: if only one address family conflicts, keep the non-conflicting one allocated and assigned to the node, strip only the problematic CIDR from the node's spec, and persist that spec change (an actual spec update, not just a status update) while surfacing an error that flags the conflicting family. If both families conflict, then nothing should be stored and no new allocation gets recorded. The critical bit is that after this operation the node's retained CIDR stays occupied in the allocator pool so no subsequent fresh allocation can claim it, otherwise we're right back to the duplicate assignment problem.
+## Description
+
+In a dual-stack cluster, when a node requests both an IPv4 and an IPv6 pod CIDR and one of those CIDRs turns out to already be in use by another node, the IPAM pod CIDR allocator incorrectly rolls back the allocation for the entire node — including the address family that had no conflict.
+
+This means the legitimately assigned CIDR gets returned to the free pool and may subsequently be handed out to a third node, creating a situation where two different nodes both hold overlapping pod CIDRs.
+
+## Expected Behavior
+
+- When only one address family has a conflict, only that family should be stripped from the node's assignment. The other family's allocation should be preserved.
+- The node should be stored with whichever address family was successfully allocated, and an error should be surfaced for the conflicting family.
+- The node's spec should be updated to reflect only the successfully allocated CIDRs (the conflicting one omitted), and this spec change must be persisted — not just reported as a status update.
+- When both address families conflict, nothing should be stored and no new allocation should be recorded.
+
+## Why This Matters
+
+In a busy dual-stack cluster this bug silently corrupts the CIDR allocation state: a node loses a valid CIDR it should keep, that CIDR lands on another node, and the original node never gets a replacement. The result is routing failures that are difficult to diagnose because the allocator's in-memory state no longer matches what is actually deployed.

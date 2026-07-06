@@ -1,7 +1,17 @@
-I'm digging into the KV cache store component for long-context inference and I keep hitting the same waste: every time the sending thread picks up a new batch of tokens for a request, it re-processes the whole token history from token 0 instead of just the newly arrived tokens. For long-context requests that show up in multiple chunks, blocks already persisted in an earlier batch get redundantly re-checked on every later batch, so the overhead just grows as requests get longer.
+## Description
 
-There's a nastier bug too. When a store batch gets skipped because we're under CPU or disk pressure, those tokens are never retried, the component just moves on to the next batch starting from the beginning, and since there's no record of what actually got saved, the saved-progress tracking isn't reliable and blocks can be silently lost forever, which breaks prefill caching for later requests that share a common prefix.
+The KV cache store component currently re-processes all blocks from the beginning of every request on each successive save batch. For long-context requests that arrive in multiple chunks, this means blocks already persisted in an earlier batch are redundantly re-checked on every subsequent batch. More critically, when a save batch is bypassed due to CPU or disk pressure, there is no mechanism to retry the skipped range — those blocks are silently lost and never stored.
 
-So I want a delta-save approach. The store thread should keep a per-request saved-progress tracker (a high-water mark of tokens persisted), and each batch should process only the tokens beyond the previously saved point. If a batch is skipped due to pressure, don't advance the marker, that way the next batch automatically covers the missed range from the last saved point. Oh and when a request is removed, clean up its progress tracking too.
+We need a delta-save approach: track how far along each request has been successfully persisted, and on each new batch, process only the new suffix of tokens that haven't been saved yet. When a batch is skipped due to pressure, the saved-progress marker must stay at its previous value so the next batch automatically covers the missed range.
 
-For this to work the per-group masking logic needs to compute a mask for just a suffix of the token range, not always from token 0, so resuming from the middle of a long sequence gives the correct per-group inclusion mask for just the new portion (basically a partial suffix starting at a given token offset). Also the token database's chunk-iteration helper should take filtering params, a per-chunk boolean mask plus a stride/rank pair for distributing chunks across tensor-parallel ranks, and it should delay reading the actual hash value for each chunk until after all the filtering checks pass. And that helper should return raw hash bytes directly rather than wrapping them in a key object, the caller can build the key string when it needs it.
+## Expected Behavior
+
+- The store thread maintains a per-request saved-progress tracker (high-water mark of tokens persisted)
+- Each store batch processes only tokens beyond the previously saved point
+- The per-group mask computation supports computing masks for a partial suffix starting at a given token offset, so incremental saves correctly compute which chunks of the new suffix need to be stored
+- When a batch is skipped due to pressure, the progress marker is not advanced — the next batch retries the skipped range from the last saved point
+- When a request is removed, its progress tracking is also cleaned up
+
+## Why This Matters
+
+Without incremental tracking, long-context requests incur growing overhead on every batch as the saved range is repeatedly re-scanned. More importantly, under memory pressure where batches are skipped, KV cache blocks can be permanently lost, breaking prefill caching for subsequent requests that share a common prefix.

@@ -1,3 +1,18 @@
-I'm hitting a gap in IoTDB's table data model when I load data files into my tables. The tree (hierarchical) model already does automatic type conversion on load, so if a file's column types don't line up exactly with the target table schema, the engine converts them and loads everything anyway. But the table (relational) model doesn't do this, it just fails the load instead of converting. So anyone managing data with the table model who has files where column types differ slightly from the table definition can't get them in without pre-processing the file to match schema types first, which is annoying since the tree model handles it for free. I want the table model load path fixed so that when a file's column data types differ from the target table schema, it automatically converts the types and loads all the rows, and then querying the table afterward returns the complete set of rows from the file with nothing silently dropped because of a type mismatch.
+## Description
 
-There's also a related bug in the pipe-with-load feature, btw. When I pipe data between nodes using a load-based approach, not all the table data actually makes it to the receiver. Data from some source tables gets silently dropped, so queries at the receiver come back incomplete. What I'd expect is all rows from all source tables showing up at the receiver, with null values filled in where a column doesn't apply to a particular row. So really two things here: make the table model load convert type mismatches automatically like the tree model does, and fix the pipe behavior so all source table data transfers completely instead of dropping rows. After both fixes a query at the receiver should show everything from every source table.
+IoTDB supports loading time-series data files directly into the database, and when the column types in the file don't match those of the target table, the system is supposed to automatically convert them. However, this automatic type conversion during file loading only works for the older hierarchical (tree) data model — it does not work for the newer relational (table) data model.
+
+Users who manage their data using the table model and have data files where column types differ slightly from the table definition cannot load those files successfully today. The load fails instead of performing the expected type conversion, making it impossible to ingest files with minor type mismatches.
+
+## Expected Behavior
+
+- When a data file is loaded into a table-model table and the file's column data types differ from those of the target table schema, the system should automatically convert the data types and load all rows successfully.
+- After the load, querying the table should return the complete set of rows from the file — none should be silently dropped due to type mismatch.
+
+## Related Issue
+
+There is also a related problem in the pipe-with-load feature: when data is piped between nodes and involves a load operation, data from some source tables is being silently dropped rather than transferred completely to the receiver. After both fixes, querying the receiver should show all rows from all source tables, with null values in columns that are not applicable to a given row.
+
+## Why This Matters
+
+Without type conversion support in the table model, users must pre-process their data files to exactly match table schema types before loading — an unnecessary burden that already works automatically in the tree model. Fixing both issues ensures consistent, complete data ingestion across all use cases.

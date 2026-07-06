@@ -1,5 +1,15 @@
-I'm trying to make our outgoing request timeout configurable at runtime instead of the fixed value we've got baked in everywhere. Right now every outgoing HTTP request, including the ones that go through a proxy, uses a hardcoded timeout and there's no way to tune it without shipping a code change, which is painful when we hit slow networks or need to respect strict SLA environments.
+## Description
 
-What I want is a new remote experiment feature flag that lets operators specify a default request timeout in seconds. The config object should expose a method that reads that timeout from the experiment flags and hands it back in milliseconds (so it does the seconds to milliseconds conversion for us), and returns nothing if the flag isn't set, or if the value isn't a valid positive integer, or if it's negative. Then that experiment-driven timeout needs to actually get applied to all outgoing requests, and especially the proxy connections should respect it rather than falling back to the fixed hardcoded value.
+Currently, the network request timeout used for outgoing connections (including proxy connections) is hardcoded and cannot be changed without a code deployment. There is no way for operators to configure a different timeout value at runtime through the experiment flag system, which makes it difficult to tune request behavior for different environments or network conditions.
 
-Also, separate thing but related to init order: right now if someone touches the language model client before the remote experiment config has been fetched, they get an error that's really about authentication not being complete, which is super confusing because the actual problem is experiments haven't loaded yet. So I want a guard in the client initialization that throws a clear, specific error saying experiments need to be fetched first, distinct from that existing auth-not-complete error. Makes debugging init failures during integration way easier.
+Additionally, if the language model client is accessed before the application has finished fetching its remote configuration, the error message shown to developers is unclear about what initialization step was skipped.
+
+## Expected Behavior
+
+- Operators should be able to configure a default request timeout (in seconds) via a remote experiment feature flag. The application should pick up this value and apply it to all outgoing HTTP requests — including those routed through a proxy — converting seconds to milliseconds automatically.
+- Proxy connections should respect the experiment-driven timeout rather than always using a fixed hardcoded value.
+- If the language model client is accessed before experiments have been fetched, the system should throw a clear error indicating that experiments must be fetched first, distinct from the existing error about authentication not being complete.
+
+## Why This Matters
+
+Without a configurable timeout, it is impossible to tune request behavior for slow networks or strict SLA environments without a code change. The new guard on client access also makes initialization failures much easier to diagnose during development and integration testing.

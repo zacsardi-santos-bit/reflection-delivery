@@ -1,5 +1,19 @@
-I'm cleaning up the plan mode feature in this CLI tool and it's got a couple of rough edges I want fixed. Right now when the model wants to finalize and exit plan mode, it has to hand over a full relative path to the plan file including the directory prefix, like "plans/my-feature.md", which is annoying and error-prone since every plan file always lives in the same designated plans directory anyway. I want the finalize tool to just take a plain filename like "my-feature.md" and resolve the full path internally. While you're at it rename that parameter so it's obvious only a filename is expected and not some directory-prefixed path. Validation needs to reject an empty or missing filename with a clear error, and it should also reject a filename that resolves to somewhere outside the plans directory (think symlink escapes), and that error message should include both the resolved path and the designated plans directory so it's actually debuggable.
+## Description
 
-There's a related thing too: when we're in plan mode and a file edit comes in, it currently writes to the normal workspace location instead of the plans dir. I want edits during plan mode redirected into the plans directory using the basename of the requested path, so planning-phase changes stay scoped and don't accidentally touch workspace files.
+The tool used to finalize the planning phase currently requires the model to provide a full relative path to the plan file, including the plans subdirectory prefix (e.g., "plans/my-feature.md"). This is unnecessarily verbose and error-prone — the model has to know and reproduce the directory structure prefix every time. Since all plan files live in a single designated directory, the tool should accept just the filename (e.g., "my-feature.md") and resolve the full path internally.
 
-Also the path safety check utility currently takes an extra root/target directory as a third argument, which we don't need anymore once everything resolves against the plans directory alone, so cut it down to two arguments. And the config object should expose a method to query whether we're currently in plan mode, since several tools need to know that to decide where to write files.
+There is also an issue with how the tool operates during the planning phase itself: when the tool is in plan mode, file edit operations currently write to the normal workspace location rather than the plans directory. Edits made during planning should be redirected to the plans directory to keep all planning-phase changes scoped correctly.
+
+## Expected Behavior
+
+- The tool that finalizes plan mode should accept a plain filename (not a full path with directory prefix) as its parameter.
+- The parameter should be renamed to make it clear that only a filename is expected, not a directory-prefixed path.
+- Validation should reject empty or missing filenames with a clear error message.
+- Validation should reject filenames that, when resolved, point outside the plans directory (e.g., via symbolic links), with an error message that includes both the resolved path and the designated plans directory for easier debugging.
+- The underlying path validation utility should no longer need a root/target directory as a third argument — path safety can be ensured by resolving against the plans directory alone.
+- When the system is operating in plan mode, file edit operations should be redirected to write into the plans directory rather than the workspace, using the basename of the requested file path.
+- The configuration interface should expose a way to query whether the system is currently in plan mode.
+
+## Why This Matters
+
+Requiring the model to construct a full directory-prefixed path when only a filename is needed adds unnecessary complexity and a common source of errors. Simplifying to a filename-only interface makes the tool easier to use correctly. The plan mode redirect for edits ensures that changes made during planning stay within the plan context and don't accidentally modify workspace files.

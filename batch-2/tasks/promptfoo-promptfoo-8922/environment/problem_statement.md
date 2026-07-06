@@ -1,5 +1,19 @@
-I'm tightening up input validation and error shapes across our server's API routes because right now a bunch of endpoints take query params and request bodies without checking them first, so bad inputs leak into downstream service calls or come back as inconsistent, sometimes non-JSON errors. I want validation to happen early and errors to come back as predictable JSON. So a missing required field should give a 400 with a JSON body that names the offending field, a missing resource should reliably return 404 with a structured JSON error body, and an unexpected internal failure (say a background service throws) should return 500 with a structured error instead of crashing unhandled.
+## Description
 
-A few behavioral details that actually matter here. The "include providers" flag should only count the exact string "true" as truthy, not "1" or "yes" or other truthy-ish stuff, those all resolve to false. The share URL endpoint should have no rate limiting at all. The dataset generation route needs to normalize prompt inputs so both plain strings and object prompts missing a display name get expanded to carry both the prompt content and a matching display name, and any extra fields on object prompts have to be preserved. Oh and the prompt hash URL param needs validating as a proper 64-character hex string before we hit the database. Telemetry properties should only allow primitives (strings, numbers, booleans, or arrays of strings), nested objects get rejected.
+The server's API routes lack consistent input validation and standardized error response shapes. When clients send invalid query parameters or malformed request bodies, they may receive raw framework errors or inconsistent JSON rather than clear, actionable responses. Similarly, when resources are missing or internal operations fail unexpectedly, there is no guarantee the response will be well-structured JSON.
 
-Also the telemetry module should export the list of valid event names and the event validation schema as named exports so other code can reuse them without duplicating logic. And importantly, the server DTO schema module and the telemetry events module both need to be importable as pure modules, so importing them can't write anything to the user's config directory. That last bit keeps `@server` schema and telemetry files clean to import from anywhere.
+## Expected Behavior
+
+- All API endpoints should validate incoming query parameters and request bodies before passing them to downstream services. Invalid inputs should be rejected early with descriptive error responses (HTTP 400) whose JSON bodies identify which field failed validation.
+- Missing resources should consistently return HTTP 404 with a structured JSON error body.
+- Internal server failures (e.g., when a background service throws) should return HTTP 500 with a structured JSON error rather than an unhandled exception.
+- The share URL endpoint should not impose rate limiting on requests.
+- The dataset generation endpoint should normalize prompt inputs — both plain string prompts and object prompts missing an explicit display name should be expanded to include both the prompt content and a matching display name before being forwarded to the generation service. Extra fields on object prompts must be preserved.
+- The boolean flag for including provider details in results should only be treated as enabled when the query value is the exact string for "true"; other truthy-looking strings such as "1" or "yes" must resolve to false.
+- The prompt hash parameter in the URL must be validated as a 64-character hexadecimal string before any database lookup is attempted.
+- The telemetry event validation logic and the list of valid event names should be exported from the telemetry module so other parts of the application can reuse them without duplicating logic.
+- The server DTO schema file and the telemetry events definition file must be importable as pure modules — importing them must not write to or modify the user's configuration directory.
+
+## Why This Matters
+
+Without consistent validation, bad inputs can propagate into downstream service calls and produce confusing or non-JSON errors for API consumers. Standardizing these response shapes makes the API more predictable and easier to integrate with.

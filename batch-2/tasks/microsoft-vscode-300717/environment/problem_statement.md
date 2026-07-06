@@ -1,5 +1,17 @@
-I'm working in a monorepo and my actual workspace folder is nested a few levels down inside a parent repo, and the AI assistant in VS Code just flat out ignores all the customization and instruction files that live in the ancestor directories above my workspace root. So shared coding guidelines, agent instructions, that kind of stuff that a team drops at the top level so it applies to every nested project, none of it gets picked up. I want a new config option that lets me opt into searching parent directories above the workspace root for these customization and instruction files. When it's on, discovery should walk up the parent folders and grab instruction files like Claude config files, Copilot instruction files, and agent guideline files, not just the ones inside the workspace root and my home dir. When it's off, and off is the default, nothing changes, no parent search happens at all so existing behavior stays identical.
+## Description
 
-Separately, the hook diagnostics need help. Right now if a hook definition file exists in the workspace but the workspace isn't trusted, the hook file just gets silently skipped, no signal, nothing. I want the discovery info to explicitly list each skipped hook file with a clear reason saying it was skipped because the workspace is untrusted, so I can actually figure out why my hooks aren't firing.
+When working in a monorepo or a project where the workspace folder is nested inside a parent repository, the AI coding assistant currently ignores customization files (such as coding guidelines or agent instructions) that live in ancestor directories above the workspace root. This means teams that organize their conventions in a top-level parent repository cannot take advantage of those shared guidelines — even when they're explicitly relevant to the nested project.
 
-Also, btw, built-in internal items are leaking into the listings for agent skills, prompt slash commands, and prompt files when they shouldn't be. Fetching any of those lists should only return user-defined items, not the built-in internal ones, since mixing them in throws off result counts and just confuses things.
+## Expected Behavior
+
+- A new configuration option should allow users to enable or disable searching parent directories above the workspace root for customization and instruction files.
+- When the option is enabled, the assistant should pick up instruction files (such as Claude configuration files, Copilot instruction files, and agent guidelines) from parent folders, not just from within the workspace root and home directories.
+- When the option is disabled (the default), behavior should remain unchanged — no parent-directory search occurs.
+
+Additionally, when a hook definition file exists in the workspace but the workspace is not trusted, the discovery diagnostics for hooks should explicitly report those files as skipped rather than silently ignoring them. The reason for skipping should clearly indicate that the workspace is not trusted, so users can diagnose why their hooks are not active.
+
+Finally, built-in internal customizations should no longer be exposed through the listings for agent skills, prompt slash commands, and prompt file lists. These internal items were previously mixed in with user-defined ones, which could cause confusion and incorrect result counts.
+
+## Why This Matters
+
+Developers working in monorepos or multi-project repositories need a reliable way to share AI assistant configurations across nested projects. Without parent-folder discovery, these shared files are invisible to the assistant. The diagnostics improvement helps users quickly understand workspace trust issues, and cleaning up the internal-items exposure makes the public API surface more predictable.

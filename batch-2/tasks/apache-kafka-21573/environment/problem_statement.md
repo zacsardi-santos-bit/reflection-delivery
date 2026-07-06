@@ -1,5 +1,14 @@
-I'm chasing a slow metrics leak on our Kafka brokers and could use a hand. When a broker stops being the leader for a topic partition, whether because the partition got deleted or leadership moved elsewhere, the per-partition expiration metrics we register during delayed produce and remote list offset operations just never get cleaned up. They pile up in the metrics registry forever, and on long-running brokers that churn through lots of partition reassignments or deletions it grows without bound, wastes memory, and clutters up our monitoring dashboards so it's hard to tell what's actually going on.
+## Description
 
-What I want is an explicit way to remove these per-partition metrics when a partition moves off the broker. So there should be a method to drop the per-partition expiration metric for delayed produce ops for a given partition, and a matching one for the remote list offset delayed operations that pulls the partition's metric out of both the internal tracking map and the underlying metrics registry (Kafka's metrics registry). These live in the delayed operation code, so wire them into wherever the produce and remote-list-offset delayed op metrics get tracked (see the relevant files under `@core/src/main/scala/kafka/server/`).
+When a Kafka broker stops being the leader for a topic partition — due to partition deletion or a leadership transfer — per-partition expiration metrics registered during delayed produce and remote list offset operations are never cleaned up. These stale metrics accumulate in the broker's metrics registry indefinitely, growing without bound on long-running brokers with frequent partition reassignments or deletions.
 
-Couple of things that matter: both cleanup methods have to be safe to call even when no metric was ever recorded for that partition, so no exceptions thrown in that case, it should just quietly do nothing. And critically, removing a single partition's metrics can't disturb the aggregate metrics that track expiration rates across all partitions broker-wide, those need to keep ticking along untouched. End state I'm after is a registry that only reflects the partitions the broker is currently serving.
+## Expected Behavior
+
+- A method should exist to explicitly remove per-partition expiration metrics for delayed produce operations when a partition is no longer served by the broker.
+- A corresponding method should exist for remote list offset delayed operations, removing the partition's per-partition metric from both the internal tracking map and the underlying metrics registry.
+- Both cleanup methods should be safe to call even if no metric was ever recorded for the given partition — no exception should be thrown.
+- Cleaning up per-partition metrics must not affect aggregate-level metrics that track overall broker-wide expiration rates.
+
+## Why This Matters
+
+Without this cleanup, brokers that handle many partition reassignments or deletions will accumulate a growing set of stale per-partition metrics in their registry. This wastes memory and makes monitoring dashboards harder to interpret. With the cleanup in place, the metrics registry accurately reflects only the partitions currently managed by the broker.

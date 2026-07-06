@@ -1,5 +1,14 @@
-I'm hitting a gap with functional models that mix required and optional inputs. Right now if I pass an absent value for an input, nothing checks whether that input was actually supposed to be required or optional, so I can silently feed an absent value into a required input and get no clear error, just confusing downstream failures deeper in the computation graph.
+## Description
 
-What I want is proper enforcement of optionality. When an input is declared required (non-optional) and I pass an absent value for it at inference time, the model should immediately raise a clear, actionable error telling me the input is not optional and that I need to provide a valid value. But when I've explicitly marked an input as optional and I pass an absent value, the model should just accept it and compute the correct output without complaining.
+Functional models currently allow an absent value to be passed for any input without any validation against whether that input was intended to be required or optional. This makes it possible to silently pass an absent value for a required model input with no clear error, leading to confusing downstream failures.
 
-This needs to behave the same whether I call the model with inputs as a list or as a dict, oh and it also has to hold during training, so if an absent value gets passed for a required input in a training run I should see that same clear error surface instead of it getting swallowed by the training loop and turning into some generic failure. The point is catching missing required values early with a helpful message instead of letting them propagate silently.
+## Expected Behavior
+
+- When a model input is declared as required (non-optional) and an absent value is passed for it at inference time, the model should immediately raise a clear error indicating that the input is not optional and that a valid value must be provided.
+- When a model input is declared as optional and an absent value is passed for it, the model should accept the absent value and compute the correct output.
+- This validation should work consistently regardless of whether the model is called with inputs as a list or as a dictionary.
+- The validation should also apply during model training — passing an absent value for a required input during a training run should surface the same clear error rather than a generic one.
+
+## Why This Matters
+
+Users who build multi-input models sometimes need to represent inputs that are genuinely optional (e.g., side inputs used only for some examples). The framework should allow them to mark inputs explicitly as optional or required. Required inputs should be guarded so that missing values are caught early with a clear, actionable message, rather than propagating silently into the computation graph.

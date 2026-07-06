@@ -1,5 +1,18 @@
-I'm adding schedule management to the Pulumi CLI so folks can create, list, view, edit, and remove scheduled deployment actions on their stacks, because right now there's no CLI-native way to do any of this and people are stuck using the web UI or external tooling to automate recurring stuff like drift checks or TTL destroys. I need both the backend HTTP client methods that hit the schedule API endpoints and the actual command logic for each operation.
+## Description
 
-There are three schedule kinds I care about: a general-purpose "raw" deployment schedule, a drift detection schedule, and a time-to-live destroy schedule. Each has its own valid options, so for example only drift schedules take an auto-remediate option and only TTL schedules take a delete-after-destroy option, and creation takes a cron expression or a one-time timestamp. The implementation needs to reject incompatible flag combos with clear errors (like a cron expression can't be used for a TTL schedule).
+The Pulumi CLI should support managing scheduled deployment actions for stacks. Currently, there is no way to create, list, view, edit, or remove scheduled operations on a stack from the command line. Users who want to automate recurring operations — such as periodically checking for infrastructure drift, destroying stacks on a time-to-live basis, or running arbitrary deployment commands on a schedule — have no CLI-native tooling to manage these.
 
-For listing, I want table or JSON output plus a count limit to cap results, and when there are no schedules the table should say no scheduled actions are configured for the stack. Get shows details for one schedule by ID in text or JSON, including the type, a settings summary, the schedule expression, next and last run times, and the creation date. Edit should fetch the existing schedule, apply only the flags that actually changed, and submit the update so untouched fields are preserved, and if no edit flags were given at all it should error asking me to supply at least one change. Remove deletes by ID and prints a confirmation message. Text output uses labeled fields like ID:, Type:, Schedule: and so on, while JSON follows a consistent schema with camelCase field names.
+## Expected Behavior
+
+- Users can create a new scheduled action for a stack by specifying the schedule type (raw deployment, drift detection, or TTL destroy), a cron expression or one-time timestamp, and any type-specific options.
+- Users can list all schedules for a stack, with output in both table and JSON formats, and can limit the number of results shown.
+- Users can view the details of a specific schedule by ID, with both text and JSON output.
+- Users can edit an existing schedule by changing only the fields they want to update (unchanged fields are preserved automatically).
+- Users can delete a scheduled action by ID.
+- The CLI validates that flags are compatible with the schedule type and returns informative errors for invalid combinations (for example, a cron expression cannot be used for a TTL schedule).
+- When a schedule is removed, a confirmation message is displayed.
+- When no edit flags are provided to the edit command, an error is returned asking the user to supply at least one change.
+
+## Why This Matters
+
+This feature closes a gap in the Pulumi CLI's ability to manage the full lifecycle of a stack. Without it, users must rely on external tooling or the web UI to manage scheduled automation, making it harder to script and automate their infrastructure workflows.

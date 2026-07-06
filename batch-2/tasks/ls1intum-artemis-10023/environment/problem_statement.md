@@ -1,7 +1,15 @@
-I'm adding an unsaved-changes warning to the lecture editing feature in our LMS because right now if an instructor tweaks a lecture's title, description, channel name, or time period and then clicks a link or hits the browser back button, all their edits just vanish silently, which is a rotten experience when you've spent a few minutes configuring things.
+## Description
 
-What I want is a route guard on the lecture edit page that checks whether anything actually changed in the title section (title, channel name, description) or the period section (visible date, start date, end date). If there are real changes and the warning is active, it should pop a confirmation dialog letting the user either discard and navigate away or stay put and keep editing. If nothing changed, or the warning mechanism isn't active, navigation just proceeds like normal, no dialog.
+The lecture editing page has no unsaved-changes guard. If a user makes changes to a lecture's title, description, channel name, or time period and then navigates away — either by clicking a link or using the browser's back button — those changes are silently discarded without any warning. This is a poor user experience, especially for instructors who may spend several minutes configuring a lecture.
 
-To make change detection work, the lecture component's state needs updating so the lecture is held in a reactive signal instead of a plain property, and it should stash a snapshot of the lecture's initial state at page load so the guard can compare current against that baseline. Couple of gotchas on the comparison: invalid date values should count the same as no date at all, and an empty string description should be treated as no description.
+## Expected Behavior
 
-Oh and while I'm in there, pull the date period settings (visible date, start date, end date) out into their own standalone component that works with signal inputs, so it can be shared between the regular edit view and the wizard mode. That also sets us up nicer for the signal-based direction we're heading.
+- When a user has made changes to the lecture's title section (title, description, channel name) or period section (visible date, start date, end date) and attempts to leave the edit page, a confirmation dialog should appear.
+- The dialog should give the user the choice to either discard their changes and continue navigating away, or to return to the edit page and keep editing.
+- If the user has not made any changes, or if the warning mechanism is not active, navigation should proceed without showing any dialog.
+- The lecture's date range settings (visible date, start date, end date) should be managed by a standalone, reusable component that can be shared between the regular edit view and the wizard mode.
+- The lecture edit component should track the state of the lecture at the time of page load so it can accurately determine whether any changes have been made.
+
+## Why This Matters
+
+Without this guard, instructors risk accidentally losing their work when navigating away from the lecture edit form. Adding an unsaved-changes warning makes the editing experience more forgiving and prevents silent data loss. Extracting the date period settings into a shared component also improves maintainability and prepares the codebase for a more reactive, signal-based architecture.

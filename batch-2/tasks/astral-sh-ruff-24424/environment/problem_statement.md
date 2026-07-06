@@ -1,5 +1,20 @@
-I'm digging into the file permissions lint check and there's two gaps I need to close. First off the check is supposed to get stricter in preview mode but right now toggling preview does nothing to which bits get flagged. The upstream tool we're mirroring flags four dangerous permission bits (group-write, group-execute, other-write, and other-execute) but we only catch two of them regardless of mode. I want group-write and other-execute to become errors when preview mode is on, and stay quiet in stable mode so a mode that includes either of those bits produces a diagnostic under preview but nothing under stable.
+## Description
 
-Second thing, the check totally gives up when the mode argument to a permission-setting call is built from bitwise ops involving variables. It should reason about which bits are statically known set or cleared instead of bailing. So if someone OR's a runtime variable with a dangerous constant, flag it because that constant guarantees those dangerous bits are always present in the result. But if they AND a variable against a safe mask that can't produce dangerous bits, accept it since AND can't introduce bits the constant doesn't already have. And if the only path to a dangerous bit needs some specific value of an unknown operand, leave it alone.
+The file permissions lint check has two related gaps:
 
-Also want a few edge cases handled better, oh and these matter because right now dangerous or malformed calls silently pass which is a real false-negative problem. Integer literals too large to fit the platform's native integer type should be reported invalid, and literals with bits set beyond the valid 12-bit Unix permission range should also be reported invalid. Plus a bitwise op between two structurally identical expressions (XOR with itself basically) should be recognized as always yielding zero.
+1. **Missing preview-mode strictness**: The check does not distinguish between stable and preview mode when deciding which permission bits are dangerous. The upstream tool this check is based on flags four distinct dangerous bits (group-write, group-execute, other-write, and other-execute), but the current implementation only flags two of them regardless of whether preview mode is enabled. Group-write and other-execute permissions should become errors in preview mode to match the upstream behavior.
+
+2. **Inability to analyze dynamic permission expressions**: When the mode argument to a permission-setting call is constructed via bitwise operations (for example, combining a runtime variable with a constant), the checker currently gives up entirely and produces no diagnostic. It should instead reason about which bits are statically known to be set or cleared. If the known-set bits include a dangerous permission, the call should be flagged even when part of the expression is unknown. Conversely, if the only way to end up with a dangerous bit would require a specific value of an unknown operand, the call should be left alone.
+
+## Expected Behavior
+
+- Permissions that include group-write or other-execute bits should produce a diagnostic in preview mode but not in stable mode.
+- A permission mode formed by combining a variable with a dangerous constant using bitwise OR should be flagged because the constant guarantees those dangerous bits are always present in the result.
+- A permission mode formed by masking a variable with a safe constant using bitwise AND should be accepted because the AND operation cannot introduce dangerous bits that are not already present in the constant.
+- Oversized integer literals (too large to fit in the platform's native integer type) should be reported as invalid.
+- Integer literals with bits set beyond the valid 12-bit Unix permission range should be reported as invalid.
+- A bitwise operation between two structurally identical expressions (such as XOR with itself) should be recognized as producing zero.
+
+## Why This Matters
+
+These missing detections cause false negatives: dangerous or malformed permission calls silently pass the check. Developers using preview mode expect stricter checking, and expressions built from bitwise operations are common in code that constructs permissions dynamically, so missing them represents a significant gap in coverage.

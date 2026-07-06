@@ -1,9 +1,22 @@
-I'm hitting a bunch of parsing gaps in the ShardingSphere SQL parser for the SQLServer dialect. We've got real production SQLServer queries that just fail to parse, and I need the grammar rules plus supporting segment classes so these patterns get recognized and represented properly in the AST.
+## Description
 
-First one is INSERT with table optimizer hints. SQLServer lets you put a WITH clause specifying locking and performance behavior (like forcing table-level locking during a bulk insert) before the SELECT or VALUES body, and right now the parser doesn't recognize that syntax at all so it just blows up. I want it to parse cleanly and, importantly, the table hint info from that INSERT WITH clause needs to live as a dedicated segment on the parsed insert statement object, with a handler method that pulls it back out from any insert statement type.
+The ShardingSphere SQL parser for the SQLServer dialect does not support several valid SQL patterns that are commonly used in production SQLServer databases. Specifically:
 
-Second, INSERT that populates a table by executing a stored procedure and capturing its result set. That's valid SQLServer but it fails right now when the params are passed as named assignments, so I need that named-parameter case handled.
+1. **INSERT with table optimizer hints** — SQLServer allows specifying locking and performance hints in an INSERT statement using a WITH clause (e.g., to force table-level locking during a bulk insert). This syntax is not currently recognized by the parser, causing a parse failure.
 
-On the SELECT side, queries mixing arithmetic with type casting applied to built-in system function calls aren't parsing correctly, so those need to work. Also the analytical style ones, oh and these are the ones that join multiple tables, apply compound WHERE filters including pattern-matching (LIKE) conditions, group by a column, filter the groups with an aggregation-based HAVING predicate, and order the output, aren't handled right for SQLServer either and should parse successfully.
+2. **INSERT via stored procedure execution** — SQLServer supports inserting rows into a table by executing a stored procedure and capturing its result set. The parser does not handle this pattern when parameters are passed as named assignments.
 
-Why this matters: without these, ShardingSphere can't act as a proxy or query router for SQLServer setups that rely on performance-oriented insert patterns or complex analytical queries, so those folks are just blocked. The relevant grammar and segment work sits under the SQLServer parser modules, so weave the new hint segment and its handler accessor in there alongside the existing insert statement plumbing.
+3. **Complex SELECT expressions** — Certain SELECT queries that combine arithmetic operations with type casting applied to built-in system function calls are not parsed correctly.
+
+4. **SELECT with aggregation, filtering, and sorting** — SELECT statements that join multiple tables, filter with compound conditions (including pattern matching), group results, filter groups with aggregation-based predicates, and sort the output are not always handled correctly for the SQLServer dialect.
+
+## Expected Behavior
+
+- INSERT statements that include a WITH clause containing optimizer hints should parse successfully and expose the hint information in the resulting AST.
+- INSERT statements that execute a stored procedure (with named parameters) to populate a table should parse successfully.
+- SELECT statements with arithmetic expressions mixing type casts and built-in function calls should parse successfully.
+- SELECT statements using JOIN, compound WHERE, GROUP BY, HAVING with aggregation, and ORDER BY should parse successfully in the SQLServer dialect.
+
+## Why This Matters
+
+Without these fixes, ShardingSphere cannot be used as a proxy or query router for SQLServer databases that rely on these SQL patterns. Developers using performance-oriented insert patterns or complex analytical queries with SQLServer are completely blocked from using ShardingSphere in those environments.

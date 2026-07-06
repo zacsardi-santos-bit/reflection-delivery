@@ -1,7 +1,17 @@
-I'm adding cursor-based pagination to our task instances listing endpoint in the Airflow FastAPI app, because right now it only does offset-based paging and that means we run an expensive total-count query on every single request. For deployments with millions of task instances that count is a real bottleneck and it slows down every paginated response, so I want an alternative mode where clients pass an opaque cursor token they got from a previous response and we just hand back tokens for the next and previous pages without counting anything.
+## Description
 
-Here's what I need. The endpoint should accept an optional cursor param, and when it's present the response includes next-page and previous-page cursor tokens instead of a total count. An empty cursor string means "first page" of cursor mode. Walking forward through all the pages and then back again has to produce the same records in the same order, that round-trip is the whole point. If someone hands me a malformed or invalid cursor token I want a clean HTTP 400, not silent weirdness.
+The task instances listing endpoint currently supports only offset-based pagination, which counts all matching records on every request. For deployments with large numbers of task instances this total-count query is expensive and can significantly slow down every paginated response.
 
-To make this work I also need cursor encoding/decoding utilities: one function to encode a page position (the current row's sort-column values) into a compact opaque token, one to decode a token back into those values with real validation (that's where the 400 comes from), and one to apply the decoded cursor position as a filter on the SQL query. The encoding should use a compact binary serialization with base64url and no padding. Oh and the sorting helper class needs a new method that returns the resolved sort columns (including the automatic primary-key tiebreaker) plus their sort direction, without requiring a query to have been built first, since I need those columns to build the cursor.
+We need to add cursor-based pagination as an alternative mode. Instead of passing an offset, clients would supply an opaque cursor token obtained from a previous response, and the server would return tokens pointing to the next and previous pages without performing a full count.
 
-Also the task instance collection response schema should always carry the cursor fields, set to null when we're not in cursor mode, so consumers get a consistent shape no matter which pagination mode is active.
+## Expected Behavior
+
+- The listing endpoint accepts an optional cursor parameter. When present, the response includes next-page and previous-page cursor tokens rather than a total count.
+- An empty cursor value means "first page" of cursor-based pagination.
+- Navigating forward and then backward through all pages must produce the same set of results in the same order.
+- An invalid or malformed cursor token must be rejected with an HTTP 400 error.
+- The response schema must always include cursor fields (set to null when not in cursor mode) so API consumers can handle the shape consistently.
+
+## Why This Matters
+
+Large Airflow deployments can have millions of task instances. Counting all matching records on every paginated request is slow and wasteful. Cursor-based pagination removes this bottleneck, enabling efficient and scalable traversal of large result sets in both forward and backward directions.

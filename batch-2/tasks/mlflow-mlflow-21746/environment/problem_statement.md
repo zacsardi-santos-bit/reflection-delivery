@@ -1,5 +1,15 @@
-I'm poking at the issue tracking search and I keep wanting to know how many traces are tied to each issue when I run a search inside an experiment. Right now the search hands me back the issue details but nothing about trace volume, so to figure out which issues hit the most traces I end up making extra API calls or manual queries, which is annoying when I'm trying to triage and prioritize by impact.
+## Description
 
-What I want is an optional flag on the issue search (something like an include-trace-count option) that, when I turn it on, populates a trace count on each returned issue. When I don't set it, the search should behave exactly like it does today with zero trace count info in the response, no change at all. When it is set, issues that have no linked traces should come back with a count of 0, an actual zero and not a missing/null value, and issues that share the same severity level should be sorted by their trace count in descending order so the most-impacted ones float to the top. It's gotta keep working right alongside the existing filters and pagination too, so counts and ordering stay correct across pages and filtered results.
+When searching for issues in an experiment, it would be very useful to see how many traces are associated with each issue — so teams can quickly understand the impact of each issue without making additional API calls. Currently, the issue search result does not include any trace count information, making it difficult to triage and prioritize issues by their scope.
 
-Also I need this wired all the way through, so the flag should get passed through the REST store layer down to the server endpoint, the whole stack supporting it end to end.
+## Expected Behavior
+
+- The issue search should support an optional flag that, when enabled, returns each issue with a count of the traces linked to it.
+- When the flag is not set, the search behaves exactly as before (no trace count information is returned).
+- When the flag is enabled, issues that have zero linked traces should return a count of 0, not a missing value.
+- When the flag is enabled, results within the same severity level should be sorted by trace count in descending order, so the most-impacted issues appear first.
+- The trace count option should work correctly alongside existing filters and pagination.
+
+## Why This Matters
+
+Teams often need to prioritize issues by the number of traces affected. Without trace count in the search response, users must make separate API calls or manual queries to determine which issues have the highest trace volume. Adding this capability directly to the issue search response makes issue triage faster and more efficient.

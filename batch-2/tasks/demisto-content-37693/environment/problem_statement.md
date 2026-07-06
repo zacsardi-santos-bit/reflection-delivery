@@ -1,5 +1,17 @@
-I'm hitting a dedup problem in the Azure AD Connect Health feed integration and could use a fix. When it fetches the list of network endpoints that agents need to connect to from Microsoft's docs page, the same endpoint keeps showing up more than once in the returned indicators. So I'll get a URL endpoint repeated, or a wildcard domain glob repeated, when each unique one should only appear a single time. It's creating noise downstream, redundant entries that muddy up threat intel pipelines and can trip false duplicate detection in the SIEM/SOAR platforms consuming this feed, so I really want clean deduplicated data going out.
+## Description
 
-From what I can tell the scraper is pulling content from the wrong part of the page, matching HTML elements that hold repeated or nested data instead of the canonical element where each endpoint is listed exactly once, which is why the same URL or domain glob pattern comes back multiple times. Can you fix it so it correctly identifies each endpoint from the right element and returns every unique indicator exactly once?
+The Azure AD Connect Health feed integration is returning duplicate indicators when scraping endpoint data from Microsoft's documentation. When the feed fetches the list of network endpoints that agents need to connect to, the same endpoint can appear more than once in the result, leading to redundant indicator entries.
 
-The behavior I want: each unique URL endpoint appears exactly once, each unique wildcard domain (domain glob) appears exactly once, and no indicator type comes back with extra or repeated entries. So if I filter the returned indicators by type I should get a set with exactly one entry per expected endpoint, no copies. Basically just correct the scraping source so the dedup falls out naturally.
+## Expected Behavior
+
+- Each unique URL endpoint should appear exactly once in the returned indicators.
+- Each unique wildcard domain endpoint (domain glob) should appear exactly once in the returned indicators.
+- The feed should not return extra or repeated entries for any indicator type.
+
+## Current Behavior
+
+The feed scraper returns more indicators than expected — the same URL or domain glob pattern can appear multiple times. This happens because the scraper is matching content from HTML elements that contain repeated or nested data, rather than from the canonical element where each endpoint is listed exactly once.
+
+## Why This Matters
+
+Duplicate indicators create noise in downstream threat intelligence pipelines and may cause unnecessary processing or false duplicate detection in SIEM/SOAR platforms that consume this feed. The feed should provide clean, deduplicated data to consumers.

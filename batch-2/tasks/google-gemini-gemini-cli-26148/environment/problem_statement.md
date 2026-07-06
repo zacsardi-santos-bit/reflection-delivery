@@ -1,5 +1,19 @@
-I'm hitting a rendering bug in the tool group message component (the CLI thing that draws the bordered box around a batch of tool calls). When the model fires off several tools and drops a topic-update call in the middle of the sequence, so there's some regular tools before it and some after it, the tools that come after that topic separator render with a missing top border. The box gets sides and a bottom but no top edge, so it looks broken and unfinished.
+## Description
 
-Here's the thing, the topic separator already works fine when it shows up at the very start of a tool group or as a standalone call, so this is specifically the sandwiched case where it sits between two or more regular tool calls that's busted. What I'd expect is that each group of tools on either side of the separator renders as its own clean, complete bordered box, with the topic heading acting as a visual divider between them. So preceding tool(s) in a properly closed box, then the topic heading as the separator, then the following tool(s) in a new fully bordered box with the top border intact, and this should hold regardless of whether the topic-update call lands at the start, the middle, or the end of a sequence.
+When the CLI renders a group of tool calls that includes a topic-update separator in the **middle** of the group (with regular tools both before and after it), the tools appearing after the separator are displayed without a top border. This makes the layout look broken — the bordered box framing for the second group of tools is missing its top edge.
 
-Can you fix it so a tool call that appears immediately after a topic-update separator is treated as the start of a brand new visual group and gets drawn with a proper top border? Users are seeing an inconsistent, visually broken UI whenever the model interleaves topic markers with tool actions, and the separator should cleanly divide the groups with proper borders on all sides.
+## Expected Behavior
+
+- When a topic-update tool appears between two regular tool calls, the rendering should show:
+  - The preceding tool(s) in a properly closed bordered box
+  - The topic heading as a visual separator
+  - The following tool(s) in a new, fully bordered box (with top border intact)
+- This should work regardless of whether the topic-update tool appears at the start, middle, or end of a sequence
+
+## What Currently Happens
+
+The component already handles topic-update tools correctly when they appear at the beginning or as standalone calls. However, when a topic-update tool is sandwiched between other tools, the tool group immediately following it loses its top border, resulting in a visually incomplete frame.
+
+## Why This Matters
+
+Users see an inconsistent and visually broken UI when the model interleaves topic markers with tool actions. The separator should cleanly divide the preceding and following tool groups, each rendered with proper borders on all sides.

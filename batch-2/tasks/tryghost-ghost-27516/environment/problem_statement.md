@@ -1,5 +1,19 @@
-There's a nested-modal escape bug in the Ghost Admin email settings I keep hitting. When you open the email design customization modal and click the button color field to pop open the color picker, hitting Escape blows away the whole customization modal instead of just dismissing the color picker. That's really annoying because people lose all their unsaved changes when all they wanted was to back out of the color picker, not their entire editing session.
+## Description
 
-I want Escape to only close the color picker while the customization modal stays put and visible so folks can keep editing their settings. There are actually two scenarios to handle here. First the obvious one, the color picker is fully visible on screen and someone presses Escape to close it, the modal should stick around. Second, and this is the tricky one, someone clicks the button color field trigger and then immediately mashes Escape before the popover has even finished rendering on screen, oh and in that racy case the modal should still stay open too and only the (still-appearing) color picker should get dismissed.
+When users open the email design customization modal in Ghost Admin and click the button color field to open the color picker, pressing the Escape key incorrectly dismisses the entire customization modal instead of just closing the color picker.
 
-So basically whenever the color picker is open or in the process of opening, Escape needs to swallow that keypress for the picker alone and leave the customization modal intact. Look in the email settings customization modal component under `@ghost/admin/app` where the color picker trigger and popover live, that's where the Escape handling needs fixing.
+This happens in two scenarios:
+- When the color picker is fully visible on screen and a user presses Escape to close it
+- When a user presses Escape immediately after clicking the button color field, before the color picker has finished appearing on screen
+
+In both cases, the expected behavior is that Escape should close only the color picker, leaving the customization modal open so the user can continue editing settings.
+
+## Expected Behavior
+
+- Pressing Escape while the color picker is open should close the color picker only
+- The email customization modal should remain visible after the color picker is closed via Escape
+- This should work even if Escape is pressed immediately after clicking the color picker trigger, before the popover has fully rendered
+
+## Why This Matters
+
+Users lose their unsaved changes when Escape accidentally closes the entire modal instead of just the nested color picker. This is especially disruptive because the user likely intended to cancel only the color picker interaction, not their entire customization session.

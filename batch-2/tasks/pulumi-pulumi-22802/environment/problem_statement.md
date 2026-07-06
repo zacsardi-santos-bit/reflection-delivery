@@ -1,5 +1,18 @@
-I'm hitting a bug in the Pulumi Configuration Language runtime where the built-in string length function gives wrong answers for anything that isn't plain ASCII. When I run it on strings with emoji or accented characters it's clearly counting raw bytes or Unicode code points instead of what a person actually sees on screen. A family emoji that looks like one glyph gets counted as a bunch of characters because of how it's encoded internally, and an emoji followed by a variation selector comes back as two instead of one. This matters because PCL programs that do length checks on user-provided names, labels, or tags with Unicode content will silently branch on or export wrong numbers, which is a real logic-error trap.
+## Description
 
-What I want is for the length function to count Unicode grapheme clusters, the units that line up with user-perceived characters. So an ASCII letter is one (no change there), an accented Latin base char plus its combining accent is one, an emoji with a variation selector is one per visible glyph, and a full ZWJ sequence like the family emoji counts as one for the whole composed thing. Basically it should behave like any modern string library.
+The built-in string length function in the Pulumi Configuration Language (PCL) runtime produces incorrect results for non-ASCII text. It counts raw bytes or Unicode code points instead of user-visible characters (Unicode grapheme clusters). This means that emoji, accented characters, and composed sequences all report inflated lengths compared to what a human would expect.
 
-Also while we're in there, split, join, and string interpolation all need to work correctly across these same cases: ASCII, multi-byte Latin strings, emoji with variation selectors, and composite emoji sequences. One known exception, the Go code generator can't correctly handle converting a split result into a string array, so Go-based code generation isn't expected to support that particular case, don't sweat that one.
+For example, a family emoji composed of multiple joined code points should count as a single character, but currently reports as several. An emoji followed by a variation selector should count as one character, but currently counts as two. Regular ASCII strings are unaffected.
+
+## Expected Behavior
+
+- The string length function should return the number of Unicode grapheme clusters — the units that correspond to user-perceived characters.
+- ASCII strings: length equals the character count (no change in behavior).
+- Accented Latin characters: each base character plus its combining accent counts as one unit.
+- Emoji with variation selectors: counts as one unit per visible glyph.
+- ZWJ sequences (e.g., family emoji): the entire composed sequence counts as one unit.
+- The split, join, and string interpolation operations should work correctly alongside the corrected length function.
+
+## Why This Matters
+
+Configuration programs using PCL that perform string length checks on non-ASCII input (such as user-provided names, labels, or tags with Unicode content) will silently get wrong answers. This can cause logic errors in programs that branch on or export string lengths. Correct grapheme cluster counting ensures the length function behaves consistently with what users expect from any modern string processing library.

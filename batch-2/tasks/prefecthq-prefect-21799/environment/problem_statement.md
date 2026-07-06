@@ -1,7 +1,14 @@
-I'm digging into Prefect's flow engine and I keep hitting a gap: there's no standardized way to run a flow from a command-line entrypoint, the kind of thing a worker does when it launches a flow run in a subprocess or container. Right now every worker has to wire this up by hand or rely on ad-hoc conventions, and I want it living in the flow engine module itself so workers and other parts of the system can just import it.
+## Description
 
-I need three things added over in the flow engine. First, a function that loads a flow given an entrypoint string, which is either a file path plus a function name or a Python module path plus a function name. Important bit: if the thing it resolves to is a plain undecorated Python function rather than an actual flow, it should automatically wrap it as a flow instead of blowing up.
+Prefect needs a standardized entry point for running flows launched by a worker or agent in a separate subprocess or container. Currently, there is no built-in way for the flow engine to load a flow from a file path or module reference, read the flow run ID from the environment, and orchestrate the full execution lifecycle. This means each worker implementation must handle this wiring manually or rely on ad-hoc conventions.
 
-Second, a main entry point function that takes a list of command-line args and reads the flow run ID from a designated environment variable. It validates both the arg count (expecting a single entrypoint argument) and that the env var is present and holds a valid identifier, returning 0 on success or a non-zero code (1) on any validation failure, so wrong arg count or a missing/invalid env var all bail out with 1.
+## Expected Behavior
 
-Third, the orchestration function that ties it all together in the right sequence: configure from the environment, load the flow run and the flow, set up logging and metrics context, run the flow, and drive the result to completion. And all three need to be importable from the flow engine module so subprocess-based execution doesn't have to duplicate this orchestration logic.
+- The flow engine should expose a function that loads a flow given an entrypoint string (either a file path with a function name, or a Python module path with a function name).
+- If the referenced function is a plain Python function rather than a decorated flow, it should automatically be wrapped as a flow rather than failing.
+- There should be a main entry point function that reads the flow run ID from a designated environment variable and a single entrypoint argument. It should return a non-zero exit code when the argument count is wrong or when the environment variable is missing or does not contain a valid identifier.
+- There should be a function that ties the pieces together: configuring from the environment, loading the flow run and the flow, setting up logging and metrics, running the flow, and driving the result — all in the correct order.
+
+## Why This Matters
+
+Workers that launch flow runs in subprocesses need a reliable, consistent mechanism for invoking flows. Having these utilities built into the flow engine makes it easier to implement and test subprocess-based execution without duplicating orchestration logic.

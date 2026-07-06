@@ -1,5 +1,12 @@
-I'm poking around the Quarkus core runtime module and found a utility class that manages system properties in a resettable way, like it lets you set props and then roll them back, and it's sitting right there in the core runtime jar. Problem is that module gets pulled in as a dependency by every single Quarkus app and ends up shipping in production builds, but this thing is only ever useful during testing or dev work. It's got no business being on the runtime classpath.
+## Description
 
-So this is really a module boundary cleanup. I want that resettable system property helper moved out of the core runtime module entirely so it's not part of the runtime artifact anymore, meaning nothing in `@core/runtime` should be able to reach it or reference it. It needs to land in a module that isn't shipped as part of the runtime dependency chain, somewhere test or dev oriented where it actually belongs.
+A utility class used for managing system properties in a resettable manner was placed inside the core runtime module. This module is included as a dependency of all Quarkus applications and ends up in production builds. The utility in question is only useful during testing or development — it is not needed at runtime by deployed applications.
 
-The goal is a lean runtime jar that doesn't carry test/dev-only code, and clean separation so it's obvious what's genuinely production runtime versus what's just for tests. After the move, production builds shouldn't expose or include this utility at all, and the core runtime module should compile and work fine without it since it wasn't needed at runtime to begin with.
+## Expected Behavior
+
+- The core runtime module should not expose or include utilities that are only relevant during testing or development.
+- Any class that handles resettable system property management for test purposes should live outside the core runtime module so it is not on the classpath of production builds.
+
+## Why This Matters
+
+Having test/development utilities in the core runtime module means every application that depends on Quarkus carries unnecessary code. This violates module separation principles and can lead to confusion about what is part of the production runtime. Removing this utility from the runtime module ensures a clean, lean runtime artifact and enforces correct module boundaries.

@@ -1,7 +1,17 @@
-I'm extending NetBox's IPAM module so ASNs can carry a functional role the same way prefixes and VLANs already do. Right now there's no way to categorize an ASN by role, which makes it painful to organize a big ASN inventory when different ASNs serve different purposes (transit, peering, internal, that kind of thing). I want the Role taxonomy applied consistently to ASNs everywhere they're managed.
+## Description
 
-So the ASN model needs an optional role field (a foreign key to the existing Role model, nullable/blank since it's optional). This role should be settable and editable through the ASN web form for creating and editing, plus the bulk edit form so I can set or clear the role across many ASNs at once, and CSV import should accept an optional role column matched by role name. On the REST API side the ASN serializer needs to accept and return the role, so it's part of the ASN resource.
+Prefixes and VLANs in NetBox already support being assigned a functional role to categorize them by purpose, but Autonomous System Numbers (ASNs) have no equivalent capability. This makes it difficult to organize and manage large ASN inventories where different ASNs serve different operational functions (e.g., transit, peering, internal).
 
-Also when I'm looking at the roles list I want to see how many ASNs are assigned to each role, right next to the prefix and VLAN counts that are already shown, so the role overview page gets an asn_count. That same ASN count should show up in the brief/compact API representation of a role too, like the other counts do.
+## Expected Behavior
 
-And I want to filter the ASN list by role through the filterset, both by role ID and by role slug, matching how filtering works elsewhere. The relevant bits live around the IPAM app, the ASN model and its forms, serializers, and filtersets, plus wherever the Role annotations and brief serializer counts are defined. Keep it consistent with the existing prefix and VLAN role handling so nothing feels bolted on.
+- Users should be able to assign an optional role to an ASN when creating or editing it through the web UI
+- The ASN list and detail pages should support filtering by role
+- The REST API for ASNs should accept and return a role field
+- Bulk editing of ASNs should allow setting or clearing the role across multiple records at once
+- CSV import of ASNs should accept an optional role column (matched by role name)
+- The role overview page should display an ASN count for each role, alongside the existing prefix and VLAN counts
+- The brief/compact API representation of a role should include an ASN count field
+
+## Why This Matters
+
+Without role support on ASNs, network operators cannot use NetBox's existing role taxonomy to classify ASNs by function, which is inconsistent with how prefixes and VLANs work. Adding this capability brings ASN management in line with the rest of the IP address management workflow.

@@ -1,3 +1,15 @@
-I've been poking around the realtime conversation APIs and the session identifier field is bugging me because it's just named something generic like session ID, and in our world there are a bunch of session-ish identifiers floating around (conversation threads, user sessions, thread-group IDs, Codex sessions, the actual upstream realtime session) so when I glance at the field I can't tell which one it's supposed to be. It's easy to assume it maps to a Codex session or a thread-group ID when it actually refers to the upstream realtime session, and that ambiguity makes the whole thing harder to read.
+## Description
 
-So I want to rename this field to something precise that makes it obvious it's the realtime session identifier specifically, not any other kind of session or thread-group thing. And it needs to be consistent everywhere the identifier shows up, so that means the parameters you pass when starting a realtime conversation, the notification/event that gets emitted when a realtime conversation starts successfully, and the event type that signals a realtime session has been updated all need the new name applied. Basically anything in the start/observe/respond flow that carries this ID should use the clearer name so nobody has to guess what it points at.
+Several data structures in the realtime conversation system use a field named "session ID" that is ambiguous — it's not immediately clear whether it refers to the realtime session, a conversation thread, a user session, or some other session-like entity in the system. This naming ambiguity makes the API harder to understand at a glance, especially for developers who work across multiple session concepts.
+
+## Expected Behavior
+
+The field should be renamed to make it unambiguous that it refers specifically to the realtime session identifier, not any other kind of session or thread-group identifier in the system. This rename should be reflected consistently across all data structures that carry this identifier:
+
+- The parameters used to start a realtime conversation
+- The notification emitted when a realtime conversation starts
+- The event type that signals a realtime session has been updated
+
+## Why This Matters
+
+Developers working with the realtime conversation APIs should be able to tell at a glance what kind of session identifier a field holds. With the current generic name, it is easy to mistakenly assume it maps to a Codex session or thread-group identifier, when in fact it refers to the upstream realtime session. A more precise name reduces the chance of confusion, improves code readability, and aligns the field name with what it actually represents.

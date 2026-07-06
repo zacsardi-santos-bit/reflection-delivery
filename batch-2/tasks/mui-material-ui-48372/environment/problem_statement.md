@@ -1,5 +1,13 @@
-I'm hitting a glitchy exit animation on our Slide transition component, the one over in `@packages/material-ui/src/Slide/Slide.js` that animates elements in and out. We support touch-drag gestures so a user can partially drag the sliding panel (think a bottom sheet swiped part way down) before releasing it, and that's where it breaks. When the panel gets dismissed programmatically after being dragged, the slide-out animation totally ignores wherever the panel actually sits and snaps it back to its original resting position before animating away, so you get this jarring jump right as the exit begins. Looks wrong.
+## Description
 
-What I want is for the exit to start from the element's real on-screen position at the moment of dismissal, including whatever translation offset it picked up from dragging. So if the user dragged it 170px, the exit should begin from that 170px spot, not from zero. Basically the exit translation needs to be computed relative to the element's actual current position rather than its resting one.
+When a user drags a sliding panel to a new position on screen — for example, partially swiping a bottom sheet downward — and then the panel is programmatically dismissed, the slide-out animation should start from wherever the panel actually is at that moment. Currently it ignores any drag offset the panel may have accumulated and animates from the panel's original, undragged position, causing a visible jump before the exit animation begins.
 
-To make that work I also need a little utility (put it in `@packages/material-ui/src/Slide/Slide.js` alongside the component, or wherever it fits) that takes any CSS transform string and pulls out the numeric X and Y translation values. It's gotta handle the full range: `matrix(...)`, 3D `matrix3d(...)`, two-axis `translate(x, y)`, three-axis `translate3d(x, y, z)`, and single-axis `translateX(x)` / `translateY(y)` formats. Oh and for anything it doesn't recognize, or `"none"`, or when there's no transform passed at all, it should just return zero for both X and Y. Thanks!
+## Expected Behavior
+
+- When the Slide component exits, it should read the child element's current on-screen position, including any translation already applied (e.g., from a drag gesture), and factor that into the exit animation's starting point.
+- The exit translation should be computed relative to the element's actual current position rather than its resting position.
+- A utility should be available that can parse any common CSS transform string format — including matrix, 3D matrix, two-axis translate, three-axis translate, and single-axis translate variants — and return the numeric X and Y translation values from it. For unrecognized, empty, or "none" transforms, it should return zero for both axes.
+
+## Why This Matters
+
+Without this fix, dismissing a dragged panel produces a jarring animation glitch. With it, the dismissal animation is visually continuous and correct regardless of how far the panel has been dragged before being closed.

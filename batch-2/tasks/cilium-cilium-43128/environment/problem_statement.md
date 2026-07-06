@@ -1,9 +1,22 @@
-I'm working through some gaps in the ztunnel integration in Cilium and could use a hand knocking these out.
+## Description
 
-First off, our connectivity tests for ztunnel only cover the symmetric cases right now, two enrolled pods talking, or two unenrolled pods talking. I need scenarios for the mixed case where one pod's enrolled in the ambient mesh and the other isn't, and I want all four patterns covered: enrolled-to-unenrolled and unenrolled-to-enrolled, each for same-node and cross-node. In these mixed setups the traffic shouldn't be encrypted, so the tests should expect plain non-encrypted traffic. Realistic deployments hit this and asymmetric bugs slip through otherwise.
+Several related gaps need to be addressed in the ztunnel integration:
 
-Second, when we convert between the full endpoint representation and the compact form, the pod UID is getting dropped. The compact form should hold onto the UID that comes from the pod's owner reference, and on the way back to the full representation that UID needs to be reconstructed as a proper owner reference pointing at the pod. Otherwise downstream consumers can't correlate an endpoint back to its pod.
+1. **Missing mixed-enrollment traffic scenarios**: The connectivity test suite currently only covers traffic between two enrolled pods or two unenrolled pods. It is missing scenarios where one side is enrolled in the ambient mesh and the other is not — which is a realistic deployment case that should be validated. Plain (non-encrypted) traffic should be expected in these mixed cases.
 
-Third, the xDS server's endpoint subscription needs reworking. Today it lists all endpoints upfront with no namespace filtering and uses a wait group to signal readiness. Instead I want the initial set of endpoint events (the ones that show up before the informer syncs) buffered into a single batch that gets delivered to the subscriber all at once, and events arriving after sync forwarded individually. And importantly, events for namespaces not enrolled in the ambient mesh should be silently dropped so ztunnel never learns about endpoints it shouldn't.
+2. **Pod identity not preserved in endpoint slices**: When a pod's endpoint information is stored in a compact representation, the pod's unique identifier (UID) from its owner reference is not preserved. This means consumers of that compact representation cannot reconstruct the Kubernetes owner reference to link back to the originating pod. The conversion functions that translate between the full endpoint representation and the compact form should round-trip the pod UID through the owner reference mechanism.
 
-Finally, when the enrollment reconciler handles a namespace getting enrolled or disenrolled, it should also poke the xDS layer by emitting endpoint events, creation events on enrollment and removal events on disenrollment, for every endpoint in that namespace. The reconciler needs access to the endpoint resources from the Kubernetes store to pull this off, and it's gotta work in both the regular endpoint and endpoint slice modes.
+3. **xDS endpoint subscription does not respect namespace enrollment**: The xDS server's endpoint subscription mechanism currently sends all known endpoints as an initial list when a consumer subscribes. It does not filter for namespaces enrolled in the ambient mesh, and it relies on a "list all" approach instead of event batching. The subscription model should be changed so that pre-existing endpoint events are batched and delivered as an initial snapshot to the subscriber, while subsequent events are streamed individually. Endpoints in namespaces that are not enrolled must be silently ignored.
+
+4. **Namespace enrollment does not notify the xDS layer**: When a namespace is enrolled in or removed from the ambient mesh, the system currently enrolls/disenrolls the local endpoints via the ztunnel daemon, but it does not notify the xDS server about the corresponding endpoint objects. The enrollment reconciler should emit endpoint creation events when a namespace is enrolled, and endpoint removal events when a namespace is disenrolled, using the endpoint resources from the Kubernetes store.
+
+## Expected Behavior
+
+- Connectivity tests cover all four mixed-enrollment traffic patterns: enrolled-to-unenrolled and unenrolled-to-enrolled, for both same-node and cross-node cases. These scenarios expect no encryption.
+- The compact endpoint representation preserves the pod UID so that it can be reconstructed as a Kubernetes owner reference when converting back to the full representation.
+- The xDS subscription mechanism buffers pre-sync events into an initial batch, forwards post-sync events individually, and filters out events for unenrolled namespaces.
+- The enrollment reconciler emits endpoint events to the xDS channel whenever a namespace is enrolled or disenrolled.
+
+## Why This Matters
+
+Without mixed-enrollment tests, asymmetric connectivity issues could go undetected. Without pod UID preservation, downstream consumers cannot correlate endpoints with their pods. Without proper namespace filtering and event batching in the xDS subscription, ztunnel may receive information about endpoints it should not know about, or miss the initial state entirely.

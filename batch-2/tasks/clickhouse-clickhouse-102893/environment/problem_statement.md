@@ -1,5 +1,17 @@
-I'm getting wrong results out of a right-side "any match" join when the ON clause has multiple OR conditions and I've turned off the query plan table-swap optimization. With that optimization on (the default), the planner rewrites the thing into an equivalent left-side join and the results come out correct. But when I force the actual right-join path by setting the table-swap option to 0, I get fewer rows than expected. It looks like the hash-join engine stops after the first OR condition that produces a match and never checks the remaining OR condition maps, so right-table rows that would only be found via the second or third OR condition are just silently missing from the output.
+# ANY RIGHT JOIN with OR conditions returns wrong results when table swap is disabled
 
-The two paths should give identical, complete result sets no matter whether the optimizer applies the rewrite. When multiple OR conditions are present, the engine needs to keep scanning all the OR condition maps for each right-table row before it commits the result, and a right-table row should show up paired with every left-table row that matches via any of the OR conditions, not just the first one. Same deal for full outer "any match" joins since they run through the same code path.
+## Description
 
-Can you dig into the hash join implementation and find the early exit from the OR condition loop for the right and full outer "any match" cases and fix it? This matters because anyone who disables table-swap explicitly, or whose query shape prevents the optimizer from doing the rewrite, silently gets wrong answers for a totally common and valid join pattern, and it's sneaky because the default optimizer path masks the bug.
+There is a correctness bug in the hash-join engine when executing a right-side "any match" join that has multiple OR-connected conditions in the ON clause. When the query plan optimizer's table-swap feature is active (which rewrites the query into an equivalent left-side join), the results are correct. However, when that optimization is disabled — either explicitly or because the query shape prevents it — the join engine follows the actual right-join code path and returns incorrect or incomplete results.
+
+The root cause is that the engine's internal loop over multiple OR condition maps exits too early: it stops searching after the first OR condition produces a match, and never checks the remaining OR conditions. As a result, right-side rows that are only reachable via a second (or later) OR condition are silently omitted from the output.
+
+## Expected Behavior
+
+- A right-side "any match" join with OR conditions should produce the **same** complete result set regardless of whether the query plan optimizer rewrites it as a left-side join.
+- When multiple OR conditions are present, the engine must continue scanning all OR condition maps for each right-table row before committing the result.
+- A right-table row should appear in the output paired with all left-table rows that match via **any** of the OR conditions.
+
+## Why This Matters
+
+Users who explicitly disable the table-swap setting, or whose queries are structured in a way that prevents the optimizer from applying the rewrite, will silently get wrong answers for a common and valid join pattern. The bug is not obvious because the default optimizer path produces correct results, masking the underlying defect.

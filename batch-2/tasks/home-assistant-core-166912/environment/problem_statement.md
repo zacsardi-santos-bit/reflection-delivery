@@ -1,5 +1,18 @@
-I'm building out the Home Assistant integration for Fresh-r ventilation devices and I want to add diagnostics support because right now if something breaks there's no clean way to grab a snapshot of the integration's state. I'd have to poke through config entries, device registries, and coordinator data one at a time, which is painful when I'm trying to help someone with a bug report.
+# Add Diagnostics Support to Fresh-r Integration
 
-What I want is to hook into the standard Home Assistant per-config-entry diagnostics system so it behaves exactly like other integrations that support it. The diagnostics call should return one combined structured view. First piece is the config entry details, but with the password redacted while the username stays visible (so folks can safely share the output). Second piece is a list of all the registered Fresh-r devices, each with its identifier, its type, its activation status (activation date), and any extra info fields the device carries. Third piece is a per-device dictionary of the current sensor readings, covering temperatures, humidity, CO2 level, dew point, flow rate, and whatever extra readings exist.
+## Description
 
-The point is that when someone hits weird behavior they can hand over a safe, redacted state dump instead of nothing. Add this alongside the existing integration code so requesting diagnostics for a Fresh-r config entry just works the way HA expects, with sensitive credentials automatically hidden.
+The Fresh-r integration currently lacks support for the Home Assistant diagnostics system. When users run into problems with their Fresh-r ventilation devices, there is no easy way to capture a structured snapshot of the integration's state — including device information, sensor readings, and configuration — to share for troubleshooting purposes.
+
+## Expected Behavior
+
+- The Fresh-r integration should support the standard Home Assistant diagnostics interface for config entries.
+- Requesting diagnostics should return a structured snapshot that includes:
+  - Configuration entry details (with sensitive credentials like passwords automatically redacted)
+  - A list of registered devices with their type, identifier, activation date, and any extra fields
+  - A set of current sensor readings for each device, including temperature values, humidity, CO2 level, dew point, flow rate, and any extra readings
+- The username field should be visible in diagnostics output while the password field should be hidden.
+
+## Why This Matters
+
+Without diagnostics support, users who encounter unexpected behavior from their Fresh-r integration cannot easily provide a meaningful bug report. Adding this capability allows users to share a safe, redacted snapshot of their integration state to help with troubleshooting.

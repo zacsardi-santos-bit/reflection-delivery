@@ -1,5 +1,24 @@
-I'm working in the Nx monorepo and I keep running into package.json drift across our publishable projects. We've got a ton of packages and there's nothing enforcing our org's package.json standards, so stuff like missing package names, packages scoped to the wrong org, public packages that forgot their publish access setting, projects that have executor or generator manifests on disk but never declared them in package.json, and packages missing their exports map, all of that only gets caught during code review or worse at publish time. I want to fix that with a workspace-level conformance rule.
+## Description
 
-What I need is a function that takes a project's package.json contents plus some project metadata and returns a list of violations it finds. It should check that the package has a name that's actually a string, and if the name is scoped it has to belong to our designated org namespace (any other scope gets flagged). Public packages need their publish access explicitly set to public in the publish config. Then if the project directory has an executor manifest file on disk, the package.json needs to reference it in the right field, same deal for a generator manifest file. Oh and the package.json must declare a non-empty exports map too.
+In a large monorepo with many publishable packages, it's easy for individual projects to drift from the organization's package.json standards over time. Without an automated check, common problems can slip through unnoticed: packages missing a name, packages scoped to the wrong organization, public packages missing the required publish access setting, projects that have executor or generator manifests but forget to declare them in their package.json, and packages that lack an exports declaration.
 
-Private packages should be skipped entirely, exempt from all of these checks. When it does find violations, each one needs to carry the path to the offending file, a clear human-readable message describing the problem, and the name of the source project. Also make sure the function is exported by name from the rule's index file so I can test it on its own without pulling in the whole conformance rule infrastructure.
+We need a workspace-level conformance rule that validates each project's package.json and reports violations when these standards are not met.
+
+## Expected Behavior
+
+The validation logic should check each project package.json for the following:
+
+- The package must have a name field that is a string
+- If the package name is organization-scoped, it must be scoped to the designated organization namespace — any other scope should be flagged
+- Public packages must have their publish access explicitly set to public in their publish configuration
+- If the project directory contains an executor manifest file, the package.json must correctly reference it in the appropriate field
+- If the project directory contains a generator manifest file, the package.json must correctly reference it in the appropriate field
+- The package.json must declare a non-empty exports map
+
+Packages marked as private should be exempt from all of these checks.
+
+Each detected problem should be reported as a violation including the path to the offending file, a clear human-readable message, and the name of the source project.
+
+## Why This Matters
+
+Without this automated check, inconsistencies in package.json files across the monorepo are only caught during manual code review or — worse — at publish time. An automated rule surfaces these issues early and consistently across all projects.

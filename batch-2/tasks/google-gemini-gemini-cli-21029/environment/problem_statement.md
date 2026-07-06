@@ -1,5 +1,23 @@
-I'm poking at the CLI chat interface and the "show more lines" prompt indicator is bugging me because it doesn't own its own spacing. Right now the parent message components have to conditionally slap on a top or bottom margin depending on whether we're in normal display mode or the alternate buffer mode, and that's just the wrong place for layout logic to live. It's scattered across multiple parents that each replicate the same conditional, and it also forces the integration tests for the main content area to swap in a mock placeholder for the indicator instead of the real thing, so they're not actually verifying what gets rendered.
+## Description
 
-What I want is to move the spacing responsibility into the indicator component itself. It should carry its own horizontal padding so the text shows up slightly indented (a leading space before the text), plus a bottom margin so there's one blank line between it and whatever comes next. Then parent components don't need to know anything about spacing, they can just render the indicator directly inside a plain wrapper with no conditional margins.
+The "show more lines" indicator in the CLI chat interface does not manage its own spacing. Instead, the parent message components are responsible for conditionally applying top or bottom margins depending on which display mode (normal or alternate buffer) is active. This design puts layout concerns in the wrong place and causes tests to need a mock substitute for the indicator rather than being able to use the real component.
 
-Once that's done, when multiple conversation history items get rendered in a constrained-height alternate-buffer view they should naturally end up separated by exactly one blank line. In normal display mode the indicator should render nothing visible at all, so no extra space sneaks in and the blank line below it is absent too. Oh and please update the integration tests for the main content to use the real indicator component instead of the mock, so the actual rendering is what's being checked.
+## Problem
+
+Because parent components control spacing, the indicator component carries no visual margin or padding of its own. This means:
+
+- The spacing behavior is scattered across multiple parent components that each need to replicate the conditional logic
+- Integration tests for the main content area cannot easily use the real indicator component, so a mock is used instead — meaning the tests don't verify actual rendering
+- When multiple conversation history items are displayed in a constrained-height view, the spacing between them may be inconsistent
+
+## Expected Behavior
+
+- The indicator component should own its own horizontal padding (a small indent before the text) and a bottom margin (one blank line after it)
+- Parent components that wrap the indicator should not need to apply any conditional margins based on buffer mode — those should simply use a plain wrapper
+- In constrained-height alternate-buffer mode, the indicator appears with a leading space and is followed by one blank line
+- In normal display mode, the indicator renders no visible content (and thus the blank line below it is also absent)
+- Multiple conversation items shown in constrained-height mode should be separated by exactly one blank line
+
+## Why This Matters
+
+Consolidating spacing into the indicator component itself makes the layout easier to reason about, reduces duplication in parent components, and allows integration tests to use the real indicator component rather than a placeholder mock.

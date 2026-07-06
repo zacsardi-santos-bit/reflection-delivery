@@ -1,7 +1,20 @@
-I'm trying to run Falcon-Mamba-7B through Transformers and there's just no support for it yet, which is blocking me. It's one of those Mamba state space models from TII (non-attention, so it's much faster and lighter on memory for long sequences), and I want to load the pretrained checkpoint and generate text the same way I would with any other model in the library.
+## Add FalconMamba Model Support to Transformers
 
-So I need the whole stack added. A config class for this FalconMamba architecture that's importable from the top-level library and exposes the usual hyperparameters, hidden size, number of hidden layers, the state size, the convolution kernel size, and the time-step bounds (min/max), since it's a state space design and those matter. Then a base model class that just returns hidden states for feature extraction, and on top of that a causal LM variant that does text generation plus loss computation and proper backward passes so fine-tuning works.
+### Description
 
-These should behave like normal library citizens too, so saving and loading checkpoints, resizing token embeddings, and gradient checkpointing all need to work, and it's gotta be registered with the auto-model API so it's discoverable straight from a pretrained checkpoint.
+The FalconMamba model family is a new large language model architecture based on the Mamba state space design, released by TII UAE. It achieves competitive performance with leading open-weight models at the 7B scale while offering significantly faster inference and lower memory usage for long sequences due to its non-attention-based design.
 
-Oh and the important one: this thing uses stateful caching, so when I feed a sequence token by token with a running cache the output has to match processing the whole sequence in one shot. That cached inference path needs to actually be correct, not approximately close. Also please wire it up so it works out of the box with the text-generation and feature-extraction pipeline types.
+Currently, the Transformers library does not support FalconMamba, so developers cannot load the Falcon-Mamba-7B pretrained checkpoint through the standard API. There is no way to use FalconMamba for text generation, fine-tuning, or pipeline integration via Transformers.
+
+### Expected Behavior
+
+- A configuration class for FalconMamba should be available and importable from the library, including attributes for hidden size, number of hidden layers, state size, convolution kernel size, and time-step bounds
+- A base FalconMamba model should be available for feature extraction, returning hidden states
+- A causal language modeling variant should support text generation, loss computation, and backward passes
+- Both models should support stateful caching so that sequential token processing is equivalent to processing the full sequence at once
+- The architecture should be registered with the auto-model system so it can be discovered automatically from pretrained checkpoints
+- Both models should integrate with the text-generation and feature-extraction pipeline types
+
+### Why This Matters
+
+Users want to experiment with and deploy the FalconMamba architecture, which offers an efficient alternative to transformer-based LLMs. Without library support, they cannot leverage existing infrastructure for fine-tuning, quantization, or compiled inference that the library already provides for other models.

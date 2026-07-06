@@ -1,5 +1,17 @@
-I'm poking at the markdown formatter and hit a bug with hard line breaks. Quick refresher: in markdown you make a hard line break by ending a line with two or more trailing spaces, which forces a new line inside the same paragraph. That only means something when there's another line of content right after it in the same paragraph block, since the break sends the reader down to that next line. But when those trailing spaces land on the very last line of a paragraph (right before a blank line, or at the end of the document) they're pointless, there's nothing to break to.
+## Description
 
-Right now the formatter keeps those trailing spaces even on the final line, so my output drifts from what the reference formatter produces. The two cases I'm seeing are a single line that ends with trailing spaces before a blank line, and a multi-line paragraph whose last line has trailing spaces before a blank line. Both wrong.
+The markdown formatter incorrectly preserves trailing spaces on the last line of a paragraph. In markdown, two trailing spaces on a line create a "hard line break" that forces a new line within the same paragraph. However, when this trailing-space sequence appears on the **last line** of a paragraph block (i.e., the line is followed by a blank line or the end of the document), those trailing spaces are meaningless — there is no next line to break to. The formatter should strip them in this case, just as the reference formatter does.
 
-What I want is for the formatter to strip the trailing-space hard-break markers from the final line of each paragraph block, while still preserving them on interior lines where they actually create a meaningful line break. Same behavior whether the paragraph ends with a blank line or at end-of-file, oh and the whole point is matching the reference formatter's output on these edge cases so we don't emit semantically meaningless whitespace.
+## Expected Behavior
+
+- When trailing spaces (hard line break markers) appear on an **interior line** of a paragraph, they should be preserved in the formatted output — they create an actual line break.
+- When trailing spaces appear on the **last line** of a paragraph block, they should be removed from the formatted output — they serve no purpose there.
+- This behavior should be consistent whether the paragraph ends with a blank line or at end-of-file.
+
+## Current Behavior
+
+The formatter keeps trailing spaces on the last line of a paragraph, causing the output to differ from the reference formatter in these cases.
+
+## Why This Matters
+
+This inconsistency means documents formatted by the tool may contain semantically meaningless whitespace that differs from what other formatters produce. Achieving compatibility with the reference formatter for these edge cases is important for correctness and interoperability.

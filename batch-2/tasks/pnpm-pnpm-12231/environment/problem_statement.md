@@ -1,5 +1,17 @@
-I'm chasing a lockfile bug in our monorepo tooling. We've got projects that set their package manager requirement to a lenient policy, basically "if the version doesn't match, ignore it and keep going," and that's intentional. The trouble is that even with that ignore-failures policy set, once we run a self-update or version sync the lockfile comes back with a package manager dependencies section that wasn't there before. That's wrong to me: if we've said mismatches are fine and we shouldn't be enforcing the constraint, there's no reason to be pinning or tracking the package manager in the lockfile at all. It's surprising churn for teams who deliberately opted into permissive behavior.
+## Description
 
-What I want is for the code to check whether the package manager policy is set to fail silently (ignore) and, if so, skip writing the package manager dependency info to the lockfile entirely. The function that decides whether to persist this stuff to the lockfile needs to know about the ignore-failures policy and return false in that case so the entry never gets created after a self-update.
+When a project configures its package manager requirement with a lenient "ignore failures" policy, the intent is that the tool should continue working even if the exact package manager version doesn't match. However, despite this lenient policy, the system still records the resolved package manager version into the lockfile under the package manager dependencies section. This is inconsistent — if a mismatch is acceptable and the system should just proceed without enforcing the constraint, there is no reason to pin or track the package manager in the lockfile.
 
-Also, that persistence-gate logic currently lives in one package but it's needed in a few different places, so it makes sense to lift it into the shared configuration reader package so every caller can pull it from one source instead of duplicating it.
+## Expected Behavior
+
+- When the package manager policy is set to ignore failures, the lockfile should **not** include a package manager dependencies entry after a self-update or version sync.
+- The logic that decides whether to persist package manager information to the lockfile should respect the "ignore" failure policy and skip persistence in that case.
+- This persistence gate logic should live in the shared configuration reader package so it can be reused across the codebase.
+
+## Current Behavior
+
+The system always writes the resolved package manager version to the lockfile, even when the project's package manager policy is configured to silently ignore mismatches. This results in unnecessary lockfile churn and contradicts the non-enforcing intent of the policy.
+
+## Why This Matters
+
+Teams that deliberately opt into a lenient package manager policy (accepting any compatible version rather than enforcing a strict match) should not see their lockfile updated with a pinned package manager entry. The lockfile change is surprising and unwanted in contexts where the policy is intentionally permissive.

@@ -1,7 +1,17 @@
-I'm adding cloud browser support to browser-use and right now everything assumes a local browser, there's no way to connect to a cloud-hosted session. I want a first-class integration so people running automated tasks in cloud environments don't have to hand-roll all the API communication and session lifecycle themselves.
+## Description
 
-Here's what I need. Users should authenticate with the cloud browser service either through an environment variable holding the API key or a saved config file, and that auth config should support being saved to and loaded from a file with the config directory location configurable via its own environment variable. Starting a session should hit the service and return a connection endpoint, basically a WebSocket URL I can use to connect to the remote browser, and stopping a session should cleanly terminate it and hand back the updated session status.
+The browser automation library currently only supports running browsers locally, but many users need to connect to cloud-hosted browser sessions instead. There is no built-in support for authenticating with a cloud browser service, starting a remote browser session, obtaining a connection endpoint, or stopping sessions when finished.
 
-Error handling matters a lot here. When no credentials are configured at all it should raise an informative error telling the user to set the API key environment variable. If the server rejects the credentials with a 401 it should raise a specific authentication failure error. And really importantly, none of these failures should ever silently fall back to running a local browser, the cloud config needs to stay in effect as-is.
+## Expected Behavior
 
-Oh and I need the browser profile to support a cloud mode flag, where flipping it on makes the profile report that it's not a local session, and the browser session should expose a property reflecting whether cloud mode is active. Both the profile and session objects should surface whether a cloud browser is being used. Without this integration there's no standardized error handling or auth support at all, which is the whole point.
+- Users should be able to configure authentication either through an environment variable or a saved configuration file
+- Starting a cloud browser session should return a connection endpoint (WebSocket URL) that can be used to connect to the remote browser
+- Stopping a cloud session should cleanly terminate it and return the updated session status
+- When authentication credentials are missing, the system should raise an informative error pointing the user to the correct environment variable
+- When authentication fails (rejected by the server), a clear authentication failure error should be raised
+- Failures during cloud browser setup should not silently fall back to running a local browser — the cloud setting should remain in effect
+- Browser profile and session objects should expose a property indicating whether a cloud browser is being used, and the profile should correctly reflect that it is not a local session when cloud mode is enabled
+
+## Why This Matters
+
+Users running automated tasks in cloud environments or wanting managed browser infrastructure need a reliable, first-class way to connect to remote browsers. Without this integration, they have to handle all the API communication and session lifecycle themselves, with no standardized error handling or authentication support.

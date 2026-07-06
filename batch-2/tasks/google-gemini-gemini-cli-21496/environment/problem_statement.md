@@ -1,7 +1,18 @@
-I'm building out OAuth2 support in our remote agent auth system, and right now it only knows how to do API keys and static HTTP bearer tokens, so anyone whose agent sits behind an OAuth2 service is just stuck. I want the full authorization code flow with PKCE wired in. Users should be able to set an oauth2 auth type in their remote agent config file, with a client ID plus optional client secret, scopes, an authorization URL, and a token URL. The config parser needs to validate that any URLs they pass are well-formed and reject anything malformed with a clear error, don't just let a bad URL slide through.
+## Description
 
-When an agent actually needs OAuth2, open a browser, run the auth code flow, exchange the code for tokens, and cache them in storage for later. On subsequent uses serve the cached token if it's still valid, and if it's expired try refreshing automatically using whatever refresh token we have. If the refresh fails, fall back to re-authorizing, and when we do need to re-auth, remove the stale creds first. Oh and if the user declines to authorize, surface a clean cancellation message instead of hanging or spitting out something cryptic.
+Remote agents sometimes sit behind services that require OAuth2 authorization, but the current agent authentication system only supports API keys and static bearer tokens. Users who want to connect to OAuth2-protected remote agents have no way to configure this, and the system cannot guide them through the browser-based authorization flow, manage tokens, or refresh them when they expire.
 
-The auth provider should also handle retries on the request side, so if a response comes back 401 or 403 it clears the stale token and re-authenticates, but it's gotta stop after two attempts so we don't loop forever. Non-auth errors return no retry headers, and the retry counter resets whenever we get a successful non-auth-error response.
+Additionally, when fetching agent metadata (the agent card), the system currently passes the authenticated transport fetch to the card resolver — meaning credentials are sent even before knowing whether authentication is required. If the server doesn't need authentication to serve the card, this unnecessarily exposes credentials.
 
-Also, when we know the agent card URL, discover the OAuth2 endpoint URLs (authorization and token) straight from the agent card so users don't have to hardcode them, but anything explicitly configured always wins over what the card advertises. And for fetching the agent card itself, do an unauthenticated request first by default and only fall back to an authenticated one if the server hits us with a 401, since right now we pass the authenticated transport fetch up front and leak credentials before we even know auth is required. This matters because OAuth2 is table stakes for professionally hosted agent services and without it a whole class of remote agents is just unreachable.
+## Expected Behavior
+
+- Users can declare an OAuth2 auth type in a remote agent's configuration file, specifying a client ID, optional client secret, scopes, authorization URL, and token URL.
+- The system validates that any URLs provided in the OAuth2 configuration are well-formed, and rejects configurations with invalid URLs.
+- When authentication is required, the system initiates the OAuth2 authorization code flow interactively (browser-based), exchanges the code for tokens, and persists those tokens for future sessions.
+- Expired tokens are refreshed automatically using any available refresh token. If refresh fails, the system falls back to re-authorization.
+- When the user declines to authorize, the system surfaces a clear cancellation message rather than hanging or producing an obscure error.
+- For fetching agent cards, the system first tries an unauthenticated request and only falls back to an authenticated request if the server responds with an authentication challenge.
+
+## Why This Matters
+
+Requiring OAuth2 authentication is a common pattern for professionally hosted APIs and agent services. Without this support, users are locked out of an entire class of remote agents. Proper token lifecycle management (storage, refresh, fallback) makes the feature robust for daily use, and the smarter agent card fetching behavior reduces unnecessary credential exposure.

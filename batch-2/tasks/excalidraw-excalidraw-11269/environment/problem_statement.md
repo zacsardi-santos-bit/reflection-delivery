@@ -1,7 +1,15 @@
-I'm hitting a z-order bug in Excalidraw's element ordering normalization. When I've got a mix of elements where some belong just to a top-level group (say group A) and others live in nested subgroups within that same parent (A then B then C), and they show up interleaved in the input, the normalize routine yanks all the deeper subgroup elements down to the end of the parent group block instead of leaving them where they actually appear. So if a nested-subgroup element sits between two elements of the parent group, after normalization it lands at the end of the whole group block rather than staying in between, which is wrong.
+## Description
 
-There's also a related thing where two groups with different inner group IDs get treated as the same group whenever their individual ID strings happen to concatenate to the same value, so elements that really belong to distinct inner groups get incorrectly merged together. That's another bug, group identity needs to be based on the actual individual group ID values, not some concatenated string that can collide.
+The element ordering normalization logic has a bug in how it handles elements belonging to nested subgroups that are interleaved with sibling elements of a shared parent group.
 
-What I want is: when normalizing element order, each distinct inner group should appear at the position where that group is first encountered in the input, and elements with identical group identities at each nesting level should always stay adjacent in the output. So the position of each distinct group in the result is decided purely by first-occurrence in the input, not by any other heuristic, and a subgroup element between two siblings of a common parent stays put.
+When a user has canvas elements where some belong only to a top-level group (e.g., group A) and others belong to nested subgroups within that same parent group (e.g., group A → B → C), and these elements appear in mixed order, the normalization routine incorrectly relocates all the deeper-subgroup elements to the end of the parent group block. The correct behavior is to preserve the first-occurrence position of each distinct inner group.
 
-This matters because things like duplicating elements or loading a saved document trigger this normalization, and if it mangles the subgroup ordering, users see their layering change after operations that shouldn't touch it at all, so it reads as elements silently jumping around. The fix lives in the ordering normalization logic (look under `@packages/excalidraw/element` where the element ordering/normalization code sits, roughly `@packages/excalidraw/element/sortElements.ts` and wherever group-aware normalization happens). Keep same-group elements contiguous per nesting level, anchor each group to its first appearance, and compare groups by individual IDs rather than concatenated strings.
+## Expected Behavior
+
+- When a sub-group element appears between two sibling elements of a common parent group, it should stay in that position after normalization — it should not be moved to the end.
+- The position of each distinct group within the output should be determined by where that group first appears in the input, not by any other ordering heuristic.
+- Group identity must be based on the actual individual group ID values — groups that happen to produce the same concatenated string but have different individual IDs should be treated as separate groups.
+
+## Why This Matters
+
+Operations such as duplicating elements or loading a saved document trigger element order normalization. If that normalization incorrectly moves subgroup elements, users will see their elements in a different layering order than they arranged them, which is unexpected and confusing. This bug causes observable z-order changes after seemingly unrelated operations.

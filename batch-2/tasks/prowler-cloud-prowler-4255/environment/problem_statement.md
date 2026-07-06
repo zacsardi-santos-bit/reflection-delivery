@@ -1,7 +1,18 @@
-I'm extending our cloud security scanner to cover inline IAM policies, not just the managed ones we already handle. Right now we scan managed (customer-created) policies for privilege escalation risks and for granting unrestricted access to critical services like logging and encryption key management, but there's nothing equivalent for inline policies, the kind embedded directly in an IAM role, user, or group. That's a real blind spot because a role or user with a dangerous inline policy sails through undetected while managed policies get flagged fine, and inline policies are super common in AWS so security teams end up with an incomplete picture of their IAM risk surface.
+## Description
 
-So I want new checks that evaluate inline policies attached to roles, users, and groups for those same two risks, producing one pass/fail finding per inline policy for the privilege escalation side, and also checking each inline policy for wide-open access to sensitive services.
+The security scanning tool currently checks for privilege escalation risks and overly-permissive access to sensitive services in managed (customer-created) IAM policies, but it lacks equivalent coverage for **inline policies** — those embedded directly in IAM roles, users, and groups. This gap means that a role or user with a dangerous inline policy could go undetected even while managed policies are flagged correctly.
 
-Also, the existing full-service-access detection only looks for explicit wildcard entries in the allowed actions. It misses the "allow everything except these services" construct where, if the critical service isn't in the exclusion list, it's effectively granted full access. I want that pattern caught too, for both managed and inline checks.
+In addition, the existing checks for detecting full access to certain critical services only look for explicit wildcard action entries. They miss cases where a policy uses an "allow everything except" construct that implicitly grants full access to any service not listed in the exclusion list — which is an equally dangerous misconfiguration.
 
-Oh and the privilege escalation logic plus the list of known dangerous action combinations is currently duplicated between the implementation and the tests, which is a pain to keep in sync. Pull those combination definitions out into a single shared library module so both the existing managed-policy check and the new inline-policy check import the same definitions instead of duplicating them.
+Finally, the privilege escalation combination logic is currently duplicated between the implementation and the tests, making it harder to keep them in sync.
+
+## Expected Behavior
+
+- Inline policies attached to roles, users, or groups should be scanned for privilege escalation risks, producing one finding per inline policy.
+- Inline policies should also be checked for granting unrestricted access to critical services (such as logging and encryption key management).
+- Full-service-access detection should correctly flag policies that use "allow all except listed services" statements where the critical service is not in the exclusion list.
+- The privilege escalation combination definitions should live in a single shared library module, imported by all relevant checks.
+
+## Why This Matters
+
+Inline policies are commonly used in AWS environments and represent the same security risks as managed policies. Without these checks, security teams have an incomplete picture of their IAM risk surface. This gap also means policies crafted to look restrictive can actually grant wide-open access to critical services, which these checks would previously miss.

@@ -1,9 +1,18 @@
-We've got a mobile hybrid app where some users are administratively locked into the new app experience and shouldn't be able to go back to the old app, and right now that lock just isn't being enforced at the action and UI level. In the HybridApp environment, mobile-locked users can still trigger old-app exits, still see the Classic redirect entry point (like the FAB redirect option), and still get the confirmation modal offering them the redirect. I need all of those paths blocked when we're running in the mobile hybrid context.
+## Description
 
-So concretely, when a user is mobile-locked in HybridApp, every old-app exit action needs to be blocked, meaning the native close must not fire no matter what kind of exit was requested, and the GPS handoff modal that leads back to the old app has to be suppressed too. The FAB-style redirect entry points should go inactive and not pop a confirmation dialog when tapped, and the old-app navigation confirmation modal shouldn't render at all.
+In our mobile hybrid app environment, there is a category of users who have been administratively locked into the new app experience and must not be able to return to the old app. However, this lock is not currently enforced at the UI and action level: locked users can still see entry points to redirect to the old app, trigger the confirmation modal for that redirect, and exit the new app experience entirely. We need to enforce this lock so that locked users are prevented from navigating away in the mobile context.
 
-This only applies in the mobile hybrid environment, btw. The same users hitting the app via web must not be affected, Classic redirect gating on web keeps working exactly like it always has.
+## Expected Behavior
 
-I also want a shared utility layer other parts of the app can call to check lock state consistently, like whether to hide a Classic entry point, whether to block an old-app exit, whether to prevent a redirect, that kind of thing. These checks also need to know if the lock state is still loading, and in the mobile context if we don't yet know whether the user's locked, default to blocking to be safe.
+- When a user is mobile-locked in the HybridApp environment:
+  - All old-app exit actions must be blocked — the native close must not be triggered, regardless of the type of exit requested
+  - The GPS handoff modal leading to the old app must also be suppressed
+  - UI entry points (such as the FAB redirect option) must become inactive and must not open a confirmation dialog when triggered
+  - The old-app navigation confirmation modal must not render at all
+- The mobile lock must not affect the same users when accessing via web — classic redirect gating on web should remain unaffected
+- The lock state must be re-evaluated correctly after session changes: switching accounts should cause the system to wait for the new user's lock state before allowing any exits; token rotation for the same account must not disrupt an already-resolved unlocked state
+- If the lock state is cleared and then the app reloads, the system must re-evaluate the lock before allowing exits again
 
-Session changes need care too. When an account switch happens, re-block exits until the new user's lock state is resolved. But if it's just the auth token rotating for the same account, keep the already-resolved unlocked state and let exits keep working. And if the lock state gets cleared and the app reloads, re-evaluate the lock before allowing exits again. The whole point is locked users are supposed to stay in the new experience, letting them wander back to the old app defeats the lock and breaks workflows tied to the new app.
+## Why This Matters
+
+Users who are locked to the new app experience are expected to remain there — allowing them to navigate back to the old app defeats the purpose of the lock and can lead to inconsistent state or broken workflows tied to the new app.

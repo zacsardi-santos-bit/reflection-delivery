@@ -1,5 +1,18 @@
-I'm adding an HTML accessibility lint rule to biome that checks heading elements for meaningful, screen-reader-friendly content. We already have this check on the JSX side, but it doesn't touch plain HTML or the component-based formats (Vue, Svelte, Astro), so anyone writing headings there gets zero feedback when the content is inaccessible. Headings matter a lot for assistive tech since folks navigate page structure by jumping between them, and an empty or hidden heading is worse than useless. I want this wired into the HTML analyzer so it catches issues across all four file types, all six heading levels (h1 through h6).
+## Description
 
-The rule should flag a heading that's empty, whitespace-only, self-closing, or explicitly hidden from screen readers, and also one where every child is hidden from assistive tech. Headings should pass when they have visible text, a recognized accessible label attribute, or nested visible child elements (an image with descriptive alt text counts). One important edge: if a heading is explicitly marked hidden from assistive tech, flag it even when an accessible label attribute is also present, since the hidden state takes priority over any label.
+The biome linter already enforces an accessibility rule for heading elements in JSX-based projects, but this rule is not yet applied to plain HTML files or to component-based file formats like Vue, Svelte, and Astro. This means developers writing heading elements in those formats receive no feedback when those headings are missing accessible content.
 
-The tricky bit is custom components. In the component-based formats, any element whose name starts with an uppercase letter is a custom component, not a native HTML element, and it may render accessible content at runtime, so don't flag it. This applies both at the heading level itself and to children of a heading, so an uppercase-named child in Vue or Svelte should count as potentially accessible. In plain HTML though, tag names are case-insensitive, so I want all heading-like names matched without regard to case and treated as regular elements that need real content, and the same goes for their children, a same-looking tag in HTML is just a regular element with no content.
+Heading elements are critical for screen reader navigation — users of assistive technology rely on them to understand a page's structure and jump between sections. A heading that is empty, contains only whitespace, or is entirely hidden from assistive technologies provides no benefit and actively harms accessibility.
+
+## Expected Behavior
+
+- Heading elements (all six levels) in HTML, Vue, Svelte, and Astro files should be linted for accessible content.
+- The rule should flag headings that are empty, whitespace-only, self-closing, or explicitly marked as hidden from screen readers.
+- The rule should accept headings that have visible text content, a recognized accessible label attribute, or nested child elements that provide readable content (including images with descriptive alternative text).
+- When a heading is explicitly marked as hidden from screen readers, it should be flagged even if an accessible label attribute is also present — the hidden state takes priority.
+- In component-based file formats, elements whose names begin with an uppercase letter should be treated as custom components rather than native HTML elements, both at the heading level and when appearing as children of headings.
+- In plain HTML files, element names should be matched without regard to case, consistent with how HTML itself works.
+
+## Why This Matters
+
+Without this rule, accessibility issues in headings can go unnoticed during development in these widely used file formats. Catching these problems at lint time reduces the chance that inaccessible headings reach production.

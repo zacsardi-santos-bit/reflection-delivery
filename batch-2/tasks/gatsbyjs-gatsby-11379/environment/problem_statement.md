@@ -1,5 +1,16 @@
-I'm working on the Gatsby Google Tag Manager plugin (`gatsby-plugin-google-tagmanager`) and I need it to support setting up a default data layer before the GTM script loads. Right now the plugin loads GTM fine on pages but there's no way to push initial context into the data layer ahead of time, stuff like page category or platform info, before any GTM tags fire. Lots of analytics setups need that context present from the very first event and without it people end up hacking in custom scripts outside the plugin.
+## Description
 
-So I want the plugin to accept an optional config for a default data layer that can be either a plain static key-value object or a function that runs in the browser. If it's a static object, serialize it and push it to the data layer before the GTM loader script runs. If it's a function, it should get called at runtime and the result pushed, again before GTM loads. Either way the whole script output including the data layer init needs to stay on a single unbroken line, no newline characters anywhere.
+The Gatsby Google Tag Manager plugin currently loads GTM on pages but has no way to set up a default data layer before GTM initializes. This is a common analytics requirement — many implementations need certain contextual data (like page type or platform information) to already be in the data layer before any GTM tags fire. Without this capability, developers must resort to custom scripts or workarounds outside the plugin.
 
-Also the error handling matters here, if someone passes an unsupported type for the default data layer, or passes something that isn't a plain object when one is expected, I want a clear error reported instead of silently emitting broken output. And when no default data layer is configured at all, don't emit any data layer setup code in the generated HTML, it just shouldn't be there.
+## Expected Behavior
+
+- The plugin should accept an optional default data layer configuration that can be either a static key-value object or a function that runs in the browser.
+- When a static object is provided, its contents should be pushed to the data layer before the GTM loader script runs.
+- When a function is provided, it should be evaluated at runtime and the result pushed to the data layer before GTM loads.
+- If the provided default data layer is of an unsupported type or is not a plain object when one is expected, the plugin should report a clear error rather than silently producing broken output.
+- When no default data layer is configured, no data layer setup code should appear in the page HTML.
+- The GTM script and any data layer initialization code should be rendered as a single unbroken line with no newline characters.
+
+## Why This Matters
+
+Many analytics setups rely on having certain data available from the very first GTM event. Without first-class support for a configurable default data layer, users of this plugin cannot reliably ensure that GTM has the context it needs at initialization time.

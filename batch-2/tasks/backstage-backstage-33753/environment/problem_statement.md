@@ -1,7 +1,15 @@
-I'm working in the catalog backend plugin and want to stop recomputing the same thing over and over. Right now every location row (those entries pointing at catalog descriptor files) has a corresponding catalog entity reference, but we don't store it, so every read recomputes a hash from the location's type and target URL. I'd rather compute it once at write time and read it straight from the db, gives us a single source of truth that's queryable too.
+## Description
 
-So first I need a new utility that takes a location's type and target and returns the full entity ref string in the standard format, where the unique part is a deterministic hash derived from those type and target values. Export it from the existing conversion utilities module so both the location store (on insert) and tests can pull it in.
+The catalog backend maintains a database table of registered locations (entries pointing to catalog descriptor files). Each location has a corresponding catalog entity reference that uniquely identifies it. Currently, that reference is not stored in the table — it is recomputed every time from the location's type and URL target. This means the same hash-based computation runs repeatedly on reads, and there is no single source of truth in the database for what entity ref a given location row corresponds to.
 
-Then a database migration that adds a new column to the locations table to hold this pre-computed entity ref, and backfills all existing rows. Non-bootstrap rows should get the correct hash-based entity ref, but the internal bootstrap row (the special placeholder that doesn't map to a real catalog entity and gets removed later anyway) should get an empty string instead. Oh and the migration needs to be reversible, rolling back should drop the column cleanly.
+## Expected Behavior
 
-Last thing, update the location store itself so it populates this column whenever a new location gets created, so all new rows always land with their entity reference already computed.
+- A new column should be added to the locations table to store the pre-computed entity reference for each registered location.
+- When a new location is created, its entity reference should be computed once and stored alongside the location in the database.
+- Existing location rows in the database should be backfilled with their correct entity reference values via a database migration.
+- The internal bootstrap location row (a special placeholder that will be removed in a future migration) should receive an empty string as its entity reference value, since it does not correspond to a real catalog entity.
+- Rolling back the migration should remove the new column cleanly.
+
+## Why This Matters
+
+Pre-storing the entity reference avoids redundant computation on every read and makes the relationship between a location row and its corresponding catalog entity explicit and queryable directly from the database. It is a step toward removing the need to recompute this value in application code altogether.

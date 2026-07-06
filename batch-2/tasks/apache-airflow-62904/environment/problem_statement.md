@@ -1,5 +1,18 @@
-I'm adding Model Context Protocol (MCP) support to Airflow so our AI agent tasks can talk to externally-hosted tool servers, and right now there's just no idiomatic way to manage those connections through Airflow's connection infrastructure, which is a pain for anyone building AI-powered workflows. So I want two things: a connection hook and a toolset adapter that wraps it.
+## Description
 
-The hook should read an Airflow connection and instantiate the right MCP server object based on a transport type set in the connection. It needs to handle three transports, a streamable HTTP mode which is the default when nothing's specified, an SSE mode, and a stdio mode that launches a local command. When there's a password stored on the connection, forward it as a bearer token in the request headers (that's the auth model). It should validate config and raise meaningful errors, so if a host URL is required but missing I want a clear message saying a host URL is needed, and for stdio if there's no command specified I want an error about the missing command, and if the transport value is unknown/unsupported it should raise saying the transport type isn't recognized. Oh and cache the server object so it's only built once per hook instance. Also it should play nice with the connection UI, hide the fields that don't apply (schema, port, login) and relabel the password field as "Auth Token".
+Airflow currently has no native integration for connecting to external tool servers that implement the Model Context Protocol (MCP). Without this, developers who want to use MCP-compatible tool providers in their AI agent tasks have no standard way to manage those connections through Airflow's connection management infrastructure. This creates friction for teams building AI-powered workflows that rely on MCP servers.
 
-Then the toolset adapter wraps the hook and exposes the server's tools to agent tasks. It needs an identifier that incorporates the connection ID, it should store a tool prefix, and it delegates both the tool-listing and tool-invocation calls straight through to the underlying MCP server. Same caching deal as the hook, the underlying server/hook should only get instantiated once. This all lives in the MCP provider area under `@providers`, btw.
+## Expected Behavior
+
+- A new connection hook should be available in Airflow that lets users configure connections to MCP servers through the Airflow UI, supporting HTTP, SSE, and stdio transports.
+- The connection UI should hide irrelevant fields (schema, port, login) and relabel the password field as "Auth Token" to match the MCP authentication model.
+- When a host URL is required but not configured, the system should produce a clear error message indicating that a host URL is needed.
+- For stdio-based connections, a clear error should be raised when no command is specified.
+- An unknown or unsupported transport value should raise an error indicating the transport type is unrecognized.
+- A companion toolset adapter should wrap the hook and expose the server's tools to AI agent tasks, with an identifier derived from the connection ID.
+- Both the hook and toolset should cache their server connection object so it is only created once per instance.
+- The toolset should delegate tool listing and tool invocation to the underlying MCP server.
+
+## Why This Matters
+
+Teams building AI agent workflows in Airflow need a reliable, idiomatic way to connect to MCP tool servers. Supporting multiple transport types and providing clear validation errors helps developers quickly discover and fix misconfigured connections without digging into internals.

@@ -1,9 +1,16 @@
-I'm hitting a frustrating bug in the Argo CD application controller around cluster name lookups. When we resolve which server URL corresponds to a cluster name, say to count how many apps target a given cluster, the code unconditionally checks whether local in-cluster mode is enabled, even for a totally normal externally-defined cluster that has nothing to do with in-cluster access. That check reads from the ArgoCD configuration resource, and if that resource happens to be absent (which is valid in some deployments), the whole lookup fails even though the in-cluster check is completely irrelevant for an external name.
+## Description
 
-I want to make that check lazy. Skip it entirely for any cluster name that isn't the special reserved in-cluster name, and only invoke it when someone's actually requesting the in-cluster cluster by that specific reserved name. So looking up an external cluster by name should succeed even when the config resource is missing, but looking up the reserved in-cluster name should still run the enablement check and propagate any error it produces.
+When looking up which server URL corresponds to a given cluster name, Argo CD currently checks whether the special local (in-cluster) mode is enabled for **every** name lookup — even for completely normal, externally-defined clusters. This check requires reading from a configuration resource. If that resource is absent or unavailable (which can happen in certain deployment configurations), the cluster name lookup fails entirely, even though the in-cluster check is irrelevant for external cluster names.
 
-While I'm in here, app counting for a cluster needs to handle ambiguous names right. If a cluster name shows up in multiple cluster definitions pointing at different servers, apps using that name shouldn't be counted toward any particular cluster, only count by name when the name unambiguously identifies a single cluster.
+The fix should make this check lazy: it should only be performed when the caller is specifically looking up the reserved local cluster by its special name. For all other cluster names, the check should be skipped entirely.
 
-Also I want a helper that resolves just the server URL for a given application destination without the overhead of fetching the full cluster object. For server-based destinations it returns the URL directly, and for name-based destinations it calls the name-to-server lookup. This all lives in the application controller cluster resolution code, so wire it in there.
+## Expected Behavior
 
-This eager evaluation is a real correctness and reliability issue since it causes spurious failures anywhere we resolve cluster names at runtime in environments where in-cluster just isn't configured.
+- Looking up an external cluster by name must succeed even when the in-cluster configuration resource is absent.
+- Looking up the reserved in-cluster name must still invoke the in-cluster enablement check (and propagate any resulting errors).
+- When counting applications assigned to a specific cluster, apps that target the cluster by name should be counted only when that name unambiguously identifies a single cluster. If a name is shared by multiple cluster definitions, apps using that name should not be attributed to any cluster.
+- A helper function should be introduced to resolve a destination's cluster server URL without fetching the full cluster object — for server-based destinations it returns the URL directly, for name-based destinations it calls the name-to-server lookup.
+
+## Why This Matters
+
+Unnecessary eager evaluation of the in-cluster check causes spurious lookup failures in environments where the in-cluster feature is simply not configured. This is a correctness and reliability issue that affects any workflow that resolves cluster names at runtime.

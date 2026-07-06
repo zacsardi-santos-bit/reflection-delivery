@@ -1,5 +1,12 @@
-I keep getting bitten by the Gradio HTML component silently swallowing script tags. I was trying to load an external JS library by dropping a `<script>` tag into the HTML content I pass into the component, and nothing happened, no error, no warning, the script just quietly does nothing. Turns out browsers don't execute scripts injected the way the HTML component puts content on the page, which is a real platform limitation, but the component gave me zero feedback about it so I burned a bunch of time debugging something that was never going to work.
+## Description
 
-Can we make the HTML component warn about this upfront? What I want is: when someone constructs an HTML component with content that contains a script tag, it should raise a warning telling the developer that the script won't run and they'll need some other approach to run scripts alongside their HTML. If the content is just regular HTML with no script tags in it, then no warning should fire, I don't want noise on the normal case. So the detection should key off whether a `<script>` tag is actually present in the content.
+The HTML component silently ignores script tags embedded in its content, which confuses users who expect those scripts to execute. Because of the way the HTML component injects content into the page, browsers do not run scripts included this way — yet no feedback is given to the developer when this happens.
 
-The relevant component lives under `@gradio` (the Python HTML component), so the check should happen when the component gets created with its content. Basically, plain HTML stays silent, script-tag HTML triggers the heads-up warning.
+## Expected Behavior
+
+- When a developer creates an HTML component with content that includes a script tag, a warning should be raised informing them that the script will not execute.
+- When a developer creates an HTML component with regular HTML content (no script tags), no warning should be raised.
+
+## Why This Matters
+
+Developers often try to load external libraries or run inline scripts by embedding script tags inside the HTML component's content, only to find the scripts silently do nothing. This change provides an early warning that lets developers know they need to use an alternative mechanism to run scripts alongside their HTML content, saving time spent debugging a non-obvious platform limitation.

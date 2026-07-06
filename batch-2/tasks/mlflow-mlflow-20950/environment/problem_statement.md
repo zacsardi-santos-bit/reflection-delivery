@@ -1,5 +1,16 @@
-I'm hitting a snag with MLflow's tracing and how it handles LLM call costs. Right now every time a traced LLM span ends, the code always tries to compute costs client-side using an optional cost-tracking library, and that blows up when I'm on the lightweight tracing package because that library isn't part of the minimal install. Tests that run against the lightweight tracing SDK fail since the lib isn't there, and the CI workflow is papering over it by installing the library as a workaround, which I want gone.
+## Description
 
-The actual fix is that client-side cost computation is only needed for Databricks backends, since they use a different ingestion path where the server doesn't calculate costs. For every other backend the server already computes and stores cost during span ingestion, so doing it on the client is wasted duplicate work. So I want the system to only compute costs client-side when it's connected to a Databricks backend, and otherwise defer to the server side. End result should be identical, traces still show accurate cost info regardless of backend, meaning the server-side path produces the same input cost, output cost, and total cost fields that used to be computed on the client. And the lightweight tracing package should no longer list the cost-tracking library as a dependency at all, that's the whole point, make the minimal SDK actually minimal.
+The tracing system currently computes LLM call costs on the client side every time a span ends. This approach relies on an optional cost-tracking library that is not included in the minimal tracing package installation. As a result, tests that run against the lightweight tracing SDK fail because the library is not available, and the CI workflow incorrectly installs this library as a workaround.
 
-Oh and while you're in there, there's a related bug where model name attributes get double-encoded as JSON during span translation, please fix that at the same time.
+Beyond the dependency issue, computing costs on the client is unnecessary for non-Databricks backends: those backends can calculate costs themselves when ingesting span data. Only Databricks backends require client-side cost computation because they use a different ingestion path where server-side cost calculation does not occur.
+
+## Expected Behavior
+
+- Cost computation should only happen on the client side when connected to a Databricks backend.
+- For all other backends, cost computation should be deferred to the server side, which already has the capability to compute and store cost information.
+- The lightweight tracing package should not require the cost-tracking library as a dependency.
+- Traces must still show accurate cost information regardless of backend — server-side computation must produce the same cost fields (input cost, output cost, total cost) that were previously computed client-side.
+
+## Why This Matters
+
+This change makes the minimal tracing SDK truly minimal — developers can use it without pulling in an unneeded dependency. It also corrects the logical flow: non-Databricks backends are capable of computing costs during ingestion, so there is no need to duplicate that work on the client.

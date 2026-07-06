@@ -1,3 +1,18 @@
-I'm hitting two problems in Babel's core transform pipeline that I want you to fix together. First one's about source maps. When Babel transforms code that already carries an input source map (super common in multi-pass build setups where each step emits its own map), it has to merge that input map with the freshly generated output map. Right now the merge can hand back a specialized class instance straight from the remapping library instead of a plain data object, and that breaks downstream stuff, our traversal and type utilities inspect source maps as ordinary data and blow up with unexpected object type errors when they get a class instance. So I want a dedicated source map merging module added to the file-generation part of the core transform code (under `@packages/babel-core/src/transformation/file/`). It should take an input source map, an output source map, and a source file name, do the merge, and always return a plain JavaScript object, not a class instance or anything exotic, so the rest of Babel can process it without choking.
+## Description
 
-Second thing, unrelated but let's knock it out too. Our tests for ESM plugin and config loading use this old workaround where they spawn separate Node.js child processes, because calling Babel's async transform and config-loading APIs directly inside the test runner used to crash things due to a Node.js bug with dynamic imports. That bug's fixed now, so rip out the spawn helper plus the fixture scripts it leans on, and rewrite those tests to call the transform and config-loading functions directly in-process instead. Cleaner and closer to how people actually use Babel anyway.
+When Babel transforms code that already has an associated source map — a common scenario in multi-pass build pipelines where each transformation step produces its own map — it needs to merge the input map with the newly generated output map. The current implementation may return a specialized object from the underlying remapping library rather than a standard plain data object. This causes failures in Babel's traversal and type utilities, which inspect source maps as plain data and report unexpected object type errors.
+
+A dedicated source map merging module should be added to the core transformation file-generation pipeline. The merged map it returns must be a plain data object so that downstream Babel code can process it without type errors.
+
+Additionally, an old test infrastructure workaround that spawned separate Node.js child processes to test ESM plugin and configuration loading should be removed. That workaround existed because of a Node.js bug that caused crashes when using dynamic imports inside the test runner. Since that bug has since been fixed, the tests can call Babel's transform and config-loading APIs directly in-process.
+
+## Expected Behavior
+
+- A source map merging utility should be added under the core transformation file-generation code
+- The utility accepts an input source map, an output source map, and a source file name, and returns a merged map
+- The returned merged map must be a plain JavaScript object — not a class instance or any other specialized type — so that Babel's internal utilities can work with it correctly
+- The test helper that spawned child processes for ESM loading tests should be removed; those tests should call Babel's APIs directly
+
+## Why This Matters
+
+Build pipelines that chain multiple Babel transformations depend on correct source map merging. If the merged map is returned as a class instance instead of a plain data object, tools that inspect the map will fail. Removing the spawn workaround also simplifies the test infrastructure and aligns tests with how Babel is actually used.

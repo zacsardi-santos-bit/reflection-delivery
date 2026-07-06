@@ -1,5 +1,17 @@
-I'm adding diagnostics support to the Duco ventilation integration for Home Assistant, since right now if someone's device is acting up there's no clean way to pull a report through the built-in HA diagnostics download and hand it to support. I want to wire up the standard diagnostics endpoint (the usual `async_get_config_entry_diagnostics` in `@homeassistant/components/duco/diagnostics.py`) so a user can export a structured report and share it safely.
+## Description
 
-The report should cover a few things. Board hardware info, so the device name and subtype off the board. Then the LAN/network config, IP address, gateway, DNS, the wifi signal strength, and the network mode. It also needs all the connected node details, so node IDs plus the general info, sensor readings, and ventilation state for each one. Oh and the ventilation system component diagnostic status, meaning each component's name and its health status. And finally how many write requests the device has left, that remaining count is handy for debugging rate limit weirdness.
+The Duco ventilation integration does not currently support the Home Assistant diagnostics feature. When users or developers need to troubleshoot issues with a Duco ventilation device, they cannot use the standard Home Assistant diagnostics download to collect and share device information. Adding diagnostics support would allow users to export a structured report covering all the relevant device and network data.
 
-Big thing, it's gotta redact the sensitive stuff automatically so people don't leak private data when they post the report. Mask serial numbers, MAC addresses, and hostnames, and also the device IP/host that's configured in the integration entry itself. Basically anything identifying should come out scrubbed. This lines it up with HA quality standards and protects privacy while making troubleshooting way easier.
+## Expected Behavior
+
+- The integration should expose a diagnostics endpoint that returns a structured report containing:
+  - Board hardware information (device name, subtype)
+  - Network/LAN configuration (IP address, gateway, DNS, signal strength, network mode)
+  - Connected node details (node IDs, general info, sensor readings, ventilation state)
+  - Ventilation system component diagnostic status (component name and health status)
+  - The number of remaining write requests available to the device
+- Sensitive identifying information must be automatically masked in the report, including serial numbers, MAC addresses, hostnames, and the device IP/host configured in the integration entry
+
+## Why This Matters
+
+Without diagnostics support, users experiencing problems with their Duco ventilation system have no easy way to provide support teams with a clean, structured dump of their device state. Adding this capability aligns the integration with Home Assistant quality standards and makes troubleshooting significantly easier while protecting user privacy.

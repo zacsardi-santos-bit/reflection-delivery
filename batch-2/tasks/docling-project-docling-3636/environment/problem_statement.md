@@ -1,5 +1,18 @@
-I'm hitting a gap in the JATS/NXML backend where footnote groups inside document sections just vanish during conversion. I'm running scientific journal articles through the doc conversion pipeline, and any `<fn-group>` element sitting in a section (including back matter) gets skipped entirely. Concrete example: an eLife article with an "Additional information" section that carries "Competing interests", "Author contributions", and "Ethics" subsections, all encoded as grouped footnotes, converts to Markdown with all of that content missing. Just gone. I also built a tiny synthetic JATS doc with a section holding a footnote group of two footnotes, exported to Markdown, and neither footnote showed up, the heading was there but the footnote bodies weren't.
+## Description
 
-What I want is for the JATS backend to actually read footnote-group elements in document sections and pull their footnote text into the output like it does with other content. Each footnote's text should render as a list item under a heading, and that heading should come from the footnote group's own title element when it's present, or fall back to a sensible default heading when there isn't one. If a footnote group has no individual footnotes in it, just skip it gracefully, no errors. And once it's exported to Markdown the footnote group content needs to be visible as structured content, so for articles with author-notes style sections (competing interests, author contributions, ethics statements) those sections show up populated instead of silently dropped.
+When converting scientific journal articles from JATS/NXML format, grouped footnotes that appear within document sections are silently dropped from the output. This affects footnote groups that carry important article metadata such as competing interests declarations, author contribution descriptions, and ethics statements — all of which are standard elements in life sciences publications like eLife articles.
 
-This matters because academic publishers stuff important article metadata into these footnote groups, disclosures that can be legally or editorially required, and losing them quietly makes the converted documents incomplete. Can you fix the parsing so footnote groups are preserved?
+The parser currently encounters footnote-group elements in document sections (including back matter) but skips them entirely without extracting or preserving their content. As a result, the converted document is missing these sections entirely.
+
+## Expected Behavior
+
+- Footnote groups in JATS document sections should be parsed and their text content preserved in the output
+- Each footnote's text should appear as a list item under an appropriate heading in the converted document
+- The heading for the footnote section should come from the group's own title element when present, or fall back to a default heading when absent
+- Empty footnote groups (containing no individual footnotes) should be skipped gracefully without errors
+- When exported to Markdown, footnote group content must be visible as structured content
+- For articles with author-notes sections (e.g. competing interests, author contributions, ethics statements), these sections must be present and populated in the converted output
+
+## Why This Matters
+
+Academic publishers encode important article metadata as footnote groups in the document body. The current behavior silently drops all of this content, making converted documents incomplete. Users who rely on document conversion to process scientific literature lose crucial metadata about the article — including disclosures that may be legally or editorially required.

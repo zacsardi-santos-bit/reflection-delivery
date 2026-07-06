@@ -1,7 +1,19 @@
-I'm working on the Airflow Helm chart and want to add support for the Kubernetes Gateway API as an alternative to Ingress for exposing the API server. Right now the chart can spit out Ingress resources but there's no way to create a Gateway API HTTPRoute for the API server component, so anyone running a Gateway API based cluster has to hand-roll their routing outside Helm, which is error-prone and breaks the single-source-of-truth thing Helm gives you.
+## Description
 
-What I need is for the chart to optionally render an HTTP routing resource for the API server, gated behind a new enabling flag in the API server component's HTTP route config in values. When it's on, the resource has to carry the correct Gateway API apiVersion and kind (HTTPRoute). I want to configure which gateway it attaches to via parent references, including individual listener sections, plus hostnames as a list that support Helm template expressions (like pulling in the release name dynamically), plus path and path match type, annotations, and labels. By default it should forward all traffic to the API server backend on its standard port using a prefix path match, but I also want to be able to tweak the path/match type or supply fully custom routing rules that replace the default entirely.
+The Airflow Helm chart supports Kubernetes Ingress for exposing the API server to external traffic, but it has no support for the Kubernetes Gateway API — a newer, more capable alternative to Ingress that is increasingly adopted in modern clusters. Users who run clusters using the Gateway API need to manually create the appropriate routing resources outside of Helm, which is error-prone and breaks the single-source-of-truth model that Helm provides.
 
-Couple of important edge cases: the route must not render at all when the API server component itself is disabled. Labels need to merge together from the global labels, the API server component labels, and the route-specific labels into the resource metadata. Oh and when a full name override is set with standard naming enabled, the backend service name in the route has to reflect that overridden name.
+## Expected Behavior
 
-Also the chart's schema validation tooling needs updating to recognize this new resource type so validation still works during testing. The new template lives alongside the existing API server ingress stuff under `@chart/templates/api-server/`.
+- The chart should be able to optionally render a Gateway API HTTP routing resource for the Airflow API server, controlled by a new enabling flag in the chart's HTTP route configuration for the API server component.
+- When enabled, the resource must carry the correct API version and resource kind for the Gateway API.
+- Users should be able to configure which gateway the route attaches to (via parent references), including specifying individual listener sections.
+- Hostnames should be configurable as a list, and should support Helm template expressions (e.g., using the release name dynamically).
+- By default, the route should forward all traffic to the API server backend on its default port using a prefix path match.
+- Users should be able to customize the path and path match type, or supply fully custom routing rules that override the default.
+- Custom annotations and labels should be supported and merged with component-level and global labels.
+- The route must not be rendered when the API server component itself is disabled.
+- When a full name override is configured with standard naming enabled, the backend service name in the route must reflect the overridden name.
+
+## Why This Matters
+
+Teams adopting the Kubernetes Gateway API as their cluster's ingress solution have no way to manage the Airflow API server's external routing through the official Helm chart. Adding Gateway API support lets these teams manage all Airflow routing configuration in one place and get the same level of flexibility they have with other chart features.

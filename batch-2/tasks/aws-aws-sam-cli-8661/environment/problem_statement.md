@@ -1,5 +1,14 @@
-I'm building Lambda container image functions with SAM CLI and I keep hitting a wall where the image build always goes through the SDK path. There's no way to opt into the container runtime's own CLI tooling, so I miss out on newer build features (better caching, provenance, cross-platform stuff) that the SDK abstraction just doesn't expose. I want to add an optional flag on the build command so folks who have Docker's buildx plugin installed, or who are on Finch, can build images with their runtime's native CLI instead.
+## Description
 
-Here's the behavior I'm after. When the new flag is set, the build should detect which container engine is actually in use, verify the CLI tooling for it is available, and if it isn't (say the buildx plugin is missing) raise a clear descriptive error instead of failing silently or with some confusing message. If everything checks out it proceeds using the CLI. When the flag isn't set, the existing SDK-based behavior stays as the default, totally unchanged.
+When building Lambda container image functions with SAM CLI, users currently have no way to opt into using the native CLI-based build engine provided by their container runtime. The existing build path always uses the SDK-based method, which lacks support for newer build features and more advanced image construction scenarios. Users who have Docker's buildx plugin installed, or who are using Finch, should be able to take advantage of their runtime's CLI tooling for image builds rather than being locked into the SDK path.
 
-Also I need the internal build abstraction refactored so the SDK and CLI approaches share a common interface, makes swapping between them easy. And the flag needs to plumb through both the build context and the command entry point so it actually reaches the code that performs the image build. btw keep the default path identical to today so existing workflows don't break.
+## Expected Behavior
+
+- A new optional flag should be available on the build command to enable CLI-based image building.
+- When the flag is enabled, SAM CLI should detect the active container runtime and invoke its CLI tooling to build container images.
+- If the required CLI tooling is not available (for example, the buildx plugin is missing), SAM CLI should emit a clear, descriptive error rather than failing silently or with a confusing message.
+- When the flag is not set, the existing SDK-based build behavior should remain unchanged as the default.
+
+## Why This Matters
+
+As container build tooling matures, users need more flexibility in how their images are constructed. CLI-based build tools offer richer feature sets (better caching, provenance, cross-platform builds) that the SDK abstraction doesn't expose. Adding this opt-in flag lets users take advantage of those capabilities while keeping existing workflows unaffected.

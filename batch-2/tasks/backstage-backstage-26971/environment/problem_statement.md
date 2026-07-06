@@ -1,3 +1,16 @@
-I'm working on the Backstage Kubernetes plugin and the detail drawers for resources are reformatting nested property names into human-readable title case, which is throwing people off. Like a rolling update strategy shows up as "Rolling Update:" and "Max Surge:" instead of the actual camelCase names from the Kubernetes spec, and the same thing happens with ingress rules, service configs, and stateful set specs. Anyone who knows Kubernetes expects to see property names exactly as they'd appear in a YAML manifest, so when they look at the deployment strategy in the UI they should see the original camelCase, not a prettified version. This matters because engineers debugging cluster issues or comparing UI output to a manifest can't easily correlate the two right now, the displayed labels just don't match the Kubernetes API spec.
+## Description
 
-What I want is to add an option to the metadata table component so nested object values can be rendered in their original YAML format, preserving the original property names instead of running them through the title formatter. When that YAML display mode is on, nested keys should appear exactly like they do in Kubernetes YAML. Then the Kubernetes resource drawers, deployments, ingresses, services, and stateful sets, should all use this mode so nested properties keep their original names. Oh and one thing to be careful about, if a custom title formatter is configured it should still apply to the top-level keys, it just shouldn't touch the nested YAML content. So top-level formatting stays, nested stuff stays raw.
+The metadata table component used to transform all nested object property keys into human-readable, title-cased labels. For Kubernetes resource detail views, this means camelCase properties — such as those for rolling update strategies and selector labels — are displayed as reformatted, title-cased labels instead of their original names.
+
+This is confusing for users who know Kubernetes — the displayed labels no longer match the actual Kubernetes API spec or the YAML they would write or read. Engineers debugging cluster issues or comparing UI output to a Kubernetes manifest have no easy way to correlate the two.
+
+## Expected Behavior
+
+- The metadata table component should support an option to render nested object values in their original YAML format, preserving original property names.
+- When this YAML display mode is enabled, nested property names should appear exactly as they do in Kubernetes YAML manifests — not reformatted as human-readable labels.
+- The Kubernetes resource drawers (deployments, ingresses, services, stateful sets) should use this YAML display mode so nested properties are shown with their original names.
+- If a title formatter is also configured, it should still apply to top-level keys but should not affect nested values displayed as YAML.
+
+## Why This Matters
+
+Users working with Kubernetes in Backstage need the UI to reflect the actual structure of Kubernetes resources. Showing reformatted labels for nested properties creates a disconnect from the Kubernetes API, making it harder to cross-reference the UI with actual Kubernetes YAML files and documentation.

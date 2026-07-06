@@ -1,7 +1,19 @@
-I'm cleaning up how we handle email validation failures in the CLI because right now when someone exceeds their cloud inference limit or hasn't verified their email, we just call `process.exit()` straight away, which is way too aggressive. It means anything wrapping these operations, like a file watcher that re-evaluates config on changes or an embedding app, can't recover and just dies. What I want instead is for these validation failures to throw a dedicated catchable error type so individual commands can catch it, set an exit code, and skip logging duplicate messages since the validation code already printed the relevant message before it threw.
+# Email Validation Should Throw Recoverable Errors Instead of Exiting
 
-Same deal with the email prompt getting cancelled, like when someone hits Ctrl+C. Today that exits silently, but it should throw that same kind of recoverable error instead, and importantly the cancellation shouldn't produce any error or warning output at all since it's a totally expected user action.
+## Description
 
-There's a log-callback angle too. When an operation registers a log callback at the start and then fails, I need to tear that callback down safely during error handling, but only if it's still the active one. If some other caller registered a different callback in the meantime, the teardown has to be a no-op so we don't clobber their state. So basically a utility that clears a log callback only when the caller that set it is still the active owner.
+Right now, when email validation fails at runtime — for example when the user has exceeded their cloud inference limit or hasn't verified their email address — the system calls `process.exit()` directly. This is too aggressive: it makes it impossible for any caller (such as a file watcher or an embedding application) to recover or handle the failure gracefully.
 
-Then the red team run and generate commands should catch one of these recoverable email errors and set the process exit code to 1 without logging extra error output. And a file watcher that hits an email validation error on a config reload should just keep watching rather than crashing. The whole point is that hard exits kill any recovery logic and make the tool useless as a library or inside automated pipelines, so throwing lets each command decide how to respond.
+Similarly, if the user presses Ctrl+C to cancel the email prompt, the process exits without giving the caller a chance to clean up or continue.
+
+## Expected Behavior
+
+- Email validation failures should be signalled by throwing a dedicated, catchable error type rather than terminating the process immediately.
+- Commands that trigger email validation should catch these specific errors, record an appropriate exit code, and suppress redundant error output — since the underlying validation code already logs the relevant message.
+- A file watcher that encounters an email validation error on a config reload should continue watching rather than crashing.
+- When an operation that sets up a log callback fails, the log callback should be cleaned up safely — even if the operation that registered it throws.
+- A utility should exist to clear a log callback only when the caller that registered it is still the active owner, preventing one operation from inadvertently clearing a callback registered by another.
+
+## Why This Matters
+
+Hard process exits prevent any recovery logic from running and make the tool unusable as a library or inside automated pipelines. Replacing exits with thrown errors lets each command decide how to respond — setting an exit code, logging a user-friendly message, or simply continuing — without compromising the user experience.

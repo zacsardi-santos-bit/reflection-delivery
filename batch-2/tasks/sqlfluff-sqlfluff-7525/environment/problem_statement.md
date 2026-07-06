@@ -1,5 +1,21 @@
-I'm hitting parse errors with sqlfluff on our T-SQL scripts and it's the RESTORE DATABASE statements that are blowing up. These are super common in our SQL Server admin scripts, all the backup/restore maintenance stuff, and right now the parser just chokes on them, reports parse errors or leaves tokens unrecognized, which makes the linter basically useless for any project that has database maintenance scripts in it.
+# Add support for parsing T-SQL RESTORE DATABASE statements
 
-Can you add proper RESTORE DATABASE support to the T-SQL dialect? I need it to parse cleanly with zero errors across the full range of variants we actually use. That means restoring from different sources like disk, tape, or a cloud URL, and it's gotta handle the recovery mode options too (simple/full recovery, no-recovery, and standby mode). Also the ability to specify individual files or filegroups before the backup source, and the usual grab bag of options, replace an existing database, checksum validation, progress stats reporting, plus the media and transfer tuning knobs like block size, buffer count, and max transfer size. Oh and move file options so you can redirect data and log files to new paths on restore. One more thing, the database name and the backup path both need to work with variables, not just literal string values, since our scripts parameterize those all over the place.
+## Description
 
-The relevant dialect logic lives under `@src/sqlfluff/dialects/dialect_tsql.py` (with keywords in the companion `@src/sqlfluff/dialects/dialect_tsql_keywords.py` if needed). Without this, database admin scripts throw false parse errors and the whole thing's unusable for those codebases, so I'd love to get restore scripts fully into the supported set.
+The T-SQL dialect currently does not support parsing database restore statements. When running the linter against T-SQL scripts that contain restore commands — a very common operation in SQL Server database administration — the parser fails to recognize the syntax and reports parse errors or leaves tokens unrecognized. This makes sqlfluff unusable for many real-world T-SQL codebases that include database maintenance scripts.
+
+## Expected Behavior
+
+- RESTORE DATABASE statements should be parsed cleanly without any errors
+- The parser should handle the full range of commonly used restore syntax variants, including:
+  - Restoring from disk, tape, or URL (cloud storage) backup sources
+  - Recovery options: simple recovery, no-recovery mode, and standby mode
+  - File and filegroup specification before the backup source
+  - Options like replace existing database, checksum validation, progress reporting
+  - Media and transfer tuning options (block size, buffer count, max transfer size)
+  - Move file options to redirect data and log files to new paths
+  - Using variables for the database name or backup path
+
+## Why This Matters
+
+Database backup and restore scripts are a core part of SQL Server database administration. Without support for this syntax, any T-SQL project that includes these scripts will produce false positives when linted. Adding proper parse support allows these scripts to be linted without noise, bringing T-SQL restore scripts fully into the set of supported syntax.

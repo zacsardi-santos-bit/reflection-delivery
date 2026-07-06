@@ -1,5 +1,15 @@
-I'm adding usage analytics to Flutter's code size analysis so we can actually see how often folks use it and on which platforms. Right now when someone runs a build with the size analysis flag on Linux, macOS, Windows, or Android, the analysis runs and prints a summary but no telemetry event ever fires, so the team has zero visibility into adoption. I want an analytics event recorded each time code size analysis completes, tagged with which platform got analyzed.
+## Description
 
-The way I'm thinking about it, the core `SizeAnalyzer` utility should take a usage/analytics reporting object as part of its config (the same global usage service the tool already has) so it can dispatch the right event when the analysis finishes, automatically, no extra developer action needed. Then each platform's build workflow has to wire that global usage reporting service in when it constructs the analyzer. So the desktop builds for Linux, macOS, and Windows each send an event naming the platform they analyzed, and the Android APK build path sends one for the APK platform too.
+Flutter's code size analysis feature lets developers inspect how their app binary is composed, but it currently doesn't report any usage analytics. This means the Flutter team has no visibility into how often developers are using the feature or which platforms they're analyzing.
 
-Oh and the status output the developer sees after a finished analysis already says something like "A summary of your [Platform] bundle analysis can be found at ..." with the platform-specific location, and that needs to keep working exactly as before. Just don't break that while adding the telemetry.
+## Expected Behavior
+
+- When a developer runs a build with code size analysis enabled on any supported desktop platform (Linux, macOS, or Windows), an analytics event should be recorded indicating which platform was analyzed.
+- When a developer performs an Android APK build with code size analysis, an analytics event should likewise be recorded for the APK platform.
+- The analytics object responsible for sending these events should be provided to the size analysis component so it can dispatch the event upon completing its analysis.
+
+## Why This Matters
+
+Without usage analytics, it's impossible to know whether the code size analysis feature is being adopted and on which platforms it is most useful. Adding analytics telemetry for this feature will help the Flutter team make data-driven decisions about future improvements.
+
+The core size analysis utility needs to accept an analytics/usage reporting object as part of its configuration, and the build commands for each platform need to wire in the global usage reporting service so the events are dispatched correctly when analysis is run.
